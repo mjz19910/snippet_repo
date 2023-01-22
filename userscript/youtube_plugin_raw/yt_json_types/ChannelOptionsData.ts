@@ -3,5 +3,5 @@ type D$ChannelOptions={
 	avatarEndpoint: {};
 	name: string;
 	links: R$TextWithRuns[];
-	avatarAccessibility: A$Accessibility;
+	avatarAccessibility: AD$Accessibility;
 };

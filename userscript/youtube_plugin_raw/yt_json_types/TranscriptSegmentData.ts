@@ -4,6 +4,6 @@ type D$TranscriptSegment={
 	snippet: R$TextWithRuns;
 	startTimeText: G$Text;
 	trackingParams: string;
-	accessibility: A$Accessibility;
+	accessibility: AD$Accessibility;
 	targetId?: `${string}.${string}.${number}.${number}`;
 };

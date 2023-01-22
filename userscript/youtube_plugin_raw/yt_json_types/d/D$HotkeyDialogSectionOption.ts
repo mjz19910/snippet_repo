@@ -4,5 +4,5 @@ type D$HotkeyDialogSectionOption={
 }|{
 	label: R$TextWithRuns;
 	hotkey: string;
-	hotkeyAccessibilityLabel: A$Accessibility;
+	hotkeyAccessibilityLabel: AD$Accessibility;
 };

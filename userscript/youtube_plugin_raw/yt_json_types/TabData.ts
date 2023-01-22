@@ -18,6 +18,6 @@ type D$Tab={
 	selected: true;
 	content: R$SectionList;
 	tabIdentifier: "FEsubscriptions";
-	accessibility: A$Accessibility;
+	accessibility: AD$Accessibility;
 	trackingParams: string;
 };

@@ -1,6 +1,6 @@
 type D$Thumbnail={
 	thumbnails: D$ThumbnailItem[];
-	accessibility?: A$Accessibility;
+	accessibility?: AD$Accessibility;
 	isOriginalAspectRatio?: true;
 	sampledThumbnailColor?: D$Color;
 };

@@ -4,7 +4,7 @@ type D$ClipCreationScrubber={
 	minLengthMs: 5000;
 	defaultLengthMs: 15000;
 	windowSizeMs: 120000;
-	startAccessibility: A$Accessibility;
-	endAccessibility: A$Accessibility;
-	durationAccessibility: A$Accessibility;
+	startAccessibility: AD$Accessibility;
+	endAccessibility: AD$Accessibility;
+	durationAccessibility: AD$Accessibility;
 };

@@ -1,6 +1,6 @@
 type D$ChannelThumbnailWithLink={
 	thumbnail: D$Thumbnail;
 	navigationEndpoint: E$Browse;
-	accessibility: A$Accessibility;
+	accessibility: AD$Accessibility;
 	title: string;
 };

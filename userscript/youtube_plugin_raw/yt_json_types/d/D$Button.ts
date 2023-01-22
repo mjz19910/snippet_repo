@@ -1,6 +1,6 @@
 type D$Button={
 	accessibility?: A$Label;
-	accessibilityData?: A$Accessibility;
+	accessibilityData?: AD$Accessibility;
 	command?: G$Button$command;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;

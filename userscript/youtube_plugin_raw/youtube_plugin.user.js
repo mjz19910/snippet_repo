@@ -4663,7 +4663,7 @@ class CodegenService extends BaseService {
 			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
 			return b;
 		}
-		/** @type {A$Accessibility} */
+		/** @type {AD$Accessibility} */
 		if(b.accessibilityData) return "TYPE::A$Accessibility";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
@@ -6877,7 +6877,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ItemSectionData",trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @private @arg {R$SimpleText} x @arg {(this:this,x:{accessibility?:A$Accessibility})=>void} f */
+	/** @private @arg {R$SimpleText} x @arg {(this:this,x:{accessibility?:AD$Accessibility})=>void} f */
 	D$SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
 		this.save_keys(`[${cf}]`,x);
@@ -7333,17 +7333,17 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(text);
 		this.R$Button(dismissButton);
 	}
-	/** @private @arg {{}} x */
-	A$LabelData(x) {this.emf("A$LabelData",x);}
-	/** @private @arg {{}} x */
-	A$Accessibility(x) {this.emf("A$Accessibility",x);}
+	/** @private @arg {A$Label} x */
+	A$Label(x) {this.emf("A$Label",x);}
+	/** @private @arg {AD$Accessibility} x */
+	AD$Accessibility(x) {this.emf("A$Accessibility",x);}
 	/** @private @arg {D$Button} x */
 	D$Button(x) {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y); // ! #destructure
-		if(accessibility) return this.A$LabelData(accessibility);
-		this.t(accessibilityData,this.A$Accessibility);
+		if(accessibility) return this.A$Label(accessibility);
+		this.t(accessibilityData,this.AD$Accessibility);
 		this.t(command,this.ButtonCommand);
 		this.t(icon,this.T$Icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
@@ -7441,7 +7441,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,...y}=x;
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
-		this.t(accessibility,this.A$Accessibility);
+		this.t(accessibility,this.AD$Accessibility);
 		this.z(this.w(y),this.D$ThumbnailItem);
 	}
 	/** @private @arg {D$ThumbnailItem} x */
@@ -7969,7 +7969,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.t(accessibility,this.A$Accessibility);
+		this.t(accessibility,this.AD$Accessibility);
 		this.tz(items,this.G$Menu$items$iterate);
 		/** @type {D$Menu$targetId} */
 		this.t(targetId,a => this.targetId(cf,a));
@@ -8018,10 +8018,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.WebCommandMetadata(this.w(x));
 	}
-	/** @private @arg {{accessibility?:A$Accessibility}} x */
+	/** @private @arg {{accessibility?:AD$Accessibility}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
-		if(x.accessibility) this.A$Accessibility(x.accessibility);
+		if(x.accessibility) this.AD$Accessibility(x.accessibility);
 	}
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
@@ -8121,7 +8121,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y); // ! #destructure
 		this.z(runs,a => this.D$TextRun(a,f_run));
-		this.t(accessibility,this.A$Accessibility);
+		this.t(accessibility,this.AD$Accessibility);
 	}
 	/** @private @arg {R$TextRun} x @arg {(x:NonNullable<R$TextRun['navigationEndpoint']>)=>void} f_run */
 	D$TextRun(x,f_run) {
@@ -9377,7 +9377,7 @@ class HandleTypes extends ServiceMethods {
 		if("hotkeyAccessibilityLabel" in y) {
 			let ka=this.w(y);
 			this.save_string(`[${cf}.hotkey_label]`,ka.accessibilityData.label);
-			this.A$Accessibility(ka);
+			this.AD$Accessibility(ka);
 		}
 	}
 	/** @template {D$SubscribeButton} T @arg {T} x */
@@ -9402,8 +9402,8 @@ class HandleTypes extends ServiceMethods {
 			this.do_codegen(cf,x);
 			debugger;
 		});
-		this.A$Accessibility(subscribeAccessibility);
-		this.A$Accessibility(unsubscribeAccessibility);
+		this.AD$Accessibility(subscribeAccessibility);
+		this.AD$Accessibility(unsubscribeAccessibility);
 		return y;
 	}
 	/** @arg {E$SubscribeEndpoint} x */
