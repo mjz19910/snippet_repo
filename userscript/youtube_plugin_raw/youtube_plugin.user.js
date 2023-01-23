@@ -8562,7 +8562,9 @@ class HandleTypes extends ServiceMethods {
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
 	/** @private @arg {TD_ItemSection<ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
-		let [i,...a]=this.decode_TD_ItemSection(x); i;
+		const cf="D_ItemSection_2_CommentItemSection";
+		this.save_keys(`[${cf}]`,x);
+		let [i,...a]=this.decode_TD_ItemSection(cf,x); i;
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
 		this.z(i,x => {
 			/** @arg {string} v */
@@ -8585,19 +8587,33 @@ class HandleTypes extends ServiceMethods {
 	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
 	/** @arg {D_AdSlot} x */
 	D_AdSlot(x) {
+		const cf="D_AdSlot";
+		this.save_keys(`[${cf}]`,x);
 		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=x; this.g(y);
 		this.DM_AdSlot(adSlotMetadata);
 		this.FulfillmentContent(fulfillmentContent);
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
 	/** @arg {FulfillmentContent} x */
-	FulfillmentContent(x) {x;}
+	FulfillmentContent(x) {
+		const cf="D_AdSlot";
+		this.save_keys(`[${cf}]`,x);
+	}
 	/** @arg {DM_AdSlot} x */
-	DM_AdSlot(x) {x;}
+	DM_AdSlot(x) {
+		const cf="D_AdSlot";
+		this.save_keys(`[${cf}]`,x);
+		const {slotId,slotPhysicalPosition,slotType,...y}=x; this.g(y);
+		this.primitive_of_string(slotId);
+		if(slotPhysicalPosition!==1) debugger;
+		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
+	}
 	/** @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
-	/** @private @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
-	decode_TD_ItemSection(x) {
+	/** @private @arg {string} cf @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
+	decode_TD_ItemSection(cf,x) {
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
 		return [x.contents,x.sectionIdentifier,x.targetId];
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
