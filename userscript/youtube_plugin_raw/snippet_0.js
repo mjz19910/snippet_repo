@@ -241,9 +241,9 @@ export class Snippet_0_tmp {
 		rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 		console.log(rn);
 	}
-	/** @arg {MyReader} reader @arg {D$DecTypeNum[]} results */
+	/** @arg {MyReader} reader @arg {D_DecTypeNum[]} results */
 	unpack_children_reader_result(reader,results) {
-		/** @type {D$DecTypeNum[]} */
+		/** @type {D_DecTypeNum[]} */
 		let out=[];
 		for(let item of results) {
 			switch(item[0]) {

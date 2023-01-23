@@ -883,7 +883,7 @@ class MyReader {
 	/** @private */
 	read_any_impl() {
 		this.failed=false;
-		/** @private @type {D$DataArrType} */
+		/** @private @type {D_DataArrType} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -908,7 +908,7 @@ class MyReader {
 				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
 			}
 		}
-		/** @private @type {D$DecTypeNum[]} */
+		/** @private @type {D_DecTypeNum[]} */
 		let res_arr=[];
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
@@ -1103,7 +1103,7 @@ class MyReader {
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
-		/** @private @type {D$DecTypeNum[]} */
+		/** @private @type {D_DecTypeNum[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
@@ -1169,7 +1169,7 @@ class MyReader {
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @type {D$DecTypeNum} */
+				/** @type {D_DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
@@ -2687,10 +2687,10 @@ class BaseService extends BaseServicePrivate {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @typedef {number|string|['bigint',number[], bigint]|['group',D$DecTypeNum[]]|["failed",D$DecTypeNum[]|null]|ParamMapType} ParamMapValue */
+	/** @typedef {number|string|['bigint',number[], bigint]|['group',D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]|ParamMapType} ParamMapValue */
 	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
-	/** @public @arg {D$DecTypeNum[]} res_e */
+	/** @public @arg {D_DecTypeNum[]} res_e */
 	make_param_map(res_e) {
 		/** @type {ParamMapType} */
 		let ret_map=new Map();
@@ -5371,7 +5371,7 @@ class ParserService extends BaseService {
 			off++;
 		}
 	}
-	/** @template {["bigint",number[],bigint]|["group",D$DecTypeNum[]]|["failed",D$DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
+	/** @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
 	is_bigint(x) {
 		return x[0]==="bigint";
 	}
@@ -8447,13 +8447,19 @@ class HandleTypes extends ServiceMethods {
 	D_CommonConfig(x) {const cf="D_CommonConfig"; this.H_(cf,x,x => this.parser.parse_url(cf,x));}
 	/** @private @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,this.D_VssLoggingContext);}
+	decoder=new TextDecoder();
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext";
 		this.save_keys(`[${cf}]`,x);
 		let b_res=this.decode_b64_url_proto_obj(x.serializedContextData);
 		if(!b_res) return;
-		console.log(b_res[0]);
+		let [r]=b_res;
+		if(r[0]==="child") {
+			console.log(this.decoder.decode(r[2]));
+		} else {
+			console.log(r);
+		}
 	}
 	/** @private @arg {NonNullable<R_TextRun['navigationEndpoint']>} x */
 	handle_text_endpoint(x) {

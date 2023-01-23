@@ -30,7 +30,7 @@ export class MyReader {
 		} else {
 			this.cur_len=this.pos+size;
 		}
-		/** @type {D$DataArrType} */
+		/** @type {D_DataArrType} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -51,7 +51,7 @@ export class MyReader {
 				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
 			}
 		}
-		/** @type {D$DecTypeNum[]} */
+		/** @type {D_DecTypeNum[]} */
 		let res_arr=[];
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
@@ -231,7 +231,7 @@ export class MyReader {
 		if(this.noisy_log_level)
 			console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
-		/** @type {D$DecTypeNum[]} */
+		/** @type {D_DecTypeNum[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
@@ -287,7 +287,7 @@ export class MyReader {
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @type {D$DecTypeNum} */
+				/** @type {D_DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
