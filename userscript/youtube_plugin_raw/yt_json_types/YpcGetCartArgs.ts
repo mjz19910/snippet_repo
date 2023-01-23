@@ -1,1 +1,0 @@
-type YpcGetCartArgs={transactionParams: string;};

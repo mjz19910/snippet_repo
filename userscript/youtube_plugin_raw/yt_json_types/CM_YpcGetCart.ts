@@ -1,0 +1,1 @@
+type CM_YpcGetCart={webCommandMetadata: WCM_YpcGetCart;};

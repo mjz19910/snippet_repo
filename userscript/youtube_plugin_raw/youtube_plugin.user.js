@@ -7747,11 +7747,48 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PdgColorSlider} x */
 	R_PdgColorSlider(x) {this.H_("R_PdgColorSlider",x,this.D_PdgColorSlider);}
 	/** @private @arg {D_PdgColorSlider} x */
-	D_PdgColorSlider(x) {x;}
+	D_PdgColorSlider(x) {
+		const cf="D_PdgColorSlider";
+		this.save_keys(`[${cf}]`,x);
+		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=x; this.g(y);
+		this.z(notches,this.NotchesItem);
+		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
+	}
+	/** @private @arg {NotchesItem} x */
+	NotchesItem(x) {
+		const cf="NotchesItem";
+		this.save_keys(`[${cf}]`,x);
+		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=x; this.g(y);
+		if(linearGradientCssStyle) {
+			debugger;
+		}
+		if(knobColorArgb!==4280191205) debugger;
+		this.E_YpcGetCart(purchaseCommand);
+		this.D_SimpleText(tierValue);
+	}
+	/** @private @arg {E_YpcGetCart} x */
+	E_YpcGetCart(x) {
+		const cf="E_YpcGetCart";
+		this.H_R(cf,x);
+		this.T_Endpoint(cf,x,x => this.y(x,this.D_YpcGetCart),this.CM_YpcGetCart);
+	}
+	/** @private @arg {CM_YpcGetCart} x */
+	CM_YpcGetCart(x) {
+		const {apiUrl,sendPost,...t}=this.w(x); this.w(t);
+		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @private @arg {D_YpcGetCart} x */
+	D_YpcGetCart(x) {x;}
 	/** @private @arg {R_PdgCommentPreview} x */
 	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview",x,this.D_PdgCommentPreview);}
 	/** @private @arg {D_PdgCommentPreview} x */
-	D_PdgCommentPreview(x) {x;}
+	D_PdgCommentPreview(x) {
+		const cf="D_PdgCommentPreview";
+		this.save_keys(`[${cf}]`,x);
+		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=x; this.g(y);
+		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
+	}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader",x,this.D_PdgBuyFlowHeader);}
 	/** @private @arg {C_GetSurvey} x */
