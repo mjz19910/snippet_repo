@@ -7488,16 +7488,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf_}]`,x);
 		this.D_TextWithRuns(this.w(x));
 	}
-	/** @private @arg {PdgBuyFlow} x */
-	D$PdgBuyFlow(x) {
-		const cf="PdgBuyFlow";
-		this.save_keys(`[${cf}]`,x);
-		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y); // ! #destructure
-		this.R$PdgBuyFlowHeader(header);
-		this.z(content,this.R$SuperVodBuyFlowContent);
-		this.trackingParams(cf,trackingParams);
-		this.C_GetSurvey(onCloseCommand);
-	}
 	/** @public @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
 		const cf="D_PdgBuyFlowHeader";
@@ -7721,7 +7711,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y);
 		this.R_PdgBuyFlowHeader(x.header);
-		this.z(content,a => a);
+		this.z(content,a => {
+			if(!a.superVodBuyFlowContentRenderer) debugger;
+			return this.R_SuperVodBuyFlowContent(a);
+		});
 		this.trackingParams(cf,trackingParams);
 		if("getSurveyCommand" in onCloseCommand) {
 			this.C_GetSurvey(onCloseCommand);
@@ -7729,6 +7722,36 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
+	/** @private @arg {R_SuperVodBuyFlowContent} x */
+	R_SuperVodBuyFlowContent(x) {this.H_("R_SuperVodBuyFlowContent",x,this.D_SuperVodBuyFlowContent);}
+	/** @private @arg {D_SuperVodBuyFlowContent} x */
+	D_SuperVodBuyFlowContent(x) {
+		const cf="D_SuperVodBuyFlowContent";
+		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=x; this.g(y);
+		this.z([description,disclaimerText],a => this.D_TextWithRuns(a));
+		this.R_Button(buyButton);
+		this.trackingParams(cf,trackingParams);
+		this.R_PdgCommentPreview(commentPreview);
+		this.R_PdgColorSlider(colorSlider);
+		console.log("defaultPriceTier",defaultPriceTier);
+		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
+	}
+	/** @private @arg {SuperThanksSelectedTierEntity} x */
+	SuperThanksSelectedTierEntity(x) {
+		const cf="SuperThanksSelectedTierEntity";
+		this.save_keys(`[${cf}]`,x);
+		const {index,key,...y}=x; this.g(y);
+		console.log("superThanksSelectedTierEntity.index",index);
+		console.log("superThanksSelectedTierEntity.key",key);
+	}
+	/** @private @arg {R_PdgColorSlider} x */
+	R_PdgColorSlider(x) {this.H_("R_PdgColorSlider",x,this.D_PdgColorSlider);}
+	/** @private @arg {D_PdgColorSlider} x */
+	D_PdgColorSlider(x) {x;}
+	/** @private @arg {R_PdgCommentPreview} x */
+	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview",x,this.D_PdgCommentPreview);}
+	/** @private @arg {D_PdgCommentPreview} x */
+	D_PdgCommentPreview(x) {x;}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader",x,this.D_PdgBuyFlowHeader);}
 	/** @private @arg {C_GetSurvey} x */
