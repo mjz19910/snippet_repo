@@ -7889,7 +7889,7 @@ class HandleTypes extends ServiceMethods {
 					});
 					this.z(iw[0].items,x => {
 						if("notificationRenderer" in x) return this.R_Notification(x);
-						if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+						if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 						console.log(x);
 						debugger;
 					});
@@ -8373,15 +8373,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
-	/** @arg {R_ContinuationItem} x */
-	R_ContinuationItem(x) {this.H_("R_CompactPlaylist",x,this.D_ContinuationItem);}
-	/** @arg {D_ContinuationItem} x */
-	D_ContinuationItem(x) {
-		const {trigger,continuationEndpoint,...y}=x;
-		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
-		this.E_Continuation(continuationEndpoint);
-		this.g(y);
-	}
 	/** @private @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
 	decode_TD_ItemSection(x) {
 		return [x.contents,x.sectionIdentifier,x.targetId];
@@ -8700,7 +8691,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			return;
 		} else if("continuationItemRenderer" in x) {
-			this.ContinuationItemRenderer(x);
+			this.R_ContinuationItem(x);
 		} else if("musicCarouselShelfRenderer" in x) {
 			// this.MusicCarouselShelfRenderer(x);
 			debugger;
@@ -8714,21 +8705,17 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {R_ContinuationItem} x */
-	ContinuationItemRenderer(x) {
-		const cf="ContinuationItemRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ContinuationItemData(x.continuationItemRenderer);
-	}
+	R_ContinuationItem(x) {this.H_("R_ContinuationItem",x,this.ContinuationItemData);}
 	/** @private @arg {D_ContinuationItem} x */
 	ContinuationItemData(x) {
 		const cf="ContinuationItemData";
 		this.save_keys(`[${cf}]`,x);
-		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y); // ! #destructure
+		const {trigger,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
-		// this.save_enum("CONTINUATION_TRIGGER",trigger);
+		this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.G_ContinuationEndpoint(continuationEndpoint);
-		this.t(button,this.R_Button);
-		this.t(ghostCards,((_x) => {debugger;}));
+		//this.t(button,this.R_Button);
+		//this.t(ghostCards,((_x) => {debugger;}));
 	}
 	/** @private @arg {G_ContinuationEndpoint} x */
 	G_ContinuationEndpoint(x) {
