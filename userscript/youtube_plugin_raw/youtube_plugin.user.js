@@ -7225,12 +7225,16 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[E_${cf}]`,x);
 		this.T_Endpoint("E_Browse",x,a => {
 			let u=this.w(a);
-			let {browseId,...y}=u; this.g(y);
+			let {browseId,...y}=u;
 			switch(u.browseId) {
 				case "SPaccount_notifications": break;
 				case "FEwhat_to_watch": break;
 				default: debugger; break;
 			};
+			if("canonicalBaseUrl" in y) {
+				if(!this.str_starts_with("/@",this.w(y))) debugger;
+				return;
+			} this.g(y);
 		},x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
@@ -8528,7 +8532,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(ownerBadges,this.R_MetadataBadge);
 		this.t(publishedTimeText,this.R_SimpleText);
 		let kof=this.get_keys_of(y);
-		if(kof.length>0){
+		if(kof.length>0) {
 			console.log("[log_keys_of] [%s] [%s]",cf,kof);
 			this.do_codegen("D_CompactPlaylist",y);
 			console.log(this.get_keys_of(x).join());
