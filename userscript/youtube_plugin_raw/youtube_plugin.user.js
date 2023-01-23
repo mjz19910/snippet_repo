@@ -5245,7 +5245,7 @@ class ParserService extends BaseService {
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
 			case "${path}":
-				switch(ta) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
+				switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
 				/** @type {P$PathRoot} */
 				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
@@ -5285,31 +5285,20 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
-					case "watch.params":
-						switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}
+					case "watch.player_params.f40.f1":
+						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f16.f4":
-						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f16":
-						switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */ 
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.params.f33":
-						switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry.f10":
-						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "watch.params":switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f16.f4":switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f16":switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "watch.params.f33":switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "AdServingDataEntry.f10":switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry.f9": case "tracking.trackingParams.f4": case "transcript_target_id.param":
 					case "tracking.trackingParams.f19": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "report.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
