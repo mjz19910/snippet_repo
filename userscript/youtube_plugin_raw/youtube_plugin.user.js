@@ -8699,6 +8699,7 @@ class HandleTypes extends ServiceMethods {
 					switch(k[0]) {
 						case "itemSectionRenderer": break;
 						case "relatedChipCloudRenderer": break;
+						default: debugger; break;
 					}
 				});
 			} else if("results" in a) {
