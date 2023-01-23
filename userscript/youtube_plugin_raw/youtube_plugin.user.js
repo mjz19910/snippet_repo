@@ -8302,6 +8302,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(thumbnailOverlays,a=>{
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
+			if("thumbnailOverlayNowPlayingRenderer" in a) return;
 			this.do_codegen("D_CompactPlaylist",a);
 			a; debugger;
 		});
