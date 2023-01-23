@@ -5280,6 +5280,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "watch.params":
+						switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16.f4":
 						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
@@ -5300,18 +5304,8 @@ class ParserService extends BaseService {
 					case "AdServingDataEntry.f9":
 					case "tracking.trackingParams.f4":
 					case "transcript_target_id.param":
-					case "tracking.trackingParams.f19":
-						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry":
-						switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.params":
-						switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f19": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.player_params":
 						switch(map_entry_key) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
