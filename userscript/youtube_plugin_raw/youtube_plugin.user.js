@@ -7328,7 +7328,7 @@ class HandleTypes extends ServiceMethods {
 	R_Browse(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
-		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x;this.g(y);
+		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x; this.g(y);
 		this.RC$ResponseContext(responseContext);
 		this.t(header,this.BrowseHeader);
 		this.trackingParams(cf,trackingParams);
@@ -7342,6 +7342,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(metadata,this.BrowseMetadata);
 		this.t(microformat,this.R_MicroformatData);
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
+		this.t(background,this.R_MusicThumbnail);
 		this.t(continuationContents,_x => {debugger;});
 		this.t(alerts,a => this.Response_alerts(cf,a));
 	}
