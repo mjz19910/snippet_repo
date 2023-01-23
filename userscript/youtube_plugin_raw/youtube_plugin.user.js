@@ -8264,27 +8264,39 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @private @arg {R_MerchandiseShelf} x */
+	/** @public np @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("MerchandiseShelf",x,a => {a; debugger;});}
-	/** @private @arg {R_VideoPrimaryInfo} x */
+	/** @public np @arg {R_VideoPrimaryInfo} x */
 	R_VideoPrimaryInfo(x) {this.H_("VideoPrimaryInfo",x,a => {a; debugger;});}
-	/** @private @arg {R_VideoSecondaryInfo} x */
+	/** @public np @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("VideoSecondaryInfo",x,a => {a; debugger;});}
-	/** @private @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
+	/** @public np @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TR_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
 				case "comment-item-section": return this.TR_ItemSection$2$CommentItemSection(x);
+				default: debugger; return x;
 			}
 		}
 		switch(x.itemSectionRenderer.sectionIdentifier) {
 			case "comments-entry-point": return this.TR_ItemSection$1(x,a => {a; debugger;});
+			default: debugger; return x;
 		}
 	}
 	/** @arg {TR_ItemSection<{},"comment-item-section","comments-section">} x */
-	TR_ItemSection$2$CommentItemSection(x) {this.H_("A_Notification",x,a => {a; debugger;});}
+	TR_ItemSection$2$CommentItemSection(x) {this.H_("TR_ItemSection$2$CommentItemSection",x,this.TD_ItemSection$2CommentItemSection);}
 	/** @arg {TD_ItemSection<{},"comment-item-section","comments-section">} x */
-	TD_ItemSection$2CommentItemSection(x) {x;}
+	TD_ItemSection$2CommentItemSection(x) {
+		const cf="TD_ItemSection$2CommentItemSection";
+		this.save_keys(`[${cf}]`,x);
+		const {sectionIdentifier,targetId,trackingParams,...y}=x;
+		if(x.sectionIdentifier!=="comment-item-section") debugger;
+		if(x.targetId!=="comments-section") debugger;
+		this.z(this.w(y),a=>{
+			a;
+			debugger;
+		})
+	}
 	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
