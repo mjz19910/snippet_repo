@@ -8649,7 +8649,11 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {D_AdLayoutLogging} x */
-	D_AdLayoutLogging(x) {this.primitive_of_string(this.w(x));}
+	D_AdLayoutLogging(x) {
+		const cf="D_AdLayoutLogging";
+		this.save_keys(`[${cf}]`,x);
+		this.primitive_of_string(this.w(x));
+	}
 	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
 		const cf="DM_AdSlot";
