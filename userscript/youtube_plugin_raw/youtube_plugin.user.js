@@ -7485,7 +7485,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		{x;}
 	}
-	/** @private @arg {E_Continuation} x */
+	/** @private @arg {C_Continuation} x */
 	ContinuationCommand(x) {
 		if(!x) {debugger; return;}
 		const cf="ContinuationCommand";
@@ -8548,7 +8548,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.trackingParams("MP_MenuNotificationSection",trackingParams);
 	}
-	/** @private @arg {E_Continuation} x */
+	/** @private @arg {C_Continuation} x */
 	E_Continuation(x) {
 		this.T_Endpoint("E_Continuation",x,a => {
 			let u=this.w(a);

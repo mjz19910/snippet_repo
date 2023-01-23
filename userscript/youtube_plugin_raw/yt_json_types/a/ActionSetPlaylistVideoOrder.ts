@@ -7,7 +7,7 @@ type ActionSetPlaylistVideoOrder={
 			clickTrackingParams: string;
 		};
 	};
-	serviceEndpoint?: E_Continuation;
+	serviceEndpoint?: C_Continuation;
 	accessibility?: D_Accessibility;
 	trackingParams: string;
 };
