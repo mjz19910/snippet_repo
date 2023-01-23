@@ -10139,11 +10139,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {identifier,status,...y}=x; this.g(y);
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
-		switch(x.identifier) {
-			case "bottom_sheet_list_option.eml|cd39732d53f1132c": break;
-			case "track_selection_sheet_option.eml|f3619d8bb085c9a9": break;
-			default: debugger; break;
-		}
+		this.primitive_of_string(x.identifier);
 	}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {
