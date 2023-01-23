@@ -8576,10 +8576,19 @@ class HandleTypes extends ServiceMethods {
 			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
 			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
 			if("compactRadioRenderer" in x) {sc("t1.crr"); debugger; return;}
+			if("adSlotRenderer" in x) {sc("t1.asr"); return this.R_AdSlot(x);}
 			x;
 			debugger;
 		});
 	}
+	/** @arg {R_AdSlot} x */
+	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
+	/** @arg {D_AdSlot} x */
+	D_AdSlot(x) {
+		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=x; this.g(y);
+	}
+	/** @arg {DM_AdSlot} x */
+	DM_AdSlot(x) {x;}
 	/** @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
 	/** @private @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
@@ -9654,7 +9663,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(adLayoutMetadata,this.AdLayoutMetadataItem);
 		this.AdSlotMetadata(adSlotMetadata);
 	}
-	/** @private @arg {DM$AdSlot} x */
+	/** @private @arg {DM_AdSlot} x */
 	AdSlotMetadata(x) {
 		const cf="AdSlotMetadata";
 		this.save_keys(`[${cf}]`,x);
