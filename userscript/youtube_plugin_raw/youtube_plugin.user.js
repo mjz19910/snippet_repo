@@ -7351,7 +7351,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_MicroformatData} x */
 	R_MicroformatData(x) {this.H_("R_MicroformatData",x,this.D_Microformat);}
 	/** @private @arg {D_Microformat} x */
-	D_Microformat(x) {x;}
+	D_Microformat(x) {
+		this.unwrap_microformat(x);
+	}
 	/** @private @arg {R_EntityBatchUpdate} x */
 	R_EntityBatchUpdate(x) {this.H_("A_Notification",x,this.D_EntityBatchUpdate);}
 	/** @private @arg {G_BrowseMetadata} x */
@@ -8182,6 +8184,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
+	/** @template T @template {string} VV @typedef {{[U in keyof T as `${string&U extends `${VV}${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemovePrefix */
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
 	/** @template {{}} U @arg {U} x @returns {[RemoveToggled<U>,RemoveUnToggled<U>,Omit<U,`toggled${string}`|`untoggled${string}`>]} */
@@ -8212,8 +8215,53 @@ class HandleTypes extends ServiceMethods {
 				untoggled[u1]=cc[1];
 				continue;
 			}
+			/** @type {any} */
+			let ac=c1;
+			/** @type {keyof Omit<U,`toggled${string}`|`untoggled${string}`>} */
+			let u1=ac;
+			other[u1]=cc[1];
 		}
 		return [tog,untoggled,other];
+	}
+	/** @private @template {D_Microformat} U @arg {U} x */
+	unwrap_microformat(x) {
+		/** @type {Partial<RemovePrefix<U,"url">>} */
+		let uu={};
+		uu; x;
+		uu.applinksAndroid;
+		let [v,o]=this.unwrap_prefix(x,"url");
+		let [v1,o2]=this.unwrap_prefix(o,"ios");
+		return {
+			url: v,
+			ios: v1,
+			o:o2,
+		};
+	}
+	/** @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
+	unwrap_prefix(x,pf) {
+		/** @type {RemovePrefix<U,VV>} */
+		let un_prefix=as({});
+		/** @type {Omit<U,`${VV}${string}`>} */
+		let other=as({});
+		for(let cc of Object.entries(x)) {
+			let c1=cc[0];
+			if(this.str_starts_with(pf,c1)) {
+				let u1x=split_string_once(c1,pf);
+				if(u1x.length!==2) continue;
+				/** @type {any} */
+				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
+				/** @type {keyof RemovePrefix<U,VV>} */
+				let u1=ac;
+				un_prefix[u1]=cc[1];
+				continue;
+			}
+			/** @type {any} */
+			let ac=c1;
+			/** @type {keyof Omit<U,`${VV}${string}`>} */
+			let u1=ac;
+			other[u1]=cc[1];
+		}
+		return [un_prefix,other];
 	}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {
