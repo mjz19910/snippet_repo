@@ -8303,6 +8303,8 @@ class HandleTypes extends ServiceMethods {
 		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x; this.g(y);
 		this.z(thumbnailOverlays,a=>{
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
+			if("thumbnailOverlayHoverTextRenderer" in a) return;
+			this.do_codegen("D_CompactPlaylist",a);
 			a; debugger;
 		});
 		this.tz(ownerBadges,this.R_MetadataBadge);
