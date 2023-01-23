@@ -1,4 +1,5 @@
 type YtUrlFormat=[
+	`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`,
 	"android-app://com.google.android.youtube/http/youtube.com/premium",
 	"/",
 	"/channel_switcher",

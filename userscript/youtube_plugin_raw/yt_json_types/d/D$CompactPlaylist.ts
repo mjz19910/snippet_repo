@@ -12,7 +12,7 @@ type D_CompactPlaylist={
 	thumbnailText: R_TextWithRuns;
 	ownerBadges?: R_MetadataBadge[];
 	menu: R_Menu;
-	shareUrl: string;
+	shareUrl: `https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`;
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	longBylineText: R_TextWithRuns;
 	thumbnailOverlays: {}[];

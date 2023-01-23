@@ -5302,15 +5302,10 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry.f9":
-					case "tracking.trackingParams.f4":
-					case "transcript_target_id.param":
+					case "AdServingDataEntry.f9": case "tracking.trackingParams.f4": case "transcript_target_id.param":
 					case "tracking.trackingParams.f19": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.player_params":
-						switch(map_entry_key) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "report.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5319,20 +5314,7 @@ class ParserService extends BaseService {
 					case "report.params.f28.f1": switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "createBackstagePost.param": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1":
 					case "record_notification_interactions.f2.f14": switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams":
-						switch(map_entry_key) {
-							case 16:
-							case 19: break;
-							default: {
-								if(map_entry_key<12) {
-									/** @type {NumRange<1,11>} */
-									let tu=as(map_entry_key);
-									map_entry_key=tu;
-									return this.parse_param_next(root,`${path}.f${tu}`,map_entry_value);
-								}
-							} new_ns(); debugger; return;
-						}
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams": switch(map_entry_key) {case 16: case 19: break; default: {if(map_entry_key<12) {let tu=m_num_range(); map_entry_key=tu; return this.parse_param_next(root,`${path}.f${tu}`,map_entry_value);} } new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "browse$param.f84": switch(map_entry_key) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "create_playlist.params":
 					case "browse$param": switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_value);
@@ -5340,6 +5322,8 @@ class ParserService extends BaseService {
 				}
 			}
 			callback(map_entry_value,map_entry_key);
+			/** @returns {NumRange<1,11>} */
+			function m_num_range() {return as(map_entry_key);}
 		}
 	}
 	/** @public @arg {ParamMapValue} tv */
@@ -8624,7 +8608,7 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(navigationEndpoint);
 		this.R_Menu(menu);
 		this.trackingParams(cf,trackingParams);
-		this.parser.parse_url(cf,as(shareUrl));
+		this.parser.parse_url(cf,shareUrl);
 		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
