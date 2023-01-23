@@ -1,1 +1,1 @@
-type G$BrowseMetadata=R_ChannelMetadata|R_PlaylistMetadata;
+type G_BrowseMetadata=R_ChannelMetadata|R_PlaylistMetadata;

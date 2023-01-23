@@ -7132,7 +7132,7 @@ class HandleTypes extends ServiceMethods {
 			},
 		});
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
-		this.RC$ResponseContext(responseContext);
+		this.RC_ResponseContext(responseContext);
 		this.A_TwoColumnWatchNextResults(contents);
 		this.E_Watch(currentVideoEndpoint);
 		this.trackingParams("WatchResponse",trackingParams);
@@ -7244,7 +7244,7 @@ class HandleTypes extends ServiceMethods {
 		if(x.browseId!=="") debugger;
 	}
 	/** @private @arg {RC$ResponseContext} x */
-	RC$ResponseContext(x) {
+	RC_ResponseContext(x) {
 		const cf="ResponseContext";
 		this.save_keys(`[${cf}]`,x);
 		const service_tracking=this.x.get("service_tracking");
@@ -7329,39 +7329,64 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x; this.g(y);
-		this.RC$ResponseContext(responseContext);
+		this.RC_ResponseContext(responseContext);
 		this.t(header,this.BrowseHeader);
 		this.trackingParams(cf,trackingParams);
 		this.tz(onResponseReceivedActions,this.A_ResponseReceived);
 		this.t(contents,this.BrowseContents);
 		this.t(topbar,this.R_DesktopTopbar);
 		this.t(frameworkUpdates,this.R_EntityBatchUpdate);
-		this.t(sidebar,this.BrowseSidebar);
+		this.t(sidebar,this.G_BrowseSidebar);
 		this.tz(observedStateTags,this.StateTag);
 		this.t(cacheMetadata,this.CacheMetadata);
-		this.t(metadata,this.BrowseMetadata);
+		this.t(metadata,this.G_BrowseMetadata);
 		this.t(microformat,this.R_MicroformatData);
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
 		this.t(background,this.R_MusicThumbnail);
-		this.t(continuationContents,_x => {debugger;});
+		this.t(continuationContents,this.C_SectionList);
 		this.t(alerts,a => this.Response_alerts(cf,a));
 	}
-	/** @private @arg {{}} x */
-	R_MicroformatData(x) {this.emf("R_MicroformatData",x);}
+	/** @private @arg {C_SectionList} x */
+	C_SectionList(x) {x;}
+	/** @private @arg {R_MicroformatData} x */
+	R_MicroformatData(x) {this.H_("R_MicroformatData",x,this.D_Microformat);}
+	/** @private @arg {D_Microformat} x */
+	D_Microformat(x) {x;}
 	/** @private @arg {R_EntityBatchUpdate} x */
 	R_EntityBatchUpdate(x) {this.H_("A_Notification",x,this.D_EntityBatchUpdate);}
-	/** @private @arg {NonNullable<R_Browse['metadata']>} x */
-	BrowseMetadata(x) {this.emf("BrowseMetadata",x);}
-	/** @private @arg {string} cf @arg {{}} x */
-	emf(cf,x) {this.save_keys(`[${cf}]`,x); debugger;}
-	/** @private @arg {G$BrowseSidebar} x */
-	BrowseSidebar(x) {
+	/** @private @arg {G_BrowseMetadata} x */
+	G_BrowseMetadata(x) {
+		if("channelMetadataRenderer" in x) return this.R_ChannelMetadata(x);
+		if("playlistMetadataRenderer" in x) return this.R_PlaylistMetadata(x);
+		debugger;
+	}
+	/** @private @arg {G_BrowseSidebar} x */
+	G_BrowseSidebar(x) {
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
 		debugger;
 	}
-	/** @private @arg {{}} x */
-	R_SettingsSidebar(x) {this.emf("SettingsSidebarRenderer",x);}
+	/** @private @arg {R_SettingsSidebar} x */
+	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar",x,this.D_SettingsSidebar);}
+	/** @private @arg {D_SettingsSidebar} x */
+	D_SettingsSidebar(x) {
+		const {title,...y}=x;
+		this.z(this.w(y),this.R_CompactLink);
+	}
+	/** @private @arg {R_CompactLink} x */
+	R_CompactLink(x) {this.H_("R_CompactLink",x,this.D_CompactLink);}
+	/** @private @arg {D_CompactLink} x */
+	D_CompactLink(x) {
+		const cf="D_CompactLink";
+		if("navigationEndpoint" in x) {debugger; return;}
+		const {icon,title,trackingParams,...y}=x; this.g(y);
+		switch(x.icon.iconType) {
+			case "PERSON_ADD": break;
+			default: debugger; break;
+		}
+		this.G_Text(x.title);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @public @arg {D_Dropdown_Privacy} x */
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
@@ -7548,7 +7573,7 @@ class HandleTypes extends ServiceMethods {
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType";
 		this.save_keys(`[${cf}]`,x);
-		this.RC$ResponseContext(x.response.responseContext);
+		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.R_BrowsePage(x);
 			case "watch": return this.R_WatchPage(x);
@@ -7592,7 +7617,7 @@ class HandleTypes extends ServiceMethods {
 		this._current_response_type=x.type;
 		/** @type {{data:{responseContext:RC$ResponseContext;}}} */
 		let v=x;
-		this.RC$ResponseContext(v.data.responseContext);
+		this.RC_ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="account.account_menu") break x;
 			if(x.type==="browse.edit_playlist") break x;
@@ -8300,7 +8325,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
 		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x; this.g(y);
-		this.z(thumbnailOverlays,a=>{
+		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
 			if("thumbnailOverlayNowPlayingRenderer" in a) return;

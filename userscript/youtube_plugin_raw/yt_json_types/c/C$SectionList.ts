@@ -1,1 +1,1 @@
-type C$SectionList={sectionListContinuation: G_SectionList;};
+type C_SectionList={sectionListContinuation: G_SectionList;};

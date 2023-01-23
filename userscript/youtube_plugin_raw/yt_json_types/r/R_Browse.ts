@@ -1,10 +1,10 @@
 type R_Browse={
 	responseContext: RC$ResponseContext;
 	contents?: G$BrowseContents;
-	continuationContents?: C$SectionList;
+	continuationContents?: C_SectionList;
 	header?: G$BrowseHeader;
 	alerts?: R_AlertWithButton[];
-	metadata?: G$BrowseMetadata;
+	metadata?: G_BrowseMetadata;
 	trackingParams: string;
 	topbar?: R_DesktopTopbar;
 	microformat?: R_MicroformatData;
@@ -14,7 +14,7 @@ type R_Browse={
 	background?: R_MusicThumbnail;
 	// ?
 	onResponseReceivedActions?: A_ResponseReceived[];
-	sidebar?: G$BrowseSidebar;
+	sidebar?: G_BrowseSidebar;
 	observedStateTags?: B$StateTag[];
 	cacheMetadata?: CacheMetadata;
 };
