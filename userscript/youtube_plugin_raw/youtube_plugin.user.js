@@ -6730,7 +6730,7 @@ class ServiceMethods extends ServiceData {
 		if(ss1[1]!=="googlevideo") debugger;
 		if(ss1[2]!=="com") debugger;
 		let ss2=split_string(ss1[0],"---");
-		if(!this.str_starts_with(ss2[0],"rr")) debugger;
+		if(!this.str_starts_with_r(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
