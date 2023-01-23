@@ -8493,17 +8493,13 @@ class HandleTypes extends ServiceMethods {
 		const cf="MP_MenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
-		let xr=this.z(items,x => {
+		this.z(items,x => {
 			if("notificationRenderer" in x) return this.R_Notification(x);
 			if("continuationItemRenderer" in x) {
 				let r=this.T$ContinuationItemRenderer(x); r;
 				this.E_Continuation(r);
 				return;
 			}
-			debugger;
-		});
-		this.z(xr[0],x => {
-			if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 			debugger;
 		});
 		debugger;
@@ -8537,10 +8533,46 @@ class HandleTypes extends ServiceMethods {
 	D_Notification(x) {
 		const cf="D_Notification";
 		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,...y}=x;
+		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=x; this.g(y);
 		this.trackingParams(cf,trackingParams);
-		console.log(y);
+		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
+		this.z([shortMessage,sentTimeText],a => this.D_SimpleText(a));
+		if(navigationEndpoint.watchEndpoint) {
+			this.E_Watch(navigationEndpoint);
+		} else {
+			debugger;
+		}
+		this.primitive_of(read,"boolean");
+		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {
+			this.E_RecordNotificationInteractions(recordClickEndpoint);
+		}
 	}
+	/** @private @arg {E_RecordNotificationInteractions} x */
+	E_RecordNotificationInteractions(x) {this.T_Endpoint("E_RecordNotificationInteractions",x,a=>{
+		this.DE_RecordNotificationInteractions(this.w(a));
+	},a=>{
+		a;
+		debugger;
+	});}
+	/** @private @arg {DE_RecordNotificationInteractions} x */
+	DE_RecordNotificationInteractions(x) {
+		this.primitive_of_string(x.serializedInteractionsRequest);
+		if("actions" in x) {
+			this.z(x.actions,a=>{
+				this.A_A_HideEnclosing(a);
+			})
+		}
+		debugger;
+	}
+	/** @private @arg {A_A_HideEnclosing} x */
+	A_A_HideEnclosing(x) {
+		const cf="T$ContinuationItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,...y}=x;
+		this.AD_HideEnclosing(this.w(y));
+	}
+	/** @private @arg {AD_HideEnclosing} x */
+	AD_HideEnclosing(x) {x;}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {this.H_("E_GetNotificationMenu",x,() => 0);}
 	/** @private @template T @arg {TR_ContinuationItem<T>} x */
@@ -8642,6 +8674,7 @@ class HandleTypes extends ServiceMethods {
 	G_ContinuationEndpoint(x) {
 		const cf="ContinuationEndpointRoot";
 		this.save_keys(`[${cf}]`,x);
+		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) {
 			this.ContinuationCommand(x);
 		} else if("getTranscriptEndpoint" in x) {
