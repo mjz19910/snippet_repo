@@ -1,5 +1,5 @@
-type R_NotificationGetUnseenCount={
+type R_GetUnseenCount={
 	responseContext: RC$ResponseContext;
-	actions?: [A_UpdateNotificationsUnseenCount];
+	actions?: [AU_NotificationsUnseenCount];
 	unseenCount?: number;
 };

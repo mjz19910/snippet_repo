@@ -6470,7 +6470,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "get_unseen_count": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_NotificationGetUnseenCount} */
+				/** @private @type {R_GetUnseenCount} */
 				data: as(x),
 			};
 			case "modify_channel_preference": return {
@@ -8427,9 +8427,9 @@ class HandleTypes extends ServiceMethods {
 	R_ChipCloud(x) {this.H_("A_Notification",x,this.D_ChipCloud);}
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {this.H_("D_ChipCloud",x,() => 0);}
-	/** @private @arg {R_NotificationGetUnseenCount} x */
+	/** @private @arg {R_GetUnseenCount} x */
 	R_GetUnseenCount(x) {
-		const cf="NotificationGetUnseenCountResponse";
+		const cf="R_GetUnseenCount";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
@@ -8438,7 +8438,7 @@ class HandleTypes extends ServiceMethods {
 		}));
 		if(unseenCount!==void 0) this.primitive_of(unseenCount,"number");
 	}
-	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
+	/** @private @arg {AU_NotificationsUnseenCount} x */
 	UA_NotificationsUnseenCount(x) {
 		const cf="UA_NotificationsUnseenCount";
 		this.save_keys(`[${cf}]`,x);

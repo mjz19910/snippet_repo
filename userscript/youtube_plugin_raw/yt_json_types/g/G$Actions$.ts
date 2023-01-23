@@ -6,7 +6,7 @@ type G_Actions$=
 	|A_RemoveFromGuideSection
 	|C$RunAttestation
 	|A_UpdateChannelSwitcherPage
-	|A_UpdateNotificationsUnseenCount
+	|AU_NotificationsUnseenCount
 	|A_UpdateSubscribeButton
 	;
 ;

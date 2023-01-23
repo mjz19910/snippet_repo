@@ -1,6 +1,6 @@
 type ResponseActions=
 	TA_OpenPopup<{}>|
-	A_UpdateNotificationsUnseenCount|
+	AU_NotificationsUnseenCount|
 	A_RemoveFromGuideSection|
 	A_AddToGuideSection|
 	never;
