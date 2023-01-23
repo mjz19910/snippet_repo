@@ -1,5 +1,5 @@
 type D_CompactPlaylist={
-	playlistId: string;
+	playlistId: `PL${string}`;
 	thumbnail: D_Thumbnail;
 	title: R_SimpleText;
 	shortBylineText: R_TextWithRuns;
@@ -16,7 +16,4 @@ type D_CompactPlaylist={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	longBylineText: R_TextWithRuns;
 	thumbnailOverlays: {}[];
-};
-type D_CompactPlaylist$PublishedTimeText={
-	publishedTimeText?: R_SimpleText;
 };
