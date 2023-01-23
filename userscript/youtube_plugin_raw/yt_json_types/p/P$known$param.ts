@@ -53,7 +53,6 @@ type P$known$param=[
 	"report.params.f28",
 	"report.params.f8",
 	"report.params",
-	"serializedTemplateConfig",
 	"subscribe.params.f2.f1",
 	"subscribe.params.f2",
 	"subscribe.params.f3",
