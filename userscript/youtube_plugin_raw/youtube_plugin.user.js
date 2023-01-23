@@ -4991,11 +4991,14 @@ class ParserService extends BaseService {
 				} break;
 				case "list": {
 					let v=res[1];
-					if(this.str_starts_with(v,"RD")) {
-						if(this.str_starts_with(v,"RDMM")) {
+					if(this.str_starts_with("RD",v)) {
+						if(this.str_starts_with("RDMM",v)) {
 							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
-						} else if(this.str_starts_with(v,"RDGM")) {
+						} else if(this.str_starts_with("RDGM",v)) {
 							url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)});
+						} else if(this.str_starts_with("RDCM",v)) {
+							// url_info[playlist] "RDCM" still needs a valid `UC${string}` channel id
+							url_info_arr.push({_tag: "playlist",type: "RDCM",id: v.slice(4)});
 						} else {
 							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
 						}

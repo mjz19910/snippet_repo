@@ -3,4 +3,5 @@ type YtUrlInfoItemType=[
 	"RD",
 	"RDGM",
 	"RDMM",
+	"RDCM",
 ][number];
