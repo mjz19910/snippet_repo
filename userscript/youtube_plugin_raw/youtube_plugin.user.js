@@ -8296,8 +8296,6 @@ class HandleTypes extends ServiceMethods {
 	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,a => {a; debugger;});}
 	/** @public np @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,a => {a; debugger;});}
-	/** @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
 		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x; this.g(y);
@@ -8360,10 +8358,9 @@ class HandleTypes extends ServiceMethods {
 			/** @arg {string} v */
 			let sc=(v) => {this.save_string("[ItemSection.T_ContentType]",v);};
 			if("compactVideoRenderer" in x) {sc("t1.cvr"); return this.R_CompactVideo(x);}
-			if("continuationItemRenderer" in x) {sc("t1.cir"); debugger; return;}
+			if("continuationItemRenderer" in x) {sc("t1.cir"); return this.R_ContinuationItem(x);}
 			if("commentThreadRenderer" in x) {sc("t1.ctr"); debugger; return;}
 			if("commentsHeaderRenderer" in x) {sc("t1.chr"); debugger; return;}
-			if("continuationItemRenderer" in x) {sc("t1.cir"); debugger; return;}
 			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return this.R_CompactPlaylist(x);}
 			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
 			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
@@ -8372,6 +8369,17 @@ class HandleTypes extends ServiceMethods {
 			x;
 			debugger;
 		});
+	}
+	/** @arg {R_CompactPlaylist} x */
+	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
+	/** @arg {R_ContinuationItem} x */
+	R_ContinuationItem(x) {this.H_("R_CompactPlaylist",x,this.D_ContinuationItem);}
+	/** @arg {D_ContinuationItem} x */
+	D_ContinuationItem(x) {
+		const {trigger,continuationEndpoint,...y}=x;
+		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
+		this.E_Continuation(continuationEndpoint);
+		this.g(y);
 	}
 	/** @private @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
 	decode_TD_ItemSection(x) {
