@@ -5305,7 +5305,7 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
-						switch(ta) {case 2: case 3: case 7: case 24: case 27: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 2: case 3: case 7: case 24: case 27: case 33: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.player_params":
