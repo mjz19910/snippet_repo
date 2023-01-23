@@ -35,7 +35,7 @@ type WatchUrlFormat=[
 	`/watch?${YtWatchVideoUrlFormat}`,
 	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
-	`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`,
+	`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`,
 ][number];
 type ResultsPageUrl=`/results?search_query=${string}`;
 type PlaylistUrlFormat=`/playlist?list=${PlaylistId}`;

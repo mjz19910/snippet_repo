@@ -5799,7 +5799,6 @@ class ParserService extends BaseService {
 	/** @private @arg {ParamsSection} root @arg {Extract<SplitOnce<SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
 	parse_url_2(root,x) {
 		if(this.str_is_search(x)) {
-			x;
 			return this.parse_url_with_search(root,as(x));
 		}
 		if(this.str_starts_with("@",x)) {
