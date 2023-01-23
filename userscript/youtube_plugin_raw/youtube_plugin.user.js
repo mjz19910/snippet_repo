@@ -8612,7 +8612,8 @@ class HandleTypes extends ServiceMethods {
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
 		this.save_keys(`[${cf}]`,x);
-		const {...y}=this.Omit$Radio(cf,x);
+		const {secondaryNavigationEndpoint,...y}=this.Omit$Radio(cf,x);
+		this.E_Watch(secondaryNavigationEndpoint);
 		console.log("[log_keys_of] [%s] [%s]",cf,this.get_keys_of(y).join().split(",")[0]);
 	}
 	/** @arg {string} cf @template {D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
