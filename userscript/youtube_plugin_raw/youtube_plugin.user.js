@@ -8710,11 +8710,16 @@ class HandleTypes extends ServiceMethods {
 	D_ContinuationItem(x) {
 		const cf="ContinuationItemData";
 		this.save_keys(`[${cf}]`,x);
-		const {trigger,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
+		const {trigger,continuationEndpoint,...y}=x;
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.G_ContinuationEndpoint(continuationEndpoint);
-		//this.t(button,this.R_Button);
+		if("button" in y) {
+			const {button,...a}=y; this.g(a);
+			this.t(button,this.R_Button);
+			return;
+		}
+		this.g(y); // ! #destructure
 		//this.t(ghostCards,((_x) => {debugger;}));
 	}
 	/** @private @arg {G_ContinuationEndpoint} x */
