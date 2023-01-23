@@ -6695,9 +6695,7 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		if(this.str_starts_with_r(x,"browse-feed")) {
-			return this.parser.parse_target_id(x);
-		};
+		if(this.str_starts_with_r(x,"browse-feed")) return;
 		switch(x) {
 			case "clip-info-button": return;
 			case "comments-section": return;
