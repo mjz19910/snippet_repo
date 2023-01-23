@@ -1,3 +1,3 @@
-type E$FeedbackEndpoint=EB$Endpoint&{
+type E$FeedbackEndpoint=EB_Endpoint&{
 	feedbackEndpoint: E_Feedback;
 };

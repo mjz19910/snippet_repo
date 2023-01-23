@@ -1,4 +1,4 @@
-type E_AddToPlaylistService=EB$Endpoint&{
+type E_AddToPlaylistService=EB_Endpoint&{
 	addToPlaylistServiceEndpoint: {
 		videoId: string;
 	};
