@@ -8554,6 +8554,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {
 		this.T_Endpoint("E_RecordNotificationInteractions",x,a => {
+			if(!a.recordNotificationInteractionsEndpoint) debugger;
 			this.DE_RecordNotificationInteractions(this.w(a));
 		},a => {
 			let v=this.w(a);
