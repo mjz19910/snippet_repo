@@ -7563,7 +7563,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7652,13 +7652,13 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetPdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
-		this.A_A_OpenPopup(command);
+		this.TA_OpenPopup(command);
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
 	/** @template T @arg {TA_OpenPopup<T>} x */
-	A_A_OpenPopup(x) {
-		const cf="A_OpenPopup";
+	TA_OpenPopup(x) {
+		const cf="TA_OpenPopup";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,...y}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -7807,7 +7807,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,x => {
-			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7818,7 +7818,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7829,7 +7829,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 			return null;
 		}));
@@ -7867,7 +7867,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[R_${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let [ar]=this.z(actions,x => {
-			if(x.openPopupAction) return this.A_A_OpenPopup(x);
+			if(x.openPopupAction) return this.TA_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7878,8 +7878,15 @@ class HandleTypes extends ServiceMethods {
 					let x=this.w(a.popup);
 					const {header,sections,style,trackingParams,...y}=x; this.g(y);
 					this.R_SimpleMenuHeader(header);
-					this.z(sections,a => {
-						a;
+					let [iw]=this.z(sections,a => {
+						if("multiPageMenuNotificationSectionRenderer" in a) return this.w(a);
+						debugger;
+						return;
+					});
+					this.z(iw[0].items,a=>{
+						if(a.notificationRenderer) this.R_Notification(a);
+						console.log(a);
+						debugger;
 					});
 					if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 					this.trackingParams(cf,trackingParams);
@@ -8103,7 +8110,7 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,text,icon,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.D_SimpleText(text);
-		this.A_A_OpenPopup(navigationEndpoint);
+		this.TA_OpenPopup(navigationEndpoint);
 	}
 	/** @template {string} T @arg {T_Icon<T>} x */
 	T$Icon(x) {
@@ -8292,10 +8299,10 @@ class HandleTypes extends ServiceMethods {
 		const {sectionIdentifier,targetId,trackingParams,...y}=x;
 		if(x.sectionIdentifier!=="comment-item-section") debugger;
 		if(x.targetId!=="comments-section") debugger;
-		this.z(this.w(y),a=>{
+		this.z(this.w(y),a => {
 			a;
 			debugger;
-		})
+		});
 	}
 	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
@@ -8498,7 +8505,15 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("MP_MenuNotificationSection",trackingParams);
 	}
 	/** @private @arg {R_Notification} x */
-	R_Notification(x) {this.H_("R_Notification",x,() => 0);}
+	R_Notification(x) {this.H_("R_Notification",x,this.D_Notification);}
+	/** @private @arg {D_Notification} x */
+	D_Notification(x) {
+		const cf="D_Notification";
+		this.save_keys(`[${cf}]`,x);
+		const {trackingParams,...y}=x;
+		this.trackingParams(cf,trackingParams);
+		console.log(y);
+	}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {this.H_("E_GetNotificationMenu",x,() => 0);}
 	/** @private @template T @arg {TR_ContinuationItem<T>} x */
@@ -9217,7 +9232,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
-		this.z(commands,this.A_A_OpenPopup);
+		this.z(commands,this.TA_OpenPopup);
 	}
 	/** @private @arg {G_Button$command} x */
 	ButtonCommand(x) {
@@ -9225,7 +9240,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
-		if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
@@ -9256,7 +9271,7 @@ class HandleTypes extends ServiceMethods {
 	A_CommandExecutor(x) {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C$ScrollToEngagementPanel(x);
-		if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
 		if("loopCommand" in x) return;
 		if("updateToggleButtonStateCommand" in x) return;
