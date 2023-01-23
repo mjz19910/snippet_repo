@@ -5288,6 +5288,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "watch.params.f33":
+						switch(ta) {case 2: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "AdServingDataEntry.f10":
 						switch(ta) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
