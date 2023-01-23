@@ -5423,6 +5423,14 @@ class ParserService extends BaseService {
 		/** @type {P$LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "YpcGetCart": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					// [watch.transactionParams]
+					case "transactionParams": u(idx); debugger; break;
+				}
+			} break;
 			case "AdServingDataEntry": {
 				const idx=2;
 				if(path_parts.length===1) switch(tv) {default: debugger; return;}
