@@ -8291,11 +8291,21 @@ class HandleTypes extends ServiceMethods {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
 	/** @public np @arg {R_MerchandiseShelf} x */
-	R_MerchandiseShelf(x) {this.H_("MerchandiseShelf",x,a => {a; debugger;});}
+	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,a => {a; debugger;});}
 	/** @public np @arg {R_VideoPrimaryInfo} x */
-	R_VideoPrimaryInfo(x) {this.H_("VideoPrimaryInfo",x,a => {a; debugger;});}
+	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,a => {a; debugger;});}
 	/** @public np @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("VideoSecondaryInfo",x,a => {a; debugger;});}
+	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,a => {a; debugger;});}
+	/** @arg {R_CompactPlaylist} x */
+	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
+	/** @arg {D_CompactPlaylist} x */
+	D_CompactPlaylist(x) {
+		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,...y}=x; this.g(y);
+		this.z(thumbnailOverlays,a=>{
+			if("thumbnailOverlaySidePanelRenderer" in a) return;
+			a; debugger;
+		})
+	}
 	/** @public np @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TR_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
@@ -8327,7 +8337,7 @@ class HandleTypes extends ServiceMethods {
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
-	/** @private @arg {TD_ItemSection<R_CompactVideo,"sid-wn-chips","watch-next-feed">} x */
+	/** @private @arg {TD_ItemSection<ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
 		let [i,...a]=this.decode_TD_ItemSection(x); i;
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
@@ -8339,7 +8349,7 @@ class HandleTypes extends ServiceMethods {
 			if("commentThreadRenderer" in x) {sc("t1.ctr"); debugger; return;}
 			if("commentsHeaderRenderer" in x) {sc("t1.chr"); debugger; return;}
 			if("continuationItemRenderer" in x) {sc("t1.cir"); debugger; return;}
-			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); debugger; return;}
+			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return this.R_CompactPlaylist(x);}
 			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
 			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
 			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
