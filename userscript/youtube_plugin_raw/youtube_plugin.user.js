@@ -8256,11 +8256,8 @@ class HandleTypes extends ServiceMethods {
 	G_Text(x) {
 		const cf="TextT";
 		this.save_keys(`[${cf}]`,x);
-		if("simpleText" in x) {
-			return this.D_SimpleText(x);
-		} else if("runs" in x) {
-			return this.D_TextWithRuns(x);
-		}
+		if("simpleText" in x) return this.D_SimpleText(x);
+		if("runs" in x) return this.D_TextWithRuns(x);
 		debugger;
 	}
 	/** @private @arg {TR_ItemSection$1<any,any>} x @returns {x is TR_ItemSection<any,any,any>} */
