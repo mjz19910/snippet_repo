@@ -8264,21 +8264,10 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @arg {D_TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
-	handle_results_3(x) {
-		if("itemSectionRenderer" in x) return this.TR_ItemSection$CommentItemSection(x);
-		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
-		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
-		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		debugger;
-	}
-	/** @arg {{}} x */
 	/** @private @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("MerchandiseShelf",x,a => {a; debugger;});}
-	/** @arg {{}} x */
 	/** @private @arg {R_VideoPrimaryInfo} x */
 	R_VideoPrimaryInfo(x) {this.H_("VideoPrimaryInfo",x,a => {a; debugger;});}
-	/** @arg {{}} x */
 	/** @private @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("VideoSecondaryInfo",x,a => {a; debugger;});}
 	/** @private @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
@@ -8299,29 +8288,24 @@ class HandleTypes extends ServiceMethods {
 	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
-	R_ItemSection(x) {
-		this.H_("ItemSection",x,a => {
-			this.D_ItemSection(a);
-		});
-	}
+	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
 	/** @private @arg {TD_ItemSection<R_CompactVideo,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
-		x;
 		let [i,...a]=this.decode_TD_ItemSection(x); i;
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
 		this.z(i,x => {
 			/** @arg {string} v */
 			let sc=(v) => {this.save_string("[ItemSection.T_ContentType]",v);};
-			if("compactVideoRenderer" in x) {sc("t1.cvr"); return;}
-			if("continuationItemRenderer" in x) {sc("t1.cir"); return;}
-			if("commentThreadRenderer" in x) {sc("t1.ctr"); return;}
-			if("commentsHeaderRenderer" in x) {sc("t1.chr"); return;}
-			if("continuationItemRenderer" in x) {sc("t1.cir"); return;}
-			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return;}
-			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); return;}
-			if("commentRenderer" in x) {sc("t1.cr"); return;}
-			if("itemSectionRenderer" in x) {sc("t1.isr"); return;}
-			if("compactRadioRenderer" in x) {sc("t1.crr"); return;}
+			if("compactVideoRenderer" in x) {sc("t1.cvr"); return this.R_CompactVideo(x);}
+			if("continuationItemRenderer" in x) {sc("t1.cir"); debugger; return;}
+			if("commentThreadRenderer" in x) {sc("t1.ctr"); debugger; return;}
+			if("commentsHeaderRenderer" in x) {sc("t1.chr"); debugger; return;}
+			if("continuationItemRenderer" in x) {sc("t1.cir"); debugger; return;}
+			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); debugger; return;}
+			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
+			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
+			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
+			if("compactRadioRenderer" in x) {sc("t1.crr"); debugger; return;}
 			x;
 			debugger;
 		});
