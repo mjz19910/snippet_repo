@@ -1,0 +1,1 @@
+type R_DisplayAd={displayAdRenderer: D_DisplayAd;};

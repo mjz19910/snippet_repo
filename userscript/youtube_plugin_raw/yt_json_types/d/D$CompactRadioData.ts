@@ -1,5 +1,5 @@
 type D_CompactRadio={
-	playlistId: `RD__{"GM"}${string}`;
+	playlistId: `RD${string}`|`RDGM${string}`;
 	thumbnail: D_Thumbnail&SampledThumbnailColor;
 	title: R_SimpleText;
 	navigationEndpoint: E_Watch;

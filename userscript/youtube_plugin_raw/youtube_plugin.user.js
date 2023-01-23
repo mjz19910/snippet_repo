@@ -8582,11 +8582,19 @@ class HandleTypes extends ServiceMethods {
 			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
 			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
 			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
-			if("compactRadioRenderer" in x) {sc("t1.crr"); debugger; return;}
+			if("compactRadioRenderer" in x) {sc("t1.crr"); return this.R_CompactRadio(x);}
 			if("adSlotRenderer" in x) {sc("t1.asr"); return this.R_AdSlot(x);}
 			x;
 			debugger;
 		});
+	}
+	/** @arg {R_CompactRadio} x */
+	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @arg {D_CompactRadio} x */
+	D_CompactRadio(x) {
+		const cf="D_CompactRadio";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
 	}
 	/** @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
@@ -8606,12 +8614,21 @@ class HandleTypes extends ServiceMethods {
 		this.R_InFeedAdLayout(this.w(x));
 	}
 	/** @private @arg {R_InFeedAdLayout} x */
-	R_InFeedAdLayout(x) {this.H_("R_AdSlot",x,this.D_InFeedAdLayout);}
+	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout",x,this.D_InFeedAdLayout);}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {
-		const {adLayoutMetadata,renderingContent,...y}=x; this.g(y);
-		this.M$AdLayout(adLayoutMetadata);
+		const {adLayoutMetadata: a,renderingContent: b,...y}=x; this.g(y);
+		this.M$AdLayout(a);
+		if("displayAdRenderer" in b) {
+			this.R_DisplayAd(b);
+		} else {
+			debugger;
+		}
 	}
+	/** @private @arg {R_DisplayAd} x */
+	R_DisplayAd(x) {this.H_("R_DisplayAd",x,this.D_DisplayAd);}
+	/** @private @arg {D_DisplayAd} x */
+	D_DisplayAd(x) {x;}
 	/** @private @arg {M$AdLayout} x */
 	M$AdLayout(x) {
 		const {layoutId,layoutType,adLayoutLoggingData,...y}=x; this.g(y);

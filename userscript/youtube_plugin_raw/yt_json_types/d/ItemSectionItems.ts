@@ -1,1 +1,1 @@
-type ItemSectionItems=R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;
+type ItemSectionItems=R_CompactRadio|R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;

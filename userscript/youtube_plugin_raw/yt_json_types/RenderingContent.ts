@@ -1,1 +1,0 @@
-type RenderingContent={displayAdRenderer: R_DisplayAd;};

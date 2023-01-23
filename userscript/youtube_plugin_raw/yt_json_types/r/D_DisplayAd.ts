@@ -1,4 +1,4 @@
-type R_DisplayAd={
+type D_DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: R_TextWithRuns;
 	image: R_ThumbnailsList;
@@ -12,4 +12,4 @@ type R_DisplayAd={
 	mediaHoverOverlay: R_Button;
 	mediaBadge: D_MetadataBadge;
 	trackingParams: string;
-}
+};
