@@ -6865,9 +6865,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template CT,T,U @arg {TD_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
+		const cf="ItemSectionData";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
-		this.trackingParams("ItemSectionData",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		let k=this.get_keys_of(contents);
 		switch(k[0]) {
 			default: debugger; break;
@@ -7564,7 +7566,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_AccountMenu} x */
 	R_AccountMenu(x) {
-		const cf="AccountMenuResponse";
+		const cf="R_AccountMenu";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
@@ -7845,7 +7847,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.z(entries,a => this.CommandTemplate(a,this.E_ReelWatch));
-		this.trackingParams("ReelWatchSequenceResponse",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
 	/** @private @arg {E_ReelWatch} x */
@@ -8547,7 +8549,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 		debugger;
-		this.trackingParams("MP_MenuNotificationSection",trackingParams);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {C_Continuation} x */
 	E_Continuation(x) {
