@@ -5289,7 +5289,7 @@ class ParserService extends BaseService {
 						return;
 					}
 					case "watch.params.f33":
-						switch(ta) {case 2: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 2: case 3: break; default: return this.save_number(`[${path}]`,ta);}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "AdServingDataEntry.f10":
@@ -8552,19 +8552,21 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {this.T_Endpoint("E_RecordNotificationInteractions",x,a=>{
-		this.DE_RecordNotificationInteractions(this.w(a));
-	},a=>{
-		a;
-		debugger;
-	});}
+	E_RecordNotificationInteractions(x) {
+		this.T_Endpoint("E_RecordNotificationInteractions",x,a => {
+			this.DE_RecordNotificationInteractions(this.w(a));
+		},a => {
+			a;
+			debugger;
+		});
+	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		this.primitive_of_string(x.serializedInteractionsRequest);
 		if("actions" in x) {
-			this.z(x.actions,a=>{
+			this.z(x.actions,a => {
 				this.A_A_HideEnclosing(a);
-			})
+			});
 		}
 		debugger;
 	}
