@@ -9824,6 +9824,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript",x,this.D_Transcript);}
+	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {x; debugger;}
 	/** @private @arg {R_Channel} x */
 	R_Channel(x) {
