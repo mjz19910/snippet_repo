@@ -9,6 +9,7 @@ type D_CompactPlaylist={
 	trackingParams: string;
 	sidebarThumbnails: D_Thumbnail[];
 	thumbnailText: R_TextWithRuns;
+	ownerBadges?: R_MetadataBadge[];
 	menu: R_Menu;
 	shareUrl: string;
 	thumbnailRenderer: R_PlaylistVideoThumbnail;

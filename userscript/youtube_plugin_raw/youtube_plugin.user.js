@@ -8300,11 +8300,24 @@ class HandleTypes extends ServiceMethods {
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
-		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,...y}=x; this.g(y);
+		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x; this.g(y);
 		this.z(thumbnailOverlays,a=>{
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			a; debugger;
-		})
+		});
+		this.tz(ownerBadges,this.R_MetadataBadge);
+	}
+	/** @arg {R_MetadataBadge} x */
+	R_MetadataBadge(x) {this.H_("R_MetadataBadge",x,this.D_MetadataBadge);}
+	/** @arg {D_MetadataBadge} x */
+	D_MetadataBadge(x) {
+		const cf="D_MetadataBadge";
+		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=x; this.g(y);
+		this.T$Icon(icon);
+		if(style!=="BADGE_STYLE_TYPE_VERIFIED") debugger;
+		console.log("badge.tooltip",tooltip);
+		this.trackingParams(cf,trackingParams);
+		this.D_Label(accessibilityData);
 	}
 	/** @public np @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TR_ItemSection$CommentItemSection(x) {
