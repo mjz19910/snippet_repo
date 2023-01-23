@@ -9845,10 +9845,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {
-		const cf="MusicThumbnailRenderer";
+		const cf="R_MusicThumbnail";
 		this.save_keys(`[${cf}]`,x);
-		if(!x.musicThumbnailRenderer) debugger;
-		x; debugger;
+		this.D_MusicThumbnail(this.w(x));
+	}
+	/** @private @arg {D_MusicThumbnail} x */
+	D_MusicThumbnail(x) {
+		const cf="D_MusicThumbnail";
+		const {thumbnail,thumbnailCrop,thumbnailScale,...y}=x;
+		this.trackingParams(cf,this.w(y));
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
