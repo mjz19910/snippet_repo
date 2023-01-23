@@ -5908,7 +5908,7 @@ class ParserService extends BaseService {
 	parse_target_id(x) {
 		if(x===void 0) {debugger; return;}
 		if(this.str_starts_with("browse-feed",x)) {
-			console.log("[target_id.browse_feed","browse-feed",split_string_once("browse-feed")[1]);
+			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
 		if(this.str_starts_with("comment-replies-item",x)) {
