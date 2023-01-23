@@ -1,5 +1,5 @@
 type D_Radio={
-	playlistId: `RD__{string}`;
+	playlistId: `RD${string}`;
 	title: R_SimpleText;
 	thumbnail: D_Thumbnail;
 	videoCountText: R_TextWithRuns;

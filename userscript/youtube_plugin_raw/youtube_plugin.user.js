@@ -4209,7 +4209,7 @@ class CodegenService extends BaseService {
 		if(k1=="clickTrackingParams") return "TYPE::string";
 		if(k1=="playlistId") {
 			if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
-			if(o.startsWith("RD")) return "TYPE::`RD__{string}`";
+			if(o.startsWith("RD")) return "TYPE::`RD${string}`";
 			if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
 			debugger;
 			return "TYPE::string";
@@ -4962,7 +4962,7 @@ class ParserService extends BaseService {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @public @arg {`RD__{string}`} x */
+	/** @public @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
 		/** @private @type {YtUrlInfoItem[]} */
 		let arr=[];

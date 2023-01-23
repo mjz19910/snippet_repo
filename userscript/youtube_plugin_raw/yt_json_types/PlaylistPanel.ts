@@ -2,7 +2,7 @@ type D_PlaylistPanel={
 	title: "YouTube Mix";
 	contents: G_PlaylistPanel$contents[];
 	currentIndex?: number;
-	playlistId: `RD__{string}`;
+	playlistId: `RD${string}`;
 	ownerName?: R_TextWithRuns;
 	isInfinite: true;
 	continuations?: D_NextRadioContinuation[];

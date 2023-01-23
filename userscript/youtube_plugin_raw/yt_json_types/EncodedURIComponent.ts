@@ -1,1 +1,0 @@
-type EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
