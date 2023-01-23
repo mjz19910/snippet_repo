@@ -5206,8 +5206,8 @@ class ParserService extends BaseService {
 		f();
 		console.groupEnd();
 	};
-	/** @private @arg {P$PathRoot} path @arg {ParamMapValue} tv @arg {number|null} ta */
-	get_parse_fns(path,tv,ta=null) {
+	/** @private @arg {P$PathRoot} path @arg {number[]} map_keys @arg {ParamMapValue} tv @arg {number|null} ta */
+	get_parse_fns(path,map_keys,tv,ta=null) {
 		let path_parts=split_string(path,".");
 		/** @private @arg {number} idx */
 		let gd=(idx) => {console.log("[param_next.next_new_ns]",path_parts.join(".")); gen_next_part(idx);};
@@ -5242,20 +5242,20 @@ class ParserService extends BaseService {
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
 			case "${path}":
-				switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
+				switch(ta) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
 				/** @type {P$PathRoot} */
 				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		return {u,gen_next_part,new_path};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {ParamMapValue[]|undefined} tv @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-	parse_key(root,path,x,mk,ta,tv,cb) {
-		this.parse_value(root,path,x,mk,ta,tv,cb);
+	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map @arg {ParamMapValue[]|undefined} tv @arg {number[]} map_keys @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	parse_key(root,path,map,map_keys,ta,tv,cb) {
+		this.parse_value(root,path,map,map_keys,ta,tv,cb);
 	}
 	/** @type {P$LogItems} */
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue[]|undefined} tv @arg {ParseCallbackFunction|null} cb */
-	parse_value(root,path,x,mk,ta,tv,cb) {
+	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
+	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
 		/** @private @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
 			console.group(ns);
@@ -5265,15 +5265,15 @@ class ParserService extends BaseService {
 		let new_ns=() => {
 			console.log("[parse_value.new_ns_gen]",path);
 			/** @type {P$LogItems} */
-			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
-			console.log(`-- [parse_value.gen_ns] --\n\n\tcase ${ta}: \n`);
+			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
+			console.log(`-- [parse_value.gen_ns] --\n\n\t${map_keys.map(e => `case ${e}:`).join(" ")} \n`);
 		};
-		if(tv!==void 0) {
-			let new_path=this.get_parse_fns(path,tv[0],ta).new_path;
-			x.delete(ta);
-			let cx=mk.indexOf(ta);
-			if(cx>-1) mk.splice(cx,1);
-			if(cb===null) {
+		if(map_entry_value!==void 0) {
+			let new_path=this.get_parse_fns(path,map_keys,map_entry_value[0],map_entry_key).new_path;
+			map.delete(map_entry_key);
+			let cx=map_keys.indexOf(map_entry_key);
+			if(cx>-1) map_keys.splice(cx,1);
+			if(callback===null) {
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: {
@@ -5281,63 +5281,71 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "tracking.trackingParams.f16.f4":
+						switch(map_entry_key) {case 1: break; case 2: case 3: default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f16":
+						switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params.f33":
-						switch(ta) {case 2: case 3: break; default: return this.save_number(`[${path}]`,ta);}
+						switch(map_entry_key) {case 2: case 3: break; default: return this.save_number(`[${path}]`,map_entry_key);}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry.f10":
-						switch(ta) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "tracking.trackingParams.f6": switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry.f9":
 					case "tracking.trackingParams.f4":
 					case "transcript_target_id.param":
 					case "tracking.trackingParams.f19":
-						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry":
-						switch(ta) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params":
-						switch(ta) {case 2: case 3: case 7: case 24: case 27: case 33: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.player_params":
-						switch(ta) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "report.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "browse$param.f93": case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40":
-					case "ypc_get_offers.params.f5.f5": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "report.params.f28.f1": switch(ta) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "ypc_get_offers.params.f5.f5": switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "report.params.f28.f1": switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "createBackstagePost.param": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1":
-					case "record_notification_interactions.f2.f14": switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "record_notification_interactions.f2.f14": switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams":
-						switch(ta) {
+						switch(map_entry_key) {
 							case 16:
 							case 19: break;
 							default: {
-								if(ta<12) {
+								if(map_entry_key<12) {
 									/** @type {NumRange<1,11>} */
-									let tu=as(ta);
-									ta=tu;
-									return this.parse_param_next(root,`${path}.f${tu}`,tv);
+									let tu=as(map_entry_key);
+									map_entry_key=tu;
+									return this.parse_param_next(root,`${path}.f${tu}`,map_entry_value);
 								}
 							} new_ns(); debugger; return;
 						}
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "browse$param.f84": switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "browse$param.f84": switch(map_entry_key) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "create_playlist.params":
-					case "browse$param": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
-					case "entity_key": switch(ta) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "browse$param": switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_value);
+					case "entity_key": switch(map_entry_key) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 				}
 			}
-			cb(tv,ta);
+			callback(map_entry_value,map_entry_key);
 		}
 	}
 	/** @public @arg {ParamMapValue} tv */
@@ -5409,7 +5417,7 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		let path_parts=split_string(path,".");
-		let pp=this.get_parse_fns(path,tv);
+		let pp=this.get_parse_fns(path,[],tv);
 		let u=pp.u;
 		const idx=1;
 		/** @type {P$LogItems} */
@@ -5545,7 +5553,7 @@ class ParserService extends BaseService {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
-									case "f2": case "f3": case "f12": case "f13":
+									case "f2": case "f3": case "f4": case "f12": case "f13":
 									// [tracking.trackingParams.f4.f1]
 									case "f1": {
 										const idx=5;
@@ -5557,6 +5565,7 @@ class ParserService extends BaseService {
 										}
 										switch(path_parts[4]) {
 											default: u(idx); debugger; path_parts[4]===""; break;
+											case "f1": case "f2": case "f3": u(idx); break;
 										}
 										function calc_skip() {
 											if(path_parts[2]==="f4") {
