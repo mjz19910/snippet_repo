@@ -8586,7 +8586,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_AdSlot} x */
 	D_AdSlot(x) {
 		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=x; this.g(y);
+		this.DM_AdSlot(adSlotMetadata);
+		this.FulfillmentContent(fulfillmentContent);
+		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
+	/** @arg {FulfillmentContent} x */
+	FulfillmentContent(x) {x;}
 	/** @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {x;}
 	/** @arg {R_CompactPlaylist} x */
