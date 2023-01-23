@@ -9652,8 +9652,6 @@ class HandleTypes extends ServiceMethods {
 		const {label,hotkey,...y}=x;
 		this.D_TextWithRuns(label);
 		this.primitive_of_string(hotkey);
-		this.save_string(`[${cf}.label]`,label.runs[0].text);
-		this.save_string(`[${cf}.hotkey]`,hotkey);
 		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
 		this.g(y);
 	}
