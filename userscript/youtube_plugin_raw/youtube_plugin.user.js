@@ -7230,7 +7230,6 @@ class HandleTypes extends ServiceMethods {
 			case "FEwhat_to_watch": break;
 			default: debugger; break;
 		};
-		x;
 	}
 	/** @private @arg {E_Browse} x */
 	E_Browse(x) {
@@ -7248,6 +7247,7 @@ class HandleTypes extends ServiceMethods {
 			let y=this.w(x);
 			switch(y.rootVe) {
 				case 3854: this.G_VE3854_WC(y); break;
+				case 3611: this.G_VE3611_WC(y); break;
 				case 23462: this.G_VE23462_WC(y); break;
 				default: debugger; break;
 			}
@@ -7255,6 +7255,8 @@ class HandleTypes extends ServiceMethods {
 		});
 		x;
 	}
+	/** @private @arg {GM_VE3611_WC} x */
+	G_VE3611_WC(x) {x;}
 	/** @private @arg {GM_VE23462_WC} x */
 	G_VE23462_WC(x) {
 		const cf="VE23462.Metadata";
