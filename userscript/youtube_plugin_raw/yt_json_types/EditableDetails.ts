@@ -1,1 +1,0 @@
-type EditableDetails={canDelete: false;};

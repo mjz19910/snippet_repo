@@ -1,0 +1,1 @@
+type D_EditableDetails={canDelete: false;};

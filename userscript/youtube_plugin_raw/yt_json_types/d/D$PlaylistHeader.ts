@@ -9,7 +9,7 @@ type D_PlaylistHeader={
 	isEditable: boolean;
 	privacy: string;
 	ownerEndpoint: E_Browse;
-	editableDetails: EditableDetails;
+	editableDetails: D_EditableDetails;
 	trackingParams: string;
 	serviceEndpoints: T_Endpoint<E_PlaylistEdit,{}>[];
 	stats: R_TextWithRuns[];
