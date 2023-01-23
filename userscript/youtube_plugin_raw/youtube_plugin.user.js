@@ -7539,7 +7539,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.ContinuationCommandData(continuationCommand);
 	}
-	/** @private @arg {CD__Continuation} x */
+	/** @private @arg {CD_Continuation} x */
 	ContinuationCommandData(x) {
 		const cf="ContinuationCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -8563,7 +8563,7 @@ class HandleTypes extends ServiceMethods {
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
-	/** @private @arg {TD_ItemSection<ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
+	/** @private @arg {TD_ItemSection<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
 		const cf="D_ItemSection_2_CommentItemSection";
 		let [i,...a]=this.decode_TD_ItemSection(cf,x); i;
@@ -8643,7 +8643,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_InFeedAdLayout";
 		this.save_keys(`[${cf}]`,x);
 		const {adLayoutMetadata: a,renderingContent: b,...y}=x; this.g(y);
-		this.M$AdLayout(a);
+		this.M_AdLayout(a);
 		if("displayAdRenderer" in b) {
 			this.R_DisplayAd(b);
 		} else {
@@ -8658,8 +8658,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {M$AdLayout} x */
-	M$AdLayout(x) {
+	/** @private @arg {M_AdLayout} x */
+	M_AdLayout(x) {
 		const {layoutId,layoutType,adLayoutLoggingData,...y}=x; this.g(y);
 		switch(layoutType) {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": break; case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": break;

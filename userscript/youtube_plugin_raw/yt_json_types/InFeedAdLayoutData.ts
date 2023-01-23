@@ -1,4 +1,4 @@
 type D_InFeedAdLayout={
-	adLayoutMetadata: M$AdLayout;
+	adLayoutMetadata: M_AdLayout;
 	renderingContent: R_DisplayAd;
 };

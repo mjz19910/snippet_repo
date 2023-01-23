@@ -1,0 +1,1 @@
+type D_LinearAdSequence={linearAds: G_LinearAdsItem[];adLayoutMetadata: M_AdLayout;};
