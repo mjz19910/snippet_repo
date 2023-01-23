@@ -5,6 +5,7 @@ type D_CompactPlaylist={
 	shortBylineText: R_TextWithRuns;
 	videoCountText: R_TextWithRuns;
 	navigationEndpoint: E_Watch;
+	publishedTimeText?: R_SimpleText;
 	videoCountShortText: R_SimpleText;
 	trackingParams: string;
 	sidebarThumbnails: D_Thumbnail[];
@@ -17,5 +18,5 @@ type D_CompactPlaylist={
 	thumbnailOverlays: {}[];
 };
 type D_CompactPlaylist$PublishedTimeText={
-	publishedTimeText: R_SimpleText;
+	publishedTimeText?: R_SimpleText;
 };

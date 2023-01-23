@@ -6965,8 +6965,8 @@ class HandleTypes extends ServiceMethods {
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
 	/** @private @arg {R_SimpleText} x @arg {(this:this,x:{accessibility?:D_Accessibility})=>void} f */
-	D_SimpleText(x,f=this.handle_accessibility) {
-		const cf="SimpleText";
+	R_SimpleText(x,f=this.handle_accessibility) {
+		const cf="R_SimpleText";
 		this.save_keys(`[${cf}]`,x);
 		const {simpleText,...y}=x; f.call(this,y);
 		this.primitive_of_string(simpleText);
@@ -7454,7 +7454,7 @@ class HandleTypes extends ServiceMethods {
 			case "INFO": break;
 			default: debugger;
 		}
-		this.D_SimpleText(text);
+		this.R_SimpleText(text);
 		this.R_Button(dismissButton);
 	}
 	/** @private @arg {D_Label} x */
@@ -7777,7 +7777,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(knobColorArgb!==4280191205) debugger;
 		this.E_YpcGetCart(purchaseCommand);
-		this.D_SimpleText(tierValue);
+		this.R_SimpleText(tierValue);
 	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {
@@ -7910,7 +7910,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateDateTextAction;
 		this.save_keys(`[UA_DateTextData]`,x1);
-		this.D_SimpleText(x1.dateText);
+		this.R_SimpleText(x1.dateText);
 	}
 	/** @private @arg {U_ToggleButtonText} x */
 	UA_ToggleButtonText(x) {
@@ -7919,8 +7919,8 @@ class HandleTypes extends ServiceMethods {
 		let x1=x.updateToggleButtonTextAction; x1;
 		this.save_keys(`[UA_ToggleButtonTextData]`,x1);
 		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
-		this.D_SimpleText(x1.defaultText);
-		this.D_SimpleText(x1.toggledText);
+		this.R_SimpleText(x1.defaultText);
+		this.R_SimpleText(x1.toggledText);
 	}
 	/** @private @arg {U_Viewership} x */
 	UA_Viewership(x) {
@@ -8294,7 +8294,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,text,icon,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.D_SimpleText(text);
+		this.R_SimpleText(text);
 		this.TA_OpenPopup(navigationEndpoint);
 	}
 	/** @template {string} T @arg {T_Icon<T>} x */
@@ -8496,7 +8496,7 @@ class HandleTypes extends ServiceMethods {
 	G_Text(x) {
 		const cf="TextT";
 		this.save_keys(`[${cf}]`,x);
-		if("simpleText" in x) return this.D_SimpleText(x);
+		if("simpleText" in x) return this.R_SimpleText(x);
 		if("runs" in x) return this.D_TextWithRuns(x);
 		debugger;
 	}
@@ -8514,7 +8514,7 @@ class HandleTypes extends ServiceMethods {
 	D_CompactPlaylist(x) {
 		const cf="D_CompactPlaylist";
 		this.save_keys(`[${cf}]`,x);
-		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x;
+		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,publishedTimeText,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x;
 		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
@@ -8523,6 +8523,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 		this.tz(ownerBadges,this.R_MetadataBadge);
+		this.t(publishedTimeText,this.R_SimpleText);
 		let kof=this.get_keys_of(y);
 		if(kof.length>0){
 			console.log("[log_keys_of] [%s] [%s]",cf,kof);
@@ -8885,7 +8886,7 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=x; this.g(y);
 		this.trackingParams(cf,trackingParams);
 		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
-		this.z([shortMessage,sentTimeText],a => this.D_SimpleText(a));
+		this.z([shortMessage,sentTimeText],a => this.R_SimpleText(a));
 		if(navigationEndpoint.watchEndpoint) {
 			this.E_Watch(navigationEndpoint);
 		} else {
@@ -9143,7 +9144,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],a => this.D_SimpleText(a));
+		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],a => this.R_SimpleText(a));
 		this.z(contents,this.R_PlaylistPanelVideo);
 		this.primitive_of_string(title);
 		this.primitive_of_string(playlistId);
@@ -9163,7 +9164,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlayerOverlayVideoDetails";
 		this.save_keys(`[${cf}]`,x);
 		const {title,subtitle,...y}=x; this.g(y); // ! #destructure
-		this.D_SimpleText(title);
+		this.R_SimpleText(title);
 		this.D_TextWithRuns(subtitle);
 	}
 	/** @template T @arg {T$Item<T>} x @arg {(x:T)=>void} f */
@@ -9731,7 +9732,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_TextWithRuns(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E_Browse(navigationEndpoint);
-		this.t(subscriberCountText,this.D_SimpleText);
+		this.t(subscriberCountText,this.R_SimpleText);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
