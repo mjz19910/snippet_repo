@@ -7958,7 +7958,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
 			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=x; this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
-			this.ChangeKeyedMarkersVisibilityCommandData(changeKeyedMarkersVisibilityCommand);
+			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
 		} else if("loadMarkersCommand" in x) {
 			const {clickTrackingParams,loadMarkersCommand,...y}=x; this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
@@ -8030,9 +8030,9 @@ class HandleTypes extends ServiceMethods {
 		const {entityKeys,...y}=x; this.g(y); // ! #destructure
 		this.z(entityKeys,this.primitive_of_string);
 	}
-	/** @private @arg {D_ChangeKeyedMarkersVisibilityCommand} x */
-	ChangeKeyedMarkersVisibilityCommandData(x) {
-		const cf="ChangeKeyedMarkersVisibilityCommandData";
+	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
+	DC_ChangeKeyedMarkersVisibility(x) {
+		const cf="DC_ChangeKeyedMarkersVisibility";
 		this.save_keys(`[${cf}]`,x);
 		const {isVisible,key,...y}=x; this.g(y); // ! #destructure
 		if(isVisible!==true) debugger;
