@@ -7734,9 +7734,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		this.T_Endpoint("R_PdgBuyFlowHeader",x,a => {
+			if(!a.getSurveyCommand) debugger;
 			this.GetSurveyArgs(this.w(a));
 		},a => {
-			a;
+			const {apiUrl,sendPost,...y}=this.w(a); this.g(y);
+			if(apiUrl!=="/youtubei/v1/get_survey") debugger;
+			if(sendPost!==true) debugger;
 		});
 	}
 	/** @private @arg {D_GetSurvey} x */
