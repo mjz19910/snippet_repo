@@ -8513,7 +8513,9 @@ class HandleTypes extends ServiceMethods {
 	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,a => {a; debugger;});}
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
-		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x; this.g(y);
+		const cf="D_CompactPlaylist";
+		this.save_keys(`[${cf}]`,x);
+		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x;
 		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
@@ -8522,6 +8524,9 @@ class HandleTypes extends ServiceMethods {
 			a; debugger;
 		});
 		this.tz(ownerBadges,this.R_MetadataBadge);
+		let kof=this.get_keys_of(y);
+		if(kof.length>0)
+			console.log("[log_keys_of] [%s] [%s]",cf,this.get_keys_of(y));
 	}
 	/** @arg {R_MetadataBadge} x */
 	R_MetadataBadge(x) {this.H_("R_MetadataBadge",x,this.D_MetadataBadge);}
