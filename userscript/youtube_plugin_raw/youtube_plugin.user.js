@@ -7328,24 +7328,20 @@ class HandleTypes extends ServiceMethods {
 	R_Browse(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
-		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y1}=x;
+		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x;this.g(y);
 		this.RC$ResponseContext(responseContext);
 		this.t(header,this.BrowseHeader);
 		this.trackingParams(cf,trackingParams);
 		this.tz(onResponseReceivedActions,this.A_ResponseReceived);
 		this.t(contents,this.BrowseContents);
-		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
 		this.t(topbar,this.R_DesktopTopbar);
 		this.t(frameworkUpdates,this.R_EntityBatchUpdate);
 		this.t(sidebar,this.BrowseSidebar);
 		this.tz(observedStateTags,this.StateTag);
 		this.t(cacheMetadata,this.CacheMetadata);
-		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
 		this.t(metadata,this.BrowseMetadata);
 		this.t(microformat,this.R_MicroformatData);
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
-		this.t(background,this.R_MusicThumbnail);
-		const {continuationContents,alerts,...y}=y3; this.g(y);
 		this.t(continuationContents,_x => {debugger;});
 		this.t(alerts,a => this.Response_alerts(cf,a));
 	}
