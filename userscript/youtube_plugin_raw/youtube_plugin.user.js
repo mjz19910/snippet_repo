@@ -8563,7 +8563,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {TD_ItemSection<ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
 		const cf="D_ItemSection_2_CommentItemSection";
-		this.save_keys(`[${cf}]`,x);
 		let [i,...a]=this.decode_TD_ItemSection(cf,x); i;
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
 		this.z(i,x => {
@@ -8635,6 +8634,7 @@ class HandleTypes extends ServiceMethods {
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
 	/** @private @arg {string} cf @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
 	decode_TD_ItemSection(cf,x) {
+		this.save_keys(`[${cf}]`,x);
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y);
 		this.trackingParams(cf,trackingParams);
 		return [x.contents,x.sectionIdentifier,x.targetId];
