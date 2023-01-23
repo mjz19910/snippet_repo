@@ -5565,7 +5565,14 @@ class ParserService extends BaseService {
 										}
 										switch(path_parts[4]) {
 											default: u(idx); debugger; path_parts[4]===""; break;
-											case "f1": case "f2": case "f3": u(idx); break;
+											case "f1": case "f2": case "f3": {
+												const idx=6;
+												if(path_parts.length===5) {
+													if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+													switch(tv) {default: u(idx-1); debugger; return;}
+												}
+												switch(path_parts[5]) {default: u(idx); debugger; path_parts[5]===""; break;}
+											} break;
 										}
 										function calc_skip() {
 											if(path_parts[2]==="f4") {
