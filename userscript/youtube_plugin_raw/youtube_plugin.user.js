@@ -8594,12 +8594,15 @@ class HandleTypes extends ServiceMethods {
 		this.FulfillmentContent(fulfillmentContent);
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @arg {FulfillmentContent} x */
+	/** @private @arg {FulfillmentContent} x */
 	FulfillmentContent(x) {
 		const cf="D_AdSlot";
 		this.save_keys(`[${cf}]`,x);
+		this.R_InFeedAdLayout(this.w(x));
 	}
-	/** @arg {DM_AdSlot} x */
+	/** @private @arg {R_InFeedAdLayout} x */
+	R_InFeedAdLayout(x) {x;}
+	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
 		const cf="D_AdSlot";
 		this.save_keys(`[${cf}]`,x);
@@ -8608,7 +8611,7 @@ class HandleTypes extends ServiceMethods {
 		if(slotPhysicalPosition!==1) debugger;
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 	}
-	/** @arg {R_CompactPlaylist} x */
+	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
 	/** @private @arg {string} cf @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
 	decode_TD_ItemSection(cf,x) {
