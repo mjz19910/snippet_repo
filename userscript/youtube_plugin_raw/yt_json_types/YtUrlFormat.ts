@@ -1,5 +1,4 @@
 type YtUrlFormat=[
-	`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`,
 	"android-app://com.google.android.youtube/http/youtube.com/premium",
 	"/",
 	"/channel_switcher",
@@ -23,6 +22,7 @@ type YtUrlFormat=[
 	`/channel/UC${string}`,
 	`/watch?${string}`,
 	`http://www.youtube.com/watch?${string}`,
+	`https://www.youtube.com/watch?${string}`,
 	`https://support.google.com/youtube/answer/${number}`,
 	YTExternalUrl,
 ][number];
@@ -33,8 +33,9 @@ type YTExternalUrl=SplitOnce<SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
 type WatchUrlFormat=[
 	WatchPageUrl,
 	`/watch?${YtWatchVideoUrlFormat}`,
-	`/watch?v=${string}&list=RD__{string}&start_radio=1&rv=${string}`,
+	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
+	`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`,
 ][number];
 type ResultsPageUrl=`/results?search_query=${string}`;
 type PlaylistUrlFormat=`/playlist?list=${PlaylistId}`;
