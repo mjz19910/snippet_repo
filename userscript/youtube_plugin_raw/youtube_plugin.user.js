@@ -6828,7 +6828,7 @@ class HandleTypes extends ServiceMethods {
 		this.minimal_handler_member_2({});
 	}
 	//#region templates
-	/** @private @template {{}} T @arg {TR_ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TR_ItemSection$1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection$CommentsEntryPoint(a,f));}
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
@@ -8494,7 +8494,7 @@ class HandleTypes extends ServiceMethods {
 		if("runs" in x) return this.R_TextWithRuns(x);
 		debugger;
 	}
-	/** @private @arg {TR_ItemSection$1<any,any>} x @returns {x is TR_ItemSection<any,any,any>} */
+	/** @private @arg {TR_ItemSection_1<any,any>} x @returns {x is TR_ItemSection<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}

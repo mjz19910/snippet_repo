@@ -1,0 +1,1 @@
+type TR_ItemSection_1<CType,T>={itemSectionRenderer: TD_ItemSection_1<CType,T>;};
