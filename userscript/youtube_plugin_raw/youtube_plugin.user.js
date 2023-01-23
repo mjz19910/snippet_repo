@@ -9390,7 +9390,7 @@ class HandleTypes extends ServiceMethods {
 		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
 		this.t(parentTrackingParams,a => this.params("ResolveUrlCommandMetadata","tracking.parentTrackingParams",a));
 	}
-	/** @private @arg {DC$AdsControlFlowOpportunityReceived} x */
+	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -9758,7 +9758,7 @@ class HandleTypes extends ServiceMethods {
 		if(type!=="FREE") debugger;
 		this.t(subscribed,a => this.primitive_of(a,"boolean"));
 	}
-	/** @private @arg {D$AdSlotAndLayoutMetadataItem} x */
+	/** @private @arg {D_AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		const cf="AdSlotAndLayoutMetadataItem";
 		this.save_keys(`[${cf}]`,x);
