@@ -7898,7 +7898,6 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		});
-		debugger;
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -8565,13 +8564,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
+		const {serializedInteractionsRequest,...y}=x;
 		this.primitive_of_string(x.serializedInteractionsRequest);
-		if("actions" in x) {
-			this.z(x.actions,a => {
+		if("actions" in y) {
+			const {actions,...u}=y; this.g(u);
+			this.z(actions,a => {
 				this.A_A_HideEnclosing(a);
 			});
+			return;
 		}
-		debugger;
+		this.g(y);
 	}
 	/** @private @arg {A_A_HideEnclosing} x */
 	A_A_HideEnclosing(x) {
