@@ -8705,9 +8705,9 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {R_ContinuationItem} x */
-	R_ContinuationItem(x) {this.H_("R_ContinuationItem",x,this.ContinuationItemData);}
+	R_ContinuationItem(x) {this.H_("R_ContinuationItem",x,this.D_ContinuationItem);}
 	/** @private @arg {D_ContinuationItem} x */
-	ContinuationItemData(x) {
+	D_ContinuationItem(x) {
 		const cf="ContinuationItemData";
 		this.save_keys(`[${cf}]`,x);
 		const {trigger,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
