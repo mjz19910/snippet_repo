@@ -8219,7 +8219,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CommonConfig} x */
 	D_CommonConfig(x) {const cf="D_CommonConfig"; this.H_(cf,x,x => this.parser.parse_url(cf,x));}
 	/** @private @arg {R_VssLoggingContext} x */
-	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,() => 0);}
+	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,this.D_VssLoggingContext);}
+	/** @private @arg {D_VssLoggingContext} x */
+	D_VssLoggingContext(x) {
+		const cf="D_VssLoggingContext";
+		this.save_keys(`[${cf}]`,x);
+		console.log(x.serializedContextData);
+	}
 	/** @private @arg {NonNullable<R_TextRun['navigationEndpoint']>} x */
 	handle_text_endpoint(x) {
 		if("browseEndpoint" in x) return this.E_Browse(x);
