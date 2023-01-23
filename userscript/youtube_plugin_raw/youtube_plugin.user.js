@@ -6980,6 +6980,7 @@ class HandleTypes extends ServiceMethods {
 		if("rootVe" in x&&"apiUrl" in x) {
 			switch(x.rootVe) {
 				case 3854: return this.G_VE3854_WC(x);
+				case 3611: return this.G_VE3611_WC(x);
 				default: debugger; break;
 			}
 		}
