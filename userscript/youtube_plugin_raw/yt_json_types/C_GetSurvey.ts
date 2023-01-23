@@ -1,5 +1,5 @@
-type GetSurveyCommand={
+type C_GetSurvey={
 	clickTrackingParams: string;
 	commandMetadata: GetSurveyCommandMetadata;
-	getSurveyCommand: GetSurveyArgs;
+	getSurveyCommand: D_GetSurvey;
 };

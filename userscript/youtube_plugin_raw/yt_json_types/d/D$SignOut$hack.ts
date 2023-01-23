@@ -1,1 +1,0 @@
-type D_SignOut$hack={hack: true;};

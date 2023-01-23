@@ -1,1 +1,0 @@
-type E_Upload={hack: true;};

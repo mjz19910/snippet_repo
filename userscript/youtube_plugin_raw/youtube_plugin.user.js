@@ -7352,7 +7352,16 @@ class HandleTypes extends ServiceMethods {
 	R_MicroformatData(x) {this.H_("R_MicroformatData",x,this.D_Microformat);}
 	/** @private @arg {D_Microformat} x */
 	D_Microformat(x) {
-		this.unwrap_microformat(x);
+		let uw=this.unwrap_microformat(x);
+		{
+			let {tags,familySafe,noindex,unlisted,thumbnail,title,description,schemaDotOrgType,androidPackage,appName,availableCountries,linkAlternates,siteName,ogType,...y}=uw.o; this.g(y);
+		}
+		{let {appArguments,appStoreId,...y}=uw.ios; this.z([appArguments,appStoreId],this.primitive_of_string); this.g(y);}
+		{
+			let {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=uw.url;
+			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.primitive_of_string);
+			this.g(y);
+		}
 	}
 	/** @private @arg {R_EntityBatchUpdate} x */
 	R_EntityBatchUpdate(x) {this.H_("A_Notification",x,this.D_EntityBatchUpdate);}
@@ -7410,7 +7419,9 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,x.trackingParams);
 	}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
-	R_PlaylistSidebarPrimaryInfo(x) {this.emf("PlaylistSidebarPrimaryInfoRenderer",x);}
+	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo",x,this.D_PlaylistSidebarPrimaryInfo);}
+	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
+	D_PlaylistSidebarPrimaryInfo(x) {x; debugger;}
 	/** @private @arg {PlaylistSidebarItem} x */
 	PlaylistSidebarItem(x) {
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
@@ -7476,6 +7487,16 @@ class HandleTypes extends ServiceMethods {
 		const cf_="D_ThumbnailOverlayLoadingPreview";
 		this.save_keys(`[${cf_}]`,x);
 		this.D_TextWithRuns(this.w(x));
+	}
+	/** @private @arg {PdgBuyFlow} x */
+	D$PdgBuyFlow(x) {
+		const cf="PdgBuyFlow";
+		this.save_keys(`[${cf}]`,x);
+		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y); // ! #destructure
+		this.R$PdgBuyFlowHeader(header);
+		this.z(content,this.R$SuperVodBuyFlowContent);
+		this.trackingParams(cf,trackingParams);
+		this.C_GetSurvey(onCloseCommand);
 	}
 	/** @public @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
@@ -7684,10 +7705,48 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetPdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
-		this.TA_OpenPopup(command);
+		let pu=this.TA_OpenPopup(command);
+		if("pdgBuyFlowRenderer" in pu) {
+			this.R_PdgBuyFlow(pu);
+		}
+		pu.pdgBuyFlowRenderer;
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
+	/** @private @arg {R_PdgBuyFlow} x */
+	R_PdgBuyFlow(x) {this.H_("R_PdgBuyFlow",x,this.D_PdgBuyFlow);}
+	/** @private @arg {D_PdgBuyFlow} x */
+	D_PdgBuyFlow(x) {
+		const cf="D_PdgBuyFlow";
+		this.save_keys(`[${cf}]`,x);
+		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y);
+		this.R_PdgBuyFlowHeader(x.header);
+		this.z(content,a => a);
+		this.trackingParams(cf,trackingParams);
+		if("getSurveyCommand" in onCloseCommand) {
+			this.C_GetSurvey(onCloseCommand);
+		} else {
+			debugger;
+		}
+	}
+	/** @private @arg {R_PdgBuyFlowHeader} x */
+	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader",x,this.D_PdgBuyFlowHeader);}
+	/** @private @arg {C_GetSurvey} x */
+	C_GetSurvey(x) {
+		this.T_Endpoint("R_PdgBuyFlowHeader",x,a => {
+			this.GetSurveyArgs(this.w(a));
+		},a => {
+			a;
+		});
+	}
+	/** @private @arg {D_GetSurvey} x */
+	GetSurveyArgs(x) {
+		const {action,...y}=x;
+		console.log("GetSurvey.action",x.action);
+		this.R_PaidDigitalGoods(this.w(y));
+	}
+	/** @private @arg {R_PaidDigitalGoods} x */
+	R_PaidDigitalGoods(x) {x;}
 	/** @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(x) {
 		const cf="TA_OpenPopup";
@@ -8231,10 +8290,12 @@ class HandleTypes extends ServiceMethods {
 		uu.applinksAndroid;
 		let [v,o]=this.unwrap_prefix(x,"url");
 		let [v1,o2]=this.unwrap_prefix(o,"ios");
+		let [v2,o3]=this.unwrap_prefix(o2,"twitter");
 		return {
 			url: v,
 			ios: v1,
-			o:o2,
+			twitter: v2,
+			o: o3,
 		};
 	}
 	/** @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */

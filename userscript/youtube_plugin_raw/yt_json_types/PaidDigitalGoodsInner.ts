@@ -1,1 +1,0 @@
-type PaidDigitalGoodsInner={hack: true;};
