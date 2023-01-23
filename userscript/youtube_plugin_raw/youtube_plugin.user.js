@@ -8178,7 +8178,7 @@ class HandleTypes extends ServiceMethods {
 			let param_map=this.make_param_map(res_e);
 			this.parser.parse_endpoint_param(root,path,new Map(param_map));
 		}
-		this.t(commandMetadata,this.CM$VE3832$Metadata);
+		this.t(commandMetadata,this.M_VE3832);
 		this.D_Watch(watchEndpoint);
 	}
 	/** @private @arg {D_Watch} x */
@@ -8202,7 +8202,16 @@ class HandleTypes extends ServiceMethods {
 		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
 	}
 	/** @private @arg {M_VE3832} x */
-	CM$VE3832$Metadata(x) {x;}
+	M_VE3832(x) {this.H_("M_VE3832",x,this.GM_VE3832_Watch_WC);}
+	/** @private @arg {GM_VE3832_Watch_WC} x */
+	GM_VE3832_Watch_WC(x) {
+		const cf="GM_VE3832_Watch_WC";
+		this.save_keys(`[${cf}]`,x);
+		const {rootVe,url,webPageType,...y}=x; this.g(y);
+		if(rootVe!==3832) debugger;
+		if(!this.str_starts_with("/watch",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+	}
 	/** @private @arg {Html5PlaybackOnesieConfig} x */
 	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
 	/** @private @arg {R_CommonConfig} x */
