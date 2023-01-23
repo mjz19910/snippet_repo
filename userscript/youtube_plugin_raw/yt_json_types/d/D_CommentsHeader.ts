@@ -6,7 +6,7 @@ type D_CommentsHeader={
 	titleText: R_TextWithRuns;
 	commentsCount: R_TextWithRuns;
 	showSeparator: true;
-	customEmojis: CustomEmoji[];
+	customEmojis: D_CustomEmoji[];
 	unicodeEmojisUrl: string;
 	loggingDirectives: A_LoggingDirectives;
 };

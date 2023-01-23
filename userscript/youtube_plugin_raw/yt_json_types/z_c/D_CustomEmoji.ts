@@ -1,4 +1,4 @@
-type CustomEmoji={
+type D_CustomEmoji={
 	emojiId: `UC${string}/${string}`;
 	shortcuts: `:${string}:`[];
 	searchTerms: string[];
