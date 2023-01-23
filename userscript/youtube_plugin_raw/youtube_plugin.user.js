@@ -8529,18 +8529,9 @@ class HandleTypes extends ServiceMethods {
 	D_CompactPlaylist(x) {
 		const cf="D_CompactPlaylist";
 		this.save_keys(`[${cf}]`,x);
-		const {playlistId,thumbnail,title,shortBylineText,videoCountText,navigationEndpoint,publishedTimeText,videoCountShortText,trackingParams,sidebarThumbnails,thumbnailText,menu,shareUrl,thumbnailRenderer,longBylineText,thumbnailOverlays,ownerBadges,...y}=x;
-		this.playlistId(playlistId);
-		this.D_Thumbnail(thumbnail);
-		this.R_SimpleText(title);
+		let u=this.Omit$Radio(cf,x);
+		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=u;
 		this.R_TextWithRuns(shortBylineText);
-		this.z(thumbnailOverlays,a => {
-			if("thumbnailOverlaySidePanelRenderer" in a) return;
-			if("thumbnailOverlayHoverTextRenderer" in a) return;
-			if("thumbnailOverlayNowPlayingRenderer" in a) return;
-			this.do_codegen("ThumbnailOverlay$CompactPlaylist",a);
-			debugger;
-		});
 		this.tz(ownerBadges,this.R_MetadataBadge);
 		this.t(publishedTimeText,this.R_SimpleText);
 		let kof=this.get_keys_of(y);
@@ -8621,10 +8612,28 @@ class HandleTypes extends ServiceMethods {
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
 		this.save_keys(`[${cf}]`,x);
-		const {playlistId,thumbnail,...y}=x;
+		const {...y}=this.Omit$Radio(cf,x);
+		console.log("[log_keys_of] [%s] [%s]",cf,this.get_keys_of(y).join().split(",")[0]);
+	}
+	/** @arg {string} cf @template {D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
+	Omit$Radio(cf,x) {
+		const {playlistId,thumbnail,title,videoCountText,navigationEndpoint,menu,trackingParams,videoCountShortText,thumbnailText,shareUrl,longBylineText,thumbnailOverlays,...y}=x;
 		this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
-		console.log("[log_keys_of] [%s] [%s]",cf,this.get_keys_of(y)[0]);
+		this.R_SimpleText(title);
+		this.R_TextWithRuns(videoCountText);
+		this.E_Watch(navigationEndpoint);
+		this.R_Menu(menu);
+		this.trackingParams(cf,trackingParams);
+		this.parser.parse_url(cf,as(shareUrl));
+		this.z(thumbnailOverlays,a => {
+			if("thumbnailOverlaySidePanelRenderer" in a) return;
+			if("thumbnailOverlayHoverTextRenderer" in a) return;
+			if("thumbnailOverlayNowPlayingRenderer" in a) return;
+			this.do_codegen("ThumbnailOverlay$CompactPlaylist",a);
+			debugger;
+		});
+		return y;
 	}
 	/** @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
