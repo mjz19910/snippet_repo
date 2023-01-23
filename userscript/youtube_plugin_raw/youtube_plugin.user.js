@@ -9090,7 +9090,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},challenge,bgChallenge,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(challenge);
-		this.AttBgChallenge(bgChallenge);
+		this.D_AttBgChallenge(bgChallenge);
 	}
 	/** @private @arg {R_Guide} x */
 	R_Guide(x) {
@@ -9458,13 +9458,15 @@ class HandleTypes extends ServiceMethods {
 		this.U_EngagementPanelData(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
-	/** @private @arg {D$AttBgChallenge} x */
-	AttBgChallenge(x) {
+	/** @private @arg {D_AttBgChallenge} x */
+	D_AttBgChallenge(x) {
 		const cf="AttBgChallenge";
 		this.save_keys(`[${cf}]`,x);
 		const {interpreterUrl,interpreterHash,program,globalName,...y}=x; this.g(y); // ! #destructure
-		let uw=this.UrlWrappedValueT(interpreterUrl);
-		this.primitive_of_string(uw);
+		this.t(interpreterUrl,a => {
+			let uw=this.UrlWrappedValueT(a);
+			this.primitive_of_string(uw);
+		});
 		this.primitive_of_string(interpreterHash);
 		this.primitive_of_string(program);
 		if(globalName!=="trayride") debugger;
@@ -9832,7 +9834,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_TranscriptSearchPanel(this.w(y));
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
-	R_TranscriptSearchPanel(x) {x;}
+	R_TranscriptSearchPanel(x) {x; debugger;}
 	/** @private @arg {R_Channel} x */
 	R_Channel(x) {
 		const cf="ChannelResponse";
