@@ -5193,7 +5193,7 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,null);
+		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
 		parse_key(2);
 		parse_key(5);
 		if(this.eq_keys(mk,[])) return;
@@ -5256,9 +5256,8 @@ class ParserService extends BaseService {
 		return {u,gen_next_part,new_path};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-	parse_key(root,path,x,mk,ta,cb) {
-		let tv=x.get(ta);
+	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {ParamMapValue[]|undefined} tv @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	parse_key(root,path,x,mk,ta,tv,cb) {
 		this.parse_value(root,path,x,mk,ta,tv,cb);
 	}
 	/** @type {P$LogItems} */
@@ -5643,52 +5642,64 @@ class ParserService extends BaseService {
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
-	parse_any_param(root,path,x) {
+	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	parse_any_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		console.log(key_index,x);
-		let mk=[...x.keys()];
+		console.log(key_index,map);
+		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
+		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
 		let mk_max=Math.max(...mk,-1);
 		for(let i=1;i<mk_max+1;i++) {
 			if(!mk.includes(i)) continue;
+			x: if(root!=="WatchEndpoint") {
+				if(root==="ButtonData") break x;
+				if(root==="AutoplayContent") break x;
+				if(root==="WatchResponse") break x;
+				if(root==="ShareEntityServiceEndpoint") break x;
+				if(root==="E_Browse.endpoint") break x;
+				if(root==="FusionSearchboxData") break x;
+				if(root==="DesktopTopbar") break x;
+				if(root==="D_HotkeyDialog") break x;
+				console.log("ki=",key_index,'parse_key',i,map.get(i));
+				debugger;
+			}
 			parse_key(i);
 		}
 		if(this.eq_keys(mk,[])) return;
-		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
+		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		debugger;
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
-	parse_player_param(root,path,x) {
+	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	parse_player_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		let mk=[...x.keys()];
+		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
+		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
 		for(let i=1;i<72;i++) {
 			if(!mk.includes(i)) continue;
 			parse_key(i);
 		}
 		parse_key(72);
 		if(this.eq_keys(mk,[])) return;
-		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(x));
+		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		debugger;
 	}
-	/** @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
-	parse_endpoint_param(root,path,x) {
+	/** @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	parse_endpoint_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		let map_keys=[...x.keys()];
+		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,x,map_keys,ta,null);
+		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
 		for(let i=1;i<40;i++) {
-			if(!map_keys.includes(i)) continue;
+			if(!mk.includes(i)) continue;
 			parse_key(i);
 		}
 		// endpoint.create_playlist.params
-		this.parse_key(root,path,x,map_keys,77,tv => {
+		this.parse_key(root,path,map,mk,77,map.get(77),tv => {
 			if(tv.length===1&&typeof tv[0]==="string") {
 				let bt=this.decode_browse_id(tv[0]);
 				if(!bt) {debugger; return;}
@@ -5697,11 +5708,11 @@ class ParserService extends BaseService {
 			debugger;
 		});
 		for(let i=1;i<300;i++) {
-			if(!map_keys.includes(i)) continue;
+			if(!mk.includes(i)) continue;
 			parse_key(i);
 		}
-		if(this.eq_keys(map_keys,[])) return;
-		let param_obj=this.to_param_obj(x);
+		if(this.eq_keys(mk,[])) return;
+		let param_obj=this.to_param_obj(map);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		debugger;
 	}
