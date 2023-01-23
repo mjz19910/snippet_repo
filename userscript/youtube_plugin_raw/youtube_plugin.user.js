@@ -9114,7 +9114,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_TemplateUpdate";
 		this.save_keys(`[${cf}]`,x);
 		const {identifier,dependencies,...y}=x;
-		this.params(cf,"serializedTemplateConfig",this.w(y));
+		this.primitive_of_string(this.w(y));
 	}
 	/** @private @arg {D_EntityBatchUpdateData} x */
 	D_EntityBatchUpdate(x) {
