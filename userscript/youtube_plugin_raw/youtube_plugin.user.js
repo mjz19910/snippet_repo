@@ -8617,6 +8617,8 @@ class HandleTypes extends ServiceMethods {
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout",x,this.D_InFeedAdLayout);}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {
+		const cf="D_InFeedAdLayout";
+		this.save_keys(`[${cf}]`,x);
 		const {adLayoutMetadata: a,renderingContent: b,...y}=x; this.g(y);
 		this.M$AdLayout(a);
 		if("displayAdRenderer" in b) {
@@ -8628,7 +8630,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("R_DisplayAd",x,this.D_DisplayAd);}
 	/** @private @arg {D_DisplayAd} x */
-	D_DisplayAd(x) {x;}
+	D_DisplayAd(x) {
+		const cf="D_DisplayAd";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
 	/** @private @arg {M$AdLayout} x */
 	M$AdLayout(x) {
 		const {layoutId,layoutType,adLayoutLoggingData,...y}=x; this.g(y);
