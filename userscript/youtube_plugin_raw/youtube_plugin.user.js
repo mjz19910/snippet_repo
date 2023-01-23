@@ -5295,10 +5295,10 @@ class ParserService extends BaseService {
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16":
 						switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
+						/** @type {P$PathRoot} */ 
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params.f33":
-						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry.f10":
@@ -8462,7 +8462,9 @@ class HandleTypes extends ServiceMethods {
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext";
 		this.save_keys(`[${cf}]`,x);
-		console.log(x.serializedContextData);
+		let b_res=this.decode_b64_url_proto_obj(x.serializedContextData);
+		if(!b_res) return;
+		console.log(b_res[0]);
 	}
 	/** @private @arg {NonNullable<R_TextRun['navigationEndpoint']>} x */
 	handle_text_endpoint(x) {
@@ -8616,6 +8618,7 @@ class HandleTypes extends ServiceMethods {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
 			if("thumbnailOverlayNowPlayingRenderer" in a) return;
+			if("thumbnailOverlayBottomPanelRenderer" in a) return;
 			this.do_codegen("ThumbnailOverlay$CompactPlaylist",a);
 			debugger;
 		});
