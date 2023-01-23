@@ -7219,6 +7219,19 @@ class HandleTypes extends ServiceMethods {
 		this.t(expirationTime,a => this.primitive_of(a,"number"));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
+	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
+	E_Browse$ParseBrowseId(x) {
+		if(this.str_starts_with("UC",x)) {
+			console.log("browseId$channel",x);
+			return;
+		}
+		switch(x) {
+			case "SPaccount_notifications": break;
+			case "FEwhat_to_watch": break;
+			default: debugger; break;
+		};
+		x;
+	}
 	/** @private @arg {E_Browse} x */
 	E_Browse(x) {
 		const cf="Browse";
@@ -7226,11 +7239,7 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint("E_Browse",x,a => {
 			let u=this.w(a);
 			let {browseId,...y}=u;
-			switch(u.browseId) {
-				case "SPaccount_notifications": break;
-				case "FEwhat_to_watch": break;
-				default: debugger; break;
-			};
+			this.E_Browse$ParseBrowseId(browseId);
 			if("canonicalBaseUrl" in y) {
 				if(!this.str_starts_with("/@",this.w(y))) debugger;
 				return;

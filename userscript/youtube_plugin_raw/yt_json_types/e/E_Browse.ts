@@ -1,5 +1,5 @@
 type E_Browse=T_Endpoint<{browseEndpoint: D_Browse_Id<ValidBrowseId>|{
-	browseId:ValidBrowseId;
+	browseId: `UC${string}`;
 	canonicalBaseUrl: `/@${string}`;
 };},{
 	webCommandMetadata: M_VE3854_Metadata;
