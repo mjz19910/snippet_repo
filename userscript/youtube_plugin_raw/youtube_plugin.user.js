@@ -5018,6 +5018,7 @@ class ParserService extends BaseService {
 					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
 				case "t": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
+				case "playnext": url_info_arr.push({_tag: "play-next", value:res[1]}); break;
 				default: res[0]===""; debugger;
 			}
 		}
