@@ -5427,7 +5427,7 @@ class ParserService extends BaseService {
 				const idx=2;
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					// [watch.transactionParams]
+					// [YpcGetCart.transactionParams]
 					case "transactionParams": u(idx); debugger; break;
 				}
 			} break;
