@@ -4050,7 +4050,7 @@ class CodegenService extends BaseService {
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.R_SimpleText(${k});`); continue;};
 			/** @type {R_TextWithRuns} */
-			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D_TextWithRuns(${k});`); continue;};
+			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.R_TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			/** @type {D_Thumbnail} */
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D_Thumbnail(${k});`); continue;}
