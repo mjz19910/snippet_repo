@@ -13,4 +13,7 @@ type AD_ChangeEngagementPanelVisibility={
 }|{
 	targetId: "engagement-panel-macro-markers-auto-chapters";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED";
+}|{
+	targetId: "engagement-panel-macro-markers-description-chapters";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED";
 };

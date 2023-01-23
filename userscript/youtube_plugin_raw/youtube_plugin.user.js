@@ -4191,6 +4191,7 @@ class CodegenService extends BaseService {
 			if(!this.typedef_cache.includes(new_typedef)) {
 				this.typedef_cache.push(new_typedef);
 				console.log(new_typedef);
+				debugger;
 			}
 		}
 	}
@@ -9493,6 +9494,7 @@ class HandleTypes extends ServiceMethods {
 			case "engagement-panel-comments-section": break;
 			case "engagement-panel-structured-description": break;
 			case "engagement-panel-macro-markers-auto-chapters": break;
+			case "engagement-panel-macro-markers-description-chapters": break;
 		}
 		switch(visibility) {
 			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_vis"); break;
