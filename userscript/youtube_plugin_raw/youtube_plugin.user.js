@@ -8601,10 +8601,30 @@ class HandleTypes extends ServiceMethods {
 		this.R_InFeedAdLayout(this.w(x));
 	}
 	/** @private @arg {R_InFeedAdLayout} x */
-	R_InFeedAdLayout(x) {x;}
+	R_InFeedAdLayout(x) {this.H_("R_AdSlot",x,this.D_InFeedAdLayout);}
+	/** @private @arg {D_InFeedAdLayout} x */
+	D_InFeedAdLayout(x) {
+		const {adLayoutMetadata,renderingContent,...y}=x; this.g(y);
+		this.M$AdLayout(adLayoutMetadata);
+	}
+	/** @private @arg {M$AdLayout} x */
+	M$AdLayout(x) {
+		const {layoutId,layoutType,adLayoutLoggingData,...y}=x; this.g(y);
+		switch(layoutType) {
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": break; case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": break;
+			default: debugger; break;
+		}
+		console.log(layoutId);
+		if(adLayoutLoggingData) {
+			this.D_AdLayoutLogging(adLayoutLoggingData);
+		}
+		debugger;
+	}
+	/** @private @arg {D_AdLayoutLogging} x */
+	D_AdLayoutLogging(x) {this.primitive_of_string(this.w(x));}
 	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
-		const cf="D_AdSlot";
+		const cf="DM_AdSlot";
 		this.save_keys(`[${cf}]`,x);
 		const {slotId,slotPhysicalPosition,slotType,...y}=x; this.g(y);
 		this.primitive_of_string(slotId);
