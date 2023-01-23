@@ -1,1 +1,1 @@
-type SecondaryContentsItem=T$AR_Contents<SecondaryContentsItemInner>;
+type SecondaryContentsItem=Record<"contents",SecondaryContentsItemInner[]>;

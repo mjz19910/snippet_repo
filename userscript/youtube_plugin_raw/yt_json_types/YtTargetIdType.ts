@@ -1,6 +1,6 @@
 type YtTargetIdType=[
 	G_AppendContinuationItems['targetId'],
-	T$A_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId'],
+	TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId'],
 	"comments-section",
 	EngagementPanelSectionTargetId,
 	D_SearchFeedSectionList['targetId'],

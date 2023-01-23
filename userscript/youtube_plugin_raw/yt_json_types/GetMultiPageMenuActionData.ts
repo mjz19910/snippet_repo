@@ -1,3 +1,3 @@
-type D_GetMP_Menu={
+type D_MP_GetMenu={
 	menu: TR_MP_Menu<{}>;
 };

@@ -1,1 +1,1 @@
-type R_Page=T$AR_Contents<R_TwoColumnBrowseResults>&{trackingParams: string;};
+type R_Page=Record<"contents",R_TwoColumnBrowseResults[]>&{trackingParams: string;};

@@ -6402,7 +6402,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "getAccountSwitcherEndpoint": return {
 				type: target[0],
-				/** @type {R_GetAccountSwitcherEndpoint} */
+				/** @type {RE_GetAccountSwitcher} */
 				data: as(x),
 			};
 			case "get_transcript": return {
@@ -6535,7 +6535,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "set_setting": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountSetSetting} */
+				/** @private @type {R_SetSetting} */
 				data: as(x),
 			};
 		}
@@ -7620,7 +7620,7 @@ class HandleTypes extends ServiceMethods {
 			case "feedback": return this.R_Feedback(x.data);
 			case "get_transcript": return this.R_GetTranscript(x.data);
 			case "get_survey": return this.R_GetSurvey(x.data);
-			case "getAccountSwitcherEndpoint": return this.R_E_GetAccountSwitcher(x.data);
+			case "getAccountSwitcherEndpoint": return this.RE_GetAccountSwitcher(x.data);
 			case "getDatasyncIdsEndpoint": return this.R_DatasyncIds(x.data);
 			case "guide": return this.R_Guide(x.data);
 			case "like.like": return this.R_LikeLike(x.data);
@@ -8350,7 +8350,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
+	/** @template T @arg {T$ResultsTemplate<Record<"contents",T[]>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
@@ -8462,23 +8462,23 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y); // ! #destructure
 		this.z(datasyncIds,this.primitive_of_string);
 	}
-	/** @private @arg {R_GetAccountSwitcherEndpoint} x */
-	R_E_GetAccountSwitcher(x) {
-		const cf="GetAccountSwitcherEndpointResponse";
+	/** @private @arg {RE_GetAccountSwitcher} x */
+	RE_GetAccountSwitcher(x) {
+		const cf="RE_GetAccountSwitcher";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
 		this.D_TextWithRuns(selectText);
 		this.z(actions,a => {
 			if("getMP_MenuAction" in a) {
-				return this.A_GetMP_Menu(a);
+				return this.A_MP_GetMenu(a);
 			}
 			debugger;
 		});
 	}
-	/** @private @arg {A_GetMP_Menu} x */
-	A_GetMP_Menu(x) {this.H_("A_GetMP_Menu",x,this.D_GetMP_Menu);}
-	/** @private @arg {D_GetMP_Menu} x */
-	D_GetMP_Menu(x) {this.H_("D_GetMP_Menu",x,() => 0);}
+	/** @private @arg {A_MP_GetMenu} x */
+	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu",x,this.D_MP_GetMenu);}
+	/** @private @arg {D_MP_GetMenu} x */
+	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,() => 0);}
 	/** @private @arg {R_AccountsList} x */
 	R_AccountsList(x) {
 		const cf="AccountsListResponse";
@@ -8506,9 +8506,9 @@ class HandleTypes extends ServiceMethods {
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,() => 0);}
 	/** @private @arg {G_EngagementPanelItem} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,() => 0);}
-	/** @private @arg {AccountSetSetting} x */
+	/** @private @arg {R_SetSetting} x */
 	R_SetSetting(x) {
-		const cf="AccountSetSetting";
+		const cf="R_SetSetting";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},settingItemId,...y}=x; this.g(y); // ! #destructure
 		if(settingItemId!=="407") debugger;
@@ -9123,7 +9123,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
 	}
-	/** @private @arg {T$A_Continuation<`comment-replies-item-${string}`,R_Comment>} x */
+	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,R_Comment>} x */
 	CommentRepliesItem(x) {
 		const cf="CommentRepliesItem";
 		this.save_keys(`[${cf}]`,x);
@@ -9272,7 +9272,7 @@ class HandleTypes extends ServiceMethods {
 		const {types,...y}=x; this.g(y); // ! #destructure
 		this.save_string("[Visibility.types]",types);
 	}
-	/** @private @arg {T$A_Continuation<"comments-section",G_CommentsSection>} x */
+	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation$(x) {
 		const cf="A_CommentsSectionContinuation";
 		this.save_keys(`[${cf}]`,x);
@@ -9280,7 +9280,7 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.G_CommentsSection);
 	}
-	/** @private @arg {T$A_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
+	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
 	A_BrowseFeed$(x) {
 		const cf="A_BrowseFeed";
 		this.save_keys(`[${cf}]`,x);
@@ -9288,7 +9288,7 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.R_BrowseFeed);
 	}
-	/** @private @arg {T$A_Continuation<"watch-next-feed",G_WatchNext>} x */
+	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
 	A_WatchNext$(x) {
 		const cf="A_WatchNext$";
 		this.save_keys(`[${cf}]`,x);
@@ -9650,13 +9650,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_HotkeyDialogSectionOption";
 		this.save_keys(`[${cf}]`,x);
 		const {label,hotkey,...y}=x;
+		this.D_TextWithRuns(label);
+		this.primitive_of_string(hotkey);
 		this.save_string(`[${cf}.label]`,label.runs[0].text);
 		this.save_string(`[${cf}.hotkey]`,hotkey);
-		if("hotkeyAccessibilityLabel" in y) {
-			let ka=this.w(y);
-			this.save_string(`[${cf}.hotkey_label]`,ka.accessibilityData.label);
-			this.D_Accessibility(ka);
-		}
+		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
+		this.g(y);
 	}
 	/** @template {D_SubscribeButton} T @arg {T} x */
 	SubscribeButton$Omit(x) {

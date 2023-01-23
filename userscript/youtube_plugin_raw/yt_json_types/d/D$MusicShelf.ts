@@ -1,4 +1,4 @@
-type D_MusicShelf=T$AR_Contents<R_MusicResponsiveListItem>&{
+type D_MusicShelf=Record<"contents",R_MusicResponsiveListItem[]>&{
 	title: R_TextWithRuns;
 	trackingParams: string;
 	continuations: D_ReloadContinuation[];

@@ -1,3 +1,0 @@
-type AccountSettingIdList=[
-	407
-];

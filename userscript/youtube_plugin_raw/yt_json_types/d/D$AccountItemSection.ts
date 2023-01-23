@@ -1,1 +1,1 @@
-type D_AccountItemSection=T$AR_Contents<G_AccountItemSection>;
+type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;

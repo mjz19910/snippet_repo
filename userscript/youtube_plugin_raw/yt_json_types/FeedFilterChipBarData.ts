@@ -1,4 +1,4 @@
-type D_FeedFilterChipBar=T$AR_Contents<R_ChipCloudChip>&{
+type D_FeedFilterChipBar=Record<"contents",R_ChipCloudChip[]>&{
 	trackingParams: string;
 	nextButton: R_Button;
 	previousButton: R_Button;

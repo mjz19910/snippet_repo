@@ -1,1 +1,0 @@
-type T$AR_Contents<T>={contents: T[];};

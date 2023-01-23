@@ -1,4 +1,4 @@
-type PlaylistContent=T$AR_Contents<R_PlaylistPanelVideo>&{
+type PlaylistContent=Record<"contents",R_PlaylistPanelVideo[]>&{
 	title: string;
 	currentIndex: number;
 	playlistId: PlaylistId;

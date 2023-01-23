@@ -1,1 +1,1 @@
-type A_GetMP_Menu={getMP_MenuAction: D_GetMP_Menu;};
+type A_MP_GetMenu={getMP_MenuAction: D_MP_GetMenu;};

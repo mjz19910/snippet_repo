@@ -1,5 +1,5 @@
-type R_GetAccountSwitcherEndpoint={
+type RE_GetAccountSwitcher={
 	responseContext: RC$ResponseContext;
 	selectText: R_TextWithRuns;
-	actions: A_GetMP_Menu[];
+	actions: A_MP_GetMenu[];
 };
