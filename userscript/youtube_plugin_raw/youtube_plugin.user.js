@@ -5021,7 +5021,7 @@ class ParserService extends BaseService {
 					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
 				case "t": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
-				case "playnext": url_info_arr.push({_tag: "play-next", value:res[1]}); break;
+				case "playnext": url_info_arr.push({_tag: "play-next",value: res[1]}); break;
 				default: res[0]===""; debugger;
 			}
 		}
@@ -5289,11 +5289,11 @@ class ParserService extends BaseService {
 						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.params":switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f16.f4":switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f16":switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.params.f33":switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry.f10":switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f16.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "AdServingDataEntry.f10": switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry.f9": case "tracking.trackingParams.f4": case "transcript_target_id.param":
 					case "tracking.trackingParams.f19": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -9823,7 +9823,8 @@ class HandleTypes extends ServiceMethods {
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {R_Transcript} x */
-	R_Transcript(x) {this.H_("Transcript",x,a => {a; debugger;});}
+	R_Transcript(x) {this.H_("Transcript",x,this.D_Transcript);}
+	D_Transcript(x) {x; debugger;}
 	/** @private @arg {R_Channel} x */
 	R_Channel(x) {
 		const cf="ChannelResponse";
