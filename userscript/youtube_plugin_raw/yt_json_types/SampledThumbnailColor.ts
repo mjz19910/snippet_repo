@@ -1,1 +1,0 @@
-type SampledThumbnailColor={sampledThumbnailColor: ThumbnailColor;};

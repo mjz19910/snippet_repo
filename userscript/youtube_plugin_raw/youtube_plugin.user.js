@@ -8594,8 +8594,9 @@ class HandleTypes extends ServiceMethods {
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
 		this.save_keys(`[${cf}]`,x);
-		const {playlistId,...y}=x;
+		const {playlistId,thumbnail,...y}=x;
 		this.playlistId(playlistId);
+		this.D_Thumbnail(thumbnail);
 		console.log("[log_keys_of] [%s] [%s]",cf,this.get_keys_of(y)[0]);
 	}
 	/** @arg {R_AdSlot} x */

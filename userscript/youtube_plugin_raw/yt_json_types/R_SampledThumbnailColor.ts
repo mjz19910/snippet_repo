@@ -1,0 +1,1 @@
+type R_SampledThumbnailColor={sampledThumbnailColor: D_ThumbnailColor;};
