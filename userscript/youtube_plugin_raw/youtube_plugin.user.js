@@ -4183,7 +4183,6 @@ class CodegenService extends BaseService {
 			if(!this.typedef_cache.includes(new_typedef)) {
 				this.typedef_cache.push(new_typedef);
 				console.log(new_typedef);
-				debugger;
 			}
 		}
 	}
