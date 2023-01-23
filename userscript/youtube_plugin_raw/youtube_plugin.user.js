@@ -5594,7 +5594,6 @@ class ParserService extends BaseService {
 	parse_any_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		console.log(key_index,map);
 		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
@@ -5611,7 +5610,6 @@ class ParserService extends BaseService {
 				if(root==="DesktopTopbar") break x;
 				if(root==="D_HotkeyDialog") break x;
 				console.log("ki=",key_index,'parse_key',i,map.get(i));
-				debugger;
 			}
 			parse_key(i);
 		}
