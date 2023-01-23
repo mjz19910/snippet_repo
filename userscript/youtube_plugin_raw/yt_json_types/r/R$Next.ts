@@ -8,7 +8,7 @@ type R_Next={
 	videoReporting?: RT$ReportFormModal;
 	queueContextParams?: string;
 	onResponseReceivedEndpoints?: EI$ResponseReceived[];
-	engagementPanels?: EngagementPanel[];
+	engagementPanels?: R_EngagementPanelSectionList[];
 	topbar?: R_DesktopTopbar;
 	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: A_FrameworkUpdates;

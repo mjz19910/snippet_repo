@@ -1,1 +1,0 @@
-type G_EngagementPanelItem=R_EngagementPanelSectionList;

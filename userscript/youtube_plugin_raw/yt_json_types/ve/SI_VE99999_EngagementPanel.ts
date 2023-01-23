@@ -1,4 +1,4 @@
-type SI$VE99999_EngagementPanelSectionItem={
+type SI_VE99999_EngagementPanel={
 	panelIdentifier: "shopping_panel_for_entry_point_5";
 	header: R_EngagementPanelTitleHeader;
 	content: R_ProductList;

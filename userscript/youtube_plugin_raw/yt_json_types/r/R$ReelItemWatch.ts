@@ -6,5 +6,5 @@ type D_ReelItemWatch={
 	replacementEndpoint?: E_ReelWatch;
 	sequenceContinuation?: string;
 	desktopTopbar: R_DesktopTopbar;
-	engagementPanels: G_EngagementPanelItem[];
+	engagementPanels: R_EngagementPanelSectionList[];
 };

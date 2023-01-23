@@ -1,9 +1,9 @@
 type D_EngagementPanelSectionList=
 	|GenericEngagementPanelSectionItem
 	|G$VE76278$EngagementPanel$S$Item
-	|SI$VE99999_EngagementPanelSectionItem
-	|VE124975_EngagementPanelSectionItem
-	|VE126250_EngagementPanelSectionItem
-	|VE139722_EngagementPanelSectionItem
+	|SI_VE99999_EngagementPanel
+	|SI_VE124975_EngagementPanel
+	|SI_VE126250_EngagementPanel
+	|SI_VE139722_EngagementPanel
 	;
 ;

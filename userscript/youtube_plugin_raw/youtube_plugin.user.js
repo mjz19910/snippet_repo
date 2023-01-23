@@ -8077,7 +8077,7 @@ class HandleTypes extends ServiceMethods {
 	G_NextContents(x) {this.H_("G_NextContents",x,() => 0);}
 	/** @private @arg {PlaylistPanelContinuation} x */
 	R_PlaylistPanelContinuation(x) {this.H_("PlaylistPanelContinuation",x,a => {a; debugger;});}
-	/** @template T @arg {I$ShortsSurfaceIdentifier<T>} x */
+	/** @template T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	I$ShortsSurfaceIdentifier(x) {
 		const {surface,tag,...y}=x; this.g(y); // ! #destructure
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
@@ -8820,7 +8820,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,() => 0);}
-	/** @private @arg {G_EngagementPanelItem} x */
+	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,() => 0);}
 	/** @private @arg {R_SetSetting} x */
 	R_SetSetting(x) {

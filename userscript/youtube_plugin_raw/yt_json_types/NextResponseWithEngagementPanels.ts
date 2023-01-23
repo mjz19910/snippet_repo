@@ -2,5 +2,5 @@ type NextResponseWithEngagementPanels={
 	onResponseReceivedEndpoints: {}[];
 	responseContext: RC$ResponseContext;
 	trackingParams: string;
-	engagementPanels: EngagementPanel[];
+	engagementPanels: R_EngagementPanelSectionList[];
 };
