@@ -6891,7 +6891,7 @@ class HandleTypes extends ServiceMethods {
 		return [y,ca];
 	}
 	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} U @template {{}} V$M @template {T_Endpoint<U,V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
-	T$Endpoint(cf,x,f,f_v$m) {
+	T_Endpoint(cf,x,f,f_v$m) {
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		this.t(commandMetadata,a => f_v$m.call(this,a));
@@ -7202,7 +7202,7 @@ class HandleTypes extends ServiceMethods {
 	E_Browse(x) {
 		const cf="Browse";
 		this.save_keys(`[E_${cf}]`,x);
-		this.T$Endpoint("E_Browse",x,a => {
+		this.T_Endpoint("E_Browse",x,a => {
 			let u=this.w(a);
 			let {browseId,...y}=u; this.g(y);
 			switch(u.browseId) {
@@ -7847,7 +7847,7 @@ class HandleTypes extends ServiceMethods {
 	E_ReelWatch(x) {
 		const cf="E_ReelWatch";
 		this.H_R(cf,x);
-		this.T$Endpoint(cf,x,x => {this.y(x,this.D_ReelWatch);},x => {x; debugger;});
+		this.T_Endpoint(cf,x,x => {this.y(x,this.D_ReelWatch);},x => {x; debugger;});
 	}
 	/** @private @arg {D_ReelWatch} x */
 	D_ReelWatch(x) {this.H_("D_ReelWatch",x,() => 0);}
@@ -7883,9 +7883,10 @@ class HandleTypes extends ServiceMethods {
 						debugger;
 						return;
 					});
-					this.z(iw[0].items,a=>{
-						if(a.notificationRenderer) this.R_Notification(a);
-						console.log(a);
+					this.z(iw[0].items,x => {
+						if("notificationRenderer" in x) return this.R_Notification(x);
+						if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+						console.log(x);
 						debugger;
 					});
 					if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
@@ -8487,14 +8488,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("R_MP_MenuNotificationSection",x,this.MP_MenuNotificationSection);}
-	/** @private @arg {{trackingParams:string;}&T_Items<R_Notification|TR_ContinuationItem<E_GetNotificationMenu>>} x */
+	/** @private @arg {R_MP_MenuNotificationSection['multiPageMenuNotificationSectionRenderer']} x */
 	MP_MenuNotificationSection(x) {
 		const cf="MP_MenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let xr=this.z(items,x => {
 			if("notificationRenderer" in x) return this.R_Notification(x);
-			if("continuationItemRenderer" in x) return this.T$ContinuationItemRenderer(x);
+			if("continuationItemRenderer" in x) {
+				let r=this.T$ContinuationItemRenderer(x); r;
+				this.E_Continuation(r);
+				return;
+			}
 			debugger;
 		});
 		this.z(xr[0],x => {
@@ -8503,6 +8508,28 @@ class HandleTypes extends ServiceMethods {
 		});
 		debugger;
 		this.trackingParams("MP_MenuNotificationSection",trackingParams);
+	}
+	/** @private @arg {E_Continuation} x */
+	E_Continuation(x) {
+		this.T_Endpoint("E_Continuation",x,a => {
+			let u=this.w(a);
+			const {request,token,...b}=u; this.g(b);
+			switch(request) {
+				case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
+				default: debugger; break;
+			};
+			this.primitive_of_string(token);
+		},a => {
+			let v=this.w(a);
+			if("apiUrl" in v) {
+				const {apiUrl,sendPost,...b}=v; this.g(b);
+				if(apiUrl!=="/youtubei/v1/browse") debugger;
+				if(sendPost!==true) debugger;
+				return;
+			};
+			v;
+			debugger;
+		});
 	}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification",x,this.D_Notification);}
@@ -9245,7 +9272,7 @@ class HandleTypes extends ServiceMethods {
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) {
-			this.T$Endpoint(cf,x,a => {
+			this.T_Endpoint(cf,x,a => {
 				this.params(cf,"createBackstagePost.param",this.w(this.w(a)));
 			},meta => {
 				console.log(meta);
