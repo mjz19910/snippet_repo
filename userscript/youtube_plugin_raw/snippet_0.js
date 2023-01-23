@@ -65,7 +65,7 @@ function split_string_once(s,d=as(",")) {
 	return as(q);
 }
 class ParserService {
-	/** @arg {Split<D$ApiUrlFormat,"/">} x @returns {Join<Split<D$ApiUrlFormat,"/">,".">} */
+	/** @arg {Split<D_ApiUrlFormat$1,"/">} x @returns {Join<Split<D_ApiUrlFormat$1,"/">,".">} */
 	get_url_type(x) {x; throw 1;}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {root; x;}

@@ -1,1 +1,0 @@
-type TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;

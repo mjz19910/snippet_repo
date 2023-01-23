@@ -1,4 +1,4 @@
-type O$ApiUrlFormat=[
+type D_ApiUrlFormat$2=[
 	"getAccountSwitcherEndpoint",
 	"getDatasyncIdsEndpoint",
 	"youtubei/v1/browse/edit_playlist",
@@ -22,6 +22,5 @@ type O$ApiUrlFormat=[
 	`youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`,
 	`youtubei/v1/updated_metadata`,
 	"youtubei/v1/flag/get_form",
-	"youtubei/v1/backstage/create_post"
-
+	"youtubei/v1/backstage/create_post",
 ][number];

@@ -3,7 +3,7 @@ type YtUrlFormat=[
 	"/",
 	"/channel_switcher",
 	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
-	`/${D$ApiUrlFormat}`,
+	`/${D_ApiUrlFormat$1}`,
 	`/account${""|`_${AccountPageSettingsSections}`}`,
 	`/api/stats/ads?${string}`,
 	`/channel/UC${string}`,
