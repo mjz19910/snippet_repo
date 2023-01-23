@@ -16,3 +16,6 @@ type D_CompactPlaylist={
 	longBylineText: R_TextWithRuns;
 	thumbnailOverlays: {}[];
 };
+type D_CompactPlaylist$PublishedTimeText={
+	publishedTimeText: R_SimpleText;
+};
