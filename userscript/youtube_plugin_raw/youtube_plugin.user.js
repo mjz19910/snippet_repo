@@ -7093,7 +7093,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
-	/** @private @arg {R_VE3832$WatchPage} x */
+	/** @private @arg {R_VE3832_WatchPage} x */
 	R_VE3832_WatchPage(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
