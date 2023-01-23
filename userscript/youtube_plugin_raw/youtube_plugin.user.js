@@ -8520,13 +8520,13 @@ class HandleTypes extends ServiceMethods {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
 			if("thumbnailOverlayNowPlayingRenderer" in a) return;
-			this.do_codegen("D_CompactPlaylist",a);
+			this.do_codegen("ThumbnailOverlay$CompactPlaylist",a);
 			a; debugger;
 		});
 		this.tz(ownerBadges,this.R_MetadataBadge);
 		let kof=this.get_keys_of(y);
 		if(kof.length>0)
-			console.log("[log_keys_of] [%s] [%s]",cf,this.get_keys_of(y));
+			console.log("[log_keys_of] [%s] [%s]",cf,kof);
 	}
 	/** @arg {R_MetadataBadge} x */
 	R_MetadataBadge(x) {this.H_("R_MetadataBadge",x,this.D_MetadataBadge);}
