@@ -5313,7 +5313,7 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.player_params":
-						switch(ta) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 8: case 9: case 12: case 25: break; default: return this.save_number(`[${path}.keys]`,ta);}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -8556,8 +8556,10 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint("E_RecordNotificationInteractions",x,a => {
 			this.DE_RecordNotificationInteractions(this.w(a));
 		},a => {
-			a;
-			debugger;
+			let v=this.w(a);
+			const {apiUrl,sendPost,...u}=v; this.g(u);
+			if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
+			if(sendPost!==true) debugger;
 		});
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */

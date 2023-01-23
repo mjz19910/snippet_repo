@@ -1,5 +1,10 @@
 type E_RecordNotificationInteractions={
 	clickTrackingParams: string;
-	commandMetadata: G_Metadata;
+	commandMetadata: {
+		webCommandMetadata: {
+			sendPost: true;
+			apiUrl: "/youtubei/v1/notification/record_interactions";
+		};
+	};
 	recordNotificationInteractionsEndpoint: DE_RecordNotificationInteractions;
 };
