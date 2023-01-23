@@ -5600,17 +5600,6 @@ class ParserService extends BaseService {
 		let mk_max=Math.max(...mk,-1);
 		for(let i=1;i<mk_max+1;i++) {
 			if(!mk.includes(i)) continue;
-			x: if(root!=="WatchEndpoint") {
-				if(root==="ButtonData") break x;
-				if(root==="AutoplayContent") break x;
-				if(root==="WatchResponse") break x;
-				if(root==="ShareEntityServiceEndpoint") break x;
-				if(root==="E_Browse.endpoint") break x;
-				if(root==="FusionSearchboxData") break x;
-				if(root==="DesktopTopbar") break x;
-				if(root==="D_HotkeyDialog") break x;
-				console.log("ki=",key_index,'parse_key',i,map.get(i));
-			}
 			parse_key(i);
 		}
 		if(this.eq_keys(mk,[])) return;
