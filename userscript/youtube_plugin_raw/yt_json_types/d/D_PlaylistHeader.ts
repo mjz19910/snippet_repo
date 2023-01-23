@@ -11,7 +11,7 @@ type D_PlaylistHeader={
 	ownerEndpoint: E_Browse;
 	editableDetails: D_EditableDetails;
 	trackingParams: string;
-	serviceEndpoints: T_Endpoint<E_PlaylistEdit,{}>[];
+	serviceEndpoints: D_PlaylistHeader_ServiceEndpointItem[];
 	stats: R_TextWithRuns[];
 	briefStats: R_TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;

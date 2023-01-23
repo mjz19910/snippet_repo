@@ -4,7 +4,7 @@ type D_PlaylistAddToOption={
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";
 	privacyIcon: T_Icon<"PRIVACY_PRIVATE">;
-	addToPlaylistServiceEndpoint: T_Endpoint<E_PlaylistEdit,{}>;
-	removeFromPlaylistServiceEndpoint: T_Endpoint<E_PlaylistEdit,{}>;
+	addToPlaylistServiceEndpoint: E_PlaylistEdit&T_Endpoint<{}>;
+	removeFromPlaylistServiceEndpoint: E_PlaylistEdit&T_Endpoint<{}>;
 	trackingParams: string;
 };
