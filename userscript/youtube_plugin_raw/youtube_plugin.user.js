@@ -7779,7 +7779,10 @@ class HandleTypes extends ServiceMethods {
 		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {D_YpcGetCart} x */
-	D_YpcGetCart(x) {x;}
+	D_YpcGetCart(x) {
+		let sp=this.w(x);
+		this.params("","YpcGetCart.transactionParams",sp);
+	}
 	/** @private @arg {R_PdgCommentPreview} x */
 	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview",x,this.D_PdgCommentPreview);}
 	/** @private @arg {D_PdgCommentPreview} x */
