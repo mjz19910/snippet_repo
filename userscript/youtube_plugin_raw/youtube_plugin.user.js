@@ -8045,7 +8045,7 @@ class HandleTypes extends ServiceMethods {
 		if("browserMediaSession" in x) {
 			return this.BrowserMediaSessionRoot(x);
 		}
-		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=x; this.g(y);
+		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=x;
 		this.R_WatchNextEndScreen(endScreen);
 		this.R_PlayerOverlayAutoplay(autoplay);
 		this.R_Button(shareButton);
@@ -8057,7 +8057,22 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(shareButton);
 		this.R_Menu(addToMenu);
 		this.R_PlayerOverlayVideoDetails(videoDetails);
-		// this.t(decoratedPlayerBarRenderer,this.R_DecoratedPlayerBar);
+		if("decoratedPlayerBarRenderer" in y) {
+			return this.R_DecoratedPlayerBar(this.w(y));
+		}
+		this.g(y);
+	}
+	/** @private @arg {R_DecoratedPlayerBar} x */
+	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar",x,this.D_DecoratedPlayerBar);}
+	/** @private @arg {D_DecoratedPlayerBar} x */
+	D_DecoratedPlayerBar(x) {
+		const cf="D_DecoratedPlayerBar";
+		this.save_keys(`[${cf}]`,x);
+		const {playerBar,...y}=x;
+		if("playerBarActionButton" in y) {
+			return this.R_Button(this.w(y));
+		}
+		this.g(y);
 	}
 	/** @private @arg {R_AutoplaySwitchButton} x */
 	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton",x,() => 0);}
