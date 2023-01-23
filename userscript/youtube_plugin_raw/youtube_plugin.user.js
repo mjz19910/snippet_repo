@@ -5255,6 +5255,7 @@ class ParserService extends BaseService {
 	/** @type {P$LogItems} */
 	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
+		let saved_map_keys=map_keys.slice();
 		/** @private @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
 			console.group(ns);
@@ -5265,10 +5266,10 @@ class ParserService extends BaseService {
 			console.log("[parse_value.new_ns_gen]",path);
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
-			console.log(`-- [parse_value.gen_ns] --\n\n\t${map_keys.map(e => `case ${e}:`).join(" ")} \n`);
+			console.log(`-- [parse_value.gen_ns] --\n\n\t${saved_map_keys.map(e => `case ${e}:`).join(" ")} \n`);
 		};
 		if(map_entry_value!==void 0) {
-			let new_path=this.get_parse_fns(path,map_keys,map_entry_value[0],map_entry_key).new_path;
+			let new_path=this.get_parse_fns(path,saved_map_keys,map_entry_value[0],map_entry_key).new_path;
 			map.delete(map_entry_key);
 			let cx=map_keys.indexOf(map_entry_key);
 			if(cx>-1) map_keys.splice(cx,1);
