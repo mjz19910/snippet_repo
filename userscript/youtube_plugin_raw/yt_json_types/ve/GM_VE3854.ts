@@ -1,6 +1,6 @@
-type M_VE96368={
-	url: "/feed/subscriptions";
+type GM_VE3854={
+	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 96368;
+	rootVe: 3854;
 	apiUrl: "/youtubei/v1/browse";
 };

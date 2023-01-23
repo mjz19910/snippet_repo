@@ -1,6 +1,6 @@
-type M_VE11487_Metadata={
-	url: "/premium";
+type GM_VE96368={
+	url: "/feed/subscriptions";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 11487;
+	rootVe: 96368;
 	apiUrl: "/youtubei/v1/browse";
 };
