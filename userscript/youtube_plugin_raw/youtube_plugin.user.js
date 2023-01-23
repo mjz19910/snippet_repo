@@ -8527,7 +8527,7 @@ class HandleTypes extends ServiceMethods {
 		let kof=this.get_keys_of(y);
 		if(kof.length>0){
 			console.log("[log_keys_of] [%s] [%s]",cf,kof);
-			this.do_codegen("ThumbnailOverlay$CompactPlaylist",y);
+			this.do_codegen("D_CompactPlaylist",y);
 			console.log(this.get_keys_of(x).join());
 		}
 	}
