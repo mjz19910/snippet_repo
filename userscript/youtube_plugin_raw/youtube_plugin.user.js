@@ -6882,7 +6882,7 @@ class HandleTypes extends ServiceMethods {
 		let ca=this.z(commands,f);
 		return [y,ca];
 	}
-	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} U @template {{}} V$M @template {T_Endpoint<U,V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T_Endpoint(cf,x,f,f_v$m) {
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		f.call(this,y);
