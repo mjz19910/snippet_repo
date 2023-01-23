@@ -9825,7 +9825,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript",x,this.D_Transcript);}
 	/** @private @arg {D_Transcript} x */
-	D_Transcript(x) {x; debugger;}
+	D_Transcript(x) {
+		const cf="D_Transcript";
+		this.save_keys(`[${cf}]`,x);
+		const {trackingParams,...y}=x;
+		this.R_TranscriptSearchPanel(this.w(y));
+	}
+	/** @private @arg {R_TranscriptSearchPanel} x */
+	R_TranscriptSearchPanel(x) {x;}
 	/** @private @arg {R_Channel} x */
 	R_Channel(x) {
 		const cf="ChannelResponse";
