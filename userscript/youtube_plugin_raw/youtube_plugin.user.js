@@ -2211,19 +2211,19 @@ class BitmapResult {
 	get_seen_root_visual_elements() {
 		return this.seen_root_visual_elements;
 	}
-	/** @api_1 @protected @type {[string,{t:boolean;f:boolean}][]} */
+	/** @api @protected @type {[string,{t:boolean;f:boolean}][]} */
 	seen_booleans=[];
-	/** @api_1 @protected @type {number[]} */
+	/** @api @protected @type {number[]} */
 	seen_root_visual_elements=[];
-	/** @api_1 @protected @type {{[x:string]:number}} */
+	/** @api @protected @type {{[x:string]:number}} */
 	strings_key_index_map={};
-	/** @api_1 @protected @type {{[x:string]:number}} */
+	/** @api @protected @type {{[x:string]:number}} */
 	seen_keys_index={};
-	/** @api_1 @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
+	/** @api @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
 	seen_keys=[];
-	/** @api_1 @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
+	/** @api @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
 	seen_strings=[];
-	/** @api_1 @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
+	/** @api @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
 	seen_numbers=[];
 	get_seen_numbers() {
 		return this.seen_numbers;
