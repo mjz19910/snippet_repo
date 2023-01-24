@@ -6617,7 +6617,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {RS_GetAddToPlaylist} */
+				/** @private @type {RSG_AddToPlaylist} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -6668,7 +6668,7 @@ class ServiceMethods extends ServiceData {
 				data: as(x),
 			}; case "like": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RSL_LikeLike} */data: as(x),
+				/** @private @type {RSL_Like} */data: as(x),
 			}; case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {RSL_RemoveLike} */data: as(x),
@@ -7981,7 +7981,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,a => {a; debugger;});}
-	/** @private @arg {RSL_LikeLike} x */
+	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
 		const {responseContext: {},actions,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9416,7 +9416,7 @@ class HandleTypes extends ServiceMethods {
 	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,a => {a; debugger;});}
 	/** @private @arg {R_WebSearchboxConfig} x */
 	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
-	/** @private @arg {RS_GetAddToPlaylist} x */
+	/** @private @arg {RSG_AddToPlaylist} x */
 	RS_GetAddToPlaylist(x) {
 		const cf="GetAddToPlaylistResponse";
 		const {responseContext: {},contents,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
