@@ -81,6 +81,8 @@ class CodegenService {
 	codegen_new_typedef(x,y,z) {x; y; z;}
 }
 export class Snippet_0_tmp {
+	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
 		this.save_keys("[NavigationEndpoint]",x);
@@ -112,7 +114,7 @@ export class Snippet_0_tmp {
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @private @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
+	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
@@ -456,6 +458,34 @@ class ND extends Snippet_0_tmp {
 	E_New$Endpoint(x) {x;}
 	use() {
 		this.R_New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
+	}
+	/** @private @arg {E_Browse} x */
+	E_Browse(x) {x;}
+	/** @private @arg {D_Thumbnail} x */
+	D_Thumbnail(x) {x;}
+	/** @private @arg {R_TextWithRuns} x */
+	R_TextWithRuns(x) {x;}
+	/** @private @arg {R_SimpleText} x */
+	R_SimpleText(x) {x;}
+	/** @template {D_VideoOwner} T @arg {T} x */
+	VideoOwner$Omit(x) {
+		const cf="VideoOwner$Omit";
+		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
+		this.D_Thumbnail(thumbnail);
+		this.R_TextWithRuns(title);
+		this.t(subscriptionButton,this.SubscriptionButton);
+		this.E_Browse(navigationEndpoint);
+		this.t(subscriberCountText,this.R_SimpleText);
+		this.trackingParams(cf,trackingParams);
+		return y;
+	}
+	/** @private @arg {D_SubscriptionButton} x */
+	SubscriptionButton(x) {
+		const cf="SubscriptionButton";
+		this.save_keys(`[${cf}]`,x);
+		const {type,subscribed,...y}=x; this.g(y); // ! #destructure
+		if(type!=="FREE") debugger;
+		this.t(subscribed,a => this.primitive_of(a,"boolean"));
 	}
 }
 new ND;

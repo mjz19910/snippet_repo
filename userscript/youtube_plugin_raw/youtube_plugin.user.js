@@ -7405,14 +7405,28 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink";
-		if("navigationEndpoint" in x) {debugger; x; return;}
-		const {icon,title,trackingParams,...y}=x; this.g(y);
+		this.save_keys(`[${cf}]`,x);
+		if("navigationEndpoint" in x) {
+			let u=this.D_Link$Omit(cf,x);
+			const {navigationEndpoint,style,...y}=u; this.g(y);
+			this.E_Browse(navigationEndpoint);
+			if(style!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
+			return;
+		}
+		let u=this.D_Link$Omit(cf,x);
+		const {icon,...y}=u; this.g(y);
 		switch(x.icon.iconType) {
 			case "PERSON_ADD": break;
 			default: debugger; break;
 		}
-		this.G_Text(x.title);
+	}
+	/** @template {D_CompactLink} T @arg {string} cf @arg {T} x */
+	D_Link$Omit(cf,x) {
+		this.save_keys(`[D_Link$Omit]`,x);
+		const {title,trackingParams,...y}=x;
+		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
+		return y;
 	}
 	/** @public @arg {D_Dropdown_Privacy} x */
 	DropdownData(x) {
@@ -9756,26 +9770,6 @@ class HandleTypes extends ServiceMethods {
 		this.E_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(overrideEntityKey);
-	}
-	/** @template {D_VideoOwner} T @arg {T} x */
-	VideoOwner$Omit(x) {
-		const cf="VideoOwnerData";
-		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
-		this.D_Thumbnail(thumbnail);
-		this.R_TextWithRuns(title);
-		this.t(subscriptionButton,this.SubscriptionButton);
-		this.E_Browse(navigationEndpoint);
-		this.t(subscriberCountText,this.R_SimpleText);
-		this.trackingParams(cf,trackingParams);
-		return y;
-	}
-	/** @private @arg {D_SubscriptionButton} x */
-	SubscriptionButton(x) {
-		const cf="SubscriptionButton";
-		this.save_keys(`[${cf}]`,x);
-		const {type,subscribed,...y}=x; this.g(y); // ! #destructure
-		if(type!=="FREE") debugger;
-		this.t(subscribed,a => this.primitive_of(a,"boolean"));
 	}
 	/** @private @arg {D_AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
