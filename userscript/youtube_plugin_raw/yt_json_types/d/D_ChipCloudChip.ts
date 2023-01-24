@@ -1,24 +1,20 @@
 type D_ChipCloudChip$Style=[
+	"STYLE_DEFAULT",
 	"STYLE_HOME_FILTER",
+	"STYLE_REFRESH_TO_NOVEL_CHIP",
 ][number];
 type D_ChipCloudChip=|{
-	style: {
-		styleType: "STYLE_HOME_FILTER";
-	};
+	style: TS_ChipCloud<D_ChipCloudChip$Style>;
 	text: R_TextWithRuns;
 	navigationEndpoint: C_Continuation;
 	trackingParams: string;
 }|{
-	style: {
-		styleType: "STYLE_HOME_FILTER";
-	};
+	style: TS_ChipCloud<D_ChipCloudChip$Style>;
 	text: R_TextWithRuns;
 	trackingParams: string;
 	isSelected: true;
 }|{
-	style: {
-		styleType: "STYLE_HOME_FILTER";
-	};
+	style: TS_ChipCloud<D_ChipCloudChip$Style>;
 	text: R_TextWithRuns;
 	navigationEndpoint: C_Continuation;
 	trackingParams: string;
