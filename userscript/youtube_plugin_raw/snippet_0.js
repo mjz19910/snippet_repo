@@ -211,14 +211,27 @@ export class Snippet_0_tmp {
 		console.log("[empty_object] [%s]",keys.join());
 		debugger;
 	}
-	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} y  */
-	z(x,y) {
-		if(x===void 0) {debugger; return;}
+	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
+	z(x,f) {
+		if(x===void 0) {debugger; return [[],[]];}
+		if(!x.entries) {debugger; return [[],[]];}
+		/** @type {any[]} */
+		let c=[];
+		/** @type {any[]} */
+		let v=[];
 		for(let it of x.entries()) {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
-			y.call(this,a,i);
+			let u=f.call(this,a,i);
+			if(u!==void 0) {
+				c.push(u);
+			} else if(u===void 0) {
+				v.push(u);
+			} else {
+				throw new Error();
+			}
 		}
+		return [c,v];
 	}
 	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
 	w1(x,f) {
@@ -565,6 +578,159 @@ class ND extends Snippet_0_tmp {
 		}
 		this.R_SimpleText(text);
 		this.R_Button(dismissButton);
+	}
+	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
+	c1(f) {return x => f.call(this,x);}
+	/** @protected @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
+	ItemsTemplate(x,f) {
+		const cf/**/="ItemsTemplate";
+		this.save_keys(`[${cf}]`,x);
+		this.z(this.w(x),f);
+	}
+	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
+	ContentsArrayTemplate(x,f) {
+		const cf="ContentsArrayTemplate";
+		this.save_keys(`[${cf}]`,x);
+		this.z(this.w(x),f);
+	}
+	/** @protected @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
+	CommandsTemplate$Omit(x,f) {
+		const cf="CommandsTemplate";
+		this.save_keys(`[${cf}]`,x);
+		const {commands,...y}=x;
+		let ca=this.z(commands,f);
+		return [y,ca];
+	}
+	/** @protected @template T @arg {T$ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	ResultsTemplate(x,f) {
+		const cf="ResultsTemplate";
+		this.save_keys(`[${cf}]`,x);
+		const {results,...y}=x; this.g(y); // ! #destructure
+		f.call(this,results);
+	}
+	/** @private @template T @arg {TD_ContinuationItem<T>} x */
+	T$ContinuationItemData(x) {
+		const {trigger,...y}=x;
+		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
+		return y;
+	}
+	/** @protected @template T @arg {TR_ContinuationItem<T>} x */
+	R_T$ContinuationItem(x) {
+		const {continuationItemRenderer,...y}=x; this.g(y);
+		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
+	}
+	/** @protected @template T @arg {T_ShortsSurfaceIdentifier<T>} x */
+	I$ShortsSurfaceIdentifier(x) {
+		const {surface,tag,...y}=x; this.g(y); // ! #destructure
+		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+		return tag;
+	}
+	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	str_starts_with(needle,str) {
+		return str.startsWith(needle);
+	}
+	/** @private @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
+	/** @private @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
+	/** @protected @template {{}} U @arg {U} x @returns {[RemoveToggled<U>,RemoveUnToggled<U>,Omit<U,`toggled${string}`|`untoggled${string}`>]} */
+	unwrap_toggled(x) {
+		/** @type {RemoveToggled<U>} */
+		let tog=as({});
+		/** @type {RemoveUnToggled<U>} */
+		let untoggled=as({});
+		/** @type {Omit<U,`toggled${string}`|`untoggled${string}`>} */
+		let other=as({});
+		for(let cc of Object.entries(x)) {
+			let c1=cc[0];
+			if(this.str_starts_with("toggled",c1)) {
+				let u1x=split_string_once(c1,"toggled");
+				/** @type {any} */
+				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
+				/** @type {keyof RemoveToggled<U>} */
+				let u1=ac;
+				tog[u1]=cc[1];
+				continue;
+			}
+			if(this.str_starts_with("untoggled",c1)) {
+				let u1x=split_string_once(c1,"untoggled");
+				/** @type {any} */
+				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
+				/** @type {keyof RemoveUnToggled<U>} */
+				let u1=ac;
+				untoggled[u1]=cc[1];
+				continue;
+			}
+			/** @type {any} */
+			let ac=c1;
+			/** @type {keyof Omit<U,`toggled${string}`|`untoggled${string}`>} */
+			let u1=ac;
+			other[u1]=cc[1];
+		}
+		return [tog,untoggled,other];
+	}
+	/** @protected @template T @arg {T$Item<T>} x @arg {(x:T)=>void} f */
+	ItemTemplate(x,f) {
+		const cf="ItemTemplate";
+		this.save_keys(`[${cf}]`,x);
+		return f.call(this,x.item);
+	}
+	/** @protected @template K,V @arg {MapTemplate<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
+	MapTemplate(x,f) {
+		f.call(this,x.value,x.key);
+	}
+	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
+	tz(x,f) {
+		if(!x) return;
+		this.z(x,f);
+	}
+	/** @protected @template {D_SubscribeButton} T @arg {T} x */
+	SubscribeButton$Omit(x) {
+		const cf="SubscribeButton";
+		this.save_keys(`[${cf}]`,x);
+		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
+		this.primitive_of(subscribed,"boolean");
+		this.primitive_of(enabled,"boolean");
+		this.primitive_of_string(type);
+		this.primitive_of_string(channelId);
+		this.primitive_of(showPreferences,"boolean");
+		this.R_TextWithRuns(buttonText);
+		this.R_TextWithRuns(subscribedButtonText);
+		this.R_TextWithRuns(unsubscribedButtonText);
+		this.trackingParams(cf,trackingParams);
+		this.R_TextWithRuns(unsubscribeButtonText);
+		this.tz(serviceEndpoints,x => {
+			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
+			if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
+			x;
+			this.do_codegen(cf,x);
+			debugger;
+		});
+		this.D_Accessibility(subscribeAccessibility);
+		this.D_Accessibility(unsubscribeAccessibility);
+		return y;
+	}
+	/** @private @arg {D_Accessibility} x */
+	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}
+	/** @private @arg {D_Label} x */
+	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
+	/** @private @arg {E_Subscribe} x */
+	E_Subscribe(x) {this.H_("E_Subscribe",x,() => 0);}
+	/** @private @template T @arg {E_T$SignalService<T>} x */
+	signalServiceEndpoint(x) {
+		this.E_SignalService(x,a => {
+			a;
+			debugger;
+		});
+	}
+	/** @private @template T @arg {E_T$SignalService<T>} x @arg {(this:this,x:T)=>void} f */
+	E_SignalService(x,f) {
+		f.call(this,x.signalServiceEndpoint);
+	}
+	/** @protected @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
+	ChipCloudStyle(x,f) {
+		const cf="ChipCloudStyle";
+		this.save_keys(`[${cf}]`,x);
+		const {styleType,...y}=x; this.g(y); // ! #destructure
+		f.call(this,styleType);
 	}
 }
 new ND;

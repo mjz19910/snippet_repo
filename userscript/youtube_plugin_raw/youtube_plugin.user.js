@@ -2095,7 +2095,7 @@ class ApiBase {
 	uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @template T @arg {T[]} x */
+	/** @protected @template T @arg {T[]} x */
 	filter_keys(x) {
 		let ret=[];
 		for(let k of x) {
@@ -2132,7 +2132,7 @@ class ApiBase {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
+	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
 		/** @type {Partial<B>} */
 		let cd=x;
@@ -2149,14 +2149,14 @@ class ApiBase {
 		}
 		return true;
 	}
-	/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
+	/** @protected @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
 	parse_url_search_params(t) {
 		let sp=new URLSearchParams(t);
 		/** @private @type {any} */
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
-	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	/** @public @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
 			debugger;
@@ -2169,9 +2169,9 @@ class ApiBase {
 }
 //#endregion
 //#region Service
-/** @template T */
+/** @private @template T */
 class BitmapResult {
-	/** @public  @arg {T[]} map_arr @arg {string} bitmap */
+	/** @public @arg {T[]} map_arr @arg {string} bitmap */
 	constructor(map_arr,bitmap) {
 		this.map_arr=map_arr;
 		this.bitmap=bitmap;
@@ -2186,7 +2186,7 @@ class KnownDataSaver extends ApiBase {
 	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
 	do_save_keys_obj=false;
-	/** @template {string} T @arg {`[${T}]`} x @returns {T} */
+	/** @private @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */
 		function gn() {return null;}
@@ -2637,7 +2637,7 @@ class KnownDataSaver extends ApiBase {
 	}
 }
 const data_saver=new KnownDataSaver;
-/** @template T,U */
+/** @private @template T,U */
 class BaseServicePrivate extends ApiBase {
 	//#region Public
 	/** @public @arg {ResolverT<T,U>} x */
@@ -2676,7 +2676,7 @@ class BaseServicePrivate extends ApiBase {
 	log_skipped_strings=false;
 	#x;
 }
-/** @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
+/** @private @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
 class BaseService extends BaseServicePrivate {
 	/** @public @arg {string} x */
 	create_param_map(x) {
@@ -2735,13 +2735,13 @@ class BaseService extends BaseServicePrivate {
 		}
 		return ret_map;
 	}
-	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
+	/** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
+	/** @public @template {string} T @arg {T} str @returns {UrlParse<T>} */
 	parse_with_url_parse(str) {
 		let s=new URL(str);
 		/** @private @type {any} */
@@ -2890,11 +2890,11 @@ class BaseService extends BaseServicePrivate {
 		let r=x[k];
 		return r;
 	}
-	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
+	/** @protected @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	y(x,f) {f.call(this,this.w(x));}
-	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	/** @protected @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
 		if(!x) return;
 		this.z(x,f);
@@ -2921,15 +2921,13 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @public @arg {U|null} _rv @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t_ex(_rv,f,x) {if(!x) return; return f.call(this,x);}
-	/** @template U @template {{}} T @arg {(this:this,x:T)=>U} f */
+	/** @protected @template U @template {{}} T @arg {(this:this,x:T)=>U} f */
 	tf(f) {
 		/** @returns {U|null} */
 		function mu() {return null;}
 		/** @param {T|undefined} x @returns {U|undefined} */
 		return x => this.t_ex(mu(),f,x);
 	}
-	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
-	c1(f) {return x => f.call(this,x);}
 	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
@@ -5371,7 +5369,7 @@ class ParserService extends BaseService {
 			off++;
 		}
 	}
-	/** @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
+	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
 	is_bigint(x) {
 		return x[0]==="bigint";
 	}
@@ -6810,7 +6808,7 @@ class ServiceMethods extends ServiceData {
 	previousCsn(x) {
 		console.log(base64_dec.decode_str(x));
 	}
-	/** @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
+	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
@@ -6835,25 +6833,13 @@ class HandleTypes extends ServiceMethods {
 	//#region templates
 	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TR_ItemSection$1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection$CommentsEntryPoint(a,f));}
-	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
-	ItemsTemplate(x,f) {
-		const cf/**/="ItemsTemplate";
-		this.save_keys(`[${cf}]`,x);
-		this.z(this.w(x),f);
-	}
-	/** @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
-	ContentsArrayTemplate(x,f) {
-		const cf="ContentsArrayTemplate";
-		this.save_keys(`[${cf}]`,x);
-		this.z(this.w(x),f);
-	}
-	/** @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionRendererTemplate(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.ItemSectionDataTemplate(this.w(x),f);
 	}
-	/** @template CT,T,U @arg {TD_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @private @template CT,T,U @arg {TD_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const cf="ItemSectionData";
 		this.save_keys(`[${cf}]`,x);
@@ -6865,7 +6851,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @template T @arg {T$Command<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {T$Command<T>} x @arg {(this:this,x:T)=>void} f */
 	CommandTemplate(x,f) {
 		const cf="CommandTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -6873,19 +6859,11 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		f.call(this,this.w(y));
 	}
-	/** @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
-	}
-	/** @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
-	CommandsTemplate$Omit(x,f) {
-		const cf="CommandsTemplate";
-		this.save_keys(`[${cf}]`,x);
-		const {commands,...y}=x;
-		let ca=this.z(commands,f);
-		return [y,ca];
 	}
 	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T_Endpoint(cf,x,f,f_v$m) {
@@ -6895,37 +6873,30 @@ class HandleTypes extends ServiceMethods {
 		this.t(commandMetadata,a => f_v$m.call(this,a));
 		this.save_keys("[ServiceEndpointTemplate]",y);
 	}
-	/** @template T @arg {T$Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {T$Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	AutoplayTemplate(x,f) {
 		const cf="AutoplayTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {autoplay,...y}=x; this.g(y); // ! #destructure
 		f.call(this,autoplay);
 	}
-	/** @template T @arg {T$Playlist<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {T$Playlist<T>} x @arg {(this:this,x:T)=>void} f */
 	PlaylistTemplate(x,f) {
 		const cf="PlaylistTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {playlist,...y}=x; this.g(y); // ! #destructure
 		f.call(this,playlist);
 	}
-	/** @template T @arg {T$ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	ResultsTemplate(x,f) {
-		const cf="ResultsTemplate";
-		this.save_keys(`[${cf}]`,x);
-		const {results,...y}=x; this.g(y); // ! #destructure
-		f.call(this,results);
-	}
-	/** @template T @arg {T$SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {T$SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
 	SecondaryResultsTemplate(x,f) {
 		const cf="SecondaryResultsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {secondaryResults,...y}=x; this.g(y); // ! #destructure
 		f.call(this,secondaryResults);
 	}
-	/** @template {number} T @arg {T$TypesTemplate<T>} x @arg {T|null} _x @returns {T} */
+	/** @private @template {number} T @arg {T$TypesTemplate<T>} x @arg {T|null} _x @returns {T} */
 	TypesTemplate(x,_x=null) {
-		/** @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
 		}
@@ -7058,7 +7029,7 @@ class HandleTypes extends ServiceMethods {
 	//#region general done
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
 	H$Data(cf,x) {this.save_keys(`[D_${cf}]`,x);}
-	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	/** @private @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
 	H_(cf,x,f) {
 		this.save_keys(`[${cf}]`,x);
 		f.call(this,this.w(x));
@@ -7820,7 +7791,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_PaidDigitalGoods} x */
 	R_PaidDigitalGoods(x) {x;}
-	/** @template T @arg {TA_OpenPopup<T>} x */
+	/** @private @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(x) {
 		const cf="TA_OpenPopup";
 		this.save_keys(`[${cf}]`,x);
@@ -7848,12 +7819,7 @@ class HandleTypes extends ServiceMethods {
 		let kk=rk[0];
 		return this.uppercase_first(kk);
 	}
-	/** @template T @arg {TR_ContinuationItem<T>} x */
-	R_T$ContinuationItem(x) {
-		const {continuationItemRenderer,...y}=x; this.g(y);
-		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
-	}
-	/** @template T @arg {TD_ContinuationItem<T>} x */
+	/** @private @template T @arg {TD_ContinuationItem<T>} x */
 	T$ContinuationItemData(x) {
 		const {trigger,...y}=x;
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
@@ -8084,12 +8050,6 @@ class HandleTypes extends ServiceMethods {
 	G_NextContents(x) {this.H_("G_NextContents",x,() => 0);}
 	/** @private @arg {PlaylistPanelContinuation} x */
 	R_PlaylistPanelContinuation(x) {this.H_("PlaylistPanelContinuation",x,a => {a; debugger;});}
-	/** @template T @arg {T_ShortsSurfaceIdentifier<T>} x */
-	I$ShortsSurfaceIdentifier(x) {
-		const {surface,tag,...y}=x; this.g(y); // ! #destructure
-		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-		return tag;
-	}
 	/** @private @arg {C$ScrollToEngagementPanel} x */
 	C$ScrollToEngagementPanel(x) {
 		const cf="ScrollToEngagementPanelCommand";
@@ -8106,13 +8066,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template T @arg {E_T$SignalService<T>} x */
-	E_SignalService(x) {x;}
+	/** @private @template T @arg {E_T$SignalService<T>} x @arg {(this:this,x:T)=>void} f */
+	E_SignalService(x,f) {
+		f.call(this,x.signalServiceEndpoint);
+	}
 	/** @private @arg {string} cf @arg {EI$ResponseReceived} x */
 	EI$ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.E_SignalService(x);
+			this.E_SignalService(x,a=>{
+				a;
+				debugger;
+			});
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.AdsControlFlowOpportunityReceivedCommand(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
@@ -8291,7 +8256,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_SimpleText(text);
 		this.TA_OpenPopup(navigationEndpoint);
 	}
-	/** @template {string} T @arg {T_Icon<T>} x */
+	/** @private @template {string} T @arg {T_Icon<T>} x */
 	T$Icon(x) {
 		const cf="Icon";
 		this.save_keys(`[${cf}]`,x);
@@ -8316,45 +8281,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
-	/** @template T @template {string} VV @typedef {{[U in keyof T as `${string&U extends `${VV}${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemovePrefix */
-	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
-	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
-	/** @template {{}} U @arg {U} x @returns {[RemoveToggled<U>,RemoveUnToggled<U>,Omit<U,`toggled${string}`|`untoggled${string}`>]} */
-	unwrap_toggled(x) {
-		/** @type {RemoveToggled<U>} */
-		let tog=as({});
-		/** @type {RemoveUnToggled<U>} */
-		let untoggled=as({});
-		/** @type {Omit<U,`toggled${string}`|`untoggled${string}`>} */
-		let other=as({});
-		for(let cc of Object.entries(x)) {
-			let c1=cc[0];
-			if(this.str_starts_with("toggled",c1)) {
-				let u1x=split_string_once(c1,"toggled");
-				/** @type {any} */
-				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
-				/** @type {keyof RemoveToggled<U>} */
-				let u1=ac;
-				tog[u1]=cc[1];
-				continue;
-			}
-			if(this.str_starts_with("untoggled",c1)) {
-				let u1x=split_string_once(c1,"untoggled");
-				/** @type {any} */
-				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
-				/** @type {keyof RemoveUnToggled<U>} */
-				let u1=ac;
-				untoggled[u1]=cc[1];
-				continue;
-			}
-			/** @type {any} */
-			let ac=c1;
-			/** @type {keyof Omit<U,`toggled${string}`|`untoggled${string}`>} */
-			let u1=ac;
-			other[u1]=cc[1];
-		}
-		return [tog,untoggled,other];
-	}
+	/** @private @template T @template {string} VV @typedef {{[U in keyof T as `${string&U extends `${VV}${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemovePrefix */
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
 		/** @type {Partial<RemovePrefix<U,"url">>} */
@@ -8371,7 +8298,7 @@ class HandleTypes extends ServiceMethods {
 			o: o3,
 		};
 	}
-	/** @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
+	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
 		/** @type {RemovePrefix<U,VV>} */
 		let un_prefix=as({});
@@ -8566,7 +8493,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @template T @arg {T$ResultsTemplate<Record<"contents",T[]>>} x */
+	/** @private @template T @arg {T$ResultsTemplate<Record<"contents",T[]>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
@@ -9189,17 +9116,14 @@ class HandleTypes extends ServiceMethods {
 		this.R_SimpleText(title);
 		this.R_TextWithRuns(subtitle);
 	}
-	/** @template T @arg {T$Item<T>} x @arg {(x:T)=>void} f */
-	ItemTemplate(x,f) {
-		const cf="ItemTemplate";
-		this.save_keys(`[${cf}]`,x);
-		return f.call(this,x.item);
-	}
 	/** @private @template T @arg {E_Button_service<T>} x */
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a=>{
+			a;
+			debugger;
+		});
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
@@ -9487,7 +9411,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(program);
 		if(globalName!=="trayride") debugger;
 	}
-	/** @template {string} T @arg {UrlWrappedValueT<T>} x */
+	/** @private @template {string} T @arg {UrlWrappedValueT<T>} x */
 	UrlWrappedValueT(x) {
 		const cf="UrlWrappedValueT";
 		this.save_keys(`[${cf}]`,x);
@@ -9684,7 +9608,10 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a=>{
+			a;
+			debugger;
+		});
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) {
@@ -9931,10 +9858,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(index,"number");
 		this.params("WatchPlaylist","watch_playlist.params",params);
 	}
-	/** @template K,V @arg {MapTemplate<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
-	MapTemplate(x,f) {
-		f.call(this,x.value,x.key);
-	}
 	/** @private @arg {M$AdLayoutMetadata$1} x */
 	AdLayoutMetadataItem(x) {
 		const cf="AdLayoutMetadataItem";
@@ -9971,43 +9894,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(hotkey);
 		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
 		this.g(y);
-	}
-	/** @template {D_SubscribeButton} T @arg {T} x */
-	SubscribeButton$Omit(x) {
-		const cf="SubscribeButton";
-		this.save_keys(`[${cf}]`,x);
-		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
-		this.primitive_of(subscribed,"boolean");
-		this.primitive_of(enabled,"boolean");
-		this.primitive_of_string(type);
-		this.primitive_of_string(channelId);
-		this.primitive_of(showPreferences,"boolean");
-		this.R_TextWithRuns(buttonText);
-		this.R_TextWithRuns(subscribedButtonText);
-		this.R_TextWithRuns(unsubscribedButtonText);
-		this.trackingParams(cf,trackingParams);
-		this.R_TextWithRuns(unsubscribeButtonText);
-		this.tz(serviceEndpoints,x => {
-			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
-			if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
-			x;
-			this.do_codegen(cf,x);
-			debugger;
-		});
-		this.D_Accessibility(subscribeAccessibility);
-		this.D_Accessibility(unsubscribeAccessibility);
-		return y;
-	}
-	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {this.H_("E_Subscribe",x,() => 0);}
-	/** @template T @arg {E_T$SignalService<T>} x */
-	signalServiceEndpoint(x) {this.E_SignalService(x);}
-	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
-	ChipCloudStyle(x,f) {
-		const cf="ChipCloudStyle";
-		this.save_keys(`[${cf}]`,x);
-		const {styleType,...y}=x; this.g(y); // ! #destructure
-		f.call(this,styleType);
 	}
 	/** @private @arg {C$ResetChannelUnreadCount} x */
 	ResetChannelUnreadCountCommand(x) {
