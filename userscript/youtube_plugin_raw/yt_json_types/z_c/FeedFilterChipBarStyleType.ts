@@ -1,4 +1,4 @@
-namespace FEED_FILTER_CHIP_BAR_STYLE_TYPE {
+namespace FeedFilterChipBarStyleType {
 	export type ChannelPageGrid=
 		|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
 		|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"

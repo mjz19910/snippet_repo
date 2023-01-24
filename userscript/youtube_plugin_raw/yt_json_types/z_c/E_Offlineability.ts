@@ -1,0 +1,1 @@
+type E_Offlineability={offlineabilityEntity: DE_Offlineability;};

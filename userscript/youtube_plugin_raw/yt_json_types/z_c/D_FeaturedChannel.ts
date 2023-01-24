@@ -1,4 +1,4 @@
-type FeaturedChannel={
+type D_FeaturedChannel={
 	startTimeMs: `${number}`;
 	endTimeMs: `${number}`;
 	watermark: D_Thumbnail;

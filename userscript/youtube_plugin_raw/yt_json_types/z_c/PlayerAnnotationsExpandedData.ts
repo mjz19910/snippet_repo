@@ -1,5 +1,5 @@
 type D_PlayerAnnotationsExpanded={
-	featuredChannel: FeaturedChannel;
+	featuredChannel: D_FeaturedChannel;
 	allowSwipeDismiss: boolean;
 	annotationId: string;
 };

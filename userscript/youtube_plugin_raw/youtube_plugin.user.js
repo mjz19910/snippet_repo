@@ -9527,7 +9527,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template V @arg {{[U in `${string}Entity`]:V}} x */
 	EN$(x) {return this.w(x);}
-	/** @private @arg {EntityMutationPayload} x @returns {EntityMutationPayload extends infer I?I extends {[U in `${string}Entity`]:infer V}?V|null:null:never} */
+	/** @private @arg {G_Entity} x @returns {G_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?V|null:null:never} */
 	EntityMutationPayload(x) {
 		const cf="EntityMutationPayload";
 		this.save_keys(`[${cf}]`,x);
@@ -9543,7 +9543,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		return null;
 	}
-	/** @private @arg {EntityMutationOptions} x */
+	/** @private @arg {D_EntityMutationOptions} x */
 	EntityMutationOptions(x) {
 		const cf="EntityMutationOptions";
 		this.save_keys(`[${cf}]`,x);

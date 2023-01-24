@@ -1,5 +1,5 @@
 // [ELEMENT::structured-description-music-section::@::row-state-id]
-type EnumForExpandStatusKey=MakeElementId<
+type DE_ExpandStatusKey=MakeElementId<
 	"structured-description-music-section",MakeElementId<
 		[
 			"artists",
