@@ -1,5 +1,5 @@
 type R_MenuServiceItem={
-	menuServiceItemRenderer: 
+	menuServiceItemRenderer:
 	|D_MenuServiceItem<null,{}>
 	|D_MenuServiceItem<"NOT_INTERESTED",{}>;
 };
