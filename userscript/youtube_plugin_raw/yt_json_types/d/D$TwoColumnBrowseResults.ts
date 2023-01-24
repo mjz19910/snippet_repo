@@ -1,4 +1,4 @@
 type D_TwoColumnBrowseResults={
-	tabs: R_G_Result[];
+	tabs: RG_Result[];
 	secondaryContents?: G_SecondaryContents;
 };

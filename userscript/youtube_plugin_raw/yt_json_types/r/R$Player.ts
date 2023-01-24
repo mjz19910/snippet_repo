@@ -1,4 +1,4 @@
-type R_Player={
+type RS_Player={
 	responseContext: RC$ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;
 	streamingData?: D_StreamingData;

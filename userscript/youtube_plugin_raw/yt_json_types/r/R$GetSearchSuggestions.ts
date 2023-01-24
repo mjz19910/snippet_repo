@@ -1,4 +1,4 @@
-type R_GetSearchSuggestions={
+type RSG_SearchSuggestions={
 	responseContext: RC$ResponseContext;
 	trackingParams: string;
 };

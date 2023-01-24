@@ -4,4 +4,4 @@ type R_SearchApi={
 	continuationContents?: MusicShelfContinuation;
 	trackingParams: string;
 	header?: R_MusicHeader;
-}|R_Search;
+}|RS_Search;

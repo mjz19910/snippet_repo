@@ -6463,12 +6463,12 @@ class ServiceMethods extends ServiceData {
 			};
 			case "player": return {
 				type: target[0],
-				/** @private @type {R_Player} */
+				/** @private @type {RS_Player} */
 				data: as(x),
 			};
 			case "search": return {
 				type: target[0],
-				/** @private @type {R_Search} */
+				/** @private @type {RS_Search} */
 				data: as(x),
 			};
 			case "updated_metadata": return {
@@ -6490,7 +6490,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "reel_watch_sequence": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_ReelWatchSequence} */
+				/** @private @type {RS_ReelWatchSequence} */
 				data: as(x),
 			};
 		}
@@ -6561,7 +6561,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "account_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_AccountMenu} */
+				/** @private @type {RS_AccountMenu} */
 				data: as(x),
 			};
 			case "accounts_list": return {
@@ -6593,7 +6593,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R_GetSearchSuggestions} */
+				/** @private @type {RSG_SearchSuggestions} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -6662,14 +6662,14 @@ class ServiceMethods extends ServiceData {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_Dislike} */
+				/** @private @type {RSL_Dislike} */
 				data: as(x),
 			}; case "like": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_LikeLike} */data: as(x),
+				/** @private @type {RSL_LikeLike} */data: as(x),
 			}; case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_LikeRemoveLike} */data: as(x),
+				/** @private @type {RSL_RemoveLike} */data: as(x),
 			};
 		}
 		return null;
@@ -7508,10 +7508,6 @@ class HandleTypes extends ServiceMethods {
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		debugger;
 	}
-	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
-	R_PlaylistSidebarSecondaryInfo(x) {
-		x; debugger;
-	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="ButtonData";
@@ -7564,9 +7560,9 @@ class HandleTypes extends ServiceMethods {
 	codegen_renderer(cf,x) {
 		this.codegen.generate_renderer(x,cf);
 	}
-	/** @private @arg {R_G_Result} x */
-	R_Result(x) {
-		const cf="ResultRenderer";
+	/** @private @arg {RG_Result} x */
+	RG_Result(x) {
+		const cf="RG_Result";
 		this.save_keys(`[${cf}]`,x);
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
@@ -7660,7 +7656,7 @@ class HandleTypes extends ServiceMethods {
 		console.log("pt",x);
 		debugger;
 	}
-	/** @private @arg {R_AccountMenu} x */
+	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="R_AccountMenu";
 		this.save_keys(`[${cf}]`,x);
@@ -7719,7 +7715,7 @@ class HandleTypes extends ServiceMethods {
 			case "getAccountSwitcherEndpoint": return this.REG_AccountSwitcher(x.data);
 			case "getDatasyncIdsEndpoint": return this.REG_DatasyncIds(x.data);
 			case "guide": return this.RS_Guide(x.data);
-			case "like.like": return this.RSL_LikeLike(x.data);
+			case "like.like": return this.RSL_Like(x.data);
 			case "like.dislike": return this.RSL_Dislike(x.data);
 			case "like.removelike": return this.RSL_RemoveLike(x.data);
 			case "live_chat.get_live_chat_replay": return this.RS_GetLiveChat(x.data);
@@ -7844,8 +7840,6 @@ class HandleTypes extends ServiceMethods {
 		console.log("GetSurvey.action",x.action);
 		this.R_PaidDigitalGoods(this.w(y));
 	}
-	/** @private @arg {R_PaidDigitalGoods} x */
-	R_PaidDigitalGoods(x) {x;}
 	/** @private @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(x) {
 		const cf="TA_OpenPopup";
@@ -7943,7 +7937,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[UA_ViewershipData]`,x1);
 		((_x) => {debugger;})(x1.viewCount);
 	}
-	/** @private @arg {R_Search} x */
+	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="SearchResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7969,24 +7963,28 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
 	}
-	/** @private @arg {R_GetSearchSuggestions} x */
+	/** @private @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
-		const cf="GetSearchSuggestions";
+		const cf="RSG_SearchSuggestions";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_Player} x */
+	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
+	R_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
+	/** @private @arg {R_PaidDigitalGoods} x */
+	R_PaidDigitalGoods(x) {x; debugger;}
+	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
-		const cf="PlayerResponse";
+		const cf="RS_Player";
 		this.save_keys(`[${cf}]`,x);
 		this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,a => {a; debugger;});}
-	/** @private @arg {R_LikeLike} x */
-	RSL_LikeLike(x) {
-		const cf="LikeLikeResponse";
+	/** @private @arg {RSL_LikeLike} x */
+	RSL_Like(x) {
+		const cf="RSL_Like";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,x => {
@@ -7995,7 +7993,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 	}
-	/** @private @arg {R_Dislike} x */
+	/** @private @arg {RSL_Dislike} x */
 	RSL_Dislike(x) {
 		const cf="DislikeResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8006,7 +8004,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 	}
-	/** @private @arg {R_LikeRemoveLike} x */
+	/** @private @arg {RSL_RemoveLike} x */
 	RSL_RemoveLike(x) {
 		const cf="LikeRemoveLikeResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8017,7 +8015,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		}));
 	}
-	/** @private @arg {R_ReelWatchSequence} x */
+	/** @private @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
 		const cf="ReelWatchSequenceResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9605,7 +9603,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="TwoColumnBrowseResultsData";
 		this.save_keys(`[${cf}]`,x);
 		const {tabs,secondaryContents,...y}=x; this.g(y); // ! #destructure
-		this.z(tabs,this.R_Result);
+		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.SecondaryContents);
 	}
 	/** @private @arg {TM$Visibility} x */
