@@ -6871,14 +6871,19 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	static {
+		this.prototype.minimal_handler_member_use();
+	}
 	/** @private */
-	//@ts-expect-error(6133)
 	minimal_handler_member_use() {
 		this.minimal_handler_member_2({});
 	}
 	//#region templates
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
-	H$Data(cf,x) {this.save_keys(`[D_${cf}]`,x);}
+	HD_(cf,x) {
+		this.save_keys(`[${cf}]`,x);
+		if(this.get_keys_of(x).length!==1) debugger;
+	}
 	/** @private @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
 	H_(cf,x,f) {
 		this.save_keys(`[${cf}]`,x);
@@ -7184,7 +7189,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y); // ! #destructure
 		this.D_EntityBatchUpdate(entityBatchUpdate);
-		this.t(elementUpdate,this.ElementUpdate);
+		this.t(elementUpdate,this.R_ElementUpdate);
 	}
 	/** @private @arg {R_BrowseEditPlaylist} x */
 	R_BrowseEditPlaylist(x) {
@@ -8733,7 +8738,7 @@ class HandleTypes extends ServiceMethods {
 								this.z(a[0],a => {
 									let cf=this.get_name_from_keys(a);
 									if(!cf) {debugger; return;}
-									this.H$Data(cf,a);
+									this.HD_(`D_${cf}`,a);
 									console.log("[found item_section_watch_data]",cf);
 								});
 								return;
@@ -9430,11 +9435,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,a => {a; debugger;});}
 	/** @private @arg {R_AttLog$RC} x */
-	R_AttLog(x) {
-		const cf="AttLogResponse";
-		this.save_keys(`[${cf}]`,x);
-		const {responseContext: {},...y}=x; this.g(y); // ! #destructure
-	}
+	R_AttLog(x) {this.HD_("R_AttLog",x);}
+	/** @private @arg {R_Comment} x */
+	R_Comment(x) {this.H_("Comment",x,a => {a; debugger;});}
+	/** @private @arg {R_ElementUpdate} x */
+	R_ElementUpdate(x) {this.H_("ElementUpdate",x,x => this.z(x,this.ElementUpdateItem));}
+	/** @private @arg {R_TemplateUpdate} x */
+	R_TemplateUpdate(x) {this.H_("TemplateUpdate",x,this.D_TemplateUpdate);}
+	/** @private @arg {R_ProfileColumn} x */
+	R_ProfileColumn(x) {this.H_("ProfileColumn",x,a => {a; debugger;});}
+	/** @private @arg {R_BrowseFeedActions} x */
+	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,a => {a; debugger;});}
+	/** @private @arg {R_WebSearchboxConfig} x */
+	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {A_LoggingDirectives} x */
 	A_LoggingDirectives(x) {
 		const cf="LoggingDirectives";
@@ -9466,8 +9479,6 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.R_Comment);
 	}
-	/** @private @arg {R_Comment} x */
-	R_Comment(x) {this.H_("Comment",x,a => {a; debugger;});}
 	/** @private @arg {FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
 		const cf="FeedbackResponseProcessedStatus";
@@ -9502,13 +9513,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		return this.w(x);
 	}
-	/** @private @arg {R_ElementUpdate} x */
-	ElementUpdate(x) {
-		const cf="ElementUpdate";
-		this.save_keys(`[${cf}]`,x);
-		const {updates,...y}=x; this.g(y); // ! #destructure
-		this.z(updates,this.ElementUpdateItem);
-	}
+	/** @private @arg {R_CompactVideo} x */
+	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
+	D_CompactVideo(x) {x;}
 	/** @private @arg {D_ElementUpdate} x */
 	ElementUpdateItem(x) {
 		const cf="ElementUpdateItem";
@@ -9517,8 +9524,6 @@ class HandleTypes extends ServiceMethods {
 		if("resourceStatusInResponseCheck" in x) return this.ResourceStatusInResponseCheck(x);
 		debugger;
 	}
-	/** @private @arg {R_TemplateUpdate} x */
-	R_TemplateUpdate(x) {this.H_("TemplateUpdate",x,this.D_TemplateUpdate);}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
 		const cf="D_TemplateUpdate";
@@ -9655,10 +9660,6 @@ class HandleTypes extends ServiceMethods {
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
 		debugger;
 	}
-	/** @private @arg {R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_("ProfileColumn",x,a => {a; debugger;});}
-	/** @private @arg {R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,a => {a; debugger;});}
 	/** @private @arg {G_WatchNext} x */
 	WatchNextItem(x) {
 		const cf="WatchNextItem";
@@ -9667,8 +9668,6 @@ class HandleTypes extends ServiceMethods {
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		debugger;
 	}
-	/** @private @arg {R_CompactVideo} x */
-	R_CompactVideo(x) {this.H_("R_CompactVideo",x,a => {a; debugger;});}
 	/** @private @arg {E_ShareEntityService} x */
 	ShareEntityServiceEndpoint(x) {
 		const cf="ShareEntityServiceEndpoint";
@@ -9793,8 +9792,6 @@ class HandleTypes extends ServiceMethods {
 		this.E_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
-	/** @private @arg {R_WebSearchboxConfig} x */
-	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
 		const cf="WebSearchboxConfig";
