@@ -9672,7 +9672,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {E_CommandExecutorCommand} x */
+	/** @private @arg {C_CommandExecutor} x */
 	CommandExecutorCommand(x) {
 		const cf="CommandExecutorCommand";
 		this.save_keys(`[${cf}]`,x);

@@ -8,6 +8,6 @@ type D_VideoSecondaryInfo={
 	trackingParams: string;
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;
-	showMoreCommand?: E_CommandExecutorCommand;
+	showMoreCommand?: C_CommandExecutor;
 	showLessCommand?: EA_ChangeEngagementPanelVisibility;
 };

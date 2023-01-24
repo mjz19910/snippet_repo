@@ -4,7 +4,7 @@ type D_ToggleButton={
 	isDisabled: false;
 	defaultIcon: T_Icon<"LOOP">;
 	defaultServiceEndpoint: RepeatChapterCommand;
-	toggledServiceEndpoint: E_CommandExecutorCommand;
+	toggledServiceEndpoint: C_CommandExecutor;
 	trackingParams: string;
 	toggledStyle: StyleTypeObj;
 	accessibilityData: D_Accessibility;
