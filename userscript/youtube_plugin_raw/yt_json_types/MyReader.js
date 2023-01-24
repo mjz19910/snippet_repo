@@ -70,13 +70,15 @@ export class MyReader {
 		this.pos=prev_pos;
 		return ret;
 	}
-	/** @template T @arg {number} pos @arg {()=>T} x */
-	revert_to(pos,x) {
+	/** @private @template T @arg {number} pos @arg {()=>T} f */
+	revert_to(pos,f) {
 		let prev_pos=this.pos;
 		this.pos=pos;
-		let ret=x();
-		this.pos=prev_pos;
-		return ret;
+		try {
+			return f();
+		} finally {
+			this.pos=prev_pos;
+		}
 	}
 	/** @private @arg {number} [length] */
 	skip(length) {
@@ -135,9 +137,28 @@ export class MyReader {
 		}
 		return value;
 	}
+	read_varint() {
+		let sa=[this.buf[this.pos]&127];
+		while(true) {
+			if(this.buf[this.pos++]<128) break;
+			sa.push(this.buf[this.pos]&127);
+			if(this.pos>this.len) return null;
+		}
+		return sa;
+	}
+	/** @returns {[number[],bigint]|null} */
 	uint64() {
 		this.last_pos=this.pos;
-		return this.readLongVarint().toBigInt();
+		let u64_varint=this.read_varint();
+		if(!u64_varint) return null;
+		let ret=u64_varint.map((e,n) => [n,e]).reduce((acc,[k,e]) => {
+			let k_=BigInt(k);
+			let e_=BigInt(e);
+			let mul_pos=2n**(7n*k_);
+			let mul_res=e_*mul_pos;
+			return acc+mul_res;
+		},0n);
+		return [u64_varint,ret];
 	}
 	readLongVarint() {
 		// tends to deopt with local vars for octet etc.
@@ -228,49 +249,58 @@ export class MyReader {
 	log_range_error=false;
 	/** @private @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
-		if(this.noisy_log_level)
-			console.log("[skip] pos=%o",this.pos);
+		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
-		/** @type {D_DecTypeNum[]} */
+		/** @private @type {D_DecTypeNum[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
-				/** @type {[boolean,bigint,number]} */
+				/** @private @type {[true,[number[], bigint],number]|[false,null,number]} */
 				let revert_res=this.revert_to(pos_start,() => {
 					try {
 						let u64=this.uint64();
+						if(u64===null) return [false,u64,this.pos];
 						return [true,u64,this.pos];
 					} catch {}
-					return [false,0n,this.pos];
+					return [false,null,this.pos];
 				});
 				let num32=null;
 				x: try {
 					num32=this.uint32();
 				} catch {
-					if(revert_res[0])
-						break x;
+					if(revert_res[0]) break x;
 					this.failed=true;
 					first_num.push(["error",fieldId]);
 					break;
 				}
-				let [success_64,num64,new_pos]=revert_res;
-				if(success_64&&num32===null) {
-					first_num.push(["data64",fieldId,num64]);
+				if(revert_res[0]&&num32===null) {
+					let [,num64,new_pos]=revert_res;
+					first_num.push(["data64",fieldId,...num64]);
 					this.pos=new_pos;
 				} else if(num32===null) {
 					this.failed=true;
 					first_num.push(["error",fieldId]);
-				} else if(success_64&&num64!==BigInt(num32)) {
-					first_num.push(["data64",fieldId,num64]);
-					this.pos=new_pos;
+				} else if(revert_res[0]) {
+					let [,num64,new_pos]=revert_res;
+					if(num64[1]!==BigInt(num32)) {
+						first_num.push(["data64",fieldId,...num64]);
+						this.pos=new_pos;
+					} else {
+						first_num.push(["data32",fieldId,num32]);
+					}
 				} else {
 					first_num.push(["data32",fieldId,num32]);
 				}
-				if(this.noisy_log_level)
-					console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
+				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
 				break;
 			case 1:
-				first_num.push(["data_fixed64",fieldId,this.fixed64()]);
+				let last_pos=this.pos;
+				let f64=this.fixed64();
+				if(this.pos>this.cur_len) {
+					first_num.push(['error',last_pos]);
+					break;
+				}
+				first_num.push(["data_fixed64",fieldId,f64]);
 				break;
 			case 2: {
 				let size=this.uint32();
@@ -287,7 +317,7 @@ export class MyReader {
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @type {D_DecTypeNum} */
+				/** @private @type {D_DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
@@ -300,6 +330,7 @@ export class MyReader {
 						first_num.push(["child",fieldId,sub_buffer,null]);
 						break x;
 					}
+					if(sub_buffer.length===0&&res.length!==0) debugger;
 					first_num.push(["child",fieldId,sub_buffer,res]);
 				} else {
 					first_num.push(["child",fieldId,sub_buffer,null]);
@@ -309,7 +340,11 @@ export class MyReader {
 				let res;
 				while((wireType=(res=this.uint32())&7)!==4) {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
-					first_num.push(["group",fieldId,skip_res]);
+					if(this.failed) {
+						first_num.push(["error",res>>>3]);
+						break;
+					}
+					first_num.push(["group",res>>>3,skip_res]);
 				}
 			} break;
 			case 4: {

@@ -963,7 +963,7 @@ class MyReader {
 		}
 		if(ret===null) throw new Error("Failed to read uint32");
 		return ret;
-	};
+	}
 	read_varint() {
 		let sa=[this.buf[this.pos]&127];
 		while(true) {
