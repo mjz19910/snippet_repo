@@ -7453,7 +7453,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader",x,this.D_PdgBuyFlowHeader);}
 	/** @private @arg {R_Menu} x */
-	R_Menu(x) {this.H_("A_Notification",x,this.D_Menu);}
+	R_Menu(x) {this.H_("R_Menu",x,this.D_Menu);}
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow";
@@ -7551,6 +7551,7 @@ class HandleTypes extends ServiceMethods {
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
 					if(selected!==true) debugger;
+					if(!content.richGridRenderer) debugger;
 					this.R_RichGrid(content);
 					this.trackingParams(cf,trackingParams);
 				} break;
@@ -7559,6 +7560,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @private @arg {R_RichGrid} x */
+	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
+	/** @private @arg {D_RichGrid} x */
+	D_RichGrid(x) {x; debugger;}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="ExpandableTab"; this.k(cf,x);
