@@ -1,3 +1,6 @@
+type D_ChipCloudChip$Style=[
+	"STYLE_HOME_FILTER",
+][number];
 type D_ChipCloudChip=|{
 	style: {
 		styleType: "STYLE_HOME_FILTER";

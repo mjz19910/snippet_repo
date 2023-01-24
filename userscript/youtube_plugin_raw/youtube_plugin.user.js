@@ -9027,7 +9027,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.RD__NextContinuation);
+		this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
 		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
@@ -9037,14 +9037,14 @@ class HandleTypes extends ServiceMethods {
 		const cf="SearchFeedSectionListData";
 		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.RD__NextContinuation);
+		this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
 		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
 	/** @private @arg {RD_NextContinuation} x */
-	RD__NextContinuation(x) {this.H_("RD__NextContinuation",x,a => {a; debugger;});}
+	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,a => {a; debugger;});}
 	/** @private @arg {TR_SectionListItem<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
