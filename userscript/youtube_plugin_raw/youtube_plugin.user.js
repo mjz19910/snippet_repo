@@ -6226,7 +6226,7 @@ class ParserService extends BaseService {
 				case "report_history":
 				case "unlimited":
 					return;
-				default: console.log(`case "${x1}": `);console.log(`\n|"${x1}"`); debugger;
+				default: console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
 			}
 			console.log("new with param [param_2c_SP]",x,x1);
 		} else if(this.str_starts_with_r(x,"MP")) {
