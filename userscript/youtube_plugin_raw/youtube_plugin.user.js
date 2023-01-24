@@ -1880,7 +1880,7 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 			rest=rest_;
 		};
 		obj=rest;
-	};
+	}
 	/** @private @type {any} */
 	let res_any=obj;
 	/** @private @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
@@ -3325,18 +3325,6 @@ class IterateApiResultBase extends BaseService {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class CsiService extends BaseService {
-	data={
-		/** @private @type {D$BrowseEndpointPages|null} */
-		yt_fn: null,
-		/** @private @type {RC$CsiServiceC["value"]|null} */
-		c: null,
-		/** @private @type {RC$CsiVarTypes["cver"]|null} */
-		cver: null,
-		/** @private @type {"1"|null} */
-		yt_li: null,
-		/** @private @type {"1"|null} */
-		yt_ad: null,
-	};
 	/** @private @type {(RidFormat<string>)[]} */
 	rid_keys=[
 		"GetAccountAdvanced_rid","GetAccountBilling_rid","GetAccountDownloads_rid","GetAccountMenu_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountSharing_rid","GetAccountsList_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetHistory_rid","GetHome_rid","GetLibrary_rid","GetLiveChatReplay_rid","GetNotificationsMenu_rid","GetPlayer_rid","GetPlaylist_rid","GetReelItemWatch_rid","GetReelWatchSequence_rid","GetSubscriptions_rid","GetUnseenNotificationCount_rid","GetVideoTranscript_rid","GetWatchNext_rid","GetWatchPageWebCommentReplies_rid","GetWatchPageWebTopLevelComments_rid","GetWebMainAppGuide_rid","RecordNotificationInteractions_rid","RemoveLike_rid",
@@ -3381,6 +3369,18 @@ class CsiService extends BaseService {
 	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
+		this.data={
+			/** @private @type {D$BrowseEndpointPages|null} */
+			yt_fn: null,
+			/** @private @type {RC$CsiServiceC["value"]|null} */
+			c: null,
+			/** @private @type {RC$CsiVarTypes["cver"]|null} */
+			cver: null,
+			/** @private @type {"1"|null} */
+			yt_li: null,
+			/** @private @type {"1"|null} */
+			yt_ad: null,
+		};
 		for(let x of this.rid_keys) {
 			this.rid[x]=void 0;
 		}
