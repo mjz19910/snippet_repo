@@ -25,15 +25,26 @@ async function D_Watch$Test$playlistId() {
 	{
 		type UU=D_Watch['playlistId'];
 		let xa: UU="LL" as UU;
-		if(xa.length>2) {
-			type uw=Extract<SplitIntoGroups<UU,`${string}`>,[any,any,...any]>[1];
-			let v: uw=xa.slice(2,4) as uw;
+		type sw=SplitIntoGroups<UU,`${string}`>;
+		{
+			type uw=sw[0];
+			let v: uw=xa.slice(0,2) as uw;
 			switch(v) {
-				case "GM": break;
-				case "MM": break;
+				case "LL": break;
+				case "PL": console.log("some_more",xa.slice(2,4)); break;
+				case "RD": console.log("some_more",xa.slice(2,4)); break;
+				case "WL": break;
 				default: v===""; debugger; console.log("some",v); console.log("all",xa); break;
 			}
-			return;
+		}
+		if(xa.length>2) {
+			type uw=Extract<sw,[any,any,...any]>[1];
+			let v: uw=xa.slice(2,4) as uw;
+			switch(v) {
+				case "GM":
+				case "MM": console.log("some_more",xa.slice(4,6)); break;
+				default: v===""; debugger; console.log("some",v); console.log("all",xa); break;
+			}
 		}
 		let r=await dc<"RDGM">()(xa,"RDGM");
 		let r2=await dc<"RDMM">()(r,"RDMM");
