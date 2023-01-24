@@ -1,4 +1,4 @@
-type A_CommandExecutor=[
+type AC_Executor=[
 	EA_ChangeEngagementPanelVisibility,
 	A_HideEngagementPanelScrim,
 	TA_OpenPopup<{}>,

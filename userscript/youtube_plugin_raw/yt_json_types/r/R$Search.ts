@@ -4,6 +4,6 @@ type RS_Search=Record<"contents",R_TwoColumnSearchResults>&{
 	trackingParams: string;
 	topbar: R_DesktopTopbar;
 	refinements: string[];
-	onResponseReceivedCommands: SearchResponseReceivedCommandItem[];
+	onResponseReceivedCommands: C_AdsControlFlowOpportunityReceived[];
 	targetId: "search-page";
 };

@@ -1,1 +1,0 @@
-type YtPageTypeEnum=YtPageTypeList[number];

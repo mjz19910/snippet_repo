@@ -1,1 +1,0 @@
-type SearchResponseReceivedCommandItem=C_AdsControlFlowOpportunityReceived;

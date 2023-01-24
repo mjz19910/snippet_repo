@@ -6911,7 +6911,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @private @template T @arg {T_Command_TP<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf=this.sc("T_Command_TP",x);
 		const {trackingParams,...y}=this.sd(cf,x);
@@ -9657,18 +9657,18 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {C_CommandExecutor} x */
+	/** @private @arg {C_Executor} x */
 	CommandExecutorCommand(x) {
 		const cf="CommandExecutorCommand";
 		const {clickTrackingParams,commandExecutorCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandExecutorData(commandExecutorCommand);
 	}
-	/** @private @arg {D_CommandExecutor} x */
+	/** @private @arg {DC_Executor} x */
 	CommandExecutorData(x) {
 		this.T_Commands(x,this.A_CommandExecutor);
 	}
-	/** @private @arg {A_CommandExecutor} x */
+	/** @private @arg {AC_Executor} x */
 	A_CommandExecutor(x) {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);

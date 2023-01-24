@@ -1,1 +1,0 @@
-type MG_SurveyCommand_MD={webCommandMetadata: GMG_SurveyWeb_CMD;};

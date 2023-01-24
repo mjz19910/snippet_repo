@@ -1,1 +1,0 @@
-type D_CommandExecutor=Record<"commands",A_CommandExecutor[]>;

@@ -1,4 +1,4 @@
-type T_Command_TP<T>={
+type T_Command$<T>={
 	command: T;
 	trackingParams: string;
 };

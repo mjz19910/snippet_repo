@@ -1,0 +1,1 @@
+type DC_Executor=Record<"commands",AC_Executor[]>;

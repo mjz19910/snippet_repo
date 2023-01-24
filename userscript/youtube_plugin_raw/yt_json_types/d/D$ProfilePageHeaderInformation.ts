@@ -3,5 +3,5 @@ type D_ProfilePageHeaderInformation={
 	metadata: R_ProfilePageHeaderMetadataViewModel;
 	thumbnail: R_ProfilePageHeaderThumbnailViewModel;
 	alignment: string;
-	onTap: C$InnertubeCommand;
+	onTap: C_Innertube;
 };

@@ -1,0 +1,1 @@
+type C_Innertube={innertubeCommand: CD_Innertube;};

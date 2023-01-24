@@ -5,6 +5,6 @@ type GC_Button=
 	|TE_SignalService<GS_Client>
 	|E_CreateBackstagePost
 	|E_Url
-	|C_CommandExecutor
+	|C_Executor
 	;
 ;

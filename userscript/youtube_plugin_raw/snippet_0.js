@@ -306,7 +306,7 @@ export class Snippet_0_tmp {
 		let q=this.split_string_once(r[1],"_");
 		return q[1];
 	}
-	/** @public @template {{}} T @arg {T$Commands<T>} x @arg {(x:T)=>void} f */
+	/** @public @template {{}} T @arg {{commands:T[]}} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}
