@@ -9015,7 +9015,15 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {x; debugger;}
 	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {this.H_("E_GetNotificationMenu",x,a => {a; debugger;});}
+	E_GetNotificationMenu(x) {
+		this.T_Endpoint("E_GetNotificationMenu",x,a => {
+			this.params("","GetNotificationMenu",this.w(a).ctoken);
+			debugger;
+		},a => {
+			a;
+			debugger;
+		});
+	}
 	/** @private @template T @arg {TR_ContinuationItem_CE<T>} x */
 	TR_ContinuationItem_CE(x) {
 		const cf="TR_ContinuationItem_CE";
@@ -9069,7 +9077,9 @@ class HandleTypes extends ServiceMethods {
 		this.t(targetId,a => this.targetId(cf,a));
 	}
 	/** @private @arg {RD_NextContinuation} x */
-	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,a => {a; debugger;});}
+	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,this.D_NextContinuation);}
+	/** @private @arg {D_NextContinuation} x */
+	D_NextContinuation(x) {x;}
 	/** @private @arg {TR_SectionListItem<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
