@@ -7522,7 +7522,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(style,a => this.save_string("[Button.style]",a));
 		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
-		this.t(hint,_x => {debugger;});
+		this.t(hint,this.R_Hint);
 		this.t(targetId,a => {
 			/** @private @type {D_Button$TargetId} */
 			switch(a) {
@@ -7533,6 +7533,8 @@ class HandleTypes extends ServiceMethods {
 			this.targetId(cf,a);
 		});
 	}
+	/** @private @arg {R_Hint} x */
+	R_Hint(x) {x; debugger;}
 	/** @unused @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {
 		const cf="D_ThumbnailOverlayLoadingPreview"; this.k(cf,x);
@@ -7955,14 +7957,16 @@ class HandleTypes extends ServiceMethods {
 		const cf="UA_Viewership"; this.k(cf,x);
 		let x1=x.updateViewershipAction;
 		this.save_keys(`[UA_ViewershipData]`,x1);
-		((_x) => {debugger;})(x1.viewCount);
+		this.R_VideoViewCount(x1.viewCount);
 	}
+	/** @private @arg {R_VideoViewCount} x */
+	R_VideoViewCount(x) {x; debugger;}
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="SearchResponse";
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_of_string(estimatedResults);
-		((_x) => {debugger;})(contents);
+		this.R_TwoColumnSearchResults(contents);
 		this.trackingParams(cf,trackingParams);
 		this.R_DesktopTopbar(topbar);
 		this.z(refinements,this.primitive_of_string);
@@ -7974,6 +7978,8 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.targetId(cf,targetId);
 	}
+	/** @private @arg {R_TwoColumnSearchResults} x */
+	R_TwoColumnSearchResults(x) {x; debugger;}
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommand";
@@ -8111,6 +8117,10 @@ class HandleTypes extends ServiceMethods {
 	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel",x,a => {a; debugger;});}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog",x,this.D_VoiceSearchDialog);}
+	/** @private @arg {R_CommentsHeader} x */
+	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog",x,this.D_CommentsHeader);}
+	/** @private @arg {D_CommentsHeader} x */
+	D_CommentsHeader(x) {x; debugger;}
 	/** @private @arg {D_VoiceSearchDialog} x */
 	D_VoiceSearchDialog(x) {
 		const cf="D_VoiceSearchDialog"; this.k(cf,x);
@@ -8246,9 +8256,7 @@ class HandleTypes extends ServiceMethods {
 				this.targetId(cf,targetId);
 				this.save_string("[Header.targetId]",targetId);
 				if(targetId!=="comments-section") debugger;
-				if(continuationItems.length!==1) debugger;
-				const [item]=continuationItems;
-				((_x) => {debugger;})(item);
+				this.z(continuationItems,this.R_CommentsHeader);
 			} break;
 			default: debugger; break;
 		};
@@ -8336,7 +8344,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
 	/** @private @arg {R_LikeButton} x */
-	R_LikeButton(x) {x;debugger;}
+	R_LikeButton(x) {x; debugger;}
 	/** @private @arg {R_BrowserMediaSession} x */
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession",x,this.AD_BrowserMediaSession);}
 	/** @private @arg {AD_BrowserMediaSession} x */

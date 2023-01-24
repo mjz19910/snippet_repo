@@ -5,5 +5,5 @@ type DC_ReloadContinuationItems={
 }|{
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 	targetId: "comments-section";
-	continuationItems: [R_CommentsHeader];
+	continuationItems: R_CommentsHeader[];
 };
