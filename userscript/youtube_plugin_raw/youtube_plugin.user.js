@@ -7898,11 +7898,13 @@ class HandleTypes extends ServiceMethods {
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
+	/** @private @arg {RD_TimedContinuation} x */
+	RD_TimedContinuation(x) {x; debugger;}
 	/** @private @arg {RSU_M} x */
 	RSU_M(x) {
 		const cf="RSU_M";
 		const {responseContext: {},continuation,actions,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		((_x) => {debugger;})(continuation);
+		this.RD_TimedContinuation(continuation);
 		this.z(actions,a => {
 			if("updateViewershipAction" in a) {
 				return this.UA_Viewership(a);
@@ -8327,9 +8329,18 @@ class HandleTypes extends ServiceMethods {
 	A_BrowserMediaSession(x) {
 		const cf="BrowserMediaSessionRoot";
 		const {actions,browserMediaSession,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(actions,((_x) => {debugger;}));
-		((_x) => {debugger;})(browserMediaSession);
+		this.z(actions,(x => {
+			if(!x.likeButtonRenderer) debugger;
+			this.R_LikeButton(x);
+		}));
+		this.R_BrowserMediaSession(browserMediaSession);
 	}
+	/** @private @arg {R_LikeButton} x */
+	R_LikeButton(x) {x;debugger;}
+	/** @private @arg {R_BrowserMediaSession} x */
+	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession",x,this.AD_BrowserMediaSession);}
+	/** @private @arg {AD_BrowserMediaSession} x */
+	AD_BrowserMediaSession(x) {x; debugger;}
 	/** @private @arg {string} x */
 	primitive_of_string(x) {
 		this.primitive_of(x,"string");
@@ -9700,7 +9711,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {G_WatchNext} x */
 	WatchNextItem(x) {
 		const cf="WatchNextItem"; this.k(cf,x);
-		if("continuationItemRenderer" in x) return ((_x) => {debugger;})(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		debugger;
 	}

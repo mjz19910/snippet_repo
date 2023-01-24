@@ -1,1 +1,0 @@
-type AD__BrowserMediaSession={};
