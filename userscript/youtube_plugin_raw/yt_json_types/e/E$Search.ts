@@ -1,5 +1,5 @@
 type E_Search={
 	clickTrackingParams: string;
-	commandMetadata: VE4724_CommandMetadata;
+	commandMetadata: M_VE4724;
 	searchEndpoint: D_Search;
 };

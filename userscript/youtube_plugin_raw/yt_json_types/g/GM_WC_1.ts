@@ -48,8 +48,10 @@ type GM_VE5754_WC={
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 };
 type GM_VE23462_WC={
-	rootVe: 23462;
+	url: "/account_notifications";
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
+	rootVe: 23462;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE4724_WC={
 	url: "/results?search_query=";

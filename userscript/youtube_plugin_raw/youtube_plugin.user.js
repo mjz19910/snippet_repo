@@ -6767,7 +6767,7 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}
-	/** @public @arg {Extract<G_WC$Metadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
@@ -6785,7 +6785,7 @@ class ServiceMethods extends ServiceData {
 			case "83769": return;
 			case "96368": return;
 			default: {
-				/** @type {G_WC$Metadata[]} */
+				/** @type {GM_WC[]} */
 				let x=[]; x;
 			}
 		}
@@ -6813,7 +6813,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @public @arg {Extract<G_WC$Metadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -6944,7 +6944,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
-	/** @private @arg {G_WC$Metadata} x */
+	/** @private @arg {GM_WC} x */
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -6966,7 +6966,7 @@ class HandleTypes extends ServiceMethods {
 						return;
 					}
 					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-					/** @private @arg {G_WC$Metadata} x */
+					/** @private @arg {GM_WC} x */
 					let typedef_str=this.codegen_new_typedef(x,`G_${url_type_ex}`,true);
 					console.log(`
 					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
@@ -7001,7 +7001,7 @@ class HandleTypes extends ServiceMethods {
 			let cx=x.rootVe;
 			switch(x.rootVe) {
 				default: {
-					/** @private @arg {G_WC$Metadata} x */
+					/** @private @arg {GM_WC} x */
 					this.codegen_new_typedef(x,`G_VE_{cx}`);
 					console.log(`\n\tG_VE_{cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
@@ -7041,7 +7041,7 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @private @arg {G_WC$Metadata} x */
+	/** @private @arg {GM_WC} x */
 	GeneratedWebCommandMetadata(x) {
 		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;

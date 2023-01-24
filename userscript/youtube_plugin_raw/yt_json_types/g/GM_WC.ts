@@ -1,4 +1,4 @@
-type G_WC$Metadata=[
+type GM_WC=[
 	GM_SendPost,
 	GM_WC_1,
 ][number];

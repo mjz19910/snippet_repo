@@ -1,1 +1,0 @@
-type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
