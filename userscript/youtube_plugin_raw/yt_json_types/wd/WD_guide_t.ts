@@ -1,1 +1,0 @@
-type WD_guide_t={type: "guide";data: R_Guide;};

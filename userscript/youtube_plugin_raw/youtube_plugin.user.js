@@ -6527,12 +6527,12 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "get_live_chat_replay": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChat} */
+				/** @private @type {RS_GetLiveChat} */
 				data: as(x),
 			};
 			case "get_live_chat": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChat} */
+				/** @private @type {RS_GetLiveChat} */
 				data: as(x),
 			};
 		}
@@ -8034,7 +8034,7 @@ class HandleTypes extends ServiceMethods {
 	D_ReelWatch(x) {this.H_("D_ReelWatch",x,a => {a; debugger;});}
 	/** @private @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {x; debugger;}
-	/** @private @arg {GetLiveChat} x */
+	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
 		const cf="GetLiveChat";
 		this.save_keys(`[R_${cf}]`,x);

@@ -1,1 +1,0 @@
-type WD_player_t={type: "player";data: RS_Player;};
