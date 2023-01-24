@@ -8124,8 +8124,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GS_Client} x */
 	GS_Client(x) {
-		let om=this.Signal$Omit(x,a => {
-			if(a!=="CLIENT_SIGNAL") debugger;
+		const cf="GS_Client";
+		this.save_keys(`[${cf}]`,x);
+		let om=this.Signal$Omit(x,x => {
+			this.save_string(`[${cf}.signal]`,x);
+			if(x!=="CLIENT_SIGNAL") debugger;
 		});
 		this.z(this.w(om),x => {
 			if("openPopupAction" in x) {
