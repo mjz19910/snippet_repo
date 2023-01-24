@@ -8576,7 +8576,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio"; this.k(cf,x);
-		const {secondaryNavigationEndpoint,...y}=this.sd(cf,x);this.Omit$Radio(cf,x);
+		const {secondaryNavigationEndpoint,...y}=this.sd(cf,x); this.Omit$Radio(cf,x);
 		this.E_Watch(secondaryNavigationEndpoint);
 		let uk=this.get_keys_of(y);
 		if(uk.length>0) {
@@ -8676,7 +8676,7 @@ class HandleTypes extends ServiceMethods {
 		return [x.contents,x.sectionIdentifier,x.targetId];
 	}
 	/** @private @arg {G_WatchResultItem} x */
-	G_WatchResultItem(x) {x;}
+	G_WatchResultItem(x) {x; debugger;}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
