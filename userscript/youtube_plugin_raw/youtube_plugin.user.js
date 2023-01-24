@@ -8374,8 +8374,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {D_MenuServiceItem<null, {}>} x */
 	D_MenuServiceItem(x) {
-		const cf="R_MenuServiceItem";
-		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
+		const cf="R_MenuServiceItem",{text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.G_Text(text);
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
