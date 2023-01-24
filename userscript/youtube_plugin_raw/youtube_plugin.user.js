@@ -8388,10 +8388,9 @@ class HandleTypes extends ServiceMethods {
 		this.H_("R_MenuServiceItem",x,x => {
 			const cf="Menu"; this.k(cf,x);
 			if("icon" in x) {
-				if(x.icon.iconType!=="NOT_INTERESTED") debugger;
 				switch(x.icon.iconType) {
-					case "NOT_INTERESTED": return this.D_MenuServiceItem_NotInterested(x);
-					case "ADD_TO_QUEUE_TAIL": debugger; break;
+					case "NOT_INTERESTED": debugger; return this.D_MenuServiceItem_NotInterested({...x,icon: {iconType: x.icon.iconType}});
+					case "ADD_TO_QUEUE_TAIL": debugger; return this.D_MenuServiceItem_AddToQueueTail({...x,icon: {iconType: x.icon.iconType}});
 					default: debugger; break;
 				}
 
@@ -8409,6 +8408,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", {}>} x */
 	D_MenuServiceItem_NotInterested(x) {x; debugger;}
+	/** @arg {D_MenuServiceItem<"ADD_TO_QUEUE_TAIL", {}>} x */
+	D_MenuServiceItem_AddToQueueTail(x) {
+		const cf="D_MenuServiceItem_AddToQueueTail"; this.k(cf,x);
+		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+		this.G_Text(text);
+		if(icon.iconType!=="ADD_TO_QUEUE_TAIL") debugger;
+		this.g(serviceEndpoint);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
 	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem",x,this.D_ToggleMenuServiceItem);}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
