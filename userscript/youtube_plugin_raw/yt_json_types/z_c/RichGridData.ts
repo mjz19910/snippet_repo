@@ -2,7 +2,7 @@ type ReflowOptions={
 	minimumRowsOfVideosAtStart: 2;
 	minimumRowsOfVideosBetweenSections: 1;
 };
-type BrowseFeedContentItem=R_RichItem;
+type BrowseFeedContentItem=R_RichItem|R_ContinuationItem;
 type Todo_D_RichGrid=Record<"contents",RendererContentItem[]>&{
 	masthead: R_VideoMastheadAdV3;
 };

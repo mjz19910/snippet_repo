@@ -7566,7 +7566,11 @@ class HandleTypes extends ServiceMethods {
 	D_RichGrid(x) {
 		const cf="D_RichGrid";
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x); this.g(y);
-		this.z(contents,this.R_RichItem);
+		this.z(contents,a => {
+			if("richItemRenderer" in a) return this.R_RichItem(a);
+			if("continuationItemRenderer" in a) return this.R_ContinuationItem(x);
+			debugger;
+		});
 		this.R_FeedFilterChipBar(header);
 		this.trackingParams(cf,trackingParams);
 		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
@@ -7581,8 +7585,12 @@ class HandleTypes extends ServiceMethods {
 		const {content,trackingParams,rowIndex,colIndex,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
 		console.log("[Item.pos]",rowIndex,colIndex);
-		if("videoRenderer" in content) return;
-		debugger;
+		{
+			let x=content;
+			if("videoRenderer" in x) return;
+			if("radioRenderer" in x) return;
+			debugger;
+		}
 		content;
 		trackingParams;
 		rowIndex;
