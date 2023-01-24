@@ -9190,7 +9190,9 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
-	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,a => {a; debugger;});}
+	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,this.D_GuideSubscriptionsSection);}
+	/** @private @arg {D_GuideSubscriptionsSection} x */
+	D_GuideSubscriptionsSection(x) {x;}
 	/** @private @arg {D_GuideSection} x */
 	D_GuideSection(x) {
 		const cf="GuideSectionData";
@@ -9244,7 +9246,9 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isCourse,"boolean");
 	}
 	/** @private @arg {R_PlaylistPanelVideo} x */
-	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo",x,a => {a; debugger;});}
+	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo",x,this.D_PlaylistPanelVideo);}
+	/** @private @arg {D_PlaylistPanelVideo} x */
+	D_PlaylistPanelVideo(x) {x;}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
 		const cf="PlayerOverlayVideoDetails";
@@ -9387,10 +9391,10 @@ class HandleTypes extends ServiceMethods {
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
 		debugger;
 	}
-	/**
-	 * @param {R_C4TabbedHeader} x
-	 */
-	R_C4TabbedHeader(x) {this.H_("C4TabbedHeader",x,a => {a; debugger;});}
+	/** @private @arg {R_C4TabbedHeader} x */
+	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader",x,this.D_C4TabbedHeader);}
+	/** @private @arg {D_C4TabbedHeader} x */
+	D_C4TabbedHeader(x) {x;}
 	/** @private @arg {R_FeedTabbedHeader} x */
 	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {R_PlaylistHeader} x */
@@ -9458,19 +9462,27 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
 	/** @private @arg {R_AddToPlaylist} x */
-	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,a => {a; debugger;});}
+	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,this.D_AddToPlaylist);}
+	/** @private @arg {D_AddToPlaylist} x */
+	D_AddToPlaylist(x) {x;}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog(x) {this.HD_("R_AttLog",x);}
 	/** @private @arg {R_Comment} x */
-	R_Comment(x) {this.H_("Comment",x,a => {a; debugger;});}
+	R_Comment(x) {this.H_("Comment",x,this.D_Comment);}
+	/** @private @arg {D_Comment} x */
+	D_Comment(x) {x;}
 	/** @private @arg {R_ElementUpdate} x */
 	R_ElementUpdate(x) {this.H_("ElementUpdate",x,x => this.z(x,this.ElementUpdateItem));}
 	/** @private @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("TemplateUpdate",x,this.D_TemplateUpdate);}
 	/** @private @arg {R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_("ProfileColumn",x,a => {a; debugger;});}
+	R_ProfileColumn(x) {this.H_("ProfileColumn",x,this.D_ProfileColumn);}
+	/** @private @arg {D_ProfileColumn} x */
+	D_ProfileColumn(x) {x;}
 	/** @private @arg {R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,a => {a; debugger;});}
+	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,this.D_BrowseFeedActions);}
+	/** @private @arg {D_BrowseFeedActions} x */
+	D_BrowseFeedActions(x) {x;}
 	/** @private @arg {R_WebSearchboxConfig} x */
 	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {RSG_AddToPlaylist} x */
