@@ -3,7 +3,7 @@ type R_BrowsePage={
 	url: string;
 	endpoint: E_Browse;
 	page: "browse";
-	response: R_Browse;
+	response: RSB_t;
 	expirationTime?: number;
 	previousCsn?: string;
 };

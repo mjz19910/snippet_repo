@@ -1,4 +1,4 @@
-type R_BrowseEditPlaylist={
+type RSB_EditPlaylist={
 	responseContext: RC$ResponseContext;
 	status: "STATUS_SUCCEEDED";
 	playlistEditResults: {}[];

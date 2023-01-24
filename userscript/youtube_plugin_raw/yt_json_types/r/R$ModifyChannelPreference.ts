@@ -1,4 +1,4 @@
-type R_ModifyChannelPreference={
+type RSM_ChannelPreference={
 	responseContext: RC$ResponseContext;
 	actions: TA_OpenPopup<{}>[];
 	channelId: `UC${string}`;

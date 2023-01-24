@@ -1,4 +1,4 @@
-type R_GetNotificationMenu={
+type RS_GetNotificationMenu={
 	responseContext: RC$ResponseContext;
 	actions: TA_OpenPopup<{
 		popup: TR_MP_Menu<{

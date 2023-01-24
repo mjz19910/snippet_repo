@@ -6423,27 +6423,27 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "browse": return {
 				type: target[0],
-				/** @private @type {R_Browse} */
+				/** @private @type {RSB_t} */
 				data: as(x),
 			};
 			case "feedback": return {
 				type: target[0],
-				/** @private @type {R_Feedback} */
+				/** @private @type {RS_Feedback} */
 				data: as(x),
 			};
 			case "getDatasyncIdsEndpoint": return {
 				type: target[0],
-				/** @private @type {R_DatasyncIds} */
+				/** @private @type {REG_DatasyncIds} */
 				data: as(x),
 			};
 			case "getAccountSwitcherEndpoint": return {
 				type: target[0],
-				/** @private @type {RE_GetAccountSwitcher} */
+				/** @private @type {REG_AccountSwitcher} */
 				data: as(x),
 			};
 			case "get_transcript": return {
 				type: target[0],
-				/** @private @type {R_GetTranscript} */
+				/** @private @type {RSG_Transcript} */
 				data: as(x),
 			};
 			case "get_survey": return {
@@ -6453,7 +6453,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "guide": return {
 				type: target[0],
-				/** @private @type {R_Guide} */
+				/** @private @type {RS_Guide} */
 				data: as(x),
 			};
 			case "next": return {
@@ -6473,7 +6473,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "updated_metadata": return {
 				type: target[0],
-				/** @private @type {U_Metadata} */
+				/** @private @type {RSU_M} */
 				data: as(x),
 			};
 		}
@@ -6485,7 +6485,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {D_ReelItemWatch} */
+				/** @private @type {RS_ReelItemWatch} */
 				data: as(x),
 			};
 			case "reel_watch_sequence": return {
@@ -6501,17 +6501,17 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "get_notification_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_GetNotificationMenu} */
+				/** @private @type {RS_GetNotificationMenu} */
 				data: as(x),
 			};
 			case "get_unseen_count": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_GetUnseenCount} */
+				/** @private @type {RSG_GetUnseenCount} */
 				data: as(x),
 			};
 			case "modify_channel_preference": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_ModifyChannelPreference} */
+				/** @private @type {RSM_ChannelPreference} */
 				data: as(x),
 			};
 			case "record_interactions": return {
@@ -6544,12 +6544,12 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "get": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_AttGet} */
+				/** @private @type {RS_AttGet} */
 				data: as(x),
 			};
 			case "log": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_AttLog$RC} */
+				/** @private @type {RS_AttLog_RC} */
 				data: as(x),
 			};
 		}
@@ -6566,12 +6566,12 @@ class ServiceMethods extends ServiceData {
 			};
 			case "accounts_list": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_AccountsList} */
+				/** @private @type {RS_AccountsList} */
 				data: as(x),
 			};
 			case "set_setting": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_SetSetting} */
+				/** @private @type {RS_SetSetting} */
 				data: as(x),
 			};
 		}
@@ -6604,7 +6604,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[1]) {
 			case "get_share_panel": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetSharePanel} */
+				/** @private @type {RSG_SharePanel} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -6626,12 +6626,12 @@ class ServiceMethods extends ServiceData {
 		switch(t[1]) {
 			case "subscribe": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R_Subscribe} */
+				/** @private @type {RS_Subscribe} */
 				data: as(x),
 			};
 			case "unsubscribe": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R_Unsubscribe} */
+				/** @private @type {RS_Unsubscribe} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -6643,7 +6643,7 @@ class ServiceMethods extends ServiceData {
 			case 2: switch(t[1]) {
 				case "edit_playlist": return {
 					type: `${t[0]}.${t[1]}`,
-					/** @private @type {R_BrowseEditPlaylist} */
+					/** @private @type {RSB_EditPlaylist} */
 					data: as(x),
 				};
 			}
@@ -6652,7 +6652,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[0]) {
 			case "browse": return {
 				type: t[0],
-				/** @private @type {R_Browse} */
+				/** @private @type {RSB_t} */
 				data: as(x),
 			};
 		}
@@ -7191,7 +7191,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
-	/** @private @arg {R_BrowseEditPlaylist} x */
+	/** @private @arg {RSB_EditPlaylist} x */
 	RSB_EditPlaylist(x) {
 		const cf="BrowseEditPlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7362,7 +7362,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
 	}
-	/** @private @arg {R_Browse} x */
+	/** @private @arg {RSB_t} x */
 	RSB(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7874,9 +7874,9 @@ class HandleTypes extends ServiceMethods {
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
-	/** @private @arg {U_Metadata} x */
+	/** @private @arg {RSU_M} x */
 	RSU_M(x) {
-		const cf="R_UpdatedMetadata";
+		const cf="RSU_M";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y); // ! #destructure
 		((_x) => {debugger;})(continuation);
@@ -8042,7 +8042,7 @@ class HandleTypes extends ServiceMethods {
 		this.LiveChatContinuation(a1);
 		this.t_cf("GetLiveChat",a2,this.trackingParams);
 	}
-	/** @private @arg {R_GetNotificationMenu} x */
+	/** @private @arg {RS_GetNotificationMenu} x */
 	RSG_NotificationMenu(x) {
 		const cf="GetNotificationMenu";
 		this.save_keys(`[R_${cf}]`,x);
@@ -8771,7 +8771,7 @@ class HandleTypes extends ServiceMethods {
 	D_ChipCloud(x) {
 		x.chips;
 	}
-	/** @private @arg {R_GetUnseenCount} x */
+	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_UnseenCount(x) {
 		const cf="R_GetUnseenCount";
 		this.save_keys(`[${cf}]`,x);
@@ -8799,14 +8799,14 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(unseenCount,"number");
 		this.primitive_of(timeoutMs,"number");
 	}
-	/** @private @arg {R_DatasyncIds} x */
+	/** @private @arg {REG_DatasyncIds} x */
 	REG_DatasyncIds(x) {
 		const cf="DatasyncIdsResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y); // ! #destructure
 		this.z(datasyncIds,this.primitive_of_string);
 	}
-	/** @private @arg {RE_GetAccountSwitcher} x */
+	/** @private @arg {REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x) {
 		const cf="RE_GetAccountSwitcher";
 		this.save_keys(`[${cf}]`,x);
@@ -8823,7 +8823,7 @@ class HandleTypes extends ServiceMethods {
 	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu",x,this.D_MP_GetMenu);}
 	/** @private @arg {D_MP_GetMenu} x */
 	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,a => {a; debugger;});}
-	/** @private @arg {R_AccountsList} x */
+	/** @private @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="AccountsListResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8833,7 +8833,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
 	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,a => {a; debugger;});}
-	/** @private @arg {D_ReelItemWatch} x */
+	/** @private @arg {RS_ReelItemWatch} x */
 	RS_ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8850,14 +8850,14 @@ class HandleTypes extends ServiceMethods {
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,a => {a; debugger;});}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,a => {a; debugger;});}
-	/** @private @arg {R_SetSetting} x */
+	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="R_SetSetting";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},settingItemId,...y}=x; this.g(y); // ! #destructure
 		if(settingItemId!=="407") debugger;
 	}
-	/** @private @arg {R_Feedback} x */
+	/** @private @arg {RS_Feedback} x */
 	RS_Feedback(x) {
 		const cf="FeedbackResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9098,7 +9098,7 @@ class HandleTypes extends ServiceMethods {
 		const {params,...y}=x; this.g(y); // ! #destructure
 		this.params("GetTranscript","get_transcript.params",params);
 	}
-	/** @private @arg {R_GetTranscript} x */
+	/** @private @arg {RSG_Transcript} x */
 	RS_GetTranscript(x) {
 		const cf="R_GetTranscript";
 		this.save_keys(`[${cf}]`,x);
@@ -9118,7 +9118,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},success,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(success,"boolean");
 	}
-	/** @private @arg {R_AttGet} x */
+	/** @private @arg {RS_AttGet} x */
 	RS_AttGet(x) {
 		const cf="AttGetResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9126,7 +9126,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(challenge);
 		this.D_AttBgChallenge(bgChallenge);
 	}
-	/** @private @arg {R_Guide} x */
+	/** @private @arg {RS_Guide} x */
 	RS_Guide(x) {
 		const cf="GuideResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9424,7 +9424,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,a => {a; debugger;});}
-	/** @private @arg {R_AttLog$RC} x */
+	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog(x) {this.HD_("R_AttLog",x);}
 	/** @private @arg {R_Comment} x */
 	R_Comment(x) {this.H_("Comment",x,a => {a; debugger;});}
@@ -10045,25 +10045,25 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {GetSharePanel} x */
+	/** @private @arg {RSG_SharePanel} x */
 	RS_GetSharePanel(x) {
 		const cf="GetSharePanel";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {R_Subscribe} x */
+	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
 		const cf="SubscribeResponse";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {R_Unsubscribe} x */
+	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="UnsubscribeResponse";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {R_ModifyChannelPreference} x */
+	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
 		const cf="ModifyChannelPreference";
 		this.save_keys(`[${cf}]`,x);

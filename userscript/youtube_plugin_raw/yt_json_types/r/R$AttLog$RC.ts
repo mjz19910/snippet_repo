@@ -1,1 +1,1 @@
-type R_AttLog$RC={responseContext: RC$ResponseContext;};
+type RS_AttLog_RC={responseContext: RC$ResponseContext;};
