@@ -8671,6 +8671,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {M_AdLayout} x */
 	M_AdLayout(x) {
+		const cf="M_AdLayout";
+		this.save_keys(`[${cf}]`,x);
 		const {layoutId,layoutType,adLayoutLoggingData,...y}=x; this.g(y);
 		switch(layoutType) {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": break; case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": break;
