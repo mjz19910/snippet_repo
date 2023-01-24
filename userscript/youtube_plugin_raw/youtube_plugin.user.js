@@ -7232,7 +7232,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="GM_VE23462_WC";
 		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		url;
+		if(!this.str_starts_with("/@",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
