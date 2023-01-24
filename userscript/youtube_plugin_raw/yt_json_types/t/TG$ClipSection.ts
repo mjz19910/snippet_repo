@@ -1,1 +1,0 @@
-type ClipSection=Record<"contents",R_ClipCreation[]>;

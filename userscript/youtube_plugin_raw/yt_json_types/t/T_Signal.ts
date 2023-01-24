@@ -1,1 +1,1 @@
-type T_Signal<T>={signal: T;};
+type T_Signal<T>=Record<"signal",T>;

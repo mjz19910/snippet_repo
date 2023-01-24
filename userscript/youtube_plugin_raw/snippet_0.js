@@ -467,7 +467,7 @@ class ND extends Snippet_0_tmp {
 	R_New(x) {this.H$R_("A_Notification",x,this.AD_Notification);}
 	/** @pub @arg {AD_Notification} x */
 	D_NewData(x) {x;}
-	/** @pub @arg {E_T$SignalService<{}>} x */
+	/** @pub @arg {TE_SignalService<{}>} x */
 	E_New$Endpoint(x) {x;}
 	use() {
 		this.R_New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
@@ -714,14 +714,14 @@ class ND extends Snippet_0_tmp {
 	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {this.H_("E_Subscribe",x,() => 0);}
-	/** @private @template T @arg {E_T$SignalService<T>} x */
+	/** @private @template T @arg {TE_SignalService<T>} x */
 	signalServiceEndpoint(x) {
 		this.E_SignalService(x,a => {
 			a;
 			debugger;
 		});
 	}
-	/** @private @template T @arg {E_T$SignalService<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {TE_SignalService<T>} x @arg {(this:this,x:T)=>void} f */
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}

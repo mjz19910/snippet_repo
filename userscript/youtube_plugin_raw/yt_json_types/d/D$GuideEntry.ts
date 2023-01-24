@@ -25,14 +25,14 @@ type D_GuideEntry={
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	serviceEndpoint: E_T$SignalService<{}>|E_ReelWatch;
+	serviceEndpoint: TE_SignalService<{}>|E_ReelWatch;
 	isPrimary: true;
 }|{
 	icon: T_Icon<"HELP">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	serviceEndpoint: E_T$SignalService<{}>;
+	serviceEndpoint: TE_SignalService<{}>;
 }|{
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<"VIDEO_LIBRARY_WHITE">;

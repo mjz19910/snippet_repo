@@ -4411,7 +4411,7 @@ class CodegenService extends BaseService {
 	}
 	/** @param {{[U in string]:unknown}} x */
 	decode_Signal(x) {
-		/** @private @type {SG_Client} */
+		/** @private @type {GS_Client} */
 		let u=as(x);
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E_S_ClientSignal"; break;
@@ -8113,7 +8113,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template T @arg {E_T$SignalService<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {TE_SignalService<T>} x @arg {(this:this,x:T)=>void} f */
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}

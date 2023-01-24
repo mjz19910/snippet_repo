@@ -1,1 +1,1 @@
-type D_E_SignalService=SG_Client|S_GetAccountMenu;
+type D_E_SignalService=GS_Client|S_GetAccountMenu;

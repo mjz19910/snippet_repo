@@ -1,6 +1,6 @@
-type SG_Client=T_Signal<"CLIENT_SIGNAL">&T_Actions<[
+type S_Client_Items=[
 	E_ShowEngagementPanel,
 	A_SendFeedback,
 	A_Signal,
 	TA_OpenPopup<{}>
-][number]>;
+][number];
