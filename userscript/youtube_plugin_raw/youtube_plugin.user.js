@@ -4126,7 +4126,7 @@ class CodegenService extends BaseService {
 	#generate_body_default_item(k,out,env_names,def_name) {
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let mn=tn;
-		if(mn===def_name) mn=`D__${tn}`;
+		if(mn===def_name) mn=`D_${tn}`;
 		env_names.push(mn);
 		out.push(`this.${mn}(${k});`);
 	}
@@ -6914,9 +6914,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf=this.sc("T_Command_TP",x);
-		const {trackingParams,...y}=this.sd(cf,x);
+		const {trackingParams,command: a,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
-		f.call(this,this.w(y));
+		f.call(this,a);
 	}
 	/** @private @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(x,f) {
@@ -6925,7 +6925,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T_Endpoint(cf,x,f,f_v$m) {
-		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x);
+		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x); // !
 		f.call(this,y);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		this.t(commandMetadata,a => f_v$m.call(this,a));
@@ -7151,8 +7151,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
-		const cf="DesktopTopbar";
-		this.save_keys(`[D__${cf}]`,x);
+		const cf="D_DesktopTopbar";
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.R_TopbarLogo(logo);
 		this.R_X_FusionSearchbox(searchbox);
@@ -7211,11 +7210,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_Browse} x */
 	E_Browse(x) {
-		const cf="Browse";
-		this.save_keys(`[E_${cf}]`,x);
-		this.T_Endpoint("E_Browse",x,a => {
+		const cf="E_Browse";
+		this.T_Endpoint(cf,x,a => {
 			let u=this.w(a);
-			let {browseId,...y}=this.sd(cf,u); // !
+			let {browseId,...y}=this.sd(`${cf}.data`,u); // !
 			this.E_Browse$ParseBrowseId(browseId);
 			if("canonicalBaseUrl" in y) return this.decode_channel_url(this.w(y));
 			this.g(y);
@@ -7426,8 +7424,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {D_CompactLink} T @arg {string} cf @arg {T} x */
 	D_Link$Omit(cf,x) {
-		this.save_keys(`[D_Link$Omit]`,x);
-		const {title,trackingParams,...y}=this.sd(cf,x);
+		this.k("D_Link$Omit",x);
+		const {title,trackingParams,...y}=this.sd(cf,x); // !
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -7519,8 +7517,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @unused @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {
-		const cf_="D_ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf_}]`,x);
+		const cf="D_ThumbnailOverlayLoadingPreview"; this.k(cf,x);
 		this.R_TextWithRuns(this.w(x));
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
@@ -7624,10 +7621,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {
 		const cf="D_Thumbnail"; this.k(cf,x);
-		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,...y}=this.sd(cf,x);
+		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.sd(cf,x); this.g(y);
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.D_Accessibility);
-		this.z(this.w(y),this.D_ThumbnailItem);
+		this.z(a,this.D_ThumbnailItem);
 	}
 	/** @private @arg {D_ThumbnailItem} x */
 	D_ThumbnailItem(x) {
@@ -7834,7 +7831,7 @@ class HandleTypes extends ServiceMethods {
 	C_GetSurvey(x) {
 		this.T_Endpoint("R_PdgBuyFlowHeader",x,a => {
 			if(!a.getSurveyCommand) debugger;
-			this.GetSurveyArgs(this.w(a));
+			this.D_GetSurvey(this.w(a));
 		},a => {
 			const cf="GetSurveyCommandMetadata"; this.k(cf,a);
 			const {apiUrl,sendPost,...y}/*!*/=this.w(a); this.g(y);
@@ -7843,18 +7840,18 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {D_GetSurvey} x */
-	GetSurveyArgs(x) {
-		const cf="GetSurveyArgs";
-		const {action,...y}=this.sd(cf,x);
+	D_GetSurvey(x) {
+		const cf="D_GetSurvey";
+		const {action,endpoint: a,...y}=this.sd(cf,x); this.g(y);
 		console.log("GetSurvey.action",x.action);
-		this.R_PaidDigitalGoods(this.w(y));
+		this.R_PaidDigitalGoods(a);
 	}
 	/** @private @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(x) {
 		const cf="TA_OpenPopup";
-		const {clickTrackingParams,...y}=this.sd(cf,x);
+		const {clickTrackingParams,openPopupAction: a,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		return this.w(y);
+		return a;
 	}
 	/** @private @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
@@ -7879,7 +7876,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template T @arg {TD_ContinuationItem_CE<T>} x */
 	TD_ContinuationItem_CE(x) {
 		const cf="TD_ContinuationItem";
-		const {trigger,...y}=this.sd(cf,x);
+		const {trigger,...y}=this.sd(cf,x); // !
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
@@ -8031,16 +8028,14 @@ class HandleTypes extends ServiceMethods {
 	LiveChatContinuation(x) {x; debugger;}
 	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
-		const cf="GetLiveChat";
-		this.save_keys(`[R_${cf}]`,x);
+		const cf="RS_GetLiveChat";
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.LiveChatContinuation(a1);
-		this.t_cf("GetLiveChat",a2,this.trackingParams);
+		this.t_cf(cf,a2,this.trackingParams);
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
-		const cf="GetNotificationMenu";
-		this.save_keys(`[R_${cf}]`,x);
+		const cf="RSG_NotificationMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		let [ar]=this.z(actions,x => {
 			if(x.openPopupAction) return this.TA_OpenPopup(x);
@@ -8078,16 +8073,14 @@ class HandleTypes extends ServiceMethods {
 	D_SimpleMenuHeader(x) {this.H_("D_SimpleMenuHeader",x,a => {a; debugger;});}
 	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
-		const cf="Next";
-		this.save_keys(`[R_${cf}]`,x);
-		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.sd(cf,x);
+		const cf="RS_Next";
+		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.sd(cf,x); this.g(y);
 		this.t(contents,this.G_NextContents);
 		this.t(currentVideoEndpoint,this.E_Watch);
 		this.trackingParams(cf,trackingParams);
 		this.t(playerOverlays,this.R_PlayerOverlay);
 		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived("NextResponse",a));
 		this.tz(engagementPanels,this.G_EngagementPanelItem);
-		const {...y1}=y; this.g(y1);
 		this.t(videoReporting,this.R_ReportFormModal);
 		this.t(queueContextParams,a => this.params("Next","next.queue_context_params",a));
 		this.t(continuationContents,this.RC_PlaylistPanel);
@@ -8119,8 +8112,7 @@ class HandleTypes extends ServiceMethods {
 	/** @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
 	Signal$Omit(x,f) {
 		const cf="Signal$Omit";
-		const {signal,...y}=this.sd(cf,x);
-		f(signal);
+		const {signal,...y}=this.sd(cf,x); f(signal);
 		return y;
 	}
 	/** @arg {GS_Client} x */
@@ -8246,7 +8238,7 @@ class HandleTypes extends ServiceMethods {
 		if("browserMediaSession" in x) {
 			return this.A_BrowserMediaSession(x);
 		}
-		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.sd(cf,x);
+		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.sd(cf,x); // !
 		this.R_WatchNextEndScreen(endScreen);
 		this.R_PlayerOverlayAutoplay(autoplay);
 		this.R_Button(shareButton);
@@ -8268,7 +8260,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
-		const {playerBar,...y}=this.sd(cf,x);
+		const {playerBar,...y}=this.sd(cf,x); // !
 		if("playerBarActionButton" in y) {
 			return this.R_Button(this.w(y));
 		}
@@ -8582,11 +8574,11 @@ class HandleTypes extends ServiceMethods {
 	TD_ItemSection_3_CommentItemSection(x) {
 		const cf="TD_ItemSection_3_CommentItemSection";
 		this.save_keys(`[${cf}]`,x);
-		const {sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x);
+		const {sectionIdentifier,targetId,trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);
 		if(x.sectionIdentifier!=="comment-item-section") debugger;
 		if(x.targetId!=="comments-section") debugger;
-		this.z(this.w(y),a => {
-			a;
+		this.z(a,x => {
+			x;
 			debugger;
 		});
 	}
@@ -8636,7 +8628,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {string} cf @template {D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
 	Omit$Radio(cf,x) {
-		const {playlistId,thumbnail,title,videoCountText,navigationEndpoint,menu,trackingParams,videoCountShortText,thumbnailText,shareUrl,longBylineText,thumbnailOverlays,...y}=this.sd(cf,x);
+		const {playlistId,thumbnail,title,videoCountText,navigationEndpoint,menu,trackingParams,videoCountShortText,thumbnailText,shareUrl,longBylineText,thumbnailOverlays,...y}=this.sd(cf,x); // !
 		this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
 		this.R_SimpleText(title);
@@ -8969,7 +8961,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
-		const {serializedInteractionsRequest,...y}=this.sd(cf,x);
+		const {serializedInteractionsRequest,...y}=this.sd(cf,x); // !
 		this.primitive_of_string(x.serializedInteractionsRequest);
 		if("actions" in y) {
 			const {actions,...u}=y; this.g(u);
@@ -8984,8 +8976,8 @@ class HandleTypes extends ServiceMethods {
 	A_HideEnclosing(x) {
 		const cf="A_HideEnclosing";
 		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,...y}=this.sd(cf,x);
-		this.AD_HideEnclosing(this.w(y));
+		const {clickTrackingParams,hideEnclosingAction: a,...y}=this.sd(cf,x); this.g(y);
+		this.AD_HideEnclosing(a);
 	}
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {x; debugger;}
@@ -9071,7 +9063,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="ContinuationItemData"; this.k(cf,x);
-		const {trigger,continuationEndpoint,...y}=this.sd(cf,x);
+		const {trigger,continuationEndpoint,...y}=this.sd(cf,x); // !
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.G_ContinuationEndpoint(continuationEndpoint);
@@ -9259,7 +9251,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlaylistPage} x */
 	R_PlaylistPage(x) {
 		const cf="PlaylistPageResponse"; this.k(cf,x);
-		const {url,endpoint,page,response,...y}=this.sd(cf,x);
+		const {url,endpoint,page,response,...y}=this.sd(cf,x); // !
 		if(page!=="playlist") debugger;
 		this.E_Browse(endpoint);
 		this.R_Api_Playlist(response);
@@ -9518,8 +9510,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
 		const cf="D_TemplateUpdate"; this.k(cf,x);
-		const {identifier,dependencies,...y}=this.sd(cf,x);
-		this.primitive_of_string(this.w(y));
+		const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.sd(cf,x); this.g(y);
+		this.primitive_of_string(a);
 	}
 	/** @private @arg {D_EntityBatchUpdate} x */
 	D_EntityBatchUpdate(x) {
@@ -9798,8 +9790,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
 		const cf="D_Transcript"; this.k(cf,x);
-		const {trackingParams,...y}=this.sd(cf,x);
-		this.R_TranscriptSearchPanel(this.w(y));
+		const {trackingParams,content: a,...y}=this.sd(cf,x); this.g(y);
+		this.R_TranscriptSearchPanel(a);
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {x; debugger;}
@@ -9943,14 +9935,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_HotkeyDialogSection} x */
 	D_HotkeyDialogSection(x) {
 		const cf="D_HotkeyDialogSection"; this.k(cf,x);
-		const {title,...y}=this.sd(cf,x);
-		let u=this.w(y);
+		const {title,options: u,...y}=this.sd(cf,x); this.g(y);
 		this.z(u,this.R_HotkeyDialogSectionOption);
 	}
 	/** @private @arg {D_HotkeyDialogSectionOption} x */
 	D_HotkeyDialogSectionOption(x) {
 		const cf="D_HotkeyDialogSectionOption"; this.k(cf,x);
-		const {label,hotkey,...y}=this.sd(cf,x);
+		const {label,hotkey,...y}=this.sd(cf,x); // !
 		this.R_TextWithRuns(label);
 		this.primitive_of_string(hotkey);
 		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
@@ -10074,8 +10065,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ResourceStatusInResponseCheckData} x */
 	D_ResourceStatusInResponseCheckData(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
-		const {serverBuildLabel,...y}=this.sd(cf,x);
-		this.z(this.w(y),this.D_ElementResourceStatus);
+		const {serverBuildLabel,resourceStatuses: a,...y}=this.sd(cf,x); this.g(y);
+		this.z(a,this.D_ElementResourceStatus);
 	}
 	/** @private @arg {D_ElementResourceStatus} x */
 	D_ElementResourceStatus(x) {
@@ -10092,8 +10083,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_MusicThumbnail} x */
 	D_MusicThumbnail(x) {
 		const cf="D_MusicThumbnail";
-		const {thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sd(cf,x);
-		this.trackingParams(cf,this.w(y));
+		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,a);
+		this.D_Thumbnail(thumbnail);
+		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
+		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
