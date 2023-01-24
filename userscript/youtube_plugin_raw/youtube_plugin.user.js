@@ -2589,7 +2589,7 @@ class KnownDataSaver extends ApiBase {
 		console.log(rle_x.split("!"));
 	}
 	console_code_2() {
-		"0:0!1:1".split("!").map(e=>e.split(":").map(e=>parseInt(e,10))).map((e,i)=>[...e,i]).sort(([,a],[,b])=>a-b).map(([a,b,i])=>`${b}$${i}$${a}`)
+		"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);
 	}
 	/** @private @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
@@ -3437,6 +3437,7 @@ class ECatcherService extends BaseService {
 				[/**/246_12269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 				[/**/393_21826,39321827,39322504,39322574,39322870,39322873,39322953,39322980,39322983,39323013,39323016,39323020,39323023,39323117,39323120],
 				[/**/456_86551],
+				[24449113,24450200],
 			].flat(),
 		},
 	};
