@@ -8882,7 +8882,7 @@ class HandleTypes extends ServiceMethods {
 			if("notificationRenderer" in x) return this.R_Notification(x);
 			if("continuationItemRenderer" in x) {
 				let r=this.TR_ContinuationItem_CE(x); r;
-				this.E_Continuation(r);
+				this.C_Continuation(r);
 				return;
 			}
 			debugger;
@@ -8891,8 +8891,8 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {C_Continuation} x */
-	E_Continuation(x) {
-		this.T_Endpoint("E_Continuation",x,a => {
+	C_Continuation(x) {
+		this.T_Endpoint("C_Continuation",x,a => {
 			let u=this.w(a);
 			const {request,token,...b}=u; this.g(b);
 			switch(request) {
@@ -9842,12 +9842,17 @@ class HandleTypes extends ServiceMethods {
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,this.D_ChipCloudChip);}
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
-		const cf="D_ChipCloudChip";
-		let d=this.D_ChipCloudChip$Omit(cf,x);
-		if("isSelected" in d) {
-			const {isSelected,...y}=this.sd(cf,d); this.g(y); // ! #destructure
+		const cf="D_ChipCloudChip"; this.k(cf,x);
+		if("isSelected" in x) {
+			let d=this.D_ChipCloudChip$Omit(cf,x);
+			const {isSelected,...y}=d; this.g(y); // ! #destructure
 			if(isSelected!==true) debugger;
+			return;
 		}
+		let d=this.D_ChipCloudChip$Omit(cf,x);
+		const {targetId,navigationEndpoint,...y}=d; this.g(y); // ! #destructure
+		if(targetId!=="feed_filter_chip_bar_second_chip") debugger;
+		this.C_Continuation(navigationEndpoint);
 	}
 	/** @arg {string} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip$Omit(cf,x) {
