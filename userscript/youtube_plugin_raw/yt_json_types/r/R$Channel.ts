@@ -1,5 +1,5 @@
 type R_Channel={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	header: R_C4TabbedHeader;
 	metadata: R_Channel_MD;

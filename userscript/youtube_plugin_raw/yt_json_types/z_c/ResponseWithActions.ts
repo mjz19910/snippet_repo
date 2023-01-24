@@ -1,4 +1,4 @@
 type ResponseWithActions={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	actions: ResponseActions[];
 };

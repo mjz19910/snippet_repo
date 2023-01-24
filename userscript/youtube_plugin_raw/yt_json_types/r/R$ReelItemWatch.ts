@@ -1,5 +1,5 @@
 type RS_ReelItemWatch={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	overlay: R_ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
 	trackingParams: string;

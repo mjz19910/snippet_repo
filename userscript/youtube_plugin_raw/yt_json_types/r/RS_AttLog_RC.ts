@@ -1,0 +1,1 @@
+type RS_AttLog_RC={responseContext: RC_ResponseContext;};

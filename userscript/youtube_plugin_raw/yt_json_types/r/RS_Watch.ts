@@ -1,5 +1,5 @@
-type R_Watch={
-	responseContext: RC$ResponseContext;
+type RS_Watch={
+	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnWatchNextResults;
 	currentVideoEndpoint: E_Watch;
 	trackingParams: string;

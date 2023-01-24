@@ -1,4 +1,4 @@
 type RS_Feedback={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	feedbackResponses: FeedbackResponseItem[];
 };

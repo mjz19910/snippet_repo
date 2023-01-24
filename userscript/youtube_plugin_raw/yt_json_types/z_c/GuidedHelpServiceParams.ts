@@ -1,4 +1,4 @@
-type RC$GuidedHelpServiceParams={
+type RC_GuidedHelp_SPs={
 	service: "GUIDED_HELP";
-	params: RC$ToServiceParams<GuidedHelpState>;
+	params: RC_To_SPs<GuidedHelpState>;
 };

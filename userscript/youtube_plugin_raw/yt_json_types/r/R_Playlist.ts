@@ -1,5 +1,5 @@
 type R_Playlist=Record<"contents",R_TwoColumnBrowseResults>&{
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	header: R_PlaylistHeader;
 	alerts?: R_AlertWithButton[];
 	metadata: R_Playlist_MD;

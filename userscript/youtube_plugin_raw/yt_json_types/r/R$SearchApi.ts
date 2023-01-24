@@ -1,5 +1,5 @@
 type R_SearchApi={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	contents?: R_TabbedSearchResults;
 	continuationContents?: MusicShelfContinuation;
 	trackingParams: string;

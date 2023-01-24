@@ -1,5 +1,5 @@
 type RS_Browse={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	contents?: G$BrowseContents;
 	continuationContents?: C_SectionList;
 	header?: G$BrowseHeader;

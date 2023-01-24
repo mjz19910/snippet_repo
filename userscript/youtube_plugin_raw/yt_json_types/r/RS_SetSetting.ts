@@ -1,4 +1,4 @@
 type RS_SetSetting={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	settingItemId: `${D_AccountSettingIdList[number]}`;
 };

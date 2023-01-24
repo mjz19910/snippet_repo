@@ -1,4 +1,4 @@
-type RC$GoogleHelpServiceParams={
+type RC_GoogleHelp_SPs={
 	service: "GOOGLE_HELP";
-	params: RC$ToServiceParams<GoogleHelpServiceObj>;
+	params: RC_To_SPs<GoogleHelpServiceObj>;
 };

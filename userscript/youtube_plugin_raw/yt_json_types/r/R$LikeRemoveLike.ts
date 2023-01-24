@@ -1,4 +1,4 @@
 type RSL_RemoveLike={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	actions?: (TA_OpenPopup<{}>|A_RemoveFromGuideSection)[]
 };

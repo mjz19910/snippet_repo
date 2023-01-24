@@ -1,5 +1,5 @@
 type RS_Search=Record<"contents",R_TwoColumnSearchResults>&{
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	estimatedResults: `${number}`;
 	trackingParams: string;
 	topbar: R_DesktopTopbar;

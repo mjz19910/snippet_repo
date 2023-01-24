@@ -1,4 +1,4 @@
 type RSG_Survey={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	trackingParams: string;
 };

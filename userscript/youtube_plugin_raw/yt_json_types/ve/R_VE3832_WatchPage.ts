@@ -5,5 +5,5 @@ type R_VE3832_WatchPage={
 	page: "watch";
 	preconnect?: [D_VE3832_PreconnectUrl];
 	playerResponse: RS_Player;
-	response: R_Watch;
+	response: RS_Watch;
 };

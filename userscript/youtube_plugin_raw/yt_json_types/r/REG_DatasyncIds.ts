@@ -1,4 +1,4 @@
 type REG_DatasyncIds={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	datasyncIds: (`${number}||${number}`|`${number}||`)[];
 };

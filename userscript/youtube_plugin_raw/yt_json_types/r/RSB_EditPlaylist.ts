@@ -1,5 +1,5 @@
 type RSB_EditPlaylist={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	status: "STATUS_SUCCEEDED";
 	playlistEditResults: {}[];
 	trackingParams: string;

@@ -1,4 +1,4 @@
-type RC$ConsistencyTokenJar={
+type RC_ConsistencyTokenJar={
 	encryptedTokenJarContents: string;
 	expirationSeconds: `${TokenJarDefaultExpirationSeconds}`;
 };

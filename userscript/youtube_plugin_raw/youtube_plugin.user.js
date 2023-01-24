@@ -3372,9 +3372,9 @@ class CsiService extends BaseService {
 		this.data={
 			/** @private @type {D$BrowseEndpointPages|null} */
 			yt_fn: null,
-			/** @private @type {RC$CsiServiceC["value"]|null} */
+			/** @private @type {RC_CsiServiceC["value"]|null} */
 			c: null,
-			/** @private @type {RC$CsiVarTypes["cver"]|null} */
+			/** @private @type {RC_CsiVarTypes["cver"]|null} */
 			cver: null,
 			/** @private @type {"1"|null} */
 			yt_li: null,
@@ -3396,7 +3396,7 @@ class CsiService extends BaseService {
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @api @public @arg {RC$CsiServiceParamsType} params */
+	/** @api @public @arg {DRC_Csi_SPs} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3416,7 +3416,7 @@ class CsiService extends BaseService {
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	data={
-		/** @private @type {{name:RC$ECatcherClientName['value'];fexp:number[];version:RC$SomeVer<RC$CsiVarTypes["cver"]>}|null} */
+		/** @private @type {{name:RC_ECatcherClientName['value'];fexp:number[];version:RC_SomeVer<RC_CsiVarTypes["cver"]>}|null} */
 		client: null,
 		expected_client_values: {
 			/** @private @type {number[]} */
@@ -3458,7 +3458,7 @@ class ECatcherService extends BaseService {
 		}
 		this.data.expected_client_values.fexp;
 	}
-	/** @api @public @arg {RC$ECatcherServiceParams["params"]} params */
+	/** @api @public @arg {RC_ECatcher_SPs["params"]} params */
 	on_params(params) {
 		/** @private @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3500,7 +3500,7 @@ class GFeedbackService extends BaseService {
 	/** @private @type {string[]} */
 	seen_e_param=[];
 	has_new_e_param=false;
-	/** @private @arg {Extract<RC$ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
+	/** @private @arg {Extract<RC_To_SPs<GFeedbackVarMap>[number],{key:"e"}>} param */
 	parse_e_param(param) {
 		if(this.seen_e_param.includes(param.value)) return;
 		this.seen_e_param.push(param.value);
@@ -3581,7 +3581,7 @@ class GuidedHelpService extends BaseService {
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @api @public @arg {RC$GuidedHelpServiceParams["params"]} params */
+	/** @api @public @arg {RC_GuidedHelp_SPs["params"]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3598,26 +3598,26 @@ class GuidedHelpService extends BaseService {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class TrackingServices extends BaseService {
-	/** @private @arg {RC$CsiServiceParams} service */
+	/** @private @arg {RC_Csi_SPs} service */
 	on_csi_service(service) {
 		this.x.get("csi_service").on_params(service.params);
 	}
-	/** @private @arg {RC$ECatcherServiceParams} service */
+	/** @private @arg {RC_ECatcher_SPs} service */
 	on_e_catcher_service(service) {
 		this.x.get("e_catcher_service").on_params(service.params);
 	}
-	/** @private @arg {RC$GFeedbackServiceParams} service */
+	/** @private @arg {RC_GFeedback_SPs} service */
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
-	/** @private @arg {RC$GuidedHelpServiceParams} service */
+	/** @private @arg {RC_GuidedHelp_SPs} service */
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
 	get handle_types() {
 		return this.x.get("handle_types");
 	}
-	/** @private @arg {RC$GoogleHelpServiceParams} service */
+	/** @private @arg {RC_GoogleHelp_SPs} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -3627,7 +3627,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @api @public @arg {RC$AllServiceTrackingParams} service_arg */
+	/** @api @public @arg {GRC_ServiceTrackingParams} service_arg */
 	set_service_params(service_arg) {
 		switch(service_arg.service) {
 			case "CSI": this.on_csi_service(service_arg); break;
@@ -4285,7 +4285,7 @@ class CodegenService extends BaseService {
 		}
 		state.k1=k1;
 		if(k1==="") return x;
-		/** @private @type {RC$ResponseContext} */
+		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
 		/** @private @type {A_FrameworkUpdates} */
 		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
@@ -6503,7 +6503,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "get_notification_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RS_GetNotificationMenu} */
+				/** @private @type {RSG_NotificationMenu} */
 				data: as(x),
 			};
 			case "get_unseen_count": return {
@@ -7128,7 +7128,7 @@ class HandleTypes extends ServiceMethods {
 		this.RS_Player(playerResponse);
 		this.R_Watch(response);
 	}
-	/** @private @arg {R_Watch} x */
+	/** @private @arg {RS_Watch} x */
 	R_Watch(x) {
 		const cf="WatchResponse";
 		this.x.get("yt_plugin").add_function({
@@ -7257,7 +7257,7 @@ class HandleTypes extends ServiceMethods {
 		const {browseId,...y}=this.sd(cf,x); this.g(y);
 		if(x.browseId!=="") debugger;
 	}
-	/** @private @arg {RC$ResponseContext} x */
+	/** @private @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="ResponseContext";
 		const service_tracking=this.x.get("service_tracking");
@@ -7275,14 +7275,14 @@ class HandleTypes extends ServiceMethods {
 		const {relevantStateTags,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(relevantStateTags,this.StateTag);
 	}
-	/** @private @arg {RC$ConsistencyTokenJar} x */
+	/** @private @arg {RC_ConsistencyTokenJar} x */
 	ConsistencyTokenJar(x) {
 		const cf="ConsistencyTokenJar";
 		const {encryptedTokenJarContents,expirationSeconds,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_of_string(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
-	/** @private @arg {RC_WebResponseContextExtension} x */
+	/** @private @arg {RC_WR_ContextExtension} x */
 	WebResponseContextExtensionData(x) {
 		const cf="WebResponseContextExtensionData";
 		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -7324,7 +7324,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @arg {RC$MainAppWebResponseContext} x */
+	/** @private @arg {RC_MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {
 		const cf="MainAppWebResponseContext";
 		const {datasyncId,loggedOut,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -7697,7 +7697,7 @@ class HandleTypes extends ServiceMethods {
 			case "_Generic": return g(x);
 		}
 		this._current_response_type=x.type;
-		/** @private @type {{data:{responseContext:RC$ResponseContext;}}} */
+		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
 		let v=x;
 		this.RC_ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
@@ -8037,7 +8037,7 @@ class HandleTypes extends ServiceMethods {
 		this.LiveChatContinuation(a1);
 		this.t_cf("GetLiveChat",a2,this.trackingParams);
 	}
-	/** @private @arg {RS_GetNotificationMenu} x */
+	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
 		const cf="GetNotificationMenu";
 		this.save_keys(`[R_${cf}]`,x);
@@ -9020,7 +9020,7 @@ class HandleTypes extends ServiceMethods {
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
-	/** @private @arg {RD__NextContinuation} x */
+	/** @private @arg {RD_NextContinuation} x */
 	RD__NextContinuation(x) {this.H_("RD__NextContinuation",x,a => {a; debugger;});}
 	/** @private @arg {TR_SectionListItem<{},{},{}>} x */
 	SectionListItem(x) {
@@ -9966,7 +9966,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="LiveChatRenderer"; this.k(cf,x);
 		debugger;
 	}
-	/** @private @arg {R_TODO_ReportFormModal} x */
+	/** @private @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {
 		const cf="ReportFormModalRenderer"; this.k(cf,x);
 		debugger;

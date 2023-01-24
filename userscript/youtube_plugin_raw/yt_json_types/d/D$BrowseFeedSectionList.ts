@@ -1,5 +1,5 @@
 type D_BrowseFeedSectionList={
-	continuations?: RD__NextContinuation[];
+	continuations?: RD_NextContinuation[];
 	contents: TR_SectionListItem<{},{},{}>[];
 	trackingParams: string;
 	subMenu?: {};

@@ -1,5 +1,5 @@
 type R_Settings={
-	responseContext: RC$ResponseContext;
+	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	trackingParams: string;
 	topbar: R_DesktopTopbar;
