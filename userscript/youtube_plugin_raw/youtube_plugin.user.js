@@ -9864,6 +9864,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
 		const cf="D_ChipCloudChip"; this.k(cf,x);
+		this.do_codegen(cf,x);
 		if("isSelected" in x) {
 			let d=this.D_ChipCloudChip$Omit(cf,x);
 			const {isSelected: a,...y}=d; this.g(y); // ! #destructure
