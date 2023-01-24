@@ -433,7 +433,7 @@ export class Snippet_0_tmp {
 	/** @private @template {{}} T @arg {TR_ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
-			this.z(b,a=>{a;debugger;});
+			this.z(b,a => {a; debugger;});
 			let v=this.join_string(a,"-");
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
@@ -546,6 +546,25 @@ class ND extends Snippet_0_tmp {
 			}
 			this.do_codegen("Dropdown",x);
 		});
+	}
+	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	H_(cf,x,f) {
+		this.save_keys(`[${cf}]`,x);
+		f.call(this,this.w(x));
+	}
+	/** @private @arg {R_Button} x */
+	R_Button(x) {this.H_("R_Button",x,() => {debugger;});}
+	/** @protected @arg {D_AlertWithButton} x */
+	AlertWithButton(x) {
+		const cf="AlertWithButton";
+		this.save_keys(`[${cf}]`,x);
+		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
+		switch(type) {
+			case "INFO": break;
+			default: debugger;
+		}
+		this.R_SimpleText(text);
+		this.R_Button(dismissButton);
 	}
 }
 new ND;

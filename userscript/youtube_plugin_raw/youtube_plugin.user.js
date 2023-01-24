@@ -7420,7 +7420,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @template {D_CompactLink} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_CompactLink} T @arg {string} cf @arg {T} x */
 	D_Link$Omit(cf,x) {
 		this.save_keys(`[D_Link$Omit]`,x);
 		const {title,trackingParams,...y}=x;
@@ -7450,18 +7450,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {
 		x; debugger;
-	}
-	/** @public @arg {D_AlertWithButton} x */
-	AlertWithButton(x) {
-		const cf="AlertWithButton";
-		this.save_keys(`[${cf}]`,x);
-		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
-		switch(type) {
-			case "INFO": break;
-			default: debugger;
-		}
-		this.R_SimpleText(text);
-		this.R_Button(dismissButton);
 	}
 	/** @private @arg {D_Label} x */
 	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
