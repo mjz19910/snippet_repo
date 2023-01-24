@@ -9883,7 +9883,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {string} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip$Omit(cf,x) {
 		const {style: a,text: b,trackingParams: c,...y}=x;
-		if(a.styleType!=="STYLE_HOME_FILTER") debugger;
+		switch(a.styleType) {
+			case "STYLE_DEFAULT":
+			case "STYLE_HOME_FILTER":
+			case "STYLE_REFRESH_TO_NOVEL_CHIP": break;
+		}
 		this.R_TextWithRuns(b);
 		this.trackingParams(cf,c);
 		return y;
