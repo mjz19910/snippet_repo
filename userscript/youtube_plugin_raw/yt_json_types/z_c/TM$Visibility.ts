@@ -1,1 +1,1 @@
-type TM$Visibility=T$TypesTemplate<12|14|15>;
+type TM$Visibility=T_Types<12|14|15>;

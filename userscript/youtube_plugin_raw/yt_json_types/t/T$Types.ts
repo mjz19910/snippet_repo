@@ -1,1 +1,1 @@
-type T$TypesTemplate<T extends number>={types: `${T}`;};
+type T_Types<T extends number>={types: `${T}`;};

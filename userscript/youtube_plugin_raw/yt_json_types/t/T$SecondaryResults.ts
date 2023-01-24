@@ -1,3 +1,3 @@
-type T$SecondaryResults<T>={
+type T_SecondaryResults<T>={
 	secondaryResults: T;
 };

@@ -1,3 +1,3 @@
-type T$Playlist<T>={
+type T_Playlist<T>={
 	playlist: T;
 };
