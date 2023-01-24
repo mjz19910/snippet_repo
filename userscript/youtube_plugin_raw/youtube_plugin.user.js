@@ -18,13 +18,13 @@
 function as(e,x=e) {
 	return x;
 }
-/** @type {YtdAppElement} */
+/** @private @type {YtdAppElement} */
 const YtdAppElement=as({});
-/** @type {InstanceType<typeof YtdAppElement>|null} */
+/** @private @type {InstanceType<typeof YtdAppElement>|null} */
 let ytd_app=null;
-/** @type {HTMLElement|null} */
+/** @private @type {HTMLElement|null} */
 let ytcp_app=null;
-/** @type {HTMLElement|null} */
+/** @private @type {HTMLElement|null} */
 let ytmusic_app=null;
 {
 	/** @private @type {Exclude<typeof window[InjectApiStr],undefined>} */
@@ -860,7 +860,7 @@ class MyReader {
 	_use() {
 		this.reset_and_read_any(0);
 	}
-	/** @type {boolean} */
+	/** @private @type {boolean} */
 	failed=false;
 	/** @private @arg {number} [size] @arg {number} [pos] */
 	read_any(size,pos) {
@@ -989,7 +989,7 @@ class MyReader {
 			return [n,e];
 		}
 		let varint_entries=varint_arr.map(into_entries);
-		/** @type {number|null} */
+		/** @private @type {number|null} */
 		let res=0;
 		for(let i=0;i<varint_entries.length;i++) {
 			let cur_res=do_reduce_varint(res,varint_entries[i]);
@@ -1172,7 +1172,7 @@ class MyReader {
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @type {D_DecTypeNum} */
+				/** @private @type {D_DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
@@ -1924,12 +1924,12 @@ class ServiceResolver {
 	}
 	/** @arg {keyof T} k */
 	_use(k) {
-		/** @type {any} */
+		/** @private @type {any} */
 		let x={};
-		/** @type {U} */
+		/** @private @type {U} */
 		let u=x;
 		this.set_params(u);
-		/** @type {Extract<T, {}>[keyof T]} */
+		/** @private @type {Extract<T, {}>[keyof T]} */
 		let v=x;
 		this.set(k,v);
 	}
@@ -2148,9 +2148,9 @@ class ApiBase {
 	}
 	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
-		/** @type {Partial<B>} */
+		/** @private @type {Partial<B>} */
 		let cd=x;
-		/** @type {Partial<U|B>} */
+		/** @private @type {Partial<U|B>} */
 		let id=cd;
 		return id;
 	}
@@ -2190,6 +2190,42 @@ class BitmapResult {
 		this.map_arr=map_arr;
 		this.bitmap=bitmap;
 	}
+} class StoreData {
+	/** @arg {ReturnType<StoreData['destructure']>} src */
+	constructor(src) {
+		this.update(src);
+	}
+	/** @api_1 @protected @type {[string,{t:boolean;f:boolean}][]} */
+	seen_booleans=[];
+	/** @api_1 @protected @type {number[]} */
+	seen_root_visual_elements=[];
+	/** @api_1 @protected @type {{[x:string]:number}} */
+	strings_key_index_map={};
+	/** @api_1 @protected @type {{[x:string]:number}} */
+	seen_keys_index={};
+	/** @api_1 @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
+	seen_keys=[];
+	/** @api_1 @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
+	seen_strings=[];
+	/** @api_1 @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
+	seen_numbers=[];
+	get_seen_numbers() {
+		return this.seen_numbers;
+	}
+	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} x */
+	update(x) {
+		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=x;
+		if(seen_booleans) this.seen_booleans=seen_booleans;
+		if(seen_numbers) this.seen_numbers=seen_numbers;
+		if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
+		if(seen_strings) this.seen_strings=seen_strings;
+		if(seen_keys) this.seen_keys=seen_keys;
+	}
+	/** @protected */
+	destructure() {
+		const {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings}=this;
+		return {seen_booleans,seen_keys,seen_numbers,seen_root_visual_elements,seen_strings};
+	}
 }
 class KnownDataSaver extends ApiBase {
 	constructor() {
@@ -2197,7 +2233,7 @@ class KnownDataSaver extends ApiBase {
 		this.#load_data();
 		this.#store_data();
 	}
-	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
+	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
 	do_save_keys_obj=false;
 	/** @private @template {string} T @arg {`[${T}]`} x @returns {T} */
@@ -2230,14 +2266,15 @@ class KnownDataSaver extends ApiBase {
 		let ret=this.save_to_store("save_keys",k,keys.join(),store);
 		return ret;
 	}
-	/** @no_mod @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["get_data_store"]>>} */
+	/** @no_mod @arg {string} str @returns {Partial<ReturnType<StoreData['destructure']>>} */
 	#parse_data(str) {
-		return JSON.parse(str);
+		let obj=JSON.parse(str);
+		return obj;
 	}
 	#store_data() {
 		let data=this.get_data_store();
-		for(let v=0;v<data.seen_numbers.length;v++) {
-			const j=data.seen_numbers[v];
+		for(let v=0;v<data.get_seen_numbers().length;v++) {
+			const j=data.get_seen_numbers()[v];
 			const [_n,[_k,c]]=j;
 			for(let i=0;i<c.length;i++) {
 				if(c[i]===null) {
@@ -2258,31 +2295,7 @@ class KnownDataSaver extends ApiBase {
 			this.#loaded_from_storage=true;
 		}
 	}
-	#data_store=new class StoreData {
-		/** @type {number[]} */
-		seen_root_visual_elements=[];
-		/** @type {{[x:string]:number}} */
-		strings_key_index_map={};
-		/** @type {{[x:string]:number}} */
-		seen_keys_index={};
-		/** @type {[string,["one",string[]]|["many",string[][]]][]} */
-		seen_keys=[];
-		/** @type {[string,["one",string[]]|["many",string[][]]][]} */
-		seen_strings=[];
-		/** @type {[string,["one",number[]]|["many",number[][]]][]} */
-		seen_numbers=[];
-		/** @type {[string,{t:boolean;f:boolean}][]} */
-		seen_booleans=[];
-		/** @api @public @arg {Partial<StoreData>} x */
-		update(x) {
-			const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=x;
-			if(seen_booleans) this.seen_booleans=seen_booleans;
-			if(seen_numbers) this.seen_numbers=seen_numbers;
-			if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
-			if(seen_strings) this.seen_strings=seen_strings;
-			if(seen_keys) this.seen_keys=seen_keys;
-		}
-	};
+	#data_store=new StoreData;
 	get_data_store() {
 		return this.#data_store;
 	}
@@ -2298,15 +2311,15 @@ class KnownDataSaver extends ApiBase {
 		if(no_storage_access) return this.#seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
-	/** @no_mod @arg {Partial<ReturnType<KnownDataSaver["get_data_store"]>>} x */
+	/** @no_mod @arg {Partial<ReturnType<StoreData['destructure']>>} x */
 	#push_data_to_parent(x) {
 		let x1=this.get_data_store();
 		x1.update(x);
 	}
-	/** @type {string|null} */
+	/** @no_mod @type {string|null} */
 	#seen_data_json_str=null;
 	#loaded_from_storage=false;
-	/** @type {number|null|Nullable<{}>} */
+	/** @no_mod @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	#onDataChange() {
 		if(this.#idle_id!==null) return;
@@ -2319,7 +2332,7 @@ class KnownDataSaver extends ApiBase {
 		const {strings_key_index_map: index,seen_strings: data}=this.#data_store;
 		return {index,data,new_data: this.#new_strings};
 	}
-	/** @type {[string,string|string[]][]} */
+	/** @no_mod @type {[string,string|string[]][]} */
 	#new_keys=[];
 	#get_keys_store() {
 		const {seen_keys_index: index,seen_keys: data}=this.#data_store;
@@ -2335,7 +2348,7 @@ class KnownDataSaver extends ApiBase {
 		index[key]=idx;
 		return data[idx];
 	}
-	/** @type {[string,string|string[]][]} */
+	/** @no_mod @type {[string,string|string[]][]} */
 	#new_strings=[];
 	/** @private @arg {string|string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} data_item */
 	save_to_data_item(x,data_item) {
@@ -2370,7 +2383,7 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @private @arg {string} k @arg {StoreDescription<string>['data'][number][1]} x @arg {StoreDescription<string>} store */
 	add_to_index(k,x,store) {
-		/** @type {StoreDescription<string>['data'][number]} */
+		/** @private @type {StoreDescription<string>['data'][number]} */
 		let p=[k,x];
 		let nk=store.data.push(p)-1;
 		store.index[k]=nk;
@@ -2491,7 +2504,7 @@ class KnownDataSaver extends ApiBase {
 		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
 		let zz=map_arr.at(-1)??0;
 		let ta=new Array(zz+1).fill(fill_value);
-		/** @type {0|1} */
+		/** @private @type {0|1} */
 		let replace_value;
 		if(fill_value===0) {
 			replace_value=1;
@@ -2516,7 +2529,7 @@ class KnownDataSaver extends ApiBase {
 		/** @private @arg {string} str */
 		function find_one_set_bit(str) {
 			let rx=/(?<=0)1{1}(?=0)/g;
-			/** @type {[number,string][]} */
+			/** @private @type {[number,string][]} */
 			let r=[];
 			for(;;) {
 				let rr=rx.exec(str);
@@ -2566,7 +2579,7 @@ class KnownDataSaver extends ApiBase {
 		let bitmap_rle=this.rle_enc(bitmap);
 		return new BitmapResult(map_arr,bitmap_rle);
 	}
-	/** @type {[string,number|number[]][]} */
+	/** @no_mod @type {[string,number|number[]][]} */
 	#new_numbers=[];
 	/** @api @public @arg {`[${string}]`} key @arg {number|number[]} x */
 	save_number(key,x) {
@@ -2614,7 +2627,7 @@ class KnownDataSaver extends ApiBase {
 		this.#onDataChange();
 		console.log("store_num [%s]",k,x);
 	}
-	/** @type {[string,{t:boolean;f:boolean}][]} */
+	/** @no_mod @type {[string,{t:boolean;f:boolean}][]} */
 	#new_booleans=[];
 	/** @api @public @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
@@ -2638,7 +2651,7 @@ class KnownDataSaver extends ApiBase {
 		this.#new_booleans.push([key,kc]);
 		this.#onDataChange();
 	}
-	/** @type {number[]} */
+	/** @no_mod @type {number[]} */
 	#new_root_visual_elements=[];
 	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
@@ -2708,7 +2721,7 @@ class BaseService extends BaseServicePrivate {
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @protected @arg {D_DecTypeNum[]} res_e */
 	make_param_map(res_e) {
-		/** @type {ParamMapType} */
+		/** @private @type {ParamMapType} */
 		let ret_map=new Map();
 		/** @private @arg {number} key @arg {ParamMapValue} value */
 		let do_set=(key,value) => {
@@ -2866,9 +2879,9 @@ class BaseService extends BaseServicePrivate {
 	z(x,f) {
 		if(x===void 0) {debugger; return [[],[]];}
 		if(!x.entries) {debugger; return [[],[]];}
-		/** @type {any[]} */
+		/** @private @type {any[]} */
 		let c=[];
-		/** @type {any[]} */
+		/** @private @type {any[]} */
 		let v=[];
 		for(let it of x.entries()) {
 			const [i,a]=it;
@@ -2888,7 +2901,7 @@ class BaseService extends BaseServicePrivate {
 	// zw(x,f) {
 	// 	return this.z(this.w(x),f);
 	// }
-	/** @type {string[]} */
+	/** @private @type {string[]} */
 	logged_keys=[];
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
@@ -2947,10 +2960,10 @@ class BaseService extends BaseServicePrivate {
 		/** @param {T|undefined} x @returns {U|undefined} */
 		return x => this.t_ex(mu(),f,x);
 	}
-	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
-		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
 		let ok_e=[];
 		for(let i=0;i<keys.length;i++) {
 			let rm_idx=to_remove.findIndex(e => e===keys[i]);
@@ -3130,7 +3143,7 @@ class HandleRendererContentItemArray extends BaseService {
 	/** @private @arg {R_RichSection} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
-		/** @type {G_RichSection} */
+		/** @private @type {G_RichSection} */
 		let content=renderer.content;
 		if("inlineSurveyRenderer" in content) return true;
 		if("sourcePivotHeaderRenderer" in content) return true;
@@ -3469,7 +3482,7 @@ class GFeedbackService extends BaseService {
 	get handle_types() {
 		return this.x.get("handle_types");
 	}
-	/** @type {string[]} */
+	/** @private @type {string[]} */
 	seen_e_param=[];
 	has_new_e_param=false;
 	/** @private @arg {Extract<RC$ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
@@ -3630,7 +3643,7 @@ class Services {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ModifyEnv extends BaseService {
-	/** @type {[(obj: Blob|MediaSource) => string,typeof URL,Blob|MediaSource][]} */
+	/** @private @type {[(obj: Blob|MediaSource) => string,typeof URL,Blob|MediaSource][]} */
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
@@ -3830,7 +3843,7 @@ class IndexedDbAccessor extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @type {Map<string,number>} */
+	/** @private @type {Map<string,number>} */
 	index=new Map;
 	/** @private @type {{v: string}[]} */
 	arr=[];
@@ -4023,9 +4036,9 @@ class JsonReplacerState {
 		this.gen_name=gen_name;
 		this.key_keep_arr=keys;
 		this.k1="";
-		/** @type {{}[]} */
+		/** @api @public @type {{}[]} */
 		this.object_store=[];
-		/** @type {Map<{},[number,string]>} */
+		/** @api @public @type {Map<{},[number,string]>} */
 		this.parent_map=new Map;
 	}
 }
@@ -4066,10 +4079,10 @@ class CodegenService extends BaseService {
 			if(new_code) {ret_arr.push(new_code); continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.R_SimpleText(${k});`); continue;};
-			/** @type {R_TextWithRuns} */
+			/** @private @type {R_TextWithRuns} */
 			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.R_TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			/** @type {D_Thumbnail} */
+			/** @private @type {D_Thumbnail} */
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D_Thumbnail(${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
 			/** @private @type {{}} */
@@ -4153,7 +4166,7 @@ class CodegenService extends BaseService {
 		let ex_names=req_names.map(e => {
 			let kk=keys.find(u => this.uppercase_first(u)===e);
 			if(!kk) {debugger; return "";}
-			/** @type {{}} */
+			/** @private @type {{}} */
 			let ucx=x;
 			/** @private @type {{[x:string]:unknown}} */
 			let x1=ucx;
@@ -4161,7 +4174,7 @@ class CodegenService extends BaseService {
 			if(typeof val_2!=="object") return "";
 			if(val_2===null) return "";
 			let keys_2=Object.keys(val_2);
-			/** @type {string[]} */
+			/** @private @type {string[]} */
 			let next_req=[];
 			let body_2=this.#generate_renderer_body(next_req,x,keys_2,t_name);
 			let tmp0=`
@@ -4190,7 +4203,7 @@ class CodegenService extends BaseService {
 		} while(ps!==s);
 		return s;
 	}
-	/** @type {string[]} */
+	/** @private @type {string[]} */
 	typedef_cache=[];
 	/** @api @public @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_new_typedef(x,gen_name,ret_val) {
@@ -4257,11 +4270,11 @@ class CodegenService extends BaseService {
 		}
 		state.k1=k1;
 		if(k1==="") return x;
-		/** @type {RC$ResponseContext} */
+		/** @private @type {RC$ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
-		/** @type {A_FrameworkUpdates} */
+		/** @private @type {A_FrameworkUpdates} */
 		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
-		/** @type {A_LoggingDirectives} */
+		/** @private @type {A_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		let res_type=this.get_json_replacer_type(state,gen_name,x);
@@ -4273,7 +4286,7 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} rep */
 	json_replacer(state,k1,rep) {
-		/** @type {unknown} */
+		/** @private @type {unknown} */
 		let o=rep;
 		if(typeof o==="bigint") return o;
 		else if(typeof o==="boolean") return o;
@@ -4296,7 +4309,7 @@ class CodegenService extends BaseService {
 		if("response" in x&&typeof x.response==='object'&&x.response!==null) {
 			keys=keys.concat(Object.keys(x.response));
 		}
-		/** @type {JsonReplacerState} */
+		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(gen_name,keys);
 		let tc=JSON.stringify(x,this.json_replacer.bind(this,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
@@ -4328,13 +4341,13 @@ class CodegenService extends BaseService {
 	get_json_replacer_type(state,r,x) {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
-		/** @type {R_TextWithRuns} */
+		/** @private @type {R_TextWithRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextWithRuns";
-		/** @type {D_Thumbnail} */
+		/** @private @type {D_Thumbnail} */
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D_Thumbnail";
-		/** @type {R_SimpleText} */
+		/** @private @type {R_SimpleText} */
 		if(x.simpleText) return "TYPE::R_SimpleText";
-		/** @type {T_Icon<"">} */
+		/** @private @type {T_Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
@@ -4383,7 +4396,7 @@ class CodegenService extends BaseService {
 	}
 	/** @param {{[U in string]:unknown}} x */
 	decode_Signal(x) {
-		/** @type {SG_Client} */
+		/** @private @type {SG_Client} */
 		let u=as(x);
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E_S_ClientSignal"; break;
@@ -4675,7 +4688,7 @@ class CodegenService extends BaseService {
 			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
 			return b;
 		}
-		/** @type {D_Accessibility} */
+		/** @private @type {D_Accessibility} */
 		if(b.accessibilityData) return "TYPE::A_Accessibility";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
@@ -4910,7 +4923,7 @@ class ParserService extends BaseService {
 		let a=split_string_once(x,"?");
 		switch(a[0]) {
 			case "ads": {
-				/** @type {D$ApiStatsAdsArgs} */
+				/** @private @type {D$ApiStatsAdsArgs} */
 				let sp=as(a[1]);
 				let v=this.parse_url_search_params(sp);
 				// spell:disable-next
@@ -5056,7 +5069,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {ParamMapType} x */
 	parse_get_transcript(x) {
-		/** @type {ParamMapValue[]} */
+		/** @private @type {ParamMapValue[]} */
 		let transcript_args=[];
 		let pMap=x;
 		/** @private @arg {number} x */
@@ -5069,7 +5082,7 @@ class ParserService extends BaseService {
 			}
 		}
 		this.z([1,2,3,5,6,7,8],a => convert_param(a));
-		/** @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
+		/** @private @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
 		let transcript_args_dec=null;
 		let p0=transcript_args[0];
 		let p1=transcript_args[1];
@@ -5258,12 +5271,12 @@ class ParserService extends BaseService {
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_path_gen]",path);
-			/** @type {P$LogItems} */
+			/** @private @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
 			case "${path}":
 				switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
-				/** @type {P$PathRoot} */
+				/** @private @type {P$PathRoot} */
 				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		return {u,gen_next_part,new_path};
@@ -5273,7 +5286,7 @@ class ParserService extends BaseService {
 	parse_key(root,path,map,map_keys,ta,tv,cb) {
 		this.parse_value(root,path,map,map_keys,ta,tv,cb);
 	}
-	/** @type {P$LogItems} */
+	/** @private @type {P$LogItems} */
 	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
 		let saved_map_keys=map_keys.slice();
@@ -5285,7 +5298,7 @@ class ParserService extends BaseService {
 		};
 		let new_ns=() => {
 			console.log("[parse_value.new_ns_gen]",path);
-			/** @type {P$LogItems} */
+			/** @private @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
 			console.log(`-- [parse_value.gen_ns] --\n\n\t${saved_map_keys.map(e => `case ${e}:`).join(" ")} \n`);
 		};
@@ -5295,7 +5308,7 @@ class ParserService extends BaseService {
 			let cx=map_keys.indexOf(map_entry_key);
 			if(cx>-1) map_keys.splice(cx,1);
 			if(callback===null) {
-				/** @type {P$LogItems} */
+				/** @private @type {P$LogItems} */
 				switch(path) {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
@@ -5304,7 +5317,7 @@ class ParserService extends BaseService {
 					}
 					case "watch.player_params.f40.f1":
 						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}
-						/** @type {P$PathRoot} */
+						/** @private @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5408,7 +5421,7 @@ class ParserService extends BaseService {
 		let pp=this.get_parse_fns(path,[],tv);
 		let u=pp.u;
 		const idx=1;
-		/** @type {P$LogItems} */
+		/** @private @type {P$LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
 			case "YpcGetCart": {
@@ -5462,7 +5475,7 @@ class ParserService extends BaseService {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							/** @type {P$LogItems} */
+							/** @private @type {P$LogItems} */
 							// [watch.player_params.f12]
 							// [watch.player_params.f25]
 							case "f2": case "f3": case "f7": case "f8": case "f9":
@@ -5522,7 +5535,7 @@ class ParserService extends BaseService {
 					// [tracking.trackingParams]
 					case "trackingParams": {
 						const idx=3;
-						/** @type {P$LogItems} */
+						/** @private @type {P$LogItems} */
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
@@ -5865,7 +5878,7 @@ class ParserService extends BaseService {
 	/** @unused_api @protected @arg {D_VE6827_PageUrl} x */
 	parse_ve_6827_url(x) {
 		const cf="VE6827_PageUrl";
-		/** @type {SplitOnce<D_VE6827_PageUrl,"/">[1]} */
+		/** @private @type {SplitOnce<D_VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
@@ -5986,19 +5999,19 @@ class ParserService extends BaseService {
 			case "flag":
 				if(x[3]!=="get_form") debugger;
 				return {
-					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+					/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 					x: `${x[2]}.${x[3]}`,
 				}.x;
 			case "backstage":
 				if(x[3]!=="create_post") debugger;
 				return {
-					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+					/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 					x: `${x[2]}.${x[3]}`,
 				}.x;
 			case "ypc": {
 				if(x[3]!=="get_offers") debugger;
 				return {
-					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+					/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 					x: `${x[2]}.${x[3]}`,
 				}.x;
 			}
@@ -6012,7 +6025,7 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[3]);
 		}
 		return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
@@ -6023,7 +6036,7 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[3]);
 		}
 		return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
@@ -6034,7 +6047,7 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[3]);
 		}
 		return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
@@ -6046,7 +6059,7 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[3]);
 		}
 		return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
@@ -6233,7 +6246,7 @@ class ParserService extends BaseService {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
 		} else if(this.str_starts_with_r(x,"SP")) {
-			/** @type {D_Settings_Id} */
+			/** @private @type {D_Settings_Id} */
 			let x1=split_string_once(x,"SP")[1];
 			switch(x1) {
 				case "account_advanced":
@@ -6396,57 +6409,57 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "browse": return {
 				type: target[0],
-				/** @type {R_Browse} */
+				/** @private @type {R_Browse} */
 				data: as(x),
 			};
 			case "feedback": return {
 				type: target[0],
-				/** @type {R_Feedback} */
+				/** @private @type {R_Feedback} */
 				data: as(x),
 			};
 			case "getDatasyncIdsEndpoint": return {
 				type: target[0],
-				/** @type {R_DatasyncIds} */
+				/** @private @type {R_DatasyncIds} */
 				data: as(x),
 			};
 			case "getAccountSwitcherEndpoint": return {
 				type: target[0],
-				/** @type {RE_GetAccountSwitcher} */
+				/** @private @type {RE_GetAccountSwitcher} */
 				data: as(x),
 			};
 			case "get_transcript": return {
 				type: target[0],
-				/** @type {R_GetTranscript} */
+				/** @private @type {R_GetTranscript} */
 				data: as(x),
 			};
 			case "get_survey": return {
 				type: target[0],
-				/** @type {R_GetSurvey} */
+				/** @private @type {R_GetSurvey} */
 				data: as(x),
 			};
 			case "guide": return {
 				type: target[0],
-				/** @type {R_Guide} */
+				/** @private @type {R_Guide} */
 				data: as(x),
 			};
 			case "next": return {
 				type: target[0],
-				/** @type {R_Next} */
+				/** @private @type {R_Next} */
 				data: as(x),
 			};
 			case "player": return {
 				type: target[0],
-				/** @type {R_Player} */
+				/** @private @type {R_Player} */
 				data: as(x),
 			};
 			case "search": return {
 				type: target[0],
-				/** @type {R_Search} */
+				/** @private @type {R_Search} */
 				data: as(x),
 			};
 			case "updated_metadata": return {
 				type: target[0],
-				/** @type {U_Metadata} */
+				/** @private @type {U_Metadata} */
 				data: as(x),
 			};
 		}
@@ -6517,12 +6530,12 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "get": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {R_AttGet} */
+				/** @private @type {R_AttGet} */
 				data: as(x),
 			};
 			case "log": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {R_AttLog$RC} */
+				/** @private @type {R_AttLog$RC} */
 				data: as(x),
 			};
 		}
@@ -6625,7 +6638,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[0]) {
 			case "browse": return {
 				type: t[0],
-				/** @type {R_Browse} */
+				/** @private @type {R_Browse} */
 				data: as(x),
 			};
 		}
@@ -6635,14 +6648,14 @@ class ServiceMethods extends ServiceData {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {R_Dislike} */
+				/** @private @type {R_Dislike} */
 				data: as(x),
 			}; case "like": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {R_LikeLike} */data: as(x),
+				/** @private @type {R_LikeLike} */data: as(x),
 			}; case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {R_LikeRemoveLike} */data: as(x),
+				/** @private @type {R_LikeRemoveLike} */data: as(x),
 			};
 		}
 		return null;
@@ -6663,7 +6676,7 @@ class ServiceMethods extends ServiceData {
 	clickTrackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @type {string[]} */
+	/** @private @type {string[]} */
 	known_target_id=[];
 	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_r(str,needle) {
@@ -6730,7 +6743,7 @@ class ServiceMethods extends ServiceData {
 		/** @typedef {Extract<PartGroups,["57",...any]>} PartGroups_1 */
 		/** @typedef {Extract<PartGroups,["5s",...any]>} PartGroups_2 */
 		if(this.str_starts_with(ss4,"57yn")) {
-			/** @type {PartGroups_1[2]} */
+			/** @private @type {PartGroups_1[2]} */
 			let ss5=as(ss4.slice(4));
 			switch(ss5) {
 				case "lk": break;
@@ -6743,7 +6756,7 @@ class ServiceMethods extends ServiceData {
 				default: debugger;
 			}
 		} else if(this.str_starts_with(ss4,"5s7n")) {
-			/** @type {PartGroups_2[2]} */
+			/** @private @type {PartGroups_2[2]} */
 			let ss5=as(ss4.slice(4));
 			switch(ss5) {
 				case "76": break;
@@ -6807,7 +6820,7 @@ class ServiceMethods extends ServiceData {
 			case "83769": return;
 			case "96368": return;
 			default: {
-				/** @type {GM_WC[]} */
+				/** @private @type {GM_WC[]} */
 				let x=[]; x;
 			}
 		}
@@ -7293,7 +7306,7 @@ class HandleTypes extends ServiceMethods {
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(visitorData);
 		if(sessionIndex!==0) debugger;
-		/** @type {`${typeof rootVisualElementType}`} */
+		/** @private @type {`${typeof rootVisualElementType}`} */
 		let s=`${rootVisualElementType}`;
 		switch(s) {
 			case "3611": return;
@@ -7470,7 +7483,7 @@ class HandleTypes extends ServiceMethods {
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,_x => {debugger;});
 		this.t(targetId,a => {
-			/** @type {D_Button$TargetId} */
+			/** @private @type {D_Button$TargetId} */
 			switch(a) {
 				case "clip-info-button": break;
 				case "sponsorships-button": return;
@@ -7625,7 +7638,7 @@ class HandleTypes extends ServiceMethods {
 			case "_Generic": return g(x);
 		}
 		this._current_response_type=x.type;
-		/** @type {{data:{responseContext:RC$ResponseContext;}}} */
+		/** @private @type {{data:{responseContext:RC$ResponseContext;}}} */
 		let v=x;
 		this.RC_ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
@@ -8093,7 +8106,7 @@ class HandleTypes extends ServiceMethods {
 	EI$ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.E_SignalService(x,a=>{
+			this.E_SignalService(x,a => {
 				a;
 				debugger;
 			});
@@ -8244,7 +8257,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_Menu$items$iterate);
-		/** @type {D_Menu$targetId} */
+		/** @private @type {D_Menu$targetId} */
 		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.A_LoggingDirectives);
 	}
@@ -8303,7 +8316,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template T @template {string} VV @typedef {{[U in keyof T as `${string&U extends `${VV}${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemovePrefix */
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
-		/** @type {Partial<RemovePrefix<U,"url">>} */
+		/** @private @type {Partial<RemovePrefix<U,"url">>} */
 		let uu={};
 		uu; x;
 		uu.applinksAndroid;
@@ -8319,25 +8332,25 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
-		/** @type {RemovePrefix<U,VV>} */
+		/** @private @type {RemovePrefix<U,VV>} */
 		let un_prefix=as({});
-		/** @type {Omit<U,`${VV}${string}`>} */
+		/** @private @type {Omit<U,`${VV}${string}`>} */
 		let other=as({});
 		for(let cc of Object.entries(x)) {
 			let c1=cc[0];
 			if(this.str_starts_with(pf,c1)) {
 				let u1x=split_string_once(c1,pf);
 				if(u1x.length!==2) continue;
-				/** @type {any} */
+				/** @private @type {any} */
 				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
-				/** @type {keyof RemovePrefix<U,VV>} */
+				/** @private @type {keyof RemovePrefix<U,VV>} */
 				let u1=ac;
 				un_prefix[u1]=cc[1];
 				continue;
 			}
-			/** @type {any} */
+			/** @private @type {any} */
 			let ac=c1;
-			/** @type {keyof Omit<U,`${VV}${string}`>} */
+			/** @private @type {keyof Omit<U,`${VV}${string}`>} */
 			let u1=ac;
 			other[u1]=cc[1];
 		}
@@ -9139,7 +9152,7 @@ class HandleTypes extends ServiceMethods {
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a=>{
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a => {
 			a;
 			debugger;
 		});
@@ -9627,7 +9640,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a=>{
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a => {
 			a;
 			debugger;
 		});
@@ -9943,20 +9956,20 @@ class HandleTypes extends ServiceMethods {
 	D_GradientColorConfig(x) {
 		{
 			let c=x[0];
-			/** @type {`${typeof c['darkThemeColor']}`} */
+			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==0) debugger;
 			if(u!=="2566914048") debugger;
 		}
 		{
 			let c=x[1];
-			/** @type {`${typeof c['darkThemeColor']}`} */
+			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(u!=="2130706432") debugger;
 		}
 		{
 			let c=x[2];
-			/** @type {`${typeof c['darkThemeColor']}`} */
+			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==1) debugger;
 			if(u!=="4278190080") debugger;
