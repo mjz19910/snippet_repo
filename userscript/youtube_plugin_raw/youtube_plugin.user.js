@@ -6216,12 +6216,17 @@ class ParserService extends BaseService {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
 		} else if(this.str_starts_with_r(x,"SP")) {
+			/** @type {D_Settings_Id} */
 			let x1=split_string_once(x,"SP")[1];
 			switch(x1) {
-				case "account": case "account_advanced": case "account_billing": case "account_notifications": case "account_privacy":
-				case "account_sharing": case "account_playback": case "account_overview": case "report_history": return;
-				case "unlimited": return;
-				default: debugger;
+				case "account_advanced":
+				case "account_downloads":
+				case "account_overview":
+				case "account":
+				case "report_history":
+				case "unlimited":
+					return;
+				default: console.log(`case "${x1}": `);console.log(`\n|"${x1}"`); debugger;
 			}
 			console.log("new with param [param_2c_SP]",x,x1);
 		} else if(this.str_starts_with_r(x,"MP")) {

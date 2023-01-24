@@ -2,5 +2,5 @@ type D$Browse$Id=
 	|`FE${D$BrowseEndpointPages}`
 	|`VL${`${"LL"|"WL"|"PL"}${string}`}`
 	|`UC${string}`
-	|`SP${D$Settings$Id}`
+	|`SP${D_Settings_Id}`
 	|`MP${"TRt"|"REb"|"LYt"}_${string}`;
