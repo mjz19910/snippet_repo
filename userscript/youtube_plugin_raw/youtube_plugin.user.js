@@ -4312,13 +4312,13 @@ class CodegenService extends BaseService {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
 		/** @type {R_TextWithRuns} */
-		if(x.runs&&x.runs instanceof Array) return "TYPE::D_TextWithRuns";
+		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextWithRuns";
 		/** @type {D_Thumbnail} */
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D_Thumbnail";
 		/** @type {R_SimpleText} */
-		if(x.simpleText) return "TYPE::D_SimpleText";
+		if(x.simpleText) return "TYPE::R_SimpleText";
 		/** @type {T_Icon<"">} */
-		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T$Icon<"${x.iconType}">`;
+		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
@@ -7405,7 +7405,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink";
-		if("navigationEndpoint" in x) {debugger; return;}
+		if("navigationEndpoint" in x) {debugger; x; return;}
 		const {icon,title,trackingParams,...y}=x; this.g(y);
 		switch(x.icon.iconType) {
 			case "PERSON_ADD": break;
