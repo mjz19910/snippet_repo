@@ -8392,6 +8392,7 @@ class HandleTypes extends ServiceMethods {
 				switch(x.icon.iconType) {
 					case "NOT_INTERESTED": return this.D_MenuServiceItem_NotInterested(x);
 					case "ADD_TO_QUEUE_TAIL": debugger; break;
+					default: debugger; break;
 				}
 
 			}
