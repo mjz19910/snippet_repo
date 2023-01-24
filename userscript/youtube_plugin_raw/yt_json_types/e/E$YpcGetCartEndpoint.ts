@@ -1,5 +1,5 @@
 type E_YpcGetCart={
 	clickTrackingParams: string;
-	commandMetadata: CM_YpcGetCart;
+	commandMetadata: M_YpcGetCart;
 	ypcGetCartEndpoint: D_YpcGetCart;
 };

@@ -7797,7 +7797,7 @@ class HandleTypes extends ServiceMethods {
 		this.H_R(cf,x);
 		this.T_Endpoint(cf,x,x => this.y(x,this.D_YpcGetCart),this.CM_YpcGetCart);
 	}
-	/** @private @arg {CM_YpcGetCart} x */
+	/** @private @arg {M_YpcGetCart} x */
 	CM_YpcGetCart(x) {
 		const {apiUrl,sendPost,...t}=this.w(x); this.w(t);
 		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;

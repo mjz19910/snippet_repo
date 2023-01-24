@@ -2,7 +2,7 @@ type D_DesktopTopbar={
 	logo: R_TopbarLogo;
 	searchbox: R_FusionSearchbox;
 	trackingParams: string;
-	countryCode: CountryCode;
+	countryCode: D_CountryCode;
 	topbarButtons: G_TopbarButtonItem[];
 	hotkeyDialog: R_HotkeyDialog;
 	backButton: R_Button;

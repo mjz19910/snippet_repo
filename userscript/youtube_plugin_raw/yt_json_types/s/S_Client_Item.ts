@@ -1,4 +1,4 @@
-type S_Client_Items=[
+type S_Client_Item=[
 	E_ShowEngagementPanel,
 	A_SendFeedback,
 	A_Signal,

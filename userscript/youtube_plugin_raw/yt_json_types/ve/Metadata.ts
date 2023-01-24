@@ -33,3 +33,4 @@ type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE4724={webCommandMetadata: GM_VE4724_WC;};
 type M_VE23462={webCommandMetadata: GM_VE23462_WC;};
 type M_VE83769={webCommandMetadata: GM_VE83769_WC;};
+type M_YpcGetCart={webCommandMetadata: WCM_YpcGetCart;};
