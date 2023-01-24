@@ -4943,7 +4943,7 @@ class ParserService extends BaseService {
 				let v=this.parse_url_search_params(sp);
 				this.save_keys(`[${cf}.ads]`,v);
 				// spell:disable-next
-				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}=v; this.g(y);
+				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}/*!*/=v; this.g(y);
 			} break;
 			default: debugger; break;
 		}
@@ -7786,7 +7786,7 @@ class HandleTypes extends ServiceMethods {
 			this.GetSurveyArgs(this.w(a));
 		},a => {
 			const cf="GetSurveyCommandMetadata"; this.k(cf,a);
-			const {apiUrl,sendPost,...y}=this.w(a); this.g(y);
+			const {apiUrl,sendPost,...y}/*!*/=this.w(a); this.g(y);
 			if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 			if(sendPost!==true) debugger;
 		});
