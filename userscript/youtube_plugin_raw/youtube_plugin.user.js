@@ -8684,24 +8684,24 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio"; this.k(cf,x);
-		const {secondaryNavigationEndpoint,...y}=this.sd(cf,x); this.Omit$Radio(cf,x);
+		const {secondaryNavigationEndpoint,...y}=this.Omit$Radio(cf,x);
 		this.E_Watch(secondaryNavigationEndpoint);
 		let uk=this.get_keys_of(y);
 		if(uk.length>0) {
 			console.log("[log_keys_of] [%s] [%s]",cf,uk.join(",").split(",")[0]);
 		}
 	}
-	/** @arg {string} cf @template {D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
+	/** @arg {string} cf @template {D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
 	Omit$Radio(cf,x) {
-		const {playlistId,thumbnail,title,videoCountText,navigationEndpoint,menu,trackingParams,videoCountShortText,thumbnailText,shareUrl,longBylineText,thumbnailOverlays,...y}=this.sd(cf,x); // !
-		this.playlistId(playlistId);
+		const {thumbnail,title,navigationEndpoint,menu,trackingParams,longBylineText,thumbnailOverlays,...y}=this.sd(cf,x); // !
+		// this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
-		this.R_SimpleText(title);
-		this.R_TextWithRuns(videoCountText);
-		this.E_Watch(navigationEndpoint);
-		this.R_Menu(menu);
+		// this.R_SimpleText(title);
+		// this.R_TextWithRuns(videoCountText);
+		// this.E_Watch(navigationEndpoint);
+		// this.R_Menu(menu);
 		this.trackingParams(cf,trackingParams);
-		this.parser.parse_url(cf,shareUrl);
+		// this.parser.parse_url(cf,shareUrl);
 		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
@@ -9547,7 +9547,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_CompactVideo} x */
 	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
 	/** @private @arg {D_CompactVideo} x */
-	D_CompactVideo(x) {x; debugger;}
+	D_CompactVideo(x) {
+		let u=this.Omit$Radio("D_CompactVideo",x);
+	}
 	/** @private @arg {A_LoggingDirectives} x */
 	A_LoggingDirectives(x) {
 		const cf="LoggingDirectives";
