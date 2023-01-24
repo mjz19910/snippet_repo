@@ -8952,9 +8952,9 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint("E_RecordNotificationInteractions",x,a => {
 			if(!a.recordNotificationInteractionsEndpoint) debugger;
 			this.DE_RecordNotificationInteractions(this.w(a));
-		},a => {
-			let v=this.w(a);
-			const {apiUrl,sendPost,...u}=v; this.g(u);
+		},x => {
+			let y=this.w(x);
+			const {apiUrl,sendPost,...u}=y; this.g(u);
 			if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
 			if(sendPost!==true) debugger;
 		});
@@ -9232,13 +9232,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_YpcGetOffers} x */
 	YpcGetOffersEndpoint(x) {
 		const cf="YpcGetOffersEndpoint";
-		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: x1,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		const cf1="YpcGetOffers";
-		this.save_keys(`[${cf1}]`,x1);
-		const {params,...y1}=x1; this.g(y1);
-		this.params(cf1,"ypc_get_offers.params",params);
+		this.D_YpcGetOffers(a);
+	}
+	/** @private @arg {D_YpcGetOffers} x */
+	D_YpcGetOffers(x) {
+		const cf="YpcGetOffers";
+		this.save_keys(`[${cf}]`,x);
+		const {params,...y}=this.sd(cf,x); this.g(y);
+		this.params(cf,"ypc_get_offers.params",params);
 	}
 	/** @private @arg {R_ChannelPage} x */
 	R_ChannelPage(x) {
