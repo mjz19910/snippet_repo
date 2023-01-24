@@ -7,7 +7,7 @@ type YtUrlFormat=[
 	`/account${""|`_${AccountPageSettingsSections}`}`,
 	`/api/stats/ads?${string}`,
 	`/channel/UC${string}`,
-	`/feed/${YtFeedSubSections}`,
+	`/feed/${D$BrowseEndpointPages}`,
 	`/feed/trending?${string}`,
 	`/gaming`,
 	`/playlist?${string}`,
