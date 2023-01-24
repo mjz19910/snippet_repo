@@ -2588,7 +2588,7 @@ class KnownDataSaver extends ApiBase {
 		let rle_x=yt_plugin.ds.rle_enc(mx);
 		console.log(rle_x.split("!").map(e=>{
 			let [a,b]=e.split(":").map(e=>parseInt(e,10));
-			return String.fromCharCode(a)+String.fromCharCode(b);
+			return String.fromCharCode(b*4+a);
 		}).map(e=>btoa(e).replaceAll("=","")).map((e,i)=>`${e}$${i}`).sort());
 	}
 	/** @private @arg {number[]} bitmap_src */
