@@ -7566,9 +7566,9 @@ class HandleTypes extends ServiceMethods {
 	D_RichGrid(x) {
 		const cf="D_RichGrid";
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x); this.g(y);
-		this.z(contents,a => {
-			if("richItemRenderer" in a) return this.R_RichItem(a);
-			if("continuationItemRenderer" in a) return this.R_ContinuationItem(x);
+		this.z(contents,x => {
+			if("richItemRenderer" in x) return this.R_RichItem(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 			debugger;
 		});
 		this.R_FeedFilterChipBar(header);
