@@ -8345,7 +8345,14 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @arg {D_MenuServiceItem<null, {}>} x */
-	D_MenuServiceItem(x) {x;}
+	D_MenuServiceItem(x) {
+		const cf="R_MenuServiceItem";
+		this.save_keys(`[${cf}]`,x);
+		const {text,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+		this.G_Text(text);
+		this.g(serviceEndpoint);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", {}>} x */
 	D_MenuServiceItem_NotInterested(x) {x;}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
