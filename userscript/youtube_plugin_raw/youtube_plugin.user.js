@@ -4421,6 +4421,7 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(state,r,b,keys) {
+		if(keys[0].endsWith("Command")) debugger;
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
@@ -4697,13 +4698,25 @@ class CodegenService extends BaseService {
 			||b.engagementPanelPopupPresentationConfig
 			||b.userFeedbackEndpoint
 			;
-		if(hg) return g();
+		if(hg) {
+			let hr=g();
+			if(hr.endsWith("Command")) {
+				let sq=split_string_once(hr,"Command");
+				if(sq[1]==="") {
+					return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;
+				}
+				console.log(sq);
+				debugger;
+			}
+			return hr;
+		}
 		if(b.webCommandMetadata) {
 			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
 			return b;
 		}
 		/** @private @type {D_Accessibility} */
 		if(b.accessibilityData) return "TYPE::A_Accessibility";
+		if(b.styleType&&typeof b.styleType==="string") return `TYPE::TS_ChipCloud<"${b.styleType}">`;
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		debugger;
 		return null;
