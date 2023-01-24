@@ -2586,10 +2586,10 @@ class KnownDataSaver extends ApiBase {
 		let mu_=swap_mask(mu);
 		let mx=mu_;
 		let rle_x=yt_plugin.ds.rle_enc(mx);
-		console.log(rle_x.split("!").map(e=>{
-			let [a,b]=e.split(":").map(e=>parseInt(e,10));
-			return String.fromCharCode(b*4+a);
-		}).map(e=>btoa(e).replaceAll("=","")).map((e,i)=>`${e}$${i}`).sort());
+		console.log(rle_x.split("!"));
+	}
+	console_code_2() {
+		["0:0!1:1"].map(e=>e.split(":").map(e=>parseInt(e,10))).map((e,i)=>[...e,i]).sort(([,a],[,b])=>a-b).map(([a,b,i])=>`${b}$${i}$${a}`)
 	}
 	/** @private @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
