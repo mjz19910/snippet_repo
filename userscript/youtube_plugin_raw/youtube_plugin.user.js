@@ -4414,7 +4414,7 @@ class CodegenService extends BaseService {
 		/** @private @type {GS_Client} */
 		let u=as(x);
 		switch(u.signal) {
-			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E_S_ClientSignal"; break;
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::ES_Client"; break;
 		}
 		debugger;
 		return x;
@@ -4511,7 +4511,6 @@ class CodegenService extends BaseService {
 			||b.watchEndpoint
 			||b.watchPlaylistEndpoint
 			||b.ypcGetOffersEndpoint
-			||b.signalServiceEndpoint
 			//#endregion
 			//#region renderer
 			||b.accountItemSectionRenderer
@@ -7483,7 +7482,10 @@ class HandleTypes extends ServiceMethods {
 		this.t(command,this.ButtonCommand);
 		this.t(icon,this.T$Icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		this.t(serviceEndpoint,this.Button_serviceEndpoint);
+		this.t(serviceEndpoint,x => this.Button_serviceEndpoint(x,a => {
+			a;
+			debugger;
+		}));
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
@@ -8125,10 +8127,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GS_Client} x */
 	GS_Client(x) {
-		let om=this.Signal$Omit(x,a=>{
+		let om=this.Signal$Omit(x,a => {
 			if(a!=="CLIENT_SIGNAL") debugger;
 		});
-		this.z(this.w(om),x=>{
+		this.z(this.w(om),x => {
 			if("openPopupAction" in x) {
 				const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
 				this.clickTrackingParams("openPopupAction",clickTrackingParams);
@@ -9190,14 +9192,11 @@ class HandleTypes extends ServiceMethods {
 		this.R_SimpleText(title);
 		this.R_TextWithRuns(subtitle);
 	}
-	/** @private @template T @arg {E_Button_service<T>} x */
-	Button_serviceEndpoint(x) {
+	/** @private @template T @arg {E_Button_service<T>} x @arg {(x:T)=>void} f */
+	Button_serviceEndpoint(x,f) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,x => {
-			x;
-			debugger;
-		});
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,f);
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
@@ -9682,10 +9681,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a => {
-			a;
-			debugger;
-		});
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) {
