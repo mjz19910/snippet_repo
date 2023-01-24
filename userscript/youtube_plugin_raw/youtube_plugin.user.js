@@ -7544,7 +7544,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
 		const cf="Tab"; this.k(cf,x);
-		{x; debugger;}
+		if("tabIdentifier" in x) {
+			switch(x.tabIdentifier) {
+				default: debugger; break;
+				case "FEsubscriptions": debugger; break;
+				case "FEwhat_to_watch": {
+					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
+					if(selected!==true) debugger;
+					this.R_RichGrid(content);
+					this.trackingParams(cf,trackingParams);
+				} break;
+			}
+			return;
+		}
+		debugger;
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
