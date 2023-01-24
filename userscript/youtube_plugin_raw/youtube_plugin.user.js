@@ -2589,7 +2589,7 @@ class KnownDataSaver extends ApiBase {
 		console.log(rle_x.split("!"));
 	}
 	console_code_2() {
-		["0:0!1:1"].map(e=>e.split(":").map(e=>parseInt(e,10))).map((e,i)=>[...e,i]).sort(([,a],[,b])=>a-b).map(([a,b,i])=>`${b}$${i}$${a}`)
+		"0:0!1:1".split("!").map(e=>e.split(":").map(e=>parseInt(e,10))).map((e,i)=>[...e,i]).sort(([,a],[,b])=>a-b).map(([a,b,i])=>`${b}$${i}$${a}`)
 	}
 	/** @private @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
