@@ -1,1 +1,1 @@
-type C_Innertube={innertubeCommand: CD_Innertube;};
+type C_Innertube={innertubeCommand: E_YpcGetOfflineUpsell;};

@@ -1,6 +1,6 @@
-import {KnownDataSaver} from "./yt_json_types/KnownDataSaver";
-import {MyReader} from "./yt_json_types/MyReader";
 import {Base64Binary} from "./support/Base64Binary";
+import {KnownDataSaver} from "./support_2/KnownDataSaver";
+import {MyReader} from "./support_2/MyReader";
 `
 const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 this.z(actions,a => {
