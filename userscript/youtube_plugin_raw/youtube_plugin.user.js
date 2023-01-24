@@ -8342,9 +8342,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {x; debugger;}
 	/** @private @arg {string} x */
-	primitive_of_string(x) {
-		this.primitive_of(x,"string");
-	}
+	primitive_of_string(x) {this.primitive_of(x,"string");}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="Menu";
