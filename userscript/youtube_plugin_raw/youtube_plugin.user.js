@@ -7563,7 +7563,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
 	/** @private @arg {D_RichGrid} x */
-	D_RichGrid(x) {x; debugger;}
+	D_RichGrid(x) {
+		const cf="D_RichGrid";
+		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x); this.g(y);
+		this.z(contents,this.R_RichItem);
+		this.R_FeedFilterChipBar(header);
+		this.trackingParams(cf,trackingParams);
+		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
+		if(reflowOptions.minimumRowsOfVideosAtStart!==2) debugger;
+		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
+	}
+	/** @private @arg {R_RichItem} x */
+	R_RichItem(x) {this.H_("R_RichItem",x,this.D_RichItem);}
+	/** @private @arg {D_RichItem} x */
+	D_RichItem(x) {x; debugger;}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="ExpandableTab"; this.k(cf,x);
