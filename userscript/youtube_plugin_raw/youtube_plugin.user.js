@@ -6963,7 +6963,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,f);
-		this.trackingParams("ItemSectionData",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
 	/** @private @arg {R_SimpleText} x @arg {(this:this,x:Omit<R_SimpleText,"simpleText">)=>void} f */
