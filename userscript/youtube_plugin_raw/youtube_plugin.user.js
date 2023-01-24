@@ -9868,21 +9868,27 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ChipCloudChip"; this.k(cf,x);
 		if("isSelected" in x) {
 			let d=this.D_ChipCloudChip$Omit(cf,x);
-			const {isSelected,...y}=d; this.g(y); // ! #destructure
-			if(isSelected!==true) debugger;
+			const {isSelected: a,...y}=d; this.g(y); // ! #destructure
+			if(a!==true) debugger;
+			return;
+		}
+		if("targetId" in x) {
+			let d=this.D_ChipCloudChip$Omit(cf,x);
+			const {targetId: a,navigationEndpoint: b,...y}=d; this.g(y); // ! #destructure
+			if(a!=="feed_filter_chip_bar_second_chip") debugger;
+			this.C_Continuation(b);
 			return;
 		}
 		let d=this.D_ChipCloudChip$Omit(cf,x);
-		const {targetId,navigationEndpoint,...y}=d; this.g(y); // ! #destructure
-		if(targetId!=="feed_filter_chip_bar_second_chip") debugger;
-		this.C_Continuation(navigationEndpoint);
+		const {navigationEndpoint: a,...y}=d; this.g(y); // ! #destructure
+		this.C_Continuation(a);
 	}
 	/** @arg {string} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip$Omit(cf,x) {
-		const {style,text,trackingParams,...y}=x;
-		if(style.styleType!=="STYLE_HOME_FILTER") debugger;
-		this.R_TextWithRuns(text);
-		this.trackingParams(cf,trackingParams);
+		const {style: a,text: b,trackingParams: c,...y}=x;
+		if(a.styleType!=="STYLE_HOME_FILTER") debugger;
+		this.R_TextWithRuns(b);
+		this.trackingParams(cf,c);
 		return y;
 	}
 	/** @private @arg {AutoplaySetItem} x */

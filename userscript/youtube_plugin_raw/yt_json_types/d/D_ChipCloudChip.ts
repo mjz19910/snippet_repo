@@ -1,4 +1,11 @@
-type D_ChipCloudChip={
+type D_ChipCloudChip=|{
+	style: {
+		styleType: "STYLE_HOME_FILTER";
+	};
+	text: R_TextWithRuns;
+	navigationEndpoint: C_Continuation;
+	trackingParams: string;
+}|{
 	style: {
 		styleType: "STYLE_HOME_FILTER";
 	};
