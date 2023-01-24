@@ -5,7 +5,7 @@ type D_CompactLink={
 	title: G_Text;
 	trackingParams: string;
 }|{
-	title: D_TextWithRuns;
+	title: R_TextWithRuns;
 	navigationEndpoint: E_Browse;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR";
