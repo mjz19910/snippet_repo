@@ -7877,8 +7877,8 @@ class HandleTypes extends ServiceMethods {
 		return this.uppercase_first(kk);
 	}
 	/** @private @template T @arg {TD_ContinuationItem<T>} x */
-	TD_ContinuationItem(x) {
-		const cf="TD_ContinuationItem";
+	DT_ContinuationItem(x) {
+		const cf="DT_ContinuationItem";
 		const {trigger,...y}=this.sd(cf,x);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
@@ -8972,7 +8972,7 @@ class HandleTypes extends ServiceMethods {
 	T$ContinuationItemRenderer(x) {
 		const cf="T$ContinuationItemRenderer";
 		this.save_keys(`[${cf}]`,x);
-		return this.w(this.TD_ContinuationItem(this.w(x)));
+		return this.w(this.DT_ContinuationItem(this.w(x)));
 	}
 	/** @arg {G_SectionList} x */
 	SectionListData(x) {
