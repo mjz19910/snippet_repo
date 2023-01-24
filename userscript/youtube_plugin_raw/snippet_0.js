@@ -555,7 +555,7 @@ class ND extends Snippet_0_tmp {
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button",x,() => {debugger;});}
 	/** @protected @arg {D_AlertWithButton} x */
-	AlertWithButton(x) {
+	D_AlertWithButton(x) {
 		const cf="AlertWithButton";
 		this.save_keys(`[${cf}]`,x);
 		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
