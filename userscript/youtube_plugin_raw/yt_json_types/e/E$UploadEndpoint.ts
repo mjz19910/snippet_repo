@@ -1,5 +1,5 @@
 type E_Upload={
 	clickTrackingParams: string;
-	commandMetadata: G_MD;
+	commandMetadata: G_CommandMetadata;
 	uploadEndpoint: E_Upload;
 };

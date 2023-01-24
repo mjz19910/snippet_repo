@@ -1,4 +1,4 @@
-type G_MD={
+type G_CommandMetadata={
 	webCommandMetadata: GM_WC;
 	resolveUrlCommandMetadata: MC_ResolveUrl;
 }|{

@@ -8003,7 +8003,9 @@ class HandleTypes extends ServiceMethods {
 		this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
-	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,a => {a; debugger;});}
+	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,this.D_PlayerAnnotationsExpanded);}
+	/** @private @arg {D_PlayerAnnotationsExpanded} x */
+	D_PlayerAnnotationsExpanded(x) {x; debugger;}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
@@ -8112,9 +8114,16 @@ class HandleTypes extends ServiceMethods {
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
 	/** @private @arg {G_NextContents} x */
-	G_NextContents(x) {this.H_("G_NextContents",x,a => {a; debugger;});}
+	G_NextContents(x) {
+		this.H_("G_NextContents",x,x => {
+			x;
+			debugger;
+		});
+	}
 	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel",x,a => {a; debugger;});}
+	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel",x,this.DC_PlaylistPanel);}
+	/** @private @arg {DC_PlaylistPanel} x */
+	DC_PlaylistPanel(x) {x; debugger;}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {R_CommentsHeader} x */
@@ -8309,9 +8318,13 @@ class HandleTypes extends ServiceMethods {
 		this.g(y);
 	}
 	/** @private @arg {R_AutoplaySwitchButton} x */
-	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton",x,a => {a; debugger;});}
+	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton",x,this.D_AutoplaySwitchButton);}
+	/** @private @arg {D_AutoplaySwitchButton} x */
+	D_AutoplaySwitchButton(x) {x; debugger;}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
-	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay",x,a => {a; debugger;});}
+	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay",x,this.D_PlayerOverlayAutoplay);}
+	/** @private @arg {D_PlayerOverlayAutoplay} x */
+	D_PlayerOverlayAutoplay(x) {x; debugger;}
 	/** @private @arg {R_WatchNextEndScreen} x */
 	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen",x,this.D_WatchNextEndScreen);}
 	/** @private @arg {D_WatchNextEndScreen} x */
@@ -8392,7 +8405,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", {}>} x */
 	D_MenuServiceItem_NotInterested(x) {x; debugger;}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
-	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem",x,a => {a; debugger;});}
+	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem",x,this.D_ToggleMenuServiceItem);}
+	/** @private @arg {D_ToggleMenuServiceItem} x */
+	D_ToggleMenuServiceItem(x) {x; debugger;}
 	/** @private @arg {R_MenuNavigationItem} x */
 	R_MenuNavigationItem(x) {
 		const cf="R_MenuNavigationItem"; this.k(cf,x);
@@ -8412,9 +8427,10 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
-	/** @private @arg {G_MD} x */
-	CommandMetadata(x) {
-		const cf="CommandMetadata";
+	/** @private @arg {G_CommandMetadata} x */
+	G_CommandMetadata(x) {
+		debugger;
+		const cf="G_CommandMetadata";
 		if("resolveUrlCommandMetadata" in x) {
 			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 			debugger;
@@ -8767,8 +8783,15 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		return [x.contents,x.sectionIdentifier,x.targetId];
 	}
+	// TODO
 	/** @private @arg {G_WatchResultItem} x */
-	G_WatchResultItem(x) {x; debugger;}
+	G_WatchResultItem(x) {
+		if("itemSectionRenderer" in x) return;
+		if("merchandiseShelfRenderer" in x) return;
+		if("videoPrimaryInfoRenderer" in x) return;
+		if("videoSecondaryInfoRenderer" in x) return;
+		debugger;
+	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
@@ -8887,7 +8910,9 @@ class HandleTypes extends ServiceMethods {
 		this.z(engagementPanels,this.G_EngagementPanelItem);
 	}
 	/** @private @arg {R_ReelPlayerOverlay} x */
-	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,a => {a; debugger;});}
+	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {D_ReelPlayerOverlay} x */
+	D_ReelPlayerOverlay(x) {x; debugger;}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,a => {a; debugger;});}
 	/** @private @arg {RS_SetSetting} x */
@@ -9165,7 +9190,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetTranscriptEndpoint";
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		this.G_CommandMetadata(commandMetadata);
 		this.DE_GetTranscript(getTranscriptEndpoint);
 	}
 	/** @private @arg {DE_GetTranscript} x */
@@ -9302,7 +9327,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="YpcGetOffersEndpoint";
 		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		this.G_CommandMetadata(commandMetadata);
 		this.D_YpcGetOffers(a);
 	}
 	/** @private @arg {D_YpcGetOffers} x */
@@ -9402,7 +9427,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="SearchEndpoint";
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		this.G_CommandMetadata(commandMetadata);
 		this.D_Search(searchEndpoint);
 	}
 	/** @private @arg {D_Search} x */
@@ -9726,7 +9751,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ShareEntityServiceEndpoint";
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		this.G_CommandMetadata(commandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
 	/** @private @arg {D_ShareEntityService} x */
@@ -10001,7 +10026,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchPlaylistEndpoint";
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams("WatchPlaylistEndpoint",clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		this.G_CommandMetadata(commandMetadata);
 		this.E_WatchPlaylist(watchPlaylistEndpoint);
 	}
 	/** @private @arg {D_WatchPlaylist} x */
