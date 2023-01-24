@@ -7428,17 +7428,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @public @arg {D_Dropdown_Privacy} x */
-	DropdownData(x) {
-		const {entries,label,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(label);
-		this.z(entries,x => {
-			if("privacyDropdownItemRenderer" in x) {
-				return;
-			}
-			this.do_codegen("Dropdown",x);
-		});
-	}
 	/** @private @arg {R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar",x,this.D_PlaylistSidebar);}
 	/** @private @arg {D_PlaylistSidebar} x */

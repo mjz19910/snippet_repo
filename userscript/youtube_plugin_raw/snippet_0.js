@@ -487,5 +487,65 @@ class ND extends Snippet_0_tmp {
 		if(type!=="FREE") debugger;
 		this.t(subscribed,a => this.primitive_of(a,"boolean"));
 	}
+	/** @private @arg {string} x */
+	primitive_of_string(x) {
+		this.primitive_of(x,"string");
+	}
+	/** @protected @arg {string} x */
+	uppercase_first(x) {
+		return x[0].toUpperCase()+x.slice(1);
+	}
+	/** @template T @arg {T[]} x */
+	filter_keys(x) {
+		let ret=[];
+		for(let k of x) {
+			if(k==="clickTrackingParams") continue;
+			if(k==="commandMetadata") continue;
+			ret.push(k);
+		}
+		if(!ret.length) {
+			for(let k of x) {
+				if(k==="clickTrackingParams") continue;
+				ret.push(k);
+			}
+		}
+		if(!ret.length) {
+			for(let k of x) {
+				ret.push(k);
+			}
+		}
+		return ret;
+	}
+	/** @private @arg {{[U in string]: unknown}} x */
+	get_codegen_name(x) {
+		if(typeof x.type==='string') {
+			return x.type.split(".").map(e => {
+				if(e.includes("_")) {
+					return e.split("_").map(e => this.uppercase_first(e)).join("");
+				}
+				return this.uppercase_first(e);
+			}).join("$");
+		}
+		let rk=this.filter_keys(this.get_keys_of(x));
+		let kk=rk[0];
+		return this.uppercase_first(kk);
+	}
+	/** @private @arg {string} cf @arg {{}} x */
+	do_codegen(cf,x) {
+		let u_name=this.get_codegen_name(x);
+		let gen_name=`${cf}$${u_name}`;
+		this.codegen_new_typedef(x,gen_name);
+	}
+	/** @protected @arg {D_Dropdown_Privacy} x */
+	DropdownData(x) {
+		const {entries,label,...y}=x; this.g(y); // ! #destructure
+		this.primitive_of_string(label);
+		this.z(entries,x => {
+			if("privacyDropdownItemRenderer" in x) {
+				return;
+			}
+			this.do_codegen("Dropdown",x);
+		});
+	}
 }
 new ND;
