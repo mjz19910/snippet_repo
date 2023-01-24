@@ -6902,7 +6902,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TD_ItemSection_3(x,f) {
-		const cf="ItemSectionData";
+		const cf="TD_ItemSection_3";
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
 		this.trackingParams(cf,trackingParams);
@@ -8885,7 +8885,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_ShowReloadUi} x */
 	C_ShowReloadUi(x) {
 		const cf="C_ShowReloadUi"; this.k(cf,x);
-		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=x;
+		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.sd(cf,x); // !
 		this.z([y1,y2],this.g);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		switch(targetId) {
@@ -8895,7 +8895,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {DC_Continuation} T @arg {T} x */
 	DC_Continuation$Omit(x) {
-		const {request,token,...y}=x;
+		const {request,token,...y}=x; // !
 		switch(request) {
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": break;
@@ -8915,17 +8915,18 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			this.g(this.DC_Continuation$Omit(u));
-		},a => {
-			let v=this.w(a);
-			if("apiUrl" in v) {
-				const {apiUrl,sendPost,...b}=v; this.g(b);
-				if(apiUrl!=="/youtubei/v1/browse") debugger;
-				if(sendPost!==true) debugger;
-				return;
-			};
-			v;
-			debugger;
-		});
+		},x => this.y(x,this.GM_browse));
+	}
+	/** @private @arg {GM_browse} x */
+	GM_browse(x) {
+		if("apiUrl" in x) {
+			const {apiUrl,sendPost,...b}=x; this.g(b);
+			if(apiUrl!=="/youtubei/v1/browse") debugger;
+			if(sendPost!==true) debugger;
+			return;
+		};
+		x;
+		debugger;
 	}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification",x,this.D_Notification);}
