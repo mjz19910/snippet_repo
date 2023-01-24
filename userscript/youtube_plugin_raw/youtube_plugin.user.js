@@ -9054,12 +9054,18 @@ class HandleTypes extends ServiceMethods {
 		this.G_ContinuationEndpoint(continuationEndpoint);
 		if("button" in y) {
 			const {button,...a}=y; this.g(a);
-			this.t(button,this.R_Button);
+			this.R_Button(button);
+			return;
+		}
+		if("ghostCards" in y) {
+			const {ghostCards,...a}=y; this.g(a);
+			this.R_GhostGrid(ghostCards);
 			return;
 		}
 		this.g(y); // ! #destructure
-		//this.t(ghostCards,((_x) => {debugger;}));
 	}
+	/** @private @arg {R_GhostGrid} x */
+	R_GhostGrid(x) {x; debugger;}
 	/** @private @arg {G_ContinuationEndpoint} x */
 	G_ContinuationEndpoint(x) {
 		const cf="ContinuationEndpointRoot"; this.k(cf,x);
