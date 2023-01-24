@@ -8906,6 +8906,7 @@ class HandleTypes extends ServiceMethods {
 		const {request,token,...y}=x;
 		switch(request) {
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": break;
 			default: debugger; break;
 		};
 		this.primitive_of_string(token);
