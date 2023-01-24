@@ -7878,7 +7878,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template T @arg {TD_ContinuationItem<T>} x */
 	DT_ContinuationItem(x) {
-		const cf="DT_ContinuationItem";
+		const cf="TD_ContinuationItem";
 		const {trigger,...y}=this.sd(cf,x);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
