@@ -7364,8 +7364,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RS_Browse} x */
 	RS_Browse(x) {
-		const cf="BrowseResponse";
+		const cf="RS_Browse";
 		this.save_keys(`[${cf}]`,x);
+		x: {
+			let jk=this.get_keys_of(x).join();
+			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="responseContext,contents,trackingParams,topbar,sidebar") break x;
+			debugger;
+		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x; this.g(y);
 		this.RC_ResponseContext(responseContext);
 		this.t(header,this.BrowseHeader);
