@@ -9876,7 +9876,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
 		const cf="D_ChipCloudChip"; this.k(cf,x);
-		this.do_codegen(cf,x);
 		if("isSelected" in x) {
 			let d=this.D_ChipCloudChip$Omit(cf,x);
 			const {isSelected: a,...y}=d; this.g(y); // ! #destructure
@@ -9888,6 +9887,13 @@ class HandleTypes extends ServiceMethods {
 			const {targetId: a,navigationEndpoint: b,...y}=d; this.g(y); // ! #destructure
 			if(a!=="feed_filter_chip_bar_second_chip") debugger;
 			this.C_Continuation(b);
+			return;
+		}
+		if("uniqueId" in x) {
+			let d=this.D_ChipCloudChip$Omit(cf,x);
+			const {navigationEndpoint: a,uniqueId: b,...y}=d; this.g(y); // ! #destructure
+			this.C_Continuation(a);
+			if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
 			return;
 		}
 		let d=this.D_ChipCloudChip$Omit(cf,x);
