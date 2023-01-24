@@ -1,1 +1,1 @@
-type E_Button_service<T>=TE_SignalService<T>|E_YpcGetOffers;
+type ES_Button=TE_SignalService<GS_Client>|E_YpcGetOffers;

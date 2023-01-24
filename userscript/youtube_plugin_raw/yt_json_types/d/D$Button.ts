@@ -1,10 +1,10 @@
 type D_Button={
 	accessibility?: D_Label;
 	accessibilityData?: D_Accessibility;
-	command?: G_Button$command;
+	command?: GC_Button;
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: E_Button_service<{}>;
+	serviceEndpoint?: ES_Button;
 	navigationEndpoint?: E_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;

@@ -7479,13 +7479,10 @@ class HandleTypes extends ServiceMethods {
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y); // ! #destructure
 		if(accessibility) return this.D_Label(accessibility);
 		this.t(accessibilityData,this.D_Accessibility);
-		this.t(command,this.ButtonCommand);
+		this.t(command,this.GC_Button);
 		this.t(icon,this.T$Icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		this.t(serviceEndpoint,x => this.Button_serviceEndpoint(x,a => {
-			a;
-			debugger;
-		}));
+		this.t(serviceEndpoint,this.ES_Button);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
@@ -9192,11 +9189,11 @@ class HandleTypes extends ServiceMethods {
 		this.R_SimpleText(title);
 		this.R_TextWithRuns(subtitle);
 	}
-	/** @private @template T @arg {E_Button_service<T>} x @arg {(x:T)=>void} f */
-	Button_serviceEndpoint(x,f) {
-		const cf="Button_serviceEndpoint";
+	/** @private @arg {ES_Button} x */
+	ES_Button(x) {
+		const cf="ES_Button";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,f);
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.GS_Client);
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
@@ -9674,9 +9671,9 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.TA_OpenPopup);
 	}
-	/** @private @arg {G_Button$command} x */
-	ButtonCommand(x) {
-		const cf="ButtonCommand";
+	/** @private @arg {GC_Button} x */
+	GC_Button(x) {
+		const cf="GC_Button";
 		this.save_keys(`[${cf}]`,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);

@@ -1,4 +1,4 @@
-type G_Button$command=
+type GC_Button=
 	|EA_ChangeEngagementPanelVisibility
 	|C_Continuation
 	|TA_OpenPopup<{}>
