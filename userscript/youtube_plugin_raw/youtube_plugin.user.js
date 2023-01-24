@@ -7211,10 +7211,8 @@ class HandleTypes extends ServiceMethods {
 			let u=this.w(a);
 			let {browseId,...y}=u;
 			this.E_Browse$ParseBrowseId(browseId);
-			if("canonicalBaseUrl" in y) {
-				if(!this.str_starts_with("/@",this.w(y))) debugger;
-				return;
-			} this.g(y);
+			if("canonicalBaseUrl" in y) return this.decode_channel_url(this.w(y));
+			this.g(y);
 		},x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
@@ -7232,9 +7230,13 @@ class HandleTypes extends ServiceMethods {
 		const cf="GM_VE23462_WC";
 		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		if(!this.str_starts_with("/@",url)) debugger;
+		this.decode_channel_url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @private @arg {GM_VE3611_WC['url']} x */
+	decode_channel_url(x) {
+		if(!this.str_starts_with("/@",x)) debugger;
 	}
 	/** @private @arg {GM_VE23462_WC} x */
 	G_VE23462_WC(x) {
