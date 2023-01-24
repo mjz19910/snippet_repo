@@ -8890,16 +8890,38 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {C_ShowReloadUi} x */
+	C_ShowReloadUi(x) {
+		const cf="C_ShowReloadUi"; this.k(cf,x);
+		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=x;
+		this.z([y1,y2],this.g);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		switch(targetId) {
+			case "browse-feedFEwhat_to_watch": break;
+			default: debugger; break;
+		}
+	}
+	/** @private @template {DC_Continuation} T @arg {T} x */
+	DC_Continuation$Omit(x) {
+		const {request,token,...y}=x;
+		switch(request) {
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
+			default: debugger; break;
+		};
+		this.primitive_of_string(token);
+		return y;
+	}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
 		this.T_Endpoint("C_Continuation",x,a => {
 			let u=this.w(a);
-			const {request,token,...b}=u; this.g(b);
-			switch(request) {
-				case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
-				default: debugger; break;
-			};
-			this.primitive_of_string(token);
+			const cf="DC_Continuation"; this.k(cf,x);
+			if("command" in u) {
+				const {command: x,...b}=this.DC_Continuation$Omit(u); this.g(b);
+				this.C_ShowReloadUi(x);
+				return;
+			}
+			this.g(this.DC_Continuation$Omit(u));
 		},a => {
 			let v=this.w(a);
 			if("apiUrl" in v) {
