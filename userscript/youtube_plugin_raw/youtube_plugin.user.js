@@ -374,7 +374,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					event.detail.handle_types.save_string("[body_element]",fut_data);
+					event.detail.handle_types.save_string_api("[body_element]",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -731,11 +731,11 @@ class R_HandleRichGrid$ {
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
 	entry="richGridRenderer";
-	/** @private @arg {ResolverT<Services, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
-	/** @private @arg {string} path @arg {D_RichGrid} renderer */
+	/** @handler @public @arg {string} path @arg {D_RichGrid} renderer */
 	richGridRenderer$(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
@@ -775,7 +775,7 @@ class Base64Binary {
 		return byte_arr;
 	}
 	decoder=new TextDecoder();
-	/** @private @arg {string} input */
+	/** @api @public @arg {string} input */
 	decode_str(input) {
 		let y=this.decodeByteArray(input);
 		if(!y) return null;
@@ -1899,15 +1899,15 @@ class ServiceResolver {
 		this.services=services;
 		this.params=params;
 	}
-	/** @private @arg {T} services */
-	set_services(services) {
-		this.services=services;
-	}
+	//** @private @arg {T} services */
+	//set_services(services) {
+	//	this.services=services;
+	//}
 	/** @private @arg {U} params */
 	set_params(params) {
 		this.params=params;
 	}
-	/** @private @arg {keyof U} key */
+	/** @api @public @arg {keyof U} key */
 	get_param(key) {
 		if(!this.params) throw new Error("No service params");
 		return this.params[key];
@@ -1926,6 +1926,9 @@ class ServiceResolver {
 	_use(k) {
 		/** @type {any} */
 		let x={};
+		/** @type {U} */
+		let u=x;
+		this.set_params(u);
 		/** @type {Extract<T, {}>[keyof T]} */
 		let v=x;
 		this.set(k,v);
@@ -2127,7 +2130,7 @@ class ApiBase {
 		}
 		return ret;
 	}
-	/** @private @arg {unknown} x */
+	/** @api @public @arg {unknown} x */
 	get_name_from_keys(x) {
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
@@ -2167,7 +2170,7 @@ class ApiBase {
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
-	/** @protected @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	/** @export @public @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
 			debugger;
@@ -2208,7 +2211,7 @@ class KnownDataSaver extends ApiBase {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	/** @private @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
+	/** @api @public @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
 	save_keys(k,x) {
 		if(!x) {debugger; return;}
 		let ki=this.unwrap_brackets(k);
@@ -2637,7 +2640,7 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @type {number[]} */
 	#new_root_visual_elements=[];
-	/** @private @arg {number} x */
+	/** @api @public @arg {number} x */
 	save_root_visual_element(x) {
 		if(x===void 0) {debugger; return;}
 		if(this.#data_store.seen_root_visual_elements.includes(x)) return;
@@ -2672,14 +2675,16 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value.get("codegen");
 	}
 	/** @api @public @arg {`[${string}]`} k @arg {string|string[]} x */
+	save_string_api=this.save_string;
+	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string(k,x) {
 		this.ds.save_string(k,x);
 	}
-	/** @private @arg {`[${string}]`} k @arg {boolean} x */
+	/** @protected @arg {`[${string}]`} k @arg {boolean} x */
 	save_boolean(k,x) {
 		this.ds.save_boolean(k,x);
 	}
-	/** @private @arg {`[${string}]`} k @arg {number|number[]} x */
+	/** @protected @arg {`[${string}]`} k @arg {number|number[]} x */
 	save_number(k,x) {
 		this.ds.save_number(k,x);
 	}
@@ -2689,7 +2694,7 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @private @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
 class BaseService extends BaseServicePrivate {
-	/** @private @arg {string} x */
+	/** @protected @arg {string} x */
 	create_param_map(x) {
 		let res_e=this.decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
@@ -2701,7 +2706,7 @@ class BaseService extends BaseServicePrivate {
 	/** @typedef {number|string|['bigint',number[], bigint]|['group',D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]|ParamMapType} ParamMapValue */
 	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
-	/** @private @arg {D_DecTypeNum[]} res_e */
+	/** @protected @arg {D_DecTypeNum[]} res_e */
 	make_param_map(res_e) {
 		/** @type {ParamMapType} */
 		let ret_map=new Map();
@@ -2752,7 +2757,7 @@ class BaseService extends BaseServicePrivate {
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @private @template {string} T @arg {T} str @returns {UrlParse<T>} */
+	/** @api @public @template {string} T @arg {T} str @returns {UrlParse<T>} */
 	parse_with_url_parse(str) {
 		let s=new URL(str);
 		/** @private @type {any} */
@@ -2768,36 +2773,39 @@ class BaseService extends BaseServicePrivate {
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @private @arg {string} str */
+	_use() {
+		this.decode_b64_proto_obj(btoa("\0"));
+	}
+	/** @api @public @arg {string} str */
 	decode_b64_url_proto_obj(str) {
 		let buffer=base64_url_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
+	/** @protected @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
 	_2_str_ends_with(x,v) {
 		return x.endsWith(v);
 	}
-	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(needle,str) {
 		return str.startsWith(needle);
 	}
 	get TODO_true() {
 		return true;
 	}
-	/** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
-	targetId_arr([f,a]) {
-		let [c,a1]=split_string_once(a,".");
-		let [d,a2]=split_string_once(a1,".");
-		return [f,c,d,a2];
-	}
-	/** @private @arg {string} cf @arg {`${string}.${string}.${number}.${number}`} x */
-	parse_transcript_target_id(cf,x) {
-		let b=this.parser.targetId_arr(split_string_once(x,"."));
-		this.parser.on_endpoint_params(cf,"transcript_target_id.param",b[1]);
-	}
-	/** @private @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
+	// /** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
+	// targetId_arr([f,a]) {
+	// 	let [c,a1]=split_string_once(a,".");
+	// 	let [d,a2]=split_string_once(a1,".");
+	// 	return [f,c,d,a2];
+	// }
+	///** @private @arg {string} cf @arg {`${string}.${string}.${number}.${number}`} x */
+	//parse_transcript_target_id(cf,x) {
+	//	let b=this.parser.targetId_arr(split_string_once(x,"."));
+	//	this.parser.on_endpoint_params(cf,"transcript_target_id.param",b[1]);
+	//}
+	/** @protected @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
 		/** @private @type {"_"|"-"} */
 		let sep;
@@ -2816,7 +2824,7 @@ class BaseService extends BaseServicePrivate {
 		let no_ns_part=nn[1];
 		this.save_string(`[${ns_name}::${ns}]`,no_ns_part);
 	}
-	/** @private @template {string} T @template {string} Sep @template {`${T}${Sep}${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
+	/** @protected @template {string} T @template {string} Sep @template {`${T}${Sep}${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
 	save_enum_with_sep(enum_base,enum_str,sep) {
 		const ns_name="ELEMENT";
 		let n1=split_string_once(enum_str,enum_base);
@@ -2837,7 +2845,7 @@ class BaseService extends BaseServicePrivate {
 		if(q) return q;
 		return x;
 	}
-	/** @private @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
+	/** @protected @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
 	get_keys_of_ex(obj) {
 		let pd=Object.getOwnPropertyDescriptors(obj);
 		let l1_pk=this.get_keys_of(pd);
@@ -2854,7 +2862,7 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn.call(this,e[0],e[1]));
 	}
-	/** @private @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
+	/** @protected @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
 		if(x===void 0) {debugger; return [[],[]];}
 		if(!x.entries) {debugger; return [[],[]];}
@@ -2876,10 +2884,10 @@ class BaseService extends BaseServicePrivate {
 		}
 		return [c,v];
 	}
-	/** @private @template {GetMaybeKeys<T>} K @template U @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
-	zw(x,f) {
-		return this.z(this.w(x),f);
-	}
+	// /** @private @template {GetMaybeKeys<T>} K @template U @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
+	// zw(x,f) {
+	// 	return this.z(this.w(x),f);
+	// }
 	/** @type {string[]} */
 	logged_keys=[];
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
@@ -2893,7 +2901,7 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s]",jk);
 		debugger;
 	}
-	/** @private @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	/** @protected @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(x,excl=[]) {
 		let ka=this.get_keys_of(x);
 		let keys=this.filter_out_keys(ka,excl);
@@ -2910,12 +2918,12 @@ class BaseService extends BaseServicePrivate {
 		if(!x) return;
 		this.z(x,f);
 	}
-	/** @private @arg {string} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
+	/** @protected @arg {string} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
 	t_cf(cf,x,f) {
 		if(x===void 0) return;
 		f.call(this,cf,x);
 	}
-	/** @private @arg {string} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
+	/** @protected @arg {string} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
 	tz_cf(cf,x,f) {
 		if(x===void 0) return;
 		this.z_cf(cf,x,f);
@@ -2960,14 +2968,14 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @private @type {this['ds']['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
+	/** @api @public @type {this['ds']['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
 	}
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class YtHandlers extends BaseService {
-	/** @private @arg {ResolverT<Services,ServiceOptions>} res */
+	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		super(res);
 		this.filter_handler_debug=false;
@@ -3004,7 +3012,7 @@ class YtHandlers extends BaseService {
 			["videoRenderer",false],
 		]);
 	}
-	/** @private @arg {string|URL|Request} request @arg {Response} response @arg {{}} data */
+	/** @api @public @arg {string|URL|Request} request @arg {Response} response @arg {{}} data */
 	on_handle_api(request,response,data) {
 		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
@@ -3053,7 +3061,7 @@ class YtHandlers extends BaseService {
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
-	/** @private @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
+	/** @api @public @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @private @type {YTNavigateFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
@@ -3087,7 +3095,7 @@ class YtHandlers extends BaseService {
 		}
 		return ret;
 	}
-	/** @private @arg {YTNavigateFinishDetail} detail */
+	/** @api @public @arg {YTNavigateFinishDetail} detail */
 	on_page_type_changed(detail) {
 		try {
 			if(this.do_initial_data_trace) console.log('ptc detail',detail);
@@ -3178,7 +3186,7 @@ class HandleRendererContentItemArray extends BaseService {
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor {
-	/** @private @arg {ApiIterateState} state @arg {G_AppendContinuationItems} action */
+	/** @handler @public @arg {ApiIterateState} state @arg {G_AppendContinuationItems} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
@@ -3188,7 +3196,7 @@ class YtObjectVisitor {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @private @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
+	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
 	reloadContinuationItemsCommand({t: state},command) {
 		if(!command.continuationItems) {
 			debugger;
@@ -3198,7 +3206,7 @@ class YtObjectVisitor {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @private @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection<T1,T2,T3>} renderer */
+	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
@@ -3213,23 +3221,23 @@ class YtObjectVisitor {
 			return true;
 		});
 	}
-	/** @private @arg {ApiIterateState} state @arg {D_RichGrid} renderer */
+	/** @handler @public @arg {ApiIterateState} state @arg {D_RichGrid} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer$(state.path,renderer);
 		state.path="richGridRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/** @private @arg {ApiIterateState} state @arg {{}} renderer */
+	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
 	compactVideoRenderer(state,renderer) {
 		state.path="compactVideoRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/** @private @arg {ApiIterateState} state @arg {{}} renderer */
+	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
 	thumbnailOverlayToggleButtonRenderer(state,renderer) {
 		state.path="thumbnailOverlayToggleButtonRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/** @private @arg {ApiIterateState} state @arg {{}} renderer */
+	/** @handler @public @arg {ApiIterateState} state @arg {{}} renderer */
 	videoRenderer(state,renderer) {
 		state.path="videoRenderer";
 		state.t.iteration.default_iter(state,renderer);
@@ -3238,18 +3246,18 @@ class YtObjectVisitor {
 /** @extends {BaseService<Services,ServiceOptions>} */
 class IterateApiResultBase extends BaseService {
 	obj_visitor;
-	/** @private @type {Map<string,keyof YtObjectVisitor>} */
-	keys_map=new Map;
-	/** @private @arg {ResolverT<Services, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
+	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
 	constructor(x,obj_visitor) {
 		super(x);
 		this.obj_visitor=obj_visitor;
+		/** @private @type {Map<string,keyof YtObjectVisitor>} */
+		this.keys_map=new Map;
 		let keys=this.get_keys_of_ex(obj_visitor);
 		for(let i of keys) {
 			this.keys_map.set(i,i);
 		}
 	}
-	/** @private @arg {ApiIterateState} state @arg {{}} data */
+	/** @api @public @arg {ApiIterateState} state @arg {{}} data */
 	default_iter(state,data) {
 		if(data===void 0) {
 			return;
@@ -3342,7 +3350,7 @@ class CsiService extends BaseService {
 	}
 	/** @private @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @private @arg {ResolverT<Services,ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		for(let x of this.rid_keys) {
@@ -3360,7 +3368,7 @@ class CsiService extends BaseService {
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @private @arg {RC$CsiServiceParamsType} params */
+	/** @api @public @arg {RC$CsiServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3402,7 +3410,7 @@ class ECatcherService extends BaseService {
 	};
 	/** @private @type {number[]} */
 	seen_new_expected=[];
-	/** @private @arg {number[]} x */
+	/** @api @public @arg {number[]} x */
 	iterate_fexp(x) {
 		let expected=this.data.expected_client_values.fexp;
 		/** @private @type {number[]} */
@@ -3422,7 +3430,7 @@ class ECatcherService extends BaseService {
 		}
 		this.data.expected_client_values.fexp;
 	}
-	/** @private @arg {RC$ECatcherServiceParams["params"]} params */
+	/** @api @public @arg {RC$ECatcherServiceParams["params"]} params */
 	on_params(params) {
 		/** @private @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3472,7 +3480,7 @@ class GFeedbackService extends BaseService {
 		this.data.e=inner;
 		this.has_new_e_param=true;
 	}
-	/** @private @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
+	/** @api @public @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
 	on_context_param(data_target,x) {
 		data_target.context=x;
 		switch(x) {
@@ -3488,7 +3496,7 @@ class GFeedbackService extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {GFeedbackServiceParamsType} params */
+	/** @api @public @arg {GFeedbackServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3545,7 +3553,7 @@ class GuidedHelpService extends BaseService {
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @private @arg {RC$GuidedHelpServiceParams["params"]} params */
+	/** @api @public @arg {RC$GuidedHelpServiceParams["params"]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3591,7 +3599,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @private @arg {RC$AllServiceTrackingParams} service_arg */
+	/** @api @public @arg {RC$AllServiceTrackingParams} service_arg */
 	set_service_params(service_arg) {
 		switch(service_arg.service) {
 			case "CSI": this.on_csi_service(service_arg); break;
@@ -3792,13 +3800,13 @@ class ModifyEnv extends BaseService {
 class YtPlugin extends BaseService {
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
-	/** @private @arg {ResolverT<Services, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
 	}
-	/** @private @template {{name:string}} T @arg {T} function_obj */
+	/** @api @public @template {{name:string}} T @arg {T} function_obj */
 	add_function(function_obj) {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
@@ -3807,7 +3815,7 @@ class YtPlugin extends BaseService {
 //#endregion
 //#region HelperServices
 class DatabaseArguments {
-	/** @private @arg {string} name @arg {number} version */
+	/** @constructor @public @arg {string} name @arg {number} version */
 	constructor(name,version) {
 		this.name=name;
 		this.version=version;
@@ -3815,7 +3823,7 @@ class DatabaseArguments {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class IndexedDbAccessor extends BaseService {
-	/** @private @arg {ResolverT<Services, ServiceOptions>} x @arg {string} db_name */
+	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x @arg {string} db_name */
 	constructor(x,db_name,version=1) {
 		super(x);
 		this.db_args=new DatabaseArguments(db_name,version);
@@ -3828,7 +3836,7 @@ class IndexedDbAccessor extends BaseService {
 	arr=[];
 	/** @private @type {{v: string}[]} */
 	committed_data=[];
-	/** @private @template {{v: string}} T @arg {T} obj */
+	/** @api @public @template {{v: string}} T @arg {T} obj */
 	put(obj) {
 		if(!obj) {debugger; return;}
 		if(!this.database_open) this.requestOpen();
@@ -4009,7 +4017,7 @@ class IndexedDbAccessor extends BaseService {
 	}
 }
 class JsonReplacerState {
-	/** @private @arg {string} gen_name @arg {string[]} keys */
+	/** @constructor @public @arg {string} gen_name @arg {string[]} keys */
 	constructor(gen_name,keys) {
 		this.object_count=0;
 		this.gen_name=gen_name;
@@ -4184,7 +4192,7 @@ class CodegenService extends BaseService {
 	}
 	/** @type {string[]} */
 	typedef_cache=[];
-	/** @private @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
+	/** @api @public @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_new_typedef(x,gen_name,ret_val) {
 		let new_typedef=this.#_codegen_new_typedef(x,gen_name);
 		if(ret_val) return new_typedef;
@@ -4672,7 +4680,7 @@ class CodegenService extends BaseService {
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
 	}
-	/** @private @arg {string} x1 */
+	/** @api @public @arg {string} x1 */
 	generate_depth(x1) {
 		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
 		if(!rxr?.groups) return null;
@@ -4721,13 +4729,13 @@ class CodegenService extends BaseService {
 		});
 		return new Map(typedef_members);
 	}
-	/** @private @arg {{}} x @arg {string} r */
+	/** @unused_api @protected @arg {{}} x @arg {string} r */
 	use_generated_members(x,r) {
 		let td=new Generate(this);
 		td.generate_typedef_and_depth(x,r);
 		return td;
 	}
-	/** @private @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
+	/** @api @public @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
 	generate_renderer(x,r,w) {
 		let gen_obj=this.#generate_renderer(x,r);
 		if(w) return gen_obj;
@@ -4763,7 +4771,7 @@ class CodegenService extends BaseService {
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
-	/** @private @arg {YTNavigateFinishDetail['pageType']} x */
+	/** @api @public @arg {YTNavigateFinishDetail['pageType']} x */
 	parse_page_type(x) {
 		switch(x) {
 			default: debugger; break;
@@ -4776,7 +4784,7 @@ class ParserService extends BaseService {
 			case "watch": break;
 		}
 	}
-	/** @private @arg {PlaylistId} x */
+	/** @api @public @arg {PlaylistId} x */
 	parse_playlist_id(x) {
 		if(x===void 0) {debugger; return;}
 		x: {
@@ -4818,7 +4826,7 @@ class ParserService extends BaseService {
 	str_has_sep(x,u) {
 		return x.includes(u);
 	}
-	/** @private @arg {MimeTypeFormat} x */
+	/** @console_api @public @arg {MimeTypeFormat} x */
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
@@ -4918,7 +4926,7 @@ class ParserService extends BaseService {
 		}
 		console.log("[parse_channel_url]",x);
 	}
-	/** @private @arg {`UC${string}`} x */
+	/** @unused_api @protected @arg {`UC${string}`} x */
 	parse_channel_id(x) {
 		if(this.str_starts_with_r(x,"UC")) {
 			return;
@@ -4971,7 +4979,7 @@ class ParserService extends BaseService {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @private @arg {`RD${string}`} x */
+	/** @unused_api @protected @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
 		/** @private @type {YtUrlInfoItem[]} */
 		let arr=[];
@@ -5036,7 +5044,7 @@ class ParserService extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
-	/** @private @arg {string} x */
+	/** @console_api @public @arg {string} x */
 	create_param_map_dbg(x) {
 		debugger;
 		let res_e=this.decode_b64_url_proto_obj(x);
@@ -5138,7 +5146,7 @@ class ParserService extends BaseService {
 		console.log("[new_get_transcript_endpoint_params]",param_obj);
 		debugger;
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @api @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
@@ -5173,7 +5181,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @api @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	on_player_params(root,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -5184,7 +5192,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	cache_interaction_requests=[];
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @unused_api @protected @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	on_serialized_interactions_request_params(root,path,x) {
 		if(this.cache_interaction_requests.includes(x)) return;
 		this.cache_interaction_requests.push(x);
@@ -5206,7 +5214,7 @@ class ParserService extends BaseService {
 		debugger;
 	}
 	parse_key_index=1;
-	/** @private @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
+	/** @unused_api @protected @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
 	remove_key(x,mk,ta) {
 		x.delete(ta);
 		let idx=mk.indexOf(ta);
@@ -5328,7 +5336,7 @@ class ParserService extends BaseService {
 			function m_num_range() {return as(map_entry_key);}
 		}
 	}
-	/** @private @arg {ParamMapValue} tv */
+	/** @unused_api @protected @arg {ParamMapValue} tv */
 	mapper_use(tv) {
 		/** @private @arg {ParamMapValue} e */
 		let mapper=e => {
@@ -5352,7 +5360,7 @@ class ParserService extends BaseService {
 			return xx;
 		}
 	}
-	/** @private @arg {string[]} x */
+	/** @unused_api @protected @arg {string[]} x */
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
@@ -5624,7 +5632,7 @@ class ParserService extends BaseService {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		debugger;
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	/** @api @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
 	parse_endpoint_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5722,11 +5730,11 @@ class ParserService extends BaseService {
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @private @arg {GM_VE3832_Watch_WC['url']} x */
+	/** @unused_api @protected @arg {GM_VE3832_Watch_WC['url']} x */
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
-	/** @private @arg {ParamsSection} root @arg {YtUrlFormat} x */
+	/** @api @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {
 		if(this.str_starts_with("https://",x)) {
 			return this.parse_full_url(root,x);
@@ -5854,7 +5862,7 @@ class ParserService extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @private @arg {D_VE6827_PageUrl} x */
+	/** @unused_api @protected @arg {D_VE6827_PageUrl} x */
 	parse_ve_6827_url(x) {
 		const cf="VE6827_PageUrl";
 		/** @type {SplitOnce<D_VE6827_PageUrl,"/">[1]} */
@@ -5883,7 +5891,7 @@ class ParserService extends BaseService {
 	str_starts_with_r(str,needle) {
 		return this.str_starts_with(needle,str);
 	}
-	/** @private @arg {YtTargetIdType} x */
+	/** @api @public @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		if(this.str_starts_with("browse-feed",x)) {
 			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
@@ -5912,7 +5920,7 @@ class ParserService extends BaseService {
 		}
 		this.save_string("[target_id]",x);
 	}
-	/** @private @arg {SplitOnce<ChanLoc,".">} x */
+	/** @api @public @arg {SplitOnce<ChanLoc,".">} x */
 	parse_channel_section(x) {
 		switch(x[1]) {
 			case "": break;
@@ -6147,7 +6155,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Split<D_ApiUrlFormat$1,"/">} x */
+	/** @api @public @arg {Split<D_ApiUrlFormat$1,"/">} x */
 	get_url_type(x) {
 		switch(x[0]) {
 			case "youtubei": return this.get_yt_url_type(x);
@@ -6206,7 +6214,7 @@ class ParserService extends BaseService {
 		}
 		return null;
 	}
-	/** @private @arg {D$Browse$Id} x */
+	/** @api @public @arg {D$Browse$Id} x */
 	parse_browse_id(x) {
 		if(this.str_starts_with_r(x,"FE")) {
 			let page=split_string_once(x,"FE")[1];
@@ -6308,14 +6316,14 @@ class Generate {
 	out_arr=[];
 	/** @private @type {string[]} */
 	str_arr=[];
-	/** @private @arg {CodegenService} parent */
+	/** @constructor @public @arg {CodegenService} parent */
 	constructor(parent) {
 		this.parent=parent;
 	}
 	get x() {
 		return this.parent;
 	}
-	/** @private @arg {{}} x @arg {string} r */
+	/** @api @public @arg {{}} x @arg {string} r */
 	generate_typedef_and_depth(x,r) {
 		let gen=this.x.codegen_new_typedef(x,r,true);
 		if(!gen) return;
@@ -6341,7 +6349,7 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {_ResponseTypes} */
+	/** @api @public @arg {UrlTypes} url_type @arg {{}} x @returns {_ResponseTypes} */
 	get_res_data(url_type,x) {
 		/** @private @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
@@ -6372,7 +6380,7 @@ class ServiceMethods extends ServiceData {
 			data: x,
 		};
 	}
-	/** @private @arg {D_ApiUrlFormat} x */
+	/** @api @public @arg {D_ApiUrlFormat} x */
 	use_template_url(x) {
 		const res_parse=this.parse_with_url_parse(x);
 		if("_tag" in res_parse) {
@@ -6639,19 +6647,19 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {true} x */
+	/** @unused @protected @arg {true} x */
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
-	/** @private @arg {string} cf @arg {string} x */
+	/** @protected @arg {string} cf @arg {string} x */
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @private @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
+	/** @protected @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
 	codegen_new_typedef(x,gen_name,ret_val) {
 		return this.codegen.codegen_new_typedef(x,gen_name,ret_val);
 	}
-	/** @private @arg {string} cf @arg {string} x */
+	/** @protected @arg {string} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -6661,7 +6669,7 @@ class ServiceMethods extends ServiceData {
 	str_starts_with_r(str,needle) {
 		return this.str_starts_with(needle,str);
 	}
-	/** @private @arg {string} root @arg {YtTargetIdType} x */
+	/** @protected @arg {string} root @arg {YtTargetIdType} x */
 	targetId(root,x) {
 		const cf="targetId";
 		this.save_string(`[${root}.${cf}]`,x);
@@ -6700,7 +6708,7 @@ class ServiceMethods extends ServiceData {
 			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
-	/** @private @arg {[D_VE3832_PreconnectUrl]} x */
+	/** @protected @arg {[D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
 		this.parse_preconnect_url(x[0]);
@@ -6751,7 +6759,7 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		}
 	}
-	/** @private @arg {ParamsSection} root @arg {WatchPageUrl} x */
+	/** @protected @arg {ParamsSection} root @arg {WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
@@ -6768,16 +6776,16 @@ class ServiceMethods extends ServiceData {
 		this.parser.parse_url(root,x);
 		return u3;
 	}
-	/** @private @arg {string} x */
+	/** @protected @arg {string} x */
 	videoId(x) {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @protected @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
-	/** @private @arg {PlaylistId} x */
+	/** @protected @arg {PlaylistId} x */
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}
@@ -6807,15 +6815,15 @@ class ServiceMethods extends ServiceData {
 			default: debugger;
 		}
 	}
-	/** @private @arg {D$Browse$Id} x */
+	/** @unused @protected @arg {D$Browse$Id} x */
 	browseId(x) {
 		this.parser.parse_browse_id(x);
 	}
-	/** @private @arg {`/@${string}`} x */
+	/** @unused @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {
 		if(!this.str_starts_with_r(x,"/@")) debugger;
 	}
-	/** @private @arg {string} x */
+	/** @protected @arg {string} x */
 	previousCsn(x) {
 		console.log(base64_dec.decode_str(x));
 	}
@@ -6823,11 +6831,11 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @protected @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @private @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
+	/** @unused @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -7234,7 +7242,7 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @private @arg {D_Browse_Id<"">} x */
+	/** @unused @protected @arg {D_Browse_Id<"">} x */
 	E_D__Browse(x) {
 		const cf="D_Browse";
 		this.save_keys(`[${cf}]`,x);
@@ -7471,7 +7479,7 @@ class HandleTypes extends ServiceMethods {
 			this.targetId(cf,a);
 		});
 	}
-	/** @private @arg {D_ThumbnailOverlayLoadingPreview} x */
+	/** @unused @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {
 		const cf_="D_ThumbnailOverlayLoadingPreview";
 		this.save_keys(`[${cf_}]`,x);
@@ -7553,7 +7561,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(width,a => this.primitive_of(a,"number"));
 		this.t(height,a => this.primitive_of(a,"number"));
 	}
-	/** @private @arg {YTNavigateFinishDetail} x */
+	/** @handler @public @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail";
 		this.save_keys(`[${cf}]`,x);
@@ -7601,7 +7609,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams("AccountMenuResponse",trackingParams);
 	}
-	/** @private @arg {Response} response @arg {_ResponseTypes} x */
+	/** @handler @public @arg {Response} response @arg {_ResponseTypes} x */
 	ResponseTypes(response,x) {
 		const cf="ResponseTypes";
 		this.save_keys(`[${cf}]`,x);
@@ -8443,11 +8451,11 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @private np @arg {R_MerchandiseShelf} x */
+	/** @unused @protected @arg{R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,a => {a; debugger;});}
-	/** @private np @arg {R_VideoPrimaryInfo} x */
+	/** @unused @protected @arg {R_VideoPrimaryInfo} x */
 	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,a => {a; debugger;});}
-	/** @private np @arg {R_VideoSecondaryInfo} x */
+	/** @unused @protected @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,a => {a; debugger;});}
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
@@ -8477,7 +8485,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.D_Label(accessibilityData);
 	}
-	/** @private np @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
+	/** @unused @protected @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TR_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
