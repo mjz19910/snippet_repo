@@ -7233,8 +7233,10 @@ class HandleTypes extends ServiceMethods {
 	G_VE23462_WC(x) {
 		const cf="VE23462.Metadata";
 		this.save_keys(`[${cf}]`,x);
-		const {rootVe,webPageType,...y}=x; this.g(y);
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		if(url!=="/account_notifications") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @public @arg {D_Browse_Id<"">} x */
 	E_D__Browse(x) {
