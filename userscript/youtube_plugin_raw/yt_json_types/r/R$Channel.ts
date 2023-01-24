@@ -6,5 +6,5 @@ type R_Channel={
 	trackingParams: string;
 	topbar: R_DesktopTopbar;
 	microformat: R_MicroformatData;
-	onResponseReceivedActions: C$ResetChannelUnreadCount[];
+	onResponseReceivedActions: C_ResetChannelUnreadCount[];
 };

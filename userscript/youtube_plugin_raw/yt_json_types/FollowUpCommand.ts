@@ -1,4 +1,4 @@
 type FollowUpCommand={
 	clickTrackingParams: string;
-	addFollowUpSurveyCommand: C$AddFollowUpSurvey;
+	addFollowUpSurveyCommand: C_AddFollowUpSurvey;
 };

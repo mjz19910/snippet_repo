@@ -1,0 +1,1 @@
+type CP_Tracking={clickTrackingParams: string;};

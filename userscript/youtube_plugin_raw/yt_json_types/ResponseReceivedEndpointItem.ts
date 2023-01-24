@@ -1,7 +1,7 @@
 type EI$ResponseReceived=
-	|C$AdsControlFlowOpportunityReceived
+	|C_AdsControlFlowOpportunityReceived
 	|A_AppendContinuationItems
-	|C$ChangeKeyedMarkersVisibility
+	|C_ChangeKeyedMarkersVisibility
 	|LoadMarkersCommand
 	|ReloadContinuationItemsCommand
 	|TE_SignalService<GS_Client>

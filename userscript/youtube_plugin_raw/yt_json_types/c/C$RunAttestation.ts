@@ -1,1 +1,0 @@
-type C$RunAttestation={runAttestationCommand: D_RunAttestation;};

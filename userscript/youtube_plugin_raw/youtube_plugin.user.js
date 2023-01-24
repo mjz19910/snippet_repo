@@ -7955,7 +7955,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.targetId(cf,targetId);
 	}
-	/** @private @arg {C$AdsControlFlowOpportunityReceived} x */
+	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommand";
 		this.save_keys(`[${cf}]`,x);
@@ -9942,7 +9942,7 @@ class HandleTypes extends ServiceMethods {
 		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
 		this.g(y);
 	}
-	/** @private @arg {C$ResetChannelUnreadCount} x */
+	/** @private @arg {C_ResetChannelUnreadCount} x */
 	ResetChannelUnreadCountCommand(x) {
 		const cf="ResetChannelUnreadCountCommand";
 		this.save_keys(`[${cf}]`,x);
