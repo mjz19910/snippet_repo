@@ -8112,21 +8112,15 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VoiceSearchDialog} x */
 	D_VoiceSearchDialog(x) {
 		const cf="D_VoiceSearchDialog"; this.k(cf,x);
-		let u=Object.entries(x);
+		const {trackingParams,exitButton,...y}=x;
+		let u=Object.entries(y);
 		for(let x of u) {
 			let c=x[1];
-			if(typeof c==="string") {
-				console.log('str',x[0]);
-				continue;
-			}
 			if("runs" in c) {
-				console.log('text.runs',x[0]);
 				this.R_TextWithRuns(c);
 				continue;
 			}
-			if(!c.buttonRenderer) debugger;
-			console.log('button',x[0]);
-			this.R_Button(c);
+			debugger;
 		}
 
 	}
@@ -9211,12 +9205,17 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		debugger;
 	}
-	/** @private @arg {{}} x */
-	R_GuideCollapsibleSectionEntry(x) {x; debugger;}
-	/** @private @arg {{}} x */
-	R_GuideEntry(x) {x; debugger;}
+	// TODO
+	/** @private @arg {D_GuideEntry} x */
+	D_GuideEntry(x) {this.k("D_GuideEntry",x);}
+	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
+	D_GuideCollapsibleSectionEntry(x) {this.k("D_GuideCollapsibleSectionEntry",x);}
+	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
+	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry",x,this.D_GuideCollapsibleSectionEntry);}
+	/** @private @arg {R_GuideEntry} x */
+	R_GuideEntry(x) {this.H_("R_GuideEntry",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
-	R_GuideSection(x) {this.H_("GuideSection",x,this.D_GuideSection);}
+	R_GuideSection(x) {this.H_("R_GuideSection",x,this.D_GuideSection);}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		const cf="AutoplayContent";
