@@ -9843,11 +9843,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
 		const cf="D_ChipCloudChip";
-		const {style,text,trackingParams,isSelected,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		let d=this.D_ChipCloudChip$Omit(cf,x);
+		if("isSelected" in d) {
+			const {isSelected,...y}=this.sd(cf,d); this.g(y); // ! #destructure
+			if(isSelected!==true) debugger;
+		}
+	}
+	/** @arg {string} cf @private @template {D_ChipCloudChip} T @arg {T} x */
+	D_ChipCloudChip$Omit(cf,x) {
+		const {style,text,trackingParams,...y}=x;
 		if(style.styleType!=="STYLE_HOME_FILTER") debugger;
 		this.R_TextWithRuns(text);
 		this.trackingParams(cf,trackingParams);
-		if(isSelected!==true) debugger;
+		return y;
 	}
 	/** @private @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
