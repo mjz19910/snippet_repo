@@ -8336,7 +8336,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
 	/** @private @arg {R_LikeButton} x */
-	R_LikeButton(x) {x;debugger;}
+	R_LikeButton(x) {x; debugger;}
 	/** @private @arg {R_BrowserMediaSession} x */
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession",x,this.AD_BrowserMediaSession);}
 	/** @private @arg {AD_BrowserMediaSession} x */
@@ -8345,8 +8345,7 @@ class HandleTypes extends ServiceMethods {
 	primitive_of_string(x) {this.primitive_of(x,"string");}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
-		const cf="Menu";
-		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		const cf="Menu",{trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_Menu$items$iterate);
