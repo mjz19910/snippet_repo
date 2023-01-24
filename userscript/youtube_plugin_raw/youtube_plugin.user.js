@@ -7576,7 +7576,18 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_RichItem} x */
 	R_RichItem(x) {this.H_("R_RichItem",x,this.D_RichItem);}
 	/** @private @arg {D_RichItem} x */
-	D_RichItem(x) {x; debugger;}
+	D_RichItem(x) {
+		const cf="D_RichItem";
+		const {content,trackingParams,rowIndex,colIndex,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		console.log("[Item.pos]",rowIndex,colIndex);
+		if("videoRenderer" in content) return;
+		debugger;
+		content;
+		trackingParams;
+		rowIndex;
+		colIndex;
+	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="ExpandableTab"; this.k(cf,x);
