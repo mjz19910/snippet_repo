@@ -1,5 +1,6 @@
-type D_RichItem=Record<"content",RichItemContent>&{
+type D_RichItem={
+	content: RichItemContent;
 	trackingParams: string;
-	rowIndex?: number;
-	colIndex?: number;
+	rowIndex: number;
+	colIndex: number;
 };
