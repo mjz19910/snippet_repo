@@ -20,11 +20,21 @@ async function D_Watch$Test$playlistId() {
 		return str.startsWith(needle);
 	}
 	function dc<M extends string>() {
-		return async <T extends string>(a: T,s: (T extends infer V? V extends `${M}${string}`? M:never:never)) => ((await import("../../support/make/assert_is_equal_t.js")).assert_is_equal<`${typeof s}${string}`>(a),1)&&!str_starts_with(s,a)? a as any as Exclude<T,`${M}${string}`>:Promise.reject([a,1])
+		return async <T extends string>(a: T,s: (T extends infer V? V extends `${M}${string}`? M:never:never)) => ((await import("../../support/make/assert_is_equal_t.js")).assert_is_equal<`${typeof s}${string}`>(a),1)&&!str_starts_with(s,a)? a as any as Exclude<T,`${M}${string}`>:Promise.reject([a,1]);
 	}
 	{
 		type UU=D_Watch['playlistId'];
 		let xa: UU="LL" as UU;
+		if(xa.length>2) {
+			type uw=Extract<SplitIntoGroups<UU,`${string}`>,[any,any,...any]>[1];
+			let v: uw=xa.slice(2,4) as uw;
+			switch(v) {
+				case "GM": break;
+				case "MM": break;
+				default: v===""; debugger; console.log("some",v); console.log("all",xa); break;
+			}
+			return;
+		}
 		let r=await dc<"RDGM">()(xa,"RDGM");
 		let r2=await dc<"RDMM">()(r,"RDMM");
 		let r3=await dc<"RD">()(r2,"RD");
