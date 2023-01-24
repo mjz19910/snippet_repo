@@ -1,23 +1,16 @@
-type E_Watch={
-	clickTrackingParams?: string;
-	commandMetadata?: M_VE3832;
-	watchEndpoint: D_Watch;
-};
 type D_Watch={
 	videoId: string;
-	playlistId: "LL";
+	playlistId: "LL"|PlaylistEditEndpoint['playlistEditEndpoint']['playlistId']|D_CompactRadio['playlistId']|D_CompactPlaylist['playlistId'];
 	index: number;
 	playlistSetVideoId: string;
 	params: string;
-	startTimeSeconds: {};
-	continuePlayback: {};
+	startTimeSeconds?: number;
+	continuePlayback?: false;
 	loggingContext: R_VssLoggingContext;
 	watchEndpointSupportedOnesieConfig: Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig: R_PrefetchHintConfig;
 	playerParams: string;
 	watchEndpointMusicSupportedConfigs: R_WatchEndpointMusicConfig;
-	nofollow: {};
-	playerExtraUrlParams: {
-		key: "inline";
-	}[];
+	nofollow?: boolean;
+	playerExtraUrlParams: G_ExtraUrlParamItem[];
 };
