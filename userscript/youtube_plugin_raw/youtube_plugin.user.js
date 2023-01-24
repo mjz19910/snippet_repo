@@ -7337,6 +7337,7 @@ class HandleTypes extends ServiceMethods {
 		x: {
 			let jk=this.get_keys_of(x).join();
 			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
 			if(jk==="responseContext,contents,trackingParams,topbar,sidebar") break x;
 			debugger;
 		}
