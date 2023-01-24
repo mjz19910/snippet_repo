@@ -9356,7 +9356,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_Search(searchEndpoint);
 	}
 	/** @private @arg {D_Search} x */
-	D_Search(x) {this.H_("D_Search",x,a => {a; debugger;});}
+	D_Search(x) {this.H_("D_Search",x,this.primitive_of_string);}
 	/** @private @arg {G$BrowseHeader} x */
 	BrowseHeader(x) {
 		this.sc("BrowseHeader",x);
@@ -9596,7 +9596,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {G_TopbarButtonItem} x */
 	TopbarButtonItem(x) {
 		const cf="TopbarButtonItem"; this.k(cf,x);
-		{x; debugger;}
+		// TODO
+		if("topbarMenuButtonRenderer" in x) return;
+		if("notificationTopbarButtonRenderer" in x) return;
+		debugger;
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	TwoColumnBrowseResultsData(x) {
@@ -9780,7 +9783,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
 		const cf="WebSearchboxConfig"; this.k(cf,x);
-		{x; debugger;}
+		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=x; this.g(y);
+		if(!this.eq_keys([a,b],["en","ca"])) debugger;
+		this.z([!c,d],v => {if(!v) debugger;});
 	}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
