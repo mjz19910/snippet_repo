@@ -1,4 +1,4 @@
-type R_Success={
+type RS_Success={
 	responseContext: RC_ResponseContext;
 	success: boolean;
 };

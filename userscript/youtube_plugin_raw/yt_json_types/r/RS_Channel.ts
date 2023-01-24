@@ -1,4 +1,4 @@
-type R_Channel={
+type RS_Channel={
 	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	header: R_C4TabbedHeader;

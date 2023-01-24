@@ -3508,7 +3508,7 @@ class GFeedbackService extends BaseService {
 		this.data.e=inner;
 		this.has_new_e_param=true;
 	}
-	/** @api @public @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
+	/** @api @public @arg {{context: D_ContextTypeStr|null;}} data_target @arg {D_ContextTypeStr} x */
 	on_context_param(data_target,x) {
 		data_target.context=x;
 		switch(x) {
@@ -6487,7 +6487,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RS_ReelItemWatch} */
+				/** @private @type {RSW_ReelItem} */
 				data: as(x),
 			};
 			case "reel_watch_sequence": return {
@@ -6518,7 +6518,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "record_interactions": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R_Success} */
+				/** @private @type {RS_Success} */
 				data: as(x),
 			};
 		}
@@ -8833,7 +8833,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
 	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,a => {a; debugger;});}
-	/** @private @arg {RS_ReelItemWatch} x */
+	/** @private @arg {RSW_ReelItem} x */
 	RS_ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9111,7 +9111,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_Success} x */
+	/** @private @arg {RS_Success} x */
 	RS_Ok(x) {
 		const cf="SuccessResponse";
 		const {responseContext: {},success,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9595,7 +9595,7 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.WatchNextItem);
 	}
-	/** @private @arg {R_Reel} x */
+	/** @private @arg {RS_Reel} x */
 	R_Reel(x) {
 		const cf="ReelResponse";
 		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9780,7 +9780,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {x; debugger;}
-	/** @private @arg {R_Channel} x */
+	/** @private @arg {RS_Channel} x */
 	R_Channel(x) {
 		const cf="ChannelResponse";
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9794,7 +9794,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_Channel_MD} x */
 	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,a => {a; debugger;});}
-	/** @private @arg {R_Playlist} x */
+	/** @private @arg {RS_Playlist} x */
 	R_Api_Playlist(x) {
 		const cf="PlaylistResponse";
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9809,7 +9809,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_Playlist_MD} x */
 	R_PlaylistMetadata(x) {this.H_("PlaylistMetadata",x,a => {a; debugger;});}
-	/** @private @arg {string} cf @arg {NonNullable<R_Playlist['alerts']>} x */
+	/** @private @arg {string} cf @arg {NonNullable<RS_Playlist['alerts']>} x */
 	Response_alerts(cf,x) {
 		this.z(x,x => {
 			if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
@@ -9818,7 +9818,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_AlertWithButton} x */
 	R_AlertWithButton(x) {this.H_("AlertWithButton",x,a => {a; debugger;});}
-	/** @private @arg {R_Settings} x */
+	/** @private @arg {RS_Settings} x */
 	R_Settings(x) {
 		const cf="SettingsResponse";
 		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.sd(cf,x); this.g(y); // ! #destructure

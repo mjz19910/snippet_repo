@@ -1,4 +1,4 @@
-type R_Settings={
+type RS_Settings={
 	responseContext: RC_ResponseContext;
 	contents: R_TwoColumnBrowseResults;
 	trackingParams: string;
