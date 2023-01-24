@@ -8399,21 +8399,7 @@ class HandleTypes extends ServiceMethods {
 			if("icon" in x) {
 				if(this.is_MenuItemNotInt(x)) {debugger; return;}
 				if(this.is_MenuItem_AQ(x)) {debugger; return;}
-				switch(x.icon.iconType) {
-					case "NOT_INTERESTED": {
-						const cf="D_MenuServiceItem_NotInterested"; this.k(cf,x);
-						const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
-						this.G_Text(text);
-						if(icon.iconType!=="NOT_INTERESTED") debugger;
-						this.E_Feedback(serviceEndpoint);
-						this.trackingParams(cf,trackingParams);
-					} break;
-					case "ADD_TO_QUEUE_TAIL": {
-						this.D_MenuServiceItem_1(x,a => a);
-					} return this.D_MenuServiceItem_AddToQueueTail({...x,icon: {iconType: x.icon.iconType}});
-					default: debugger; break;
-				}
-
+				debugger;
 			}
 			this.D_MenuServiceItem(x);
 		});
