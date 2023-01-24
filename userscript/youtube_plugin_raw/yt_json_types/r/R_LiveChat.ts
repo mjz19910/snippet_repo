@@ -1,0 +1,1 @@
+type R_LiveChat={liveChatRenderer: D_LiveChat;};

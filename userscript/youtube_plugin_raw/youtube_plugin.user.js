@@ -8516,7 +8516,7 @@ class HandleTypes extends ServiceMethods {
 	TR_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
-				case "comment-item-section": return this.TR_ItemSection$2$CommentItemSection(x);
+				case "comment-item-section": return this.TR_ItemSection_3_CommentItemSection(x);
 				default: debugger; return x;
 			}
 		}
@@ -8526,10 +8526,10 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {TR_ItemSection<{},"comment-item-section","comments-section">} x */
-	TR_ItemSection$2$CommentItemSection(x) {this.H_("TR_ItemSection$2$CommentItemSection",x,this.TD_ItemSection$2CommentItemSection);}
+	TR_ItemSection_3_CommentItemSection(x) {this.H_("TR_ItemSection_3_CommentItemSection",x,this.TD_ItemSection_3_CommentItemSection);}
 	/** @arg {TD_ItemSection_3<{},"comment-item-section","comments-section">} x */
-	TD_ItemSection$2CommentItemSection(x) {
-		const cf="TD_ItemSection$2CommentItemSection";
+	TD_ItemSection_3_CommentItemSection(x) {
+		const cf="TD_ItemSection_3_CommentItemSection";
 		this.save_keys(`[${cf}]`,x);
 		const {sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x);
 		if(x.sectionIdentifier!=="comment-item-section") debugger;
@@ -8539,8 +8539,12 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @template T @arg {T_Results<Record<"contents",T[]>>} x */
-	D_TwoColumnWatchNextResults$results(x) {x; debugger;}
+	/** @private @template {{}} T @arg {T_Results<Record<"contents",T[]>>} x @arg {(this:this,x:T)=>void} f  */
+	D_TwoColumnWatchNextResultsInner(x,f) {
+		const cf="D_TwoColumnWatchNextResultsInner";
+		this.save_keys(`[${cf}]`,x);
+		this.z(this.w(this.w(x)),f);
+	}
 	/** @pub @arg {E_Url} x */
 	E_Url(x) {x; debugger;}
 	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
@@ -8671,11 +8675,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		return [x.contents,x.sectionIdentifier,x.targetId];
 	}
+	/** @private @arg {G_WatchResultItem} x */
+	G_WatchResultItem(x) {x;}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.D_TwoColumnWatchNextResults$results(results);
+		this.D_TwoColumnWatchNextResultsInner(results,this.G_WatchResultItem);
 		this.T_SecondaryResults(secondaryResults,a => {
 			if("contents" in a) {
 				this.z(a.contents,a => {

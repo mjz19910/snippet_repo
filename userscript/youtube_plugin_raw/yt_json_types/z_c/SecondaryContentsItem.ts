@@ -1,1 +1,1 @@
-type SecondaryContentsItem=Record<"contents",SecondaryContentsItemInner[]>;
+type G_SecondaryContentsItem=Record<"contents",SecondaryContentsItemInner[]>;
