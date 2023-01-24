@@ -1,4 +1,4 @@
-type GetPdgBuyFlow={
+type RSG_PdgBuyFlow={
 	responseContext: RC$ResponseContext;
 	command: TA_OpenPopup<R_PdgBuyFlow>;
 	trackingParams: string;

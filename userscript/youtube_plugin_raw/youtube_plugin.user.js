@@ -6448,7 +6448,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "get_survey": return {
 				type: target[0],
-				/** @private @type {R_GetSurvey} */
+				/** @private @type {RSG_Survey} */
 				data: as(x),
 			};
 			case "guide": return {
@@ -6582,7 +6582,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetPdgBuyFlow} */
+				/** @private @type {RSG_PdgBuyFlow} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -6615,7 +6615,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R_GetAddToPlaylist} */
+				/** @private @type {RS_GetAddToPlaylist} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -7127,7 +7127,7 @@ class HandleTypes extends ServiceMethods {
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y); // ! #destructure
 		this.E_Watch(endpoint);
 		this.R_Watch(response);
-		this.R_Player(playerResponse);
+		this.RS_Player(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
@@ -7142,7 +7142,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
 		this.E_Watch(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
-		this.R_Player(playerResponse);
+		this.RS_Player(playerResponse);
 		this.R_Watch(response);
 	}
 	/** @private @arg {R_Watch} x */
@@ -7192,7 +7192,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
 	/** @private @arg {R_BrowseEditPlaylist} x */
-	R_BrowseEditPlaylist(x) {
+	RSB_EditPlaylist(x) {
 		const cf="BrowseEditPlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -7214,7 +7214,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E_Browse(endpoint);
 		if(page!=="browse") debugger;
-		this.R_Browse(response);
+		this.RSB(response);
 		this.t(expirationTime,a => this.primitive_of(a,"number"));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
@@ -7363,7 +7363,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(loggedOut,"boolean");
 	}
 	/** @private @arg {R_Browse} x */
-	R_Browse(x) {
+	RSB(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x; this.g(y);
@@ -7476,6 +7476,23 @@ class HandleTypes extends ServiceMethods {
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader",x,this.D_PdgBuyFlowHeader);}
 	/** @private @arg {R_Menu} x */
 	R_Menu(x) {this.H_("A_Notification",x,this.D_Menu);}
+	/** @private @arg {D_PdgBuyFlow} x */
+	D_PdgBuyFlow(x) {
+		const cf="D_PdgBuyFlow";
+		this.save_keys(`[${cf}]`,x);
+		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y);
+		this.R_PdgBuyFlowHeader(x.header);
+		this.z(content,a => {
+			if(!a.superVodBuyFlowContentRenderer) debugger;
+			return this.R_SuperVodBuyFlowContent(a);
+		});
+		this.trackingParams(cf,trackingParams);
+		if("getSurveyCommand" in onCloseCommand) {
+			this.C_GetSurvey(onCloseCommand);
+		} else {
+			debugger;
+		}
+	}
 	/** @private @arg {D_PlaylistSidebar} x */
 	D_PlaylistSidebar(x) {
 		const cf="PlaylistSidebar";
@@ -7644,7 +7661,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_AccountMenu} x */
-	R_AccountMenu(x) {
+	RS_AccountMenu(x) {
 		const cf="R_AccountMenu";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -7689,53 +7706,53 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 		switch(x.type) {
-			case "account.account_menu": return this.R_AccountMenu(x.data);
-			case "account.accounts_list": return this.R_AccountsList(x.data);
-			case "account.set_setting": return this.R_SetSetting(x.data);
-			case "att.get": return this.R_AttGet(x.data);
-			case "att.log": return this.R_AttLog(x.data);
-			case "browse.edit_playlist": return this.R_BrowseEditPlaylist(x.data);
-			case "browse": return this.R_Browse(x.data);
-			case "feedback": return this.R_Feedback(x.data);
-			case "get_transcript": return this.R_GetTranscript(x.data);
-			case "get_survey": return this.R_GetSurvey(x.data);
-			case "getAccountSwitcherEndpoint": return this.RE_GetAccountSwitcher(x.data);
-			case "getDatasyncIdsEndpoint": return this.R_DatasyncIds(x.data);
-			case "guide": return this.R_Guide(x.data);
-			case "like.like": return this.R_LikeLike(x.data);
-			case "like.dislike": return this.R_Dislike(x.data);
-			case "like.removelike": return this.R_LikeRemoveLike(x.data);
-			case "live_chat.get_live_chat_replay": return this.R_GetLiveChat(x.data);
-			case "live_chat.get_live_chat": return this.R_GetLiveChat(x.data);
-			case "music.get_search_suggestions": return this.R_GetSearchSuggestions(x.data);
-			case "next": return this.R_Next(x.data);
-			case "notification.get_notification_menu": return this.R_GetNotificationMenu(x.data);
-			case "notification.get_unseen_count": return this.R_GetUnseenCount(x.data);
-			case "notification.modify_channel_preference": return this.R_ModifyChannelPreference(x.data);
-			case "notification.record_interactions": return this.R_Success(x.data);
-			case "player": return this.R_Player(x.data);
-			case "playlist.get_add_to_playlist": return this.R_GetAddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.D_ReelItemWatch(x.data);
-			case "reel.reel_watch_sequence": return this.R_ReelWatchSequence(x.data);
-			case "share.get_share_panel": return this.R_GetSharePanel(x.data);
-			case "subscription.subscribe": return this.R_Subscribe(x.data);
-			case "subscription.unsubscribe": return this.R_Unsubscribe(x.data);
-			case "search": return this.R_Search(x.data);
-			case "updated_metadata": return this.R_UpdatedMetadata(x.data);
-			case "pdg.get_pdg_buy_flow": return this.R_GetPdgBuyFlow(x.data);
+			case "account.account_menu": return this.RS_AccountMenu(x.data);
+			case "account.accounts_list": return this.RS_AccountsList(x.data);
+			case "account.set_setting": return this.RS_SetSetting(x.data);
+			case "att.get": return this.RS_AttGet(x.data);
+			case "att.log": return this.RS_AttLog(x.data);
+			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
+			case "browse": return this.RSB(x.data);
+			case "feedback": return this.RS_Feedback(x.data);
+			case "get_transcript": return this.RS_GetTranscript(x.data);
+			case "get_survey": return this.RSG_Survey(x.data);
+			case "getAccountSwitcherEndpoint": return this.REG_AccountSwitcher(x.data);
+			case "getDatasyncIdsEndpoint": return this.REG_DatasyncIds(x.data);
+			case "guide": return this.RS_Guide(x.data);
+			case "like.like": return this.RSL_LikeLike(x.data);
+			case "like.dislike": return this.RSL_Dislike(x.data);
+			case "like.removelike": return this.RSL_RemoveLike(x.data);
+			case "live_chat.get_live_chat_replay": return this.RS_GetLiveChat(x.data);
+			case "live_chat.get_live_chat": return this.RS_GetLiveChat(x.data);
+			case "music.get_search_suggestions": return this.RSG_SearchSuggestions(x.data);
+			case "next": return this.RS_Next(x.data);
+			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
+			case "notification.get_unseen_count": return this.RSG_UnseenCount(x.data);
+			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
+			case "notification.record_interactions": return this.RS_Ok(x.data);
+			case "player": return this.RS_Player(x.data);
+			case "playlist.get_add_to_playlist": return this.RS_GetAddToPlaylist(x.data);
+			case "reel.reel_item_watch": return this.RS_ReelItemWatch(x.data);
+			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
+			case "share.get_share_panel": return this.RS_GetSharePanel(x.data);
+			case "subscription.subscribe": return this.RS_Subscribe(x.data);
+			case "subscription.unsubscribe": return this.RS_Unsubscribe(x.data);
+			case "search": return this.RS_Search(x.data);
+			case "updated_metadata": return this.RSU_M(x.data);
+			case "pdg.get_pdg_buy_flow": return this.RSG_PdgBuyFlow(x.data);
 			default: debugger; return g(x);
 		}
 	}
-	/** @private @arg {R_GetSurvey} x */
-	R_GetSurvey(x) {
-		const cf="GetSurveyResponse";
+	/** @private @arg {RSG_Survey} x */
+	RSG_Survey(x) {
+		const cf="RSG_Survey";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {GetPdgBuyFlow} x */
-	R_GetPdgBuyFlow(x) {
-		const cf="GetPdgBuyFlow";
+	/** @private @arg {RSG_PdgBuyFlow} x */
+	RSG_PdgBuyFlow(x) {
+		const cf="RSG_PdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
 		let pu=this.TA_OpenPopup(command);
@@ -7745,23 +7762,6 @@ class HandleTypes extends ServiceMethods {
 		pu.pdgBuyFlowRenderer;
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
-	}
-	/** @private @arg {D_PdgBuyFlow} x */
-	D_PdgBuyFlow(x) {
-		const cf="D_PdgBuyFlow";
-		this.save_keys(`[${cf}]`,x);
-		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y);
-		this.R_PdgBuyFlowHeader(x.header);
-		this.z(content,a => {
-			if(!a.superVodBuyFlowContentRenderer) debugger;
-			return this.R_SuperVodBuyFlowContent(a);
-		});
-		this.trackingParams(cf,trackingParams);
-		if("getSurveyCommand" in onCloseCommand) {
-			this.C_GetSurvey(onCloseCommand);
-		} else {
-			debugger;
-		}
 	}
 	/** @private @arg {D_SuperVodBuyFlowContent} x */
 	D_SuperVodBuyFlowContent(x) {
@@ -7881,7 +7881,7 @@ class HandleTypes extends ServiceMethods {
 		return y;
 	}
 	/** @private @arg {U_Metadata} x */
-	R_UpdatedMetadata(x) {
+	RSU_M(x) {
 		const cf="R_UpdatedMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y); // ! #destructure
@@ -7944,7 +7944,7 @@ class HandleTypes extends ServiceMethods {
 		((_x) => {debugger;})(x1.viewCount);
 	}
 	/** @private @arg {R_Search} x */
-	R_Search(x) {
+	RS_Search(x) {
 		const cf="SearchResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y); // ! #destructure
@@ -7970,14 +7970,14 @@ class HandleTypes extends ServiceMethods {
 		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
 	}
 	/** @private @arg {R_GetSearchSuggestions} x */
-	R_GetSearchSuggestions(x) {
+	RSG_SearchSuggestions(x) {
 		const cf="GetSearchSuggestions";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_Player} x */
-	R_Player(x) {
+	RS_Player(x) {
 		const cf="PlayerResponse";
 		this.save_keys(`[${cf}]`,x);
 		this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
@@ -7985,7 +7985,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,a => {a; debugger;});}
 	/** @private @arg {R_LikeLike} x */
-	R_LikeLike(x) {
+	RSL_LikeLike(x) {
 		const cf="LikeLikeResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
@@ -7996,7 +7996,7 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {R_Dislike} x */
-	R_Dislike(x) {
+	RSL_Dislike(x) {
 		const cf="DislikeResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
@@ -8007,7 +8007,7 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {R_LikeRemoveLike} x */
-	R_LikeRemoveLike(x) {
+	RSL_RemoveLike(x) {
 		const cf="LikeRemoveLikeResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
@@ -8018,7 +8018,7 @@ class HandleTypes extends ServiceMethods {
 		}));
 	}
 	/** @private @arg {R_ReelWatchSequence} x */
-	R_ReelWatchSequence(x) {
+	RS_ReelWatchSequence(x) {
 		const cf="ReelWatchSequenceResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -8037,7 +8037,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {x; debugger;}
 	/** @private @arg {GetLiveChat} x */
-	R_GetLiveChat(x) {
+	RS_GetLiveChat(x) {
 		const cf="GetLiveChat";
 		this.save_keys(`[R_${cf}]`,x);
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=x; this.g(y); // ! #destructure
@@ -8045,7 +8045,7 @@ class HandleTypes extends ServiceMethods {
 		this.t_cf("GetLiveChat",a2,this.trackingParams);
 	}
 	/** @private @arg {R_GetNotificationMenu} x */
-	R_GetNotificationMenu(x) {
+	RSG_NotificationMenu(x) {
 		const cf="GetNotificationMenu";
 		this.save_keys(`[R_${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -8084,7 +8084,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {this.H_("D_SimpleMenuHeader",x,a => {a; debugger;});}
 	/** @private @arg {R_Next} x */
-	R_Next(x) {
+	RS_Next(x) {
 		const cf="Next";
 		this.save_keys(`[R_${cf}]`,x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=x;
@@ -8774,7 +8774,7 @@ class HandleTypes extends ServiceMethods {
 		x.chips;
 	}
 	/** @private @arg {R_GetUnseenCount} x */
-	R_GetUnseenCount(x) {
+	RSG_UnseenCount(x) {
 		const cf="R_GetUnseenCount";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y); // ! #destructure
@@ -8802,14 +8802,14 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(timeoutMs,"number");
 	}
 	/** @private @arg {R_DatasyncIds} x */
-	R_DatasyncIds(x) {
+	REG_DatasyncIds(x) {
 		const cf="DatasyncIdsResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y); // ! #destructure
 		this.z(datasyncIds,this.primitive_of_string);
 	}
 	/** @private @arg {RE_GetAccountSwitcher} x */
-	RE_GetAccountSwitcher(x) {
+	REG_AccountSwitcher(x) {
 		const cf="RE_GetAccountSwitcher";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
@@ -8826,7 +8826,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_MP_GetMenu} x */
 	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,a => {a; debugger;});}
 	/** @private @arg {R_AccountsList} x */
-	R_AccountsList(x) {
+	RS_AccountsList(x) {
 		const cf="AccountsListResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
@@ -8836,7 +8836,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
 	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,a => {a; debugger;});}
 	/** @private @arg {D_ReelItemWatch} x */
-	D_ReelItemWatch(x) {
+	RS_ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x; this.g(y); // ! #destructure
@@ -8853,14 +8853,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,a => {a; debugger;});}
 	/** @private @arg {R_SetSetting} x */
-	R_SetSetting(x) {
+	RS_SetSetting(x) {
 		const cf="R_SetSetting";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},settingItemId,...y}=x; this.g(y); // ! #destructure
 		if(settingItemId!=="407") debugger;
 	}
 	/** @private @arg {R_Feedback} x */
-	R_Feedback(x) {
+	RS_Feedback(x) {
 		const cf="FeedbackResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},feedbackResponses,...y}=x; this.g(y); // ! #destructure
@@ -9101,7 +9101,7 @@ class HandleTypes extends ServiceMethods {
 		this.params("GetTranscript","get_transcript.params",params);
 	}
 	/** @private @arg {R_GetTranscript} x */
-	R_GetTranscript(x) {
+	RS_GetTranscript(x) {
 		const cf="R_GetTranscript";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -9114,14 +9114,14 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_Success} x */
-	R_Success(x) {
+	RS_Ok(x) {
 		const cf="SuccessResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},success,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(success,"boolean");
 	}
 	/** @private @arg {R_AttGet} x */
-	R_AttGet(x) {
+	RS_AttGet(x) {
 		const cf="AttGetResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},challenge,bgChallenge,...y}=x; this.g(y); // ! #destructure
@@ -9129,7 +9129,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_AttBgChallenge(bgChallenge);
 	}
 	/** @private @arg {R_Guide} x */
-	R_Guide(x) {
+	RS_Guide(x) {
 		const cf="GuideResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},items,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -9290,14 +9290,14 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
-		this.R_Player(playerResponse);
+		this.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.R_Reel(response);
-		this.t(reelWatchSequenceResponse,this.R_ReelWatchSequence);
+		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
-		this.R_ReelWatchSequence(cachedReelWatchSequenceResponse);
+		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
 	/** @private @arg {R_ShortsPage} x */
 	R_ShortsPage(x) {
@@ -9306,13 +9306,13 @@ class HandleTypes extends ServiceMethods {
 		if("rootVe" in x) return this.Shorts_VE37414(x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(page!=="shorts") debugger;
-		this.R_Player(playerResponse);
+		this.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.R_Reel(response);
-		this.t(reelWatchSequenceResponse,this.R_ReelWatchSequence);
+		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
-		this.t(cachedReelWatchSequenceResponse,this.R_ReelWatchSequence);
+		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
 	/** @private @arg {R_SearchPage} x */
 	R_SearchPage(x) {
@@ -9321,7 +9321,7 @@ class HandleTypes extends ServiceMethods {
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="search") debugger;
 		this.E_Search(endpoint);
-		this.R_Search(response);
+		this.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
@@ -9424,18 +9424,10 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isInitialLoad,"boolean");
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {R_GetAddToPlaylist} x */
-	R_GetAddToPlaylist(x) {
-		const cf="GetAddToPlaylistResponse";
-		this.save_keys(`[${cf}]`,x);
-		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.R_AddToPlaylist);
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,a => {a; debugger;});}
 	/** @private @arg {R_AttLog$RC} x */
-	R_AttLog(x) {this.HD_("R_AttLog",x);}
+	RS_AttLog(x) {this.HD_("R_AttLog",x);}
 	/** @private @arg {R_Comment} x */
 	R_Comment(x) {this.H_("Comment",x,a => {a; debugger;});}
 	/** @private @arg {R_ElementUpdate} x */
@@ -9448,6 +9440,18 @@ class HandleTypes extends ServiceMethods {
 	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,a => {a; debugger;});}
 	/** @private @arg {R_WebSearchboxConfig} x */
 	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
+	/** @private @arg {RS_GetAddToPlaylist} x */
+	RS_GetAddToPlaylist(x) {
+		const cf="GetAddToPlaylistResponse";
+		this.save_keys(`[${cf}]`,x);
+		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y); // ! #destructure
+		this.z(contents,this.R_AddToPlaylist);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {R_CompactVideo} x */
+	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
+	/** @private @arg {D_CompactVideo} x */
+	D_CompactVideo(x) {x;}
 	/** @private @arg {A_LoggingDirectives} x */
 	A_LoggingDirectives(x) {
 		const cf="LoggingDirectives";
@@ -9513,9 +9517,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		return this.w(x);
 	}
-	/** @private @arg {R_CompactVideo} x */
-	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
-	D_CompactVideo(x) {x;}
 	/** @private @arg {D_ElementUpdate} x */
 	ElementUpdateItem(x) {
 		const cf="ElementUpdateItem";
@@ -10047,25 +10048,25 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {GetSharePanel} x */
-	R_GetSharePanel(x) {
+	RS_GetSharePanel(x) {
 		const cf="GetSharePanel";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @private @arg {R_Subscribe} x */
-	R_Subscribe(x) {
+	RS_Subscribe(x) {
 		const cf="SubscribeResponse";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @private @arg {R_Unsubscribe} x */
-	R_Unsubscribe(x) {
+	RS_Unsubscribe(x) {
 		const cf="UnsubscribeResponse";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @private @arg {R_ModifyChannelPreference} x */
-	R_ModifyChannelPreference(x) {
+	RSM_ChannelPreference(x) {
 		const cf="ModifyChannelPreference";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
