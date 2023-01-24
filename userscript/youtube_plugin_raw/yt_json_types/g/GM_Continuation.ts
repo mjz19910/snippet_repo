@@ -1,0 +1,1 @@
+type GM_Continuation={webCommandMetadata: GM_browse;};

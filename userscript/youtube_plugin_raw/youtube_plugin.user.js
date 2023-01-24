@@ -7564,7 +7564,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.ContinuationCommandData(continuationCommand);
 	}
-	/** @private @arg {CD_Continuation} x */
+	/** @private @arg {DC_Continuation} x */
 	ContinuationCommandData(x) {
 		const cf="ContinuationCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -8117,7 +8117,7 @@ class HandleTypes extends ServiceMethods {
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}
-	/** @private @arg {string} cf @arg {EI$ResponseReceived} x */
+	/** @private @arg {string} cf @arg {EI_ResponseReceived} x */
 	EI$ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
@@ -8161,7 +8161,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger;
 		}
 	}
-	/** @private @arg {ReloadContinuationItemsCommand} x */
+	/** @private @arg {C_ReloadContinuationItems} x */
 	ReloadContinuationItemsCommand(x) {
 		const cf="ReloadContinuationItemsCommand";
 		this.save_keys(`[${cf}]`,x);

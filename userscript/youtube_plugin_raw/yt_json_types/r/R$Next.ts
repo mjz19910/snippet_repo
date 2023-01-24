@@ -7,7 +7,7 @@ type R_Next={
 	playerOverlays?: R_PlayerOverlay;
 	videoReporting?: RT$ReportFormModal;
 	queueContextParams?: string;
-	onResponseReceivedEndpoints?: EI$ResponseReceived[];
+	onResponseReceivedEndpoints?: EI_ResponseReceived[];
 	engagementPanels?: R_EngagementPanelSectionList[];
 	topbar?: R_DesktopTopbar;
 	pageVisualEffects?: R_CinematicContainer[];

@@ -4,7 +4,7 @@ type R_Watch={
 	currentVideoEndpoint: E_Watch;
 	trackingParams: string;
 	playerOverlays: R_PlayerOverlay;
-	onResponseReceivedEndpoints: EI$ResponseReceived[];
+	onResponseReceivedEndpoints: EI_ResponseReceived[];
 	engagementPanels: R_EngagementPanelSectionList[];
 	topbar: R_DesktopTopbar;
 	pageVisualEffects: R_CinematicContainer[];

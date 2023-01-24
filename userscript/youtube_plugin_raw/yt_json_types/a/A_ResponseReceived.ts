@@ -1,3 +1,3 @@
 type A_ResponseReceived=
 	|C_AdsControlFlowOpportunityReceived
-	|ReloadContinuationItemsCommand;
+	|C_ReloadContinuationItems;
