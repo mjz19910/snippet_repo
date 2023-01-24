@@ -7145,7 +7145,7 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(currentVideoEndpoint);
 		this.trackingParams("WatchResponse",trackingParams);
 		this.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a => this.EI$ResponseReceived("WatchResponse",a));
+		this.z(onResponseReceivedEndpoints,a => this.GE_ResponseReceived("WatchResponse",a));
 		this.z(engagementPanels,this.G_EngagementPanelItem);
 		this.R_DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R_CinematicContainer);
@@ -8086,7 +8086,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(currentVideoEndpoint,this.E_Watch);
 		this.trackingParams(cf,trackingParams);
 		this.t(playerOverlays,this.R_PlayerOverlay);
-		this.tz(onResponseReceivedEndpoints,a => this.EI$ResponseReceived("NextResponse",a));
+		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived("NextResponse",a));
 		this.tz(engagementPanels,this.G_EngagementPanelItem);
 		const {...y1}=y; this.g(y1);
 		this.t(videoReporting,this.R_ReportFormModal);
@@ -8117,8 +8117,8 @@ class HandleTypes extends ServiceMethods {
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}
-	/** @private @arg {string} cf @arg {EI_ResponseReceived} x */
-	EI$ResponseReceived(cf,x) {
+	/** @private @arg {string} cf @arg {GE_ResponseReceived} x */
+	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
 			this.E_SignalService(x,a => {
@@ -9488,7 +9488,7 @@ class HandleTypes extends ServiceMethods {
 		const {identifier,dependencies,...y}=x;
 		this.primitive_of_string(this.w(y));
 	}
-	/** @private @arg {D_EntityBatchUpdateData} x */
+	/** @private @arg {D_EntityBatchUpdate} x */
 	D_EntityBatchUpdate(x) {
 		const cf="EntityBatchUpdateData";
 		this.save_keys(`[${cf}]`,x);
@@ -9504,7 +9504,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(seconds);
 		this.primitive_of(nanos,"number");
 	}
-	/** @private @arg {EntityMutationItem} x */
+	/** @private @arg {D_EntityMutationItem} x */
 	EntityMutationItem(x) {
 		const cf="EntityMutationItem";
 		this.save_keys(`[${cf}]`,x);

@@ -1,4 +1,4 @@
-type EngagementPanelSectionListContent=[
+type G_EngagementPanelSectionListItem=[
 	R_AdsEngagementPanelContent,
 	R_ClipSection,
 	R_ContinuationItem,

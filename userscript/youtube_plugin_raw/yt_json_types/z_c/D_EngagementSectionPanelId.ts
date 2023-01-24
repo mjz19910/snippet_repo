@@ -1,4 +1,4 @@
-type EngagementSectionPanelId=MakeTargetId<"engagement-panel",[
+type D_EngagementSectionPanelId=MakeTargetId<"engagement-panel",[
 	"clip-create",
 	"structured-description"
 ][number]>|

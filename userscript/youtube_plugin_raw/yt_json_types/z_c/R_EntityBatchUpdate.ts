@@ -1,0 +1,1 @@
+type R_EntityBatchUpdate={entityBatchUpdate: D_EntityBatchUpdate;};

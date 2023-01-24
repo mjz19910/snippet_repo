@@ -1,3 +1,3 @@
 namespace NS$DiscriminatedEnums {
-	export type EntityMutationItem=EntityMutationReplace|EntityMutationDelete;
+	export type EntityMutationItem=EntityMutationReplace|D_EntityMutationDelete;
 }

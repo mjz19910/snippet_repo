@@ -27,5 +27,5 @@ type GenericEngagementPanelSectionItem={
 	loggingDirectives: A_LoggingDirectives;
 };
 type GenericEngagementPanelSectionItem_tmp={
-	targetId: EngagementPanelSectionTargetId;
+	targetId: D_EngagementPanelSectionTargetId;
 }
