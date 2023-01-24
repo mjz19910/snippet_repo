@@ -2585,9 +2585,8 @@ class KnownDataSaver extends ApiBase {
 		mu=unset_bits(mc);
 		let mu_=swap_mask(mu);
 		let mx=mu_;
-		console.log(mx);
 		let rle_x=yt_plugin.ds.rle_enc(mx);
-		console.log(rle_x.split("!"));
+		console.log(rle_x.split("!").map(e=>btoa(e).replaceAll("=","")).map((e,i)=>`${e}$${i}`).sort());
 	}
 	/** @private @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
