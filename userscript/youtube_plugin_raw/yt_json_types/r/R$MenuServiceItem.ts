@@ -1,15 +1,9 @@
+type RD_MenuServiceItem=[
+	D_MenuServiceItem<null,{}>,
+	D_MenuServiceItem<"NOT_INTERESTED",E_Feedback>,
+	D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",TE_SignalService<{}>>
+][number];
+
 type R_MenuServiceItem={
-	menuServiceItemRenderer:
-	|D_MenuServiceItem<null,{}>
-	|{
-		text: R_TextWithRuns;
-		icon: T_Icon<"NOT_INTERESTED">;
-		serviceEndpoint: E_Feedback;
-		trackingParams: string;
-	}|{
-		text: R_TextWithRuns;
-		icon: T_Icon<"ADD_TO_QUEUE_TAIL">;
-		serviceEndpoint: TE_SignalService<{}>;
-		trackingParams: string;
-	};
+	menuServiceItemRenderer: RD_MenuServiceItem;
 };

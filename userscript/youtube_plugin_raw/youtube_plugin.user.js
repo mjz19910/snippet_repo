@@ -8382,14 +8382,35 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
+	/** @template U @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"NOT_INTERESTED",U>} */
+	is_MenuItemNotInt(x) {
+		if("icon" in x) return x.icon.iconType==="NOT_INTERESTED";
+		return false;
+	}
+	/** @template U @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",U>} */
+	is_MenuItem_AQ(x) {
+		if("icon" in x) return x.icon.iconType==="ADD_TO_QUEUE_TAIL";
+		return false;
+	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {
 		this.H_("R_MenuServiceItem",x,x => {
 			const cf="Menu"; this.k(cf,x);
 			if("icon" in x) {
+				if(this.is_MenuItemNotInt(x)) {debugger; return;}
+				if(this.is_MenuItem_AQ(x)) {debugger; return;}
 				switch(x.icon.iconType) {
-					case "NOT_INTERESTED": return this.D_MenuServiceItem_NotInterested({...x,icon: {iconType: x.icon.iconType}});
-					case "ADD_TO_QUEUE_TAIL": return this.D_MenuServiceItem_AddToQueueTail({...x,icon: {iconType: x.icon.iconType}});
+					case "NOT_INTERESTED": {
+						const cf="D_MenuServiceItem_NotInterested"; this.k(cf,x);
+						const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+						this.G_Text(text);
+						if(icon.iconType!=="NOT_INTERESTED") debugger;
+						this.E_Feedback(serviceEndpoint);
+						this.trackingParams(cf,trackingParams);
+					} break;
+					case "ADD_TO_QUEUE_TAIL": {
+						this.D_MenuServiceItem_1(x,a => a);
+					} return this.D_MenuServiceItem_AddToQueueTail({...x,icon: {iconType: x.icon.iconType}});
 					default: debugger; break;
 				}
 
@@ -8405,22 +8426,15 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", E_Feedback>} x */
-	D_MenuServiceItem_NotInterested(x) {
-		const cf="D_MenuServiceItem_NotInterested"; this.k(cf,x);
-		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
-		this.G_Text(text);
-		if(icon.iconType!=="NOT_INTERESTED") debugger;
-		this.g(serviceEndpoint);
-		this.trackingParams(cf,trackingParams);
-	}
+	/** @arg {E_Feedback} x */
+	E_Feedback(x) {x;}
 	/** @arg {D_MenuServiceItem<"ADD_TO_QUEUE_TAIL", TE_SignalService<{}>>} x */
 	D_MenuServiceItem_AddToQueueTail(x) {
 		const cf="D_MenuServiceItem_AddToQueueTail"; this.k(cf,x);
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.G_Text(text);
 		if(icon.iconType!=="ADD_TO_QUEUE_TAIL") debugger;
-		this.T_Endpoint(cf,serviceEndpoint,a=>a,b=>b);
+		this.T_Endpoint(cf,serviceEndpoint,a => a,b => b);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
