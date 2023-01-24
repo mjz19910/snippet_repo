@@ -3,7 +3,17 @@ type D_ChipCloudChip$Style=[
 	"STYLE_HOME_FILTER",
 	"STYLE_REFRESH_TO_NOVEL_CHIP",
 ][number];
-type D_ChipCloudChip=|{
+type D_ChipCloudChip=
+|{
+	style: {
+		styleType: "STYLE_REFRESH_TO_NOVEL_CHIP";
+	};
+	text: R_TextWithRuns;
+	navigationEndpoint: ContinuationCommand;
+	trackingParams: string;
+	uniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";
+}
+|{
 	style: TS_ChipCloud<D_ChipCloudChip$Style>;
 	text: R_TextWithRuns;
 	navigationEndpoint: C_Continuation;
