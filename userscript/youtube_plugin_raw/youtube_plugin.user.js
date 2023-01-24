@@ -6943,11 +6943,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T_Endpoint(cf,x,f,f_v$m) {
+		const cf="T_Endpoint";
 		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x); // !
 		f.call(this,y);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		this.t(commandMetadata,a => f_v$m.call(this,a));
-		this.save_keys("[ServiceEndpointTemplate]",y);
+		this.save_keys(`[cf]`,y);
 	}
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
@@ -8406,15 +8407,22 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", {}>} x */
-	D_MenuServiceItem_NotInterested(x) {x; debugger;}
-	/** @arg {D_MenuServiceItem<"ADD_TO_QUEUE_TAIL", {}>} x */
+	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", E_Feedback>} x */
+	D_MenuServiceItem_NotInterested(x) {
+		const cf="D_MenuServiceItem_NotInterested"; this.k(cf,x);
+		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+		this.G_Text(text);
+		if(icon.iconType!=="NOT_INTERESTED") debugger;
+		this.g(serviceEndpoint);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @arg {D_MenuServiceItem<"ADD_TO_QUEUE_TAIL", TE_SignalService<{}>>} x */
 	D_MenuServiceItem_AddToQueueTail(x) {
 		const cf="D_MenuServiceItem_AddToQueueTail"; this.k(cf,x);
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.G_Text(text);
 		if(icon.iconType!=="ADD_TO_QUEUE_TAIL") debugger;
-		this.g(serviceEndpoint);
+		this.T_Endpoint(cf,serviceEndpoint,a=>a,b=>b);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_ToggleMenuServiceItem} x */

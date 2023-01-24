@@ -4,7 +4,7 @@ type R_MenuServiceItem={
 	|{
 		text: R_TextWithRuns;
 		icon: T_Icon<"NOT_INTERESTED">;
-		serviceEndpoint: {};
+		serviceEndpoint: E_Feedback;
 		trackingParams: string;
 	}|{
 		text: R_TextWithRuns;
