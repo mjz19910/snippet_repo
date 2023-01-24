@@ -1603,28 +1603,6 @@ async function wait_for_yt_player() {
 	}
 	await ytd_player.playerResolver_.promise;
 }
-/** @private @arg {HTMLElement} element */
-function sumOffset(element) {
-	let cache={
-		top_offset: 0,
-		left_offset: 0
-	};
-	/** @private @type {HTMLElement|null} */
-	let cur_element=null;
-	cur_element=element;
-	for(;;) {
-		cache.top_offset+=cur_element.offsetTop;
-		cache.left_offset+=cur_element.offsetLeft;
-		/** @private @type {Element|null} */
-		let next_element=cur_element.offsetParent;
-		if(next_element instanceof HTMLElement) {
-			cur_element=next_element;
-		} else {
-			break;
-		}
-	}
-	return cache;
-}
 let overlay_content_div=document.createElement("div");
 let input_modify_css_style=document.createElement("div");
 let overlay_hide_ui_input=document.createElement("div");
@@ -1645,6 +1623,28 @@ plugin_overlay_element.append(input_modify_css_style);
 plugin_overlay_element.append(overlay_hide_ui_input);
 function update_plugin_overlay_location() {
 	if(!ytd_player) return;
+	/** @private @arg {HTMLElement} element */
+	function sumOffset(element) {
+		let cache={
+			top_offset: 0,
+			left_offset: 0
+		};
+		/** @private @type {HTMLElement|null} */
+		let cur_element=null;
+		cur_element=element;
+		for(;;) {
+			cache.top_offset+=cur_element.offsetTop;
+			cache.left_offset+=cur_element.offsetLeft;
+			/** @private @type {Element|null} */
+			let next_element=cur_element.offsetParent;
+			if(next_element instanceof HTMLElement) {
+				cur_element=next_element;
+			} else {
+				break;
+			}
+		}
+		return cache;
+	}
 	let player_offset=sumOffset(ytd_player);
 	plugin_overlay_element.style.top=player_offset.top_offset+"px";
 	plugin_overlay_element.style.left=player_offset.left_offset+"px";
