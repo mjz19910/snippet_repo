@@ -9839,7 +9839,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {R_ChipCloudChip} x */
-	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,a => {a; debugger;});}
+	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,this.D_ChipCloudChip);}
+	/** @private @arg {D_ChipCloudChip} x */
+	D_ChipCloudChip(x) {
+		x;
+		debugger;
+	}
 	/** @private @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
 		const cf="AutoplaySetItem";

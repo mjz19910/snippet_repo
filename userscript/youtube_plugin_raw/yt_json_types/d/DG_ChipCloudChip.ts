@@ -1,1 +1,0 @@
-type DG_ChipCloudChip=D_ChipCloudChip|D_ChipCloudChip_tid;
