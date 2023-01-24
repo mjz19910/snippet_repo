@@ -6951,7 +6951,7 @@ class HandleTypes extends ServiceMethods {
 		if("rootVe" in x&&"apiUrl" in x) {
 			switch(x.rootVe) {
 				case 3854: return this.G_VE3854_WC(x);
-				case 3611: return this.G_VE3611_WC(x);
+				case 3611: return this.GM_VE3611_WC(x);
 				default: debugger; break;
 			}
 		}
@@ -7219,7 +7219,7 @@ class HandleTypes extends ServiceMethods {
 			let y=this.w(x);
 			switch(y.rootVe) {
 				case 3854: this.G_VE3854_WC(y); break;
-				case 3611: this.G_VE3611_WC(y); break;
+				case 3611: this.GM_VE3611_WC(y); break;
 				case 23462: this.G_VE23462_WC(y); break;
 				default: debugger; break;
 			}
@@ -7228,10 +7228,17 @@ class HandleTypes extends ServiceMethods {
 		x;
 	}
 	/** @private @arg {GM_VE3611_WC} x */
-	G_VE3611_WC(x) {x;}
+	GM_VE3611_WC(x) {
+		const cf="GM_VE23462_WC";
+		this.save_keys(`[${cf}]`,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		url;
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
 	/** @private @arg {GM_VE23462_WC} x */
 	G_VE23462_WC(x) {
-		const cf="VE23462.Metadata";
+		const cf="GM_VE23462_WC";
 		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		if(url!=="/account_notifications") debugger;
