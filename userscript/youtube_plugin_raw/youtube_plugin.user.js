@@ -6887,7 +6887,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
 	H_R(cf,x) {this.save_keys(`[${cf}]`,x);}
 	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TR_ItemSection$1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection_2(a,f));}
+	TR_ItemSection$1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection_1_CommentsEntryPoint(a,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
 		const cf="ItemSectionRendererTemplate";
@@ -6957,16 +6957,16 @@ class HandleTypes extends ServiceMethods {
 		}
 		return parse_number(x.types,_x);
 	}
-	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TD_ItemSection_2(x,f) {
-		const cf="TD_ItemSection_2";
+	/** @private @template {{}} T @arg {TD_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	TD_ItemSection_1_CommentsEntryPoint(x,f) {
+		const cf="ItemSectionDataTemplate_Section";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,f);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams("ItemSectionData",trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @private @arg {R_SimpleText} x @arg {(this:this,x:Omit<R_SimpleText,"simpleText">)=>void} f */
+	/** @private @arg {R_SimpleText} x @arg {(this:this,x:{accessibility?:D_Accessibility})=>void} f */
 	R_SimpleText(x,f=this.handle_accessibility) {
 		const cf="R_SimpleText";
 		this.save_keys(`[${cf}]`,x);
