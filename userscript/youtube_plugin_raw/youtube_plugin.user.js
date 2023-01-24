@@ -735,7 +735,7 @@ class R_HandleRichGrid$ {
 	constructor(x) {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
-	/** @handler @public @arg {string} path @arg {D_RichGrid} renderer */
+	/** @handler @public @arg {string} path @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer$(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
@@ -3249,7 +3249,7 @@ class YtObjectVisitor {
 			return true;
 		});
 	}
-	/** @handler @public @arg {ApiIterateState} state @arg {D_RichGrid} renderer */
+	/** @handler @public @arg {ApiIterateState} state @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer$(state.path,renderer);
 		state.path="richGridRenderer";
@@ -9065,7 +9065,14 @@ class HandleTypes extends ServiceMethods {
 		this.g(y); // ! #destructure
 	}
 	/** @private @arg {R_GhostGrid} x */
-	R_GhostGrid(x) {x; debugger;}
+	R_GhostGrid(x) {
+		const cf="R_GhostGrid"; this.k(cf,x);
+		if(!x.ghostGridRenderer) debugger;
+		let gg=this.w(x);
+		this.k("D_GhostGrid",gg);
+		if(this.get_keys_of(gg).join()!=="rows") debugger;
+		if(gg.rows!==2) debugger;
+	}
 	/** @private @arg {G_ContinuationEndpoint} x */
 	G_ContinuationEndpoint(x) {
 		const cf="ContinuationEndpointRoot"; this.k(cf,x);
