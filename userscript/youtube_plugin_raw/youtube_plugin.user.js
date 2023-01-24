@@ -6959,7 +6959,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TD_ItemSection_2(x,f) {
-		const cf="ItemSectionDataTemplate_Section";
+		const cf="TD_ItemSection_2";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,f);
