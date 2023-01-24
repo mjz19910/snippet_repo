@@ -1,8 +1,10 @@
-type D_MenuServiceItem<T extends string,EndpointItems>={
+type D_MenuServiceItem<T extends string|null,EndpointItems>=T extends null? {
 	text: G_Text;
-	icon?: T_Icon<T>;
 	serviceEndpoint: G_MenuServiceEndpointItems<EndpointItems>;
 	trackingParams: string;
-	hasSeparator?: true;
-	loggingDirectives?: A_LoggingDirectives;
+}:{
+	text: G_Text;
+	icon: T_Icon<T&string>;
+	serviceEndpoint: G_MenuServiceEndpointItems<EndpointItems>;
+	trackingParams: string;
 };

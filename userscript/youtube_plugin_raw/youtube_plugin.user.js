@@ -8333,7 +8333,21 @@ class HandleTypes extends ServiceMethods {
 		x;
 	}
 	/** @private @arg {R_MenuServiceItem} x */
-	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem",x,a => {a; debugger;});}
+	R_MenuServiceItem(x) {
+		this.H_("R_MenuServiceItem",x,x => {
+			const cf="Menu";
+			this.save_keys(`[${cf}]`,x);
+			if("icon" in x) {
+				if(x.icon.iconType!=="NOT_INTERESTED") debugger;
+				return this.D_MenuServiceItem_NotInterested(x);
+			}
+			this.D_MenuServiceItem(x);
+		});
+	}
+	/** @arg {D_MenuServiceItem<null, {}>} x */
+	D_MenuServiceItem(x) {x;}
+	/** @arg {D_MenuServiceItem<"NOT_INTERESTED", {}>} x */
+	D_MenuServiceItem_NotInterested(x) {x;}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
 	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem",x,a => {a; debugger;});}
 	/** @private @arg {R_MenuNavigationItem} x */
