@@ -2486,7 +2486,7 @@ class KnownDataSaver extends ApiBase {
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]==="many") return;
-		let sr=g1[1].slice().sort();
+		let sr=g1[1].slice().sort((a,b) => a-b);
 		this.save_number("[arr.tracking.trackingParams.f1]",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
 		this.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
@@ -2585,6 +2585,7 @@ class KnownDataSaver extends ApiBase {
 		mu=unset_bits(mc);
 		let mu_=swap_mask(mu);
 		let mx=mu_;
+		console.log(mx);
 		let rle_x=yt_plugin.ds.rle_enc(mx);
 		console.log(rle_x.split("!"));
 	}
