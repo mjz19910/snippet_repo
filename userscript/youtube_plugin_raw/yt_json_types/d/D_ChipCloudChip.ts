@@ -9,7 +9,7 @@ type D_ChipCloudChip=
 		styleType: "STYLE_REFRESH_TO_NOVEL_CHIP";
 	};
 	text: R_TextWithRuns;
-	navigationEndpoint: ContinuationCommand;
+	navigationEndpoint: C_Continuation;
 	trackingParams: string;
 	uniqueId: "ATTRIBUTE_FILTER_TYPE_EXPLORE";
 }

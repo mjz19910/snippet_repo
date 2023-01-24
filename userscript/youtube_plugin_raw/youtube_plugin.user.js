@@ -4421,7 +4421,6 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(state,r,b,keys) {
-		if(keys[0].endsWith("Command")) debugger;
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
