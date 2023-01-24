@@ -1,1 +1,1 @@
-type TR_ItemSection_1<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
+type TR_ItemSection_1<CType,T>={itemSectionRenderer: TD_ItemSection_1<CType,T>;};
