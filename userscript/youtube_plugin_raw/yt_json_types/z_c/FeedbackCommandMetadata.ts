@@ -1,1 +1,0 @@
-type FeedbackCommandMetadata={webCommandMetadata: GM_WC;};

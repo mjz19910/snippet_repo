@@ -1,6 +1,6 @@
 type E_CreateBackstagePost={
 	clickTrackingParams: string;
-	commandMetadata: G_Metadata;
+	commandMetadata: G_MD;
 	createBackstagePostEndpoint: {
 		createBackstagePostParams: string;
 	};

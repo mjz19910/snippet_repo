@@ -1,1 +1,0 @@
-type A_R_Notification={notificationActionRenderer: AD_Notification;};

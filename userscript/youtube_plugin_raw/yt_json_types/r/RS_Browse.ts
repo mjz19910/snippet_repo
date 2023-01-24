@@ -4,17 +4,17 @@ type RS_Browse={
 	continuationContents?: C_SectionList;
 	header?: G$BrowseHeader;
 	alerts?: R_AlertWithButton[];
-	metadata?: G_BrowseMetadata;
+	metadata?: G_Browse_MD;
 	trackingParams: string;
 	topbar?: R_DesktopTopbar;
-	microformat?: R_MicroformatData;
+	microformat?: R_Microformat;
 	frameworkUpdates?: R_EntityBatchUpdate;
 	maxAgeStoreSeconds?: number;
 	background?: R_MusicThumbnail;
 	onResponseReceivedActions?: A_ResponseReceived[];
 	sidebar?: G_BrowseSidebar;
 	observedStateTags?: B$StateTag[];
-	cacheMetadata?: CacheMetadata;
+	cacheMetadata?: D_Cache_MD;
 };
 type Alt_RS_Browse_raw=[
 	"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates",

@@ -1,1 +1,0 @@
-type CacheMetadata={isCacheHit: true;};

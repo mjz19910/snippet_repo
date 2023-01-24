@@ -9,7 +9,7 @@ type YtTargetIdType=[
 	D_TranscriptSearchPanel['targetId'],
 	D_UpdateEngagementPanel['targetId'],
 	A_WatchNextContinuation['targetId'],
-	ChipCloudChip_tid['targetId'],
+	D_ChipCloudChip_tid['targetId'],
 	`shopping_panel_for_entry_point_${"5"|"22"}`,
 	"clip-info-button",
 	"sponsorships-button",

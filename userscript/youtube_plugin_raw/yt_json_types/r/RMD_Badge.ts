@@ -1,0 +1,1 @@
+type RMD_Badge={metadataBadgeRenderer: DMD_Badge;};

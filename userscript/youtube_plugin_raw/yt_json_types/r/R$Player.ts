@@ -1,7 +1,7 @@
 type RS_Player={
 	responseContext: RC$ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;
-	streamingData?: D_StreamingData;
+	streamingData?: DD_Streaming;
 	heartbeatParams?: D_HeartbeatParams;
 	playerAds?: R_DesktopWatchAds[];
 	playbackTracking?: D_PlaybackTracking;

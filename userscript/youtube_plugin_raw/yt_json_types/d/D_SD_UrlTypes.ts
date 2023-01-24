@@ -1,0 +1,1 @@
+type D_SD_UrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;

@@ -1,1 +1,0 @@
-type GD_SavedDataItem={};

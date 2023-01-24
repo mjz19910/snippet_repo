@@ -3079,7 +3079,7 @@ class YtHandlers extends BaseService {
 		ht.ResponseTypes(response,res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SavedDataItem} data */
+	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @private @type {D_AnySaved} */
@@ -7361,7 +7361,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {C_SectionList} x */
 	C_SectionList(x) {this.H_("C_SectionList",x,this.G_SectionList);}
-	/** @private @arg {R_MicroformatData} x */
+	/** @private @arg {R_Microformat} x */
 	R_MicroformatData(x) {this.H_("R_MicroformatData",x,this.D_Microformat);}
 	/** @private @arg {R_EntityBatchUpdate} x */
 	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate",x,this.D_EntityBatchUpdate);}
@@ -7387,7 +7387,7 @@ class HandleTypes extends ServiceMethods {
 			this.g(y);
 		}
 	}
-	/** @private @arg {G_BrowseMetadata} x */
+	/** @private @arg {G_Browse_MD} x */
 	G_BrowseMetadata(x) {
 		const cf="G_BrowseMetadata"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_ChannelMetadata(x);
@@ -7876,8 +7876,8 @@ class HandleTypes extends ServiceMethods {
 		let kk=rk[0];
 		return this.uppercase_first(kk);
 	}
-	/** @private @template T @arg {TD_ContinuationItem<T>} x */
-	DT_ContinuationItem(x) {
+	/** @private @template T @arg {TD_ContinuationItem_CE<T>} x */
+	TD_ContinuationItem_CE(x) {
 		const cf="TD_ContinuationItem";
 		const {trigger,...y}=this.sd(cf,x);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
@@ -8227,7 +8227,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		};
 	}
-	/** @private @arg {D_LoadMarkersCommand} x */
+	/** @private @arg {DC_LoadMarkers} x */
 	LoadMarkersCommandData(x) {
 		const cf="LoadMarkersCommandData";
 		const {entityKeys,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -8371,7 +8371,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
-	/** @private @arg {G_Metadata} x */
+	/** @private @arg {G_MD} x */
 	CommandMetadata(x) {
 		const cf="CommandMetadata";
 		if("resolveUrlCommandMetadata" in x) {
@@ -8551,9 +8551,9 @@ class HandleTypes extends ServiceMethods {
 			console.log(this.get_keys_of(x).join());
 		}
 	}
-	/** @arg {R_MetadataBadge} x */
+	/** @arg {RMD_Badge} x */
 	R_MetadataBadge(x) {this.H_("R_MetadataBadge",x,this.D_MetadataBadge);}
-	/** @arg {D_MetadataBadge} x */
+	/** @arg {DMD_Badge} x */
 	D_MetadataBadge(x) {
 		const cf="D_MetadataBadge";
 		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
@@ -8881,7 +8881,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(items,x => {
 			if("notificationRenderer" in x) return this.R_Notification(x);
 			if("continuationItemRenderer" in x) {
-				let r=this.T$ContinuationItemRenderer(x); r;
+				let r=this.TR_ContinuationItem_CE(x); r;
 				this.E_Continuation(r);
 				return;
 			}
@@ -8951,15 +8951,15 @@ class HandleTypes extends ServiceMethods {
 		if("actions" in y) {
 			const {actions,...u}=y; this.g(u);
 			this.z(actions,a => {
-				this.A_A_HideEnclosing(a);
+				this.A_HideEnclosing(a);
 			});
 			return;
 		}
 		this.g(y);
 	}
-	/** @private @arg {A_A_HideEnclosing} x */
-	A_A_HideEnclosing(x) {
-		const cf="T$ContinuationItemRenderer";
+	/** @private @arg {A_HideEnclosing} x */
+	A_HideEnclosing(x) {
+		const cf="A_HideEnclosing";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,...y}=this.sd(cf,x);
 		this.AD_HideEnclosing(this.w(y));
@@ -8968,11 +8968,11 @@ class HandleTypes extends ServiceMethods {
 	AD_HideEnclosing(x) {x; debugger;}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {this.H_("E_GetNotificationMenu",x,a => {a; debugger;});}
-	/** @private @template T @arg {TR_ContinuationItem<T>} x */
-	T$ContinuationItemRenderer(x) {
-		const cf="T$ContinuationItemRenderer";
+	/** @private @template T @arg {TR_ContinuationItem_CE<T>} x */
+	TR_ContinuationItem_CE(x) {
+		const cf="TR_ContinuationItem_CE";
 		this.save_keys(`[${cf}]`,x);
-		return this.w(this.DT_ContinuationItem(this.w(x)));
+		return this.w(this.TD_ContinuationItem_CE(this.w(x)));
 	}
 	/** @arg {G_SectionList} x */
 	SectionListData(x) {
@@ -9344,7 +9344,7 @@ class HandleTypes extends ServiceMethods {
 	D_FeedTabbedHeader(x) {
 		this.R_TextWithRuns(this.w(x));
 	}
-	/** @private @arg {CacheMetadata} x */
+	/** @private @arg {D_Cache_MD} x */
 	CacheMetadata(x) {
 		const cf="CacheMetadata";
 		const {isCacheHit,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9384,7 +9384,7 @@ class HandleTypes extends ServiceMethods {
 		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
 		debugger;
 	}
-	/** @private @arg {M$ResolveUrlCommandMetadata} x */
+	/** @private @arg {MC_ResolveUrl} x */
 	ResolveUrlCommandMetadata(x) {
 		const cf="ResolveUrlCommandMetadata";
 		const {isVanityUrl,parentTrackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9706,7 +9706,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(overrideEntityKey);
 	}
-	/** @private @arg {D_AdSlotAndLayoutMetadataItem} x */
+	/** @private @arg {DMD_AdSlotAndLayoutItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		const cf="AdSlotAndLayoutMetadataItem";
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9792,7 +9792,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_MicroformatData(microformat);
 		this.z(onResponseReceivedActions,this.ResetChannelUnreadCountCommand);
 	}
-	/** @private @arg {R_ChannelMetadata} x */
+	/** @private @arg {R_Channel_MD} x */
 	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,a => {a; debugger;});}
 	/** @private @arg {R_Playlist} x */
 	R_Api_Playlist(x) {
@@ -9807,7 +9807,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_MicroformatData(microformat);
 		this.R_PlaylistSidebar(sidebar);
 	}
-	/** @private @arg {R_PlaylistMetadata} x */
+	/** @private @arg {R_Playlist_MD} x */
 	R_PlaylistMetadata(x) {this.H_("PlaylistMetadata",x,a => {a; debugger;});}
 	/** @private @arg {string} cf @arg {NonNullable<R_Playlist['alerts']>} x */
 	Response_alerts(cf,x) {
@@ -9872,7 +9872,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(index,"number");
 		this.params("WatchPlaylist","watch_playlist.params",params);
 	}
-	/** @private @arg {M$AdLayoutMetadata$1} x */
+	/** @private @arg {MMD_AdLayout_1} x */
 	AdLayoutMetadataItem(x) {
 		const cf="AdLayoutMetadataItem";
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.sd(cf,x); this.g(y); // ! #destructure

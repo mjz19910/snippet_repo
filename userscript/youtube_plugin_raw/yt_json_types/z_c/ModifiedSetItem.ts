@@ -10,6 +10,6 @@ type D_WatchPlaylist={
 };
 type WatchPlaylistEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: G_Metadata;
+	commandMetadata: G_MD;
 	watchPlaylistEndpoint: D_WatchPlaylist;
 };

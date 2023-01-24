@@ -1,0 +1,1 @@
+type D_Cache_MD={isCacheHit: true;};

@@ -10,7 +10,7 @@ type D_CompactPlaylist={
 	trackingParams: string;
 	sidebarThumbnails: D_Thumbnail[];
 	thumbnailText: R_TextWithRuns;
-	ownerBadges?: R_MetadataBadge[];
+	ownerBadges?: RMD_Badge[];
 	menu: R_Menu;
 	shareUrl: `https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`;
 	thumbnailRenderer: R_PlaylistVideoThumbnail;

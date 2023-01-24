@@ -1,0 +1,1 @@
+type R_GuideEntry_D={guideEntryData: R_GuideEntryId;};

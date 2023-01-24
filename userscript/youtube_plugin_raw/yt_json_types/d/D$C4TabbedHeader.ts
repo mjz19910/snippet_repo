@@ -4,7 +4,7 @@ type D_C4TabbedHeader={
 	navigationEndpoint: E_Browse;
 	avatar: D_Thumbnail;
 	banner: D_Thumbnail;
-	badges?: R_MetadataBadge[];
+	badges?: RMD_Badge[];
 	headerLinks: R_ChannelHeaderLinks;
 	subscribeButton: R_SubscribeButton;
 	subscriberCountText: R_SimpleText;

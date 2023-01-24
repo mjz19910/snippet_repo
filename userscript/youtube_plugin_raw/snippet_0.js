@@ -467,7 +467,7 @@ export class Snippet_0_tmp {
 	}
 }
 class ND extends Snippet_0_tmp {
-	/** @private @arg {A_R_Notification} x */
+	/** @private @arg {AR_Notification} x */
 	R_New(x) {this.H$R_("A_Notification",x,this.AD_Notification);}
 	/** @pub @arg {AD_Notification} x */
 	D_NewData(x) {x;}
@@ -612,13 +612,13 @@ class ND extends Snippet_0_tmp {
 		const {results,...y}=x; this.g(y); // ! #destructure
 		f.call(this,results);
 	}
-	/** @private @template T @arg {TD_ContinuationItem<T>} x */
+	/** @private @template T @arg {TD_ContinuationItem_CE<T>} x */
 	T$ContinuationItemData(x) {
 		const {trigger,...y}=x;
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
-	/** @protected @template T @arg {TR_ContinuationItem<T>} x */
+	/** @protected @template T @arg {TR_ContinuationItem_CE<T>} x */
 	R_T$ContinuationItem(x) {
 		const {continuationItemRenderer,...y}=x; this.g(y);
 		return this.w(this.T$ContinuationItemData(continuationItemRenderer));

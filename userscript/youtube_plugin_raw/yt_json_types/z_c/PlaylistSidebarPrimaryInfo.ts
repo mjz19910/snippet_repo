@@ -5,7 +5,7 @@ type D_PlaylistSidebarPrimaryInfo={
 	menu: R_Menu;
 	thumbnailOverlays: R_ThumbnailOverlaySidePanel[];
 	navigationEndpoint: E_Watch;
-	badges: R_MetadataBadge[];
+	badges: RMD_Badge[];
 	description: {};
 	showMoreText: R_TextWithRuns;
 };

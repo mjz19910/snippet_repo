@@ -1,1 +1,0 @@
-type G_BrowseMetadata=R_ChannelMetadata|R_PlaylistMetadata;

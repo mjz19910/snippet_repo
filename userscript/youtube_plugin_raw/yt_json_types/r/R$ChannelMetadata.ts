@@ -1,1 +1,0 @@
-type R_ChannelMetadata={channelMetadataRenderer: D_ChannelMetadata;};

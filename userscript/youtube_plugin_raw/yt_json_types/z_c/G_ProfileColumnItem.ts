@@ -1,0 +1,1 @@
+type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;

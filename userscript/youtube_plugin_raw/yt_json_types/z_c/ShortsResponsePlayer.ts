@@ -1,7 +1,7 @@
 type ShortsResponsePlayer={
 	responseContext: {};
 	playabilityStatus: {};
-	streamingData: D_StreamingData;
+	streamingData: DD_Streaming;
 	playbackTracking: D_PlaybackTracking;
 	captions: R_PlayerCaptionsTracklist;
 	videoDetails: D_VideoDetails;
@@ -12,5 +12,5 @@ type ShortsResponsePlayer={
 	attestation: R_PlayerAttestation;
 	videoQualityPromoSupportedRenderers: R_VideoQualityPromo;
 	frameworkUpdates: A_FrameworkUpdates;
-	cacheMetadata?: CacheMetadata;
+	cacheMetadata?: D_Cache_MD;
 };

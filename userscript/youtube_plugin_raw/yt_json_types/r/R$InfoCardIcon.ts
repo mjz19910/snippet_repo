@@ -1,1 +1,1 @@
-type R_InfoCardIcon={infoCardIconRenderer: D_InfoCardIcon;};
+type R_InfoCardIcon={infoCardIconRenderer: OD_InfoCardIcon_TP;};

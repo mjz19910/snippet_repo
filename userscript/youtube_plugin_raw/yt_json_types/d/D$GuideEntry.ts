@@ -5,7 +5,7 @@ type D_GuideEntry={
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	entryData: R_GuideEntryData;
+	entryData: R_GuideEntry_D;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
 	navigationEndpoint?: E_Url|E_Browse;

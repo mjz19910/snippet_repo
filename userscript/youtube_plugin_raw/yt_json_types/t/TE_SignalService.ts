@@ -1,5 +1,5 @@
 type TE_SignalService<T>={
 	clickTrackingParams: string;
-	commandMetadata: G_Metadata;
+	commandMetadata: G_MD;
 	signalServiceEndpoint: T;
 };

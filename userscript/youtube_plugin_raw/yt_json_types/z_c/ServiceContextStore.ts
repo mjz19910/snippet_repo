@@ -1,1 +1,1 @@
-type ServiceContextStore={context: ContextTypeStr|null;};
+type ServiceContextStore={context: D_ContextTypeStr|null;};

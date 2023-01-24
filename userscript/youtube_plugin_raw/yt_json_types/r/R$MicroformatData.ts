@@ -1,1 +1,0 @@
-type R_MicroformatData={microformatDataRenderer: D_Microformat;};

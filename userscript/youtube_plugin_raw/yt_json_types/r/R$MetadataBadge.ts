@@ -1,1 +1,0 @@
-type R_MetadataBadge={metadataBadgeRenderer: D_MetadataBadge;};

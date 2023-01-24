@@ -15,5 +15,5 @@ type D_ReelPlayerOverlay={
 	trackingParams: string;
 	shareButton: R_Button;
 	pivotButton: R_PivotButton;
-	badge: R_MetadataBadge;
+	badge: RMD_Badge;
 };

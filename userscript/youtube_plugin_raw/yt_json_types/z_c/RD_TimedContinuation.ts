@@ -1,0 +1,1 @@
+type RD_TimedContinuation={timedContinuationData: DD_TimedContinuation;};
