@@ -7594,7 +7594,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_RichItem";
 		const {content,trackingParams,rowIndex,colIndex,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
-		console.log("[Item.pos]",rowIndex,colIndex);
+		this.save_number("[Item.pos]",[rowIndex,colIndex]);
 		{
 			let x=content;
 			if("videoRenderer" in x) return;
