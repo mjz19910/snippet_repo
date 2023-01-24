@@ -1,4 +1,4 @@
-import {Box} from "../../rebuild_the_universe_raw/ns.js";
+import {Box} from "../../../rebuild_the_universe_raw/ns.js";
 
 type ExtractTypes_5<T>=T extends Promise<infer U>?[Promise<U>]:[null];
 type ExtractTypes_4<T>=T extends (...v:infer A)=>infer R?[(...v:A)=>R,...ExtractTypes_5<T>]:[null,...ExtractTypes_5<T>];

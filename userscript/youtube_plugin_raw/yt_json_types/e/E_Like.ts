@@ -1,0 +1,1 @@
+type E_Like={likeEndpoint: DE_Like;}&EB_Endpoint;

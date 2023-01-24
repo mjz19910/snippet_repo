@@ -16,13 +16,13 @@ export class KnownDataSaver {
 		this.#store_data();
 	}
 	/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
-	split_string_once(s,d=as(",")) {
+	split_string_once(s,d=cast_objects.as(",")) {
 		if(s==="") {
 			/** @private @type {[]} */
 			let r=[];
 			/** @private @type {any} */
 			let q=r;
-			return as(q);
+			return cast_objects.as(q);
 		}
 		let i=s.indexOf(d);
 		if(i===-1) {
@@ -30,7 +30,7 @@ export class KnownDataSaver {
 			let r=[s];
 			/** @private @type {any} */
 			let q=r;
-			return as(q);
+			return cast_objects.as(q);
 		}
 		let a=s.slice(0,i);
 		let b=s.slice(i+d.length);
@@ -38,7 +38,7 @@ export class KnownDataSaver {
 		let r=[a,b];
 		/** @private @type {any} */
 		let q=r;
-		return as(q);
+		return cast_objects.as(q);
 	}
 	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};

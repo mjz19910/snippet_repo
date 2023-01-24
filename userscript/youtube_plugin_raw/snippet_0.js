@@ -39,6 +39,10 @@ try {
 } catch {
 	no_storage_access=true;
 }
+/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+function as(e,x=e) {
+	return x;
+}
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {

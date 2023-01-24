@@ -1,4 +1,4 @@
-type D_MusicCarouselShelf=T$AR_Contents<{}>&{
+type D_MusicCarouselShelf=Record<"contents",{}[]>&{
 	header: {};
 	trackingParams: string;
 	itemSize: "COLLECTION_STYLE_ITEM_SIZE_MEDIUM";
