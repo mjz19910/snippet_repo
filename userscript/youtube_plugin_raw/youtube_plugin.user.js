@@ -9194,8 +9194,8 @@ class HandleTypes extends ServiceMethods {
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a => {
-			a;
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,x => {
+			x;
 			debugger;
 		});
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
