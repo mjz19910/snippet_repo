@@ -6423,7 +6423,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "browse": return {
 				type: target[0],
-				/** @private @type {RSB_t} */
+				/** @private @type {RS_Browse} */
 				data: as(x),
 			};
 			case "feedback": return {
@@ -6458,7 +6458,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "next": return {
 				type: target[0],
-				/** @private @type {R_Next} */
+				/** @private @type {RS_Next} */
 				data: as(x),
 			};
 			case "player": return {
@@ -6652,7 +6652,7 @@ class ServiceMethods extends ServiceData {
 		switch(t[0]) {
 			case "browse": return {
 				type: t[0],
-				/** @private @type {RSB_t} */
+				/** @private @type {RS_Browse} */
 				data: as(x),
 			};
 		}
@@ -7214,7 +7214,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E_Browse(endpoint);
 		if(page!=="browse") debugger;
-		this.RSB(response);
+		this.RS_Browse(response);
 		this.t(expirationTime,a => this.primitive_of(a,"number"));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
@@ -7362,8 +7362,8 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
 	}
-	/** @private @arg {RSB_t} x */
-	RSB(x) {
+	/** @private @arg {RS_Browse} x */
+	RS_Browse(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=x; this.g(y);
@@ -7708,7 +7708,7 @@ class HandleTypes extends ServiceMethods {
 			case "att.get": return this.RS_AttGet(x.data);
 			case "att.log": return this.RS_AttLog(x.data);
 			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
-			case "browse": return this.RSB(x.data);
+			case "browse": return this.RS_Browse(x.data);
 			case "feedback": return this.RS_Feedback(x.data);
 			case "get_transcript": return this.RS_GetTranscript(x.data);
 			case "get_survey": return this.RSG_Survey(x.data);
@@ -8081,7 +8081,7 @@ class HandleTypes extends ServiceMethods {
 	R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {this.H_("D_SimpleMenuHeader",x,a => {a; debugger;});}
-	/** @private @arg {R_Next} x */
+	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="Next";
 		this.save_keys(`[R_${cf}]`,x);
@@ -10039,7 +10039,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {RT$ReportFormModal} x */
+	/** @private @arg {R_TODO_ReportFormModal} x */
 	R_ReportFormModal(x) {
 		const cf="ReportFormModalRenderer";
 		this.save_keys(`[${cf}]`,x);

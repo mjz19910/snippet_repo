@@ -1,4 +1,4 @@
-type U_MetadataAction$items=[
+type UMA_Item=[
 	U_Viewership,
 	U_ToggleButtonText,
 	U_DateText,

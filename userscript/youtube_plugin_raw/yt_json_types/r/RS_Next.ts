@@ -1,11 +1,11 @@
-type R_Next={
+type RS_Next={
 	responseContext: RC$ResponseContext;
 	contents?: G_NextContents;
 	continuationContents?: RC_PlaylistPanel;
 	currentVideoEndpoint?: E_Watch;
 	trackingParams: string;
 	playerOverlays?: R_PlayerOverlay;
-	videoReporting?: RT$ReportFormModal;
+	videoReporting?: R_TODO_ReportFormModal;
 	queueContextParams?: string;
 	onResponseReceivedEndpoints?: GE_ResponseReceived[];
 	engagementPanels?: R_EngagementPanelSectionList[];

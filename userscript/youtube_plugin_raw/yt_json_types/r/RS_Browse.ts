@@ -1,4 +1,4 @@
-type RSB_t={
+type RS_Browse={
 	responseContext: RC$ResponseContext;
 	contents?: G$BrowseContents;
 	continuationContents?: C_SectionList;

@@ -1,0 +1,1 @@
+type R_ResponseContext={responseContext: RC$ResponseContext;};
