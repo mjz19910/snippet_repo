@@ -15,5 +15,5 @@ type D_CompactPlaylist={
 	shareUrl: `https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`;
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	longBylineText: R_TextWithRuns;
-	thumbnailOverlays: {}[];
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };

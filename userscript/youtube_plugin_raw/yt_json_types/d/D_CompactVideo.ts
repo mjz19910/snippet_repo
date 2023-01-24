@@ -1,18 +1,18 @@
 type D_CompactVideo={
 	videoId: string;
 	thumbnail: D_Thumbnail;
-	title: {};
+	title: R_SimpleText;
 	longBylineText: R_TextWithRuns;
 	publishedTimeText: R_TextWithRuns;
 	viewCountText: R_TextWithRuns;
 	lengthText: R_TextWithRuns;
-	navigationEndpoint: {};
+	navigationEndpoint: E_Watch;
 	shortBylineText: R_TextWithRuns;
 	channelThumbnail: {};
 	ownerBadges?: {};
 	trackingParams: string;
 	shortViewCountText: R_TextWithRuns;
-	menu: {};
+	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	accessibility: D_Accessibility;
 	richThumbnail: {};

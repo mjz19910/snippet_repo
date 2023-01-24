@@ -8596,7 +8596,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
 		const cf="D_CompactPlaylist";
-		let u=this.Omit$Radio(cf,x);
+		let u=this.Omit$CompactPlayer(cf,x);
 		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=this.sd(cf,u);
 		this.R_TextWithRuns(shortBylineText);
 		this.tz(ownerBadges,this.R_MetadataBadge);
@@ -8684,7 +8684,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio"; this.k(cf,x);
-		const {secondaryNavigationEndpoint,...y}=this.Omit$Radio(cf,x);
+		const {playlistId,videoCountText,videoCountShortText,thumbnailText,shareUrl,secondaryNavigationEndpoint,...y}=this.Omit$CompactPlayer(cf,x); this.g(y);
+		this.playlistId(playlistId);
+		this.R_TextWithRuns(videoCountText);
+		this.R_TextWithRuns(videoCountShortText);
+		this.R_TextWithRuns(thumbnailText);
+		this.parser.parse_url(cf,shareUrl);
 		this.E_Watch(secondaryNavigationEndpoint);
 		let uk=this.get_keys_of(y);
 		if(uk.length>0) {
@@ -8692,22 +8697,20 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {string} cf @template {D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
-	Omit$Radio(cf,x) {
+	Omit$CompactPlayer(cf,x) {
 		const {thumbnail,title,navigationEndpoint,menu,trackingParams,longBylineText,thumbnailOverlays,...y}=this.sd(cf,x); // !
-		// this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
-		// this.R_SimpleText(title);
-		// this.R_TextWithRuns(videoCountText);
-		// this.E_Watch(navigationEndpoint);
-		// this.R_Menu(menu);
+		this.R_SimpleText(title);
+		this.E_Watch(navigationEndpoint);
+		this.R_Menu(menu);
 		this.trackingParams(cf,trackingParams);
-		// this.parser.parse_url(cf,shareUrl);
+		this.G_Text(longBylineText);
 		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
 			if("thumbnailOverlayNowPlayingRenderer" in a) return;
 			if("thumbnailOverlayBottomPanelRenderer" in a) return;
-			this.do_codegen("ThumbnailOverlay$CompactPlaylist",a);
+			this.do_codegen("ThumbnailOverlay$CompactPlayer",a);
 			debugger;
 		});
 		return y;
@@ -9548,7 +9551,17 @@ class HandleTypes extends ServiceMethods {
 	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
-		let u=this.Omit$Radio("D_CompactVideo",x);
+		let {
+			videoId,accessibility,
+			shortBylineText,publishedTimeText,ownerBadges,viewCountText,lengthText,shortViewCountText,
+			channelThumbnail,richThumbnail,badges,...y
+		}=this.Omit$CompactPlayer("D_CompactVideo",x); this.g(y);
+		this.videoId(videoId);
+		this.D_Accessibility(accessibility);
+		this.z([shortBylineText,publishedTimeText,viewCountText,lengthText],x => this.R_TextWithRuns(x));
+		console.log("chan.thumb",channelThumbnail);
+		console.log("rich.thumb",richThumbnail);
+		this.t(badges,a => console.log("badge",a));
 	}
 	/** @private @arg {A_LoggingDirectives} x */
 	A_LoggingDirectives(x) {
