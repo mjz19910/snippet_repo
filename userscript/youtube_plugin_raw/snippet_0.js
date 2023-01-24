@@ -601,7 +601,7 @@ class ND extends Snippet_0_tmp {
 		let ca=this.z(commands,f);
 		return [y,ca];
 	}
-	/** @protected @template T @arg {T$ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template T @arg {T_Results<T>} x @arg {(this:this,x:T)=>void} f */
 	ResultsTemplate(x,f) {
 		const cf="ResultsTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -725,7 +725,7 @@ class ND extends Snippet_0_tmp {
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}
-	/** @protected @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {string} T @arg {TS_ChipCloud<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
 		const cf="ChipCloudStyle";
 		this.save_keys(`[${cf}]`,x);

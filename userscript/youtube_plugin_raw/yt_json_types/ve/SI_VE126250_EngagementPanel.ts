@@ -5,6 +5,6 @@ type SI_VE126250_EngagementPanel={
 	veType: 126250;
 	targetId: "engagement-panel-searchable-transcript";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: C$ScrollToEngagementPanel[];
+	onShowCommands: C_ScrollToEngagementPanel[];
 	loggingDirectives: A_LoggingDirectives;
 };

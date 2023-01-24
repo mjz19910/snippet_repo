@@ -1,4 +1,4 @@
-type T$AD__OpenPopup$Dialog<T>={
+type TAD_OpenPopup_Dialog<T>={
 	popup: T;
 	popupType: "DIALOG";
 };

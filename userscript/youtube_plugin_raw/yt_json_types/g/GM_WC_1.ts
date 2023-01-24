@@ -1,3 +1,4 @@
+type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 type GM_WC_1=[
 	GM_VE11487_WC,
 	GM_VE23462_WC,
@@ -31,6 +32,7 @@ type GM_WC_1=[
 	GM_share_get_share_panel,
 	GM_subscription_subscribe,
 	GM_ypc_get_offers,
+	GM_YpcGetCart,
 ][number];
 type GM_VE3611_WC={
 	url: `/@${string}`;
@@ -171,4 +173,8 @@ type GM_playlist_create={
 type GM_notification_record_interactions={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/record_interactions";
+};
+type GM_YpcGetCart={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/ypc/get_cart";
 };
