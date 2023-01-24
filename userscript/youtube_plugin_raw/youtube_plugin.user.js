@@ -8117,14 +8117,41 @@ class HandleTypes extends ServiceMethods {
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}
+	/** @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
+	Signal$Omit(x,f) {
+		const {signal,...y}=x;
+		f(signal);
+		return y;
+	}
+	/** @arg {GS_Client} x */
+	GS_Client(x) {
+		let om=this.Signal$Omit(x,a=>{
+			if(a!=="CLIENT_SIGNAL") debugger;
+		});
+		this.z(this.w(om),x=>{
+			if("openPopupAction" in x) {
+				const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
+				this.clickTrackingParams("openPopupAction",clickTrackingParams);
+				{
+					let x=openPopupAction;
+					debugger;
+					const {...y}=x; this.g(y);
+				}
+				return;
+			}
+			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
+			if("sendFeedbackAction" in x) return;
+			if("signalAction" in x) return;
+			debugger;
+		});
+	}
+	/** @private @arg {E_ShowEngagementPanel} x */
+	E_ShowEngagementPanel(x) {x;}
 	/** @private @arg {string} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.E_SignalService(x,a => {
-				a;
-				debugger;
-			});
+			this.E_SignalService(x,this.GS_Client);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.AdsControlFlowOpportunityReceivedCommand(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
