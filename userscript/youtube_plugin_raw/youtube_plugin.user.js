@@ -8108,7 +8108,28 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RC_PlaylistPanel} x */
 	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel",x,a => {a; debugger;});}
 	/** @private @arg {R_VoiceSearchDialog} x */
-	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog",x,a => {a; debugger;});}
+	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog",x,this.D_VoiceSearchDialog);}
+	/** @private @arg {D_VoiceSearchDialog} x */
+	D_VoiceSearchDialog(x) {
+		const cf="D_VoiceSearchDialog"; this.k(cf,x);
+		let u=Object.entries(x);
+		for(let x of u) {
+			let c=x[1];
+			if(typeof c==="string") {
+				console.log('str',x[0]);
+				continue;
+			}
+			if("runs" in c) {
+				console.log('text.runs',x[0]);
+				this.R_TextWithRuns(c);
+				continue;
+			}
+			if(!c.buttonRenderer) debugger;
+			console.log('button',x[0]);
+			this.R_Button(c);
+		}
+
+	}
 	/** @private @arg {C_ScrollToEngagementPanel} x */
 	C_ScrollToEngagementPanel(x) {
 		const cf="C_ScrollToEngagementPanel";
