@@ -5399,49 +5399,50 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
-					case "GetNotificationMenu.ctoken":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "slot_ad_serving_data_entry.f3":
-						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "slot_ad_serving_data_entry.f1":
-						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
+					case "reel.player_params":
+						switch(map_entry_key) {case 30: case 71: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "slot_ad_serving_data_entry":
 						switch(map_entry_key) {case 1: case 3: case 4: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.player_params.f40.f1":
-						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f16.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry.f10": switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry.f9": case "tracking.trackingParams.f4": case "transcript_target_id.param":
 					case "tracking.trackingParams.f19": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "report.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "browse$param.f93": case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40":
-					case "ypc_get_offers.params.f5.f5": switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "report.params.f28.f1": switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "createBackstagePost.param": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1":
-					case "record_notification_interactions.f2.f14": switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams": switch(map_entry_key) {case 16: case 19: break; default: {if(map_entry_key<12) {let tu=m_num_range(); map_entry_key=tu; return this.parse_param_next(root,`${path}.f${tu}`,map_entry_value);} } new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "browse$param.f84": switch(map_entry_key) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "create_playlist.params":
-					case "browse$param": switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_value);
 					case "entity_key": switch(map_entry_key) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "createBackstagePost.param": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "record_notification_interactions.f2.f14":
+						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "create_playlist.params": case "browse$param":
+						switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_value);
+					case "browse$param.f93": case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
+						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "slot_ad_serving_data_entry.f1": case "tracking.trackingParams.f16.f4": case "AdServingDataEntry.f9": case "tracking.trackingParams.f4": case "transcript_target_id.param": case "watch.player_params.f40.f1":
+						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "slot_ad_serving_data_entry.f3": case "AdServingDataEntry.f10":
+						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams":
+						switch(map_entry_key) {
+							case 16: case 19: break;
+							default: {
+								if(map_entry_key<12) {
+									let tu=m_num_range();
+									map_entry_key=tu;
+									return this.parse_param_next(root,`${path}.f${tu}`,map_entry_value);
+								}
+							} new_ns(); debugger; return;
+						}
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+
 				}
 			}
 			callback(map_entry_value,map_entry_key);
@@ -7967,6 +7968,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_Video['inlinePlaybackEndpoint']} x */
 	D_Video_inlinePlaybackEndpoint(x) {
+		if(!x) {debugger; return;}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
 	}
