@@ -7766,70 +7766,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		let cx=this.D_Video_Omit(cf,x); cx;
-		if("publishedTimeText" in x) {
-			if("richThumbnail" in x&&"ownerBadges" in x) {
-				// D_Video_1
-				let u=this.D_Video_Omit_OwnerBadges(cf,x);
-				let {richThumbnail,...y}=u; this.g(y);
-				this.richThumbnail_Video(richThumbnail);
-				return;
-			}
-			if("richThumbnail" in x) {
-				if("owner" in x) {
-					// D_Video_5
-					let {owner,...y}=this.D_Video_Omit_Thumbnail(cf,x);
-					this.D_Video_Owner(owner);
-					return this.g(y);
-				}
-				// D_Video_7
-				let {topStandaloneBadge,...y}=this.D_Video_Omit_Thumbnail(cf,x);
-				this.RMD_Badge(topStandaloneBadge);
-				return this.g(y);
-			}
-			if("descriptionSnippet" in x) {
-				if("owner" in x) {
-					// D_Video_4
-					let {...y}=this.D_Video_Omit_OwnerBadges(cf,x);
-					return this.g(y);
-				}
-				// D_Video_3
-				let {descriptionSnippet,...y}=this.D_Video_Omit_publishedTimeText(cf,x);
-				return this.g(y);
-			}
-			if("owner" in x) {
-				// D_Video_2
-				let {owner,...y}=this.D_Video_Omit_publishedTimeText(cf,x);
-				return this.g(y);
-			}
-		}
-		if("owner" in x) {
-			// D_Video_8
-			let {owner,...y}=this.D_Video_Omit_Badges(cf,x); this.g(y);
-			return;
-		}
-		if("badges" in x) {
-			// D_Video_6
-			let {viewCountText,shortViewCountText,...y}=this.D_Video_Omit_Badges(cf,x); this.g(y);
-			return;
-		}
-		x===0;
-		debugger;
-	}
-	/** @template {Extract<D_Video,{publishedTimeText:any}>} T @arg {string} cf @arg {T} x */
-	D_Video_Omit_publishedTimeText(cf,x) {
-		let {lengthText,publishedTimeText,shortViewCountText,viewCountText,...y}=this.D_Video_Omit(cf,x);
-		this.G_Text(lengthText);
-		this.G_Text(publishedTimeText);
-		this.G_Text(shortViewCountText);
-		this.G_Text(viewCountText);
-		return y;
-	}
-	/** @template {Extract<D_Video,{badges:any}>} T @arg {string} cf @arg {T} x */
-	D_Video_Omit_Badges(cf,x) {
-		let {badges,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
-		this.z(badges,this.RMD_Badge);
-		return y;
+		let u=this.D_Video_Omit(cf,x);
+		const {owner,viewCountText,shortViewCountText,descriptionSnippet,badges,...y}=u; this.g(y);
+		this.t(owner,this.D_Video_Owner);
+		this.t(viewCountText,this.R_TextRuns);
+		this.t(shortViewCountText,this.R_TextRuns);
+		this.t(descriptionSnippet,this.R_TextRuns);
 	}
 	/** @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
@@ -7853,13 +7795,13 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @template {D_Video} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_Video} T @arg {string} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
 		this.R_TextRuns(ownerText);
@@ -7868,32 +7810,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
 		return y;
 	}
-	/** @template {Extract<D_Video,{owner:any}>} T @arg {string} cf @arg {T} x */
-	D_Video_Omit_Owner(cf,x) {
-		let {owner,...y}=this.D_Video_Omit(cf,x);
-		this.D_Video_Owner(owner);
-		return y;
-	}
-	/** @template {Extract<D_Video,{ownerBadges:any}>} T @arg {string} cf @arg {T} x */
-	D_Video_Omit_OwnerBadges(cf,x) {
-		let {descriptionSnippet,ownerBadges,lengthText,publishedTimeText,viewCountText,shortViewCountText,...y}=this.D_Video_Omit_Owner(cf,x);
-		this.R_TextRuns(descriptionSnippet);
-		this.z(ownerBadges,this.RMD_Badge);
-		return y;
-	}
-	/** @template {Extract<D_Video,{richThumbnail:any}>} T @arg {string} cf @arg {T} x */
-	D_Video_Omit_Thumbnail(cf,x) {
-		let {richThumbnail,publishedTimeText,lengthText,shortViewCountText,viewCountText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
-		this.richThumbnail_Video(richThumbnail);
-		return y;
-	}
-	/** @template {Extract<D_Video,{descriptionSnippet:any}>} T @arg {string} cf @arg {T} x */
-	D_Video_Omit_DescriptionSnippet(cf,x) {
-		let {descriptionSnippet,...y}=this.D_Video_Omit(cf,x);
-		this.R_TextRuns(descriptionSnippet);
-		return y;
-	}
-	/** @arg {D_Video_Owner} x */
+	/** @private @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {
 		const cf="D_Video_Owner";
 		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.sd(cf,x); this.g(y);
@@ -7902,9 +7819,9 @@ class HandleTypes extends ServiceMethods {
 		this.D_Accessibility(accessibility);
 		this.primitive_of_string(title);
 	}
-	/** @arg {R_ChannelThumbnailWithLink} x */
+	/** @private @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
-	/** @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
 		const {thumbnail,navigationEndpoint,accessibility,...y}=this.sd(cf,x);
 		this.D_Thumbnail(thumbnail);
@@ -7912,7 +7829,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_Accessibility(accessibility);
 		return y;
 	}
-	/** @arg {D_ChannelThumbnailWithLink} x */
+	/** @private @arg {D_ChannelThumbnailWithLink} x */
 	D_ChannelThumbnailWithLink(x) {
 		const cf="D_ChannelThumbnailWithLink";
 		if("title" in x) {
@@ -7922,13 +7839,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
 	}
-	/** @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
+	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		debugger;
 	}
-	/** @arg {D_Video['inlinePlaybackEndpoint']} x */
+	/** @private @arg {D_Video['inlinePlaybackEndpoint']} x */
 	D_Video_inlinePlaybackEndpoint(x) {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
