@@ -8402,7 +8402,7 @@ class HandleTypes extends ServiceMethods {
 					return;
 				}
 				if(this.is_MenuItem_AQ(x)) {
-					const {icon,...y}=this.D_MenuServiceItem$Omit(x,sp=>{
+					const {icon,...y}=this.D_MenuServiceItem$Omit(x,sp => {
 						sp;
 					}); this.g(y);
 					this.T_Icon(icon);
@@ -8831,39 +8831,50 @@ class HandleTypes extends ServiceMethods {
 		if("videoSecondaryInfoRenderer" in x) return;
 		debugger;
 	}
+	/** @private @arg {Extract<Extract<G_Watch_SecondaryResults,{contents:any}>['contents'][number],{itemSectionRenderer:any}>} x */
+	RG_Watch_ItemSection(x) {
+		this.TR_ItemSection(x,a => {
+			let [u,...v]=a;
+			if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u,a => {
+				let cf=this.get_name_from_keys(a);
+				if(!cf) {debugger; return;}
+				this.HD_(`D_${cf}`,a);
+				console.log("[found item_section_watch_data]",cf);
+				debugger;
+			});
+			debugger;
+			return null;
+		});
+	}
+	/** @private @arg {Extract<G_Watch_SecondaryResults,{contents:any}>['contents'][number]} x */
+	G_Watch_SecondaryResults_ContentsItem(x) {
+		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
+		let k=this.get_keys_of(x);
+		switch(k[0]) {
+			case "relatedChipCloudRenderer": break;
+			default: debugger; break;
+		}
+	}
+	/** @private @arg {Extract<G_Watch_SecondaryResults,{contents:any}>} x */
+	G_Watch_SecondaryResults_Contents(x) {
+		const cf="G_Watch_SecondaryResults_Contents";
+		const {contents,...y}=this.sd(cf,x); this.g(y);
+		this.z(contents,this.G_Watch_SecondaryResults_ContentsItem);
+	}
+	/** @private @arg {Extract<G_Watch_SecondaryResults,{results:any}>} x */
+	G_Watch_SecondaryResults_Results(x) {x;}
+	/** @private @arg {G_Watch_SecondaryResults} x */
+	G_Watch_SecondaryResults(x) {
+		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
+		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
+		debugger;
+	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.D_TwoColumnWatchNextResultsInner(results,this.G_WatchResultItem);
-		this.T_SecondaryResults(secondaryResults,a => {
-			if("contents" in a) {
-				this.z(a.contents,a => {
-					if("itemSectionRenderer" in a) {
-						this.TR_ItemSection(a,a => {
-							if(a[1]==="sid-wn-chips"&&a[2]==="watch-next-feed") {
-								this.z(a[0],a => {
-									let cf=this.get_name_from_keys(a);
-									if(!cf) {debugger; return;}
-									this.HD_(`D_${cf}`,a);
-									console.log("[found item_section_watch_data]",cf);
-								});
-								return;
-							}
-							debugger;
-						});
-					}
-					let k=this.get_keys_of(a);
-					switch(k[0]) {
-						case "itemSectionRenderer": break;
-						case "relatedChipCloudRenderer": break;
-						default: debugger; break;
-					}
-				});
-				return;
-			}
-			debugger;
-		});
+		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
 		this.t(playlist,a => this.T_Playlist(a,this.PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
