@@ -9090,10 +9090,24 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
 		const cf="DM_AdSlot";
-		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x); this.g(y);
+		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x);
 		this.primitive_of_string(slotId);
+		let do_=false;
+		if(do_) {
+			let sid=split_string(slotId,":");
+			let n=(BigInt(sid[0]));
+			n/=1000n;
+			this.save_number("[AdSlot.slotId[0]]",Number(n));
+			this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
+		}
 		if(slotPhysicalPosition!==1) debugger;
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
+		if("adSlotLoggingData" in y) {
+			const {adSlotLoggingData,...y1}=y; this.g(y1);
+			adSlotLoggingData.serializedSlotAdServingDataEntry;
+			return;
+		}
+		this.g(y); // ! #destructure
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
@@ -10197,22 +10211,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="AdSlotAndLayoutMetadataItem";
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(adLayoutMetadata,this.AdLayoutMetadataItem);
-		this.AdSlotMetadata(adSlotMetadata);
-	}
-	/** @private @arg {DM_AdSlot} x */
-	AdSlotMetadata(x) {
-		const cf="AdSlotMetadata";
-		const {slotId,slotType,slotPhysicalPosition,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		let do_=false;
-		if(do_) {
-			let sid=split_string(slotId,":");
-			let n=(BigInt(sid[0]));
-			n/=1000n;
-			this.save_number("[AdSlot.slotId[0]]",Number(n));
-			this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
-		}
-		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
-		if(slotPhysicalPosition!==1) debugger;
+		this.DM_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
 	FusionSearchboxData(x) {
