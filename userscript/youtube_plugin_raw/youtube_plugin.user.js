@@ -8052,8 +8052,26 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_PlayerAnnotationsExpanded";
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.D_FeaturedChannel(featuredChannel);
-		console.log(annotationId);
-
+		let anno_uuid=this.parse_uuid(annotationId);
+		console.log(anno_uuid);
+	}
+	/** @private @arg {UUIDString} x */
+	parse_uuid(x) {
+		let ui_parts=split_string(x,"-");
+		let uid=this.join_string(ui_parts,"");
+		/** @type {string[][]} */
+		let hx=[[]];
+		uid.split("").forEach(x=>{
+			let ca=hx.at(-1);
+			if(!ca) throw new Error();
+			if(ca.length===2) {
+				ca=[];
+				hx.push(ca);
+			}
+			ca.push(x);
+		});
+		console.log(hx);
+		return uid;
 	}
 	/** @private @arg {D_FeaturedChannel} x */
 	D_FeaturedChannel(x) {
