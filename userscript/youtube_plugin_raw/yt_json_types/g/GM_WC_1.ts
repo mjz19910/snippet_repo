@@ -41,6 +41,7 @@ type GM_VE3611_WC={
 	url:
 	|`/channel/UC${string}`
 	|`/@${string}`
+	|"/gaming"
 	;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 	rootVe: 3611;

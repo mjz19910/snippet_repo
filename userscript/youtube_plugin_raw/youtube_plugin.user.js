@@ -7628,11 +7628,15 @@ class HandleTypes extends ServiceMethods {
 	_decode_channel_url(x) {
 		if(this.str_starts_with("/@",x)) return;
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
-		let [y0,y1]=split_string_once(y,"/");
-		if(!y1) {debugger; return;}
-		if(y0!=="channel") debugger;
-		if(this.str_starts_with("UC",y1)) return;
-		debugger;
+		let a1=split_string_once(y,"/");
+		switch(a1[0]) {
+			default: debugger; break;
+			case "gaming": if(a1.length!==1) debugger; break;
+			case "channel": {
+				let [,y1]=a1;
+				if(this.str_starts_with("UC",y1)) return;
+			} break;
+		}
 	}
 	/** @private @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
@@ -10257,6 +10261,8 @@ class HandleTypes extends ServiceMethods {
 				case "WATCH_LATER":
 				case "CLAPPERBOARD":
 				case "MUSIC":
+				case "LIVE":
+				case "GAMING_LOGO":
 			}
 			{
 				let x=navigationEndpoint;
