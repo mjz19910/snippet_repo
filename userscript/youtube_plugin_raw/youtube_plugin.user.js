@@ -8091,6 +8091,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			if("buttonText" in x) {
 				const {buttonText,...y}=x; this.g(y);
+				this.R_TextRuns(buttonText);
 				return;
 			}
 			this.g(x);
