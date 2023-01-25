@@ -4269,7 +4269,7 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {string} o @arg {string} k1 */
 	json_filter_string(o,k1) {
-		const max_str_len=40;
+		const max_str_len=120;
 		if(k1==="apiUrl") return o;
 		if(k1==="targetId") return o;
 		if(k1==="panelIdentifier") return o;
