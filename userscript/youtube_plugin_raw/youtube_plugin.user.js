@@ -10098,6 +10098,7 @@ class HandleTypes extends ServiceMethods {
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
+		if("guideCollapsibleEntryRenderer" in x) return;
 		debugger;
 	}
 	/** @private @arg {D_GuideDownloadsEntry} x */
