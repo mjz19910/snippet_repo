@@ -9011,7 +9011,10 @@ class HandleTypes extends ServiceMethods {
 			if("thumbnailOverlayNowPlayingRenderer" in x) return;
 			if("thumbnailOverlayBottomPanelRenderer" in x) return;
 			if("thumbnailOverlayTimeStatusRenderer" in x) return;
-			this.do_codegen("ThumbnailOverlay$CompactPlayer",x);
+			if("thumbnailOverlayToggleButtonRenderer" in x) return;
+			if("thumbnailOverlayLoadingPreviewRenderer" in x) return;
+			if("thumbnailOverlayResumePlaybackRenderer" in x) return;
+			this.do_codegen(`ThumbnailOverlay$${cf}`,x);
 			debugger;
 		});
 		return y;
