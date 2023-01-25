@@ -15,6 +15,7 @@ type D_Video={
 	trackingParams: /**/string;
 	showActionMenu: /**/false;
 	shortViewCountText?: G_Text;
+	isWatched?: true;
 	menu: /**/R_Menu;
 	channelThumbnailSupportedRenderers: /**/R_ChannelThumbnailWithLink;
 	thumbnailOverlays: /**/G_ThumbnailOverlayItem[];
