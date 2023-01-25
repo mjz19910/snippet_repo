@@ -7552,8 +7552,7 @@ class HandleTypes extends ServiceMethods {
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
-		if(url) this._decode_channel_url(url);
-		else debugger;
+		this._decode_channel_url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
@@ -10127,7 +10126,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
 		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
-		debugger;
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
+		this.R_GuideEntry(headerEntry);
+		if(expanderIcon.iconType!=="EXPAND") debugger; this.T_Icon(expanderIcon);
+		if(collapserIcon.iconType!=="COLLAPSE") debugger; this.T_Icon(collapserIcon);
+		this.z(sectionItems,this.R_GuideEntry);
+		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
+		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
+		if(handlerDatas.length!==2) debugger;
 	}
 	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
 	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry",x,this.D_GuideCollapsibleSectionEntry);}
