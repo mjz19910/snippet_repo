@@ -6,5 +6,6 @@ type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayTimeStatus
 	|R_ThumbnailOverlayToggleButton
 	|R_ThumbnailOverlayResumePlayback
+	|R_ThumbnailOverlayEndorsement
 	;
 ;
