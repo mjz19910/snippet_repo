@@ -10056,10 +10056,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ES_Button} x */
 	ES_Button(x) {
 		const cf="ES_Button";
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a=>{
-			a;
-			debugger;
-		},this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
