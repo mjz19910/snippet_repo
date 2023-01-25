@@ -5768,6 +5768,7 @@ class ParserService extends BaseService {
 					case "f84": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(map_entry_value instanceof Map) return;
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
