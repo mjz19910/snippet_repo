@@ -9648,8 +9648,18 @@ class HandleTypes extends ServiceMethods {
 		const cf="SearchEndpoint";
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.G_CommandMetadata(commandMetadata);
+		this.M_VE4724(commandMetadata);
 		this.D_Search(searchEndpoint);
+	}
+	/** @private @arg {M_VE4724} x */
+	M_VE4724(x) {this.H_("M_VE4724",x,this.GM_VE4724_WC);}
+	/** @private @arg {GM_VE4724_WC} x */
+	GM_VE4724_WC(x) {
+		const cf="GM_VE4724_WC";
+		const {url,webPageType,rootVe,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		if(!this.str_starts_with("/results?search_query=",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		if(rootVe!==4724) debugger;
 	}
 	/** @private @arg {D_Search} x */
 	D_Search(x) {this.H_("D_Search",x,this.primitive_of_string);}
