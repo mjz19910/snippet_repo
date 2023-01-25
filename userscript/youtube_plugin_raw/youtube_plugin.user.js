@@ -6970,11 +6970,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
+		const cf="T_Types";
+		const {types,...y}=this.sd(cf,x); this.g(y);
 		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
 		}
-		return parse_number(x.types,_x);
+		return parse_number(types,_x);
 	}
 	/** @private @template {{}} T @arg {TD_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TD_ItemSection_1_CommentsEntryPoint(x,f) {
@@ -9776,6 +9778,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
+		const cf="D_LoggingDirectives"; this.k(cf,x);
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
 	}
