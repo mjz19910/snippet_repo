@@ -7767,11 +7767,16 @@ class HandleTypes extends ServiceMethods {
 	D_Video(x) {
 		const cf="D_Video";
 		let u=this.D_Video_Omit(cf,x);
-		const {owner,viewCountText,shortViewCountText,descriptionSnippet,badges,...y}=u; this.g(y);
-		this.t(owner,this.D_Video_Owner);
-		this.t(viewCountText,this.R_TextRuns);
-		this.t(shortViewCountText,this.R_TextRuns);
+		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,owner,shortViewCountText,richThumbnail,...y}=u; this.g(y);
 		this.t(descriptionSnippet,this.R_TextRuns);
+		this.t(publishedTimeText,this.R_SimpleText);
+		this.t(lengthText,this.R_SimpleText);
+		this.t(viewCountText,this.R_TextRuns);
+		this.tz(ownerBadges,this.RMD_Badge);
+		this.tz(badges,this.RMD_Badge);
+		this.t(owner,this.D_Video_Owner);
+		this.t(shortViewCountText,this.R_TextRuns);
+		this.t(richThumbnail,this.R_MovingThumbnail);
 	}
 	/** @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
