@@ -19,5 +19,5 @@ type D_Video={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	richThumbnail: R_MovingThumbnail;
 	inlinePlaybackEndpoint: E_Watch;
-	owner: D_Video$Owner;
+	owner: D_Video_Owner;
 };

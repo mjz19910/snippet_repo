@@ -7697,11 +7697,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		let {descriptionSnippet,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...v}=this.Omit_Menu_Video(cf,x);
+		let {descriptionSnippet,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
 		this.R_TextRuns(descriptionSnippet);
 		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
-		{v; debugger;}
+		channelThumbnailSupportedRenderers;
+		inlinePlaybackEndpoint;
+		owner;
 	}
 	/** @arg {R_Radio} x */
 	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
