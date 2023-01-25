@@ -10220,9 +10220,9 @@ class HandleTypes extends ServiceMethods {
 			switch(icon.iconType) {
 				default: icon===""; debugger; break;
 				case "MY_VIDEOS":
+				case "TRENDING":
 				case "WATCH_HISTORY":
 				case "WATCH_LATER":
-				case "TRENDING":
 			}
 			{
 				let x=navigationEndpoint;
