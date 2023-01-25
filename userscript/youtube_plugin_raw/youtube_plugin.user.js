@@ -9884,8 +9884,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="ShareEntityServiceEndpoint";
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		console.log(commandMetadata);
-		debugger;
+		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/share/get_share_panel") debugger;
+		this.WebCommandMetadata(commandMetadata.webCommandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
 	/** @private @arg {D_ShareEntityService} x */
