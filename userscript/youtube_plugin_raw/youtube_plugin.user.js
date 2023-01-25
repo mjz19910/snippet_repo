@@ -8124,7 +8124,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_SimpleMenuHeader} x */
 	R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {D_SimpleMenuHeader} x */
-	D_SimpleMenuHeader(x) {this.H_("D_SimpleMenuHeader",x,a => {a; debugger;});}
+	D_SimpleMenuHeader(x) {
+		const cf="RS_Next";
+		const {title,buttons,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		this.G_Text(title);
+		this.z(buttons,this.R_Button);
+	}
 	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next";
@@ -8354,7 +8359,7 @@ class HandleTypes extends ServiceMethods {
 			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.sd(cf,x); this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
-			this.G_CommandMetadata(commandMetadata,true)
+			this.G_CommandMetadata(commandMetadata,true);
 		});
 		this.D_Accessibility(enabledAccessibilityData);
 		this.D_Accessibility(disabledAccessibilityData);
