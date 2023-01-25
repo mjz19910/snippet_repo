@@ -9103,7 +9103,11 @@ class HandleTypes extends ServiceMethods {
 			this.save_number("[AdSlot.slotId[0]]",Number(n));
 			this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		}
-		if(slotPhysicalPosition!==1) debugger;
+		switch(slotPhysicalPosition) {
+			case 0:
+			case 1: break;
+			default: debugger; break;
+		}
 		switch(slotType) {
 			case "SLOT_TYPE_IN_FEED":
 			case "SLOT_TYPE_PAGE_TOP": break;
