@@ -4334,7 +4334,11 @@ class CodegenService extends BaseService {
 			/** @type {{iconType?:string}} */
 			let ru=b.icon;
 			if(!ru.iconType) break x;
-			console.log("[Generate.TD_GuideEntry_Simple.keys]",this.get_keys_of(b));
+			let kk=this.get_keys_of(b);
+			if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
+				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(b));
+				break x;
+			}
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
 		if(k1==="") return x;
@@ -10271,7 +10275,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			switch(icon.iconType) {
-				default: icon===""; debugger; break;
+				default: icon===""; this.do_codegen(cf,x); break;
 				case "MY_VIDEOS":
 				case "TRENDING":
 				case "WATCH_HISTORY":
@@ -10280,6 +10284,11 @@ class HandleTypes extends ServiceMethods {
 				case "MUSIC":
 				case "LIVE":
 				case "GAMING_LOGO":
+				case "COURSE":
+				case "TROPHY":
+				case "NEWS":
+				case "YOUTUBE_ROUND":
+				case "FASHION_LOGO":
 			}
 			{
 				let x=navigationEndpoint;

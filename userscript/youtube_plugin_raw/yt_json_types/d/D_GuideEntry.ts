@@ -6,6 +6,11 @@ type TD_GuideEntry_Simple<T extends string>={
 	accessibility: D_Accessibility;
 };
 type D_GuideEntry=[
+	TD_GuideEntry_Simple<"YOUTUBE_ROUND">,
+	TD_GuideEntry_Simple<"FASHION_LOGO">,
+	TD_GuideEntry_Simple<"COURSE">,
+	TD_GuideEntry_Simple<"TROPHY">,
+	TD_GuideEntry_Simple<"NEWS">,
 	TD_GuideEntry_Simple<"GAMING_LOGO">,
 	{
 		navigationEndpoint: E_Browse;
