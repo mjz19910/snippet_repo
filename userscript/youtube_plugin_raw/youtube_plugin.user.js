@@ -9308,10 +9308,16 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("adSlotLoggingData" in y) {
 			const {adSlotLoggingData,...y1}=y; this.g(y1);
-			console.log(adSlotLoggingData.serializedSlotAdServingDataEntry);
+			this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
 			return;
 		}
 		this.g(y); // ! #destructure
+	}
+	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
+	D_SerializedSlotAdServingDataEntry(x) {
+		const {serializedSlotAdServingDataEntry: a,...y}=x; this.g(y);
+		let dec=this._decode_b64_url_proto_obj(a);
+		console.log(dec);
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}

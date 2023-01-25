@@ -6,9 +6,7 @@ type DM_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_IN_FEED";
 	slotPhysicalPosition: 1;
-	adSlotLoggingData: {
-		serializedSlotAdServingDataEntry: string;
-	};
+	adSlotLoggingData: D_SerializedSlotAdServingDataEntry;
 }|{
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_PAGE_TOP";
