@@ -10075,18 +10075,8 @@ class HandleTypes extends ServiceMethods {
 	RS_Guide(x) {
 		const cf="RS_Guide";
 		const {responseContext: {},items,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(items,this.GuideItemType);
+		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {G_GuideItem} x */
-	GuideItemType(x) {
-		const cf="GuideItemType"; this.k(cf,x);
-		if("guideSectionRenderer" in x) {
-			return this.R_GuideSection(x);
-		} else if("guideSubscriptionsSectionRenderer" in x) {
-			return this.R_GuideSubscriptionsSection(x);
-		}
-		debugger;
 	}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,this.D_GuideSubscriptionsSection);}
@@ -10101,10 +10091,15 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
+		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
+		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
 		debugger;
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
-	D_GuideCollapsibleEntry(x) {x;}
+	D_GuideCollapsibleEntry(x) {
+		const cf="D_GuideCollapsibleEntry";
+		const {expanderItem,expandableItems,collapserItem,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_GuideDownloadsEntry} x */
 	D_GuideDownloadsEntry(x) {
 		const {alwaysShow,entryRenderer,...y}=x; this.g(y);
@@ -10158,14 +10153,24 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(isPrimary!==true) debugger;
 	}
+	/** @private @arg {R_GuideEntryData} x */
+	R_GuideEntryData(x) {this.H_("R_GuideEntryData",x,this.D_GuideEntryData);}
+	/** @private @arg {D_GuideEntryData} x */
+	D_GuideEntryData(x) {
+		const {guideEntryId,...y}=x; this.g(y);
+		if(guideEntryId!=="LL") debugger;
+	}
 	/** @private @arg {string} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
 		if("entryData" in x) {
 			const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			if(!navigationEndpoint.browseEndpoint) debugger;
+			this.E_Browse(navigationEndpoint);
 			switch(icon.iconType) {
 				default: icon.iconType===""; debugger; break;
 				case "LIKES_PLAYLIST": break;
 			}
+			this.R_GuideEntryData(entryData);
 			return;
 		}
 		if("navigationEndpoint" in x) {

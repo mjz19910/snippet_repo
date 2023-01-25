@@ -1,6 +1,8 @@
 type G_GuideSectionItem=[
-	R_GuideEntry,
+	R_GuideCollapsibleEntry,
 	R_GuideCollapsibleSectionEntry,
 	R_GuideDownloadsEntry,
-	R_GuideCollapsibleEntry,
+	R_GuideEntry,
+	R_GuideSection,
+	R_GuideSubscriptionsSection,
 ][number];
