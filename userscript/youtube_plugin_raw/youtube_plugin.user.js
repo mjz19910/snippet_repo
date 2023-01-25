@@ -8415,12 +8415,12 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
-	/** @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"NOT_INTERESTED",any>} */
+	/** @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<"NOT_INTERESTED",any>} */
 	is_MenuItemNotInt(x) {
 		if("icon" in x) return x.icon.iconType==="NOT_INTERESTED";
 		return false;
 	}
-	/** @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",any>} */
+	/** @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",any>} */
 	is_MenuItem_AQ(x) {
 		if("icon" in x) return x.icon.iconType==="ADD_TO_QUEUE_TAIL";
 		return false;
