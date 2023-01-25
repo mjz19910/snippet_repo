@@ -8769,12 +8769,15 @@ class HandleTypes extends ServiceMethods {
 		const {title,trackingParams,thumbnailOverlays,...y}=this.sd(cf,x); // !
 		this.R_SimpleText(title);
 		this.trackingParams(cf,trackingParams);
-		this.z(thumbnailOverlays,a => {
-			if("thumbnailOverlaySidePanelRenderer" in a) return;
-			if("thumbnailOverlayHoverTextRenderer" in a) return;
-			if("thumbnailOverlayNowPlayingRenderer" in a) return;
-			if("thumbnailOverlayBottomPanelRenderer" in a) return;
-			this.do_codegen("ThumbnailOverlay$CompactPlayer",a);
+		this.z(thumbnailOverlays,x => {
+			// TODO: #11 Handle thumbnailOverlay Renderers
+			// Actually iterate over these renderers
+			if("thumbnailOverlaySidePanelRenderer" in x) return;
+			if("thumbnailOverlayHoverTextRenderer" in x) return;
+			if("thumbnailOverlayNowPlayingRenderer" in x) return;
+			if("thumbnailOverlayBottomPanelRenderer" in x) return;
+			if("thumbnailOverlayTimeStatusRenderer" in x) return;
+			this.do_codegen("ThumbnailOverlay$CompactPlayer",x);
 			debugger;
 		});
 		return y;
