@@ -8059,19 +8059,7 @@ class HandleTypes extends ServiceMethods {
 	parse_uuid(x) {
 		let ui_parts=split_string(x,"-");
 		let uid=this.join_string(ui_parts,"");
-		/** @type {string[][]} */
-		let hx=[[]];
-		uid.split("").forEach(x=>{
-			let ca=hx.at(-1);
-			if(!ca) throw new Error();
-			if(ca.length===2) {
-				ca=[];
-				hx.push(ca);
-			}
-			ca.push(x);
-		});
-		console.log(hx.map(e=>parseInt(e.join(""),16)));
-		return uid;
+		return ui_parts;
 	}
 	/** @private @arg {D_FeaturedChannel} x */
 	D_FeaturedChannel(x) {
