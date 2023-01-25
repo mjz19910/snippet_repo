@@ -1,4 +1,4 @@
-type D_ThumbnailOverlayTimeStatus$2={
+type D_ThumbnailOverlayTimeStatus_2={
 	text: R_TextRuns;
 	style: "LIVE";
 	icon: T_Icon<"LIVE">;

@@ -7709,14 +7709,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
-	/** @arg {D_ChannelThumbnailWithLink} x */
-	D_ChannelThumbnailWithLink(x) {
-		const cf="D_ChannelThumbnailWithLink";
-		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.sd(cf,x); this.g(y);
+	/** @template {D_ChannelThumbnailWithLink} T @arg {T} x */
+	D_ChannelThumbnailWithLink_Omit(x) {
+		const {thumbnail,navigationEndpoint,accessibility,...y}=x;
 		this.D_Thumbnail(thumbnail);
 		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
 		this.D_Accessibility(accessibility);
-		this.primitive_of_string(title);
+		return y;
+	}
+	/** @arg {D_ChannelThumbnailWithLink} x */
+	D_ChannelThumbnailWithLink(x) {
+		const cf="D_ChannelThumbnailWithLink";
+		if("title" in x) {
+			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(this.sd(cf,x)); this.g(y);
+			this.primitive_of_string(title);
+		}
+		let y=this.D_ChannelThumbnailWithLink_Omit(this.sd(cf,x)); this.g(y);
 	}
 	/** @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
