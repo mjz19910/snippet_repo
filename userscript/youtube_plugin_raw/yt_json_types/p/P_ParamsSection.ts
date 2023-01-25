@@ -1,25 +1,47 @@
+type Omit_Menu_Radio_CF=[
+	"D_PlayerOverlayAutoplay",
+	"D_Radio",
+][number];
 type P_ParamsSection=
 	|"A_HideEngagementPanelScrim"
 	|"AE_Browse"
 	|"C_AdsControlFlowOpportunityReceived"
 	|"C_Executor"
+	|"C_ReloadContinuationItems"
+	|"C_ScrollToEngagementPanel"
 	|"CommonConfigData"
 	|"CreatePlaylist"
+	|"D_AutoplaySwitchButton"
+	|"D_CommonConfig"
 	|"D_CompactVideo"
 	|"D_DesktopTopbar"
 	|"D_FeaturedChannel"
+	|"D_ItemSection_2_CommentItemSection"
+	|"D_Menu"
+	|"D_MenuNavigationItem"
+	|"D_MenuServiceItem"
 	|"D_Notification"
 	|"D_PdgBuyFlow"
+	|"D_PlayerOverlayAutoplay"
+	|"D_PlaylistEdit"
 	|"D_PlaylistSidebar"
 	|"D_ReelWatch"
 	|"D_RichGrid"
 	|"D_RichItem"
+	|"D_SubscribeButton"
+	|"D_SuperVodBuyFlowContent"
 	|"D_TemplateUpdate"
 	|"D_Video"
+	|"D_WatchNextEndScreen"
+	|"D_WatchResult_ResultsItem"
+	|"D_YpcGetCart"
 	|"DE_GetNotificationMenu"
 	|"E_CreateBackstagePost"
 	|"E_CreateBackstagePost"
+	|"E_Feedback"
+	|"E_PlaylistEdit"
 	|"E_ReelWatch"
+	|"E_SetSettingAutonavForDesktop"
 	|"E_ShareEntityService"
 	|"GeneratedWCM"
 	|"Generic_WatchPageResponse"
@@ -27,33 +49,33 @@ type P_ParamsSection=
 	|"GetTranscript"
 	|"GM_WC"
 	|"HrefUrl"
+	|"MC_ResolveUrl"
 	|"Next"
+	|"openPopupAction"
 	|"PlaylistContent"
 	|"PlaylistEdit"
 	|"RecordNotificationInteractions"
 	|"ReelWatch"
+	|"RS_AccountMenu"
 	|"RS_Browse"
 	|"RS_Channel"
 	|"RS_GetLiveChat"
+	|"RS_Next"
 	|"RS_Playlist"
 	|"RS_ReelWatchSequence"
+	|"RS_Search"
 	|"RS_Settings"
 	|"RSB_EditPlaylist"
 	|"RSG_NotificationMenu"
+	|"RSG_PdgBuyFlow"
 	|"RSG_SearchSuggestions"
+	|"RSG_Survey"
 	|"SubscribeEndpoint"
 	|"T_Command_TP"
-	|"Tab"
-	|"TD_ItemSection_3"
-	|"D_SuperVodBuyFlowContent"
-	|"D_YpcGetCart"
-	|"MC_ResolveUrl"
-	|"RS_AccountMenu"
-	|"RS_Search"
-	|"RSG_PdgBuyFlow"
-	|"RSG_Survey"
 	|"TA_OpenPopup"
+	|"Tab"
 	|"TD_ItemSection_1_CommentsEntryPoint"
+	|"TD_ItemSection_3"
 	|"TopbarLogo"
 	|"UnknownWebCommandMetadata"
 	|"WatchEndpoint"
@@ -64,6 +86,9 @@ type P_ParamsSection=
 	|`${T_Endpoint_CF}.endpoint`
 	|D_Button_CF
 	|D_Link_CF
+	|GE_ResponseReceived_CF
+	|Omit_Menu_Radio_CF
+	|T_Endpoint_CF
 	;
 ;
 type T_Endpoint_CF=[
@@ -72,6 +97,7 @@ type T_Endpoint_CF=[
 	"C_GetSurvey",
 	"E_Browse",
 	"E_YpcGetCart",
+	"E_ReelWatch",
 ][number];
 type D_Link_CF=[
 	"D_CompactLink",
@@ -79,6 +105,11 @@ type D_Link_CF=[
 type D_Button_CF=[
 	"D_Button",
 	`D_Button.${"Mixed"|"Styled"|"WithAccessibility"}`,
+][number];
+type GE_ResponseReceived_CF=[
+	"Base",
+	"RS_Watch",
+	"RS_Next",
 ][number];
 function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 	switch(u) {
@@ -89,10 +120,6 @@ function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 		case "sd":
 		case "k":
 		case "_decoder":
-		case "TR_ItemSection_3_CommentItemSection":
-		case "TD_ItemSection_3_CommentItemSection":
-		case "E_Url":
-		case "R_ItemSection":
 		case "R_RelatedClipCloud":
 		case "D_MP_Menu":
 		case "SectionListData":

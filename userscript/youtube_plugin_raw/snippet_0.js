@@ -9,6 +9,7 @@ this.z(actions,a => {
 });
 this.trackingParams(trackingParams);
 `;
+const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
 export function con_snippet_1() {
 	let x={};
 	/** @arg {{}} o */
@@ -30,7 +31,7 @@ export function con_snippet_1() {
 	console.log(u);
 }
 const decoder=new TextDecoder();
-const base64_dec=new Base64Binary();
+const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",/[^A-Za-z0-9\+\/\=]/g);
 export let no_storage_access=false;
 try {
 	localStorage.setItem("test","test_value");
@@ -114,7 +115,7 @@ export class Snippet_0_tmp {
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
-	/** @public @arg {string} cf @arg {string} x */
+	/** @public @arg {P_ParamsSection} cf @arg {string} x */
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -134,6 +135,7 @@ export class Snippet_0_tmp {
 	/** @public @arg {string} x */
 	parse_endpoint_params(x) {
 		let arr=this.decode_url_b64(x);
+		if(!arr) return;
 		let reader=new MyReader(arr);
 		let res=reader.try_read_any();
 		if(!res) return;
@@ -314,6 +316,7 @@ export class Snippet_0_tmp {
 	decode_url_b64_proto_obj(x) {
 		x=x.replaceAll("_","/").replaceAll("-","+");
 		let ba=base64_dec.decodeByteArray(x);
+		if(!ba) return null;
 		let reader=new MyReader(ba);
 		return reader.try_read_any();
 	}
@@ -393,7 +396,7 @@ export class Snippet_0_tmp {
 		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;
 			this.primitive_of(sendPost,"boolean");
-			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
+			apiUrl;
 		} else if("rootVe" in x) {
 			switch(x.rootVe) {
 				case 3832:
@@ -459,7 +462,7 @@ export class Snippet_0_tmp {
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
-		this.trackingParams("ItemSectionData",trackingParams);
+		trackingParams;
 		let k=this.get_keys_of(contents);
 		switch(k[0]) {
 			default: debugger; break;
@@ -486,14 +489,14 @@ class ND extends Snippet_0_tmp {
 	R_SimpleText(x) {x;}
 	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
-		const cf="VideoOwner$Omit";
+		const cf="VideoOwner$Omit"; cf;
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
 		this.D_Thumbnail(thumbnail);
 		this.R_TextWithRuns(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E_Browse(navigationEndpoint);
 		this.t(subscriberCountText,this.R_SimpleText);
-		this.trackingParams(cf,trackingParams);
+		trackingParams;
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
@@ -699,7 +702,7 @@ class ND extends Snippet_0_tmp {
 		this.R_TextWithRuns(buttonText);
 		this.R_TextWithRuns(subscribedButtonText);
 		this.R_TextWithRuns(unsubscribedButtonText);
-		this.trackingParams(cf,trackingParams);
+		trackingParams; cf;
 		this.R_TextWithRuns(unsubscribeButtonText);
 		// this.tz(serviceEndpoints,x => {
 		// 	if("subscribeEndpoint" in x) return this.E_Subscribe(x);
@@ -712,6 +715,64 @@ class ND extends Snippet_0_tmp {
 		this.D_Accessibility(unsubscribeAccessibility);
 		return y;
 	}
+	/** @private @arg {P_ParamsSection} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
+	_decode_TD_ItemSection(cf,x) {
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		return [x.contents,x.sectionIdentifier,x.targetId];
+	}
+	/** @arg {string} a @arg {{}} b */
+	k=(a,b) => this.save_keys(`[${a}]`,b);
+	/** @template {{}} T @arg {string} cf @arg {T} x */
+	sd(cf,x) {
+		this.k(cf,x);
+		return x;
+	}
+	/** @api @public @arg {string} str */
+	_decode_b64_url_proto_obj(str) {
+		let buffer=base64_url_dec.decodeByteArray(str);
+		if(!buffer) return null;
+		let reader=new MyReader(buffer);
+		return reader.try_read_any();
+	}
+	/** @private @arg {D_CompactRadio} x */
+	D_CompactRadio(x) {x; debugger;}
+	/** @private @arg {R_CompactRadio} x */
+	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @private @arg {D_CompactPlaylist} x */
+	D_CompactPlaylist(x) {x; debugger;}
+	/** @private @arg {R_CompactPlaylist} x */
+	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
+	/** @private @arg {R_CompactVideo} x */
+	R_CompactVideo(x) {x; debugger;}
+	/** @private @arg {R_ContinuationItem} x */
+	R_ContinuationItem(x) {x; debugger;}
+	/** @private @arg {R_AdSlot} x */
+	R_AdSlot(x) {x; debugger;}
+	/** @private @arg {TD_ItemSection_3<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
+	D_ItemSection(x) {
+		const cf="D_ItemSection_2_CommentItemSection";
+		let [i,...a]=this._decode_TD_ItemSection(cf,x); i;
+		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
+		this.z(i,x => {
+			/** @arg {string} v */
+			let sc=(v) => {this.save_string("[ItemSection.T_ContentType]",v);};
+			if("compactVideoRenderer" in x) {sc("t1.cvr"); return this.R_CompactVideo(x);}
+			if("continuationItemRenderer" in x) {sc("t1.cir"); return this.R_ContinuationItem(x);}
+			if("commentThreadRenderer" in x) {sc("t1.ctr"); debugger; return;}
+			if("commentsHeaderRenderer" in x) {sc("t1.chr"); debugger; return;}
+			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return this.R_CompactPlaylist(x);}
+			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
+			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
+			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
+			if("compactRadioRenderer" in x) {sc("t1.crr"); return this.R_CompactRadio(x);}
+			if("adSlotRenderer" in x) {sc("t1.asr"); return this.R_AdSlot(x);}
+			x;
+			debugger;
+		});
+	}
+	/** @protected @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
+	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
 	/** @private @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}
 	/** @private @arg {D_Label} x */

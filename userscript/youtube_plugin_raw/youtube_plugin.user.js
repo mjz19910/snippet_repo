@@ -6995,16 +6995,16 @@ class HandleTypes extends ServiceMethods {
 	//#region templates
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
 	HD_(cf,x) {
-		this.save_keys(`[${cf}]`,x);
+		this.k(cf,x);
 		if(this.get_keys_of(x).length!==1) debugger;
 	}
 	/** @private @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
 	H_(cf,x,f) {
-		this.save_keys(`[${cf}]`,x);
+		this.k(cf,x);
 		f.call(this,this.w(x));
 	}
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
-	H_R(cf,x) {this.save_keys(`[${cf}]`,x);}
+	H_R(cf,x) {this.k(cf,x);}
 	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TR_ItemSection$1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection_1_CommentsEntryPoint(a,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
@@ -7238,7 +7238,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="Generic_WatchPageResponse";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.E_Watch(endpoint);
-		this.R_Watch(response);
+		this.RS_Watch(response);
 		this.RS_Player(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
@@ -7254,11 +7254,11 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.RS_Player(playerResponse);
-		this.R_Watch(response);
+		this.RS_Watch(response);
 	}
 	/** @private @arg {RS_Watch} x */
-	R_Watch(x) {
-		const cf="WatchResponse";
+	RS_Watch(x) {
+		const cf="RS_Watch";
 		this.x.get("yt_plugin").add_function({
 			name: "data",
 			data: {
@@ -7271,7 +7271,7 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(currentVideoEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a => this.GE_ResponseReceived("WatchResponse",a));
+		this.z(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
 		this.z(engagementPanels,this.G_EngagementPanelItem);
 		this.R_DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R_CinematicContainer);
@@ -7834,13 +7834,13 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(navigationEndpoint);
 		return y;
 	}
-	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {string} cf @arg {T} x */
+	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	R_Omit_Menu_Radio(cf,x) {
 		let {navigationEndpoint,menu,...y}=this.Omit_Compact_Player(cf,x);
 		this.R_Menu(menu);
 		return y;
 	}
-	/** @private @template {D_Radio|D_CompactRadio} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_Radio|D_CompactRadio} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
 		let u=this.R_Omit_Menu_Radio(cf,x);
 		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
@@ -7871,7 +7871,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
-	/** @private @arg {string} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
+	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.sd(cf,x);
 		this.z(thumbnailOverlays,x => {
@@ -7891,13 +7891,13 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @private @template {D_CompactVideo|D_Video} T @arg {"D_CompactVideo"|"D_Video"} cf @arg {T} x */
+	/** @private @template {D_CompactVideo|D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @template {D_Video} T @arg {"D_CompactVideo"|"D_Video"} cf @arg {T} x */
+	/** @private @template {D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
 		this.R_TextRuns(ownerText);
@@ -8550,7 +8550,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(currentVideoEndpoint,this.E_Watch);
 		this.trackingParams(cf,trackingParams);
 		this.t(playerOverlays,this.R_PlayerOverlay);
-		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived("NextResponse",a));
+		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
 		this.tz(engagementPanels,this.G_EngagementPanelItem);
 		this.t(videoReporting,this.R_ReportFormModal);
 		this.t(queueContextParams,a => this.params("Next","next.queue_context_params",a));
@@ -8646,7 +8646,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {x; debugger;}
-	/** @private @arg {string} cf @arg {GE_ResponseReceived} x */
+	/** @private @arg {GE_ResponseReceived_CF} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
@@ -8665,7 +8665,7 @@ class HandleTypes extends ServiceMethods {
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.LoadMarkersCommandData(loadMarkersCommand);
 		} else if("reloadContinuationItemsCommand" in x) {
-			this.ReloadContinuationItemsCommand(x);
+			this.C_ReloadContinuationItems(x);
 		} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
@@ -8690,8 +8690,8 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {C_ReloadContinuationItems} x */
-	ReloadContinuationItemsCommand(x) {
-		const cf="ReloadContinuationItemsCommand";
+	C_ReloadContinuationItems(x) {
+		const cf="C_ReloadContinuationItems";
 		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
@@ -8781,7 +8781,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.D_Accessibility(enabledAccessibilityData);
 		this.D_Accessibility(disabledAccessibilityData);
-		this.trackingParams("",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
@@ -8803,13 +8803,13 @@ class HandleTypes extends ServiceMethods {
 		if("endScreenVideoRenderer" in x) return;
 		debugger;
 	}
-	/** @template {{}} T @arg {string} cf @arg {T} x */
-	sd(cf,x) {
-		this.save_keys(`[${cf}]`,x);
-		return x;
-	}
 	/** @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
+	/** @template {{}} T @arg {string} cf @arg {T} x */
+	sd(cf,x) {
+		this.k(cf,x);
+		return x;
+	}
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
 		const cf="BrowserMediaSessionRoot";
@@ -8830,7 +8830,7 @@ class HandleTypes extends ServiceMethods {
 	primitive_of_string(x) {this.primitive_of(x,"string");}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
-		const cf="Menu";
+		const cf="D_Menu";
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
@@ -8909,7 +8909,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_PlaylistEdit} x */
 	D_PlaylistEdit(x) {
-		const cf="D_MenuServiceItem$Omit";
+		const cf="D_PlaylistEdit";
 		const {playlistId,params,actions,...y}=this.sd(cf,x); this.g(y);
 		this.playlistId(playlistId);
 		this.t(params,x => this.params(cf,"playlist_edit.params",x));
@@ -9037,7 +9037,7 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		x: if(clickTrackingParams) {
 			let x=clickTrackingParams;
-			let root=cf;
+			const root=cf;
 			const path="tracking.trackingParams";
 			let dx=decodeURIComponent(x);
 			let res_e=this._decode_b64_url_proto_obj(dx);
@@ -9149,21 +9149,6 @@ class HandleTypes extends ServiceMethods {
 	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,a => {a; debugger;});}
 	/** @unused @protected @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,a => {a; debugger;});}
-	/** @private @arg {D_CompactPlaylist} x */
-	D_CompactPlaylist(x) {
-		const cf="D_CompactPlaylist";
-		let u=this.Omit_Compact_Player(cf,x);
-		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=this.sd(cf,u);
-		this.R_TextRuns(shortBylineText);
-		this.tz(ownerBadges,this.RMD_Badge);
-		this.t(publishedTimeText,this.R_TextRuns);
-		let kof=this.get_keys_of(y);
-		if(kof.length>0) {
-			console.log("[log_keys_of] [%s] [%s]",cf,kof);
-			this.do_codegen("D_CompactPlaylist",y);
-			console.log(this.get_keys_of(x).join());
-		}
-	}
 	/** @unused @protected @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TR_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
@@ -9177,12 +9162,11 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; return x;
 		}
 	}
-	/** @arg {TR_ItemSection<{},"comment-item-section","comments-section">} x */
+	/** @private @arg {TR_ItemSection<{},"comment-item-section","comments-section">} x */
 	TR_ItemSection_3_CommentItemSection(x) {this.H_("TR_ItemSection_3_CommentItemSection",x,this.TD_ItemSection_3_CommentItemSection);}
-	/** @arg {TD_ItemSection_3<{},"comment-item-section","comments-section">} x */
+	/** @private @arg {TD_ItemSection_3<{},"comment-item-section","comments-section">} x */
 	TD_ItemSection_3_CommentItemSection(x) {
-		const cf="TD_ItemSection_3_CommentItemSection";
-		this.save_keys(`[${cf}]`,x);
+		const cf="TD_ItemSection_3_CommentItemSection"; this.k(cf,x);
 		const {sectionIdentifier,targetId,trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);
 		if(x.sectionIdentifier!=="comment-item-section") debugger;
 		if(x.targetId!=="comments-section") debugger;
@@ -9193,50 +9177,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x @arg {(this:this,x:G_WatchResult_ContentsItem)=>void} f  */
 	D_WatchResults(x,f) {
-		const cf="D_WatchResults";
-		this.save_keys(`[${cf}]`,x);
+		const cf="D_WatchResults"; this.k(cf,x);
 		let u=this.w(x);
-		let {trackingParams,...y}=u;
-		this.trackingParams("D_WatchResult_ResultsItem",trackingParams);
+		this.D_WatchResult_ResultsItem(u,f);
+	}
+	/** @private @arg {D_WatchResult_ResultsItem} x @arg {(this:this,x:G_WatchResult_ContentsItem)=>void} f   */
+	D_WatchResult_ResultsItem(x,f) {
+		const cf="D_WatchResult_ResultsItem"; this.k(cf,x);
+		let {trackingParams,...y}=x;
+		this.trackingParams(cf,trackingParams);
 		this.z(this.w(y),f);
 	}
-	/** @pub @arg {E_Url} x */
+	/** @private @arg {E_Url} x */
 	E_Url(x) {x; debugger;}
-	/** @pub @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
-	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
-	/** @private @arg {TD_ItemSection_3<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
-	D_ItemSection(x) {
-		const cf="D_ItemSection_2_CommentItemSection";
-		let [i,...a]=this._decode_TD_ItemSection(cf,x); i;
-		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
-		this.z(i,x => {
-			/** @arg {string} v */
-			let sc=(v) => {this.save_string("[ItemSection.T_ContentType]",v);};
-			if("compactVideoRenderer" in x) {sc("t1.cvr"); return this.R_CompactVideo(x);}
-			if("continuationItemRenderer" in x) {sc("t1.cir"); return this.R_ContinuationItem(x);}
-			if("commentThreadRenderer" in x) {sc("t1.ctr"); debugger; return;}
-			if("commentsHeaderRenderer" in x) {sc("t1.chr"); debugger; return;}
-			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return this.R_CompactPlaylist(x);}
-			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
-			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
-			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
-			if("compactRadioRenderer" in x) {sc("t1.crr"); return this.R_CompactRadio(x);}
-			if("adSlotRenderer" in x) {sc("t1.asr"); return this.R_AdSlot(x);}
-			x;
-			debugger;
-		});
-	}
-	/** @private @arg {R_CompactRadio} x */
-	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
-	/** @private @arg {string} cf @template {D_CompactVideo|D_CompactRadio} T @arg {T} x */
-	Omit$Compact$Radio(cf,x) {
-		let {thumbnail,navigationEndpoint,menu,longBylineText,...y}=this.Omit_Compact_Player(cf,x);
-		this.D_Thumbnail(thumbnail);
-		this.E_Watch(navigationEndpoint);
-		this.R_Menu(menu);
-		this.G_Text(longBylineText);
-		return y;
-	}
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
@@ -9254,25 +9207,14 @@ class HandleTypes extends ServiceMethods {
 		if(!webShowNewAutonavCountdown) debugger;
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @private @arg {D_CompactRadio} x */
-	D_CompactRadio(x) {
-		const cf="D_CompactRadio"; this.k(cf,x);
-		const {shareUrl,secondaryNavigationEndpoint,...y}=this.Omit_Menu_Radio(cf,x); this.g(y);
-		this.parser.parse_url(cf,shareUrl);
-		this.E_Watch(secondaryNavigationEndpoint);
-		let uk=this.get_keys_of(y);
-		if(uk.length>0) {
-			console.log("[log_keys_of] [%s] [%s]",cf,uk.join(",").split(",")[0]);
-		}
-	}
-	/** @private @arg {string} cf @template {R_Omit_Compact_Player} T @arg {T} x */
+	/** @private @arg {Omit_Menu_Radio_CF} cf @template {R_Omit_Compact_Player} T @arg {T} x */
 	Omit_Compact_Player(cf,x) {
 		const {title,trackingParams,...y}=this.sd(cf,x); // !
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {string} cf @template {R_Omit_Compact_Video} T @arg {T} x */
+	/** @private @arg {Omit_Menu_Radio_CF} cf @template {R_Omit_Compact_Video} T @arg {T} x */
 	Omit_Compact_Video(cf,x) {
 		let u=this.Omit_Compact_Player(cf,x);
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
@@ -9427,14 +9369,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_SerializedSlotAdServingDataEntry";
 		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"slot_ad_serving_data_entry",a);
-	}
-	/** @private @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
-	/** @private @arg {string} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
-	_decode_TD_ItemSection(cf,x) {
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.trackingParams(cf,trackingParams);
-		return [x.contents,x.sectionIdentifier,x.targetId];
 	}
 	// TODO
 	/** @private @arg {G_WatchResult_ContentsItem} x */
@@ -9724,7 +9658,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {
 		const cf="A_HideEnclosing";
-		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,hideEnclosingAction: a,...y}=this.sd(cf,x); this.g(y);
 		this.AD_HideEnclosing(a);
 	}
@@ -9744,8 +9677,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template T @arg {TR_ContinuationItem_CE<T>} x */
 	TR_ContinuationItem_CE(x) {
-		const cf="TR_ContinuationItem_CE";
-		this.save_keys(`[${cf}]`,x);
+		const cf="TR_ContinuationItem_CE"; this.k(cf,x);
 		return this.w(this.TD_ContinuationItem_CE(this.w(x)));
 	}
 	/** @arg {G_SectionList} x */
@@ -10076,7 +10008,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_YpcGetOffers} x */
 	D_YpcGetOffers(x) {
 		const cf="YpcGetOffers";
-		this.save_keys(`[${cf}]`,x);
 		const {params,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"ypc_get_offers.params",params);
 	}
@@ -10247,7 +10178,7 @@ class HandleTypes extends ServiceMethods {
 	A_ResponseReceived(x) {
 		const cf="A_ResponseReceived"; this.k(cf,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		debugger;
 	}
 	/** @private @arg {MC_ResolveUrl} x */
@@ -10466,7 +10397,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
 	A_WatchNext$(x) {
 		const cf="A_WatchNext$";
-		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.G_WatchNext);
