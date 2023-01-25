@@ -9556,6 +9556,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {Extract<DE_Url['url']|"https://www.youtubekids.com/?source=youtube_web",`https://www.youtubekids.com${string}`>} x */
 	handle_yt_kids_url(x) {
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
+		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		debugger;
 	}
 	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
