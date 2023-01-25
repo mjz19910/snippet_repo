@@ -9176,13 +9176,13 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @template {{}} T @arg {T_Results<{trackingParams: string;}&Record<"contents",T[]>>} x @arg {(this:this,x:T)=>void} f  */
-	D_TwoColumnWatchNextResultsInner(x,f) {
-		const cf="D_TwoColumnWatchNextResultsInner";
+	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x @arg {(this:this,x:G_WatchResult_ContentsItem)=>void} f  */
+	D_WatchResults(x,f) {
+		const cf="D_WatchResults";
 		this.save_keys(`[${cf}]`,x);
 		let u=this.w(x);
 		let {trackingParams,...y}=u;
-		this.trackingParams(`${cf}.results`,trackingParams);
+		this.trackingParams("D_WatchResult_ResultsItem",trackingParams);
 		this.z(this.w(y),f);
 	}
 	/** @pub @arg {E_Url} x */
@@ -9426,7 +9426,7 @@ class HandleTypes extends ServiceMethods {
 		return [x.contents,x.sectionIdentifier,x.targetId];
 	}
 	// TODO
-	/** @private @arg {G_WatchResultItem} x */
+	/** @private @arg {G_WatchResult_ContentsItem} x */
 	G_WatchResultItem(x) {
 		if("itemSectionRenderer" in x) return;
 		if("merchandiseShelfRenderer" in x) return;
@@ -9476,7 +9476,7 @@ class HandleTypes extends ServiceMethods {
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.D_TwoColumnWatchNextResultsInner(results,this.G_WatchResultItem);
+		this.D_WatchResults(results,this.G_WatchResultItem);
 		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
 		this.t(playlist,a => this.T_Playlist(a,this.PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.AutoplayContent));

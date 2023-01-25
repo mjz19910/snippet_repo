@@ -1,4 +1,4 @@
-type G_WatchResultItem=[
+type G_WatchResult_ContentsItem=[
 	TR_ItemSection<{},"comment-item-section","comments-section">,
 	TR_ItemSection_1<{},"comments-entry-point">,
 	R_MerchandiseShelf,
