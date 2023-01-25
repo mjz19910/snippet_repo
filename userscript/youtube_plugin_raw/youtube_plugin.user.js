@@ -7488,12 +7488,13 @@ class HandleTypes extends ServiceMethods {
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
-	E_Browse$ParseBrowseId(x) {
+	E_Browse_ParseBrowseId(x) {
 		if(this.str_starts_with("UC",x)) return this.channelId(x);
 		switch(x) {
 			case "SPaccount_notifications": break;
 			case "FEwhat_to_watch": break;
-			default: debugger; break;
+			case "FEsubscriptions": break;
+			default: x===""; debugger; break;
 		};
 	}
 	/** @private @arg {{browseEndpoint:E_Browse['browseEndpoint']}} x */
@@ -7507,27 +7508,31 @@ class HandleTypes extends ServiceMethods {
 		const cf="DE_Browse";
 		if("canonicalBaseUrl" in x) {
 			let {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y); // !
-			this.E_Browse$ParseBrowseId(a);
+			this.E_Browse_ParseBrowseId(a);
 			return this._decode_channel_url(b);
 		}
 		let {browseId: a,...y}=this.sd(cf,x); this.g(y); // !
-		this.E_Browse$ParseBrowseId(a);
+		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
 	/** @private @arg {E_Browse} x */
-	E_Browse(x) {
-		const cf="E_Browse";
-		this.T_Endpoint(cf,x,this.E_Browse_Handler,x => {
-			let y=this.w(x);
-			switch(y.rootVe) {
-				case 3611: this.GM_VE3611_WC(y); break;
-				case 3854: this.G_VE3854_WC(y); break;
-				case 23462: this.G_VE23462_WC(y); break;
-				default: debugger; break;
-			}
-			this.WebCommandMetadata(this.w(x));
-		});
-		x;
+	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,this.E_Browse_Handler,this.M_VE_Browse);}
+	/** @private @arg {E_Browse['commandMetadata']} x */
+	M_VE_Browse(x) {
+		const cf="M_VE_Browse";
+		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y); // !
+		this.GM_VE_WC_Browse(a);
+	}
+	/** @private @arg {E_Browse['commandMetadata']['webCommandMetadata']} x */
+	GM_VE_WC_Browse(x) {
+		switch(x.rootVe) {
+			case 3611: this.GM_VE3611_WC(x); break;
+			case 3854: this.G_VE3854_WC(x); break;
+			case 23462: this.G_VE23462_WC(x); break;
+			case 96368: this.GM_VE96368_WC_browse(x); break;
+			default: x===""; debugger; break;
+		}
+		this.WebCommandMetadata(x);
 	}
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
