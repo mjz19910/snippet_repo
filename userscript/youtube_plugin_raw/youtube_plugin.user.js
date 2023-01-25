@@ -5309,7 +5309,7 @@ class ParserService extends BaseService {
 			let case_part="";
 			let value_part=`${pad}\t\tswitch(map_entry_value) {default: debugger; return;}`;
 			if(path_parts.length===idx) {
-				if(map_entry_value instanceof Map) case_part=`${pad}if(map_entry_value instanceof Map) return;`;
+				if(map_entry_value instanceof Map) case_part=`${pad}\t\tif(map_entry_value instanceof Map) return;\n`;
 				switch(typeof map_entry_value) {
 					case "number": case_part=`${pad}\t\tif(typeof map_entry_value==="number") return this.save_number(\`[$\{path}]\`,map_entry_value);\n`; break;
 					case "string": case_part=`${pad}\t\tif(typeof map_entry_value==="string") return this.save_string(\`[$\{path}]\`,map_entry_value);\n`; break;
@@ -5495,6 +5495,7 @@ class ParserService extends BaseService {
 					case "f1": case "f3": case "f4": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(map_entry_value instanceof Map) return;
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
