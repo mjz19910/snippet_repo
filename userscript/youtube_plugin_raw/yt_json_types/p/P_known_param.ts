@@ -146,5 +146,5 @@ type P_known_param=[
 	"ypc_get_offers.params.f5",
 	"ypc_get_offers.params",
 	"YpcGetCart.transactionParams",
-	P$tracking$param,
+	P_tracking_param,
 ][number];

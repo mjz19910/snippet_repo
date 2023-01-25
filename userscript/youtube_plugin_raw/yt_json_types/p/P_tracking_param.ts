@@ -1,4 +1,4 @@
-type P$tracking$param<T extends string="tracking">=[
+type P_tracking_param<T extends string="tracking">=[
 	`${T}.parentTrackingParams`,
 	`${T}.trackingParams.f1`,
 	`${T}.trackingParams.f19.f1`,

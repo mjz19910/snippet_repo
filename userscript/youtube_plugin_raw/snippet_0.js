@@ -71,9 +71,9 @@ function split_string_once(s,d=as(",")) {
 class ParserService {
 	/** @arg {T_Split<D_ApiUrlFormat$1,"/">} x @returns {Join<T_Split<D_ApiUrlFormat$1,"/">,".">} */
 	get_url_type(x) {x; throw 1;}
-	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
+	/** @public @arg {P_ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {root; x;}
-	/** @public @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	on_endpoint_params(root,path,x) {if(x===void 0) {debugger; return;} root; x; path;}
 }
 class CodegenService {
@@ -110,7 +110,7 @@ export class Snippet_0_tmp {
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
 	}
-	/** @public @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
