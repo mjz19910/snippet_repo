@@ -10648,7 +10648,11 @@ class HandleTypes extends ServiceMethods {
 			this.R_SimpleText(formattedTitle);
 			this.D_Accessibility(accessibility);
 			this.R_GuideEntryData(entryData);
-			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
+			switch(presentationStyle) {
+				case "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT":
+				case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE": break;
+				default: console.log(`[D_GuideEntry_PresentationType]\n\n\ncase"${presentationStyle}":`); break;
+			}
 			return;
 		}
 		x===0;
