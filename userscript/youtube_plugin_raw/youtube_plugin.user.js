@@ -5535,6 +5535,7 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "D_Browse": u(idx); break;
 			case "GetNotificationMenu": {
 				const idx=2;
 				switch(path_parts[1]) {
@@ -7545,12 +7546,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_Browse['browseEndpoint']} x */
 	DE_Browse_VE(x) {
 		const cf="DE_Browse";
+		if("params" in x) {
+			const {browseId: a,params: c,...y}=this.sd(cf,x); this.g(y); // !
+			this.E_Browse_ParseBrowseId(a);
+			this.params(cf,"D_Browse.param",c);
+			this.g(y);
+			return;
+		}
 		if("canonicalBaseUrl" in x) {
-			let {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y); // !
+			const {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y); // !
 			this.E_Browse_ParseBrowseId(a);
 			return this._decode_channel_url(b);
 		}
-		let {browseId: a,...y}=this.sd(cf,x); this.g(y); // !
+		const {browseId: a,...y}=this.sd(cf,x); this.g(y); // !
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
