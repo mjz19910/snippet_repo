@@ -1,15 +1,4 @@
 type P_LogItems=[
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
-	"[parse_value.gen_ns] []",
 	"[parse_value.gen_ns] [GetNotificationMenu.f1]",
 ];
 type P_PathRoot=[

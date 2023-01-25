@@ -1,3 +1,7 @@
+type DE_GetNotificationMenu={
+	ctoken: string;
+};
+
 type E_GetNotificationMenu={
 	clickTrackingParams: string;
 	commandMetadata: {
@@ -6,7 +10,5 @@ type E_GetNotificationMenu={
 			apiUrl: "/youtubei/v1/notification/get_notification_menu";
 		};
 	};
-	getNotificationMenuEndpoint: {
-		ctoken: "CJaf6PnE0fwC";
-	};
+	getNotificationMenuEndpoint: DE_GetNotificationMenu;
 };

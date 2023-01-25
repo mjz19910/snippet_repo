@@ -5493,6 +5493,13 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "GetNotificationMenu": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break;case "f1": u(idx); debugger; break;}
+			} break;
 			case "slot_ad_serving_data_entry": {
 				const idx=2;
 				if(path_parts.length===1) {
@@ -5697,7 +5704,6 @@ class ParserService extends BaseService {
 			case "record_notification_interactions":
 			case "transcript_target_id":
 			case "watch":
-			case "GetNotificationMenu":
 			case "report":
 			case "createBackstagePost":
 			case "subscribe":
@@ -9691,8 +9697,9 @@ class HandleTypes extends ServiceMethods {
 	AD_HideEnclosing(x) {x; debugger;}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {
-		this.T_Endpoint("E_GetNotificationMenu",x,a => {
-			this.params("","GetNotificationMenu",this.w(a).ctoken);
+		this.T_Endpoint("E_GetNotificationMenu",x,x => {
+			let {ctoken,...y}=this.w(x); this.g(y);
+			this.params("","GetNotificationMenu",ctoken);
 			debugger;
 		},a => {
 			a;
