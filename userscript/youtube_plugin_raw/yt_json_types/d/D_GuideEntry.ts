@@ -1,21 +1,22 @@
 type D_GuideEntry={
+	navigationEndpoint: E_Browse;
+	icon: T_Icon<"LIKES_PLAYLIST">;
+	trackingParams: string;
+	formattedTitle: R_SimpleText;
+	accessibility: D_Accessibility;
+	entryData: R_GuideEntryData;
+}|{
 	alwaysShow: false;
 	entryRenderer: R_GuideEntry;
 }|{
 	navigationEndpoint: E_Browse;
-	icon: T_Icon<"WATCH_LATER">;
+	icon: T_Icon<"WATCH_LATER"|"WATCH_HISTORY">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
 }|{
 	navigationEndpoint: E_Url;
 	icon: T_Icon<"MY_VIDEOS">;
-	trackingParams: string;
-	formattedTitle: R_SimpleText;
-	accessibility: D_Accessibility;
-}|{
-	navigationEndpoint: E_Browse;
-	icon: T_Icon<"WATCH_HISTORY">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;

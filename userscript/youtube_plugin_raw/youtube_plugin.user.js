@@ -10098,6 +10098,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {string} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
+		if("entryData" in x) {
+			const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			switch(icon.iconType) {
+				default: icon.iconType===""; debugger; break;
+				case "LIKES_PLAYLIST": break;
+			}
+			return;
+		}
 		if("navigationEndpoint" in x) {
 			if("targetId" in x) {
 				const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
