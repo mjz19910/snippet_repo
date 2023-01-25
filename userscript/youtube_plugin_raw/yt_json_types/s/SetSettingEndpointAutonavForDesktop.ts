@@ -1,5 +1,5 @@
 type E_SetSettingAutonavForDesktop<T extends boolean>={
 	clickTrackingParams: string;
-	commandMetadata: G_CommandMetadata;
+	commandMetadata: {};
 	setSettingEndpoint: SettingItemAutonavForDesktop<T>;
 };

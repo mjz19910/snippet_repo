@@ -4100,7 +4100,7 @@ class CodegenService extends BaseService {
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.R_SimpleText(${k});`); continue;};
 			/** @private @type {R_TextRuns} */
-			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.R_TextWithRuns(${k});`); continue;};
+			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.R_TextRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			/** @private @type {D_Thumbnail} */
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D_Thumbnail(${k});`); continue;}
@@ -4362,7 +4362,7 @@ class CodegenService extends BaseService {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
-		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextWithRuns";
+		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
 		/** @private @type {D_Thumbnail} */
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D_Thumbnail";
 		/** @private @type {R_SimpleText} */
@@ -8346,7 +8346,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_AutoplaySwitchButton} x */
 	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton",x,this.D_AutoplaySwitchButton);}
 	/** @private @arg {D_AutoplaySwitchButton} x */
-	D_AutoplaySwitchButton(x) {x; debugger;}
+	D_AutoplaySwitchButton(x) {
+		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled}=x;
+		onEnabledCommand.commandMetadata;
+		onDisabledCommand.commandMetadata;
+		debugger;
+		this.D_Accessibility(enabledAccessibilityData);
+		this.D_Accessibility(disabledAccessibilityData);
+		this.trackingParams("",trackingParams);
+		this.save_boolean("[autoplay.switch.enabled]",enabled);
+	}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
 	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay",x,this.D_PlayerOverlayAutoplay);}
 	/** @private @arg {R_WatchNextEndScreen} x */
@@ -8677,7 +8686,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_TextRuns} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
 	R_TextRuns(x,f_run=this.handle_text_endpoint) {
-		const cf="R_TextWithRuns";
+		const cf="R_TextRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(runs,a => this.R_TextRun(a,f_run));
 		this.t(accessibility,this.D_Accessibility);
