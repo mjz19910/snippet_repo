@@ -9351,9 +9351,9 @@ class HandleTypes extends ServiceMethods {
 				this.T_Icon(icon);
 				this.trackingParams(cf,trackingParams);
 				switch(label) {
+					default: debugger; break;
 					case "LIVE": break;
 					case "PREMIERE": break;
-					default: debugger; break;
 				}
 			} break;
 			case "BADGE_STYLE_TYPE_COLLECTION": {
