@@ -4721,7 +4721,7 @@ class CodegenService extends BaseService {
 			return b;
 		}
 		/** @private @type {D_Accessibility} */
-		if(b.accessibilityData) return "TYPE::A_Accessibility";
+		if(b.accessibilityData) return "TYPE::D_Accessibility";
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::TS_ChipCloud<"${b.styleType}">`;
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		debugger;
@@ -7474,7 +7474,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Label} x */
 	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
 	/** @private @arg {D_Accessibility} x */
-	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}
+	D_Accessibility(x) {this.H_("D_Accessibility",x,this.D_Label);}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab",x,this.D_Tab);}
 	/** @private @arg {R_ExpandableTab} x */
@@ -8071,55 +8071,68 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_SubscribeButton} x */
 	R_SubscribeButton(x) {this.H_("R_SubscribeButton",x,this.D_SubscribeButton);}
+	/** @private @arg {`UC${string}`} x */
+	channelId(x) {x;}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton";
-		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.sd(cf,x);
-		this.R_TextRuns(buttonText);
-		this.primitive_of(subscribed,"boolean");
-		if(enabled!==true) debugger;
-		if(type!=="FREE") debugger;
-		let [sub,o1]=this.unwrap_prefix(y,"subscribed");
-		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
-		/** @arg {RemovePrefix<D_SubscribeButton,"subscribed">} x */
-		let r_sub=({...x})=>{
-			if("entityKey" in x) {
-				const {buttonText,entityKey,...y}=x; this.g(y);
-				this.R_TextRuns(buttonText);
-				console.log("[subscribed.entityKey]",entityKey);
-				return;
-			}
-			if("buttonText" in x) {
+		if("serviceEndpoints" in x) {
+			const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,serviceEndpoints,...y}=this.sd(cf,x);
+			this.R_TextRuns(buttonText);
+			this.primitive_of(subscribed,"boolean");
+			if(enabled!==true) debugger;
+			if(type!=="FREE") debugger;
+			this.channelId(channelId);
+			this.trackingParams(cf,trackingParams);
+			if(showPreferences!==false) debugger;
+			let [sub,o1]=this.unwrap_prefix(y,"subscribed");
+			let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
+			/** @arg {RemovePrefix<D_SubscribeButton,"subscribed">} x */
+			let r_sub=({...x}) => {
+				if("entityKey" in x) {
+					const {buttonText,entityKey,...y}=x; this.g(y);
+					this.R_TextRuns(buttonText);
+					console.log("[subscribed.entityKey]",entityKey);
+					return;
+				}
+				if("buttonText" in x) {
+					const {buttonText,...y}=x; this.g(y);
+					this.R_TextRuns(buttonText);
+					return;
+				}
+				this.g(x);
+			};
+			r_sub(sub);
+			/** @arg {RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
+			let r_un_sub=({...x}) => {
 				const {buttonText,...y}=x; this.g(y);
 				this.R_TextRuns(buttonText);
-				return;
-			}
-			this.g(x);
+			};
+			r_un_sub(un_sub);
+			let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
+			let [un_sub_2,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
+			/** @arg {RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
+			let r_sub_2=({...x}) => {
+				const {accessibility,...y}=x; this.g(y);
+				this.D_Accessibility(accessibility);
+			};
+			r_sub_2(sub_2);
+			/** @arg {RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
+			let r_un_sub_2=({...x}) => {
+				const {buttonText,accessibility,...y}=x; this.g(y);
+				this.R_TextRuns(buttonText);
+				this.D_Accessibility(accessibility);
+			};
+			r_un_sub_2(un_sub_2);
+			this.g(o4);
+			console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(y)[0]);
+			return;
 		}
-		r_sub(sub);
-		/** @arg {RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
-		let r_un_sub=({...x})=>{
-			const {buttonText,...y}=x; this.g(y);
-			this.R_TextRuns(buttonText);
+		if("targetId" in x) {
+			debugger;
+			return;
 		}
-		r_un_sub(un_sub);
-		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
-		let [un_sub_2,o4]=this.unwrap_prefix(o3,"unsubscribe");
-		/** @arg {RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
-		let r_sub_2=({...x})=>{
-			const {accessibility,...y}=x; this.g(y);
-			this.D_Accessibility(accessibility);
-		}
-		r_sub_2(sub_2);
-		/** @arg {RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
-		let r_un_sub_2=({...x})=>{
-			const {buttonText,accessibility,...y}=x; this.g(y);
-			this.R_TextRuns(buttonText);
-			this.D_Accessibility(accessibility);
-		}
-		r_un_sub_2(un_sub_2);
-		this.g(o4);
-		console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(y)[0]);
+		debugger;
 	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
@@ -9389,7 +9402,14 @@ class HandleTypes extends ServiceMethods {
 				if(ss.length!==2) {debugger; return;}
 				let sa=ss[1];
 				let ll=sa.slice(24);
-				if(this.str_starts_with(sa,"UC")&&ll==="featured") return;
+				if(this.str_starts_with(sa,"UC")&&ll==="featured") {
+					/** @returns {`UC${string}`} */
+					function wx(){return "UCx"}
+					let [cid,fe]=split_string_once_last(sa,"featured",wx());
+					if(fe!=="") debugger;
+					this.channelId(cid);
+					return;
+				}
 				console.log("target_id.ll",ll);
 				if(this.str_starts_with(sa,"UC")) {
 					let floc=sa.indexOf("featured");

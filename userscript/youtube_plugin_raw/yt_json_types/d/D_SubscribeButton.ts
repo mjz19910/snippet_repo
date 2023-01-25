@@ -30,6 +30,20 @@ type D_SubscribeButton={
 	serviceEndpoints: E_Subscribe[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
+}|{
+	buttonText: R_TextRuns;
+	subscribed: true;
+	enabled: true;
+	type: "FREE";
+	channelId: "UC7YOGHUfC1Tb6E4pudI9STA";
+	showPreferences: false;
+	subscribedButtonText: R_TextRuns;
+	unsubscribedButtonText: R_TextRuns;
+	trackingParams: string;
+	unsubscribeButtonText: R_TextRuns;
+	serviceEndpoints: E_Subscribe[];
+	subscribeAccessibility: D_Accessibility;
+	unsubscribeAccessibility: D_Accessibility;
 };
 type SubscribeButtonData$SignalServiceEndpoint={
 	clickTrackingParams: string;
