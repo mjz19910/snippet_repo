@@ -9562,7 +9562,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.str_starts_with("https://www.youtubekids.com?",x)) {
 			return this.handle_yt_kids_url(x);
 		}
-		let sp=parse_with_url_parse(x);this.parse_with_url_parse(x);
+		let sp=this.parse_with_url_parse(x);
 		switch(sp.host) {
 			case "www.youtube.com": return this.handle_yt_url(sp.href);
 			case "studio.youtube.com": return this.handle_yt_studio_url(sp.href);
