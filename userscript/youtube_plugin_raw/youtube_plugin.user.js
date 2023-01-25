@@ -8038,7 +8038,7 @@ class HandleTypes extends ServiceMethods {
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.D_FeaturedChannel(featuredChannel);
 		console.log(annotationId);
-		
+
 	}
 	/** @private @arg {D_FeaturedChannel} x */
 	D_FeaturedChannel(x) {
@@ -8055,8 +8055,9 @@ class HandleTypes extends ServiceMethods {
 	R_SubscribeButton(x) {this.H_("R_SubscribeButton",x,this.D_SubscribeButton);}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
-		const {buttonText,...y}=x;
-		this.R_TextRuns(buttonText)
+		const cf="D_SubscribeButton";
+		const {buttonText,...y}=this.sd(cf,x);
+		this.R_TextRuns(buttonText);
 		console.log(this.get_keys_of(y)[0]);
 	}
 	/** @private @arg {RSL_Like} x */
