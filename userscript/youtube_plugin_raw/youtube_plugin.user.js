@@ -7569,16 +7569,11 @@ class HandleTypes extends ServiceMethods {
 	E_Browse_ParseBrowseId(x) {
 		if(this.str_starts_with("UC",x)) return this.channelId(x);
 		switch(x) {
-			case "FEdownloads": break;
-			case "FEhistory": break;
-			case "FElibrary": break;
-			case "FEsubscriptions": break;
-			case "FEtrending": break;
-			case "FEwhat_to_watch": break;
+			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch":
 			case "FEstorefront": break;
-			case "SPaccount_notifications": break;
-			case "SPunlimited": break;
-			case "VLLL": break;
+			case "SPaccount_notifications": case "SPunlimited":
+			case "SPaccount_overview": break;
+			case "VLLL":
 			case "VLWL": break;
 			default: x===""; debugger; break;
 		};
