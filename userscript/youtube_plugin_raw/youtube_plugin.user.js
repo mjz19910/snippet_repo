@@ -7808,19 +7808,19 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		if("publishedTimeText" in x) {
 			if("richThumbnail" in x&&"ownerBadges" in x) {
-				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
+				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
 				this.R_TextRuns(descriptionSnippet);
 				this.richThumbnail_Video(richThumbnail);
 				return;
 			}
 			if("richThumbnail" in x) {
-				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x); this.g(y);
+				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit(cf,x); this.g(y);
 				this.R_TextRuns(descriptionSnippet);
 				this.richThumbnail_Video(richThumbnail);
 				return;
 			}
 			if("owner" in x) {
-				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x);
+				let {publishedTimeText,lengthText,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_Video_Omit_Owner(cf,x);
 				return this.g(y);
 			}
 			return;
