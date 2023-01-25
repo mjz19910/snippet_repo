@@ -7677,8 +7677,7 @@ class HandleTypes extends ServiceMethods {
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
 	Omit_Menu_Video(cf,x) {
-		let u=this.D_ChildVideo_Omit(cf,x);
-		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=u;
+		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.G_Text(longBylineText);
 		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
@@ -7765,8 +7764,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
-		let u=this.Omit_Menu_Video(cf,x);
-		const {trackingParams,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
+		const {trackingParams,shortViewCountText,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,viewCountText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
@@ -7793,29 +7791,30 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		if("richThumbnail" in x&&"ownerBadges" in x) {
-			let {descriptionSnippet,richThumbnail,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
-			this.R_TextRuns(descriptionSnippet);
-			this.richThumbnail_Video(richThumbnail);
-			return;
-		}
-		if("ownerBadges" in x) {
-			let {descriptionSnippet,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
-			this.R_TextRuns(descriptionSnippet);
-			return;
-		}
-		if("richThumbnail" in x) {
-			let {descriptionSnippet,richThumbnail,...y}=this.D_Video_Omit_Owner(cf,x); this.g(y);
-			this.R_TextRuns(descriptionSnippet);
-			this.richThumbnail_Video(richThumbnail);
+		if("publishedTimeText" in x) {
+			if("richThumbnail" in x&&"ownerBadges" in x) {
+				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
+				this.R_TextRuns(descriptionSnippet);
+				this.richThumbnail_Video(richThumbnail);
+				return;
+			}
+			if("richThumbnail" in x) {
+				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x); this.g(y);
+				this.R_TextRuns(descriptionSnippet);
+				this.richThumbnail_Video(richThumbnail);
+				return;
+			}
+			if("owner" in x) {
+				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x);
+				return this.g(y);
+			}
 			return;
 		}
 		if("descriptionSnippet" in x) {
-			let {descriptionSnippet,...y}=this.D_Video_Omit(cf,x); this.g(y);
+			let {descriptionSnippet,badges,...y}=this.D_Video_Omit(cf,x); this.g(y);
 			this.R_TextRuns(descriptionSnippet);
 			return;
 		}
-		if("owner" in x) return this.g(this.D_Video_Omit_Owner(cf,x));
 		x===0;
 		debugger;
 	}
@@ -9167,7 +9166,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
-		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
+		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
 		this.richThumbnail_Video(richThumbnail);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);

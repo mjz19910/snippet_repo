@@ -13,7 +13,6 @@ type T_Omit_Compact_Video<T extends R_Omit_Compact_Video>=Omit<T_Omit_Compact_Pl
 type R_Omit_Menu_Video={
 	thumbnail: D_Thumbnail;
 	longBylineText: R_TextRuns;
-	lengthText: G_Text;
 	viewCountText: G_Text;
 	navigationEndpoint: E_Watch;
 	shortBylineText: R_TextRuns;
