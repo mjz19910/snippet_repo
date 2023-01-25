@@ -5674,6 +5674,7 @@ class ParserService extends BaseService {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(path_parts[2]==="f8") return;
+									if(path_parts[2]==="f9") return;
 									if(map_entry_value instanceof Map) return;
 									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
@@ -6861,18 +6862,17 @@ class ServiceMethods extends ServiceData {
 		if(ss1.length!==3) debugger;
 		if(ss1[1]!=="googlevideo") debugger;
 		if(ss1[2]!=="com") debugger;
-		let ss2=split_string(ss1[0],"---");
+		/** @type {T_Split<T_Split<RE_D_VE3832_PreconnectUrl,"/">[2],".">[0]} */
+		let ux=as(ss1[0]);
+		let ss2=split_string(ux,"---");
 		if(!this.str_starts_with_r(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
-		/** @typedef {T_SplitIntoGroups<typeof ss4,`${string}`>} PartGroups */
-		/** @typedef {Extract<PartGroups,["57",...any]>} PartGroups_1 */
-		/** @typedef {Extract<PartGroups,["5s",...any]>} PartGroups_2 */
-		if(this.str_starts_with(ss4,"57yn")) {
-			/** @private @type {PartGroups_1[2]} */
-			let ss5=as(ss4.slice(4));
-			switch(ss5) {
+		if(this.str_starts_with("57yn",ss4)) {
+			let [,,,,...ss5]=split_string(ss4,"");
+			let ss6=this.join_string(ss5,"");
+			switch(ss6) {
 				case "lk": break;
 				case "sd": break;
 				case "se": break;
@@ -6880,12 +6880,12 @@ class ServiceMethods extends ServiceData {
 				case "sl": break;
 				case "ss": break;
 				case "sz": break;
-				default: debugger;
+				default: ss6===""; debugger;
 			}
-		} else if(this.str_starts_with(ss4,"5s7n")) {
-			/** @private @type {PartGroups_2[2]} */
-			let ss5=as(ss4.slice(4));
-			switch(ss5) {
+		} else if(this.str_starts_with("5s7n",ss4)) {
+			let [,,,,...ss5]=split_string(ss4,"");
+			let ss6=this.join_string(ss5,"");
+			switch(ss6) {
 				case "76": break;
 				case "7d": break;
 				case "7s": break;
@@ -6893,9 +6893,10 @@ class ServiceMethods extends ServiceData {
 				case "7z": break;
 				case "ee": break;
 				case "el": break;
-				default: debugger;
+				default: ss6===""; debugger;
 			}
 		} else {
+			ss4==="";
 			debugger;
 		}
 	}
