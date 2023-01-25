@@ -6,7 +6,7 @@ type D_Video={
 	longBylineText: /**/R_TextRuns;
 	publishedTimeText?: R_SimpleText;
 	lengthText?: R_SimpleText;
-	viewCountText?: R_TextRuns;
+	viewCountText?: G_Text;
 	navigationEndpoint: /**/E_Watch;
 	ownerBadges?: RMD_Badge[];
 	badges?: RMD_Badge[];
@@ -14,7 +14,7 @@ type D_Video={
 	shortBylineText: /**/R_TextRuns;
 	trackingParams: /**/string;
 	showActionMenu: /**/false;
-	shortViewCountText?: R_TextRuns;
+	shortViewCountText?: G_Text;
 	menu: /**/R_Menu;
 	channelThumbnailSupportedRenderers: /**/R_ChannelThumbnailWithLink;
 	thumbnailOverlays: /**/G_ThumbnailOverlayItem[];

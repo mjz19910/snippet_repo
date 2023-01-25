@@ -7771,11 +7771,11 @@ class HandleTypes extends ServiceMethods {
 		this.t(descriptionSnippet,this.R_TextRuns);
 		this.t(publishedTimeText,this.R_SimpleText);
 		this.t(lengthText,this.R_SimpleText);
-		this.t(viewCountText,this.R_TextRuns);
+		this.t(viewCountText,this.G_Text);
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.tz(badges,this.RMD_Badge);
 		this.t(owner,this.D_Video_Owner);
-		this.t(shortViewCountText,this.R_TextRuns);
+		this.t(shortViewCountText,this.G_Text);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 	}
 	/** @arg {R_Video} x */
