@@ -8322,8 +8322,6 @@ class HandleTypes extends ServiceMethods {
 	D_AutoplaySwitchButton(x) {x; debugger;}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
 	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay",x,this.D_PlayerOverlayAutoplay);}
-	/** @private @arg {D_PlayerOverlayAutoplay} x */
-	D_PlayerOverlayAutoplay(x) {x; debugger;}
 	/** @private @arg {R_WatchNextEndScreen} x */
 	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen",x,this.D_WatchNextEndScreen);}
 	/** @private @arg {D_WatchNextEndScreen} x */
@@ -8725,10 +8723,25 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @arg {string} cf @template {D_CompactVideo|D_CompactRadio} T @arg {T} x */
+	Omit$Compact$Radio(cf,x) {
+		let {menu,navigationEndpoint,thumbnail,longBylineText,...y}=this.Omit$CompactPlayer(cf,x);
+		this.D_Thumbnail(thumbnail);
+		this.E_Watch(navigationEndpoint);
+		this.R_Menu(menu);
+		this.G_Text(longBylineText);
+		return y;
+	}
+	/** @private @arg {D_PlayerOverlayAutoplay} x */
+	D_PlayerOverlayAutoplay(x) {
+		const cf="D_PlayerOverlayAutoplay";
+		let {...rr}=this.Omit$CompactPlayer(cf,x);
+		rr;
+	}
 	/** @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio"; this.k(cf,x);
-		const {playlistId,videoCountText,videoCountShortText,thumbnailText,shareUrl,secondaryNavigationEndpoint,...y}=this.Omit$CompactPlayer(cf,x); this.g(y);
+		const {playlistId,videoCountText,videoCountShortText,thumbnailText,shareUrl,secondaryNavigationEndpoint,...y}=this.Omit$Compact$Radio(cf,x); this.g(y);
 		this.playlistId(playlistId);
 		this.R_TextWithRuns(videoCountText);
 		this.R_TextWithRuns(videoCountShortText);
@@ -8740,15 +8753,11 @@ class HandleTypes extends ServiceMethods {
 			console.log("[log_keys_of] [%s] [%s]",cf,uk.join(",").split(",")[0]);
 		}
 	}
-	/** @arg {string} cf @template {D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
+	/** @arg {string} cf @template {D_PlayerOverlayAutoplay|D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
 	Omit$CompactPlayer(cf,x) {
-		const {thumbnail,title,navigationEndpoint,menu,trackingParams,longBylineText,thumbnailOverlays,...y}=this.sd(cf,x); // !
-		this.D_Thumbnail(thumbnail);
+		const {title,trackingParams,thumbnailOverlays,...y}=this.sd(cf,x); // !
 		this.R_SimpleText(title);
-		this.E_Watch(navigationEndpoint);
-		this.R_Menu(menu);
 		this.trackingParams(cf,trackingParams);
-		this.G_Text(longBylineText);
 		this.z(thumbnailOverlays,a => {
 			if("thumbnailOverlaySidePanelRenderer" in a) return;
 			if("thumbnailOverlayHoverTextRenderer" in a) return;
@@ -8758,6 +8767,26 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 		return y;
+	}
+	/** @arg {string} cf @template {D_CompactVideo} T @arg {T} x */
+	Omit$Compact$Video(cf,x) {
+		let r=this.Omit$Compact$Radio(cf,x);
+		r;
+	}
+	/** @private @arg {D_CompactVideo} x */
+	D_CompactVideo(x) {
+		const cf="D_CompactVideo";
+		let {
+			videoId,accessibility,
+			shortBylineText,publishedTimeText,ownerBadges,viewCountText,lengthText,shortViewCountText,
+			channelThumbnail,richThumbnail,badges,...y
+		}=this.Omit$Compact$Radio(cf,x); this.g(y);
+		this.videoId(videoId);
+		this.D_Accessibility(accessibility);
+		this.z([shortBylineText,publishedTimeText,viewCountText,lengthText],x => this.R_TextWithRuns(x));
+		console.log("chan.thumb",channelThumbnail);
+		console.log("rich.thumb",richThumbnail);
+		this.t(badges,a => console.log("badge",a));
 	}
 	/** @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
@@ -9605,20 +9634,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_CompactVideo} x */
 	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
-	/** @private @arg {D_CompactVideo} x */
-	D_CompactVideo(x) {
-		let {
-			videoId,accessibility,
-			shortBylineText,publishedTimeText,ownerBadges,viewCountText,lengthText,shortViewCountText,
-			channelThumbnail,richThumbnail,badges,...y
-		}=this.Omit$CompactPlayer("D_CompactVideo",x); this.g(y);
-		this.videoId(videoId);
-		this.D_Accessibility(accessibility);
-		this.z([shortBylineText,publishedTimeText,viewCountText,lengthText],x => this.R_TextWithRuns(x));
-		console.log("chan.thumb",channelThumbnail);
-		console.log("rich.thumb",richThumbnail);
-		this.t(badges,a => console.log("badge",a));
-	}
 	/** @private @arg {A_LoggingDirectives} x */
 	A_LoggingDirectives(x) {
 		const cf="LoggingDirectives";
