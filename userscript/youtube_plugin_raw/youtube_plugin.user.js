@@ -7785,6 +7785,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
+		if("richThumbnail" in x&&"ownerBadges" in x) {
+			let {descriptionSnippet,richThumbnail,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
+			this.R_TextRuns(descriptionSnippet);
+			this.richThumbnail_Video(richThumbnail);
+			return;
+		}
 		if("ownerBadges" in x) {
 			let {descriptionSnippet,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
 			this.R_TextRuns(descriptionSnippet);
@@ -7796,12 +7802,12 @@ class HandleTypes extends ServiceMethods {
 			this.richThumbnail_Video(richThumbnail);
 			return;
 		}
-		if("owner" in x) return this.g(this.D_Video_Omit_Owner(cf,x));
 		if("descriptionSnippet" in x) {
 			let {descriptionSnippet,...y}=this.D_Video_Omit(cf,x); this.g(y);
 			this.R_TextRuns(descriptionSnippet);
 			return;
 		}
+		if("owner" in x) return this.g(this.D_Video_Omit_Owner(cf,x));
 		x===0;
 		debugger;
 	}
