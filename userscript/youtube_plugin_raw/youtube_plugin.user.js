@@ -9193,33 +9193,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {RMD_Badge} x */
 	RMD_Badge(x) {this.H_("RMD_Badge",x,this.DMD_Badge);}
-	/** @template {DMD_Badge['icon']['iconType']} T @arg {T} wt @arg {DMD_Badge} x @returns {x is DMD_Badge_<T>} */
+	/** @template {Extract<DMD_Badge,{icon:any}>} U @template {U['icon']['iconType']} T @arg {T} wt @arg {U} x @returns {x is DMD_Badge_<T>} */
 	IsBadgeIcon(x,wt) {
 		return x.icon.iconType===wt;
 	}
 	/** @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
-		if(this.IsBadgeIcon(x,"CHECK_CIRCLE_THICK")) {
-			const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
-			this.T_Icon(icon);
-			this.save_enum("BADGE_STYLE_TYPE",style);
-			if(style!=="BADGE_STYLE_TYPE_VERIFIED") debugger;
-			console.log("badge.tooltip",tooltip);
-			this.primitive_of_string(tooltip);
-			this.trackingParams(cf,trackingParams);
-			this.D_Label(accessibilityData);
-			return;
-		}
-		switch(x.icon.iconType) {
-			default: debugger; break;
-			case "LIVE": {
-				const {icon,style,trackingParams,label,...y}=this.sd(cf,x); this.g(y);
+		this.save_enum("BADGE_STYLE_TYPE",x.style);
+		switch(x.style) {
+			case "BADGE_STYLE_TYPE_VERIFIED": {
+				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
+				if(icon.iconType!=="CHECK_CIRCLE_THICK") debugger;
 				this.T_Icon(icon);
-				if(style!=="BADGE_STYLE_TYPE_LIVE_NOW") debugger;
+				console.log("badge.tooltip",tooltip);
+				this.primitive_of_string(tooltip);
+				this.trackingParams(cf,trackingParams);
+				this.D_Label(accessibilityData);
+			} break;
+			case "BADGE_STYLE_TYPE_LIVE_NOW": {
+				const {icon,style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);
+				if(icon.iconType!=="LIVE") debugger;
+				this.T_Icon(icon);
 				this.trackingParams(cf,trackingParams);
 				if(label!=="LIVE") debugger;
 			} break;
+			case "BADGE_STYLE_TYPE_COLLECTION": {
+				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);
+				this.trackingParams(cf,trackingParams);
+				this.primitive_of_string(label);
+			} break;
+			default: debugger; break;
 		}
 	}
 	/** @arg {R_AdSlot} x */
