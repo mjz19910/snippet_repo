@@ -22,6 +22,7 @@ type Alt_RS_Browse_raw=[
 	"responseContext,contents,trackingParams,topbar,sidebar",
 	"responseContext,header,trackingParams,onResponseReceivedActions",
 	"responseContext,trackingParams,onResponseReceivedActions",
+	"responseContext,contents,header,trackingParams,topbar",
 ];
 type Alt_RS_Get<T extends number>=Required<{[U in T_Split<Alt_RS_Browse_raw[T],",">[number]]: U extends keyof RS_Browse? RS_Browse[U]:never;}>;
 type Alt_RS_Browse=[
@@ -30,5 +31,6 @@ type Alt_RS_Browse=[
 	Alt_RS_Get<2>,
 	Alt_RS_Get<3>,
 	Alt_RS_Get<4>,
+	Alt_RS_Get<5>,
 ][number];
 type RR={[U in keyof Alt_RS_Browse]: RS_Browse[U]};
