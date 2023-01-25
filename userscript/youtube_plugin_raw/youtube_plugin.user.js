@@ -7670,6 +7670,8 @@ class HandleTypes extends ServiceMethods {
 	Omit_Menu_Video(cf,x) {
 		let u=this.D_ChildVideo_Omit(cf,x);
 		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=u;
+		this.D_Thumbnail(thumbnail);
+		this.G_Text(longBylineText);
 		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
 		return y;
 	}
@@ -7722,7 +7724,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {D_Radio|D_CompactRadio} T @arg {string} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
-		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.R_Omit_Menu_Radio(cf,x);
+		let u=this.R_Omit_Menu_Radio(cf,x);
+		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
 		this.R_TextRuns(videoCountText);
@@ -7731,14 +7734,36 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(videoCountShortText);
 		return y;
 	}
+	/** @private @arg {string} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
+	D_Omit_ThumbnailOverlay(cf,x) {
+		const {thumbnailOverlays,...y}=x;
+		this.z(thumbnailOverlays,x => {
+			// TODO: #11 Handle thumbnailOverlay Renderers
+			// Actually iterate over these renderers
+			if("thumbnailOverlaySidePanelRenderer" in x) return;
+			if("thumbnailOverlayHoverTextRenderer" in x) return;
+			if("thumbnailOverlayNowPlayingRenderer" in x) return;
+			if("thumbnailOverlayBottomPanelRenderer" in x) return;
+			if("thumbnailOverlayTimeStatusRenderer" in x) return;
+			if("thumbnailOverlayToggleButtonRenderer" in x) return;
+			if("thumbnailOverlayLoadingPreviewRenderer" in x) return;
+			if("thumbnailOverlayResumePlaybackRenderer" in x) return;
+			if("thumbnailOverlayEndorsementRenderer" in x) return;
+			this.do_codegen(`ThumbnailOverlay$${cf}`,x);
+			debugger;
+		});
+		return y;
+	}
 	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
-		const {trackingParams,thumbnailOverlays,shortViewCountText,publishedTimeText,...y}=this.Omit_Menu_Video(cf,x);
+		let u=this.Omit_Menu_Video(cf,x);
+		const {trackingParams,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
+		this.trackingParams(cf,trackingParams);
 		return y;
 	}
 	/** @template {D_Video} T @arg {string} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.D_ThumbnailOverlay_Omit(cf,x);		this.R_TextRuns(ownerText);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
 		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
@@ -9078,11 +9103,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio"; this.k(cf,x);
-		const {playlistId,videoCountText,videoCountShortText,thumbnailText,shareUrl,secondaryNavigationEndpoint,...y}=this.Omit$Compact$Radio(cf,x); this.g(y);
-		this.playlistId(playlistId);
-		this.R_TextRuns(videoCountText);
-		this.R_TextRuns(videoCountShortText);
-		this.R_TextRuns(thumbnailText);
+		const {shareUrl,secondaryNavigationEndpoint,...y}=this.Omit_Menu_Radio(cf,x); this.g(y);
 		this.parser.parse_url(cf,shareUrl);
 		this.E_Watch(secondaryNavigationEndpoint);
 		let uk=this.get_keys_of(y);
@@ -9092,29 +9113,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {string} cf @template {R_Omit_Compact_Player} T @arg {T} x */
 	Omit_Compact_Player(cf,x) {
-		const {title,trackingParams,thumbnailOverlays,...y}=this.sd(cf,x); // !
+		const {title,trackingParams,...y}=this.sd(cf,x); // !
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
-		this.z(thumbnailOverlays,x => {
-			// TODO: #11 Handle thumbnailOverlay Renderers
-			// Actually iterate over these renderers
-			if("thumbnailOverlaySidePanelRenderer" in x) return;
-			if("thumbnailOverlayHoverTextRenderer" in x) return;
-			if("thumbnailOverlayNowPlayingRenderer" in x) return;
-			if("thumbnailOverlayBottomPanelRenderer" in x) return;
-			if("thumbnailOverlayTimeStatusRenderer" in x) return;
-			if("thumbnailOverlayToggleButtonRenderer" in x) return;
-			if("thumbnailOverlayLoadingPreviewRenderer" in x) return;
-			if("thumbnailOverlayResumePlaybackRenderer" in x) return;
-			if("thumbnailOverlayEndorsementRenderer" in x) return;
-			this.do_codegen(`ThumbnailOverlay$${cf}`,x);
-			debugger;
-		});
 		return y;
 	}
 	/** @arg {string} cf @template {R_Omit_Compact_Video} T @arg {T} x */
 	Omit_Compact_Video(cf,x) {
-		let {videoId,shortViewCountText,publishedTimeText,...y}=this.Omit_Compact_Player(cf,x);
+		let u=this.Omit_Compact_Player(cf,x);
+		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.videoId(videoId);
 		this.G_Text(publishedTimeText);
 		this.G_Text(shortViewCountText);
