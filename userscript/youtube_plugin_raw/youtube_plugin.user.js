@@ -10219,9 +10219,10 @@ class HandleTypes extends ServiceMethods {
 			const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			switch(icon.iconType) {
 				default: icon===""; debugger; break;
-				case "MY_VIDEOS": break;
-				case "WATCH_HISTORY": break;
-				case "WATCH_LATER": break;
+				case "MY_VIDEOS":
+				case "WATCH_HISTORY":
+				case "WATCH_LATER":
+				case "TRENDING":
 			}
 			{
 				let x=navigationEndpoint;

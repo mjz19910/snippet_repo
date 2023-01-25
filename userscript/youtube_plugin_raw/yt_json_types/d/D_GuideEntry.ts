@@ -1,6 +1,13 @@
 type D_GuideEntry=[
 	{
 		navigationEndpoint: E_Browse;
+		icon: T_Icon<"TRENDING">;
+		trackingParams: string;
+		formattedTitle: R_SimpleText;
+		accessibility: D_Accessibility;
+	},
+	{
+		navigationEndpoint: E_Browse;
 		thumbnail: D_Thumbnail;
 		badges: D_GuideEntryBadges;
 		trackingParams: string;
