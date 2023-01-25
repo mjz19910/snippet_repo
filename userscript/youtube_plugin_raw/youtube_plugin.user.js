@@ -5368,6 +5368,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "GetNotificationMenu":
+						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "slot_ad_serving_data_entry.f3":
 						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
