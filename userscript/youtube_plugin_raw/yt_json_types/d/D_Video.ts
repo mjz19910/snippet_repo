@@ -65,4 +65,13 @@ type D_Video_Base={
 	shortViewCountText: R_SimpleText;
 	topStandaloneBadge: RMD_Badge;
 	richThumbnail: R_MovingThumbnail;
+}|{
+	descriptionSnippet: R_TextRuns;
+	badges: RMD_Badge[];
+	owner: {
+		thumbnail: D_Thumbnail;
+		navigationEndpoint: E_Browse;
+		accessibility: D_Accessibility;
+		title: "Asahi Lina / 朝日リナ";
+	};
 };

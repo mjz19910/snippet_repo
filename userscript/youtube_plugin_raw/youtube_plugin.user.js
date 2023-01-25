@@ -4298,7 +4298,7 @@ class CodegenService extends BaseService {
 		/** @private @type {D_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
-		let res_type=this.get_json_replacer_type(state,gen_name,x);
+		let res_type=this.get_replacement_json(state,gen_name,x);
 		if(res_type!==null) return res_type;
 		if(key_keep_arr.includes(k1)) return x;
 		state.object_count++;
@@ -4359,7 +4359,7 @@ class CodegenService extends BaseService {
 		return ret;
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} x */
-	get_json_replacer_type(state,r,x) {
+	get_replacement_json(state,r,x) {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
@@ -4372,6 +4372,11 @@ class CodegenService extends BaseService {
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
+		if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
+			let pi=state.parent_map.get(x);
+			console.log(pi);
+			debugger;
+		}
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
@@ -7627,10 +7632,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
-	/** @private @arg {D_RichGrid} x */
-	D_RichGrid(x) {
-		const cf="D_RichGrid";
-		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x); this.g(y);
+	/** @private @template {D_RichGrid} T @arg {string} cf @arg {T} x */
+	D_RichGrid_Omit(cf,x) {
+		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x);
 		this.z(contents,x => {
 			if("richItemRenderer" in x) return this.R_RichItem(x);
 			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
@@ -7641,6 +7645,17 @@ class HandleTypes extends ServiceMethods {
 		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
 		if(reflowOptions.minimumRowsOfVideosAtStart!==2) debugger;
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
+		return y;
+	}
+	/** @private @arg {D_RichGrid} x */
+	D_RichGrid(x) {
+		const cf="D_RichGrid";
+		if("masthead" in x) {
+			const {masthead,...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
+			this.R_AdSlot(masthead);
+			return;
+		}
+		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
 	}
 	/** @private @arg {R_RichItem} x */
 	R_RichItem(x) {this.H_("R_RichItem",x,this.D_RichItem);}
