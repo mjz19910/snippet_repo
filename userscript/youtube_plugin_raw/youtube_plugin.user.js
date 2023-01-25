@@ -4337,7 +4337,23 @@ class CodegenService extends BaseService {
 			/** @type {{iconType?:string}} */
 			let ru=b.icon;
 			if(!ru.iconType) break x;
+			/** @arg {unknown} u @returns {{[x: string]: unknown}|null} */
+			function o(u) {
+				if(typeof u==='object') {
+					/** @type {{}|null} */
+					let c=u;
+					return c;
+				}
+				return null;
+			}
 			let kk=this.get_keys_of(b);
+			if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
+				if(!o(b.navigationEndpoint)?.browseEndpoint) {
+					console.log("[Generate.TD_GuideEntry_WithEntryData.wrong_endpoint]",this.get_keys_of(b));
+					break x;
+				}
+				return `TYPE::TD_GuideEntry_WithEntryData<"${ru.iconType}">`;
+			}
 			/** @type {TD_GuideEntry_Simple<any>} */
 			if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
 				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(b));
