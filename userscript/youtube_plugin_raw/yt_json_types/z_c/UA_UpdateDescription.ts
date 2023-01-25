@@ -1,1 +1,0 @@
-type U_Description={updateDescriptionAction: D_Description;};

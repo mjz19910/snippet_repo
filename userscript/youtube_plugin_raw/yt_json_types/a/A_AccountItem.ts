@@ -1,0 +1,1 @@
+type A_AccountItem={accountItem: AD_AccountItem;};

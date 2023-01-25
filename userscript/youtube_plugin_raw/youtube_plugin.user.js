@@ -7921,7 +7921,7 @@ class HandleTypes extends ServiceMethods {
 			console.log(a);
 		});
 	}
-	/** @private @arg {U_Description} x */
+	/** @private @arg {UA_Description} x */
 	UA_Description(x) {
 		const cf="UA_Description"; this.k(cf,x);
 		let x1=x.updateDescriptionAction;

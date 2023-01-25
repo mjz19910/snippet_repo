@@ -3,5 +3,5 @@ type UMA_Item=[
 	U_ToggleButtonText,
 	U_DateText,
 	U_Title,
-	U_Description
+	UA_Description
 ][number];

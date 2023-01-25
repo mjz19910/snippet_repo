@@ -14,5 +14,5 @@ type YtTargetIdType=[
 	"clip-info-button",
 	"sponsorships-button",
 	D_Menu_TargetId,
-	GenericEngagementPanelSectionItem['targetId'],
+	DB_SI_EngagementPanel['targetId'],
 ][number];

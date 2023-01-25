@@ -1,1 +1,0 @@
-type D_Description={description: R_TextRuns;};

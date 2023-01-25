@@ -1,5 +1,5 @@
 type D_EngagementPanelSectionList=
-	|GenericEngagementPanelSectionItem
+	|DB_SI_EngagementPanel
 	|SI_VE76278_EngagementPanel
 	|SI_VE99999_EngagementPanel
 	|SI_VE124975_EngagementPanel

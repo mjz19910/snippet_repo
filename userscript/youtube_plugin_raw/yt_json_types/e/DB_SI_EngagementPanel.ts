@@ -1,4 +1,4 @@
-type GenericEngagementPanelSectionItem={
+type DB_SI_EngagementPanel={
 	content: R_AdsEngagementPanelContent;
 	targetId: "engagement-panel-ads";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
