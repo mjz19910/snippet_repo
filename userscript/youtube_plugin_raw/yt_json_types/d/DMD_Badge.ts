@@ -18,6 +18,10 @@ type DMD_Badge=(DMD_Badge_<"CHECK_CIRCLE_THICK">&{
 	tooltip: "Official Artist Channel";
 	trackingParams: string;
 	accessibilityData: TD_Label<"Official Artist Channel">;
+}|{
+	style: "BADGE_STYLE_TYPE_YPC";
+	label: "Fundraiser";
+	trackingParams: string;
 };
 type DMD_Badge_<T extends string>={
 	icon: T_Icon<T>;

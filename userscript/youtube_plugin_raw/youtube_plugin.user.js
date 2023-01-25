@@ -9256,6 +9256,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_enum("BADGE_STYLE_TYPE",x.style);
 		switch(x.style) {
 			default: x===0; debugger; break;
+			case "BADGE_STYLE_TYPE_YPC": {
+				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);
+				this.trackingParams(cf,trackingParams);
+				if(label!=="Fundraiser") debugger;
+			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
 				if(icon.iconType!=="OFFICIAL_ARTIST_BADGE") debugger;
