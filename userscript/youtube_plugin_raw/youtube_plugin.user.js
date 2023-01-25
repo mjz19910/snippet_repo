@@ -9565,6 +9565,7 @@ class HandleTypes extends ServiceMethods {
 		let sp=this.parse_with_url_parse(x);
 		switch(sp.host) {
 			case "www.youtube.com": return this.handle_yt_url(sp.href);
+			case "music.youtube.com": return this.handle_yt_music_url(sp.href);
 			case "studio.youtube.com": return this.handle_yt_studio_url(sp.href);
 			default: debugger; break;
 		}

@@ -4,5 +4,6 @@ type UrlParseImpl<T extends string>=
 	T extends `${infer Protocol extends `${string}:`}//${infer Host}/${infer PathName}`?
 	UrlParseRes_noSearch<T,Host,Protocol,PathName>:
 	T extends `${infer Protocol extends `${string}:`}//${infer Host}?${infer Search}`?
-	UrlParseRes<T,Host,Protocol,Search,"">
-	:never;
+	UrlParseRes<T,Host,Protocol,Search,"">:
+	T extends `${infer Protocol extends `${string}:`}//${infer Host}`?
+	UrlParseRes_noSearch<T,Host,Protocol,"">:never;
