@@ -129,6 +129,7 @@ type GE_ResponseReceived_CF=[
 	"RS_Watch",
 ][number];
 type Omit_Menu_Radio_CF=[
+	string,
 	"D_CompactVideo",
 	"D_PlayerOverlayAutoplay",
 	"D_Radio",

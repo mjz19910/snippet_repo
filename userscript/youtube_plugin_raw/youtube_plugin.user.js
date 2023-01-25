@@ -8137,9 +8137,8 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(videoCountShortText);
 		return y;
 	}
-	/** @private @arg {D_Video} x */
-	D_Video(x) {
-		const cf="D_Video";
+	/** @private @arg {string} cf @arg {D_Video} x */
+	D_Video_Handle(cf,x) {
 		let {...u}=this.D_Video_Omit(cf,x);
 		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=u; this.g(y);
 		this.t(descriptionSnippet,this.R_TextRuns);
@@ -8161,6 +8160,11 @@ class HandleTypes extends ServiceMethods {
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
 		this.tz(buttons,this.R_ToggleButton);
+	}
+	/** @private @arg {D_Video} x */
+	D_Video(x) {
+		if("owner" in x) return this.D_Video_Handle("D_Video_Owner",x);
+		this.D_Video_Handle("D_Video_NoOwner",x);
 	}
 	/** @private @arg {R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("R_ToggleButton",x,this.D_ToggleButton);}
@@ -8770,7 +8774,7 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
 		this.GM_VE37414_WC(a);
 	}
-	/** @arg {Omit<E_ReelWatch,"clickTrackingParams"|"commandMetadata">} x */
+	/** @private @arg {Omit<E_ReelWatch,"clickTrackingParams"|"commandMetadata">} x */
 	IC_ReelWatch(x) {this.H_("IC_ReelWatch",x,this.D_ReelWatch);}
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {this.T_Endpoint("E_ReelWatch",x,this.IC_ReelWatch,this.M_VE37414);}
@@ -9948,7 +9952,7 @@ class HandleTypes extends ServiceMethods {
 		switch(tag) {}
 		return tag;
 	}
-	/** @arg {Record<"identifier",unknown>} x */
+	/** @private @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(x) {
 		const {identifier,...a}=x; this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
@@ -10038,7 +10042,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.DB_SI_EngagementPanel(x);
 	}
-	/** @arg {G_EngagementPanelSectionShowCommands} x */
+	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x) {
 		const cf="EngagementPanelSectionShowCommands";
 		this.save_keys(`[${cf}]`,x);
@@ -10479,7 +10483,7 @@ class HandleTypes extends ServiceMethods {
 		const {guideEntryId,...y}=this.sd(cf,x); this.g(y);
 		this.parse_guide_entry_id(guideEntryId);
 	}
-	/** @arg {D_GuideEntryBadges} x */
+	/** @private @arg {D_GuideEntryBadges} x */
 	D_GuideEntryBadges(x) {
 		const cf="D_GuideEntryBadges";
 		const {liveBroadcasting,...y}=this.sd(cf,x); this.g(y);
@@ -10493,8 +10497,8 @@ class HandleTypes extends ServiceMethods {
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.E_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: this.do_codegen(cf,x); break;
-					case "LIKES_PLAYLIST":
+					default: icon===""; this.do_codegen(cf,x); break;
+					case "LIKES_PLAYLIST": case "PLAYLISTS":
 				}
 				return this.R_GuideEntryData(entryData);
 			}
@@ -10526,6 +10530,18 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			x: {
+				let x=navigationEndpoint;
+				if("browseEndpoint" in x) {
+					this.E_Browse(x);
+					break x;
+				}
+				if("urlEndpoint" in x) {
+					this.E_Url(x);
+					break x;
+				}
+				debugger;
+			}
 			this.T_Icon(icon);
 			switch(icon.iconType) {
 				default: icon===""; this.do_codegen(cf,x); break;
