@@ -7499,11 +7499,9 @@ class HandleTypes extends ServiceMethods {
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		debugger;
 	}
-	/** @private @arg {D_Button} x */
-	D_Button(x) {
-		const cf="ButtonData";
-		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		if(accessibility) return this.D_Label(accessibility);
+	/** @private @template {D_Button} T @arg {string} cf @arg {T} x */
+	D_Button$Omit(cf,x) {
+		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.sd(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 		this.t(icon,this.T_Icon);
@@ -7518,7 +7516,6 @@ class HandleTypes extends ServiceMethods {
 				case "SIZE_SMALL": break;
 			}
 		}
-		this.t(style,a => this.save_string("[Button.style]",a));
 		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,this.R_Hint);
@@ -7531,6 +7528,22 @@ class HandleTypes extends ServiceMethods {
 			}
 			this.targetId(cf,a);
 		});
+		return y;
+	}
+	/** @private @arg {D_Button} x */
+	D_Button(x) {
+		const cf="D_Button";
+		if("style" in x) {
+			const {style,...y}=this.D_Button$Omit(`${cf}.Styled`,x); this.g(y);
+			this.t(style,a => this.save_string("[Button.style]",a));
+			return;
+		}
+		if("accessibility" in x) {
+			const {accessibility,...y}=this.D_Button$Omit(`${cf}.WithAccessibility`,x); this.g(y);
+			if(accessibility) return this.D_Label(accessibility);
+			return;
+		}
+		const {...y}=this.D_Button$Omit(cf,x); this.g(y);
 	}
 	/** @private @arg {R_Hint} x */
 	R_Hint(x) {x; debugger;}
