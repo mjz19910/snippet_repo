@@ -7632,7 +7632,7 @@ class HandleTypes extends ServiceMethods {
 		this.WebCommandMetadata(x);
 	}
 	/** @private @arg {GM_VE42352_WC} x */
-	GM_VE42352_WC(x) {x;}
+	GM_VE42352_WC(x) {x; debugger;}
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC";
@@ -9838,7 +9838,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,this.G_SecondaryContentsItem);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
-	G_Watch_SecondaryResults_Results(x) {x;}
+	G_Watch_SecondaryResults_Results(x) {x; debugger;}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
@@ -9925,6 +9925,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {R_ReelPlayerHeader} x */
+	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader",x,this.D_ReelPlayerHeader);}
+	/** @private @arg {D_ReelPlayerHeader} x */
+	D_ReelPlayerHeader(x) {x; debugger;}
+	/** @private @arg {R_PivotButton} x */
+	R_PivotButton(x) {this.H_("R_PivotButton",x,this.D_PivotButton);}
+	/** @private @arg {D_PivotButton} x */
+	D_PivotButton(x) {x; debugger;}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
@@ -9939,7 +9947,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(viewCommentsButton);
 		this.trackingParams(cf,trackingParams);
 		this.R_Button(shareButton);
-		this.R_Button(pivotButton);
+		this.R_PivotButton(pivotButton);
 	}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,this.D_EngagementPanelSectionList);}
@@ -9952,9 +9960,9 @@ class HandleTypes extends ServiceMethods {
 		this.DB_SI_EngagementPanel(x);
 	}
 	/** @private @arg {R_ClipSection} x */
-	R_ClipSection(x) {x;}
+	R_ClipSection(x) {x; debugger;}
 	/** @private @arg {R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {x;}
+	R_MacroMarkersList(x) {x; debugger;}
 	/** @private @arg {Extract<DB_SI_EngagementPanel,{panelIdentifier:any}>['content']} x */
 	DB_SI_EngagementPanel_ContentPanelIdentifier(x) {
 		const cf="DB_SI_EngagementPanel_ContentPanelIdentifier"; this.k(cf,x);
@@ -10160,7 +10168,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RD_NextContinuation} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,this.D_NextContinuation);}
 	/** @private @arg {D_NextContinuation} x */
-	D_NextContinuation(x) {x;}
+	D_NextContinuation(x) {x; debugger;}
 	/** @private @arg {TR_SectionListItem<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
@@ -10518,7 +10526,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlaylistPanelVideo} x */
 	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {D_PlaylistPanelVideo} x */
-	D_PlaylistPanelVideo(x) {x;}
+	D_PlaylistPanelVideo(x) {x; debugger;}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
 		const cf="PlayerOverlayVideoDetails";
@@ -10675,7 +10683,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader",x,this.D_C4TabbedHeader);}
 	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {x;}
+	D_C4TabbedHeader(x) {x; debugger;}
 	/** @private @arg {R_FeedTabbedHeader} x */
 	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {R_PlaylistHeader} x */
@@ -10745,13 +10753,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,this.D_AddToPlaylist);}
 	/** @private @arg {D_AddToPlaylist} x */
-	D_AddToPlaylist(x) {x;}
+	D_AddToPlaylist(x) {x; debugger;}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog(x) {this.HD_("R_AttLog",x);}
 	/** @private @arg {R_Comment} x */
 	R_Comment(x) {this.H_("Comment",x,this.D_Comment);}
 	/** @private @arg {D_Comment} x */
-	D_Comment(x) {x;}
+	D_Comment(x) {x; debugger;}
 	/** @private @arg {R_ElementUpdate} x */
 	R_ElementUpdate(x) {this.H_("ElementUpdate",x,x => this.z(x,this.ElementUpdateItem));}
 	/** @private @arg {R_TemplateUpdate} x */
@@ -10759,11 +10767,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_ProfileColumn} x */
 	R_ProfileColumn(x) {this.H_("ProfileColumn",x,this.D_ProfileColumn);}
 	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {x;}
+	D_ProfileColumn(x) {x; debugger;}
 	/** @private @arg {R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,this.D_BrowseFeedActions);}
 	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {x;}
+	D_BrowseFeedActions(x) {x; debugger;}
 	/** @private @arg {R_WebSearchboxConfig} x */
 	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {RSG_AddToPlaylist} x */
