@@ -7676,7 +7676,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		let {descriptionSnippet,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...v}=this.Omit_Menu_Video(cf,x);
+		let {...v}=this.Omit_Menu_Video(cf,x);
 		{v; debugger;}
 	}
 	/** @arg {R_Radio} x */
@@ -8876,7 +8876,7 @@ class HandleTypes extends ServiceMethods {
 		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=this.sd(cf,u);
 		this.R_TextRuns(shortBylineText);
 		this.tz(ownerBadges,this.R_MetadataBadge);
-		this.t(publishedTimeText,this.R_SimpleText);
+		this.t(publishedTimeText,this.R_TextRuns);
 		let kof=this.get_keys_of(y);
 		if(kof.length>0) {
 			console.log("[log_keys_of] [%s] [%s]",cf,kof);
@@ -8959,7 +8959,7 @@ class HandleTypes extends ServiceMethods {
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
 	/** @arg {string} cf @template {D_CompactVideo|D_CompactRadio} T @arg {T} x */
 	Omit$Compact$Radio(cf,x) {
-		let {menu,navigationEndpoint,thumbnail,longBylineText,...y}=this.Omit_Compact_Player(cf,x);
+		let {thumbnail,navigationEndpoint,menu,longBylineText,...y}=this.Omit_Compact_Player(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.E_Watch(navigationEndpoint);
 		this.R_Menu(menu);
@@ -8969,10 +8969,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
-		let {videoTitle,byline,pauseText,background,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit$Compact$Video(cf,x); this.g(y);
-		this.R_SimpleText(videoTitle);
+		let {background,videoTitle,byline,pauseText,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit$Compact$Video(cf,x); this.g(y);
+		this.R_TextRuns(videoTitle);
 		this.R_TextRuns(byline);
-		this.R_SimpleText(pauseText);
+		this.R_TextRuns(pauseText);
 		this.D_Thumbnail(background);
 		if(countDownSecs!==8) debugger;
 		this.R_Button(cancelButton);
@@ -9028,8 +9028,6 @@ class HandleTypes extends ServiceMethods {
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
 		let {accessibility,channelThumbnail,badges,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
-		this.G_Text(publishedTimeText);
-		this.G_Text(shortViewCountText);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
 		this.t(badges,a => console.log("badge",a));

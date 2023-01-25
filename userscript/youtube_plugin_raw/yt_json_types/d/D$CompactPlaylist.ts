@@ -1,12 +1,12 @@
 type D_CompactPlaylist={
 	playlistId: `PL${string}`;
 	thumbnail: D_Thumbnail;
-	title: R_SimpleText;
+	title: R_TextRuns;
 	shortBylineText: R_TextRuns;
 	videoCountText: R_TextRuns;
 	navigationEndpoint: E_Watch;
-	publishedTimeText?: R_SimpleText;
-	videoCountShortText: R_SimpleText;
+	publishedTimeText?: R_TextRuns;
+	videoCountShortText: R_TextRuns;
 	trackingParams: string;
 	sidebarThumbnails: D_Thumbnail[];
 	thumbnailText: R_TextRuns;
