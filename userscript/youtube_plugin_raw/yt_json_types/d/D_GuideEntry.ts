@@ -1,11 +1,12 @@
+type TD_GuideEntry_Simple<T extends string>={
+	navigationEndpoint: E_Browse;
+	icon: T_Icon<T>;
+	trackingParams: string;
+	formattedTitle: R_SimpleText;
+	accessibility: D_Accessibility;
+};
 type D_GuideEntry=[
-	{
-		navigationEndpoint: E_Browse;
-		icon: T_Icon<"GAMING_LOGO">;
-		trackingParams: string;
-		formattedTitle: R_SimpleText;
-		accessibility: D_Accessibility;
-	},
+	TD_GuideEntry_Simple<"GAMING_LOGO">,
 	{
 		navigationEndpoint: E_Browse;
 		icon: T_Icon<"LIVE">;

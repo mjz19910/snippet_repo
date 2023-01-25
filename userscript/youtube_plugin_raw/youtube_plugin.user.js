@@ -4299,6 +4299,14 @@ class CodegenService extends BaseService {
 		console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 		return o;
 	}
+	/** @arg {{[U in string]: unknown}} x */
+	is_GuideEntrySimple(x) {
+		return x.navigationEndpoint
+			&&x.icon
+			&&x.trackingParams
+			&&x.formattedTitle
+			&&x.accessibility;
+	}
 	/** @private @arg {JsonReplacerState} state @arg {{}|null} x @arg {string} k1 */
 	json_filter_object(state,x,k1) {
 		const {gen_name,key_keep_arr}=state;
@@ -4320,6 +4328,15 @@ class CodegenService extends BaseService {
 			state.parent_map.set(val,[mi,k_in]);
 		}
 		state.k1=k1;
+		/** @type {{[U in string]: unknown}} */
+		let b=x;
+		x: if(this.is_GuideEntrySimple(b)&&typeof b.icon==="object"&&b.icon) {
+			/** @type {{iconType?:string}} */
+			let ru=b.icon;
+			if(!ru.iconType) break x;
+			console.log("[Generate.TD_GuideEntry_Simple.keys]",this.get_keys_of(b));
+			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
+		}
 		if(k1==="") return x;
 		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
