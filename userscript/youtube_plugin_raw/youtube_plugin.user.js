@@ -10076,13 +10076,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
-	R_GuideDownloadsEntry(x) {x; debugger;}
+	R_GuideDownloadsEntry(x) {this.H_("R_GuideDownloadsEntry",x,this.D_GuideDownloadsEntry);}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
 		debugger;
+	}
+	/** @private @arg {D_GuideDownloadsEntry} x */
+	D_GuideDownloadsEntry(x) {
+		const {alwaysShow,entryRenderer,...y}=x; this.g(y);
+		if(alwaysShow!==false) debugger;
+		if(!entryRenderer.guideEntryRenderer) debugger;
+		this.R_GuideEntry(entryRenderer);
 	}
 	/** @private @arg {D_GuideSubscriptionsSection} x */
 	D_GuideSubscriptionsSection(x) {
