@@ -1,8 +1,8 @@
 type P_LogItems=[
-	"[parse_value.gen_ns] [GetNotificationMenu.f1]",
+	"[parse_value.gen_ns] [GetNotificationMenu.ctoken.f1]",
 ];
 type P_PathRoot=[
-	"GetNotificationMenu",
+	"GetNotificationMenu.ctoken",
 	"slot_ad_serving_data_entry",
 	P$param$missing$,
 	P$known$param,

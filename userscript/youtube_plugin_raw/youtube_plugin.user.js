@@ -5368,7 +5368,7 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
-					case "GetNotificationMenu":
+					case "GetNotificationMenu.ctoken":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5495,18 +5495,23 @@ class ParserService extends BaseService {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
 			case "GetNotificationMenu": {
 				const idx=2;
-				if(path_parts.length===1) {
-					switch(map_entry_value) {default: debugger; return;}
-				}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					case "f1": {
+					case "ctoken": {
 						const idx=3;
 						if(path_parts.length===2) {
-							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							if(map_entry_value instanceof Map) return;
 							switch(map_entry_value) {default: debugger; return;}
 						}
-						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1": {
+								if(path_parts.length===3) {
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									switch(map_entry_value) {default: debugger; return;}
+								}
+							} break;
+						}
 					} break;
 				}
 			} break;
@@ -9708,8 +9713,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {
 		this.T_Endpoint("E_GetNotificationMenu",x,x => {
-			let {ctoken,...y}=this.w(x); this.g(y);
-			this.params("","GetNotificationMenu",ctoken);
+			const u=this.w(x);
+			const {ctoken,...y}=u; this.g(y);
+			this.params("DE_GetNotificationMenu","GetNotificationMenu.ctoken",ctoken);
 			debugger;
 		},a => {
 			a;
