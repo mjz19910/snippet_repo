@@ -7798,7 +7798,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {Extract<D_Video,{richThumbnail:any}>} T @arg {string} cf @arg {T} x */
 	D_Video_Omit_Thumbnail(cf,x) {
-		let {richThumbnail,publishedTimeText,lengthText,descriptionSnippet,...y}=this.D_Video_Omit(cf,x);
+		let {richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
 		this.richThumbnail_Video(richThumbnail);
 		return y;
 	}
@@ -7820,8 +7820,8 @@ class HandleTypes extends ServiceMethods {
 			}
 			if("richThumbnail" in x) {
 				if("owner" in x) {
-					let {richThumbnail,descriptionSnippet,...y}=this.D_Video_Omit_Owner(cf,x);
-					this.richThumbnail_Video(richThumbnail);
+					let {owner,...y}=this.D_Video_Omit_Thumbnail(cf,x);
+					this.D_Video_Owner(owner);
 					return this.g(y);
 				}
 				let {topStandaloneBadge,...y}=this.D_Video_Omit_Thumbnail(cf,x);
@@ -7829,6 +7829,10 @@ class HandleTypes extends ServiceMethods {
 				return this.g(y);
 			}
 			if("descriptionSnippet" in x) {
+				if("owner" in x) {
+					let {...y}=this.D_Video_Omit_OwnerBadges(cf,x);
+					return this.g(y);
+				}
 				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
 				return this.g(y);
 			}
