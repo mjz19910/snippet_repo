@@ -471,7 +471,7 @@ class ND extends Snippet_0_tmp {
 	R_New(x) {this.H$R_("A_Notification",x,this.AD_Notification);}
 	/** @pub @arg {AD_Notification} x */
 	D_NewData(x) {x;}
-	/** @pub @arg {TE_SignalService<{}>} x */
+	/** @pub @arg {TE_SignalService<{},{}>} x */
 	E_New$Endpoint(x) {x;}
 	use() {
 		this.R_New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
@@ -690,7 +690,7 @@ class ND extends Snippet_0_tmp {
 	SubscribeButton$Omit(x) {
 		const cf="SubscribeButton";
 		this.save_keys(`[${cf}]`,x);
-		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
+		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
 		this.primitive_of(subscribed,"boolean");
 		this.primitive_of(enabled,"boolean");
 		this.primitive_of_string(type);
@@ -701,13 +701,13 @@ class ND extends Snippet_0_tmp {
 		this.R_TextWithRuns(unsubscribedButtonText);
 		this.trackingParams(cf,trackingParams);
 		this.R_TextWithRuns(unsubscribeButtonText);
-		this.tz(serviceEndpoints,x => {
-			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
-			if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
-			x;
-			this.do_codegen(cf,x);
-			debugger;
-		});
+		// this.tz(serviceEndpoints,x => {
+		// 	if("subscribeEndpoint" in x) return this.E_Subscribe(x);
+		// 	if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
+		// 	x;
+		// 	this.do_codegen(cf,x);
+		// 	debugger;
+		// });
 		this.D_Accessibility(subscribeAccessibility);
 		this.D_Accessibility(unsubscribeAccessibility);
 		return y;
@@ -716,16 +716,16 @@ class ND extends Snippet_0_tmp {
 	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}
 	/** @private @arg {D_Label} x */
 	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
-	/** @private @arg {E_Subscribe} x */
+	/** @protected @arg {E_Subscribe} x */
 	E_Subscribe(x) {this.H_("E_Subscribe",x,() => 0);}
-	/** @private @template T @arg {TE_SignalService<T>} x */
+	/** @protected @template T @arg {TE_SignalService<{},T>} x */
 	signalServiceEndpoint(x) {
 		this.E_SignalService(x,a => {
 			a;
 			debugger;
 		});
 	}
-	/** @private @template T @arg {TE_SignalService<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @private @template T @arg {TE_SignalService<{},T>} x @arg {(this:this,x:T)=>void} f */
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}

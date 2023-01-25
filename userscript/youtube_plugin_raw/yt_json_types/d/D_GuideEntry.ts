@@ -1,14 +1,5 @@
 type D_GuideEntry={
 	navigationEndpoint: E_Browse;
-	thumbnail: D_Thumbnail;
-	badges: GuideEntryBadges;
-	trackingParams: string;
-	formattedTitle: R_SimpleText;
-	accessibility: D_Accessibility;
-	entryData: R_GuideEntry_D;
-	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
-}|{
-	navigationEndpoint: E_Browse;
 	icon: T_Icon<"WHAT_TO_WATCH">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
@@ -19,14 +10,14 @@ type D_GuideEntry={
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	serviceEndpoint: TE_SignalService<{}>|E_ReelWatch;
+	serviceEndpoint: TE_SignalService<{},{}>|E_ReelWatch;
 	isPrimary: true;
 }|{
 	icon: T_Icon<"HELP">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	serviceEndpoint: TE_SignalService<{}>;
+	serviceEndpoint: TE_SignalService<{},{}>;
 }|{
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<"VIDEO_LIBRARY_WHITE">;
@@ -35,4 +26,14 @@ type D_GuideEntry={
 	accessibility: D_Accessibility;
 	targetId: "library-guide-item";
 	isPrimary: true;
+};
+type GE_ND_GuideEntry={
+	navigationEndpoint: E_Browse;
+	thumbnail: D_Thumbnail;
+	badges: GuideEntryBadges;
+	trackingParams: string;
+	formattedTitle: R_SimpleText;
+	accessibility: D_Accessibility;
+	entryData: R_GuideEntry_D;
+	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 };
