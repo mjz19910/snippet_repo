@@ -9514,29 +9514,49 @@ class HandleTypes extends ServiceMethods {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @private @arg {DE_Url['url']} x */
-	GM_E_Url_TargetUrlType(x) {
-		if(this.str_is_uri(x)) {
-			let [hp,up]=split_string_once(x,":");
-			if(hp!=="https") debugger;
-			let [f,r]=split_string_once(up,"//"); if(f!=="") debugger;
-			let su=split_string(r,"/");
-			if(su[0]==="www.youtube.com") {
-				let sp=su[1];
-				if(this.str_is_search(sp)) {
-					let [pp,qp]=split_string_once(sp,"?");
-					switch(pp) {
-						case "redirect": {
-							console.log("[E_Url.TargetUrl.search_params]",qp);
-							return;
-						}
-						default: debugger; break;
-					}
-					debugger;
+	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url'],`${string}www.youtube.com${string}`>,"//">[1],"/">} x */
+	handle_yt_url([h,sp]) {
+		if(h!=="www.youtube.com") debugger;
+		if(this.str_is_search(sp)) {
+			let [pp,qp]=split_string_once(sp,"?");
+			switch(pp) {
+				case "redirect": {
+					console.log("[E_Url.TargetUrl.search_params]",qp);
+					return;
 				}
-				debugger;
+				default: debugger; break;
 			}
 			debugger;
+		}
+		debugger;
+	}
+	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url'],`${string}//studio.youtube.com/${string}`>,"//">[1],"/">} x */
+	handle_yt_studio_url(x) {
+		let sp=x[1];
+		switch(sp) {
+			default: debugger; break;
+			case "channel": {
+				let v=x[2];
+				if(!this.str_starts_with("UC",v)) {debugger; return;}
+				let v1=x[3];
+				switch(v1) {
+					default: debugger; break;
+					case "videos": if(x.length!==4) debugger; break;
+				}
+			} break;
+		}
+	}
+	/** @private @arg {DE_Url['url']} x */
+	GM_E_Url_TargetUrlType(x) {
+		if(!this.str_is_uri(x)) {debugger; return;}
+		let [hp,up]=split_string_once(x,":");
+		if(hp!=="https") debugger;
+		let [f,r]=split_string_once(up,"//"); if(f!=="") debugger;
+		let su=split_string(r,"/");
+		switch(su[0]) {
+			case "www.youtube.com": return this.handle_yt_url(su);
+			case "studio.youtube.com": return this.handle_yt_studio_url(su);
+			default: debugger; break;
 		}
 		debugger;
 	}
