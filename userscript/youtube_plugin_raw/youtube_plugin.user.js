@@ -10113,13 +10113,16 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_GuideSubscriptionsSection";
 		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
-		this.z(items,this.G_GuideSubscriptionsSectionItem);
+		this.z(items,x => {
+			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
+			if("guideCollapsibleEntryRenderer" in x) return this.G_GuideSectionItem(x);
+			let ua=this.get_keys_of(x);
+			if(ua.length>0) console.log("[G_GuideSubscriptionsSectionItem.key]",ua);
+		});
 		this.trackingParams(cf,trackingParams);
 		this.t(formattedTitle,this.G_Text);
 		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
 	}
-	/** @private @arg {G_GuideSubscriptionsSectionItem} x */
-	G_GuideSubscriptionsSectionItem(x) {x; debugger;}
 	/** @private @arg {D_GuideSection} x */
 	D_GuideSection(x) {
 		const cf="D_GuideSection";
