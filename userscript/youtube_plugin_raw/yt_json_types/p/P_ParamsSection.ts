@@ -153,8 +153,6 @@ function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 		case "parser":
 		case "codegen":
 		case "save_string_api":
-		case "log_skipped_strings":
-		case "get_name_from_keys":
 	}
 }
 vv_x("TODO_true");

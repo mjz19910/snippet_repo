@@ -2139,7 +2139,7 @@ class ApiBase {
 		}
 		return ret;
 	}
-	/** @api @public @arg {unknown} x */
+	/** @protected @arg {unknown} x */
 	get_name_from_keys(x) {
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
@@ -2717,8 +2717,6 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
 	}
-	/** @api @public @arg {`[${string}]`} k @arg {string|string[]} x */
-	save_string_api=this.save_string;
 	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string(k,x) {
 		this.ds.save_string(k,x);
@@ -2732,7 +2730,6 @@ class BaseServicePrivate extends ApiBase {
 		this.ds.save_number(k,x);
 	}
 	//#endregion
-	log_skipped_strings=false;
 	#x;
 }
 /** @private @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
@@ -7030,6 +7027,8 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	/** @api @public @arg {`[${string}]`} k @arg {string|string[]} x */
+	save_string_api=this.save_string;
 	static {
 		this.prototype.minimal_handler_member_use();
 	}
