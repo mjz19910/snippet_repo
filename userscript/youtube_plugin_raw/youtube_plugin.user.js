@@ -10535,7 +10535,7 @@ class HandleTypes extends ServiceMethods {
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.E_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: console.log(`case "${icon.iconType}":`); break;
+					default: console.log(`[D_GuideEntry_LikesPlaylist]\n\n\ncase "${icon.iconType}":`); break;
 					case "LIKES_PLAYLIST":
 				}
 				return this.R_GuideEntryData(entryData);
