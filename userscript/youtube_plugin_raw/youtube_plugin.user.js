@@ -7805,7 +7805,6 @@ class HandleTypes extends ServiceMethods {
 	D_Video(x) {
 		const cf="D_Video";
 		let cg_x=this.D_Video_Omit(cf,x); cg_x;
-		debugger;
 		if("publishedTimeText" in x) {
 			if("richThumbnail" in x&&"ownerBadges" in x) {
 				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
