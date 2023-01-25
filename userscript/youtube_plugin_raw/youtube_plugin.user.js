@@ -8765,8 +8765,8 @@ class HandleTypes extends ServiceMethods {
 			if("icon" in x) {
 				if(this.is_MenuItemNotInt(x)) {
 					const {icon,...y}=this.D_MenuServiceItem$Omit(x,sp => {
-						sp;
-						debugger;
+						if(!sp.feedbackEndpoint) debugger;
+						this.E_Feedback(sp);
 					}); this.g(y);
 					return;
 				}
@@ -8835,7 +8835,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {E_Feedback} x */
-	E_Feedback(x) {x;}
+	E_Feedback(x) {
+		const cf="E_Feedback";
+		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/feedback") debugger;
+		this.G_CommandMetadata(commandMetadata,true);
+	}
 	/** @arg {D_MenuServiceItem_Icon<"ADD_TO_QUEUE_TAIL", TE_SignalService<{}>>} x */
 	D_MenuServiceItem_AddToQueueTail(x) {
 		const cf="D_MenuServiceItem_AddToQueueTail"; this.k(cf,x);
