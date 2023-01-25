@@ -109,23 +109,23 @@ type P_ParamsSection=
 	|"YpcGetOffers"
 	|`${T_Endpoint_CF}.endpoint`
 	|D_Button_CF
+	|D_ChipCloudChip_Omit_CF
 	|D_Link_CF
 	|GE_ResponseReceived_CF
 	|Omit_Menu_Radio_CF
 	|T_Endpoint_CF
-	|D_ChipCloudChip_Omit_CF
 	;
 ;
 type T_Endpoint_CF=[
-	"E_CreateBackstagePost",
 	"C_Continuation",
 	"C_GetSurvey",
 	"E_Browse",
-	"E_YpcGetCart",
-	"E_ReelWatch",
-	"E_RecordNotificationInteractions",
+	"E_CreateBackstagePost",
 	"E_GetNotificationMenu",
+	"E_RecordNotificationInteractions",
+	"E_ReelWatch",
 	"E_WatchPlaylist",
+	"E_YpcGetCart",
 ][number];
 type D_Link_CF=[
 	"D_CompactLink",
@@ -135,14 +135,14 @@ type D_Button_CF=[
 	`D_Button.${"Mixed"|"Styled"|"WithAccessibility"}`,
 ][number];
 type GE_ResponseReceived_CF=[
-	"RS_Watch",
 	"RS_Next",
+	"RS_Watch",
 ][number];
 type Omit_Menu_Radio_CF=[
+	"D_CompactVideo",
 	"D_PlayerOverlayAutoplay",
 	"D_Radio",
 	"D_Video",
-	"D_CompactVideo",
 ][number];
 type D_ChipCloudChip_Omit_CF=[
 	"D_ChipCloudChip",
