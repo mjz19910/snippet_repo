@@ -19,7 +19,7 @@ type D_SubscribeButton={
 	onUnsubscribeEndpoints: TE_SignalService<{}>[];
 }|{
 	buttonText: R_TextRuns;
-	subscribed: false;
+	subscribed: boolean;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
