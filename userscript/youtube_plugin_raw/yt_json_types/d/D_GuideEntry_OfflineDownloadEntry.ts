@@ -1,0 +1,1 @@
+type D_GuideEntry_OfflineDownloadEntry=TD_GuideEntry_Tid_Primary<"OFFLINE_DOWNLOAD","downloads-guide-item">;

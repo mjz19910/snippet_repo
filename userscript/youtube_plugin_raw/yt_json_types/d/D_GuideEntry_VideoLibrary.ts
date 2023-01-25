@@ -1,0 +1,1 @@
+type D_GuideEntry_VideoLibrary=TD_GuideEntry_Tid_Primary<"VIDEO_LIBRARY_WHITE","library-guide-item">;

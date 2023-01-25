@@ -10131,6 +10131,17 @@ class HandleTypes extends ServiceMethods {
 		const {accessibility,formattedTitle,trackingParams,...y}=this.sd(cf,x);
 		return y;
 	}
+	/** @private @arg {string} cf @arg {D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
+	GE_GuideEntry_WithTargetId(cf,x) {
+		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+		if(!navigationEndpoint.browseEndpoint) debugger;
+		this.E_Browse(navigationEndpoint);
+		switch(targetId) {
+			default: console.log(`case "${x}": break;`); debugger; break;
+			case "downloads-guide-item":
+			case "library-guide-item": break;
+		}
+	}
 	/** @private @arg {string} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
 		if("entryData" in x) {
@@ -10143,10 +10154,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("navigationEndpoint" in x) {
 			if("targetId" in x) {
-				const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
-				if(!navigationEndpoint.browseEndpoint) debugger;
-				this.E_Browse(navigationEndpoint);
-				if(targetId!=="library-guide-item") debugger;
+				this.GE_GuideEntry_WithTargetId(cf,x);
 				return;
 			}
 			if("isPrimary" in x) {
