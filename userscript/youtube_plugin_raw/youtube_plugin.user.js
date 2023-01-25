@@ -7579,7 +7579,7 @@ class HandleTypes extends ServiceMethods {
 			if(this.str_starts_with_r(x1,"LL")) return;
 			if(this.str_starts_with_r(x1,"WL")) return;
 			if(this.str_starts_with_r(x1,"PL")) return;
-			console.log("new with param [param_2c_VL]",x,x1);
+			console.log("new with param [Browse_param_2c_VL]",x,x1);
 			debugger;
 			return;
 		}
