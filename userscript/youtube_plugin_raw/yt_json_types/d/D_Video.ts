@@ -19,6 +19,7 @@ type D_Video={
 	menu: /**/R_Menu;
 	channelThumbnailSupportedRenderers: /**/R_ChannelThumbnailWithLink;
 	thumbnailOverlays: /**/G_ThumbnailOverlayItem[];
+	topStandaloneBadge?: RMD_Badge;
 	richThumbnail?: R_MovingThumbnail;
 	inlinePlaybackEndpoint: /**/E_Watch;
 	owner?: D_Video_Owner;
