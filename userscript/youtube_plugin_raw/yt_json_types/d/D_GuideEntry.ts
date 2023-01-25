@@ -6,6 +6,8 @@ type TD_GuideEntry_Simple<T extends string>={
 	accessibility: D_Accessibility;
 };
 type D_GuideEntry=[
+	TD_GuideEntry_WithEntryData<"PLAYLISTS">,
+	TD_GuideEntry_WithEntryData<"LIKES_PLAYLIST">,
 	TD_GuideEntry_Simple<"CREATOR_STUDIO_RED_LOGO">,
 	TD_GuideEntry_Simple<"YOUTUBE_MUSIC">,
 	TD_GuideEntry_Simple<"YOUTUBE_ROUND">,
@@ -33,7 +35,6 @@ type D_GuideEntry=[
 		presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
 	},
 	D_GuideEntry_HelpService,
-	D_GuideEntry_LikesPlaylist,
 	D_GuideEntry_MyVideosTab,
 	D_GuideEntry_OfflineDownloadEntry,
 	D_GuideEntry_ShortsTab,
