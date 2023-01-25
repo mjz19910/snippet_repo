@@ -7365,7 +7365,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case 3832: return this.GM_VE3832_Watch_WC(x);
 			case 4724: return this.GM_WC(x);
-			case 96368: return this.GM_WC(x);
 			case 83769: return this.GM_WC(x);
 			case 37414: return this.GM_WC(x);
 		}

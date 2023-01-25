@@ -1,17 +1,16 @@
 //#region GM_WC_1
 type GM_WC_1=[
-	GM_VE11487_WC,
-	GM_VE23462_WC,
 	GM_VE3611_WC,
-	GM_VE37414_WC,
 	GM_VE3832_Watch_WC,
 	GM_VE3854_WC,
 	GM_VE4724_WC,
 	GM_VE5754_WC,
 	GM_VE6827_WC,
+	GM_VE11487_WC,
+	GM_VE23462_WC,
+	GM_VE37414_WC,
 	GM_VE42352_WC,
 	GM_VE83769_WC,
-	GM_VE96368_WC,
 	GM_VE96368_WC_browse,
 	GM_account_account_menu,
 	GM_account_set_setting,
@@ -103,10 +102,6 @@ type GM_VE83769_WC={
 	url: GM_VE83769_UrlType;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
-};
-type GM_VE96368_WC={
-	rootVe: 96368;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type GM_VE96368_WC_browse={
 	url: "/feed/subscriptions";
@@ -212,6 +207,7 @@ type M_VE6827={webCommandMetadata: GM_VE6827_WC;};
 type M_VE11487={webCommandMetadata: GM_VE11487_WC;};
 type M_VE23462={webCommandMetadata: GM_VE23462_WC;};
 type M_VE37414={webCommandMetadata: GM_VE37414_WC;};
+type M_VE42352={webCommandMetadata: GM_VE42352_WC;};
 type M_VE83769={webCommandMetadata: GM_VE83769_WC;};
 type M_VE96368={webCommandMetadata: GM_VE96368_WC_browse;};
 //#endregion
@@ -236,12 +232,12 @@ type DE_VE42352_Browse={browseId: "FEdownloads";};
 //#region E_VE\d+_.+
 type E_VE3611_Browse={
 	clickTrackingParams: string;
-	commandMetadata: {webCommandMetadata: GM_VE3611_WC;};
+	commandMetadata: M_VE3611;
 	browseEndpoint: DE_VE3611_Browse;
 };
 type E_VE3854_Browse={
 	clickTrackingParams: string;
-	commandMetadata: {webCommandMetadata: GM_VE3854_WC;};
+	commandMetadata: M_VE3854;
 	browseEndpoint: DE_VE3854_Browse;
 };
 type E_VE5754_Browse={
@@ -267,17 +263,16 @@ type E_VE96368_Browse={
 };
 type E_VE42352_Browse={
 	clickTrackingParams: string;
-	commandMetadata: {
-		webCommandMetadata: GM_VE42352_WC;
-	};
+	commandMetadata: M_VE42352;
 	browseEndpoint: DE_VE42352_Browse;
+};
+type DE_VE11487_Browse={
+	browseId: "SPunlimited";
 };
 type E_VE11487_Browse={
 	clickTrackingParams: string;
 	commandMetadata: M_VE11487;
-	browseEndpoint: {
-		browseId: "SPunlimited";
-	};
+	browseEndpoint: DE_VE11487_Browse;
 };
 
 //#endregion
