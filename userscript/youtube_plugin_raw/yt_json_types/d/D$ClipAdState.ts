@@ -1,4 +1,4 @@
 type D_ClipAdState={
-	title: R_TextWithRuns;
-	body: R_TextWithRuns;
+	title: R_TextRuns;
+	body: R_TextRuns;
 };

@@ -1,5 +1,5 @@
 type AD_Notification={
-	responseText: R_TextWithRuns;
+	responseText: R_TextRuns;
 	actionButton?: R_Button;
 	trackingParams: string;
 };

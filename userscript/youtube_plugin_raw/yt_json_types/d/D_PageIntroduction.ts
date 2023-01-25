@@ -1,6 +1,6 @@
 type D_PageIntroduction={
-	bodyText: R_TextWithRuns;
+	bodyText: R_TextRuns;
 	headerIcon: T_Icon<"ACCOUNT_ADVANCED">|T_Icon<"ACCOUNT_SHARING">;
-	headerText: R_TextWithRuns;
-	pageTitle: R_TextWithRuns;
+	headerText: R_TextRuns;
+	pageTitle: R_TextRuns;
 };

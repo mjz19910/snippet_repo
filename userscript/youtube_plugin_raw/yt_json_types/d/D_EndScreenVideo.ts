@@ -2,7 +2,7 @@ type D_EndScreenVideo={
 	videoId: string;
 	thumbnail: D_Thumbnail;
 	title: R_SimpleText;
-	shortBylineText: R_TextWithRuns;
+	shortBylineText: R_TextRuns;
 	lengthText?: R_SimpleText;
 	lengthInSeconds?: number;
 	navigationEndpoint: E_Watch|E_ReelWatch;

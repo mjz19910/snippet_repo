@@ -1,4 +1,4 @@
 type D_SettingsSidebar={
-	title: R_TextWithRuns;
+	title: R_TextRuns;
 	items: R_CompactLink[];
 };

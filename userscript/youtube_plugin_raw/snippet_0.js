@@ -480,7 +480,7 @@ class ND extends Snippet_0_tmp {
 	E_Browse(x) {x;}
 	/** @private @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {x;}
-	/** @private @arg {R_TextWithRuns} x */
+	/** @private @arg {R_TextRuns} x */
 	R_TextWithRuns(x) {x;}
 	/** @private @arg {R_SimpleText} x */
 	R_SimpleText(x) {x;}

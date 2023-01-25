@@ -1,1 +1,1 @@
-type D_Description={description: R_TextWithRuns;};
+type D_Description={description: R_TextRuns;};

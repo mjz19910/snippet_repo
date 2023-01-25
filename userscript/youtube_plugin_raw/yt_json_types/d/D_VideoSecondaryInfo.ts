@@ -1,6 +1,6 @@
 type D_VideoSecondaryInfo={
 	owner: R_VideoOwner;
-	description?: R_TextWithRuns;
+	description?: R_TextRuns;
 	subscribeButton: R_SubscribeButton;
 	metadataRowContainer: R_MetadataRowContainer;
 	showMoreText: R_SimpleText;

@@ -3,5 +3,5 @@ type D_PivotButton={
 	onClickCommand: E_Browse;
 	trackingParams: string;
 	contentDescription: R_SimpleText;
-	soundAttributionTitle: R_TextWithRuns;
+	soundAttributionTitle: R_TextRuns;
 };

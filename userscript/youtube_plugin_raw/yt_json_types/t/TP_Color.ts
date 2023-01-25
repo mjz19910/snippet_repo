@@ -1,0 +1,1 @@
+type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;

@@ -1,5 +1,5 @@
 type D_CommentsEntryPointHeader={
-	headerText: R_TextWithRuns;
+	headerText: R_TextRuns;
 	onTap: C_Executor;
 	trackingParams: string;
 	commentCount: R_SimpleText;

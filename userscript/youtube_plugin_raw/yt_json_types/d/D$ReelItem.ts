@@ -1,8 +1,8 @@
 type D_ReelItem={
 	videoId: YtVideoId;
-	headline: R_TextWithRuns;
+	headline: R_TextRuns;
 	thumbnail: D_Thumbnail;
-	viewCountText: R_TextWithRuns;
+	viewCountText: R_TextRuns;
 	navigationEndpoint: E_ReelWatch;
 	menu: R_Menu;
 	trackingParams: string;

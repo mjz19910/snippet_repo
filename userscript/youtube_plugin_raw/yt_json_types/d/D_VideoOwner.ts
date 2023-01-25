@@ -1,6 +1,6 @@
 type D_VideoOwner={
 	thumbnail: D_Thumbnail;
-	title: R_TextWithRuns;
+	title: R_TextRuns;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: E_Browse;
 	subscriberCountText: R_SimpleText;
@@ -8,7 +8,7 @@ type D_VideoOwner={
 	membershipButton: R_Button;
 }|{
 	thumbnail: D_Thumbnail;
-	title: R_TextWithRuns;
+	title: R_TextRuns;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: E_Browse;
 	subscriberCountText: R_SimpleText;

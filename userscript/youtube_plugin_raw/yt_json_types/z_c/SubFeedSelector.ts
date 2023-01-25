@@ -1,5 +1,5 @@
 type D_SubFeedSelector={
-	title: R_TextWithRuns;
+	title: R_TextRuns;
 	options: R_SubFeedOption[];
 	trackingParams: string;
 };

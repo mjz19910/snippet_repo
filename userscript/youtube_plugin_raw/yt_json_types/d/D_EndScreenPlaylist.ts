@@ -4,7 +4,7 @@ type D_EndScreenPlaylist={
 	thumbnail: D_Thumbnail;
 	videoCount?: `${number}`;
 	longBylineText: G_Text;
-	videoCountText: R_TextWithRuns;
+	videoCountText: R_TextRuns;
 	navigationEndpoint: E_Watch;
 	trackingParams: string;
 };

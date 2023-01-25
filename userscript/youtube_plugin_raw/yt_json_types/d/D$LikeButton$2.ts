@@ -11,6 +11,6 @@ type D_LikeButton$2={
 	trackingParams: string;
 	likesAllowed: true;
 	serviceEndpoints: E_Like[];
-	likeCountTooltipText: R_TextWithRuns;
-	dislikeCountTooltipText: R_TextWithRuns;
+	likeCountTooltipText: R_TextRuns;
+	dislikeCountTooltipText: R_TextRuns;
 };

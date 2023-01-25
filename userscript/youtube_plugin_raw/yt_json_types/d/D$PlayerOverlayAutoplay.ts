@@ -1,7 +1,7 @@
 type D_PlayerOverlayAutoplay={
 	title: R_SimpleText;
 	videoTitle: R_SimpleText;
-	byline: R_TextWithRuns;
+	byline: R_TextRuns;
 	pauseText: R_SimpleText;
 	background: D_Thumbnail;
 	countDownSecs: 8;

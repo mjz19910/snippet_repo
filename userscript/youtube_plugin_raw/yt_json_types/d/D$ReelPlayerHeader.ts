@@ -1,8 +1,8 @@
 type D_ReelPlayerHeader={
-	reelTitleText: R_TextWithRuns;
+	reelTitleText: R_TextRuns;
 	timestampText: R_SimpleText;
 	channelNavigationEndpoint: E_Browse;
-	channelTitleText: R_TextWithRuns;
+	channelTitleText: R_TextRuns;
 	channelThumbnail: D_Thumbnail;
 	trackingParams: string;
 	accessibility: D_Accessibility;

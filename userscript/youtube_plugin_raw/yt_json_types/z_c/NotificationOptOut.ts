@@ -1,5 +1,5 @@
 type AE_NotificationOptOut={
-	optOutText: R_TextWithRuns;
+	optOutText: R_TextRuns;
 	serializedOptOut: string;
 	serializedRecordInteractionsRequest: string;
 };

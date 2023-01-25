@@ -12,6 +12,6 @@ type D_C4TabbedHeader={
 	mobileBanner: D_Thumbnail;
 	trackingParams: string;
 	sponsorButton?: R_Button;
-	channelHandleText: R_TextWithRuns;
-	videosCountText: R_TextWithRuns;
+	channelHandleText: R_TextRuns;
+	videosCountText: R_TextRuns;
 };

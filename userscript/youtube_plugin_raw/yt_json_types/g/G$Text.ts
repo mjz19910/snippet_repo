@@ -1,1 +1,1 @@
-type G_Text=R_SimpleText|R_TextWithRuns;
+type G_Text=R_SimpleText|R_TextRuns;

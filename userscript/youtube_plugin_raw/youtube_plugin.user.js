@@ -4099,7 +4099,7 @@ class CodegenService extends BaseService {
 			if(new_code) {ret_arr.push(new_code); continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.R_SimpleText(${k});`); continue;};
-			/** @private @type {R_TextWithRuns} */
+			/** @private @type {R_TextRuns} */
 			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.R_TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			/** @private @type {D_Thumbnail} */
@@ -4361,7 +4361,7 @@ class CodegenService extends BaseService {
 	get_json_replacer_type(state,r,x) {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
-		/** @private @type {R_TextWithRuns} */
+		/** @private @type {R_TextRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextWithRuns";
 		/** @private @type {D_Thumbnail} */
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D_Thumbnail";
@@ -8598,7 +8598,7 @@ class HandleTypes extends ServiceMethods {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
 	}
-	/** @private @arg {R_TextWithRuns} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {R_TextRuns} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
 	R_TextWithRuns(x,f_run=this.handle_text_endpoint) {
 		const cf="R_TextWithRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure

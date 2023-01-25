@@ -1,14 +1,14 @@
 type D_SubscribeButton={
-	buttonText: R_TextWithRuns;
+	buttonText: R_TextRuns;
 	subscribed: false;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
-	subscribedButtonText: R_TextWithRuns;
-	unsubscribedButtonText: R_TextWithRuns;
+	subscribedButtonText: R_TextRuns;
+	unsubscribedButtonText: R_TextRuns;
 	trackingParams: string;
-	unsubscribeButtonText: R_TextWithRuns;
+	unsubscribeButtonText: R_TextRuns;
 	serviceEndpoints?: (E_Subscribe|SubscribeButtonData$SignalServiceEndpoint)[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
@@ -18,16 +18,16 @@ type D_SubscribeButton={
 	onSubscribeEndpoints: E_Subscribe[];
 	onUnsubscribeEndpoints: TE_SignalService<{}>[];
 }|{
-	buttonText: R_TextWithRuns;
+	buttonText: R_TextRuns;
 	subscribed: false;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
-	subscribedButtonText: R_TextWithRuns;
-	unsubscribedButtonText: R_TextWithRuns;
+	subscribedButtonText: R_TextRuns;
+	unsubscribedButtonText: R_TextRuns;
 	trackingParams: string;
-	unsubscribeButtonText: R_TextWithRuns;
+	unsubscribeButtonText: R_TextRuns;
 	serviceEndpoints: E_Subscribe[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;

@@ -1,6 +1,6 @@
 type D_CardCollection={
 	cards: R_Card[];
-	headerText: R_TextWithRuns;
+	headerText: R_TextRuns;
 	icon: R_InfoCardIcon;
 	closeButton: R_InfoCardIcon;
 	trackingParams: string;

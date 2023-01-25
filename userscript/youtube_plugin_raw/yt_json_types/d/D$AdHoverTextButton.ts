@@ -1,5 +1,5 @@
 type D_AdHoverTextButton={
 	button: R_Button;
-	hoverText: R_TextWithRuns;
+	hoverText: R_TextRuns;
 	trackingParams: string;
 };

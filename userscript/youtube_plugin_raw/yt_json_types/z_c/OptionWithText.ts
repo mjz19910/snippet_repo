@@ -1,5 +1,5 @@
 type OptionWithText={
 	options: SettingsOptionItem[];
-	title: R_TextWithRuns;
-	text: R_TextWithRuns;
+	title: R_TextRuns;
+	text: R_TextRuns;
 };

@@ -1,9 +1,9 @@
 type D_DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
-	titleText: R_TextWithRuns;
+	titleText: R_TextRuns;
 	image: R_ThumbnailsList;
-	bodyText: R_TextWithRuns;
-	secondaryText: R_TextWithRuns;
+	bodyText: R_TextRuns;
+	secondaryText: R_TextRuns;
 	badge: DMD_Badge;
 	menu: R_Menu;
 	ctaButton: R_Button;

@@ -1,7 +1,7 @@
 type ClientMessages={
-	reconnectMessage: R_TextWithRuns;
-	unableToReconnectMessage: R_TextWithRuns;
-	fatalError: R_TextWithRuns;
-	reconnectedMessage: R_TextWithRuns;
-	genericError: R_TextWithRuns;
+	reconnectMessage: R_TextRuns;
+	unableToReconnectMessage: R_TextRuns;
+	fatalError: R_TextRuns;
+	reconnectedMessage: R_TextRuns;
+	genericError: R_TextRuns;
 };
