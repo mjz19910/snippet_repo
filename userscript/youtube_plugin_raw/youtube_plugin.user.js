@@ -374,7 +374,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					event.detail.handle_types.save_string_api("[body_element]",fut_data);
+					data_saver.save_string("[body_element]",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2707,12 +2707,12 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value;
 	}
-	/** @this {BaseServicePrivate<Services,{}>} */
+	/** @protected @this {BaseServicePrivate<Services,{}>} */
 	get parser() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("parser_service");
 	}
-	/** @this {BaseServicePrivate<Services,{}>} */
+	/** @protected @this {BaseServicePrivate<Services,{}>} */
 	get codegen() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
@@ -2818,7 +2818,7 @@ class BaseService extends BaseServicePrivate {
 		this._decode_b64_proto_obj(btoa("\0"));
 	}
 	static {
-		let y=new this({value:new ServiceResolver({},{})});
+		let y=new this({value: new ServiceResolver({},{})});
 		y._use();
 	}
 	/** @protected @arg {string} str */
@@ -2836,20 +2836,10 @@ class BaseService extends BaseServicePrivate {
 	str_starts_with(needle,str) {
 		return str.startsWith(needle);
 	}
+	/** @protected */
 	get TODO_true() {
 		return true;
 	}
-	// /** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
-	// targetId_arr([f,a]) {
-	// 	let [c,a1]=split_string_once(a,".");
-	// 	let [d,a2]=split_string_once(a1,".");
-	// 	return [f,c,d,a2];
-	// }
-	///** @private @arg {string} cf @arg {`${string}.${string}.${number}.${number}`} x */
-	//parse_transcript_target_id(cf,x) {
-	//	let b=this.parser.targetId_arr(split_string_once(x,"."));
-	//	this.parser.on_endpoint_params(cf,"transcript_target_id.param",b[1]);
-	//}
 	/** @protected @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
 		/** @private @type {"_"|"-"} */
@@ -7027,7 +7017,7 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
-	/** @api @public @arg {`[${string}]`} k @arg {string|string[]} x */
+	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	static {
 		this.prototype.minimal_handler_member_use();
