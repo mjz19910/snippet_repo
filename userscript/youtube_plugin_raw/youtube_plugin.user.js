@@ -7250,9 +7250,23 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {GM_VE23462_WC} x */
-	GM_VE23462_WC(x) {x; debugger;}
+	GM_VE23462_WC(x) {
+		const cf="GM_VE23462_WC";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		if(url!=="/account_notifications") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		if(rootVe!==23462) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
 	/** @private @arg {GM_VE96368_WC_browse} x */
-	GM_VE96368_WC_browse(x) {x; debugger;}
+	GM_VE96368_WC_browse(x) {
+		const cf="GM_VE23462_WC";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		if(url!=="/feed/subscriptions") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==96368) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
 	WebCommandMetadataWithApiUrl(x) {
 		let cx=x.apiUrl;
@@ -10070,7 +10084,11 @@ class HandleTypes extends ServiceMethods {
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
-			if(icon.iconType!=="WHAT_TO_WATCH") debugger;
+			switch(icon.iconType) {
+				case "SUBSCRIPTIONS": break;
+				case "WHAT_TO_WATCH": break;
+				default: debugger; break;
+			}
 			if(isPrimary!==true) debugger;
 			return;
 		}
