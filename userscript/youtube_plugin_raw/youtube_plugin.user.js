@@ -9104,7 +9104,11 @@ class HandleTypes extends ServiceMethods {
 			this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		}
 		if(slotPhysicalPosition!==1) debugger;
-		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
+		switch(slotType) {
+			case "SLOT_TYPE_IN_FEED":
+			case "SLOT_TYPE_PAGE_TOP": break;
+			default: debugger; break;
+		}
 		if("adSlotLoggingData" in y) {
 			const {adSlotLoggingData,...y1}=y; this.g(y1);
 			console.log(adSlotLoggingData.serializedSlotAdServingDataEntry);
