@@ -1,5 +1,4 @@
-type D_Video=Video$VideoId;
-type Video$VideoId={
+type D_Video={
 	videoId: string;
 	thumbnail: D_Thumbnail;
 	title: R_TextRuns;

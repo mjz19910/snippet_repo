@@ -2937,6 +2937,7 @@ class BaseService extends BaseServicePrivate {
 	w(x,excl=[]) {
 		let ka=this.get_keys_of(x);
 		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length!==1) debugger;
 		let k=keys[0];
 		let r=x[k];
 		return r;
@@ -7658,39 +7659,49 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {R_FeedNudge} x */
 	R_FeedNudge(x) {this.H_("R_FeedNudge",x,this.D_FeedNudge);}
 	/** @arg {D_FeedNudge} x */
-	D_FeedNudge(x) {x; debugger;}
+	D_FeedNudge(x) {
+		const cf="D_FeedNudge"; this.k(cf,x);
+		{x; debugger;}
+	}
 	/** @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
+	/** @arg {T_Omit_Compact_Video<D_Video>} x */
+	Omit_Menu_Video(x) {x;}
 	/** @private @arg {D_Video} x */
-	D_Video(x) {x; debugger;}
+	D_Video(x) {
+		const cf="D_Video"; this.k(cf,x);
+		let {...y}=this.Omit$Compact$Video(cf,x);
+		{y; debugger;}
+	}
 	/** @arg {R_Radio} x */
 	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
 	/** @private @arg {D_Radio} x */
-	D_Radio(x) {x; debugger;}
+	D_Radio(x) {
+		const cf="D_Radio"; this.k(cf,x);
+		{x; debugger;}
+	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
-		const cf="ExpandableTab"; this.k(cf,x);
+		const cf="D_ExpandableTab"; this.k(cf,x);
 		{x; debugger;}
 	}
 	/** @private @arg {C_Continuation} x */
-	ContinuationCommand(x) {
+	C_Continuation(x) {
 		if(!x) {debugger; return;}
-		const cf="ContinuationCommand";
-		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.clickTrackingParams("ContinuationCommand",clickTrackingParams);
-		if(commandMetadata) {
-			if("apiUrl" in commandMetadata.webCommandMetadata) {
-				return this.WebCommandMetadata(commandMetadata.webCommandMetadata);
-			}
-			debugger;
-		}
-		this.ContinuationCommandData(continuationCommand);
+		this.T_Endpoint("C_Continuation",x,x => this.y(x,this.DC_Continuation),x => {
+			if(x.webCommandMetadata.apiUrl!=="/youtubei/v1/browse") debugger;
+			this.y(x,this.GM_browse);
+		});
 	}
 	/** @private @arg {DC_Continuation} x */
-	ContinuationCommandData(x) {
-		const cf="ContinuationCommandData"; this.k(cf,x);
-		this.primitive_of(x.token,"string");
-		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
+	DC_Continuation(x) {
+		const cf="DC_Continuation"; this.k(cf,x);
+		if("command" in x) {
+			const {command: x1,...b}=this.DC_Continuation$Omit(x); this.g(b);
+			this.C_ShowReloadUi(x1);
+			return;
+		}
+		this.g(this.DC_Continuation$Omit(x));
 	}
 	/** @private @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {
@@ -8194,7 +8205,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(entries,a => this.T_Command_TP(a,this.E_ReelWatch));
 		this.trackingParams(cf,trackingParams);
-		this.t(continuationEndpoint,this.ContinuationCommand);
+		this.t(continuationEndpoint,this.C_Continuation);
 	}
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {
@@ -8981,10 +8992,10 @@ class HandleTypes extends ServiceMethods {
 			console.log("[log_keys_of] [%s] [%s]",cf,uk.join(",").split(",")[0]);
 		}
 	}
-	/** @arg {string} cf @template {D_PlayerOverlayAutoplay|D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
+	/** @arg {string} cf @template {D_Video|D_PlayerOverlayAutoplay|D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
 	Omit$Compact$Player(cf,x) {
 		const {title,trackingParams,thumbnailOverlays,...y}=this.sd(cf,x); // !
-		this.R_SimpleText(title);
+		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		this.z(thumbnailOverlays,x => {
 			// TODO: #11 Handle thumbnailOverlay Renderers
@@ -8999,7 +9010,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @arg {string} cf @template {D_PlayerOverlayAutoplay|D_CompactVideo} T @arg {T} x */
+	/** @arg {string} cf @template {D_Video|D_PlayerOverlayAutoplay|D_CompactVideo} T @arg {T} x */
 	Omit$Compact$Video(cf,x) {
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.Omit$Compact$Player(cf,x);
 		this.videoId(videoId);
@@ -9314,27 +9325,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {DC_Continuation} T @arg {T} x */
 	DC_Continuation$Omit(x) {
-		const {request,token,...y}=x; // !
+		const {token,request,...y}=x; // !
+		this.primitive_of_string(token);
+		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": break;
 			default: debugger; break;
 		};
-		this.primitive_of_string(token);
 		return y;
-	}
-	/** @private @arg {C_Continuation} x */
-	C_Continuation(x) {
-		this.T_Endpoint("C_Continuation",x,a => {
-			let u=this.w(a);
-			const cf="DC_Continuation"; this.k(cf,x);
-			if("command" in u) {
-				const {command: x,...b}=this.DC_Continuation$Omit(u); this.g(b);
-				this.C_ShowReloadUi(x);
-				return;
-			}
-			this.g(this.DC_Continuation$Omit(u));
-		},x => this.y(x,this.GM_browse));
 	}
 	/** @private @arg {GM_browse} x */
 	GM_browse(x) {
@@ -9530,7 +9529,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ContinuationEndpointRoot"; this.k(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) {
-			this.ContinuationCommand(x);
+			this.C_Continuation(x);
 		} else if("getTranscriptEndpoint" in x) {
 			this.E_GetTranscript(x);
 		} else {
@@ -10129,7 +10128,7 @@ class HandleTypes extends ServiceMethods {
 	GC_Button(x) {
 		const cf="GC_Button"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("continuationCommand" in x) return this.ContinuationCommand(x);
+		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
