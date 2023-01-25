@@ -7696,12 +7696,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R_Radio} x */
 	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
+	/** @template {D_Video} T @arg {string} cf @arg {T} x */
+	D_Video_Omit(cf,x) {
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x);
+		return y;
+	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
+		if("descriptionSnippet" in x) {
+			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_Video_Omit(cf,x); this.g(y);
+			this.tz(ownerBadges,this.RMD_Badge);
+			this.richThumbnail_Video(richThumbnail);
+			this.R_TextRuns(descriptionSnippet);
+			return;
+		}
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
-		// this.richThumbnail_Video(richThumbnail);
-		// this.R_TextRuns(descriptionSnippet);
 		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
@@ -8933,7 +8943,7 @@ class HandleTypes extends ServiceMethods {
 		let u=this.Omit_Compact_Player(cf,x);
 		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=this.sd(cf,u);
 		this.R_TextRuns(shortBylineText);
-		this.tz(ownerBadges,this.R_MetadataBadge);
+		this.tz(ownerBadges,this.RMD_Badge);
 		this.t(publishedTimeText,this.R_TextRuns);
 		let kof=this.get_keys_of(y);
 		if(kof.length>0) {
@@ -8941,18 +8951,6 @@ class HandleTypes extends ServiceMethods {
 			this.do_codegen("D_CompactPlaylist",y);
 			console.log(this.get_keys_of(x).join());
 		}
-	}
-	/** @arg {RMD_Badge} x */
-	R_MetadataBadge(x) {this.H_("R_MetadataBadge",x,this.D_MetadataBadge);}
-	/** @arg {DMD_Badge} x */
-	D_MetadataBadge(x) {
-		const cf="D_MetadataBadge";
-		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
-		this.T_Icon(icon);
-		if(style!=="BADGE_STYLE_TYPE_VERIFIED") debugger;
-		console.log("badge.tooltip",tooltip);
-		this.trackingParams(cf,trackingParams);
-		this.D_Label(accessibilityData);
 	}
 	/** @unused @protected @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TR_ItemSection$CommentItemSection(x) {
@@ -9106,6 +9104,7 @@ class HandleTypes extends ServiceMethods {
 		this.T_Icon(icon);
 		this.save_enum("BADGE_STYLE_TYPE",style);
 		if(style!=="BADGE_STYLE_TYPE_VERIFIED") debugger;
+		console.log("badge.tooltip",tooltip);
 		this.primitive_of_string(tooltip);
 		this.trackingParams(cf,trackingParams);
 		this.D_Label(accessibilityData);
