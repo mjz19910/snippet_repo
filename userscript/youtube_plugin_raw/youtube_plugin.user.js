@@ -5368,15 +5368,15 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
-					case "SerializedSlotAdServingDataEntry.f3":
+					case "slot_ad_serving_data_entry.f3":
 						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "SerializedSlotAdServingDataEntry.f1":
+					case "slot_ad_serving_data_entry.f1":
 						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "SerializedSlotAdServingDataEntry":
+					case "slot_ad_serving_data_entry":
 						switch(map_entry_key) {case 1: case 3: case 4: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5489,7 +5489,7 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
-			case "SerializedSlotAdServingDataEntry": {
+			case "slot_ad_serving_data_entry": {
 				const idx=2;
 				if(path_parts.length===1) {
 					switch(map_entry_value) {default: debugger; return;}
@@ -5508,6 +5508,12 @@ class ParserService extends BaseService {
 							case "f1": case "f2": case "f3": case "f6": case "f11": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(path_parts[1]==="f1") {
+										if(path_parts[2]==="f1") return;
+										if(path_parts[2]==="f2") return;
+										if(path_parts[2]==="f3") return;
+										path_parts;
+									}
 									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
@@ -9371,7 +9377,7 @@ class HandleTypes extends ServiceMethods {
 	D_SerializedSlotAdServingDataEntry(x) {
 		const cf="D_SerializedSlotAdServingDataEntry";
 		const {serializedSlotAdServingDataEntry: a,...y}=x; this.g(y);
-		this.params(cf,"SerializedSlotAdServingDataEntry",a);
+		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
