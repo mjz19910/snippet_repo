@@ -7040,41 +7040,43 @@ class HandleTypes extends ServiceMethods {
 		}
 		return;
 	}
+	/** @private @arg {Exclude<Extract<GM_WC,{rootVe:any}>,{apiUrl:any}>} x */
+	WebCommandMetadataOnlyRootVe(x) {
+		let cx=x.rootVe;
+		switch(x.rootVe) {
+			default: {
+				x===0;
+				/** @private @arg {GM_WC} x */
+				this.codegen_new_typedef(x,`G_VE${cx}`);
+				console.log(`\n\tG_VE${cx},`);
+				console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
+			} break;
+			case 3832: return this.GM_VE3832_Watch_WC(x);
+			case 4724: return this.GeneratedWebCommandMetadata(x);
+			case 5754: return this.GeneratedWebCommandMetadata(x);
+			case 6827: return this.GeneratedWebCommandMetadata(x);
+			case 11487: return this.GeneratedWebCommandMetadata(x);
+			case 96368: return this.GeneratedWebCommandMetadata(x);
+			case 83769: return this.GeneratedWebCommandMetadata(x);
+			case 37414: return this.GeneratedWebCommandMetadata(x);
+		}
+	}
+	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
+	WebCommandMetadataEx(x) {
+		switch(x.rootVe) {
+			case 3854: return this.G_VE3854_WC(x);
+			case 3611: return this.GM_VE3611_WC(x);
+			case 23462: return this.GM_VE23462_WC(x);
+			case 96368: return this.GM_VE96368(x);
+			default: x===0; debugger; break;
+		}
+	}
 	/** @private @arg {GM_WC} x */
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
-		if("rootVe" in x&&!("apiUrl" in x)) {
-			let cx=x.rootVe;
-			switch(x.rootVe) {
-				default: {
-					x===0;
-					/** @private @arg {GM_WC} x */
-					this.codegen_new_typedef(x,`G_VE${cx}`);
-					console.log(`\n\tG_VE${cx},`);
-					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
-				} break;
-				case 3832: return this.GM_VE3832_Watch_WC(x);
-				case 4724: return this.GeneratedWebCommandMetadata(x);
-				case 5754: return this.GeneratedWebCommandMetadata(x);
-				case 6827: return this.GeneratedWebCommandMetadata(x);
-				case 11487: return this.GeneratedWebCommandMetadata(x);
-				case 96368: return this.GeneratedWebCommandMetadata(x);
-				case 83769: return this.GeneratedWebCommandMetadata(x);
-				case 37414: return this.GeneratedWebCommandMetadata(x);
-			}
-			return;
-		}
-		if("apiUrl" in x &&!("rootVe" in x)) return this.WebCommandMetadataWithApiUrl(x);
-		if("rootVe" in x&&"apiUrl" in x) {
-			switch(x.rootVe) {
-				case 3854: return this.G_VE3854_WC(x);
-				case 3611: return this.GM_VE3611_WC(x);
-				case 23462: return this.GM_VE23462_WC(x);
-				case 96368: return this.GM_VE96368(x);
-				default: x===0; debugger; break;
-			}
-			return;
-		}
+		if("rootVe" in x&&!("apiUrl" in x)) return this.WebCommandMetadataOnlyRootVe(x);
+		if("apiUrl" in x&&!("rootVe" in x)) return this.WebCommandMetadataWithApiUrl(x);
+		if("rootVe" in x&&"apiUrl" in x) return this.WebCommandMetadataEx(x);
 		if("sendPost" in x) {
 			const {sendPost,...y}=this.sd(cf,x); this.g(y);
 			if(sendPost!==true) debugger;
