@@ -1,1 +1,7 @@
-type E_ShareEntityService=EB_Endpoint&{shareEntityServiceEndpoint: D_ShareEntityService;};
+type E_ShareEntityService={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: GM_share_get_share_panel;
+	};
+	shareEntityServiceEndpoint: D_ShareEntityService;
+};

@@ -4429,17 +4429,15 @@ class CodegenService extends BaseService {
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
-			||b.subscriptionNotificationToggleButtonRenderer
-			||b.twoColumnWatchNextResults
 			//#region action
-			||b.changeEngagementPanelVisibilityAction
-			||b.openPopupAction
 			||b.addChatItemAction
 			||b.appendContinuationItemsAction
+			||b.changeEngagementPanelVisibilityAction
 			||b.changeEngagementPanelVisibilityAction
 			||b.createAction
 			||b.getMP_MenuAction
 			||b.hideEngagementPanelScrimAction
+			||b.openPopupAction
 			||b.openPopupAction
 			||b.replayChatItemAction
 			||b.sendFeedbackAction
@@ -4455,11 +4453,10 @@ class CodegenService extends BaseService {
 			||b.updateViewershipAction
 			//#endregion
 			//#region command
-			||b.commandExecutorCommand
-			||b.showReloadUiCommand
 			||b.addToPlaylistCommand
 			||b.adsControlFlowOpportunityReceivedCommand
 			||b.changeKeyedMarkersVisibilityCommand
+			||b.commandExecutorCommand
 			||b.commandExecutorCommand
 			||b.continuationCommand
 			||b.getInitialCommand
@@ -4477,6 +4474,7 @@ class CodegenService extends BaseService {
 			||b.scrollToEngagementPanelCommand
 			||b.showLessCommand
 			||b.showMoreCommand
+			||b.showReloadUiCommand
 			||b.showReloadUiCommand
 			||b.updateToggleButtonStateCommand
 			//#endregion
@@ -4513,6 +4511,7 @@ class CodegenService extends BaseService {
 			||b.updateUnseenCountEndpoint
 			||b.uploadEndpoint
 			||b.urlEndpoint
+			||b.userFeedbackEndpoint
 			||b.watchEndpoint
 			||b.watchPlaylistEndpoint
 			||b.ypcGetOffersEndpoint
@@ -4669,6 +4668,7 @@ class CodegenService extends BaseService {
 			||b.sourcePivotHeaderRenderer
 			||b.structuredDescriptionContentRenderer
 			||b.subscribeButtonRenderer
+			||b.subscriptionNotificationToggleButtonRenderer
 			||b.superVodBuyFlowContentRenderer
 			||b.tabbedRenderer
 			||b.tabbedSearchResultsRenderer
@@ -4698,8 +4698,11 @@ class CodegenService extends BaseService {
 			||b.watchNextEndScreenRenderer
 			||b.watchNextTabbedResultsRenderer
 			//#endregion
+			//#region other
 			||b.engagementPanelPopupPresentationConfig
-			||b.userFeedbackEndpoint
+			||b.html5PlaybackOnesieConfig
+			||b.twoColumnWatchNextResults
+			//#endregion
 			;
 		if(hg) {
 			let hr=g();
@@ -9881,7 +9884,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="ShareEntityServiceEndpoint";
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.G_CommandMetadata(commandMetadata);
+		console.log(commandMetadata);
+		debugger;
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
 	/** @private @arg {D_ShareEntityService} x */
