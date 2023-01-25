@@ -8070,7 +8070,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			ca.push(x);
 		});
-		console.log(hx);
+		console.log(hx.map(e=>parseInt(e.join(""),16)));
 		return uid;
 	}
 	/** @private @arg {D_FeaturedChannel} x */
