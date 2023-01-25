@@ -7763,24 +7763,35 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {D_Video} T @arg {string} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.R_TextRuns(ownerText);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
 		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
-		this.D_Video_Owner(owner);
 		return y;
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		if("descriptionSnippet" in x) {
-			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_Video_Omit(cf,x); this.g(y);
+		if("owner" in x&&"descriptionSnippet" in x) {
+			let {owner,descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_Video_Omit(cf,x); this.g(y);
+			this.R_TextRuns(descriptionSnippet);
 			this.tz(ownerBadges,this.RMD_Badge);
 			this.richThumbnail_Video(richThumbnail);
+			this.D_Video_Owner(owner);
+			return;
+		}
+		if("owner" in x) {
+			let {owner,...y}=this.D_Video_Omit(cf,x); this.g(y);
+			this.D_Video_Owner(owner);
+			return;
+		}
+		if("descriptionSnippet" in x) {
+			let {descriptionSnippet,...y}=this.D_Video_Omit(cf,x); this.g(y);
 			this.R_TextRuns(descriptionSnippet);
 			return;
 		}
-		let y=this.D_Video_Omit(cf,x); this.g(y);
+		x===0;
+		debugger;
 	}
 	/** @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {x;}
