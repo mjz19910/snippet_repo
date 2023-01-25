@@ -1,43 +1,63 @@
 type P_ParamsSection=
 	|"A_HideEngagementPanelScrim"
 	|"AE_Browse"
+	|"C_AdsControlFlowOpportunityReceived"
 	|"C_Executor"
 	|"CommonConfigData"
 	|"CreatePlaylist"
+	|"D_CompactVideo"
 	|"D_DesktopTopbar"
+	|"D_FeaturedChannel"
 	|"D_Notification"
 	|"D_PdgBuyFlow"
 	|"D_PlaylistSidebar"
+	|"D_ReelWatch"
+	|"D_RichGrid"
+	|"D_RichItem"
 	|"D_TemplateUpdate"
+	|"D_Video"
 	|"DE_GetNotificationMenu"
 	|"E_CreateBackstagePost"
 	|"E_CreateBackstagePost"
+	|"E_ReelWatch"
 	|"E_ShareEntityService"
 	|"GeneratedWCM"
 	|"Generic_WatchPageResponse"
 	|"GetReportForm"
 	|"GetTranscript"
+	|"GM_WC"
 	|"HrefUrl"
 	|"Next"
 	|"PlaylistContent"
 	|"PlaylistEdit"
 	|"RecordNotificationInteractions"
 	|"ReelWatch"
+	|"RS_Browse"
 	|"RS_Channel"
+	|"RS_GetLiveChat"
 	|"RS_Playlist"
+	|"RS_ReelWatchSequence"
 	|"RS_Settings"
+	|"RSB_EditPlaylist"
+	|"RSG_NotificationMenu"
+	|"RSG_SearchSuggestions"
 	|"SubscribeEndpoint"
 	|"T_Command_TP"
 	|"Tab"
 	|"TD_ItemSection_3"
+	|"D_SuperVodBuyFlowContent"
+	|"D_YpcGetCart"
+	|"MC_ResolveUrl"
+	|"RS_AccountMenu"
+	|"RS_Search"
+	|"RSG_PdgBuyFlow"
+	|"RSG_Survey"
+	|"TA_OpenPopup"
+	|"TD_ItemSection_1_CommentsEntryPoint"
 	|"TopbarLogo"
 	|"UnknownWebCommandMetadata"
 	|"WatchEndpoint"
 	|"WatchPageResponse"
-	|"GM_WC"
-	|"RS_Browse"
-	|"RSB_EditPlaylist"
-	|"TD_ItemSection_1_CommentsEntryPoint"
 	|"WatchPlaylist"
 	|"WatchResponse"
 	|"YpcGetOffers"
@@ -48,7 +68,10 @@ type P_ParamsSection=
 ;
 type T_Endpoint_CF=[
 	"Base",
+	"C_Continuation",
+	"C_GetSurvey",
 	"E_Browse",
+	"E_YpcGetCart",
 ][number];
 type D_Link_CF=[
 	"D_CompactLink",
@@ -57,7 +80,7 @@ type D_Button_CF=[
 	"D_Button",
 	`D_Button.${"Mixed"|"Styled"|"WithAccessibility"}`,
 ][number];
-function vv_x(u:keyof import("../../youtube_plugin.user.js").HandleTypes) {
+function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 	switch(u) {
 		case "log_url":
 		case "YTNavigateFinishDetail":

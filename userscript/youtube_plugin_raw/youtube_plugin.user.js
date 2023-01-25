@@ -7723,7 +7723,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
-	/** @private @template {D_RichGrid} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x);
 		this.z(contents,x => {
@@ -7891,13 +7891,13 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @private @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_CompactVideo|D_Video} T @arg {"D_CompactVideo"|"D_Video"} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @template {D_Video} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_Video} T @arg {"D_CompactVideo"|"D_Video"} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
 		this.R_TextRuns(ownerText);
@@ -8022,14 +8022,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
-		const cf="R_AccountMenu";
+		const cf="RS_AccountMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 			return null;
 		});
-		this.trackingParams("AccountMenuResponse",trackingParams);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @handler @public @arg {Response} response @arg {G_ResponseTypes} x */
 	ResponseTypes(response,x) {
@@ -8129,21 +8129,21 @@ class HandleTypes extends ServiceMethods {
 		this.R_PdgCommentPreview(commentPreview);
 		this.R_PdgColorSlider(colorSlider);
 		console.log("defaultPriceTier",defaultPriceTier);
-		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
+		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {DE_SuperThanksSelectedTier} x */
-	SuperThanksSelectedTierEntity(x) {
-		const cf="SuperThanksSelectedTierEntity";
+	DE_SuperThanksSelectedTier(x) {
+		const cf="DE_SuperThanksSelectedTier";
 		const {index,key,...y}=this.sd(cf,x); this.g(y);
-		console.log("superThanksSelectedTierEntity.index",index);
-		console.log("superThanksSelectedTierEntity.key",key);
+		console.log("super_thanks_selected_tier.index",index);
+		console.log("super_thanks_selected_tier.key",key);
 	}
 	/** @private @arg {D_PdgColorSlider} x */
 	D_PdgColorSlider(x) {
 		const cf="D_PdgColorSlider";
 		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.sd(cf,x); this.g(y);
 		this.z(notches,this.NotchesItem);
-		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
+		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {NotchesItem} x */
 	NotchesItem(x) {
@@ -8170,18 +8170,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_YpcGetCart} x */
 	D_YpcGetCart(x) {
+		const cf="D_YpcGetCart";
 		let sp=this.w(x);
-		this.params("","YpcGetCart.transactionParams",sp);
+		this.params(cf,"YpcGetCart.transactionParams",sp);
 	}
 	/** @private @arg {D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x) {
 		const cf="D_PdgCommentPreview";
 		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.sd(cf,x); this.g(y);
-		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
+		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
-		this.T_Endpoint("R_PdgBuyFlowHeader",x,a => {
+		const cf="C_GetSurvey";
+		this.T_Endpoint(cf,x,a => {
 			if(!a.getSurveyCommand) debugger;
 			this.D_GetSurvey(this.w(a));
 		},a => {
@@ -8295,7 +8297,7 @@ class HandleTypes extends ServiceMethods {
 	R_VideoViewCount(x) {x; debugger;}
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
-		const cf="SearchResponse";
+		const cf="RS_Search";
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_of_string(estimatedResults);
 		this.R_TwoColumnSearchResults(contents);
@@ -8304,7 +8306,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(refinements,this.primitive_of_string);
 		this.z(onResponseReceivedCommands,a => {
 			if("adsControlFlowOpportunityReceivedCommand" in a) {
-				return this.AdsControlFlowOpportunityReceivedCommand(a);
+				return this.C_AdsControlFlowOpportunityReceived(a);
 			};
 			debugger;
 		});
@@ -8313,11 +8315,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {x; debugger;}
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
-	AdsControlFlowOpportunityReceivedCommand(x) {
-		const cf="AdsControlFlowOpportunityReceivedCommand";
+	C_AdsControlFlowOpportunityReceived(x) {
+		const cf="C_AdsControlFlowOpportunityReceived";
 		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
+		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
 	}
 	/** @private @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
@@ -8468,7 +8470,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
-		const cf="ReelWatchSequenceResponse";
+		const cf="RS_ReelWatchSequence";
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(entries,a => this.T_Command_TP(a,this.E_ReelWatch));
 		this.trackingParams(cf,trackingParams);
@@ -8653,7 +8655,7 @@ class HandleTypes extends ServiceMethods {
 				debugger;
 			},this.GS_Client);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
-			this.AdsControlFlowOpportunityReceivedCommand(x);
+			this.C_AdsControlFlowOpportunityReceived(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
 			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
@@ -8976,7 +8978,7 @@ class HandleTypes extends ServiceMethods {
 			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 			debugger;
 			// this.WebCommandMetadata(webCommandMetadata);
-			this.t(resolveUrlCommandMetadata,this.ResolveUrlCommandMetadata);
+			this.t(resolveUrlCommandMetadata,this.MC_ResolveUrl);
 			return;
 		}
 		this.WebCommandMetadata(this.w(x));
@@ -10244,19 +10246,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
 		const cf="A_ResponseReceived"; this.k(cf,x);
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.AdsControlFlowOpportunityReceivedCommand(x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
 		debugger;
 	}
 	/** @private @arg {MC_ResolveUrl} x */
-	ResolveUrlCommandMetadata(x) {
-		const cf="ResolveUrlCommandMetadata";
+	MC_ResolveUrl(x) {
+		const cf="MC_ResolveUrl";
 		const {isVanityUrl,parentTrackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
-		this.t(parentTrackingParams,a => this.params("ResolveUrlCommandMetadata","tracking.parentTrackingParams",a));
+		this.t(parentTrackingParams,a => this.params(cf,"tracking.parentTrackingParams",a));
 	}
 	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
-	AdsControlFlowOpportunityReceivedCommandData(x) {
+	DC_AdsControlFlowOpportunityReceived(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommandData";
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
