@@ -7778,7 +7778,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(shortViewCountText,this.G_Text);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(isWatched,a => {if(a!==true) debugger;});
-		this.RMD_Badge(topStandaloneBadge);
+		this.t(topStandaloneBadge,this.RMD_Badge);
 	}
 	/** @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
