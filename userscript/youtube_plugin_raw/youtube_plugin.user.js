@@ -7883,7 +7883,7 @@ class HandleTypes extends ServiceMethods {
 	D_Video(x) {
 		const cf="D_Video";
 		let {...u}=this.D_Video_Omit(cf,x);
-		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,owner,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,...y}=u; this.g(y);
+		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,owner,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,...y}=u; this.g(y);
 		this.t(descriptionSnippet,this.R_TextRuns);
 		this.t(publishedTimeText,this.R_SimpleText);
 		this.t(lengthText,this.R_SimpleText);
@@ -7892,9 +7892,10 @@ class HandleTypes extends ServiceMethods {
 		this.tz(badges,this.RMD_Badge);
 		this.t(owner,this.D_Video_Owner);
 		this.t(shortViewCountText,this.G_Text);
-		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(isWatched,a => {if(a!==true) debugger;});
 		this.t(topStandaloneBadge,this.RMD_Badge);
+		this.t(richThumbnail,this.R_MovingThumbnail);
+		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
 	}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
@@ -7927,11 +7928,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
 		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
 		return y;
 	}
 	/** @private @arg {D_Video_Owner} x */
@@ -7969,9 +7969,8 @@ class HandleTypes extends ServiceMethods {
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		debugger;
 	}
-	/** @private @arg {D_Video['inlinePlaybackEndpoint']} x */
+	/** @private @arg {E_Watch} x */
 	D_Video_inlinePlaybackEndpoint(x) {
-		if(!x) {debugger; return;}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
 	}

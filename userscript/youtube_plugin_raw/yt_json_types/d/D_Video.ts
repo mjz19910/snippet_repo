@@ -21,6 +21,6 @@ type D_Video={
 	thumbnailOverlays: /**/G_ThumbnailOverlayItem[];
 	topStandaloneBadge?: RMD_Badge;
 	richThumbnail?: R_MovingThumbnail;
-	inlinePlaybackEndpoint: /**/E_Watch;
+	inlinePlaybackEndpoint?: E_Watch;
 	owner?: D_Video_Owner;
 };
