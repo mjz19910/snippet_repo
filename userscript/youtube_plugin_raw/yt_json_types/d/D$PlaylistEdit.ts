@@ -1,1 +1,5 @@
-type D_PlaylistEdit={playlistId: "WL";params?: string; }&T_Actions<GA_Playlist>;
+type D_PlaylistEdit={
+	actions: GA_Playlist[];
+	playlistId: "WL";
+	params?: string;
+};
