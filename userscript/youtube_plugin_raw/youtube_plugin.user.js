@@ -9540,10 +9540,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DE_Url} x */
 	DE_Url(x) {
 		const cf="DE_Url";
-		const {url,target,nofollow,...y}=this.sd(cf,x); this.g(y);
+		if("nofollow" in x) {
+			const {url,target,nofollow,...y}=this.sd(cf,x); this.g(y);
+			this.GM_E_Url_TargetUrlType(url);
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			if(nofollow!==true) debugger;
+			return;
+		}
+		const {url,target,...y}=this.sd(cf,x); this.g(y);
 		this.GM_E_Url_TargetUrlType(url);
 		if(target!=="TARGET_NEW_WINDOW") debugger;
-		if(nofollow!==true) debugger;
 	}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.H_("M_VE83769",x,this.GM_VE83769_WC);}
