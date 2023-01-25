@@ -8066,7 +8066,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_Thumbnail(watermark);
 		this.trackingParams(cf,trackingParams);
 		this.E_Browse(navigationEndpoint);
-		console.log(channelName);
+		this.primitive_of_string(channelName);
 		this.R_SubscribeButton(subscribeButton);
 	}
 	/** @private @arg {R_SubscribeButton} x */
