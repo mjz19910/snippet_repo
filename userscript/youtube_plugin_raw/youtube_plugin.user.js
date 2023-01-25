@@ -8007,7 +8007,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
 	/** @private @arg {R_PaidDigitalGoods} x */
-	R_PaidDigitalGoods(x) {x; debugger;}
+	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods",x,this.B_Hack);}
+	/** @private @arg {B_Hack} x */
+	B_Hack(x) {
+		const cf="B_Hack";
+		const {hack,...y}=this.sd(cf,x); this.g(y);
+		if(hack!==true) debugger;
+	}
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
