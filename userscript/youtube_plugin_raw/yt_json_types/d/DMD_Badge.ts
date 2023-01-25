@@ -1,6 +1,6 @@
 type DMD_Badge=(DMD_Badge_<"CHECK_CIRCLE_THICK">&{
 	style: "BADGE_STYLE_TYPE_VERIFIED";
-	tooltip: string;
+	tooltip: "Verified";
 	trackingParams: string;
 	accessibilityData: D_Label;
 

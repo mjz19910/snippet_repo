@@ -9208,7 +9208,7 @@ class HandleTypes extends ServiceMethods {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
 				if(icon.iconType!=="CHECK_CIRCLE_THICK") debugger;
 				this.T_Icon(icon);
-				console.log("badge.tooltip",tooltip);
+				if(tooltip!=="Verified") debugger;
 				this.primitive_of_string(tooltip);
 				this.trackingParams(cf,trackingParams);
 				this.D_Label(accessibilityData);
