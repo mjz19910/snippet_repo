@@ -5277,7 +5277,7 @@ class ParserService extends BaseService {
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
 		switch(root) {
-			case "GetTranscript": return this.parse_get_transcript(param_map);
+			case "DE_GetTranscript": return this.parse_get_transcript(param_map);
 		}
 		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
@@ -7269,7 +7269,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_WatchPage$1} x */
 	R_Generic_WatchPage(x) {
-		const cf="Generic_WatchPageResponse";
+		const cf="R_Generic_WatchPage";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.E_Watch(endpoint);
 		this.RS_Watch(response);
@@ -7280,7 +7280,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_VE3832_WatchPage} x */
 	R_VE3832_WatchPage(x) {
-		const cf="WatchPageResponse";
+		const cf="R_VE3832_WatchPage";
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
@@ -7737,7 +7737,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
-		const cf="Tab"; this.k(cf,x);
+		const cf="D_Tab"; this.k(cf,x);
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				default: debugger; break;
@@ -8573,7 +8573,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
 		this.tz(engagementPanels,this.G_EngagementPanelItem);
 		this.t(videoReporting,this.R_ReportFormModal);
-		this.t(queueContextParams,a => this.params("Next","next.queue_context_params",a));
+		this.t(queueContextParams,a => this.params(cf,"next.queue_context_params",a));
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
 	/** @private @arg {G_NextContents} x */
@@ -9053,7 +9053,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {
-		const cf="WatchEndpoint";
+		const cf="E_Watch";
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		x: if(clickTrackingParams) {
 			let x=clickTrackingParams;
@@ -9076,13 +9076,13 @@ class HandleTypes extends ServiceMethods {
 		this.t(playlistId,this.playlistId);
 		if(index!==void 0) this.primitive_of(index,"number");
 		this.t(playlistSetVideoId,this.primitive_of_string);
-		if(params!==void 0) this.params("WatchEndpoint","watch.params",params);
+		if(params!==void 0) this.params(cf,"watch.params",params);
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
 		this.t(loggingContext,this.R_VssLoggingContext);
 		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
 		this.t(a1,this.PrefetchHintConfig);
-		this.t(playerParams,a => this.playerParams("WatchEndpoint","watch.player_params",a));
+		this.t(playerParams,a => this.playerParams(cf,"watch.player_params",a));
 		this.t(a2,this.WatchEndpointMusicConfig);
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
 		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
@@ -9786,9 +9786,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DE_GetTranscript} x */
 	DE_GetTranscript(x) {
-		const cf="GetTranscriptData";
+		const cf="DE_GetTranscript";
 		const {params,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.params("GetTranscript","get_transcript.params",params);
+		this.params(cf,"get_transcript.params",params);
 	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -9978,7 +9978,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_YpcGetOffers} x */
 	D_YpcGetOffers(x) {
-		const cf="YpcGetOffers";
+		const cf="D_YpcGetOffers";
 		const {params,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"ypc_get_offers.params",params);
 	}
@@ -10685,11 +10685,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_WatchPlaylist} x */
 	D_WatchPlaylist(x) {
-		const cf="WatchPlaylist";
+		const cf="D_WatchPlaylist";
 		const {playlistId,index,params,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.parser.parse_playlist_id(playlistId);
 		this.primitive_of(index,"number");
-		this.params("WatchPlaylist","watch_playlist.params",params);
+		this.params(cf,"watch_playlist.params",params);
 	}
 	/** @private @arg {MMD_AdLayout_1} x */
 	AdLayoutMetadataItem(x) {
