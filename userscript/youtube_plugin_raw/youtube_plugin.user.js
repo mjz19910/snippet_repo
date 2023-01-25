@@ -5215,7 +5215,7 @@ class ParserService extends BaseService {
 		console.log("[new_get_transcript_endpoint_params]",param_obj);
 		debugger;
 	}
-	/** @api @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @api @public @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
@@ -5250,7 +5250,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
-	/** @api @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @api @public @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	on_player_params(root,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -5261,7 +5261,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	cache_interaction_requests=[];
-	/** @unused_api @protected @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @unused_api @protected @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	on_serialized_interactions_request_params(root,path,x) {
 		if(this.cache_interaction_requests.includes(x)) return;
 		this.cache_interaction_requests.push(x);
@@ -5269,7 +5269,7 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		this.parse_serialized_interactions_request(root,path,param_map);
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
 	parse_serialized_interactions_request(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5295,8 +5295,8 @@ class ParserService extends BaseService {
 		f();
 		console.groupEnd();
 	};
-	/** @private @arg {P$PathRoot} path @arg {number[]} map_keys @arg {ParamMapValue} tv @arg {number|null} ta */
-	get_parse_fns(path,map_keys,tv,ta=null) {
+	/** @private @arg {P_PathRoot} path @arg {number[]} map_keys @arg {ParamMapValue} tv @arg {number|null} map_entry_key */
+	get_parse_fns(path,map_keys,tv,map_entry_key=null) {
 		let path_parts=split_string(path,".");
 		/** @private @arg {number} idx */
 		let gd=(idx) => {console.log("[param_next.next_new_ns]",path_parts.join(".")); gen_next_part(idx);};
@@ -5310,8 +5310,8 @@ class ParserService extends BaseService {
 			if(path_parts.length===idx) {
 				if(tv instanceof Map) case_part="if(tv instanceof Map) return;";
 				switch(typeof tv) {
-					case "number": case_part='if(typeof tv==="number") return this.save_number(`[${path}]`,tv);\n'; break;
-					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,tv);\n'; break;
+					case "number": case_part='if(typeof tv==="number") return this.save_number(`[${path}]`,map_entry_value);\n'; break;
+					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,map_entry_value);\n'; break;
 				}
 			}
 			let res_case="";
@@ -5327,23 +5327,23 @@ class ParserService extends BaseService {
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_path_gen]",path);
-			/** @private @type {P$LogItems} */
-			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
+			/** @private @type {P_LogItems} */
+			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
 			console.log(`
 			case "${path}":
 				switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
-				/** @private @type {P$PathRoot} */
-				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+				/** @private @type {P_PathRoot} */
+				return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		return {u,gen_next_part,new_path};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map @arg {ParamMapValue[]|undefined} tv @arg {number[]} map_keys @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map @arg {ParamMapValue[]|undefined} tv @arg {number[]} map_keys @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 	parse_key(root,path,map,map_keys,ta,tv,cb) {
 		this.parse_value(root,path,map,map_keys,ta,tv,cb);
 	}
-	/** @private @type {P$LogItems} */
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
+	/** @private @type {P_LogItems} */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
 		let saved_map_keys=map_keys.slice();
 		/** @private @arg {string} ns @arg {()=>void} f */
@@ -5354,7 +5354,7 @@ class ParserService extends BaseService {
 		};
 		let new_ns=() => {
 			console.log("[parse_value.new_ns_gen]",path);
-			/** @private @type {P$LogItems} */
+			/** @private @type {P_LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
 			console.log(`-- [parse_value.gen_ns] --\n\n\t${saved_map_keys.map(e => `case ${e}:`).join(" ")} \n`);
 		};
@@ -5364,16 +5364,20 @@ class ParserService extends BaseService {
 			let cx=map_keys.indexOf(map_entry_key);
 			if(cx>-1) map_keys.splice(cx,1);
 			if(callback===null) {
-				/** @private @type {P$LogItems} */
+				/** @private @type {P_LogItems} */
 				switch(path) {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						debugger;
 						return;
 					}
+					case "SerializedSlotAdServingDataEntry":
+						switch(map_entry_key) {case 1: case 3: case 4: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.player_params.f40.f1":
 						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}
-						/** @private @type {P$PathRoot} */
+						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5433,7 +5437,7 @@ class ParserService extends BaseService {
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,tva) {
 		let off=1;
 		for(let val of tva) {
@@ -5466,20 +5470,21 @@ class ParserService extends BaseService {
 		this.save_number(`[${path}]`,x[1]);
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapValue[]} tva */
 	parse_param_next(root,path,tva) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,tva);
 		if(tva.length!==1) return;
-		let tv=tva[0];
+		let map_entry_value=tva[0];
 		let key_index=this.parse_key_index;
-		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
+		if(map_entry_value instanceof Map) this.parse_any_param(root,path,new Map(map_entry_value));
 		let path_parts=split_string(path,".");
-		let pp=this.get_parse_fns(path,[],tv);
+		let pp=this.get_parse_fns(path,[],map_entry_value);
 		let u=pp.u;
 		const idx=1;
-		/** @private @type {P$LogItems} */
+		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "SerializedSlotAdServingDataEntry": u(idx); debugger; break;
 			case "YpcGetCart": {
 				const idx=2;
 				switch(path_parts[1]) {
@@ -5490,16 +5495,16 @@ class ParserService extends BaseService {
 			} break;
 			case "AdServingDataEntry": {
 				const idx=2;
-				if(path_parts.length===1) switch(tv) {default: debugger; return;}
+				if(path_parts.length===1) switch(map_entry_value) {default: debugger; return;}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
 					case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13":
 					case "f14": {
 						const idx=3;
 						if(path_parts.length===2) {
-							if(tv instanceof Map) return;
-							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-							switch(tv) {default: debugger; return;}
+							if(map_entry_value instanceof Map) return;
+							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
@@ -5526,12 +5531,12 @@ class ParserService extends BaseService {
 					case "player_params": {
 						const idx=3;
 						if(path_parts.length===2) {
-							if(tv instanceof Map) return;
-							switch(tv) {default: debugger; return;}
+							if(map_entry_value instanceof Map) return;
+							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							/** @private @type {P$LogItems} */
+							/** @private @type {P_LogItems} */
 							// [watch.player_params.f12]
 							// [watch.player_params.f25]
 							case "f2": case "f3": case "f7": case "f8": case "f9":
@@ -5539,10 +5544,10 @@ class ParserService extends BaseService {
 							case "f33": case "f40": case "f56": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(tv instanceof Map) return;
-									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
-									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-									if(this.is_bigint(tv)) return this.handle_bigint(path,tv);
+									if(map_entry_value instanceof Map) return;
+									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
 									debugger;
 								}
 								switch(path_parts[3]) {
@@ -5566,7 +5571,7 @@ class ParserService extends BaseService {
 			case "entity_key": {
 				const idx=2;
 				if(path_parts.length===1) {
-					switch(tv) {default: debugger; return;}
+					switch(map_entry_value) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
@@ -5575,9 +5580,9 @@ class ParserService extends BaseService {
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
-							if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
-							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-							switch(tv) {default: u(idx-1); debugger; return;}
+							if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							switch(map_entry_value) {default: u(idx-1); debugger; return;}
 						}
 						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
 					} break;
@@ -5591,9 +5596,9 @@ class ParserService extends BaseService {
 					// [tracking.trackingParams]
 					case "trackingParams": {
 						const idx=3;
-						/** @private @type {P$LogItems} */
+						/** @private @type {P_LogItems} */
 						if(path_parts.length===2) {
-							switch(tv) {default: debugger; return;}
+							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
@@ -5603,11 +5608,11 @@ class ParserService extends BaseService {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(path_parts[2]==="f8") return;
-									if(tv instanceof Map) return;
-									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
-									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-									if(this.is_bigint(tv)) return this.handle_bigint(path,tv);
-									switch(tv) {default: debugger; return;}
+									if(map_entry_value instanceof Map) return;
+									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
+									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
@@ -5616,18 +5621,18 @@ class ParserService extends BaseService {
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(tv instanceof Map) return;
+											if(map_entry_value instanceof Map) return;
 											if(calc_skip()) return;
-											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-											switch(tv) {default: debugger; return;}
+											if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
 											default: u(idx); debugger; path_parts[4]===""; break;
 											case "f1": case "f2": case "f3": {
 												const idx=6;
 												if(path_parts.length===5) {
-													if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-													switch(tv) {default: u(idx-1); debugger; return;}
+													if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+													switch(map_entry_value) {default: u(idx-1); debugger; return;}
 												}
 												switch(path_parts[5]) {default: u(idx); debugger; path_parts[5]===""; break;}
 											} break;
@@ -5668,9 +5673,9 @@ class ParserService extends BaseService {
 				debugger;
 			} break;
 		}
-		console.log(`[${path}] [idx=${key_index}]`,root,tv);
+		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
 	parse_any_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5686,7 +5691,7 @@ class ParserService extends BaseService {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		debugger;
 	}
-	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
 	parse_player_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5702,7 +5707,7 @@ class ParserService extends BaseService {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		debugger;
 	}
-	/** @api @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
+	/** @api @public @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
 	parse_endpoint_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -6851,7 +6856,7 @@ class ServiceMethods extends ServiceData {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @protected @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @protected @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
@@ -6901,7 +6906,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @protected @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	/** @protected @arg {ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
@@ -9320,9 +9325,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
 	D_SerializedSlotAdServingDataEntry(x) {
+		const cf="D_SerializedSlotAdServingDataEntry";
 		const {serializedSlotAdServingDataEntry: a,...y}=x; this.g(y);
-		let dec=this._decode_b64_url_proto_obj(a);
-		console.log(dec);
+		this.params(cf,"SerializedSlotAdServingDataEntry",a);
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
