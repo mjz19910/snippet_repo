@@ -7551,14 +7551,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.WebCommandMetadata(x);
 	}
-	/** @private @arg {GM_VE6827_WC} x */
-	GM_VE6827_WC(x) {
-		const cf="G_VE6827_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
-		this._decode_channel_url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC";
@@ -7583,20 +7575,6 @@ class HandleTypes extends ServiceMethods {
 		if(y0!=="channel") debugger;
 		if(this.str_starts_with("UC",y1)) return;
 		debugger;
-	}
-	/** @private @arg {GM_VE23462_WC} x */
-	GM_VE23462_WC(x) {
-		const cf="GM_VE23462_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
-		if(url!=="/account_notifications") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @unused @protected @arg {D_Browse_Id<"">} x */
-	E_D__Browse(x) {
-		const cf="D_Browse";
-		const {browseId,...y}=this.sd(cf,x); this.g(y);
-		if(x.browseId!=="") debugger;
 	}
 	/** @private @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
