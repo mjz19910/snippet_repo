@@ -9176,11 +9176,14 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @template {{}} T @arg {T_Results<Record<"contents",T[]>>} x @arg {(this:this,x:T)=>void} f  */
+	/** @private @template {{}} T @arg {T_Results<{trackingParams: string;}&Record<"contents",T[]>>} x @arg {(this:this,x:T)=>void} f  */
 	D_TwoColumnWatchNextResultsInner(x,f) {
 		const cf="D_TwoColumnWatchNextResultsInner";
 		this.save_keys(`[${cf}]`,x);
-		this.z(this.w(this.w(x)),f);
+		let u=this.w(x);
+		let {trackingParams,...y}=u;
+		this.trackingParams(`${cf}.results`,trackingParams);
+		this.z(this.w(y),f);
 	}
 	/** @pub @arg {E_Url} x */
 	E_Url(x) {x; debugger;}
