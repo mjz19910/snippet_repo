@@ -9,7 +9,6 @@ type D_SubscribeButton={
 	unsubscribedButtonText: R_TextRuns;
 	trackingParams: string;
 	unsubscribeButtonText: R_TextRuns;
-	serviceEndpoints?: (E_Subscribe|SubscribeButtonData$SignalServiceEndpoint)[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 	notificationPreferenceButton?: R_SubscriptionNotificationToggleButton;

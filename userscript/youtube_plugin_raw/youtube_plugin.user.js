@@ -8074,15 +8074,15 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton";
-		const {buttonText,subscribed,enabled,type,...y}=this.sd(cf,x);
+		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.sd(cf,x);
 		this.R_TextRuns(buttonText);
 		this.primitive_of(subscribed,"boolean");
 		if(enabled!==true) debugger;
 		if(type!=="FREE") debugger;
-		let [{...sub},o1]=this.unwrap_prefix(y,"subscribed");
+		let [sub,o1]=this.unwrap_prefix(y,"subscribed");
 		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
-		/** @arg {{buttonText: R_TextRuns;entityKey: string;} | {buttonText: R_TextRuns;}} x */
-		let rr=(x)=>{
+		/** @arg {RemovePrefix<D_SubscribeButton,"subscribed">} x */
+		let r_sub=({...x})=>{
 			if("entityKey" in x) {
 				const {buttonText,entityKey,...y}=x; this.g(y);
 				this.R_TextRuns(buttonText);
@@ -8096,13 +8096,29 @@ class HandleTypes extends ServiceMethods {
 			}
 			this.g(x);
 		}
-		rr(sub);
-		un_sub.buttonText;
-		let [un_sub_2,o3]=this.unwrap_prefix(o2,"unsubscribe");
-		let [sub_2,o4]=this.unwrap_prefix(o3,"subscribe");
-		un_sub_2.accessibility;
-		sub_2.accessibility;
-		o4.channelId;
+		r_sub(sub);
+		/** @arg {RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
+		let r_un_sub=({...x})=>{
+			const {buttonText,...y}=x; this.g(y);
+			this.R_TextRuns(buttonText);
+		}
+		r_un_sub(un_sub);
+		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
+		let [un_sub_2,o4]=this.unwrap_prefix(o3,"unsubscribe");
+		/** @arg {RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
+		let r_sub_2=({...x})=>{
+			const {accessibility,...y}=x; this.g(y);
+			this.D_Accessibility(accessibility);
+		}
+		r_sub_2(sub_2);
+		/** @arg {RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
+		let r_un_sub_2=({...x})=>{
+			const {buttonText,accessibility,...y}=x; this.g(y);
+			this.R_TextRuns(buttonText);
+			this.D_Accessibility(accessibility);
+		}
+		r_un_sub_2(un_sub_2);
+		this.g(o4);
 		console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(y)[0]);
 	}
 	/** @private @arg {RSL_Like} x */
