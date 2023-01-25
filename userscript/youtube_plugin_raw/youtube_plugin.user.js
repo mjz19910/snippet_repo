@@ -3024,7 +3024,7 @@ class BaseService extends BaseServicePrivate {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class YtHandlers extends BaseService {
-	/** @arg {{}} item */
+	/** @api @public @arg {{}} item */
 	filter_renderer_contents_item(item) {
 		let keys=this.get_keys_of(item);
 		for(let key of keys) {
