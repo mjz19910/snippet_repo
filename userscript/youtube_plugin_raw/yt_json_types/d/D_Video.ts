@@ -72,6 +72,6 @@ type D_Video_Base={
 		thumbnail: D_Thumbnail;
 		navigationEndpoint: E_Browse;
 		accessibility: D_Accessibility;
-		title: "Asahi Lina / 朝日リナ";
+		title: string;
 	};
 };
