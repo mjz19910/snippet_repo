@@ -5498,7 +5498,17 @@ class ParserService extends BaseService {
 				if(path_parts.length===1) {
 					switch(map_entry_value) {default: debugger; return;}
 				}
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break;case "f1": u(idx); debugger; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f1": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+					} break;
+				}
 			} break;
 			case "slot_ad_serving_data_entry": {
 				const idx=2;
