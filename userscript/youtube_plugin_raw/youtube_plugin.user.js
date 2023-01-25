@@ -8337,14 +8337,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {UUIDString} x */
 	parse_uuid(x) {
 		let uuid_parts=split_string(x,"-");
-		let [up0,up1,up2,up3,up4]=uuid_parts;
-		console.log(up0);
+		let [_up0,up1,up2,up3,_up4]=uuid_parts;
 		if(up1!=="0000") debugger;
 		if(split_string(up2,"")[0]!=="2") debugger;
 		let bd=parseInt(split_string(up3,"")[0],16).toString(2);
 		if(bd.length!==4) debugger;
 		if(bd.slice(0,2)!=="10") debugger;
-		console.log([up0,up2,up3,up4]);
 		return uuid_parts;
 	}
 	/** @private @arg {D_FeaturedChannel} x */
