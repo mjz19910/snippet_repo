@@ -857,8 +857,13 @@ class MyReader {
 	reset_and_read_any(size) {
 		return this.read_any(size,0);
 	}
+	/** @private */
 	_use() {
 		this.reset_and_read_any(0);
+	}
+	static {
+		let test_instance=new this(new Uint8Array(0));
+		test_instance._use();
 	}
 	/** @private @type {boolean} */
 	failed=false;
@@ -1922,7 +1927,7 @@ class ServiceResolver {
 		if(!this.services) throw new Error("No services");
 		this.services[key]=value;
 	}
-	/** @arg {keyof T} k */
+	/** @private @arg {keyof T} k */
 	_use(k) {
 		/** @private @type {any} */
 		let x={};
@@ -1932,6 +1937,10 @@ class ServiceResolver {
 		/** @private @type {Extract<T, {}>[keyof T]} */
 		let v=x;
 		this.set(k,v);
+	}
+	static {
+		let y=new this({a: 1},{});
+		y._use("a");
 	}
 }
 //#endregion
@@ -1944,7 +1953,7 @@ function export_(fn) {
 }
 function main() {
 	setTimeout(() => {
-		window.yt_plugin?.ds.num_bitmap_console();
+		window.yt_plugin?.get_data_saver().num_bitmap_console();
 	},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ResolverT<Services,ServiceOptions>} */
@@ -2170,7 +2179,7 @@ class ApiBase {
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
-	/** @export @public @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	/** @protected @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
 			debugger;
@@ -2690,8 +2699,10 @@ class BaseServicePrivate extends ApiBase {
 	constructor(x) {
 		super();
 		this.#x=x;
+		/** @protected */
 		this.ds=data_saver;
 	}
+	/** @protected */
 	get x() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value;
@@ -2789,7 +2800,7 @@ class BaseService extends BaseServicePrivate {
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @api @public @template {string} T @arg {T} str @returns {UrlParse<T>} */
+	/** @protected @template {string} T @arg {T} str @returns {UrlParse<T>} */
 	parse_with_url_parse(str) {
 		let s=new URL(str);
 		/** @private @type {any} */
@@ -2805,10 +2816,15 @@ class BaseService extends BaseServicePrivate {
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
+	/** @private */
 	_use() {
 		this._decode_b64_proto_obj(btoa("\0"));
 	}
-	/** @api @public @arg {string} str */
+	static {
+		let y=new this({value:new ServiceResolver({},{})});
+		y._use();
+	}
+	/** @protected @arg {string} str */
 	_decode_b64_url_proto_obj(str) {
 		let buffer=base64_url_dec.decodeByteArray(str);
 		if(!buffer) return null;
@@ -3001,13 +3017,23 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @api @public @type {this['ds']['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
+	/** @protected @type {KnownDataSaver['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
 	save_keys(k,x) {
-		this.ds.save_keys(k,x);
+		return this.ds.save_keys(k,x);
 	}
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class YtHandlers extends BaseService {
+	/** @arg {{}} item */
+	filter_renderer_contents_item(item) {
+		let keys=this.get_keys_of(item);
+		for(let key of keys) {
+			let is_blacklisted=this.blacklisted_item_sections.get(key);
+			if(is_blacklisted!==void 0) return !is_blacklisted;
+			console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
+		}
+		return true;
+	}
 	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		super(res);
@@ -3060,7 +3086,8 @@ class YtHandlers extends BaseService {
 		let parsed_url=convert_to_url(request).url;
 		/** @private @type {D_ApiUrlFormat} */
 		let api_url=as(parsed_url.href);
-		let url_type=this.x.get("handle_types").use_template_url(api_url);
+		let ht=this.x.get("response_types_handler");
+		let url_type=ht.decode_url(api_url);
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
@@ -3079,8 +3106,7 @@ class YtHandlers extends BaseService {
 		}
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
-		let ht=this.x.get("response_types_handler");
-		let res=ht.get_res_data(url_type,data);
+		let res=ht.decode_input(url_type,data);
 		ht.run(response,res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
@@ -3244,15 +3270,7 @@ class YtObjectVisitor {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
 		if(renderer.contents===void 0) return;
-		renderer.contents=renderer.contents.filter((item) => {
-			let keys=state.t.get_keys_of(item);
-			for(let key of keys) {
-				let is_blacklisted=t.blacklisted_item_sections.get(key);
-				if(is_blacklisted!==void 0) return !is_blacklisted;
-				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
-			}
-			return true;
-		});
+		renderer.contents=renderer.contents.filter(state.t.filter_renderer_contents_item,state.t);
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer(state,renderer) {
@@ -3659,6 +3677,14 @@ class Services {
 			run(response,x) {
 				this.ResponseTypes.call(this.x.get("handle_types"),response,x);
 			}
+			/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
+			decode_input(url_type,x) {
+				return this.get_res_data(url_type,x);
+			}
+			/** @public @arg {D_ApiUrlFormat} url */
+			decode_url(url) {
+				return this.use_template_url(url);
+			}
 		}
 		this.ht_caller=new HT_Caller(x);
 		this.response_types_handler=new RT_Caller(x);
@@ -3858,6 +3884,9 @@ class YtPlugin extends BaseService {
 	add_function(function_obj) {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
+	}
+	get_data_saver() {
+		return this.ds;
 	}
 }
 //#endregion
@@ -6500,11 +6529,13 @@ class ServiceData extends BaseService {
 		"2160p60","1440p60","1080p60","720p60",
 		"1080p","720p","480p","360p","240p","144p"
 	];
+	/** @protected */
 	valid_fps_arr=[13,25,30,50,60];
+	/** @protected */
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @api @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
+	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
 	get_res_data(url_type,x) {
 		/** @private @type {T_Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
@@ -6535,7 +6566,7 @@ class ServiceMethods extends ServiceData {
 			data: x,
 		};
 	}
-	/** @api @public @arg {D_ApiUrlFormat} x */
+	/** @protected @arg {D_ApiUrlFormat} x */
 	use_template_url(x) {
 		const res_parse=this.parse_with_url_parse(x);
 		if("_tag" in res_parse) {
@@ -7325,6 +7356,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(playlistEditResults,this.g);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private */
 	log_url=false;
 	/** @private @arg {R_BrowsePage} x */
 	R_BrowsePage(x) {
@@ -8050,6 +8082,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.type) {
 			case "_Generic": return g(x);
 		}
+		/** @private */
 		this._current_response_type=x.type;
 		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
 		let v=x;
@@ -8801,9 +8834,9 @@ class HandleTypes extends ServiceMethods {
 		if("endScreenVideoRenderer" in x) return;
 		debugger;
 	}
-	/** @arg {string} a @arg {{}} b */
+	/** @private @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
-	/** @template {{}} T @arg {string} cf @arg {T} x */
+	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	sd(cf,x) {
 		this.k(cf,x);
 		return x;
@@ -9083,6 +9116,7 @@ class HandleTypes extends ServiceMethods {
 	D_CommonConfig(x) {const cf="D_CommonConfig"; this.H_(cf,x,x => this.parser.parse_url(cf,x));}
 	/** @private @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,this.D_VssLoggingContext);}
+	/** @private */
 	_decoder=new TextDecoder();
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {

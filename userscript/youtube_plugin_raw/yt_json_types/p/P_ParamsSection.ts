@@ -149,28 +149,12 @@ type D_ChipCloudChip_Omit_CF=[
 ][number];
 function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 	switch(u) {
-		case "log_url":
-		case "_current_response_type":
-		case "sd":
-		case "k":
-		case "_decoder":
-		case "get_res_data":
-		case "use_template_url":
-		case "valid_fps_arr":
-		case "format_quality_arr":
-		case "parse_with_url_parse":
-		case "_use":
-		case "_decode_b64_url_proto_obj":
 		case "TODO_true":
-		case "save_keys":
-		case "ds":
-		case "x":
 		case "parser":
 		case "codegen":
 		case "save_string_api":
 		case "log_skipped_strings":
 		case "get_name_from_keys":
-		case "get_keys_of":
 	}
 }
 vv_x("TODO_true");
