@@ -9558,7 +9558,8 @@ class HandleTypes extends ServiceMethods {
 		switch(su[0]) {
 			case "www.youtube.com": return this.handle_yt_url(su);
 			case "studio.youtube.com": return this.handle_yt_studio_url(su);
-			default: debugger; break;
+			case "music.youtube.com": return this.handle_yt_music_url_parts(su);
+			default: su[0]===""; debugger; break;
 		}
 		debugger;
 	}
@@ -9592,6 +9593,11 @@ class HandleTypes extends ServiceMethods {
 			case "https://music.youtube.com/": break;
 			default: debugger; break;
 		}
+	}
+	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url'],`${string}://music.youtube.com${string}`>,"//">[1],"/">} x */
+	handle_yt_music_url_parts(x) {
+		if(x.length===1&&x[0]==="music.youtube.com") return;
+		debugger;
 	}
 	/** @private @arg {GM_VE83769_UrlType} x */
 	GM_VE83769_UrlType(x) {
