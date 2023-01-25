@@ -8480,14 +8480,20 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint(cf,x,x => {this.y(x,this.D_ReelWatch);},x => {x; debugger;});
 	}
 	/** @private @arg {D_ReelWatch} x */
-	D_ReelWatch(x) {this.H_("D_ReelWatch",x,a => {a; debugger;});}
-	/** @private @arg {LiveChatContinuation} x */
-	LiveChatContinuation(x) {x; debugger;}
+	D_ReelWatch(x) {
+		const cf="D_ReelWatch";
+		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=this.sd(cf,x); this.g(y);
+		this.t(videoId,this.videoId);
+		this.params(cf,"reel.player_params",playerParams);
+		this.params(cf,"reel.params",params);
+	}
+	/** @private @arg {RC_LiveChat} x */
+	RC_LiveChat(x) {x; debugger;}
 	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
 		const cf="RS_GetLiveChat";
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.LiveChatContinuation(a1);
+		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
 	}
 	/** @private @arg {RSG_NotificationMenu} x */

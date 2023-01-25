@@ -1,0 +1,1 @@
+type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
