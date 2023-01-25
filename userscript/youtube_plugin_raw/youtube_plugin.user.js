@@ -7665,13 +7665,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
-	/** @arg {T_Omit_Compact_Video<D_Video>} x */
-	Omit_Menu_Video(x) {x;}
+	/** @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
+	Omit_Menu_Video(cf,x) {
+		let u=this.Omit$Compact$Video(cf,x);
+		const {thumbnail,longBylineText,lengthText,viewCountText,navigationEndpoint,ownerBadges,shortBylineText,menu,richThumbnail,...y}=u;
+		this.z([shortBylineText,viewCountText,lengthText],x => this.G_Text(x));
+		console.log("rich.thumb",richThumbnail);
+		return y;
+	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
-		const cf="D_Video"; this.k(cf,x);
-		let {...y}=this.Omit$Compact$Video(cf,x);
-		{y; debugger;}
+		const cf="D_Video";
+		let {descriptionSnippet,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...v}=this.Omit_Menu_Video(cf,x);
+		{v; debugger;}
 	}
 	/** @arg {R_Radio} x */
 	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
@@ -8866,7 +8872,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
 		const cf="D_CompactPlaylist";
-		let u=this.Omit$Compact$Player(cf,x);
+		let u=this.Omit_Compact_Player(cf,x);
 		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=this.sd(cf,u);
 		this.R_TextRuns(shortBylineText);
 		this.tz(ownerBadges,this.R_MetadataBadge);
@@ -8953,7 +8959,7 @@ class HandleTypes extends ServiceMethods {
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
 	/** @arg {string} cf @template {D_CompactVideo|D_CompactRadio} T @arg {T} x */
 	Omit$Compact$Radio(cf,x) {
-		let {menu,navigationEndpoint,thumbnail,longBylineText,...y}=this.Omit$Compact$Player(cf,x);
+		let {menu,navigationEndpoint,thumbnail,longBylineText,...y}=this.Omit_Compact_Player(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.E_Watch(navigationEndpoint);
 		this.R_Menu(menu);
@@ -8992,8 +8998,8 @@ class HandleTypes extends ServiceMethods {
 			console.log("[log_keys_of] [%s] [%s]",cf,uk.join(",").split(",")[0]);
 		}
 	}
-	/** @arg {string} cf @template {D_Video|D_PlayerOverlayAutoplay|D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
-	Omit$Compact$Player(cf,x) {
+	/** @arg {string} cf @template {R_Omit_Compact_Player} T @arg {T} x */
+	Omit_Compact_Player(cf,x) {
 		const {title,trackingParams,thumbnailOverlays,...y}=this.sd(cf,x); // !
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
@@ -9010,9 +9016,9 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @arg {string} cf @template {D_Video|D_PlayerOverlayAutoplay|D_CompactVideo} T @arg {T} x */
+	/** @arg {string} cf @template {R_Omit_Compact_Video} T @arg {T} x */
 	Omit$Compact$Video(cf,x) {
-		let {videoId,shortViewCountText,publishedTimeText,...y}=this.Omit$Compact$Player(cf,x);
+		let {videoId,shortViewCountText,publishedTimeText,...y}=this.Omit_Compact_Player(cf,x);
 		this.videoId(videoId);
 		this.G_Text(publishedTimeText);
 		this.G_Text(shortViewCountText);
@@ -9021,19 +9027,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
-		let {
-			videoId,
-			accessibility,publishedTimeText,shortViewCountText,
-			shortBylineText,ownerBadges,viewCountText,lengthText,
-			channelThumbnail,richThumbnail,badges,...y
-		}=this.Omit$Compact$Radio(cf,x); this.g(y);
-		this.videoId(videoId);
+		let {accessibility,channelThumbnail,badges,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
 		this.G_Text(publishedTimeText);
 		this.G_Text(shortViewCountText);
 		this.D_Accessibility(accessibility);
-		this.z([shortBylineText,viewCountText,lengthText],x => this.R_TextRuns(x));
 		console.log("chan.thumb",channelThumbnail);
-		console.log("rich.thumb",richThumbnail);
 		this.t(badges,a => console.log("badge",a));
 	}
 	/** @arg {R_AdSlot} x */
