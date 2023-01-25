@@ -14,7 +14,7 @@ type D_PlaylistHeader={
 	serviceEndpoints: D_PlaylistHeader_ServiceEndpointItem[];
 	stats: R_TextWithRuns[];
 	briefStats: R_TextWithRuns[];
-	editorEndpoint: PlaylistEditorEndpoint;
+	editorEndpoint: E_PlaylistEditor;
 	playlistHeaderBanner: R_HeroPlaylistThumbnail;
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;

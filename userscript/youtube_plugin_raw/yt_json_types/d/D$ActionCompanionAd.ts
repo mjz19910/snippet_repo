@@ -1,6 +1,6 @@
 type D_ActionCompanionAd={
-	headline: TemplatedText;
-	description: TemplatedText;
+	headline: D_TemplatedText;
+	description: D_TemplatedText;
 	actionButton: R_Button;
 	iconImage: R_ThumbnailsList;
 	bannerImage: R_ThumbnailsList;

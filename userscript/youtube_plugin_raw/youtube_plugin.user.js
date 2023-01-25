@@ -7506,7 +7506,7 @@ class HandleTypes extends ServiceMethods {
 		if(accessibility) return this.D_Label(accessibility);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
-		this.t(icon,this.T$Icon);
+		this.t(icon,this.T_Icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		this.t(serviceEndpoint,this.ES_Button);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
@@ -8382,12 +8382,12 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
-	/** @template U @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"NOT_INTERESTED",U>} */
+	/** @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"NOT_INTERESTED",any>} */
 	is_MenuItemNotInt(x) {
 		if("icon" in x) return x.icon.iconType==="NOT_INTERESTED";
 		return false;
 	}
-	/** @template U @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",U>} */
+	/** @arg {RD_MenuServiceItem} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",any>} */
 	is_MenuItem_AQ(x) {
 		if("icon" in x) return x.icon.iconType==="ADD_TO_QUEUE_TAIL";
 		return false;
@@ -8397,17 +8397,33 @@ class HandleTypes extends ServiceMethods {
 		this.H_("R_MenuServiceItem",x,x => {
 			const cf="Menu"; this.k(cf,x);
 			if("icon" in x) {
-				if(this.is_MenuItemNotInt(x)) {debugger; return;}
-				if(this.is_MenuItem_AQ(x)) {debugger; return;}
+				if(this.is_MenuItemNotInt(x)) {
+					const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+					return;
+				}
+				if(this.is_MenuItem_AQ(x)) {
+					const {icon,...y}=this.D_MenuServiceItem$Omit(x,sp=>{
+						sp;
+					}); this.g(y);
+					this.T_Icon(icon);
+					return;
+				}
 				debugger;
 				return;
 			}
 			this.D_MenuServiceItem(x);
 		});
 	}
+	/** @template T @template {string|null} U @arg {Extract<D_MenuServiceItem<U, T>,{icon:any}>} x @arg {(this:this,x:T)=>void} f */
+	D_MenuServiceItem$Omit(x,f) {
+		const cf="D_MenuServiceItem$Omit";
+		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x);
+		f.call(this,serviceEndpoint);
+		return y;
+	}
 	/** @arg {D_MenuServiceItem<null, {}>} x */
 	D_MenuServiceItem(x) {
-		const cf="R_MenuServiceItem";
+		const cf="D_MenuServiceItem";
 		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.G_Text(text);
 		this.g(serviceEndpoint);
@@ -8442,7 +8458,7 @@ class HandleTypes extends ServiceMethods {
 		this.TA_OpenPopup(navigationEndpoint);
 	}
 	/** @private @template {string} T @arg {T_Icon<T>} x */
-	T$Icon(x) {
+	T_Icon(x) {
 		const cf="Icon";
 		const {iconType,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
@@ -8634,7 +8650,7 @@ class HandleTypes extends ServiceMethods {
 	D_MetadataBadge(x) {
 		const cf="D_MetadataBadge";
 		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
-		this.T$Icon(icon);
+		this.T_Icon(icon);
 		if(style!=="BADGE_STYLE_TYPE_VERIFIED") debugger;
 		console.log("badge.tooltip",tooltip);
 		this.trackingParams(cf,trackingParams);
@@ -9196,7 +9212,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.get_keys_of(gg).join()!=="rows") debugger;
 		if(gg.rows!==2) debugger;
 	}
-	/** @private @arg {G_ContinuationEndpoint} x */
+	/** @private @arg {GE_Continuation} x */
 	G_ContinuationEndpoint(x) {
 		const cf="ContinuationEndpointRoot"; this.k(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
@@ -9486,7 +9502,7 @@ class HandleTypes extends ServiceMethods {
 		const {isCacheHit,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(!isCacheHit) debugger;
 	}
-	/** @private @arg {B$StateTag} x */
+	/** @private @arg {B_StateTag} x */
 	StateTag(x) {
 		const cf="StateTag";
 		if(x.stateTag!==3) debugger;
@@ -9726,7 +9742,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.SecondaryContents);
 	}
-	/** @private @arg {TM$Visibility} x */
+	/** @private @arg {TM_Visibility} x */
 	Visibility(x) {
 		const cf="Visibility";
 		const {types,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9859,7 +9875,7 @@ class HandleTypes extends ServiceMethods {
 	TopbarLogo(x) {
 		const cf="TopbarLogo";
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.T$Icon(iconImage);
+		this.T_Icon(iconImage);
 		this.R_TextWithRuns(tooltipText);
 		this.E_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
@@ -9891,7 +9907,7 @@ class HandleTypes extends ServiceMethods {
 	FusionSearchboxData(x) {
 		const cf="FusionSearchboxData";
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.T$Icon(icon);
+		this.T_Icon(icon);
 		this.R_TextWithRuns(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);

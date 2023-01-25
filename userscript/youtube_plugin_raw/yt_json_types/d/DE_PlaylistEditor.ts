@@ -1,0 +1,1 @@
+type DE_PlaylistEditor={playlistId: string;};

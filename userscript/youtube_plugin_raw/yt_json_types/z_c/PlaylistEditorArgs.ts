@@ -1,1 +1,0 @@
-type PlaylistEditorArgs={playlistId: string;};

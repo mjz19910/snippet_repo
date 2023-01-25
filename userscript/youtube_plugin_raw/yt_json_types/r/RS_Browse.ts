@@ -13,7 +13,7 @@ type RS_Browse={
 	background?: R_MusicThumbnail;
 	onResponseReceivedActions?: A_ResponseReceived[];
 	sidebar?: G_BrowseSidebar;
-	observedStateTags?: B$StateTag[];
+	observedStateTags?: B_StateTag[];
 	cacheMetadata?: D_Cache_MD;
 };
 type Alt_RS_Browse_raw=[

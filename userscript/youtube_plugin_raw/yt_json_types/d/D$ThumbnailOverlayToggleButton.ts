@@ -4,8 +4,8 @@ type D_ThumbnailOverlayToggleButton={
 	toggledIcon: T_Icon<"CHECK">;
 	untoggledTooltip: "Watch Later";
 	toggledTooltip: "Added";
-	untoggledServiceEndpoint: PlaylistEditEndpoint;
-	toggledServiceEndpoint: PlaylistEditEndpoint;
+	untoggledServiceEndpoint: E_PlaylistEdit;
+	toggledServiceEndpoint: E_PlaylistEdit;
 	untoggledAccessibility: D_Accessibility;
 	toggledAccessibility: D_Accessibility;
 	trackingParams: string;

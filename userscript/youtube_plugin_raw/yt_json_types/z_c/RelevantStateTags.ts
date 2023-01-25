@@ -1,3 +1,3 @@
 type RC$A_RelevantStateTags={
-	relevantStateTags: B$StateTag[];
+	relevantStateTags: B_StateTag[];
 };

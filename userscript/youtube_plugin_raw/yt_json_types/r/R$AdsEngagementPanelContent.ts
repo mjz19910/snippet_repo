@@ -1,1 +1,1 @@
-type R_AdsEngagementPanelContent={adsEngagementPanelContentRenderer: B$Hack;};
+type R_AdsEngagementPanelContent={adsEngagementPanelContentRenderer: B_Hack;};
