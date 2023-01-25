@@ -1,4 +1,4 @@
-type P_ParamsSection=
+type P_ParamsSection=|string
 	|"A_HideEngagementPanelScrim"
 	|"AE_Browse"
 	|"D_AdLayoutLogging"

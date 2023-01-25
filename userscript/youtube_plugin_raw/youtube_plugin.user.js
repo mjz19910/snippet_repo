@@ -10075,8 +10075,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,this.D_GuideSubscriptionsSection);}
+	/** @private @arg {R_GuideDownloadsEntry} x */
+	R_GuideDownloadsEntry(x) {x; debugger;}
+	/** @private @arg {G_GuideSectionItem} x */
+	G_GuideSectionItem(x) {
+		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
+		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
+		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
+		debugger;
+	}
 	/** @private @arg {D_GuideSubscriptionsSection} x */
-	D_GuideSubscriptionsSection(x) {x;}
+	D_GuideSubscriptionsSection(x) {
+		const cf="D_GuideSubscriptionsSection";
+		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		if(sort!=="CHANNEL_ACTIVITY") debugger;
+		this.z(items,this.G_GuideSubscriptionsSectionItem);
+		this.trackingParams(cf,trackingParams);
+		this.t(formattedTitle,this.G_Text);
+		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
+	}
+	/** @private @arg {G_GuideSubscriptionsSectionItem} x */
+	G_GuideSubscriptionsSectionItem(x) {x; debugger;}
 	/** @private @arg {D_GuideSection} x */
 	D_GuideSection(x) {
 		const cf="D_GuideSection";
@@ -10084,12 +10103,6 @@ class HandleTypes extends ServiceMethods {
 		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
 		this.t(formattedTitle,this.G_Text);
-	}
-	/** @private @arg {G_GuideSectionItem} x */
-	G_GuideSectionItem(x) {
-		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
-		debugger;
 	}
 	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {string} cf @arg {T} x */
 	D_GuideEntry_Omit(cf,x) {
@@ -10180,7 +10193,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_GuideEntry(headerEntry);
 		if(expanderIcon.iconType!=="EXPAND") debugger; this.T_Icon(expanderIcon);
 		if(collapserIcon.iconType!=="COLLAPSE") debugger; this.T_Icon(collapserIcon);
-		this.z(sectionItems,this.R_GuideEntry);
+		this.z(sectionItems,this.G_GuideSectionItem);
 		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
 		if(handlerDatas.length!==2) debugger;

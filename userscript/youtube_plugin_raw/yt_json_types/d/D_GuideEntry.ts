@@ -6,9 +6,6 @@ type D_GuideEntry={
 	accessibility: D_Accessibility;
 	entryData: R_GuideEntryData;
 }|{
-	alwaysShow: false;
-	entryRenderer: R_GuideEntry;
-}|{
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<"WATCH_LATER"|"WATCH_HISTORY">;
 	trackingParams: string;
@@ -58,4 +55,11 @@ type GE_ND_GuideEntry={
 	accessibility: D_Accessibility;
 	entryData: R_GuideEntry_D;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
+};
+type R_GuideDownloadsEntry={
+	guideDownloadsEntryRenderer: D_GuideDownloadsEntry;
+}
+type D_GuideDownloadsEntry={
+	alwaysShow: false;
+	entryRenderer: R_GuideEntry;
 };
