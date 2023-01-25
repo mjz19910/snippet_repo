@@ -5818,7 +5818,26 @@ class ParserService extends BaseService {
 			} break;
 			case "reel": {
 				const idx=2;
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": case "sequence_params": case "player_params": u(idx); debugger; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break; case "player_params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break; case "f30": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									switch(map_entry_value) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break;}
+							} break;
+							case "f71": u(idx); debugger; break;
+						}
+					} break;
+					case "params": case "sequence_params": u(idx); debugger; break;
+				}
 			} break;
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
