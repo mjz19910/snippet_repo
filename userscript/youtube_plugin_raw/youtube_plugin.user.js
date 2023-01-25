@@ -7260,7 +7260,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GM_VE3611_WC['url']} x */
 	_decode_channel_url(x) {
-		if(!this.str_starts_with("/@",x)) debugger;
+		if(this.str_starts_with("/@",x)) return;
+		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
+		let [y0,y1]=split_string_once(y,"/");
+		if(y0!=="channel") debugger;
+		if(this.str_starts_with("UC",y1)) return;
+		debugger;
 	}
 	/** @private @arg {GM_VE23462_WC} x */
 	G_VE23462_WC(x) {

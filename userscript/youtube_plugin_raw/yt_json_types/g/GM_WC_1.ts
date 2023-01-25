@@ -35,7 +35,10 @@ type GM_WC_1=[
 	GM_YpcGetCart,
 ][number];
 type GM_VE3611_WC={
-	url: `/@${string}`;
+	url:
+	|`/channel/UC${string}`
+	|`/@${string}`
+	;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 	rootVe: 3611;
 	apiUrl: "/youtubei/v1/browse";
