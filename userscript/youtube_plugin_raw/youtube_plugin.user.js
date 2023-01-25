@@ -8052,13 +8052,18 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_PlayerAnnotationsExpanded";
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.D_FeaturedChannel(featuredChannel);
-		let anno_uuid=this.parse_uuid(annotationId);
-		console.log(anno_uuid);
+		this.parse_uuid(annotationId);
 	}
 	/** @private @arg {UUIDString} x */
 	parse_uuid(x) {
-		let ui_parts=split_string(x,"-");
-		return ui_parts;
+		let uuid_parts=split_string(x,"-");
+		let [up0,up1,up2,up3,up4]=uuid_parts;
+		console.log(up0);
+		if(up1!=="0000") debugger;
+		if(split_string(up2,"")[0]!=="2") debugger;
+		if(split_string(up3,"")[0]!=="a") debugger;
+		console.log([up0,up2,up3,up4]);
+		return uuid_parts;
 	}
 	/** @private @arg {D_FeaturedChannel} x */
 	D_FeaturedChannel(x) {
