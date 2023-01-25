@@ -5402,6 +5402,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "reel.params":
+						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1":
 					case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "reel.player_params":
@@ -5843,7 +5847,14 @@ class ParserService extends BaseService {
 							} break;
 						}
 					} break;
-					case "params": case "sequence_params": u(idx); debugger; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break; case "f1": u(idx); debugger; break;}
+					} break;
+					case "sequence_params": u(idx); debugger; break;
 				}
 			} break;
 		}
