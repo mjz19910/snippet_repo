@@ -1,3 +1,4 @@
+//#region GM_WC_1
 type GM_WC_1=[
 	GM_VE11487_WC,
 	GM_VE23462_WC,
@@ -8,6 +9,7 @@ type GM_WC_1=[
 	GM_VE4724_WC,
 	GM_VE5754_WC,
 	GM_VE6827_WC,
+	GM_VE42352_WC,
 	GM_VE83769_WC,
 	GM_VE96368_WC,
 	GM_VE96368_WC_browse,
@@ -33,12 +35,8 @@ type GM_WC_1=[
 	GM_ypc_get_offers,
 	GM_YpcGetCart,
 ][number];
-type GM_VE3611={
-	url: `/@${string}`;
-	webPageType: "WEB_PAGE_TYPE_CHANNEL";
-	rootVe: 3611;
-	apiUrl: "/youtubei/v1/browse";
-};
+//#endregion
+//#region GM_VE
 type GM_VE3611_WC={
 	url:
 	|`/channel/UC${string}`
@@ -59,16 +57,16 @@ type GM_VE3854_WC={
 	rootVe: 3854;
 	apiUrl: "/youtubei/v1/browse";
 };
+type GM_VE4724_WC={
+	url: `/results?search_query=${string}`;
+	webPageType: "WEB_PAGE_TYPE_SEARCH";
+	rootVe: 4724;
+};
 type GM_VE5754_WC={
 	url: "/playlist?list=WL";
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 	rootVe: 5754;
 	apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE4724_WC={
-	url: `/results?search_query=${string}`;
-	webPageType: "WEB_PAGE_TYPE_SEARCH";
-	rootVe: 4724;
 };
 type GM_VE6827_WC={
 	url?: D_VE6827_PageUrl;
@@ -76,15 +74,11 @@ type GM_VE6827_WC={
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE11487={
+type GM_VE11487_WC={
 	url: "/premium";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 11487;
 	apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE11487_WC={
-	rootVe: 11487;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type GM_VE23462_WC={
 	url: "/account_notifications";
@@ -97,8 +91,13 @@ type GM_VE37414_WC={
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
+type GM_VE42352_WC={
+	url: "/feed/downloads";
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 42352;
+	apiUrl: "/youtubei/v1/browse";
+};
 type GM_VE83769_UrlType="/upload"|`https://studio.youtube.com/channel/UC${string}`;
-
 type GM_VE83769_WC={
 	url: GM_VE83769_UrlType;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
@@ -114,6 +113,8 @@ type GM_VE96368_WC_browse={
 	rootVe: 96368;
 	apiUrl: "/youtubei/v1/browse";
 };
+//#endregion
+//#region GM_ApiUrl
 type GM_ypc_get_offers={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/ypc/get_offers";
@@ -198,6 +199,8 @@ type GM_YpcGetCart={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/ypc/get_cart";
 };
+//#endregion
+//#region M_*
 type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
@@ -205,8 +208,71 @@ type M_VE3854={webCommandMetadata: GM_VE3854_WC;};
 type M_VE4724={webCommandMetadata: GM_VE4724_WC;};
 type M_VE5754={webCommandMetadata: GM_VE5754_WC;};
 type M_VE6827={webCommandMetadata: GM_VE6827_WC;};
-type M_VE11487={webCommandMetadata: GM_VE11487;};
+type M_VE11487={webCommandMetadata: GM_VE11487_WC;};
 type M_VE23462={webCommandMetadata: GM_VE23462_WC;};
 type M_VE37414={webCommandMetadata: GM_VE37414_WC;};
 type M_VE83769={webCommandMetadata: GM_VE83769_WC;};
 type M_VE96368={webCommandMetadata: GM_VE96368_WC_browse;};
+//#endregion
+//#region DE_VE\d+_.+
+type DE_VE3611_Browse={
+	browseId: `UC${string}`;
+	canonicalBaseUrl: `/@${string}`;
+};
+type DE_VE3854_Browse={browseId: "FEwhat_to_watch";};
+type DE_VE5754_Browse={browseId: "VLWL";};
+type DE_VE6827_Browse={browseId: "FElibrary"|"FEhistory";};
+type DE_VE23462_Browse={browseId: "SPaccount_notifications";};
+type DE_VE96368_Browse={browseId: "FEsubscriptions";};
+type DE_VE42352_Browse={browseId: "FEdownloads";};
+//#endregion
+//#region E_VE\d+_.+
+type E_VE3611_Browse={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_VE3611_WC;};
+	browseEndpoint: DE_VE3611_Browse;
+};
+type E_VE3854_Browse={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_VE3854_WC;};
+	browseEndpoint: DE_VE3854_Browse;
+};
+type E_VE5754_Browse={
+	clickTrackingParams: string;
+	commandMetadata: M_VE5754;
+	browseEndpoint: DE_VE5754_Browse;
+};
+type E_VE6827_Browse={
+	clickTrackingParams: string;
+	commandMetadata: M_VE6827;
+	browseEndpoint: DE_VE6827_Browse;
+};
+type E_VE23462_Browse={
+	clickTrackingParams: string;
+	commandMetadata: M_VE23462;
+	browseEndpoint: DE_VE23462_Browse;
+};
+
+type E_VE96368_Browse={
+	clickTrackingParams: string;
+	commandMetadata: M_VE96368;
+	browseEndpoint: DE_VE96368_Browse;
+};
+type E_VE42352_Browse={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: GM_VE42352_WC;
+	};
+	browseEndpoint: DE_VE42352_Browse;
+};
+
+//#endregion
+type E_Browse=[
+	E_VE3611_Browse,
+	E_VE3854_Browse,
+	E_VE6827_Browse,
+	E_VE5754_Browse,
+	E_VE23462_Browse,
+	E_VE42352_Browse,
+	E_VE96368_Browse,
+][number];
