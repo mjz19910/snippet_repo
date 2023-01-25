@@ -8691,7 +8691,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @pub @arg {E_Url} x */
 	E_Url(x) {x; debugger;}
-	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
+	/** @pub @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
 	/** @private @arg {TD_ItemSection_3<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
@@ -8860,19 +8860,15 @@ class HandleTypes extends ServiceMethods {
 						default: debugger; break;
 					}
 				});
-			} else if("results" in a) {
-				this.z(a.results,x => {
-					if("itemSectionRenderer" in x) return this.R_ItemSection(x);
-					if("relatedChipCloudRenderer" in x) return this.R_RelatedClipCloud(x);
-					debugger;
-				});
+				return;
 			}
+			debugger;
 		});
 		this.t(playlist,a => this.T_Playlist(a,this.PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
 	}
-	/** @private @arg {R_RelatedChipCloud} x */
+	/** @pub @arg {R_RelatedChipCloud} x */
 	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
 	/** @private @arg {R_ChipCloud} x */
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
@@ -9139,12 +9135,12 @@ class HandleTypes extends ServiceMethods {
 				case "search-feed": return this.SearchFeedSectionListData(x);
 			}
 		}
-		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		const {contents,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.RD_NextContinuation);
+		// this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
-		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
-		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+		// this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
+		// if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 	}
 	/** @private @arg {D_SearchFeedSectionList} x */
 	SearchFeedSectionListData(x) {
