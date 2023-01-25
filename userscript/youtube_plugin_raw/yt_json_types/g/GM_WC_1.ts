@@ -63,7 +63,7 @@ type GM_VE4724_WC={
 	rootVe: 4724;
 };
 type GM_VE5754_WC={
-	url: `/playlist?list=${"WL"|"LL"}`;
+	url: `/playlist?list=${"WL"|"LL"|`PL${string}`}`;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 	rootVe: 5754;
 	apiUrl: "/youtubei/v1/browse";
@@ -216,7 +216,9 @@ type DE_VE3611_Browse={
 	canonicalBaseUrl: `/@${string}`;
 };
 type DE_VE3854_Browse={browseId: "FEwhat_to_watch";};
-type DE_VE5754_Browse={browseId: `VL${"LL"|"WL"}`;};
+type DE_VE5754_Browse={
+	browseId: `VL${"LL"|"WL"|`PL${string}`}`;
+};
 type DE_VE6827_Browse={
 	browseId:
 	|"FElibrary"

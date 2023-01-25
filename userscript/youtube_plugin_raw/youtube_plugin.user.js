@@ -6984,7 +6984,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
-	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_r(str,needle) {
 		return this.str_starts_with(needle,str);
 	}
@@ -7259,7 +7259,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_SimpleText} x @arg {(this:this,x:{accessibility?:D_Accessibility})=>void} f */
 	R_SimpleText(x,f=this.handle_accessibility) {
-		const cf="R_SimpleText"; this.k(cf,x);
+		const cf="R_SimpleText";
 		const {simpleText,...y}=this.sd(cf,x); f.call(this,y);
 		this.primitive_of_string(simpleText);
 	}
@@ -7267,7 +7267,8 @@ class HandleTypes extends ServiceMethods {
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
-		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		const cf="GM_VE6827_WC";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
 		this.t(url,this.D_VE6827_PageUrl);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==6827) debugger;
@@ -7573,13 +7574,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
 		if(this.str_starts_with("UC",x)) return this.channelId(x);
+		if(this.str_starts_with("VL",x)) {
+			let x1=split_string_once(x,"VL")[1];
+			if(this.str_starts_with_r(x1,"LL")) return;
+			if(this.str_starts_with_r(x1,"WL")) return;
+			if(this.str_starts_with_r(x1,"PL")) return;
+			console.log("new with param [param_2c_VL]",x,x1);
+			debugger;
+			return;
+		}
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch":
 			case "FEstorefront": break;
 			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
 			case "SPaccount_overview": break;
-			case "VLLL":
-			case "VLWL": break;
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); debugger; break;
 		};
 	}
@@ -7631,8 +7639,22 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.WebCommandMetadata(x);
 	}
+	/** @private @arg {GM_VE42352_WC['url']} x */
+	_decode_browse_url(x) {
+		switch(x) {
+			case "/feed/downloads": break;
+			default: debugger; break;
+		}
+	}
 	/** @private @arg {GM_VE42352_WC} x */
-	GM_VE42352_WC(x) {x; debugger;}
+	GM_VE42352_WC(x) {
+		const cf="GM_VE42352_WC";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		this._decode_browse_url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==42352) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC";
@@ -9495,8 +9517,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_WatchResult_ResultsItem} x @arg {(this:this,x:G_WatchResult_ContentsItem)=>void} f   */
 	D_WatchResult_ResultsItem(x,f) {
-		const cf="D_WatchResult_ResultsItem"; this.k(cf,x);
-		let {trackingParams,...y}=x;
+		const cf="D_WatchResult_ResultsItem";
+		let {trackingParams,...y}=this.sd(cf,x);
 		this.trackingParams(cf,trackingParams);
 		this.z(this.w(y),f);
 	}
@@ -9953,7 +9975,8 @@ class HandleTypes extends ServiceMethods {
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,this.D_EngagementPanelSectionList);}
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	T_ShortsSurfaceIdentifier(x) {
-		const {surface,tag,...y}=x; this.g(y); // ! #destructure
+		const cf="T_ShortsSurfaceIdentifier";
+		const {surface,tag,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
 		switch(tag) {}
 		return tag;
@@ -9986,7 +10009,7 @@ class HandleTypes extends ServiceMethods {
 			switch(x.veType) {
 				default: debugger; break;
 				case 76278: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x;
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.sd(cf,x);
 					if(panelIdentifier!=="comment-item-section") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					((_x) => {debugger;})(content);
@@ -10000,7 +10023,7 @@ class HandleTypes extends ServiceMethods {
 					this.g(y);
 				} break;
 				case 99999: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x; this.g(y);
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);
 					if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_ProductList(content);
@@ -10009,7 +10032,7 @@ class HandleTypes extends ServiceMethods {
 					this.D_LoggingDirectives(loggingDirectives);
 				} break;
 				case 126250: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.sd(cf,x);
 					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					((_x) => {debugger;})(content);
@@ -10023,7 +10046,7 @@ class HandleTypes extends ServiceMethods {
 					this.g(y);
 				} break;
 				case 124975: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y); // ! #destructure
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 					if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_StructuredDescriptionContent(content);
@@ -10036,7 +10059,7 @@ class HandleTypes extends ServiceMethods {
 					}
 				} break;
 				case 139722: {
-					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y); // ! #destructure
+					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 					((_x) => {debugger;})(content);
 					this.t(header,this.R_EngagementPanelTitleHeader);
 					this.targetId(cf,targetId);
@@ -10082,7 +10105,7 @@ class HandleTypes extends ServiceMethods {
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-clip-create": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=x; this.g(y); // ! #destructure
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_ClipSection(content);
@@ -10091,7 +10114,7 @@ class HandleTypes extends ServiceMethods {
 				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
 			} break;
 			case "engagement-panel-macro-markers-description-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_MacroMarkersList(content);
@@ -10099,7 +10122,7 @@ class HandleTypes extends ServiceMethods {
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-macro-markers-auto-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_MacroMarkersList(content);
@@ -10416,10 +10439,17 @@ class HandleTypes extends ServiceMethods {
 	D_GuideCollapsibleEntry(x) {
 		const cf="D_GuideCollapsibleEntry";
 		const {expanderItem,expandableItems,collapserItem,...y}=this.sd(cf,x); this.g(y);
+		this.R_GuideEntry(expanderItem);
+		this.z(expandableItems,x => {
+			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
+			debugger;
+		});
+		this.R_GuideEntry(collapserItem);
 	}
 	/** @private @arg {D_GuideDownloadsEntry} x */
 	D_GuideDownloadsEntry(x) {
-		const {alwaysShow,entryRenderer,...y}=x; this.g(y);
+		const cf="D_GuideDownloadsEntry";
+		const {alwaysShow,entryRenderer,...y}=this.sd(cf,x); this.g(y);
 		if(alwaysShow!==false) debugger;
 		if(!entryRenderer.guideEntryRenderer) debugger;
 		this.R_GuideEntry(entryRenderer);
@@ -10575,7 +10605,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_GuideEntry"; this.k(cf,x);
 		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		if("presentationStyle" in x) {
-			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y);
+			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.sd(cf,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
 			this.D_Thumbnail(thumbnail);
@@ -10593,7 +10623,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
 		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
-		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.sd(cf,x); this.g(y);
 		this.R_GuideEntry(headerEntry);
 		if(expanderIcon.iconType!=="EXPAND") debugger; this.T_Icon(expanderIcon);
 		if(collapserIcon.iconType!=="COLLAPSE") debugger; this.T_Icon(collapserIcon);
