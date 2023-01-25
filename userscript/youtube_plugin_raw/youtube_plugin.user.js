@@ -7723,6 +7723,7 @@ class HandleTypes extends ServiceMethods {
 		if("title" in x) {
 			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(this.sd(cf,x)); this.g(y);
 			this.primitive_of_string(title);
+			return;
 		}
 		let y=this.D_ChannelThumbnailWithLink_Omit(this.sd(cf,x)); this.g(y);
 	}
