@@ -4,7 +4,7 @@ type D_Button={
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
 	serviceEndpoint?: ES_Button;
-	navigationEndpoint?: E_Button_navigation;
+	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	text?: G_Text;
@@ -18,7 +18,7 @@ type D_Button={
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
 	serviceEndpoint?: ES_Button;
-	navigationEndpoint?: E_Button_navigation;
+	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	text?: G_Text;
@@ -31,7 +31,7 @@ type D_Button={
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
 	serviceEndpoint?: ES_Button;
-	navigationEndpoint?: E_Button_navigation;
+	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	style: D$ButtonStyleType;
@@ -46,7 +46,7 @@ type D_Button={
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
 	serviceEndpoint?: ES_Button;
-	navigationEndpoint?: E_Button_navigation;
+	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	style: D$ButtonStyleType;

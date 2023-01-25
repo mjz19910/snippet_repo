@@ -24,6 +24,14 @@ type E_Browse={
 		browseId: `UC${string}`;
 		canonicalBaseUrl: `/@${string}`;
 	};
+}|{
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: GM_VE3854;
+	};
+	browseEndpoint: {
+		browseId: "FEwhat_to_watch";
+	};
 };
 type ValidBrowseId=[
 	"FEwhat_to_watch"

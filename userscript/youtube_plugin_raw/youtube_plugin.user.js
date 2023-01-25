@@ -7225,6 +7225,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		switch(x) {
 			case "SPaccount_notifications": break;
+			case "FEwhat_to_watch": break;
 			default: debugger; break;
 		};
 	}
@@ -9535,7 +9536,7 @@ class HandleTypes extends ServiceMethods {
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {E_Button_navigation} x */
+	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint";
 		if("shareEntityServiceEndpoint" in x) return this.ShareEntityServiceEndpoint(x);
