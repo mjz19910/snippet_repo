@@ -9602,11 +9602,15 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {GM_VE83769_UrlType} x */
 	GM_VE83769_UrlType(x) {
 		const sh="https://studio.youtube.com",mh="https://music.youtube.com";
+		const yk="https://www.youtubekids.com/?source=youtube_web";
 		if(this.str_starts_with(sh,x)) {
 			let u=split_string(split_string_once(split_string_once(x,":")[1],"//")[1],"/");
 			return this.handle_yt_studio_url(u);
 		}
 		if(this.str_starts_with(mh,x)) return this.handle_yt_music_url(x);
+		if(this.str_starts_with(yk,x)) {
+			return;
+		}
 		switch(x) {
 			default: x===""; debugger; break;
 			case "/upload": break;
