@@ -8058,7 +8058,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {UUIDString} x */
 	parse_uuid(x) {
 		let ui_parts=split_string(x,"-");
-		let uid=this.join_string(ui_parts,"");
 		return ui_parts;
 	}
 	/** @private @arg {D_FeaturedChannel} x */
