@@ -1,1 +1,0 @@
-type EG_MenuServiceEndpoints<T={}>=T;

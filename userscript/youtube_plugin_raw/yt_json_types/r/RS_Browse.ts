@@ -1,8 +1,8 @@
 type RS_Browse={
 	responseContext: RC_ResponseContext;
-	contents?: G$BrowseContents;
+	contents?: G_BrowseContents;
 	continuationContents?: C_SectionList;
-	header?: G$BrowseHeader;
+	header?: G_BrowseHeader;
 	alerts?: R_AlertWithButton[];
 	metadata?: G_Browse_MD;
 	trackingParams: string;
@@ -22,7 +22,7 @@ type Alt_RS_Browse_raw=[
 	"responseContext,contents,trackingParams,topbar,sidebar",
 	"responseContext,header,trackingParams,onResponseReceivedActions",
 ];
-type Alt_RS_Get<T extends number>=Required<{[U in Split<Alt_RS_Browse_raw[T],",">[number]]: U extends keyof RS_Browse? RS_Browse[U]:never;}>;
+type Alt_RS_Get<T extends number>=Required<{[U in T_Split<Alt_RS_Browse_raw[T],",">[number]]: U extends keyof RS_Browse? RS_Browse[U]:never;}>;
 type Alt_RS_Browse=[
 	Alt_RS_Get<0>,
 	Alt_RS_Get<1>,

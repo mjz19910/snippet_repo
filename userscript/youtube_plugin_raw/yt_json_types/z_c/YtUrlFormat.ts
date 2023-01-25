@@ -4,7 +4,7 @@ type YtUrlFormat=[
 	"/channel_switcher",
 	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
 	`/${D_ApiUrlFormat$1}`,
-	`/account${""|`_${AccountPageSettingsSections}`}`,
+	`/account${""|`_${G_AccountPageSettingsSections}`}`,
 	`/api/stats/ads?${string}`,
 	`/channel/UC${string}`,
 	`/feed/${D$BrowseEndpointPages}`,
@@ -29,7 +29,7 @@ type YtUrlFormat=[
 type YTExternalEncUrl=[
 	`[parse_url_external_1] https://m.youtube.com/premium`,
 ][number];
-type YTExternalUrl=SplitOnce<SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
+type YTExternalUrl=T_SplitOnce<T_SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
 type WatchUrlFormat=[
 	WatchPageUrl,
 	`/watch?${YtWatchVideoUrlFormat}`,

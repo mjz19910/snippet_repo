@@ -1,1 +1,1 @@
-type Letters=Split<"abcdefghijklmnopqrstuvwxyz","">[number];
+type Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];

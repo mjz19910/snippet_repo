@@ -1,0 +1,1 @@
+type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;

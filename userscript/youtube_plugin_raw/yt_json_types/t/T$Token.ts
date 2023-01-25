@@ -1,1 +1,0 @@
-type CommandToken={token: string;};

@@ -1,7 +1,7 @@
 type D_AdaptiveFormatItem={
 	itag: number;
 	url?: string;
-	mimeType: MimeTypeFormat;
+	mimeType: G_MimeTypeFormat;
 	bitrate: number;
 	width?: number;
 	height?: number;
@@ -9,12 +9,12 @@ type D_AdaptiveFormatItem={
 	indexRange: YtRange;
 	lastModified: string;
 	contentLength: string;
-	quality: FormatQuality;
-	fps?: FormatFps;
+	quality: G_FormatQuality;
+	fps?: D_FormatFps;
 	qualityLabel?: QualityLabel;
 	projectionType: "RECTANGULAR";
 	averageBitrate: number;
-	colorInfo?: FormatColorInfo;
+	colorInfo?: D_FormatColorInfo;
 	highReplication?: true,
 	audioQuality?: "AUDIO_QUALITY_MEDIUM";
 	approxDurationMs: `${number}`;

@@ -1,5 +1,5 @@
 type D_RichItem={
-	content: RichItemContent;
+	content: G_RichItemContent;
 	trackingParams: string;
 	rowIndex: number;
 	colIndex: number;

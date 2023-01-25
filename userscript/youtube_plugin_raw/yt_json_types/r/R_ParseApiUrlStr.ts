@@ -1,1 +1,1 @@
-type R_ParseApiUrlStr=SplitOnce<Extract<SplitOnce<ParseUrlStr_1,"/">,["api",...any]>[1],"/">[1];
+type R_ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<ParseUrlStr_1,"/">,["api",...any]>[1],"/">[1];

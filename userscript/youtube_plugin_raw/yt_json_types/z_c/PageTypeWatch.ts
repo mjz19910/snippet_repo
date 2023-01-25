@@ -1,4 +1,4 @@
-type PageTypeWatch={
+type R_PageTypeWatch={
 	pageType: "watch";
 	endpoint: E_Watch;
 	response: R_WatchPage;

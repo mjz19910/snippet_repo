@@ -1,4 +1,4 @@
-type PageTypeShorts={
+type R_PageTypeShorts={
 	pageType: "shorts";
 	endpoint: E_ReelWatch;
 	response: R_ShortsPage;

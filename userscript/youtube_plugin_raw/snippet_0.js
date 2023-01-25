@@ -43,7 +43,7 @@ try {
 function as(e,x=e) {
 	return x;
 }
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {
 		/** @type {[]} */
@@ -69,7 +69,7 @@ function split_string_once(s,d=as(",")) {
 	return as(q);
 }
 class ParserService {
-	/** @arg {Split<D_ApiUrlFormat$1,"/">} x @returns {Join<Split<D_ApiUrlFormat$1,"/">,".">} */
+	/** @arg {T_Split<D_ApiUrlFormat$1,"/">} x @returns {Join<T_Split<D_ApiUrlFormat$1,"/">,".">} */
 	get_url_type(x) {x; throw 1;}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {root; x;}
@@ -118,7 +118,7 @@ export class Snippet_0_tmp {
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
+	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
@@ -161,7 +161,7 @@ export class Snippet_0_tmp {
 		}
 	}
 	split_string_once=split_string_once;
-	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
+	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
 		let v=this.split_string_once(x,sep);
 		if(v[0]) return v[0];
@@ -299,7 +299,7 @@ export class Snippet_0_tmp {
 		if(a>(b-epsilon)&&a<(b+epsilon)) return true;
 		return false;
 	}
-	/** @public @template {string} T @template {`${T}_${string}`} U @arg {T} ns @arg {U} x @returns {SplitOnce<SplitOnce<U,T>[1],"_">[1]} */
+	/** @public @template {string} T @template {`${T}_${string}`} U @arg {T} ns @arg {U} x @returns {T_SplitOnce<T_SplitOnce<U,T>[1],"_">[1]} */
 	parse_enum(ns,x) {
 		let r=this.split_string_once(x,ns);
 		if(!r[1]) throw new Error("Invalid enum");
@@ -337,7 +337,7 @@ export class Snippet_0_tmp {
 		}
 		return ok_e;
 	}
-	/** @template {string} C @template {string} U @template {Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {Split<C,","> extends U[]?C:never} arg1 */
+	/** @template {string} C @template {string} U @template {T_Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {T_Split<C,","> extends U[]?C:never} arg1 */
 	has_keys(ok_3,arg1) {
 		return this.eq_keys(ok_3,arg1.split(","));
 	}

@@ -1,1 +1,1 @@
-type KnownSplit=Split<KnownGet>[number];
+type KnownSplit=T_Split<KnownGet>[number];

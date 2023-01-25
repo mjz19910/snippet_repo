@@ -1,1 +1,0 @@
-type G_Menu$items$iterate=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;

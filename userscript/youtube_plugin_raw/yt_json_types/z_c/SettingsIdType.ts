@@ -1,1 +1,1 @@
-type SettingsIdType=`SP${SettingsEndpointPages}`;
+type SettingsIdType=`SP${G_SettingsEndpointPages}`;

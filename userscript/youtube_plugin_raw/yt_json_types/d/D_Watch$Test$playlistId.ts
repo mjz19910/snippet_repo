@@ -8,7 +8,7 @@ async function D_Watch$Test$playlistId(): Promise<void> {
 	{
 		type UU=PlaylistId;
 		let xa: UU="LL" as UU;
-		type sw=SplitIntoGroups<UU,`${string}`>;
+		type sw=T_SplitIntoGroups<UU,`${string}`>;
 		{
 			type uw=sw[0];
 			let v: uw=xa.slice(0,2) as uw;

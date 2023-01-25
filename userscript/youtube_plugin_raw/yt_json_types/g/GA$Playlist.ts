@@ -1,1 +1,0 @@
-type A_Playlist=A_ActionAddVideo|ActionRemoveVideoByVideoId|A_ActionSetPlaylistVideoOrder;

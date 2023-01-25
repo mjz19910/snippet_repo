@@ -1,5 +1,5 @@
 type D_SortFilterSubMenu={
-	subMenuItems: ActionSetPlaylistVideoOrder[];
+	subMenuItems: D_ActionSetPlaylistVideoOrder[];
 	title?: string;
 	icon?: T_Icon<"SORT">;
 	accessibility?: D_Accessibility;

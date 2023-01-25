@@ -5,5 +5,5 @@ type D_PdgCommentPreview={
 	commentOptionRenderers: R_PdgCommentOption[];
 	defaultCommentText: R_TextRuns;
 	editButton: R_Button;
-	superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
+	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
 };

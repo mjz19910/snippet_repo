@@ -111,7 +111,7 @@ class CustomEventTarget {
 class DomObserver extends CustomEventTarget {
 	/** @private @type {Set<MessagePort>} */
 	wait_ports=new Set;
-	/** @private @type {Map<MessagePort,ResState[]>} */
+	/** @private @type {Map<MessagePort,D_ResState[]>} */
 	port_to_resolvers_map=new Map;
 	/** @api @public @arg {MessagePort} port */
 	notify_with_port(port) {
@@ -1860,7 +1860,7 @@ class AudioGainController {
 }
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
-/** @private @template {string} T @template {{}} U @template {Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
+/** @private @template {string} T @template {{}} U @template {T_Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str) {
 	/** @private @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
@@ -2011,13 +2011,13 @@ function main() {
 }
 //#endregion
 //#region string manipulation
-/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
+/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
 function split_string(x,s=as(",")) {
 	if(!x) {debugger;}
 	let r=x.split(s);
 	return as(r);
 }
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {
 		/** @private @type {[]} */
@@ -2142,7 +2142,7 @@ class ApiBase {
 		}
 		return null;
 	}
-	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
+	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
@@ -2852,7 +2852,7 @@ class BaseService extends BaseServicePrivate {
 		if(!no_ns[1]) throw new Error();
 		let nn=split_string_once(no_ns[1],sep);
 		if(!nn[1]) throw new Error();
-		/** @private @type {SplitOnce<NonNullable<SplitOnce<U,T>[1]>,"">[1]} */
+		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
 		this.save_string(`[${ns_name}::${ns}]`,no_ns_part);
 	}
@@ -2869,7 +2869,7 @@ class BaseService extends BaseServicePrivate {
 			this.save_string(`[${ns_name}::${enum_base}]`,n2);
 		}
 	}
-	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]} */
+	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
 		let v=split_string_once(x,sep);
 		if(v[0]) return v[0];
@@ -3329,7 +3329,7 @@ class IterateApiResultBase extends BaseService {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class CsiService extends BaseService {
-	/** @private @type {(RidFormat<string>)[]} */
+	/** @private @type {(T_RidFormat<string>)[]} */
 	rid_keys=[
 		"GetAccountAdvanced_rid","GetAccountBilling_rid","GetAccountDownloads_rid","GetAccountMenu_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountSharing_rid","GetAccountsList_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetHistory_rid","GetHome_rid","GetLibrary_rid","GetLiveChatReplay_rid","GetNotificationsMenu_rid","GetPlayer_rid","GetPlaylist_rid","GetReelItemWatch_rid","GetReelWatchSequence_rid","GetSubscriptions_rid","GetUnseenNotificationCount_rid","GetVideoTranscript_rid","GetWatchNext_rid","GetWatchPageWebCommentReplies_rid","GetWatchPageWebTopLevelComments_rid","GetWebMainAppGuide_rid","RecordNotificationInteractions_rid","RemoveLike_rid",
 		"SetSetting_rid",
@@ -3337,12 +3337,12 @@ class CsiService extends BaseService {
 		"GetAddToPlaylist_rid",
 		"EditPlaylist_rid",
 	];
-	/** @private @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
+	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
 		this.decode_rid_section(x);
 		this.save_string("[rid_key]",x.key);
 	}
-	/** @private @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
+	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
@@ -3352,11 +3352,11 @@ class CsiService extends BaseService {
 			debugger;
 		}
 	}
-	/** @private @arg {{key:RidFormat<string>;value:`0x${string}`}} param */
+	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */
 	parse_rid_param(param) {
 		this.decode_rid_param_key(param);
 		if(param.key in this.rid) {
-			/** @private @type {RidFormat<string>} */
+			/** @private @type {T_RidFormat<string>} */
 			let rid_key=param.key;
 			this.rid[rid_key]=param.value;
 			return;
@@ -3368,7 +3368,7 @@ class CsiService extends BaseService {
 		}
 		this.rid[param.key]=param.value;
 	}
-	/** @private @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
+	/** @private @type {{[x: T_RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
 	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
@@ -3667,7 +3667,7 @@ class ModifyEnv extends BaseService {
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
-		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_Response$} response_obj */
+		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_Response} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
 			try {
 				yt_handlers.on_handle_api(request,response,response_obj);
@@ -4871,7 +4871,7 @@ class ParserService extends BaseService {
 	str_has_sep(x,u) {
 		return x.includes(u);
 	}
-	/** @console_api @public @arg {MimeTypeFormat} x */
+	/** @console_api @public @arg {G_MimeTypeFormat} x */
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
@@ -4891,7 +4891,7 @@ class ParserService extends BaseService {
 		console.log(vv[0],codec_type_raw);
 		debugger;
 	}
-	/** @private @arg {CodecType} x */
+	/** @private @arg {G_CodecType} x */
 	parse_codec_str(x) {
 		switch(x) {
 			case "av01": break;
@@ -4943,7 +4943,7 @@ class ParserService extends BaseService {
 			default: debugger; return;
 		}
 	}
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["api",...any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["api",...any]>} x */
 	parse_api_url(x) {
 		let a=split_string_once(x[1],"/");
 		switch(a[0]) {
@@ -4966,7 +4966,7 @@ class ParserService extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
 	parse_channel_url(x) {
 		if(this.str_starts_with_at_1(x,"UC")) {
 			return;
@@ -5004,11 +5004,11 @@ class ParserService extends BaseService {
 	parse_video_id(x) {
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		this.x.get("indexed_db").put({v: x[1]});
 	}
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
 		let [,a]=x;
 		if(this.str_is_search(a)) {
@@ -5039,14 +5039,14 @@ class ParserService extends BaseService {
 		this.log_url_info_arr(arr);
 	}
 	log_start_radio=false;
-	/** @private @arg {ParamsSection} root @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	/** @private @arg {ParamsSection} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url(root,x) {
 		let vv=split_string(x,"&");
 		/** @private @type {YtUrlInfoItem[]} */
 		let url_info_arr=[];
 		// spell:ignore RDMM
 		for(let prop of vv) {
-			/** @private @type {SplitOnce<typeof prop,"=">} */
+			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
 				case "v": {
@@ -5853,7 +5853,7 @@ class ParserService extends BaseService {
 	}
 	log_channel_handles=false;
 	/** @private @type {YtUrlFormat} */
-	/** @private @arg {ParamsSection} root @arg {Extract<SplitOnce<SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
+	/** @private @arg {ParamsSection} root @arg {Extract<T_SplitOnce<T_SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
 	parse_url_2(root,x) {
 		if(this.str_is_search(x)) {
 			return this.parse_url_with_search(root,as(x));
@@ -5885,7 +5885,7 @@ class ParserService extends BaseService {
 			default: debugger; return;
 		}
 	}
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
+	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
 	parse_account_url(x) {
 		let a=split_string(x,"_");
 		if(a.length===1) return;
@@ -5912,7 +5912,7 @@ class ParserService extends BaseService {
 	/** @unused_api @protected @arg {D_VE6827_PageUrl} x */
 	parse_ve_6827_url(x) {
 		const cf="VE6827_PageUrl";
-		/** @private @type {SplitOnce<D_VE6827_PageUrl,"/">[1]} */
+		/** @private @type {T_SplitOnce<D_VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
@@ -5967,7 +5967,7 @@ class ParserService extends BaseService {
 		}
 		this.save_string("[target_id]",x);
 	}
-	/** @api @public @arg {SplitOnce<ChanLoc,".">} x */
+	/** @api @public @arg {T_SplitOnce<ChanLoc,".">} x */
 	parse_channel_section(x) {
 		switch(x[1]) {
 			case "": break;
@@ -5989,7 +5989,7 @@ class ParserService extends BaseService {
 		debugger;
 		return null;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1",string]>} x */
 	get_yt_url_type_3(x) {
 		switch(x[2]) {
 			case "browse": return x[2];
@@ -6008,7 +6008,7 @@ class ParserService extends BaseService {
 		}
 		return x[2];
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei",...any]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei",...any]>} x */
 	get_yt_url_type(x) {
 		if(x[1]!=="v1") {
 			return this.api_no_handler(x,x[1]);
@@ -6052,7 +6052,7 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[2]);
 		}
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","pdg",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","pdg",string]>} x */
 	get_pdg_type(x) {
 		switch(x[3]) {
 			case "get_pdg_buy_flow": break;
@@ -6063,7 +6063,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","music",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","music",string]>} x */
 	get_music_type(x) {
 		switch(x[3]) {
 			case "get_search_suggestions": break;
@@ -6074,7 +6074,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","share",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","share",string]>} x */
 	get_share_type(x) {
 		switch(x[3]) {
 			case "get_share_panel": break;
@@ -6085,7 +6085,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","playlist",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","playlist",string]>} x */
 	get_playlist_type(x) {
 		switch(x[3]) {
 			case "get_add_to_playlist": break;
@@ -6097,7 +6097,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","browse",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","browse",string]>} x */
 	get_browse_type(x) {
 		switch(x[3]) {
 			case "edit_playlist": break;
@@ -6108,7 +6108,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","subscription",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","subscription",string]>} x */
 	get_subscription_type(x) {
 		switch(x[3]) {
 			case "subscribe": break;
@@ -6119,7 +6119,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","reel",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","reel",string]>} x */
 	get_reel_type(x) {
 		switch(x[3]) {
 			case "reel_item_watch": break;
@@ -6130,7 +6130,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","notification",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","notification",string]>} x */
 	get_notification_type(x) {
 		switch(x[3]) {
 			case "get_unseen_count": break;
@@ -6144,7 +6144,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","comment",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","comment",string]>} x */
 	get_comment_type(x) {
 		switch(x[3]) {
 			case "create_comment": break;
@@ -6154,7 +6154,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","att",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","att",string]>} x */
 	get_att_type(x) {
 		switch(x[3]) {
 			case "get": break;
@@ -6165,7 +6165,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","like",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","like",string]>} x */
 	get_like_type(x) {
 		switch(x[3]) {
 			case "like": break;
@@ -6177,7 +6177,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","account",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","account",string]>} x */
 	get_account_type(x) {
 		switch(x[3]) {
 			case "account_menu": break;
@@ -6190,7 +6190,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","live_chat",string]>} x */
+	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1","live_chat",string]>} x */
 	get_live_chat_type(x) {
 		switch(x[3]) {
 			case "get_live_chat_replay": break;
@@ -6202,7 +6202,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @api @public @arg {Split<D_ApiUrlFormat$1,"/">} x */
+	/** @api @public @arg {T_Split<D_ApiUrlFormat$1,"/">} x */
 	get_url_type(x) {
 		switch(x[0]) {
 			case "youtubei": return this.get_yt_url_type(x);
@@ -6384,7 +6384,7 @@ class Generate {
 //#region HandleTypesSupport
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ServiceData extends BaseService {
-	/** @protected @type {FormatItagArr} */
+	/** @protected @type {GA_FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @protected @type {QualArr} */
 	format_quality_label_arr=[
@@ -6396,11 +6396,11 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @api @public @arg {UrlTypes} url_type @arg {{}} x @returns {_ResponseTypes} */
+	/** @api @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
 	get_res_data(url_type,x) {
-		/** @private @type {Split<UrlTypes, ".">} */
+		/** @private @type {T_Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
-		/** @private @type {_ResponseTypes|null} */
+		/** @private @type {G_ResponseTypes|null} */
 		let res=null;
 		switch(target[0]) {
 			case "account": res=this.convert_account(target,x); break;
@@ -6437,7 +6437,7 @@ class ServiceMethods extends ServiceData {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.parser.get_url_type(path_parts);
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -6499,7 +6499,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -6515,7 +6515,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -6541,7 +6541,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -6558,7 +6558,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -6575,7 +6575,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -6597,7 +6597,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_pdg(t,x) {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
@@ -6608,7 +6608,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_music(t,x) {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
@@ -6619,7 +6619,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_share(t,x) {
 		switch(t[1]) {
 			case "get_share_panel": return {
@@ -6630,7 +6630,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_playlist(t,x) {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
@@ -6641,7 +6641,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_subscription(t,x) {
 		switch(t[1]) {
 			case "subscribe": return {
@@ -6657,7 +6657,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_browse(t,x) {
 		switch(t.length) {
 			case 2: switch(t[1]) {
@@ -6677,7 +6677,7 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
 	convert_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break; case "dislike": return {
@@ -6773,7 +6773,7 @@ class ServiceMethods extends ServiceData {
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
-		/** @typedef {SplitIntoGroups<typeof ss4,`${string}`>} PartGroups */
+		/** @typedef {T_SplitIntoGroups<typeof ss4,`${string}`>} PartGroups */
 		/** @typedef {Extract<PartGroups,["57",...any]>} PartGroups_1 */
 		/** @typedef {Extract<PartGroups,["5s",...any]>} PartGroups_2 */
 		if(this.str_starts_with(ss4,"57yn")) {
@@ -7284,7 +7284,7 @@ class HandleTypes extends ServiceMethods {
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
 		this.t(stateTags,this.RelevantStateTags);
 	}
-	/** @private @arg {RC$A_RelevantStateTags} x */
+	/** @private @arg {RCA_RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const cf="RelevantStateTags";
 		const {relevantStateTags,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -7698,7 +7698,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams("AccountMenuResponse",trackingParams);
 	}
-	/** @handler @public @arg {Response} response @arg {_ResponseTypes} x */
+	/** @handler @public @arg {Response} response @arg {G_ResponseTypes} x */
 	ResponseTypes(response,x) {
 		const cf="ResponseTypes"; this.k(cf,x);
 		if(!response.ok) {
@@ -7798,7 +7798,7 @@ class HandleTypes extends ServiceMethods {
 		console.log("defaultPriceTier",defaultPriceTier);
 		this.SuperThanksSelectedTierEntity(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {SuperThanksSelectedTierEntity} x */
+	/** @private @arg {DE_SuperThanksSelectedTier} x */
 	SuperThanksSelectedTierEntity(x) {
 		const cf="SuperThanksSelectedTierEntity";
 		const {index,key,...y}=this.sd(cf,x); this.g(y);
@@ -8370,11 +8370,11 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_Menu$items$iterate);
-		/** @private @type {D_Menu$targetId} */
+		/** @private @type {D_Menu_TargetId} */
 		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.A_LoggingDirectives);
 	}
-	/** @private @arg {G_Menu$items$iterate} x */
+	/** @private @arg {G_MenuItem} x */
 	G_Menu$items$iterate(x) {
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
@@ -8761,7 +8761,7 @@ class HandleTypes extends ServiceMethods {
 		this.FulfillmentContent(fulfillmentContent);
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {FulfillmentContent} x */
+	/** @private @arg {R_FulfillmentLayout} x */
 	FulfillmentContent(x) {
 		const cf="D_AdSlot"; this.k(cf,x);
 		this.R_InFeedAdLayout(this.w(x));
@@ -9471,7 +9471,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_Search} x */
 	D_Search(x) {this.H_("D_Search",x,this.primitive_of_string);}
-	/** @private @arg {G$BrowseHeader} x */
+	/** @private @arg {G_BrowseHeader} x */
 	BrowseHeader(x) {
 		this.sc("BrowseHeader",x);
 		if("feedTabbedHeaderRenderer" in x) {
@@ -9514,7 +9514,7 @@ class HandleTypes extends ServiceMethods {
 		const {stateTag: {},onStateTagModified,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
 	}
-	/** @private @arg {G$BrowseContents} x */
+	/** @private @arg {G_BrowseContents} x */
 	BrowseContents(x) {
 		const cf="BrowseContents"; this.k(cf,x);
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
@@ -9627,7 +9627,7 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.R_Comment);
 	}
-	/** @private @arg {FeedbackResponseProcessedStatus} x */
+	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
 		const cf="FeedbackResponseProcessedStatus";
 		const {isProcessed,...y}=this.sd(cf,x); this.g(y); // ! #destructure

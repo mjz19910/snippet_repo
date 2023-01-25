@@ -1,6 +1,6 @@
 type D_PlayerCaptionsTracklist={
 	captionTracks: CaptionTrackItem[];
 	audioTracks: AudioTrackItem[];
-	translationLanguages: TranslationLanguage[];
+	translationLanguages: D_TranslationLanguage[];
 	defaultAudioTrackIndex: number;
 };

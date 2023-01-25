@@ -1,0 +1,1 @@
+type D_Token={token: string;};

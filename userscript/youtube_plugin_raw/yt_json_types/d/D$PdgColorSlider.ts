@@ -1,6 +1,6 @@
 type D_PdgColorSlider={
 	notches: NotchesItem[];
-	superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
+	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
 	maxTierValue: R_SimpleText;
 	minTierValue: R_SimpleText;
 };

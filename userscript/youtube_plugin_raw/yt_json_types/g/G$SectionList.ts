@@ -1,1 +1,0 @@
-type G_SectionList=D_GenericSectionList|D_SearchFeedSectionList|D_BrowseFeedSectionList;

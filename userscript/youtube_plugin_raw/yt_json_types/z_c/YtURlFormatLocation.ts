@@ -1,7 +1,7 @@
 type YtURlFormatLocation=[
 	"/channel_switcher",
 	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
-	`/account${""|`_${AccountPageSettingsSections}`}`,
+	`/account${""|`_${G_AccountPageSettingsSections}`}`,
 	`/channel/UC${string}`,
 	`/feed/${D$BrowseEndpointPages}`,
 	`/feed/trending?bp=${string}`,

@@ -1,0 +1,1 @@
+type D_FeedbackResponseProcessedStatus={isProcessed: true;};

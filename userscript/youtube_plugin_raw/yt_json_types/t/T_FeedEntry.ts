@@ -1,0 +1,1 @@
+type T_FeedEntry<T extends string>=`FE${T}`;

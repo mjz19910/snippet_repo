@@ -1,5 +1,5 @@
 function create_from_parse_partial<T extends string>(x: T): UrlParse_ext<T> {
-	type St=Split<T,"?">;
+	type St=T_Split<T,"?">;
 	const fs: St=x.split("?") as St;
 	return {
 		whole_url: x,

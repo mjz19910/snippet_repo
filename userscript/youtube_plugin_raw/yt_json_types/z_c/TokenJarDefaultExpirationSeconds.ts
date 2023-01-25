@@ -1,1 +1,0 @@
-type TokenJarDefaultExpirationSeconds=600;

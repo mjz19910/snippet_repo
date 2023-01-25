@@ -1,4 +1,4 @@
 type C_AddFollowUpSurvey={
-	followUpOptions: FollowUpOption[];
+	followUpOptions: G_FollowUpOption[];
 	followUpText: R_TextRuns;
 };

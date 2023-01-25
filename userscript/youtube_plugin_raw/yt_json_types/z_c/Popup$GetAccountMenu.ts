@@ -1,1 +1,1 @@
-type Popup$GetAccountMenu=T$A_OpenPopup$Dropdown<TR_MP_Menu<{}>>&{beReused: true;};
+type Popup$GetAccountMenu=TA_OpenPopup_Dropdown<TR_MP_Menu<{}>>&{beReused: true;};

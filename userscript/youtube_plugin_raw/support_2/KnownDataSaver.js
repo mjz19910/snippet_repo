@@ -15,7 +15,7 @@ export class KnownDataSaver {
 		this.#load_data();
 		this.#store_data();
 	}
-	/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
+	/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
 	split_string_once(s,d=cast_objects.as(",")) {
 		if(s==="") {
 			/** @private @type {[]} */
