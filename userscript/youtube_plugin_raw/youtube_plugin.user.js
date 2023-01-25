@@ -7732,32 +7732,33 @@ class HandleTypes extends ServiceMethods {
 		return y;
 	}
 	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
-	D_Video_Omit(cf,x) {
-		let {...y}=this.Omit_Menu_Video(cf,x);
+	D_ThumbnailOverlay_Omit(cf,x) {
+		const {trackingParams,thumbnailOverlays,shortViewCountText,publishedTimeText,...y}=this.Omit_Menu_Video(cf,x);
 		return y;
 	}
-	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
-	D_ThumbnailOverlay_Omit(cf,x) {
-		const {trackingParams,thumbnailOverlays,shortViewCountText,publishedTimeText,...y}=this.D_Video_Omit(cf,x);
+	/** @template {D_Video} T @arg {string} cf @arg {T} x */
+	D_Video_Omit(cf,x) {
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.D_ThumbnailOverlay_Omit(cf,x);		this.R_TextRuns(ownerText);
+		if(showActionMenu!==false) debugger;
+		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
+		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
+		this.D_Video_Owner(owner);
 		return y;
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
 		if("descriptionSnippet" in x) {
-			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
+			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_Video_Omit(cf,x); this.g(y);
 			this.tz(ownerBadges,this.RMD_Badge);
 			this.richThumbnail_Video(richThumbnail);
 			this.R_TextRuns(descriptionSnippet);
 			return;
 		}
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
-		// this.R_TextRuns(ownerText);
-		// if(showActionMenu!==false) debugger;
-		// this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		// this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
-		// owner;
+		let y=this.D_Video_Omit(cf,x); this.g(y);
 	}
+	/** @arg {D_Video_Owner} x */
+	D_Video_Owner(x) {x;}
 	/** @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
 	/** @template {D_ChannelThumbnailWithLink} T @arg {T} x */
