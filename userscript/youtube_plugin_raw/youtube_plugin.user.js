@@ -7212,11 +7212,32 @@ class HandleTypes extends ServiceMethods {
 	GM_VE6827_WC(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		this.t(url,this.D_VE6827_PageUrl);
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==6827) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {D_VE6827_PageUrl} x */
 	D_VE6827_PageUrl(x) {
 		let [f,...p]=split_string(x,"/"); if(f!=="") debugger;
-		switch(p[1]) {}
+		switch(p[0]) {
+			default: p[0]===""; debugger; break;
+			case "reporthistory": {
+				let [,...u]=p;
+				if(u.length!==0) debugger;
+			} break;
+			case "feed": {
+				let s2=split_string(p[1],'?');
+				let [...u]=s2;
+				switch(u[0]) {
+					default: u[0]===""; debugger; break;
+					case "history":
+					case "library":
+					case "guide_builder":
+					case "trending":
+					case "storefront": break;
+				}
+			} break;
+		}
 	}
 	/** @private @arg {GM_VE23462_WC} x */
 	GM_VE23462_WC(x) {x; debugger;}
