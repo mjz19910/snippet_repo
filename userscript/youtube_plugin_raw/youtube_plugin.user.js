@@ -8076,7 +8076,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_SubscribeButton";
 		const {buttonText,...y}=this.sd(cf,x);
 		this.R_TextRuns(buttonText);
-		console.log(this.get_keys_of(y)[0]);
+		console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(y)[0]);
 	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
