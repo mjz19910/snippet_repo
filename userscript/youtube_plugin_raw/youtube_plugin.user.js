@@ -5437,7 +5437,9 @@ class ParserService extends BaseService {
 								if(is_in_range(map_entry_key,11)) {
 									return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 								}
-							} new_ns(); debugger; return;
+								new_ns();
+								debugger;
+							} return;
 						}
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 
