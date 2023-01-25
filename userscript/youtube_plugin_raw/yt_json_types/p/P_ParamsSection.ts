@@ -2,6 +2,7 @@ type P_ParamsSection=
 	|"A_HideEngagementPanelScrim"
 	|"AE_Browse"
 	|"D_AdLayoutLogging"
+	|"D_CommentsHeader"
 	|"D_AutoplayContent"
 	|"D_AutoplaySwitchButton"
 	|"D_ChipCloud"
