@@ -10279,8 +10279,9 @@ class HandleTypes extends ServiceMethods {
 			this.T_Icon(icon);
 			switch(icon.iconType) {
 				default: icon===""; this.do_codegen(cf,x); break;
-				case "MY_VIDEOS": case "TRENDING": case "WATCH_HISTORY": case "WATCH_LATER": case "CLAPPERBOARD": case "MUSIC": case "LIVE": case "GAMING_LOGO": case "COURSE": case "TROPHY": case "NEWS": case "YOUTUBE_ROUND":
-				case "FASHION_LOGO":
+				case "MY_VIDEOS": case "TRENDING": case "WATCH_HISTORY": case "WATCH_LATER": case "CLAPPERBOARD": case "MUSIC": case "LIVE":
+				case "GAMING_LOGO": case "COURSE": case "TROPHY": case "NEWS": case "YOUTUBE_ROUND": case "FASHION_LOGO": case "FLAG":
+				case "CREATOR_STUDIO_RED_LOGO": case "YOUTUBE_MUSIC": case "YOUTUBE_KIDS_ROUND": case "UNPLUGGED_LOGO": case "SETTINGS":
 			}
 			{
 				let x=navigationEndpoint;
