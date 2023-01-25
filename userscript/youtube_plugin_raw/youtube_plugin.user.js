@@ -6998,76 +6998,56 @@ class HandleTypes extends ServiceMethods {
 	GM_VE23462_WC(x) {x;}
 	/** @private @arg {GM_VE96368} x */
 	GM_VE96368(x) {x;}
-	/** @private @arg {GM_WC} x */
+	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
 	WebCommandMetadataWithApiUrl(x) {
-		if("apiUrl" in x) {
-			let cx=x.apiUrl;
-			switch(x.apiUrl) {
-				default: {
-					let path_parts=split_string(split_string_once(cx,"/")[1],"/");
-					let url_type=this.parser.get_url_type(path_parts);
-					if(!url_type) {
-						debugger;
-						return;
-					}
-					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-					/** @private @arg {GM_WC} x */
-					let typedef_str=this.codegen_new_typedef(x,`G_${url_type_ex}`,true);
-					console.log(`
-					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
-					---\n\n\tG_${url_type_ex},
-					---\n\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
+		let cx=x.apiUrl;
+		switch(x.apiUrl) {
+			default: {
+				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
+				let url_type=this.parser.get_url_type(path_parts);
+				if(!url_type) {
 					debugger;
-				} break;
-				case "/youtubei/v1/backstage/create_post": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/like/removelike": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/like/like": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/notification/opt_out": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/notification/record_interactions": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/playlist/create": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/flag/get_form": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/subscription/subscribe": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/feedback": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/browse": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/account/account_menu": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/notification/get_unseen_count": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/notification/get_notification_menu": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/get_transcript": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/next": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/share/get_share_panel": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/browse/edit_playlist": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/playlist/get_add_to_playlist": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/account/set_setting": return this.GeneratedWebCommandMetadata(x);
-				case "/youtubei/v1/ypc/get_offers": return this.GeneratedWebCommandMetadata(x);
-			}
-			return;
+					return;
+				}
+				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
+				/** @private @arg {GM_WC} x */
+				let typedef_str=this.codegen_new_typedef(x,`G_${url_type_ex}`,true);
+				const l1="-- [GeneratedWebCommandMetadata] --";
+				const r2="return this.GeneratedWebCommandMetadata(x);";
+				console.log(`\n${l1}\n\n${typedef_str}\n---\n\n\tG_${url_type_ex},\n---\n\n\tcase "${cx}": ${r2}`);
+				debugger;
+			} break;
+			case "/youtubei/v1/backstage/create_post": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/like/removelike": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/like/like": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/notification/opt_out": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/notification/record_interactions": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/playlist/create": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/flag/get_form": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/subscription/subscribe": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/feedback": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/browse": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/account/account_menu": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_unseen_count": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_notification_menu": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/account/set_setting": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/ypc/get_offers": return this.GeneratedWebCommandMetadata(x);
 		}
+		return;
 	}
 	/** @private @arg {GM_WC} x */
 	WebCommandMetadata(x) {
-		this.WebCommandMetadataWithApiUrl(x);
 		const cf="GenericWebCommandMetadata";
-		if("rootVe" in x&&"apiUrl" in x) {
-			switch(x.rootVe) {
-				case 3854: return this.G_VE3854_WC(x);
-				case 3611: return this.GM_VE3611_WC(x);
-				case 23462: return this.GM_VE23462_WC(x);
-				case 96368: return this.GM_VE96368(x);
-				default: x===0; debugger; break;
-			}
-		}
-		let ka=this.get_keys_of(x);
-		switch(ka[0]) {
-			case "rootVe":
-			case "sendPost":
-			case "webPageType":
-			case "url": break;
-			default: ka[0]===""; debugger; break;
-		}
-		if("rootVe" in x) {
+		if("rootVe" in x&&!("apiUrl" in x)) {
 			let cx=x.rootVe;
 			switch(x.rootVe) {
 				default: {
+					x===0;
 					/** @private @arg {GM_WC} x */
 					this.codegen_new_typedef(x,`G_VE${cx}`);
 					console.log(`\n\tG_VE${cx},`);
@@ -7075,6 +7055,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case 3832: return this.GM_VE3832_Watch_WC(x);
 				case 4724: return this.GeneratedWebCommandMetadata(x);
+				case 5754: return this.GeneratedWebCommandMetadata(x);
 				case 6827: return this.GeneratedWebCommandMetadata(x);
 				case 11487: return this.GeneratedWebCommandMetadata(x);
 				case 96368: return this.GeneratedWebCommandMetadata(x);
@@ -7083,11 +7064,23 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
+		if("apiUrl" in x &&!("rootVe" in x)) return this.WebCommandMetadataWithApiUrl(x);
+		if("rootVe" in x&&"apiUrl" in x) {
+			switch(x.rootVe) {
+				case 3854: return this.G_VE3854_WC(x);
+				case 3611: return this.GM_VE3611_WC(x);
+				case 23462: return this.GM_VE23462_WC(x);
+				case 96368: return this.GM_VE96368(x);
+				default: x===0; debugger; break;
+			}
+			return;
+		}
 		if("sendPost" in x) {
 			const {sendPost,...y}=this.sd(cf,x); this.g(y);
 			if(sendPost!==true) debugger;
 			return;
 		}
+		x===0;
 		debugger;
 	}
 	/** @private @arg {GM_VE3854_WC} x */
