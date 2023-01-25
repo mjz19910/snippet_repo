@@ -224,7 +224,12 @@ type DE_VE6827_Browse={browseId: "FElibrary"|"FEhistory";}|{
 	browseId: "FEstorefront";
 	params: string;
 };
-type DE_VE23462_Browse={browseId: "SPaccount_notifications";};
+type DE_VE23462_Browse={
+	browseId:
+	|"SPaccount_notifications"
+	|"SPaccount_overview"
+	;
+};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
 //#endregion
