@@ -5602,6 +5602,7 @@ class ParserService extends BaseService {
 							case "f10": case "f11": case "f16": case "f19": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(path_parts[2]==="f8") return;
 									if(tv instanceof Map) return;
 									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
