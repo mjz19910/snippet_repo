@@ -8652,7 +8652,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {
 		const cf="E_ReelWatch";
-		this.T_Endpoint(cf,x,x => this.y(x,this.D_ReelWatch),(x) => {
+		this.T_Endpoint(cf,x,x => this.y(x,this.D_ReelWatch),x => {
 			const cf="M_VE37414";
 			const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
 			this.GM_VE37414_WC(a);
