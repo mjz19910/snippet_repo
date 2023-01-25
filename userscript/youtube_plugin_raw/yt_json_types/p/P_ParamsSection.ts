@@ -1,11 +1,6 @@
 type P_ParamsSection=
 	|"A_HideEngagementPanelScrim"
 	|"AE_Browse"
-	|"C_AdsControlFlowOpportunityReceived"
-	|"C_Executor"
-	|"C_ReloadContinuationItems"
-	|"C_ScrollToEngagementPanel"
-	|"C_ShowReloadUi"
 	|"CommonConfigData"
 	|"CreatePlaylist"
 	|"D_AdLayoutLogging"
@@ -47,16 +42,6 @@ type P_ParamsSection=
 	|"D_YpcGetCart"
 	|"DE_GetNotificationMenu"
 	|"DMD_Badge"
-	|"E_CreateBackstagePost"
-	|"E_CreateBackstagePost"
-	|"E_Feedback"
-	|"E_GetTranscript"
-	|"E_PlaylistEdit"
-	|"E_ReelWatch"
-	|"E_Search"
-	|"E_SetSettingAutonavForDesktop"
-	|"E_ShareEntityService"
-	|"E_YpcGetOffers"
 	|"EA_ChangeEngagementPanelVisibility"
 	|"G_SectionList"
 	|"GeneratedWCM"
@@ -117,15 +102,30 @@ type P_ParamsSection=
 	;
 ;
 type T_Endpoint_CF=[
+	"C_AdsControlFlowOpportunityReceived",
 	"C_Continuation",
+	"C_Executor",
 	"C_GetSurvey",
+	"C_ReloadContinuationItems",
+	"C_ScrollToEngagementPanel",
+	"C_ShowReloadUi",
 	"E_Browse",
 	"E_CreateBackstagePost",
+	"E_CreateBackstagePost",
+	"E_CreateBackstagePost",
+	"E_Feedback",
 	"E_GetNotificationMenu",
+	"E_GetTranscript",
+	"E_PlaylistEdit",
 	"E_RecordNotificationInteractions",
 	"E_ReelWatch",
+	"E_ReelWatch",
+	"E_Search",
+	"E_SetSettingAutonavForDesktop",
+	"E_ShareEntityService",
 	"E_WatchPlaylist",
 	"E_YpcGetCart",
+	"E_YpcGetOffers",
 ][number];
 type D_Link_CF=[
 	"D_CompactLink",
