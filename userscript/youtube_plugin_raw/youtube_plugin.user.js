@@ -9530,13 +9530,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`,`${string}//studio.youtube.com${string}`>,"//">[1],"/">} x */
+	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url']|GM_VE83769_UrlType,`${string}//studio.youtube.com${string}`>,"//">[1],"/">} x */
 	handle_yt_studio_url(x) {
 		if(x[0]!=="studio.youtube.com") {debugger; return;}
 		if(x.length===1) return;
-		let sp=x[1];
-		switch(sp) {
+		switch(x[1]) {
 			default: debugger; break;
+			case "": return;
 			case "channel": {
 				let v=x[2];
 				if(!this.str_starts_with("UC",v)) {debugger; return;}

@@ -97,10 +97,6 @@ type GM_VE42352_WC={
 	rootVe: 42352;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE83769_UrlType=
-|"/upload"
-|`https://studio.youtube.com/channel/UC${string}`
-|"https://music.youtube.com/";
 type GM_VE83769_WC={
 	url: GM_VE83769_UrlType;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
