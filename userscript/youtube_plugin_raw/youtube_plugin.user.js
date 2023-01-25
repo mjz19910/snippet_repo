@@ -7531,11 +7531,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
-		const cf="GM_VE23462_WC";
+		const cf="GM_VE3611_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
 		this._decode_channel_url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @private @arg {GM_VE37414_WC} x */
+	GM_VE37414_WC(x) {
+		const cf="GM_VE37414_WC";
+		const {url,webPageType,rootVe,...y}=this.sd(cf,x); this.g(y);
+		if(url!=="/shorts/") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
+		if(rootVe!==37414) debugger;
 	}
 	/** @private @arg {GM_VE3611_WC['url']} x */
 	_decode_channel_url(x) {
@@ -8644,7 +8652,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {
 		const cf="E_ReelWatch";
-		this.T_Endpoint(cf,x,x => this.y(x,this.D_ReelWatch),x => {x; debugger;});
+		this.T_Endpoint(cf,x,x => this.y(x,this.D_ReelWatch),(x) => {
+			const cf="M_VE37414";
+			const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
+			this.GM_VE37414_WC(a);
+		});
 	}
 	/** @private @arg {D_ReelWatch} x */
 	D_ReelWatch(x) {
