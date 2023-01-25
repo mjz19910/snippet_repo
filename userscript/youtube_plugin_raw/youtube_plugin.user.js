@@ -4571,7 +4571,6 @@ class CodegenService extends BaseService {
 			||b.feedNudgeRenderer
 			||b.feedTabbedHeaderRenderer
 			||b.fusionSearchboxRenderer
-			||b.getSurveyCommand
 			||b.ghostGridRenderer
 			||b.gridRenderer
 			||b.guideCollapsibleEntryRenderer
@@ -9882,23 +9881,26 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GC_Button} x */
 	GC_Button(x) {
-		const cf="GC_Button";
+		const cf="GC_Button"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
-		if("createBackstagePostEndpoint" in x) {
-			this.T_Endpoint(cf,x,a => {
-				this.params(cf,"createBackstagePost.param",this.w(this.w(a)));
-			},meta => {
-				console.log(meta);
-				debugger;
-			});
-			return;
-		}
+		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x)
+		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		debugger;
+	}
+	/** @private @arg {E_CreateBackstagePost} x */
+	E_CreateBackstagePost(x) {
+		const cf="E_CreateBackstagePost";
+		this.T_Endpoint(cf,x,a => {
+			this.params(cf,"createBackstagePost.param",this.w(this.w(a)));
+		},meta => {
+			console.log(meta);
+			debugger;
+		});
 	}
 	/** @private @arg {C_Executor} x */
 	CommandExecutorCommand(x) {

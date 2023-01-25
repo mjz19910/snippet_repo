@@ -6,5 +6,6 @@ type GC_Button=
 	|E_CreateBackstagePost
 	|E_Url
 	|C_Executor
+	|C_GetSurvey
 	;
 ;
