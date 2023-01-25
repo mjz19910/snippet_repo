@@ -9,4 +9,8 @@ type DM_AdSlot={
 	adSlotLoggingData: {
 		serializedSlotAdServingDataEntry: string;
 	};
+}|{
+	slotId: `${number}:${number}:${number}:${number}`;
+	slotType: "SLOT_TYPE_PAGE_TOP";
+	slotPhysicalPosition: 0;
 };
