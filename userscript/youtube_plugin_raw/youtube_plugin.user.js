@@ -9043,6 +9043,7 @@ class HandleTypes extends ServiceMethods {
 			let x=decodeURIComponent(serializedContextData);
 			let b_res=this._decode_b64_url_proto_obj(x);
 			if(!b_res) return;
+			if(b_res.length!==1) debugger;
 			let [r]=b_res;
 			if(r[0]==="child"&&r[1]===3) {
 				let playlist_id=this._decoder.decode(r[2]);
