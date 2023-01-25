@@ -7508,6 +7508,8 @@ class HandleTypes extends ServiceMethods {
 			case "SPaccount_notifications": break;
 			case "FEwhat_to_watch": break;
 			case "FEsubscriptions": break;
+			case "FElibrary": break;
+			case "FEhistory": break;
 			default: x===""; debugger; break;
 		};
 	}
@@ -8564,6 +8566,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {`UC${string}`} x */
 	channelId(x) {
 		if(this.str_starts_with("UC",x)) {
+			if(x.length===24) return;
 			console.log("[channelId.length]",x.length);
 			return;
 		}
