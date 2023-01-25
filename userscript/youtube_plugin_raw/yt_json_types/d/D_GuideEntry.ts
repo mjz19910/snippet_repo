@@ -1,4 +1,14 @@
 type D_GuideEntry=[
+	{
+		navigationEndpoint: E_Browse;
+		thumbnail: D_Thumbnail;
+		badges: GuideEntryBadges;
+		trackingParams: string;
+		formattedTitle: R_SimpleText;
+		accessibility: D_Accessibility;
+		entryData: D_GuideEntryData;
+		presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
+	},
 	D_GuideEntry_HelpService,
 	D_GuideEntry_LikesPlaylist,
 	D_GuideEntry_MyVideosTab,

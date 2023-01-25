@@ -1,3 +1,3 @@
 type D_GuideEntryData={
-	guideEntryId: "LL";
+	guideEntryId: "LL"|`UC${string}`;
 };
