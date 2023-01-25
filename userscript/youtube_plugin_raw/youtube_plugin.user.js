@@ -4800,6 +4800,8 @@ class CodegenService extends BaseService {
 		}
 		/** @private @type {D_Accessibility} */
 		if(b.accessibilityData) return "TYPE::D_Accessibility";
+		/** @private @type {R_GuideEntryData} */
+		if(b.guideEntryData) return "TYPE::R_GuideEntryData";
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		debugger;
@@ -10535,7 +10537,7 @@ class HandleTypes extends ServiceMethods {
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.E_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: console.log(`[D_GuideEntry_LikesPlaylist]\n\n\ncase "${icon.iconType}":`); break;
+					default: this.do_codegen(cf,x); break;
 					case "LIKES_PLAYLIST":
 				}
 				return this.R_GuideEntryData(entryData);
