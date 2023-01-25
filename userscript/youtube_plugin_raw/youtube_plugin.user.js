@@ -8402,13 +8402,14 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
-		this.tz(items,this.G_Menu$items$iterate);
+		this.tz(items,this.G_MenuItem);
 		/** @private @type {D_Menu_TargetId} */
 		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.A_LoggingDirectives);
 	}
 	/** @private @arg {G_MenuItem} x */
-	G_Menu$items$iterate(x) {
+	G_MenuItem(x) {
+		const cf="G_MenuItem"; this.k(cf,x);
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
@@ -8423,6 +8424,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",any>} */
 	is_MenuItem_AQ(x) {
 		if("icon" in x) return x.icon.iconType==="ADD_TO_QUEUE_TAIL";
+		return false;
+	}
+	/** @template {Extract<RD_MenuServiceItem,{icon:any}>['icon']['iconType']} T @arg {T} wt @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<T,any>} */
+	is_MenuItem_W(x,wt) {
+		if("icon" in x) return x.icon.iconType===wt;
 		return false;
 	}
 	/** @private @arg {R_MenuServiceItem} x */
@@ -8445,11 +8451,24 @@ class HandleTypes extends ServiceMethods {
 					this.T_Icon(icon);
 					return;
 				}
+				if(this.is_MenuItem_W(x,"WATCH_LATER")) {
+					const {icon,...y}=this.D_MenuServiceItem$Omit(x,x => {
+						if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
+						debugger;
+					}); this.g(y);
+					this.T_Icon(icon);
+					return;
+				}
 				debugger;
 				return;
 			}
 			this.D_MenuServiceItem(x);
 		});
+	}
+	/** @private @arg {E_PlaylistEdit} x */
+	E_PlaylistEdit(x) {
+		const cf="E_PlaylistEdit"; this.k(cf,x);
+		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y);
 	}
 	/** @template T @template {string|null} U @arg {Extract<D_MenuServiceItem<U, T>,{icon:any}>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem$Omit(x,f) {
@@ -9908,7 +9927,7 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
-		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x)
+		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		debugger;
 	}
