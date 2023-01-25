@@ -4872,6 +4872,7 @@ class ParserService extends BaseService {
 		}
 		if(this.str_starts_with_r(x,"RDMM")) {
 			let pl=x.slice(4);
+			if(pl.length===11) return;
 			console.log("[parse_playlist_radio_mm]",pl.length,pl);
 			return;
 		}
