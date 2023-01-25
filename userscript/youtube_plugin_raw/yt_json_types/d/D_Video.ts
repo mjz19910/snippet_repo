@@ -68,10 +68,14 @@ type D_Video_Base={
 }|{
 	descriptionSnippet: R_TextRuns;
 	badges: RMD_Badge[];
-	owner: {
-		thumbnail: D_Thumbnail;
-		navigationEndpoint: E_Browse;
-		accessibility: D_Accessibility;
-		title: string;
-	};
+	owner: D_Video_Owner;
+}|{
+	descriptionSnippet: R_TextRuns;
+	publishedTimeText: R_SimpleText;
+	lengthText: R_SimpleText;
+	viewCountText: R_SimpleText;
+	ownerBadges: RMD_Badge[];
+	shortViewCountText: R_SimpleText;
+	richThumbnail: R_MovingThumbnail;
+	owner: D_Video_Owner;
 };
