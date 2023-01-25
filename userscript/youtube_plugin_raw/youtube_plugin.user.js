@@ -7671,6 +7671,7 @@ class HandleTypes extends ServiceMethods {
 			if(jk==="responseContext,header,trackingParams,onResponseReceivedActions") break x;
 			if(jk==="responseContext,contents,trackingParams,topbar,sidebar") break x;
 			if(jk==="responseContext,trackingParams,onResponseReceivedActions") break x;
+			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk=="${jk}") break x;`);
 			debugger;
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.sd(cf,x); this.g(y);
@@ -10090,7 +10091,7 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		debugger;
 	}
-	/** @private @template {D_GuideEntry} T @arg {string} cf @arg {T} x */
+	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {string} cf @arg {T} x */
 	D_GuideEntry_Omit(cf,x) {
 		const {accessibility,formattedTitle,trackingParams,...y}=this.sd(cf,x);
 		return y;
@@ -10156,10 +10157,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
-		const cf="D_GuideEntry";
-		if("icon" in x) {
-			return this.D_GuideEntry_WithIcon(cf,x);
+		const cf="D_GuideEntry"; this.k(cf,x);
+		if("entryRenderer" in x) {
+			return;
 		}
+		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		x===0;
 		debugger;
 	}

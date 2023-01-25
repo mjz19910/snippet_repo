@@ -1,4 +1,7 @@
 type D_GuideEntry={
+	alwaysShow: false;
+	entryRenderer: R_GuideEntry;
+}|{
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<"WATCH_LATER">;
 	trackingParams: string;
