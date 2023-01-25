@@ -7,3 +7,4 @@ type D_VE6827_PageUrl=
 	|"/feed/guide_builder"
 	;
 ;
+type FRRes=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;

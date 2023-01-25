@@ -1,6 +1,6 @@
 type GFeedbackVarMap={
 	browse_id_prefix: "";
-	browse_id: D$Browse$Id;
+	browse_id: D_Browse_Id;
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
 	e: string;
 	has_alc_entitlement: "false";
