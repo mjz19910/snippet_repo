@@ -3,4 +3,7 @@ type D_RichItem={
 	trackingParams: string;
 	rowIndex: number;
 	colIndex: number;
+}|{
+	content: G_RichItemContent;
+	trackingParams: string;
 };

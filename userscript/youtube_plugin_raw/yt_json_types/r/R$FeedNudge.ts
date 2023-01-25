@@ -1,3 +1,1 @@
-type R_FeedNudge={
-	feedNudgeRenderer: {};
-};
+type R_FeedNudge={feedNudgeRenderer: D_FeedNudge;};

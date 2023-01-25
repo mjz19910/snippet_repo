@@ -7636,20 +7636,37 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_RichItem} x */
 	D_RichItem(x) {
 		const cf="D_RichItem";
-		const {content,trackingParams,rowIndex,colIndex,...y}=this.sd(cf,x); this.g(y);
-		this.trackingParams(cf,trackingParams);
-		this.save_number("[Item.pos]",[rowIndex,colIndex]);
-		{
-			let x=content;
-			if("videoRenderer" in x) return;
-			if("radioRenderer" in x) return;
-			debugger;
+		if("rowIndex" in x) {
+			const {content,trackingParams,rowIndex,colIndex,...y}=this.sd(cf,x); this.g(y);
+			this.G_RichItemContent(content);
+			this.trackingParams(cf,trackingParams);
+			this.save_number("[Item.pos]",[rowIndex,colIndex]);
+			return;
 		}
-		content;
-		trackingParams;
-		rowIndex;
-		colIndex;
+		const {content,trackingParams,...y}=this.sd(cf,x); this.g(y);
+		this.G_RichItemContent(content);
+		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {G_RichItemContent} x */
+	G_RichItemContent(x) {
+		if("adSlotRenderer" in x) return this.R_AdSlot(x);
+		if("videoRenderer" in x) return this.R_Video(x);
+		if("radioRenderer" in x) return this.R_Radio(x);
+		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
+		debugger;
+	}
+	/** @arg {R_FeedNudge} x */
+	R_FeedNudge(x) {this.H_("R_FeedNudge",x,this.D_FeedNudge);}
+	/** @arg {D_FeedNudge} x */
+	D_FeedNudge(x) {x; debugger;}
+	/** @arg {R_Video} x */
+	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
+	/** @private @arg {D_Video} x */
+	D_Video(x) {x; debugger;}
+	/** @arg {R_Radio} x */
+	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
+	/** @private @arg {D_Radio} x */
+	D_Radio(x) {x; debugger;}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="ExpandableTab"; this.k(cf,x);
@@ -9411,7 +9428,7 @@ class HandleTypes extends ServiceMethods {
 				let ll=sa.slice(24);
 				if(this.str_starts_with(sa,"UC")&&ll==="featured") {
 					/** @returns {`UC${string}`} */
-					function wx(){return "UCx"}
+					function wx() {return "UCx";}
 					let [cid,fe]=split_string_once_last(sa,"featured",wx());
 					if(fe!=="") debugger;
 					this.channelId(cid);
