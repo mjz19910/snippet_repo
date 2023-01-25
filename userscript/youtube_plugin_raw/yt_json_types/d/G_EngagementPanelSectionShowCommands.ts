@@ -1,0 +1,1 @@
+type G_EngagementPanelSectionShowCommands=EA_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;

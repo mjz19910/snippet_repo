@@ -16,7 +16,7 @@ type DB_SI_EngagementPanel={
 	content: R_ClipSection;
 	targetId: "engagement-panel-clip-create";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: EA_ChangeEngagementPanelVisibility[];
+	onShowCommands: G_EngagementPanelSectionShowCommands[];
 	loggingDirectives: D_LoggingDirectives;
 }|{
 	panelIdentifier: "engagement-panel-macro-markers-auto-chapters";
@@ -26,6 +26,3 @@ type DB_SI_EngagementPanel={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };
-type GenericEngagementPanelSectionItem_tmp={
-	targetId: D_EngagementPanelSectionTargetId;
-}

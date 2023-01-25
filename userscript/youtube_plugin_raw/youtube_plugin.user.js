@@ -9951,10 +9951,103 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,this.D_EngagementPanelSectionList);}
+	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
+	T_ShortsSurfaceIdentifier(x) {
+		const {surface,tag,...y}=x; this.g(y); // ! #destructure
+		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+		switch(tag) {}
+		return tag;
+	}
+	/** @arg {Record<"identifier",unknown>} x */
+	force_parse_identifier(x) {
+		const {identifier,...a}=x; this.g(a);
+		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
+			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
+			let yk=this.get_keys_of(identifier);
+			if(!this.eq_keys(yk,["surface","tag"])) debugger;
+			switch(identifier.tag) {
+				case "engagement-panel-structured-description": break;
+				default: debugger; return;
+			}
+			let a1=this.T_ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
+			if(a1!=="engagement-panel-structured-description") debugger;
+			return;
+		}
+		debugger;
+	}
+	/** @private @arg {R_StructuredDescriptionContent} x */
+	R_StructuredDescriptionContent(x) {x; debugger;}
+	/** @private @arg {R_ProductList} x */
+	R_ProductList(x) {x; debugger;}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
 		const cf="D_EngagementPanelSectionList"; this.k(cf,x);
 		if("veType" in x) {
+			switch(x.veType) {
+				default: debugger; break;
+				case 76278: {
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x;
+					if(panelIdentifier!=="comment-item-section") debugger;
+					this.R_EngagementPanelTitleHeader(header);
+					((_x) => {debugger;})(content);
+					if(targetId!=="engagement-panel-comments-section") debugger;
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.D_LoggingDirectives(loggingDirectives);
+					if("identifier" in y) {
+						this.force_parse_identifier(y);
+						return;
+					}
+					this.g(y);
+				} break;
+				case 99999: {
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x; this.g(y);
+					if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
+					this.R_EngagementPanelTitleHeader(header);
+					this.R_ProductList(content);
+					if(targetId!=="shopping_panel_for_entry_point_5") debugger;
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.D_LoggingDirectives(loggingDirectives);
+				} break;
+				case 126250: {
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
+					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+					this.R_EngagementPanelTitleHeader(header);
+					((_x) => {debugger;})(content);
+					if(targetId!=="engagement-panel-searchable-transcript") debugger;
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.D_LoggingDirectives(loggingDirectives);
+					if("identifier" in y) {
+						this.force_parse_identifier(y);
+						return;
+					}
+					this.g(y);
+				} break;
+				case 124975: {
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y); // ! #destructure
+					if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
+					this.R_EngagementPanelTitleHeader(header);
+					this.R_StructuredDescriptionContent(content);
+					if(targetId!=="engagement-panel-structured-description") debugger;
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.D_LoggingDirectives(loggingDirectives);
+					if(identifier) {
+						let a1=this.T_ShortsSurfaceIdentifier(identifier);
+						if(a1!=="engagement-panel-structured-description") debugger;
+					}
+				} break;
+				case 139722: {
+					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y); // ! #destructure
+					((_x) => {debugger;})(content);
+					this.t(header,this.R_EngagementPanelTitleHeader);
+					this.targetId(cf,targetId);
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.D_LoggingDirectives(loggingDirectives);
+					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
+					if(!identifier) debugger;
+					let a1=this.T_ShortsSurfaceIdentifier(identifier);
+					if(a1!=="shorts-comments-panel") debugger;
+				} break;
+			}
 			return;
 		}
 		this.DB_SI_EngagementPanel(x);
@@ -9963,38 +10056,57 @@ class HandleTypes extends ServiceMethods {
 	R_ClipSection(x) {x; debugger;}
 	/** @private @arg {R_MacroMarkersList} x */
 	R_MacroMarkersList(x) {x; debugger;}
-	/** @private @arg {Extract<DB_SI_EngagementPanel,{panelIdentifier:any}>['content']} x */
-	DB_SI_EngagementPanel_ContentPanelIdentifier(x) {
-		const cf="DB_SI_EngagementPanel_ContentPanelIdentifier"; this.k(cf,x);
-		if("macroMarkersListRenderer" in x) return this.R_MacroMarkersList(x);
-		if("clipSectionRenderer" in x) return this.R_ClipSection(x);
+	/** @private @arg {R_EngagementPanelTitleHeader} x */
+	R_EngagementPanelTitleHeader(x) {x; debugger;}
+	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {x; debugger;}
+	/** @arg {G_EngagementPanelSectionShowCommands} x */
+	G_EngagementPanelSectionShowCommands(x) {
+		const cf="EngagementPanelSectionShowCommands";
+		this.save_keys(`[${cf}]`,x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
+		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
+		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		debugger;
 	}
 	/** @private @arg {DB_SI_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
 		const cf="DB_SI_EngagementPanel";
-		if("panelIdentifier" in x) {
-			const {content,targetId,visibility,loggingDirectives,panelIdentifier,header,...y}=this.sd(cf,x);
-			this.DB_SI_EngagementPanel_ContentPanelIdentifier(content);
-			switch(targetId) {
-				default: debugger; break;
-				case "engagement-panel-clip-create":
-				case "engagement-panel-macro-markers-description-chapters":
-				case "engagement-panel-macro-markers-auto-chapters":
-			}
-			if("onShowCommands" in y) {
-				const {onShowCommands,...y1}=y; this.g(y1);
-				this.z(onShowCommands,this.EA_ChangeEngagementPanelVisibility);
-				return;
-			}
-			this.g(y);
-			return;
+		switch(x.targetId) {
+			default: x===""; debugger; break;
+			case "engagement-panel-ads": {
+				const {content,targetId,visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);
+				this.R_AdsEngagementPanelContent(content);
+				if(targetId!=="engagement-panel-ads") debugger;
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-clip-create": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=x; this.g(y); // ! #destructure
+				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_ClipSection(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
+			} break;
+			case "engagement-panel-macro-markers-description-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-macro-markers-auto-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
 		}
-		const {content,targetId,visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);
-		this.R_AdsEngagementPanelContent(content);
-		if(targetId!=="engagement-panel-ads") debugger;
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {R_AdsEngagementPanelContent} x */
 	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent",x,this.B_Hack);}

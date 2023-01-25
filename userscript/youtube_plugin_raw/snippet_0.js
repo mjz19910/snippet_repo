@@ -626,12 +626,6 @@ class ND extends Snippet_0_tmp {
 		const {continuationItemRenderer,...y}=x; this.g(y);
 		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
-	/** @protected @template T @arg {T_ShortsSurfaceIdentifier<T>} x */
-	I$ShortsSurfaceIdentifier(x) {
-		const {surface,tag,...y}=x; this.g(y); // ! #destructure
-		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-		return tag;
-	}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(needle,str) {
 		return str.startsWith(needle);
