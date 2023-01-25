@@ -95,8 +95,10 @@ type GM_VE37414_WC={
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
+type GM_VE83769_UrlType="/upload"|`https://studio.youtube.com/channel/UC${string}`;
+
 type GM_VE83769_WC={
-	url: "/upload";
+	url: GM_VE83769_UrlType;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };

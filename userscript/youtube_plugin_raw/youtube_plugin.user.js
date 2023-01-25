@@ -9412,7 +9412,30 @@ class HandleTypes extends ServiceMethods {
 		this.z(this.w(y),f);
 	}
 	/** @private @arg {E_Url} x */
-	E_Url(x) {x; debugger;}
+	E_Url(x) {
+		const cf="D_WatchResult_ResultsItem";
+		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.sd(cf,x); this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.M_VE83769(commandMetadata);
+	}
+	/** @private @arg {M_VE83769} x */
+	M_VE83769(x) {this.H_("M_VE83769",x,this.GM_VE83769_WC);}
+	/** @private @arg {GM_VE83769_WC} x */
+	GM_VE83769_WC(x) {
+		const cf="GM_VE83769_WC";
+		const {url,webPageType,rootVe,...y}=this.sd(cf,x); this.g(y);
+		this.GM_VE83769_UrlType(url);
+		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
+		if(rootVe!==83769) debugger;
+	}
+	/** @private @arg {GM_VE83769_UrlType} x */
+	GM_VE83769_UrlType(x) {
+		if(this.str_starts_with("https://studio.youtube.com",x)) return;
+		switch(x) {
+			default: debugger; break;
+			case "/upload": break;
+		}
+	}
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
