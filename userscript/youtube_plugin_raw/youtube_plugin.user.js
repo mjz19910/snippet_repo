@@ -4276,6 +4276,8 @@ class CodegenService extends BaseService {
 		if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
 			return o;
 		}
+		if(o.startsWith("https://")) return o;
+		if(o.startsWith("http://")) return o;
 		if(o.length>max_str_len) {
 			console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
 			return "TYPE::string";
