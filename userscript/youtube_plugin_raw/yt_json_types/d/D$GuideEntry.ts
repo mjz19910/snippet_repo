@@ -8,12 +8,6 @@ type D_GuideEntry={
 	entryData: R_GuideEntry_D;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
-	navigationEndpoint?: E_Url|E_Browse;
-	icon: T_Icon<"EXPAND"|"ADD_CIRCLE">;
-	trackingParams: string;
-	formattedTitle: R_SimpleText;
-	accessibility: D_Accessibility;
-}|{
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<"WHAT_TO_WATCH">;
 	trackingParams: string;
