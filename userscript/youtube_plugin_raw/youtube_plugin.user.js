@@ -7688,8 +7688,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_FeedNudge"; this.k(cf,x);
 		{x; debugger;}
 	}
-	/** @arg {R_Video} x */
-	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
 	Omit_Menu_Video(cf,x) {
 		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(cf,x);
@@ -7761,6 +7759,49 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(videoCountShortText);
 		return y;
 	}
+	/** @private @arg {D_Video} x */
+	D_Video(x) {
+		const cf="D_Video";
+		let cx=this.D_Video_Omit(cf,x); cx;
+		if("publishedTimeText" in x) {
+			if("richThumbnail" in x&&"ownerBadges" in x) {
+				let {richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
+				this.richThumbnail_Video(richThumbnail);
+				return;
+			}
+			if("richThumbnail" in x) {
+				if("owner" in x) {
+					let {owner,...y}=this.D_Video_Omit_Thumbnail(cf,x);
+					this.D_Video_Owner(owner);
+					return this.g(y);
+				}
+				let {topStandaloneBadge,...y}=this.D_Video_Omit_Thumbnail(cf,x);
+				this.RMD_Badge(topStandaloneBadge);
+				return this.g(y);
+			}
+			if("descriptionSnippet" in x) {
+				if("owner" in x) {
+					let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x);
+					return this.g(y);
+				}
+				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
+				return this.g(y);
+			}
+			if("owner" in x) {
+				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x);
+				return this.g(y);
+			}
+		}
+		if("descriptionSnippet" in x) {
+			let {badges,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x); this.g(y);
+			this.z(badges,this.RMD_Badge);
+			return;
+		}
+		x===0;
+		debugger;
+	}
+	/** @arg {R_Video} x */
+	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @private @arg {string} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=x;
@@ -7822,47 +7863,6 @@ class HandleTypes extends ServiceMethods {
 		let {descriptionSnippet,...y}=this.D_Video_Omit(cf,x);
 		this.R_TextRuns(descriptionSnippet);
 		return y;
-	}
-	/** @private @arg {D_Video} x */
-	D_Video(x) {
-		const cf="D_Video";
-		let cx=this.D_Video_Omit(cf,x); cx;
-		if("publishedTimeText" in x) {
-			if("richThumbnail" in x&&"ownerBadges" in x) {
-				let {richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
-				this.richThumbnail_Video(richThumbnail);
-				return;
-			}
-			if("richThumbnail" in x) {
-				if("owner" in x) {
-					let {owner,...y}=this.D_Video_Omit_Thumbnail(cf,x);
-					this.D_Video_Owner(owner);
-					return this.g(y);
-				}
-				let {topStandaloneBadge,...y}=this.D_Video_Omit_Thumbnail(cf,x);
-				this.RMD_Badge(topStandaloneBadge);
-				return this.g(y);
-			}
-			if("descriptionSnippet" in x) {
-				if("owner" in x) {
-					let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x);
-					return this.g(y);
-				}
-				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
-				return this.g(y);
-			}
-			if("owner" in x) {
-				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x);
-				return this.g(y);
-			}
-		}
-		if("descriptionSnippet" in x) {
-			let {badges,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x); this.g(y);
-			this.z(badges,this.RMD_Badge);
-			return;
-		}
-		x===0;
-		debugger;
 	}
 	/** @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {x;}
