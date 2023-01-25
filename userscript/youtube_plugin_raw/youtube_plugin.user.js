@@ -7668,13 +7668,13 @@ class HandleTypes extends ServiceMethods {
 	/** @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
 	Omit_Menu_Video(cf,x) {
 		let u=this.Omit$Compact$Video(cf,x);
-		const {thumbnail,longBylineText,lengthText,viewCountText,navigationEndpoint,ownerBadges,shortBylineText,menu,richThumbnail,...y}=u;
+		const {thumbnail,longBylineText,lengthText,viewCountText,navigationEndpoint,shortBylineText,menu,...y}=u;
 		this.z([shortBylineText,viewCountText,lengthText],x => this.G_Text(x));
-		this.richThumbnail_Video(richThumbnail);
 		return y;
 	}
 	/** @private @arg {R_MovingThumbnail} x */
 	richThumbnail_Video(x) {
+		if(!x) {debugger; return;}
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
 		console.log("rich.thumb",x);
 		debugger;
@@ -7699,8 +7699,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		let {descriptionSnippet,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
-		this.R_TextRuns(descriptionSnippet);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
+		// this.richThumbnail_Video(richThumbnail);
+		// this.R_TextRuns(descriptionSnippet);
 		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
@@ -9088,10 +9089,26 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
-		let {accessibility,channelThumbnail,badges,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
+		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
+		this.richThumbnail_Video(richThumbnail);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
-		this.t(badges,a => console.log("badge",a));
+		this.t(ownerBadges,a => this.z(a,this.RMD_Badge));
+		this.t(badges,a => this.z(a,this.RMD_Badge));
+	}
+	/** @arg {RMD_Badge} x */
+	RMD_Badge(x) {this.H_("RMD_Badge",x,this.DMD_Badge);}
+	/** @arg {DMD_Badge} x */
+	DMD_Badge(x) {
+		const cf="DMD_Badge";
+		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
+		if(icon.iconType!=="CHECK_CIRCLE_THICK") debugger;
+		this.T_Icon(icon);
+		this.save_enum("BADGE_STYLE_TYPE",style);
+		if(style!=="BADGE_STYLE_TYPE_VERIFIED") debugger;
+		this.primitive_of_string(tooltip);
+		this.trackingParams(cf,trackingParams);
+		this.D_Label(accessibilityData);
 	}
 	/** @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
