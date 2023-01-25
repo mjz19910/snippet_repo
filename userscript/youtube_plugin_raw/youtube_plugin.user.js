@@ -9294,11 +9294,11 @@ class HandleTypes extends ServiceMethods {
 			this.parser.parse_endpoint_param(root,path,new Map(param_map));
 		}
 		this.t(commandMetadata,this.M_VE3832);
-		this.D_Watch(watchEndpoint);
+		this.DE_VE3832_Watch(watchEndpoint);
 	}
-	/** @private @arg {D_Watch} x */
-	D_Watch(x) {
-		const cf="D_Watch";
+	/** @private @arg {DE_VE3832_Watch} x */
+	DE_VE3832_Watch(x) {
+		const cf="DE_VE3832_Watch";
 		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,playerExtraUrlParams,...y}=this.sd(cf,x); this.g(y);
 		this.videoId(videoId);
 		this.t(playlistId,this.playlistId);

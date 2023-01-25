@@ -1,4 +1,4 @@
-type D_Watch={
+type DE_VE3832_Watch={
 	videoId: string;
 	playlistId: PlaylistId;
 	index: number;
