@@ -8997,13 +8997,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext"; this.k(cf,x);
-		let b_res=this._decode_b64_url_proto_obj(x.serializedContextData);
-		if(!b_res) return;
-		let [r]=b_res;
-		if(r[0]==="child") {
-			console.log(this._decoder.decode(r[2]));
-		} else {
-			console.log(r);
+		const {serializedContextData,...y}=x; this.g(y);
+		{
+			let x=decodeURIComponent(serializedContextData);
+			let b_res=this._decode_b64_url_proto_obj(x);
+			if(!b_res) return;
+			let [r]=b_res;
+			if(r[0]==="child") {
+				console.log(this._decoder.decode(r[2]));
+			} else {
+				console.log(r);
+			}
 		}
 	}
 	/** @private @arg {NonNullable<IR_TextRun['navigationEndpoint']>} x */
