@@ -8033,7 +8033,32 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,this.D_PlayerAnnotationsExpanded);}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
-	D_PlayerAnnotationsExpanded(x) {x; debugger;}
+	D_PlayerAnnotationsExpanded(x) {
+		const cf="D_PlayerAnnotationsExpanded";
+		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		this.D_FeaturedChannel(featuredChannel);
+		console.log(annotationId);
+		
+	}
+	/** @private @arg {D_FeaturedChannel} x */
+	D_FeaturedChannel(x) {
+		const cf="D_FeaturedChannel";
+		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		this.z([startTimeMs,endTimeMs],this.primitive_of_string);
+		this.D_Thumbnail(watermark);
+		this.trackingParams(cf,trackingParams);
+		this.E_Browse(navigationEndpoint);
+		console.log(channelName);
+		this.R_SubscribeButton(subscribeButton);
+	}
+	/** @private @arg {R_SubscribeButton} x */
+	R_SubscribeButton(x) {this.H_("R_SubscribeButton",x,this.D_SubscribeButton);}
+	/** @private @arg {D_SubscribeButton} x */
+	D_SubscribeButton(x) {
+		const {buttonText,...y}=x;
+		this.R_TextRuns(buttonText)
+		console.log(this.get_keys_of(y)[0]);
+	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
@@ -8701,11 +8726,11 @@ class HandleTypes extends ServiceMethods {
 	R_TextRuns(x,f_run=this.handle_text_endpoint) {
 		const cf="R_TextRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(runs,a => this.R_TextRun(a,f_run));
+		this.z(runs,a => this.IR_TextRun(a,f_run));
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
-	R_TextRun(x,f_run) {
+	IR_TextRun(x,f_run) {
 		const cf="R_TextRun";
 		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.t(navigationEndpoint,f_run);
