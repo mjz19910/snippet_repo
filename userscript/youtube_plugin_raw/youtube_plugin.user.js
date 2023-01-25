@@ -9009,7 +9009,13 @@ class HandleTypes extends ServiceMethods {
 			if(!b_res) return;
 			let [r]=b_res;
 			if(r[0]==="child") {
-				console.log(this._decoder.decode(r[2]));
+				console.log("D_VssLoggingContext.serializedContextData.fieldId",r[1]);
+				let playlist_id=this._decoder.decode(r[2]);
+				if(this.str_starts_with("RD",playlist_id)) {
+					this.playlistId(as(playlist_id));
+				} else {
+					debugger;
+				}
 			} else {
 				console.log(r);
 			}
