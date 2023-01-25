@@ -7597,6 +7597,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.str_starts_with("/@",x)) return;
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
 		let [y0,y1]=split_string_once(y,"/");
+		if(!y1) {debugger; return;}
 		if(y0!=="channel") debugger;
 		if(this.str_starts_with("UC",y1)) return;
 		debugger;
