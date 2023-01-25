@@ -7332,7 +7332,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
 	WebCommandMetadataEx(x) {
 		switch(x.rootVe) {
-			case 3854: return this.G_VE3854_WC(x);
+			case 3854: return this.GM_VE3854_WC(x);
 			case 3611: return this.GM_VE3611_WC(x);
 			case 6827: return this.GM_VE6827_WC(x);
 			case 23462: return this.GM_VE23462_WC(x);
@@ -7355,7 +7355,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {GM_VE3854_WC} x */
-	G_VE3854_WC(x) {
+	GM_VE3854_WC(x) {
 		const cf="G_VE3854_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
 		x: {
@@ -7543,12 +7543,21 @@ class HandleTypes extends ServiceMethods {
 	GM_VE_WC_Browse(x) {
 		switch(x.rootVe) {
 			case 3611: this.GM_VE3611_WC(x); break;
-			case 3854: this.G_VE3854_WC(x); break;
-			case 23462: this.G_VE23462_WC(x); break;
+			case 3854: this.GM_VE3854_WC(x); break;
+			case 6827: this.GM_VE6827_WC(x); break;
+			case 23462: this.GM_VE23462_WC(x); break;
 			case 96368: this.GM_VE96368_WC_browse(x); break;
 			default: x===""; debugger; break;
 		}
 		this.WebCommandMetadata(x);
+	}
+	/** @private @arg {GM_VE6827_WC} x */
+	GM_VE6827_WC(x) {
+		const cf="G_VE6827_WC";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		this._decode_channel_url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
@@ -7576,7 +7585,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {GM_VE23462_WC} x */
-	G_VE23462_WC(x) {
+	GM_VE23462_WC(x) {
 		const cf="GM_VE23462_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
 		if(url!=="/account_notifications") debugger;
