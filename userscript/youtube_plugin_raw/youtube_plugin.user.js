@@ -2728,7 +2728,7 @@ class BaseServicePrivate extends ApiBase {
 class BaseService extends BaseServicePrivate {
 	/** @protected @arg {string} x */
 	create_param_map(x) {
-		let res_e=this.decode_b64_url_proto_obj(x);
+		let res_e=this._decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
 		if(res_e.find(e => e[0]==="error")) {
 			return null;
@@ -2799,17 +2799,17 @@ class BaseService extends BaseServicePrivate {
 		return ret;
 	}
 	/** @private @arg {string} str */
-	decode_b64_proto_obj(str) {
+	_decode_b64_proto_obj(str) {
 		let buffer=base64_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
 	_use() {
-		this.decode_b64_proto_obj(btoa("\0"));
+		this._decode_b64_proto_obj(btoa("\0"));
 	}
 	/** @api @public @arg {string} str */
-	decode_b64_url_proto_obj(str) {
+	_decode_b64_url_proto_obj(str) {
 		let buffer=base64_url_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
@@ -5094,7 +5094,7 @@ class ParserService extends BaseService {
 	/** @console_api @public @arg {string} x */
 	create_param_map_dbg(x) {
 		debugger;
-		let res_e=this.decode_b64_url_proto_obj(x);
+		let res_e=this._decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
 		if(res_e.find(e => e[0]==="error")) {
 			return null;
@@ -5147,7 +5147,7 @@ class ParserService extends BaseService {
 		}
 		x: if(transcript_args_dec) {
 			let param_1=decodeURIComponent(transcript_args_dec.langParams);
-			let param_buf_1=this.decode_b64_url_proto_obj(param_1);
+			let param_buf_1=this._decode_b64_url_proto_obj(param_1);
 			if(param_buf_1===null) {debugger; break x;}
 			let param_map_1=this.make_param_map(param_buf_1);
 			if(!param_map_1) {debugger; break x;}
@@ -7232,7 +7232,7 @@ class HandleTypes extends ServiceMethods {
 			let u=this.w(a);
 			let {browseId,...y}=this.sd(`${cf}.data`,u); // !
 			this.E_Browse$ParseBrowseId(browseId);
-			if("canonicalBaseUrl" in y) return this.decode_channel_url(this.w(y));
+			if("canonicalBaseUrl" in y) return this._decode_channel_url(this.w(y));
 			this.g(y);
 		},x => {
 			let y=this.w(x);
@@ -7250,12 +7250,12 @@ class HandleTypes extends ServiceMethods {
 	GM_VE3611_WC(x) {
 		const cf="GM_VE23462_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
-		this.decode_channel_url(url);
+		this._decode_channel_url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_VE3611_WC['url']} x */
-	decode_channel_url(x) {
+	_decode_channel_url(x) {
 		if(!this.str_starts_with("/@",x)) debugger;
 	}
 	/** @private @arg {GM_VE23462_WC} x */
@@ -7537,7 +7537,7 @@ class HandleTypes extends ServiceMethods {
 	/** @unused @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {
 		const cf="D_ThumbnailOverlayLoadingPreview"; this.k(cf,x);
-		this.R_TextWithRuns(this.w(x));
+		this.R_TextRuns(this.w(x));
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
@@ -7790,7 +7790,7 @@ class HandleTypes extends ServiceMethods {
 	D_SuperVodBuyFlowContent(x) {
 		const cf="D_SuperVodBuyFlowContent";
 		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.sd(cf,x); this.g(y);
-		this.z([description,disclaimerText],a => this.R_TextWithRuns(a));
+		this.z([description,disclaimerText],a => this.R_TextRuns(a));
 		this.R_Button(buyButton);
 		this.trackingParams(cf,trackingParams);
 		this.R_PdgCommentPreview(commentPreview);
@@ -7926,14 +7926,14 @@ class HandleTypes extends ServiceMethods {
 		const cf="UA_Description"; this.k(cf,x);
 		let x1=x.updateDescriptionAction;
 		this.save_keys(`[UA_DescriptionData]`,x1);
-		this.R_TextWithRuns(x1.description);
+		this.R_TextRuns(x1.description);
 	}
 	/** @private @arg {U_Title} x */
 	UA_Title(x) {
 		const cf="UA_Title"; this.k(cf,x);
 		let x1=x.updateTitleAction;
 		this.save_keys(`[UA_TitleData]`,x1);
-		this.R_TextWithRuns(x1.title);
+		this.R_TextRuns(x1.title);
 	}
 	/** @private @arg {U_DateText} x */
 	UA_DateText(x) {
@@ -8137,7 +8137,7 @@ class HandleTypes extends ServiceMethods {
 		for(let x of u) {
 			let c=x[1];
 			if("runs" in c) {
-				this.R_TextWithRuns(c);
+				this.R_TextRuns(c);
 				continue;
 			}
 			debugger;
@@ -8539,7 +8539,7 @@ class HandleTypes extends ServiceMethods {
 			let root=cf;
 			const path="tracking.trackingParams";
 			let dx=decodeURIComponent(x);
-			let res_e=this.decode_b64_url_proto_obj(dx);
+			let res_e=this._decode_b64_url_proto_obj(dx);
 			if(!res_e) break x;
 			let param_map=this.make_param_map(res_e);
 			this.parser.parse_endpoint_param(root,path,new Map(param_map));
@@ -8584,15 +8584,15 @@ class HandleTypes extends ServiceMethods {
 	D_CommonConfig(x) {const cf="D_CommonConfig"; this.H_(cf,x,x => this.parser.parse_url(cf,x));}
 	/** @private @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,this.D_VssLoggingContext);}
-	decoder=new TextDecoder();
+	_decoder=new TextDecoder();
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext"; this.k(cf,x);
-		let b_res=this.decode_b64_url_proto_obj(x.serializedContextData);
+		let b_res=this._decode_b64_url_proto_obj(x.serializedContextData);
 		if(!b_res) return;
 		let [r]=b_res;
 		if(r[0]==="child") {
-			console.log(this.decoder.decode(r[2]));
+			console.log(this._decoder.decode(r[2]));
 		} else {
 			console.log(r);
 		}
@@ -8605,7 +8605,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_TextRuns} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
-	R_TextWithRuns(x,f_run=this.handle_text_endpoint) {
+	R_TextRuns(x,f_run=this.handle_text_endpoint) {
 		const cf="R_TextWithRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(runs,a => this.R_TextRun(a,f_run));
@@ -8622,7 +8622,7 @@ class HandleTypes extends ServiceMethods {
 	G_Text(x) {
 		const cf="TextT"; this.k(cf,x);
 		if("simpleText" in x) return this.R_SimpleText(x);
-		if("runs" in x) return this.R_TextWithRuns(x);
+		if("runs" in x) return this.R_TextRuns(x);
 		debugger;
 	}
 	/** @private @arg {TR_ItemSection_1<any,any>} x @returns {x is TR_ItemSection<any,any,any>} */
@@ -8638,9 +8638,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D_CompactPlaylist} x */
 	D_CompactPlaylist(x) {
 		const cf="D_CompactPlaylist";
-		let u=this.Omit$CompactPlayer(cf,x);
+		let u=this.Omit$Compact$Player(cf,x);
 		const {shortBylineText,publishedTimeText,sidebarThumbnails,thumbnailRenderer,ownerBadges,...y}=this.sd(cf,u);
-		this.R_TextWithRuns(shortBylineText);
+		this.R_TextRuns(shortBylineText);
 		this.tz(ownerBadges,this.R_MetadataBadge);
 		this.t(publishedTimeText,this.R_SimpleText);
 		let kof=this.get_keys_of(y);
@@ -8702,7 +8702,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {TD_ItemSection_3<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
 		const cf="D_ItemSection_2_CommentItemSection";
-		let [i,...a]=this.decode_TD_ItemSection(cf,x); i;
+		let [i,...a]=this._decode_TD_ItemSection(cf,x); i;
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
 		this.z(i,x => {
 			/** @arg {string} v */
@@ -8725,7 +8725,7 @@ class HandleTypes extends ServiceMethods {
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
 	/** @arg {string} cf @template {D_CompactVideo|D_CompactRadio} T @arg {T} x */
 	Omit$Compact$Radio(cf,x) {
-		let {menu,navigationEndpoint,thumbnail,longBylineText,...y}=this.Omit$CompactPlayer(cf,x);
+		let {menu,navigationEndpoint,thumbnail,longBylineText,...y}=this.Omit$Compact$Player(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.E_Watch(navigationEndpoint);
 		this.R_Menu(menu);
@@ -8735,17 +8735,28 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
-		let {...rr}=this.Omit$CompactPlayer(cf,x);
-		rr;
+		let {videoTitle,byline,pauseText,background,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit$Compact$Video(cf,x); this.g(y);
+		this.R_SimpleText(videoTitle);
+		this.R_TextRuns(byline);
+		this.R_SimpleText(pauseText);
+		this.D_Thumbnail(background);
+		if(countDownSecs!==8) debugger;
+		this.R_Button(cancelButton);
+		this.R_Button(nextButton);
+		this.R_Button(closeButton);
+		if(preferImmediateRedirect) debugger;
+		if(webShowBigThumbnailEndscreen) debugger;
+		if(!webShowNewAutonavCountdown) debugger;
+		if(countDownSecsForFullscreen!==3) debugger;
 	}
 	/** @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio"; this.k(cf,x);
 		const {playlistId,videoCountText,videoCountShortText,thumbnailText,shareUrl,secondaryNavigationEndpoint,...y}=this.Omit$Compact$Radio(cf,x); this.g(y);
 		this.playlistId(playlistId);
-		this.R_TextWithRuns(videoCountText);
-		this.R_TextWithRuns(videoCountShortText);
-		this.R_TextWithRuns(thumbnailText);
+		this.R_TextRuns(videoCountText);
+		this.R_TextRuns(videoCountShortText);
+		this.R_TextRuns(thumbnailText);
 		this.parser.parse_url(cf,shareUrl);
 		this.E_Watch(secondaryNavigationEndpoint);
 		let uk=this.get_keys_of(y);
@@ -8754,7 +8765,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {string} cf @template {D_PlayerOverlayAutoplay|D_CompactVideo|D_CompactPlaylist|D_CompactRadio} T @arg {T} x */
-	Omit$CompactPlayer(cf,x) {
+	Omit$Compact$Player(cf,x) {
 		const {title,trackingParams,thumbnailOverlays,...y}=this.sd(cf,x); // !
 		this.R_SimpleText(title);
 		this.trackingParams(cf,trackingParams);
@@ -8768,22 +8779,28 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @arg {string} cf @template {D_CompactVideo} T @arg {T} x */
+	/** @arg {string} cf @template {D_PlayerOverlayAutoplay|D_CompactVideo} T @arg {T} x */
 	Omit$Compact$Video(cf,x) {
-		let r=this.Omit$Compact$Radio(cf,x);
-		r;
+		let {videoId,shortViewCountText,publishedTimeText,...y}=this.Omit$Compact$Player(cf,x);
+		this.videoId(videoId);
+		this.G_Text(publishedTimeText);
+		this.G_Text(shortViewCountText);
+		return y;
 	}
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
 		let {
-			videoId,accessibility,
-			shortBylineText,publishedTimeText,ownerBadges,viewCountText,lengthText,shortViewCountText,
+			videoId,
+			accessibility,publishedTimeText,shortViewCountText,
+			shortBylineText,ownerBadges,viewCountText,lengthText,
 			channelThumbnail,richThumbnail,badges,...y
 		}=this.Omit$Compact$Radio(cf,x); this.g(y);
 		this.videoId(videoId);
+		this.G_Text(publishedTimeText);
+		this.G_Text(shortViewCountText);
 		this.D_Accessibility(accessibility);
-		this.z([shortBylineText,publishedTimeText,viewCountText,lengthText],x => this.R_TextWithRuns(x));
+		this.z([shortBylineText,viewCountText,lengthText],x => this.R_TextRuns(x));
 		console.log("chan.thumb",channelThumbnail);
 		console.log("rich.thumb",richThumbnail);
 		this.t(badges,a => console.log("badge",a));
@@ -8854,7 +8871,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
 	/** @private @arg {string} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
-	decode_TD_ItemSection(cf,x) {
+	_decode_TD_ItemSection(cf,x) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
 		return [x.contents,x.sectionIdentifier,x.targetId];
@@ -8964,7 +8981,7 @@ class HandleTypes extends ServiceMethods {
 	REG_AccountSwitcher(x) {
 		const cf="RE_GetAccountSwitcher";
 		const {responseContext: {},selectText,actions,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.R_TextWithRuns(selectText);
+		this.R_TextRuns(selectText);
 		this.z(actions,a => {
 			if("getMP_MenuAction" in a) {
 				return this.A_MP_GetMenu(a);
@@ -8980,7 +8997,7 @@ class HandleTypes extends ServiceMethods {
 	RS_AccountsList(x) {
 		const cf="AccountsListResponse";
 		const {responseContext: {},selectText,actions,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.R_TextWithRuns(selectText);
+		this.R_TextRuns(selectText);
 		this.z(actions,this.A_UpdateChannelSwitcherPage);
 	}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
@@ -9394,7 +9411,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlayerOverlayVideoDetails";
 		const {title,subtitle,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.R_SimpleText(title);
-		this.R_TextWithRuns(subtitle);
+		this.R_TextRuns(subtitle);
 	}
 	/** @private @arg {ES_Button} x */
 	ES_Button(x) {
@@ -9543,7 +9560,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
-		this.R_TextWithRuns(this.w(x));
+		this.R_TextRuns(this.w(x));
 	}
 	/** @private @arg {D_Cache_MD} x */
 	CacheMetadata(x) {
@@ -9911,7 +9928,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="TopbarLogo";
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.T_Icon(iconImage);
-		this.R_TextWithRuns(tooltipText);
+		this.R_TextRuns(tooltipText);
 		this.E_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(overrideEntityKey);
@@ -9943,7 +9960,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="FusionSearchboxData";
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.T_Icon(icon);
-		this.R_TextWithRuns(placeholderText);
+		this.R_TextRuns(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
 		this.E_Search(searchEndpoint);
@@ -10087,7 +10104,7 @@ class HandleTypes extends ServiceMethods {
 			case "STYLE_HOME_FILTER":
 			case "STYLE_REFRESH_TO_NOVEL_CHIP": break;
 		}
-		this.R_TextWithRuns(b);
+		this.R_TextRuns(b);
 		this.trackingParams(cf,c);
 		return y;
 	}
@@ -10135,7 +10152,7 @@ class HandleTypes extends ServiceMethods {
 	D_HotkeyDialog(x) {
 		const cf="D_HotkeyDialog";
 		const {title,sections,dismissButton,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.R_TextWithRuns(title);
+		this.R_TextRuns(title);
 		this.z(sections,this.R_HotkeyDialogSection);
 		this.R_Button(dismissButton);
 		this.trackingParams(cf,trackingParams);
@@ -10150,7 +10167,7 @@ class HandleTypes extends ServiceMethods {
 	D_HotkeyDialogSectionOption(x) {
 		const cf="D_HotkeyDialogSectionOption"; this.k(cf,x);
 		const {label,hotkey,...y}=this.sd(cf,x); // !
-		this.R_TextWithRuns(label);
+		this.R_TextRuns(label);
 		this.primitive_of_string(hotkey);
 		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
 		this.g(y);
