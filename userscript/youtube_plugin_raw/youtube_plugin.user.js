@@ -7232,10 +7232,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
 	E_Browse$ParseBrowseId(x) {
-		if(this.str_starts_with("UC",x)) {
-			console.log("browseId$channel",x);
-			return;
-		}
+		if(this.str_starts_with("UC",x)) return this.channelId(x);
 		switch(x) {
 			case "SPaccount_notifications": break;
 			case "FEwhat_to_watch": break;
