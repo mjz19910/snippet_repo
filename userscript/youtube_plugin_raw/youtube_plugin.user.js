@@ -8125,10 +8125,10 @@ class HandleTypes extends ServiceMethods {
 			};
 			r_un_sub_2(un_sub_2);
 			this.g(o4);
-			console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(y)[0]);
 			return;
 		}
 		if("targetId" in x) {
+			console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(x)[0]);
 			debugger;
 			return;
 		}
