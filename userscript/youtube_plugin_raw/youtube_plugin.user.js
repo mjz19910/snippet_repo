@@ -5434,10 +5434,8 @@ class ParserService extends BaseService {
 						switch(map_entry_key) {
 							case 16: case 19: break;
 							default: {
-								if(map_entry_key<12) {
-									let tu=m_num_range();
-									map_entry_key=tu;
-									return this.parse_param_next(root,`${path}.f${tu}`,map_entry_value);
+								if(is_in_range(map_entry_key,11)) {
+									return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 								}
 							} new_ns(); debugger; return;
 						}
@@ -5446,8 +5444,11 @@ class ParserService extends BaseService {
 				}
 			}
 			callback(map_entry_value,map_entry_key);
-			/** @returns {NumRange<1,11>} */
-			function m_num_range() {return as(map_entry_key);}
+			/** @arg {number} x @template {number} T @arg {T} mx @returns {x is NumRange<1,T>} */
+			function is_in_range(x,mx) {
+				if(x<=mx) return true;
+				return false;
+			}
 		}
 	}
 	/** @unused_api @protected @arg {ParamMapValue} map_entry_value */
