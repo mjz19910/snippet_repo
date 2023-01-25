@@ -1,4 +1,1 @@
-type G_Watch_SecondaryResults=Record<"contents",G_SecondaryContentsItem[]>|{
-	results: R_RelatedChipCloud[];
-	trackingParams: string;
-};
+type G_Watch_SecondaryResults=G_Watch_SecondaryResults_Contents|G_Watch_SecondaryResults_Results;

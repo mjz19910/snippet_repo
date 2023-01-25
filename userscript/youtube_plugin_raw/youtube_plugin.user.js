@@ -8839,7 +8839,7 @@ class HandleTypes extends ServiceMethods {
 		if("videoSecondaryInfoRenderer" in x) return;
 		debugger;
 	}
-	/** @private @arg {Extract<Extract<G_Watch_SecondaryResults,{contents:any}>['contents'][number],{itemSectionRenderer:any}>} x */
+	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
 		this.TR_ItemSection(x,a => {
 			let [u,...v]=a;
@@ -8854,8 +8854,8 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 	}
-	/** @private @arg {Extract<G_Watch_SecondaryResults,{contents:any}>['contents'][number]} x */
-	G_Watch_SecondaryResults_ContentsItem(x) {
+	/** @private @arg {G_SecondaryContentsItem} x */
+	G_SecondaryContentsItem(x) {
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
 		let k=this.get_keys_of(x);
 		switch(k[0]) {
@@ -8863,13 +8863,13 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<G_Watch_SecondaryResults,{contents:any}>} x */
+	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
 	G_Watch_SecondaryResults_Contents(x) {
 		const cf="G_Watch_SecondaryResults_Contents";
 		const {contents,...y}=this.sd(cf,x); this.g(y);
-		this.z(contents,this.G_Watch_SecondaryResults_ContentsItem);
+		this.z(contents,this.G_SecondaryContentsItem);
 	}
-	/** @private @arg {Extract<G_Watch_SecondaryResults,{results:any}>} x */
+	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {x;}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
