@@ -8874,7 +8874,12 @@ class HandleTypes extends ServiceMethods {
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {
-		x.chips;
+		const cf="D_ChipCloud";
+		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		if(!horizontalScrollable) debugger;
+		this.R_Button(nextButton);
+		this.R_Button(previousButton);
 	}
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_UnseenCount(x) {
