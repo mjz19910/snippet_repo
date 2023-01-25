@@ -8400,6 +8400,7 @@ class HandleTypes extends ServiceMethods {
 				if(this.is_MenuItemNotInt(x)) {debugger; return;}
 				if(this.is_MenuItem_AQ(x)) {debugger; return;}
 				debugger;
+				return;
 			}
 			this.D_MenuServiceItem(x);
 		});
