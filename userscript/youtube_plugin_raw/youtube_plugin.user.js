@@ -8431,12 +8431,16 @@ class HandleTypes extends ServiceMethods {
 			const cf="Menu"; this.k(cf,x);
 			if("icon" in x) {
 				if(this.is_MenuItemNotInt(x)) {
-					const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+					const {icon,...y}=this.D_MenuServiceItem$Omit(x,sp => {
+						sp;
+						debugger;
+					}); this.g(y);
 					return;
 				}
 				if(this.is_MenuItem_AQ(x)) {
 					const {icon,...y}=this.D_MenuServiceItem$Omit(x,sp => {
 						sp;
+						debugger;
 					}); this.g(y);
 					this.T_Icon(icon);
 					return;
