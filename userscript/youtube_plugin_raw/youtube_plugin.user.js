@@ -7532,6 +7532,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
+		if("style" in x&&"accessibility" in x) {
+			const {accessibility,style,...y}=this.D_Button$Omit(`${cf}.Mixed`,x); this.g(y);
+			if(accessibility) return this.D_Label(accessibility);
+			this.t(style,a => this.save_string("[Button.style]",a));
+			return;
+		}
 		if("style" in x) {
 			const {style,...y}=this.D_Button$Omit(`${cf}.Styled`,x); this.g(y);
 			this.t(style,a => this.save_string("[Button.style]",a));
