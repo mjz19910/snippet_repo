@@ -5371,6 +5371,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "SerializedSlotAdServingDataEntry.f1":
+						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "SerializedSlotAdServingDataEntry":
 						switch(map_entry_key) {case 1: case 3: case 4: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
