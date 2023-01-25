@@ -6,40 +6,22 @@ type TD_GuideEntry_Simple<T extends string>={
 	accessibility: D_Accessibility;
 };
 type D_GuideEntry=[
+	TD_GuideEntry_Simple<"CREATOR_STUDIO_RED_LOGO">,
+	TD_GuideEntry_Simple<"YOUTUBE_MUSIC">,
 	TD_GuideEntry_Simple<"YOUTUBE_ROUND">,
+	TD_GuideEntry_Simple<"YOUTUBE_KIDS_ROUND">,
+	TD_GuideEntry_Simple<"UNPLUGGED_LOGO">,
+	TD_GuideEntry_Simple<"SETTINGS">,
+	TD_GuideEntry_Simple<"FLAG">,
 	TD_GuideEntry_Simple<"FASHION_LOGO">,
 	TD_GuideEntry_Simple<"COURSE">,
 	TD_GuideEntry_Simple<"TROPHY">,
 	TD_GuideEntry_Simple<"NEWS">,
 	TD_GuideEntry_Simple<"GAMING_LOGO">,
-	{
-		navigationEndpoint: E_Browse;
-		icon: T_Icon<"LIVE">;
-		trackingParams: string;
-		formattedTitle: R_SimpleText;
-		accessibility: D_Accessibility;
-	},
-	{
-		navigationEndpoint: E_Browse;
-		icon: T_Icon<"CLAPPERBOARD">;
-		trackingParams: string;
-		formattedTitle: R_SimpleText;
-		accessibility: D_Accessibility;
-	},
-	{
-		navigationEndpoint: E_Browse;
-		icon: T_Icon<"MUSIC">;
-		trackingParams: string;
-		formattedTitle: R_SimpleText;
-		accessibility: D_Accessibility;
-	},
-	{
-		navigationEndpoint: E_Browse;
-		icon: T_Icon<"TRENDING">;
-		trackingParams: string;
-		formattedTitle: R_SimpleText;
-		accessibility: D_Accessibility;
-	},
+	TD_GuideEntry_Simple<"LIVE">,
+	TD_GuideEntry_Simple<"CLAPPERBOARD">,
+	TD_GuideEntry_Simple<"MUSIC">,
+	TD_GuideEntry_Simple<"TRENDING">,
 	{
 		navigationEndpoint: E_Browse;
 		thumbnail: D_Thumbnail;

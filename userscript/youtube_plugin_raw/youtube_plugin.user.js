@@ -4335,6 +4335,7 @@ class CodegenService extends BaseService {
 			let ru=b.icon;
 			if(!ru.iconType) break x;
 			let kk=this.get_keys_of(b);
+			/** @type {TD_GuideEntry_Simple<any>} */
 			if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
 				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(b));
 				break x;
