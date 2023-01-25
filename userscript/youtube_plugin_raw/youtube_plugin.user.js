@@ -7332,16 +7332,28 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		};
 	}
+	/** @private @arg {{browseEndpoint:E_Browse['browseEndpoint']}} x */
+	E_Browse_Handler(x) {
+		const cf="E_Browse_Handler";
+		const {browseEndpoint: a,...y}=this.sd(cf,x); this.g(y);
+		this.DE_Browse(a);
+	}
+	/** @private @arg {E_Browse['browseEndpoint']} x */
+	DE_Browse(x) {
+		const cf="DE_Browse";
+		if("canonicalBaseUrl" in x) {
+			let {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y); // !
+			this.E_Browse$ParseBrowseId(a);
+			return this._decode_channel_url(b);
+		}
+		let {browseId: a,...y}=this.sd(cf,x); this.g(y); // !
+		this.E_Browse$ParseBrowseId(a);
+		this.g(y);
+	}
 	/** @private @arg {E_Browse} x */
 	E_Browse(x) {
 		const cf="E_Browse";
-		this.T_Endpoint(cf,x,a => {
-			let u=this.w(a);
-			let {browseId,...y}=this.sd(`${cf}.data`,u); // !
-			this.E_Browse$ParseBrowseId(browseId);
-			if("canonicalBaseUrl" in y) return this._decode_channel_url(this.w(y));
-			this.g(y);
-		},x => {
+		this.T_Endpoint(cf,x,this.E_Browse_Handler,x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
 				case 3611: this.GM_VE3611_WC(y); break;
