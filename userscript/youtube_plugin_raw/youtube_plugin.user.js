@@ -7894,7 +7894,14 @@ class HandleTypes extends ServiceMethods {
 		return y;
 	}
 	/** @arg {D_Video_Owner} x */
-	D_Video_Owner(x) {x;}
+	D_Video_Owner(x) {
+		const cf="D_Video_Owner";
+		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.sd(cf,x); this.g(y);
+		this.D_Thumbnail(thumbnail);
+		this.E_Browse(navigationEndpoint);
+		this.D_Accessibility(accessibility);
+		this.primitive_of_string(title);
+	}
 	/** @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
 	/** @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
