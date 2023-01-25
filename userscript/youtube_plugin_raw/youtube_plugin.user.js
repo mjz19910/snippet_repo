@@ -7776,20 +7776,24 @@ class HandleTypes extends ServiceMethods {
 		this.D_Video_Owner(owner);
 		return y;
 	}
+	/** @template {Extract<D_Video,{ownerBadges:any}>} T @arg {string} cf @arg {T} x */
+	D_Video_Omit_OwnerBadges(cf,x) {
+		let {ownerBadges,...y}=this.D_Video_Omit_Owner(cf,x);
+		this.z(ownerBadges,this.RMD_Badge);
+		return y;
+	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		if("richThumbnail" in x) {
-			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_Video_Omit_Owner(cf,x); this.g(y);
+		if("ownerBadges" in x) {
+			let {descriptionSnippet,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
 			this.R_TextRuns(descriptionSnippet);
-			this.z(ownerBadges,this.RMD_Badge);
-			this.richThumbnail_Video(richThumbnail);
 			return;
 		}
-		if("owner" in x&&"descriptionSnippet" in x) {
-			let {descriptionSnippet,ownerBadges,...y}=this.D_Video_Omit_Owner(cf,x); this.g(y);
+		if("richThumbnail" in x) {
+			let {descriptionSnippet,richThumbnail,...y}=this.D_Video_Omit_Owner(cf,x); this.g(y);
 			this.R_TextRuns(descriptionSnippet);
-			this.z(ownerBadges,this.RMD_Badge);
+			this.richThumbnail_Video(richThumbnail);
 			return;
 		}
 		if("owner" in x) return this.g(this.D_Video_Omit_Owner(cf,x));
