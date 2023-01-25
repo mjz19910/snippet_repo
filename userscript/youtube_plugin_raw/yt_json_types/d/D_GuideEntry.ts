@@ -19,6 +19,7 @@ type D_GuideEntry_PresentationNewContent={
 type D_GuideEntry=[
 	TD_GuideEntry_EntryData<"LIKES_PLAYLIST">,
 	TD_GuideEntry_EntryData<"PLAYLISTS">,
+	TD_GuideEntry_Simple<"ADD_CIRCLE">,
 	TD_GuideEntry_Simple<"CLAPPERBOARD">,
 	TD_GuideEntry_Simple<"COURSE">,
 	TD_GuideEntry_Simple<"CREATOR_STUDIO_RED_LOGO">,
