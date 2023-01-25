@@ -9504,6 +9504,46 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_VE83769(commandMetadata);
+		this.DE_Url(urlEndpoint);
+	}
+	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
+	str_is_uri(x) {
+		return x.includes(":");
+	}
+	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+	str_is_search(x) {
+		return x.includes("?");
+	}
+	/** @private @arg {DE_Url['url']} x */
+	GM_E_Url_TargetUrlType(x) {
+		if(this.str_is_uri(x)) {
+			let [hp,up]=split_string_once(x,":");
+			if(hp!=="https") debugger;
+			let [f,r]=split_string_once(up,"//"); if(f!=="") debugger;
+			let su=split_string(r,"/");
+			if(su[0]==="www.youtube.com") {
+				let sp=su[1];
+				if(this.str_is_search(sp)) {
+					let [pp,qp]=split_string_once(sp,"?");
+					switch(pp) {
+						case "redirect": {
+							console.log("[E_Url.TargetUrl.search_params]",qp);
+							return;
+						}
+						default: break;
+					}
+				}
+			}
+		}
+		debugger;
+	}
+	/** @private @arg {DE_Url} x */
+	DE_Url(x) {
+		const cf="DE_Url";
+		const {url,target,nofollow,...y}=this.sd(cf,x); this.g(y);
+		this.GM_E_Url_TargetUrlType(url);
+		if(target!=="TARGET_NEW_WINDOW") debugger;
+		if(nofollow!==true) debugger;
 	}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.H_("M_VE83769",x,this.GM_VE83769_WC);}
