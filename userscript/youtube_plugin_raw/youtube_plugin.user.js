@@ -9926,7 +9926,21 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,this.D_ReelPlayerOverlay);}
 	/** @private @arg {D_ReelPlayerOverlay} x */
-	D_ReelPlayerOverlay(x) {x; debugger;}
+	D_ReelPlayerOverlay(x) {
+		const cf="D_ReelPlayerOverlay";
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.sd(cf,x); this.g(y);
+		this.R_LikeButton(likeButton);
+		this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
+		this.R_Menu(menu);
+		this.R_Button(nextItemButton);
+		this.R_Button(prevItemButton);
+		this.R_SubscribeButton(subscribeButtonRenderer);
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.R_Button(viewCommentsButton);
+		this.trackingParams(cf,trackingParams);
+		this.R_Button(shareButton);
+		this.R_Button(pivotButton);
+	}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {D_EngagementPanelSectionList} x */
@@ -9937,10 +9951,37 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.DB_SI_EngagementPanel(x);
 	}
+	/** @private @arg {R_ClipSection} x */
+	R_ClipSection(x) {x;}
+	/** @private @arg {R_MacroMarkersList} x */
+	R_MacroMarkersList(x) {x;}
+	/** @private @arg {Extract<DB_SI_EngagementPanel,{panelIdentifier:any}>['content']} x */
+	DB_SI_EngagementPanel_ContentPanelIdentifier(x) {
+		const cf="DB_SI_EngagementPanel_ContentPanelIdentifier"; this.k(cf,x);
+		if("macroMarkersListRenderer" in x) return this.R_MacroMarkersList(x);
+		if("clipSectionRenderer" in x) return this.R_ClipSection(x);
+		debugger;
+	}
 	/** @private @arg {DB_SI_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
-		const cf="DB_SI_EngagementPanel"; this.k(cf,x);
-		if("panelIdentifier" in x) return;
+		const cf="DB_SI_EngagementPanel";
+		if("panelIdentifier" in x) {
+			const {content,targetId,visibility,loggingDirectives,panelIdentifier,header,...y}=this.sd(cf,x);
+			this.DB_SI_EngagementPanel_ContentPanelIdentifier(content);
+			switch(targetId) {
+				default: debugger; break;
+				case "engagement-panel-clip-create":
+				case "engagement-panel-macro-markers-description-chapters":
+				case "engagement-panel-macro-markers-auto-chapters":
+			}
+			if("onShowCommands" in y) {
+				const {onShowCommands,...y1}=y; this.g(y1);
+				this.z(onShowCommands,this.EA_ChangeEngagementPanelVisibility);
+				return;
+			}
+			this.g(y);
+			return;
+		}
 		const {content,targetId,visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);
 		this.R_AdsEngagementPanelContent(content);
 		if(targetId!=="engagement-panel-ads") debugger;
