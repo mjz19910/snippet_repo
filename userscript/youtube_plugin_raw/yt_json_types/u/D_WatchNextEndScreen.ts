@@ -1,5 +1,5 @@
 type D_WatchNextEndScreen={
-	results: WatchNextEndScreenItem[];
+	results: G_WatchNextEndScreenItem[];
 	title: R_SimpleText;
 	trackingParams: string;
 };

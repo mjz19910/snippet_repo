@@ -8330,8 +8330,16 @@ class HandleTypes extends ServiceMethods {
 	D_WatchNextEndScreen(x) {
 		const cf="D_WatchNextEndScreen";
 		const {results,title,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.z(results,x => {x; debugger;});
+		this.z(results,this.G_WatchNextEndScreenItem);
 		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {G_WatchNextEndScreenItem} x */
+	G_WatchNextEndScreenItem(x) {
+		// TODO: #10 #9 Actually handle these
+		// Not currently handling any children
+		if("endScreenPlaylistRenderer" in x) return;
+		if("endScreenVideoRenderer" in x) return;
+		debugger;
 	}
 	/** @template {string} T @arg {T} cf @arg {{}} x */
 	sc(cf,x) {

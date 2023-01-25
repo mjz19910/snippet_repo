@@ -1,0 +1,2 @@
+type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
+	R_EndScreenVideo;
