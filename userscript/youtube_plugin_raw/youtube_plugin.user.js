@@ -10088,7 +10088,7 @@ class HandleTypes extends ServiceMethods {
 				case "WATCH_HISTORY": break;
 				default: debugger; break;
 			}
-			x: {
+			{
 				let x=navigationEndpoint;
 				if("urlEndpoint" in x) return this.E_Url(x);
 				if("browseEndpoint" in x) return this.E_Browse(x);;
