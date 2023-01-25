@@ -10528,16 +10528,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_GuideEntryData} x */
 	R_GuideEntryData(x) {this.H_("R_GuideEntryData",x,this.D_GuideEntryData);}
+	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
+	parse_guide_entry_id(x) {
+		if(this.str_starts_with("UC",x)) {
+			if(x.length===24) return;
+			console.log("[guideEntryId.channel.length]",x.length);
+			return;
+		}
+		if(this.str_starts_with("PL",x)) {
+			console.log("[guideEntryId.playlist.length]",x.length);
+			return;
+		}
+		switch(x) {
+			case "LL": break;
+			default: debugger; break;
+		}
+	}
 	/** @private @arg {D_GuideEntryData} x */
 	D_GuideEntryData(x) {
 		const cf="D_GuideEntryData";
 		const {guideEntryId,...y}=this.sd(cf,x); this.g(y);
-		if(this.str_starts_with("UC",guideEntryId)) {
-			if(guideEntryId.length===24) return;
-			console.log("[guideEntryId.length]",guideEntryId.length);
-			return;
-		}
-		if(guideEntryId!=="LL") debugger;
+		this.parse_guide_entry_id(guideEntryId);
 	}
 	/** @arg {D_GuideEntryBadges} x */
 	D_GuideEntryBadges(x) {
