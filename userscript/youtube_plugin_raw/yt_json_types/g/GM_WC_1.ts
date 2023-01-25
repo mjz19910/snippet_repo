@@ -272,6 +272,13 @@ type E_VE42352_Browse={
 	};
 	browseEndpoint: DE_VE42352_Browse;
 };
+type E_VE11487_Browse={
+	clickTrackingParams: string;
+	commandMetadata: M_VE11487;
+	browseEndpoint: {
+		browseId: "SPunlimited";
+	};
+};
 
 //#endregion
 type E_Browse=[
@@ -279,6 +286,7 @@ type E_Browse=[
 	E_VE3854_Browse,
 	E_VE6827_Browse,
 	E_VE5754_Browse,
+	E_VE11487_Browse,
 	E_VE23462_Browse,
 	E_VE42352_Browse,
 	E_VE96368_Browse,

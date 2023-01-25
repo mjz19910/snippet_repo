@@ -7575,6 +7575,7 @@ class HandleTypes extends ServiceMethods {
 			case "FEwhat_to_watch": break;
 			case "FEstorefront": break;
 			case "SPaccount_notifications": break;
+			case "SPunlimited": break;
 			case "VLLL": break;
 			case "VLWL": break;
 			default: x===""; debugger; break;
@@ -7620,6 +7621,7 @@ class HandleTypes extends ServiceMethods {
 			case 3854: this.GM_VE3854_WC(x); break;
 			case 5754: this.GM_VE5754_WC(x); break;
 			case 6827: this.GM_VE6827_WC(x); break;
+			case 11487: this.GM_VE11487_WC(x); break;
 			case 23462: this.GM_VE23462_WC(x); break;
 			case 42352: this.GM_VE42352_WC(x); break;
 			case 96368: this.GM_VE96368_WC_browse(x); break;
