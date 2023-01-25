@@ -9570,6 +9570,7 @@ class HandleTypes extends ServiceMethods {
 			case "www.youtube.com": return this.handle_yt_url(sp.href);
 			case "music.youtube.com": return this.handle_yt_music_url(sp.href);
 			case "studio.youtube.com": return this.handle_yt_studio_url(sp.href);
+			case "tv.youtube.com": return;
 			default: debugger; break;
 		}
 		debugger;
@@ -9607,11 +9608,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GM_VE83769_UrlType} x */
 	GM_VE83769_UrlType(x) {
+		let up=this.parse_with_url_parse(x);
+		switch(up.host) {
+			case "music.youtube.com": return this.handle_yt_music_url(up.href);
+			case "studio.youtube.com": return this.handle_yt_studio_url(up.href);
+			case "www.youtubekids.com": return this.handle_yt_kids_url(up.href);
+			default: debugger; break;
+		}
 		const sh="https://studio.youtube.com",mh="https://music.youtube.com";
 		const yk="https://www.youtubekids.com/?source=youtube_web";
-		if(this.str_starts_with(sh,x)) return this.handle_yt_studio_url(x);
-		if(this.str_starts_with(mh,x)) return this.handle_yt_music_url(x);
-		if(this.str_starts_with(yk,x)) return this.handle_yt_kids_url(x);
+		if(this.str_starts_with(sh,x)) return;
+		if(this.str_starts_with(mh,x)) return;
+		if(this.str_starts_with(yk,x)) return;
 		switch(x) {
 			default: x===""; debugger; break;
 			case "/upload": break;
