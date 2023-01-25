@@ -9350,7 +9350,11 @@ class HandleTypes extends ServiceMethods {
 				if(icon.iconType!=="LIVE") debugger;
 				this.T_Icon(icon);
 				this.trackingParams(cf,trackingParams);
-				if(label!=="LIVE") debugger;
+				switch(label) {
+					case "LIVE": break;
+					case "PREMIERE": break;
+					default: debugger; break;
+				}
 			} break;
 			case "BADGE_STYLE_TYPE_COLLECTION": {
 				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);
