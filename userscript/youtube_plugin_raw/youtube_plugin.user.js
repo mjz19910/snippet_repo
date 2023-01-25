@@ -8468,9 +8468,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {
 		const cf="E_PlaylistEdit"; this.k(cf,x);
-		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y);
+		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=x; this.g(y); this.g(y1);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		debugger;
+		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		this.WebCommandMetadata(webCommandMetadata);
 		this.D_PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @private @arg {D_PlaylistEdit} x */
@@ -8479,7 +8480,7 @@ class HandleTypes extends ServiceMethods {
 		const {playlistId,params,actions,...y}=this.sd(cf,x); this.g(y);
 		this.playlistId(playlistId);
 		this.t(params,x => this.params(cf,"playlist_edit.params",x));
-		this.z(actions,x=>{
+		this.z(actions,x => {
 			// TODO: #12 Handle playlist actions
 			// Just skip them for now
 			switch(x.action) {
@@ -8488,7 +8489,7 @@ class HandleTypes extends ServiceMethods {
 				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
 				default: debugger; break;
 			}
-		})
+		});
 	}
 	/** @template T @template {string|null} U @arg {Extract<D_MenuServiceItem<U, T>,{icon:any}>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem$Omit(x,f) {
