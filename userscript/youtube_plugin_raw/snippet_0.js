@@ -729,7 +729,7 @@ class ND extends Snippet_0_tmp {
 	E_SignalService(x,f) {
 		f.call(this,x.signalServiceEndpoint);
 	}
-	/** @protected @template {string} T @arg {TS_ChipCloud<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {string} T @arg {T_StyleType<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
 		const cf="ChipCloudStyle";
 		this.save_keys(`[${cf}]`,x);

@@ -1,4 +1,4 @@
 type D_EntityBatchUpdate={
 	mutations: D_EntityMutationItem[];
-	timestamp: TimestampWithNanos;
+	timestamp: D_TimestampWithNanos;
 };

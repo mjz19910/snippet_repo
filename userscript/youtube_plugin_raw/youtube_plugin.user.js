@@ -9677,7 +9677,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(mutations,this.EntityMutationItem);
 		this.TimestampWithNanos(timestamp);
 	}
-	/** @private @arg {TimestampWithNanos} x */
+	/** @private @arg {D_TimestampWithNanos} x */
 	TimestampWithNanos(x) {
 		const cf="TimestampWithNanos";
 		const {seconds,nanos,...y}=this.sd(cf,x); this.g(y); // ! #destructure
