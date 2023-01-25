@@ -7,6 +7,7 @@ type DE_Url={
 	|`https://studio.youtube.com/channel/UC${string}/videos`
 	|"https://studio.youtube.com"
 	|"https://music.youtube.com"
+	|"https://www.youtubekids.com?source=youtube_web"
 	;
 	target: "TARGET_NEW_WINDOW";
 };

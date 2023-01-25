@@ -7,7 +7,7 @@ type UrlParseResImpl<
 		hash: "";
 		host: `${Host}`;
 		hostname: `${Host}`;
-		href: `${Protocol}://${Host}/${PathName}?${Search}`;
+		href: `${Protocol}//${Host}/${PathName}?${Search}`;
 		origin: `${Protocol}//${Host}`;
 		password: "";
 		pathname: `/${PathName}`;

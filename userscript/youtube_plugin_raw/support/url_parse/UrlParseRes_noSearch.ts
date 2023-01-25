@@ -6,7 +6,7 @@ type UrlParseRes_noSearch<
 		hash: "";
 		host: `${Host}`;
 		hostname: `${Host}`;
-		href: `${Protocol}://${Host}/${PathName}`;
+		href: `${Protocol}//${Host}/${PathName}`;
 		origin: `${Protocol}//${Host}`;
 		password: "";
 		pathname: `/${PathName}`;

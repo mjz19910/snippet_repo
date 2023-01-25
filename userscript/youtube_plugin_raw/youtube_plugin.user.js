@@ -9514,8 +9514,10 @@ class HandleTypes extends ServiceMethods {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url'],`${string}www.youtube.com${string}`>,"//">[1],"/">} x */
-	handle_yt_url([h,sp]) {
+	/** @private @arg {Extract<DE_Url['url'],`${string}www.youtube.com${string}`>} uv */
+	handle_yt_url(uv) {
+		let [p1,s1]=split_string_once(uv,"//"); if(p1!=="https:") debugger;
+		let [h,sp]=split_string_once(s1,"/");
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
 			let [pp,qp]=split_string_once(sp,"?");
@@ -9530,8 +9532,9 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url']|GM_VE83769_UrlType,`${string}//studio.youtube.com${string}`>,"//">[1],"/">} x */
-	handle_yt_studio_url(x) {
+	/** @private @arg {Extract<DE_Url['url']|GM_VE83769_UrlType,`${string}//studio.youtube.com${string}`>} b */
+	handle_yt_studio_url(b) {
+		let x=split_string(split_string_once(b,"//")[1],"/");
 		if(x[0]!=="studio.youtube.com") {debugger; return;}
 		if(x.length===1) return;
 		switch(x[1]) {
@@ -9548,18 +9551,22 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {Extract<DE_Url['url']|"https://www.youtubekids.com/?source=youtube_web",`https://www.youtubekids.com${string}`>} x */
+	handle_yt_kids_url(x) {
+		if(x==="https://www.youtubekids.com?source=youtube_web") return;
+		debugger;
+	}
 	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
 		if(!this.str_is_uri(x)) {debugger; return;}
-		let [hp,up]=split_string_once(x,":");
-		if(hp!=="https") debugger;
-		let [f,r]=split_string_once(up,"//"); if(f!=="") debugger;
-		let su=split_string(r,"/");
-		switch(su[0]) {
-			case "www.youtube.com": return this.handle_yt_url(su);
-			case "studio.youtube.com": return this.handle_yt_studio_url(su);
-			case "music.youtube.com": return this.handle_yt_music_url_parts(su);
-			default: su[0]===""; debugger; break;
+		if(this.str_starts_with("https://www.youtubekids.com?",x)) {
+			return this.handle_yt_kids_url(x);
+		}
+		let sp=create_from_parse(x);
+		switch(sp.host) {
+			case "www.youtube.com": return this.handle_yt_url(sp.href);
+			case "studio.youtube.com": return this.handle_yt_studio_url(sp.href);
+			default: debugger; break;
 		}
 		debugger;
 	}
@@ -9594,23 +9601,13 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {T_Split<T_SplitOnce<Extract<DE_Url['url'],`${string}://music.youtube.com${string}`>,"//">[1],"/">} x */
-	handle_yt_music_url_parts(x) {
-		if(x.length===1&&x[0]==="music.youtube.com") return;
-		debugger;
-	}
 	/** @private @arg {GM_VE83769_UrlType} x */
 	GM_VE83769_UrlType(x) {
 		const sh="https://studio.youtube.com",mh="https://music.youtube.com";
 		const yk="https://www.youtubekids.com/?source=youtube_web";
-		if(this.str_starts_with(sh,x)) {
-			let u=split_string(split_string_once(split_string_once(x,":")[1],"//")[1],"/");
-			return this.handle_yt_studio_url(u);
-		}
+		if(this.str_starts_with(sh,x)) return this.handle_yt_studio_url(x);
 		if(this.str_starts_with(mh,x)) return this.handle_yt_music_url(x);
-		if(this.str_starts_with(yk,x)) {
-			return;
-		}
+		if(this.str_starts_with(yk,x)) return this.handle_yt_kids_url(x);
 		switch(x) {
 			default: x===""; debugger; break;
 			case "/upload": break;

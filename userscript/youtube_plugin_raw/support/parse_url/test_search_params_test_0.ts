@@ -4,6 +4,8 @@ function create_from_parse<T extends string>(str:T): UrlParse<T> {
 }
 
 function test_search_params_test_0() {
+	const url3_parsed=create_from_parse("https://www.youtubekids.com?source=youtube_web");
+	url3_parsed.href;
 	function black_box<T>(v:T) {return v;}
 	const str=url_test_value_ytimg_vi_jpg;
 	const vv=create_from_parse(str);

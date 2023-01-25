@@ -13,6 +13,3 @@ function split_string<X extends string,S extends string>(x: X,s: S=cast_objects.
 	const {as}=cast_objects;
 	return as(r);
 }
-const url_pathname_parts_value: url_pathname_parts=vv.pathname.split("/") as url_pathname_parts;
-let res_a=make_search_params(split_string(vv.search,"?")[1]);
-res_a;
