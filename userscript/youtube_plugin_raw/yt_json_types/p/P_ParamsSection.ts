@@ -150,13 +150,10 @@ type D_ChipCloudChip_Omit_CF=[
 function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 	switch(u) {
 		case "log_url":
-		case "YTNavigateFinishDetail":
-		case "ResponseTypes":
 		case "_current_response_type":
 		case "sd":
 		case "k":
 		case "_decoder":
-		case "D_MP_Menu":
 		case "get_res_data":
 		case "use_template_url":
 		case "valid_fps_arr":
@@ -176,4 +173,4 @@ function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 		case "get_keys_of":
 	}
 }
-vv_x("D_MP_Menu");
+vv_x("TODO_true");

@@ -3079,9 +3079,9 @@ class YtHandlers extends BaseService {
 		}
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
-		let ht=this.x.get("handle_types");
+		let ht=this.x.get("response_types_handler");
 		let res=ht.get_res_data(url_type,data);
-		ht.ResponseTypes(response,res);
+		ht.run(response,res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
@@ -3132,7 +3132,7 @@ class YtHandlers extends BaseService {
 	on_page_type_changed(detail) {
 		try {
 			if(this.do_initial_data_trace) console.log('ptc detail',detail);
-			this.x.get("handle_types").YTNavigateFinishDetail(detail);
+			this.x.get("ht_caller").run(detail);
 		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
@@ -3648,6 +3648,20 @@ class TrackingServices extends BaseService {
 class Services {
 	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
+		class HT_Caller extends HandleTypes {
+			/** @public @arg {YTNavigateFinishDetail} detail */
+			run(detail) {
+				this.YTNavigateFinishDetail.call(this.x.get("handle_types"),detail);
+			}
+		}
+		class RT_Caller extends HandleTypes {
+			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
+			run(response,x) {
+				this.ResponseTypes.call(this.x.get("handle_types"),response,x);
+			}
+		}
+		this.ht_caller=new HT_Caller(x);
+		this.response_types_handler=new RT_Caller(x);
 		this.csi_service=new CsiService(x);
 		this.e_catcher_service=new ECatcherService(x);
 		this.g_feedback_service=new GFeedbackService(x);
@@ -7777,14 +7791,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_FeedNudge"; this.k(cf,x);
 		{x; debugger;}
 	}
-	/** @private @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
-	Omit_Menu_Video(cf,x) {
-		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(cf,x);
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(longBylineText);
-		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
-		return y;
-	}
 	/** @private @arg {R_MovingThumbnail} x */
 	richThumbnail_Video(x) {
 		if(!x) {debugger; return;}
@@ -7985,7 +7991,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(width,a => this.primitive_of(a,"number"));
 		this.t(height,a => this.primitive_of(a,"number"));
 	}
-	/** @handler @public @arg {YTNavigateFinishDetail} x */
+	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -8030,7 +8036,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @handler @public @arg {Response} response @arg {G_ResponseTypes} x */
+	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
 	ResponseTypes(response,x) {
 		const cf="ResponseTypes"; this.k(cf,x);
 		if(!response.ok) {
@@ -8225,13 +8231,6 @@ class HandleTypes extends ServiceMethods {
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
 		return this.uppercase_first(kk);
-	}
-	/** @private @template T @arg {TD_ContinuationItem_CE<T>} x */
-	TD_ContinuationItem_CE(x) {
-		const cf="TD_ContinuationItem";
-		const {trigger,...y}=this.sd(cf,x); // !
-		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
-		return y;
 	}
 	/** @private @arg {RD_TimedContinuation} x */
 	RD_TimedContinuation(x) {x; debugger;}
@@ -9527,35 +9526,6 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},feedbackResponses,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(feedbackResponses,this.FeedbackResponseProcessedStatus);
 	}
-	/** @arg {D_MP_Menu} x */
-	D_MP_Menu(x) {
-		const cf="D_MP_Menu"; this.k(cf,x);
-		if(x.sections) {
-			let z=x.sections[0];
-			if("multiPageMenuNotificationSectionRenderer" in z) return this.R_MP_MenuNotificationSection(z);
-			if("accountSectionListRenderer" in z) return;
-			if("multiPageMenuSectionRenderer" in z) return;
-			debugger;
-		}
-	}
-	/** @private @arg {R_MP_MenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("R_MP_MenuNotificationSection",x,this.MP_MenuNotificationSection);}
-	/** @private @arg {R_MP_MenuNotificationSection['multiPageMenuNotificationSectionRenderer']} x */
-	MP_MenuNotificationSection(x) {
-		const cf="MP_MenuNotificationSection";
-		const {items,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(items,x => {
-			if("notificationRenderer" in x) return this.R_Notification(x);
-			if("continuationItemRenderer" in x) {
-				let r=this.TR_ContinuationItem_CE(x); r;
-				this.C_Continuation(r);
-				return;
-			}
-			debugger;
-		});
-		debugger;
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {C_ShowReloadUi} x */
 	C_ShowReloadUi(x) {
 		const cf="C_ShowReloadUi"; this.k(cf,x);
@@ -9658,12 +9628,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @template T @arg {TR_ContinuationItem_CE<T>} x */
-	TR_ContinuationItem_CE(x) {
-		const cf="TR_ContinuationItem_CE"; this.k(cf,x);
-		return this.w(this.TD_ContinuationItem_CE(this.w(x)));
-	}
-	/** @arg {G_SectionList} x */
+	/** @private @arg {G_SectionList} x */
 	G_SectionList(x) {
 		const cf="G_SectionList";
 		if("targetId" in x) {

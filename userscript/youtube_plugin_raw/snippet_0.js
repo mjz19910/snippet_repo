@@ -810,5 +810,60 @@ class ND extends Snippet_0_tmp {
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
 	/** @protected @arg {R_RelatedChipCloud} x */
 	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
+	/** @protected @arg {G_Text} x */
+	G_Text(x) {x; debugger;}
+	/** @protected @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
+	Omit_Menu_Video(cf,x) {
+		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(cf,x);
+		this.D_Thumbnail(thumbnail);
+		this.G_Text(longBylineText);
+		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
+		return y;
+	}
+	/** @protected @arg {D_MP_Menu} x */
+	D_MP_Menu(x) {
+		const cf="D_MP_Menu"; this.k(cf,x);
+		if(x.sections) {
+			let z=x.sections[0];
+			if("multiPageMenuNotificationSectionRenderer" in z) return this.R_MP_MenuNotificationSection(z);
+			if("accountSectionListRenderer" in z) return;
+			if("multiPageMenuSectionRenderer" in z) return;
+			debugger;
+		}
+	}
+	/** @private @arg {R_MP_MenuNotificationSection} x */
+	R_MP_MenuNotificationSection(x) {this.H_("R_MP_MenuNotificationSection",x,this.MP_MenuNotificationSection);}
+	/** @private @arg {R_MP_MenuNotificationSection['multiPageMenuNotificationSectionRenderer']} x */
+	MP_MenuNotificationSection(x) {
+		const cf="MP_MenuNotificationSection";
+		const {items,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
+		this.z(items,x => {
+			if("notificationRenderer" in x) return this.R_Notification(x);
+			if("continuationItemRenderer" in x) {
+				let r=this.TR_ContinuationItem_CE(x); r;
+				this.C_Continuation(r);
+				return;
+			}
+			debugger;
+		});
+		debugger;
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @template T @arg {TR_ContinuationItem_CE<T>} x */
+	TR_ContinuationItem_CE(x) {
+		const cf="TR_ContinuationItem_CE"; this.k(cf,x);
+		return this.w(this.TD_ContinuationItem_CE(this.w(x)));
+	}
+	/** @private @template T @arg {TD_ContinuationItem_CE<T>} x */
+	TD_ContinuationItem_CE(x) {
+		const cf="TD_ContinuationItem";
+		const {trigger,...y}=this.sd(cf,x); // !
+		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
+		return y;
+	}
+	/** @arg {C_Continuation} x */
+	C_Continuation(x) {x;}
+	/** @arg {R_Notification} x */
+	R_Notification(x) {x;}
 }
 new ND;
