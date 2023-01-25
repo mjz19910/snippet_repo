@@ -8480,6 +8480,8 @@ class HandleTypes extends ServiceMethods {
 		this.playlistId(playlistId);
 		this.t(params,x => this.params(cf,"playlist_edit.params",x));
 		this.z(actions,x=>{
+			// TODO: #12 Handle playlist actions
+			// Just skip them for now
 			switch(x.action) {
 				case "ACTION_ADD_VIDEO":
 				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
