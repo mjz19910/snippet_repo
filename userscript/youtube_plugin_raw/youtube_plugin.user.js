@@ -9226,9 +9226,9 @@ class HandleTypes extends ServiceMethods {
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
 		let {background,videoTitle,byline,pauseText,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit_Compact_Video(cf,x); this.g(y);
-		this.R_TextRuns(videoTitle);
+		this.G_Text(videoTitle);
 		this.R_TextRuns(byline);
-		this.R_TextRuns(pauseText);
+		this.G_Text(pauseText);
 		this.D_Thumbnail(background);
 		if(countDownSecs!==8) debugger;
 		this.R_Button(cancelButton);
