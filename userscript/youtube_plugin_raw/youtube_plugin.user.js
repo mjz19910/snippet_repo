@@ -4294,7 +4294,7 @@ class CodegenService extends BaseService {
 		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
 		/** @private @type {A_FrameworkUpdates} */
 		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
-		/** @private @type {A_LoggingDirectives} */
+		/** @private @type {D_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		let res_type=this.get_json_replacer_type(state,gen_name,x);
@@ -8424,7 +8424,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(items,this.G_MenuItem);
 		/** @private @type {D_Menu_TargetId} */
 		this.t(targetId,a => this.targetId(cf,a));
-		this.t(loggingDirectives,this.A_LoggingDirectives);
+		this.t(loggingDirectives,this.D_LoggingDirectives);
 	}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
@@ -9113,7 +9113,27 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {x; debugger;}
 	/** @private @arg {R_EngagementPanelSectionList} x */
-	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,a => {a; console.log("TODO");});}
+	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,this.D_EngagementPanelSectionList);}
+	/** @private @arg {D_EngagementPanelSectionList} x */
+	D_EngagementPanelSectionList(x) {
+		const cf="D_EngagementPanelSectionList"; this.k(cf,x);
+		if("veType" in x) {
+			return;
+		}
+		this.DB_SI_EngagementPanel(x);
+	}
+	/** @private @arg {DB_SI_EngagementPanel} x */
+	DB_SI_EngagementPanel(x) {
+		const cf="DB_SI_EngagementPanel"; this.k(cf,x);
+		if("panelIdentifier" in x) return;
+		const {content,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
+		this.R_AdsEngagementPanelContent(content);
+		if(targetId!=="engagement-panel-ads") debugger;
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @private @arg {R_AdsEngagementPanelContent} x */
+	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent",x,this.B_Hack);}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="R_SetSetting";
@@ -9745,17 +9765,17 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_CompactVideo} x */
 	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
-	/** @private @arg {A_LoggingDirectives} x */
-	A_LoggingDirectives(x) {
-		const cf="LoggingDirectives";
+	/** @private @arg {D_LoggingDirectives} x */
+	D_LoggingDirectives(x) {
+		const cf="D_LoggingDirectives";
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.Visibility(visibility);
-		this.t(gestures,this.LoggingDirectives_gestures);
+		this.t(gestures,this.D_LoggingDirectives_Gestures);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
 	}
-	/** @private @arg {NonNullable<A_LoggingDirectives['gestures']>} x */
-	LoggingDirectives_gestures(x) {
+	/** @private @arg {NonNullable<D_LoggingDirectives['gestures']>} x */
+	D_LoggingDirectives_Gestures(x) {
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
 	}

@@ -5,5 +5,5 @@ type D_ProductListItem={
 	price: `CA_${string}`;
 	onClickCommand: E_Url;
 	trackingParams: string;
-	loggingDirectives: A_LoggingDirectives;
+	loggingDirectives: D_LoggingDirectives;
 };

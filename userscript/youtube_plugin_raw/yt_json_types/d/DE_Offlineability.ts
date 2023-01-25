@@ -4,5 +4,5 @@ type DE_Offlineability={
 	addToOfflineButtonState: GE_AddToOfflineButtonState;
 	contentCheckOk: false;
 	racyCheckOk: false;
-	loggingDirectives: A_LoggingDirectives;
+	loggingDirectives: D_LoggingDirectives;
 };

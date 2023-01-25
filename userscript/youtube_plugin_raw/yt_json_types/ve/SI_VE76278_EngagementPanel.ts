@@ -5,5 +5,5 @@ type SI_VE76278_EngagementPanel={
 	veType: 76278;
 	targetId: "engagement-panel-comments-section";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: A_LoggingDirectives;
+	loggingDirectives: D_LoggingDirectives;
 };

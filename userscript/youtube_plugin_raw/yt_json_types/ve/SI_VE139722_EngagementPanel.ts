@@ -6,5 +6,5 @@ type SI_VE139722_EngagementPanel={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	identifier: T_ShortsSurfaceIdentifier<"shorts-comments-panel">;
-	loggingDirectives: A_LoggingDirectives;
+	loggingDirectives: D_LoggingDirectives;
 };

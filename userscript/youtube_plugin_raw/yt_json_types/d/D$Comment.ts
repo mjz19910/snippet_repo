@@ -15,5 +15,5 @@ type D_Comment={
 	voteCount: R_TextRuns;
 	expandButton: R_Button;
 	collapseButton: R_Button;
-	loggingDirectives: A_LoggingDirectives;
+	loggingDirectives: D_LoggingDirectives;
 };

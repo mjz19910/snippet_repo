@@ -5,5 +5,5 @@ type SI_VE99999_EngagementPanel={
 	veType: 99999;
 	targetId: "shopping_panel_for_entry_point_5";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: A_LoggingDirectives;
+	loggingDirectives: D_LoggingDirectives;
 };

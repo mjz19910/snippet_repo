@@ -4,6 +4,6 @@ type D_Menu={
 	topLevelButtons?: R_SegmentedLikeDislikeButton[];
 	accessibility?: D_Accessibility;
 	targetId?: D_Menu_TargetId;
-	loggingDirectives?: A_LoggingDirectives;
+	loggingDirectives?: D_LoggingDirectives;
 	flexibleItems?: R_MenuFlexibleItem[];
 };
