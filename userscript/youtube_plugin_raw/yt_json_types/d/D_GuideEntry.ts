@@ -1,6 +1,20 @@
 type D_GuideEntry=[
 	{
 		navigationEndpoint: E_Browse;
+		icon: T_Icon<"CLAPPERBOARD">;
+		trackingParams: string;
+		formattedTitle: R_SimpleText;
+		accessibility: D_Accessibility;
+	},
+	{
+		navigationEndpoint: E_Browse;
+		icon: T_Icon<"MUSIC">;
+		trackingParams: string;
+		formattedTitle: R_SimpleText;
+		accessibility: D_Accessibility;
+	},
+	{
+		navigationEndpoint: E_Browse;
 		icon: T_Icon<"TRENDING">;
 		trackingParams: string;
 		formattedTitle: R_SimpleText;

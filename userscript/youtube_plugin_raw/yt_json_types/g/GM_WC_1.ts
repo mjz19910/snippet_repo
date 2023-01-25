@@ -224,6 +224,9 @@ type DE_VE5754_Browse={browseId: `VL${"LL"|"WL"}`;};
 type DE_VE6827_Browse={browseId: "FElibrary"|"FEhistory";}|{
 	browseId: "FEtrending";
 	params: string;
+}|{
+	browseId: "FEstorefront";
+	params: string;
 };
 type DE_VE23462_Browse={browseId: "SPaccount_notifications";};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};

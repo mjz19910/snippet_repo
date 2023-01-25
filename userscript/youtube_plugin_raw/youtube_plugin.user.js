@@ -7531,6 +7531,7 @@ class HandleTypes extends ServiceMethods {
 			case "FEsubscriptions": break;
 			case "FEtrending": break;
 			case "FEwhat_to_watch": break;
+			case "FEstorefront": break;
 			case "SPaccount_notifications": break;
 			case "VLLL": break;
 			case "VLWL": break;
@@ -10232,6 +10233,8 @@ class HandleTypes extends ServiceMethods {
 				case "TRENDING":
 				case "WATCH_HISTORY":
 				case "WATCH_LATER":
+				case "CLAPPERBOARD":
+				case "MUSIC":
 			}
 			{
 				let x=navigationEndpoint;
