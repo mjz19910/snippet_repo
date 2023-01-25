@@ -9308,8 +9308,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("adSlotLoggingData" in y) {
 			const {adSlotLoggingData,...y1}=y; this.g(y1);
-			this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
-			return;
+			return this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
 		}
 		this.g(y); // ! #destructure
 	}
