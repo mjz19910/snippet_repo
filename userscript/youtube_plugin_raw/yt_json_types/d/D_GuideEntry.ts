@@ -1,5 +1,11 @@
 type D_GuideEntry={
 	navigationEndpoint: E_Browse;
+	icon: T_Icon<"WATCH_HISTORY">;
+	trackingParams: string;
+	formattedTitle: R_SimpleText;
+	accessibility: D_Accessibility;
+}|{
+	navigationEndpoint: E_Browse;
 	icon: T_Icon<"SUBSCRIPTIONS"|"WHAT_TO_WATCH">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;

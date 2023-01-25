@@ -10071,15 +10071,25 @@ class HandleTypes extends ServiceMethods {
 				if(targetId!=="library-guide-item") debugger;
 				return;
 			}
-			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			if("isPrimary" in x) {
+				const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+				if(!navigationEndpoint.browseEndpoint) debugger;
+				this.E_Browse(navigationEndpoint);
+				switch(icon.iconType) {
+					case "SUBSCRIPTIONS": break;
+					case "WHAT_TO_WATCH": break;
+					default: debugger; break;
+				}
+				if(isPrimary!==true) debugger;
+				return;
+			}
+			const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
 			switch(icon.iconType) {
-				case "SUBSCRIPTIONS": break;
-				case "WHAT_TO_WATCH": break;
+				case "WATCH_HISTORY": break;
 				default: debugger; break;
 			}
-			if(isPrimary!==true) debugger;
 			return;
 		}
 		if("isPrimary" in x) {
