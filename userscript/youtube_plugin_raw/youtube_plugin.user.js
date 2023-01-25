@@ -9536,6 +9536,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Extract<DE_Url['url']|GM_VE83769_UrlType,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
+		if(!this.str_is_uri(b)) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
 		if(x[0]!=="studio.youtube.com") {debugger; return;}
 		if(x.length===1) return;
@@ -9561,19 +9562,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
-		if(!this.str_is_uri(x)) {debugger; return;}
-		if(this.str_starts_with("https://www.youtubekids.com?",x)) {
-			return this.handle_yt_kids_url(x);
-		}
+		const rp="https://www.youtube.com/redirect?";
+		if(this.str_starts_with(rp,x)) return this.handle_yt_url(x);
 		let sp=this.parse_with_url_parse(x);
-		switch(sp.host) {
-			case "www.youtube.com": return this.handle_yt_url(sp.href);
-			case "music.youtube.com": return this.handle_yt_music_url(sp.href);
-			case "studio.youtube.com": return this.handle_yt_studio_url(sp.href);
-			case "tv.youtube.com": return;
-			default: debugger; break;
-		}
-		debugger;
+		this.GM_VE83769_UrlType(sp.href);
 	}
 	/** @private @arg {DE_Url} x */
 	DE_Url(x) {
