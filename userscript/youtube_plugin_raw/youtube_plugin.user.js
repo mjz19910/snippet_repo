@@ -4607,6 +4607,7 @@ class CodegenService extends BaseService {
 			||b.metadataBadgeRenderer
 			||b.metadataRowContainerRenderer
 			||b.microformatDataRenderer
+			||b.movingThumbnailRenderer
 			||b.multiMarkersPlayerBarRenderer
 			||b.multiPageMenuNotificationSectionRenderer
 			||b.multiPageMenuRenderer
