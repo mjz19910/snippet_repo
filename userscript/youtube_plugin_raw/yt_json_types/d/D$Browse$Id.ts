@@ -1,5 +1,5 @@
 type D$Browse$Id=
-	|`FE${D$BrowseEndpointPages}`
+	|`FE${D_BrowseEndpointPages}`
 	|`VL${`${"LL"|"WL"|"PL"}${string}`}`
 	|`UC${string}`
 	|`SP${D_Settings_Id}`

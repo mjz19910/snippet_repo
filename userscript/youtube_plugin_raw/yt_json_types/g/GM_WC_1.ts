@@ -1,4 +1,3 @@
-type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 type GM_WC_1=[
 	GM_VE11487_WC,
 	GM_VE23462_WC,
@@ -195,6 +194,7 @@ type GM_YpcGetCart={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/ypc/get_cart";
 };
+type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};

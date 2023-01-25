@@ -1,4 +1,4 @@
-type D$BrowseEndpointPages=[
+type D_BrowseEndpointPages=[
 	"explore",
 	"guide_builder",
 	"hashtag",

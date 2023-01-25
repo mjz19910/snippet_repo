@@ -3,7 +3,7 @@ type YtURlFormatLocation=[
 	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
 	`/account${""|`_${G_AccountPageSettingsSections}`}`,
 	`/channel/UC${string}`,
-	`/feed/${D$BrowseEndpointPages}`,
+	`/feed/${D_BrowseEndpointPages}`,
 	`/feed/trending?bp=${string}`,
 	`/playlist?${YtPlaylistUrlParamsFormat}`,
 	`/results?search_query=${string}`,

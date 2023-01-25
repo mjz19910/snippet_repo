@@ -3380,7 +3380,7 @@ class CsiService extends BaseService {
 	constructor(x) {
 		super(x);
 		this.data={
-			/** @private @type {D$BrowseEndpointPages|null} */
+			/** @private @type {D_BrowseEndpointPages|null} */
 			yt_fn: null,
 			/** @private @type {RC_CsiServiceC["value"]|null} */
 			c: null,
@@ -3395,7 +3395,7 @@ class CsiService extends BaseService {
 			this.rid[x]=void 0;
 		}
 	}
-	/** @private @arg {D$BrowseEndpointPages} value */
+	/** @private @arg {D_BrowseEndpointPages} value */
 	verify_param_yt_fn(value) {
 		switch(value) {
 			case "history":
@@ -6435,7 +6435,7 @@ class ParserService extends BaseService {
 		}
 		return x[0];
 	}
-	/** @private @arg {D$BrowseEndpointPages} x */
+	/** @private @arg {D_BrowseEndpointPages} x */
 	parse_known_page(x) {
 		switch(x) {
 			case "explore": return true;
@@ -7500,10 +7500,10 @@ class HandleTypes extends ServiceMethods {
 	E_Browse_Handler(x) {
 		const cf="E_Browse_Handler";
 		const {browseEndpoint: a,...y}=this.sd(cf,x); this.g(y);
-		this.DE_Browse(a);
+		this.DE_Browse_VE(a);
 	}
 	/** @private @arg {E_Browse['browseEndpoint']} x */
-	DE_Browse(x) {
+	DE_Browse_VE(x) {
 		const cf="DE_Browse";
 		if("canonicalBaseUrl" in x) {
 			let {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y); // !
