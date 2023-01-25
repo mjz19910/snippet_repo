@@ -7578,7 +7578,10 @@ class HandleTypes extends ServiceMethods {
 			let x1=split_string_once(x,"VL")[1];
 			if(this.str_starts_with_r(x1,"LL")) return;
 			if(this.str_starts_with_r(x1,"WL")) return;
-			if(this.str_starts_with_r(x1,"PL")) return;
+			if(this.str_starts_with_r(x1,"PL")) {
+				console.log("[browseId.playlist.length]",x1.length);
+				return;
+			}
 			console.log("new with param [Browse_param_2c_VL]",x,x1);
 			debugger;
 			return;
