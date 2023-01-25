@@ -7766,35 +7766,46 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
+	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x @returns {Omit<T,D_ThumbnailOverlay_Omit_Keys>} */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,shortViewCountText,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,viewCountText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
-		return y;
+		/** @type {any} */
+		let u=y;
+		return u;
 	}
-	/** @template {D_Video} T @arg {string} cf @arg {T} x */
+	/** @template {D_Video} T @arg {string} cf @arg {T} x @returns {Omit<T,D_Video_Omit_Keys>} */
 	D_Video_Omit(cf,x) {
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.R_TextRuns(ownerText);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
+		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
 		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
-		return y;
+		/** @type {any} */
+		let u=y;
+		return u;
 	}
-	/** @template {Extract<D_Video,{owner:any}>} T @arg {string} cf @arg {T} x */
+	/** @template {Extract<D_Video,{owner:any}>} T @arg {string} cf @arg {T} x @returns {Omit<T,D_Video_Omit_Owner_Keys>} */
 	D_Video_Omit_Owner(cf,x) {
 		let {owner,...y}=this.D_Video_Omit(cf,x);
 		this.D_Video_Owner(owner);
-		return y;
+		/** @type {any} */
+		let u=y;
+		return u;
 	}
-	/** @template {Extract<D_Video,{ownerBadges:any}>} T @arg {string} cf @arg {T} x */
+	/** @template {Extract<D_Video,{ownerBadges:any}>} T @arg {string} cf @arg {T} x @returns {Omit<T,D_Video_Omit_Owner_Keys|"ownerBadges">} */
 	D_Video_Omit_OwnerBadges(cf,x) {
 		let {ownerBadges,...y}=this.D_Video_Omit_Owner(cf,x);
 		this.z(ownerBadges,this.RMD_Badge);
-		return y;
+		/** @type {any} */
+		let u=y;
+		return u;
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
+		let cg_x=this.D_Video_Omit(cf,x); cg_x;
+		debugger;
 		if("publishedTimeText" in x) {
 			if("richThumbnail" in x&&"ownerBadges" in x) {
 				let {descriptionSnippet,richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
@@ -7826,9 +7837,9 @@ class HandleTypes extends ServiceMethods {
 	D_Video_Owner(x) {x;}
 	/** @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
-	/** @template {D_ChannelThumbnailWithLink} T @arg {T} x */
-	D_ChannelThumbnailWithLink_Omit(x) {
-		const {thumbnail,navigationEndpoint,accessibility,...y}=x;
+	/** @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
+	D_ChannelThumbnailWithLink_Omit(cf,x) {
+		const {thumbnail,navigationEndpoint,accessibility,...y}=this.sd(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
 		this.D_Accessibility(accessibility);
@@ -7838,11 +7849,11 @@ class HandleTypes extends ServiceMethods {
 	D_ChannelThumbnailWithLink(x) {
 		const cf="D_ChannelThumbnailWithLink";
 		if("title" in x) {
-			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(this.sd(cf,x)); this.g(y);
+			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
 			this.primitive_of_string(title);
 			return;
 		}
-		let y=this.D_ChannelThumbnailWithLink_Omit(this.sd(cf,x)); this.g(y);
+		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
 	}
 	/** @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
@@ -7870,6 +7881,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DC_Continuation} x */
 	DC_Continuation(x) {
+		if("continuationCommand" in x) debugger;
 		const cf="DC_Continuation"; this.k(cf,x);
 		if("command" in x) {
 			const {command: x1,...b}=this.DC_Continuation$Omit(x); this.g(b);
