@@ -7299,7 +7299,11 @@ class HandleTypes extends ServiceMethods {
 	GM_VE23462_WC(x) {
 		const cf="GM_VE23462_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
-		if(url!=="/account_notifications") debugger;
+		switch(url) {
+			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
+			case "/account": break;
+			case "/account_notifications": break;
+		}
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 		if(rootVe!==23462) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;

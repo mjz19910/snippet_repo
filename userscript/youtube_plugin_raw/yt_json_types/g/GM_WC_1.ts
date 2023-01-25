@@ -81,7 +81,7 @@ type GM_VE11487_WC={
 	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE23462_WC={
-	url: "/account_notifications";
+	url: "/account"|"/account_notifications";
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
 	rootVe: 23462;
 	apiUrl: "/youtubei/v1/browse";
