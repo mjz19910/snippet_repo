@@ -34,6 +34,12 @@ type GM_WC_1=[
 	GM_ypc_get_offers,
 	GM_YpcGetCart,
 ][number];
+type GM_VE3611={
+	url: `/@${string}`;
+	webPageType: "WEB_PAGE_TYPE_CHANNEL";
+	rootVe: 3611;
+	apiUrl: "/youtubei/v1/browse";
+};
 type GM_VE3611_WC={
 	url:
 	|`/channel/UC${string}`
@@ -48,9 +54,40 @@ type GM_VE3832_Watch_WC={
 	webPageType: "WEB_PAGE_TYPE_WATCH";
 	rootVe: 3832;
 };
+type GM_VE3854_WC={
+	url: "/";
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 3854;
+	apiUrl: "/youtubei/v1/browse";
+};
 type GM_VE5754_WC={
 	rootVe: 5754;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
+};
+type GM_VE4724_WC={
+	url: `/results?search_query=${string}`;
+	webPageType: "WEB_PAGE_TYPE_SEARCH";
+	rootVe: 4724;
+};
+type GM_VE6827={
+	url?: D_VE6827_PageUrl;
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 6827;
+	apiUrl: "/youtubei/v1/browse";
+};
+type GM_VE6827_WC={
+	rootVe: 6827;
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+};
+type GM_VE11487={
+	url: "/premium";
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 11487;
+	apiUrl: "/youtubei/v1/browse";
+};
+type GM_VE11487_WC={
+	rootVe: 11487;
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type GM_VE23462_WC={
 	url: "/account_notifications";
@@ -58,38 +95,19 @@ type GM_VE23462_WC={
 	rootVe: 23462;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE4724_WC={
-	url: `/results?search_query=${string}`;
-	webPageType: "WEB_PAGE_TYPE_SEARCH";
-	rootVe: 4724;
-};
 type GM_VE37414_WC={
 	url: "/shorts/";
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
-type GM_VE96368_WC={
-	rootVe: 96368;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-};
-type GM_VE11487_WC={
-	rootVe: 11487;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-};
-type GM_VE6827_WC={
-	rootVe: 6827;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-};
-type GM_VE3854_WC={
-	url: "/";
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 3854;
-	apiUrl: "/youtubei/v1/browse";
-};
 type GM_VE83769_WC={
 	url: "/upload";
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
+};
+type GM_VE96368_WC={
+	rootVe: 96368;
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type GM_VE96368_WC_browse={
 	url: "/feed/subscriptions";
@@ -181,3 +199,14 @@ type GM_YpcGetCart={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/ypc/get_cart";
 };
+type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
+type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
+type M_VE3854={webCommandMetadata: GM_VE3854_WC;};
+type M_VE4724={webCommandMetadata: GM_VE4724_WC;};
+type M_VE5754={webCommandMetadata: GM_VE5754_WC;};
+type M_VE6827={webCommandMetadata: GM_VE6827;};
+type M_VE11487={webCommandMetadata: GM_VE11487;};
+type M_VE23462={webCommandMetadata: GM_VE23462_WC;};
+type M_VE37414={webCommandMetadata: GM_VE37414_WC;};
+type M_VE83769={webCommandMetadata: GM_VE83769_WC;};
+type M_VE96368={webCommandMetadata: GM_VE96368_WC_browse;};

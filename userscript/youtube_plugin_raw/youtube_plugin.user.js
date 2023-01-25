@@ -7209,9 +7209,9 @@ class HandleTypes extends ServiceMethods {
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE23462_WC} x */
-	GM_VE23462_WC(x) {x;}
-	/** @private @arg {GM_VE96368} x */
-	GM_VE96368(x) {x;}
+	GM_VE23462_WC(x) {x; debugger;}
+	/** @private @arg {GM_VE96368_WC_browse} x */
+	GM_VE96368_WC_browse(x) {x; debugger;}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
 	WebCommandMetadataWithApiUrl(x) {
 		let cx=x.apiUrl;
@@ -7281,7 +7281,7 @@ class HandleTypes extends ServiceMethods {
 			case 3854: return this.G_VE3854_WC(x);
 			case 3611: return this.GM_VE3611_WC(x);
 			case 23462: return this.GM_VE23462_WC(x);
-			case 96368: return this.GM_VE96368(x);
+			case 96368: return this.GM_VE96368_WC_browse(x);
 			default: x===0; debugger; break;
 		}
 	}
