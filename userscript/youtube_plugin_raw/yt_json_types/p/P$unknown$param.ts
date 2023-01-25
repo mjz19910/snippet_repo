@@ -1,4 +1,4 @@
-type P$unknown$param=[
+type P_unknown_param=[
 	"like.likeParams",
 	"like.remove_like_params",
 	"next.queue_context_params",

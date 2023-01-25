@@ -1,4 +1,4 @@
-type P$known$param=[
+type P_known_param=[
 	"AdServingDataEntry.f10.f1",
 	"AdServingDataEntry.f10.f11",
 	"AdServingDataEntry.f10.f6",
