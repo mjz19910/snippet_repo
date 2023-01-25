@@ -7684,7 +7684,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
 		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=x; this.g(y);
-		this.t(movingThumbnailDetails,this.D_Thumbnail);
+		this.t(movingThumbnailDetails,x=>{
+			if("logAsMovingThumbnail" in x) {
+				const {logAsMovingThumbnail,...y}=x;
+				return this.D_Thumbnail(y);
+			}
+			this.D_Thumbnail(x);
+		});
 		if(enableHoveredLogging!==true) debugger;
 		if(enableOverlay!==true) debugger;
 	}
