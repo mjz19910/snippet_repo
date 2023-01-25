@@ -2,11 +2,11 @@ type D_GuideEntry=[
 	{
 		navigationEndpoint: E_Browse;
 		thumbnail: D_Thumbnail;
-		badges: GuideEntryBadges;
+		badges: D_GuideEntryBadges;
 		trackingParams: string;
 		formattedTitle: R_SimpleText;
 		accessibility: D_Accessibility;
-		entryData: D_GuideEntryData;
+		entryData: R_GuideEntryData;
 		presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
 	},
 	D_GuideEntry_HelpService,

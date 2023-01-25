@@ -10161,20 +10161,37 @@ class HandleTypes extends ServiceMethods {
 	R_GuideEntryData(x) {this.H_("R_GuideEntryData",x,this.D_GuideEntryData);}
 	/** @private @arg {D_GuideEntryData} x */
 	D_GuideEntryData(x) {
-		const {guideEntryId,...y}=x; this.g(y);
+		const cf="D_GuideEntryData";
+		const {guideEntryId,...y}=this.sd(cf,x); this.g(y);
 		if(guideEntryId!=="LL") debugger;
+	}
+	/** @arg {D_GuideEntryBadges} x */
+	D_GuideEntryBadges(x) {
+		const cf="D_GuideEntryBadges";
+		const {liveBroadcasting,...y}=this.sd(cf,x); this.g(y);
+		if(liveBroadcasting!==false) debugger;
 	}
 	/** @private @arg {string} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
 		if("entryData" in x) {
-			const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			if("icon" in x) {
+				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+				if(!navigationEndpoint.browseEndpoint) debugger;
+				this.E_Browse(navigationEndpoint);
+				switch(icon.iconType) {
+					default: icon.iconType===""; debugger; break;
+					case "LIKES_PLAYLIST": break;
+				}
+				return this.R_GuideEntryData(entryData);
+			}
+			const {...u}=this.D_GuideEntry_Omit(cf,x);
+			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=u; this.g(y);
+			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
-			switch(icon.iconType) {
-				default: icon.iconType===""; debugger; break;
-				case "LIKES_PLAYLIST": break;
-			}
-			this.R_GuideEntryData(entryData);
+			this.D_Thumbnail(thumbnail);
+			this.D_GuideEntryBadges(badges);
+			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
 		}
 		if("navigationEndpoint" in x) {
@@ -10234,10 +10251,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
 		const cf="D_GuideEntry"; this.k(cf,x);
-		if("entryRenderer" in x) {
+		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
+		if("presentationStyle" in x) {
+			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y);
+			if(!navigationEndpoint.browseEndpoint) debugger;
+			this.E_Browse(navigationEndpoint);
+			this.D_Thumbnail(thumbnail);
+			this.D_GuideEntryBadges(badges);
+			this.trackingParams(cf,trackingParams);
+			this.R_SimpleText(formattedTitle);
+			this.D_Accessibility(accessibility);
+			this.R_GuideEntryData(entryData);
+			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
 		}
-		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		x===0;
 		debugger;
 	}
