@@ -5275,7 +5275,7 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
+		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),null);
 		parse_key(2);
 		parse_key(5);
 		if(this.eq_keys(mk,[])) return;
@@ -5295,8 +5295,8 @@ class ParserService extends BaseService {
 		f();
 		console.groupEnd();
 	};
-	/** @private @arg {P_PathRoot} path @arg {number[]} map_keys @arg {ParamMapValue} tv @arg {number|null} map_entry_key */
-	get_parse_fns(path,map_keys,tv,map_entry_key=null) {
+	/** @private @arg {P_PathRoot} path @arg {number[]} map_keys @arg {ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
+	get_parse_fns(path,map_keys,map_entry_value,map_entry_key=null) {
 		let path_parts=split_string(path,".");
 		/** @private @arg {number} idx */
 		let gd=(idx) => {console.log("[param_next.next_new_ns]",path_parts.join(".")); gen_next_part(idx);};
@@ -5304,14 +5304,15 @@ class ParserService extends BaseService {
 		let u=idx => this.grouped(path_parts.join("$"),() => gd(idx));
 		/** @private @arg {number} idx */
 		let gen_next_part=(idx) => {
+			let pad="\t\t\t";
 			if(idx>path_parts.length) return;
 			let case_part="";
-			let value_part="switch(tv) {default: debugger; return;}";
+			let value_part=`${pad}\t\tswitch(map_entry_value) {default: debugger; return;}`;
 			if(path_parts.length===idx) {
-				if(tv instanceof Map) case_part="if(tv instanceof Map) return;";
-				switch(typeof tv) {
-					case "number": case_part='if(typeof tv==="number") return this.save_number(`[${path}]`,map_entry_value);\n'; break;
-					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,map_entry_value);\n'; break;
+				if(map_entry_value instanceof Map) case_part=`${pad}if(map_entry_value instanceof Map) return;`;
+				switch(typeof map_entry_value) {
+					case "number": case_part=`${pad}\t\tif(typeof map_entry_value==="number") return this.save_number(\`[$\{path}]\`,map_entry_value);\n`; break;
+					case "string": case_part=`${pad}\t\tif(typeof map_entry_value==="string") return this.save_string(\`[$\{path}]\`,map_entry_value);\n`; break;
 				}
 			}
 			let res_case="";
@@ -5321,7 +5322,7 @@ class ParserService extends BaseService {
 			-- [${path_parts.join(".")},${idx}] --\n
 			case "${path_parts[idx-1]}": {
 				const idx=${idx+1};
-				if(path_parts.length===${idx}) {\n${case_part}${value_part}\n}
+				if(path_parts.length===${idx}) {\n${case_part}${value_part}\n${pad}\t}
 				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}}
 			} break;`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
@@ -5338,10 +5339,6 @@ class ParserService extends BaseService {
 		return {u,gen_next_part,new_path};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
-	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map @arg {ParamMapValue[]|undefined} tv @arg {number[]} map_keys @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-	parse_key(root,path,map,map_keys,ta,tv,cb) {
-		this.parse_value(root,path,map,map_keys,ta,tv,cb);
-	}
 	/** @private @type {P_LogItems} */
 	/** @private @arg {ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
@@ -5413,8 +5410,8 @@ class ParserService extends BaseService {
 			function m_num_range() {return as(map_entry_key);}
 		}
 	}
-	/** @unused_api @protected @arg {ParamMapValue} tv */
-	mapper_use(tv) {
+	/** @unused_api @protected @arg {ParamMapValue} map_entry_value */
+	mapper_use(map_entry_value) {
 		/** @private @arg {ParamMapValue} e */
 		let mapper=e => {
 			if(e instanceof Map) {
@@ -5429,7 +5426,7 @@ class ParserService extends BaseService {
 			}
 			return e;
 		};
-		let xx=mapper(tv);
+		let xx=mapper(map_entry_value);
 		// Array.from(xx).slice(1).map(mapper)[0];
 		if(xx instanceof Array) {
 			return xx.map(mapper);
@@ -5488,7 +5485,25 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
-			case "SerializedSlotAdServingDataEntry": u(idx); debugger; break;
+			case "SerializedSlotAdServingDataEntry": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f1": case "f3": case "f4": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1": case "f2": case "f3": u(idx); debugger; break;
+						}
+					} break;
+				}
+			} break;
 			case "YpcGetCart": {
 				const idx=2;
 				switch(path_parts[1]) {
@@ -5685,7 +5700,7 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
+		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),null);
 		let mk_max=Math.max(...mk,-1);
 		for(let i=1;i<mk_max+1;i++) {
 			if(!mk.includes(i)) continue;
@@ -5701,7 +5716,7 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
+		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),null);
 		for(let i=1;i<72;i++) {
 			if(!mk.includes(i)) continue;
 			parse_key(i);
@@ -5717,15 +5732,15 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,map.get(ta),null);
+		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),null);
 		for(let i=1;i<40;i++) {
 			if(!mk.includes(i)) continue;
 			parse_key(i);
 		}
 		// endpoint.create_playlist.params
-		this.parse_key(root,path,map,mk,77,map.get(77),tv => {
-			if(tv.length===1&&typeof tv[0]==="string") {
-				let bt=this.decode_browse_id(tv[0]);
+		this.parse_value(root,path,map,mk,77,map.get(77),map_entry_value => {
+			if(map_entry_value.length===1&&typeof map_entry_value[0]==="string") {
+				let bt=this.decode_browse_id(map_entry_value[0]);
 				if(!bt) {debugger; return;}
 				return this.parse_browse_id(bt);
 			}
