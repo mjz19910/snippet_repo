@@ -221,7 +221,10 @@ type DE_VE3611_Browse={
 };
 type DE_VE3854_Browse={browseId: "FEwhat_to_watch";};
 type DE_VE5754_Browse={browseId: `VL${"LL"|"WL"}`;};
-type DE_VE6827_Browse={browseId: "FElibrary"|"FEhistory";};
+type DE_VE6827_Browse={browseId: "FElibrary"|"FEhistory";}|{
+	browseId: "FEtrending";
+	params: string;
+};
 type DE_VE23462_Browse={browseId: "SPaccount_notifications";};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
