@@ -1,10 +1,5 @@
-type D_MenuServiceItem<T extends string|null,EndpointItems>=T extends null? {
+type D_MenuServiceItem<T_EI>={
 	text: G_Text;
-	serviceEndpoint: EndpointItems;
-	trackingParams: string;
-}:{
-	text: G_Text;
-	icon: T_Icon<T&string>;
-	serviceEndpoint: EndpointItems;
+	serviceEndpoint: T_EI;
 	trackingParams: string;
 };

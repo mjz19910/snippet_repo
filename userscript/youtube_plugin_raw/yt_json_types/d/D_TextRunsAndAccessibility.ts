@@ -1,4 +1,4 @@
 type D_TextRunsAndAccessibility={
-	runs: R_TextRun[];
+	runs: IR_TextRun[];
 	accessibility: D_Accessibility;
 };

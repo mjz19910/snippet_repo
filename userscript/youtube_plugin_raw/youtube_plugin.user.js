@@ -8347,10 +8347,15 @@ class HandleTypes extends ServiceMethods {
 	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton",x,this.D_AutoplaySwitchButton);}
 	/** @private @arg {D_AutoplaySwitchButton} x */
 	D_AutoplaySwitchButton(x) {
-		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled}=x;
-		onEnabledCommand.commandMetadata;
-		onDisabledCommand.commandMetadata;
-		debugger;
+		const cf="D_AutoplaySwitchButton";
+		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled}=this.sd(cf,x);
+		this.z([onEnabledCommand,onDisabledCommand],(x) => {
+			const cf="E_SetSettingAutonavForDesktop";
+			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.sd(cf,x); this.g(y);
+			this.clickTrackingParams(cf,clickTrackingParams);
+			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
+			this.G_CommandMetadata(commandMetadata,true)
+		});
 		this.D_Accessibility(enabledAccessibilityData);
 		this.D_Accessibility(disabledAccessibilityData);
 		this.trackingParams("",trackingParams);
@@ -8425,17 +8430,17 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
-	/** @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<"NOT_INTERESTED",any>} */
+	/** @arg {D_MenuServiceItem_Icon<any,any>} x @returns {x is D_MenuServiceItem_Icon<"NOT_INTERESTED",any>} */
 	is_MenuItemNotInt(x) {
 		if("icon" in x) return x.icon.iconType==="NOT_INTERESTED";
 		return false;
 	}
-	/** @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<"ADD_TO_QUEUE_TAIL",any>} */
+	/** @arg {D_MenuServiceItem_Icon<any,any>} x @returns {x is D_MenuServiceItem_Icon<"ADD_TO_QUEUE_TAIL",any>} */
 	is_MenuItem_AQ(x) {
 		if("icon" in x) return x.icon.iconType==="ADD_TO_QUEUE_TAIL";
 		return false;
 	}
-	/** @template {Extract<RD_MenuServiceItem,{icon:any}>['icon']['iconType']} T @arg {T} wt @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem<T,any>} */
+	/** @template {Extract<RD_MenuServiceItem,{icon:any}>['icon']['iconType']} T @arg {T} wt @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem_Icon<T,any>} */
 	is_MenuItem_W(x,wt) {
 		if("icon" in x) return x.icon.iconType===wt;
 		return false;
@@ -8468,6 +8473,7 @@ class HandleTypes extends ServiceMethods {
 					this.T_Icon(icon);
 					return;
 				}
+				if(this.is_MenuItem_W(x,"PLAYLIST_ADD")) return;
 				debugger;
 				return;
 			}
@@ -8500,14 +8506,14 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 	}
-	/** @template T @template {string|null} U @arg {Extract<D_MenuServiceItem<U, T>,{icon:any}>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem$Omit(x,f) {
 		const cf="D_MenuServiceItem$Omit";
 		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x);
 		f.call(this,serviceEndpoint);
 		return y;
 	}
-	/** @arg {D_MenuServiceItem<null, {}>} x */
+	/** @arg {D_MenuServiceItem<{}>} x */
 	D_MenuServiceItem(x) {
 		const cf="D_MenuServiceItem";
 		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
@@ -8517,7 +8523,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E_Feedback} x */
 	E_Feedback(x) {x;}
-	/** @arg {D_MenuServiceItem<"ADD_TO_QUEUE_TAIL", TE_SignalService<{}>>} x */
+	/** @arg {D_MenuServiceItem_Icon<"ADD_TO_QUEUE_TAIL", TE_SignalService<{}>>} x */
 	D_MenuServiceItem_AddToQueueTail(x) {
 		const cf="D_MenuServiceItem_AddToQueueTail"; this.k(cf,x);
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
@@ -8549,9 +8555,9 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
-	/** @private @arg {G_CommandMetadata} x */
-	G_CommandMetadata(x) {
-		debugger;
+	/** @private @arg {G_CommandMetadata} x @arg {boolean} handled */
+	G_CommandMetadata(x,handled=false) {
+		if(handled===false) console.log("TODO",x,[new Error]);
 		const cf="G_CommandMetadata";
 		if("resolveUrlCommandMetadata" in x) {
 			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -8677,21 +8683,21 @@ class HandleTypes extends ServiceMethods {
 			console.log(r);
 		}
 	}
-	/** @private @arg {NonNullable<R_TextRun['navigationEndpoint']>} x */
+	/** @private @arg {NonNullable<IR_TextRun['navigationEndpoint']>} x */
 	handle_text_endpoint(x) {
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
 	}
-	/** @private @arg {R_TextRuns} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {R_TextRuns} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
 	R_TextRuns(x,f_run=this.handle_text_endpoint) {
 		const cf="R_TextRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(runs,a => this.R_TextRun(a,f_run));
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @private @arg {R_TextRun} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
 	R_TextRun(x,f_run) {
 		const cf="R_TextRun";
 		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9102,7 +9108,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {x; debugger;}
 	/** @private @arg {R_EngagementPanelSectionList} x */
-	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,a => {a; debugger;});}
+	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,a => {a; console.log("TODO");});}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="R_SetSetting";
