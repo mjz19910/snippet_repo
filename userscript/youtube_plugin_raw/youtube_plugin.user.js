@@ -7241,8 +7241,8 @@ class HandleTypes extends ServiceMethods {
 		},x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
-				//case 3854: this.G_VE3854_WC(y); break;
 				case 3611: this.GM_VE3611_WC(y); break;
+				case 3854: this.G_VE3854_WC(y); break;
 				case 23462: this.G_VE23462_WC(y); break;
 				default: debugger; break;
 			}
