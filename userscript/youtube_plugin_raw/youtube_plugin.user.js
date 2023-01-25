@@ -5368,6 +5368,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "SerializedSlotAdServingDataEntry.f3":
+						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "SerializedSlotAdServingDataEntry.f1":
 						switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
@@ -5496,11 +5500,12 @@ class ParserService extends BaseService {
 						const idx=3;
 						if(path_parts.length===2) {
 							if(map_entry_value instanceof Map) return;
+							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							case "f1": case "f2": case "f3": {
+							case "f1": case "f2": case "f3": case "f6": case "f11": {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
@@ -5525,8 +5530,7 @@ class ParserService extends BaseService {
 				if(path_parts.length===1) switch(map_entry_value) {default: debugger; return;}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13":
-					case "f14": {
+					case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13": case "f14": {
 						const idx=3;
 						if(path_parts.length===2) {
 							if(map_entry_value instanceof Map) return;
@@ -9242,6 +9246,17 @@ class HandleTypes extends ServiceMethods {
 		const cf="DMD_Badge";
 		this.save_enum("BADGE_STYLE_TYPE",x.style);
 		switch(x.style) {
+			default: x===0; debugger; break;
+			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
+				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
+				if(icon.iconType!=="OFFICIAL_ARTIST_BADGE") debugger;
+				this.T_Icon(icon);
+				if(tooltip!=="Official Artist Channel") debugger;
+				this.primitive_of_string(tooltip);
+				this.trackingParams(cf,trackingParams);
+				if(accessibilityData.label!=="Official Artist Channel") debugger;
+				this.D_Label(accessibilityData);
+			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);
 				if(icon.iconType!=="CHECK_CIRCLE_THICK") debugger;
@@ -9263,7 +9278,6 @@ class HandleTypes extends ServiceMethods {
 				this.trackingParams(cf,trackingParams);
 				this.primitive_of_string(label);
 			} break;
-			default: debugger; break;
 		}
 	}
 	/** @arg {R_AdSlot} x */
