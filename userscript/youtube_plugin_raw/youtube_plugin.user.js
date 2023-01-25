@@ -10163,6 +10163,11 @@ class HandleTypes extends ServiceMethods {
 	D_GuideEntryData(x) {
 		const cf="D_GuideEntryData";
 		const {guideEntryId,...y}=this.sd(cf,x); this.g(y);
+		if(this.str_starts_with("UC",guideEntryId)) {
+			if(guideEntryId.length===24) return;
+			console.log("[guideEntryId.length]",guideEntryId.length);
+			return;
+		}
 		if(guideEntryId!=="LL") debugger;
 	}
 	/** @arg {D_GuideEntryBadges} x */
