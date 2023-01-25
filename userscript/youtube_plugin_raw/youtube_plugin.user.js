@@ -7684,7 +7684,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
 		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=x; this.g(y);
-		this.t(movingThumbnailDetails,x=>{
+		this.t(movingThumbnailDetails,x => {
 			if("logAsMovingThumbnail" in x) {
 				const {logAsMovingThumbnail,...y}=x;
 				return this.D_Thumbnail(y);
@@ -7694,6 +7694,8 @@ class HandleTypes extends ServiceMethods {
 		if(enableHoveredLogging!==true) debugger;
 		if(enableOverlay!==true) debugger;
 	}
+	/** @arg {R_Radio} x */
+	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
@@ -7701,12 +7703,32 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(descriptionSnippet);
 		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
-		channelThumbnailSupportedRenderers;
-		inlinePlaybackEndpoint;
+		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
+		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
 		owner;
 	}
-	/** @arg {R_Radio} x */
-	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
+	/** @arg {R_ChannelThumbnailWithLink} x */
+	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
+	/** @arg {D_ChannelThumbnailWithLink} x */
+	D_ChannelThumbnailWithLink(x) {
+		const cf="D_ChannelThumbnailWithLink";
+		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.sd(cf,x); this.g(y);
+		this.D_Thumbnail(thumbnail);
+		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
+		this.D_Accessibility(accessibility);
+		this.primitive_of_string(title);
+	}
+	/** @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
+	D_ChannelThumbnail_navigationEndpoint(x) {
+		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_Browse(x);
+		debugger;
+	}
+	/** @arg {D_Video['inlinePlaybackEndpoint']} x */
+	D_Video_inlinePlaybackEndpoint(x) {
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		debugger;
+	}
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {
 		const cf="D_Radio"; this.k(cf,x);
