@@ -6994,16 +6994,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
+	/** @private @arg {GM_VE23462_WC} x */
+	GM_VE23462_WC(x) {x;}
+	/** @private @arg {GM_VE96368} x */
+	GM_VE96368(x) {x;}
 	/** @private @arg {GM_WC} x */
-	WebCommandMetadata(x) {
-		const cf="GenericWebCommandMetadata";
-		if("rootVe" in x&&"apiUrl" in x) {
-			switch(x.rootVe) {
-				case 3854: return this.G_VE3854_WC(x);
-				case 3611: return this.GM_VE3611_WC(x);
-				default: debugger; break;
-			}
-		}
+	WebCommandMetadataWithApiUrl(x) {
 		if("apiUrl" in x) {
 			let cx=x.apiUrl;
 			switch(x.apiUrl) {
@@ -7046,13 +7042,35 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
+	}
+	/** @private @arg {GM_WC} x */
+	WebCommandMetadata(x) {
+		this.WebCommandMetadataWithApiUrl(x);
+		const cf="GenericWebCommandMetadata";
+		if("rootVe" in x&&"apiUrl" in x) {
+			switch(x.rootVe) {
+				case 3854: return this.G_VE3854_WC(x);
+				case 3611: return this.GM_VE3611_WC(x);
+				case 23462: return this.GM_VE23462_WC(x);
+				case 96368: return this.GM_VE96368(x);
+				default: x===0; debugger; break;
+			}
+		}
+		let ka=this.get_keys_of(x);
+		switch(ka[0]) {
+			case "rootVe":
+			case "sendPost":
+			case "webPageType":
+			case "url": break;
+			default: ka[0]===""; debugger; break;
+		}
 		if("rootVe" in x) {
 			let cx=x.rootVe;
 			switch(x.rootVe) {
 				default: {
 					/** @private @arg {GM_WC} x */
-					this.codegen_new_typedef(x,`G_VE_{cx}`);
-					console.log(`\n\tG_VE_{cx},`);
+					this.codegen_new_typedef(x,`G_VE${cx}`);
+					console.log(`\n\tG_VE${cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 				} break;
 				case 3832: return this.GM_VE3832_Watch_WC(x);
