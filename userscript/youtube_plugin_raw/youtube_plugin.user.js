@@ -7513,8 +7513,6 @@ class HandleTypes extends ServiceMethods {
 	R_CompactLink(x) {this.H_("R_CompactLink",x,this.D_CompactLink);}
 	/** @private @arg {R_PlaylistSidebar} x */
 	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar",x,this.D_PlaylistSidebar);}
-	/** @private @arg {G_SectionList} x */
-	G_SectionList(x) {x; debugger;}
 	/** @private @arg {D_Microformat} x */
 	D_Microformat(x) {
 		const cf="D_Microformat";
@@ -7897,7 +7895,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @template {D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
+	/** @private @arg {Omit_Menu_Radio_CF} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
 		this.R_TextRuns(ownerText);
@@ -7954,7 +7952,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
 		if(!x) {debugger; return;}
-		this.T_Endpoint("C_Continuation",x,x => this.y(x,this.DC_Continuation),x => {
+		const cf="C_Continuation";
+		this.T_Endpoint(cf,x,x => this.y(x,this.DC_Continuation),x => {
 			if(x.webCommandMetadata.apiUrl!=="/youtubei/v1/browse") debugger;
 			this.y(x,this.GM_browse);
 		});
@@ -8072,7 +8071,7 @@ class HandleTypes extends ServiceMethods {
 			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
 			case "browse": return this.RS_Browse(x.data);
 			case "feedback": return this.RS_Feedback(x.data);
-			case "get_transcript": return this.RS_GetTranscript(x.data);
+			case "get_transcript": return this.RSG_Transcript(x.data);
 			case "get_survey": return this.RSG_Survey(x.data);
 			case "getAccountSwitcherEndpoint": return this.REG_AccountSwitcher(x.data);
 			case "getDatasyncIdsEndpoint": return this.REG_DatasyncIds(x.data);
@@ -9330,11 +9329,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {D_AdLayoutLogging} x */
-	D_AdLayoutLogging(x) {
-		const cf="D_AdLayoutLogging"; this.k(cf,x);
-		this.primitive_of_string(this.w(x));
-	}
 	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
 		const cf="DM_AdSlot";
@@ -9423,22 +9417,9 @@ class HandleTypes extends ServiceMethods {
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.D_WatchResults(results,this.G_WatchResultItem);
 		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
-		this.t(playlist,a => this.T_Playlist(a,this.PlaylistContent));
-		this.t(autoplay,a => this.T_Autoplay(a,this.AutoplayContent));
+		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
+		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
-	}
-	/** @pub @arg {R_RelatedChipCloud} x */
-	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
-	/** @private @arg {R_ChipCloud} x */
-	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
-	/** @private @arg {D_ChipCloud} x */
-	D_ChipCloud(x) {
-		const cf="D_ChipCloud";
-		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
-		this.trackingParams(cf,trackingParams);
-		if(!horizontalScrollable) debugger;
-		this.R_Button(nextButton);
-		this.R_Button(previousButton);
 	}
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_UnseenCount(x) {
@@ -9454,7 +9435,7 @@ class HandleTypes extends ServiceMethods {
 	UA_NotificationsUnseenCount(x) {
 		const cf="UA_NotificationsUnseenCount";
 		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.clickTrackingParams("UA_NotificationsUnseenCount",clickTrackingParams);
+		this.clickTrackingParams(cf,clickTrackingParams);
 		this.U_NotificationsUnseenCount(updateNotificationsUnseenCountAction);
 	}
 	/** @private @arg {U_NotificationsUnseenCount} x */
@@ -9498,7 +9479,7 @@ class HandleTypes extends ServiceMethods {
 	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,a => {a; debugger;});}
 	/** @private @arg {RSW_ReelItem} x */
 	RS_ReelItemWatch(x) {
-		const cf="ReelItemWatchResponse";
+		const cf="RS_ReelItemWatch";
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
@@ -9631,7 +9612,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {
-		this.T_Endpoint("E_RecordNotificationInteractions",x,a => {
+		const cf="E_RecordNotificationInteractions";
+		this.T_Endpoint(cf,x,a => {
 			if(!a.recordNotificationInteractionsEndpoint) debugger;
 			this.DE_RecordNotificationInteractions(this.w(a));
 		},x => {
@@ -9665,7 +9647,8 @@ class HandleTypes extends ServiceMethods {
 	AD_HideEnclosing(x) {x; debugger;}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {
-		this.T_Endpoint("E_GetNotificationMenu",x,x => {
+		const cf="E_GetNotificationMenu";
+		this.T_Endpoint(cf,x,x => {
 			const u=this.w(x),cf="DE_GetNotificationMenu";
 			const {ctoken,...y}=this.sd(cf,u); this.g(y);
 			this.params(cf,"GetNotificationMenu.ctoken",ctoken);
@@ -9681,8 +9664,8 @@ class HandleTypes extends ServiceMethods {
 		return this.w(this.TD_ContinuationItem_CE(this.w(x)));
 	}
 	/** @arg {G_SectionList} x */
-	SectionListData(x) {
-		const cf="SectionListData";
+	G_SectionList(x) {
+		const cf="G_SectionList";
 		if("targetId" in x) {
 			if(this.str_starts_with(x.targetId,"browse-feed")) {
 				let ss=split_string(x.targetId,"browse-feed");
@@ -9807,7 +9790,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {
-		const cf="GetTranscriptEndpoint";
+		const cf="E_GetTranscript";
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.G_CommandMetadata(commandMetadata);
@@ -9820,8 +9803,8 @@ class HandleTypes extends ServiceMethods {
 		this.params("GetTranscript","get_transcript.params",params);
 	}
 	/** @private @arg {RSG_Transcript} x */
-	RS_GetTranscript(x) {
-		const cf="R_GetTranscript";
+	RSG_Transcript(x) {
+		const cf="RSG_Transcript";
 		const {responseContext: {},actions,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {
@@ -9846,7 +9829,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RS_Guide} x */
 	RS_Guide(x) {
-		const cf="GuideResponse";
+		const cf="RS_Guide";
 		const {responseContext: {},items,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(items,this.GuideItemType);
 		this.trackingParams(cf,trackingParams);
@@ -9867,7 +9850,7 @@ class HandleTypes extends ServiceMethods {
 	D_GuideSubscriptionsSection(x) {x;}
 	/** @private @arg {D_GuideSection} x */
 	D_GuideSection(x) {
-		const cf="GuideSectionData";
+		const cf="D_GuideSection";
 		const {items,trackingParams,formattedTitle,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
@@ -9943,18 +9926,18 @@ class HandleTypes extends ServiceMethods {
 	R_GuideEntry(x) {this.H_("R_GuideEntry",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("R_GuideSection",x,this.D_GuideSection);}
-	/** @private @arg {AutoplayContent} x */
-	AutoplayContent(x) {
-		const cf="AutoplayContent";
+	/** @private @arg {D_AutoplayContent} x */
+	D_AutoplayContent(x) {
+		const cf="D_AutoplayContent";
 		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(sets,this.AutoplaySetItem);
 		if(countDownSecs&&countDownSecs!==5) debugger;
 		if(modifiedSets!==void 0) this.z(modifiedSets,this.ModifiedSetItem);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {PlaylistContent} x */
-	PlaylistContent(x) {
-		const cf="PlaylistContent";
+	/** @private @arg {D_PlaylistContent} x */
+	D_PlaylistContent(x) {
+		const cf="D_PlaylistContent";
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],a => this.R_SimpleText(a));
@@ -9962,7 +9945,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(title);
 		this.primitive_of_string(playlistId);
 		this.primitive_of(currentIndex,"number");
-		this.parser.parse_url("PlaylistContent",playlistShareUrl);
+		this.parser.parse_url(cf,playlistShareUrl);
 		this.R_Menu(menu);
 		if(localCurrentIndex!==25&&localCurrentIndex!==0) debugger;
 		this.R_Menu(playlistButtons);
@@ -9985,7 +9968,7 @@ class HandleTypes extends ServiceMethods {
 	ES_Button(x) {
 		const cf="ES_Button";
 		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
-		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
+		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {GE_Button_navigation} x */
@@ -9998,8 +9981,8 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {E_YpcGetOffers} x */
-	YpcGetOffersEndpoint(x) {
-		const cf="YpcGetOffersEndpoint";
+	E_YpcGetOffers(x) {
+		const cf="E_YpcGetOffers";
 		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.G_CommandMetadata(commandMetadata);
@@ -10065,7 +10048,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
-		this.R_Reel(response);
+		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -10080,7 +10063,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
-		this.R_Reel(response);
+		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -10223,7 +10206,7 @@ class HandleTypes extends ServiceMethods {
 	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {RSG_AddToPlaylist} x */
 	RS_GetAddToPlaylist(x) {
-		const cf="GetAddToPlaylistResponse";
+		const cf="RS_GetAddToPlaylist";
 		const {responseContext: {},contents,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(contents,this.R_AddToPlaylist);
 		this.trackingParams(cf,trackingParams);
@@ -10246,8 +10229,8 @@ class HandleTypes extends ServiceMethods {
 		if(inner!==4) debugger;
 	}
 	/** @private @arg {EA_ChangeEngagementPanelVisibility} x */
-	A_ChangeEngagementPanelVisibility(x) {
-		const cf="A_ChangeEngagementPanelVisibility";
+	EA_ChangeEngagementPanelVisibility(x) {
+		const cf="EA_ChangeEngagementPanelVisibility";
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
@@ -10306,7 +10289,7 @@ class HandleTypes extends ServiceMethods {
 	D_EntityBatchUpdate(x) {
 		const cf="EntityBatchUpdateData";
 		const {mutations,timestamp,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(mutations,this.EntityMutationItem);
+		this.z(mutations,this.D_EntityMutationItem);
 		this.TimestampWithNanos(timestamp);
 	}
 	/** @private @arg {D_TimestampWithNanos} x */
@@ -10317,10 +10300,10 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(nanos,"number");
 	}
 	/** @private @arg {D_EntityMutationItem} x */
-	EntityMutationItem(x) {
-		const cf="EntityMutationItem";
+	D_EntityMutationItem(x) {
+		const cf="D_EntityMutationItem";
 		const {entityKey,type,options,payload,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.params("EntityMutationItem","entity_key",entityKey);
+		this.params(cf,"entity_key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		this.tf(this.EntityMutationOptions)(options);
 		let payload_inner=this.tf(this.EntityMutationPayload)(payload);
@@ -10402,8 +10385,8 @@ class HandleTypes extends ServiceMethods {
 		this.z(continuationItems,this.G_WatchNext);
 	}
 	/** @private @arg {RS_Reel} x */
-	R_Reel(x) {
-		const cf="ReelResponse";
+	RS_Reel(x) {
+		const cf="RS_Reel";
 		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
@@ -10459,7 +10442,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
@@ -10492,7 +10475,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AC_Executor} x */
 	A_CommandExecutor(x) {
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
@@ -10676,7 +10659,7 @@ class HandleTypes extends ServiceMethods {
 		const {navigationEndpoint: a,...y}=d; this.g(y); // ! #destructure
 		this.C_Continuation(a);
 	}
-	/** @arg {string} cf @private @template {D_ChipCloudChip} T @arg {T} x */
+	/** @arg {D_ChipCloudChip_Omit_CF} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
 		const {style: a,text: b,trackingParams: c,...y}=this.sd(cf,x);
 		switch(a.styleType) {
@@ -10700,20 +10683,20 @@ class HandleTypes extends ServiceMethods {
 	ModifiedSetItem(x) {
 		const cf="ModifiedSetItem";
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.WatchPlaylistEndpoint(autoplayVideo);
-		this.WatchPlaylistEndpoint(nextButtonVideo);
-		this.t(previousButtonVideo,this.WatchPlaylistEndpoint);
+		this.E_WatchPlaylist(autoplayVideo);
+		this.E_WatchPlaylist(nextButtonVideo);
+		this.t(previousButtonVideo,this.E_WatchPlaylist);
 	}
-	/** @private @arg {WatchPlaylistEndpoint} x */
-	WatchPlaylistEndpoint(x) {
-		const cf="WatchPlaylistEndpoint";
+	/** @private @arg {E_WatchPlaylist} x */
+	E_WatchPlaylist(x) {
+		const cf="E_WatchPlaylist";
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.clickTrackingParams("WatchPlaylistEndpoint",clickTrackingParams);
+		this.clickTrackingParams(cf,clickTrackingParams);
 		this.G_CommandMetadata(commandMetadata);
-		this.E_WatchPlaylist(watchPlaylistEndpoint);
+		this.D_WatchPlaylist(watchPlaylistEndpoint);
 	}
 	/** @private @arg {D_WatchPlaylist} x */
-	E_WatchPlaylist(x) {
+	D_WatchPlaylist(x) {
 		const cf="WatchPlaylist";
 		const {playlistId,index,params,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.parser.parse_playlist_id(playlistId);
@@ -10726,7 +10709,7 @@ class HandleTypes extends ServiceMethods {
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_of_string(layoutType);
 		this.primitive_of_string(layoutId);
-		this.AdLayoutLoggingData(adLayoutLoggingData);
+		this.D_AdLayoutLogging(adLayoutLoggingData);
 	}
 	/** @private @arg {D_HotkeyDialog} x */
 	D_HotkeyDialog(x) {
@@ -10804,9 +10787,9 @@ class HandleTypes extends ServiceMethods {
 		this.D_Thumbnail(x.thumbnail);
 	}
 	/** @private @arg {D_AdLayoutLogging} x */
-	AdLayoutLoggingData(x) {
-		const cf="AdLayoutLoggingData";
-		this.parser.on_endpoint_params(cf,"AdServingDataEntry",this.w(x));
+	D_AdLayoutLogging(x) {
+		const cf="D_AdLayoutLogging";
+		this.params(cf,"AdServingDataEntry",this.w(x));
 	}
 	/** @private @arg {R_LiveChat} x */
 	R_LiveChat(x) {

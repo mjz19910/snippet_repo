@@ -797,5 +797,18 @@ class ND extends Snippet_0_tmp {
 		const {styleType,...y}=x; this.g(y); // ! #destructure
 		f.call(this,styleType);
 	}
+	/** @private @arg {D_ChipCloud} x */
+	D_ChipCloud(x) {
+		const cf="D_ChipCloud";
+		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		if(!horizontalScrollable) debugger;
+		this.R_Button(nextButton);
+		this.R_Button(previousButton);
+	}
+	/** @private @arg {R_ChipCloud} x */
+	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
+	/** @protected @arg {R_RelatedChipCloud} x */
+	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
 }
 new ND;

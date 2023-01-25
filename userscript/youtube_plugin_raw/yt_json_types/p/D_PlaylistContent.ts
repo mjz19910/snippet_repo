@@ -1,4 +1,4 @@
-type PlaylistContent=Record<"contents",R_PlaylistPanelVideo[]>&{
+type D_PlaylistContent=Record<"contents",R_PlaylistPanelVideo[]>&{
 	title: string;
 	currentIndex: number;
 	playlistId: PlaylistId;

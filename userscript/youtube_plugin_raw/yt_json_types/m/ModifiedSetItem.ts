@@ -1,14 +1,14 @@
 type ModifiedSetItem={
-	autoplayVideo: WatchPlaylistEndpoint;
-	nextButtonVideo: WatchPlaylistEndpoint;
-	previousButtonVideo?: WatchPlaylistEndpoint;
+	autoplayVideo: E_WatchPlaylist;
+	nextButtonVideo: E_WatchPlaylist;
+	previousButtonVideo?: E_WatchPlaylist;
 };
 type D_WatchPlaylist={
 	playlistId: `RD${string}`;
 	index: 13;
 	params: string;
 };
-type WatchPlaylistEndpoint={
+type E_WatchPlaylist={
 	clickTrackingParams: string;
 	commandMetadata: G_CommandMetadata;
 	watchPlaylistEndpoint: D_WatchPlaylist;
