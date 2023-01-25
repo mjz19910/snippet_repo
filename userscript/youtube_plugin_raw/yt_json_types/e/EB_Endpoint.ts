@@ -1,4 +1,4 @@
-type EB_Endpoint={
+type EB_Endpoint<T={}>={
 	clickTrackingParams: string;
-	commandMetadata: {};
+	commandMetadata: T;
 };

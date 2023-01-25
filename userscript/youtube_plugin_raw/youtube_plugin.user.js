@@ -8469,6 +8469,7 @@ class HandleTypes extends ServiceMethods {
 	E_PlaylistEdit(x) {
 		const cf="E_PlaylistEdit"; this.k(cf,x);
 		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @template T @template {string|null} U @arg {Extract<D_MenuServiceItem<U, T>,{icon:any}>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem$Omit(x,f) {
