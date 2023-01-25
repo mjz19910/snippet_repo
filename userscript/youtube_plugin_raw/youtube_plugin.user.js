@@ -8341,7 +8341,9 @@ class HandleTypes extends ServiceMethods {
 		console.log(up0);
 		if(up1!=="0000") debugger;
 		if(split_string(up2,"")[0]!=="2") debugger;
-		if(split_string(up3,"")[0]!=="a") debugger;
+		let bd=parseInt(split_string(up3,"")[0],16).toString(2);
+		if(bd.length!==4) debugger;
+		if(bd[0]!=="1"&&bd[1]!=="0") debugger;
 		console.log([up0,up2,up3,up4]);
 		return uuid_parts;
 	}
