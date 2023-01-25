@@ -7009,8 +7009,9 @@ class HandleTypes extends ServiceMethods {
 	TR_ItemSection$1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection_1_CommentsEntryPoint(a,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
-		this.sc("ItemSectionRendererTemplate",x);
-		this.TD_ItemSection_3(this.w(x),f);
+		const cf="ItemSectionRendererTemplate";
+		const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y);
+		this.TD_ItemSection_3(a,f);
 	}
 	/** @private @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TD_ItemSection_3(x,f) {
@@ -7025,14 +7026,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
-		const cf=this.sc("T_Command_TP",x);
+		const cf="T_Command_TP";
 		const {trackingParams,command: a,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
 		f.call(this,a);
 	}
 	/** @private @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(x,f) {
-		this.sc("T_Commands",x);
+		const cf="T_Commands"; this.k(cf,x);
 		this.z(this.w(x),f);
 	}
 	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
@@ -7223,7 +7224,7 @@ class HandleTypes extends ServiceMethods {
 	R_HotkeyDialog(x) {this.H_("HotkeyDialog",x,this.D_HotkeyDialog);}
 	/** @private @arg {R_WatchPage} x */
 	R_WatchPage(x) {
-		const cf="WatchPageResponse"; this.sc(cf,x);
+		const cf="WatchPageResponse"; this.k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
 			case 3832: this.R_VE3832_WatchPage(x); break;
 			default: debugger; break;
@@ -7471,7 +7472,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.sd(cf,x); this.g(y);
 		this.RC_ResponseContext(responseContext);
-		this.t(header,this.BrowseHeader);
+		this.t(header,this.G_BrowseHeader);
 		this.trackingParams(cf,trackingParams);
 		this.tz(onResponseReceivedActions,this.A_ResponseReceived);
 		this.t(contents,this.BrowseContents);
@@ -7554,7 +7555,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {D_CompactLink} T @arg {string} cf @arg {T} x */
 	D_Link$Omit(cf,x) {
-		this.k("D_Link$Omit",x);
 		const {title,trackingParams,...y}=this.sd(cf,x); // !
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
@@ -8774,11 +8774,6 @@ class HandleTypes extends ServiceMethods {
 		if("endScreenVideoRenderer" in x) return;
 		debugger;
 	}
-	/** @template {string} T @arg {T} cf @arg {{}} x */
-	sc(cf,x) {
-		this.save_keys(`[${cf}]`,x);
-		return cf;
-	}
 	/** @template {{}} T @arg {string} cf @arg {T} x */
 	sd(cf,x) {
 		this.save_keys(`[${cf}]`,x);
@@ -9839,10 +9834,15 @@ class HandleTypes extends ServiceMethods {
 	R_GhostGrid(x) {
 		const cf="R_GhostGrid"; this.k(cf,x);
 		if(!x.ghostGridRenderer) debugger;
-		let gg=this.w(x);
-		this.k("D_GhostGrid",gg);
-		if(this.get_keys_of(gg).join()!=="rows") debugger;
-		if(gg.rows!==2) debugger;
+		let y=this.w(x);
+		this.D_GhostGrid(y);
+	}
+	/** @private @arg {D_GhostGrid} x */
+	D_GhostGrid(x) {
+		const cf="D_GhostGrid";
+		const {rows,...y}=this.sd(cf,x); this.g(y);
+		if(this.get_keys_of(x).join()!=="rows") debugger;
+		if(x.rows!==2) debugger;
 	}
 	/** @private @arg {GE_Continuation} x */
 	G_ContinuationEndpoint(x) {
@@ -9930,11 +9930,16 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		debugger;
 	}
-	// TODO
 	/** @private @arg {D_GuideEntry} x */
-	D_GuideEntry(x) {this.k("D_GuideEntry",x);}
+	D_GuideEntry(x) {
+		const cf="D_GuideEntry"; this.k(cf,x);
+		debugger;
+	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
-	D_GuideCollapsibleSectionEntry(x) {this.k("D_GuideCollapsibleSectionEntry",x);}
+	D_GuideCollapsibleSectionEntry(x) {
+		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
+		debugger;
+	}
 	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
 	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry",x,this.D_GuideCollapsibleSectionEntry);}
 	/** @private @arg {R_GuideEntry} x */
@@ -10087,7 +10092,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_SearchPage} x */
 	R_SearchPage(x) {
-		const cf="GetNotificationMenuJson";
+		const cf="R_SearchPage";
 		const {page,endpoint,response,url,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(page!=="search") debugger;
 		this.E_Search(endpoint);
@@ -10097,7 +10102,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {
-		const cf="SearchEndpoint";
+		const cf="E_Search";
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_VE4724(commandMetadata);
@@ -10116,8 +10121,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Search} x */
 	D_Search(x) {this.H_("D_Search",x,this.primitive_of_string);}
 	/** @private @arg {G_BrowseHeader} x */
-	BrowseHeader(x) {
-		this.sc("BrowseHeader",x);
+	G_BrowseHeader(x) {
+		const cf="G_BrowseHeader"; this.k(cf,x);
 		if("feedTabbedHeaderRenderer" in x) {
 			return this.R_FeedTabbedHeader(x);
 		} else if("c4TabbedHeaderRenderer" in x) {
