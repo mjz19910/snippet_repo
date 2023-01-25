@@ -10512,14 +10512,26 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/share/get_share_panel") debugger;
 		this.WebCommandMetadata(commandMetadata.webCommandMetadata);
-		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
+		this.D_ShareEntityService(shareEntityServiceEndpoint);
 	}
 	/** @private @arg {D_ShareEntityService} x */
-	ShareEntityServiceArgs(x) {
-		const cf="ShareEntityServiceArgs";
+	D_ShareEntityService(x) {
+		const cf="D_ShareEntityService";
 		const {serializedShareEntity,commands,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.TA_OpenPopup);
+	}
+	/** @private @arg {M_SignalService_SendPost} x */
+	M_SignalService_SendPost(x) {
+		const cf="M_SignalService_SendPost";
+		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
+		this.GM_SignalService_SendPost(a);
+	}
+	/** @private @arg {GM_SignalService_SendPost} x */
+	GM_SignalService_SendPost(x) {
+		const cf="GM_SignalService_SendPost";
+		const {sendPost: a,...y}=this.sd(cf,x); this.g(y);
+		if(a!==true) debugger;
 	}
 	/** @private @arg {GC_Button} x */
 	GC_Button(x) {
@@ -10527,10 +10539,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,a=>{
-			a;
-			debugger;
-		},this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
