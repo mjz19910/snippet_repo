@@ -35,20 +35,8 @@ type D_Video={
 	showActionMenu: false;
 	shortViewCountText: R_SimpleText;
 	menu: R_Menu;
-	channelThumbnailSupportedRenderers: {
-		channelThumbnailWithLinkRenderer: {
-			thumbnail: D_Thumbnail;
-			navigationEndpoint: E_Browse;
-			accessibility: D_Accessibility;
-			title: "Hi Pie";
-		};
-	};
+	channelThumbnailSupportedRenderers: R_ChannelThumbnailWithLink;
 	thumbnailOverlays: R_ThumbnailOverlayTimeStatus[];
 	inlinePlaybackEndpoint: E_Watch;
-	owner: {
-		thumbnail: D_Thumbnail;
-		navigationEndpoint: E_Browse;
-		accessibility: D_Accessibility;
-		title: "Hi Pie";
-	};
+	owner: D_Video_Owner;
 };

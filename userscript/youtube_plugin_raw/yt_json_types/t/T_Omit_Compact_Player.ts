@@ -1,5 +1,5 @@
 type R_Omit_Compact_Player={
-	title: R_TextRuns;
+	title: G_Text;
 	trackingParams: string;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
@@ -17,6 +17,10 @@ type R_Omit_Menu_Video={
 	viewCountText: G_Text;
 	navigationEndpoint: E_Watch;
 	shortBylineText: R_TextRuns;
+	menu: R_Menu;
+};
+type R_Omit_Menu_Radio={
+	navigationEndpoint: E_Watch;
 	menu: R_Menu;
 };
 type R_Omit_Menu_Video_Ex={

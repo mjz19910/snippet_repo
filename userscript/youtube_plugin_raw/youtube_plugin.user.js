@@ -4538,6 +4538,7 @@ class CodegenService extends BaseService {
 			||b.channelMetadataRenderer
 			||b.channelRenderer
 			||b.channelSwitcherPageRenderer
+			||b.channelThumbnailWithLinkRenderer
 			||b.chipCloudChipRenderer
 			||b.cinematicContainerRenderer
 			||b.clipCreationRenderer
@@ -7667,9 +7668,9 @@ class HandleTypes extends ServiceMethods {
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
 	Omit_Menu_Video(cf,x) {
-		let u=this.Omit$Compact$Video(cf,x);
-		const {thumbnail,longBylineText,lengthText,viewCountText,navigationEndpoint,shortBylineText,menu,...y}=u;
-		this.z([shortBylineText,viewCountText,lengthText],x => this.G_Text(x));
+		let u=this.D_ChildVideo_Omit(cf,x);
+		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=u;
+		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
 		return y;
 	}
 	/** @private @arg {R_MovingThumbnail} x */
@@ -7696,27 +7697,66 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R_Radio} x */
 	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
-	/** @template {D_Video} T @arg {string} cf @arg {T} x */
+	/** @private @arg {D_Radio} x */
+	D_Radio(x) {
+		const cf="D_Radio";
+		let {videos,...y}=this.Omit_Menu_Radio(cf,x); this.g(y);
+		this.z(videos,this.R_ChildVideo);
+		y;
+	}
+	/** @arg {R_ChildVideo} x */
+	R_ChildVideo(x) {this.H_("R_Radio",x,this.D_ChildVideo);}
+	/** @arg {D_ChildVideo} x */
+	D_ChildVideo(x) {x; debugger;}
+	/** @template {R_ChildVideo_Omit} T @arg {string} cf @arg {T} x */
+	D_ChildVideo_Omit(cf,x) {
+		let {title,navigationEndpoint,lengthText,videoId,...y}=this.sd(cf,x);
+		this.E_Watch(navigationEndpoint);
+		return y;
+	}
+	/** @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {string} cf @arg {T} x */
+	R_Omit_Menu_Radio(cf,x) {
+		let {navigationEndpoint,menu,...y}=this.Omit_Compact_Player(cf,x);
+		this.R_Menu(menu);
+		return y;
+	}
+	/** @private @template {D_Radio|D_CompactRadio} T @arg {string} cf @arg {T} x */
+	Omit_Menu_Radio(cf,x) {
+		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.R_Omit_Menu_Radio(cf,x);
+		this.playlistId(playlistId);
+		this.D_Thumbnail(thumbnail);
+		this.R_TextRuns(videoCountText);
+		this.R_TextRuns(thumbnailText);
+		this.G_Text(longBylineText);
+		this.R_TextRuns(videoCountShortText);
+		return y;
+	}
+	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x);
+		let {...y}=this.Omit_Menu_Video(cf,x);
+		return y;
+	}
+	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
+	D_ThumbnailOverlay_Omit(cf,x) {
+		const {trackingParams,thumbnailOverlays,shortViewCountText,publishedTimeText,...y}=this.D_Video_Omit(cf,x);
 		return y;
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
 		if("descriptionSnippet" in x) {
-			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_Video_Omit(cf,x); this.g(y);
+			let {descriptionSnippet,ownerBadges,richThumbnail,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
 			this.tz(ownerBadges,this.RMD_Badge);
 			this.richThumbnail_Video(richThumbnail);
 			this.R_TextRuns(descriptionSnippet);
 			return;
 		}
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
-		this.R_TextRuns(ownerText);
-		if(showActionMenu!==false) debugger;
-		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
-		owner;
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
+		// this.R_TextRuns(ownerText);
+		// if(showActionMenu!==false) debugger;
+		// this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
+		// this.D_Video_inlinePlaybackEndpoint(inlinePlaybackEndpoint);
+		// owner;
 	}
 	/** @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
@@ -7748,11 +7788,6 @@ class HandleTypes extends ServiceMethods {
 	D_Video_inlinePlaybackEndpoint(x) {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
-	}
-	/** @private @arg {D_Radio} x */
-	D_Radio(x) {
-		const cf="D_Radio"; this.k(cf,x);
-		{x; debugger;}
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
@@ -9025,7 +9060,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
-		let {background,videoTitle,byline,pauseText,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit$Compact$Video(cf,x); this.g(y);
+		let {background,videoTitle,byline,pauseText,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit_Compact_Video(cf,x); this.g(y);
 		this.R_TextRuns(videoTitle);
 		this.R_TextRuns(byline);
 		this.R_TextRuns(pauseText);
@@ -9077,7 +9112,7 @@ class HandleTypes extends ServiceMethods {
 		return y;
 	}
 	/** @arg {string} cf @template {R_Omit_Compact_Video} T @arg {T} x */
-	Omit$Compact$Video(cf,x) {
+	Omit_Compact_Video(cf,x) {
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.Omit_Compact_Player(cf,x);
 		this.videoId(videoId);
 		this.G_Text(publishedTimeText);
@@ -9087,12 +9122,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
-		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,...y}=this.Omit_Menu_Video(cf,x); this.g(y);
+		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
 		this.richThumbnail_Video(richThumbnail);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
-		this.t(ownerBadges,a => this.z(a,this.RMD_Badge));
-		this.t(badges,a => this.z(a,this.RMD_Badge));
+		this.tz(ownerBadges,this.RMD_Badge);
+		this.tz(badges,this.RMD_Badge);
 	}
 	/** @arg {RMD_Badge} x */
 	RMD_Badge(x) {this.H_("RMD_Badge",x,this.DMD_Badge);}
