@@ -10092,15 +10092,19 @@ class HandleTypes extends ServiceMethods {
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
 	R_GuideDownloadsEntry(x) {this.H_("R_GuideDownloadsEntry",x,this.D_GuideDownloadsEntry);}
+	/** @private @arg {R_GuideCollapsibleEntry} x */
+	R_GuideCollapsibleEntry(x) {this.H_("R_GuideCollapsibleEntry",x,this.D_GuideCollapsibleEntry);}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
 		const cf="G_GuideSectionItem"; this.k(cf,x);
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
-		if("guideCollapsibleEntryRenderer" in x) return;
+		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		debugger;
 	}
+	/** @private @arg {D_GuideCollapsibleEntry} x */
+	D_GuideCollapsibleEntry(x) {x;}
 	/** @private @arg {D_GuideDownloadsEntry} x */
 	D_GuideDownloadsEntry(x) {
 		const {alwaysShow,entryRenderer,...y}=x; this.g(y);
@@ -10131,6 +10135,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {string} cf @arg {T} x */
 	D_GuideEntry_Omit(cf,x) {
 		const {accessibility,formattedTitle,trackingParams,...y}=this.sd(cf,x);
+		this.D_Accessibility(accessibility);
+		this.R_SimpleText(formattedTitle);
+		this.trackingParams(cf,trackingParams);
 		return y;
 	}
 	/** @private @arg {string} cf @arg {D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
@@ -10138,11 +10145,18 @@ class HandleTypes extends ServiceMethods {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
 		this.E_Browse(navigationEndpoint);
+		this.T_Icon(icon);
+		switch(icon.iconType) {
+			default: debugger; break;
+			case "OFFLINE_DOWNLOAD":
+			case "VIDEO_LIBRARY_WHITE": break;
+		}
 		switch(targetId) {
 			default: console.log(`case "${x}": break;`); debugger; break;
 			case "downloads-guide-item":
 			case "library-guide-item": break;
 		}
+		if(isPrimary!==true) debugger;
 	}
 	/** @private @arg {string} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
