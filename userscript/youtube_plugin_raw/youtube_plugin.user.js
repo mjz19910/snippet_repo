@@ -9104,7 +9104,7 @@ class HandleTypes extends ServiceMethods {
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if("adSlotLoggingData" in y) {
 			const {adSlotLoggingData,...y1}=y; this.g(y1);
-			adSlotLoggingData.serializedSlotAdServingDataEntry;
+			console.log(adSlotLoggingData.serializedSlotAdServingDataEntry);
 			return;
 		}
 		this.g(y); // ! #destructure
