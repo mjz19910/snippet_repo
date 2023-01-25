@@ -100,4 +100,22 @@ type D_Video={
 	richThumbnail: R_MovingThumbnail;
 	inlinePlaybackEndpoint: E_Watch;
 	owner: D_Video_Owner;
+}|{
+	videoId: string;
+	thumbnail: D_Thumbnail;
+	title: R_TextRuns;
+	descriptionSnippet: R_TextRuns;
+	longBylineText: R_TextRuns;
+	viewCountText: R_TextRuns;
+	navigationEndpoint: E_Watch;
+	badges: RMD_Badge[];
+	ownerText: R_TextRuns;
+	shortBylineText: R_TextRuns;
+	trackingParams: string;
+	showActionMenu: false;
+	shortViewCountText: R_TextRuns;
+	menu: R_Menu;
+	channelThumbnailSupportedRenderers: R_ChannelThumbnailWithLink;
+	thumbnailOverlays: R_ThumbnailOverlayToggleButton[];
+	inlinePlaybackEndpoint: E_Watch;
 };
