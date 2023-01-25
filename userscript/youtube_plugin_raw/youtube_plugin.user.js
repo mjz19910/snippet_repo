@@ -7608,10 +7608,11 @@ class HandleTypes extends ServiceMethods {
 		}
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch":
+			case "FEguide_builder":
 			case "FEstorefront": break;
 			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
 			case "SPaccount_overview": break;
-			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); debugger; break;
+			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
 		};
 	}
 	/** @private @arg {{browseEndpoint:E_Browse['browseEndpoint']}} x */
