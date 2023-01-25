@@ -7769,40 +7769,67 @@ class HandleTypes extends ServiceMethods {
 		let cx=this.D_Video_Omit(cf,x); cx;
 		if("publishedTimeText" in x) {
 			if("richThumbnail" in x&&"ownerBadges" in x) {
-				let {richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x); this.g(y);
+				// D_Video_1
+				let u=this.D_Video_Omit_OwnerBadges(cf,x);
+				let {richThumbnail,...y}=u; this.g(y);
 				this.richThumbnail_Video(richThumbnail);
 				return;
 			}
 			if("richThumbnail" in x) {
 				if("owner" in x) {
+					// D_Video_5
 					let {owner,...y}=this.D_Video_Omit_Thumbnail(cf,x);
 					this.D_Video_Owner(owner);
 					return this.g(y);
 				}
+				// D_Video_7
 				let {topStandaloneBadge,...y}=this.D_Video_Omit_Thumbnail(cf,x);
 				this.RMD_Badge(topStandaloneBadge);
 				return this.g(y);
 			}
 			if("descriptionSnippet" in x) {
 				if("owner" in x) {
-					let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_OwnerBadges(cf,x);
+					// D_Video_4
+					let {...y}=this.D_Video_Omit_OwnerBadges(cf,x);
 					return this.g(y);
 				}
-				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
+				// D_Video_3
+				let {descriptionSnippet,...y}=this.D_Video_Omit_publishedTimeText(cf,x);
 				return this.g(y);
 			}
 			if("owner" in x) {
-				let {publishedTimeText,lengthText,...y}=this.D_Video_Omit_Owner(cf,x);
+				// D_Video_2
+				let {owner,...y}=this.D_Video_Omit_publishedTimeText(cf,x);
 				return this.g(y);
 			}
 		}
-		if("descriptionSnippet" in x) {
-			let {badges,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x); this.g(y);
-			this.z(badges,this.RMD_Badge);
+		if("owner" in x) {
+			// D_Video_8
+			let {owner,...y}=this.D_Video_Omit_Badges(cf,x); this.g(y);
+			return;
+		}
+		if("badges" in x) {
+			// D_Video_6
+			let {viewCountText,shortViewCountText,...y}=this.D_Video_Omit_Badges(cf,x); this.g(y);
 			return;
 		}
 		x===0;
 		debugger;
+	}
+	/** @template {Extract<D_Video,{publishedTimeText:any}>} T @arg {string} cf @arg {T} x */
+	D_Video_Omit_publishedTimeText(cf,x) {
+		let {lengthText,publishedTimeText,shortViewCountText,viewCountText,...y}=this.D_Video_Omit(cf,x);
+		this.G_Text(lengthText);
+		this.G_Text(publishedTimeText);
+		this.G_Text(shortViewCountText);
+		this.G_Text(viewCountText);
+		return y;
+	}
+	/** @template {Extract<D_Video,{badges:any}>} T @arg {string} cf @arg {T} x */
+	D_Video_Omit_Badges(cf,x) {
+		let {badges,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
+		this.z(badges,this.RMD_Badge);
+		return y;
 	}
 	/** @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
@@ -7826,13 +7853,11 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
-	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x @returns {Omit<T,D_ThumbnailOverlay_Omit_Keys>} */
+	/** @template {D_CompactVideo|D_Video} T @arg {string} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
-		/** @type {any} */
-		let u=y;
-		return u;
+		return y;
 	}
 	/** @template {D_Video} T @arg {string} cf @arg {T} x */
 	D_Video_Omit(cf,x) {
@@ -7851,14 +7876,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {Extract<D_Video,{ownerBadges:any}>} T @arg {string} cf @arg {T} x */
 	D_Video_Omit_OwnerBadges(cf,x) {
-		let {descriptionSnippet,ownerBadges,...y}=this.D_Video_Omit_Owner(cf,x);
+		let {descriptionSnippet,ownerBadges,lengthText,publishedTimeText,viewCountText,shortViewCountText,...y}=this.D_Video_Omit_Owner(cf,x);
 		this.R_TextRuns(descriptionSnippet);
 		this.z(ownerBadges,this.RMD_Badge);
 		return y;
 	}
 	/** @template {Extract<D_Video,{richThumbnail:any}>} T @arg {string} cf @arg {T} x */
 	D_Video_Omit_Thumbnail(cf,x) {
-		let {richThumbnail,publishedTimeText,lengthText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
+		let {richThumbnail,publishedTimeText,lengthText,shortViewCountText,viewCountText,...y}=this.D_Video_Omit_DescriptionSnippet(cf,x);
 		this.richThumbnail_Video(richThumbnail);
 		return y;
 	}
@@ -9227,12 +9252,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
-		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
+		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
 		this.richThumbnail_Video(richThumbnail);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
-		this.tz(ownerBadges,this.RMD_Badge);
 		this.tz(badges,this.RMD_Badge);
+		this.tz(ownerBadges,this.RMD_Badge);
+		this.G_Text(publishedTimeText);
 	}
 	/** @arg {RMD_Badge} x */
 	RMD_Badge(x) {this.H_("RMD_Badge",x,this.DMD_Badge);}
