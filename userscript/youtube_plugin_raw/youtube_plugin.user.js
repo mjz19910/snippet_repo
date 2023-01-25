@@ -7670,13 +7670,31 @@ class HandleTypes extends ServiceMethods {
 		let u=this.Omit$Compact$Video(cf,x);
 		const {thumbnail,longBylineText,lengthText,viewCountText,navigationEndpoint,ownerBadges,shortBylineText,menu,richThumbnail,...y}=u;
 		this.z([shortBylineText,viewCountText,lengthText],x => this.G_Text(x));
-		console.log("rich.thumb",richThumbnail);
+		this.richThumbnail_Video(richThumbnail);
 		return y;
+	}
+	/** @private @arg {R_MovingThumbnail} x */
+	richThumbnail_Video(x) {
+		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
+		console.log("rich.thumb",x);
+		debugger;
+	}
+	/** @private @arg {R_MovingThumbnail} x */
+	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail",x,this.D_MovingThumbnail);}
+	/** @private @arg {D_MovingThumbnail} x */
+	D_MovingThumbnail(x) {
+		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=x; this.g(y);
+		this.t(movingThumbnailDetails,this.D_Thumbnail);
+		if(enableHoveredLogging!==true) debugger;
+		if(enableOverlay!==true) debugger;
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		const cf="D_Video";
-		let {...v}=this.Omit_Menu_Video(cf,x);
+		let {descriptionSnippet,ownerText,showActionMenu,channelThumbnailSupportedRenderers,inlinePlaybackEndpoint,owner,...v}=this.Omit_Menu_Video(cf,x);
+		this.R_TextRuns(descriptionSnippet);
+		this.R_TextRuns(ownerText);
+		if(showActionMenu!==false) debugger;
 		{v; debugger;}
 	}
 	/** @arg {R_Radio} x */
