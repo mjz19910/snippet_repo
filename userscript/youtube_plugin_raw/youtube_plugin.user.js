@@ -7354,7 +7354,7 @@ class HandleTypes extends ServiceMethods {
 	GM_VE5754_WC(x) {
 		const cf="GM_VE5754_WC";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
-		if(url!=="/playlist?list=WL") debugger;
+		if(url!=="/playlist?list=WL"&&url!=="/playlist?list=LL") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
 		if(rootVe!==5754) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;

@@ -63,7 +63,7 @@ type GM_VE4724_WC={
 	rootVe: 4724;
 };
 type GM_VE5754_WC={
-	url: "/playlist?list=WL";
+	url: `/playlist?list=${"WL"|"LL"}`;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 	rootVe: 5754;
 	apiUrl: "/youtubei/v1/browse";
