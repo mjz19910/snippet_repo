@@ -7322,7 +7322,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case 3832: return this.GM_VE3832_Watch_WC(x);
 			case 4724: return this.GM_WC(x);
-			case 5754: return this.GM_WC(x);
 			case 11487: return this.GM_WC(x);
 			case 96368: return this.GM_WC(x);
 			case 83769: return this.GM_WC(x);
@@ -7334,11 +7333,21 @@ class HandleTypes extends ServiceMethods {
 		switch(x.rootVe) {
 			case 3854: return this.GM_VE3854_WC(x);
 			case 3611: return this.GM_VE3611_WC(x);
+			case 5754: return this.GM_VE5754_WC(x);
 			case 6827: return this.GM_VE6827_WC(x);
 			case 23462: return this.GM_VE23462_WC(x);
 			case 96368: return this.GM_VE96368_WC_browse(x);
 			default: x===0; debugger; break;
 		}
+	}
+	/** @private @arg {GM_VE5754_WC} x */
+	GM_VE5754_WC(x) {
+		const cf="GM_VE5754_WC";
+		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		if(url!=="/playlist?list=WL") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
+		if(rootVe!==5754) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_WC} x */
 	WebCommandMetadata(x) {
@@ -7510,6 +7519,7 @@ class HandleTypes extends ServiceMethods {
 			case "FEsubscriptions": break;
 			case "FElibrary": break;
 			case "FEhistory": break;
+			case "VLWL": break;
 			default: x===""; debugger; break;
 		};
 	}
@@ -7544,6 +7554,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.rootVe) {
 			case 3611: this.GM_VE3611_WC(x); break;
 			case 3854: this.GM_VE3854_WC(x); break;
+			case 5754: this.GM_VE5754_WC(x); break;
 			case 6827: this.GM_VE6827_WC(x); break;
 			case 23462: this.GM_VE23462_WC(x); break;
 			case 96368: this.GM_VE96368_WC_browse(x); break;
