@@ -9044,12 +9044,14 @@ class HandleTypes extends ServiceMethods {
 			let b_res=this._decode_b64_url_proto_obj(x);
 			if(!b_res) return;
 			let [r]=b_res;
-			if(r[0]==="child") {
-				console.log("D_VssLoggingContext.serializedContextData.fieldId",r[1]);
+			if(r[0]==="child"&&r[1]===3) {
 				let playlist_id=this._decoder.decode(r[2]);
 				if(this.str_starts_with("RD",playlist_id)) {
 					this.playlistId(as(playlist_id));
 				} else {
+					console.log("D_VssLoggingContext.serializedContextData.fieldId",r[1]);
+					let playlist_id=this._decoder.decode(r[2]);
+					console.log("serializedContextData.decode",playlist_id);
 					debugger;
 				}
 			} else {
