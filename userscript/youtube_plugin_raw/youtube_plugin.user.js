@@ -9774,7 +9774,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(gestures,this.D_LoggingDirectives_Gestures);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
 	}
-	/** @private @arg {NonNullable<D_LoggingDirectives['gestures']>} x */
+	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;

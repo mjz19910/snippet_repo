@@ -2,5 +2,6 @@ type D_LoggingDirectives={
 	trackingParams: string;
 	visibility: TM_Visibility;
 	enableDisplayloggerExperiment?: boolean;
-	gestures?: T_Types<4>;
+	gestures?: D_LoggingDirectives_Gestures;
 };
+type D_LoggingDirectives_Gestures=T_Types<4>;
