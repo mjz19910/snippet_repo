@@ -7717,7 +7717,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {R_ChildVideo} x */
 	R_ChildVideo(x) {this.H_("R_Radio",x,this.D_ChildVideo);}
 	/** @arg {D_ChildVideo} x */
-	D_ChildVideo(x) {x; debugger;}
+	D_ChildVideo(x) {
+		const cf="D_ChildVideo";
+		let y=this.D_ChildVideo_Omit(cf,x);
+		this.g(y);
+	}
 	/** @template {R_ChildVideo_Omit} T @arg {string} cf @arg {T} x */
 	D_ChildVideo_Omit(cf,x) {
 		let {title,navigationEndpoint,lengthText,videoId,...y}=this.sd(cf,x);
