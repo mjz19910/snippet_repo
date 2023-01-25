@@ -4328,6 +4328,7 @@ class CodegenService extends BaseService {
 		/** @private @type {D_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
+		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
 		let res_type=this.get_replacement_json(state,gen_name,x);
 		if(res_type!==null) return res_type;
 		if(key_keep_arr.includes(k1)) return x;
@@ -4528,6 +4529,7 @@ class CodegenService extends BaseService {
 			//#endregion
 			//#region endpoint
 			||b.addToPlaylistServiceEndpoint
+			||b.addUpcomingEventReminderEndpoint
 			||b.authorEndpoint
 			||b.browseEndpoint
 			||b.channelNavigationEndpoint
@@ -4730,6 +4732,7 @@ class CodegenService extends BaseService {
 			||b.thumbnailOverlayResumePlaybackRenderer
 			||b.thumbnailOverlayTimeStatusRenderer
 			||b.thumbnailOverlayToggleButtonRenderer
+			||b.toggleButtonRenderer
 			||b.topbarLogoRenderer
 			||b.topbarMenuButtonRenderer
 			||b.transcriptRenderer
@@ -4772,7 +4775,7 @@ class CodegenService extends BaseService {
 		}
 		/** @private @type {D_Accessibility} */
 		if(b.accessibilityData) return "TYPE::D_Accessibility";
-		if(b.styleType&&typeof b.styleType==="string") return `TYPE::TS_ChipCloud<"${b.styleType}">`;
+		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		debugger;
 		return null;
@@ -7883,20 +7886,31 @@ class HandleTypes extends ServiceMethods {
 	D_Video(x) {
 		const cf="D_Video";
 		let {...u}=this.D_Video_Omit(cf,x);
-		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,owner,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,...y}=u; this.g(y);
+		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=u; this.g(y);
 		this.t(descriptionSnippet,this.R_TextRuns);
 		this.t(publishedTimeText,this.R_SimpleText);
 		this.t(lengthText,this.R_SimpleText);
 		this.t(viewCountText,this.G_Text);
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.tz(badges,this.RMD_Badge);
+		this.t(upcomingEventData,a => {
+			const {isReminderSet,startTime,upcomingEventText,...y}=a; this.g(y);
+			if(isReminderSet!==false) debugger;
+			this.primitive_of_string(startTime);
+			this.R_TextRuns(upcomingEventText);
+		});
 		this.t(owner,this.D_Video_Owner);
 		this.t(shortViewCountText,this.G_Text);
 		this.t(isWatched,a => {if(a!==true) debugger;});
 		this.t(topStandaloneBadge,this.RMD_Badge);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
+		this.tz(buttons,this.R_ToggleButton);
 	}
+	/** @private @arg {R_ToggleButton} x */
+	R_ToggleButton(x) {this.H_("R_ToggleButton",x,this.D_ToggleButton);}
+	/** @private @arg {D_ToggleButton} x */
+	D_ToggleButton(x) {x; debugger;}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */

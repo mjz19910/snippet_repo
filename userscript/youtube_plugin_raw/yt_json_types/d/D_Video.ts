@@ -11,6 +11,7 @@ type D_Video={
 	ownerBadges?: RMD_Badge[];
 	badges?: RMD_Badge[];
 	ownerText: /**/R_TextRuns;
+	upcomingEventData?: D_UpcomingEvent;
 	shortBylineText: /**/R_TextRuns;
 	trackingParams: /**/string;
 	showActionMenu: /**/false;
@@ -23,4 +24,5 @@ type D_Video={
 	richThumbnail?: R_MovingThumbnail;
 	inlinePlaybackEndpoint?: E_Watch;
 	owner?: D_Video_Owner;
+	buttons?: R_ToggleButton[];
 };
