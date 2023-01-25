@@ -5756,24 +5756,69 @@ class ParserService extends BaseService {
 					} break;
 				}
 			} break;
-			case "browse$param":
-			case "record_notification_interactions":
-			case "transcript_target_id":
-			case "watch":
-			case "report":
-			case "createBackstagePost":
-			case "subscribe":
-			case "ypc_get_offers":
-			case "create_playlist":
-			case "get_transcript":
-			case "like":
-			case "next":
-			case "playlist_edit":
-			case "watch_page_url":
-			case "watch_playlist":
+			case "browse$param": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "f84": case "f93": u(idx); debugger; break;}
+			} break;
+			case "record_notification_interactions": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "f2": case "f5": u(idx); debugger; break;}
+			} break;
+			case "transcript_target_id": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "param": u(idx); debugger; break;}
+			} break;
+			case "watch": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": case "player_params": u(idx); debugger; break;}
+			} break;
+			case "report": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
+			case "createBackstagePost": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "param": u(idx); debugger; break;}
+			} break;
+			case "subscribe": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
+			case "ypc_get_offers": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
+			case "create_playlist": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
+			case "get_transcript": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
+			case "like": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "remove_like_params": case "likeParams": u(idx); debugger; break;}
+			} break;
+			case "next": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "queue_context_params": u(idx); debugger; break;}
+			} break;
+			case "playlist_edit": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
+			case "watch_page_url": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "pp": u(idx); debugger; break;}
+			} break;
+			case "watch_playlist": {
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+			} break;
 			case "reel": {
-				u(idx);
-				debugger;
+				const idx=2;
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": case "sequence_params": case "player_params": u(idx); debugger; break;}
 			} break;
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
