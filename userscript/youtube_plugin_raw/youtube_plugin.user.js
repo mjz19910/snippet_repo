@@ -9949,7 +9949,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="T_ShortsSurfaceIdentifier";
 		const {surface,tag,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-		switch(tag) {}
+		switch(tag) {
+			case "engagement-panel-structured-description": break;
+			case "shorts-comments-panel": break;
+			default: debugger; break;
+		}
 		return tag;
 	}
 	/** @private @arg {Record<"identifier",unknown>} x */
