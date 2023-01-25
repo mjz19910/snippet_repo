@@ -1,4 +1,10 @@
 type D_GuideEntry={
+	navigationEndpoint: E_Url;
+	icon: T_Icon<"MY_VIDEOS">;
+	trackingParams: string;
+	formattedTitle: R_SimpleText;
+	accessibility: D_Accessibility;
+}|{
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<"WATCH_HISTORY">;
 	trackingParams: string;

@@ -10084,11 +10084,15 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
-			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.E_Browse(navigationEndpoint);
 			switch(icon.iconType) {
 				case "WATCH_HISTORY": break;
 				default: debugger; break;
+			}
+			x: {
+				let x=navigationEndpoint;
+				if("urlEndpoint" in x) return this.E_Url(x);
+				if("browseEndpoint" in x) return this.E_Browse(x);;
+				debugger;
 			}
 			return;
 		}
