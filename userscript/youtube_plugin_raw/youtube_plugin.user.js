@@ -7208,6 +7208,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
+	/** @private @arg {GM_VE6827_WC} x */
+	GM_VE6827_WC(x) {
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		this.t(url,this.D_VE6827_PageUrl);
+	}
+	/** @private @arg {D_VE6827_PageUrl} x */
+	D_VE6827_PageUrl(x) {
+		let [f,...p]=split_string(x,"/"); if(f!=="") debugger;
+		switch(p[1]) {}
+	}
 	/** @private @arg {GM_VE23462_WC} x */
 	GM_VE23462_WC(x) {x; debugger;}
 	/** @private @arg {GM_VE96368_WC_browse} x */
@@ -7268,7 +7278,6 @@ class HandleTypes extends ServiceMethods {
 			case 3832: return this.GM_VE3832_Watch_WC(x);
 			case 4724: return this.GM_WC(x);
 			case 5754: return this.GM_WC(x);
-			case 6827: return this.GM_WC(x);
 			case 11487: return this.GM_WC(x);
 			case 96368: return this.GM_WC(x);
 			case 83769: return this.GM_WC(x);
@@ -7280,6 +7289,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.rootVe) {
 			case 3854: return this.G_VE3854_WC(x);
 			case 3611: return this.GM_VE3611_WC(x);
+			case 6827: return this.GM_VE6827_WC(x);
 			case 23462: return this.GM_VE23462_WC(x);
 			case 96368: return this.GM_VE96368_WC_browse(x);
 			default: x===0; debugger; break;

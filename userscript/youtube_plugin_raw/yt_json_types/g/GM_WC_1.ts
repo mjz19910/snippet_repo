@@ -69,15 +69,11 @@ type GM_VE4724_WC={
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
-type GM_VE6827={
+type GM_VE6827_WC={
 	url?: D_VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE6827_WC={
-	rootVe: 6827;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type GM_VE11487={
 	url: "/premium";
@@ -204,7 +200,7 @@ type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};
 type M_VE4724={webCommandMetadata: GM_VE4724_WC;};
 type M_VE5754={webCommandMetadata: GM_VE5754_WC;};
-type M_VE6827={webCommandMetadata: GM_VE6827;};
+type M_VE6827={webCommandMetadata: GM_VE6827_WC;};
 type M_VE11487={webCommandMetadata: GM_VE11487;};
 type M_VE23462={webCommandMetadata: GM_VE23462_WC;};
 type M_VE37414={webCommandMetadata: GM_VE37414_WC;};
