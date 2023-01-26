@@ -1,5 +1,6 @@
-type LP_LogItems_Str="likeParams"|"dislikeParams"|"removeLikeParams";
 type P_LogItems=[
+	"[parse_value.gen_ns] [like.removeLikeParams.f1]",
+	"[parse_value.gen_ns] [like.removeLikeParams.f6]",
 ];
 type P_PathRoot=[
 	"slot_ad_serving_data_entry",

@@ -5464,6 +5464,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "like.removeLikeParams":
+						switch(map_entry_key) {case 6: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.dislikeParams.f4":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
@@ -5661,7 +5665,6 @@ class ParserService extends BaseService {
 					case "tracking.trackingParams.f6.f12":
 					case "tracking.trackingParams.f6.f13":
 					case "tracking.trackingParams.f9":
-					case "like.removeLikeParams":
 					case "next.queue_context_params":
 					case "playlist_edit.params":
 					case "watch_page_url.pp":
