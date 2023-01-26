@@ -3870,6 +3870,11 @@ class YtPlugin extends BaseService {
 		return this.ds;
 	}
 }
+function detect_firefox() {
+	let ua=navigator.userAgent;
+	return ua.includes("Gecko/")&&ua.includes("Firefox/");
+}
+const is_firefox=detect_firefox();
 //#endregion
 //#region HelperServices
 class DatabaseArguments {
@@ -4007,7 +4012,11 @@ class IndexedDbAccessor extends BaseService {
 				/** @private @type {Map<string,{v:string}>} */
 				let new_data_map=new Map;
 				database_data.forEach(e => database_map.set(e.v,e));
-				console.log("database [%s:%s] has %o items",this.db_args.name,store_name,database_data.length);
+				if(is_firefox) {
+					console.log("database [%s:%s] has(%o)items",this.db_args.name,store_name,database_data.length);
+				} else {
+					console.log("database [%s:%s] has %o items",this.db_args.name,store_name,database_data.length);
+				}
 				for(let data of this.arr) {
 					if(!data) {debugger; continue;}
 					if(database_map.has(data.v)) {
