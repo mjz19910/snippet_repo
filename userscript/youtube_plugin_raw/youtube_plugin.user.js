@@ -2939,7 +2939,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	y(x,f) {f.call(this,this.w(x));}
-	/** @protected @template U @template {{}} T @arg {Nullable<T>} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
@@ -10126,7 +10126,6 @@ class HandleTypes extends ServiceMethods {
 		if(adLayoutLoggingData) {
 			this.D_AdLayoutLogging(adLayoutLoggingData);
 		}
-		debugger;
 	}
 	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
