@@ -3455,11 +3455,21 @@ class ECatcherService extends BaseService {
 			new_expected.push(e);
 		});
 		if(new_expected.length>0) {
-			if(new_expected.length>1) {
+			if(is_firefox) {
 				console.log("[new_fexp_expected]",new_expected);
-			} else {
-				console.log("[new_fexp_expected][%o]",new_expected[0]);
+				return;
 			}
+			let fexp_log_val;
+			if(new_expected.length>1) {
+				fexp_log_val=new_expected;
+			} else {
+				fexp_log_val=new_expected[0];
+			}
+			if(fexp_log_val instanceof Array) {
+				console.log("[new_fexp_expected]",fexp_log_val);
+				return;
+			}
+			console.log("[new_fexp_expected][%o]",fexp_log_val);
 		}
 		this.data.expected_client_values.fexp;
 	}
@@ -12798,7 +12808,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_NotificationAction} x */
 	D_NotificationAction(x) {x; debugger;}
 	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a=>this.DC_AddToPlaylist(this.w(a)))}
+	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a => this.DC_AddToPlaylist(this.w(a)));}
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
