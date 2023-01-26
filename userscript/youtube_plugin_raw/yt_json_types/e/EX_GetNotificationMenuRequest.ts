@@ -1,1 +1,1 @@
-type EX_GetNotificationMenuRequest=TE_SignalService<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
+type EX_GetNotificationMenuRequest=T_ES_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;

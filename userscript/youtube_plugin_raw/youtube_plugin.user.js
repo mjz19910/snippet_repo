@@ -9218,9 +9218,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template T @template U @arg {TE_SignalService<T,U>} x @arg {(this:this,x:T)=>void} f_t @arg {(this:this,x:U)=>void} f_u */
-	TE_SignalService(x,f_t,f_u) {
-		const cf="E_SignalService";
+	/** @private @template T @template U @arg {T_ES_Signal<T,U>} x @arg {(this:this,x:T)=>void} f_t @arg {(this:this,x:U)=>void} f_u */
+	T_ES_Signal(x,f_t,f_u) {
+		const cf="T_ES_Signal";
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
 		f_t.call(this,x.commandMetadata);
 		f_u.call(this,x.signalServiceEndpoint);
@@ -9273,7 +9273,7 @@ class HandleTypes extends ServiceMethods {
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.TE_SignalService(x,a => {
+			this.T_ES_Signal(x,a => {
 				a;
 				debugger;
 			},this.GS_Client);
@@ -9478,7 +9478,7 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
-	/** @private @arg {TE_SignalService<M_SendPost, GS_Client>} x */
+	/** @private @arg {T_ES_Signal<M_SendPost, GS_Client>} x */
 	TE_SignalService_I_0(x) {
 		const cf="TE_SignalService_I_0";
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
@@ -9491,6 +9491,7 @@ class HandleTypes extends ServiceMethods {
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		debugger;
 	}
 	codegen_all_service_menu_icons() {
@@ -10991,7 +10992,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ES_Button} x */
 	ES_Button(x) {
 		const cf="ES_Button";
-		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.GS_Client);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x);
 		debugger;
@@ -11449,7 +11450,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
@@ -12097,7 +12098,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {avatar,menuRequest,trackingParams,accessibility,tooltip,...y}=this.sd(cf,x); this.g(y);
 		this.D_Thumbnail(avatar);
-		this.TE_SignalService(menuRequest,this.M_AccountMenu,this.S_GetAccountMenu);
+		this.T_ES_Signal(menuRequest,this.M_AccountMenu,this.S_GetAccountMenu);
 	}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.H_("M_AccountMenu",x,this.GM_AccountMenu);}
@@ -12115,7 +12116,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_NotificationTopbarButton";
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.sd(cf,x); this.g(y);
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
-		this.TE_SignalService(menuRequest,this.M_GetNotificationMenu,this.Signal_GetNotificationsMenu);
+		this.T_ES_Signal(menuRequest,this.M_GetNotificationMenu,this.Signal_GetNotificationsMenu);
 	}
 	/** @private @arg {Signal_GetNotificationsMenu} x */
 	Signal_GetNotificationsMenu(x) {

@@ -12,7 +12,7 @@ type D_TopbarMenuButton={
 	style: "STYLE_DEFAULT";
 }|{
 	avatar: D_Thumbnail;
-	menuRequest: TE_SignalService<M_AccountMenu,S_GetAccountMenu>;
+	menuRequest: T_ES_Signal<M_AccountMenu,S_GetAccountMenu>;
 	trackingParams: string;
 	accessibility: D_Accessibility;
 	tooltip: string;

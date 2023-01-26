@@ -1,4 +1,4 @@
-type TE_SignalService<T,U>={
+type T_ES_Signal<T,U>={
 	clickTrackingParams: string;
 	commandMetadata: T;
 	signalServiceEndpoint: U;

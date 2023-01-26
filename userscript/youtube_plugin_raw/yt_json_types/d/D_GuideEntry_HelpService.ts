@@ -3,5 +3,5 @@ type D_GuideEntry_HelpService={
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	serviceEndpoint: TE_SignalService<{},{}>;
+	serviceEndpoint: T_ES_Signal<{},{}>;
 };
