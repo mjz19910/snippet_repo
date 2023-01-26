@@ -9477,54 +9477,17 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
-	/** @private @arg {D_MenuServiceItem_Icon<any,any>} x @returns {x is D_MenuServiceItem_Icon<"NOT_INTERESTED",any>} */
-	is_MenuItemNotInt(x) {
-		if("icon" in x) return x.icon.iconType==="NOT_INTERESTED";
-		return false;
-	}
-	/** @private @arg {D_MenuServiceItem_Icon<any,any>} x @returns {x is D_MenuServiceItem_Icon<"ADD_TO_QUEUE_TAIL",any>} */
-	is_MenuItem_AQ(x) {
-		if("icon" in x) return x.icon.iconType==="ADD_TO_QUEUE_TAIL";
-		return false;
-	}
-	/** @private @template {Extract<RD_MenuServiceItem,{icon:any}>['icon']['iconType']} T @arg {T} wt @arg {Extract<RD_MenuServiceItem,{icon:any}>} x @returns {x is D_MenuServiceItem_Icon<T,any>} */
-	is_MenuItem_W(x,wt) {
-		if("icon" in x) return x.icon.iconType===wt;
-		return false;
+	/** @private @arg {RD_MenuServiceItem} x */
+	RD_MenuServiceItem(x) {
+		x;
 	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {
-		this.H_("R_MenuServiceItem",x,x => {
-			const cf="Menu"; this.k(cf,x);
-			if("icon" in x) {
-				if(this.is_MenuItemNotInt(x)) {
-					const {icon,...y}=this.D_MenuServiceItem_Omit(x,sp => {
-						if(!sp.feedbackEndpoint) debugger;
-						this.E_Feedback(sp);
-					}); this.g(y);
-					return;
-				}
-				if(this.is_MenuItem_AQ(x)) {
-					const {icon,...y}=this.D_MenuServiceItem_Omit(x,x => this.TE_SignalService(x,this.M_SendPost,this.GS_Client)); this.g(y);
-					this.T_Icon(icon);
-					return;
-				}
-				if(this.is_MenuItem_W(x,"WATCH_LATER")) {
-					const {icon,...y}=this.D_MenuServiceItem_Omit(x,x => {
-						if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
-						debugger;
-					}); this.g(y);
-					this.T_Icon(icon);
-					return;
-				}
-				if(this.is_MenuItem_W(x,"PLAYLIST_ADD")) return;
-				debugger;
-				return;
-			}
-			this.D_MenuServiceItem(x);
-		});
+		this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);
 	}
-	/** @private @arg {E_PlaylistEdit} x */
+	/** @protected @arg {E_AddToPlaylistService} x */
+	E_AddToPlaylistService(x) {x;}
+	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {
 		const cf="E_PlaylistEdit"; this.k(cf,x);
 		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.sd(cf,x); this.g(y); this.g(y1);
@@ -9550,14 +9513,14 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 	}
-	/** @private @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {
-		const cf="D_MenuServiceItem$Omit";
+		const cf="D_MenuServiceItem_Omit";
 		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x);
 		f.call(this,serviceEndpoint);
 		return y;
 	}
-	/** @private @arg {D_MenuServiceItem<{}>} x */
+	/** @protected @arg {D_MenuServiceItem<{}>} x */
 	D_MenuServiceItem(x) {
 		const cf="D_MenuServiceItem";
 		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
@@ -9565,7 +9528,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {E_Feedback} x */
+	/** @protected @arg {E_Feedback} x */
 	E_Feedback(x) {
 		const cf="E_Feedback";
 		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.sd(cf,x); this.g(y);

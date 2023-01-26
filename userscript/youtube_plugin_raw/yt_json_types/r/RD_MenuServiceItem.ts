@@ -1,7 +1,6 @@
-type RD_MenuServiceItem=[
-	D_MenuServiceItem<{}>,
-	D_MenuServiceItem_Icon<"NOT_INTERESTED",E_Feedback>,
-	D_MenuServiceItem_Icon<"ADD_TO_QUEUE_TAIL",TE_SignalService<M_SendPost,GS_Client>>,
-	D_MenuServiceItem_Icon<"WATCH_LATER",E_PlaylistEdit>,
-	D_MenuServiceItem_Separated<"PLAYLIST_ADD",E_AddToPlaylistService>,
-][number];
+type RD_MenuServiceItem={
+	text: R_TextRuns;
+	icon: T_Icon<"NOT_INTERESTED">;
+	serviceEndpoint: E_Feedback;
+	trackingParams: string;
+};
