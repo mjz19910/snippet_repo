@@ -12065,7 +12065,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {x; debugger;}
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
-	E_Like_C(x) {x; debugger;}
+	E_Like_C(x) {const {webCommandMetadata: a,...y}=x; this.g(y);this.GM_like_like(a);}
+	/** @private @arg {GM_like_like} x */
+	GM_like_like(x) {
+		const {apiUrl: a,sendPost: b,...y}=x; this.g(y);
+		if(a!=="/youtubei/v1/like/like") debugger;
+		if(b!==true) debugger;
+	}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {x; debugger;}
 	/** @private @arg {D_Playlist_MD} x */
