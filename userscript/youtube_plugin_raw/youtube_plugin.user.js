@@ -4007,7 +4007,7 @@ class IndexedDbAccessor extends BaseService {
 				/** @private @type {Map<string,{v:string}>} */
 				let new_data_map=new Map;
 				database_data.forEach(e => database_map.set(e.v,e));
-				console.log("database [%s:%s] has %n items",this.db_args.name,store_name,database_data.length);
+				console.log("database [%s:%s] has %o items",this.db_args.name,store_name,database_data.length);
 				for(let data of this.arr) {
 					if(!data) {debugger; continue;}
 					if(database_map.has(data.v)) {
