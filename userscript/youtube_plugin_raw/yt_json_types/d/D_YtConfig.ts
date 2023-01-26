@@ -1,5 +1,5 @@
 type D_YtConfig={
 	visitorData: string;
 	sessionIndex: 0;
-	rootVisualElementType: VisualElementType;
+	rootVisualElementType: D_VisualElementType;
 };

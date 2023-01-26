@@ -1,6 +1,6 @@
 type DC_LiveChat={
 	continuations: G_LiveChatContinuationItem[];
-	actions?: LiveChatContinuationActions[];
+	actions?: G_LiveChatContinuationActions[];
 	actionPanel?: R_LiveChatMessageInput;
 	itemList?: R_LiveChatItemList;
 	header?: R_LiveChatHeader;
@@ -8,7 +8,7 @@ type DC_LiveChat={
 	trackingParams?: string;
 	participantsList?: R_LiveChatParticipantsList;
 	popoutMessage?: R_Message;
-	emojis?: LiveChatEmoji[];
+	emojis?: D_LiveChatEmoji[];
 	clientMessages?: ClientMessages;
 	viewerName?: string;
 };

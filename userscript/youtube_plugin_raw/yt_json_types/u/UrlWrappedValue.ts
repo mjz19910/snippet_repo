@@ -1,1 +1,0 @@
-type UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};

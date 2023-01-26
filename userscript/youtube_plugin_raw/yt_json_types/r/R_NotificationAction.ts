@@ -1,1 +1,1 @@
-type R_NotificationAction={notificationActionRenderer: DR_NotificationAction;};
+type R_NotificationAction={notificationActionRenderer: D_NotificationAction;};

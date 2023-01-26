@@ -3,6 +3,6 @@ type R_WatchPage$1={
 	endpoint: E_Watch;
 	response: RS_Watch;
 	playerResponse: RS_Player;
-	url: WatchPageUrl;
+	url: D_WatchPageUrl;
 	previousCsn?: string;
 };

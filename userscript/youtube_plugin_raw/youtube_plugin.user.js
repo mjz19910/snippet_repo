@@ -7340,7 +7340,7 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		}
 	}
-	/** @protected @arg {P_ParamsSection} root @arg {WatchPageUrl} x */
+	/** @protected @arg {P_ParamsSection} root @arg {D_WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
@@ -9235,12 +9235,10 @@ class HandleTypes extends ServiceMethods {
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup";
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
-		if("notificationActionRenderer" in x) return this.AR_Notification(x);
+		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
 		this.do_codegen(cf,x);
 		debugger;
 	}
-	/** @private @arg {R_NotificationAction} x */
-	AR_Notification(x) {x; debugger;}
 	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
@@ -9271,10 +9269,6 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {x;}
-	/** @private @arg {A_Signal} x */
-	A_Signal(x) {x;}
 	/** @private @arg {GE_ResponseReceived_CF} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
@@ -9388,6 +9382,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_DecoratedPlayerBar} x */
 	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar",x,this.D_DecoratedPlayerBar);}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {x;}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {x;}
+	/** @private @arg {R_NotificationAction} x */
+	R_NotificationAction(x) {this.H_("R_NotificationAction ",x,this.D_NotificationAction);}
+	/** @private @arg {D_NotificationAction} x */
+	D_NotificationAction(x) {x;}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
@@ -11271,7 +11273,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_str(program);
 		if(globalName!=="trayride") debugger;
 	}
-	/** @private @template {string} T @arg {UrlWrappedValueT<T>} x */
+	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {
 		const cf="UrlWrappedValueT"; this.k(cf,x);
 		return this.w(x);

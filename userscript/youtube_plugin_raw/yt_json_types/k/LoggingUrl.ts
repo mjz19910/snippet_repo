@@ -1,1 +1,0 @@
-type LoggingUrl={baseUrl: string;};

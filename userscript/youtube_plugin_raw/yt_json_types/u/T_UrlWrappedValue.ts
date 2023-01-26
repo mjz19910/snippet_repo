@@ -1,3 +1,3 @@
-type UrlWrappedValueT<T extends string>={
+type T_UrlWrappedValue<T extends string>={
 	privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;
 };

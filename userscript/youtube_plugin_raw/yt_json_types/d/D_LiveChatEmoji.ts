@@ -1,4 +1,4 @@
-type LiveChatEmoji={
+type D_LiveChatEmoji={
 	emojiId: string;
 	shortcuts: `:${string}:`[];
 	searchTerms: string[];

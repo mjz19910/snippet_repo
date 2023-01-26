@@ -10,7 +10,7 @@ type D_MacroMarkersListItem={
 	endRepeatCommand: C_Executor;
 	playerStateEntityKey: string;
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-	lightColorPalette: LightColorPalette;
+	lightColorPalette: D_LightColorPalette;
 	darkColorPalette: D$DarkColorPalette;
 	timeDescriptionA11yLabel: `${number} seconds`;
 }|{

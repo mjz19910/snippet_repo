@@ -1,5 +1,5 @@
 type D_AttBgChallenge={
-	interpreterUrl?: UrlWrappedValueT<`//www.google.com/js/th/${string}.js`>;
+	interpreterUrl?: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
 	interpreterHash: string;
 	program: string;
 	globalName: "trayride";

@@ -437,7 +437,7 @@ export class Snippet_0_tmp {
 		this.save_keys(`[${cf}Renderer]`,x);
 		f.call(this,this.w(x));
 	}
-	/** @arg {DR_NotificationAction} x */
+	/** @arg {D_NotificationAction} x */
 	AD_Notification(x) {x;}
 	/** @protected @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
@@ -472,7 +472,7 @@ export class Snippet_0_tmp {
 class ND extends Snippet_0_tmp {
 	/** @private @arg {R_NotificationAction} x */
 	R_New(x) {this.H$R_("A_Notification",x,this.AD_Notification);}
-	/** @pub @arg {DR_NotificationAction} x */
+	/** @pub @arg {D_NotificationAction} x */
 	D_NewData(x) {x;}
 	/** @pub @arg {TE_SignalService<{},{}>} x */
 	E_New$Endpoint(x) {x;}

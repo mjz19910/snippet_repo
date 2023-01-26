@@ -31,7 +31,7 @@ type YTExternalEncUrl=[
 ][number];
 type YTExternalUrl=T_SplitOnce<T_SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
 type WatchUrlFormat=[
-	WatchPageUrl,
+	D_WatchPageUrl,
 	`/watch?${YtWatchVideoUrlFormat}`,
 	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
