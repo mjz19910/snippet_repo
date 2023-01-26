@@ -35,7 +35,7 @@ type GM_WC=[
 	GM_Browse,
 	GM_comment_create_comment,
 	GM_feedback,
-	GM_flag_get_form,
+	GM_FlagGetForm,
 	GM_get_survey,
 	GM_get_transcript,
 	GM_GetNotificationMenu,
@@ -158,7 +158,7 @@ type GM_feedback={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/feedback";
 };
-type GM_flag_get_form={
+type GM_FlagGetForm={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/flag/get_form";
 };
@@ -231,11 +231,6 @@ type GM_SendPost={
 };
 //#endregion
 //#region M_*
-type M_AccountMenu={webCommandMetadata: GM_AccountMenu;};
-type M_Browse={webCommandMetadata: GM_Browse;};
-type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
-type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
-type M_SendPost={webCommandMetadata: GM_SendPost;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};
@@ -248,6 +243,12 @@ type M_VE37414={webCommandMetadata: GM_VE37414_WC;};
 type M_VE42352={webCommandMetadata: GM_VE42352_WC;};
 type M_VE83769={webCommandMetadata: GM_VE83769_WC;};
 type M_VE96368={webCommandMetadata: GM_VE96368_WC_browse;};
+type M_AccountMenu={webCommandMetadata: GM_AccountMenu;};
+type M_Browse={webCommandMetadata: GM_Browse;};
+type M_FlagGetForm={webCommandMetadata: GM_FlagGetForm;};
+type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
+type M_SendPost={webCommandMetadata: GM_SendPost;};
+type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 //#endregion
 //#region DE_VE\d+_.+
 type DE_VE3611_Browse={browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`;};

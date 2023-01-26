@@ -9522,9 +9522,12 @@ class HandleTypes extends ServiceMethods {
 		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
+		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
 		x==="";
 		debugger;
 	}
+	/** @private @arg {E_GetReportForm} x */
+	E_GetReportForm(x) {x;}
 	codegen_all_service_menu_icons() {
 		console.log(this.service_menu_icons.join());
 	}
@@ -12819,7 +12822,7 @@ class HandleTypes extends ServiceMethods {
 	D_NotificationAction(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.R_TextRuns(responseText);
+		this.G_Text(responseText);
 		this.t(actionButton,this.R_Button);
 		this.trackingParams(cf,trackingParams);
 	}

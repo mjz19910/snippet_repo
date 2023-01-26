@@ -1,5 +1,5 @@
 type D_NotificationAction={
-	responseText: R_TextRuns;
+	responseText: G_Text;
 	actionButton?: R_Button;
 	trackingParams: string;
 };
