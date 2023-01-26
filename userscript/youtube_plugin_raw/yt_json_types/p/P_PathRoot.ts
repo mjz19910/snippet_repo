@@ -1,5 +1,6 @@
 type P_LogItems=[
 	"[parse_value.gen_ns] [like.likeParams.f1]",
+	"[parse_value.gen_ns] [like.likeParams.f1.f1]",
 	"[parse_value.gen_ns] [like.likeParams.f4]",
 	"[parse_value.gen_ns] [like.likeParams.f5]",
 	"[parse_value.gen_ns] [like.likeParams.f6]",
