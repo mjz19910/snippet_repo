@@ -8,7 +8,7 @@ type RD_MenuServiceItem={
 }|{
 	text: R_TextRuns;
 	icon: T_Icon<RD_MenuServiceIconType_Sep>;
-	serviceEndpoint: E_ShareEntityService;
+	serviceEndpoint: ES_ShareEntity;
 	trackingParams: string;
 	hasSeparator: true;
 };

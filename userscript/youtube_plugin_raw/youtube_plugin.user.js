@@ -6930,6 +6930,10 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @protected @template T @arg {{pathname:any}} x @arg {T} pathname @returns {x is {pathname:T}} */
+	is_url_with_pathname(x,pathname) {
+		return x.pathname===pathname;
+	}
 	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
 	get_res_data(url_type,x) {
 		/** @private @type {T_Split<UrlTypes, ".">} */
@@ -9486,6 +9490,8 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
+		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
+		x==="";
 		debugger;
 	}
 	codegen_all_service_menu_icons() {
@@ -11021,7 +11027,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint";
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
@@ -11441,9 +11447,9 @@ class HandleTypes extends ServiceMethods {
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		debugger;
 	}
-	/** @private @arg {E_ShareEntityService} x */
-	E_ShareEntityService(x) {
-		const cf="E_ShareEntityService";
+	/** @private @arg {ES_ShareEntity} x */
+	ES_ShareEntity(x) {
+		const cf="ES_ShareEntity";
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/share/get_share_panel") debugger;
@@ -11969,6 +11975,28 @@ class HandleTypes extends ServiceMethods {
 			});
 			return;
 		}
+		debugger;
+	}
+	/** @private @arg {R_CompactRadio} x */
+	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @private @arg {D_CompactRadio} x */
+	D_CompactRadio(x) {
+		const cf="D_CompactRadio";
+		let {secondaryNavigationEndpoint: a1,shareUrl,...o}=this.Omit_Menu_Radio(cf,x); o;
+		if(!a1.watchEndpoint) debugger;
+		this.E_Watch(a1);
+		let up=this.parse_with_url_parse(shareUrl);
+		if(this.is_url_with_pathname(up,"/watch")) {
+			let {...s}=this.parse_url_search_params(up.search);
+			{
+				let {v,playnext,list,...y}=s; this.g(y);
+				console.log("[CompactRadio.v]",v);
+				console.log("[CompactRadio.playnext]",playnext);
+				console.log("[CompactRadio.list]",list);
+			}
+			return;
+		}
+		up==="";
 		debugger;
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
@@ -12738,32 +12766,6 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint("C_RelatedChip",x,x => {
 			x.relatedChipCommand;
 		});
-	}
-	/** @private @arg {R_CompactRadio} x */
-	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
-	/** @template T @arg {{pathname:any}} x @arg {T} pathname @returns {x is {pathname:T}} */
-	is_url_with_pathname(x,pathname) {
-		return x.pathname===pathname;
-	}
-	/** @private @arg {D_CompactRadio} x */
-	D_CompactRadio(x) {
-		const cf="D_CompactRadio";
-		let {secondaryNavigationEndpoint: a1,shareUrl,...o}=this.Omit_Menu_Radio(cf,x); o;
-		if(!a1.watchEndpoint) debugger;
-		this.E_Watch(a1);
-		let up=this.parse_with_url_parse(shareUrl);
-		if(this.is_url_with_pathname(up,"/watch")) {
-			let {...s}=this.parse_url_search_params(up.search);
-			{
-				let {v,playnext,list,...y}=s; this.g(y);
-				console.log("[CompactRadio.v]",v);
-				console.log("[CompactRadio.playnext]",playnext);
-				console.log("[CompactRadio.list]",list);
-			}
-			return;
-		}
-		up==="";
-		debugger;
 	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {x;}
