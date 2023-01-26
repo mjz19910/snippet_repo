@@ -12769,7 +12769,11 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {DC_RelatedChip} x */
-	DC_RelatedChip(x) {x; debugger;}
+	DC_RelatedChip(x) {
+		const {targetSectionIdentifier,loadCached,...y}=x; this.g(y);
+		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
+		if(loadCached!==true) debugger;
+	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
 		const cf="D_CommentsEntryPointTeaser";
