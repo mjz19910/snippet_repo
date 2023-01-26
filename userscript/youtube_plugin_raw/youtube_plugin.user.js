@@ -6017,7 +6017,13 @@ class ParserService extends BaseService {
 							} break;
 						}
 					} break;
-					case "f93": u(idx); debugger; break;
+					case "f93": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break; case "f1": u(idx); debugger; break;}
+					} break;
 				}
 			} break;
 			case "record_notification_interactions": {
