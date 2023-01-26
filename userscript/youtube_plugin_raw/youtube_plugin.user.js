@@ -5784,6 +5784,7 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "service$create_playlist": u(idx); break;
 			case "next_continuation": u(idx); break;
 			case "aadc_guidelines_state_entity_key": u(idx); break;
 			case "TimedContinuation": u(idx); break;
@@ -12819,7 +12820,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ES_CreatePlaylist} x */
 	ES_CreatePlaylist(x) {const cf="ES_CreatePlaylist";this.T_Endpoint(cf,x,x=>this.y(x,this.DS_CreatePlaylist));}
 	/** @private @arg {DS_CreatePlaylist} x */
-	DS_CreatePlaylist(x) {x; debugger;}
+	DS_CreatePlaylist(x) {
+		const cf="DS_CreatePlaylist";
+		const {params,videoIds,...y}=x; this.g(y);
+		this.t(params,x=>this.params(cf,"service$create_playlist",x));
+		this.z(videoIds,this.videoId);
+	}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
