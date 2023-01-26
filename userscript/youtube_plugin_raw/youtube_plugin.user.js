@@ -9294,6 +9294,18 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a => this.DC_AddToPlaylist(this.w(a)));}
+	/** @private @arg {DC_AddToPlaylist} x */
+	DC_AddToPlaylist(x) {
+		const cf="DC_AddToPlaylist";
+		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y);
+		console.log(`${cf}.listType`,listType);
+		this.ES_CreatePlaylist(onCreateListCommand);
+		this.z([openListPanel,openMiniplayer],this.primitive_bool);
+		this.videoId(videoId);
+		this.z(videoIds,this.videoId);
+	}
 	/** @private @arg {GE_ResponseReceived_CF} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
@@ -11674,19 +11686,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,this.D_ChipCloudChip);}
-	/** @private @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>['navigationEndpoint']} x */
-	D_ChipCloudChip_navigationEndpoint(x) {
-		const cf="D_ChipCloudChip_navigationEndpoint";
-		if("continuationCommand" in x) return this.C_Continuation(x);
-		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
-		this.do_codegen(cf,x);
-		debugger;
-	}
-	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
-	D_ChipCloudChip_OmitNav(cf,x) {
-		const {navigationEndpoint: a,...y}=this.sd(cf,x);
-		this.D_ChipCloudChip_navigationEndpoint(a);
-		return y;
+	/** @private @arg {D_ChipCloudChip} x */
+	D_ChipCloudChip(x) {
+		const cf="D_ChipCloudChip";
+		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
+		if("isSelected" in x) {
+			let d=this.D_ChipCloudChip_Omit(cf,x);
+			const {isSelected: a,...y}=d; this.g(y);
+			if(a!==true) debugger;
+			return;
+		}
 	}
 	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_WithNav(cf,x) {
@@ -11708,16 +11717,32 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(x1);
 	}
-	/** @private @arg {D_ChipCloudChip} x */
-	D_ChipCloudChip(x) {
-		const cf="D_ChipCloudChip";
-		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
-		if("isSelected" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {isSelected: a,...y}=d; this.g(y);
-			if(a!==true) debugger;
-			return;
-		}
+	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	D_ChipCloudChip_OmitNav(cf,x) {
+		const {navigationEndpoint: a,...y}=this.sd(cf,x);
+		this.D_ChipCloudChip_navigationEndpoint(a);
+		return y;
+	}
+	/** @private @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>['navigationEndpoint']} x */
+	D_ChipCloudChip_navigationEndpoint(x) {
+		const cf="D_ChipCloudChip_navigationEndpoint";
+		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
+		this.do_codegen(cf,x);
+		debugger;
+	}
+	/** @private @arg {C_RelatedChip} x */
+	C_RelatedChip(x) {
+		this.T_Endpoint("C_RelatedChip",x,x => {
+			if(!x.relatedChipCommand) debugger;
+			this.DC_RelatedChip(this.w(x));
+		});
+	}
+	/** @private @arg {DC_RelatedChip} x */
+	DC_RelatedChip(x) {
+		const {targetSectionIdentifier,loadCached,...y}=x; this.g(y);
+		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
+		if(loadCached!==true) debugger;
 	}
 	/** @arg {D_ChipCloudChip_Omit_CF} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
@@ -12756,6 +12781,18 @@ class HandleTypes extends ServiceMethods {
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
 		debugger;
 	}
+	/** @private @arg {R_CommentsEntryPointTeaser} x */
+	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
+	/** @private @arg {D_CommentsEntryPointTeaser} x */
+	D_CommentsEntryPointTeaser(x) {
+		const cf="D_CommentsEntryPointTeaser";
+		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
+		if(!teaserAvatar.accessibility) debugger;
+		this.D_Thumbnail(teaserAvatar);
+		if(!teaserContent.simpleText) debugger;
+		this.R_SimpleText(teaserContent);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
@@ -12780,45 +12817,8 @@ class HandleTypes extends ServiceMethods {
 		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_CommentsEntryPointTeaser} x */
-	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
-	/** @private @arg {C_RelatedChip} x */
-	C_RelatedChip(x) {
-		this.T_Endpoint("C_RelatedChip",x,x => {
-			if(!x.relatedChipCommand) debugger;
-			this.DC_RelatedChip(this.w(x));
-		});
-	}
-	/** @private @arg {DC_RelatedChip} x */
-	DC_RelatedChip(x) {
-		const {targetSectionIdentifier,loadCached,...y}=x; this.g(y);
-		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
-		if(loadCached!==true) debugger;
-	}
-	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {
-		const cf="D_CommentsEntryPointTeaser";
-		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
-		if(!teaserAvatar.accessibility) debugger;
-		this.D_Thumbnail(teaserAvatar);
-		if(!teaserContent.simpleText) debugger;
-		this.R_SimpleText(teaserContent);
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {D_NotificationAction} x */
 	D_NotificationAction(x) {x; debugger;}
-	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a => this.DC_AddToPlaylist(this.w(a)));}
-	/** @private @arg {DC_AddToPlaylist} x */
-	DC_AddToPlaylist(x) {
-		const cf="DC_AddToPlaylist";
-		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y);
-		console.log(`${cf}.listType`,listType);
-		this.ES_CreatePlaylist(onCreateListCommand);
-		this.z([openListPanel,openMiniplayer],this.primitive_bool);
-		this.videoId(videoId);
-		this.z(videoIds,this.videoId);
-	}
 	/** @private @arg {ES_CreatePlaylist} x */
 	ES_CreatePlaylist(x) {x; debugger;}
 	/** @private @arg {A_Signal} x */
