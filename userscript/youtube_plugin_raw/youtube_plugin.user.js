@@ -12768,13 +12768,13 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {x;}
+	D_CommentsEntryPointTeaser(x) {x; debugger;}
 	/** @private @arg {D_NotificationAction} x */
-	D_NotificationAction(x) {x;}
+	D_NotificationAction(x) {x; debugger;}
 	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {x;}
+	C_AddToPlaylist(x) {x; debugger;}
 	/** @private @arg {A_Signal} x */
-	A_Signal(x) {x;}
+	A_Signal(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
