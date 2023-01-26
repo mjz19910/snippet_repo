@@ -112,13 +112,13 @@ type GM_VE96368_WC_browse={
 };
 //#endregion
 //#region GM_ApiUrl
-type GM_AccountMenu={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/account/account_menu";
-};
 type GM_account_set_setting={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/set_setting";
+};
+type GM_AccountMenu={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/account/account_menu";
 };
 type GM_backstage_create_post={
 	sendPost: true;
