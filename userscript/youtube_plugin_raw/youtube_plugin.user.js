@@ -5464,6 +5464,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "browse$param.f93":
+						switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.removeLikeParams.f5":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
@@ -5530,7 +5534,7 @@ class ParserService extends BaseService {
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "create_playlist.params": case "browse$param": case "D_Browse.param":
 						switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_value);
-					case "browse$param.f93": case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
+					case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16.f4": case "transcript_target_id.param": case "watch.player_params.f40.f1":
 						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -6024,13 +6028,14 @@ class ParserService extends BaseService {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							case "f1": {
+							case "f3": case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
-								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break; }
+								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break;}
 							} break;
 						}
 					} break;
