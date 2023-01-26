@@ -11600,34 +11600,45 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(previousButton);
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
+	/** @private @arg {boolean} x */
+	primitive_bool(x) {
+		if(typeof x!=="boolean") debugger;
+	}
 	/** @private @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,this.D_ChipCloudChip);}
+	/** @private @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>['navigationEndpoint']} x */
+	D_ChipCloudChip_navigationEndpoint(x) {
+		const cf="D_ChipCloudChip_navigationEndpoint";
+		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
+		this.do_codegen(cf,x);
+		debugger;
+	}
+	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	D_ChipCloudChip_OmitNav(cf,x) {
+		const {navigationEndpoint: a,...y}=this.sd(cf,x);
+		this.D_ChipCloudChip_navigationEndpoint(a);
+		return y;
+	}
 	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_WithNav(cf,x) {
-		if("targetId" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {targetId: a,navigationEndpoint: b,...y}=d; this.g(y);
-			if(a!=="feed_filter_chip_bar_second_chip") debugger;
-			this.C_Continuation(b);
+		let {style,text,trackingParams,...x1}=this.D_ChipCloudChip_OmitNav(cf,x);
+		if("isSelected" in x1) {
+			const {isSelected: a,...y}=x1; this.g(y);
+			this.primitive_bool(a);
 			return;
 		}
-		if("uniqueId" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {navigationEndpoint: a,uniqueId: b,...y}=d; this.g(y);
-			this.C_Continuation(a);
+		if("uniqueId" in x1) {
+			const {uniqueId: b,...y}=x1; this.g(y);
 			if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
 			return;
 		}
-		if("isSelected" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {isSelected: a,navigationEndpoint,...y}=d; this.g(y);
-			if(a!==true) debugger;
-			this.C_RelatedChip(navigationEndpoint);
+		if("targetId" in x1) {
+			const {targetId: a,...y}=x1; this.g(y);
+			if(a!=="feed_filter_chip_bar_second_chip") debugger;
 			return;
 		}
-		let d=this.D_ChipCloudChip_Omit(cf,x);
-		const {navigationEndpoint: a,...y}=d; this.g(y);
-		this.C_Continuation(a);
+		this.g(x1);
 	}
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {

@@ -7,6 +7,13 @@ type D_ChipCloudChip=
 |{
 	style: T_StyleType<"STYLE_DEFAULT">;
 	text: R_SimpleText;
+	navigationEndpoint: C_Continuation;
+	trackingParams: string;
+	isSelected: false;
+}
+|{
+	style: T_StyleType<"STYLE_DEFAULT">;
+	text: R_SimpleText;
 	navigationEndpoint: C_RelatedChip;
 	trackingParams: string;
 	isSelected: true;
