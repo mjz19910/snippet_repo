@@ -8814,9 +8814,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_NotificationMenu_Popup} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
-		const {popup: a,popupType: b,...y}=this.sd(cf,x); this.g(y);
-		this.TR_MP_Menu(a,this.D_NotificationMenu_PopupItem);
-		if(b!=="DROPDOWN") debugger;
+		const {popupType: a,popup: b,...y}=this.sd(cf,x); this.g(y);
+		if(a!=="DROPDOWN") debugger;
+		this.TR_MP_Menu(b,this.D_NotificationMenu_PopupItem);
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
