@@ -4013,7 +4013,7 @@ class IndexedDbAccessor extends BaseService {
 				let new_data_map=new Map;
 				database_data.forEach(e => database_map.set(e.v,e));
 				if(is_firefox) {
-					console.log("database [%s:%s] has(%o)items",this.db_args.name,store_name,database_data.length);
+					console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,store_name,database_data.length);
 				} else {
 					console.log("database [%s:%s] has %o items",this.db_args.name,store_name,database_data.length);
 				}
