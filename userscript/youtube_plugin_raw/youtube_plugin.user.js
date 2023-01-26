@@ -6022,7 +6022,17 @@ class ParserService extends BaseService {
 						if(path_parts.length===2) {
 							switch(map_entry_value) {default: debugger; return;}
 						}
-						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break; case "f1": u(idx); debugger; break;}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									switch(map_entry_value) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break; }
+							} break;
+						}
 					} break;
 				}
 			} break;
