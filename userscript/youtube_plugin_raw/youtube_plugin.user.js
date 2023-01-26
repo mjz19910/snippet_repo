@@ -4436,7 +4436,6 @@ class CodegenService extends BaseService {
 		if(x.simpleText) return "TYPE::R_SimpleText";
 		/** @private @type {T_Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
-		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
 		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
 			let pi=state.parent_map.get(x);
