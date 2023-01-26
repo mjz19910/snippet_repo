@@ -7483,12 +7483,7 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
-	GM_WC(x) {
-		const cf="GM_WC"; this.k(cf,x);
-		const {sendPost,apiUrl}=x;
-		this.primitive_of(sendPost,"boolean");
-		return this.parser.parse_url(cf,apiUrl);
-	}
+	GM_WC(x) {const cf="GM_WC",{sendPost,apiUrl}=this.sd(cf,x); this.primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
 	//#endregion {E_}
 	//#region general done
 	/** @private @arg {R_Button} x */
@@ -9506,11 +9501,7 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x */
-	D_WatchResults(x) {
-		const cf="D_WatchResults"; this.k(cf,x);
-		const {results: a,...y}=x; this.g(y);
-		return a;
-	}
+	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.sd(cf,x); this.g(y); return a;}
 	/** @private @arg {D_WatchResult_ResultsItem} x @returns {G_WatchResult_ContentsItem[]} */
 	D_WatchResult_ResultsItem(x) {
 		const cf="D_WatchResult_ResultsItem";
@@ -9995,7 +9986,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(x) {
-		const {identifier,...a}=x; this.g(a);
+		const {identifier,...a}=this.sd(cf,x); this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
 			let yk=this.get_keys_of(identifier);
@@ -11331,7 +11322,7 @@ class HandleTypes extends ServiceMethods {
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,this.D_ChipCloudChip);}
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
-		const cf="D_ChipCloudChip"; this.k(cf,x);
+		const cf="D_ChipCloudChip";
 		if("isSelected" in x) {
 			let d=this.D_ChipCloudChip_Omit(cf,x);
 			const {isSelected: a,...y}=d; this.g(y); // ! #destructure
