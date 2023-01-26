@@ -5484,7 +5484,7 @@ class ParserService extends BaseService {
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.likeParams":
+					case "like.likeParams": case "like.dislikeParams":
 						switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5536,7 +5536,141 @@ class ParserService extends BaseService {
 							}
 						}
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "AdServingDataEntry.f10.f1":
+					case "AdServingDataEntry.f10.f11":
+					case "AdServingDataEntry.f10.f6":
+					case "AdServingDataEntry.f13":
+					case "AdServingDataEntry.f14":
+					case "AdServingDataEntry.f4":
+					case "AdServingDataEntry.f5":
+					case "AdServingDataEntry.f6":
+					case "AdServingDataEntry.f7":
+					case "AdServingDataEntry.f9.f1":
+					case "AdServingDataEntry.f9.f2":
+					case "AdServingDataEntry.f9.f3":
+					case "browse$param.f84.f5":
+					case "browse$param.f93.f1":
+					case "create_playlist.params.f84.f5":
+					case "create_playlist.params.f84":
+					case "createBackstagePost.param.f1":
+					case "createBackstagePost.param.f2":
+					case "entity_key.f2":
+					case "entity_key.f4":
+					case "entity_key.f5":
+					case "get_transcript.params.f1":
+					case "get_transcript.params.f6":
+					case "GetNotificationMenu.ctoken.f1":
+					case "like.likeParams.f1.f1":
+					case "like.likeParams.f4":
+					case "like.likeParams.f5":
+					case "like.likeParams.f6.f2":
+					case "like.likeParams.f7":
+					case "record_notification_interactions.f2.f1":
+					case "record_notification_interactions.f2.f14.f1.f1":
+					case "record_notification_interactions.f2.f14.f1.f2":
+					case "record_notification_interactions.f2.f14.f2":
+					case "record_notification_interactions.f2":
+					case "record_notification_interactions.f5":
+					case "record_notification_interactions":
+					case "reel.params.f1":
+					case "reel.player_params.f30":
+					case "reel.player_params.f71":
+					case "reel.sequence_params.f1":
+					case "reel.sequence_params":
+					case "report.params.f11":
+					case "report.params.f15":
+					case "report.params.f18.f1.f2":
+					case "report.params.f18.f1":
+					case "report.params.f2":
+					case "report.params.f25":
+					case "report.params.f26":
+					case "report.params.f28.f1.f1.f1.f1.f4":
+					case "report.params.f28.f1.f1.f1[].f1.f4":
+					case "report.params.f28.f1.f1.f1[].f1":
+					case "report.params.f28.f1.f1.f1[]":
+					case "report.params.f28.f1.f3":
+					case "report.params.f28.f1[].f1.f1":
+					case "report.params.f28.f1[].f1.f1[].f1":
+					case "report.params.f28.f1[].f1.f1[]":
+					case "report.params.f28.f1[].f1":
+					case "report.params.f28.f1[].f3":
+					case "report.params.f28.f1[]":
+					case "report.params.f8":
+					case "report.params":
+					case "slot_ad_serving_data_entry.f1.f1":
+					case "slot_ad_serving_data_entry.f1.f2":
+					case "slot_ad_serving_data_entry.f1.f3":
+					case "slot_ad_serving_data_entry.f3.f1":
+					case "slot_ad_serving_data_entry.f3.f11":
+					case "slot_ad_serving_data_entry.f3.f6":
+					case "slot_ad_serving_data_entry.f4":
+					case "subscribe.params.f2.f1":
+					case "subscribe.params.f3":
+					case "subscribe.params.f4":
+					case "subscribe.params":
+					case "tracking.trackingParams.f10":
+					case "tracking.trackingParams.f11":
+					case "tracking.trackingParams.f16.f1":
+					case "tracking.trackingParams.f16.f2":
+					case "tracking.trackingParams.f16.f3":
+					case "tracking.trackingParams.f16.f4.f1":
+					case "tracking.trackingParams.f16.f4.f2":
+					case "tracking.trackingParams.f16.f4.f3":
+					case "tracking.trackingParams.f19.f3":
+					case "tracking.trackingParams.f4.f2":
+					case "tracking.trackingParams.f4.f3":
+					case "tracking.trackingParams.f5":
+					case "tracking.trackingParams.f7":
+					case "tracking.trackingParams.f8":
+					case "transcript_target_id.param.f1":
+					case "transcript_target_id.param.f2":
+					case "transcript_target_id.param.f3":
+					case "watch.params.f12":
+					case "watch.params.f13":
+					case "watch.params.f2":
+					case "watch.params.f24":
+					case "watch.params.f27.f1":
+					case "watch.params.f3":
+					case "watch.params.f33.f2":
+					case "watch.params.f33.f3":
+					case "watch.params.f33.f4":
+					case "watch.params.f33.f5":
+					case "watch.params.f56":
+					case "watch.params.f7":
+					case "watch.player_params.f12":
+					case "watch.player_params.f25":
+					case "watch.player_params.f40.f1.f2":
+					case "watch.player_params.f40.f1.f3":
+					case "watch.player_params.f8":
+					case "watch.player_params.f9":
+					case "ypc_get_offers.params.f1.f1":
+					case "ypc_get_offers.params.f1.f2":
+					case "ypc_get_offers.params.f3":
+					case "ypc_get_offers.params.f5.f1":
+					case "ypc_get_offers.params.f5.f3":
+					case "ypc_get_offers.params.f5.f5.f1":
+					case "ypc_get_offers.params.f5.f9":
+					case "YpcGetCart.transactionParams":
+					case "tracking.parentTrackingParams":
+					case "tracking.trackingParams.f1":
+					case "tracking.trackingParams.f19.f1":
+					case "tracking.trackingParams.f19.f2":
+					case "tracking.trackingParams.f2":
+					case "tracking.trackingParams.f3":
+					case "tracking.trackingParams.f4.f1":
+					case "tracking.trackingParams.f6.f12":
+					case "tracking.trackingParams.f6.f13":
+					case "tracking.trackingParams.f9":
+					case "like.removeLikeParams":
+					case "next.queue_context_params":
+					case "playlist_edit.params":
+					case "watch_page_url.pp":
+					case "watch_playlist.params": {
+						new_ns();
+						debugger;
+					}
 				}
+				return;
 			}
 			callback(map_entry_value,map_entry_key);
 			/** @arg {number} x @template {number} T @arg {T} mx @returns {x is NumRange<1,T>} */
