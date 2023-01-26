@@ -9984,8 +9984,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		return tag;
 	}
-	/** @private @arg {Record<"identifier",unknown>} x */
-	force_parse_identifier(x) {
+	/** @private @arg {string} cf @arg {Record<"identifier",unknown>} x */
+	force_parse_identifier(cf,x) {
 		const {identifier,...a}=this.sd(cf,x); this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
@@ -10016,7 +10016,7 @@ class HandleTypes extends ServiceMethods {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
-						this.force_parse_identifier(y);
+						this.force_parse_identifier(cf,y);
 						return;
 					}
 					this.g(y);
@@ -10039,7 +10039,7 @@ class HandleTypes extends ServiceMethods {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
-						this.force_parse_identifier(y);
+						this.force_parse_identifier(cf,y);
 						return;
 					}
 					this.g(y);
