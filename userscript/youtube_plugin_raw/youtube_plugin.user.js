@@ -9097,7 +9097,7 @@ class HandleTypes extends ServiceMethods {
 	D_NotificationMenu_PopupItem(x) {
 		const cf="D_NotificationMenu_PopupItem";
 		const {header,sections,style,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.R_SimpleMenuHeader(header);
+		this._R_SimpleMenuHeader(header);
 		let [iw]=this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
 		this.z(iw[0].items,this.R_MP_MenuNotificationSection_Item);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
@@ -9126,7 +9126,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
-	R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader",x,this.D_SimpleMenuHeader);}
+	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
@@ -12771,7 +12771,15 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {x; debugger;}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {x; debugger;}
+	D_CommentsEntryPointTeaser(x) {
+		const cf="D_CommentsEntryPointTeaser";
+		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
+		if(!teaserAvatar.accessibility) debugger;
+		this.D_Thumbnail(teaserAvatar);
+		if(!teaserContent.simpleText) debugger;
+		this.R_SimpleText(teaserContent);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {D_NotificationAction} x */
 	D_NotificationAction(x) {x; debugger;}
 	/** @private @arg {C_AddToPlaylist} x */
