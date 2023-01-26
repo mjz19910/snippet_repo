@@ -12226,9 +12226,16 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata: a,...y}=x; this.g(y);
 		switch(a.apiUrl) {
 			default: debugger; break;
+			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
 			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
 			case "/youtubei/v1/like/like": return this.GM_like_like(a);
 		}
+	}
+	/** @private @arg {GM_like_removelike} x */
+	GM_like_removelike(x) {
+		const {apiUrl: a,sendPost: b,...y}=x; this.g(y);
+		if(a!=="/youtubei/v1/like/removelike") debugger;
+		if(b!==true) debugger;
 	}
 	/** @private @arg {GM_like_dislike} x */
 	GM_like_dislike(x) {
