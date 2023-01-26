@@ -5465,7 +5465,7 @@ class ParserService extends BaseService {
 						return;
 					}
 					case "like.removeLikeParams":
-						switch(map_entry_key) {case 6: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.dislikeParams.f4":
