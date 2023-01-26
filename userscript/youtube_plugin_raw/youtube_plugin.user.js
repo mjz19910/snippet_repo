@@ -4216,7 +4216,7 @@ class CodegenService extends BaseService {
 		d1!}
 		`;
 		let ex_names=req_names.map(e => {
-			let kk=keys.find(u => this.uppercase_first(u)===e);
+			let kk=keys.map(x => this.uppercase_first(x)).find(v => v===e);
 			if(!kk) {debugger; return "";}
 			/** @private @type {{}} */
 			let ucx=x;
@@ -7279,10 +7279,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @private @arg {R_SimpleText} x @arg {(this:this,x:{accessibility?:D_Accessibility})=>void} f */
-	R_SimpleText(x,f=this.handle_accessibility) {
+	/** @private @arg {R_SimpleText} x */
+	R_SimpleText(x) {
 		const cf="R_SimpleText";
-		const {simpleText,...y}=this.sd(cf,x); f.call(this,y);
+		const {simpleText,...y}=this.sd(cf,x); this.handle_accessibility(y);
 		this.primitive_str(simpleText);
 	}
 	//#endregion
@@ -8426,7 +8426,7 @@ class HandleTypes extends ServiceMethods {
 	D_SuperVodBuyFlowContent(x) {
 		const cf="D_SuperVodBuyFlowContent";
 		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.sd(cf,x); this.g(y);
-		this.z([description,disclaimerText],x => this.R_TextRuns(x));
+		this.z([description,disclaimerText],this.R_TextRuns);
 		this.R_Button(buyButton);
 		this.trackingParams(cf,trackingParams);
 		this.R_PdgCommentPreview(commentPreview);
@@ -10154,7 +10154,7 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
 		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
-		this.z([shortMessage,sentTimeText],a => this.R_SimpleText(a));
+		this.z([shortMessage,sentTimeText],this.R_SimpleText);
 		if(navigationEndpoint.watchEndpoint) {
 			this.E_Watch(navigationEndpoint);
 		} else {
@@ -10643,7 +10643,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_PlaylistContent";
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],a => this.R_SimpleText(a));
+		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.R_SimpleText);
 		this.z(contents,this.R_PlaylistPanelVideo);
 		this.primitive_str(title);
 		this.primitive_str(playlistId);
