@@ -1,6 +1,6 @@
 type DC_AddToPlaylist={
 	listType: string;
-	onCreateListCommand: E_CreatePlaylistService;
+	onCreateListCommand: ES_CreatePlaylist;
 	openListPanel: boolean;
 	openMiniplayer: boolean;
 	videoId: string;

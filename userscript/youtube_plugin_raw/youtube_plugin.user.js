@@ -12787,7 +12787,19 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_NotificationAction} x */
 	D_NotificationAction(x) {x; debugger;}
 	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {x; debugger;}
+	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a=>this.DC_AddToPlaylist(this.w(a)))}
+	/** @private @arg {DC_AddToPlaylist} x */
+	DC_AddToPlaylist(x) {
+		const cf="DC_AddToPlaylist";
+		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y);
+		console.log(`${cf}.listType`,listType);
+		this.ES_CreatePlaylist(onCreateListCommand);
+		this.z([openListPanel,openMiniplayer],this.primitive_bool);
+		this.videoId(videoId);
+		this.z(videoIds,this.videoId);
+	}
+	/** @private @arg {ES_CreatePlaylist} x */
+	ES_CreatePlaylist(x) {x; debugger;}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {x; debugger;}
 	//#endregion
