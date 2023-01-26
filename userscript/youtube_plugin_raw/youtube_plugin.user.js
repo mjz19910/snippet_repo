@@ -12818,11 +12818,23 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {D_NotificationAction} x */
-	D_NotificationAction(x) {x; debugger;}
+	D_NotificationAction(x) {
+		const cf="D_ExpandableVideoDescriptionBody";
+		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
 	/** @private @arg {ES_CreatePlaylist} x */
-	ES_CreatePlaylist(x) {x; debugger;}
+	ES_CreatePlaylist(x) {
+		const cf="D_ExpandableVideoDescriptionBody";
+		const {clickTrackingParams,commandMetadata,createPlaylistServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
 	/** @private @arg {A_Signal} x */
-	A_Signal(x) {x; debugger;}
+	A_Signal(x) {
+		const cf="D_ExpandableVideoDescriptionBody";
+		const {clickTrackingParams,signalAction,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
