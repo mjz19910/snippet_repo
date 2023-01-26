@@ -7389,7 +7389,9 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/flag/get_form": return this.GM_WC(x);
 			case "/youtubei/v1/subscription/subscribe": return this.GM_WC(x);
 			case "/youtubei/v1/feedback": return this.GM_WC(x);
-			case "/youtubei/v1/browse": return this.GM_WC(x);
+			case "/youtubei/v1/browse":
+				if("rootVe" in x) return this.WebCommandMetadataEx(x);
+				return this.GM_browse(x);
 			case "/youtubei/v1/account/account_menu": return this.GM_WC(x);
 			case "/youtubei/v1/notification/get_unseen_count": return this.GM_WC(x);
 			case "/youtubei/v1/notification/get_notification_menu": return this.GM_WC(x);
@@ -7415,9 +7417,9 @@ class HandleTypes extends ServiceMethods {
 				console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 			} break;
 			case 3832: return this.GM_VE3832_Watch_WC(x);
-			case 4724: return this.GM_WC(x);
-			case 83769: return this.GM_WC(x);
-			case 37414: return this.GM_WC(x);
+			case 4724: return this.GM_VE4724_WC(x);
+			case 37414: return this.GM_VE37414_WC(x);
+			case 83769: return this.GM_VE83769_WC(x);
 		}
 	}
 	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
@@ -7480,14 +7482,12 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @private @arg {GM_WC} x */
+	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
 	GM_WC(x) {
 		const cf="GM_WC"; this.k(cf,x);
-		if("apiUrl" in x&&"sendPost" in x) {
-			const {sendPost,apiUrl}=x;
-			this.primitive_of(sendPost,"boolean");
-			this.parser.parse_url(cf,apiUrl);
-		}
+		const {sendPost,apiUrl}=x;
+		this.primitive_of(sendPost,"boolean");
+		return this.parser.parse_url(cf,apiUrl);
 	}
 	//#endregion {E_}
 	//#region general done
@@ -11839,16 +11839,25 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";
-		const {signal,actions,...y}=x; this.g(y);
+		const {signal,actions,...y}=this.sd(cf,x); this.g(y);
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		let [u]=this.z(actions,this.TA_OpenPopup);
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
 		let [u2]=this.z(u1,this.TR_MP_Menu);
-		this.z(u2,x => {this.do_codegen(cf,x); debugger;});
+		this.z(u2,this.MP_AccountMenu);
+	}
+	/** @private @arg {MP_AccountMenu} x */
+	MP_AccountMenu(x) {
+		const cf="MP_AccountMenu";
+		const {style,trackingParams,showLoadingSpinner,...y}=this.sd(cf,x); this.g(y);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
+		this.trackingParams(cf,trackingParams);
+		if(showLoadingSpinner!==true) debugger;
 	}
 	/** @private @arg {Popup_GetAccountMenu} x */
 	Popup_GetAccountMenu(x) {
-		const {popup: a,popupType: b,beReused: c}=x;
+		const cf="MP_AccountMenu";
+		const {popup: a,popupType: b,beReused: c,...y}=this.sd(cf,x); this.g(y);
 		if(b!=="DROPDOWN") debugger;
 		if(c!==true) debugger;
 		return a;

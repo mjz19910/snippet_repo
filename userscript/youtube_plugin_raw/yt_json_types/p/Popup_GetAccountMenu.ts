@@ -1,1 +1,1 @@
-type Popup_GetAccountMenu={popup: TR_MP_Menu<{}>;popupType: "DROPDOWN";beReused: true;};
+type Popup_GetAccountMenu={popup: TR_MP_Menu<MP_AccountMenu>;popupType: "DROPDOWN";beReused: true;};
