@@ -2939,7 +2939,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	y(x,f) {f.call(this,this.w(x));}
-	/** @protected @template U @template {{}} T @arg {T|void|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	/** @protected @template U @template {{}} T @arg {Nullable<T>} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
@@ -8392,9 +8392,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {
 		const cf="D_Radio";
-		let {videos,...y}=this.Omit_Menu_Radio(cf,x); this.g(y);
+		let {...y}=this.Omit_Menu_Radio(cf,x);
+		const {videos,...z}=y; this.g(z);
 		this.z(videos,this.R_ChildVideo);
-		y;
 	}
 	/** @private @arg {R_ChildVideo} x */
 	R_ChildVideo(x) {this.H_("R_Radio",x,this.D_ChildVideo);}
@@ -8418,6 +8418,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {D_Radio|D_CompactRadio} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
+		if("adSlotMetadata" in x) {debugger; throw new Error();}
 		let u=this.R_Omit_Menu_Radio(cf,x);
 		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.playlistId(playlistId);
@@ -10120,7 +10121,8 @@ class HandleTypes extends ServiceMethods {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": break; case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": break;
 			default: break;
 		}
-		console.log(layoutId);
+		let ba_id=base64_dec.decodeByteArray(layoutId);
+		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
 		if(adLayoutLoggingData) {
 			this.D_AdLayoutLogging(adLayoutLoggingData);
 		}
@@ -12029,7 +12031,11 @@ class HandleTypes extends ServiceMethods {
 			this.TR_ItemSection_3(x,([a,...x]) => {
 				let j=this.join_string(x,"-");
 				if(j!=="sid-wn-chips-watch-next-feed") debugger;
-				this.z(a,this.R_CompactRadio);
+				this.z(a,x => {
+					if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
+					if("adSlotRenderer" in x) return this.R_AdSlot(x);
+					debugger;
+				});
 			});
 			return;
 		}
@@ -12040,21 +12046,21 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
-		let {secondaryNavigationEndpoint: a1,shareUrl,...o}=this.Omit_Menu_Radio(cf,x); o;
-		if(!a1.watchEndpoint) debugger;
-		this.E_Watch(a1);
-		let up=this.parse_with_url_parse(shareUrl);
-		if(this.is_url_with_pathname(up,"/watch")) {
-			let {...s}=this.parse_url_search_params(up.search);
-			{
-				let {v,playnext,list,...y}=s; this.g(y);
-				console.log("[CompactRadio.v]",v);
-				console.log("[CompactRadio.playnext]",playnext);
-				console.log("[CompactRadio.list]",list);
-			}
-			return;
-		}
-		up==="";
+		let {...o}=this.Omit_Menu_Radio(cf,x); o;
+		// if(!a1.watchEndpoint) debugger;
+		// this.E_Watch(a1);
+		// let up=this.parse_with_url_parse(shareUrl);
+		// if(this.is_url_with_pathname(up,"/watch")) {
+		// 	let {...s}=this.parse_url_search_params(up.search);
+		// 	{
+		// 		let {v,playnext,list,...y}=s; this.g(y);
+		// 		console.log("[CompactRadio.v]",v);
+		// 		console.log("[CompactRadio.playnext]",playnext);
+		// 		console.log("[CompactRadio.list]",list);
+		// 	}
+		// 	return;
+		// }
+		// up==="";
 		debugger;
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
