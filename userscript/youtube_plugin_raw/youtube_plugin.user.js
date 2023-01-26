@@ -5417,7 +5417,7 @@ class ParserService extends BaseService {
 			case "${path_parts[idx-1]}": {
 				const idx=${idx+1};
 				if(path_parts.length===${idx}) {\n${case_part}${value_part}\n${pad}\t}
-				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}}
+				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break; ${res_case}}
 			} break;`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
@@ -5903,7 +5903,22 @@ class ParserService extends BaseService {
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
 							case "f1": case "f4": case "f5": case "f6":
-							case "f7": u(idx); debugger; break;
+							case "f7": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(map_entry_value) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: u(idx); debugger; path_parts[3]===""; break; {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+											switch(map_entry_value) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {default: u(idx); debugger; path_parts[4]===""; break;}
+									} break;
+								}
+							} break;
 						}
 					} break;
 				}
