@@ -4,6 +4,6 @@ type D_ChipCloudChip_tid={
 	trackingParams: string;
 	targetId: "feed_filter_chip_bar_second_chip";
 }|{
-	navigationEndpoint: C_Continuation|RC_RelatedChip;
+	navigationEndpoint: C_Continuation|C_RelatedChip;
 	targetId: "feed_filter_chip_bar_second_chip";
 };

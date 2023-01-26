@@ -11636,7 +11636,7 @@ class HandleTypes extends ServiceMethods {
 			case "STYLE_HOME_FILTER":
 			case "STYLE_REFRESH_TO_NOVEL_CHIP": break;
 		}
-		this.R_TextRuns(b);
+		this.G_Text(b);
 		this.trackingParams(cf,c);
 		return y;
 	}
