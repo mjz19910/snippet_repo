@@ -2939,7 +2939,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	y(x,f) {f.call(this,this.w(x));}
-	/** @protected @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	/** @protected @template U @template {{}} T @arg {T|void|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
@@ -4518,7 +4518,7 @@ class CodegenService extends BaseService {
 	}
 	/** @param {{[U in string]:unknown}} x */
 	decode_Signal(x) {
-		/** @private @type {GS_Client} */
+		/** @private @type {G_ClientSignal} */
 		let u=as(x);
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return `TYPE::GS_Client`; break;
@@ -9252,9 +9252,9 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
-	/** @private @arg {GS_Client} x */
-	GS_Client(x) {
-		const cf="GS_Client";
+	/** @private @arg {G_ClientSignal} x */
+	G_ClientSignal(x) {
+		const cf="G_ClientSignal";
 		let om=this.Signal_Omit(x,x => {
 			this.save_string(`[${cf}.signal]`,x);
 			if(x!=="CLIENT_SIGNAL") debugger;
@@ -9276,7 +9276,7 @@ class HandleTypes extends ServiceMethods {
 			this.T_ES_Signal(x,a => {
 				a;
 				debugger;
-			},this.GS_Client);
+			},this.G_ClientSignal);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.C_AdsControlFlowOpportunityReceived(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
@@ -9478,13 +9478,13 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
-	/** @private @arg {T_ES_Signal<M_SendPost, GS_Client>} x */
+	/** @private @template T @arg {T_ES_Signal<M_SendPost, T>} x @returns {["signalServiceEndpoint",T]} */
 	TE_SignalService_I_0(x) {
 		const cf="TE_SignalService_I_0";
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_SendPost(commandMetadata);
-		this.GS_Client(signalServiceEndpoint);
+		return ["signalServiceEndpoint",signalServiceEndpoint];
 	}
 	/** @private @arg {RD_MenuServiceItem['serviceEndpoint']} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
@@ -9505,24 +9505,51 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @type {string[]} */
 	service_menu_icons=[];
-	/** @type {RD_MenuServiceIconType} */
-	/** @private @arg {RD_MenuServiceItem} x */
-	RD_MenuServiceItem(x) {
-		const cf="RD_MenuServiceItem";
-		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+	/** @private @arg {string} cf @arg {RD_MenuServiceItem} x */
+	RD_MenuServiceItem_Omit(cf,x) {
+		const {text,icon,serviceEndpoint,trackingParams,...y}=x;
 		this.R_TextRuns(text);
 		switch(icon.iconType) {
 			default: this.new_service_icon(icon.iconType); break;
 			case "NOT_INTERESTED":
 			case "ADD_TO_QUEUE_TAIL": break;
 		}
-		this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
+		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
+		this.t(res,u => {
+			switch(u[0]) {
+				case "signalServiceEndpoint": return this.G_ClientSignal(u[1]);
+				default: debugger; break;
+			}
+		});
 		this.trackingParams(cf,trackingParams);
+		return y;
+	}
+	/** @type {RD_MenuServiceIconType_1} */
+	/** @private @arg {RD_MenuServiceItem} x */
+	RD_MenuServiceItem(x) {
+		const cf="RD_MenuServiceItem";
+		const u=this.RD_MenuServiceItem_Omit(cf,x);
+		if("hasSeparator" in u) {
+			const {hasSeparator,...y}=u; this.g(y);
+			if(hasSeparator!==true) debugger;
+			return;
+		}
+		this.g(u);
 	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {this.T_Endpoint("E_AddToPlaylistService",x,x => this.DE_AddToPlaylistService(this.w(x)));}
+	E_AddToPlaylistService(x) {
+		this.T_Endpoint("E_AddToPlaylistService",x,
+			x => this.DE_AddToPlaylistService(this.w(x)),
+			x => {let {webCommandMetadata: a,...y}=x; this.g(y); this.GM_playlist_get_add_to_playlist(a);});
+	}
+	/** @protected @arg {GM_playlist_get_add_to_playlist} x */
+	GM_playlist_get_add_to_playlist(x) {
+		const {apiUrl,sendPost,...y1}=x; this.g(y1);
+		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
+		if(sendPost!==true) debugger;
+	}
 	/** @protected @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
 		const {videoId,...y}=x; this.g(y);
@@ -10992,7 +11019,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ES_Button} x */
 	ES_Button(x) {
 		const cf="ES_Button";
-		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.G_ClientSignal);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x);
 		debugger;
@@ -11450,7 +11477,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.G_ClientSignal);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);

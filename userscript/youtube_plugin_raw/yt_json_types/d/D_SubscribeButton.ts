@@ -48,5 +48,5 @@ type D_SubscribeButton={
 type SubscribeButtonData$SignalServiceEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: M_SendPost;
-	signalServiceEndpoint: GS_Client;
+	signalServiceEndpoint: G_ClientSignal;
 };

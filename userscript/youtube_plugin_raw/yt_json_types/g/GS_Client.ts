@@ -1,1 +1,0 @@
-type GS_Client=T_Signal<"CLIENT_SIGNAL">&T_Actions<S_Client_Item>;
