@@ -765,7 +765,7 @@ class ND extends Snippet_0_tmp {
 			debugger;
 		});
 	}
-	/** @protected @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection_3x<T,U,V>} x */
+	/** @protected @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {TR_ItemSection_3<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
 	/** @private @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}
