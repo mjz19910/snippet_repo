@@ -4564,7 +4564,6 @@ class CodegenService extends BaseService {
 			||b.adsControlFlowOpportunityReceivedCommand
 			||b.changeKeyedMarkersVisibilityCommand
 			||b.commandExecutorCommand
-			||b.commandExecutorCommand
 			||b.continuationCommand
 			||b.getInitialCommand
 			||b.getSurveyCommand
@@ -4662,7 +4661,6 @@ class CodegenService extends BaseService {
 			||b.compactVideoRenderer
 			||b.confirmDialogRenderer
 			||b.connectedAppRenderer
-			||b.continuationCommand
 			||b.continuationItemRenderer
 			||b.createRenderer
 			||b.decoratedPlayerBarRenderer
@@ -7731,7 +7729,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_DesktopTopbar} x */
 	R_DesktopTopbar(x) {this.H_("DesktopTopbar",x,this.D_DesktopTopbar);}
 	/** @private @arg {R_TopbarLogo} x */
-	R_TopbarLogo(x) {this.H_("DesktopTopbar",x,this.TopbarLogo);}
+	R_TopbarLogo(x) {this.H_("DesktopTopbar",x,this.D_TopbarLogo);}
 	/** @private @arg {R_FusionSearchbox} x */
 	R_X_FusionSearchbox(x) {this.H_("DesktopTopbar",x,this.D_FusionSearchbox);}
 	/** @private @arg {R_HotkeyDialog} x */
@@ -7951,10 +7949,10 @@ class HandleTypes extends ServiceMethods {
 		const cf="ResponseContext";
 		const service_tracking=this.x.get("service_tracking");
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.t(mainAppWebResponseContext,this.MainAppWebResponseContext);
+		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
 		this.z(serviceTrackingParams,x => service_tracking.set_service_params(x));
-		this.t(webResponseContextExtensionData,this.WebResponseContextExtensionData);
-		this.t(consistencyTokenJar,this.ConsistencyTokenJar);
+		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
+		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
 		this.t(stateTags,this.RelevantStateTags);
 	}
@@ -7965,23 +7963,23 @@ class HandleTypes extends ServiceMethods {
 		this.z(relevantStateTags,this.StateTag);
 	}
 	/** @private @arg {RC_ConsistencyTokenJar} x */
-	ConsistencyTokenJar(x) {
-		const cf="ConsistencyTokenJar";
+	RC_ConsistencyTokenJar(x) {
+		const cf="RC_ConsistencyTokenJar";
 		const {encryptedTokenJarContents,expirationSeconds,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_str(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
 	/** @private @arg {RC_WR_ContextExtension} x */
-	WebResponseContextExtensionData(x) {
-		const cf="WebResponseContextExtensionData";
+	RC_WR_ContextExtension(x) {
+		const cf="RC_WR_ContextExtension";
 		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
-		this.t(ytConfigData,this.YtConfigData);
-		this.t(webPrefetchData,this.WebPrefetchData);
+		this.t(ytConfigData,this.D_YtConfig);
+		this.t(webPrefetchData,this.D_WebPrefetch);
 	}
 	/** @private @arg {D_YtConfig} x */
-	YtConfigData(x) {
-		const cf="YtConfigData";
+	D_YtConfig(x) {
+		const cf="D_YtConfig";
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_str(visitorData);
 		if(sessionIndex!==0) debugger;
@@ -8003,8 +8001,8 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {D_WebPrefetch} x */
-	WebPrefetchData(x) {
-		const cf="WebPrefetchData";
+	D_WebPrefetch(x) {
+		const cf="D_WebPrefetch";
 		const {navigationEndpoints,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(navigationEndpoints,x => {
 			if("watchEndpoint" in x) {
@@ -8014,8 +8012,8 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {RC_MainAppWebResponseContext} x */
-	MainAppWebResponseContext(x) {
-		const cf="MainAppWebResponseContext";
+	RC_MainAppWebResponseContext(x) {
+		const cf="RC_MainAppWebResponseContext";
 		const {datasyncId,loggedOut,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_str(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
@@ -8047,8 +8045,8 @@ class HandleTypes extends ServiceMethods {
 		this.t(sidebar,this.G_BrowseSidebar);
 		this.tz(observedStateTags,this.StateTag);
 		this.t(cacheMetadata,this.CacheMetadata);
-		this.t(metadata,this.G_BrowseMetadata);
-		this.t(microformat,this.R_MicroformatData);
+		this.t(metadata,this.G_Browse_MD);
+		this.t(microformat,this.R_Microformat);
 		this.t(maxAgeStoreSeconds,x => this.primitive_of(x,"number"));
 		this.t(background,this.R_MusicThumbnail);
 		this.t(continuationContents,this.C_SectionList);
@@ -8057,7 +8055,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_SectionList} x */
 	C_SectionList(x) {this.H_("C_SectionList",x,this.G_SectionList);}
 	/** @private @arg {R_Microformat} x */
-	R_MicroformatData(x) {this.H_("R_MicroformatData",x,this.D_Microformat);}
+	R_Microformat(x) {this.H_("R_Microformat",x,this.D_Microformat);}
 	/** @private @arg {R_EntityBatchUpdate} x */
 	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate",x,this.D_EntityBatchUpdate);}
 	/** @private @arg {R_SettingsSidebar} x */
@@ -8081,7 +8079,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {G_Browse_MD} x */
-	G_BrowseMetadata(x) {
+	G_Browse_MD(x) {
 		const cf="G_BrowseMetadata"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_ChannelMetadata(x);
 		if("playlistMetadataRenderer" in x) return this.R_PlaylistMetadata(x);
@@ -9205,7 +9203,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_ScrollToEngagementPanel} x */
 	D_ScrollToEngagementPanel(x) {
-		const cf="ScrollToEngagementPanelData";
+		const cf="D_ScrollToEngagementPanel";
 		const {targetId,...y}=this.sd(cf,x); this.g(y);
 		this.targetId(cf,targetId);
 	}
@@ -9270,7 +9268,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("loadMarkersCommand" in x) {
 			const {clickTrackingParams,loadMarkersCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
-			this.LoadMarkersCommandData(loadMarkersCommand);
+			this.DC_LoadMarkers(loadMarkersCommand);
 		} else if("reloadContinuationItemsCommand" in x) {
 			this.C_ReloadContinuationItems(x);
 		} else if("appendContinuationItemsAction" in x) {
@@ -9329,8 +9327,8 @@ class HandleTypes extends ServiceMethods {
 		};
 	}
 	/** @private @arg {DC_LoadMarkers} x */
-	LoadMarkersCommandData(x) {
-		const cf="LoadMarkersCommandData";
+	DC_LoadMarkers(x) {
+		const cf="DC_LoadMarkers";
 		const {entityKeys,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(entityKeys,this.primitive_str);
 	}
@@ -10132,7 +10130,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
-		const cf="TwoColumnWatchNextResultsData";
+		const cf="D_TwoColumnWatchNextResults";
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		let u=this.D_WatchResults(results);
 		let u1=this.D_WatchResult_ResultsItem(u);
@@ -10582,7 +10580,7 @@ class HandleTypes extends ServiceMethods {
 	R_ContinuationItem(x) {this.H_("R_ContinuationItem",x,this.D_ContinuationItem);}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
-		const cf="ContinuationItemData"; this.k(cf,x);
+		const cf="D_ContinuationItem"; this.k(cf,x);
 		const {trigger,continuationEndpoint,...y}=this.sd(cf,x); // !
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
@@ -11157,10 +11155,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
 	DC_AdsControlFlowOpportunityReceived(x) {
-		const cf="AdsControlFlowOpportunityReceivedCommandData";
+		const cf="DC_AdsControlFlowOpportunityReceived";
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
-		this.tz(adSlotAndLayoutMetadata,(this.AdSlotAndLayoutMetadataItem));
+		this.tz(adSlotAndLayoutMetadata,(this.DMD_AdSlotAndLayoutItem));
 		this.primitive_of(isInitialLoad,"boolean");
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
@@ -11209,7 +11207,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="EA_ChangeEngagementPanelVisibility";
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
+		this.AD_ChangeEngagementPanelVisibility(changeEngagementPanelVisibilityAction);
 	}
 	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,R_Comment>} x */
 	CommentRepliesItem(x) {
@@ -11228,7 +11226,7 @@ class HandleTypes extends ServiceMethods {
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.U_EngagementPanelData(updateEngagementPanelAction);
+		this.D_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {D_AttBgChallenge} x */
@@ -11263,7 +11261,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_EntityBatchUpdate} x */
 	D_EntityBatchUpdate(x) {
-		const cf="EntityBatchUpdateData";
+		const cf="D_EntityBatchUpdate";
 		const {mutations,timestamp,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(mutations,this.D_EntityMutationItem);
 		this.TimestampWithNanos(timestamp);
@@ -11467,7 +11465,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.R_EngagementPanelTargetId(hideEngagementPanelScrimAction);
 	}
-	/** @private @arg {A_HideEngagementPanelScrim['hideEngagementPanelScrimAction']} x */
+	/** @private @arg {R_EngagementPanelTargetId} x */
 	R_EngagementPanelTargetId(x) {
 		const cf="R_EngagementPanelTargetId";
 		const {engagementPanelTargetId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -11477,8 +11475,8 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {D_TopbarLogo} x */
-	TopbarLogo(x) {
-		const cf="TopbarLogo";
+	D_TopbarLogo(x) {
+		const cf="D_TopbarLogo";
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.T_Icon(iconImage);
 		this.R_TextRuns(tooltipText);
@@ -11487,8 +11485,8 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_str(overrideEntityKey);
 	}
 	/** @private @arg {DMD_AdSlotAndLayoutItem} x */
-	AdSlotAndLayoutMetadataItem(x) {
-		const cf="AdSlotAndLayoutMetadataItem";
+	DMD_AdSlotAndLayoutItem(x) {
+		const cf="DMD_AdSlotAndLayoutItem";
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(adLayoutMetadata,this.AdLayoutMetadataItem);
 		this.DM_AdSlot(adSlotMetadata);
@@ -11505,11 +11503,11 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(clearButton);
 	}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
-	ChangeEngagementPanelVisibilityActionData(x) {
-		const cf="ChangeEngagementPanelVisibilityActionData";
+	AD_ChangeEngagementPanelVisibility(x) {
+		const cf="AD_ChangeEngagementPanelVisibility";
 		const {targetId,visibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		switch(targetId) {
-			default: targetId===""; this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_id"); break;
+			default: targetId===""; this.codegen_new_typedef(x,"AD_ChangeEngagementPanelVisibility_id"); break;
 			case "engagement-panel-clip-create": break;
 			case "engagement-panel-clip-view": break;
 			case "engagement-panel-comments-section": break;
@@ -11524,8 +11522,8 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {D_UpdateEngagementPanel} x */
-	U_EngagementPanelData(x) {
-		const cf="U_EngagementPanelData";
+	D_UpdateEngagementPanel(x) {
+		const cf="D_UpdateEngagementPanel";
 		const {content,targetId,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.R_Transcript(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
@@ -11547,8 +11545,8 @@ class HandleTypes extends ServiceMethods {
 		this.R_ChannelMetadata(metadata);
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
-		this.R_MicroformatData(microformat);
-		this.z(onResponseReceivedActions,this.ResetChannelUnreadCountCommand);
+		this.R_Microformat(microformat);
+		this.z(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
 	}
 	/** @private @arg {RS_Playlist} x */
 	RS_Playlist(x) {
@@ -11560,7 +11558,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_PlaylistMetadata(metadata);
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
-		this.R_MicroformatData(microformat);
+		this.R_Microformat(microformat);
 		this.R_PlaylistSidebar(sidebar);
 	}
 	/** @private @arg {string} cf @arg {NonNullable<RS_Playlist['alerts']>} x */
@@ -11696,15 +11694,15 @@ class HandleTypes extends ServiceMethods {
 		this.g(y);
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
-	ResetChannelUnreadCountCommand(x) {
-		const cf="ResetChannelUnreadCountCommand";
+	C_ResetChannelUnreadCount(x) {
+		const cf="C_ResetChannelUnreadCount";
 		const {clickTrackingParams,resetChannelUnreadCountCommand,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_str(clickTrackingParams);
 		this.g(resetChannelUnreadCountCommand);
 	}
 	/** @private @arg {D_CinematicContainer} x */
 	D_CinematicContainer(x) {
-		const cf="CinematicContainerData";
+		const cf="D_CinematicContainer";
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.t(backgroundImageConfig,this.R_ThumbnailsList);
 		this.D_GradientColorConfig(gradientColorConfig);
@@ -11757,9 +11755,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_PrefetchHintConfig"; this.k(cf,x);
 	}
 	/** @private @arg {R_ResourceStatusInResponseCheck} x */
-	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheckData);}
+	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
 	/** @private @arg {D_ResourceStatusInResponseCheckData} x */
-	D_ResourceStatusInResponseCheckData(x) {
+	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
 		const {serverBuildLabel,resourceStatuses: a,...y}=this.sd(cf,x); this.g(y);
 		this.z(a,this.D_ElementResourceStatus);
