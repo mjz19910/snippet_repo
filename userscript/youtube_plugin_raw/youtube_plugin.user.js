@@ -9440,6 +9440,7 @@ class HandleTypes extends ServiceMethods {
 	k=(a,b) => this.save_keys(`[${a}]`,b);
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	sd(cf,x) {
+		if(!x) debugger;
 		this.k(cf,x);
 		return x;
 	}
@@ -9489,7 +9490,17 @@ class HandleTypes extends ServiceMethods {
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
+		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 		debugger;
+	}
+	codegen_all_service_menu_icons() {
+		console.log(this.service_menu_icons.join());
+	}
+	/** @arg {string} x */
+	new_service_icon(x) {
+		if(this.service_menu_icons.includes(x)) return;
+		this.service_menu_icons.push(x);
+		this.codegen_all_service_menu_icons();
 	}
 	/** @private @type {string[]} */
 	service_menu_icons=[];
@@ -9500,7 +9511,7 @@ class HandleTypes extends ServiceMethods {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.R_TextRuns(text);
 		switch(icon.iconType) {
-			default: this.service_menu_icons.push(icon.iconType); console.log(); break;
+			default: this.new_service_icon(icon.iconType); break;
 			case "NOT_INTERESTED":
 			case "ADD_TO_QUEUE_TAIL": break;
 		}
