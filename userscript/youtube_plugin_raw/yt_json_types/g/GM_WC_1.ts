@@ -17,6 +17,7 @@ type GM_WC_1=[
 	GM_backstage_create_post,
 	GM_browse_edit_playlist,
 	GM_Browse,
+	GM_comment_create_comment,
 	GM_feedback,
 	GM_flag_get_form,
 	GM_get_transcript,
@@ -127,6 +128,10 @@ type GM_browse_edit_playlist={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse/edit_playlist";
 };
+type GM_Browse={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/browse";
+};
 type GM_comment_create_comment={
 	apiUrl: "/youtubei/v1/comment/create_comment";
 	sendPost: true;
@@ -146,10 +151,6 @@ type GM_Next={
 type GM_get_transcript={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/get_transcript";
-};
-type GM_Browse={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/browse";
 };
 type GM_notification_get_unseen_count={
 	sendPost: true;
