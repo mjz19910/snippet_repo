@@ -12210,7 +12210,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {x; debugger;}
 	/** @private @arg {D_ReelPlayerHeader} x */
-	D_ReelPlayerHeader(x) {x; debugger;}
+	D_ReelPlayerHeader(x) {
+		const cf="D_ReelPlayerHeader";
+		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=x; this.g(y);
+		this.R_TextRuns(reelTitleText);
+		this.R_SimpleText(timestampText);
+		this.E_Browse(channelNavigationEndpoint);
+		this.R_TextRuns(channelTitleText);
+		this.D_Thumbnail(channelThumbnail);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {x; debugger;}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
