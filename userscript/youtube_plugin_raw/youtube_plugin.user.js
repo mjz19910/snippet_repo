@@ -8186,6 +8186,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
+		if("accessibility" in x) return this.D_Video_Handle("D_Video_Accessibility",x);
 		if("owner" in x) return this.D_Video_Handle("D_Video_Owner",x);
 		this.D_Video_Handle("D_Video_NoOwner",x);
 	}
