@@ -7206,7 +7206,7 @@ class HandleTypes extends ServiceMethods {
 		f.call(this,this.w(x));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection$1",x,a => this.TD_ItemSection_1_CommentsEntryPoint(a,f));}
+	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,a => this.TD_ItemSection_1_CommentsEntryPoint(a,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
 		const cf="ItemSectionRendererTemplate";
@@ -11509,36 +11509,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {RS_Unsubscribe} x */
-	RS_Unsubscribe(x) {
-		const cf="UnsubscribeResponse"; this.k(cf,x);
-		debugger;
-	}
-	/** @private @arg {RSM_ChannelPreference} x */
-	RSM_ChannelPreference(x) {
-		const cf="ModifyChannelPreference"; this.k(cf,x);
-		debugger;
-	}
-	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {
-		const cf="CommentsSectionItem"; this.k(cf,x);
-		debugger;
-	}
-	/** @private @arg {D_ExpandableTab} x */
-	D_ExpandableTab(x) {
-		const cf="D_ExpandableTab"; this.k(cf,x);
-		x; debugger;
-	}
-	/** @private @arg {D_FeedNudge} x */
-	D_FeedNudge(x) {
-		const cf="D_FeedNudge"; this.k(cf,x);
-		x; debugger;
-	}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {
-		const cf="BrowseFeedItem"; this.k(cf,x);
-		debugger;
-	}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
 	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
 	/** @private @arg {R_PlaylistHeader} x */
@@ -11779,23 +11749,41 @@ class HandleTypes extends ServiceMethods {
 		this.z([!c,d],v => {if(!v) debugger;});
 	}
 	/** @private @arg {R_Channel_MD} x */
-	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,a => {a; debugger;});}
+	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,this.D_Channel_MD);}
+	/** @private @arg {D_Channel_MD} x */
+	D_Channel_MD(x) {x; debugger;}
 	/** @private @arg {R_Playlist_MD} x */
-	R_PlaylistMetadata(x) {this.H_("PlaylistMetadata",x,a => {a; debugger;});}
+	R_PlaylistMetadata(x) {this.H_("PlaylistMetadata",x,this.D_Playlist_MD);}
+	/** @private @arg {D_Playlist_MD} x */
+	D_Playlist_MD(x) {x; debugger;}
 	/** @private @arg {R_AlertWithButton} x */
-	R_AlertWithButton(x) {this.H_("AlertWithButton",x,a => {a; debugger;});}
+	R_AlertWithButton(x) {this.H_("AlertWithButton",x,this.D_AlertWithButton);}
+	/** @private @arg {D_AlertWithButton} x */
+	D_AlertWithButton(x) {x; debugger;}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,a => {a; debugger;});}
+	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,({page: a,...y},_=this.g(y)) => this.R_ChannelSwitcherPage(a));}
+	/** @private @arg {R_ChannelSwitcherPage} x */
+	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage",x,this.D_ChannelSwitcherPage);}
+	/** @private @arg {D_ChannelSwitcherPage} x */
+	D_ChannelSwitcherPage(x) {x; debugger;}
 	/** @private @arg {D_MP_GetMenu} x */
-	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,a => {a; debugger;});}
-	/** @unused @protected @arg{R_MerchandiseShelf} x */
-	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,a => {a; debugger;});}
+	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,x => this.TR_MP_Menu(x,x => {x; debugger;}));}
+	/** @private @template T @arg {TR_MP_Menu<T>} x @arg {(this:this,x:T)=>void} f */
+	TR_MP_Menu(x,f) {const {multiPageMenuRenderer: a,...y}=x; this.g(y); f.call(this,a);}
+	/** @unused @protected @arg {R_MerchandiseShelf} x */
+	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,this.D_MerchandiseShelf);}
+	/** @unused @protected @arg {D_MerchandiseShelf} x */
+	D_MerchandiseShelf(x) {x;debugger;}
 	/** @unused @protected @arg {R_VideoPrimaryInfo} x */
-	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,a => {a; debugger;});}
+	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,this.D_VideoPrimaryInfo);}
+	/** @unused @protected @arg {D_VideoPrimaryInfo} x */
+	D_VideoPrimaryInfo(x) {x; debugger;}
 	/** @unused @protected @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,a => {a; debugger;});}
+	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,this.D_VideoSecondaryInfo);}
+	/** @unused @protected @arg {D_VideoSecondaryInfo} x */
+	D_VideoSecondaryInfo(x) {x; debugger;}
 	/** @unused @protected @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
-	TR_ItemSection$CommentItemSection(x) {
+	TR_ItemSection_CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
 				case "comment-item-section": return this.TR_ItemSection_3_CommentItemSection(x);
@@ -11803,12 +11791,42 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.TR_ItemSection_1(x,a => {a; debugger;});
+			case "comments-entry-point": return this.TR_ItemSection_1(x,this.g);
 			default: debugger; return x;
 		}
 	}
 	/** @private @arg {R_SectionList} x */
 	R_SectionList(x) {x; debugger;}
+	/** @private @arg {RS_Unsubscribe} x */
+	RS_Unsubscribe(x) {
+		const cf="UnsubscribeResponse"; this.k(cf,x);
+		debugger;
+	}
+	/** @private @arg {RSM_ChannelPreference} x */
+	RSM_ChannelPreference(x) {
+		const cf="ModifyChannelPreference"; this.k(cf,x);
+		debugger;
+	}
+	/** @private @arg {G_CommentsSection} x */
+	G_CommentsSection(x) {
+		const cf="CommentsSectionItem"; this.k(cf,x);
+		debugger;
+	}
+	/** @private @arg {D_ExpandableTab} x */
+	D_ExpandableTab(x) {
+		const cf="D_ExpandableTab"; this.k(cf,x);
+		debugger;
+	}
+	/** @private @arg {D_FeedNudge} x */
+	D_FeedNudge(x) {
+		const cf="D_FeedNudge"; this.k(cf,x);
+		debugger;
+	}
+	/** @private @arg {R_BrowseFeed} x */
+	R_BrowseFeed(x) {
+		const cf="BrowseFeedItem"; this.k(cf,x);
+		debugger;
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
