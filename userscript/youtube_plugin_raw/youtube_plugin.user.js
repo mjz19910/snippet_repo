@@ -7441,9 +7441,9 @@ class HandleTypes extends ServiceMethods {
 		return f.call(this,this.w(x));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
+	TR_ItemSection_2(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
-	TR_ItemSection(x,f) {
+	TR_ItemSection_3(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y);
 		this.TD_ItemSection_3(a,f);
@@ -10059,7 +10059,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection(x) {
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		this.TR_ItemSection(x,([a,...b]) => {
+		this.TR_ItemSection_3(x,([a,...b]) => {
 			let gen_section_id=this.join_string(b,"-");
 			if(gen_section_id!=="comment-item-section-comments-section") debugger;
 			this.z(a,x => {
@@ -10073,7 +10073,7 @@ class HandleTypes extends ServiceMethods {
 	G_WatchResultItem_ItemSections(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-		this.TR_ItemSection_1(x,this.R_CommentItemSection_EntryPoint);
+		this.TR_ItemSection_2(x,this.R_CommentItemSection_EntryPoint);
 	}
 	/** @private @arg {G_WatchResult_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
@@ -10085,7 +10085,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
-		this.TR_ItemSection(x,a => {
+		this.TR_ItemSection_3(x,a => {
 			let [u,...v]=a;
 			if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u,a => {
 				let cf=this.get_name_from_keys(a);
@@ -11996,7 +11996,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.TR_ItemSection_1(x,this.R_CommentItemSection_EntryPoint);
+			case "comments-entry-point": return this.TR_ItemSection_2(x,this.R_CommentItemSection_EntryPoint);
 			default: debugger; return x;
 		}
 	}
