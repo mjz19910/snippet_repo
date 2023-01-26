@@ -138,10 +138,9 @@ type Omit_Menu_Radio_CF=[
 type D_ChipCloudChip_Omit_CF=[
 	"D_ChipCloudChip",
 ][number];
-function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes|null=null) {
+function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 	switch(u) {
-		case null: break;
-		default: u===0; debugger; break;
+		default: u==="";
 	}
 }
-vv_x();
+vv_x(cast_objects.as(""));

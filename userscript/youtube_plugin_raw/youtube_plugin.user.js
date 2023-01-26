@@ -9376,7 +9376,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
 		this.t(a1,this.R_PrefetchHintConfig);
 		this.t(playerParams,a => this.playerParams(cf,"watch.player_params",a));
-		this.t(a2,this.WatchEndpointMusicConfig);
+		this.t(a2,this.R_WatchEndpointMusicConfig);
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
 		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
 	}
@@ -11505,24 +11505,52 @@ class HandleTypes extends ServiceMethods {
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
 	/** @private @arg {R_LiveChat} x */
-	R_LiveChat(x) {
-		const cf="LiveChatRenderer"; this.k(cf,x);
-		debugger;
-	}
+	R_LiveChat(x) {this.H_("R_LiveChat",x,this.D_LiveChat);}
+	/** @private @arg {D_LiveChat} x */
+	D_LiveChat(x) {x; debugger;}
 	/** @private @arg {R_ReportFormModal} x */
-	R_ReportFormModal(x) {
-		const cf="ReportFormModalRenderer"; this.k(cf,x);
-		debugger;
-	}
+	R_ReportFormModal(x) {this.H_("R_ReportFormModal",x,this.D_ReportFormModal);}
+	/** @private @arg {D_ReportFormModal} x */
+	D_ReportFormModal(x) {x; debugger;}
 	/** @private @arg {RSG_SharePanel} x */
 	RS_GetSharePanel(x) {
-		const cf="GetSharePanel"; this.k(cf,x);
+		const cf="GetSharePanel";
+		const {responseContext: {},trackingParams,actions,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		this.z(actions,a => {
+			const cf="RS_GetSharePanel.actions[]";
+			const {clickTrackingParams,openPopupAction,...y}=a; this.g(y);
+			this.clickTrackingParams(cf,clickTrackingParams);
+			console.log("[RS_GetSharePanel.openPopupAction]",openPopupAction);
+		});
+	}
+	/** @private @arg {A_AddToGuideSection} x */
+	A_AddToGuideSection(x) {x; debugger;}
+	/** @private @arg {A_UpdateSubscribeButton} x */
+	A_UpdateSubscribeButton(x) {x; debugger;}
+	/** @private @arg {C_RunAttestation} x */
+	C_RunAttestation(x) {x; debugger;}
+	/** @private @arg {RS_Subscribe_ActionItem} x */
+	RS_Subscribe_ActionItem(x) {
+		if("openPopupAction" in x) {
+			const cf="RS_Subscribe.actions[]";
+			const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
+			this.clickTrackingParams(cf,clickTrackingParams);
+			console.log("[RS_Subscribe.openPopupAction]",openPopupAction);
+			return;
+		}
+		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
+		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
+		if("updateSubscribeButtonAction" in x) return this.A_UpdateSubscribeButton(x);
 		debugger;
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
-		const cf="SubscribeResponse"; this.k(cf,x);
-		debugger;
+		const cf="RS_Subscribe";
+		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);
+		this.z(actions,this.RS_Subscribe_ActionItem);
+		this.trackingParams(cf,trackingParams);
+		this.FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
@@ -11555,45 +11583,82 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
-	WatchEndpointMusicConfig(x) {
-		const cf="WatchEndpointMusicConfig"; this.k(cf,x);
-		x; debugger;
-	}
+	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
+	/** @private @arg {D_WatchEndpointMusicConfig} x */
+	D_WatchEndpointMusicConfig(x) {x; debugger;}
 	/** @private @arg {R_PlaylistHeader} x */
-	R_PlaylistHeader(x) {
-		const cf="R_PlaylistHeader"; this.k(cf,x);
-		x; debugger;
-	}
+	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader",x,this.D_PlaylistHeader);}
+	/** @private @arg {D_PlaylistHeader} x */
+	D_PlaylistHeader(x) {x; debugger;}
 	/** @private @arg {R_StructuredDescriptionContent} x */
-	R_StructuredDescriptionContent(x) {x; debugger;}
+	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent",x,this.D_StructuredDescriptionContent);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {x; debugger;}
 	/** @private @arg {R_ProductList} x */
-	R_ProductList(x) {x; debugger;}
+	R_ProductList(x) {this.H_("R_ProductList",x,this.D_ProductList);}
+	/** @private @arg {D_ProductList} x */
+	D_ProductList(x) {x; debugger;}
 	/** @private @arg {R_ClipSection} x */
-	R_ClipSection(x) {x; debugger;}
+	R_ClipSection(x) {this.H_("R_ClipSection",x,this.D_ClipSection);}
+	/** @private @arg {D_ClipSection} x */
+	D_ClipSection(x) {x; debugger;}
 	/** @private @arg {R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {x; debugger;}
+	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList",x,this.D_MacroMarkersList);}
+	/** @private @arg {D_MacroMarkersList} x */
+	D_MacroMarkersList(x) {x; debugger;}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
-	R_EngagementPanelTitleHeader(x) {x; debugger;}
+	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader",x,this.D_EngagementPanelTitleHeader);}
+	/** @private @arg {D_EngagementPanelTitleHeader} x */
+	D_EngagementPanelTitleHeader(x) {x; debugger;}
 	/** @private @arg {R_Hint} x */
-	R_Hint(x) {x; debugger;}
+	R_Hint(x) {this.H_("R_Hint",x,this.D_Hint);}
+	/** @private @arg {D_Hint} x */
+	D_Hint(x) {x; debugger;}
 	/** @private @arg {R_VideoViewCount} x */
-	R_VideoViewCount(x) {x; debugger;}
+	R_VideoViewCount(x) {this.H_("R_VideoViewCount",x,this.D_VideoViewCount);}
+	/** @private @arg {D_VideoViewCount} x */
+	D_VideoViewCount(x) {x; debugger;}
 	/** @private @arg {R_TwoColumnSearchResults} x */
-	R_TwoColumnSearchResults(x) {x; debugger;}
+	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults",x,this.D_TwoColumnSearchResults);}
+	/** @private @arg {D_TwoColumnSearchResults} x */
+	D_TwoColumnSearchResults(x) {x; debugger;}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
-	R_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
+	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo",x,this.D_PlaylistSidebarSecondaryInfo);}
+	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	D_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
 	/** @private @arg {R_LikeButton} x */
-	R_LikeButton(x) {x; debugger;}
+	R_LikeButton(x) {this.H_("R_LikeButton",x,this.D_LikeButton);}
+	/** @private @arg {D_LikeButton} x */
+	D_LikeButton(x) {
+		const {likesAllowed,...y}=x;
+		if(likesAllowed!==true) debugger;
+		let [{...up},ur]=this.unwrap_prefix(y,"like");
+		{const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=up; this.g(y);}
+		let [{...ud},{...r2}]=this.unwrap_prefix(ur,"dislike");
+		{const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=ud; this.g(y);}
+		{
+			const {target,trackingParams,serviceEndpoints,...y}=r2; this.g(y);
+			this.D_LikeApi(target);
+		}
+	}
+	/** @private @arg {D_LikeApi} x */
+	D_LikeApi(x) {x;}
 	/** @private @arg {R_TranscriptSearchPanel} x */
-	R_TranscriptSearchPanel(x) {x; debugger;}
+	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel",x,this.D_TranscriptSearchPanel);}
+	/** @private @arg {D_TranscriptSearchPanel} x */
+	D_TranscriptSearchPanel(x) {x; debugger;}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {x; debugger;}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {x; debugger;}
 	/** @private @arg {RD_TimedContinuation} x */
-	RD_TimedContinuation(x) {x; debugger;}
+	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation",x,this.DD_TimedContinuation);}
+	/** @private @arg {DD_TimedContinuation} x */
+	DD_TimedContinuation(x) {x; debugger;}
 	/** @private @arg {RC_LiveChat} x */
-	RC_LiveChat(x) {x; debugger;}
+	RC_LiveChat(x) {this.H_("RC_LiveChat",x,this.DC_LiveChat);}
+	/** @private @arg {DC_LiveChat} x */
+	DC_LiveChat(x) {x; debugger;}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {x; debugger;}
 	/** @private @arg {D_CommentSimplebox} x */
@@ -11609,7 +11674,24 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_CustomEmoji} x */
 	D_CustomEmoji(x) {x; debugger;}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
-	G_Watch_SecondaryResults_Results(x) {x; debugger;}
+	G_Watch_SecondaryResults_Results(x) {
+		const {results,trackingParams,...y}=x; this.g(y);
+		this.z(results,x => {
+			if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
+			debugger;
+		});
+	}
+	/** @private @arg {R_RelatedChipCloud} x */
+	R_RelatedChipCloud(x) {
+		this.H_("RC_LiveChat",x,x => {
+			const cf="R_RelatedChipCloud.content"; this.k(cf,x);
+			this.R_ChipCloud(this.w(x));
+		});
+	}
+	/** @private @arg {R_ChipCloud} x */
+	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
+	/** @private @arg {D_ChipCloud} x */
+	D_ChipCloud(x) {x; debugger;}
 	/** @private @arg {D_ReelPlayerHeader} x */
 	D_ReelPlayerHeader(x) {x; debugger;}
 	/** @private @arg {D_PivotButton} x */
@@ -11617,7 +11699,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {x; debugger;}
 	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {x; debugger;}
+	AD_HideEnclosing(x) {this.H_("AD_HideEnclosing",x,this.primitive_of_string);}
 	/** @private @arg {D_NextContinuation} x */
 	D_NextContinuation(x) {x; debugger;}
 	/** @private @arg {D_PlaylistPanelVideo} x */
@@ -11625,13 +11707,77 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {x; debugger;}
 	/** @private @arg {D_AddToPlaylist} x */
-	D_AddToPlaylist(x) {x; debugger;}
+	D_AddToPlaylist(x) {
+		const cf="D_AddToPlaylist";
+		const {playlists,actions,...y}=this.sd(cf,x); this.g(y);
+		this.z(playlists,this.R_PlaylistAddToOption);
+		this.z(actions,this.R_AddToPlaylistCreate);
+	}
+	/** @private @arg {R_AddToPlaylistCreate} x */
+	R_AddToPlaylistCreate(x) {x; debugger;}
+	/** @private @arg {R_PlaylistAddToOption} x */
+	R_PlaylistAddToOption(x) {x; debugger;}
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {x; debugger;}
 	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {x; debugger;}
+	D_ProfileColumn(x) {this.H_("D_ProfileColumn",x,x => this.z(x,this.G_ProfileColumnItem));}
+	/** @private @arg {G_ProfileColumnItem} x */
+	G_ProfileColumnItem(x) {
+		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
+		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
+		debugger;
+	}
+	/** @private @arg {R_ProfileColumnStats} x */
+	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats",x,this.D_ProfileColumnStats);}
+	/** @private @arg {D_ProfileColumnStats} x */
+	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
+	/** @private @arg {R_ProfileColumnStatsEntry} x */
+	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry",x,this.D_ProfileColumnStatsEntry);}
+	/** @private @arg {D_ProfileColumnStatsEntry} x */
+	D_ProfileColumnStatsEntry(x) {
+		const {label,value,...y}=x; this.g(y);
+		this.R_TextRuns(label);
+		this.R_SimpleText(value);
+	}
+	/** @private @arg {R_ProfileColumnUserInfo} x */
+	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo",x,this.D_ProfileColumnUserInfo);}
+	/** @private @arg {D_ProfileColumnUserInfo} x */
+	D_ProfileColumnUserInfo(x) {
+		const {title,thumbnail,...y}=x; this.g(y);
+		this.R_SimpleText(title);
+		this.D_Thumbnail(thumbnail);
+	}
 	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {x; debugger;}
+	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions",x,x => this.z(x,this.G_BrowseFeedContent));}
+	/** @private @arg {R_SearchBox} x */
+	R_SearchBox(x) {this.H_("D_ProfileColumn",x,this.D_SearchBox);}
+	/** @private @arg {D_SearchBox} x */
+	D_SearchBox(x) {x; debugger;}
+	/** @private @arg {R_SubFeedSelector} x */
+	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector",x,this.D_SubFeedSelector);}
+	/** @private @arg {D_SubFeedSelector} x */
+	D_SubFeedSelector(x) {
+		const cf="D_SubFeedSelector";
+		const {title,options,trackingParams,...y}=this.sd(cf,x); this.g(y);
+		this.R_TextRuns(title);
+		this.z(options,this.R_SubFeedOption);
+	}
+	/** @private @arg {R_SubFeedOption} x */
+	R_SubFeedOption(x) {this.H_("R_SubFeedOption",x,this.D_SubFeedOption);}
+	/** @private @arg {D_SubFeedOption} x */
+	D_SubFeedOption(x) {
+		const cf="D_SubFeedOption";
+		const {name,isSelected,navigationEndpoint,trackingParams,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {G_BrowseFeedContent} x */
+	G_BrowseFeedContent(x) {
+		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
+		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
+		debugger;
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
