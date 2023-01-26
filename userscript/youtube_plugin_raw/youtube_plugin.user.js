@@ -9382,14 +9382,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_DecoratedPlayerBar} x */
 	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar",x,this.D_DecoratedPlayerBar);}
-	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {x;}
-	/** @private @arg {A_Signal} x */
-	A_Signal(x) {x;}
 	/** @private @arg {R_NotificationAction} x */
 	R_NotificationAction(x) {this.H_("R_NotificationAction ",x,this.D_NotificationAction);}
-	/** @private @arg {D_NotificationAction} x */
-	D_NotificationAction(x) {x;}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
@@ -12739,8 +12733,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
-	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {x;}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {
 		this.T_Endpoint("C_RelatedChip",x,x => {
@@ -12749,6 +12741,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @template T @arg {{pathname:any}} x @arg {T} pathname @returns {x is {pathname:T}} */
+	is_url_with_pathname(x,pathname) {
+		return x.pathname===pathname;
+	}
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
@@ -12756,20 +12752,27 @@ class HandleTypes extends ServiceMethods {
 		if(!a1.watchEndpoint) debugger;
 		this.E_Watch(a1);
 		let up=this.parse_with_url_parse(shareUrl);
-		switch(up.pathname) {
-			case "/watch": {
-				let {...s}=this.parse_url_search_params(up.search);
-				{
-					let {v,playnext,list,...y}=s; this.g(y);
-					console.log("[CompactRadio.v]",v);
-					console.log("[CompactRadio.playnext]",playnext);
-					console.log("[CompactRadio.list]",list);
-				}
-			} return;
-			default: debugger; break;
-		};
-		up.search;
+		if(this.is_url_with_pathname(up,"/watch")) {
+			let {...s}=this.parse_url_search_params(up.search);
+			{
+				let {v,playnext,list,...y}=s; this.g(y);
+				console.log("[CompactRadio.v]",v);
+				console.log("[CompactRadio.playnext]",playnext);
+				console.log("[CompactRadio.list]",list);
+			}
+			return;
+		}
+		up==="";
+		debugger;
 	}
+	/** @private @arg {D_CommentsEntryPointTeaser} x */
+	D_CommentsEntryPointTeaser(x) {x;}
+	/** @private @arg {D_NotificationAction} x */
+	D_NotificationAction(x) {x;}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {x;}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
