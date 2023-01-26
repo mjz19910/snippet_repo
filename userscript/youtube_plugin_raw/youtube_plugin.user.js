@@ -5423,7 +5423,7 @@ class ParserService extends BaseService {
 		let new_path=() => {
 			/** @private @type {P_LogItems} */
 			console.log("[parse_value.new_path_gen]",path);
-			let ak_gen=["",""].concat(map_keys.map(x=>`\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
 			console.log(`\n
 			case "${path}":
@@ -5895,7 +5895,17 @@ class ParserService extends BaseService {
 				const idx=2;
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					case "dislikeParams": case "removeLikeParams": case "likeParams": u(idx); debugger; break;
+					case "dislikeParams": case "removeLikeParams": case "likeParams": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1": case "f4": case "f5": case "f6":
+							case "f7": u(idx); debugger; break;
+						}
+					} break;
 				}
 			} break;
 			case "next": {
