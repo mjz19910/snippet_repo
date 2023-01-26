@@ -11916,14 +11916,24 @@ class HandleTypes extends ServiceMethods {
 	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation",x,this.DD_TimedContinuation);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat",x,this.DC_LiveChat);}
+	/** @private @arg {G_Watch_SecondaryResults_ItemType_1} x */
+	G_Watch_SecondaryResults_ItemType_1(x) {
+		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
+		if("itemSectionRenderer" in x) {
+			this.TR_ItemSection_3(x,([a,...x]) => {
+				let j=this.join_string(x,"-");
+				if(j!=="sid-wn-chips-watch-next-feed") debugger;
+				this.z(a,this.R_CompactRadio);
+			});
+			return;
+		}
+		debugger;
+	}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {
 		const cf="G_Watch_SecondaryResults_Results";
 		const {results,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.z(results,x => {
-			if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
-			debugger;
-		});
+		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
 	}
 	/** @private @arg {R_RelatedChipCloud} x */
 	R_RelatedChipCloud(x) {
@@ -12433,7 +12443,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		if(horizontalScrollable!==false) debugger;
 		this.z([nextButton,previousButton],this.R_Button);
-		debugger;
 	}
 	/** @private @arg {D_ReelPlayerHeader} x */
 	D_ReelPlayerHeader(x) {
@@ -12689,6 +12698,29 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint("C_RelatedChip",x,x => {
 			x.relatedChipCommand;
 		});
+	}
+	/** @private @arg {R_CompactRadio} x */
+	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @private @arg {D_CompactRadio} x */
+	D_CompactRadio(x) {
+		const cf="D_CompactRadio";
+		let {secondaryNavigationEndpoint: a1,shareUrl,...o}=this.Omit_Menu_Radio(cf,x); o;
+		if(!a1.watchEndpoint) debugger;
+		this.E_Watch(a1);
+		let up=this.parse_with_url_parse(shareUrl);
+		switch(up.pathname) {
+			case "/watch": {
+				let {...s}=this.parse_url_search_params(up.search);
+				{
+					let {v,playnext,list,...y}=s; this.g(y);
+					console.log("[CompactRadio.v]",v);
+					console.log("[CompactRadio.playnext]",playnext);
+					console.log("[CompactRadio.list]",list);
+				}
+			} break;
+			default: debugger; break;
+		};
+		up.search;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
