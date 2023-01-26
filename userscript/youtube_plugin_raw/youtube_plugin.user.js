@@ -10066,7 +10066,7 @@ class HandleTypes extends ServiceMethods {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
-	/** @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
+	/** @private @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
 	TR_ItemSection_3_R_1(x) {
 		const [a,...b]=x;
 		let gen_section_id=this.join_string(b,"-");
@@ -11601,15 +11601,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip",x,this.D_ChipCloudChip);}
-	/** @private @arg {D_ChipCloudChip} x */
-	D_ChipCloudChip(x) {
-		const cf="D_ChipCloudChip";
-		if("isSelected" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {isSelected: a,...y}=d; this.g(y);
-			if(a!==true) debugger;
-			return;
-		}
+	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	D_ChipCloudChip_WithNav(cf,x) {
 		if("targetId" in x) {
 			let d=this.D_ChipCloudChip_Omit(cf,x);
 			const {targetId: a,navigationEndpoint: b,...y}=d; this.g(y);
@@ -11624,9 +11617,27 @@ class HandleTypes extends ServiceMethods {
 			if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
 			return;
 		}
+		if("isSelected" in x) {
+			let d=this.D_ChipCloudChip_Omit(cf,x);
+			const {isSelected: a,navigationEndpoint,...y}=d; this.g(y);
+			if(a!==true) debugger;
+			this.C_RelatedChip(navigationEndpoint);
+			return;
+		}
 		let d=this.D_ChipCloudChip_Omit(cf,x);
 		const {navigationEndpoint: a,...y}=d; this.g(y);
 		this.C_Continuation(a);
+	}
+	/** @private @arg {D_ChipCloudChip} x */
+	D_ChipCloudChip(x) {
+		const cf="D_ChipCloudChip";
+		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
+		if("isSelected" in x) {
+			let d=this.D_ChipCloudChip_Omit(cf,x);
+			const {isSelected: a,...y}=d; this.g(y);
+			if(a!==true) debugger;
+			return;
+		}
 	}
 	/** @arg {D_ChipCloudChip_Omit_CF} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
@@ -12633,10 +12644,6 @@ class HandleTypes extends ServiceMethods {
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
 		debugger;
 	}
-	/** @private @arg {R_CommentsEntryPointTeaser} x */
-	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
-	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {x;}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
@@ -12660,6 +12667,16 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
+	}
+	/** @private @arg {R_CommentsEntryPointTeaser} x */
+	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
+	/** @private @arg {D_CommentsEntryPointTeaser} x */
+	D_CommentsEntryPointTeaser(x) {x;}
+	/** @private @arg {C_RelatedChip} x */
+	C_RelatedChip(x) {
+		this.T_Endpoint("C_RelatedChip",x,x => {
+			x.relatedChipCommand;
+		});
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
