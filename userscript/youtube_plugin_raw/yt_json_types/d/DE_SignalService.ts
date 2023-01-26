@@ -1,0 +1,1 @@
+type DE_SignalService=GS_Client|S_GetAccountMenu;

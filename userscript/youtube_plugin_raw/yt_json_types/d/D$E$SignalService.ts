@@ -1,1 +1,0 @@
-type D_E_SignalService=GS_Client|S_GetAccountMenu;
