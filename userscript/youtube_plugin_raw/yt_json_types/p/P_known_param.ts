@@ -33,6 +33,8 @@ type P_known_param=[
 	"get_transcript.params.f1",
 	"get_transcript.params.f6",
 	"get_transcript.params",
+	"GetNotificationMenu.ctoken.f1",
+	"GetNotificationMenu.ctoken",
 	"record_notification_interactions.f2.f1",
 	"record_notification_interactions.f2.f14.f1.f1",
 	"record_notification_interactions.f2.f14.f1.f2",
