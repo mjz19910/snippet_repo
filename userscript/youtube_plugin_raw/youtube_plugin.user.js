@@ -7454,9 +7454,14 @@ class HandleTypes extends ServiceMethods {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		f.call(this,[contents,sectionIdentifier,targetId]);
 		this.trackingParams(cf,trackingParams);
-		let k=this.get_keys_of(contents);
-		switch(k[0]) {
-			default: debugger; break;
+		if(contents.length>0) {
+			let cu=contents[0];
+			if(typeof cu!=="object"||!cu) {debugger; return;}
+			let k=this.get_keys_of(cu);
+			switch(k[0]) {
+				case "continuationItemRenderer": break;
+				default: debugger; break;
+			}
 		}
 	}
 	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
@@ -12401,6 +12406,10 @@ class HandleTypes extends ServiceMethods {
 	D_ChipCloud(x) {
 		const cf="D_ChipCloud";
 		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
+		this.R_ChipCloudChip(chips);
+		this.trackingParams(cf,trackingParams);
+		if(horizontalScrollable!==false) debugger;
+		this.z([nextButton,previousButton],this.R_Button);
 		debugger;
 	}
 	/** @private @arg {D_ReelPlayerHeader} x */
