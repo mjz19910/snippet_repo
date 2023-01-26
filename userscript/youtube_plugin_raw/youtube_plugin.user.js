@@ -7588,7 +7588,7 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
-	WebCommandMetadataWithApiUrl(x) {
+	GM_WC_ApiUrl(x) {
 		let cx=x.apiUrl;
 		switch(x.apiUrl) {
 			default: {
@@ -7606,33 +7606,33 @@ class HandleTypes extends ServiceMethods {
 				console.log(`\n${l1}\n\n${typedef_str}\n---\n\n\tG_${url_type_ex},\n---\n\n\tcase "${cx}": ${r2}`);
 				debugger;
 			} break;
-			case "/youtubei/v1/backstage/create_post": return this.GM_WC(x);
-			case "/youtubei/v1/like/removelike": return this.GM_WC(x);
-			case "/youtubei/v1/like/like": return this.GM_WC(x);
-			case "/youtubei/v1/notification/opt_out": return this.GM_WC(x);
-			case "/youtubei/v1/notification/record_interactions": return this.GM_WC(x);
-			case "/youtubei/v1/playlist/create": return this.GM_WC(x);
-			case "/youtubei/v1/flag/get_form": return this.GM_WC(x);
-			case "/youtubei/v1/subscription/subscribe": return this.GM_WC(x);
-			case "/youtubei/v1/feedback": return this.GM_WC(x);
+			case "/youtubei/v1/backstage/create_post": return this.GM_WC_Base(x);
+			case "/youtubei/v1/like/removelike": return this.GM_WC_Base(x);
+			case "/youtubei/v1/like/like": return this.GM_WC_Base(x);
+			case "/youtubei/v1/notification/opt_out": return this.GM_WC_Base(x);
+			case "/youtubei/v1/notification/record_interactions": return this.GM_WC_Base(x);
+			case "/youtubei/v1/playlist/create": return this.GM_WC_Base(x);
+			case "/youtubei/v1/flag/get_form": return this.GM_WC_Base(x);
+			case "/youtubei/v1/subscription/subscribe": return this.GM_WC_Base(x);
+			case "/youtubei/v1/feedback": return this.GM_WC_Base(x);
 			case "/youtubei/v1/browse":
-				if("rootVe" in x) return this.WebCommandMetadataEx(x);
+				if("rootVe" in x) return this.GM_WC_Ex(x);
 				return this.GM_browse(x);
-			case "/youtubei/v1/account/account_menu": return this.GM_WC(x);
-			case "/youtubei/v1/notification/get_unseen_count": return this.GM_WC(x);
-			case "/youtubei/v1/notification/get_notification_menu": return this.GM_WC(x);
-			case "/youtubei/v1/get_transcript": return this.GM_WC(x);
-			case "/youtubei/v1/next": return this.GM_WC(x);
-			case "/youtubei/v1/share/get_share_panel": return this.GM_WC(x);
-			case "/youtubei/v1/browse/edit_playlist": return this.GM_WC(x);
-			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GM_WC(x);
-			case "/youtubei/v1/account/set_setting": return this.GM_WC(x);
-			case "/youtubei/v1/ypc/get_offers": return this.GM_WC(x);
+			case "/youtubei/v1/account/account_menu": return this.GM_WC_Base(x);
+			case "/youtubei/v1/notification/get_unseen_count": return this.GM_WC_Base(x);
+			case "/youtubei/v1/notification/get_notification_menu": return this.GM_WC_Base(x);
+			case "/youtubei/v1/get_transcript": return this.GM_WC_Base(x);
+			case "/youtubei/v1/next": return this.GM_WC_Base(x);
+			case "/youtubei/v1/share/get_share_panel": return this.GM_WC_Base(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.GM_WC_Base(x);
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GM_WC_Base(x);
+			case "/youtubei/v1/account/set_setting": return this.GM_WC_Base(x);
+			case "/youtubei/v1/ypc/get_offers": return this.GM_WC_Base(x);
 		}
 		return;
 	}
 	/** @private @arg {Exclude<Extract<GM_WC,{rootVe:any}>,{apiUrl:any}>} x */
-	WebCommandMetadataOnlyRootVe(x) {
+	GM_WC_RootVe(x) {
 		let cx=x.rootVe;
 		switch(x.rootVe) {
 			default: {
@@ -7649,7 +7649,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
-	WebCommandMetadataEx(x) {
+	GM_WC_Ex(x) {
 		switch(x.rootVe) {
 			case 3854: return this.GM_VE3854_WC(x);
 			case 3611: return this.GM_VE3611_WC(x);
@@ -7683,11 +7683,11 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_WC} x */
-	WebCommandMetadata(x) {
+	GM_WC(x) {
 		const cf="GenericWebCommandMetadata";
-		if("rootVe" in x&&!("apiUrl" in x)) return this.WebCommandMetadataOnlyRootVe(x);
-		if("apiUrl" in x&&!("rootVe" in x)) return this.WebCommandMetadataWithApiUrl(x);
-		if("rootVe" in x&&"apiUrl" in x) return this.WebCommandMetadataEx(x);
+		if("rootVe" in x&&!("apiUrl" in x)) return this.GM_WC_RootVe(x);
+		if("apiUrl" in x&&!("rootVe" in x)) return this.GM_WC_ApiUrl(x);
+		if("rootVe" in x&&"apiUrl" in x) return this.GM_WC_Ex(x);
 		if("sendPost" in x) {
 			const {sendPost,...y}=this.sd(cf,x); this.g(y);
 			if(sendPost!==true) debugger;
@@ -7709,7 +7709,7 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
-	GM_WC(x) {const cf="GM_WC",{sendPost,apiUrl}=this.sd(cf,x); this.primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
+	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.sd(cf,x); this.primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
 	//#endregion {E_}
 	//#region general done
 	/** @private @arg {R_Button} x */
@@ -7896,7 +7896,7 @@ class HandleTypes extends ServiceMethods {
 			case 96368: this.GM_VE96368_WC_browse(x); break;
 			default: x===""; debugger; break;
 		}
-		this.WebCommandMetadata(x);
+		this.GM_WC(x);
 	}
 	/** @private @arg {GM_VE42352_WC['url']} x */
 	_decode_browse_url(x) {
@@ -9507,7 +9507,7 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.sd(cf,x); this.g(y); this.g(y1);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		this.WebCommandMetadata(webCommandMetadata);
+		this.GM_WC(webCommandMetadata);
 		this.D_PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @private @arg {D_PlaylistEdit} x */
@@ -9579,7 +9579,7 @@ class HandleTypes extends ServiceMethods {
 			this.t(resolveUrlCommandMetadata,this.MC_ResolveUrl);
 			return;
 		}
-		this.WebCommandMetadata(this.w(x));
+		this.GM_WC(this.w(x));
 	}
 	/** @private @arg {{accessibility?:D_Accessibility}} x */
 	handle_accessibility(x) {
@@ -11390,7 +11390,7 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/share/get_share_panel") debugger;
-		this.WebCommandMetadata(commandMetadata.webCommandMetadata);
+		this.GM_WC(commandMetadata.webCommandMetadata);
 		this.D_ShareEntityService(shareEntityServiceEndpoint);
 	}
 	/** @private @arg {D_ShareEntityService} x */
@@ -11756,7 +11756,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ResourceStatusInResponseCheck} x */
 	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
-	/** @private @arg {D_ResourceStatusInResponseCheckData} x */
+	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
 		const {serverBuildLabel,resourceStatuses: a,...y}=this.sd(cf,x); this.g(y);
