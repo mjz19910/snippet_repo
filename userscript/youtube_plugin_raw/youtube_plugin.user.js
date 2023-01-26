@@ -9227,6 +9227,25 @@ class HandleTypes extends ServiceMethods {
 		const {signal,...y}=this.sd(cf,x); f(signal);
 		return y;
 	}
+	R_VoiceSearchDialog(x) {
+		const cf="R_VoiceSearchDialog";
+		if(!x.voiceSearchDialogRenderer) debugger;
+		this.R_VoiceSearchDialog(x);
+	}
+	/** @private @arg {TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>} x */
+	S_VoiceSearchPopup_Dialog(x) {
+		const cf="S_VoiceSearchPopup_Dialog";
+		const {popup,popupType,...y}=this.sd(cf,x); this.g(y);
+		if(popupType!=="TOP_ALIGNED_DIALOG") debugger;
+		this.R_VoiceSearchDialog(popup);
+	}
+	/** @private @arg {TA_OpenPopup<TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>>} x */
+	S_VoiceSearchOpenPopup(x) {
+		const cf="S_VoiceSearchOpenPopup";
+		const {clickTrackingParams,openPopupAction,...y}=this.sd(cf,x); this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.S_VoiceSearchPopup_Dialog(openPopupAction);
+	}
 	/** @private @arg {GS_Client} x */
 	GS_Client(x) {
 		const cf="GS_Client";
@@ -9235,27 +9254,22 @@ class HandleTypes extends ServiceMethods {
 			if(x!=="CLIENT_SIGNAL") debugger;
 		});
 		this.z(this.w(om),x => {
+			/** @type {S_Client_Item} */
 			if("openPopupAction" in x) {
-				const {clickTrackingParams,openPopupAction,...y}=this.sd(cf,x); this.g(y);
-				this.clickTrackingParams("openPopupAction",clickTrackingParams);
-				{
-					let x=openPopupAction;
-					const {popup,popupType,...y}=this.sd(cf,x); this.g(y);
-					if(popupType!=="TOP_ALIGNED_DIALOG") debugger;
-					{
-						let x=popup;
-						if(!x.voiceSearchDialogRenderer) debugger;
-						this.R_VoiceSearchDialog(x);
-					}
-				}
+				this.S_VoiceSearchOpenPopup(x);
 				return;
 			}
 			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
 			if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
-			if("signalAction" in x) return;
+			if("signalAction" in x) return this.A_Signal(x);
+			if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
 			debugger;
 		});
 	}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {x;}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {x;}
 	/** @private @arg {GE_ResponseReceived_CF} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
