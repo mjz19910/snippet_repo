@@ -8923,7 +8923,7 @@ class HandleTypes extends ServiceMethods {
 	//#region pause
 	//#endregion
 	/** @private @template T @template U @arg {TE_SignalService<T,U>} x @arg {(this:this,x:T)=>void} f_t @arg {(this:this,x:U)=>void} f_u */
-	E_SignalService(x,f_t,f_u) {
+	TE_SignalService(x,f_t,f_u) {
 		const cf="E_SignalService";
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
 		f_t.call(this,x.commandMetadata);
@@ -8968,7 +8968,7 @@ class HandleTypes extends ServiceMethods {
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.E_SignalService(x,a => {
+			this.TE_SignalService(x,a => {
 				a;
 				debugger;
 			},this.GS_Client);
@@ -10656,7 +10656,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ES_Button} x */
 	ES_Button(x) {
 		const cf="ES_Button";
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x);
 		debugger;
@@ -11117,7 +11117,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
@@ -11666,8 +11666,6 @@ class HandleTypes extends ServiceMethods {
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		debugger;
 	}
-	/** @private @arg {R_NotificationTopbarButton} x */
-	R_NotificationTopbarButton(x) {x; debugger;}
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {x; debugger;}
 	/** @private @arg {R_AddToPlaylistCreate} x */
@@ -11841,9 +11839,25 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams(cf,trackingParams);
 			this.D_Accessibility(accessibility);
 			this.primitive_str(tooltip);
+			if(style!=="STYLE_DEFAULT") debugger;
 			return;
 		}
 		const {avatar,menuRequest,trackingParams,accessibility,tooltip,...y}=x; this.g(y);
+		this.D_Thumbnail(avatar);
+		this.TE_SignalService(menuRequest,a => {
+			a;
+			debugger;
+		},this.S_GetAccountMenu);
+	}
+	/** @private @arg {S_GetAccountMenu} x */
+	S_GetAccountMenu(x) {x; debugger;}
+	/** @private @arg {R_NotificationTopbarButton} x */
+	R_NotificationTopbarButton(x) {this.H_("R_NotificationTopbarButton",x,this.D_NotificationTopbarButton);}
+	/** @private @arg {D_NotificationTopbarButton} x */
+	D_NotificationTopbarButton(x) {
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
+		if(icon.iconType!=="NOTIFICATIONS") debugger;
+		this.TE_SignalService(menuRequest,x => {x; debugger;},x => {x; debugger;});
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
