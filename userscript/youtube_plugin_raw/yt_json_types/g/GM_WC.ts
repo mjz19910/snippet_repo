@@ -1,3 +1,15 @@
+//#region GU_VE
+type GU_VE23462_UrlType="SPaccount_notifications"|"SPaccount_overview";
+type GM_VE83769_UrlType=
+	|"/upload"
+	|"https://music.youtube.com/"
+	|"https://studio.youtube.com/"
+	|"https://www.youtubekids.com/?source=youtube_web"
+	|`https://studio.youtube.com/channel/UC${string}`
+	|"https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273"
+	;
+;
+//#endregion
 //#region GM_WC
 type GM_WC=[
 	GM_VE3611_WC,
@@ -257,14 +269,10 @@ type DE_VE6827_Browse={
 	;
 	params: string;
 };
-type DE_VE23462_Browse={
-	browseId:
-	|"SPaccount_notifications"
-	|"SPaccount_overview"
-	;
-};
-type DE_VE96368_Browse={browseId: "FEsubscriptions";};
+type DE_VE11487_Browse={browseId: "SPunlimited";};
+type DE_VE23462_Browse={browseId: GU_VE23462_UrlType;};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
+type DE_VE96368_Browse={browseId: "FEsubscriptions";};
 //#endregion
 //#region E_VE\d+_.+
 type E_VE3611_Browse={
@@ -287,29 +295,25 @@ type E_VE6827_Browse={
 	commandMetadata: M_VE6827;
 	browseEndpoint: DE_VE6827_Browse;
 };
+type E_VE11487_Browse={
+	clickTrackingParams: string;
+	commandMetadata: M_VE11487;
+	browseEndpoint: DE_VE11487_Browse;
+};
 type E_VE23462_Browse={
 	clickTrackingParams: string;
 	commandMetadata: M_VE23462;
 	browseEndpoint: DE_VE23462_Browse;
-};
-
-type E_VE96368_Browse={
-	clickTrackingParams: string;
-	commandMetadata: M_VE96368;
-	browseEndpoint: DE_VE96368_Browse;
 };
 type E_VE42352_Browse={
 	clickTrackingParams: string;
 	commandMetadata: M_VE42352;
 	browseEndpoint: DE_VE42352_Browse;
 };
-type DE_VE11487_Browse={
-	browseId: "SPunlimited";
-};
-type E_VE11487_Browse={
+type E_VE96368_Browse={
 	clickTrackingParams: string;
-	commandMetadata: M_VE11487;
-	browseEndpoint: DE_VE11487_Browse;
+	commandMetadata: M_VE96368;
+	browseEndpoint: DE_VE96368_Browse;
 };
 
 //#endregion
