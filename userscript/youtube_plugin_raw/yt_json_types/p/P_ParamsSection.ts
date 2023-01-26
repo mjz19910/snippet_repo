@@ -146,7 +146,6 @@ type D_ChipCloudChip_Omit_CF=[
 ][number];
 function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes) {
 	switch(u) {
-		default: u==="";
 	}
 }
 vv_x(cast_objects.as(""));

@@ -9491,6 +9491,8 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		debugger;
 	}
+	/** @private @type {string[]} */
+	service_menu_icons=[];
 	/** @type {RD_MenuServiceIconType} */
 	/** @private @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem(x) {
@@ -9498,7 +9500,7 @@ class HandleTypes extends ServiceMethods {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.R_TextRuns(text);
 		switch(icon.iconType) {
-			default: debugger; break;
+			default: this.service_menu_icons.push(icon.iconType); console.log(); break;
 			case "NOT_INTERESTED":
 			case "ADD_TO_QUEUE_TAIL": break;
 		}
