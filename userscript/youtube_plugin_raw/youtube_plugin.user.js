@@ -10073,12 +10073,7 @@ class HandleTypes extends ServiceMethods {
 	G_WatchResultItem_ItemSections(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-		this.TR_ItemSection_1(x,x => {
-			const cf="G_WatchResult_ContentsItem.TR_ItemSection_2.CType";
-			if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
-			this.do_codegen(cf,x);
-			debugger;
-		});
+		this.TR_ItemSection_1(x,this.R_CommentItemSection_EntryPoint);
 	}
 	/** @private @arg {G_WatchResult_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
