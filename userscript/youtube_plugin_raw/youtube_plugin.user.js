@@ -3252,7 +3252,7 @@ class YtObjectVisitor {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3x<T1,T2,T3>} renderer */
+	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
@@ -7222,13 +7222,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_2x<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
-	/** @private @template CT,T,U @arg {TR_ItemSection_3x<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y);
 		this.TD_ItemSection_3(a,f);
 	}
-	/** @private @template CT,T,U @arg {TD_ItemSection_3x<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @private @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TD_ItemSection_3(x,f) {
 		const cf="TD_ItemSection_3";
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -9486,13 +9486,13 @@ class HandleTypes extends ServiceMethods {
 		if("runs" in x) return this.R_TextRuns(x);
 		debugger;
 	}
-	/** @private @arg {TR_ItemSection_2x<any,any>} x @returns {x is TR_ItemSection_3x<any,any,any>} */
+	/** @private @arg {TR_ItemSection_2x<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @private @arg {TR_ItemSection_3x<{},"comment-item-section","comments-section">} x */
+	/** @private @arg {TR_ItemSection_3<{},"comment-item-section","comments-section">} x */
 	TR_ItemSection_3_CommentItemSection(x) {this.H_("TR_ItemSection_3_CommentItemSection",x,this.TD_ItemSection_3_CommentItemSection);}
-	/** @private @arg {TD_ItemSection_3x<{},"comment-item-section","comments-section">} x */
+	/** @private @arg {TD_ItemSection_3<{},"comment-item-section","comments-section">} x */
 	TD_ItemSection_3_CommentItemSection(x) {
 		const cf="TD_ItemSection_3_CommentItemSection"; this.k(cf,x);
 		const {sectionIdentifier,targetId,trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);
@@ -9813,7 +9813,7 @@ class HandleTypes extends ServiceMethods {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
-	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3x<any,any,any>>} x */
+	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection(x) {
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
 		this.TR_ItemSection(x,([a,...b]) => {
@@ -10292,7 +10292,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RD_NextContinuation} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,this.D_NextContinuation);}
-	/** @private @arg {TR_SectionListItem_3x<{},{},{}>} x */
+	/** @private @arg {TR_SectionListItem_3<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
 		if("itemSectionRenderer" in x) {

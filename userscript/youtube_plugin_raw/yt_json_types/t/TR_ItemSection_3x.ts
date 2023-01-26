@@ -1,1 +1,0 @@
-type TR_ItemSection_3x<CT,T,U>={itemSectionRenderer: TD_ItemSection_3x<CT,T,U>;};
