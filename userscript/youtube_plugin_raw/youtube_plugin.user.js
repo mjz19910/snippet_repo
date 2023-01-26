@@ -4521,7 +4521,8 @@ class CodegenService extends BaseService {
 		/** @private @type {GS_Client} */
 		let u=as(x);
 		switch(u.signal) {
-			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return `TYPE::GS_Client<${this.get_auto_type_name(u.actions[0])},"${u.signal}">`; break;
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return `TYPE::GS_Client`; break;
+			default: console.log("[need to decode signal] [%s]",u.signal);
 		}
 		debugger;
 		return x;
@@ -9230,20 +9231,28 @@ class HandleTypes extends ServiceMethods {
 		const {signal,...y}=this.sd(cf,x); f(signal);
 		return y;
 	}
-	/** @private @arg {TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>} x */
-	S_VoiceSearchPopup_Dialog(x) {
+	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']['popup']} x */
+	S_Client_HandlePopup(x) {
+		const cf="S_Client_HandlePopup";
+		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
+		if("notificationActionRenderer" in x) return this.AR_Notification(x);
+		this.do_codegen(cf,x);
+		debugger;
+	}
+	/** @private @arg {R_NotificationAction} x */
+	AR_Notification(x) {x; debugger;}
+	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']} x */
+	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
 		const {popup,popupType,...y}=this.sd(cf,x); this.g(y);
-		if(popupType!=="TOP_ALIGNED_DIALOG") debugger;
-		if(!popup.voiceSearchDialogRenderer) debugger;
-		this.R_VoiceSearchDialog(popup);
+		this.S_Client_HandlePopup(popup);
 	}
-	/** @private @arg {TA_OpenPopup<TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>>} x */
-	S_VoiceSearchOpenPopup(x) {
-		const cf="S_VoiceSearchOpenPopup";
+	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>} x */
+	S_Client_Popup(x) {
+		const cf="S_Client_Popup";
 		const {clickTrackingParams,openPopupAction,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.S_VoiceSearchPopup_Dialog(openPopupAction);
+		this.S_Client_OpenPopupAction(openPopupAction);
 	}
 	/** @private @arg {GS_Client} x */
 	GS_Client(x) {
@@ -9254,10 +9263,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.z(this.w(om),x => {
 			/** @type {S_Client_Item} */
-			if("openPopupAction" in x) {
-				this.S_VoiceSearchOpenPopup(x);
-				return;
-			}
+			if("openPopupAction" in x) return this.S_Client_Popup(x);
 			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
 			if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
 			if("signalAction" in x) return this.A_Signal(x);

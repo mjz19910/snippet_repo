@@ -1,4 +1,4 @@
 type AD_ReelDismissal={
-	onDismissalCompletionRenderer: AR_Notification;
+	onDismissalCompletionRenderer: R_NotificationAction;
 	trackingParams: string;
 };

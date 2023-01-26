@@ -1,0 +1,1 @@
+type R_NotificationAction={notificationActionRenderer: DR_NotificationAction;};
