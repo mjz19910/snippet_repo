@@ -2420,9 +2420,10 @@ class KnownDataSaver extends ApiBase {
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(ns,idx,store);
-		if(Math.random()>0.999) debugger;
+		if(this.do_random_breakpoint&&Math.random()>0.999) debugger;
 		return true;
 	}
+	do_random_breakpoint=false;
 	/** @api @public @arg {`[${string}]`} k_arg @arg {string|string[]} x */
 	save_string(k_arg,x) {
 		if(x===void 0) {debugger; return;}
