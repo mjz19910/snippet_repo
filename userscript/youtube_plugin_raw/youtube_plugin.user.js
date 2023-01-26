@@ -10407,9 +10407,10 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_str(token);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": break;
 			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE":
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE":
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT":
 		};
 		return y;
 	}
