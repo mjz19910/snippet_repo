@@ -5628,7 +5628,10 @@ class ParserService extends BaseService {
 									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
-								switch(path_parts[3]) {default: u(idx); debugger; path_parts[2]===""; break;}
+								switch(path_parts[3]) {
+									default: u(idx); debugger; path_parts[2]===""; break;
+									case "f1": u(idx); debugger; break;
+								}
 							} break;
 						}
 					} break;
@@ -5917,10 +5920,11 @@ class ParserService extends BaseService {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
-									case "f1": {
+									case "f2": case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+											if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {default: u(idx); debugger; path_parts[4]===""; break;}

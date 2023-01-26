@@ -1,4 +1,5 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [like.likeParams.f6.f1]",
 ];
 type P_PathRoot=[
 	"slot_ad_serving_data_entry",
