@@ -1,1 +1,1 @@
-type Html5PlaybackOnesieConfig={html5PlaybackOnesieConfig: R_CommonConfig;};
+type R_Html5PlaybackOnesieConfig={html5PlaybackOnesieConfig: R_CommonConfig;};

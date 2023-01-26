@@ -7,7 +7,7 @@ type DE_VE3832_Watch={
 	startTimeSeconds?: number;
 	continuePlayback?: false;
 	loggingContext: R_VssLoggingContext;
-	watchEndpointSupportedOnesieConfig: Html5PlaybackOnesieConfig;
+	watchEndpointSupportedOnesieConfig: R_Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig: R_PrefetchHintConfig;
 	playerParams: string;
 	watchEndpointMusicSupportedConfigs: R_WatchEndpointMusicConfig;
