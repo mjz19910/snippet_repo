@@ -10847,7 +10847,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_TwoColumnBrowseResults} x */
 	R_TwoColumnBrowseResults(x) {
-		this.TwoColumnBrowseResultsData(this.w(x));
+		this.D_TwoColumnBrowseResults(this.w(x));
 	}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
@@ -11029,14 +11029,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {G_TopbarButtonItem} x */
 	TopbarButtonItem(x) {
 		const cf="TopbarButtonItem"; this.k(cf,x);
-		// TODO
-		if("topbarMenuButtonRenderer" in x) return;
-		if("notificationTopbarButtonRenderer" in x) return;
+		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
+		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
 		debugger;
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
-	TwoColumnBrowseResultsData(x) {
-		const cf="TwoColumnBrowseResultsData";
+	D_TwoColumnBrowseResults(x) {
+		const cf="D_TwoColumnBrowseResults";
 		const {tabs,secondaryContents,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.SecondaryContents);
@@ -11163,10 +11162,10 @@ class HandleTypes extends ServiceMethods {
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
-		if("loopCommand" in x) return;
-		if("updateToggleButtonStateCommand" in x) return;
-		if("changeMarkersVisibilityCommand" in x) return;
-		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return;
+		if("loopCommand" in x) {debugger; return;}
+		if("updateToggleButtonStateCommand" in x) {debugger; return;}
+		if("changeMarkersVisibilityCommand" in x) {debugger; return;}
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return;}
 		debugger;
 	}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
@@ -11506,12 +11505,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_LiveChat} x */
 	R_LiveChat(x) {this.H_("R_LiveChat",x,this.D_LiveChat);}
-	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {x; debugger;}
 	/** @private @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal",x,this.D_ReportFormModal);}
-	/** @private @arg {D_ReportFormModal} x */
-	D_ReportFormModal(x) {x; debugger;}
 	/** @private @arg {RSG_SharePanel} x */
 	RS_GetSharePanel(x) {
 		const cf="GetSharePanel";
@@ -11524,12 +11519,6 @@ class HandleTypes extends ServiceMethods {
 			console.log("[RS_GetSharePanel.openPopupAction]",openPopupAction);
 		});
 	}
-	/** @private @arg {A_AddToGuideSection} x */
-	A_AddToGuideSection(x) {x; debugger;}
-	/** @private @arg {A_UpdateSubscribeButton} x */
-	A_UpdateSubscribeButton(x) {x; debugger;}
-	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {x; debugger;}
 	/** @private @arg {RS_Subscribe_ActionItem} x */
 	RS_Subscribe_ActionItem(x) {
 		if("openPopupAction" in x) {
@@ -11584,48 +11573,26 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
 	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
-	/** @private @arg {D_WatchEndpointMusicConfig} x */
-	D_WatchEndpointMusicConfig(x) {x; debugger;}
 	/** @private @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader",x,this.D_PlaylistHeader);}
-	/** @private @arg {D_PlaylistHeader} x */
-	D_PlaylistHeader(x) {x; debugger;}
 	/** @private @arg {R_StructuredDescriptionContent} x */
 	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent",x,this.D_StructuredDescriptionContent);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {x; debugger;}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("R_ProductList",x,this.D_ProductList);}
-	/** @private @arg {D_ProductList} x */
-	D_ProductList(x) {x; debugger;}
 	/** @private @arg {R_ClipSection} x */
 	R_ClipSection(x) {this.H_("R_ClipSection",x,this.D_ClipSection);}
-	/** @private @arg {D_ClipSection} x */
-	D_ClipSection(x) {x; debugger;}
 	/** @private @arg {R_MacroMarkersList} x */
 	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList",x,this.D_MacroMarkersList);}
-	/** @private @arg {D_MacroMarkersList} x */
-	D_MacroMarkersList(x) {x; debugger;}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader",x,this.D_EngagementPanelTitleHeader);}
-	/** @private @arg {D_EngagementPanelTitleHeader} x */
-	D_EngagementPanelTitleHeader(x) {x; debugger;}
 	/** @private @arg {R_Hint} x */
 	R_Hint(x) {this.H_("R_Hint",x,this.D_Hint);}
-	/** @private @arg {D_Hint} x */
-	D_Hint(x) {x; debugger;}
 	/** @private @arg {R_VideoViewCount} x */
 	R_VideoViewCount(x) {this.H_("R_VideoViewCount",x,this.D_VideoViewCount);}
-	/** @private @arg {D_VideoViewCount} x */
-	D_VideoViewCount(x) {x; debugger;}
 	/** @private @arg {R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults",x,this.D_TwoColumnSearchResults);}
-	/** @private @arg {D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {x; debugger;}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo",x,this.D_PlaylistSidebarSecondaryInfo);}
-	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
-	D_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
 	/** @private @arg {R_LikeButton} x */
 	R_LikeButton(x) {this.H_("R_LikeButton",x,this.D_LikeButton);}
 	/** @private @arg {D_LikeButton} x */
@@ -11657,8 +11624,6 @@ class HandleTypes extends ServiceMethods {
 	E_Like_C(v) {v; debugger;};
 	/** @private @arg {E_Like} x */
 	E_Like(x) {this.T_Endpoint("E_Like",x,this.E_Like_D,this.E_Like_C);}
-	/** @private @arg {DE_Like} x */
-	DE_Like(x) {x; debugger;}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		if("videoId" in x) return this.videoId(this.w(x));
@@ -11667,34 +11632,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {D_TranscriptSearchPanel} x */
-	D_TranscriptSearchPanel(x) {x; debugger;}
-	/** @private @arg {D_ToggleButton} x */
-	D_ToggleButton(x) {x; debugger;}
-	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
-	D_PlaylistSidebarPrimaryInfo(x) {x; debugger;}
 	/** @private @arg {RD_TimedContinuation} x */
 	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation",x,this.DD_TimedContinuation);}
-	/** @private @arg {DD_TimedContinuation} x */
-	DD_TimedContinuation(x) {x; debugger;}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat",x,this.DC_LiveChat);}
-	/** @private @arg {DC_LiveChat} x */
-	DC_LiveChat(x) {x; debugger;}
-	/** @private @arg {DC_PlaylistPanel} x */
-	DC_PlaylistPanel(x) {x; debugger;}
-	/** @private @arg {D_CommentSimplebox} x */
-	D_CommentSimplebox(x) {x; debugger;}
-	/** @private @arg {D_SortFilterSubMenu} x */
-	D_SortFilterSubMenu(x) {x; debugger;}
-	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {x; debugger;}
-	/** @private @arg {AD_BrowserMediaSession} x */
-	AD_BrowserMediaSession(x) {x; debugger;}
-	/** @private @arg {D_ToggleMenuServiceItem} x */
-	D_ToggleMenuServiceItem(x) {x; debugger;}
-	/** @private @arg {D_CustomEmoji} x */
-	D_CustomEmoji(x) {x; debugger;}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {
 		const {results,trackingParams,...y}=x; this.g(y);
@@ -11712,22 +11653,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ChipCloud} x */
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
-	/** @private @arg {D_ChipCloud} x */
-	D_ChipCloud(x) {x; debugger;}
-	/** @private @arg {D_ReelPlayerHeader} x */
-	D_ReelPlayerHeader(x) {x; debugger;}
-	/** @private @arg {D_PivotButton} x */
-	D_PivotButton(x) {x; debugger;}
-	/** @private @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {x; debugger;}
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {this.H_("AD_HideEnclosing",x,this.primitive_of_string);}
-	/** @private @arg {D_NextContinuation} x */
-	D_NextContinuation(x) {x; debugger;}
-	/** @private @arg {D_PlaylistPanelVideo} x */
-	D_PlaylistPanelVideo(x) {x; debugger;}
-	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {x; debugger;}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist";
@@ -11735,12 +11662,6 @@ class HandleTypes extends ServiceMethods {
 		this.z(playlists,this.R_PlaylistAddToOption);
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
-	/** @private @arg {R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {x; debugger;}
-	/** @private @arg {R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {x; debugger;}
-	/** @private @arg {D_Comment} x */
-	D_Comment(x) {x; debugger;}
 	/** @private @arg {D_ProfileColumn} x */
 	D_ProfileColumn(x) {this.H_("D_ProfileColumn",x,x => this.z(x,this.G_ProfileColumnItem));}
 	/** @private @arg {G_ProfileColumnItem} x */
@@ -11773,8 +11694,6 @@ class HandleTypes extends ServiceMethods {
 	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions",x,x => this.z(x,this.G_BrowseFeedContent));}
 	/** @private @arg {R_SearchBox} x */
 	R_SearchBox(x) {this.H_("D_ProfileColumn",x,this.D_SearchBox);}
-	/** @private @arg {D_SearchBox} x */
-	D_SearchBox(x) {x; debugger;}
 	/** @private @arg {R_SubFeedSelector} x */
 	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector",x,this.D_SubFeedSelector);}
 	/** @private @arg {D_SubFeedSelector} x */
@@ -11800,6 +11719,90 @@ class HandleTypes extends ServiceMethods {
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		debugger;
 	}
+	/** @private @arg {R_TopbarMenuButton} x */
+	R_TopbarMenuButton(x) {x; debugger;}
+	/** @private @arg {R_TopbarMenuButton} x */
+	R_NotificationTopbarButton(x) {x; debugger;}
+	/** @private @arg {D_SearchBox} x */
+	D_SearchBox(x) {x; debugger;}
+	/** @private @arg {R_AddToPlaylistCreate} x */
+	R_AddToPlaylistCreate(x) {x; debugger;}
+	/** @private @arg {R_PlaylistAddToOption} x */
+	R_PlaylistAddToOption(x) {x; debugger;}
+	/** @private @arg {D_Comment} x */
+	D_Comment(x) {x; debugger;}
+	/** @private @arg {D_LiveChat} x */
+	D_LiveChat(x) {x; debugger;}
+	/** @private @arg {D_ReportFormModal} x */
+	D_ReportFormModal(x) {x; debugger;}
+	/** @private @arg {D_PlaylistHeader} x */
+	D_PlaylistHeader(x) {x; debugger;}
+	/** @private @arg {D_WatchEndpointMusicConfig} x */
+	D_WatchEndpointMusicConfig(x) {x; debugger;}
+	/** @private @arg {A_AddToGuideSection} x */
+	A_AddToGuideSection(x) {x; debugger;}
+	/** @private @arg {A_UpdateSubscribeButton} x */
+	A_UpdateSubscribeButton(x) {x; debugger;}
+	/** @private @arg {C_RunAttestation} x */
+	C_RunAttestation(x) {x; debugger;}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {x; debugger;}
+	/** @private @arg {D_ProductList} x */
+	D_ProductList(x) {x; debugger;}
+	/** @private @arg {D_ClipSection} x */
+	D_ClipSection(x) {x; debugger;}
+	/** @private @arg {D_MacroMarkersList} x */
+	D_MacroMarkersList(x) {x; debugger;}
+	/** @private @arg {D_EngagementPanelTitleHeader} x */
+	D_EngagementPanelTitleHeader(x) {x; debugger;}
+	/** @private @arg {D_Hint} x */
+	D_Hint(x) {x; debugger;}
+	/** @private @arg {D_VideoViewCount} x */
+	D_VideoViewCount(x) {x; debugger;}
+	/** @private @arg {D_TwoColumnSearchResults} x */
+	D_TwoColumnSearchResults(x) {x; debugger;}
+	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	D_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
+	/** @private @arg {DE_Like} x */
+	DE_Like(x) {x; debugger;}
+	/** @private @arg {D_TranscriptSearchPanel} x */
+	D_TranscriptSearchPanel(x) {x; debugger;}
+	/** @private @arg {D_ToggleButton} x */
+	D_ToggleButton(x) {x; debugger;}
+	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
+	D_PlaylistSidebarPrimaryInfo(x) {x; debugger;}
+	/** @private @arg {DD_TimedContinuation} x */
+	DD_TimedContinuation(x) {x; debugger;}
+	/** @private @arg {DC_LiveChat} x */
+	DC_LiveChat(x) {x; debugger;}
+	/** @private @arg {DC_PlaylistPanel} x */
+	DC_PlaylistPanel(x) {x; debugger;}
+	/** @private @arg {D_CommentSimplebox} x */
+	D_CommentSimplebox(x) {x; debugger;}
+	/** @private @arg {D_SortFilterSubMenu} x */
+	D_SortFilterSubMenu(x) {x; debugger;}
+	/** @private @arg {E_ShowEngagementPanel} x */
+	E_ShowEngagementPanel(x) {x; debugger;}
+	/** @private @arg {AD_BrowserMediaSession} x */
+	AD_BrowserMediaSession(x) {x; debugger;}
+	/** @private @arg {D_ToggleMenuServiceItem} x */
+	D_ToggleMenuServiceItem(x) {x; debugger;}
+	/** @private @arg {D_CustomEmoji} x */
+	D_CustomEmoji(x) {x; debugger;}
+	/** @private @arg {D_ChipCloud} x */
+	D_ChipCloud(x) {x; debugger;}
+	/** @private @arg {D_ReelPlayerHeader} x */
+	D_ReelPlayerHeader(x) {x; debugger;}
+	/** @private @arg {D_PivotButton} x */
+	D_PivotButton(x) {x; debugger;}
+	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {x; debugger;}
+	/** @private @arg {D_NextContinuation} x */
+	D_NextContinuation(x) {x; debugger;}
+	/** @private @arg {D_PlaylistPanelVideo} x */
+	D_PlaylistPanelVideo(x) {x; debugger;}
+	/** @private @arg {D_C4TabbedHeader} x */
+	D_C4TabbedHeader(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
