@@ -1,6 +1,6 @@
 //#region GU_VE
 type GU_VE23462_UrlType="SPaccount_notifications"|"SPaccount_overview";
-type GM_VE83769_UrlType=
+type GU_VE83769_UrlType=
 	|"/upload"
 	|"https://music.youtube.com/"
 	|"https://studio.youtube.com/"
@@ -114,7 +114,7 @@ type GM_VE42352_WC={
 	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE83769_WC={
-	url: GM_VE83769_UrlType;
+	url: GU_VE83769_UrlType;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };
