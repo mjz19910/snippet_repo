@@ -1,5 +1,7 @@
 type P_LogItems=[
 	"[parse_value.gen_ns] [like.removeLikeParams.f1]",
+	"[parse_value.gen_ns] [like.removeLikeParams.f5.f1]",
+	"[parse_value.gen_ns] [like.removeLikeParams.f5.f2]",
 	"[parse_value.gen_ns] [like.removeLikeParams.f6]",
 ];
 type P_PathRoot=[
