@@ -11658,7 +11658,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_Like} x */
 	E_Like(x) {this.T_Endpoint("E_Like",x,this.E_Like_D,this.E_Like_C);}
 	/** @private @arg {DE_Like} x */
-	DE_Like(x) {x;}
+	DE_Like(x) {x; debugger;}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		if("videoId" in x) return this.videoId(this.w(x));
