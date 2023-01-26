@@ -98,6 +98,7 @@ type T_Endpoint_CF=[
 	"C_Executor",
 	"C_GetSurvey",
 	"C_ReloadContinuationItems",
+	"C_RefreshPlaylist",
 	"C_ScrollToEngagementPanel",
 	"C_ShowReloadUi",
 	"E_Browse",

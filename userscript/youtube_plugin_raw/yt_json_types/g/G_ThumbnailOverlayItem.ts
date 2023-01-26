@@ -7,5 +7,6 @@ type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayToggleButton
 	|R_ThumbnailOverlayResumePlayback
 	|R_ThumbnailOverlayEndorsement
+	|R_ThumbnailOverlaySidePanel
 	;
 ;

@@ -5768,6 +5768,9 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "next_continuation": u(idx); break;
+			case "aadc_guidelines_state_entity_key": u(idx); break;
+			case "TimedContinuation": u(idx); break;
 			case "D_Browse": u(idx); break;
 			case "GetNotificationMenu": {
 				const idx=2;
@@ -6022,6 +6025,7 @@ class ParserService extends BaseService {
 					case "f93": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(map_entry_value instanceof Map) return;
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
@@ -10530,9 +10534,10 @@ class HandleTypes extends ServiceMethods {
 		// this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		// if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 	}
-	/** @arg {Extract<G_SectionList,{targetId:"browse-feedFEsubscriptions"}>} x */
+	/** @private @arg {Extract<G_SectionList,{targetId:"browse-feedFEsubscriptions"}>} x */
 	browse_feed_subscriptions(x) {
-		const {contents,trackingParams,targetId,...y}=x; this.g(y);
+		const cf="browse_feed_subscriptions";
+		const {contents,trackingParams,targetId,...y}=this.sd(cf,x); this.g(y);
 		this.z(contents,x => {
 			if("itemSectionRenderer" in x) {
 				return;
@@ -12126,112 +12131,245 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList",x,this.G_SectionList);}
 	/** @private @arg {RS_Unsubscribe} x */
-	RS_Unsubscribe(x) {x; debugger;}
+	RS_Unsubscribe(x) {
+		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {RSM_ChannelPreference} x */
-	RSM_ChannelPreference(x) {x; debugger;}
+	RSM_ChannelPreference(x) {
+		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {x; debugger;}
+	G_CommentsSection(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ExpandableTab} x */
-	D_ExpandableTab(x) {x; debugger;}
+	D_ExpandableTab(x) {
+		const {endpoint,title,selected,expandedText,content,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_FeedNudge} x */
-	D_FeedNudge(x) {x; debugger;}
+	D_FeedNudge(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {x; debugger;}
+	R_BrowseFeed(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {R_EndScreenPlaylist} x */
-	R_EndScreenPlaylist(x) {x; debugger;}
+	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist",x,this.D_EndScreenPlaylist);}
+	/** @private @arg {D_EndScreenPlaylist} x */
+	D_EndScreenPlaylist(x) {x; debugger;}
 	/** @private @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {x; debugger;}
+	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo",x,this.D_EndScreenVideo);}
 	/** @private @arg {D_SearchBox} x */
-	D_SearchBox(x) {x; debugger;}
+	D_SearchBox(x) {
+		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {x; debugger;}
+	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {x; debugger;}
+	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {D_Comment} x */
-	D_Comment(x) {x; debugger;}
+	D_Comment(x) {
+		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {x; debugger;}
+	D_LiveChat(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ReportFormModal} x */
-	D_ReportFormModal(x) {x; debugger;}
+	D_ReportFormModal(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_PlaylistHeader} x */
-	D_PlaylistHeader(x) {x; debugger;}
+	D_PlaylistHeader(x) {
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
-	D_WatchEndpointMusicConfig(x) {x; debugger;}
+	D_WatchEndpointMusicConfig(x) {
+		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {A_AddToGuideSection} x */
-	A_AddToGuideSection(x) {x; debugger;}
+	A_AddToGuideSection(x) {
+		const {clickTrackingParams,addToGuideSectionAction,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {A_UpdateSubscribeButton} x */
-	A_UpdateSubscribeButton(x) {x; debugger;}
+	A_UpdateSubscribeButton(x) {this.H_("A_UpdateSubscribeButton",x,this.DAU_SubscribeButton);}
 	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {x; debugger;}
+	C_RunAttestation(x) {this.H_("C_RunAttestation",x,this.D_RunAttestation);}
 	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {x; debugger;}
+	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {D_ProductList} x */
-	D_ProductList(x) {x; debugger;}
+	D_ProductList(x) {
+		const {contents,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ClipSection} x */
-	D_ClipSection(x) {x; debugger;}
+	D_ClipSection(x) {this.H_("D_ClipSection",x,x => this.z(x,this.R_ClipCreation));}
+	/** @private @arg {R_ClipCreation} x */
+	R_ClipCreation(x) {this.H_("C_RunAttestation",x,this.D_ClipCreation);}
+	/** @private @arg {D_ClipCreation} x */
+	D_ClipCreation(x) {
+		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=x; this.g(y);
+		this.R_ClipCreationScrubber(scrubber);
+		debugger;
+	}
+	/** @private @template {number[]} T @arg {T} a */
+	exact_arr(...a) {
+		return a;
+	}
+	/** @private @arg {R_ClipCreationScrubber} x */
+	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber",x,this.D_ClipCreationScrubber);}
+	/** @private @arg {D_ClipCreationScrubber} x */
+	D_ClipCreationScrubber(x) {
+		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=x; this.g(y);
+		let u=this.exact_arr(60000,5000,15000,120000);
+		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
+		if(!this.eq_keys(t,u)) debugger;
+		this.z([startAccessibility,endAccessibility,durationAccessibility],this.D_Accessibility);
+		debugger;
+	}
 	/** @private @arg {D_MacroMarkersList} x */
-	D_MacroMarkersList(x) {x; debugger;}
+	D_MacroMarkersList(x) {
+		const {contents,syncButtonLabel,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
-	D_EngagementPanelTitleHeader(x) {x; debugger;}
+	D_EngagementPanelTitleHeader(x) {
+		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_Hint} x */
-	D_Hint(x) {x; debugger;}
+	D_Hint(x) {
+		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_VideoViewCount} x */
-	D_VideoViewCount(x) {x; debugger;}
+	D_VideoViewCount(x) {
+		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {x; debugger;}
+	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
-	D_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
+	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo",x,this.R_VideoOwner);}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
 		const cf="DE_Like"; this.k(cf,x);
 		switch(x.status) {
 			case "INDIFFERENT": {
 				const cf="E_LikeIndifferent";
-				const {status,target,removeLikeParams,...y}=x; this.g(y);
+				const {status,target,removeLikeParams,...y}=this.sd(cf,x); this.g(y);
 				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
 			} break;
 			case "LIKE": {
 				const cf="E_LikeLike";
-				const {status,target,actions,likeParams,...y}=x; this.g(y);
+				const {status,target,actions,likeParams,...y}=this.sd(cf,x); this.g(y);
 				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
 			} break;
 			case "DISLIKE": {
 				const cf="E_LikeDislike";
-				const {status,target,dislikeParams,...y}=x; this.g(y);
+				const {status,target,dislikeParams,...y}=this.sd(cf,x); this.g(y);
 				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
 			} break;
 		}
 	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
-	D_TranscriptSearchPanel(x) {x; debugger;}
+	D_TranscriptSearchPanel(x) {
+		const {body,footer,trackingParams,targetId,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ToggleButton} x */
-	D_ToggleButton(x) {x; debugger;}
+	D_ToggleButton(x) {
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
-	D_PlaylistSidebarPrimaryInfo(x) {x; debugger;}
+	D_PlaylistSidebarPrimaryInfo(x) {
+		const cf="D_PlaylistSidebarPrimaryInfo";
+		const {thumbnailRenderer,title,stats,menu,navigationEndpoint,badges,description,showMoreText,...y}=this.D_Omit_ThumbnailOverlay(cf,x); this.g(y);
+		debugger;
+	}
 	/** @private @arg {DD_TimedContinuation} x */
-	DD_TimedContinuation(x) {x; debugger;}
+	DD_TimedContinuation(x) {
+		const cf="DD_TimedContinuation";
+		const {timeoutMs,continuation,...y}=x; this.g(y);
+		if(timeoutMs!==60000) debugger;
+		this.params(cf,"TimedContinuation",continuation);
+		debugger;
+	}
 	/** @private @arg {DC_LiveChat} x */
-	DC_LiveChat(x) {x; debugger;}
+	DC_LiveChat(x) {
+		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {DC_PlaylistPanel} x */
-	DC_PlaylistPanel(x) {x; debugger;}
+	DC_PlaylistPanel(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_CommentSimplebox} x */
-	D_CommentSimplebox(x) {x; debugger;}
+	D_CommentSimplebox(x) {
+		const cf="D_CommentSimplebox";
+		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=x; this.g(y);
+		this.R_Button(submitButton);
+		this.R_Button(cancelButton);
+		this.params(cf,"aadc_guidelines_state_entity_key",aadcGuidelinesStateEntityKey);
+		debugger;
+	}
 	/** @private @arg {D_SortFilterSubMenu} x */
-	D_SortFilterSubMenu(x) {x; debugger;}
+	D_SortFilterSubMenu(x) {
+		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {x; debugger;}
+	E_ShowEngagementPanel(x) {
+		const cf="E_ShowEngagementPanel";
+		const {clickTrackingParams,showEngagementPanelEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.D_ShowEngagementPanel(showEngagementPanelEndpoint);
+	}
+	/** @private @arg {D_ShowEngagementPanel} x */
+	D_ShowEngagementPanel(x) {
+		const {panelIdentifier,...y}=x; this.g(y);
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	}
 	/** @private @arg {AD_BrowserMediaSession} x */
-	AD_BrowserMediaSession(x) {x; debugger;}
+	AD_BrowserMediaSession(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
-	D_ToggleMenuServiceItem(x) {x; debugger;}
+	D_ToggleMenuServiceItem(x) {
+		const {defaultText,defaultIcon,defaultServiceEndpoint,toggledText,toggledIcon,toggledServiceEndpoint,trackingParams,isToggled,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_CustomEmoji} x */
-	D_CustomEmoji(x) {x; debugger;}
+	D_CustomEmoji(x) {
+		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ChipCloud} x */
-	D_ChipCloud(x) {x; debugger;}
+	D_ChipCloud(x) {
+		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_ReelPlayerHeader} x */
 	D_ReelPlayerHeader(x) {
 		const cf="D_ReelPlayerHeader";
-		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=x; this.g(y);
+		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.sd(cf,x); this.g(y);
 		this.R_TextRuns(reelTitleText);
 		this.R_SimpleText(timestampText);
 		this.E_Browse(channelNavigationEndpoint);
@@ -12240,18 +12378,44 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_PivotButton} x */
-	D_PivotButton(x) {x; debugger;}
+	D_PivotButton(x) {
+		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {x; debugger;}
+	A_ShowEngagementPanelScrim(x) {
+		const cf="A_ShowEngagementPanelScrim";
+		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=x; this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.AD_ShowEngagementPanelScrim(showEngagementPanelScrimAction);
+		debugger;
+	}
+	/** @private @arg {AD_ShowEngagementPanelScrim} x */
+	AD_ShowEngagementPanelScrim(x) {
+		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_NextContinuation} x */
-	D_NextContinuation(x) {x; debugger;}
+	D_NextContinuation(x) {
+		const cf="D_NextContinuation";
+		const {continuation,clickTrackingParams,...y}=x; this.g(y);
+		this.params(cf,"next_continuation.continuation",continuation);
+		debugger;
+	}
 	/** @private @arg {D_PlaylistPanelVideo} x */
-	D_PlaylistPanelVideo(x) {x; debugger;}
+	D_PlaylistPanelVideo(x) {
+		const {thumbnail,thumbnailOverlays,title,trackingParams,indexText,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_C4TabbedHeader} x */
-	D_C4TabbedHeader(x) {x; debugger;}
+	D_C4TabbedHeader(x) {
+		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
 	E_Like_C(x) {
-		const {webCommandMetadata: a,...y}=x; this.g(y);
+		const cf="E_Like_C";
+		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
 		switch(a.apiUrl) {
 			default: debugger; break;
 			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
@@ -12261,42 +12425,92 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GM_like_removelike} x */
 	GM_like_removelike(x) {
-		const {apiUrl: a,sendPost: b,...y}=x; this.g(y);
+		const cf="GM_like_removelike";
+		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
 		if(a!=="/youtubei/v1/like/removelike") debugger;
 		if(b!==true) debugger;
 	}
 	/** @private @arg {GM_like_dislike} x */
 	GM_like_dislike(x) {
-		const {apiUrl: a,sendPost: b,...y}=x; this.g(y);
+		const cf="GM_like_dislike";
+		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
 		if(a!=="/youtubei/v1/like/dislike") debugger;
 		if(b!==true) debugger;
 	}
 	/** @private @arg {GM_like_like} x */
 	GM_like_like(x) {
-		const {apiUrl: a,sendPost: b,...y}=x; this.g(y);
+		const cf="GM_like_like";
+		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
 		if(a!=="/youtubei/v1/like/like") debugger;
 		if(b!==true) debugger;
 	}
 	/** @private @arg {D_Channel_MD} x */
-	D_Channel_MD(x) {x; debugger;}
+	D_Channel_MD(x) {
+		const cf="D_Channel_MD";
+		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_Playlist_MD} x */
-	D_Playlist_MD(x) {x; debugger;}
+	D_Playlist_MD(x) {
+		const cf="D_Playlist_MD";
+		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_AlertWithButton} x */
-	D_AlertWithButton(x) {x; debugger;}
+	D_AlertWithButton(x) {
+		const cf="D_AlertWithButton";
+		const {type,text,dismissButton,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_ChannelSwitcherPage} x */
-	D_ChannelSwitcherPage(x) {x; debugger;}
+	D_ChannelSwitcherPage(x) {
+		const cf="D_ChannelSwitcherPage";
+		const {header,targetId,contents,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_MerchandiseShelf} x */
-	D_MerchandiseShelf(x) {x; debugger;}
+	D_MerchandiseShelf(x) {
+		const cf="D_ChannelSwitcherPage";
+		const {title,items,trackingParams,showText,hideText,actionButton,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_VideoPrimaryInfo} x */
-	D_VideoPrimaryInfo(x) {x; debugger;}
+	D_VideoPrimaryInfo(x) {
+		const cf="D_ChannelSwitcherPage";
+		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {D_VideoSecondaryInfo} x */
-	D_VideoSecondaryInfo(x) {x; debugger;}
+	D_VideoSecondaryInfo(x) {
+		const cf="D_ChannelSwitcherPage";
+		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.sd(cf,x); this.g(y);
+		this.R_VideoOwner(owner);
+	}
 	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {x; debugger;}
+	C_RefreshPlaylist(x) {
+		const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,x => this.D_RefreshPlaylist(this.w(x)));
+		const {clickTrackingParams,refreshPlaylistCommand,...y}=this.sd(cf,x); this.g(y);
+	}
+	/** @private @arg {D_RefreshPlaylist} x */
+	D_RefreshPlaylist(x) {x; debugger;}
+	/** @private @arg {R_VideoOwner} x */
+	R_VideoOwner(x) {x; debugger;}
 	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {x; debugger;}
+	R_MusicCarouselShelf(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {x; debugger;}
+	R_MusicShelf(x) {
+		const {...y}=x; this.g(y);
+		debugger;
+	}
+	/** @private @arg {D_EndScreenVideo} x */
+	D_EndScreenVideo(x) {x; debugger;}
+	/** @private @arg {D_AddToPlaylistCreate} x */
+	D_AddToPlaylistCreate(x) {x; debugger;}
+	/** @private @arg {D_PlaylistAddToOption} x */
+	D_PlaylistAddToOption(x) {x; debugger;}
+	/** @private @arg {DAU_SubscribeButton} x */
+	DAU_SubscribeButton(x) {x; debugger;}
+	/** @private @arg {D_RunAttestation} x */
+	D_RunAttestation(x) {x; debugger;}
+	/** @private @arg {G_StructuredDescriptionContentItem} x */
+	G_StructuredDescriptionContentItem(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
