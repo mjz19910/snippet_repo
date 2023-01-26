@@ -10408,8 +10408,8 @@ class HandleTypes extends ServiceMethods {
 		this.z([y1,y2],this.g);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		switch(targetId) {
-			case "browse-feedFEwhat_to_watch": break;
 			default: debugger; break;
+			case "browse-feedFEwhat_to_watch": case "watch-next-feed":
 		}
 	}
 	/** @private @template {DC_Continuation} T @arg {string} cf @arg {T} x */
