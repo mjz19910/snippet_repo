@@ -5909,7 +5909,8 @@ class ParserService extends BaseService {
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: u(idx); debugger; path_parts[3]===""; break; {
+									default: u(idx); debugger; path_parts[3]===""; break;
+									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
@@ -8225,8 +8226,14 @@ class HandleTypes extends ServiceMethods {
 	D_Video(x) {
 		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Accessibility",x);}
 		if("owner" in x) {console.log("video.owner",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Owner",x);}
+		if("videoId" in x) {
+			if("descriptionSnippet" in x) {
+				return this.D_Video_Handle("D_Video_videoId_2",x);
+			}
+			return this.D_Video_Handle("D_Video_videoId",x);
+		}
 		console.log("video.other",this.get_keys_of(x).join());
-		this.D_Video_Handle("D_Video_NoOwner",x);
+		this.D_Video_Handle("D_Video_Other",x);
 	}
 	/** @private @arg {R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("R_ToggleButton",x,this.D_ToggleButton);}
