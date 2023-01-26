@@ -12032,8 +12032,9 @@ class HandleTypes extends ServiceMethods {
 				if(j!=="sid-wn-chips-watch-next-feed") debugger;
 				this.z(a,x => {
 					if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
-					if("adSlotRenderer" in x) return this.R_AdSlot(x);
 					if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+					if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
+					if("adSlotRenderer" in x) return this.R_AdSlot(x);
 					if("" in x) return;
 					debugger;
 				});
@@ -12042,27 +12043,37 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @private @arg {R_CompactPlaylist} x */
+	R_CompactPlaylist(x) {x; debugger;}
 	/** @private @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	/** @private @arg {D_CompactRadio['secondaryNavigationEndpoint']} x */
+	D_CompactRadio_NavE(x) {
+		if(!x.watchEndpoint) debugger;
+		this.E_Watch(x);
+
+	}
+	/** @private @arg {D_CompactRadio['shareUrl']} b */
+	D_CompactRadio_shareUrl(b) {
+		let up=this.parse_with_url_parse(b);
+		if(this.is_url_with_pathname(up,"/watch")) {
+			let {...s}=this.parse_url_search_params(up.search);
+			{
+				let {v,playnext,list,...y}=s; this.g(y);
+				console.log("[CompactRadio.v]",v);
+				console.log("[CompactRadio.playnext]",playnext);
+				console.log("[CompactRadio.list]",list);
+			}
+			return;
+		}
+		up==="";
+		debugger;
+	}
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
-		let {...o}=this.Omit_Menu_Radio(cf,x); o;
-		// if(!a1.watchEndpoint) debugger;
-		// this.E_Watch(a1);
-		// let up=this.parse_with_url_parse(shareUrl);
-		// if(this.is_url_with_pathname(up,"/watch")) {
-		// 	let {...s}=this.parse_url_search_params(up.search);
-		// 	{
-		// 		let {v,playnext,list,...y}=s; this.g(y);
-		// 		console.log("[CompactRadio.v]",v);
-		// 		console.log("[CompactRadio.playnext]",playnext);
-		// 		console.log("[CompactRadio.list]",list);
-		// 	}
-		// 	return;
-		// }
-		// up==="";
-		debugger;
+		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.Omit_Menu_Radio(cf,x); o;
+		this.D_CompactRadio_NavE(a); this.D_CompactRadio_shareUrl(b);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {
