@@ -21,7 +21,7 @@ type GM_WC_1=[
 	GM_flag_get_form,
 	GM_get_transcript,
 	GM_GetNotificationMenu,
-	GM_Like_dislike,
+	GM_like_dislike,
 	GM_like_like,
 	GM_like_removelike,
 	GM_next,
@@ -167,7 +167,7 @@ type GM_like_like={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/like";
 };
-type GM_Like_dislike={
+type GM_like_dislike={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/dislike";
 };
