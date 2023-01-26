@@ -4479,6 +4479,10 @@ class CodegenService extends BaseService {
 		if(type_name==="MetadataBadgeRenderer") {
 			return "RMD_Badge";
 		}
+		if(type_name.endsWith("Action")) {
+			let real_val=split_string_once(type_name,"Action")[0];
+			return `A_${real_val}`;
+		}
 		if(type_name.endsWith("Endpoint")) {
 			let real_val=split_string_once(type_name,"Endpoint")[0];
 			return `E_${real_val}`;
