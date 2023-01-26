@@ -7599,7 +7599,7 @@ class HandleTypes extends ServiceMethods {
 			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 		});
-		this.z(r,a=>a);
+		this.z(r,a => a);
 		this.z(playlistEditResults,this.g);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -11774,7 +11774,7 @@ class HandleTypes extends ServiceMethods {
 		this.TE_SignalService(menuRequest,this.M_AccountMenu,this.S_GetAccountMenu);
 	}
 	/** @private @arg {M_AccountMenu} x */
-	M_AccountMenu(x) {this.H_("M_AccountMenu",x,this.GM_AccountMenu)}
+	M_AccountMenu(x) {this.H_("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {
 		const cf="D_NotificationTopbarButton";
@@ -11837,7 +11837,22 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {S_GetAccountMenu} x */
-	S_GetAccountMenu(x) {x; debugger;}
+	S_GetAccountMenu(x) {
+		const cf="S_GetAccountMenu";
+		const {signal,actions,...y}=x; this.g(y);
+		if(signal!=="GET_ACCOUNT_MENU") debugger;
+		let [u]=this.z(actions,this.TA_OpenPopup);
+		let [u1]=this.z(u,this.Popup_GetAccountMenu);
+		let [u2]=this.z(u1,this.TR_MP_Menu);
+		this.z(u2,x => {this.do_codegen(cf,x); debugger;});
+	}
+	/** @private @arg {Popup_GetAccountMenu} x */
+	Popup_GetAccountMenu(x) {
+		const {popup: a,popupType: b,beReused: c}=x;
+		if(b!=="DROPDOWN") debugger;
+		if(c!==true) debugger;
+		return a;
+	}
 	/** @private @arg {R_SectionList} x */
 	R_SectionList(x) {x; debugger;}
 	/** @private @arg {RS_Unsubscribe} x */
