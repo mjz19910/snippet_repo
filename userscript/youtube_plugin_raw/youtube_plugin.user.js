@@ -5431,7 +5431,7 @@ class ParserService extends BaseService {
 				/** @private @type {P_PathRoot} */
 				return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
-		return {u,gen_next_part,new_path};
+		return {u,gen_next_part,new_path,map_entry_key};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @type {P_LogItems} */
