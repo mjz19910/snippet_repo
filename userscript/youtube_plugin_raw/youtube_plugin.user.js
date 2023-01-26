@@ -3987,11 +3987,12 @@ class IndexedDbAccessor extends BaseService {
 	}
 	/** @private @arg {IDBTransaction} transaction */
 	consume_data(transaction) {
-		const store=transaction.objectStore("video_id");
-		this.consume_data_with_store(store);
+		const store_name="video_id";
+		const store=transaction.objectStore(store_name);
+		this.consume_data_with_store(store_name,store);
 	}
-	/** @private @arg {IDBObjectStore} store */
-	consume_data_with_store(store) {
+	/** @private @arg {"video_id"} store_name @arg {IDBObjectStore} store */
+	consume_data_with_store(store_name,store) {
 		const cursor_req=store.openCursor();
 		/** @private @type {{v: string}[]} */
 		let database_data=[];
@@ -4006,6 +4007,7 @@ class IndexedDbAccessor extends BaseService {
 				/** @private @type {Map<string,{v:string}>} */
 				let new_data_map=new Map;
 				database_data.forEach(e => database_map.set(e.v,e));
+				console.log("database [%s:%s] has %n items",this.db_args.name,store_name,database_data.length);
 				for(let data of this.arr) {
 					if(!data) {debugger; continue;}
 					if(database_map.has(data.v)) {
