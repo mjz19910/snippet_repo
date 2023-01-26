@@ -11630,19 +11630,41 @@ class HandleTypes extends ServiceMethods {
 	R_LikeButton(x) {this.H_("R_LikeButton",x,this.D_LikeButton);}
 	/** @private @arg {D_LikeButton} x */
 	D_LikeButton(x) {
-		const {likesAllowed,...y}=x;
+		const cf="D_LikeButton";
+		const {likesAllowed,...y}=this.sd(cf,x);
 		if(likesAllowed!==true) debugger;
 		let [{...up},ur]=this.unwrap_prefix(y,"like");
-		{const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=up; this.g(y);}
-		let [{...ud},{...r2}]=this.unwrap_prefix(ur,"dislike");
-		{const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=ud; this.g(y);}
 		{
+			const cf="D_LikeButton.like";
+			const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=this.sd(cf,up); this.g(y);
+		}
+		let [{...ud},{...r2}]=this.unwrap_prefix(ur,"dislike");
+		{
+			const cf="D_LikeButton.dislike";
+			const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.sd(cf,ud); this.g(y);
+		}
+		{
+			const cf="D_LikeButton.rest";
 			const {target,trackingParams,serviceEndpoints,...y}=r2; this.g(y);
 			this.D_LikeApi(target);
+			this.trackingParams(cf,trackingParams);
+			this.z(serviceEndpoints,this.E_Like);
 		}
 	}
+	/** @private @type {(x:Pick<E_Like,"likeEndpoint">)=>void} */
+	E_Like_D({likeEndpoint: a,...y},_=this.g(y)) {this.DE_Like(a);}
+	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
+	E_Like_C(v) {v; debugger;};
+	/** @private @arg {E_Like} x */
+	E_Like(x) {this.T_Endpoint("E_Like",x,this.E_Like_D,this.E_Like_C);}
+	/** @private @arg {DE_Like} x */
+	DE_Like(x) {x;}
 	/** @private @arg {D_LikeApi} x */
-	D_LikeApi(x) {x;}
+	D_LikeApi(x) {
+		if("videoId" in x) return this.videoId(this.w(x));
+		if("playlistId" in x) return this.playlistId(this.w(x));
+		debugger;
+	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel",x,this.D_TranscriptSearchPanel);}
 	/** @private @arg {D_TranscriptSearchPanel} x */
