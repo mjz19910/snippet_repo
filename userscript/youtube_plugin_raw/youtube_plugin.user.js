@@ -2232,9 +2232,9 @@ class BitmapResult {
 	get_seen_numbers() {
 		return this.seen_numbers;
 	}
-	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} x */
-	update(x) {
-		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=x;
+	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} other */
+	update(other) {
+		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=other;
 		if(seen_booleans) this.seen_booleans=seen_booleans;
 		if(seen_numbers) this.seen_numbers=seen_numbers;
 		if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
