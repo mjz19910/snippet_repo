@@ -2239,7 +2239,7 @@ class BitmapResult {
 	}
 	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} x */
 	update(x) {
-		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=x;
+		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=this.sd(cf,x);
 		if(seen_booleans) this.seen_booleans=seen_booleans;
 		if(seen_numbers) this.seen_numbers=seen_numbers;
 		if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
@@ -12132,46 +12132,46 @@ class HandleTypes extends ServiceMethods {
 	R_SectionList(x) {this.H_("R_SectionList",x,this.G_SectionList);}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
-		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=x; this.g(y);
+		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
-		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=x; this.g(y);
+		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {G_CommentsSection} x */
 	G_CommentsSection(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
-		const {endpoint,title,selected,expandedText,content,...y}=x; this.g(y);
+		const {endpoint,title,selected,expandedText,content,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_BrowseFeed} x */
 	R_BrowseFeed(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_EndScreenPlaylist} x */
 	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist",x,this.D_EndScreenPlaylist);}
 	/** @private @arg {D_EndScreenPlaylist} x */
 	D_EndScreenPlaylist(x) {
-		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=x; this.g(y);
+		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_EndScreenVideo} x */
 	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo",x,this.D_EndScreenVideo);}
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {
-		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=x; this.g(y);
+		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_AddToPlaylistCreate} x */
@@ -12180,32 +12180,32 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
-		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=x; this.g(y);
+		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_LiveChat} x */
 	D_LiveChat(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ReportFormModal} x */
 	D_ReportFormModal(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=x; this.g(y);
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
 	D_WatchEndpointMusicConfig(x) {
-		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y);
+		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {
-		const {clickTrackingParams,addToGuideSectionAction,...y}=x; this.g(y);
+		const {clickTrackingParams,addToGuideSectionAction,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {A_UpdateSubscribeButton} x */
@@ -12216,7 +12216,7 @@ class HandleTypes extends ServiceMethods {
 	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
-		const {contents,trackingParams,...y}=x; this.g(y);
+		const {contents,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ClipSection} x */
@@ -12225,7 +12225,7 @@ class HandleTypes extends ServiceMethods {
 	R_ClipCreation(x) {this.H_("C_RunAttestation",x,this.D_ClipCreation);}
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
-		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=x; this.g(y);
+		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=this.sd(cf,x); this.g(y);
 		this.R_ClipCreationScrubber(scrubber);
 		debugger;
 	}
@@ -12237,7 +12237,7 @@ class HandleTypes extends ServiceMethods {
 	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber",x,this.D_ClipCreationScrubber);}
 	/** @private @arg {D_ClipCreationScrubber} x */
 	D_ClipCreationScrubber(x) {
-		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=x; this.g(y);
+		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=this.sd(cf,x); this.g(y);
 		let u=this.exact_arr(60000,5000,15000,120000);
 		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
 		if(!this.eq_keys(t,u)) debugger;
@@ -12246,22 +12246,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_MacroMarkersList} x */
 	D_MacroMarkersList(x) {
-		const {contents,syncButtonLabel,trackingParams,...y}=x; this.g(y);
+		const {contents,syncButtonLabel,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
 	D_EngagementPanelTitleHeader(x) {
-		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
+		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_Hint} x */
 	D_Hint(x) {
-		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=x; this.g(y);
+		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_VideoViewCount} x */
 	D_VideoViewCount(x) {
-		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=x; this.g(y);
+		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
@@ -12291,12 +12291,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
-		const {body,footer,trackingParams,targetId,...y}=x; this.g(y);
+		const {body,footer,trackingParams,targetId,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=x; this.g(y);
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
@@ -12308,25 +12308,25 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DD_TimedContinuation} x */
 	DD_TimedContinuation(x) {
 		const cf="DD_TimedContinuation";
-		const {timeoutMs,continuation,...y}=x; this.g(y);
+		const {timeoutMs,continuation,...y}=this.sd(cf,x); this.g(y);
 		if(timeoutMs!==60000) debugger;
 		this.params(cf,"TimedContinuation",continuation);
 		debugger;
 	}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
-		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=x; this.g(y);
+		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
 		const cf="D_CommentSimplebox";
-		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=x; this.g(y);
+		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.sd(cf,x); this.g(y);
 		this.R_Button(submitButton);
 		this.R_Button(cancelButton);
 		this.params(cf,"aadc_guidelines_state_entity_key",aadcGuidelinesStateEntityKey);
@@ -12334,39 +12334,39 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_SortFilterSubMenu} x */
 	D_SortFilterSubMenu(x) {
-		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y);
+		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {
 		const cf="E_ShowEngagementPanel";
-		const {clickTrackingParams,showEngagementPanelEndpoint,...y}=x; this.g(y);
+		const {clickTrackingParams,showEngagementPanelEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.D_ShowEngagementPanel(showEngagementPanelEndpoint);
 	}
 	/** @private @arg {D_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
-		const {panelIdentifier,...y}=x; this.g(y);
+		const {panelIdentifier,...y}=this.sd(cf,x); this.g(y);
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
-		const {...y}=x; this.g(y);
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
-		const {defaultText,defaultIcon,defaultServiceEndpoint,toggledText,toggledIcon,toggledServiceEndpoint,trackingParams,isToggled,...y}=x; this.g(y);
+		const {defaultText,defaultIcon,defaultServiceEndpoint,toggledText,toggledIcon,toggledServiceEndpoint,trackingParams,isToggled,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_CustomEmoji} x */
 	D_CustomEmoji(x) {
-		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=x; this.g(y);
+		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {
-		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=x; this.g(y);
+		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ReelPlayerHeader} x */
@@ -12382,37 +12382,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
-		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=x; this.g(y);
+		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {
 		const cf="A_ShowEngagementPanelScrim";
-		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=x; this.g(y);
+		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_ShowEngagementPanelScrim(showEngagementPanelScrimAction);
 		debugger;
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
-		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y);
+		const {engagementPanelTargetId,onClickCommands,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_NextContinuation} x */
 	D_NextContinuation(x) {
 		const cf="D_NextContinuation";
-		const {continuation,clickTrackingParams,...y}=x; this.g(y);
+		const {continuation,clickTrackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"next_continuation.continuation",continuation);
 		debugger;
 	}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
-		const {thumbnail,thumbnailOverlays,title,trackingParams,indexText,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=x; this.g(y);
+		const {thumbnail,thumbnailOverlays,title,trackingParams,indexText,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=x; this.g(y);
+		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
@@ -12469,17 +12469,17 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {
-		const cf="D_ChannelSwitcherPage";
+		const cf="D_MerchandiseShelf";
 		const {title,items,trackingParams,showText,hideText,actionButton,...y}=this.sd(cf,x); this.g(y);
 	}
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
-		const cf="D_ChannelSwitcherPage";
+		const cf="D_VideoPrimaryInfo";
 		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.sd(cf,x); this.g(y);
 	}
 	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {
-		const cf="D_ChannelSwitcherPage";
+		const cf="D_VideoSecondaryInfo";
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.sd(cf,x); this.g(y);
 		this.R_VideoOwner(owner);
 	}
@@ -12490,50 +12490,57 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
-		const {...y}=x; this.g(y);
+		const cf="D_RefreshPlaylist";
+		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
 	/** @private @arg {D_VideoOwner} x */
-	D_VideoOwner(x) {x;}
+	D_VideoOwner(x) {
+		if("badges" in x) {
+			const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,badges,...y}=this.sd(cf,x); this.g(y);
+			return;
+		}
+		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
+	}
 	/** @private @arg {R_MusicCarouselShelf} x */
 	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
-		const {contents,header,trackingParams,itemSize,...y}=x; this.g(y);
+		const {contents,header,trackingParams,itemSize,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
 	/** @private @arg {D_MusicShelf} x */
 	D_MusicShelf(x) {
-		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=x; this.g(y);
+		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
-		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=x; this.g(y);
+		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
-		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=x; this.g(y);
+		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_PlaylistAddToOption} x */
 	D_PlaylistAddToOption(x) {
-		const {playlistId,privacy,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,containsSelectedVideos,title,trackingParams,...y}=x; this.g(y);
+		const {playlistId,privacy,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,containsSelectedVideos,title,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {DAU_SubscribeButton} x */
 	DAU_SubscribeButton(x) {
-		const {subscribed,channelId,...y}=x; this.g(y);
+		const {subscribed,channelId,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {
-		const {ids,engagementType,...y}=x; this.g(y);
+		const {ids,engagementType,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
@@ -12545,13 +12552,33 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {x; debugger;}
+	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection",x,this.D_VideoDescriptionMusicSection);}
 	/** @private @arg {R_VideoDescriptionHeader} x */
-	R_VideoDescriptionHeader(x) {x; debugger;}
+	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader",x,this.D_VideoDescriptionHeader);}
 	/** @private @arg {R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {x; debugger;}
+	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList",x,this.D_HorizontalCardList);}
 	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {x; debugger;}
+	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @private @arg {D_VideoDescriptionMusicSection} x */
+	D_VideoDescriptionMusicSection(x) {
+		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
+	/** @private @arg {D_VideoDescriptionHeader} x */
+	D_VideoDescriptionHeader(x) {
+		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
+	/** @private @arg {D_HorizontalCardList} x */
+	D_HorizontalCardList(x) {
+		const {cards,trackingParams,header,style,centerItems,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
+	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
+	D_ExpandableVideoDescriptionBody(x) {
+		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
