@@ -1,8 +1,11 @@
 type DC_Continuation={
-	token: ST_EncodedURIComponent;
+	token: string;
 	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
 }|{
-	token: ST_EncodedURIComponent;
+	token: string;
 	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
 	command: C_ShowReloadUi;
+}|{
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
 };

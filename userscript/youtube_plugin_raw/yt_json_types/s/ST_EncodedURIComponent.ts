@@ -1,1 +1,0 @@
-type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
