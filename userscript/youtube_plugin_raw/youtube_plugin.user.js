@@ -3252,7 +3252,7 @@ class YtObjectVisitor {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
+	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3x<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
@@ -7003,7 +7003,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return null;
 	}
-	/** @unused @protected @arg {true} x */
+	/** @protected @arg {true} x */
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
@@ -7171,11 +7171,11 @@ class ServiceMethods extends ServiceData {
 			default: debugger;
 		}
 	}
-	/** @unused @protected @arg {D_BrowseIdStr} x */
+	/** @protected @arg {D_BrowseIdStr} x */
 	browseId(x) {
 		this.parser.parse_browse_id(x);
 	}
-	/** @unused @protected @arg {`/@${string}`} x */
+	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {
 		if(!this.str_starts_with_r(x,"/@")) debugger;
 	}
@@ -7191,7 +7191,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @unused @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
+	/** @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -7215,20 +7215,20 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		if(this.get_keys_of(x).length!==1) debugger;
 	}
-	/** @private @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	/** @private @template U @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,x,f) {
 		this.k(cf,x);
-		f.call(this,this.w(x));
+		return f.call(this,this.w(x));
 	}
-	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	/** @private @template {{}} T @arg {TR_ItemSection_2x<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
-	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @private @template CT,T,U @arg {TR_ItemSection_3x<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y);
 		this.TD_ItemSection_3(a,f);
 	}
-	/** @private @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @private @template CT,T,U @arg {TD_ItemSection_3x<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TD_ItemSection_3(x,f) {
 		const cf="TD_ItemSection_3";
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -7291,7 +7291,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		return parse_number(types,_x);
 	}
-	/** @private @template {{}} T @arg {TD_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	/** @private @template {{}} T @arg {TD_ItemSection_2x<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TD_ItemSection_1_CommentsEntryPoint(x,f) {
 		const cf="TD_ItemSection_1_CommentsEntryPoint";
 		const {contents,trackingParams,sectionIdentifier,...y}=this.sd(cf,x); this.g(y); // ! #destructure
@@ -7594,10 +7594,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="RSB_EditPlaylist";
 		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(status!=="STATUS_SUCCEEDED") debugger;
-		this.z(actions,x => {
-			x;
+		let [r]=this.z(actions,x => {
+			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
 		});
+		this.z(r,a=>a);
 		this.z(playlistEditResults,this.g);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -8000,12 +8002,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {...y}=this.D_Button_Omit(cf,x); this.g(y);
 	}
-	/** @unused @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
-	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview",x,this.R_TextRuns);}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
 		const cf="D_PdgBuyFlowHeader";
-		const {text,helpButton,dismissButton,...y}=x; this.g(y);
+		const {text,helpButton,dismissButton,...y}=this.sd(cf,x); this.g(y);
 		this.R_TextRuns(text);
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
@@ -8175,7 +8175,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.tz(badges,this.RMD_Badge);
 		this.t(upcomingEventData,x => {
-			const {isReminderSet,startTime,upcomingEventText,...y}=x; this.g(y);
+			const {isReminderSet,startTime,upcomingEventText,...y}=this.sd(cf,x); this.g(y);
 			if(isReminderSet!==false) debugger;
 			this.primitive_str(startTime);
 			this.R_TextRuns(upcomingEventText);
@@ -8209,7 +8209,7 @@ class HandleTypes extends ServiceMethods {
 			if("thumbnailOverlayBottomPanelRenderer" in x) return;
 			if("thumbnailOverlayTimeStatusRenderer" in x) return;
 			if("thumbnailOverlayToggleButtonRenderer" in x) return;
-			if("thumbnailOverlayLoadingPreviewRenderer" in x) return;
+			if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
 			if("thumbnailOverlayResumePlaybackRenderer" in x) return;
 			if("thumbnailOverlayEndorsementRenderer" in x) return;
 			if("thumbnailOverlayInlineUnplayableRenderer" in x) return;
@@ -8218,6 +8218,8 @@ class HandleTypes extends ServiceMethods {
 		});
 		return y;
 	}
+	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
+	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
@@ -8840,7 +8842,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.sd(cf,x); this.g(y);
 		if(a!=="DROPDOWN") debugger;
-		this.TR_MP_Menu(b,this.D_NotificationMenu_PopupItem);
+		let u=this.TR_MP_Menu(b);
+		this.D_NotificationMenu_PopupItem(u);
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
@@ -9483,13 +9486,13 @@ class HandleTypes extends ServiceMethods {
 		if("runs" in x) return this.R_TextRuns(x);
 		debugger;
 	}
-	/** @private @arg {TR_ItemSection_1<any,any>} x @returns {x is TR_ItemSection<any,any,any>} */
+	/** @private @arg {TR_ItemSection_2x<any,any>} x @returns {x is TR_ItemSection_3x<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @private @arg {TR_ItemSection<{},"comment-item-section","comments-section">} x */
+	/** @private @arg {TR_ItemSection_3x<{},"comment-item-section","comments-section">} x */
 	TR_ItemSection_3_CommentItemSection(x) {this.H_("TR_ItemSection_3_CommentItemSection",x,this.TD_ItemSection_3_CommentItemSection);}
-	/** @private @arg {TD_ItemSection_3<{},"comment-item-section","comments-section">} x */
+	/** @private @arg {TD_ItemSection_3x<{},"comment-item-section","comments-section">} x */
 	TD_ItemSection_3_CommentItemSection(x) {
 		const cf="TD_ItemSection_3_CommentItemSection"; this.k(cf,x);
 		const {sectionIdentifier,targetId,trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);
@@ -9500,18 +9503,18 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x @arg {(this:this,x:G_WatchResult_ContentsItem)=>void} f  */
-	D_WatchResults(x,f) {
+	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x */
+	D_WatchResults(x) {
 		const cf="D_WatchResults"; this.k(cf,x);
-		let u=this.w(x);
-		this.D_WatchResult_ResultsItem(u,f);
+		const {results: a,...y}=x; this.g(y);
+		return a;
 	}
-	/** @private @arg {D_WatchResult_ResultsItem} x @arg {(this:this,x:G_WatchResult_ContentsItem)=>void} f   */
-	D_WatchResult_ResultsItem(x,f) {
+	/** @private @arg {D_WatchResult_ResultsItem} x @returns {G_WatchResult_ContentsItem[]} */
+	D_WatchResult_ResultsItem(x) {
 		const cf="D_WatchResult_ResultsItem";
-		let {trackingParams,...y}=this.sd(cf,x);
+		let {trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
-		this.z(this.w(y),f);
+		return a;
 	}
 	/** @private @arg {E_Url} x */
 	E_Url(x) {
@@ -9810,30 +9813,31 @@ class HandleTypes extends ServiceMethods {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
-	// TODO
-	/** @private @arg {G_WatchResult_ContentsItem} x */
-	G_WatchResultItem(x) {
-		if("itemSectionRenderer" in x) {
-			if(this.is_ItemSectionRendererTemplate(x)) {
-				if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-				this.TR_ItemSection(x,([a,...b]) => {
-					let gen_section_id=this.join_string(b,"-");
-					if(gen_section_id!=="comment-item-section-comments-section") debugger;
-					this.z(a,x => {
-						x;
-						debugger;
-					});
-					debugger;
-				});
-				return;
-			}
-			if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-			this.TR_ItemSection_1(x,x => {
+	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3x<any,any,any>>} x */
+	G_WatchResultItem_ItemSection(x) {
+		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
+		this.TR_ItemSection(x,([a,...b]) => {
+			let gen_section_id=this.join_string(b,"-");
+			if(gen_section_id!=="comment-item-section-comments-section") debugger;
+			this.z(a,x => {
 				x;
 				debugger;
 			});
-			return;
-		}
+			debugger;
+		});
+	}
+	/** @private @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
+	G_WatchResultItem_ItemSections(x) {
+		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection(x);
+		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
+		this.TR_ItemSection_1(x,x => {
+			x;
+			debugger;
+		});
+	}
+	/** @private @arg {G_WatchResult_ContentsItem} x */
+	G_WatchResultItem(x) {
+		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSections(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
@@ -9879,7 +9883,9 @@ class HandleTypes extends ServiceMethods {
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.D_WatchResults(results,this.G_WatchResultItem);
+		let u=this.D_WatchResults(results);
+		let u1=this.D_WatchResult_ResultsItem(u);
+		this.z(u1,this.G_WatchResultItem);
 		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
 		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
@@ -10286,7 +10292,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RD_NextContinuation} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,this.D_NextContinuation);}
-	/** @private @arg {TR_SectionListItem<{},{},{}>} x */
+	/** @private @arg {TR_SectionListItem_3x<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
 		if("itemSectionRenderer" in x) {
@@ -11522,7 +11528,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.z(actions,x => {
 			const cf="RS_GetSharePanel.actions[]";
-			const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
+			const {clickTrackingParams,openPopupAction,...y}=this.sd(cf,x); this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			console.log("[RS_GetSharePanel.openPopupAction]",openPopupAction);
 		});
@@ -11698,6 +11704,156 @@ class HandleTypes extends ServiceMethods {
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		debugger;
 	}
+	/** @private @arg {D_WebSearchboxConfig} x */
+	D_WebSearchboxConfig(x) {
+		const cf="D_WebSearchboxConfig";
+		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=this.sd(cf,x); this.g(y);
+		if(!this.eq_keys([a,b],["en","ca"])) debugger;
+		this.z([!c,d],x => {if(!x) debugger;});
+	}
+	/** @private @arg {R_Channel_MD} x */
+	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,this.D_Channel_MD);}
+	/** @private @arg {R_Playlist_MD} x */
+	R_PlaylistMetadata(x) {this.H_("PlaylistMetadata",x,this.D_Playlist_MD);}
+	/** @private @arg {R_AlertWithButton} x */
+	R_AlertWithButton(x) {this.H_("AlertWithButton",x,this.D_AlertWithButton);}
+	/** @private @arg {A_UpdateChannelSwitcherPage} x */
+	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,x => {const cf="TA_Page_R_ChannelSwitcherPage",{page: a,...y}=this.sd(cf,x); this.g(y); this.R_ChannelSwitcherPage(a);});}
+	/** @private @arg {R_ChannelSwitcherPage} x */
+	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage",x,this.D_ChannelSwitcherPage);}
+	/** @private @arg {D_MP_GetMenu} x */
+	D_MP_GetMenu(x) {let u=this.H_("D_MP_GetMenu",x,x => this.TR_MP_Menu(x)); this.g(u);}
+	/** @private @template T @arg {TR_MP_Menu<T>} x */
+	TR_MP_Menu(x) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	/** @private @arg {R_MerchandiseShelf} x */
+	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,this.D_MerchandiseShelf);}
+	/** @private @arg {R_VideoPrimaryInfo} x */
+	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,this.D_VideoPrimaryInfo);}
+	/** @private @arg {R_VideoSecondaryInfo} x */
+	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,this.D_VideoSecondaryInfo);}
+	/** @protected @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
+	TR_ItemSection_CommentItemSection(x) {
+		if(this.is_ItemSectionRendererTemplate(x)) {
+			switch(x.itemSectionRenderer.sectionIdentifier) {
+				case "comment-item-section": return this.TR_ItemSection_3_CommentItemSection(x);
+				default: debugger; return x;
+			}
+		}
+		switch(x.itemSectionRenderer.sectionIdentifier) {
+			case "comments-entry-point": return this.TR_ItemSection_1(x,this.R_CommentItemSection_EntryPoint);
+			default: debugger; return x;
+		}
+	}
+	/** @private @arg {R_TopbarMenuButton} x */
+	R_TopbarMenuButton(x) {this.H_("R_TopbarMenuButton",x,this.D_TopbarMenuButton);}
+	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
+	D_TopbarMenuButton_MenuItem(x) {
+		const cf="D_TopbarMenuButton_MenuItem";
+		const {sections,trackingParams,style,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
+	}
+	/** @private @arg {D_TopbarMenuButton} x */
+	D_TopbarMenuButton(x) {
+		const cf="D_TopbarMenuButton";
+		if("menuRenderer" in x) {
+			const {icon,menuRenderer,trackingParams,accessibility,tooltip,style,...y}=this.sd(cf,x); this.g(y);
+			if(icon.iconType!=="VIDEO_CALL") debugger;
+			let u=this.TR_MP_Menu(menuRenderer);
+			this.D_TopbarMenuButton_MenuItem(u);
+			this.trackingParams(cf,trackingParams);
+			this.D_Accessibility(accessibility);
+			this.primitive_str(tooltip);
+			if(style!=="STYLE_DEFAULT") debugger;
+			return;
+		}
+		const {avatar,menuRequest,trackingParams,accessibility,tooltip,...y}=this.sd(cf,x); this.g(y);
+		this.D_Thumbnail(avatar);
+		this.TE_SignalService(menuRequest,this.M_AccountMenu,this.S_GetAccountMenu);
+	}
+	/** @private @arg {M_AccountMenu} x */
+	M_AccountMenu(x) {this.H_("M_AccountMenu",x,this.GM_AccountMenu)}
+	/** @private @arg {GM_AccountMenu} x */
+	GM_AccountMenu(x) {
+		const cf="D_NotificationTopbarButton";
+		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
+	}
+	/** @private @arg {R_NotificationTopbarButton} x */
+	R_NotificationTopbarButton(x) {this.H_("R_NotificationTopbarButton",x,this.D_NotificationTopbarButton);}
+	/** @private @arg {D_NotificationTopbarButton} x */
+	D_NotificationTopbarButton(x) {
+		const cf="D_NotificationTopbarButton";
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.sd(cf,x); this.g(y);
+		if(icon.iconType!=="NOTIFICATIONS") debugger;
+		this.TE_SignalService(menuRequest,this.M_GetNotificationMenu,this.Signal_GetNotificationsMenu);
+	}
+	/** @private @arg {Signal_GetNotificationsMenu} x */
+	Signal_GetNotificationsMenu(x) {
+		const cf="Signal_GetNotificationsMenu";
+		const {signal,actions,...y}=this.sd(cf,x); this.g(y);
+		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
+		let [u]=this.z(actions,this.TA_OpenPopup);
+		let [u1]=this.z(u,this.P_NotificationMenu_Popup);
+		let [u2]=this.z(u1,this.TR_MP_Menu);
+		this.z(u2,this.D_NotificationMenuPopupMenuItem);
+	}
+	/** @private @arg {D_NotificationMenuPopupMenuItem} x */
+	D_NotificationMenuPopupMenuItem(x) {
+		const cf="D_NotificationMenuPopupMenuItem";
+		const {trackingParams,style,showLoadingSpinner,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		if(showLoadingSpinner!==true) debugger;
+	}
+	/** @private @arg {P_NotificationMenu_Popup} x */
+	P_NotificationMenu_Popup(x) {
+		const cf="P_NotificationMenu_Popup";
+		const {popup: a,popupType,beReused,...y}=this.sd(cf,x); this.g(y);
+		if(popupType!=="DROPDOWN") debugger;
+		if(beReused!==true) debugger;
+		return a;
+	}
+	/** @private @arg {M_GetNotificationMenu} x */
+	M_GetNotificationMenu(x) {const cf="M_GetNotificationMenu",{webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y); this.GM_GetNotificationMenu(a);}
+	/** @private @arg {GM_GetNotificationMenu} x */
+	GM_GetNotificationMenu(x) {
+		const cf="GM_GetNotificationMenu";
+		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
+	}
+	/** @private @arg {A_SendFeedback} x */
+	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const cf="A_SendFeedback.rest",{sendFeedbackAction: a,...y}=this.sd(cf,x); this.g(y); this.AD_SendFeedback(a);});}
+	/** @private @arg {AD_SendFeedback} x */
+	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.sd(cf,x); this.g(y); if(bucket!=="Kevlar") debugger;}
+	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_2x<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
+	R_CommentItemSection_EntryPoint(x) {
+		const cf="R_CommentItemSection_EntryPoint";
+		const {...y}=this.sd(cf,x); this.g(y);
+		debugger;
+	}
+	/** @private @arg {S_GetAccountMenu} x */
+	S_GetAccountMenu(x) {x; debugger;}
+	/** @private @arg {R_SectionList} x */
+	R_SectionList(x) {x; debugger;}
+	/** @private @arg {RS_Unsubscribe} x */
+	RS_Unsubscribe(x) {x; debugger;}
+	/** @private @arg {RSM_ChannelPreference} x */
+	RSM_ChannelPreference(x) {x; debugger;}
+	/** @private @arg {G_CommentsSection} x */
+	G_CommentsSection(x) {x; debugger;}
+	/** @private @arg {D_ExpandableTab} x */
+	D_ExpandableTab(x) {x; debugger;}
+	/** @private @arg {D_FeedNudge} x */
+	D_FeedNudge(x) {x; debugger;}
+	/** @private @arg {R_BrowseFeed} x */
+	R_BrowseFeed(x) {x; debugger;}
+	/** @private @arg {R_EndScreenPlaylist} x */
+	R_EndScreenPlaylist(x) {x; debugger;}
+	/** @private @arg {R_EndScreenVideo} x */
+	R_EndScreenVideo(x) {x; debugger;}
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {x; debugger;}
 	/** @private @arg {R_AddToPlaylistCreate} x */
@@ -11779,156 +11935,25 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {x; debugger;}
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
-	E_Like_C(v) {v; debugger;}
-	/** @private @arg {D_WebSearchboxConfig} x */
-	D_WebSearchboxConfig(x) {
-		const cf="D_WebSearchboxConfig";
-		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=this.sd(cf,x); this.g(y);
-		if(!this.eq_keys([a,b],["en","ca"])) debugger;
-		this.z([!c,d],x => {if(!x) debugger;});
-	}
-	/** @private @arg {R_Channel_MD} x */
-	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,this.D_Channel_MD);}
+	E_Like_C(x) {x; debugger;}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {x; debugger;}
-	/** @private @arg {R_Playlist_MD} x */
-	R_PlaylistMetadata(x) {this.H_("PlaylistMetadata",x,this.D_Playlist_MD);}
 	/** @private @arg {D_Playlist_MD} x */
 	D_Playlist_MD(x) {x; debugger;}
-	/** @private @arg {R_AlertWithButton} x */
-	R_AlertWithButton(x) {this.H_("AlertWithButton",x,this.D_AlertWithButton);}
 	/** @private @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {x; debugger;}
-	/** @private @arg {A_UpdateChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,x => {const cf="TA_Page_R_ChannelSwitcherPage",{page: a,...y}=this.sd(cf,x); this.g(y); this.R_ChannelSwitcherPage(a);});}
-	/** @private @arg {R_ChannelSwitcherPage} x */
-	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {D_ChannelSwitcherPage} x */
 	D_ChannelSwitcherPage(x) {x; debugger;}
-	/** @private @arg {D_MP_GetMenu} x */
-	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,x => this.TR_MP_Menu(x,x => {x; debugger;}));}
-	/** @private @template T @arg {TR_MP_Menu<T>} x @arg {(this:this,x:T)=>void} f */
-	TR_MP_Menu(x,f) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.sd(cf,x); this.g(y); f.call(this,a);}
-	/** @unused @protected @arg {R_MerchandiseShelf} x */
-	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,this.D_MerchandiseShelf);}
-	/** @unused @protected @arg {D_MerchandiseShelf} x */
+	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {x; debugger;}
-	/** @unused @protected @arg {R_VideoPrimaryInfo} x */
-	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,this.D_VideoPrimaryInfo);}
-	/** @unused @protected @arg {D_VideoPrimaryInfo} x */
+	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {x; debugger;}
-	/** @unused @protected @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,this.D_VideoSecondaryInfo);}
-	/** @unused @protected @arg {D_VideoSecondaryInfo} x */
+	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {x; debugger;}
-	/** @unused @protected @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
-	TR_ItemSection_CommentItemSection(x) {
-		if(this.is_ItemSectionRendererTemplate(x)) {
-			switch(x.itemSectionRenderer.sectionIdentifier) {
-				case "comment-item-section": return this.TR_ItemSection_3_CommentItemSection(x);
-				default: debugger; return x;
-			}
-		}
-		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.TR_ItemSection_1(x,x => {x; debugger;});
-			default: debugger; return x;
-		}
-	}
-	/** @private @arg {R_SectionList} x */
-	R_SectionList(x) {x; debugger;}
-	/** @private @arg {RS_Unsubscribe} x */
-	RS_Unsubscribe(x) {x; debugger;}
-	/** @private @arg {RSM_ChannelPreference} x */
-	RSM_ChannelPreference(x) {x; debugger;}
-	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {x; debugger;}
-	/** @private @arg {D_ExpandableTab} x */
-	D_ExpandableTab(x) {x; debugger;}
-	/** @private @arg {D_FeedNudge} x */
-	D_FeedNudge(x) {x; debugger;}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {x; debugger;}
-	/** @private @arg {R_EndScreenPlaylist} x */
-	R_EndScreenPlaylist(x) {x; debugger;}
-	/** @private @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {x; debugger;}
-	/** @private @arg {R_TopbarMenuButton} x */
-	R_TopbarMenuButton(x) {this.H_("R_TopbarMenuButton",x,this.D_TopbarMenuButton);}
-	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
-	D_TopbarMenuButton_MenuItem(x) {
-		const cf="D_TopbarMenuButton_MenuItem";
-		const {sections,trackingParams,style,...y}=x; this.g(y);
-		this.trackingParams(cf,trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
-	}
-	/** @private @arg {D_TopbarMenuButton} x */
-	D_TopbarMenuButton(x) {
-		const cf="D_TopbarMenuButton";
-		if("menuRenderer" in x) {
-			const {icon,menuRenderer,trackingParams,accessibility,tooltip,style,...y}=x; this.g(y);
-			if(icon.iconType!=="VIDEO_CALL") debugger;
-			this.TR_MP_Menu(menuRenderer,this.D_TopbarMenuButton_MenuItem);
-			this.trackingParams(cf,trackingParams);
-			this.D_Accessibility(accessibility);
-			this.primitive_str(tooltip);
-			if(style!=="STYLE_DEFAULT") debugger;
-			return;
-		}
-		const {avatar,menuRequest,trackingParams,accessibility,tooltip,...y}=x; this.g(y);
-		this.D_Thumbnail(avatar);
-		this.TE_SignalService(menuRequest,x => {
-			x;
-			debugger;
-		},this.S_GetAccountMenu);
-	}
-	/** @private @arg {S_GetAccountMenu} x */
-	S_GetAccountMenu(x) {x; debugger;}
-	/** @private @arg {R_NotificationTopbarButton} x */
-	R_NotificationTopbarButton(x) {this.H_("R_NotificationTopbarButton",x,this.D_NotificationTopbarButton);}
-	/** @private @arg {D_NotificationTopbarButton} x */
-	D_NotificationTopbarButton(x) {
-		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
-		if(icon.iconType!=="NOTIFICATIONS") debugger;
-		this.TE_SignalService(menuRequest,this.M_GetNotificationMenu,this.Signal_GetNotificationsMenu);
-	}
-	/** @private @arg {Signal_GetNotificationsMenu} x */
-	Signal_GetNotificationsMenu(x) {
-		const {signal,actions,...y}=x; this.g(y);
-		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
-		let [u]=this.z(actions,x => this.TA_OpenPopup(x));
-		let [u1]=this.z(u,this.P_NotificationMenu_Popup);
-		this.z(u1,x=>this.TR_MP_Menu(x,this.D_NotificationMenuPopupMenuItem));
-	}
-	/** @private @arg {D_NotificationMenuPopupMenuItem} x */
-	D_NotificationMenuPopupMenuItem(x) {
-		const cf="D_NotificationMenuPopupMenuItem";
-		const {trackingParams,style,showLoadingSpinner,...y}=x; this.g(y);
-		this.trackingParams(cf,trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-		if(showLoadingSpinner!==true) debugger;
-	}
-	/** @private @arg {P_NotificationMenu_Popup} x */
-	P_NotificationMenu_Popup(x) {
-		const {popup: a,popupType,beReused,...y}=x; this.g(y);
-		if(popupType!=="DROPDOWN") debugger;
-		if(beReused!==true) debugger;
-		return a;
-	}
-	/** @private @arg {M_GetNotificationMenu} x */
-	M_GetNotificationMenu(x) {const {webCommandMetadata: a,...y}=x; this.g(y); this.GM_GetNotificationMenu(a);}
-	/** @private @arg {GM_GetNotificationMenu} x */
-	GM_GetNotificationMenu(x) {
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
-	}
-	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const {sendFeedbackAction: a,...y}=x; this.g(y); this.AD_SendFeedback(a);});}
-	/** @private @arg {AD_SendFeedback} x */
-	AD_SendFeedback(x) {
-		const {bucket,...y}=x; this.g(y);
-		if(bucket!=="Kevlar") debugger;
-	}
+	/** @private @arg {C_RefreshPlaylist} x */
+	C_RefreshPlaylist(x) {x; debugger;}
+	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
+	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview",x,this.R_TextRuns);}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

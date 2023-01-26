@@ -439,18 +439,18 @@ export class Snippet_0_tmp {
 	}
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
-	/** @protected @template {{}} T @arg {TR_SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	/** @protected @template {{}} T @arg {TR_SectionList_3x<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
 		const cf="SectionListRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.SectionListDataTemplate(this.w(x));
 	}
-	/** @private @template {{}} T @arg {TR_SectionList<T,"comment-item-section", "engagement-panel-comments-section">['sectionListRenderer']} x */
+	/** @private @template {{}} T @arg {TR_SectionList_3x<T,"comment-item-section", "engagement-panel-comments-section">['sectionListRenderer']} x */
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
 		this.SectionListItemTemplate(this.w(x));
 	}
-	/** @private @template {{}} T @arg {TR_ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
+	/** @private @template {{}} T @arg {TR_ItemSection_3x<T,"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
 			this.z(b,a => {a; debugger;});
@@ -458,7 +458,7 @@ export class Snippet_0_tmp {
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
 	}
-	/** @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @template CT,T,U @arg {TD_ItemSection_3x<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
@@ -709,7 +709,7 @@ class ND extends Snippet_0_tmp {
 		this.D_Accessibility(unsubscribeAccessibility);
 		return y;
 	}
-	/** @private @arg {P_ParamsSection} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
+	/** @private @arg {P_ParamsSection} cf @template T1,T2,T3 @arg {TD_ItemSection_3x<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
 	_decode_TD_ItemSection(cf,x) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
@@ -743,7 +743,7 @@ class ND extends Snippet_0_tmp {
 	R_ContinuationItem(x) {x; debugger;}
 	/** @private @arg {R_AdSlot} x */
 	R_AdSlot(x) {x; debugger;}
-	/** @private @arg {TD_ItemSection_3<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
+	/** @private @arg {TD_ItemSection_3x<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
 		const cf="D_ItemSection_2_CommentItemSection";
 		let [i,...a]=this._decode_TD_ItemSection(cf,x); i;
@@ -765,7 +765,7 @@ class ND extends Snippet_0_tmp {
 			debugger;
 		});
 	}
-	/** @protected @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
+	/** @protected @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection_3x<T,U,V>} x */
 	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
 	/** @private @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}

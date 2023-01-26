@@ -12,7 +12,7 @@ type GM_WC_1=[
 	GM_VE42352_WC,
 	GM_VE83769_WC,
 	GM_VE96368_WC_browse,
-	GM_account_account_menu,
+	GM_AccountMenu,
 	GM_account_set_setting,
 	GM_backstage_create_post,
 	GM_browse,
@@ -142,7 +142,7 @@ type GM_browse={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_account_account_menu={
+type GM_AccountMenu={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/account_menu";
 };
@@ -198,6 +198,7 @@ type GM_YpcGetCart={
 //#region M_*
 type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
+type M_AccountMenu={webCommandMetadata: GM_AccountMenu;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};

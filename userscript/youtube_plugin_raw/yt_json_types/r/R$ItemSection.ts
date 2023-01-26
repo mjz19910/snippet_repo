@@ -1,1 +1,0 @@
-type R_ItemSection<A,B,C>={itemSectionRenderer: TD_ItemSection_3<A,B,C>;};

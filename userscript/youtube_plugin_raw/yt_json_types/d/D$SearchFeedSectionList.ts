@@ -1,6 +1,6 @@
 type D_SearchFeedSectionList={
 	continuations?: RD_NextContinuation[];
-	contents: TR_SectionListItem<{},{},{}>[];
+	contents: TR_SectionListItem_3x<{},{},{}>[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;

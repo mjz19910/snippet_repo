@@ -4,6 +4,6 @@ type G_EngagementPanelSectionListItem=[
 	R_ContinuationItem,
 	R_MacroMarkersList,
 	R_ProductList,
-	TR_SectionList<{},"comment-item-section","engagement-panel-comments-section">,
+	TR_SectionList_3x<{},"comment-item-section","engagement-panel-comments-section">,
 	R_StructuredDescriptionContent,
 ][number];

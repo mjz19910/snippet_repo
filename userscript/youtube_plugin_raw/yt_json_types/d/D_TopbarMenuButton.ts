@@ -3,7 +3,6 @@ type D_TopbarMenuButton_MenuItem={
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 };
-
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
 	menuRenderer: TR_MP_Menu<D_TopbarMenuButton_MenuItem>;
@@ -13,7 +12,7 @@ type D_TopbarMenuButton={
 	style: "STYLE_DEFAULT";
 }|{
 	avatar: D_Thumbnail;
-	menuRequest: TE_SignalService<{},S_GetAccountMenu>;
+	menuRequest: TE_SignalService<M_AccountMenu,S_GetAccountMenu>;
 	trackingParams: string;
 	accessibility: D_Accessibility;
 	tooltip: string;
