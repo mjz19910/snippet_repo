@@ -4836,6 +4836,7 @@ class CodegenService extends BaseService {
 		/** @private @type {R_GuideEntryData} */
 		if(b.guideEntryData) return "TYPE::R_GuideEntryData";
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
+		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE42352_Browse";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		debugger;
 		return null;
@@ -8058,13 +8059,27 @@ class HandleTypes extends ServiceMethods {
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		debugger;
 	}
+	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
+	D_Tab_subscriptionsEndpoint(x) {
+		const cf="D_Tab_subscriptionsEndpoint"; this.k(cf,x);
+		this.do_codegen(cf,x);
+		debugger;
+	}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
 		const cf="D_Tab"; this.k(cf,x);
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				default: debugger; break;
-				case "FEsubscriptions": debugger; break;
+				case "FEsubscriptions": {
+					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
+					this.D_Tab_subscriptionsEndpoint(endpoint);
+					// this.E_Browse(endpoint);
+					if(selected!==true) debugger;
+					if(!content.sectionListRenderer) debugger;
+					this.R_SectionList(content);
+					this.trackingParams(cf,trackingParams);
+				} break;
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
 					if(selected!==true) debugger;

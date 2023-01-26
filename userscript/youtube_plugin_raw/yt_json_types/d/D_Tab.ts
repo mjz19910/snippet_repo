@@ -8,13 +8,7 @@ type D_Tab={
 	content: R_SectionList;
 	trackingParams: string;
 }|{
-	endpoint: E_Browse;
-	title: string;
-	selected?: true;
-	content?: R_SectionList;
-	trackingParams: string;
-}|{
-	endpoint: E_Browse;
+	endpoint: {}|E_Browse;
 	selected: true;
 	content: R_SectionList;
 	tabIdentifier: "FEsubscriptions";
