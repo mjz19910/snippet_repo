@@ -8,7 +8,7 @@ type D_CompactRadio={
 	longBylineText: R_TextRuns;
 	trackingParams: string;
 	thumbnailText: R_TextRuns;
-	videoCountShortText: R_TextRuns;
+	videoCountShortText: G_Text;
 	shareUrl: `https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`;
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];

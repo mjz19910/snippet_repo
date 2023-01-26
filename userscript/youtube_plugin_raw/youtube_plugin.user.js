@@ -8400,7 +8400,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(videoCountText);
 		this.R_TextRuns(thumbnailText);
 		this.G_Text(longBylineText);
-		this.R_TextRuns(videoCountShortText);
+		this.G_Text(videoCountShortText);
 		return y;
 	}
 	/** @private @template T @arg {T} v1 @arg {T} v2 */
