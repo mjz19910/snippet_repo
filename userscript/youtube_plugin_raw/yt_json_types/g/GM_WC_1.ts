@@ -136,13 +136,13 @@ type GM_comment_create_comment={
 	apiUrl: "/youtubei/v1/comment/create_comment";
 	sendPost: true;
 };
-type GM_playlist_get_add_to_playlist={
+type GM_feedback={
 	sendPost: true;
-	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
+	apiUrl: "/youtubei/v1/feedback";
 };
-type GM_share_get_share_panel={
+type GM_flag_get_form={
 	sendPost: true;
-	apiUrl: "/youtubei/v1/share/get_share_panel";
+	apiUrl: "/youtubei/v1/flag/get_form";
 };
 type GM_Next={
 	sendPost: true;
@@ -160,6 +160,14 @@ type GM_GetNotificationMenu={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_notification_menu";
 };
+type GM_playlist_get_add_to_playlist={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
+};
+type GM_share_get_share_panel={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/share/get_share_panel";
+};
 type GM_like_removelike={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/removelike";
@@ -172,10 +180,6 @@ type GM_like_dislike={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/dislike";
 };
-type GM_feedback={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/feedback";
-};
 type GM_subscription_subscribe={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/subscription/subscribe";
@@ -183,10 +187,6 @@ type GM_subscription_subscribe={
 type GM_notification_opt_out={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/opt_out";
-};
-type GM_flag_get_form={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/flag/get_form";
 };
 type GM_playlist_create={
 	sendPost: true;
