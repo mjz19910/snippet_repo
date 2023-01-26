@@ -8534,7 +8534,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(actions,x => {
 			if("updateViewershipAction" in x) return this.UA_Viewership(x);
 			if("updateToggleButtonTextAction" in x) return this.UA_ToggleButtonText(x);
-			if("updateDateTextAction" in x)return this.UA_DateText(x);
+			if("updateDateTextAction" in x) return this.UA_DateText(x);
 			if("updateTitleAction" in x) return this.UA_Title(x);
 			if("updateDescriptionAction" in x) return this.UA_Description(x);
 			console.log(x);
@@ -11772,7 +11772,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {x; debugger;}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,({page: a,...y},_=this.g(y)) => this.R_ChannelSwitcherPage(a));}
+	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,x => {const cf="TA_Page_R_ChannelSwitcherPage",{page: a,...y}=this.sd(cf,x); this.g(y); this.R_ChannelSwitcherPage(a);});}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {D_ChannelSwitcherPage} x */
@@ -11780,7 +11780,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_MP_GetMenu} x */
 	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu",x,x => this.TR_MP_Menu(x,x => {x; debugger;}));}
 	/** @private @template T @arg {TR_MP_Menu<T>} x @arg {(this:this,x:T)=>void} f */
-	TR_MP_Menu(x,f) {const {multiPageMenuRenderer: a,...y}=this.sd(cf,x); this.g(y); f.call(this,a);}
+	TR_MP_Menu(x,f) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.sd(cf,x); this.g(y); f.call(this,a);}
 	/** @unused @protected @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,this.D_MerchandiseShelf);}
 	/** @unused @protected @arg {D_MerchandiseShelf} x */
