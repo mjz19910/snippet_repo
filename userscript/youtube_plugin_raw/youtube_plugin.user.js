@@ -4485,7 +4485,7 @@ class CodegenService extends BaseService {
 			if(!gn) break x;
 			let gr=this.#_codegen_new_typedef(x.openPopupAction,gn);
 			if(!gr) break x;
-			let sr=split_string_once(gr.split("\n").map(e=>e.trim()).join(""),"=")[1];
+			let sr=split_string_once(gr.split("\n").map(e => e.trim()).join(""),"=")[1];
 			if(!sr) break x;
 			return "TA_OpenPopup<"+sr+">";
 		}
@@ -11889,7 +11889,38 @@ class HandleTypes extends ServiceMethods {
 	D_NotificationTopbarButton(x) {
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
-		this.TE_SignalService(menuRequest,x => {x; debugger;},x => {x; debugger;});
+		this.TE_SignalService(menuRequest,this.M_GetNotificationMenu,this.Signal_GetNotificationsMenu);
+	}
+	/** @private @arg {Signal_GetNotificationsMenu} x */
+	Signal_GetNotificationsMenu(x) {
+		const {signal,actions,...y}=x; this.g(y);
+		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
+		let [u]=this.z(actions,x => this.TA_OpenPopup(x));
+		let [u1]=this.z(u,this.P_NotificationMenu_Popup);
+		this.z(u1,x=>this.TR_MP_Menu(x,this.D_NotificationMenuPopupMenuItem));
+	}
+	/** @private @arg {D_NotificationMenuPopupMenuItem} x */
+	D_NotificationMenuPopupMenuItem(x) {
+		const cf="D_NotificationMenuPopupMenuItem";
+		const {trackingParams,style,showLoadingSpinner,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		if(showLoadingSpinner!==true) debugger;
+	}
+	/** @private @arg {P_NotificationMenu_Popup} x */
+	P_NotificationMenu_Popup(x) {
+		const {popup: a,popupType,beReused,...y}=x; this.g(y);
+		if(popupType!=="DROPDOWN") debugger;
+		if(beReused!==true) debugger;
+		return a;
+	}
+	/** @private @arg {M_GetNotificationMenu} x */
+	M_GetNotificationMenu(x) {const {webCommandMetadata: a,...y}=x; this.g(y); this.GM_GetNotificationMenu(a);}
+	/** @private @arg {GM_GetNotificationMenu} x */
+	GM_GetNotificationMenu(x) {
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
 	}
 	/** @private @arg {A_SendFeedback} x */
 	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const {sendFeedbackAction: a,...y}=x; this.g(y); this.AD_SendFeedback(a);});}

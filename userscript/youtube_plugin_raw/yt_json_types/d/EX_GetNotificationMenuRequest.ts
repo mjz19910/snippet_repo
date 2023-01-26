@@ -1,0 +1,1 @@
+type EX_GetNotificationMenuRequest=TE_SignalService<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
