@@ -1,1 +1,1 @@
-type LP_LogItems_Str="likeParams"|"dislikeParams"|"removeLikeParams";
+type LP_LogItems_Str=`like.${"likeParams"|"dislikeParams"|"removeLikeParams"}`;

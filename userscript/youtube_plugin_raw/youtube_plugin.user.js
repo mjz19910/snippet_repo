@@ -5788,6 +5788,7 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "get_report_form": u(idx); break;
 			case "service$create_playlist": u(idx); break;
 			case "next_continuation": u(idx); break;
 			case "aadc_guidelines_state_entity_key": u(idx); break;
@@ -9527,7 +9528,17 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {x;}
+	E_GetReportForm(x) {
+		const cf="E_GetReportForm";
+		const {clickTrackingParams,
+			commandMetadata: {
+				webCommandMetadata: {sendPost: s,apiUrl: u,...y1},...y2},
+			getReportFormEndpoint: {params: p,...y4},...y3}=x; this.z([y1,y2,y3,y4],this.g);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		if(s!==true) debugger;
+		if(u!=="/youtubei/v1/flag/get_form") debugger;
+		this.params(cf,"get_report_form",p);
+	}
 	codegen_all_service_menu_icons() {
 		console.log(this.service_menu_icons.join());
 	}
