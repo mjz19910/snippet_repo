@@ -8792,22 +8792,26 @@ class HandleTypes extends ServiceMethods {
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
 	}
-	/** @private @arg {D_NotificationMenu_PopupItem} x1 */
-	D_NotificationMenu_PopupItem(x1) {
+	/** @private @arg {R_MP_MenuNotificationSection_Item} x */
+	R_MP_MenuNotificationSection_Item(x) {
+		if("notificationRenderer" in x) return this.R_Notification(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		console.log(x);
+		debugger;
+	}
+	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
+	D_NotificationMenu_Popup_SectionItem(x) {
+		if("multiPageMenuNotificationSectionRenderer" in x) return this.w(x);
+		debugger;
+		return;
+	}
+	/** @private @arg {D_NotificationMenu_PopupItem} x */
+	D_NotificationMenu_PopupItem(x) {
 		const cf="D_NotificationMenu_PopupItem";
-		const {header,sections,style,trackingParams,...y}=this.sd(cf,x1); this.g(y);
+		const {header,sections,style,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.R_SimpleMenuHeader(header);
-		let [iw]=this.z(sections,x => {
-			if("multiPageMenuNotificationSectionRenderer" in x) return this.w(x);
-			debugger;
-			return;
-		});
-		this.z(iw[0].items,x => {
-			if("notificationRenderer" in x) return this.R_Notification(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			console.log(x);
-			debugger;
-		});
+		let [iw]=this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
+		this.z(iw[0].items,this.R_MP_MenuNotificationSection_Item);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		this.trackingParams(cf,trackingParams);
 	}

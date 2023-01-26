@@ -1,0 +1,1 @@
+type D_NotificationMenu_Popup_SectionItem=R_MP_MenuNotificationSection;
