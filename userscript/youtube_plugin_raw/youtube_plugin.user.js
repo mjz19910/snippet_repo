@@ -5464,6 +5464,18 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "like.dislikeParams.f4":
+						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "like.dislikeParams.f1":
+						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "like.dislikeParams":
+						switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.likeParams.f6":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
@@ -5910,7 +5922,7 @@ class ParserService extends BaseService {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							case "f1": case "f4": case "f5": case "f6":
+							case "f1": case "f2": case "f3": case "f4": case "f5": case "f6":
 							case "f7": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -12065,7 +12077,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {x; debugger;}
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
-	E_Like_C(x) {const {webCommandMetadata: a,...y}=x; this.g(y);this.GM_like_like(a);}
+	E_Like_C(x) {
+		const {webCommandMetadata: a,...y}=x; this.g(y);
+		switch(a.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/like/like": return this.GM_like_like(a);
+		}
+	}
 	/** @private @arg {GM_like_like} x */
 	GM_like_like(x) {
 		const {apiUrl: a,sendPost: b,...y}=x; this.g(y);

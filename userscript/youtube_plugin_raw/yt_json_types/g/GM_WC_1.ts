@@ -12,18 +12,19 @@ type GM_WC_1=[
 	GM_VE42352_WC,
 	GM_VE83769_WC,
 	GM_VE96368_WC_browse,
-	GM_AccountMenu,
 	GM_account_set_setting,
+	GM_AccountMenu,
 	GM_backstage_create_post,
-	GM_browse,
 	GM_browse_edit_playlist,
+	GM_browse,
 	GM_feedback,
 	GM_flag_get_form,
 	GM_get_transcript,
+	GM_GetNotificationMenu,
+	GM_Like_dislike,
 	GM_like_like,
 	GM_like_removelike,
 	GM_next,
-	GM_GetNotificationMenu,
 	GM_notification_get_unseen_count,
 	GM_notification_opt_out,
 	GM_notification_record_interactions,
@@ -165,6 +166,10 @@ type GM_like_removelike={
 type GM_like_like={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/like";
+};
+type GM_Like_dislike={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/like/dislike";
 };
 type GM_feedback={
 	sendPost: true;
