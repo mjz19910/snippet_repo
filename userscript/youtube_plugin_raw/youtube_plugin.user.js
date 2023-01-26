@@ -3880,11 +3880,11 @@ class YtPlugin extends BaseService {
 		return this.ds;
 	}
 }
-function detect_firefox() {
+function h_detect_firefox() {
 	let ua=navigator.userAgent;
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
-const is_firefox=detect_firefox();
+const is_firefox=h_detect_firefox();
 //#endregion
 //#region HelperServices
 class DatabaseArguments {
@@ -5479,6 +5479,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "service$create_playlist":
+						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "browse$param.f93":
 						switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
@@ -5808,7 +5812,7 @@ class ParserService extends BaseService {
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: u(idx); debugger; path_parts[2]===""; break;
+									default: u(idx); debugger; path_parts[2]==="f1"; break;
 									case "f1": u(idx); debugger; break;
 								}
 							} break;
@@ -7900,7 +7904,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(y);
 	}
 	/** @private @arg {E_Browse} x */
-	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,x=>this.y(x,this.DE_Browse_VE),this.M_VE_Browse);}
+	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,x => this.y(x,this.DE_Browse_VE),this.M_VE_Browse);}
 	/** @private @arg {E_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
@@ -12815,15 +12819,24 @@ class HandleTypes extends ServiceMethods {
 	D_NotificationAction(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		debugger;
+		this.R_TextRuns(responseText);
+		this.t(actionButton,this.R_Button);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {ES_CreatePlaylist} x */
-	ES_CreatePlaylist(x) {const cf="ES_CreatePlaylist";this.T_Endpoint(cf,x,x=>this.y(x,this.DS_CreatePlaylist));}
+	ES_CreatePlaylist(x) {
+		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,this.DS_CreatePlaylist),u => {
+			let x=u.webCommandMetadata;
+			const {sendPost,apiUrl,...y}=x; this.g(y);
+			if(sendPost!==true) debugger;
+			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
+		});
+	}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
 		const {params,videoIds,...y}=x; this.g(y);
-		this.t(params,x=>this.params(cf,"service$create_playlist",x));
+		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
 	/** @private @arg {A_Signal} x */
