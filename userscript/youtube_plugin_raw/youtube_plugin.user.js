@@ -11877,7 +11877,12 @@ class HandleTypes extends ServiceMethods {
 		this.TE_SignalService(menuRequest,x => {x; debugger;},x => {x; debugger;});
 	}
 	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,a => {a;});}
+	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const {sendFeedbackAction: a,...y}=x; this.g(y); this.AD_SendFeedback(a);});}
+	/** @private @arg {AD_SendFeedback} x */
+	AD_SendFeedback(x) {
+		const {bucket,...y}=x; this.g(y);
+		if(bucket!=="Kevlar") debugger;
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
