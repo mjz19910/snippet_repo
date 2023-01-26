@@ -12406,7 +12406,7 @@ class HandleTypes extends ServiceMethods {
 	D_ChipCloud(x) {
 		const cf="D_ChipCloud";
 		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
-		this.R_ChipCloudChip(chips);
+		this.z(chips,this.R_ChipCloudChip);
 		this.trackingParams(cf,trackingParams);
 		if(horizontalScrollable!==false) debugger;
 		this.z([nextButton,previousButton],this.R_Button);

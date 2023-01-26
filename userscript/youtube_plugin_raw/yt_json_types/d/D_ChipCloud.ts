@@ -1,5 +1,5 @@
 type D_ChipCloud={
-	chips: R_ChipCloudChip;
+	chips: R_ChipCloudChip[];
 	trackingParams: string;
 	horizontalScrollable: false;
 	nextButton: R_Button;
