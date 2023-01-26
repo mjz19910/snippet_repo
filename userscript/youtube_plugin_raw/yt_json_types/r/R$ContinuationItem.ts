@@ -1,3 +1,1 @@
-type R_ContinuationItem={
-	continuationItemRenderer: D_ContinuationItem;
-};
+type R_ContinuationItem={continuationItemRenderer: D_ContinuationItem;};

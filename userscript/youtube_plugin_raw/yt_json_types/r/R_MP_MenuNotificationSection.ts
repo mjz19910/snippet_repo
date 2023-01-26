@@ -1,0 +1,1 @@
+type R_MP_MenuNotificationSection={multiPageMenuNotificationSectionRenderer: D_MP_MenuNotificationSection;};
