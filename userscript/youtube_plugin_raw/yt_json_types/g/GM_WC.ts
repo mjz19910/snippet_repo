@@ -1,4 +1,5 @@
 //#region GU_VE
+type GU_VE6827_UrlType=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type GU_VE23462_UrlType="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE83769_UrlType=
 	|"/upload"
@@ -254,7 +255,6 @@ type DE_VE3854_Browse={browseId: "FEwhat_to_watch";};
 type DE_VE5754_Browse={
 	browseId: `VL${"LL"|"WL"|`PL${string}`}`;
 };
-type DE_VE6827_UrlType=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type DE_VE6827_Browse={
 	browseId:
 	|"FElibrary"
