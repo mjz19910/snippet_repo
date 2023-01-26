@@ -12764,9 +12764,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {
 		this.T_Endpoint("C_RelatedChip",x,x => {
-			x.relatedChipCommand;
+			if(!x.relatedChipCommand) debugger;
+			this.DC_RelatedChip(this.w(x));
 		});
 	}
+	/** @private @arg {DC_RelatedChip} x */
+	DC_RelatedChip(x) {x; debugger;}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {x; debugger;}
 	/** @private @arg {D_NotificationAction} x */
