@@ -5421,10 +5421,11 @@ class ParserService extends BaseService {
 			} break;`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
-			console.log("[parse_value.new_path_gen]",path);
 			/** @private @type {P_LogItems} */
-			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
-			console.log(`
+			console.log("[parse_value.new_path_gen]",path);
+			let ak_gen=["",""].concat(map_keys.map(x=>`\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			console.log(ak_gen.join("\n"));
+			console.log(`\n
 			case "${path}":
 				switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
 				/** @private @type {P_PathRoot} */
@@ -5462,6 +5463,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "like.likeParams":
+						switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_PathRoot} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "reel.params":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_PathRoot} */
@@ -5884,7 +5889,10 @@ class ParserService extends BaseService {
 			} break;
 			case "like": {
 				const idx=2;
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "remove_like_params": case "likeParams": u(idx); debugger; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "dislikeParams": case "removeLikeParams": case "likeParams": u(idx); debugger; break;
+				}
 			} break;
 			case "next": {
 				const idx=2;
@@ -8186,8 +8194,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
-		if("accessibility" in x) return this.D_Video_Handle("D_Video_Accessibility",x);
-		if("owner" in x) return this.D_Video_Handle("D_Video_Owner",x);
+		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Accessibility",x);}
+		if("owner" in x) {console.log("video.owner",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Owner",x);}
+		console.log("video.other",this.get_keys_of(x).join());
 		this.D_Video_Handle("D_Video_NoOwner",x);
 	}
 	/** @private @arg {R_ToggleButton} x */
@@ -11914,7 +11923,26 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
 	D_PlaylistSidebarSecondaryInfo(x) {x; debugger;}
 	/** @private @arg {DE_Like} x */
-	DE_Like(x) {x; debugger;}
+	DE_Like(x) {
+		const cf="DE_Like"; this.k(cf,x);
+		switch(x.status) {
+			case "INDIFFERENT": {
+				const cf="E_LikeIndifferent";
+				const {status,target,removeLikeParams,...y}=x; this.g(y);
+				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
+			} break;
+			case "LIKE": {
+				const cf="E_LikeLike";
+				const {status,target,actions,likeParams,...y}=x; this.g(y);
+				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
+			} break;
+			case "DISLIKE": {
+				const cf="E_LikeDislike";
+				const {status,target,dislikeParams,...y}=x; this.g(y);
+				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
+			} break;
+		}
+	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {x; debugger;}
 	/** @private @arg {D_ToggleButton} x */
