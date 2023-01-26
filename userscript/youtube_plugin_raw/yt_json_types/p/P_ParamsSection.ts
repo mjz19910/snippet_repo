@@ -102,6 +102,7 @@ type T_Endpoint_CF=[
 	"C_ReloadContinuationItems",
 	"C_ScrollToEngagementPanel",
 	"C_ShowReloadUi",
+	"E_AddToPlaylistService",
 	"E_Browse",
 	"E_CreateBackstagePost",
 	"E_CreateBackstagePost",

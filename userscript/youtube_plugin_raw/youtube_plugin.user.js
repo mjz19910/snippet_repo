@@ -9479,14 +9479,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem(x) {
-		x;
+		const cf="RD_MenuServiceItem";
+		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+		this.R_TextRuns(text);
+		if(icon.iconType!=="NOT_INTERESTED") debugger;
+		if(!serviceEndpoint.feedbackEndpoint) debugger;
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_MenuServiceItem} x */
-	R_MenuServiceItem(x) {
-		this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);
-	}
+	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {x;}
+	E_AddToPlaylistService(x) {this.T_Endpoint("E_AddToPlaylistService",x,x => this.DE_AddToPlaylistService(this.w(x)));}
+	/** @protected @arg {DE_AddToPlaylistService} x */
+	DE_AddToPlaylistService(x) {
+		const {videoId,...y}=x; this.g(y);
+		this.videoId(videoId);
+	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {
 		const cf="E_PlaylistEdit"; this.k(cf,x);

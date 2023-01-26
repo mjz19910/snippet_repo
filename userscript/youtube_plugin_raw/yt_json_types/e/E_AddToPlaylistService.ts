@@ -1,5 +1,5 @@
-type E_AddToPlaylistService=EB_Endpoint&{
-	addToPlaylistServiceEndpoint: {
-		videoId: string;
-	};
+type E_AddToPlaylistService={
+	clickTrackingParams: string;
+	commandMetadata: {};
+	addToPlaylistServiceEndpoint: DE_AddToPlaylistService;
 };
