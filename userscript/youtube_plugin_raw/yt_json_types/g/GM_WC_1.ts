@@ -16,7 +16,7 @@ type GM_WC_1=[
 	GM_AccountMenu,
 	GM_backstage_create_post,
 	GM_browse_edit_playlist,
-	GM_browse,
+	GM_Browse,
 	GM_feedback,
 	GM_flag_get_form,
 	GM_get_transcript,
@@ -24,7 +24,7 @@ type GM_WC_1=[
 	GM_like_dislike,
 	GM_like_like,
 	GM_like_removelike,
-	GM_next,
+	GM_Next,
 	GM_notification_get_unseen_count,
 	GM_notification_opt_out,
 	GM_notification_record_interactions,
@@ -131,7 +131,7 @@ type GM_share_get_share_panel={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/share/get_share_panel";
 };
-type GM_next={
+type GM_Next={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/next";
 };
@@ -139,7 +139,7 @@ type GM_get_transcript={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/get_transcript";
 };
-type GM_browse={
+type GM_Browse={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse";
 };
@@ -201,9 +201,10 @@ type GM_YpcGetCart={
 };
 //#endregion
 //#region M_*
-type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
-type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
 type M_AccountMenu={webCommandMetadata: GM_AccountMenu;};
+type M_Browse={webCommandMetadata: GM_Browse;};
+type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
+type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};

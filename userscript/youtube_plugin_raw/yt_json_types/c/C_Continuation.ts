@@ -1,5 +1,7 @@
 type C_Continuation={
 	clickTrackingParams: string;
-	commandMetadata?: GM_Continuation;
+	commandMetadata?: {
+		webCommandMetadata: GM_Next;
+	};
 	continuationCommand: DC_Continuation;
 };

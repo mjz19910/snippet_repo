@@ -7473,7 +7473,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} [f_vm] @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T_Endpoint(cf,x,f,f_vm) {
-		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x); // !
+		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x);
 		f.call(this,y);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		if(f_vm===void 0) {
@@ -7854,18 +7854,18 @@ class HandleTypes extends ServiceMethods {
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
 		if("params" in x) {
-			const {browseId: a,params: c,...y}=this.sd(cf,x); this.g(y); // !
+			const {browseId: a,params: c,...y}=this.sd(cf,x); this.g(y);
 			this.E_Browse_ParseBrowseId(a);
 			this.params(cf,"D_Browse.param",c);
 			this.g(y);
 			return;
 		}
 		if("canonicalBaseUrl" in x) {
-			const {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y); // !
+			const {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y);
 			this.E_Browse_ParseBrowseId(a);
 			return this._decode_channel_url(b);
 		}
-		const {browseId: a,...y}=this.sd(cf,x); this.g(y); // !
+		const {browseId: a,...y}=this.sd(cf,x); this.g(y);
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
@@ -7874,7 +7874,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
-		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y); // !
+		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
 		this.GM_VE_WC_Browse(a);
 	}
 	/** @private @arg {E_Browse['commandMetadata']['webCommandMetadata']} x */
@@ -8089,7 +8089,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
 		const cf="D_SettingsSidebar";
-		const {title,...y}=this.sd(cf,x); // !
+		const {title,...y}=this.sd(cf,x);
 		this.z(this.w(y),this.R_CompactLink);
 	}
 	/** @private @arg {D_CompactLink} x */
@@ -8111,7 +8111,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {D_CompactLink} T @arg {D_Link_CF} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
-		const {title,trackingParams,...y}=this.sd(cf,x); // !
+		const {title,trackingParams,...y}=this.sd(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -8258,7 +8258,6 @@ class HandleTypes extends ServiceMethods {
 				case "FEsubscriptions": {
 					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
 					this.D_Tab_subscriptionsEndpoint(endpoint);
-					// this.E_Browse(endpoint);
 					if(selected!==true) debugger;
 					if(!content.sectionListRenderer) debugger;
 					this.R_SectionList(content);
@@ -8526,9 +8525,15 @@ class HandleTypes extends ServiceMethods {
 		if(!x) {debugger; return;}
 		const cf="C_Continuation";
 		this.T_Endpoint(cf,x,x => this.y(x,this.DC_Continuation),x => {
-			if(x.webCommandMetadata.apiUrl!=="/youtubei/v1/browse") debugger;
-			this.y(x,this.GM_browse);
+			if(x.webCommandMetadata.apiUrl!=="/youtubei/v1/next") debugger;
+			this.y(x,this.GM_Next);
 		});
+	}
+	/** @private @arg {GM_Next} x */
+	GM_Next(x) {
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/next") debugger;
 	}
 	/** @private @arg {DC_Continuation} x */
 	DC_Continuation(x) {
@@ -9339,7 +9344,7 @@ class HandleTypes extends ServiceMethods {
 		if("browserMediaSession" in x) {
 			return this.A_BrowserMediaSession(x);
 		}
-		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.sd(cf,x); // !
+		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.sd(cf,x);
 		this.R_WatchNextEndScreen(endScreen);
 		this.R_PlayerOverlayAutoplay(autoplay);
 		this.R_Button(shareButton);
@@ -9361,7 +9366,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
-		const {playerBar,...y}=this.sd(cf,x); // !
+		const {playerBar,...y}=this.sd(cf,x);
 		if("playerBarActionButton" in y) {
 			return this.R_Button(this.w(y));
 		}
@@ -9897,7 +9902,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {R_Omit_Compact_Player} T @arg {T} x */
 	Omit_Compact_Player(cf,x) {
-		const {title,trackingParams,...y}=this.sd(cf,x); // !
+		const {title,trackingParams,...y}=this.sd(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -10393,7 +10398,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_ShowReloadUi} x */
 	C_ShowReloadUi(x) {
 		const cf="C_ShowReloadUi"; this.k(cf,x);
-		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.sd(cf,x); // !
+		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.sd(cf,x);
 		this.z([y1,y2],this.g);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		switch(targetId) {
@@ -10403,7 +10408,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template {DC_Continuation} T @arg {string} cf @arg {T} x */
 	DC_Continuation_Omit(cf,x) {
-		const {token,request,...y}=this.sd(cf,x); // !
+		const {token,request,...y}=this.sd(cf,x);
 		this.primitive_str(token);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
@@ -10414,7 +10419,7 @@ class HandleTypes extends ServiceMethods {
 		};
 		return y;
 	}
-	/** @private @arg {GM_browse} x */
+	/** @private @arg {GM_Browse} x */
 	GM_browse(x) {
 		const cf="GM_browse";
 		const {apiUrl,sendPost,...b}=this.sd(cf,x); this.g(b);
@@ -10456,7 +10461,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
-		const {serializedInteractionsRequest,...y}=this.sd(cf,x); // !
+		const {serializedInteractionsRequest,...y}=this.sd(cf,x);
 		this.primitive_str(x.serializedInteractionsRequest);
 		if("actions" in y) {
 			const {actions,...u}=this.sd(cf,y); this.g(u);
@@ -10582,7 +10587,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem"; this.k(cf,x);
-		const {trigger,continuationEndpoint,...y}=this.sd(cf,x); // !
+		const {trigger,continuationEndpoint,...y}=this.sd(cf,x);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.GE_Continuation(continuationEndpoint);
@@ -10998,7 +11003,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_PlaylistPage} x */
 	R_PlaylistPage(x) {
 		const cf="R_PlaylistPage"; this.k(cf,x);
-		const {url,endpoint,page,response,...y}=this.sd(cf,x); // !
+		const {url,endpoint,page,response,...y}=this.sd(cf,x);
 		if(page!=="playlist") debugger;
 		this.E_Browse(endpoint);
 		this.RS_Playlist(response);
@@ -11688,7 +11693,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_HotkeyDialogSectionOption} x */
 	D_HotkeyDialogSectionOption(x) {
 		const cf="D_HotkeyDialogSectionOption"; this.k(cf,x);
-		const {label,hotkey,...y}=this.sd(cf,x); // !
+		const {label,hotkey,...y}=this.sd(cf,x);
 		this.R_TextRuns(label);
 		this.primitive_str(hotkey);
 		if("hotkeyAccessibilityLabel" in y) return this.D_Accessibility(this.w(y));
