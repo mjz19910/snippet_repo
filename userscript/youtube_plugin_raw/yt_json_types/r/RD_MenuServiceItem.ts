@@ -1,6 +1,6 @@
 type RD_MenuServiceItem={
 	text: R_TextRuns;
 	icon: T_Icon<"NOT_INTERESTED">;
-	serviceEndpoint: E_Feedback|TE_SignalService<{},{}>;
+	serviceEndpoint: E_Feedback|TE_SignalService<M_SendPost,GS_Client>;
 	trackingParams: string;
 };
