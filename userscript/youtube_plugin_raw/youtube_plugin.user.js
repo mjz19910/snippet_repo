@@ -7440,7 +7440,7 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		return f.call(this,this.w(x));
 	}
-	/** @private @template {{}} T @arg {TR_ItemSection_2x<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
@@ -7511,7 +7511,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		return parse_number(types,_x);
 	}
-	/** @private @template {{}} T @arg {TD_ItemSection_2x<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TD_ItemSection_1_CommentsEntryPoint(x,f) {
 		const cf="TD_ItemSection_1_CommentsEntryPoint";
 		const {contents,trackingParams,sectionIdentifier,...y}=this.sd(cf,x); this.g(y);
@@ -9733,7 +9733,7 @@ class HandleTypes extends ServiceMethods {
 		if("runs" in x) return this.R_TextRuns(x);
 		debugger;
 	}
-	/** @private @arg {TR_ItemSection_2x<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
+	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
@@ -10074,7 +10074,9 @@ class HandleTypes extends ServiceMethods {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
 		this.TR_ItemSection_1(x,x => {
-			x;
+			const cf="G_WatchResult_ContentsItem.TR_ItemSection_2.CType";
+			if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
+			this.do_codegen(cf,x);
 			debugger;
 		});
 	}
@@ -12087,7 +12089,7 @@ class HandleTypes extends ServiceMethods {
 	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const cf="A_SendFeedback.rest",{sendFeedbackAction: a,...y}=this.sd(cf,x); this.g(y); this.AD_SendFeedback(a);});}
 	/** @private @arg {AD_SendFeedback} x */
 	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.sd(cf,x); this.g(y); if(bucket!=="Kevlar") debugger;}
-	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_2x<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
+	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
 		const {...y}=this.sd(cf,x); this.g(y);
@@ -12618,6 +12620,7 @@ class HandleTypes extends ServiceMethods {
 		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
+	R_CommentsEntryPointHeader(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
