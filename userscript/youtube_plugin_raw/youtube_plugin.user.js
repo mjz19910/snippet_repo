@@ -9227,16 +9227,12 @@ class HandleTypes extends ServiceMethods {
 		const {signal,...y}=this.sd(cf,x); f(signal);
 		return y;
 	}
-	R_VoiceSearchDialog(x) {
-		const cf="R_VoiceSearchDialog";
-		if(!x.voiceSearchDialogRenderer) debugger;
-		this.R_VoiceSearchDialog(x);
-	}
 	/** @private @arg {TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>} x */
 	S_VoiceSearchPopup_Dialog(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
 		const {popup,popupType,...y}=this.sd(cf,x); this.g(y);
 		if(popupType!=="TOP_ALIGNED_DIALOG") debugger;
+		if(!popup.voiceSearchDialogRenderer) debugger;
 		this.R_VoiceSearchDialog(popup);
 	}
 	/** @private @arg {TA_OpenPopup<TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>>} x */
