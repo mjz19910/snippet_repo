@@ -92,6 +92,7 @@ type P_ParamsSection=|string
 	;
 ;
 type T_Endpoint_CF=[
+	"A_SendFeedback",
 	"C_AdsControlFlowOpportunityReceived",
 	"C_Continuation",
 	"C_Executor",

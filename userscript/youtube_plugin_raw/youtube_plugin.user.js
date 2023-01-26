@@ -8970,7 +8970,7 @@ class HandleTypes extends ServiceMethods {
 				return;
 			}
 			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
-			if("sendFeedbackAction" in x) return;
+			if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
 			if("signalAction" in x) return;
 			debugger;
 		});
@@ -11871,6 +11871,8 @@ class HandleTypes extends ServiceMethods {
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
 		this.TE_SignalService(menuRequest,x => {x; debugger;},x => {x; debugger;});
 	}
+	/** @private @arg {A_SendFeedback} x */
+	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,a=>a,a=>a);}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
