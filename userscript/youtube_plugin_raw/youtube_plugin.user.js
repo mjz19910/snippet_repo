@@ -12092,7 +12092,8 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
-		const {...y}=this.sd(cf,x); this.g(y);
+		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
+		this.do_codegen(cf,x);
 		debugger;
 	}
 	/** @private @arg {S_GetAccountMenu} x */
@@ -12596,6 +12597,28 @@ class HandleTypes extends ServiceMethods {
 	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList",x,this.D_HorizontalCardList);}
 	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @private @arg {R_CommentsEntryPointHeader} x */
+	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader",x,this.D_CommentsEntryPointHeader);}
+	/** @private @arg {D_CommentsEntryPointHeader} x */
+	D_CommentsEntryPointHeader(x) {
+		const cf="D_CommentsEntryPointHeader";
+		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.sd(cf,x); this.g(y);
+		this.R_TextRuns(headerText);
+		this.C_Executor(onTap);
+		this.trackingParams(cf,trackingParams);
+		this.R_SimpleText(commentCount);
+		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);
+		if(targetId!=="comments-entry-point-header-identifier") debugger;
+	}
+	/** @private @arg {D_CommentsEntryPointHeader['contentRenderer']} x */
+	D_CommentsEntryPointHeader_contentRenderer(x) {
+		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
+		debugger;
+	}
+	/** @private @arg {R_CommentsEntryPointTeaser} x */
+	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
+	/** @private @arg {D_CommentsEntryPointTeaser} x */
+	D_CommentsEntryPointTeaser(x) {x;}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
@@ -12620,7 +12643,6 @@ class HandleTypes extends ServiceMethods {
 		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	R_CommentsEntryPointHeader(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
