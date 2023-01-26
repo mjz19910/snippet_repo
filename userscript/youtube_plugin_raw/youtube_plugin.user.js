@@ -9477,10 +9477,18 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen("MenuItems",x);
 		x;
 	}
+	/** @private @arg {TE_SignalService<M_SendPost, GS_Client>} x */
+	TE_SignalService_I_0(x) {
+		const cf="TE_SignalService_I_0";
+		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.M_SendPost(commandMetadata);
+		this.GS_Client(signalServiceEndpoint);
+	}
 	/** @private @arg {RD_MenuServiceItem['serviceEndpoint']} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		x.signalServiceEndpoint;
+		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		debugger;
 	}
 	/** @private @arg {RD_MenuServiceItem} x */
