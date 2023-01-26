@@ -7236,12 +7236,17 @@ class HandleTypes extends ServiceMethods {
 		const cf="T_Commands"; this.k(cf,x);
 		this.z(this.w(x),f);
 	}
-	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
-	T_Endpoint(cf,x,f,f_v$m) {
+	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} [f_vm] @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	T_Endpoint(cf,x,f,f_vm) {
 		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x); // !
 		f.call(this,y);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
-		this.t(commandMetadata,x => f_v$m.call(this,x));
+		if(f_vm===void 0) {
+			if(commandMetadata!==void 0) debugger;
+			return;
+		}
+		if(commandMetadata===void 0) return;
+		f_vm.call(this,commandMetadata);
 	}
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
@@ -11872,7 +11877,7 @@ class HandleTypes extends ServiceMethods {
 		this.TE_SignalService(menuRequest,x => {x; debugger;},x => {x; debugger;});
 	}
 	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,a=>a,a=>a);}
+	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,a => {a;});}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
