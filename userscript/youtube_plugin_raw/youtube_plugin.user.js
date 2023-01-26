@@ -4473,14 +4473,25 @@ class CodegenService extends BaseService {
 		}
 		return "{}";
 	}
-	/** @param {{[U in string]:unknown}} x */
+	/** @param {{[U in string]:unknown}} x @returns {string} */
 	get_auto_type_name(x) {
 		let type_name=this.json_auto_replace_1(x);
 		if(type_name==="MetadataBadgeRenderer") {
 			return "RMD_Badge";
 		}
+		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
+			if(!x.openPopupAction) break x;
+			let gn=this.get_name_from_keys(x.openPopupAction);
+			if(!gn) break x;
+			let gr=this.#_codegen_new_typedef(x.openPopupAction,gn);
+			if(!gr) break x;
+			let sr=split_string_once(gr.split("\n").map(e=>e.trim()).join(""),"=")[1];
+			if(!sr) break x;
+			return "TA_OpenPopup<"+sr+">";
+		}
 		if(type_name.endsWith("Action")) {
 			let real_val=split_string_once(type_name,"Action")[0];
+			if(real_val==="OpenPopup") return type_name;
 			return `A_${real_val}`;
 		}
 		if(type_name.endsWith("Endpoint")) {

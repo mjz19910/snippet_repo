@@ -23,7 +23,7 @@ type GM_WC_1=[
 	GM_like_like,
 	GM_like_removelike,
 	GM_next,
-	GM_notification_get_notification_menu,
+	GM_GetNotificationMenu,
 	GM_notification_get_unseen_count,
 	GM_notification_opt_out,
 	GM_notification_record_interactions,
@@ -150,7 +150,7 @@ type GM_notification_get_unseen_count={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_unseen_count";
 };
-type GM_notification_get_notification_menu={
+type GM_GetNotificationMenu={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_notification_menu";
 };
@@ -197,6 +197,7 @@ type GM_YpcGetCart={
 //#endregion
 //#region M_*
 type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
+type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};
