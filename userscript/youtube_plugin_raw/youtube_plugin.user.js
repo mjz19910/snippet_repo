@@ -12033,7 +12033,7 @@ class HandleTypes extends ServiceMethods {
 				this.z(a,x => {
 					if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
 					if("adSlotRenderer" in x) return this.R_AdSlot(x);
-					if("compactVideoRenderer" in x) return;
+					if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 					if("" in x) return;
 					debugger;
 				});
