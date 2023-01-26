@@ -4414,8 +4414,8 @@ class CodegenService extends BaseService {
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
 		});
-		tc=tc.replaceAll(",",";");
-		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
+		tc=tc.replaceAll(/,$/gm,"");
+		tc=tc.replaceAll(/[^[{;,]$/gm,a => `${a};`);
 		let ret;
 		if(typeof gen_name==="number") {
 			ret=`\ntype ArrayType_${gen_name}=${tc}\n`;
@@ -4486,6 +4486,10 @@ class CodegenService extends BaseService {
 			if(real_val==="OpenPopup") return type_name;
 			return `A_${real_val}`;
 		}
+		if(type_name.endsWith("Command")) {
+			let real_val=split_string_once(type_name,"Command")[0];
+			return `C_${real_val}`;
+		}
 		if(type_name.endsWith("Endpoint")) {
 			let real_val=split_string_once(type_name,"Endpoint")[0];
 			return `E_${real_val}`;
@@ -4517,7 +4521,7 @@ class CodegenService extends BaseService {
 		/** @private @type {GS_Client} */
 		let u=as(x);
 		switch(u.signal) {
-			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::GS_Client"; break;
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return `TYPE::GS_Client<${this.get_auto_type_name(u.actions[0])},"${u.signal}">`; break;
 		}
 		debugger;
 		return x;
