@@ -8227,6 +8227,9 @@ class HandleTypes extends ServiceMethods {
 		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Accessibility",x);}
 		if("owner" in x) {console.log("video.owner",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Owner",x);}
 		if("videoId" in x) {
+			if("topStandaloneBadge" in x) {
+				return this.D_Video_Handle("D_Video_videoId_3",x);
+			}
 			if("descriptionSnippet" in x) {
 				return this.D_Video_Handle("D_Video_videoId_2",x);
 			}
