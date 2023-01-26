@@ -1,1 +1,0 @@
-type GM_SendPost={sendPost: true;};

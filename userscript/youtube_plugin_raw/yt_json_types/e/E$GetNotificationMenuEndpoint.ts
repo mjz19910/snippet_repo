@@ -5,10 +5,7 @@ type DE_GetNotificationMenu={
 type E_GetNotificationMenu={
 	clickTrackingParams: string;
 	commandMetadata: {
-		webCommandMetadata: {
-			sendPost: true;
-			apiUrl: "/youtubei/v1/notification/get_notification_menu";
-		};
+		webCommandMetadata: GM_GetNotificationMenu;
 	};
 	getNotificationMenuEndpoint: DE_GetNotificationMenu;
 };

@@ -1,1 +1,1 @@
-type MG_Survey_CMD={webCommandMetadata: GMG_SurveyWeb_CMD;};
+type MG_Survey_CMD={webCommandMetadata: GM_get_survey;};

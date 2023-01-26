@@ -4518,7 +4518,7 @@ class CodegenService extends BaseService {
 		/** @private @type {GS_Client} */
 		let u=as(x);
 		switch(u.signal) {
-			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::ES_Client"; break;
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::GS_Client"; break;
 		}
 		debugger;
 		return x;
@@ -11412,13 +11412,13 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_str(serializedShareEntity);
 		this.z(commands,this.TA_OpenPopup);
 	}
-	/** @private @arg {M_SignalService_SendPost} x */
+	/** @private @arg {M_SendPost} x */
 	M_SignalService_SendPost(x) {
 		const cf="M_SignalService_SendPost";
 		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
 		this.GM_SignalService_SendPost(a);
 	}
-	/** @private @arg {GM_SignalService_SendPost} x */
+	/** @private @arg {GM_SendPost} x */
 	GM_SignalService_SendPost(x) {
 		const cf="GM_SignalService_SendPost";
 		const {sendPost: a,...y}=this.sd(cf,x); this.g(y);

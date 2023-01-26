@@ -111,21 +111,29 @@ type GM_VE96368_WC_browse={
 };
 //#endregion
 //#region GM_ApiUrl
-type GM_ypc_get_offers={
+type GM_AccountMenu={
 	sendPost: true;
-	apiUrl: "/youtubei/v1/ypc/get_offers";
+	apiUrl: "/youtubei/v1/account/account_menu";
 };
 type GM_account_set_setting={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/set_setting";
 };
-type GM_playlist_get_add_to_playlist={
+type GM_backstage_create_post={
 	sendPost: true;
-	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
+	apiUrl: "/youtubei/v1/backstage/create_post";
 };
 type GM_browse_edit_playlist={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse/edit_playlist";
+};
+type GM_comment_create_comment={
+	apiUrl: "/youtubei/v1/comment/create_comment";
+	sendPost: true;
+};
+type GM_playlist_get_add_to_playlist={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
 };
 type GM_share_get_share_panel={
 	sendPost: true;
@@ -143,10 +151,6 @@ type GM_Browse={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_AccountMenu={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/account/account_menu";
-};
 type GM_notification_get_unseen_count={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_unseen_count";
@@ -154,10 +158,6 @@ type GM_notification_get_unseen_count={
 type GM_GetNotificationMenu={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_notification_menu";
-};
-type GM_backstage_create_post={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/backstage/create_post";
 };
 type GM_like_removelike={
 	sendPost: true;
@@ -195,9 +195,20 @@ type GM_notification_record_interactions={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/record_interactions";
 };
+type GM_get_survey={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/get_survey";
+};
 type GM_YpcGetCart={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/ypc/get_cart";
+};
+type GM_ypc_get_offers={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/ypc/get_offers";
+};
+type GM_SendPost={
+	sendPost: true;
 };
 //#endregion
 //#region M_*
@@ -205,6 +216,7 @@ type M_AccountMenu={webCommandMetadata: GM_AccountMenu;};
 type M_Browse={webCommandMetadata: GM_Browse;};
 type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
 type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
+type M_SendPost={webCommandMetadata: GM_SendPost;};
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
 type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};
 type M_VE3854={webCommandMetadata: GM_VE3854_WC;};

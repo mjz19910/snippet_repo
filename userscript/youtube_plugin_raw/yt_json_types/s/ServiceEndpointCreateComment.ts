@@ -2,9 +2,6 @@ type ServiceEndpointCreateComment={
 	createCommentEndpoint: {
 		createCommentParams: {};
 	};
-	commandMetadata: {
-		apiUrl: "/youtubei/v1/comment/create_comment";
-		sendPost: true;
-	};
+	commandMetadata: GM_comment_create_comment;
 	clickTrackingParams: string;
 };
