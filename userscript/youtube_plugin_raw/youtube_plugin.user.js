@@ -2420,7 +2420,7 @@ class KnownDataSaver extends ApiBase {
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(ns,idx,store);
-		if(Math.random()>0.98) debugger;
+		if(Math.random()>0.999) debugger;
 		return true;
 	}
 	/** @api @public @arg {`[${string}]`} k_arg @arg {string|string[]} x */
@@ -7441,7 +7441,7 @@ class HandleTypes extends ServiceMethods {
 		return f.call(this,this.w(x));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TR_ItemSection_2(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
+	TR_ItemSection_2(x,f) {this.H_("TR_ItemSection_2",x,x => this.TD_ItemSection_2_CommentsEntryPoint(x,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection_3(x,f) {
 		const cf="ItemSectionRendererTemplate";
@@ -7512,8 +7512,8 @@ class HandleTypes extends ServiceMethods {
 		return parse_number(types,_x);
 	}
 	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TD_ItemSection_1_CommentsEntryPoint(x,f) {
-		const cf="TD_ItemSection_1_CommentsEntryPoint";
+	TD_ItemSection_2_CommentsEntryPoint(x,f) {
+		const cf="TD_ItemSection_2_CommentsEntryPoint";
 		const {contents,trackingParams,sectionIdentifier,...y}=this.sd(cf,x); this.g(y);
 		this.z(contents,f);
 		this.trackingParams(cf,trackingParams);
@@ -10056,28 +10056,36 @@ class HandleTypes extends ServiceMethods {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
+	/** @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
+	TR_ItemSection_3_R_1(x) {
+		const [a,...b]=x;
+		let gen_section_id=this.join_string(b,"-");
+		if(gen_section_id!=="comment-item-section-comments-section") debugger;
+		this.z(a,this.TR_ItemSection_3_I_1);
+	}
+	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>['itemSectionRenderer']['contents'][number]} x */
+	TR_ItemSection_3_I_1(x) {
+		const cf="TR_ItemSection_3_I_1";
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		this.do_codegen(cf,x);
+		debugger;
+	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
-	G_WatchResultItem_ItemSection(x) {
+	G_WatchResultItem_ItemSection_3(x) {
+		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
+		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		this.TR_ItemSection_3(x,([a,...b]) => {
-			let gen_section_id=this.join_string(b,"-");
-			if(gen_section_id!=="comment-item-section-comments-section") debugger;
-			this.z(a,x => {
-				x;
-				debugger;
-			});
-			debugger;
-		});
+		this.TR_ItemSection_3(x,this.TR_ItemSection_3_R_1);
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
-	G_WatchResultItem_ItemSections(x) {
-		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection(x);
+	G_WatchResultItem_ItemSectionGroup(x) {
+		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
 		this.TR_ItemSection_2(x,this.R_CommentItemSection_EntryPoint);
 	}
 	/** @private @arg {G_WatchResult_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
-		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSections(x);
+		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
