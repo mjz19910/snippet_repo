@@ -10808,7 +10808,7 @@ class HandleTypes extends ServiceMethods {
 		const {guideEntryId,...y}=this.sd(cf,x); this.g(y);
 		this.parse_guide_entry_id(guideEntryId);
 	}
-	/** @private @arg {D_GuideEntryBadges} x */
+	/** @private @arg {D_LiveBroadcastingBadge} x */
 	D_GuideEntryBadges(x) {
 		const cf="D_GuideEntryBadges";
 		const {liveBroadcasting,...y}=this.sd(cf,x); this.g(y);
