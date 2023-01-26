@@ -7206,7 +7206,7 @@ class HandleTypes extends ServiceMethods {
 		f.call(this,this.w(x));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,a => this.TD_ItemSection_1_CommentsEntryPoint(a,f));}
+	TR_ItemSection_1(x,f) {this.H_("TR_ItemSection_1",x,x => this.TD_ItemSection_1_CommentsEntryPoint(x,f));}
 	/** @private @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TR_ItemSection(x,f) {
 		const cf="ItemSectionRendererTemplate";
@@ -7241,7 +7241,7 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x); // !
 		f.call(this,y);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
-		this.t(commandMetadata,a => f_v$m.call(this,a));
+		this.t(commandMetadata,x => f_v$m.call(this,x));
 	}
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
@@ -7541,7 +7541,7 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(currentVideoEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a => this.GE_ResponseReceived(cf,a));
+		this.z(onResponseReceivedEndpoints,x => this.GE_ResponseReceived(cf,x));
 		this.z(engagementPanels,this.G_EngagementPanelItem);
 		this.R_DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R_CinematicContainer);
@@ -7574,8 +7574,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="RSB_EditPlaylist";
 		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		if(status!=="STATUS_SUCCEEDED") debugger;
-		this.z(actions,a => {
-			a;
+		this.z(actions,x => {
+			x;
 			debugger;
 		});
 		this.z(playlistEditResults,this.g);
@@ -7587,12 +7587,12 @@ class HandleTypes extends ServiceMethods {
 	R_BrowsePage(x) {
 		const cf="BrowsePageResponse";
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.t(rootVe,a => this.save_number("[R_BrowsePage.rootVe]",a));
+		this.t(rootVe,x => this.save_number("[R_BrowsePage.rootVe]",x));
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E_Browse(endpoint);
 		if(page!=="browse") debugger;
 		this.RS_Browse(response);
-		this.t(expirationTime,a => this.primitive_of(a,"number"));
+		this.t(expirationTime,x => this.primitive_of(x,"number"));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
@@ -7707,7 +7707,7 @@ class HandleTypes extends ServiceMethods {
 		const service_tracking=this.x.get("service_tracking");
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.t(mainAppWebResponseContext,this.MainAppWebResponseContext);
-		this.z(serviceTrackingParams,a => service_tracking.set_service_params(a));
+		this.z(serviceTrackingParams,x => service_tracking.set_service_params(x));
 		this.t(webResponseContextExtensionData,this.WebResponseContextExtensionData);
 		this.t(consistencyTokenJar,this.ConsistencyTokenJar);
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
@@ -7761,9 +7761,9 @@ class HandleTypes extends ServiceMethods {
 	WebPrefetchData(x) {
 		const cf="WebPrefetchData";
 		const {navigationEndpoints,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(navigationEndpoints,a => {
-			if("watchEndpoint" in a) {
-				return this.E_Watch(a);
+		this.z(navigationEndpoints,x => {
+			if("watchEndpoint" in x) {
+				return this.E_Watch(x);
 			}
 			debugger;
 		});
@@ -7802,10 +7802,10 @@ class HandleTypes extends ServiceMethods {
 		this.t(cacheMetadata,this.CacheMetadata);
 		this.t(metadata,this.G_BrowseMetadata);
 		this.t(microformat,this.R_MicroformatData);
-		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
+		this.t(maxAgeStoreSeconds,x => this.primitive_of(x,"number"));
 		this.t(background,this.R_MusicThumbnail);
 		this.t(continuationContents,this.C_SectionList);
-		this.t(alerts,a => this.Response_alerts(cf,a));
+		this.t_cf(cf,alerts,this.Response_alerts);
 	}
 	/** @private @arg {C_SectionList} x */
 	C_SectionList(x) {this.H_("C_SectionList",x,this.G_SectionList);}
@@ -7904,9 +7904,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_PdgBuyFlow";
 		const {header,content,trackingParams,onCloseCommand,...y}=this.sd(cf,x); this.g(y);
 		this.R_PdgBuyFlowHeader(x.header);
-		this.z(content,a => {
-			if(!a.superVodBuyFlowContentRenderer) debugger;
-			return this.R_SuperVodBuyFlowContent(a);
+		this.z(content,x => {
+			if(!x.superVodBuyFlowContentRenderer) debugger;
+			return this.R_SuperVodBuyFlowContent(x);
 		});
 		this.trackingParams(cf,trackingParams);
 		if("getSurveyCommand" in onCloseCommand) {
@@ -7948,14 +7948,14 @@ class HandleTypes extends ServiceMethods {
 		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,this.R_Hint);
-		this.t(targetId,a => {
+		this.t(targetId,x => {
 			/** @private @type {D_Button$TargetId} */
-			switch(a) {
+			switch(x) {
 				case "clip-info-button": break;
 				case "sponsorships-button": return;
 				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`); debugger;
 			}
-			this.targetId(cf,a);
+			this.targetId(cf,x);
 		});
 		return y;
 	}
@@ -7965,12 +7965,12 @@ class HandleTypes extends ServiceMethods {
 		if("style" in x&&"accessibility" in x) {
 			const {accessibility,style,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
 			if(accessibility) return this.D_Label(accessibility);
-			this.t(style,a => this.save_string("[Button.style]",a));
+			this.t(style,x => this.save_string("[Button.style]",x));
 			return;
 		}
 		if("style" in x) {
 			const {style,...y}=this.D_Button_Omit(`${cf}.Styled`,x); this.g(y);
-			this.t(style,a => this.save_string("[Button.style]",a));
+			this.t(style,x => this.save_string("[Button.style]",x));
 			return;
 		}
 		if("accessibility" in x) {
@@ -7985,7 +7985,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
 		const cf="D_PdgBuyFlowHeader";
-		const {}=x;
+		const {text,helpButton,dismissButton,...y}=x; this.g(y);
+		this.R_TextRuns(text);
+		this.R_Button(helpButton);
+		this.R_Button(dismissButton);
 		this.codegen_renderer(cf,x);
 		debugger;
 	}
@@ -8151,15 +8154,15 @@ class HandleTypes extends ServiceMethods {
 		this.t(viewCountText,this.G_Text);
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.tz(badges,this.RMD_Badge);
-		this.t(upcomingEventData,a => {
-			const {isReminderSet,startTime,upcomingEventText,...y}=a; this.g(y);
+		this.t(upcomingEventData,x => {
+			const {isReminderSet,startTime,upcomingEventText,...y}=x; this.g(y);
 			if(isReminderSet!==false) debugger;
 			this.primitive_str(startTime);
 			this.R_TextRuns(upcomingEventText);
 		});
 		this.t(owner,this.D_Video_Owner);
 		this.t(shortViewCountText,this.G_Text);
-		this.t(isWatched,a => this.expect_eq(a,this.true_()));
+		this.t(isWatched,x => this.expect_eq(x,this.true_()));
 		this.t(topStandaloneBadge,this.RMD_Badge);
 		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
@@ -8282,8 +8285,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ThumbnailItem";
 		const {url,width,height,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.primitive_str(url);
-		this.t(width,a => this.primitive_of(a,"number"));
-		this.t(height,a => this.primitive_of(a,"number"));
+		this.t(width,x => this.primitive_of(x,"number"));
+		this.t(height,x => this.primitive_of(x,"number"));
 	}
 	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -8423,7 +8426,7 @@ class HandleTypes extends ServiceMethods {
 	D_SuperVodBuyFlowContent(x) {
 		const cf="D_SuperVodBuyFlowContent";
 		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.sd(cf,x); this.g(y);
-		this.z([description,disclaimerText],a => this.R_TextRuns(a));
+		this.z([description,disclaimerText],x => this.R_TextRuns(x));
 		this.R_Button(buyButton);
 		this.trackingParams(cf,trackingParams);
 		this.R_PdgCommentPreview(commentPreview);
@@ -8482,12 +8485,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		const cf="C_GetSurvey";
-		this.T_Endpoint(cf,x,a => {
-			if(!a.getSurveyCommand) debugger;
-			this.D_GetSurvey(this.w(a));
-		},a => {
-			const cf="GetSurveyCommandMetadata"; this.k(cf,a);
-			const {apiUrl,sendPost,...y}/*!*/=this.w(a); this.g(y);
+		this.T_Endpoint(cf,x,x => {
+			if(!x.getSurveyCommand) debugger;
+			this.D_GetSurvey(this.w(x));
+		},x => {
+			const cf="GetSurveyCommandMetadata"; this.k(cf,x);
+			const {apiUrl,sendPost,...y}/*!*/=this.w(x); this.g(y);
 			if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 			if(sendPost!==true) debugger;
 		});
@@ -8515,11 +8518,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
 		if(typeof x.type==='string') {
-			return x.type.split(".").map(e => {
-				if(e.includes("_")) {
-					return e.split("_").map(e => this.uppercase_first(e)).join("");
+			return x.type.split(".").map(x => {
+				if(x.includes("_")) {
+					return x.split("_").map(x => this.uppercase_first(x)).join("");
 				}
-				return this.uppercase_first(e);
+				return this.uppercase_first(x);
 			}).join("$");
 		}
 		let rk=this.filter_keys(this.get_keys_of(x));
@@ -8586,10 +8589,8 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.R_DesktopTopbar(topbar);
 		this.z(refinements,this.primitive_str);
-		this.z(onResponseReceivedCommands,a => {
-			if("adsControlFlowOpportunityReceivedCommand" in a) {
-				return this.C_AdsControlFlowOpportunityReceived(a);
-			};
+		this.z(onResponseReceivedCommands,x => {
+			if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 			debugger;
 		});
 		this.targetId(cf,targetId);
@@ -8762,7 +8763,7 @@ class HandleTypes extends ServiceMethods {
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(entries,a => this.T_Command_TP(a,this.E_ReelWatch));
+		this.z(entries,x => this.T_Command_TP(x,this.E_ReelWatch));
 		this.trackingParams(cf,trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
 	}
@@ -8791,6 +8792,32 @@ class HandleTypes extends ServiceMethods {
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
 	}
+	/** @private @arg {D_NotificationMenu_PopupItem} x1 */
+	D_NotificationMenu_PopupItem(x1) {
+		const cf="D_NotificationMenu_PopupItem";
+		const {header,sections,style,trackingParams,...y}=this.sd(cf,x1); this.g(y);
+		this.R_SimpleMenuHeader(header);
+		let [iw]=this.z(sections,x => {
+			if("multiPageMenuNotificationSectionRenderer" in x) return this.w(x);
+			debugger;
+			return;
+		});
+		this.z(iw[0].items,x => {
+			if("notificationRenderer" in x) return this.R_Notification(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			console.log(x);
+			debugger;
+		});
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {D_NotificationMenu_Popup} x */
+	D_NotificationMenu_Popup(x) {
+		const cf="D_NotificationMenu_Popup"; this.k(cf,x);
+		const {popup: a,popupType: b,...y}=this.sd(cf,x);
+		this.TR_MP_Menu(a,this.D_NotificationMenu_PopupItem);
+		if(b!=="DROPDOWN") debugger;
+	}
 	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
 		const cf="RSG_NotificationMenu";
@@ -8800,28 +8827,8 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			return null;
 		});
-		this.z(ar,a => {
-			switch(a.popupType) {
-				default: debugger; break;
-				case "DROPDOWN": {
-					let x=this.w(a.popup);
-					const {header,sections,style,trackingParams,...y}=this.sd(cf,x); this.g(y);
-					this.R_SimpleMenuHeader(header);
-					let [iw]=this.z(sections,a => {
-						if("multiPageMenuNotificationSectionRenderer" in a) return this.w(a);
-						debugger;
-						return;
-					});
-					this.z(iw[0].items,x => {
-						if("notificationRenderer" in x) return this.R_Notification(x);
-						if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-						console.log(x);
-						debugger;
-					});
-					if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-					this.trackingParams(cf,trackingParams);
-				} break;
-			}
+		this.z(ar,x => {
+			this.D_NotificationMenu_Popup(x);
 		});
 		this.trackingParams(cf,trackingParams);
 	}
@@ -9430,11 +9437,12 @@ class HandleTypes extends ServiceMethods {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		debugger;
 	}
-	/** @private @arg {R_TextRuns} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
-	R_TextRuns(x,f_run=this.handle_text_endpoint) {
+	/** @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {R_TextRuns} x */
+	R_TextRuns(x) {
 		const cf="R_TextRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y); // ! #destructure
-		this.z(runs,a => this.IR_TextRun(a,f_run));
+		this.z(runs,x => this.IR_TextRun(x,this.handle_text_endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
@@ -11253,7 +11261,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.sd(cf,x); this.g(y); // ! #destructure
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_PlaylistHeader(header);
-		this.t(alerts,a => this.Response_alerts(cf,a));
+		this.t(alerts,x => this.Response_alerts(cf,x));
 		this.R_PlaylistMetadata(metadata);
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
@@ -11488,9 +11496,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetSharePanel";
 		const {responseContext: {},trackingParams,actions,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
-		this.z(actions,a => {
+		this.z(actions,x => {
 			const cf="RS_GetSharePanel.actions[]";
-			const {clickTrackingParams,openPopupAction,...y}=a; this.g(y);
+			const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			console.log("[RS_GetSharePanel.openPopupAction]",openPopupAction);
 		});
@@ -11753,7 +11761,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_WebSearchboxConfig";
 		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=this.sd(cf,x); this.g(y);
 		if(!this.eq_keys([a,b],["en","ca"])) debugger;
-		this.z([!c,d],v => {if(!v) debugger;});
+		this.z([!c,d],x => {if(!x) debugger;});
 	}
 	/** @private @arg {R_Channel_MD} x */
 	R_ChannelMetadata(x) {this.H_("ChannelMetadata",x,this.D_Channel_MD);}
@@ -11844,8 +11852,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {avatar,menuRequest,trackingParams,accessibility,tooltip,...y}=x; this.g(y);
 		this.D_Thumbnail(avatar);
-		this.TE_SignalService(menuRequest,a => {
-			a;
+		this.TE_SignalService(menuRequest,x => {
+			x;
 			debugger;
 		},this.S_GetAccountMenu);
 	}

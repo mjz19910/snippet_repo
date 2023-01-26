@@ -1,13 +1,5 @@
 type RSG_NotificationMenu={
 	responseContext: RC_ResponseContext;
-	actions: TA_OpenPopup<{
-		popup: TR_MP_Menu<{
-			header: R_SimpleMenuHeader;
-			sections: R_MP_MenuNotificationSection[];
-			style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
-			trackingParams: string;
-		}>;
-		popupType: "DROPDOWN";
-	}>[];
+	actions: TA_OpenPopup<D_NotificationMenu_Popup>[];
 	trackingParams: string;
 };
