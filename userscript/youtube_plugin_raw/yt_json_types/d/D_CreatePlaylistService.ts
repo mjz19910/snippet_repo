@@ -1,4 +1,4 @@
-type D_CreatePlaylistService={
+type DS_CreatePlaylist={
 	params?: string;
 	videoIds: string[];
 };

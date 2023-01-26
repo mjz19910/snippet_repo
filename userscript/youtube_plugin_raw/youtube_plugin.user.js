@@ -7879,12 +7879,6 @@ class HandleTypes extends ServiceMethods {
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
 		};
 	}
-	/** @private @arg {{browseEndpoint:E_Browse['browseEndpoint']}} x */
-	E_Browse_Handler(x) {
-		const cf="E_Browse_Handler";
-		const {browseEndpoint: a,...y}=this.sd(cf,x); this.g(y);
-		this.DE_Browse_VE(a);
-	}
 	/** @private @arg {E_Browse['browseEndpoint']} x */
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
@@ -7905,7 +7899,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(y);
 	}
 	/** @private @arg {E_Browse} x */
-	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,this.E_Browse_Handler,this.M_VE_Browse);}
+	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,x=>this.y(x,this.DE_Browse_VE),this.M_VE_Browse);}
 	/** @private @arg {E_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
@@ -8559,10 +8553,7 @@ class HandleTypes extends ServiceMethods {
 	C_Continuation(x) {
 		if(!x) {debugger; return;}
 		const cf="C_Continuation";
-		this.T_Endpoint(cf,x,x => this.y(x,this.DC_Continuation),x => {
-			if(x.webCommandMetadata.apiUrl!=="/youtubei/v1/next") debugger;
-			this.y(x,this.GM_Next);
-		});
+		this.T_Endpoint(cf,x,x => this.y(x,this.DC_Continuation),x => this.y(x,this.GM_Next));
 	}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {
@@ -8774,8 +8765,10 @@ class HandleTypes extends ServiceMethods {
 		this.T_Endpoint(cf,x,x => this.y(x,this.D_YpcGetCart),this.M_YpcGetCart);
 	}
 	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {
-		const {apiUrl,sendPost,...t}=this.w(x); this.w(t);
+	M_YpcGetCart(x) {this.H_("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {
+		const {apiUrl,sendPost,...y}=x; this.g(y);
 		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -12824,11 +12817,9 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {ES_CreatePlaylist} x */
-	ES_CreatePlaylist(x) {
-		const cf="D_ExpandableVideoDescriptionBody";
-		const {clickTrackingParams,commandMetadata,createPlaylistServiceEndpoint,...y}=this.sd(cf,x); this.g(y);
-		debugger;
-	}
+	ES_CreatePlaylist(x) {const cf="ES_CreatePlaylist";this.T_Endpoint(cf,x,x=>this.y(x,this.DS_CreatePlaylist));}
+	/** @private @arg {DS_CreatePlaylist} x */
+	DS_CreatePlaylist(x) {x; debugger;}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {
 		const cf="D_ExpandableVideoDescriptionBody";

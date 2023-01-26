@@ -111,6 +111,7 @@ type T_Endpoint_CF=[
 	"E_Feedback",
 	"E_GetNotificationMenu",
 	"E_GetTranscript",
+	"ES_CreatePlaylist",
 	"E_Like",
 	"E_PlaylistEdit",
 	"E_PlaylistEditor",
