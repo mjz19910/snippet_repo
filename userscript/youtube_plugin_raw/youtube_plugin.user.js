@@ -8220,6 +8220,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
 	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview",x,this.D_ThumbnailOverlayLoadingPreview);}
+	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
+	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview",x,this.R_TextRuns);}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
@@ -11952,8 +11954,6 @@ class HandleTypes extends ServiceMethods {
 	D_VideoSecondaryInfo(x) {x; debugger;}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {x; debugger;}
-	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
-	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview",x,this.R_TextRuns);}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
