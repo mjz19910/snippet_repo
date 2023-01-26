@@ -4,8 +4,6 @@ type DE_GetNotificationMenu={
 
 type E_GetNotificationMenu={
 	clickTrackingParams: string;
-	commandMetadata: {
-		webCommandMetadata: GM_GetNotificationMenu;
-	};
+	commandMetadata: {webCommandMetadata: GM_GetNotificationMenu;};
 	getNotificationMenuEndpoint: DE_GetNotificationMenu;
 };

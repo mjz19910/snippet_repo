@@ -9484,10 +9484,7 @@ class HandleTypes extends ServiceMethods {
 					return;
 				}
 				if(this.is_MenuItem_AQ(x)) {
-					const {icon,...y}=this.D_MenuServiceItem_Omit(x,sp => {
-						sp;
-						debugger;
-					}); this.g(y);
+					const {icon,...y}=this.D_MenuServiceItem_Omit(x,x => this.TE_SignalService(x,this.M_SendPost,this.GS_Client)); this.g(y);
 					this.T_Icon(icon);
 					return;
 				}
@@ -10640,7 +10637,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="E_GetTranscript";
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.G_CommandMetadata(commandMetadata);
+		debugger;
+		// this.G_CommandMetadata(commandMetadata);
 		this.DE_GetTranscript(getTranscriptEndpoint);
 	}
 	/** @private @arg {DE_GetTranscript} x */
@@ -10969,7 +10967,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ES_Button} x */
 	ES_Button(x) {
 		const cf="ES_Button";
-		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SendPost,this.GS_Client);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x);
 		debugger;
@@ -10988,7 +10986,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="E_YpcGetOffers";
 		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.G_CommandMetadata(commandMetadata);
+		debugger;
+		// this.G_CommandMetadata(commandMetadata);
 		this.D_YpcGetOffers(a);
 	}
 	/** @private @arg {D_YpcGetOffers} x */
@@ -11413,14 +11412,10 @@ class HandleTypes extends ServiceMethods {
 		this.z(commands,this.TA_OpenPopup);
 	}
 	/** @private @arg {M_SendPost} x */
-	M_SignalService_SendPost(x) {
-		const cf="M_SignalService_SendPost";
-		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
-		this.GM_SignalService_SendPost(a);
-	}
+	M_SendPost(x) {const cf="M_SendPost",{webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y); this.GM_SendPost(a);}
 	/** @private @arg {GM_SendPost} x */
-	GM_SignalService_SendPost(x) {
-		const cf="GM_SignalService_SendPost";
+	GM_SendPost(x) {
+		const cf="GM_SendPost";
 		const {sendPost: a,...y}=this.sd(cf,x); this.g(y);
 		if(a!==true) debugger;
 	}
@@ -11430,7 +11425,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SignalService_SendPost,this.GS_Client);
+		if("signalServiceEndpoint" in x) return this.TE_SignalService(x,this.M_SendPost,this.GS_Client);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
@@ -11684,7 +11679,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="E_WatchPlaylist";
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.G_CommandMetadata(commandMetadata);
+		debugger;
+		// this.G_CommandMetadata(commandMetadata);
 		this.D_WatchPlaylist(watchPlaylistEndpoint);
 	}
 	/** @private @arg {D_WatchPlaylist} x */
@@ -12717,7 +12713,7 @@ class HandleTypes extends ServiceMethods {
 					console.log("[CompactRadio.playnext]",playnext);
 					console.log("[CompactRadio.list]",list);
 				}
-			} break;
+			} return;
 			default: debugger; break;
 		};
 		up.search;

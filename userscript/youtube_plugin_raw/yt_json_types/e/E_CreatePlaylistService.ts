@@ -1,5 +1,5 @@
 type E_CreatePlaylistService={
 	clickTrackingParams: string;
-	commandMetadata: G_CommandMetadata;
+	commandMetadata: {};
 	createPlaylistServiceEndpoint: D_CreatePlaylistService;
 };

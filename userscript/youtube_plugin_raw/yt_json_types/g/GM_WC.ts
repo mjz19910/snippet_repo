@@ -1,5 +1,8 @@
 //#region GU_VE
-type GU_VE6827_UrlType=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
+type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
+type GU_VE6827_Url_NoParams="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
+type GU_VE6827_Url_Params="FEtrending"|"FEstorefront";
+type GU_VE6827_UrlType=GU_VE6827_Url_NoParams|GU_VE6827_Url_Params;
 type GU_VE23462_UrlType="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE83769_UrlType=
 	|"/upload"
@@ -247,28 +250,12 @@ type M_VE83769={webCommandMetadata: GM_VE83769_WC;};
 type M_VE96368={webCommandMetadata: GM_VE96368_WC_browse;};
 //#endregion
 //#region DE_VE\d+_.+
-type DE_VE3611_Browse={
-	browseId: `UC${string}`;
-	canonicalBaseUrl: `/@${string}`;
-};
+type DE_VE3611_Browse={browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`;};
 type DE_VE3854_Browse={browseId: "FEwhat_to_watch";};
-type DE_VE5754_Browse={
-	browseId: `VL${"LL"|"WL"|`PL${string}`}`;
-};
-type DE_VE6827_Browse={
-	browseId:
-	|"FElibrary"
-	|"FEhistory"
-	|"FEguide_builder"
-	|"SPreport_history"
-	;
-}|{
-	browseId:
-	|"FEtrending"
-	|"FEstorefront"
-	;
-	params: string;
-};
+type DE_VE5754_Browse={browseId: GU_VE5754_UrlType;};
+type DE_VE6827_NoParams={browseId: GU_VE6827_Url_NoParams;};
+type DE_VE6827_Params={browseId: GU_VE6827_Url_Params; params: string;};
+type DE_VE6827_Browse=DE_VE6827_NoParams|DE_VE6827_Params;
 type DE_VE11487_Browse={browseId: "SPunlimited";};
 type DE_VE23462_Browse={browseId: GU_VE23462_UrlType;};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
@@ -320,8 +307,8 @@ type E_VE96368_Browse={
 type E_Browse=[
 	E_VE3611_Browse,
 	E_VE3854_Browse,
-	E_VE6827_Browse,
 	E_VE5754_Browse,
+	E_VE6827_Browse,
 	E_VE11487_Browse,
 	E_VE23462_Browse,
 	E_VE42352_Browse,
