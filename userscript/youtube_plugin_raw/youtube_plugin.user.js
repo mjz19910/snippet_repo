@@ -12163,7 +12163,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_EndScreenPlaylist} x */
 	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist",x,this.D_EndScreenPlaylist);}
 	/** @private @arg {D_EndScreenPlaylist} x */
-	D_EndScreenPlaylist(x) {x; debugger;}
+	D_EndScreenPlaylist(x) {
+		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {R_EndScreenVideo} x */
 	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo",x,this.D_EndScreenVideo);}
 	/** @private @arg {D_SearchBox} x */
@@ -12486,31 +12489,69 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,refreshPlaylistCommand,...y}=this.sd(cf,x); this.g(y);
 	}
 	/** @private @arg {D_RefreshPlaylist} x */
-	D_RefreshPlaylist(x) {x; debugger;}
-	/** @private @arg {R_VideoOwner} x */
-	R_VideoOwner(x) {x; debugger;}
-	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {
+	D_RefreshPlaylist(x) {
 		const {...y}=x; this.g(y);
+		debugger;
+	}
+	/** @private @arg {R_VideoOwner} x */
+	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
+	/** @private @arg {D_VideoOwner} x */
+	D_VideoOwner(x) {x;}
+	/** @private @arg {R_MusicCarouselShelf} x */
+	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
+	/** @private @arg {D_MusicCarouselShelf} x */
+	D_MusicCarouselShelf(x) {
+		const {contents,header,trackingParams,itemSize,...y}=x; this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {
-		const {...y}=x; this.g(y);
+	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
+	/** @private @arg {D_MusicShelf} x */
+	D_MusicShelf(x) {
+		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=x; this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_EndScreenVideo} x */
-	D_EndScreenVideo(x) {x; debugger;}
+	D_EndScreenVideo(x) {
+		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
-	D_AddToPlaylistCreate(x) {x; debugger;}
+	D_AddToPlaylistCreate(x) {
+		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_PlaylistAddToOption} x */
-	D_PlaylistAddToOption(x) {x; debugger;}
+	D_PlaylistAddToOption(x) {
+		const {playlistId,privacy,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,containsSelectedVideos,title,trackingParams,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {DAU_SubscribeButton} x */
-	DAU_SubscribeButton(x) {x; debugger;}
+	DAU_SubscribeButton(x) {
+		const {subscribed,channelId,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {D_RunAttestation} x */
-	D_RunAttestation(x) {x; debugger;}
+	D_RunAttestation(x) {
+		const {ids,engagementType,...y}=x; this.g(y);
+		debugger;
+	}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x) {x; debugger;}
+	G_StructuredDescriptionContentItem(x) {
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
+		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
+		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		debugger;
+	}
+	/** @private @arg {R_VideoDescriptionMusicSection} x */
+	R_VideoDescriptionMusicSection(x) {x; debugger;}
+	/** @private @arg {R_VideoDescriptionHeader} x */
+	R_VideoDescriptionHeader(x) {x; debugger;}
+	/** @private @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {x; debugger;}
+	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
