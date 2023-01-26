@@ -4836,7 +4836,7 @@ class CodegenService extends BaseService {
 		/** @private @type {R_GuideEntryData} */
 		if(b.guideEntryData) return "TYPE::R_GuideEntryData";
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
-		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE42352_Browse";
+		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		debugger;
 		return null;
@@ -8062,8 +8062,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
 		const cf="D_Tab_subscriptionsEndpoint"; this.k(cf,x);
-		this.do_codegen(cf,x);
-		debugger;
+		switch(x.commandMetadata.webCommandMetadata.rootVe) {
+			default: this.do_codegen(cf,x); debugger; break;
+			case 96368: break;
+		}
+		this.E_Browse(x);
 	}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
@@ -10304,6 +10307,7 @@ class HandleTypes extends ServiceMethods {
 				let ss=split_string(x.targetId,"browse-feed");
 				if(ss.length!==2) {debugger; return;}
 				let sa=ss[1];
+				if(sa==="FEsubscriptions") return;
 				let ll=sa.slice(24);
 				if(this.str_starts_with(sa,"UC")&&ll==="featured") {
 					/** @returns {`UC${string}`} */
@@ -10328,6 +10332,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			switch(x.targetId) {
 				default: debugger; return;
+				case "browse-feedFEsubscriptions": return this.browse_feed_subscriptions(x);
 				case "search-feed": return this.D_SearchFeedSectionList(x);
 			}
 		}
@@ -10337,6 +10342,18 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		// this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		// if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+	}
+	/** @arg {Extract<G_SectionList,{targetId:"browse-feedFEsubscriptions"}>} x */
+	browse_feed_subscriptions(x) {
+		const {contents,trackingParams,targetId,...y}=x; this.g(y);
+		this.z(contents,x => {
+			if("itemSectionRenderer" in x) {
+				return;
+			}
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
+			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
+		});
 	}
 	/** @private @arg {D_SearchFeedSectionList} x */
 	D_SearchFeedSectionList(x) {
@@ -11920,7 +11937,7 @@ class HandleTypes extends ServiceMethods {
 		return a;
 	}
 	/** @private @arg {R_SectionList} x */
-	R_SectionList(x) {x; debugger;}
+	R_SectionList(x) {this.H_("R_SectionList",x,this.G_SectionList);}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {x; debugger;}
 	/** @private @arg {RSM_ChannelPreference} x */
@@ -12054,6 +12071,10 @@ class HandleTypes extends ServiceMethods {
 	D_VideoSecondaryInfo(x) {x; debugger;}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {x; debugger;}
+	/** @private @arg {R_MusicCarouselShelf} x */
+	R_MusicCarouselShelf(x) {x; debugger;}
+	/** @private @arg {R_MusicShelf} x */
+	R_MusicShelf(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

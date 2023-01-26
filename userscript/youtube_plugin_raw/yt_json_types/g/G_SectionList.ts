@@ -9,6 +9,10 @@ type G_SectionList={
 	contents: TR_SectionListItem_3<{},{},{}>[];
 	trackingParams: string;
 	targetId: `browse-feedUC${string}featured`;
+}|{
+	contents: TR_SectionListItem_3<{},{},{}>[];
+	trackingParams: string;
+	targetId: "browse-feedFEsubscriptions";
 };
 type G_TT_SectionList={
 	continuations: RD_NextContinuation[];
