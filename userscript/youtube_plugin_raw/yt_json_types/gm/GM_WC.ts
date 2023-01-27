@@ -1,6 +1,8 @@
 //#region Templates
 type D_Empty_WCM={webCommandMetadata: {};};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
+type T_E_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=T_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
+type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
 type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
 type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
 type T_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
@@ -39,7 +41,7 @@ type GM_WC=[
 	GM_VE42352_WC,
 	GM_VE83769_WC,
 	GM_VE96368_WC_browse,
-	GM_account_set_setting,
+	GM_SetSetting,
 	GM_AccountMenu,
 	GM_backstage_create_post,
 	GM_browse_edit_playlist,
@@ -141,7 +143,7 @@ type GM_VE96368_WC_browse={
 };
 //#endregion
 //#region GM_ApiUrl
-type GM_account_set_setting={
+type GM_SetSetting={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/set_setting";
 };
@@ -261,6 +263,7 @@ type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
 type M_Next={webCommandMetadata: GM_Next;};
 type M_RecordInteractions={webCommandMetadata: GM_RecordInteractions;};
 type M_SendPost={webCommandMetadata: GM_SendPost;};
+type M_SetSetting={webCommandMetadata: GM_SetSetting;};
 type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 //#endregion
 //#region DE_VE
@@ -309,6 +312,8 @@ type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPane
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
+type AD_SendFeedback={bucket: "Kevlar";};
+type AD_HideEnclosing={notificationId: `${number}`;};
 type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: AD_SetActivePanelItem;};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
@@ -340,14 +345,39 @@ type E_Feedback=T_Endpoint_Ex<{webCommandMetadata: GM_feedback;},"feedbackEndpoi
 type E_GetNotificationMenu=T_Endpoint_Ex<{webCommandMetadata: GM_GetNotificationMenu;},"getNotificationMenuEndpoint",DE_GetNotificationMenu>;
 type E_GetReportForm=T_Endpoint_Ex<M_FlagGetForm,"getReportFormEndpoint",DE_GetReportForm>;
 type E_GetTranscript=T_Endpoint_Ex<D_Empty_WCM,"getTranscriptEndpoint",DE_GetTranscript>;
+type DE_GetTranscript={params: string;};
 type E_Like=T_Endpoint_Ex<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
-type E_NotificationOptOut=T_Endpoint_Ex<D_Empty_WCM,"notificationOptOutEndpoint",AE_NotificationOptOut>;
-type E_PlaylistEdit=T_Endpoint_Ex<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",D_PlaylistEdit>;
+type DE_Like=E_LikeIndifferent|E_LikeLike|E_LikeDislike;
+type E_NotificationOptOut=T_Endpoint_Ex<D_Empty_WCM,"notificationOptOutEndpoint",DE_NotificationOptOut>;
+type DE_NotificationOptOut={
+	optOutText: R_TextRuns;
+	serializedOptOut: string;
+	serializedRecordInteractionsRequest: string;
+};
+type E_PlaylistEdit=T_Endpoint_Ex<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",DE_PlaylistEdit>;
+type DE_PlaylistEdit={
+	actions: GA_Playlist[];
+	playlistId: "WL";
+	params?: string;
+};
 type E_PlaylistEditor=T_Endpoint_Ex<D_Empty_WCM,"playlistEditorEndpoint",DE_PlaylistEditor>;
+type DE_PlaylistEditor={playlistId: string;};
 type E_RecordNotificationInteractions=T_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
+type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type E_ReelWatch=T_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
+type D_ReelWatch={
+	videoId?: string;
+	playerParams: string;
+	thumbnail?: R_Thumbnail;
+	overlay: R_ReelPlayerOverlay;
+	params: string;
+	sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
+	sequenceParams?: string;
+	inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
+};
 type E_Search=T_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
-type E_SetSettingAutonavForDesktop<T extends boolean>=T_Endpoint_Ex<{webCommandMetadata: GM_account_set_setting;},"setSettingEndpoint",SettingItemAutonavForDesktop<T>>;
+type D_Search={query: string;};
+type E_SetSetting=T_E_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: D_ShowEngagementPanel;};
 type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DS_Navigation>;
 type E_Subscribe=T_Endpoint_Ex<{webCommandMetadata: GM_subscription_subscribe;},"subscribeEndpoint",DE_Subscribe>;
@@ -389,10 +419,11 @@ type AD_UpdateNotificationsUnseenCount={
 	unseenCount: number;
 	timeoutMs: number;
 };
+type AD_Signal={signal: E_SignalEnum;};
 type AD_UndoFeedback={};
 type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
 type AD_SetActivePanelItem={};
-type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: DE_AddToGuideSectionHandler;};
+type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: Enum_GuideAction;};
 type AD_ChangeEngagementPanelVisibility={
 	targetId:
 	|"engagement-panel-comments-section"
@@ -402,7 +433,7 @@ type AD_ChangeEngagementPanelVisibility={
 	|"engagement-panel-macro-markers-auto-chapters"
 	|"engagement-panel-macro-markers-description-chapters"
 	;
-	visibility: 
+	visibility:
 	|"ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"
 	|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 };

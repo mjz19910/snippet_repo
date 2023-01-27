@@ -1,4 +1,4 @@
-type DM_AdSlot={
+type DMD_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_IN_FEED";
 	slotPhysicalPosition: 1;

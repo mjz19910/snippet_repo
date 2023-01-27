@@ -1,1 +1,0 @@
-type DE_Like=E_LikeIndifferent|E_LikeLike|E_LikeDislike;

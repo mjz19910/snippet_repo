@@ -1,1 +1,0 @@
-type AD_Signal={signal: E_SignalEnum;};

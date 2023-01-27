@@ -1,1 +1,1 @@
-type R_MenuFlexibleItem={menuFlexibleItemRenderer: DT$MenuFlexibleItem;};
+type R_MenuFlexibleItem={menuFlexibleItemRenderer: DT_MenuFlexibleItem;};

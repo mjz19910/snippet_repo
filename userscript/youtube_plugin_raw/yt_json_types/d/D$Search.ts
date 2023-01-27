@@ -1,1 +1,0 @@
-type D_Search={query: string;};

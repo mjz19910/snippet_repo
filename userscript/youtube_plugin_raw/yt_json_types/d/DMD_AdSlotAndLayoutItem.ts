@@ -1,4 +1,4 @@
 type DMD_AdSlotAndLayoutItem={
-	adSlotMetadata: DM_AdSlot;
+	adSlotMetadata: DMD_AdSlot;
 	adLayoutMetadata: MMD_AdLayout_1[];
 };

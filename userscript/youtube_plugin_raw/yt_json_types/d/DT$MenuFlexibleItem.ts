@@ -1,1 +1,0 @@
-type DT$MenuFlexibleItem={};

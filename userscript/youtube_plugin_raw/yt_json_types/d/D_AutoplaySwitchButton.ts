@@ -1,6 +1,6 @@
 type D_AutoplaySwitchButton={
-	onEnabledCommand: E_SetSettingAutonavForDesktop<true>;
-	onDisabledCommand: E_SetSettingAutonavForDesktop<false>;
+	onEnabledCommand: T_E_SetSetting<true>;
+	onDisabledCommand: T_E_SetSetting<false>;
 	enabledAccessibilityData: D_Accessibility;
 	disabledAccessibilityData: D_Accessibility;
 	trackingParams: string;

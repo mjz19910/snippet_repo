@@ -8809,7 +8809,7 @@ class HandleTypes extends ServiceMethods {
 		maxTierValue;
 		minTierValue;
 	}
-	/** @private @arg {NotchesItem} x */
+	/** @private @arg {D_NotchesItem} x */
 	NotchesItem(x) {
 		const cf="NotchesItem";
 		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue}=this.sd(cf,x);// this.g(y);//#destructure
@@ -9720,7 +9720,7 @@ class HandleTypes extends ServiceMethods {
 		this.GM_WC(webCommandMetadata);
 		this.D_PlaylistEdit(playlistEditEndpoint);
 	}
-	/** @private @arg {D_PlaylistEdit} x */
+	/** @private @arg {DE_PlaylistEdit} x */
 	D_PlaylistEdit(x) {
 		const cf="D_PlaylistEdit";
 		const {playlistId,params,actions}=this.sd(cf,x);// this.g(y);//#destructure
@@ -10228,7 +10228,7 @@ class HandleTypes extends ServiceMethods {
 			this.D_AdLayoutLogging(adLayoutLoggingData);
 		}
 	}
-	/** @private @arg {string} cf @arg {DM_AdSlot} x */
+	/** @private @arg {string} cf @arg {DMD_AdSlot} x */
 	DM_AdSlot_Omit(cf,x) {
 		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x);
 		this.primitive_str(slotId);
@@ -10252,7 +10252,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		return y;
 	}
-	/** @private @arg {DM_AdSlot} x */
+	/** @private @arg {DMD_AdSlot} x */
 	DM_AdSlot(x) {
 		const cf="DM_AdSlot",u=this.DM_AdSlot_Omit(cf,x);
 		if("adSlotLoggingData" in u) {
@@ -11900,7 +11900,7 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(autoplayVideo);
 		this.t(nextButtonVideo,this.E_Watch);
 	}
-	/** @private @arg {ModifiedSetItem} x */
+	/** @private @arg {D_ModifiedSetItem} x */
 	ModifiedSetItem(x) {
 		const cf="ModifiedSetItem";
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo}=this.sd(cf,x);// this.g(y);//#destructure
@@ -12973,7 +12973,7 @@ class HandleTypes extends ServiceMethods {
 		trackingParams;
 		debugger;
 	}
-	/** @private @arg {AD_BrowserMediaSession} x */
+	/** @private @arg {D_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
 		const {...y}=this.sd(cf,x); this.g(y);
@@ -13318,7 +13318,7 @@ class HandleTypes extends ServiceMethods {
 		editButton;
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {SettingItemAutonavForDesktop<boolean>} x */
+	/** @private @arg {T_DE_SettingItem<boolean>} x */
 	SettingItemAutonavForDesktop(x) {x; debugger;}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {

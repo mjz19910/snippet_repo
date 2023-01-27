@@ -1,6 +1,6 @@
 // [ELEMENT::structured-description-music-section::@::row-state-id]
-type DE_ExpandStatusKey=MakeElementId<
-	"structured-description-music-section",MakeElementId<
+type Element_StructuredDescription=T_ElementId<
+	"structured-description-music-section",T_ElementId<
 		[
 			"artists",
 			"licenses"

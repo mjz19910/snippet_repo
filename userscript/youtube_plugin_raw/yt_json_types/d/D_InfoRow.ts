@@ -4,5 +4,5 @@ type D_InfoRow={
 	expandedMetadata?: R_SimpleText;
 	expandIcon?: T_Icon<"EXPAND">;
 	trackingParams: string;
-	infoRowExpandStatusKey?: DE_ExpandStatusKey;
+	infoRowExpandStatusKey?: Element_StructuredDescription;
 };

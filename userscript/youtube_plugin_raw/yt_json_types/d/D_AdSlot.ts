@@ -1,5 +1,5 @@
 type D_AdSlot={
-	adSlotMetadata: DM_AdSlot;
+	adSlotMetadata: DMD_AdSlot;
 	fulfillmentContent: R_FulfillmentLayout;
 	enablePacfLoggingWeb: boolean;
 };
