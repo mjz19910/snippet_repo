@@ -9550,6 +9550,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
 	G_WatchNextEndScreenItem(x) {
+		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		{debugger;}
@@ -9598,14 +9599,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RD_MenuServiceItem['serviceEndpoint']} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
+		const cf="RD_MenuServiceItem_serviceEndpoint"; this.k(cf,x);
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
+		this.do_codegen(cf,x);
 		x==="";
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {
@@ -9874,19 +9877,20 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	/** @private @arg {NonNullable<IR_TextRun['navigationEndpoint']>} x */
-	handle_text_endpoint(x) {
+	/** @private @arg {IR_TextRun_Endpoint} x */
+	IR_TextRun_Endpoint(x) {
+		const cf="IR_TextRun_Endpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		debugger;
+		{debugger;}
 	}
 	/** @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
 	/** @private @arg {R_TextRuns} x */
 	R_TextRuns(x) {
 		const cf="R_TextRuns";
 		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y);
-		this.z(runs,x => this.IR_TextRun(x,this.handle_text_endpoint));
+		this.z(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
