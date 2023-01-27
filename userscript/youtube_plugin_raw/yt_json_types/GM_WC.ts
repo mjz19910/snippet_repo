@@ -1,7 +1,3 @@
-type TA_Continuation<Tid,Type>={
-	targetId: Tid;
-	continuationItems: Type[];
-};
 //#region CommonType
 type D_Empty_WCM={webCommandMetadata: {};};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
@@ -15,6 +11,7 @@ type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string
 type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
 type T_SE_Signal<T,U>=TE_Endpoint<T,"signalServiceEndpoint",U>;
 type T_Setting_AutoNavForDesktop<T extends boolean>=TE_SetSetting<"407",T,"AUTONAV_FOR_DESKTOP">;
+type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId;continuationItems: T_ItemType[];};
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
@@ -25,6 +22,7 @@ type TE_Endpoint_Default<T={}>={clickTrackingParams: string; commandMetadata: T;
 type TE_Endpoint_Opt<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type TE_Endpoint<T,U extends `${string}Endpoint`,V>=Decay<{clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V}>;
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
+type TM_GetByVE<T extends B_VEMap[keyof B_VEMap]['CommandMetadata']>=T;
 //#endregion
 //#region GU_VE
 type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
@@ -230,6 +228,8 @@ type E_VE23462_Browse=TE_Endpoint<M_VE23462,"browseEndpoint",DE_VE23462_Browse>;
 type E_VE42352_Browse=TE_Endpoint<M_VE42352,"browseEndpoint",DE_VE42352_Browse>;
 type E_VE96368_Browse=TE_Endpoint<M_VE96368,"browseEndpoint",DE_VE96368_Browse>;
 //#endregion
+// TODO: #8 Get the SettingsEndpoint type
+type E_Settings={};
 type E_Browse=[
 	E_VE3611_Browse,
 	E_VE3854_Browse,
@@ -655,4 +655,20 @@ type D_TranscriptSearchPanel={
 	footer: R_TranscriptFooter;
 	trackingParams: string;
 	targetId: "engagement-panel-searchable-transcript-search-panel";
+};
+type R_VE5754_PlaylistPage={
+	page: "playlist";
+	endpoint: E_Browse;
+	response: RS_Playlist;
+	url: string;
+	rootVe: 5754;
+};
+type R_VE3832_WatchPage={
+	rootVe: 3832;
+	url: D_WatchPageUrl;
+	endpoint: E_Watch;
+	page: "watch";
+	preconnect?: [D_VE3832_PreconnectUrl];
+	playerResponse: RS_Player;
+	response: RS_Watch;
 };
