@@ -17,7 +17,7 @@ type TB_ContinuationItemMap_2={[V in `comment-replies-item-${string}`]: R_Commen
 type TB_ContinuationItemMap=TB_ContinuationItemMap_1&TB_ContinuationItemMap_2;
 type TE_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
 type TE_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
-type TE_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
+type TE_Endpoint_Ex<T,U extends `${string}Endpoint`,V>=Decay<{clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V}>;
 type TE_Endpoint_ReqMeta<T={}>={clickTrackingParams: string; commandMetadata: T;};
 type TE_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
