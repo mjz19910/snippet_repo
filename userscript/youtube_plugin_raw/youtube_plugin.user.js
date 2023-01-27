@@ -7519,14 +7519,10 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		return f.call(this,this.w(x));
 	}
-	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	TR_ItemSection_2(x,f) {this.H_("TR_ItemSection_2",x,x => this.TD_ItemSection_2_CommentsEntryPoint(x,f));}
-	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
-	TR_ItemSection_3(x,f) {
-		const cf="ItemSectionRendererTemplate";
-		const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y);
-		this.TD_ItemSection_3(a,f);
-	}
+	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
+	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
+	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
 	/** @private @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	TD_ItemSection_3(x,f) {
 		const cf="TD_ItemSection_3";
@@ -9911,18 +9907,18 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @private @arg {TR_ItemSection_3<{},"comment-item-section","comments-section">} x */
-	TR_ItemSection_3_CommentItemSection(x) {this.H_("TR_ItemSection_3_CommentItemSection",x,this.TD_ItemSection_3_CommentItemSection);}
-	/** @private @arg {TD_ItemSection_3<{},"comment-item-section","comments-section">} x */
-	TD_ItemSection_3_CommentItemSection(x) {
-		const cf="TD_ItemSection_3_CommentItemSection"; this.k(cf,x);
-		const {sectionIdentifier,targetId,trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);
-		if(x.sectionIdentifier!=="comment-item-section") debugger;
-		if(x.targetId!=="comments-section") debugger;
-		this.z(a,x => {
-			x;
-			debugger;
-		});
+	/** @private @arg {[TD_ItemSection_3_I_1[], "comment-item-section", "comments-section"]} x */
+	ItemSection_3_CommentItemSection(x) {
+		if(x[1]!=="comment-item-section") debugger;
+		if(x[2]!=="comments-section") debugger;
+		this.z(x[0],this.TD_ItemSection_3_I_1);
+	}
+	/** @private @arg {TD_ItemSection_3_I_1} x */
+	TD_ItemSection_3_I_1(x) {
+		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.sd(cf,x); this.g(y); return a;}
@@ -10235,32 +10231,20 @@ class HandleTypes extends ServiceMethods {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
-	/** @private @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
-	TR_ItemSection_3_R_1(x) {
-		const [a,...b]=x;
-		let gen_section_id=this.join_string(b,"-");
-		if(gen_section_id!=="comment-item-section-comments-section") debugger;
-		this.z(a,this.TR_ItemSection_3_I_1);
-	}
-	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>['itemSectionRenderer']['contents'][number]} x */
-	TR_ItemSection_3_I_1(x) {
-		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.do_codegen(cf,x);
-		{debugger;}
-	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
 		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		this.TR_ItemSection_3(x,this.TR_ItemSection_3_R_1);
+		let u=this.TR_ItemSection_3(x);
+		this.TD_ItemSection_3(u,this.ItemSection_3_CommentItemSection);
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
 	G_WatchResultItem_ItemSectionGroup(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-		this.TR_ItemSection_2(x,this.R_CommentItemSection_EntryPoint);
+		let u=this.TR_ItemSection_2(x);
+		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
 	}
 	/** @private @arg {G_WatchResult_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
@@ -10273,7 +10257,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
-		this.TR_ItemSection_3(x,a => {
+		let u=this.TR_ItemSection_3(x);
+		this.TD_ItemSection_3(u,a => {
 			let [u,...v]=a;
 			if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u,a => {
 				let cf=this.get_name_from_keys(a);
@@ -10303,9 +10288,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
+		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -10434,7 +10420,7 @@ class HandleTypes extends ServiceMethods {
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -10515,7 +10501,8 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		debugger;
+		this.do_codegen(cf,x); x==="";
+		{debugger;}
 	}
 	/** @private @arg {DB_SI_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
@@ -10813,7 +10800,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="E_GetTranscript";
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		debugger;
+		{debugger;}
 		// this.G_CommandMetadata(commandMetadata);
 		this.DE_GetTranscript(getTranscriptEndpoint);
 	}
@@ -10870,7 +10857,8 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		debugger;
+		this.do_codegen(cf,x); x==="";
+		{debugger;}
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
@@ -11083,8 +11071,8 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
-		x===0;
-		debugger;
+		this.do_codegen(cf,x); x==="";
+		{debugger;}
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
@@ -11145,8 +11133,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="ES_Button";
 		if("signalServiceEndpoint" in x) return this.T_ES_Signal(x,this.M_SendPost,this.G_ClientSignal);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
-		this.do_codegen(cf,x);
-		debugger;
+		this.do_codegen(cf,x); x==="";
+		{debugger;}
 	}
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
@@ -11155,14 +11143,14 @@ class HandleTypes extends ServiceMethods {
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {
 		const cf="E_YpcGetOffers";
 		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		debugger;
+		{debugger;}
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_YpcGetOffers(a);
 	}
@@ -11283,7 +11271,8 @@ class HandleTypes extends ServiceMethods {
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader",x,this.D_C4TabbedHeader);}
@@ -11316,7 +11305,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_BrowseContents"; this.k(cf,x);
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {R_FeedFilterChipBar} x */
 	R_FeedFilterChipBar(x) {
@@ -11331,7 +11321,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="A_ResponseReceived"; this.k(cf,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
@@ -11438,7 +11429,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ElementUpdate"; this.k(cf,x);
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
@@ -11492,9 +11484,9 @@ class HandleTypes extends ServiceMethods {
 		if("playlistLoopStateEntity" in x) return this.EN$(x);
 		if("macroMarkersListEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
 		if("superThanksSelectedTierEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
-		let ret=this.EN$(x);
-		console.log(ret);
-		debugger;
+		this.do_codegen(cf,x);
+		this.do_codegen(`${cf}$entity`,this.EN$(x));
+		{debugger;}
 		return null;
 	}
 	/** @private @arg {D_EntityMutationOptions} x */
@@ -11508,7 +11500,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_TopbarButtonItem"; this.k(cf,x);
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -11562,14 +11555,16 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_SecondaryContents"; this.k(cf,x);
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
 		const cf="G_WatchNext"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {ES_ShareEntity} x */
 	ES_ShareEntity(x) {
@@ -11606,7 +11601,8 @@ class HandleTypes extends ServiceMethods {
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {
@@ -11631,6 +11627,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AC_Executor} x */
 	AC_Executor(x) {
+		const cf="AC_Executor"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
@@ -11639,7 +11636,8 @@ class HandleTypes extends ServiceMethods {
 		if("updateToggleButtonStateCommand" in x) {debugger; return;}
 		if("changeMarkersVisibilityCommand" in x) {debugger; return;}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return;}
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
@@ -11820,7 +11818,7 @@ class HandleTypes extends ServiceMethods {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
 		this.do_codegen(cf,x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {
@@ -11868,7 +11866,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="E_WatchPlaylist";
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.sd(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
-		debugger;
+		{debugger;}
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_WatchPlaylist(watchPlaylistEndpoint);
 	}
@@ -12017,7 +12015,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RS_Subscribe_ActionItem} x */
 	RS_Subscribe_ActionItem(x) {
-		const cf="RS_Subscribe_ActionItem";
+		const cf="RS_Subscribe_ActionItem"; this.k(cf,x);
 		if("openPopupAction" in x) {
 			const cf1=`${cf}.actions[]`;
 			const {clickTrackingParams,openPopupAction,...y}=this.sd(cf1,x); this.g(y);
@@ -12028,7 +12026,8 @@ class HandleTypes extends ServiceMethods {
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.A_UpdateSubscribeButton(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
@@ -12053,7 +12052,8 @@ class HandleTypes extends ServiceMethods {
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("R_ProductList",x,this.D_ProductList);}
@@ -12138,9 +12138,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
+		const cf="D_LikeApi";
 		if("videoId" in x) return this.videoId(this.w(x));
 		if("playlistId" in x) return this.playlistId(this.w(x));
-		debugger;
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel",x,this.D_TranscriptSearchPanel);}
@@ -12148,25 +12150,38 @@ class HandleTypes extends ServiceMethods {
 	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation",x,this.DD_TimedContinuation);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat",x,this.DC_LiveChat);}
+	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
+	G_Watch_SecondaryResults_G_SectionItem(x) {
+		const cf="G_Watch_SecondaryResults_G_SectionItem";
+		if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
+		if("adSlotRenderer" in x) return this.R_AdSlot(x);
+		if("" in x) return;
+		this.do_codegen(cf,x);
+		{debugger;}
+		x;
+	}
+	/** @private @arg {G_Watch_SecondaryResults_R_SectionItem} x */
+	G_Watch_SecondaryResults_R_SectionItem(x) {
+		let u=this.TR_ItemSection_3(x);
+		this.TD_ItemSection_3(u,([a,...section_id_target_id_arr]) => {
+			let section_id_target_id=this.join_string(section_id_target_id_arr,"-");
+			switch(section_id_target_id) {
+				default: debugger; break;
+				case "sid-wn-chips-watch-next-feed": break;
+			}
+			this.z(a,this.G_Watch_SecondaryResults_G_SectionItem);
+			return a;
+		});
+	}
 	/** @private @arg {G_Watch_SecondaryResults_ItemType_1} x */
 	G_Watch_SecondaryResults_ItemType_1(x) {
+		const cf="G_Watch_SecondaryResults_ItemType_1"; this.k(cf,x);
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
-		if("itemSectionRenderer" in x) {
-			this.TR_ItemSection_3(x,([a,...x]) => {
-				let j=this.join_string(x,"-");
-				if(j!=="sid-wn-chips-watch-next-feed") debugger;
-				this.z(a,x => {
-					if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
-					if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-					if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
-					if("adSlotRenderer" in x) return this.R_AdSlot(x);
-					if("" in x) return;
-					debugger;
-				});
-			});
-			return;
-		}
-		debugger;
+		if("itemSectionRenderer" in x) return this.G_Watch_SecondaryResults_R_SectionItem(x);
+		this.do_codegen(cf,x);
+		{debugger;}
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
@@ -12192,6 +12207,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_CompactRadio['shareUrl']} b */
 	D_CompactRadio_shareUrl(b) {
+		const cf="D_CompactRadio_shareUrl";
 		let up=this.parse_with_url_parse(b);
 		if(this.is_url_with_pathname(up,"/watch")) {
 			let {...s}=this.parse_url_search_params(up.search);
@@ -12203,7 +12219,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
-		up==="";
+		this.do_codegen(cf,{url: b}); up==="";
 		debugger;
 	}
 	/** @private @arg {D_CompactRadio} x */
@@ -12322,19 +12338,6 @@ class HandleTypes extends ServiceMethods {
 	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo",x,this.D_VideoPrimaryInfo);}
 	/** @private @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo",x,this.D_VideoSecondaryInfo);}
-	/** @protected @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
-	TR_ItemSection_CommentItemSection(x) {
-		if(this.is_ItemSectionRendererTemplate(x)) {
-			switch(x.itemSectionRenderer.sectionIdentifier) {
-				case "comment-item-section": return this.TR_ItemSection_3_CommentItemSection(x);
-				default: debugger; return x;
-			}
-		}
-		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.TR_ItemSection_2(x,this.R_CommentItemSection_EntryPoint);
-			default: debugger; return x;
-		}
-	}
 	/** @private @arg {R_TopbarMenuButton} x */
 	R_TopbarMenuButton(x) {this.H_("R_TopbarMenuButton",x,this.D_TopbarMenuButton);}
 	/** @private @arg {D_TopbarMenuButton_MenuItem} x */

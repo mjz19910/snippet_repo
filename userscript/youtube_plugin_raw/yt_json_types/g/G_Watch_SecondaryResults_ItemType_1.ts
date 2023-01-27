@@ -1,2 +1,5 @@
-type G_Watch_SecondaryResults_ItemType_1=R_RelatedChipCloud|
-	TR_ItemSection_3<R_CompactPlaylist|R_CompactVideo|R_CompactRadio|R_AdSlot,"sid-wn-chips","watch-next-feed">;
+type G_Watch_SecondaryResults_G_SectionItem=R_CompactPlaylist|R_CompactVideo|R_CompactRadio|R_AdSlot;
+
+type G_Watch_SecondaryResults_R_SectionItem=TR_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem,"sid-wn-chips","watch-next-feed">;
+
+type G_Watch_SecondaryResults_ItemType_1=R_RelatedChipCloud|G_Watch_SecondaryResults_R_SectionItem;
