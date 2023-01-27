@@ -1,1 +1,0 @@
-type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: DE_AddToGuideSectionHandler;};

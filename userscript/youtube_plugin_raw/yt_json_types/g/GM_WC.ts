@@ -303,7 +303,7 @@ type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: 
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
-type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: R_EngagementPanelTargetId;};
+type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: AD_HideEngagementPanelTargetId;};
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
@@ -393,4 +393,19 @@ type AD_UpdateNotificationsUnseenCount={
 type AD_UndoFeedback={};
 type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
 type AD_SetActivePanelItem={};
+type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: DE_AddToGuideSectionHandler;};
+type AD_ChangeEngagementPanelVisibility={
+	targetId:
+	|"engagement-panel-comments-section"
+	|"engagement-panel-clip-view"
+	|"engagement-panel-clip-create"
+	|"engagement-panel-structured-description"
+	|"engagement-panel-macro-markers-auto-chapters"
+	|"engagement-panel-macro-markers-description-chapters"
+	;
+	visibility: 
+	|"ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"
+	|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+};
+
 //#endregion

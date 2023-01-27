@@ -1,3 +1,3 @@
-type R_EngagementPanelTargetId={
+type AD_HideEngagementPanelTargetId={
 	engagementPanelTargetId: "engagement-panel-clip-create";
 };

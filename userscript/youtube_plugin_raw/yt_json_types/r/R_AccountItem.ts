@@ -1,0 +1,1 @@
+type R_AccountItem={accountItemRenderer: D_AccountItem;};

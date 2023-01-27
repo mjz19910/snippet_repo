@@ -1,4 +1,4 @@
-type AD_AccountItem={
+type D_AccountItem={
 	accountName: R_TextRuns;
 	accountPhoto: R_Thumbnail;
 	isSelected: boolean;

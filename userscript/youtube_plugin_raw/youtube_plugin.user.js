@@ -11692,7 +11692,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.R_EngagementPanelTargetId(hideEngagementPanelScrimAction);
 	}
-	/** @private @arg {R_EngagementPanelTargetId} x */
+	/** @private @arg {AD_HideEngagementPanelTargetId} x */
 	R_EngagementPanelTargetId(x) {
 		const cf="R_EngagementPanelTargetId";
 		const {engagementPanelTargetId}=this.sd(cf,x);// this.g(y);//#destructure

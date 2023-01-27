@@ -1,1 +1,1 @@
-type A_AccountItem={accountItem: AD_AccountItem;};
+type A_AccountItem={accountItem: D_AccountItem;};
