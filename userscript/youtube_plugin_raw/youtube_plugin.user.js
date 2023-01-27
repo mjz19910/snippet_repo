@@ -10286,19 +10286,28 @@ class HandleTypes extends ServiceMethods {
 		let k=this.get_keys_of(y)[0];
 		console.log("[D_DisplayAd.next_key] [%s]",k);
 	}
-	/** @private @arg {M_AdLayout} x */
+	/** @private @arg {MG_AdLayout['layoutType']} x */
+	D_AdLayout_TypeStr(x) {
+		this.save_enum("LAYOUT_TYPE",x);
+		switch(x) {
+			default: break;
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
+			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE":
+		}
+	}
+	/** @private @arg {MG_AdLayout} x */
 	M_AdLayout(x) {
 		const cf="M_AdLayout";
-		const {layoutId,layoutType,adLayoutLoggingData}=this.sd(cf,x);// this.g(y);//#destructure
-		this.save_enum("LAYOUT_TYPE",layoutType);
-		switch(layoutType) {
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": break; case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": break;
-			default: break;
-		}
+		const {layoutId,...y}=this.sd(cf,x);//#destructure_later
 		let ba_id=base64_dec.decodeByteArray(layoutId);
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
-		if(adLayoutLoggingData) {
-			this.D_AdLayoutLogging(adLayoutLoggingData);
+		this.D_AdLayout_TypeStr(y.layoutType);
+		switch(y.layoutType) {
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=y; this.g(u); break;
+			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
+				const {layoutType: {},adLayoutLoggingData,...u}=y; this.g(u);//#destructure
+				this.D_AdLayoutLogging(adLayoutLoggingData);
+			}
 		}
 	}
 	/** @private @arg {string} cf @arg {DMD_AdSlot} x */
@@ -11744,7 +11753,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.primitive_str(overrideEntityKey);
 	}
-	/** @private @arg {DMD_AdSlotAndLayoutItem} x */
+	/** @private @arg {D_AdSlotAndLayoutItem} x */
 	DMD_AdSlotAndLayoutItem(x) {
 		const cf="DMD_AdSlotAndLayoutItem";
 		const {adLayoutMetadata,adSlotMetadata}=this.sd(cf,x);// this.g(y);//#destructure
@@ -11958,7 +11967,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(index,"number");
 		this.params(cf,"watch_playlist.params",params);
 	}
-	/** @private @arg {MMD_AdLayout_1} x */
+	/** @private @arg {M_AdLayout_TopImage} x */
 	MMD_AdLayout_1(x) {
 		const cf="MMD_AdLayout_1";
 		const {layoutType,layoutId,adLayoutLoggingData}=this.sd(cf,x);// this.g(y);//#destructure

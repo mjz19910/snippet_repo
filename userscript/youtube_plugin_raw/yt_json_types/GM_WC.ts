@@ -286,7 +286,7 @@ type C_AddToPlaylist={clickTrackingParams: string; addToPlaylistCommand: DC_AddT
 type C_AdsControlFlowOpportunityReceived={clickTrackingParams: string; adsControlFlowOpportunityReceivedCommand: DC_AdsControlFlowOpportunityReceived;};
 type DC_AdsControlFlowOpportunityReceived={
 	opportunityType: DE_OpportunityType;
-	adSlotAndLayoutMetadata?: DMD_AdSlotAndLayoutItem[];
+	adSlotAndLayoutMetadata?: D_AdSlotAndLayoutItem[];
 	isInitialLoad: boolean;
 	enablePacfLoggingWeb: boolean;
 };
