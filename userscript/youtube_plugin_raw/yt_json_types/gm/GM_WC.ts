@@ -455,8 +455,6 @@ type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
 type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
-type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
-type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 //#endregion
 type CD_Invalidation={invalidationContinuationData: DC_Invalidation;};
 type CD_LiveChatReplay={liveChatReplayContinuationData: DC_LiveChatReplay;};
@@ -465,6 +463,7 @@ type CD_NextRadio={nextRadioContinuationData: DC_Generic_CTP;};
 type CD_PlayerSeek={playerSeekContinuationData: DC_Generic;};
 type CD_Reload={reloadContinuationData: DC_Generic_CTP;};
 type CD_TimedContinuation={timedContinuationData: DC_Timed;};
+
 type DC_Generic={continuation: string;};
 type DC_Invalidation={
 	invalidationId: D_InvalidationId;
