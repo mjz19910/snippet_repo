@@ -27,12 +27,13 @@ export type VueVnode={
 type VueComponent={
 	vnode: VueVnode;
 };
-export type JsonInputType={
+type VueAppContainer = {
 	component: VueComponent;
 	_container: null;
 	__Z_ignore_replacement?: boolean;
 	__vue_app__: VueApp;
-}|Node;
+};
+export type JsonInputType=VueAppContainer|Element|Node;
 export type CacheItemType={__cache_item: true;}|JsonInputType|Element;
 export type do_json_replace_functionType<T extends keyof ContentArgsType>=((...t_args: [res_arr: [string,string|number][][],target_args: ContentArgsType[T]]) => void);
 
