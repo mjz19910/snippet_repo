@@ -7464,6 +7464,14 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	/** @private @arg {string} a @arg {{}} b */
+	k=(a,b) => this.save_keys(`[${a}]`,b);
+	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	sd(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
 	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	static {
@@ -9508,14 +9516,6 @@ class HandleTypes extends ServiceMethods {
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		debugger;
-	}
-	/** @private @arg {string} a @arg {{}} b */
-	k=(a,b) => this.save_keys(`[${a}]`,b);
-	/** @private @template {{}} T @arg {string} cf @arg {T} x */
-	sd(cf,x) {
-		if(!x) debugger;
-		this.k(cf,x);
-		return x;
 	}
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
