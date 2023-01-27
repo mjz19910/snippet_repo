@@ -86,8 +86,7 @@ type GM_VE3611_WC={
 	|"/gaming"
 	;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
-	rootVe: 3611;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 3611; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE3832_Watch_WC={
 	url: `/watch?${string}`;
@@ -97,8 +96,7 @@ type GM_VE3832_Watch_WC={
 type GM_VE3854_WC={
 	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 3854;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 3854; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE4724_WC={
 	url: `/results?search_query=${string}`;
@@ -108,26 +106,22 @@ type GM_VE4724_WC={
 type GM_VE5754_WC={
 	url: `/playlist?list=${"WL"|"LL"|`PL${string}`}`;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
-	rootVe: 5754;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 5754; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE6827_WC={
 	url?: D_VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 6827;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 6827; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE11487_WC={
 	url: "/premium";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 11487;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 11487; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE23462_WC={
 	url: "/account"|"/account_notifications";
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
-	rootVe: 23462;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 23462; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE37414_WC={
 	url: "/shorts/";
@@ -137,8 +131,7 @@ type GM_VE37414_WC={
 type GM_VE42352_WC={
 	url: "/feed/downloads";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 42352;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 42352; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE83769_WC={
 	url: GU_VE83769_UrlType;
@@ -148,110 +141,36 @@ type GM_VE83769_WC={
 type GM_VE96368_WC_browse={
 	url: "/feed/subscriptions";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 96368;
-	apiUrl: "/youtubei/v1/browse";
+	rootVe: 96368; apiUrl: "/youtubei/v1/browse";
 };
 //#endregion
 //#region GM_ApiUrl
-type GM_SetSetting={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/account/set_setting";
-};
-type GM_AccountMenu={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/account/account_menu";
-};
-type GM_backstage_create_post={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/backstage/create_post";
-};
-type GM_browse_edit_playlist={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/browse/edit_playlist";
-};
-type GM_Browse={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/browse";
-};
-type GM_comment_create_comment={
-	apiUrl: "/youtubei/v1/comment/create_comment";
-	sendPost: true;
-};
-type GM_feedback={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/feedback";
-};
-type GM_FlagGetForm={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/flag/get_form";
-};
-type GM_get_survey={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/get_survey";
-};
-type GM_get_transcript={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/get_transcript";
-};
-type GM_GetNotificationMenu={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/notification/get_notification_menu";
-};
-type GM_like_dislike={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/like/dislike";
-};
-type GM_like_like={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/like/like";
-};
-type GM_like_removelike={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/like/removelike";
-};
-type GM_Next={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/next";
-};
-type GM_notification_get_unseen_count={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/notification/get_unseen_count";
-};
-type GM_notification_opt_out={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/notification/opt_out";
-};
-type GM_RecordInteractions={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/notification/record_interactions";
-};
-type GM_CreatePlaylist={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/playlist/create";
-};
-type GM_playlist_get_add_to_playlist={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
-};
-type GM_GetSharePanel={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/share/get_share_panel";
-};
-type GM_Subscribe={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/subscription/subscribe";
-};
-type GM_ypc_get_offers={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/ypc/get_offers";
-};
-type GM_YpcGetCart={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/ypc/get_cart";
-};
-type GM_SendPost={
-	sendPost: true;
-};
+type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
+type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
+type GM_AccountMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/account_menu">;
+type GM_backstage_create_post=T_GM_PostApi_WithApiUrl<"/youtubei/v1/backstage/create_post">;
+type GM_browse_edit_playlist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse/edit_playlist">;
+type GM_Browse=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse">;
+type GM_comment_create_comment=T_GM_PostApi_WithApiUrl<"/youtubei/v1/comment/create_comment">;
+type GM_feedback=T_GM_PostApi_WithApiUrl<"/youtubei/v1/feedback">;
+type GM_FlagGetForm=T_GM_PostApi_WithApiUrl<"/youtubei/v1/flag/get_form">;
+type GM_get_survey=T_GM_PostApi_WithApiUrl<"/youtubei/v1/get_survey">;
+type GM_get_transcript=T_GM_PostApi_WithApiUrl<"/youtubei/v1/get_transcript">;
+type GM_GetNotificationMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/get_notification_menu">;
+type GM_like_dislike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/dislike">;
+type GM_like_like=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/like">;
+type GM_like_removelike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/removelike">;
+type GM_Next=T_GM_PostApi_WithApiUrl<"/youtubei/v1/next">;
+type GM_notification_get_unseen_count=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/get_unseen_count">;
+type GM_notification_opt_out=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/opt_out">;
+type GM_RecordInteractions=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/record_interactions">;
+type GM_CreatePlaylist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/create">;
+type GM_playlist_get_add_to_playlist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/get_add_to_playlist">;
+type GM_GetSharePanel=T_GM_PostApi_WithApiUrl<"/youtubei/v1/share/get_share_panel">;
+type GM_Subscribe=T_GM_PostApi_WithApiUrl<"/youtubei/v1/subscription/subscribe">;
+type GM_ypc_get_offers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
+type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
+type GM_SendPost={sendPost: true;};
 //#endregion
 //#region M_*
 type M_VE3611={webCommandMetadata: GM_VE3611_WC;};
