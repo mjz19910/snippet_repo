@@ -8889,6 +8889,9 @@ class HandleTypes extends ServiceMethods {
 		}
 		return null;
 	}
+	renderer_decode_map=new Map([
+		["PrefetchHintConfig","R_PrefetchHintConfig"],
+	])
 	/** @private @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
 		if(typeof x.type==='string') {
@@ -8908,7 +8911,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
-		return this.uppercase_first(kk);
+		let dec=this.uppercase_first(kk);
+		let ren_dec=this.renderer_decode_map.get(dec);
+		if(ren_dec) {
+			return ren_dec;
+		}
+		return dec;
 	}
 	/** @private @arg {RSU_M} x */
 	RSU_M(x) {
