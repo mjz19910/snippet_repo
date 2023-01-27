@@ -18,7 +18,9 @@
       "nosources",
       "parama",
       "primordials",
-      "undebug"
+      "undebug",
+      "vnode",
+      "vnodes"
    ],
    "ignoreWords": [],
    "import": []
