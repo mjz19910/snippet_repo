@@ -365,10 +365,7 @@ type DE_GetNotificationMenu={ctoken: string;};
 type E_GetReportForm=TE_Endpoint<M_FlagGetForm,"getReportFormEndpoint",D_Params>;
 type E_GetTranscript=TE_Endpoint<D_Empty_WCM,"getTranscriptEndpoint",D_Params>;
 type E_Like=TE_Endpoint<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
-type DE_Like=DE_LikeIndifferent|DE_LikeLike|DE_LikeDislike;
-type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
-type DE_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
-type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
+type DE_Like=DE_Like_NS.DE_Like;
 type E_NotificationOptOut=TE_Endpoint<D_Empty_WCM,"notificationOptOutEndpoint",DE_NotificationOptOut>;
 type DE_NotificationOptOut={optOutText: R_TextRuns; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type E_PlaylistEdit=TE_Endpoint<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",DE_PlaylistEdit>;
@@ -378,7 +375,7 @@ type DE_PlaylistEditor={playlistId: string;};
 type E_RecordNotificationInteractions=TE_Endpoint<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type E_ReelWatch=TE_Endpoint<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",DE_ReelWatch>;
-type DE_ReelWatch={videoId?: string; playerParams: string; thumbnail?: R_Thumbnail; overlay: R_ReelPlayerOverlay; params: string; sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams?: string; inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
+type DE_ReelWatch={videoId: string;}|{thumbnail: R_Thumbnail;}|{playerParams: string; overlay: R_ReelPlayerOverlay; params: string;}|{sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams: string;}|{inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
 type E_Search=TE_Endpoint<M_VE4724,"searchEndpoint",DE_Search>;
 type DE_Search={query: string;};
 type M_Feedback={webCommandMetadata: GM_feedback;};
@@ -545,7 +542,7 @@ type SI_VE124975_EngagementPanel={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	identifier?: T_ShortsSurfaceIdentifier<"engagement-panel-structured-description">;
 	loggingDirectives: D_LoggingDirectives;
-}
+};
 type SI_VE139722_EngagementPanel={
 	header: R_EngagementPanelTitleHeader;
 	content: R_SectionList;

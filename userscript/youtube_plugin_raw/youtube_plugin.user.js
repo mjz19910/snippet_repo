@@ -9148,15 +9148,33 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DE_ReelWatch} x */
 	D_ReelWatch(x) {
 		const cf="D_ReelWatch";
-		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType}=this.sd(cf,x);// this.g(y);//#destructure
-		this.t(videoId,this.videoId);
+		if("videoId" in x) {
+			debugger;
+			const {videoId}=this.sd(cf,x);
+			this.t(videoId,this.videoId);
+			return;
+		}
+		if("inputType" in x) {
+			debugger;
+			const {inputType}=this.sd(cf,x);
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			return;
+		}
+		if("sequenceParams" in x) {
+			debugger;
+			const {sequenceProvider,sequenceParams}=this.sd(cf,x);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
+			return;
+		}
+		if("thumbnail" in x) {
+			debugger;
+			return;
+		}
+		const {playerParams,overlay,params}=this.sd(cf,x);// this.g(y);//#destructure
 		this.params(cf,"reel.player_params",playerParams);
-		thumbnail;
-		overlay;
+		this.R_ReelPlayerOverlay(overlay);
 		this.params(cf,"reel.params",params);
-		this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
-		this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
-		this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
 	}
 	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
