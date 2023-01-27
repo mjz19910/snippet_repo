@@ -7840,7 +7840,7 @@ class HandleTypes extends ServiceMethods {
 			this.R_Generic_WatchPage(x);
 		}
 	}
-	/** @private @arg {R_WatchPage$1} x */
+	/** @private @arg {R_WatchPage_1} x */
 	R_Generic_WatchPage(x) {
 		const cf="R_Generic_WatchPage";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn}=this.sd(cf,x);// this.g(y);//#destructure
