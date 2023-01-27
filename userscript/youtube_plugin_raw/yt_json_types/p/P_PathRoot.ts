@@ -6,38 +6,3 @@ type P_ParamParse_XX=[
 	P_known_param,
 	P_other_known_param,
 ][number];
-type P_PathRootStr=
-	|"aadc_guidelines_state_entity_key"
-	|"AdServingDataEntry"
-	|"browse$param"
-	|"create_playlist.params"
-	|"createBackstagePost.param"
-	|"D_Browse.param"
-	|"entity_key"
-	|"feedback.feedbackToken"
-	|"get_report_form"
-	|"get_transcript.params"
-	|"GetNotificationMenu.ctoken"
-	|"next.continuation"
-	|"next.queue_context_params"
-	|"playlist_edit.params"
-	|"record_notification_interactions"
-	|"reel.params"
-	|"reel.player_params"
-	|"reel.sequence_params"
-	|"report.params"
-	|"service$create_playlist"
-	|"slot_ad_serving_data_entry"
-	|"subscribe.params"
-	|"TimedContinuation"
-	|"tracking.parentTrackingParams"
-	|"tracking.trackingParams"
-	|"transcript_target_id.param"
-	|"watch_page_url.pp"
-	|"watch_playlist.params"
-	|"watch.params"
-	|"watch.player_params"
-	|"ypc_get_offers.params"
-	|"YpcGetCart.transactionParams"
-	;
-;
