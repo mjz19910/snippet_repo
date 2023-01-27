@@ -221,6 +221,7 @@ class JsonReplacerState {
 			return ["TAG::stringify_result", json_result, new InputObjBox];
 		} catch (e) {
 			JsonReplacerState.stringify_failed_obj.push(x);
+			debugger;
 			if (was_crash_testing) {
 				throw e;
 			}
@@ -381,7 +382,6 @@ class JsonReplacerState {
 	run_json_replacement_with_state(parent, x) {
 		let new_state = this;
 		let this_ = parent;
-		new_state.prepare_self(this_);
 		let ret = new_state.run_internal(x);
 		this_.post_run();
 		this_.import_state(new_state);
