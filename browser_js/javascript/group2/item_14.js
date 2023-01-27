@@ -222,6 +222,9 @@ class JsonReplacerState {
 			if (e instanceof RangeError) {
 				return ["TAG::stringify_range_error", e];
 			}
+			if (JsonReplacerState.stringify_failed_obj.includes(x)) {
+				return ["TAG::stringify_seen_failed_obj", JsonReplacerState.stringify_failed_obj.indexOf(x)];
+			}
 			JsonReplacerState.stringify_failed_obj.push(x);
 			if (was_crash_testing) {
 				throw e;
@@ -317,10 +320,43 @@ class JsonReplacerState {
 		}
 		return `TYPE::Store.cache[${cache.indexOf(x)}]`;
 	}
+	do_has_stack_space(start_at = 40) {
+		let target = 20;
+		while (start_at <= target) {
+			try {
+				this.has_stack_space();
+				let prev_start = start_at;
+				start_at = target;
+				target = prev_start + prev_start / 3;
+			} catch {
+				target = start_at - start_at / 3;
+			}
+			try {
+				return this.has_stack_space(start_at + start_at / 3);
+			} catch {
+				return this.has_stack_space(start_at - start_at / 3);
+			}
+		}
+		try {
+			return this.has_stack_space(target + 5);
+		} catch {
+			return this.has_stack_space(target - 5);
+		}
+	}
+	/** @returns {[number,number]} */
+	has_stack_space(num = 40, start = 40) {
+		if (num === 0) return [num, start];
+		return this.has_stack_space(num - 1);
+	}
 	/** @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
 		if (this.cache.includes(item)) {
 			return ["TAG::cache_item", this.cache.indexOf(item)];
+		}
+		let space = this.do_has_stack_space();
+		if (space[1] < 20) {
+			console.log('stack space running out', space);
+			debugger;
 		}
 		let data_res = this.try_json_stringify(item, true);
 		let replace_res = new InputObjBox;
@@ -599,6 +635,7 @@ class JsonReplacerState {
 			case "TAG::cache_item_to_log":
 			case "TAG::cache_item_result":
 			case "TAG::stringify_range_error":
+			case "TAG::stringify_seen_failed_obj":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
