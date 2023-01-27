@@ -1,0 +1,1 @@
+type GFeedbackServiceParamList=SP_GFeedbackServiceParam[];
