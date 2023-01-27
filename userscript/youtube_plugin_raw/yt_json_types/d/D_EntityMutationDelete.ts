@@ -1,5 +1,5 @@
-type D_EntityMutationDelete={
+type DE_MutationDelete={
 	type: "ENTITY_MUTATION_TYPE_DELETE";
 	entityKey: string;
-	options: D_EntityMutationOptions;
+	options: DE_PersistenceOption;
 };

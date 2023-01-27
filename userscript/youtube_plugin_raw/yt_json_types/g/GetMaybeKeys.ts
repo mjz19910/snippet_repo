@@ -1,1 +1,1 @@
-type GetMaybeKeys<T extends {}>=T extends infer A? A extends {}? keyof A:keyof A:never;
+type GetMaybeKeys<T>=T extends infer A? A extends {}? keyof A:keyof A:never;
