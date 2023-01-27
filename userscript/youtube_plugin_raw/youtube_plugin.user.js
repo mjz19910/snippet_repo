@@ -10763,6 +10763,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RD_NextContinuation} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,x => this.CT_ClickTracked(x,"next"));}
+	/** @private @arg {"next"} section @arg {CT_ClickTracked} x */
+	CT_ClickTracked(x,section) {
+		const cf="D_NextContinuation";
+		const {continuation,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
+		this.params(cf,`${section}.continuation`,continuation);
+		this.clickTrackingParams(cf,clickTrackingParams);
+	}
 	/** @private @arg {TR_SectionListItem_3<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
@@ -12594,13 +12601,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 	}
-	/** @private @arg {"next"} section @arg {CT_ClickTracked} x */
-	CT_ClickTracked(x,section) {
-		const cf="D_NextContinuation";
-		const {continuation,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
-		this.params(cf,`${section}.continuation`,continuation);
-		this.clickTrackingParams(cf,clickTrackingParams);
-	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
@@ -13324,6 +13324,8 @@ class HandleTypes extends ServiceMethods {
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
 		const {feedbackToken,uiActions,actions,...y}=this.sd(cf,x); this.g(y);
+		let fb_dec=base64_url_dec.decodeByteArray(feedbackToken);
+		this.t(fb_dec,x => console.log("[feedbackToken.bytes[0..1]]",x[0],x[1]));
 		this.params(cf,"feedback.feedbackToken",feedbackToken);
 		this.D_HideEnclosingContainer(uiActions);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
