@@ -9295,7 +9295,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
 	Signal_Omit(x,f) {
-		const cf="Signal$Omit";
+		const cf="Signal_Omit";
 		const {signal,...y}=this.sd(cf,x); f(signal);
 		return y;
 	}
@@ -9413,13 +9413,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {G_AppendContinuationItems} x */
 	G_AppendContinuationItems(x) {
-		const cf="G_AppendContinuationItems"; this.targetId(cf,x.targetId);
+		const cf="G_AppendContinuationItems"; this.k(cf,x); this.targetId(cf,x.targetId);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
 			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed$(x); break;
 			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
-			case "watch-next-feed": this.A_WatchNext$(x); break;
+			case "watch-next-feed": this.A_WatchNext(x); break;
 			default: x===0; debugger;
 		}
 	}
@@ -9520,7 +9520,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_AutoplaySwitchButton} x */
 	D_AutoplaySwitchButton(x) {
 		const cf="D_AutoplaySwitchButton";
-		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled}=this.sd(cf,x);
+		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled}=this.sd(cf,x); this.g(y);
 		this.z([onEnabledCommand,onDisabledCommand],(x) => {
 			const cf="E_SetSettingAutonavForDesktop";
 			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.sd(cf,x); this.g(y);
@@ -9708,7 +9708,7 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {
 		const cf="D_MenuServiceItem_Omit";
-		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x);
+		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		f.call(this,serviceEndpoint);
 		return y;
 	}
@@ -9757,7 +9757,7 @@ class HandleTypes extends ServiceMethods {
 			this.t(resolveUrlCommandMetadata,this.MC_ResolveUrl);
 			return;
 		}
-		this.GM_WC(this.w(x));
+		this.GM_WC(this.w(this.sd(cf,x)));
 	}
 	/** @private @arg {{accessibility?:D_Accessibility}} x */
 	handle_accessibility(x) {
@@ -10199,7 +10199,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DM_AdSlot} x */
 	DM_AdSlot(x) {
 		const cf="DM_AdSlot";
-		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x);
+		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x); this.g(y);
 		this.primitive_str(slotId);
 		let do_=false;
 		if(do_) {
@@ -10623,7 +10623,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
-		const {serializedInteractionsRequest,...y}=this.sd(cf,x);
+		const {serializedInteractionsRequest,...y}=this.sd(cf,x); this.g(y);
 		this.primitive_str(x.serializedInteractionsRequest);
 		if("actions" in y) {
 			const {actions,...u}=this.sd(cf,y); this.g(u);
@@ -11531,8 +11531,8 @@ class HandleTypes extends ServiceMethods {
 		this.z(continuationItems,this.R_BrowseFeed);
 	}
 	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
-	A_WatchNext$(x) {
-		const cf="A_WatchNext$";
+	A_WatchNext(x) {
+		const cf="A_WatchNext";
 		const {targetId,continuationItems,...y}=this.sd(cf,x); this.g(y);
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.G_WatchNext);
@@ -11607,8 +11607,9 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {
 		const cf="E_CreateBackstagePost";
-		this.T_Endpoint(cf,x,a => {
-			this.params(cf,"createBackstagePost.param",this.w(this.w(a)));
+		this.T_Endpoint(cf,x,x => {
+			let u=this.w(this.sd(cf,x));
+			this.params(cf,"createBackstagePost.param",this.w(this.sd(`D${cf}`,u)));
 		},meta => {
 			console.log(meta);
 			debugger;
@@ -12220,7 +12221,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		this.do_codegen(cf,{from: cf,url: b}); up==="";
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
@@ -12256,9 +12257,11 @@ class HandleTypes extends ServiceMethods {
 	D_ProfileColumn(x) {this.H_("D_ProfileColumn",x,x => this.z(x,this.G_ProfileColumnItem));}
 	/** @private @arg {G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x) {
+		const cf="G_ProfileColumnItem"; this.k(cf,x);
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		debugger;
+		this.do_codegen(cf,x); x===0;
+		{debugger;}
 	}
 	/** @private @arg {R_ProfileColumnStats} x */
 	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats",x,this.D_ProfileColumnStats);}
@@ -12305,11 +12308,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {G_BrowseFeedContent} x */
 	G_BrowseFeedContent(x) {
+		const cf="G_BrowseFeedContent"; this.k(cf,x);
 		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		debugger;
+		this.do_codegen(cf,x); x===0;
+		{debugger;}
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {

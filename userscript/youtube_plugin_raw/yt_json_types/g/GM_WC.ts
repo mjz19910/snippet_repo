@@ -261,6 +261,7 @@ type DE_VE11487_Browse={browseId: "SPunlimited";};
 type DE_VE23462_Browse={browseId: GU_VE23462_UrlType;};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};
+type DE_CreateBackstagePost={createBackstagePostParams: string;};
 //#endregion
 //#region E_VE\d+_.+
 type E_VE3611_Browse={
@@ -302,6 +303,11 @@ type E_VE96368_Browse={
 	clickTrackingParams: string;
 	commandMetadata: M_VE96368;
 	browseEndpoint: DE_VE96368_Browse;
+};
+type E_CreateBackstagePost={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_backstage_create_post;};
+	createBackstagePostEndpoint: DE_CreateBackstagePost;
 };
 
 //#endregion
