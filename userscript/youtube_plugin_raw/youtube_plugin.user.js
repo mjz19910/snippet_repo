@@ -7480,6 +7480,7 @@ class ServiceMethods extends ServiceData {
 //#region HandleTypes
 /** @template Cls_T,Cls_U @extends {ServiceMethods<Cls_T,Cls_U>}  */
 class HandleTypes extends ServiceMethods {
+	/** @typedef {{}} minimal_handler_member */
 	gk=this.get_keys_of;
 	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
 	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}

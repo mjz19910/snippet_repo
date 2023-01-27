@@ -1,1 +1,0 @@
-type minimal_handler_member={};
