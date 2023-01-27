@@ -9905,7 +9905,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_Text"; this.k(cf,x);
 		if("simpleText" in x) return this.R_SimpleText(x);
 		if("runs" in x) return this.R_TextRuns(x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
@@ -9965,7 +9965,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			debugger;
 		}
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_UrlType,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
@@ -9991,7 +9991,7 @@ class HandleTypes extends ServiceMethods {
 	handle_yt_kids_url(x) {
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
@@ -10244,10 +10244,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>['itemSectionRenderer']['contents'][number]} x */
 	TR_ItemSection_3_I_1(x) {
-		const cf="TR_ItemSection_3_I_1";
+		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		this.do_codegen(cf,x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
@@ -10264,11 +10264,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {G_WatchResult_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
+		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
 		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
