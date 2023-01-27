@@ -7486,6 +7486,8 @@ class ServiceMethods extends ServiceData {
 //#region HandleTypes
 /** @template Cls_T,Cls_U @extends {ServiceMethods<Cls_T,Cls_U>}  */
 class HandleTypes extends ServiceMethods {
+	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
+	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y);return f.call(this,x.params,cf);}
 	/** @private @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
@@ -9647,14 +9649,8 @@ class HandleTypes extends ServiceMethods {
 	E_GetReportForm(x) {
 		const cf="E_GetReportForm"; this.T_Endpoint(cf,x,x => {
 			const {getReportFormEndpoint: a,...y}=x; this.g(y);
-			this.DE_GetReportForm(a);
+			this.D_Params(`D${cf}`,a,(x,cf)=>this.params(cf,"get_report_form",x));
 		},this.M_FlagGetForm);
-	}
-	/** @private @arg {DE_GetReportForm} x */
-	DE_GetReportForm(x) {
-		const cf="DE_GetReportForm";
-		const {params: p,...y}=x; this.g(y);
-		this.params(cf,"get_report_form",p);
 	}
 	/** @private @arg {M_FlagGetForm} x */
 	M_FlagGetForm(x) {
@@ -10084,7 +10080,7 @@ class HandleTypes extends ServiceMethods {
 			case "tv.youtube.com": return;
 			default: debugger; break;
 		}
-		const hn_yt_studio="https://studio.youtube.com"
+		const hn_yt_studio="https://studio.youtube.com";
 		const hn_yt_music="https://music.youtube.com";
 		const hn_yt_kids="https://www.youtubekids.com";
 		const hn_yt_tv="https://tv.youtube.com";
@@ -10679,7 +10675,7 @@ class HandleTypes extends ServiceMethods {
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
 		const {serializedInteractionsRequest,actions,...y}=this.sd(cf,x); this.g(y);
-		this.params(cf,"record_notification_interactions",serializedInteractionsRequest); 
+		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
 	/** @private @arg {A_HideEnclosing} x */

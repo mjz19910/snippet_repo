@@ -1,1 +1,0 @@
-type A_Params={params: string;};

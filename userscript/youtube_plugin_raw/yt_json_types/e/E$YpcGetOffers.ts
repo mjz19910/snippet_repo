@@ -1,1 +1,0 @@
-type DE_YpcGetOffers={params: string;};

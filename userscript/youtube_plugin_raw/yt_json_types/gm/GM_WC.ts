@@ -1,6 +1,7 @@
 //#region CommonType
 type D_Empty_WCM={webCommandMetadata: {};};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
+type D_Params={params: string;};
 //#endregion
 //#region TemplateStrings
 type T_MixPlaylistStr=`RD${string}`;
@@ -302,15 +303,49 @@ type DC_Continuation={
 	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
 };
 type C_Executor={clickTrackingParams: string; commandExecutorCommand: DC_Executor;};
+type DC_Executor=Record<"commands",AC_Executor[]>;
 type C_FollowUp={clickTrackingParams: string; addFollowUpSurveyCommand: C_AddFollowUpSurvey;};
+type C_AddFollowUpSurvey={
+	followUpOptions: G_FollowUpOption[];
+	followUpText: R_TextRuns;
+};
 type C_GetSurvey={clickTrackingParams: string; commandMetadata: MG_Survey_CMD; getSurveyCommand: D_GetSurvey;};
+type D_GetSurvey={
+	endpoint: R_PaidDigitalGoods;
+	action: string;
+};
 type C_LoadMarkers={clickTrackingParams: string; loadMarkersCommand: DC_LoadMarkers;};
+type DC_LoadMarkers={
+	entityKeys: string[];
+};
 type C_RefreshPlaylist={clickTrackingParams: string; refreshPlaylistCommand: D_RefreshPlaylist;};
+type D_RefreshPlaylist={};
 type C_RelatedChip={clickTrackingParams: string; relatedChipCommand: DC_RelatedChip;};
+type DC_RelatedChip={
+	targetSectionIdentifier: "sid-wn-chips";
+	loadCached: true;
+};
 type C_ReloadContinuationItems={clickTrackingParams: string; reloadContinuationItemsCommand: DC_ReloadContinuationItems;};
-type C_RepeatChapter={clickTrackingParams: string; repeatChapterCommand: CD_RepeatChapter;};
-type C_ResetChannelUnreadCount={clickTrackingParams: string; resetChannelUnreadCountCommand: D_ResetChannelUnreadCount;};
-type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: D_ShowReloadUi;};
+type DC_ReloadContinuationItems={
+	slot: "RELOAD_CONTINUATION_SLOT_BODY";
+	targetId: "browse-feedFEwhat_to_watch";
+	continuationItems: G_SectionItem[];
+}|{
+	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
+	targetId: "comments-section";
+	continuationItems: R_CommentsHeader[];
+};
+type C_RepeatChapter={clickTrackingParams: string; repeatChapterCommand: DC_RepeatChapter;};
+type DC_RepeatChapter={
+	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT";
+	startTimeMs: "0";
+	endTimeMs: "60000";
+	repeatStateEntityKey: string;
+};
+type C_ResetChannelUnreadCount={clickTrackingParams: string; resetChannelUnreadCountCommand: DC_ResetChannelUnreadCount;};
+type DC_ResetChannelUnreadCount={};
+type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: DC_ShowReloadUi;};
+type DC_ShowReloadUi={targetId: D_UiTargetId;};
 //#endregion
 //#region Endpoints
 type E_AddToPlaylistService=TE_Endpoint<{webCommandMetadata: GM_playlist_get_add_to_playlist;},"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
@@ -323,7 +358,7 @@ type E_Feedback=TE_Endpoint<M_Feedback,"feedbackEndpoint",DE_Feedback>;
 type DE_Feedback={feedbackToken: string; uiActions: D_HideEnclosingContainer; actions?: A_ReplaceEnclosing[];};
 type E_GetNotificationMenu=TE_Endpoint<{webCommandMetadata: GM_GetNotificationMenu;},"getNotificationMenuEndpoint",DE_GetNotificationMenu>;
 type DE_GetNotificationMenu={ctoken: string;};
-type E_GetReportForm=TE_Endpoint<M_FlagGetForm,"getReportFormEndpoint",DE_GetReportForm>;
+type E_GetReportForm=TE_Endpoint<M_FlagGetForm,"getReportFormEndpoint",D_Params>;
 type DE_GetReportForm={params: string;};
 type E_GetTranscript=TE_Endpoint<D_Empty_WCM,"getTranscriptEndpoint",DE_GetTranscript>;
 type DE_GetTranscript={params: string;};
@@ -368,7 +403,9 @@ type E_Watch=TE_Endpoint_1<M_VE3832,"watchEndpoint",DE_VE3832_Watch>;
 type E_WatchPlaylist=TE_Endpoint<D_Empty_WCM,"watchPlaylistEndpoint",DE_WatchPlaylist>;
 type E_YpcGetCart=TE_Endpoint<M_YpcGetCart,"ypcGetCartEndpoint",DE_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint<D_Empty_WCM,"ypcGetOffersEndpoint",DE_YpcGetOffers>;
+type DE_YpcGetOffers={params: string;};
 type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: DE_YpcGetOfflineUpsell;};
+type DE_YpcGetOfflineUpsell={params: string;};
 type M_CreatePlaylist={webCommandMetadata: GM_CreatePlaylist;};
 //#endregion
 type SE_CreatePlaylist=TE_Endpoint<M_CreatePlaylist,"createPlaylistServiceEndpoint",DS_CreatePlaylist>;
@@ -446,3 +483,19 @@ type AD_Notification={
 };
 type RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};
 type G_LiveChatContinuationActions=RA_ReplayChatItem|A_AddChatItem;
+type DE_VE3832_Watch={
+	videoId: string;
+	playlistId: PlaylistId;
+	index: number;
+	playlistSetVideoId: string;
+	params: string;
+	startTimeSeconds?: number;
+	continuePlayback?: false;
+	loggingContext: R_VssLoggingContext;
+	watchEndpointSupportedOnesieConfig: R_Html5PlaybackOnesieConfig;
+	watchEndpointSupportedPrefetchConfig: R_PrefetchHintConfig;
+	playerParams: string;
+	watchEndpointMusicSupportedConfigs: R_WatchEndpointMusicConfig;
+	nofollow?: boolean;
+	playerExtraUrlParams: G_ExtraUrlParamItem[];
+};
