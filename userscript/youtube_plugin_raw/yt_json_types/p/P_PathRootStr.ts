@@ -2,7 +2,7 @@ type P_PathRootStr="aadc_guidelines_state_entity_key"|
 	"AdServingDataEntry"|
 	"browse$param"|
 	"create_playlist.params"|
-	"createBackstagePost.param"|
+	"createBackstagePost.params"|
 	"D_Browse.param"|
 	"entity_key"|
 	"feedback.feedbackToken"|

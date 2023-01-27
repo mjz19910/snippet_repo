@@ -123,9 +123,9 @@ export class Snippet_0_tmp {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @public @arg {string} x */
-	clickTrackingParams(x) {
-		this.primitive_of(x,"string");
+	/** @protected @arg {P_ParamsSection} cf @arg {string} x */
+	clickTrackingParams(cf,x) {
+		this.params(cf,"tracking.trackingParams",x);
 	}
 	/** @private @arg {string} x */
 	decode_url_b64(x) {
@@ -839,5 +839,12 @@ class ND extends Snippet_0_tmp {
 	C_Continuation(x) {x;}
 	/** @arg {R_Notification} x */
 	R_Notification(x) {x;}
+	/** @arg {"next"} section @arg {DC_Generic_CTP} x */
+	CT_ClickTracked(x,section) {
+		const cf="D_NextContinuation";
+		const {continuation,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
+		this.params(cf,`${section}.continuation`,continuation);
+		this.clickTrackingParams(cf,clickTrackingParams);
+	}
 }
 new ND;
