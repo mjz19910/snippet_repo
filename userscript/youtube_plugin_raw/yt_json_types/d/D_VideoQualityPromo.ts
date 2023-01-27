@@ -3,5 +3,5 @@ type D_VideoQualityPromo={
 	text: R_TextRuns;
 	endpoint: E_Url;
 	trackingParams: string;
-	snackbar: R_NotificationAction;
+	snackbar: RA_NotificationAction;
 };

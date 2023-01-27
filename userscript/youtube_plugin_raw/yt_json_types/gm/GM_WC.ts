@@ -2,6 +2,9 @@
 type D_Empty_WCM={webCommandMetadata: {};};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 //#endregion
+//#region TemplateStrings
+type T_MixPlaylistStr=`RD${string}`;
+//#endregion
 //#region Templates
 type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
 type T_E_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=T_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
@@ -13,7 +16,7 @@ type T_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
-type TB_ContinuationItemMap_1={"watch-next-feed": G_WatchNext;"comments-section": G_CommentsSection;"browse-feedFEwhat_to_watch": R_BrowseFeed;};
+type TB_ContinuationItemMap_1={"watch-next-feed": G_WatchNext; "comments-section": G_CommentsSection; "browse-feedFEwhat_to_watch": R_BrowseFeed;};
 type TB_ContinuationItemMap_2={[V in `comment-replies-item-${string}`]: R_Comment;};
 type TB_ContinuationItemMap=TB_ContinuationItemMap_1&TB_ContinuationItemMap_2;
 //#endregion
@@ -313,12 +316,15 @@ type E_Browse=[
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
 type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: Enum_GuideAction;};
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
+type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
 type AD_ChangeEngagementPanelVisibility={targetId: D_EngagementPanelTargetId; visibility: D_EngagementPanelVisibility;};
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
 type AD_HideEnclosing={notificationId: `${number}`;};
 type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: AD_HideEngagementPanelTargetId;};
+type AD_HideEngagementPanelTargetId={engagementPanelTargetId: "engagement-panel-clip-create";};
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
+type AD_RemoveFromGuideSection={handlerData: "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"; guideEntryId: T_MixPlaylistStr;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
 type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
@@ -454,7 +460,6 @@ type RC_SectionList={sectionListContinuation: G_SectionList;};
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
-type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 //#endregion
 type CD_Invalidation={invalidationContinuationData: DC_Invalidation;};
 type CD_LiveChatReplay={liveChatReplayContinuationData: DC_LiveChatReplay;};
@@ -480,3 +485,14 @@ type DC_Timed={
 	continuation: string;
 };
 
+type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
+type AD_ReelDismissal={
+	onDismissalCompletionRenderer: RA_NotificationAction;
+	trackingParams: string;
+};
+type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
+type AD_Notification={
+	responseText: G_Text;
+	actionButton?: R_Button;
+	trackingParams: string;
+};

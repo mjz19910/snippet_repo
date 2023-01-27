@@ -1,1 +1,1 @@
-type YtInfinitePlaylistFormat=YtMixPlaylistFormat|YtMyMixPlaylistFormat;
+type YtInfinitePlaylistFormat=T_MixPlaylistStr|YtMyMixPlaylistFormat;

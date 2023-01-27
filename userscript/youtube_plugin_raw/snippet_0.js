@@ -437,7 +437,7 @@ export class Snippet_0_tmp {
 		this.save_keys(`[${cf}Renderer]`,x);
 		f.call(this,this.w(x));
 	}
-	/** @arg {D_NotificationAction} x */
+	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
 	/** @protected @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {

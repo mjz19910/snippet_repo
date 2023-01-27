@@ -9517,9 +9517,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_DecoratedPlayerBar} x */
 	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar",x,this.D_DecoratedPlayerBar);}
-	/** @private @arg {R_NotificationAction} x */
+	/** @private @arg {RA_NotificationAction} x */
 	R_NotificationAction(x) {this.H_("R_NotificationAction ",x,this.D_NotificationAction);}
-	/** @private @arg {D_NotificationAction} x */
+	/** @private @arg {AD_Notification} x */
 	D_NotificationAction(x) {
 		const cf="D_NotificationAction";
 		const {responseText,actionButton,trackingParams}=this.sd(cf,x);// this.g(y);//#destructure
