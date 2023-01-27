@@ -1,1 +1,0 @@
-type SP_GFeedbackServiceParamsType=GFeedbackServiceParamList|RC_To_SPs<SP_GFeedbackVarMap>;
