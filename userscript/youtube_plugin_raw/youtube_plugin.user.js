@@ -4400,13 +4400,13 @@ class CodegenService extends BaseService {
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
 		/** @private @type {unknown} */
 		let x=rep;
+		if(x===null||x===void 0) return x;
 		if(typeof x==="bigint") return x;
 		if(typeof x==="boolean") return x;
 		if(typeof x==="function") return x;
 		if(typeof x==="number") return x;
 		if(typeof x==="symbol") return x;
 		if(typeof x==="string") return this.typedef_json_replace_string(x,k1);
-		if(x===null||x===void 0) return x;
 		if(!state.object_store.includes(x)) {
 			state.object_store.push(x);
 			let mi=state.object_store.indexOf(x);
