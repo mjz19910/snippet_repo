@@ -9555,6 +9555,17 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
+	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
+	T_DE_SettingItem_AutonavForDesktop(x) {
+		if("boolValue" in x) {
+			const {settingItemId,boolValue,settingItemIdForClient,...y}=x; this.g(y);
+			if(settingItemId!=="407") debugger;
+			this.primitive_bool(boolValue);
+			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
+			return;
+		}
+		debugger;
+	}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
 	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay",x,this.D_PlayerOverlayAutoplay);}
 	/** @private @arg {R_WatchNextEndScreen} x */
@@ -13315,17 +13326,6 @@ class HandleTypes extends ServiceMethods {
 		defaultCommentText;
 		editButton;
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
-	}
-	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
-	T_DE_SettingItem_AutonavForDesktop(x) {
-		if("boolValue" in x) {
-			const {settingItemId,boolValue,settingItemIdForClient,...y}=x; this.g(y);
-			if(settingItemId!=="407") debugger;
-			this.primitive_bool(boolValue);
-			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
-			return;
-		}
-		debugger;
 	}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
