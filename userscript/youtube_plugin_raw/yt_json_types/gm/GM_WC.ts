@@ -376,7 +376,7 @@ type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetN
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 // TODO #4
 type DC_PlaylistPanel={};
-type RC_SectionList={sectionListContinuation: G_SectionList;};
+type C_SectionList={sectionListContinuation: G_SectionList;};
 type G_SectionList=
 	|D_SectionListBase
 	|D_SectionList_SearchFeed

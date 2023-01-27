@@ -8133,7 +8133,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(continuationContents,this.C_SectionList);
 		this.t_cf(cf,alerts,this.Response_alerts);
 	}
-	/** @private @arg {RC_SectionList} x */
+	/** @private @arg {C_SectionList} x */
 	C_SectionList(x) {this.H_("C_SectionList",x,this.G_SectionList);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat",x,this.D_Microformat);}
