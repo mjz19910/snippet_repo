@@ -4341,11 +4341,10 @@ class CodegenService extends BaseService {
 			&&x.formattedTitle
 			&&x.accessibility;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}|null} x @arg {string} k1 */
+	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 */
 	typedef_json_replace_object(state,x,k1) {
-		const {gen_name: r,key_keep_arr}=state;
-		if(x===null) return x;
 		let g=() => this.json_auto_replace(x);
+		const {gen_name: r,key_keep_arr}=state;
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
