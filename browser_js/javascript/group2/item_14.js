@@ -514,7 +514,7 @@ class JsonReplacerState {
 		console.log("TODO: unknown_tag_section", x);
 		return ["TAG::failed", null];
 	}
-	/** @arg {Element | null} x */
+	/** @arg {Element} x */
 	on_run_request(x) {
 		/** @type {[][]} */
 		let arr = [];
@@ -632,7 +632,9 @@ class JsonReplacerState {
 		return log_args;
 	}
 	run() {
-		let {arr} = this.on_run_request(document.body.firstElementChild);
+		let doc_child=document.body.firstElementChild;
+		if(!doc_child) throw new Error("No firstElement of document.body");
+		let {arr} = this.on_run_request(doc_child);
 		let all_vnodes = [];
 		for (let item of this.result_history) {
 			all_vnodes.push(...item.vnodes);

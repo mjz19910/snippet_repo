@@ -4,7 +4,7 @@ v1 (cur): snippet_repo/javascript/group2/item_14_types.ts
 type ContentArgsType={
 	empty: ["empty",[]];
 	cache: ["cache",CacheItemType[]];
-	input: ["input",[Element|null]];
+	input: ["input",Element];
 	vue_app: ["vue_app",{}];
 	dom_nodes: ["dom_nodes",Node[]];
 	vnodes: ["vnodes",{}];
