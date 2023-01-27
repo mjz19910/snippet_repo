@@ -12058,6 +12058,38 @@ class HandleTypes extends ServiceMethods {
 	E_Like_D({likeEndpoint: a,...y},_=this.g(y)) {this.DE_Like(a);}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {this.T_Endpoint("E_Like",x,this.E_Like_D,this.E_Like_C);}
+	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
+	E_Like_C(x) {
+		const cf="E_Like_C";
+		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
+		switch(a.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
+			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
+			case "/youtubei/v1/like/like": return this.GM_like_like(a);
+		}
+	}
+	/** @private @arg {GM_like_removelike} x */
+	GM_like_removelike(x) {
+		const cf="GM_like_removelike";
+		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
+		if(a!=="/youtubei/v1/like/removelike") debugger;
+		if(b!==true) debugger;
+	}
+	/** @private @arg {GM_like_dislike} x */
+	GM_like_dislike(x) {
+		const cf="GM_like_dislike";
+		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
+		if(a!=="/youtubei/v1/like/dislike") debugger;
+		if(b!==true) debugger;
+	}
+	/** @private @arg {GM_like_like} x */
+	GM_like_like(x) {
+		const cf="GM_like_like";
+		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
+		if(a!=="/youtubei/v1/like/like") debugger;
+		if(b!==true) debugger;
+	}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		if("videoId" in x) return this.videoId(this.w(x));
@@ -12742,38 +12774,10 @@ class HandleTypes extends ServiceMethods {
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
-	E_Like_C(x) {
-		const cf="E_Like_C";
-		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);
-		switch(a.apiUrl) {
-			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
-			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
-			case "/youtubei/v1/like/like": return this.GM_like_like(a);
-		}
-	}
-	/** @private @arg {GM_like_removelike} x */
-	GM_like_removelike(x) {
-		const cf="GM_like_removelike";
-		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
-		if(a!=="/youtubei/v1/like/removelike") debugger;
-		if(b!==true) debugger;
-	}
-	/** @private @arg {GM_like_dislike} x */
-	GM_like_dislike(x) {
-		const cf="GM_like_dislike";
-		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
-		if(a!=="/youtubei/v1/like/dislike") debugger;
-		if(b!==true) debugger;
-	}
-	/** @private @arg {GM_like_like} x */
-	GM_like_like(x) {
-		const cf="GM_like_like";
-		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);
-		if(a!=="/youtubei/v1/like/like") debugger;
-		if(b!==true) debugger;
-	}
+	/** @private @arg {R_MusicCarouselShelf} x */
+	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
+	/** @private @arg {R_MusicShelf} x */
+	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
@@ -12810,6 +12814,8 @@ class HandleTypes extends ServiceMethods {
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.sd(cf,x); this.g(y);
 		this.R_VideoOwner(owner);
 	}
+	/** @private @arg {R_VideoOwner} x */
+	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {
 		const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,x => this.D_RefreshPlaylist(this.w(x)));
@@ -12821,8 +12827,6 @@ class HandleTypes extends ServiceMethods {
 		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_VideoOwner} x */
-	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
 	/** @private @arg {D_VideoOwner} x */
 	D_VideoOwner(x) {
 		const cf="D_VideoOwner";
@@ -12832,16 +12836,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
 	}
-	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
 		const cf="D_MusicCarouselShelf";
 		const {contents,header,trackingParams,itemSize,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
 	/** @private @arg {D_MusicShelf} x */
 	D_MusicShelf(x) {
 		const cf="D_MusicShelf";
