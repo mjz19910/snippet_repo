@@ -1,6 +1,6 @@
 type D_GuideEntry_PresentationNone={
 	navigationEndpoint: E_Browse;
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;

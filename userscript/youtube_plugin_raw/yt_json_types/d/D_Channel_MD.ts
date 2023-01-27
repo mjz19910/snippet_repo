@@ -5,7 +5,7 @@ type D_Channel_MD={
 	externalId: "UCMlGfpWw-RUdWX_JbLCukXg";
 	keywords: string;
 	ownerUrls: [`http://www.youtube.com/@${string}`];
-	avatar: D_Thumbnail;
+	avatar: R_Thumbnail;
 	channelUrl: string;
 	isFamilySafe: true;
 	availableCountryCodes: string[];

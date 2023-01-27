@@ -1,7 +1,7 @@
 type D_LiveChatTextMessage={
 	message: R_TextRuns;
 	authorName: R_TextRuns;
-	authorPhoto: D_Thumbnail;
+	authorPhoto: R_Thumbnail;
 	contextMenuEndpoint: {};
 	id: string;
 	authorBadges?: R_LiveChatAuthorBadge[];

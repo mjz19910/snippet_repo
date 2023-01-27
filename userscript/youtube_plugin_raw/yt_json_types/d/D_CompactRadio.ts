@@ -1,6 +1,6 @@
 type D_CompactRadio={
 	playlistId: `RD${string}`|`RDGM${string}`;
-	thumbnail: D_Thumbnail&R_SampledThumbnailColor;
+	thumbnail: R_Thumbnail&R_SampledThumbnailColor;
 	title: R_TextRuns;
 	navigationEndpoint: E_Watch;
 	videoCountText: R_TextRuns;

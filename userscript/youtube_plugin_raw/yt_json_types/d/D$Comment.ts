@@ -1,6 +1,6 @@
 type D_Comment={
 	authorText: R_TextRuns;
-	authorThumbnail: D_Thumbnail;
+	authorThumbnail: R_Thumbnail;
 	authorEndpoint: {};
 	contentText: R_TextRuns;
 	publishedTimeText: R_TextRuns;
@@ -9,7 +9,7 @@ type D_Comment={
 	commentId: string;
 	actionButtons: R_CommentActionButtons;
 	authorIsChannelOwner: boolean;
-	currentUserReplyThumbnail: D_Thumbnail;
+	currentUserReplyThumbnail: R_Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
 	voteCount: R_TextRuns;

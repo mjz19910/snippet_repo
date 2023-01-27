@@ -1,7 +1,7 @@
 type D_PlaylistPanelVideo={
 	title: R_SimpleText;
 	longBylineText: R_TextRuns;
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	lengthText: R_SimpleText;
 	indexText: R_SimpleText;
 	selected: true;

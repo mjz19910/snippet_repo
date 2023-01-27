@@ -1,5 +1,5 @@
 type D_VideoOwner={
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	title: R_TextRuns;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: E_Browse;
@@ -7,7 +7,7 @@ type D_VideoOwner={
 	trackingParams: string;
 	membershipButton: R_Button;
 }|{
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	title: R_TextRuns;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: E_Browse;

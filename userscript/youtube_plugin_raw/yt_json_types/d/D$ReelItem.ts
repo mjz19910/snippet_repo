@@ -1,7 +1,7 @@
 type D_ReelItem={
 	videoId: YtVideoId;
 	headline: R_TextRuns;
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	viewCountText: R_TextRuns;
 	navigationEndpoint: E_ReelWatch;
 	menu: R_Menu;

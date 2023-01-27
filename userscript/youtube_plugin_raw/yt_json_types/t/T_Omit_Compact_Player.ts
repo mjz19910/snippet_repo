@@ -11,7 +11,7 @@ type R_Omit_Compact_Video=R_Omit_Compact_Player&{
 };
 type T_Omit_Compact_Video<T extends R_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
 type R_Omit_Menu_Video={
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	longBylineText: R_TextRuns;
 	viewCountText: G_Text;
 	navigationEndpoint: E_Watch;

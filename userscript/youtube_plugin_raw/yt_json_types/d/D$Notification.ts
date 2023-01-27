@@ -1,6 +1,6 @@
 type D_Notification={
-	thumbnail: D_Thumbnail;
-	videoThumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
+	videoThumbnail: R_Thumbnail;
 	shortMessage: R_SimpleText;
 	sentTimeText: R_SimpleText;
 	navigationEndpoint: E_Watch;

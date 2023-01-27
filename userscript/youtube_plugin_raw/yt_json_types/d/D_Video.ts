@@ -1,6 +1,6 @@
 type D_Video={
 	videoId: /**/string;
-	thumbnail: /**/D_Thumbnail;
+	thumbnail: /**/R_Thumbnail;
 	title: /**/R_TextRuns;
 	descriptionSnippet?: R_TextRuns;
 	longBylineText: /**/R_TextRuns;

@@ -1,6 +1,6 @@
 type D_CompactVideo={
 	videoId: string;
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	title: R_TextRuns;
 	longBylineText: R_TextRuns;
 	publishedTimeText: R_TextRuns;

@@ -3,7 +3,7 @@ type D_PlayerOverlayAutoplay={
 	videoTitle: G_Text;
 	byline: R_TextRuns;
 	pauseText: G_Text;
-	background: D_Thumbnail;
+	background: R_Thumbnail;
 	countDownSecs: 8;
 	cancelButton: R_Button;
 	nextButton: R_Button;

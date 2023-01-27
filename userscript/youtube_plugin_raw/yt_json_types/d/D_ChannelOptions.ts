@@ -1,5 +1,5 @@
 type D_ChannelOptions={
-	avatar: D_Thumbnail;
+	avatar: R_Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: R_TextRuns[];

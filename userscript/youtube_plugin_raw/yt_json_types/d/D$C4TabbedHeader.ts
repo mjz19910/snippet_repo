@@ -2,14 +2,14 @@ type D_C4TabbedHeader={
 	channelId: `UC${string}`;
 	title: string;
 	navigationEndpoint: E_Browse;
-	avatar: D_Thumbnail;
-	banner: D_Thumbnail;
+	avatar: R_Thumbnail;
+	banner: R_Thumbnail;
 	badges?: RMD_Badge[];
 	headerLinks: R_ChannelHeaderLinks;
 	subscribeButton: R_SubscribeButton;
 	subscriberCountText: R_SimpleText;
-	tvBanner: D_Thumbnail;
-	mobileBanner: D_Thumbnail;
+	tvBanner: R_Thumbnail;
+	mobileBanner: R_Thumbnail;
 	trackingParams: string;
 	sponsorButton?: R_Button;
 	channelHandleText: R_TextRuns;

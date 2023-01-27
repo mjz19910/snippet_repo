@@ -4123,6 +4123,10 @@ class CodegenService extends BaseService {
 		}
 		return null;
 	}
+	#R_ThumbnailStr() {
+		/** @private @type {R_Thumbnail} */
+		return "R_Thumbnail";
+	}
 	/** @no_mod @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
@@ -4148,8 +4152,7 @@ class CodegenService extends BaseService {
 			/** @private @type {R_TextRuns} */
 			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.R_TextRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			/** @private @type {D_Thumbnail} */
-			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D_Thumbnail(${k});`); continue;}
+			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.${this.#R_ThumbnailStr()}(${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
 			/** @private @type {{}} */
 			let o3=x2;
@@ -4451,8 +4454,7 @@ class CodegenService extends BaseService {
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
-		/** @private @type {D_Thumbnail} */
-		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D_Thumbnail";
+		if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
 		/** @private @type {R_SimpleText} */
 		if(x.simpleText) return "TYPE::R_SimpleText";
 		/** @private @type {T_Icon<"">} */
@@ -8380,9 +8382,9 @@ class HandleTypes extends ServiceMethods {
 			if("logAsMovingThumbnail" in x) {
 				const cf="D_MovingThumbnail_Thumbnails";
 				const {logAsMovingThumbnail,...y}=this.sd(cf,x);
-				return this.D_Thumbnail(y);
+				return this.R_Thumbnail(y);
 			}
-			this.D_Thumbnail(x);
+			this.R_Thumbnail(x);
 		});
 		if(enableHoveredLogging!==true) debugger;
 		if(enableOverlay!==true) debugger;
@@ -8416,13 +8418,13 @@ class HandleTypes extends ServiceMethods {
 		this.R_Menu(menu);
 		return y;
 	}
-	/** @private @template {D_Radio|D_CompactRadio} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
+	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
 		if("adSlotMetadata" in x) {debugger; throw new Error();}
 		let u=this.R_Omit_Menu_Radio(cf,x);
 		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.playlistId(playlistId);
-		this.D_Thumbnail(thumbnail);
+		this.R_Thumbnail(thumbnail);
 		this.R_TextRuns(videoCountText);
 		this.R_TextRuns(thumbnailText);
 		this.G_Text(longBylineText);
@@ -8520,7 +8522,7 @@ class HandleTypes extends ServiceMethods {
 	D_Video_Owner(x) {
 		const cf="D_Video_Owner";
 		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.sd(cf,x); this.g(y);
-		this.D_Thumbnail(thumbnail);
+		this.R_Thumbnail(thumbnail);
 		this.E_Browse(navigationEndpoint);
 		this.D_Accessibility(accessibility);
 		this.primitive_str(title);
@@ -8530,7 +8532,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
 		const {thumbnail,navigationEndpoint,accessibility,...y}=this.sd(cf,x);
-		this.D_Thumbnail(thumbnail);
+		this.R_Thumbnail(thumbnail);
 		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
 		this.D_Accessibility(accessibility);
 		return y;
@@ -8579,9 +8581,9 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(this.DC_Continuation_Omit(cf,x));
 	}
-	/** @private @arg {D_Thumbnail} x */
-	D_Thumbnail(x) {
-		const cf="D_Thumbnail"; this.k(cf,x);
+	/** @private @arg {R_Thumbnail} x */
+	R_Thumbnail(x) {
+		const cf="R_Thumbnail"; this.k(cf,x);
 		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.sd(cf,x); this.g(y);
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.D_Accessibility);
@@ -8960,7 +8962,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_FeaturedChannel";
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.sd(cf,x); this.g(y);
 		this.z([startTimeMs,endTimeMs],this.primitive_str);
-		this.D_Thumbnail(watermark);
+		this.R_Thumbnail(watermark);
 		this.trackingParams(cf,trackingParams);
 		this.E_Browse(navigationEndpoint);
 		this.primitive_str(channelName);
@@ -9976,7 +9978,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(videoTitle);
 		this.R_TextRuns(byline);
 		this.G_Text(pauseText);
-		this.D_Thumbnail(background);
+		this.R_Thumbnail(background);
 		if(countDownSecs!==8) debugger;
 		this.R_Button(cancelButton);
 		this.R_Button(nextButton);
@@ -10524,7 +10526,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_Notification";
 		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
-		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
+		this.z([thumbnail,videoThumbnail],this.R_Thumbnail);
 		this.z([shortMessage,sentTimeText],this.R_SimpleText);
 		if(navigationEndpoint.watchEndpoint) {
 			this.E_Watch(navigationEndpoint);
@@ -10901,7 +10903,7 @@ class HandleTypes extends ServiceMethods {
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
-			this.D_Thumbnail(thumbnail);
+			this.R_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
@@ -10982,7 +10984,7 @@ class HandleTypes extends ServiceMethods {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.sd(cf,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
-			this.D_Thumbnail(thumbnail);
+			this.R_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			this.trackingParams(cf,trackingParams);
 			this.R_SimpleText(formattedTitle);
@@ -11874,7 +11876,7 @@ class HandleTypes extends ServiceMethods {
 	R_ThumbnailsList(x) {
 		const cf="R_ThumbnailsList"; this.k(cf,x);
 		const {thumbnail,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.D_Thumbnail(thumbnail);
+		this.R_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 	}
 	/** @private @arg {D_AdLayoutLogging} x */
@@ -11907,7 +11909,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_MusicThumbnail";
 		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,a);
-		this.D_Thumbnail(thumbnail);
+		this.R_Thumbnail(thumbnail);
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
@@ -12034,7 +12036,20 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {x; debugger;}
+	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
+	/** @private @arg {string} cf @arg {D_CompactPlaylist} x */
+	D_Playlist_Omit(cf,x) {
+		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
+		this.R_TextRuns(shortBylineText);
+		this.z(sidebarThumbnails,this.R_Thumbnail);
+		this.D_CompactRadio_shareUrl(shareUrl);
+		return y;
+	}
+	/** @private @arg {D_CompactPlaylist} x */
+	D_CompactPlaylist(x) {
+		let y=this.D_Playlist_Omit("D_CompactPlaylist",x);
+		const {...p}=y; p;
+	}
 	/** @private @arg {R_CompactRadio} x */
 	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
 	/** @private @arg {D_CompactRadio['secondaryNavigationEndpoint']} x */
@@ -12116,7 +12131,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ProfileColumnUserInfo";
 		const {title,thumbnail,...y}=this.sd(cf,x); this.g(y);
 		this.R_SimpleText(title);
-		this.D_Thumbnail(thumbnail);
+		this.R_Thumbnail(thumbnail);
 	}
 	/** @private @arg {D_BrowseFeedActions} x */
 	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions",x,x => this.z(x,this.G_BrowseFeedContent));}
@@ -12211,7 +12226,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		const {avatar,menuRequest,trackingParams,accessibility,tooltip,...y}=this.sd(cf,x); this.g(y);
-		this.D_Thumbnail(avatar);
+		this.R_Thumbnail(avatar);
 		this.T_ES_Signal(menuRequest,this.M_AccountMenu,this.S_GetAccountMenu);
 	}
 	/** @private @arg {M_AccountMenu} x */
@@ -12587,7 +12602,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_SimpleText(timestampText);
 		this.E_Browse(channelNavigationEndpoint);
 		this.R_TextRuns(channelTitleText);
-		this.D_Thumbnail(channelThumbnail);
+		this.R_Thumbnail(channelThumbnail);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_PivotButton} x */
@@ -12807,7 +12822,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_CommentsEntryPointTeaser";
 		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
 		if(!teaserAvatar.accessibility) debugger;
-		this.D_Thumbnail(teaserAvatar);
+		this.R_Thumbnail(teaserAvatar);
 		if(!teaserContent.simpleText) debugger;
 		this.R_SimpleText(teaserContent);
 		this.trackingParams(cf,trackingParams);

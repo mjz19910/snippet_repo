@@ -1,6 +1,6 @@
 type D_EndScreenVideo={
 	videoId: string;
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	title: R_SimpleText;
 	shortBylineText: R_TextRuns;
 	lengthText?: R_SimpleText;

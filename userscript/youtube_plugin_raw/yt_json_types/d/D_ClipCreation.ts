@@ -1,6 +1,6 @@
 type D_ClipCreation={
 	trackingParams: string;
-	userAvatar: D_Thumbnail;
+	userAvatar: R_Thumbnail;
 	titleInput: R_ClipCreationTextInput;
 	scrubber: R_ClipCreationScrubber;
 	saveButton: R_Button;

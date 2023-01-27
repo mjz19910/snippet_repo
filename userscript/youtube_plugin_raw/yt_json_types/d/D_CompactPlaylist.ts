@@ -1,6 +1,6 @@
 type D_CompactPlaylist={
 	playlistId: `PL${string}`;
-	thumbnail: D_Thumbnail;
+	thumbnail: R_Thumbnail;
 	title: R_TextRuns;
 	shortBylineText: R_TextRuns;
 	videoCountText: R_TextRuns;
@@ -8,7 +8,7 @@ type D_CompactPlaylist={
 	publishedTimeText?: R_TextRuns;
 	videoCountShortText: R_TextRuns;
 	trackingParams: string;
-	sidebarThumbnails: D_Thumbnail[];
+	sidebarThumbnails: R_Thumbnail[];
 	thumbnailText: R_TextRuns;
 	ownerBadges?: RMD_Badge[];
 	menu: R_Menu;

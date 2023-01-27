@@ -1,5 +1,5 @@
 type D_CommentsEntryPointTeaser={
-	teaserAvatar: D_Thumbnail&{
+	teaserAvatar: R_Thumbnail&{
 		accessibility: D_Accessibility;
 	};
 	teaserContent: R_SimpleText;
