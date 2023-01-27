@@ -369,8 +369,11 @@ type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
 
 
 type CT_ClickTracked={continuation: string; clickTrackingParams: string;};
-type RC_Next={nextContinuationData: CT_ClickTracked;};
-type RC_NextRadio={nextRadioContinuationData: CT_ClickTracked;};
+
+type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
+type RC_SectionList={sectionListContinuation: G_SectionList;};
+type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
+type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
 type AD_AppendContinuationItems=
 	|TA_Continuation<"watch-next-feed",G_WatchNext>
@@ -407,3 +410,9 @@ type AD_ChangeEngagementPanelVisibility={
 };
 
 //#endregion
+
+type RCD_Next={nextContinuationData: CT_ClickTracked;};
+type RCD_NextRadio={nextRadioContinuationData: CT_ClickTracked;};
+type D_ReloadContinuation={reloadContinuationData: CT_ClickTracked;};
+type R_InvalidationContinuation={invalidationContinuationData: DI_InvalidationContinuation;};
+type R_PlayerSeekContinuation={playerSeekContinuationData: D_GenericContinuation;};

@@ -1,7 +1,7 @@
 type RS_Browse={
 	responseContext: RC_ResponseContext;
 	contents?: G_BrowseContents;
-	continuationContents?: C_SectionList;
+	continuationContents?: RC_SectionList;
 	header?: G_BrowseHeader;
 	alerts?: R_AlertWithButton[];
 	metadata?: G_Browse_MD;
