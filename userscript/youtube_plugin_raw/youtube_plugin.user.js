@@ -4341,19 +4341,17 @@ class CodegenService extends BaseService {
 			&&x.formattedTitle
 			&&x.accessibility;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {{}|null} x @arg {string} k1 */
+	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}|null} x @arg {string} k1 */
 	typedef_json_replace_object(state,x,k1) {
-		const {gen_name,key_keep_arr}=state;
+		const {gen_name: r,key_keep_arr}=state;
 		if(x===null) return x;
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
 		}
-		/** @type {{[U in string]: unknown}} */
-		let b=x;
-		x: if(this.is_GuideEntrySimple(b)&&typeof b.icon==="object"&&b.icon) {
+		x: if(this.is_GuideEntrySimple(x)&&typeof x.icon==="object"&&x.icon) {
 			/** @type {{iconType?:string}} */
-			let ru=b.icon;
+			let ru=x.icon;
 			if(!ru.iconType) break x;
 			/** @arg {unknown} u @returns {{[x: string]: unknown}|null} */
 			function o(u) {
@@ -4364,28 +4362,47 @@ class CodegenService extends BaseService {
 				}
 				return null;
 			}
-			let kk=this.get_keys_of(b);
+			let kk=this.get_keys_of(x);
 			if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
-				if(!o(b.navigationEndpoint)?.browseEndpoint) {
+				if(!o(x.navigationEndpoint)?.browseEndpoint) {
 					/** @type {TD_GuideEntry_EntryData<any>} */
-					console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(b));
+					console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(x));
 					break x;
 				}
 				return `TYPE::TD_GuideEntry_EntryData<"${ru.iconType}">`;
 			}
 			/** @type {TD_GuideEntry_Simple<any>} */
 			if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
-				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(b));
+				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(x));
 				break x;
 			}
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
-		let res_type=this.typedef_json_replace_object_2(state,gen_name,x);
-		if(res_type!==null) return res_type;
-		if(key_keep_arr.includes(k1)) return x;
-		state.object_count++;
-		if(state.object_count<3) return x;
-		return {};
+		let g=() => this.json_auto_replace(x);
+		if(state.k1==="webCommandMetadata") return x;
+		/** @private @type {R_TextRuns} */
+		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
+		if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
+		/** @private @type {R_SimpleText} */
+		if(x.simpleText) return "TYPE::R_SimpleText";
+		/** @private @type {T_Icon<"">} */
+		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
+		if(x.signal) return this.decode_Signal(x);
+		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
+			let pi=state.parent_map.get(x);
+			if(!pi) break x;
+			if(pi[1]==="owner") {
+				return "TYPE::D_Video_Owner";
+			}
+			console.log(pi);
+			debugger;
+		}
+		let keys=this.filter_keys(this.get_keys_of(x));
+		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
+		if(state.key_keep_arr.includes(state.k1)) return x;
+		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
+		{debugger;}
+		return null;
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} rep */
 	typedef_json_replacer(state,k1,rep) {
@@ -4407,6 +4424,7 @@ class CodegenService extends BaseService {
 		if(typeof x==="number") return x;
 		if(typeof x==="symbol") return x;
 		if(typeof x==="string") return this.typedef_json_replace_string(x,k1);
+		if(typeof x!=="object") return x;
 		if(!state.object_store.includes(x)) {
 			state.object_store.push(x);
 			let mi=state.object_store.indexOf(x);
@@ -4420,7 +4438,15 @@ class CodegenService extends BaseService {
 			state.parent_map.set(val,[mi,k_in]);
 		}
 		if(k1==="") return rep;
-		return this.typedef_json_replace_object(state,x,k1);
+		/** @type {{[U in string]?:unknown}} */
+		let xu=x;
+		const {key_keep_arr}=state;
+		let res_type=this.typedef_json_replace_object(state,xu,k1);
+		if(res_type!==null) return res_type;
+		if(key_keep_arr.includes(k1)) return x;
+		state.object_count++;
+		if(state.object_count<3) return x;
+		return {};
 	}
 	/** @no_mod @arg {{}} x @arg {string} gen_name */
 	#_codegen_typedef(x,gen_name) {
@@ -4460,34 +4486,6 @@ class CodegenService extends BaseService {
 			ret=`\ntype ${gen_name}=${tc}\n`;
 		}
 		return ret;
-	}
-	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} x */
-	typedef_json_replace_object_2(state,r,x) {
-		let g=() => this.json_auto_replace(x);
-		if(state.k1==="webCommandMetadata") return x;
-		/** @private @type {R_TextRuns} */
-		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
-		if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
-		/** @private @type {R_SimpleText} */
-		if(x.simpleText) return "TYPE::R_SimpleText";
-		/** @private @type {T_Icon<"">} */
-		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
-		if(x.signal) return this.decode_Signal(x);
-		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
-			let pi=state.parent_map.get(x);
-			if(!pi) break x;
-			if(pi[1]==="owner") {
-				return "TYPE::D_Video_Owner";
-			}
-			console.log(pi);
-			debugger;
-		}
-		let keys=this.filter_keys(this.get_keys_of(x));
-		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
-		if(state.key_keep_arr.includes(state.k1)) return x;
-		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
-		{debugger;}
-		return null;
 	}
 	/** @param {{[U in string]:unknown}} x */
 	json_auto_replace_1(x) {
