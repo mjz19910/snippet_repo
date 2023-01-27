@@ -1,7 +1,7 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14_types.ts
 */
-export type ContentArgsType={
+type ContentArgsType={
 	empty: ["empty",[]];
 	cache: ["cache",CacheItemType[]];
 	input: ["input",Element];
@@ -9,16 +9,16 @@ export type ContentArgsType={
 	dom_nodes: ["dom_nodes",Node[]];
 	vnodes: ["vnodes",{}];
 };
-export type DataParsable={
+type DataParsable={
 	__parsable_tag: true;
 };
-export type VueApp={
+type VueApp={
 	_instance: {
 		uid: number;
 		vnode: VueVnode;
 	};
 };
-export type VueVnode={
+type VueVnode={
 	__v_isVNode: true;
 	__v_skip: true;
 	type: {};
@@ -33,11 +33,11 @@ type VueAppContainer = {
 	__Z_ignore_replacement?: boolean;
 	__vue_app__: VueApp;
 };
-export type JsonInputType=VueAppContainer|Element|Node;
-export type CacheItemType={__cache_item: true;}|JsonInputType|Element;
-export type do_json_replace_functionType<T extends keyof ContentArgsType>=((...t_args: [res_arr: [string,string|number][][],target_args: ContentArgsType[T]]) => void);
+type JsonInputType=VueAppContainer|Element|Node;
+type CacheItemType={__cache_item: true;}|JsonInputType|Element;
+type do_json_replace_functionType<T extends keyof ContentArgsType>=((...t_args: [res_arr: [string,string|number][][],target_args: ContentArgsType[T]]) => void);
 
-export type DataItemReturn=|["TAG::vnode_item",{}]|[
+type DataItemReturn=|["TAG::vnode_item",{}]|[
 	["TAG::unpack_vnode::1",{}],
 	["TAG::vnode",{}],
 	["TAG::vnode_inner",{}],
@@ -48,6 +48,7 @@ export type DataItemReturn=|["TAG::vnode_item",{}]|[
 	["TAG::null_arr",null[]],
 	["TAG::cache_item",number],
 	["TAG::null",null],
+	["TAG::stringify_failed",string],
 	["TAG::stringify_result",string,InputObjBox],
 	["TAG::parsed_json",DataParsable],
 	["CONTENT::empty"],

@@ -28,13 +28,6 @@ class LogGenerator {
 	}
 }
 /** @template {string} T @template {string} U @typedef {import("./item_types").Split<T,U>} Split */
-/** @typedef {import("./item_14_types").VueApp} VueApp */
-/** @typedef {import("./item_14_types").CacheItemType} CacheItemType */
-/** @typedef {import("./item_14_types").VueVnode} VueVnode */
-/** @typedef {import("./item_14_types").JsonInputType} JsonInputType */
-/** @typedef {import("./item_14_types").DataItemReturn} DataItemReturn */
-/** @typedef {import("./item_14_types").ContentArgsType} ContentArgsType */
-/** @typedef {import("./item_14_types").DataParsable} DataParsable */
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e, x = e) {
@@ -215,33 +208,41 @@ class JsonReplacerState {
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
 	}
-	/** @type {JsonInputType[]} */
-	static stringify_failed_obj = [];
-	is_crash_testing = false;
-	/** @arg {string} k @arg {JsonInputType|null} obj */
-	json_replacer(k, obj) {
-		if (typeof obj !== "object")
-			return obj;
-		if (obj === null)
-			return obj;
+	/** @arg {JsonInputType} x @returns {DataItemReturn|null} */
+	try_json_stringify(x, first = false) {
 		let was_crash_testing = this.is_crash_testing;
 		x: try {
 			if (this.is_crash_testing)
 				break x;
-			this.is_crash_testing = true;
+			this.is_crash_testing = first === false;
 			let test_state = this.clone();
-			debugger; JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
+			let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
+			return ["TAG::stringify_result", json_result, new InputObjBox];
 		} catch (e) {
-			JsonReplacerState.stringify_failed_obj.push(obj);
+			JsonReplacerState.stringify_failed_obj.push(x);
 			if (was_crash_testing) {
 				throw e;
 			}
 			console.log("swallowing error", e);
-			return "TYPE::StringifyFailed:" + Object.keys(obj);
+			return ["TAG::stringify_failed", Object.keys(x).join()];
 		} finally {
 			this.is_crash_testing = was_crash_testing;
 		}
-		let x = obj;
+		return null;
+	}
+	/** @type {JsonInputType[]} */
+	static stringify_failed_obj = [];
+	is_crash_testing = false;
+	/** @arg {string} k @arg {JsonInputType|null} x */
+	json_replacer(k, x) {
+		if (typeof x !== "object")
+			return x;
+		if (x === null)
+			return x;
+		let failure_result = this.try_json_stringify(x);
+		if (failure_result) {
+			return failure_result;
+		}
 		const { object_store } = this;
 		if (!object_store.includes(x)) {
 			object_store.push(x);
@@ -249,69 +250,69 @@ class JsonReplacerState {
 			this.parent_map.set(x, [mi, k]);
 		}
 		if (k === "") {
-			this.input_obj = obj;
-			return obj;
+			this.input_obj = x;
+			return x;
 		}
 		const { input_obj } = this;
 		if (input_obj instanceof Array) {
-			if (input_obj.includes(obj)) {
-				return obj;
+			if (input_obj.includes(x)) {
+				return x;
 			}
 		}
-		if (obj instanceof Node) {
+		if (x instanceof Node) {
 			const { dom_nodes } = this;
-			if (!dom_nodes.includes(obj))
-				dom_nodes.push(obj);
-			let obj_index = dom_nodes.indexOf(obj);
+			if (!dom_nodes.includes(x))
+				dom_nodes.push(x);
+			let obj_index = dom_nodes.indexOf(x);
 			return `TYPE::Store.dom_nodes[${obj_index}]`;
 		}
 		const { cache } = this;
-		if (cache.includes(obj)) {
-			return `TYPE::Store.cache[${cache.indexOf(obj)}]`;
+		if (cache.includes(x)) {
+			return `TYPE::Store.cache[${cache.indexOf(x)}]`;
 		}
 		const { cache_map } = this;
 		if (cache_map.has(k)) {
-			cache_map.get(k).push(obj);
+			cache_map.get(k).push(x);
 		} else {
-			cache_map.set(k, [obj]);
+			cache_map.set(k, [x]);
 		}
-		if (!cache.includes(obj)) {
-			cache.push(obj);
+		if (!cache.includes(x)) {
+			cache.push(x);
 		}
 		const { vnodes } = this;
 		/** @arg {JsonInputType} x @returns {x is VueVnode} */
 		function is_vue_vnode(x) {
 			return !!("component" in x && x.component?.vnode);
 		}
-		console.log(is_vue_vnode(obj), "component" in x && x.component?.vnode);
-		if (is_vue_vnode(obj)) {
-			if (!vnodes.includes(obj))
-				vnodes.push(obj);
-			return `TYPE::Store.vnodes[${vnodes.indexOf(obj)}]`;
+		console.log(is_vue_vnode(x), "component" in x && x.component?.vnode);
+		if (is_vue_vnode(x)) {
+			if (!vnodes.includes(x))
+				vnodes.push(x);
+			return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
 		}
 		let do_vue = false;
 		if (do_vue) {
-			if (obj?._container === input_obj) {
+			if (x?._container === input_obj) {
 				return {
-					...obj,
+					...x,
 					_container: "TYPE::Store.self",
 				};
 			}
-			if (obj.__Z_ignore_replacement) {
+			if (x.__Z_ignore_replacement) {
 				this.break_debugger;
-				return obj;
+				return x;
 			}
-			if (obj?.__vue_app__) {
-				this.vue_app = obj.__vue_app__;
+			if (x?.__vue_app__) {
+				this.vue_app = x.__vue_app__;
 				return {
-					...obj,
+					...x,
 					__vue_app__: "TYPE::Store.vue_app",
 					__Z_ignore_replacement: true,
 				};
 			}
-			return obj;
+			return x;
 		}
-		return `TYPE::Store.cache[${cache.indexOf(obj)}]`;
+		return `TYPE::Store.cache[${cache.indexOf(x)}]`;
 	}
 	/** @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
@@ -591,6 +592,7 @@ class JsonReplacerState {
 			case "TAG::parsed_json":
 			case "TAG::cache_item_to_log":
 			case "TAG::cache_item_result":
+			case "TAG::stringify_failed":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
