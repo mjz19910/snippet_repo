@@ -7528,7 +7528,10 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		let k=this.get_keys_of(x);
 		let cgx=this.get_codegen_name(x);
-		if(cgx!==cf) debugger;
+		if(cgx!==cf) {
+			console.log(`\n[${cgx},${cf}],`);
+			debugger;
+		}
 		if(k.length!==1) debugger;
 		return f.call(this,this.w(x,k[0]));
 	}
