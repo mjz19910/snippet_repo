@@ -9550,7 +9550,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
 	G_WatchNextEndScreenItem(x) {
-		// TODO: #10 #9 Actually handle these
+		// TODO: #9 Actually handle these
 		// Not currently handling any children
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
