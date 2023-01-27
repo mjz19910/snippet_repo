@@ -718,7 +718,8 @@ class JsonReplacerState {
 		if (!doc_child)
 			throw new Error("No firstElement of document.body");
 		let run_result = this.on_run_request(["store_object", doc_child]);
-		if (!run_result) return;
+		if (!run_result)
+			return;
 		let { arr } = run_result;
 		let all_vnodes = [];
 		for (let item of this.result_history) {
