@@ -2,10 +2,10 @@ type P_ParamsSection=|string
 	|"A_HideEngagementPanelScrim"
 	|"AE_Browse"
 	|"D_AdLayoutLogging"
-	|"D_CommentsHeader"
 	|"D_AutoplayContent"
 	|"D_AutoplaySwitchButton"
 	|"D_ChipCloud"
+	|"D_CommentsHeader"
 	|"D_CommonConfig"
 	|"D_CompactVideo"
 	|"D_DesktopTopbar"
@@ -91,41 +91,6 @@ type P_ParamsSection=|string
 	|T_Endpoint_CF
 	;
 ;
-type T_Endpoint_CF=[
-	"A_SendFeedback",
-	"C_AddToPlaylist",
-	"C_AdsControlFlowOpportunityReceived",
-	"C_Continuation",
-	"C_Executor",
-	"C_GetSurvey",
-	"C_RefreshPlaylist",
-	"C_RelatedChip",
-	"C_ReloadContinuationItems",
-	"C_ScrollToEngagementPanel",
-	"C_ShowReloadUi",
-	"E_Watch",
-	"E_AddToPlaylistService",
-	"E_Browse",
-	"E_CreateBackstagePost",
-	"E_CreateBackstagePost",
-	"E_CreateBackstagePost",
-	"E_Feedback",
-	"E_GetNotificationMenu",
-	"E_GetTranscript",
-	"ES_CreatePlaylist",
-	"E_Like",
-	"E_PlaylistEdit",
-	"E_PlaylistEditor",
-	"E_RecordNotificationInteractions",
-	"E_ReelWatch",
-	"E_ReelWatch",
-	"E_Search",
-	"E_SetSettingAutonavForDesktop",
-	"E_ShareEntityService",
-	"E_WatchPlaylist",
-	"E_YpcGetCart",
-	"E_YpcGetOffers",
-][number];
 type D_Link_CF=[
 	"D_CompactLink",
 ][number];

@@ -9308,6 +9308,22 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(videoId);
 		this.z(videoIds,this.videoId);
 	}
+	/** @private @arg {ES_CreatePlaylist} x */
+	ES_CreatePlaylist(x) {
+		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,this.DS_CreatePlaylist),u => {
+			let x=u.webCommandMetadata;
+			const {sendPost,apiUrl,...y}=x; this.g(y);
+			if(sendPost!==true) debugger;
+			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
+		});
+	}
+	/** @private @arg {DS_CreatePlaylist} x */
+	DS_CreatePlaylist(x) {
+		const cf="DS_CreatePlaylist";
+		const {params,videoIds,...y}=x; this.g(y);
+		this.t(params,x => this.params(cf,"service$create_playlist",x));
+		this.z(videoIds,this.videoId);
+	}
 	/** @private @arg {GE_ResponseReceived_CF} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
@@ -12853,33 +12869,17 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_NotificationAction} x */
 	D_NotificationAction(x) {
-		const cf="D_ExpandableVideoDescriptionBody";
+		const cf="D_NotificationAction";
 		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.G_Text(responseText);
 		this.t(actionButton,this.R_Button);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {ES_CreatePlaylist} x */
-	ES_CreatePlaylist(x) {
-		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,this.DS_CreatePlaylist),u => {
-			let x=u.webCommandMetadata;
-			const {sendPost,apiUrl,...y}=x; this.g(y);
-			if(sendPost!==true) debugger;
-			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
-		});
-	}
-	/** @private @arg {DS_CreatePlaylist} x */
-	DS_CreatePlaylist(x) {
-		const cf="DS_CreatePlaylist";
-		const {params,videoIds,...y}=x; this.g(y);
-		this.t(params,x => this.params(cf,"service$create_playlist",x));
-		this.z(videoIds,this.videoId);
-	}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {
-		const cf="D_ExpandableVideoDescriptionBody";
-		const {clickTrackingParams,signalAction,...y}=this.sd(cf,x); this.g(y);
-		debugger;
+		const cf="A_Signal"; this.T_Endpoint(cf,x,x=>{
+			const {signalAction,...y}=this.sd(`${cf}_Omit`,x);
+		});
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
