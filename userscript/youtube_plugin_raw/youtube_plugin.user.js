@@ -8883,6 +8883,13 @@ class HandleTypes extends ServiceMethods {
 		this.codegen_new_typedef(x,gen_name);
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
+	decode_WCM(x) {
+		if("rootVe" in x) {
+			return `M_VE${x.rootVe}`;
+		}
+		return null;
+	}
+	/** @private @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
 		if(typeof x.type==='string') {
 			return x.type.split(".").map(x => {
@@ -8891,6 +8898,13 @@ class HandleTypes extends ServiceMethods {
 				}
 				return this.uppercase_first(x);
 			}).join("$");
+		}
+		let wc=x.webCommandMetadata;
+		if(typeof wc==="object"&&wc!==null) {
+			/** @type {{}} */
+			let wo=wc;
+			let dec=this.decode_WCM(wo);
+			if(dec) return dec;
 		}
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
