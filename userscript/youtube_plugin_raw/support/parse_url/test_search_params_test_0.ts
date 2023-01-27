@@ -9,8 +9,8 @@ function test_search_params_test_0() {
 	const str=url_test_value_ytimg_vi_jpg;
 	const vv=parse_with_url_parse(str);
 	const search_str=split_string(vv.search,"?")[1];
-	type ru=Decay<ParseUrlSearchParams<typeof search_str>>;
-	let res_a=make_search_params(search_str);
+	type ru=Decay<TP_ParseUrlSearchParams<typeof search_str>>;
+	let res_a=do_parse_url_search_params(search_str);
 	let ux: ru=black_box<ru>(res_a);
 	if('rs' in ux) {
 		type v=typeof ux;

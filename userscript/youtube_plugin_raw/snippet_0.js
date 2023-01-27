@@ -194,7 +194,7 @@ export class Snippet_0_tmp {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
 	}
-	/** @protected @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
+	/** @protected @template {string} T @arg {T} t @returns {TP_ParseUrlSearchParams<T>} */
 	make_search_params(t) {
 		let sp=new URLSearchParams(t);
 		return this.as(Object.fromEntries(sp.entries()));
