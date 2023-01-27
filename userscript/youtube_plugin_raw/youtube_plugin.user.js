@@ -1506,7 +1506,7 @@ let message_channel=new MessageChannel();
 function fire_observer_event() {
 	dom_observer.notify_with_port(message_channel.port1);
 }
-/** @private @arg {HandleTypes} handle_types */
+/** @private @arg {HandleTypes<any,any>} handle_types */
 function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
@@ -2932,7 +2932,7 @@ class BaseService extends BaseServicePrivate {
 		if(this.logged_keys.includes(jk)) return;
 		this.logged_keys.push(jk);
 		console.log("[empty_object] [%s]",jk);
-		debugger;
+		{debugger;}
 	}
 	/** @protected @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(x,excl=[]) {
@@ -3092,7 +3092,11 @@ class YtHandlers extends BaseService {
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
 		let res=ht.decode_input(url_type,data);
-		ht.run(response,res);
+		if(res) {
+			ht.run(response,res);
+		} else {
+			console.log("failed to decode_input");
+		}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
@@ -3168,7 +3172,7 @@ class HandleRendererContentItemArray extends BaseService {
 		if("feedNudgeRenderer" in rc) return true;
 		let rk=this.get_keys_of(rc);
 		console.log("[rich_item_renderer.content] [%s]",...rk);
-		debugger;
+		{debugger;}
 		return true;
 	}
 	/** @private @arg {R_RichSection} content_item */
@@ -3663,18 +3667,20 @@ class TrackingServices extends BaseService {
 class Services {
 	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
+		/** @template U @extends {HandleTypes<Services,U>}  */
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
 			run(detail) {
 				this.YTNavigateFinishDetail.call(this.x.get("handle_types"),detail);
 			}
 		}
+		/** @template U @extends {HandleTypes<Services,U>}  */
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
 			run(response,x) {
 				this.ResponseTypes.call(this.x.get("handle_types"),response,x);
 			}
-			/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
+			/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
 			decode_input(url_type,x) {
 				return this.get_res_data(url_type,x);
 			}
@@ -4114,7 +4120,7 @@ class JsonReplacerState {
 		this.parent_map=new Map;
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @template T,U @extends {BaseService<T,U>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {
@@ -4479,7 +4485,7 @@ class CodegenService extends BaseService {
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
-		debugger;
+		{debugger;}
 		return null;
 	}
 	/** @param {{[U in string]:unknown}} x */
@@ -4553,7 +4559,7 @@ class CodegenService extends BaseService {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return `TYPE::GS_Client`; break;
 			default: console.log("[need to decode signal] [%s]",u.signal);
 		}
-		debugger;
+		{debugger;}
 		return x;
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
@@ -4861,7 +4867,7 @@ class CodegenService extends BaseService {
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
-		debugger;
+		{debugger;}
 		return null;
 	}
 	/** @api @public @arg {string} x1 */
@@ -4915,6 +4921,7 @@ class CodegenService extends BaseService {
 	}
 	/** @unused_api @protected @arg {{}} x @arg {string} r */
 	use_generated_members(x,r) {
+		/** @type {Generate<T,U>} */
 		let td=new Generate(this);
 		td.generate_typedef_and_depth(x,r);
 		return td;
@@ -4999,7 +5006,7 @@ class ParserService extends BaseService {
 			return;
 		}
 		console.log("[new_parse_playlist_id]",x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @template {`${U}${string}${U}`} I @template {string} U @arg {I} x @arg {U} _w @returns {I extends `${U}${infer V}${U}`?V:never} */
 	extract_inner(x,_w) {
@@ -5029,7 +5036,7 @@ class ParserService extends BaseService {
 		let h=this.parse_codec_str(codec_type_raw);
 		if(h) return;
 		console.log(vv[0],codec_type_raw);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {G_CodecType} x */
 	parse_codec_str(x) {
@@ -5118,7 +5125,7 @@ class ParserService extends BaseService {
 		if(this.str_starts_with_r(x,"UC")) {
 			return;
 		}
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {ParseUrlStr_2} x */
 	parse_youtube_url_2(x) {
@@ -5233,7 +5240,7 @@ class ParserService extends BaseService {
 	}
 	/** @console_api @public @arg {string} x */
 	create_param_map_dbg(x) {
-		debugger;
+		{debugger;}
 		let res_e=this._decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
 		if(res_e.find(e => e[0]==="error")) {
@@ -5331,7 +5338,7 @@ class ParserService extends BaseService {
 		}
 		let param_obj=this.to_param_obj(x);
 		console.log("[new_get_transcript_endpoint_params]",param_obj);
-		debugger;
+		{debugger;}
 	}
 	/** @api @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
@@ -5398,7 +5405,7 @@ class ParserService extends BaseService {
 		parse_key(5);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
-		debugger;
+		{debugger;}
 	}
 	parse_key_index=1;
 	/** @unused_api @protected @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
@@ -6225,7 +6232,7 @@ class ParserService extends BaseService {
 		}
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
 	parse_player_param(root,path,map) {
@@ -6241,7 +6248,7 @@ class ParserService extends BaseService {
 		parse_key(72);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
-		debugger;
+		{debugger;}
 	}
 	/** @api @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
 	parse_endpoint_param(root,path,map) {
@@ -6270,7 +6277,7 @@ class ParserService extends BaseService {
 		if(this.eq_keys(mk,[])) return;
 		let param_obj=this.to_param_obj(map);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {ParamMapType} x @returns {ParamObjType} */
 	to_param_obj(x) {
@@ -6339,7 +6346,7 @@ class ParserService extends BaseService {
 		}
 		/** @private @type {YtUrlFormat|YtExternalUrlFormat} */
 		console.log("[parse_url_external_1]",x);
-		debugger;
+		{debugger;}
 	}
 	/** @unused_api @protected @arg {GM_VE3832_Watch_WC['url']} x */
 	parse_url_VE3832(x) {
@@ -6550,7 +6557,7 @@ class ParserService extends BaseService {
 	/** @private @arg {string[]} parts @arg {string} cur_part */
 	api_no_handler(parts,cur_part) {
 		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
-		debugger;
+		{debugger;}
 		return null;
 	}
 	/** @private @arg {Extract<T_Split<D_ApiUrlFormat$1,"/">,["youtubei","v1",string]>} x */
@@ -6871,7 +6878,7 @@ class ParserService extends BaseService {
 			}
 			return;
 		}
-		debugger;
+		{debugger;}
 	}
 }
 //#endregion
@@ -6925,12 +6932,13 @@ function sizeof_js(obj) {
 	sizeof_cache.set(obj,size);
 	return size;
 }
+/** @template T,U */
 class Generate {
 	/** @private @type {Map<string,string>[]} */
 	out_arr=[];
 	/** @private @type {string[]} */
 	str_arr=[];
-	/** @constructor @public @arg {CodegenService} parent */
+	/** @constructor @public @arg {CodegenService<T,U>} parent */
 	constructor(parent) {
 		this.parent=parent;
 	}
@@ -6949,7 +6957,7 @@ class Generate {
 }
 //#endregion
 //#region HandleTypesSupport
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @template T,U @extends {BaseService<T,U>} */
 class ServiceData extends BaseService {
 	/** @protected @type {GA_FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
@@ -6964,12 +6972,18 @@ class ServiceData extends BaseService {
 	/** @protected */
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
+/** @template T,U @extends {ServiceData<T,U>}  */
 class ServiceMethods extends ServiceData {
 	/** @protected @template T @arg {{pathname:any}} x @arg {T} pathname @returns {x is {pathname:T}} */
 	is_url_with_pathname(x,pathname) {
 		return x.pathname===pathname;
 	}
-	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes} */
+	/** @arg {ServiceMethods<T,U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
+	is_normal_service(x) {
+		x;
+		return true;
+	}
+	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
 	get_res_data(url_type,x) {
 		/** @private @type {T_Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
@@ -6979,7 +6993,7 @@ class ServiceMethods extends ServiceData {
 			case "account": res=this.convert_account(target,x); break;
 			case "att": res=this.convert_res_att(target,x); break;
 			case "browse": res=this.convert_browse(target,x); break;
-			case "like": res=this.x.get("handle_types").convert_like(target,x); break;
+			case "like": res=this.convert_like(target,x); break;
 			case "live_chat": res=this.convert_live_chat(target,x); break;
 			case "music": res=this.convert_music(target,x); break;
 			case "notification": res=this.convert_notification(target,x); break;
@@ -6994,11 +7008,28 @@ class ServiceMethods extends ServiceData {
 		}
 		if(res) return res;
 		console.log("[log_get_res_data]",target,x);
-		debugger;
+		{debugger;}
 		return {
 			type: "_Generic",
 			data: x,
 		};
+	}
+	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
+	convert_like(target,x) {
+		switch(target[1]) {
+			default: debugger; break; case "dislike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {RSL_Dislike} */
+				data: as(x),
+			}; case "like": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {RSL_Like} */data: as(x),
+			}; case "removelike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {RSL_RemoveLike} */data: as(x),
+			};
+		}
+		return null;
 	}
 	/** @protected @arg {D_ApiUrlFormat} x */
 	use_template_url(x) {
@@ -7250,23 +7281,6 @@ class ServiceMethods extends ServiceData {
 			};
 		}
 	}
-	/** @private @arg {Extract<T_Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {G_ResponseTypes|null} */
-	convert_like(target,x) {
-		switch(target[1]) {
-			default: debugger; break; case "dislike": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RSL_Dislike} */
-				data: as(x),
-			}; case "like": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RSL_Like} */data: as(x),
-			}; case "removelike": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RSL_RemoveLike} */data: as(x),
-			};
-		}
-		return null;
-	}
 	/** @protected @arg {true} x */
 	expect_true(x) {
 		if(x!==true) debugger;
@@ -7398,6 +7412,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} x */
 	videoId(x) {
+		if(!this.is_normal_service(this)) return;
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
@@ -7463,6 +7478,7 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#endregion
 //#region HandleTypes
+/** @template Cls_T,Cls_U @extends {ServiceMethods<Cls_T,Cls_U>}  */
 class HandleTypes extends ServiceMethods {
 	/** @private @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
@@ -7475,7 +7491,18 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	static {
+		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
+		/** @type {{value:ServiceResolver<CG_ServiceResolver,{}>|null}} */
+		let v={value: null};
+		let cg=new CodegenService(v);
+		let sr=new ServiceResolver({codegen: cg},{});
+		let t=new this({value: sr});
 		this.prototype.minimal_handler_member_use();
+		this.prototype.codegen_renderer;
+	}
+	/** @private @arg {string} cf @arg {{}} x */
+	codegen_renderer(cf,x) {
+		this.codegen.generate_renderer(x,cf);
 	}
 	/** @private */
 	minimal_handler_member_use() {
@@ -7745,7 +7772,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		x===0;
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {GM_VE3854_WC} x */
 	GM_VE3854_WC(x) {
@@ -7821,12 +7848,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RS_Watch} x */
 	RS_Watch(x) {
 		const cf="RS_Watch";
-		this.x.get("yt_plugin").add_function({
-			name: "data",
-			data: {
-				R_Watch: x,
-			},
-		});
+		if(this.is_normal_service(this)) {
+			this.x.get("yt_plugin").add_function({
+				name: "data",
+				data: {
+					R_Watch: x,
+				},
+			});
+		}
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);
 		this.RC_ResponseContext(responseContext);
 		this.R_TwoColumnWatchNextResults(contents);
@@ -7992,10 +8021,13 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="RC_ResponseContext";
-		const service_tracking=this.x.get("service_tracking");
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.sd(cf,x); this.g(y);
 		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
-		this.z(serviceTrackingParams,x => service_tracking.set_service_params(x));
+		this.z(serviceTrackingParams,x => {
+			if(!this.is_normal_service(this)) return;
+			const service_tracking=this.x.get("service_tracking");
+			service_tracking.set_service_params(x);
+		});
 		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
 		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
@@ -8128,14 +8160,14 @@ class HandleTypes extends ServiceMethods {
 		const cf="G_Browse_MD"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar"; this.k(cf,x);
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
@@ -8216,7 +8248,7 @@ class HandleTypes extends ServiceMethods {
 	PlaylistSidebarItem(x) {
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		debugger;
+		{debugger;}
 	}
 	/** @private @template {D_Button} T @arg {D_Button_CF} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
@@ -8277,12 +8309,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(text);
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
-		this.codegen_renderer(cf,x);
-		debugger;
-	}
-	/** @private @arg {string} cf @arg {{}} x */
-	codegen_renderer(cf,x) {
-		this.codegen.generate_renderer(x,cf);
 	}
 	/** @private @arg {RG_Result} x */
 	RG_Result(x) {
@@ -9311,7 +9337,7 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x=>{const {showEngagementPanelEndpoint,...y}=x; this.g(y);this.D_ShowEngagementPanel(showEngagementPanelEndpoint);});}
+	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x => {const {showEngagementPanelEndpoint,...y}=x; this.g(y); this.D_ShowEngagementPanel(showEngagementPanelEndpoint);});}
 	/** @private @arg {D_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel";
