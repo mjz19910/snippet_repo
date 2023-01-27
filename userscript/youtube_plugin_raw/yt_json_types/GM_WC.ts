@@ -22,7 +22,7 @@ type TE_Endpoint_Default<T={}>={clickTrackingParams: string; commandMetadata: T;
 type TE_Endpoint_Opt<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type TE_Endpoint<T,U extends `${string}Endpoint`,V>=Decay<{clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V}>;
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
-type TM_GetByVE<T extends B_VEMap[keyof B_VEMap]['CommandMetadata']>=T;
+type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
 //#endregion
 //#region GU_VE
 type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
