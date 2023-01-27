@@ -224,8 +224,8 @@ class JsonReplacerState {
 		x: try {
 			if (this.is_crash_testing)
 				break x;
-			let test_state = new JsonReplacerState;
-			test_state.is_crash_testing = true;
+			this.is_crash_testing = true;
+			let test_state = JsonReplacerState.create_with_flags(this);
 			JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
 		} catch {
 			JsonReplacerState.stringify_failed_obj.push(obj);
@@ -322,7 +322,9 @@ class JsonReplacerState {
 		this.result_history = parent_history;
 	}
 	get debugger() {
-		debugger;
+		{
+			debugger
+		}
 		return;
 	}
 	/** @arg {DataItemReturn} obj @returns {[string,string|number][]} */
@@ -341,9 +343,15 @@ class JsonReplacerState {
 		}
 		return res;
 	}
+	/** @arg {{is_crash_testing:boolean;}} this_ */
+	static create_with_flags(this_) {
+		let new_state = new JsonReplacerState;
+		new_state.is_crash_testing = this_.is_crash_testing;
+		return new_state;
+	}
 	/** @arg {DataItemReturn} x */
 	run_json_replacement(x) {
-		let new_state = new JsonReplacerState;
+		let new_state = JsonReplacerState.create_with_flags(this);
 		return new_state.run_json_replacement_with_state(this, x);
 	}
 	/** @arg {DataItemReturn} x @arg {this} parent */
@@ -423,7 +431,7 @@ class JsonReplacerState {
 	/** @arg {any} idx @arg {["TAG::cache_item", number]} data */
 	on_tag_cache_item(idx, data) {
 		let from_cache = this.cache[data[1]];
-		let new_state = new JsonReplacerState;
+		let new_state = JsonReplacerState.create_with_flags(this);
 		let obj = this.prepare_obj("cache_item_to_log", from_cache);
 		let res = new_state.run_json_replacement_with_state(this, obj);
 		let { cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, id, is_crash_testing, ...os } = new_state;
@@ -711,5 +719,12 @@ class JsonReplacerState {
 			return;
 		console.log(log_args);
 	}
+	static default() {
+		return this.create_with_flags({
+			is_crash_testing: false
+		});
+	}
+	static {
+		this.default().run();
+	}
 }
-(new JsonReplacerState).run();
