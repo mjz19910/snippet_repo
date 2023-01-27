@@ -558,7 +558,7 @@ class JsonReplacerState {
 				return ["TAG::failed", null];
 			case "TAG::stringify_result":
 				{
-					const [tag, ...data] = x;
+					const [, ...data] = x;
 					let data_item = data[0];
 					let parsed_item = JSON.parse(data_item, (...r_args) => this.json_reviver(r_args));
 					/** @type {["TAG::parsed_json",DataParsable]} */
