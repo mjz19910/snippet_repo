@@ -335,7 +335,7 @@ type DE_PlaylistEditor={playlistId: string;};
 type E_RecordNotificationInteractions=TE_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type E_ReelWatch=TE_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",DE_ReelWatch>;
-type DE_ReelWatch={videoId?: string;playerParams: string;thumbnail?: R_Thumbnail;overlay: R_ReelPlayerOverlay;params: string;sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";sequenceParams?: string;inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
+type DE_ReelWatch={videoId?: string; playerParams: string; thumbnail?: R_Thumbnail; overlay: R_ReelPlayerOverlay; params: string; sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams?: string; inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
 type E_Search=TE_Endpoint_Ex<M_VE4724,"searchEndpoint",DE_Search>;
 type DE_Search={query: string;};
 type M_Feedback={webCommandMetadata: GM_feedback;};
@@ -348,7 +348,7 @@ type S_Client_Item=[
 	TA_OpenPopup<TA_OpenPopup_Toast<RA_NotificationAction>|TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>>,
 ][number];
 type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
-type TA_OpenPopup_Toast<T>={popup: T;popupType: "TOAST";};
+type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: DE_ShowEngagementPanel;};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type E_SignalNavigation=TE_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DE_SignalNavigation>;
@@ -376,14 +376,15 @@ type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetN
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 // TODO #4
 type DC_PlaylistPanel={};
-type C_SectionList={sectionListContinuation: G_SectionList;};
-type G_SectionList=
-	|D_SectionListBase
-	|D_SectionList_SearchFeed
-	|D_SectionList_BrowseFeed_ChannelFeatured
-	|D_SectionList_BrowseFeed_Subscriptions
-	;
-;
+type C_SectionList={sectionListContinuation: DC_SectionList;};
+type T_DC_Content<T>={trackingParams: string; contents: T[];};
+type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
+type DC_SectionList=DC_SectionListBase|DC_SectionList_SearchFeed|DC_SectionList_BrowseFeed_ChannelFeatured|DC_SectionList_BrowseFeed_Subscriptions;
+type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3<{},{},{}>>;
+type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3<{},{},{}>>;
+type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3<{},{},{}>>;
+type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3<{},{},{}>>;
+type DC_SectionListBase=T_DC_Content<TR_SectionListItem_3<{},{},{}>>;
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type DC_LiveChat={
 	continuations: G_LiveChatContinuationItem[];

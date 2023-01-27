@@ -10696,7 +10696,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @private @arg {G_SectionList} x */
+	/** @private @arg {DC_SectionList} x */
 	G_SectionList(x) {
 		const cf="G_SectionList";
 		if("targetId" in x) {
@@ -10740,7 +10740,7 @@ class HandleTypes extends ServiceMethods {
 		// this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		// if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 	}
-	/** @private @arg {D_SectionList_BrowseFeed_Subscriptions} x */
+	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
 		const cf="D_SectionList_BrowseFeed_Subscriptions";
 		const {contents,trackingParams,targetId}=this.sd(cf,x);// this.g(y);//#destructure
