@@ -1,1 +1,0 @@
-type EY_PlaylistLoopState={playlistLoopStateEntity: DE_PlaylistLoopState;};
