@@ -7514,17 +7514,17 @@ class HandleTypes extends ServiceMethods {
 		const cf="T_Commands"; this.k(cf,x);
 		this.z(this.w(x),f);
 	}
-	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} [f_vm] @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:string)=>void} [f_vm] @template {{}} V$M @template {T_Endpoint<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:string)=>void} f */
 	T_Endpoint(cf,x,f,f_vm) {
 		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x);
-		f.call(this,y);
+		f.call(this,y,cf);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		if(f_vm===void 0) {
 			if(commandMetadata!==void 0) debugger;
 			return;
 		}
 		if(commandMetadata===void 0) return;
-		f_vm.call(this,commandMetadata);
+		f_vm.call(this,commandMetadata,cf);
 	}
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
@@ -12876,10 +12876,14 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {A_Signal} x */
-	A_Signal(x) {
-		const cf="A_Signal"; this.T_Endpoint(cf,x,x=>{
-			const {signalAction,...y}=this.sd(`${cf}_Omit`,x);
-		});
+	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.sd(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
+	/** @private @arg {AD_Signal} x */
+	AD_Signal(x) {
+		const {signal,...y}=x; this.g(y);
+		switch(signal) {
+			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+		}
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
