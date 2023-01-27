@@ -1,6 +1,22 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
+//#region basic
+/** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+function as(e, x=e) {
+	return x;
+}
+//#endregion
+//#region string manipulation
+/** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
+function split_string(x, s=as(",")) {
+	if (!x) {
+		debugger ;
+	}
+	let r = x.split(s);
+	return as(r);
+}
+//#endregion
 /** @template T @arg {T|null} x @returns {x is T} */
 let is_non_null = x=>x !== null;
 /** @template T @arg {(T|null)[]} x @returns {x is T[]} */
@@ -81,7 +97,7 @@ function to_range(arr) {
 	/** @type {string | any[]} */
 	let res = [];
 	let cur_n = 0;
-	cur_n
+	cur_n;
 	for (let x of arr) {
 		if (x === arr[0] && res.length === 0)
 			continue;
@@ -132,18 +148,19 @@ class JsonReplacerState {
 	/** @type {any} */
 	dom_nodes = [];
 	json_result_cache = new Map;
-	/** @type {any[]} */
+	/** @type {CacheItemType[]} */
 	cache = [];
-	/** @type {any} */
+	/** @type {VueVnode[]} */
 	vnodes = [];
+	/** @type {VueApp|null} */
 	vue_app = null;
-	/** @type {any} */
+	/** @type {JsonInputType[]} */
 	object_store = [];
 	/** @type {Map<unknown,[number,string]>} */
 	parent_map = new Map;
 	/** @type {this[]} */
 	result_history = [];
-	/** @type {any[]} */
+	/** @type {string[]} */
 	static cache_map = [];
 	constructor() {
 		let nt = new.target;
@@ -154,7 +171,7 @@ class JsonReplacerState {
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
 	}
-	/** @arg {string} k @arg {{ component: { vnode: any; }; _container: null; __Z_ignore_replacement: any; __vue_app__: null; } | null} obj */
+	/** @arg {string} k @arg {JsonInputType|null} obj */
 	json_replacer(k, obj) {
 		if (typeof obj !== "object")
 			return obj;
@@ -197,7 +214,11 @@ class JsonReplacerState {
 			cache.push(obj);
 		}
 		const {vnodes} = this;
-		if (obj?.component?.vnode) {
+		/** @arg {JsonInputType} x @returns {x is VueVnode} */
+		function is_vue_vnode(x) {
+			return !!("component"in x && x.component?.vnode);
+		}
+		if (is_vue_vnode(obj)) {
 			if (!vnodes.includes(obj))
 				vnodes.push(obj);
 			return `TYPE::Store.vnodes[${vnodes.indexOf(obj)}]`;
@@ -227,14 +248,14 @@ class JsonReplacerState {
 	}
 	/** @arg {any} item @returns {[string,number|string]} */
 	stringify_each(item) {
-		/** @type {[0][]} */
+		/** @type {[string, string | number][][]} */
 		let arr = [];
 		if (this.cache.includes(item)) {
 			return ["TAG::cache_item", this.cache.indexOf(item)];
 		}
 		let res = JSON.stringify(item, this.json_replacer.bind(this), "\t");
 		this.json_result_cache.set(item, res);
-		this.do_json_replace(arr, "cache", this.cache);
+		this.do_json_replace(arr, ["cache", this.cache]);
 		return ["TAG::stringify_result", res];
 	}
 	/** @arg {this} parent */
@@ -245,19 +266,20 @@ class JsonReplacerState {
 		parent_history.push(...this.result_history);
 		this.result_history = parent_history;
 	}
-	/** @arg {[string, ...any[]]} obj @returns {[string,string|number][]} */
+	/** @arg {DataItemReturn} obj @returns {[string,string|number][]} */
 	run_internal(obj) {
 		let[type,...arr] = obj;
 		/** @type {[string,string|number][]} */
 		let res = [];
-		type = type.split("::")[1];
+		let type_parts = split_string(type, "::");
+		console.log("[run_internal_info] type [%o]", type_parts);
 		for (let x of arr) {
 			let ri = this.stringify_each(x);
 			res.push(ri);
 		}
 		return res;
 	}
-	/** @arg {[string,...any[]]} x */
+	/** @arg {DataItemReturn} x */
 	run_json_replacement(x) {
 		let new_state = new JsonReplacerState;
 		new_state.prepare_self(this);
@@ -277,24 +299,35 @@ class JsonReplacerState {
 		oh.forEach((/** @type {any} */
 		x)=>add_hist_unique(rh, x));
 	}
-	/** @arg {any[]} json_res_arr @arg {string} c_name @arg {any[]} target */
-	do_json_replace(json_res_arr, c_name, target) {
+	/** @template {keyof ContentArgsType} T @arg {any[]} json_res_arr @arg {JsonParseArgs<T>} args */
+	do_json_replace(json_res_arr, args) {
 		if (this.id > 64)
 			return;
-		if (target.length !== 0) {
-			let res = this.run_json_replacement([`CONTENT::${c_name}`, ...target]);
-			json_res_arr.push(res);
+		switch (args[0]) {
+		case "cache":
+			{
+				const [c_name,target] = args;
+				if (target.length !== 0) {
+					let res = this.run_json_replacement([`CONTENT::${c_name}`, target]);
+					json_res_arr.push(res);
+				}
+			}
+			break;
+		case "empty":
+			break;
 		}
+		if (args[0] !== "cache")
+			return;
 	}
-	/** @arg {string} tag @arg {any[]} x @returns {[string, ...any[]]} */
+	/** @template {string} T @arg {T} tag @arg {CacheItemType} x @returns {[`TAG::${T}`, CacheItemType]} */
 	prepare_obj(tag, x) {
-		return [`TAG::${tag}`, ...x];
+		return [`TAG::${tag}`, x];
 	}
 	/** @arg {{}[]} vnode_arr */
 	on_data_z(vnode_arr) {
 		if (this.id > 64)
 			return;
-		let res=vnode_arr.map((x,idx)=>this.on_data_item(["TAG::vnode", x], idx), this);
+		let res = vnode_arr.map((x,idx)=>this.on_data_item(["TAG::vnode", x], idx), this);
 		console.log(res);
 	}
 	/** @arg {string} section @arg {any} i @arg {string | number} t @arg {(string | number)[]} x */
@@ -329,9 +362,9 @@ class JsonReplacerState {
 		}
 	}
 	;
-	/** @arg {any} idx @arg {any} type @arg {any[]} data */
-	on_tag_cache_item(idx, type, data) {
-		let from_cache = this.cache[data[0]];
+	/** @arg {any} idx @arg {["TAG::cache_item", number]} data */
+	on_tag_cache_item(idx, data) {
+		let from_cache = this.cache[data[1]];
 		let new_state = new JsonReplacerState;
 		let obj = this.prepare_obj("cache_item_to_log", from_cache);
 		let res = new_state.run_internal(obj);
@@ -340,7 +373,7 @@ class JsonReplacerState {
 		Z_len_k(os) > 0 && console.log("[json_data_ex]\n%o", os);
 		let[inner_type,...inner_arr] = res[0];
 		let skip = true;
-		!skip && console.log("[cache_item]", type, data[0]);
+		!skip && console.log("[cache_item]", inner_type, data[0]);
 		!skip && console.log(new_state);
 		this.log_gen.new_gen();
 		this.log_gen.state_id(new_state, ns_id);
@@ -368,60 +401,142 @@ class JsonReplacerState {
 		this.log_data_result("json_data", idx, inner_type, inner_arr);
 		return from_cache;
 	}
-	/** @arg {[tag: string, ...rest: any[]]} x @arg {any} idx */
+	/** @arg {{}} x @arg {number} i */
+	unpack_data_item_vnode_2(x, i) {
+		console.log("should unpack [index=%o]", i, x);
+		x;
+		i;
+		return null;
+	}
+	/** @arg {{}} x @arg {number} i */
+	unpack_data_item_todo(x, i) {
+		console.log("TODO: [unpack] [index=%o]", i, x);
+		x;
+		i;
+		return null;
+	}
+	/** @arg {string} x @returns {DataItemReturn} */
+	json_parser(x) {
+		/** @type {DataParsable} */
+		let parse_res = JSON.parse(x, (...r_args)=>this.json_reviver(r_args));
+		console.log(parse_res);
+		return ["TAG::parsed_json", parse_res];
+	}
+	/** @arg {any} x @returns {DataItemReturn} */
+	json_reviver(x) {
+		x;
+		console.log("revive", x);
+		return ["TAG::null", null];
+	}
+	/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
 	on_data_item(x, idx) {
-		const [tag,...data] = x;
-		let tag_info = tag.split("::");
-		if (tag_info[0] !== "TAG")
-			debugger ;let tag_sec = tag_info[1];
-		if (tag_sec === "vnode") {
-			let unwrap_arr = data.map((x,i)=>this.on_data_item(["TAG::unpack_vnode::1", x],i));
-			let unpacked=unwrap_arr.map((x,i)=>this.on_data_item(["TAG::vnode_inner", x],i));
-			return unpacked;
-		} else if (tag_sec === "unpack_vnode") {
-			switch (tag_info[2]) {
-			case "2":
-				if (data.length === 1)
-					return data[0];
-				return data;
-				break;
-			case "1":
+		let xu = x;
+		switch (x[0]) {
+		default:
+			debugger ;break;
+		case "TAG::data":
+			{
+				console.log("[data_item::data]", x[1]);
+				return ["TAG::empty"];
+			}
+		case "TAG::cache_item":
+			{
+				let item = this.on_tag_cache_item(idx, x);
+				return ["TAG::cache_item_result", item];
+			}
+		case "TAG::failed":
+			return x;
+		case "TAG::vnode_item":
+			return ["TAG::failed", null];
+		case "TAG::unpack_vnode::1":
+			{
+				const [,...data] = x;
 				if (data.length === 1)
 					return this.on_data_item(["TAG::unpack_vnode::2", data[0]], 0);
-				return data.map(this.on_data_item,this);
+				let res = data.map((x,i)=>this.unpack_data_item_vnode_2(x, i), this);
+				return ["TAG::null_arr", res];
 			}
-		} else if (tag_sec === "cache_item") {
-			return this.on_tag_cache_item(idx, tag, data);
-		} else if (tag_sec === "vnode_inner") {
-			debugger;
-			return this.on_data_item(data[0],0);
-		} else if (tag_sec === "stringify_result") {
-			let data_item = data.map((/** @type {string} */
-			x)=>JSON.parse(x));
-			this.log_data_result("vnode", idx, tag, data_item);
-			return data_item;
-		} else if (tag_sec === "data") {
-			console.log("[data_item::data]", data[0]);
-		} else {
-			console.log("TODO: tag_section", tag_sec);
+		case "TAG::vnode":
+			{
+				const [,...data] = x;
+				let unwrap_arr = data.map((x,i)=>this.on_data_item(["TAG::unpack_vnode::1", x], i));
+				let unpacked = unwrap_arr.map((x,i)=>this.on_data_item(["TAG::vnode_inner", x], i));
+				/** @type {"test"[]} */
+				let ok_res = [];
+				for (let item of unpacked) {
+					switch (item[0]) {
+					case "TAG::vnode_item":
+						break;
+					default:
+						{
+							debugger ;
+						}
+						break;
+					}
+				}
+				return ["TAG::vnode_item", ok_res];
+			}
+		case "TAG::vnode_inner":
+			let res = this.unpack_data_item_todo(x[1], 0);
+			return ["TAG::null", res];
+		case "TAG::unpack_vnode::2":
+			{
+				const [,...data] = x;
+				if (data.length === 1)
+					return ["TAG::unpack_vnode::2::res", data[0]];
+				return ["TAG::unpack_vnode::2::res_arr", data];
+			}
+		case "TAG::unpack_vnode::2::res":
+			return ["TAG::failed", null];
+		case "TAG::unpack_vnode::2::res_arr":
+			return ["TAG::failed", null];
+		case "TAG::stringify_result":
+			{
+				const [tag,...data] = x;
+				let data_item = data.map(x=>JSON.parse(x, (...r_args)=>this.json_reviver(r_args)));
+				this.log_data_result("vnode", idx, tag, data_item);
+				return ["TAG::bad_array", data_item];
+			}
+		case "TAG::null_arr":
+		case "TAG::null":
+		case "CONTENT::empty":
+		case "CONTENT::cache":
+		case "TAG::bad_array":
+		case "TAG::empty":
+		case "TAG::parsed_json":
+		case "TAG::cache_item_to_log":
+		case "TAG::cache_item_result":
+			console.log("TODO: tag_section", x);
+			return ["TAG::failed", null];
 		}
+		x === "";
+		x = xu;
+		console.log("TODO: unknown_tag_section", x);
+		return ["TAG::failed", null];
 	}
 	/** @arg {Element | null} x */
 	on_run_request(x) {
 		/** @type {[][]} */
 		let arr = [];
-		this.do_json_replace(arr, "input", [x]);
-		this.cache.push(x);
-		if (this.vue_app !== null) {
-			this.do_json_replace(arr, "vue_app", [this.vue_app]);
+		this.do_json_replace(arr, ["input", x]);
+		if (x !== null) {
+			this.cache.push(x);
 		}
-		this.do_json_replace(arr, "vnodes", this.vnodes);
-		this.do_json_replace(arr, "dom_nodes", this.dom_nodes);
-		this.do_json_replace(arr, "cache", this.cache);
-		return {
-			cache_index: this.cache.indexOf(x),
-			arr,
+		if (this.vue_app !== null) {
+			this.do_json_replace(arr, ["vue_app", this.vue_app]);
+		}
+		this.do_json_replace(arr, ["vnodes", this.vnodes]);
+		this.do_json_replace(arr, ["dom_nodes", this.dom_nodes]);
+		this.do_json_replace(arr, ["cache", this.cache]);
+		let cache_index = -1;
+		if (x !== null) {
+			cache_index = this.cache.indexOf(x);
+		}
+		let ret_obj = {
+			cache_index,
+			arr
 		};
+		return ret_obj;
 	}
 	/** @arg {H_Iter} s_ @arg {JsonReplacerState} res_in */
 	iter_history_result(s_, res_in) {
