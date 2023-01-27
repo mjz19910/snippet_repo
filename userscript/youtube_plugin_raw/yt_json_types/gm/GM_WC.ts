@@ -375,7 +375,16 @@ type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetN
 type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
 
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
+// TODO #4
+type DC_PlaylistPanel={};
 type RC_SectionList={sectionListContinuation: G_SectionList;};
+type G_SectionList=
+	|D_SectionListBase
+	|D_SectionList_SearchFeed
+	|D_SectionList_BrowseFeed_ChannelFeatured
+	|D_SectionList_BrowseFeed_Subscriptions
+	;
+;
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type DC_LiveChat={
 	continuations: G_LiveChatContinuationItem[];
