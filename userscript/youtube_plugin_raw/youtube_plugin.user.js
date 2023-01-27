@@ -7464,7 +7464,7 @@ class ServiceMethods extends ServiceData {
 		if(!this.str_starts_with_r(x,"/@")) debugger;
 	}
 	/** @protected @arg {string} x */
-	previousCsn(x) {
+	_previousCsn(x) {
 		console.log(base64_dec.decode_str(x));
 	}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
@@ -7832,7 +7832,7 @@ class HandleTypes extends ServiceMethods {
 		this.RS_Player(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
-		if(previousCsn!==void 0) this.previousCsn(previousCsn);
+		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
 	/** @private @arg {R_VE3832_WatchPage} x */
 	R_VE3832_WatchPage(x) {
@@ -7919,7 +7919,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="browse") debugger;
 		this.RS_Browse(response);
 		this.t(expirationTime,x => this.primitive_of(x,"number"));
-		if(previousCsn!==void 0) this.previousCsn(previousCsn);
+		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
 	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
@@ -9548,7 +9548,7 @@ class HandleTypes extends ServiceMethods {
 			this.clickTrackingParams(cf,clickTrackingParams);
 			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
 			this.G_CommandMetadata(commandMetadata,true);
-			this.SettingItemAutonavForDesktop(setSettingEndpoint);
+			this.T_DE_SettingItem_AutonavForDesktop(setSettingEndpoint);
 		});
 		this.D_Accessibility(enabledAccessibilityData);
 		this.D_Accessibility(disabledAccessibilityData);
@@ -10658,14 +10658,12 @@ class HandleTypes extends ServiceMethods {
 			if(sendPost!==true) debugger;
 		});
 	}
-	/** @private @arg {string} cf @arg {DE_RecordNotificationInteractions} x */
-	DE_RecordNotificationInteractions_Omit(cf,x) {const {serializedInteractionsRequest,...y}=this.sd(cf,x); this.params(cf,"record_notification_interactions",serializedInteractionsRequest); return y;}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
-		const u=this.DE_RecordNotificationInteractions_Omit(cf,x);
-		if("actions" in u) {const {actions,...y}=this.sd(cf,u); this.g(y); return this.z(actions,this.A_HideEnclosing);}
-		return this.g(u);
+		const {serializedInteractionsRequest,actions,...y}=this.sd(cf,x); this.g(y);
+		this.params(cf,"record_notification_interactions",serializedInteractionsRequest); 
+		this.tz(actions,this.A_HideEnclosing);
 	}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {
@@ -13318,8 +13316,17 @@ class HandleTypes extends ServiceMethods {
 		editButton;
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {T_DE_SettingItem<boolean>} x */
-	SettingItemAutonavForDesktop(x) {x; debugger;}
+	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
+	T_DE_SettingItem_AutonavForDesktop(x) {
+		if("boolValue" in x) {
+			const {settingItemId,boolValue,settingItemIdForClient,...y}=x; this.g(y);
+			if(settingItemId!=="407") debugger;
+			this.primitive_bool(boolValue);
+			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
+			return;
+		}
+		debugger;
+	}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";

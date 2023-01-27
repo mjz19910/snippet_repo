@@ -307,13 +307,15 @@ type E_Browse=[
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
+type AD_ChangeEngagementPanelVisibility={targetId:D_EngagementPanelTargetId;visibility:D_EngagementPanelVisibility;};
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
+type AD_HideEnclosing={notificationId: `${number}`;};
 type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: AD_HideEngagementPanelTargetId;};
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
+type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
 type AD_SendFeedback={bucket: "Kevlar";};
-type AD_HideEnclosing={notificationId: `${number}`;};
 type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: AD_SetActivePanelItem;};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
@@ -403,13 +405,16 @@ type RC_SectionList={sectionListContinuation: G_SectionList;};
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
-type AD_AppendContinuationItems=
-	|TA_Continuation<"watch-next-feed",G_WatchNext>
-	|TA_Continuation<"comments-section",G_CommentsSection>
-	|TA_Continuation<`comment-replies-item-${string}`,R_Comment>
-	|TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>
-	;
-;
+type OM_ContinuationItemMap={
+	"watch-next-feed": G_WatchNext;
+	"comments-section": G_CommentsSection;
+	"browse-feedFEwhat_to_watch": R_BrowseFeed;
+}&{
+	[V in `comment-replies-item-${string}`]: R_Comment;
+};
+type AD_AppendContinuationItems={
+	[E in keyof OM_ContinuationItemMap]: TA_Continuation<E,OM_ContinuationItemMap[E]>
+}[keyof OM_ContinuationItemMap];
 type AD_ShowEngagementPanelScrim={
 	engagementPanelTargetId: "engagement-panel-clip-create";
 	onClickCommands: TA_OpenPopup<{}>[];
@@ -421,25 +426,11 @@ type AD_UpdateNotificationsUnseenCount={
 };
 type AD_Signal={signal: E_SignalEnum;};
 type AD_UndoFeedback={};
-type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
 type AD_SetActivePanelItem={};
 type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: Enum_GuideAction;};
-type AD_ChangeEngagementPanelVisibility={
-	targetId:
-	|"engagement-panel-comments-section"
-	|"engagement-panel-clip-view"
-	|"engagement-panel-clip-create"
-	|"engagement-panel-structured-description"
-	|"engagement-panel-macro-markers-auto-chapters"
-	|"engagement-panel-macro-markers-description-chapters"
-	;
-	visibility:
-	|"ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"
-	|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-};
-
+type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
+type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 //#endregion
-
 type CD_Invalidation={invalidationContinuationData: DC_Invalidation;};
 type CD_LiveChatReplay={liveChatReplayContinuationData: DC_LiveChatReplay;};
 type CD_Next={nextContinuationData: DC_Generic_CTP;};
