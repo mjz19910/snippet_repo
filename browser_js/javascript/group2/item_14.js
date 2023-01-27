@@ -151,8 +151,7 @@ function to_range(arr) {
 /** @arg {any[]} x */
 function reduce_arr_flat(x) {
 	return x.reduce((/** @type {string | any[]} */
-		acc,/** @type {any} */
-		cur) => acc.concat(cur), []);
+		acc, cur) => acc.concat(cur), []);
 }
 /** @arg {any[]} map */
 function show_cache_map(map) {
@@ -186,7 +185,7 @@ class JsonReplacerState {
 	/** @type {number|null} */
 	id = null;
 	cache_map = new Map;
-	/** @type {any} */
+
 	dom_nodes = [];
 	json_result_cache = new Map;
 	/** @type {CacheItemType[]} */
@@ -374,8 +373,7 @@ class JsonReplacerState {
 		}
 		let rh = this.result_history;
 		let oh = x.result_history;
-		oh.forEach((/** @type {any} */
-			x) => add_hist_unique(rh, x));
+		oh.forEach((x) => add_hist_unique(rh, x));
 	}
 	/** @template {keyof ContentArgsType} T @arg {any[]} json_res_arr @arg {ContentArgsType[T]} args */
 	do_json_replace(json_res_arr, args) {
@@ -579,8 +577,12 @@ class JsonReplacerState {
 		console.log("TODO: unknown_tag_section", x);
 		return ["TAG::failed", null];
 	}
+	/** @arg {CacheItemType} x */
+	on_run_with_cache_type(x) {
+		x;
+	}
 	/** @arg {JsonInputType} x */
-	on_run_request(x) {
+	on_run_with_object_store_type(x) {
 		/** @type {[][]} */
 		let arr = [];
 		if (x instanceof Element) {
@@ -607,15 +609,27 @@ class JsonReplacerState {
 		};
 		return ret_obj;
 	}
+	/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]} x */
+	on_run_request(x) {
+		switch (x[0]) {
+			case "cache":
+				return this.on_run_with_cache_type(x[1]);
+			case "store_object":
+				return this.on_run_with_object_store_type(x[1]);
+			default:
+				this.debugger;
+				throw 1;
+		}
+	}
 	/** @arg {H_Iter} s_ @arg {JsonReplacerState} res_in */
 	iter_history_result(s_, res_in) {
 		const { target_history: mh } = s_;
 		const { cache, object_store, } = res_in;
 		let out_ex = {};
-		let res = null;
 		if (!res_in.id)
 			res_in.id = res_in.get_id();
 		let id = this.get_id();
+		out_ex.id = id;
 		s_.done_ids.push(res_in.id);
 		let history = res_in.result_history.slice();
 		let x1 = history.map((x) => x.id);
@@ -642,17 +656,15 @@ class JsonReplacerState {
 			item[key] = filter_arr(cache, self[key]);
 		}
 		if (object_store) {
-			out_ex.object_store = object_store.map(x => this.on_run_request(x));
+			out_ex.object_store = object_store.map(x => this.on_run_request(["store_object", x]));
 		} else {
 			console.log("no object_store");
 		}
-		out_ex.cache = cache.map((/** @type {any} */
-			x) => this.on_run_request(x));
+		out_ex.cache = cache.map((x) => this.on_run_request(["cache", x]));
 		return history;
 		/** @arg {any[]} x @arg {any[]} o_arr */
 		function filter_arr(x, o_arr) {
-			return x.filter((/** @type {any} */
-				x) => !o_arr.includes(x));
+			return x.filter((x) => !o_arr.includes(x));
 		}
 	}
 	/** @arg {H_Iter} s_ */
