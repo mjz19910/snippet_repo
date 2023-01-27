@@ -230,8 +230,7 @@ class JsonReplacerState {
 				break x;
 			this.is_crash_testing = true;
 			let test_state = this.clone();
-			debugger;
-			JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
+			debugger; JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
 		} catch (e) {
 			if (e === null) {
 				JsonReplacerState.stringify_failed_obj.push(obj);
@@ -261,7 +260,8 @@ class JsonReplacerState {
 		}
 		if (obj instanceof Node) {
 			const { dom_nodes } = this;
-			if (!dom_nodes.includes(obj)) dom_nodes.push(obj);
+			if (!dom_nodes.includes(obj))
+				dom_nodes.push(obj);
 			let obj_index = dom_nodes.indexOf(obj);
 			return `TYPE::Store.dom_nodes[${obj_index}]`;
 		}
