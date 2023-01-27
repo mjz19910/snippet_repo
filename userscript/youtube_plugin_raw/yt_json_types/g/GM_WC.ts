@@ -1,8 +1,8 @@
 //#region Templates
 type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
 type EB_Endpoint<T={}>={clickTrackingParams: string; commandMetadata: T;};
-type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string;commandMetadata?: C}&{[I in T]:U};
-type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]:V};
+type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
+type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
 type T_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
 type T_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
@@ -300,19 +300,19 @@ type E_Browse=[
 ][number];
 //#region Actions 
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
-type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: G_AppendContinuationItems;};
+type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
 type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: R_EngagementPanelTargetId;};
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
-type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: T_Item<R_NotificationText|RA_ReelDismissal>;};
+type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
-type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: {};};
+type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: AD_SetActivePanelItem;};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
-type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: {};};
-type A_UpdateEngagementPanel={updateEngagementPanelAction: D_UpdateEngagementPanel; clickTrackingParams: string;};
-type A_UpdateNotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: U_NotificationsUnseenCount;};
+type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
+type A_UpdateEngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: D_UpdateEngagementPanel;};
+type A_UpdateNotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
 //#endregion
 //#region Commands
 type C_AddToPlaylist={addToPlaylistCommand: DC_AddToPlaylist; clickTrackingParams: string;};
@@ -343,12 +343,12 @@ type E_NotificationOptOut=T_Endpoint_Ex<{},"notificationOptOutEndpoint",AE_Notif
 type E_PlaylistEdit=T_Endpoint_Ex<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",D_PlaylistEdit>;
 type E_PlaylistEditor=T_Endpoint_Ex<{},"playlistEditorEndpoint",DE_PlaylistEditor>;
 type E_RecordNotificationInteractions=
-T_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
+	T_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
 type E_ReelWatch=
-T_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
+	T_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
 type E_Search=T_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
 type E_SetSettingAutonavForDesktop<T extends boolean>=
-T_Endpoint_Ex<{webCommandMetadata: GM_account_set_setting;},"Endpoint",SettingItemAutonavForDesktop<T>>;
+	T_Endpoint_Ex<{webCommandMetadata: GM_account_set_setting;},"Endpoint",SettingItemAutonavForDesktop<T>>;
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: D_ShowEngagementPanel;};
 type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DS_Navigation>;
 type E_Subscribe=T_Endpoint_Ex<{webCommandMetadata: GM_subscription_subscribe;},"subscribeEndpoint",DE_Subscribe>;
@@ -373,3 +373,24 @@ type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
 type CT_ClickTracked={continuation: string; clickTrackingParams: string;};
 type RC_Next={nextContinuationData: CT_ClickTracked;};
 type RC_NextRadio={nextRadioContinuationData: CT_ClickTracked;};
+//#region ActionData
+type AD_AppendContinuationItems=
+	|TA_Continuation<"watch-next-feed",G_WatchNext>
+	|TA_Continuation<"comments-section",G_CommentsSection>
+	|TA_Continuation<`comment-replies-item-${string}`,R_Comment>
+	|TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>
+	;
+;
+type AD_ShowEngagementPanelScrim={
+	engagementPanelTargetId: "engagement-panel-clip-create";
+	onClickCommands: TA_OpenPopup<{}>[];
+};
+type AD_UpdateNotificationsUnseenCount={
+	handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT";
+	unseenCount: number;
+	timeoutMs: number;
+};
+type AD_UndoFeedback={};
+type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
+type AD_SetActivePanelItem={};
+//#endregion

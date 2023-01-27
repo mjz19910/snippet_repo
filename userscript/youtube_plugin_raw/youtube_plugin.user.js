@@ -3234,7 +3234,7 @@ class HandleRendererContentItemArray extends BaseService {
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor {
-	/** @handler @public @arg {ApiIterateState} state @arg {G_AppendContinuationItems} action */
+	/** @handler @public @arg {ApiIterateState} state @arg {AD_AppendContinuationItems} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
@@ -9432,7 +9432,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @private @arg {G_AppendContinuationItems} x */
+	/** @private @arg {AD_AppendContinuationItems} x */
 	G_AppendContinuationItems(x) {
 		const cf="G_AppendContinuationItems"; this.k(cf,x); this.targetId(cf,x.targetId);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
@@ -10358,7 +10358,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.U_NotificationsUnseenCount(updateNotificationsUnseenCountAction);
 	}
-	/** @private @arg {U_NotificationsUnseenCount} x */
+	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
 	U_NotificationsUnseenCount(x) {
 		const cf="U_NotificationsUnseenCount";
 		const {handlerData,unseenCount,timeoutMs}=this.sd(cf,x);// this.g(y);//#destructure
