@@ -1,6 +1,32 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
+class LogGenerator {
+	log_str = "";
+	/** @type {JsonReplacerState[]} */
+	log_args = [];
+	reset([str,args]=["", []]) {
+		this.log_str = str;
+		/** @type {any[]} */
+		this.log_args = args;
+	}
+	/** @arg {[string, never[]] | undefined} [cap_state] */
+	new_gen(cap_state) {
+		this.reset(cap_state);
+		return this;
+	}
+	/** @arg {JsonReplacerState} id @arg {any[]} args */
+	state_id(id, ...args) {
+		this.log_str += "[state_id=%o]";
+		this.log_args.push(id, ...args);
+	}
+	get_log_args() {
+		return [this.log_str, ...this.log_args];
+	}
+	capture() {
+		return [this.log_str, this.log_args.slice()];
+	}
+}
 /** @template {string} T @template {string} U @typedef {import("./item_types").Split<T,U>} Split */
 /** @typedef {import("./item_14_types").VueApp} VueApp */
 /** @typedef {import("./item_14_types").CacheItemType} CacheItemType */
@@ -138,20 +164,27 @@ function show_cache_map(map) {
 function Z_len_k(x) {
 	return Object.keys(x).length;
 }
+const log_gen = new LogGenerator;
 class JsonReplacerState {
 	/** @type {any[][]} */
 	static all_cache = [];
 	/** @type {Map<any, any>[]} */
 	static all_cache_map = [];
 	static _next_id = 1;
-	static get next_id() {
-		let id = this._next_id;
-		this._next_id++;
+	get next_id() {
+		return JsonReplacerState._next_id++;
+	}
+	get_id() {
+		if (this.id)
+			return this.id;
+		let id = this.next_id;
+		this.id = id;
 		return id;
 	}
 	/** @type {{}|null} */
 	input_obj = null;
-	id = JsonReplacerState.next_id;
+	/** @type {number|null} */
+	id = null;
 	cache_map = new Map;
 	/** @type {any} */
 	dom_nodes = [];
@@ -179,6 +212,7 @@ class JsonReplacerState {
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
 	}
+	static stringify_failed_obj = [];
 	is_crash_testing = false;
 	/** @arg {string} k @arg {JsonInputType|null} obj */
 	json_replacer(k, obj) {
@@ -194,6 +228,7 @@ class JsonReplacerState {
 			JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
 		} catch {
 			console.log("failed to stringify", obj);
+			return "TYPE::StringifyFailed:" + Object.keys(obj);
 		}
 		let x = obj;
 		const {object_store} = this;
@@ -319,7 +354,7 @@ class JsonReplacerState {
 	}
 	/** @template {keyof ContentArgsType} T @arg {any[]} json_res_arr @arg {ContentArgsType[T]} args */
 	do_json_replace(json_res_arr, args) {
-		if (this.id > 64)
+		if (this.id && this.id > 5)
 			return;
 		switch (args[0]) {
 		case "cache":
@@ -343,7 +378,7 @@ class JsonReplacerState {
 	}
 	/** @arg {{}[]} vnode_arr */
 	on_data_z(vnode_arr) {
-		if (this.id > 64)
+		if (this.id && this.id > 5)
 			return;
 		let res = vnode_arr.map((x,idx)=>this.on_data_item(["TAG::vnode", x], idx), this);
 		console.log(res);
@@ -353,33 +388,6 @@ class JsonReplacerState {
 		let skip = true;
 		!skip && console.log(`--- [%s[%s]] ---\n%s %o`, section, i, t, ...x);
 	}
-	log_gen = new class {
-		log_str = "";
-		/** @type {JsonReplacerState[]} */
-		log_args = [];
-		reset([str,args]=["", []]) {
-			this.log_str = str;
-			/** @type {any[]} */
-			this.log_args = args;
-		}
-		/** @arg {[string, never[]] | undefined} [cap_state] */
-		new_gen(cap_state) {
-			this.reset(cap_state);
-			return this;
-		}
-		/** @arg {JsonReplacerState} id @arg {any[]} args */
-		state_id(id, ...args) {
-			this.log_str += "[state_id=%o]";
-			this.log_args.push(id, ...args);
-		}
-		get_log_args() {
-			return [this.log_str, ...this.log_args];
-		}
-		capture() {
-			return [this.log_str, this.log_args.slice()];
-		}
-	}
-	;
 	/** @arg {any} idx @arg {["TAG::cache_item", number]} data */
 	on_tag_cache_item(idx, data) {
 		let from_cache = this.cache[data[1]];
@@ -387,15 +395,16 @@ class JsonReplacerState {
 		let obj = this.prepare_obj("cache_item_to_log", from_cache);
 		let res = new_state.run_internal(obj);
 		this.import_state(new_state);
-		let {cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, log_gen, id: ns_id, ...os} = new_state;
+		let {cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, ...os} = new_state;
+		let ns_id = this.id;
 		Z_len_k(os) > 0 && console.log("[json_data_ex]\n%o", os);
 		let[inner_type,...inner_arr] = res[0];
 		let skip = true;
 		!skip && console.log("[cache_item]", inner_type, data[0]);
 		!skip && console.log(new_state);
-		this.log_gen.new_gen();
-		this.log_gen.state_id(new_state, ns_id);
-		let id_log = this.log_gen.capture();
+		log_gen.new_gen();
+		log_gen.state_id(new_state, ns_id);
+		let id_log = log_gen.capture();
 		console.log(id_log);
 		!skip && console.log("[state_id=%o]", ns_id, cache_map);
 		/** @type {Map<any,any>[]} */
@@ -562,7 +571,9 @@ class JsonReplacerState {
 		const {cache, object_store, } = res_in;
 		let out_ex = {};
 		let res = null;
-		res;
+		if (!res_in.id)
+			res_in.id = res_in.get_id();
+		let id = this.get_id();
 		s_.done_ids.push(res_in.id);
 		let history = res_in.result_history.slice();
 		let x1 = history.map((/** @type {{ id: any; }} */
@@ -612,6 +623,7 @@ class JsonReplacerState {
 			let x = stack.shift();
 			if (!x)
 				break;
+			x.id = x.get_id();
 			if (s_.done_ids.includes(x.id))
 				continue;
 			all_history_arr.push(x);
