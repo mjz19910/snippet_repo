@@ -10761,9 +10761,9 @@ class HandleTypes extends ServiceMethods {
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
-	/** @private @arg {RCD_Next} x */
+	/** @private @arg {CD_Next} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,x => this.CT_ClickTracked(x,"next"));}
-	/** @private @arg {"next"} section @arg {CT_ClickTracked} x */
+	/** @private @arg {"next"} section @arg {DC_Generic_CTP} x */
 	CT_ClickTracked(x,section) {
 		const cf="D_NextContinuation";
 		const {continuation,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
@@ -12196,7 +12196,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {RD_TimedContinuation} x */
+	/** @private @arg {CD_TimedContinuation} x */
 	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation",x,this.DD_TimedContinuation);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat",x,this.DC_LiveChat);}
@@ -12914,7 +12914,7 @@ class HandleTypes extends ServiceMethods {
 		showMoreText;
 		debugger;
 	}
-	/** @private @arg {DD_TimedContinuation} x */
+	/** @private @arg {DC_Timed} x */
 	DD_TimedContinuation(x) {
 		const cf="DD_TimedContinuation";
 		const {timeoutMs,continuation}=this.sd(cf,x);// this.g(y);//#destructure

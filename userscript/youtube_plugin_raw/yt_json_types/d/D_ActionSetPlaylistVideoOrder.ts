@@ -1,7 +1,7 @@
 type D_ActionSetPlaylistVideoOrder={
 	title: string;
 	selected: boolean;
-	continuation?: D_ReloadContinuation;
+	continuation?: CD_Reload;
 	serviceEndpoint?: C_Continuation;
 	accessibility?: D_Accessibility;
 	trackingParams: string;

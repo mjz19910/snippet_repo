@@ -1,11 +1,12 @@
 //#region Templates
 type D_Empty_WCM={webCommandMetadata: {};};
-type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
-type EB_Endpoint<T={}>={clickTrackingParams: string; commandMetadata: T;};
+type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
 type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
 type T_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
+type T_Endpoint_ReqMeta<T={}>={clickTrackingParams: string; commandMetadata: T;};
 type T_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
+type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
 //#endregion
 //#region GU_VE
@@ -367,9 +368,6 @@ type SE_Signal_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
 
-
-type CT_ClickTracked={continuation: string; clickTrackingParams: string;};
-
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 type RC_SectionList={sectionListContinuation: G_SectionList;};
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
@@ -411,8 +409,26 @@ type AD_ChangeEngagementPanelVisibility={
 
 //#endregion
 
-type RCD_Next={nextContinuationData: CT_ClickTracked;};
-type RCD_NextRadio={nextRadioContinuationData: CT_ClickTracked;};
-type D_ReloadContinuation={reloadContinuationData: CT_ClickTracked;};
-type R_InvalidationContinuation={invalidationContinuationData: DI_InvalidationContinuation;};
-type R_PlayerSeekContinuation={playerSeekContinuationData: D_GenericContinuation;};
+type CD_Invalidation={invalidationContinuationData: DC_Invalidation;};
+type CD_LiveChatReplay={liveChatReplayContinuationData: DC_LiveChatReplay;};
+type CD_Next={nextContinuationData: DC_Generic_CTP;};
+type CD_NextRadio={nextRadioContinuationData: DC_Generic_CTP;};
+type CD_PlayerSeek={playerSeekContinuationData: DC_Generic;};
+type CD_Reload={reloadContinuationData: DC_Generic_CTP;};
+type CD_TimedContinuation={timedContinuationData: DC_Timed;};
+type DC_Generic={continuation: string;};
+type DC_Invalidation={
+	invalidationId: D_InvalidationId;
+	timeoutMs: 10000;
+	continuation: string;
+	clickTrackingParams?: string;
+};
+type DC_LiveChatReplay={
+	timeUntilLastMessageMsec: number;
+	continuation: string;
+};
+type DC_Timed={
+	timeoutMs: 60000;
+	continuation: string;
+};
+

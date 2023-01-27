@@ -1,3 +1,3 @@
-type E$FeedbackEndpoint=EB_Endpoint&{
+type E$FeedbackEndpoint=T_Endpoint_ReqMeta&{
 	feedbackEndpoint: E_Feedback;
 };

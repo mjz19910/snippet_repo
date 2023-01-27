@@ -1,5 +1,5 @@
 type RSU_M={
 	responseContext: RC_ResponseContext;
-	continuation: RD_TimedContinuation;
+	continuation: CD_TimedContinuation;
 	actions: UMA_Item[];
 };
