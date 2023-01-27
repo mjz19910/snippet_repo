@@ -3,5 +3,5 @@ type D_AddToPlaylistCreate={
 	nameInput: R_TextInputFormField;
 	privacyInput: R_Dropdown;
 	createAction: R_Button;
-	serviceEndpoint: ES_CreatePlaylist;
+	serviceEndpoint: SE_CreatePlaylist;
 };

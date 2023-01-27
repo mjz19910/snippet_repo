@@ -6,7 +6,3 @@ type GE_ResponseReceived=
 	|C_ReloadContinuationItems
 	|T_SE_Signal<{},G_ClientSignal>
 	;
-type A_AppendContinuationItems={
-	clickTrackingParams: string;
-	appendContinuationItemsAction: G_AppendContinuationItems;
-};

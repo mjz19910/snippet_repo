@@ -1,1 +1,1 @@
-type D_ReloadContinuation={reloadContinuationData: DI_ReloadContinuation;};
+type D_ReloadContinuation={reloadContinuationData: CT_ClickTracked;};

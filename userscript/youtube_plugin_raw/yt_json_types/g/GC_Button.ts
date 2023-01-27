@@ -1,5 +1,5 @@
 type GC_Button=
-	|EA_ChangeEngagementPanelVisibility
+	|A_ChangeEngagementPanelVisibility
 	|C_Continuation
 	|TA_OpenPopup<{}>
 	|T_SE_Signal<M_SendPost,G_ClientSignal>

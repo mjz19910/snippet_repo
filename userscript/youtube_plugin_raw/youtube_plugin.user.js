@@ -5340,7 +5340,7 @@ class ParserService extends BaseService {
 		console.log("[new_get_transcript_endpoint_params]",param_obj);
 		{debugger;}
 	}
-	/** @api @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @api @public @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
@@ -5375,7 +5375,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
-	/** @api @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @api @public @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_player_params(root,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -5386,7 +5386,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	cache_interaction_requests=[];
-	/** @unused_api @protected @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @unused_api @protected @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_serialized_interactions_request_params(root,path,x) {
 		if(this.cache_interaction_requests.includes(x)) return;
 		this.cache_interaction_requests.push(x);
@@ -5394,7 +5394,7 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		this.parse_serialized_interactions_request(root,path,param_map);
 	}
-	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
+	/** @private @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_serialized_interactions_request(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5420,7 +5420,7 @@ class ParserService extends BaseService {
 		f();
 		console.groupEnd();
 	};
-	/** @private @arg {P_PathRoot} path @arg {number[]} map_keys @arg {ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
+	/** @private @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
 	get_parse_fns(path,map_keys,map_entry_value,map_entry_key=null) {
 		let path_parts=split_string(path,".");
 		/** @private @arg {number} idx */
@@ -5466,7 +5466,7 @@ class ParserService extends BaseService {
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @type {P_LogItems} */
-	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
+	/** @private @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
 		let saved_map_keys=map_keys.slice();
 		/** @private @arg {string} ns @arg {()=>void} f */
@@ -5496,61 +5496,61 @@ class ParserService extends BaseService {
 					}
 					case "service$create_playlist":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "browse$param.f93":
 						switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.removeLikeParams.f5":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.removeLikeParams.f1":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.removeLikeParams":
 						switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.dislikeParams.f4":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.dislikeParams.f1":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.dislikeParams":
 						switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.likeParams.f6":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.likeParams.f1":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.likeParams": case "like.dislikeParams":
 						switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "reel.params":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1":
 					case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "reel.player_params":
 						switch(map_entry_key) {case 30: case 71: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "slot_ad_serving_data_entry":
 						switch(map_entry_key) {case 1: case 3: case 4: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_PathRoot} */
+						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
@@ -5756,7 +5756,7 @@ class ParserService extends BaseService {
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
-	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,tva) {
 		let off=1;
 		for(let val of tva) {
@@ -5789,7 +5789,7 @@ class ParserService extends BaseService {
 		this.save_number(`[${path}]`,x[1]);
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
-	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
 	parse_param_next(root,path,tva) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,tva);
 		if(tva.length!==1) return;
@@ -5803,9 +5803,10 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "feedback": u(idx); break;
 			case "get_report_form": u(idx); break;
 			case "service$create_playlist": u(idx); break;
-			case "next_continuation": u(idx); break;
+			case "next": u(idx); break;
 			case "aadc_guidelines_state_entity_key": u(idx); break;
 			case "TimedContinuation": u(idx); break;
 			case "D_Browse": u(idx); break;
@@ -6154,7 +6155,11 @@ class ParserService extends BaseService {
 			} break;
 			case "next": {
 				const idx=2;
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "queue_context_params": u(idx); debugger; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "continuation": u(idx); debugger; break;
+					case "queue_context_params": u(idx); debugger; break;
+				}
 			} break;
 			case "playlist_edit": {
 				const idx=2;
@@ -6218,7 +6223,7 @@ class ParserService extends BaseService {
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 	}
-	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
+	/** @private @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_any_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -6234,7 +6239,7 @@ class ParserService extends BaseService {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @private @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
+	/** @private @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_player_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -6250,7 +6255,7 @@ class ParserService extends BaseService {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @api @public @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {ParamMapType} map */
+	/** @api @public @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_endpoint_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -7416,7 +7421,7 @@ class ServiceMethods extends ServiceData {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @protected @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @protected @arg {P_ParamsSection} root @arg {P_PathRootStr} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
@@ -7466,7 +7471,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @protected @arg {P_ParamsSection} root @arg {P_PathRoot} path @arg {string} x */
+	/** @protected @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {string} x */
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
@@ -9383,7 +9388,7 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(videoId);
 		this.z(videoIds,this.videoId);
 	}
-	/** @private @arg {ES_CreatePlaylist} x */
+	/** @private @arg {SE_CreatePlaylist} x */
 	ES_CreatePlaylist(x) {
 		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,this.DS_CreatePlaylist),u => {
 			let x=u.webCommandMetadata;
@@ -10346,7 +10351,7 @@ class HandleTypes extends ServiceMethods {
 		}));
 		if(unseenCount!==void 0) this.primitive_of(unseenCount,"number");
 	}
-	/** @private @arg {AU_NotificationsUnseenCount} x */
+	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
 	AU_NotificationsUnseenCount(x) {
 		const cf="UA_NotificationsUnseenCount";
 		const {clickTrackingParams,updateNotificationsUnseenCountAction}=this.sd(cf,x);// this.g(y);//#destructure
@@ -10757,7 +10762,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(targetId,a => this.targetId(cf,a));
 	}
 	/** @private @arg {RD_NextContinuation} x */
-	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,this.D_NextContinuation);}
+	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,x => this.CT_ClickTracked(x,"next"));}
 	/** @private @arg {TR_SectionListItem_3<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
@@ -11411,7 +11416,7 @@ class HandleTypes extends ServiceMethods {
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
 	}
-	/** @private @arg {EA_ChangeEngagementPanelVisibility} x */
+	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
 	EA_ChangeEngagementPanelVisibility(x) {
 		const cf="EA_ChangeEngagementPanelVisibility";
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction}=this.sd(cf,x);// this.g(y);//#destructure
@@ -12589,11 +12594,11 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 	}
-	/** @private @arg {D_NextContinuation} x */
-	D_NextContinuation(x) {
+	/** @private @arg {"next"} section @arg {CT_ClickTracked} x */
+	CT_ClickTracked(x,section) {
 		const cf="D_NextContinuation";
 		const {continuation,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
-		this.params(cf,"next_continuation.continuation",continuation);
+		this.params(cf,`${section}.continuation`,continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
@@ -13152,9 +13157,8 @@ class HandleTypes extends ServiceMethods {
 		this.R_VideoOwner(owner);
 		defaultExpanded;
 		descriptionCollapsedLines;
-		showMoreCommand;
-		showLessCommand;
-		debugger;
+		this.t(showMoreCommand,this.C_Executor);
+		this.t(showLessCommand,this.EA_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
@@ -13317,7 +13321,17 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {SettingItemAutonavForDesktop<boolean>} x */
 	SettingItemAutonavForDesktop(x) {x; debugger;}
 	/** @private @arg {DE_Feedback} x */
-	DE_Feedback(x) {x; debugger;}
+	DE_Feedback(x) {
+		const cf="DE_Feedback";
+		const {feedbackToken,uiActions,actions,...y}=this.sd(cf,x); this.g(y);
+		this.params(cf,"feedback.feedbackToken",feedbackToken);
+		this.D_HideEnclosingContainer(uiActions);
+		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
+	}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {x; debugger;}
+	/** @private @arg {D_HideEnclosingContainer} x */
+	D_HideEnclosingContainer(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

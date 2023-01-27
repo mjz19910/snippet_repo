@@ -1,1 +1,0 @@
-type RD_NextContinuation={nextContinuationData: D_NextContinuation;};

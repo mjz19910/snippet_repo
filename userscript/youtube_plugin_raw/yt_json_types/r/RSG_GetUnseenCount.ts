@@ -1,5 +1,5 @@
 type RSG_GetUnseenCount={
 	responseContext: RC_ResponseContext;
-	actions?: [AU_NotificationsUnseenCount];
+	actions?: [A_UpdateNotificationsUnseenCount];
 	unseenCount?: number;
 };
