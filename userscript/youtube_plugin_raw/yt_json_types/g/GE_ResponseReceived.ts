@@ -4,7 +4,7 @@ type GE_ResponseReceived=
 	|C_ChangeKeyedMarkersVisibility
 	|C_LoadMarkers
 	|C_ReloadContinuationItems
-	|T_ES_Signal<{},G_ClientSignal>
+	|T_SE_Signal<{},G_ClientSignal>
 	;
 type A_AppendContinuationItems={
 	clickTrackingParams: string;

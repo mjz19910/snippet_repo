@@ -1,5 +1,5 @@
 //#region Templates
-type T_ES_Signal<T,U>={
+type T_SE_Signal<T,U>={
 	clickTrackingParams: string;
 	commandMetadata: T;
 	signalServiceEndpoint: U;
@@ -472,5 +472,5 @@ type E_NotificationOptOut={
 	commandMetadata: {};
 	notificationOptOutEndpoint: AE_NotificationOptOut;
 };
-type EX_GetNotificationMenuRequest=T_ES_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
-type ES_Button=T_ES_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
+type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
+type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;

@@ -5,7 +5,7 @@ type D_NotificationTopbarButton={
 	trackingParams: string;
 	accessibility: D_Accessibility;
 	tooltip: string;
-	updateUnseenCountEndpoint: T_ES_Signal<{},{}>;
+	updateUnseenCountEndpoint: T_SE_Signal<{},{}>;
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };
