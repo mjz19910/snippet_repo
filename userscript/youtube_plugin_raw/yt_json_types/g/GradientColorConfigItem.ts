@@ -1,1 +1,0 @@
-type GradientColorConfigItem=GradientColorConfigStart|GradientColorConfigMid|GradientColorConfigEnd;

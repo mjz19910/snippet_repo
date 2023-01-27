@@ -1,1 +1,0 @@
-type GFeedbackServiceParamList=GFeedbackServiceParam[];

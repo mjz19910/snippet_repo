@@ -3,7 +3,7 @@ type YtExternalUrlFormat=[
 	`https://ad.doubleclick.net/ddm/trackclk/${string}`,
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
 	`https://music.youtube.com${"/"|""}`,
-	`${"https:"}//${GoogleVideoSubDomain}.googlevideo.com/initplayback?${string}`,
+	`${"https:"}//${GV_SubDomain}.googlevideo.com/initplayback?${string}`,
 	`https://studio.youtube.com${"/"|""}`,
 	`https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273`,
 	`https://www.google.com/get/videoqualityreport/`,

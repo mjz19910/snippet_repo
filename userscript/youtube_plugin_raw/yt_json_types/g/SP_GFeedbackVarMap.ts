@@ -1,4 +1,4 @@
-type GFeedbackVarMap={
+type SP_GFeedbackVarMap={
 	browse_id_prefix: "";
 	browse_id: D_BrowseIdStr;
 	context: "yt_web_unknown_form_factor_kevlar_w2w";

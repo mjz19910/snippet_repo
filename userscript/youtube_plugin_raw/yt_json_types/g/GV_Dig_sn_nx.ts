@@ -7,7 +7,6 @@ type GV_sub_57yn=[
 	"ss",
 	"sz",
 ][number];
-
 type GV_sub_5s7n=[
 	"76",
 	"7d",
@@ -17,9 +16,7 @@ type GV_sub_5s7n=[
 	"ee",
 	"el"
 ][number];
-
-// cspell:disable-next-line
-type GoogleVideo_sn_nx=[
+type GV_Dig_sn_nx=[
 	`57yn${GV_sub_57yn}`,
 	`5s7n${GV_sub_5s7n}`,
 ][number];

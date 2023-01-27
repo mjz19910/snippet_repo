@@ -1,4 +1,5 @@
-type GoogleVideo_sn_nx_dig_src=[
+//cspell:ignore ynlk ynsd ynse ynsk ynsl ynss ynsz
+type D_GoogleVideo_sn_nx_dig_src=[
 	"rr1.sn-nx57ynlk.googlevideo.com. 1755 IN A      74.125.5.166",
 	"rr1.sn-nx57ynsd.googlevideo.com. 1595 IN A      173.194.56.166",
 	"rr1.sn-nx57ynse.googlevideo.com. 705 IN A       173.194.56.6",

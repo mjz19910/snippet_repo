@@ -1,4 +1,4 @@
-type D_ApiUrlFormat$2=[
+type D_ApiPathFormat_2=[
 	"getAccountSwitcherEndpoint",
 	"getDatasyncIdsEndpoint",
 	"youtubei/v1/browse/edit_playlist",

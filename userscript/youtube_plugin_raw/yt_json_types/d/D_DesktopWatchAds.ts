@@ -1,5 +1,5 @@
 type D_DesktopWatchAds={
-	gutParams: GutParams;
+	gutParams: B_TagObj;
 	playerAdParams: PlayerAdParams;
 	showCompanion: true;
 	showInstream: true;

@@ -1,1 +1,1 @@
-type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiUrlFormat$1}`;
+type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;

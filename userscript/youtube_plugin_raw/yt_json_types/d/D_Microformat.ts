@@ -22,5 +22,5 @@ type D_Microformat={
 	tags?: string[];
 	familySafe?: true;
 	availableCountries?: string[];
-	linkAlternates: HrefUrl[];
+	linkAlternates: B_HrefUrl[];
 };

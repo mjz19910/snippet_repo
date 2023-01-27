@@ -1,0 +1,1 @@
+type B_HrefUrl={hrefUrl: string;};

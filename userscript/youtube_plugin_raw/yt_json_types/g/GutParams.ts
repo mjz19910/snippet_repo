@@ -1,1 +1,0 @@
-type GutParams={tag: string;};

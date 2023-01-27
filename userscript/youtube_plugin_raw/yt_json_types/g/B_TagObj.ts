@@ -1,0 +1,1 @@
+type B_TagObj={tag: string;};

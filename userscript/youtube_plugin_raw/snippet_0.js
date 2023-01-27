@@ -70,7 +70,7 @@ function split_string_once(s,d=as(",")) {
 	return as(q);
 }
 class ParserService {
-	/** @arg {T_Split<D_ApiUrlFormat$1,"/">} x @returns {Join<T_Split<D_ApiUrlFormat$1,"/">,".">} */
+	/** @arg {T_Split<D_ApiPathFormat_1,"/">} x @returns {Join<T_Split<D_ApiPathFormat_1,"/">,".">} */
 	get_url_type(x) {x; throw 1;}
 	/** @public @arg {P_ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {root; x;}
@@ -88,17 +88,6 @@ class CodegenService {
 export class Snippet_0_tmp {
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @arg {NavigationEndpoint} x */
-	NavigationEndpoint(x) {
-		this.save_keys("[NavigationEndpoint]",x);
-		let a1=x;
-		if("urlEndpoint" in a1) {
-		} else if("watchEndpoint" in a1) {
-		} else if("browseEndpoint" in a1) {
-		} else {
-			debugger;
-		}
-	}
 	/** @arg {D_Accessibility} x */
 	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
