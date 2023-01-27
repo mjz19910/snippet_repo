@@ -14,4 +14,7 @@ type D_Tab={
 	tabIdentifier: "FEsubscriptions";
 	accessibility: D_Accessibility;
 	trackingParams: string;
+}|{
+	content: R_MusicQueue;
+	trackingParams: string;
 };
