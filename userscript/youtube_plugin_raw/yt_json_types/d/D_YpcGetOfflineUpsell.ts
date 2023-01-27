@@ -1,1 +1,1 @@
-type D_YpcGetOfflineUpsell={params: string;};
+type DE_YpcGetOfflineUpsell={params: string;};

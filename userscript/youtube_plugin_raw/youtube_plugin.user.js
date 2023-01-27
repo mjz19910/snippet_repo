@@ -8833,7 +8833,7 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
 		if(sendPost!==true) debugger;
 	}
-	/** @private @arg {D_YpcGetCart} x */
+	/** @private @arg {DE_YpcGetCart} x */
 	D_YpcGetCart(x) {
 		const cf="D_YpcGetCart";
 		let sp=this.w(x);
@@ -9360,7 +9360,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x => {const {showEngagementPanelEndpoint,...y}=x; this.g(y); this.D_ShowEngagementPanel(showEngagementPanelEndpoint);});}
-	/** @private @arg {D_ShowEngagementPanel} x */
+	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel";
 		const {panelIdentifier}=this.sd(cf,x);// this.g(y);//#destructure
@@ -11206,7 +11206,7 @@ class HandleTypes extends ServiceMethods {
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_YpcGetOffers(a);
 	}
-	/** @private @arg {D_YpcGetOffers} x */
+	/** @private @arg {DE_YpcGetOffers} x */
 	D_YpcGetOffers(x) {
 		const cf="D_YpcGetOffers";
 		const {params}=this.sd(cf,x);// this.g(y);//#destructure
@@ -11620,7 +11620,7 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen(cf,x);
 		{debugger;}
 	}
-	/** @private @arg {ES_ShareEntity} x */
+	/** @private @arg {SE_ShareEntity} x */
 	ES_ShareEntity(x) {
 		const cf="ES_ShareEntity";
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint}=this.sd(cf,x);// this.g(y);//#destructure
@@ -11757,7 +11757,7 @@ class HandleTypes extends ServiceMethods {
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
 	}
-	/** @private @arg {D_UpdateEngagementPanel} x */
+	/** @private @arg {AD_UpdateEngagementPanel} x */
 	D_UpdateEngagementPanel(x) {
 		const cf="D_UpdateEngagementPanel";
 		const {content,targetId}=this.sd(cf,x);// this.g(y);//#destructure

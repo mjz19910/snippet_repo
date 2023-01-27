@@ -1,1 +1,1 @@
-type GE_Button_navigation=ES_ShareEntity|E_Watch|E_Browse;
+type GE_Button_navigation=SE_ShareEntity|E_Watch|E_Browse;

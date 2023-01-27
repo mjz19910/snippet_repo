@@ -1,1 +1,1 @@
-type D_YpcGetCart={transactionParams: string;};
+type DE_YpcGetCart={transactionParams: string;};

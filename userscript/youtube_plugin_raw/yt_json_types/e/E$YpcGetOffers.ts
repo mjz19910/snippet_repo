@@ -1,1 +1,1 @@
-type D_YpcGetOffers={params: string;};
+type DE_YpcGetOffers={params: string;};

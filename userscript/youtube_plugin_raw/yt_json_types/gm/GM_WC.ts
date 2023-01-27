@@ -1,15 +1,21 @@
-//#region Templates
+//#region CommonType
 type D_Empty_WCM={webCommandMetadata: {};};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
-type T_E_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=T_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
+//#endregion
+//#region Templates
 type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
+type T_E_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=T_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
 type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
 type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
 type T_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
 type T_Endpoint_ReqMeta<T={}>={clickTrackingParams: string; commandMetadata: T;};
 type T_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
+type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
+type TB_ContinuationItemMap_1={"watch-next-feed": G_WatchNext;"comments-section": G_CommentsSection;"browse-feedFEwhat_to_watch": R_BrowseFeed;};
+type TB_ContinuationItemMap_2={[V in `comment-replies-item-${string}`]: R_Comment;};
+type TB_ContinuationItemMap=TB_ContinuationItemMap_1&TB_ContinuationItemMap_2;
 //#endregion
 //#region GU_VE
 type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
@@ -59,11 +65,11 @@ type GM_WC=[
 	GM_notification_get_unseen_count,
 	GM_notification_opt_out,
 	GM_RecordInteractions,
-	GM_playlist_create,
+	GM_CreatePlaylist,
 	GM_playlist_get_add_to_playlist,
 	GM_SendPost,
-	GM_share_get_share_panel,
-	GM_subscription_subscribe,
+	GM_GetSharePanel,
+	GM_Subscribe,
 	GM_ypc_get_offers,
 	GM_YpcGetCart,
 ][number];
@@ -215,7 +221,7 @@ type GM_RecordInteractions={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/record_interactions";
 };
-type GM_playlist_create={
+type GM_CreatePlaylist={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/playlist/create";
 };
@@ -223,11 +229,11 @@ type GM_playlist_get_add_to_playlist={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
 };
-type GM_share_get_share_panel={
+type GM_GetSharePanel={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/share/get_share_panel";
 };
-type GM_subscription_subscribe={
+type GM_Subscribe={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/subscription/subscribe";
 };
@@ -305,9 +311,10 @@ type E_Browse=[
 ][number];
 //#region Actions 
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
+type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: Enum_GuideAction;};
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
-type AD_ChangeEngagementPanelVisibility={targetId:D_EngagementPanelTargetId;visibility:D_EngagementPanelVisibility;};
+type AD_ChangeEngagementPanelVisibility={targetId: D_EngagementPanelTargetId; visibility: D_EngagementPanelVisibility;};
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
 type AD_HideEnclosing={notificationId: `${number}`;};
 type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: AD_HideEngagementPanelTargetId;};
@@ -317,17 +324,54 @@ type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
 type AD_SendFeedback={bucket: "Kevlar";};
 type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: AD_SetActivePanelItem;};
+type AD_SetActivePanelItem={};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
+type AD_ShowEngagementPanelScrim={
+	engagementPanelTargetId: "engagement-panel-clip-create";
+	onClickCommands: TA_OpenPopup<{}>[];
+};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
+type AD_Signal={signal: E_SignalEnum;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
-type A_UpdateEngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: D_UpdateEngagementPanel;};
+type AD_UndoFeedback={};
+type A_UpdateEngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};
+type AD_UpdateEngagementPanel={
+	content: R_Transcript;
+	targetId: "engagement-panel-searchable-transcript";
+};
 type A_UpdateNotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
+type AD_UpdateNotificationsUnseenCount={
+	handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT";
+	unseenCount: number;
+	timeoutMs: number;
+};
 //#endregion
 //#region Commands
-type C_AddToPlaylist={addToPlaylistCommand: DC_AddToPlaylist; clickTrackingParams: string;};
+type C_AddToPlaylist={clickTrackingParams: string; addToPlaylistCommand: DC_AddToPlaylist;};
 type C_AdsControlFlowOpportunityReceived={clickTrackingParams: string; adsControlFlowOpportunityReceivedCommand: DC_AdsControlFlowOpportunityReceived;};
+type DC_AdsControlFlowOpportunityReceived={
+	opportunityType: OpportunityTypeOrganicEnum;
+	adSlotAndLayoutMetadata?: DMD_AdSlotAndLayoutItem[];
+	isInitialLoad: boolean;
+	enablePacfLoggingWeb: boolean;
+};
 type C_ChangeKeyedMarkersVisibility={clickTrackingParams: string; changeKeyedMarkersVisibilityCommand: DC_ChangeKeyedMarkersVisibility;};
+type DC_ChangeKeyedMarkersVisibility={
+	isVisible: true;
+	key: "HEATSEEKER";
+};
 type C_Continuation={clickTrackingParams: string; commandMetadata?: M_Next|M_Next; continuationCommand: DC_Continuation;};
+type DC_Continuation={
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
+}|{
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
+	command: C_ShowReloadUi;
+}|{
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
+};
 type C_Executor={clickTrackingParams: string; commandExecutorCommand: DC_Executor;};
 type C_FollowUp={clickTrackingParams: string; addFollowUpSurveyCommand: C_AddFollowUpSurvey;};
 type C_GetSurvey={clickTrackingParams: string; commandMetadata: MG_Survey_CMD; getSurveyCommand: D_GetSurvey;};
@@ -380,20 +424,25 @@ type D_ReelWatch={
 type E_Search=T_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
 type D_Search={query: string;};
 type E_SetSetting=T_E_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
-type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: D_ShowEngagementPanel;};
-type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DS_Navigation>;
-type E_Subscribe=T_Endpoint_Ex<{webCommandMetadata: GM_subscription_subscribe;},"subscribeEndpoint",DE_Subscribe>;
-type E_UndoFeedback=T_Endpoint_Ex<D_Empty_WCM,"undoFeedbackEndpoint",D_UndoFeedback>;
+type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: DE_ShowEngagementPanel;};
+type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
+type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DE_SignalNavigation>;
+type M_Subscribe={webCommandMetadata: GM_Subscribe;};
+
+type E_Subscribe=T_Endpoint_Ex<M_Subscribe,"subscribeEndpoint",DE_Subscribe>;
+type E_UndoFeedback=T_Endpoint_Ex<D_Empty_WCM,"undoFeedbackEndpoint",DE_UndoFeedback>;
 type E_Upload=T_Endpoint_Ex<D_Empty_WCM,"uploadEndpoint",B_Hack>;
 type E_Url=T_Endpoint_Ex<M_VE83769,"urlEndpoint",DE_Url>;
 type E_Watch=T_Endpoint_Ex_1<M_VE3832,"watchEndpoint",DE_VE3832_Watch>;
 type E_WatchPlaylist=T_Endpoint_Ex<D_Empty_WCM,"watchPlaylistEndpoint",DE_WatchPlaylist>;
-type E_YpcGetCart=T_Endpoint_Ex<M_YpcGetCart,"ypcGetCartEndpoint",D_YpcGetCart>;
-type E_YpcGetOffers=T_Endpoint_Ex<D_Empty_WCM,"ypcGetOffersEndpoint",D_YpcGetOffers>;
-type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: D_YpcGetOfflineUpsell;};
+type E_YpcGetCart=T_Endpoint_Ex<M_YpcGetCart,"ypcGetCartEndpoint",DE_YpcGetCart>;
+type E_YpcGetOffers=T_Endpoint_Ex<D_Empty_WCM,"ypcGetOffersEndpoint",DE_YpcGetOffers>;
+type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: DE_YpcGetOfflineUpsell;};
+type M_CreatePlaylist={webCommandMetadata: GM_CreatePlaylist;};
 //#endregion
-type SE_CreatePlaylist=T_Endpoint_Ex<{webCommandMetadata: {sendPost: true; apiUrl: "/youtubei/v1/playlist/create";};},"createPlaylistServiceEndpoint",DS_CreatePlaylist>;
-type ES_ShareEntity=T_Endpoint_Ex<{webCommandMetadata: GM_share_get_share_panel;},"shareEntityServiceEndpoint",D_ShareEntityService>;
+type SE_CreatePlaylist=T_Endpoint_Ex<M_CreatePlaylist,"createPlaylistServiceEndpoint",DS_CreatePlaylist>;
+type M_GetSharePanel={webCommandMetadata: GM_GetSharePanel;};
+type SE_ShareEntity=T_Endpoint_Ex<M_GetSharePanel,"shareEntityServiceEndpoint",D_ShareEntityService>;
 type SE_Signal_SubscribeButton=T_Endpoint_Ex<M_SendPost,"signalServiceEndpoint",G_ClientSignal>;
 type SE_Signal_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 
@@ -405,29 +454,7 @@ type RC_SectionList={sectionListContinuation: G_SectionList;};
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
-type OM_ContinuationItemMap={
-	"watch-next-feed": G_WatchNext;
-	"comments-section": G_CommentsSection;
-	"browse-feedFEwhat_to_watch": R_BrowseFeed;
-}&{
-	[V in `comment-replies-item-${string}`]: R_Comment;
-};
-type AD_AppendContinuationItems={
-	[E in keyof OM_ContinuationItemMap]: TA_Continuation<E,OM_ContinuationItemMap[E]>
-}[keyof OM_ContinuationItemMap];
-type AD_ShowEngagementPanelScrim={
-	engagementPanelTargetId: "engagement-panel-clip-create";
-	onClickCommands: TA_OpenPopup<{}>[];
-};
-type AD_UpdateNotificationsUnseenCount={
-	handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT";
-	unseenCount: number;
-	timeoutMs: number;
-};
-type AD_Signal={signal: E_SignalEnum;};
-type AD_UndoFeedback={};
-type AD_SetActivePanelItem={};
-type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: Enum_GuideAction;};
+type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 //#endregion

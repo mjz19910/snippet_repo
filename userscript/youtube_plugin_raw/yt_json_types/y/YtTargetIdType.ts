@@ -7,7 +7,7 @@ type YtTargetIdType=[
 	D_ScrollToEngagementPanel['targetId'],
 	RS_Search['targetId'],
 	D_TranscriptSearchPanel['targetId'],
-	D_UpdateEngagementPanel['targetId'],
+	AD_UpdateEngagementPanel['targetId'],
 	A_WatchNextContinuation['targetId'],
 	D_ChipCloudChip_tid['targetId'],
 	`shopping_panel_for_entry_point_${"5"|"22"}`,
