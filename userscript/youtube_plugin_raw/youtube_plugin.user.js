@@ -4345,6 +4345,7 @@ class CodegenService extends BaseService {
 	typedef_json_replace_object(state,x,k1) {
 		const {gen_name: r,key_keep_arr}=state;
 		if(x===null) return x;
+		let g=() => this.json_auto_replace(x);
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
@@ -4378,7 +4379,6 @@ class CodegenService extends BaseService {
 			}
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
-		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
