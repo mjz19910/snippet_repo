@@ -10,10 +10,10 @@ namespace NS_DP_Parse {
 		GA_ParseUrlStr_2[1][1],
 		Extract<T_SplitOnce<Extract<GA_ParseUrlStr_2[1][1],`${string}/${string}`>,"/">[1],`${string}/${string}`>,
 	];
-	export type ParseUrlStr_1=T_SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1];
-	export type ParseUrlStr_2=Extract<T_SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>;
-	export type ParseUrlStr_3=Extract<T_SplitOnce<ParseUrlStr_1,"/">,[any,any]>;
-	export type ParseUrlStr_4=ParseUrlStr_2[1];
-	export type ParseUrlStr_5=Extract<T_SplitOnce<Extract<ParseUrlStr_2[1],`${string}/${string}`>,"/">[1],`${string}/${string}`>;
+	export type ParseUrlStr_0=GA_ParseUrlStr[0];
+	export type ParseUrlStr_1=GA_ParseUrlStr[1];
+	export type ParseUrlStr_2=GA_ParseUrlStr[2];
+	export type ParseUrlStr_3=GA_ParseUrlStr[3];
+	export type ParseUrlStr_4=GA_ParseUrlStr[4];
 }
-type DP_ParseUrlStr_1=NS_DP_Parse.ParseUrlStr_1;
+type DP_ParseApiUrlStr=T_SplitOnce<Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...any]>[1],"/">[1];
