@@ -9310,6 +9310,14 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
+	/** @private @arg {E_ShowEngagementPanel} x */
+	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x=>{const {showEngagementPanelEndpoint,...y}=x; this.g(y);this.D_ShowEngagementPanel(showEngagementPanelEndpoint);});}
+	/** @private @arg {D_ShowEngagementPanel} x */
+	D_ShowEngagementPanel(x) {
+		const cf="D_ShowEngagementPanel";
+		const {panelIdentifier,...y}=this.sd(cf,x); this.g(y);
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.sd(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
 	/** @private @arg {AD_Signal} x */
@@ -10681,6 +10689,10 @@ class HandleTypes extends ServiceMethods {
 			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
 		});
 	}
+	/** @private @arg {R_MusicCarouselShelf} x */
+	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
+	/** @private @arg {R_MusicShelf} x */
+	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
 	/** @private @arg {D_SearchFeedSectionList} x */
 	D_SearchFeedSectionList(x) {
 		const cf="D_SearchFeedSectionList";
@@ -12684,19 +12696,6 @@ class HandleTypes extends ServiceMethods {
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {
-		const cf="E_ShowEngagementPanel";
-		const {clickTrackingParams,showEngagementPanelEndpoint,...y}=this.sd(cf,x); this.g(y);
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.D_ShowEngagementPanel(showEngagementPanelEndpoint);
-	}
-	/** @private @arg {D_ShowEngagementPanel} x */
-	D_ShowEngagementPanel(x) {
-		const cf="D_ShowEngagementPanel";
-		const {panelIdentifier,...y}=this.sd(cf,x); this.g(y);
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
-	}
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
@@ -12734,6 +12733,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_TextRuns(channelTitleText);
 		this.R_Thumbnail(channelThumbnail);
 		this.trackingParams(cf,trackingParams);
+		this.D_Accessibility(accessibility);
 	}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
@@ -12774,53 +12774,53 @@ class HandleTypes extends ServiceMethods {
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
-	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
 		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_Playlist_MD} x */
 	D_Playlist_MD(x) {
 		const cf="D_Playlist_MD";
 		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {
 		const cf="D_AlertWithButton";
 		const {type,text,dismissButton,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_ChannelSwitcherPage} x */
 	D_ChannelSwitcherPage(x) {
 		const cf="D_ChannelSwitcherPage";
 		const {header,targetId,contents,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {
 		const cf="D_MerchandiseShelf";
 		const {title,items,trackingParams,showText,hideText,actionButton,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
 		const cf="D_VideoPrimaryInfo";
 		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {
 		const cf="D_VideoSecondaryInfo";
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.sd(cf,x); this.g(y);
 		this.R_VideoOwner(owner);
+		debugger;
 	}
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
 	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {
-		const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,x => this.D_RefreshPlaylist(this.w(x)));
-		const {clickTrackingParams,refreshPlaylistCommand,...y}=this.sd(cf,x); this.g(y);
-	}
+	C_RefreshPlaylist(x) {const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,x => this.D_RefreshPlaylist(this.w(x)));}
 	/** @private @arg {D_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist";
@@ -12832,9 +12832,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_VideoOwner";
 		if("badges" in x) {
 			const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,badges,...y}=this.sd(cf,x); this.g(y);
+			debugger;
 			return;
 		}
 		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
