@@ -171,12 +171,22 @@ class JsonReplacerState {
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
 	}
+	is_crash_testing = false;
 	/** @arg {string} k @arg {JsonInputType|null} obj */
 	json_replacer(k, obj) {
 		if (typeof obj !== "object")
 			return obj;
 		if (obj === null)
 			return obj;
+		x: try {
+			if (this.is_crash_testing)
+				break x;
+			let test_state = new JsonReplacerState;
+			test_state.is_crash_testing = true;
+			JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
+		} catch {
+			console.log("failed to stringify", obj);
+		}
 		let x = obj;
 		const {object_store} = this;
 		if (!object_store.includes(x)) {
@@ -632,8 +642,9 @@ class JsonReplacerState {
 		return log_args;
 	}
 	run() {
-		let doc_child=document.body.firstElementChild;
-		if(!doc_child) throw new Error("No firstElement of document.body");
+		let doc_child = document.body.firstElementChild;
+		if (!doc_child)
+			throw new Error("No firstElement of document.body");
 		let {arr} = this.on_run_request(doc_child);
 		let all_vnodes = [];
 		for (let item of this.result_history) {
