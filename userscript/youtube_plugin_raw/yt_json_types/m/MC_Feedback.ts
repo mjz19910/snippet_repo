@@ -1,1 +1,0 @@
-type MC_Feedback={webCommandMetadata: {};};

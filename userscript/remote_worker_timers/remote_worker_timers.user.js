@@ -215,15 +215,15 @@
 	const TimeoutClearStringSingle="clearTimeout";
 	const TimeoutClearStringRepeating="clearInterval";
 	class TimeoutSetStrings {
-		/** @type {import("./constants.js").TimeoutSetStringSingle} */
+		/** @type {import("./constants.js").WorkerConstants.TimeoutSetStringSingle} */
 		single=TimeoutSetStringSingle;
-		/** @type {import("./constants.js").TimeoutSetStringRepeating} */
+		/** @type {import("./constants.js").WorkerConstants.TimeoutSetStringRepeating} */
 		repeating=TimeoutSetStringRepeating;
 	}
 	class TimeoutClearStrings {
-		/** @type {import("./constants.js").TimeoutClearStringSingle} */
+		/** @type {import("./constants.js").WorkerConstants.TimeoutClearStringSingle} */
 		single=TimeoutClearStringSingle;
-		/** @type {import("./constants.js").TimeoutClearStringRepeating} */
+		/** @type {import("./constants.js").WorkerConstants.TimeoutClearStringRepeating} */
 		repeating=TimeoutClearStringRepeating;
 	}
 	class TimerApi {

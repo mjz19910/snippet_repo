@@ -9135,7 +9135,7 @@ class HandleTypes extends ServiceMethods {
 	IC_ReelWatch(x) {this.H_("IC_ReelWatch",x,this.D_ReelWatch);}
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {this.T_Endpoint("E_ReelWatch",x,this.IC_ReelWatch,this.M_VE37414);}
-	/** @private @arg {D_ReelWatch} x */
+	/** @private @arg {DE_ReelWatch} x */
 	D_ReelWatch(x) {
 		const cf="D_ReelWatch";
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType}=this.sd(cf,x);// this.g(y);//#destructure
@@ -11315,7 +11315,7 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		if(rootVe!==4724) debugger;
 	}
-	/** @private @arg {D_Search} x */
+	/** @private @arg {DE_Search} x */
 	D_Search(x) {this.H_("D_Search",x,this.primitive_str);}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {

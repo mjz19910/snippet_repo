@@ -206,9 +206,6 @@ type DE_VE11487_Browse={browseId: "SPunlimited";};
 type DE_VE23462_Browse={browseId: GU_VE23462_UrlType;};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};
-type DE_CreateBackstagePost={createBackstagePostParams: string;};
-type DE_CreateComment={createCommentParams: string;};
-type DE_GetNotificationMenu={ctoken: string;};
 type DE_Subscribe={channelIds: string[]; params: string;};
 type DE_WatchPlaylist={playlistId: `RD${string}`; index: 13; params: string;};
 //#endregion
@@ -311,45 +308,47 @@ type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: D_ShowRel
 //#endregion
 //#region Endpoints
 type E_AddToPlaylistService=TE_Endpoint_Ex<{webCommandMetadata: GM_playlist_get_add_to_playlist;},"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
+type DE_AddToPlaylistService={videoId: string;};
 type E_CreateBackstagePost=TE_Endpoint_Ex<{webCommandMetadata: GM_backstage_create_post;},"createBackstagePostEndpoint",DE_CreateBackstagePost>;
+type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type E_CreateComment=TE_Endpoint_Ex<{webCommandMetadata: GM_comment_create_comment;},"createCommentEndpoint",DE_CreateComment>;
-type E_Feedback=TE_Endpoint_Ex<{webCommandMetadata: GM_feedback;},"feedbackEndpoint",DE_Feedback>;
+type DE_CreateComment={createCommentParams: string;};
+type E_Feedback=TE_Endpoint_Ex<M_Feedback,"feedbackEndpoint",DE_Feedback>;
+type DE_Feedback={feedbackToken: string; uiActions: D_HideEnclosingContainer; actions?: A_ReplaceEnclosing[];};
 type E_GetNotificationMenu=TE_Endpoint_Ex<{webCommandMetadata: GM_GetNotificationMenu;},"getNotificationMenuEndpoint",DE_GetNotificationMenu>;
+type DE_GetNotificationMenu={ctoken: string;};
 type E_GetReportForm=TE_Endpoint_Ex<M_FlagGetForm,"getReportFormEndpoint",DE_GetReportForm>;
+type DE_GetReportForm={params: string;};
 type E_GetTranscript=TE_Endpoint_Ex<D_Empty_WCM,"getTranscriptEndpoint",DE_GetTranscript>;
 type DE_GetTranscript={params: string;};
 type E_Like=TE_Endpoint_Ex<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
 type DE_Like=E_LikeIndifferent|E_LikeLike|E_LikeDislike;
+type E_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
+type E_LikeLike={status: "LIKE"; target: D_LikeApi; actions?: C_MusicLibraryStatusUpdate[]; likeParams?: string;};
+type E_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
 type E_NotificationOptOut=TE_Endpoint_Ex<D_Empty_WCM,"notificationOptOutEndpoint",DE_NotificationOptOut>;
-type DE_NotificationOptOut={
-	optOutText: R_TextRuns;
-	serializedOptOut: string;
-	serializedRecordInteractionsRequest: string;
-};
+type DE_NotificationOptOut={optOutText: R_TextRuns; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type E_PlaylistEdit=TE_Endpoint_Ex<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",DE_PlaylistEdit>;
-type DE_PlaylistEdit={
-	actions: GA_Playlist[];
-	playlistId: "WL";
-	params?: string;
-};
+type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
 type E_PlaylistEditor=TE_Endpoint_Ex<D_Empty_WCM,"playlistEditorEndpoint",DE_PlaylistEditor>;
 type DE_PlaylistEditor={playlistId: string;};
 type E_RecordNotificationInteractions=TE_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
-type E_ReelWatch=TE_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
-type D_ReelWatch={
-	videoId?: string;
-	playerParams: string;
-	thumbnail?: R_Thumbnail;
-	overlay: R_ReelPlayerOverlay;
-	params: string;
-	sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
-	sequenceParams?: string;
-	inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
-};
-type E_Search=TE_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
-type D_Search={query: string;};
+type E_ReelWatch=TE_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",DE_ReelWatch>;
+type DE_ReelWatch={videoId?: string;playerParams: string;thumbnail?: R_Thumbnail;overlay: R_ReelPlayerOverlay;params: string;sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";sequenceParams?: string;inputType?: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
+type E_Search=TE_Endpoint_Ex<M_VE4724,"searchEndpoint",DE_Search>;
+type DE_Search={query: string;};
+type M_Feedback={webCommandMetadata: GM_feedback;};
 type E_SetSetting=TE_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
+type S_Client_Item=[
+	E_ShowEngagementPanel,
+	A_SendFeedback,
+	A_Signal,
+	C_AddToPlaylist,
+	TA_OpenPopup<TA_OpenPopup_Toast<RA_NotificationAction>|TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>>,
+][number];
+type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
+type TA_OpenPopup_Toast<T>={popup: T;popupType: "TOAST";};
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: DE_ShowEngagementPanel;};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type E_SignalNavigation=TE_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DE_SignalNavigation>;
@@ -416,3 +415,4 @@ type AD_Notification={
 	actionButton?: R_Button;
 	trackingParams: string;
 };
+type BB_RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};

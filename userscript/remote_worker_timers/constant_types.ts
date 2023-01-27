@@ -1,4 +1,5 @@
-import {
+import {WorkerConstants} from "./constants.js";
+const {
 	ReplyClearAny,
 	ReplyClearRepeating,
 	ReplyClearSingle,
@@ -31,7 +32,7 @@ import {
 	WorkerReadyReply,
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
-} from "./constants.js";
+}=WorkerConstants;
 
 export type TimeoutSetStringsT={
 	single: typeof TimeoutSetStringSingle;

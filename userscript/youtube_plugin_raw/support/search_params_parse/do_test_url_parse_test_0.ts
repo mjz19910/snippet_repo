@@ -1,4 +1,8 @@
 function do_test_url_parse_test_0() {
+	function parse_with_url_parse<T extends string>(str: T): UrlParse<T> {
+		let s=new URL(str);
+		return s as any as UrlParse<T>;
+	}
 	let pagead=new class {
 		adview=new class {
 			ai: string|null=null;
