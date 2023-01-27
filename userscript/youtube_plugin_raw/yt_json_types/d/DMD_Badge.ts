@@ -1,4 +1,8 @@
 type DMD_Badge={
+	style: "BADGE_STYLE_TYPE_SIMPLE";
+	label: "New";
+	trackingParams: string;
+}|{
 	icon: T_Icon<"CHECK_CIRCLE_THICK">;
 	style: "BADGE_STYLE_TYPE_VERIFIED";
 	tooltip: "Verified";

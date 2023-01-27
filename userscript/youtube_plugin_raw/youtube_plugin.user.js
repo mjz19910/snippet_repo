@@ -9730,22 +9730,7 @@ class HandleTypes extends ServiceMethods {
 		return [un_prefix,other];
 	}
 	/** @private @arg {E_Watch} x */
-	E_Watch(x) {
-		const cf="E_Watch";
-		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=this.sd(cf,x); this.g(y);
-		x: if(clickTrackingParams) {
-			let x=clickTrackingParams;
-			const root=cf;
-			const path="tracking.trackingParams";
-			let dx=decodeURIComponent(x);
-			let res_e=this._decode_b64_url_proto_obj(dx);
-			if(!res_e) break x;
-			let param_map=this.make_param_map(res_e);
-			this.parser.parse_endpoint_param(root,path,new Map(param_map));
-		}
-		this.t(commandMetadata,this.M_VE3832);
-		this.DE_VE3832_Watch(watchEndpoint);
-	}
+	E_Watch(x) {const cf="E_Watch"; this.T_Endpoint(cf,x,x => this.y(x,this.DE_VE3832_Watch),this.M_VE3832);}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		const cf="DE_VE3832_Watch";
@@ -10036,6 +10021,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_enum("BADGE_STYLE_TYPE",x.style);
 		switch(x.style) {
 			default: x===0; debugger; break;
+			case "BADGE_STYLE_TYPE_SIMPLE": {
+				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);
+				this.trackingParams(cf,trackingParams);
+				if(label!=="New") debugger;
+			} break;
 			case "BADGE_STYLE_TYPE_YPC": {
 				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);
 				this.trackingParams(cf,trackingParams);
