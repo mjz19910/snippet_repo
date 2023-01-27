@@ -11180,7 +11180,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_SimpleText(title);
 		this.R_TextRuns(subtitle);
 	}
-	/** @private @arg {ES_Button} x */
+	/** @private @arg {D_Button_SE} x */
 	ES_Button(x) {
 		const cf="ES_Button";
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x,this.M_SendPost,this.G_ClientSignal);

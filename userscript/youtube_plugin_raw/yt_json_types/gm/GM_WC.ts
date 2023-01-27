@@ -372,7 +372,6 @@ type SE_Signal_SubscribeButton=TE_Endpoint_Ex<M_SendPost,"signalServiceEndpoint"
 type SE_Signal_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 
 type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
-type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
 
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 // TODO #4

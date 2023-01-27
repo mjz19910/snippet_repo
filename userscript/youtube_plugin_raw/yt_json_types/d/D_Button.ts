@@ -3,7 +3,7 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: ES_Button;
+	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
@@ -17,7 +17,7 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: ES_Button;
+	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
@@ -30,7 +30,7 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: ES_Button;
+	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
@@ -45,7 +45,7 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: ES_Button;
+	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
@@ -55,3 +55,4 @@ type D_Button={
 	hint?: R_Hint;
 	targetId?: D_Button$TargetId;
 };
+type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
