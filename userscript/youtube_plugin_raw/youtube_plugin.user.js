@@ -5085,7 +5085,7 @@ class ParserService extends BaseService {
 			default: debugger; return;
 		}
 	}
-	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["api",...any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<DP_ParseUrlStr_1,"/">,["api",...any]>} x */
 	parse_api_url(x) {
 		let a=split_string_once(x[1],"/");
 		switch(a[0]) {
@@ -5108,7 +5108,7 @@ class ParserService extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<DP_ParseUrlStr_1,"/">,["channel",...any]>} x */
 	parse_channel_url(x) {
 		if(this.str_starts_with_at_1(x,"UC")) {
 			return;
@@ -5146,11 +5146,11 @@ class ParserService extends BaseService {
 	parse_video_id(x) {
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<DP_ParseUrlStr_1,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		this.x.get("indexed_db").put({v: x[1]});
 	}
-	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
+	/** @private @arg {Extract<T_SplitOnce<DP_ParseUrlStr_1,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
 		let [,a]=x;
 		if(this.str_is_search(a)) {
@@ -6374,7 +6374,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_url_1(root,up[1]);
 	}
-	/** @private @arg {P_ParamsSection} root @arg {ParseUrlStr_1} x */
+	/** @private @arg {P_ParamsSection} root @arg {DP_ParseUrlStr_1} x */
 	parse_url_1(root,x) {
 		let v=split_string_once(x,"/");
 		switch(v.length) {
@@ -6456,7 +6456,7 @@ class ParserService extends BaseService {
 			default: debugger; return;
 		}
 	}
-	/** @private @arg {Extract<T_SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
+	/** @private @arg {Extract<T_SplitOnce<DP_ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
 	parse_account_url(x) {
 		let a=split_string(x,"_");
 		if(a.length===1) return;
