@@ -27,7 +27,6 @@ class LogGenerator {
 		return [this.log_str, this.log_args.slice()];
 	}
 }
-/** @template {string} T @template {string} U @typedef {import("./item_types").Split<T,U>} Split */
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e, x = e) {
@@ -182,7 +181,7 @@ class JsonReplacerState {
 	/** @type {number|null} */
 	id = null;
 	cache_map = new Map;
-
+	/** @type {Node[]} */
 	dom_nodes = [];
 	json_result_cache = new Map;
 	/** @type {CacheItemType[]} */
@@ -220,8 +219,10 @@ class JsonReplacerState {
 			this.json_result_cache.set(x, json_result);
 			return ["TAG::stringify_result", json_result, new InputObjBox];
 		} catch (e) {
+			if (e instanceof RangeError) {
+				return ["TAG::stringify_range_error", e];
+			}
 			JsonReplacerState.stringify_failed_obj.push(x);
-			debugger;
 			if (was_crash_testing) {
 				throw e;
 			}
@@ -597,6 +598,7 @@ class JsonReplacerState {
 			case "TAG::parsed_json":
 			case "TAG::cache_item_to_log":
 			case "TAG::cache_item_result":
+			case "TAG::stringify_range_error":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
@@ -608,7 +610,8 @@ class JsonReplacerState {
 	/** @arg {CacheItemType} x */
 	on_run_with_cache_type(x) {
 		if ("__cache_item" in x)
-			return {};
+			return { __cache_item: true };
+		return null;
 	}
 	/** @arg {JsonInputType} x */
 	on_run_with_object_store_type(x) {
@@ -633,7 +636,7 @@ class JsonReplacerState {
 		}
 		let ret_obj = {
 			cache_index,
-			arr: res
+			arr: res.arr,
 		};
 		return ret_obj;
 	}
@@ -746,7 +749,7 @@ class JsonReplacerState {
 		if (!doc_child)
 			throw new Error("No firstElement of document.body");
 		let run_result = this.on_run_request(["store_object", doc_child]);
-		if (!run_result)
+		if (!run_result || "__cache_item" in run_result)
 			return;
 		let { arr } = run_result;
 		let all_vnodes = [];
