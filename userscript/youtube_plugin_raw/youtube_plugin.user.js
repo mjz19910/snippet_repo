@@ -12051,7 +12051,6 @@ class HandleTypes extends ServiceMethods {
 	D_CompactRadio_NavE(x) {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
-
 	}
 	/** @private @arg {D_CompactRadio['shareUrl']} b */
 	D_CompactRadio_shareUrl(b) {
