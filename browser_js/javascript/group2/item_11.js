@@ -6,58 +6,66 @@ function main() {
 	class FSObject {
 		/** @virtual */
 		class_name() {
-			throw new Error("Unable to use virtual function")
+			throw new Error("Unable to use virtual function");
 		}
 	}
 	class File extends FSObject {
+		/** @arg {string} name @arg {string|null} content */
 		constructor(name,content) {
-			super()
-			this.name=name
-			this.content=content
+			super();
+			this.name=name;
+			this.content=content;
 		}
 		toArray() {
-			return [this.class_name(),this.name,this.content]
+			return [this.class_name(),this.name,this.content];
 		}
+		/** @override */
 		class_name() {
-			return "File"
+			return "File";
 		}
 	}
 	class Directory extends FSObject {
+		/** @typedef {{toArray():{}[]}|File} DirChild */
+		/** @arg {string} name @arg {(x:Directory)=>void} [init_func] */
 		constructor(name,init_func) {
-			super()
-			this.name=name
-			this.children=[]
+			super();
+			this.name=name;
+			/** @type {DirChild[]} */
+			this.children=[];
 			if(init_func) {
-				init_func(this)
+				init_func(this);
 			}
 		}
+		/** @arg {DirChild} dir_child */
 		push(dir_child) {
-			this.children.push(dir_child)
+			this.children.push(dir_child);
 		}
 		toArray() {
-			let children=[]
+			let children=[];
 			for(let i=0;i<this.children.length;i++) {
-				let cur=this.children[i]
-				children.push(cur.toArray())
+				let cur=this.children[i];
+				children.push(cur.toArray());
 			}
-			return [this.class_name(),this.name].concat(children)
+			return [this.class_name(),this.name,...children];
 		}
+		/** @override */
 		class_name() {
-			return "Directory"
+			return "Directory";
 		}
 	}
+	/** @arg {Directory} dir @arg {DirChild|File} dir_child */
 	function dir_add_child(dir,dir_child) {
-		dir.children.push(dir_child)
+		dir.children.push(dir_child);
 	}
 	let fs_root=new Directory("/",function(dir) {
-		let ex_dir=new Directory("example")
-		dir_add_child(dir,ex_dir)
-		let cur_dir
-		cur_dir=new Directory(".vscode")
-		dir_add_child(ex_dir,cur_dir)
+		let ex_dir=new Directory("example");
+		dir_add_child(dir,ex_dir);
+		let cur_dir;
+		cur_dir=new Directory(".vscode");
+		dir_add_child(ex_dir,cur_dir);
 		dir_add_child(ex_dir,new Directory("banking",function(dir) {
-			dir_add_child(dir,new Directory("__pycache__"))
-			dir_add_child(dir,new File("__init__.py",null))
+			dir_add_child(dir,new Directory("__pycache__"));
+			dir_add_child(dir,new File("__init__.py",null));
 			dir_add_child(dir,new File("account.py",`
 from dataclasses import dataclass
 
@@ -76,7 +84,7 @@ class Account:
 			raise ValueError("Insufficient funds")
 		self.balance -= amount
 
-`))
+`));
 			dir_add_child(dir,new File("bank.py",`
 import random
 import string
@@ -97,9 +105,9 @@ class Bank:
 
 	def get_account(self, account_number: str) -> Account:
 		return self.accounts[account_number]
-`))
+`));
 		}
-		))
+		));
 		dir_add_child(ex_dir,new File("main.py",`
 from banking.bank import Bank
 
@@ -128,9 +136,9 @@ def main() -> None:
 
 if __name__ == "__main__":
 	main()
-`))
+`));
 	}
-	)
-	return fs_root.children[0].toArray()
+	);
+	return fs_root.children[0].toArray();
 }
-main()
+main();
