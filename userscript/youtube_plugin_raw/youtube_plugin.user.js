@@ -1549,6 +1549,11 @@ function _close_div_scope() {
 	plugin_overlay_element.append(overlay_content_div);
 	plugin_overlay_element.append(input_modify_css_style);
 	plugin_overlay_element.append(overlay_hide_ui_input);
+	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
+	document.addEventListener("yt-action",on_yt_action);
+	/** @private @type {string[]} */
+	let playlist_arr=[];
+	on_yt_navigate_finish.push(log_current_video_data);
 	function title_text_overlay_update() {
 		if(title_text_overlay_enabled) {
 			overlay_hide_ui_input.style.color="";
@@ -1581,7 +1586,6 @@ function _close_div_scope() {
 		ytd_player.active_nav=false;
 		ytd_player.init_nav=true;
 	}
-	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
 	function init_ui_plugin() {
 		if(waiting_for_ytd_player) return;
 		if(current_timeout===null)
@@ -1664,8 +1668,6 @@ function _close_div_scope() {
 		plugin_overlay_element.style.top=player_offset.top_offset+"px";
 		plugin_overlay_element.style.left=player_offset.left_offset+"px";
 	}
-	/** @private @type {string[]} */
-	let playlist_arr=[];
 	function log_current_video_data() {
 		if(!ytd_player) return;
 		if(!ytd_player.player_) {
@@ -1682,9 +1684,12 @@ function _close_div_scope() {
 		console.log(playlist_log_str);
 		overlay_content_div.innerText=`[${video_id}] ${title}`;
 	}
-	on_yt_navigate_finish.push(log_current_video_data);
-	/** @private @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
+	/** @private @arg {Event|CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
 	function on_yt_action(event) {
+		if(!("detail" in event)) {
+			console.log("[on_yt_action] event [yt-action] has no detail (not a CustomEvent)");
+			return;
+		}
 		let {detail}=event;
 		if(is_yt_fullscreen_change_action(detail)) {
 			let {args}=detail;
@@ -1694,7 +1699,6 @@ function _close_div_scope() {
 			title_text_overlay_update();
 		}
 	}
-	document.addEventListener("yt-action",as(on_yt_action));
 	function title_display_toggle() {
 		title_on=!title_on;
 		title_text_overlay_update();
