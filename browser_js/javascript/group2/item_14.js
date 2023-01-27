@@ -326,7 +326,7 @@ class JsonReplacerState {
 		/** @type {[string,string|number][]} */
 		let res = [];
 		let type_parts = split_string(type, "::");
-		console.log("[run_internal_info] type [%o]", type_parts);
+		if(type_parts[0]!=="CONTENT") {debugger; return res;}
 		for (let x of arr) {
 			let ri = this.stringify_each(x);
 			res.push(ri);
@@ -603,7 +603,7 @@ class JsonReplacerState {
 		x)=>x.id);
 		out_ex.x1 = x1;
 		let x2 = res_in.input_obj;
-		let nh = filt_arr(history, mh);
+		let nh = filter_arr(history, mh);
 		let rc = res_in.json_result_cache;
 		let cv = [...rc.keys()];
 		if (cv.length === 1 && cv[0] === x2) {
@@ -621,7 +621,7 @@ class JsonReplacerState {
 			let item = out_ex;
 			let self = this;
 			const key = "cache";
-			item[key] = filt_arr(cache, self[key]);
+			item[key] = filter_arr(cache, self[key]);
 		}
 		if (object_store) {
 			out_ex.object_store = object_store.map((/** @type {any} */
@@ -633,7 +633,7 @@ class JsonReplacerState {
 		x)=>this.on_run_request(x));
 		return history;
 		/** @arg {any[]} x @arg {any[]} o_arr */
-		function filt_arr(x, o_arr) {
+		function filter_arr(x, o_arr) {
 			return x.filter((/** @type {any} */
 			x)=>!o_arr.includes(x));
 		}
