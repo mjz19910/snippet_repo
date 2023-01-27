@@ -48,7 +48,7 @@ export type DataItemReturn=|["TAG::vnode_item",{}]|[
 	["TAG::null_arr",null[]],
 	["TAG::cache_item",number],
 	["TAG::null",null],
-	["TAG::stringify_result",string],
+	["TAG::stringify_result",string,InputObjBox],
 	["TAG::parsed_json",DataParsable],
 	["CONTENT::empty"],
 	["CONTENT::cache",CacheItemType[]],

@@ -164,6 +164,10 @@ function Z_len_k(x) {
 	return Object.keys(x).length;
 }
 const log_gen = new LogGenerator;
+class InputObjBox {
+	/** @type {DataItemReturn[][]} */
+	arr = [];
+}
 class JsonReplacerState {
 	/** @type {any[][]} */
 	static all_cache = [];
@@ -300,17 +304,16 @@ class JsonReplacerState {
 		}
 		return `TYPE::Store.cache[${cache.indexOf(obj)}]`;
 	}
-	/** @arg {any} item @returns {[string,number|string]} */
+	/** @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
-		/** @type {[string, string | number][][]} */
-		let arr = [];
 		if (this.cache.includes(item)) {
 			return ["TAG::cache_item", this.cache.indexOf(item)];
 		}
-		let res = JSON.stringify(item, this.json_replacer.bind(this), "\t");
-		this.json_result_cache.set(item, res);
-		this.do_json_replace(arr, ["cache", this.cache]);
-		return ["TAG::stringify_result", res];
+		let json_res = JSON.stringify(item, this.json_replacer.bind(this), "\t");
+		this.json_result_cache.set(item, json_res);
+		let replace_res = new InputObjBox;
+		this.do_json_replace(replace_res, ["cache", this.cache]);
+		return ["TAG::stringify_result", json_res, replace_res];
 	}
 	/** @arg {this} parent */
 	prepare_self(parent) {
@@ -326,10 +329,10 @@ class JsonReplacerState {
 		}
 		return;
 	}
-	/** @arg {DataItemReturn} obj @returns {[string,string|number][]} */
+	/** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 	run_internal(obj) {
 		let [type, ...arr] = obj;
-		/** @type {[string,string|number][]} */
+		/** @type {DataItemReturn[]} */
 		let res = [];
 		let type_parts = split_string(type, "::");
 		if (type_parts[0] !== "CONTENT") {
@@ -375,8 +378,8 @@ class JsonReplacerState {
 		let oh = x.result_history;
 		oh.forEach((x) => add_hist_unique(rh, x));
 	}
-	/** @template {keyof ContentArgsType} T @arg {any[]} json_res_arr @arg {ContentArgsType[T]} args */
-	do_json_replace(json_res_arr, args) {
+	/** @template {keyof ContentArgsType} T @arg {InputObjBox} res_box @arg {ContentArgsType[T]} args */
+	do_json_replace(res_box, args) {
 		if (this.id && this.id > 5)
 			return;
 		switch (args[0]) {
@@ -385,7 +388,7 @@ class JsonReplacerState {
 					const [c_name, target] = args;
 					if (target.length !== 0) {
 						let res = this.run_json_replacement([`CONTENT::${c_name}`, target]);
-						json_res_arr.push(res);
+						res_box.arr.push(res);
 					}
 				}
 				break;
@@ -406,10 +409,9 @@ class JsonReplacerState {
 		let res = vnode_arr.map((x, idx) => this.on_data_item(["TAG::vnode", x], idx), this);
 		console.log(res);
 	}
-	/** @arg {string} section @arg {any} i @arg {string | number} t @arg {(string | number)[]} x */
-	log_data_result(section, i, t, x) {
-		let skip = true;
-		!skip && console.log(`--- [%s[%s]] ---\n%s %o`, section, i, t, ...x);
+	/** @arg {string} section @arg {any} i @arg {["TAG::parsed_json",DataParsable]|["TAG::result",DataItemReturn]} data_result */
+	log_data_result(section, i, data_result) {
+		console.log(`--- [%s[%s]] ---\n%s %o`, section, i, ...data_result);
 	}
 	post_run() {
 		if (JsonReplacerState.stringify_failed_obj.length > 0) {
@@ -435,7 +437,8 @@ class JsonReplacerState {
 		let { cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, id, is_crash_testing, ...os } = new_state;
 		let ns_id = this.id;
 		Z_len_k(os) > 0 && console.log("[json_data_ex]\n%o", os);
-		let [inner_type, ...inner_arr] = res[0];
+		let first_result = res[0];
+		let [inner_type, ...inner_arr] = first_result;
 		let skip = true;
 		!skip && console.log("[cache_item]", inner_type, data[0]);
 		!skip && console.log(new_state);
@@ -462,7 +465,7 @@ class JsonReplacerState {
 		if (typeof inner_arr[0] === "string") {
 			inner_arr[0] = JSON.parse(inner_arr[0]);
 		}
-		this.log_data_result("json_data", idx, inner_type, inner_arr);
+		this.log_data_result("json_data", idx, ["TAG::result", first_result]);
 		return from_cache;
 	}
 	/** @arg {{}} x @arg {number} i */
@@ -556,9 +559,12 @@ class JsonReplacerState {
 			case "TAG::stringify_result":
 				{
 					const [tag, ...data] = x;
-					let data_item = data.map(x => JSON.parse(x, (...r_args) => this.json_reviver(r_args)));
-					this.log_data_result("vnode", idx, tag, data_item);
-					return ["TAG::bad_array", data_item];
+					let data_item = data[0];
+					let parsed_item = JSON.parse(data_item, (...r_args) => this.json_reviver(r_args));
+					/** @type {["TAG::parsed_json",DataParsable]} */
+					let p_res = ["TAG::parsed_json", parsed_item];
+					this.log_data_result("vnode", idx, p_res);
+					return p_res;
 				}
 			case "TAG::null_arr":
 			case "TAG::null":
@@ -579,14 +585,14 @@ class JsonReplacerState {
 	}
 	/** @arg {CacheItemType} x */
 	on_run_with_cache_type(x) {
-		x;
+		if ("__cache_item" in x)
+			return {};
 	}
 	/** @arg {JsonInputType} x */
 	on_run_with_object_store_type(x) {
-		/** @type {[][]} */
-		let arr = [];
+		let res = new InputObjBox;
 		if (x instanceof Element) {
-			this.do_json_replace(arr, ["input", x]);
+			this.do_json_replace(res, ["input", x]);
 		} else {
 			debugger;
 		}
@@ -594,18 +600,18 @@ class JsonReplacerState {
 			this.cache.push(x);
 		}
 		if (this.vue_app !== null) {
-			this.do_json_replace(arr, ["vue_app", this.vue_app]);
+			this.do_json_replace(res, ["vue_app", this.vue_app]);
 		}
-		this.do_json_replace(arr, ["vnodes", this.vnodes]);
-		this.do_json_replace(arr, ["dom_nodes", this.dom_nodes]);
-		this.do_json_replace(arr, ["cache", this.cache]);
+		this.do_json_replace(res, ["vnodes", this.vnodes]);
+		this.do_json_replace(res, ["dom_nodes", this.dom_nodes]);
+		this.do_json_replace(res, ["cache", this.cache]);
 		let cache_index = -1;
 		if (x !== null) {
 			cache_index = this.cache.indexOf(x);
 		}
 		let ret_obj = {
 			cache_index,
-			arr
+			arr: res
 		};
 		return ret_obj;
 	}
