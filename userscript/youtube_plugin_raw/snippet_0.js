@@ -659,7 +659,7 @@ class ND extends Snippet_0_tmp {
 		}
 		return [tog,untoggled,other];
 	}
-	/** @protected @template T @arg {T$Item<T>} x @arg {(x:T)=>void} f */
+	/** @protected @template T @arg {T_Item<T>} x @arg {(x:T)=>void} f */
 	ItemTemplate(x,f) {
 		const cf="ItemTemplate";
 		this.save_keys(`[${cf}]`,x);

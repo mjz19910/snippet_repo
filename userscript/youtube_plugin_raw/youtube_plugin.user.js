@@ -10761,7 +10761,7 @@ class HandleTypes extends ServiceMethods {
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
-	/** @private @arg {RD_NextContinuation} x */
+	/** @private @arg {RC_Next} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,x => this.CT_ClickTracked(x,"next"));}
 	/** @private @arg {"next"} section @arg {CT_ClickTracked} x */
 	CT_ClickTracked(x,section) {
@@ -11443,7 +11443,7 @@ class HandleTypes extends ServiceMethods {
 		const {isProcessed}=this.sd(cf,x);// this.g(y);//#destructure
 		this.primitive_of(isProcessed,"boolean");
 	}
-	/** @private @arg {UA_EngagementPanel} x */
+	/** @private @arg {A_UpdateEngagementPanel} x */
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
@@ -13325,15 +13325,19 @@ class HandleTypes extends ServiceMethods {
 		const cf="DE_Feedback";
 		const {feedbackToken,uiActions,actions,...y}=this.sd(cf,x); this.g(y);
 		let fb_dec=base64_url_dec.decodeByteArray(feedbackToken);
-		this.t(fb_dec,x => console.log("[feedbackToken.bytes[0..1]]",x[0],x[1]));
-		this.params(cf,"feedback.feedbackToken",feedbackToken);
+		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
 		this.D_HideEnclosingContainer(uiActions);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
 	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {x; debugger;}
+	A_ReplaceEnclosing(x) {
+		this.T_Endpoint("A_ReplaceEnclosing",x,x => {
+			const {replaceEnclosingAction: act,...y}=x; this.g(y);
+
+		});
+	}
 	/** @private @arg {D_HideEnclosingContainer} x */
-	D_HideEnclosingContainer(x) {x; debugger;}
+	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

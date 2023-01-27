@@ -17,7 +17,7 @@ type G_SectionList={
 	targetId: `browse-feedUC${string}featured`;
 }|D_SectionList_BrowseFeed_Subscriptions;
 type G_TT_SectionList={
-	continuations: RD_NextContinuation[];
+	continuations: RC_Next[];
 	contents: TR_SectionListItem_3<{},{},{}>[];
 	trackingParams: string;
 	subMenu: {};

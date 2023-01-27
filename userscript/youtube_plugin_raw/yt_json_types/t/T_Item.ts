@@ -1,3 +1,3 @@
-type T$Item<T>={
+type T_Item<T>={
 	item: T;
 };

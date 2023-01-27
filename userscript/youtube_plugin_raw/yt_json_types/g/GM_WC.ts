@@ -1,6 +1,9 @@
 //#region Templates
-type T_SE_Signal<T,U>={clickTrackingParams: string; commandMetadata: T; signalServiceEndpoint: U;};
+type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
 type EB_Endpoint<T={}>={clickTrackingParams: string; commandMetadata: T;};
+type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string;commandMetadata?: C}&{[I in T]:U};
+type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]:V};
+type T_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
 type T_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
 //#endregion
@@ -51,7 +54,7 @@ type GM_WC=[
 	GM_Next,
 	GM_notification_get_unseen_count,
 	GM_notification_opt_out,
-	GM_notification_record_interactions,
+	GM_RecordInteractions,
 	GM_playlist_create,
 	GM_playlist_get_add_to_playlist,
 	GM_SendPost,
@@ -204,7 +207,7 @@ type GM_notification_opt_out={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/opt_out";
 };
-type GM_notification_record_interactions={
+type GM_RecordInteractions={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/record_interactions";
 };
@@ -254,6 +257,7 @@ type M_Browse={webCommandMetadata: GM_Browse;};
 type M_FlagGetForm={webCommandMetadata: GM_FlagGetForm;};
 type M_GetNotificationMenu={webCommandMetadata: GM_GetNotificationMenu;};
 type M_Next={webCommandMetadata: GM_Next;};
+type M_RecordInteractions={webCommandMetadata: GM_RecordInteractions;};
 type M_SendPost={webCommandMetadata: GM_SendPost;};
 type M_YpcGetCart={webCommandMetadata: GM_YpcGetCart;};
 //#endregion
@@ -275,14 +279,14 @@ type DE_Subscribe={channelIds: string[]; params: string;};
 type DE_WatchPlaylist={playlistId: `RD${string}`; index: 13; params: string;};
 //#endregion
 //#region E_VE
-type E_VE3611_Browse={clickTrackingParams: string; commandMetadata: M_VE3611; browseEndpoint: DE_VE3611_Browse;};
-type E_VE3854_Browse={clickTrackingParams: string; commandMetadata: M_VE3854; browseEndpoint: DE_VE3854_Browse;};
-type E_VE5754_Browse={clickTrackingParams: string; commandMetadata: M_VE5754; browseEndpoint: DE_VE5754_Browse;};
-type E_VE6827_Browse={clickTrackingParams: string; commandMetadata: M_VE6827; browseEndpoint: DE_VE6827_Browse;};
-type E_VE11487_Browse={clickTrackingParams: string; commandMetadata: M_VE11487; browseEndpoint: DE_VE11487_Browse;};
-type E_VE23462_Browse={clickTrackingParams: string; commandMetadata: M_VE23462; browseEndpoint: DE_VE23462_Browse;};
-type E_VE42352_Browse={clickTrackingParams: string; commandMetadata: M_VE42352; browseEndpoint: DE_VE42352_Browse;};
-type E_VE96368_Browse={clickTrackingParams: string; commandMetadata: M_VE96368; browseEndpoint: DE_VE96368_Browse;};
+type E_VE3611_Browse=T_Endpoint_Ex<M_VE3611,"browseEndpoint",DE_VE3611_Browse>;
+type E_VE3854_Browse=T_Endpoint_Ex<M_VE3854,"browseEndpoint",DE_VE3854_Browse>;
+type E_VE5754_Browse=T_Endpoint_Ex<M_VE5754,"browseEndpoint",DE_VE5754_Browse>;
+type E_VE6827_Browse=T_Endpoint_Ex<M_VE6827,"browseEndpoint",DE_VE6827_Browse>;
+type E_VE11487_Browse=T_Endpoint_Ex<M_VE11487,"browseEndpoint",DE_VE11487_Browse>;
+type E_VE23462_Browse=T_Endpoint_Ex<M_VE23462,"browseEndpoint",DE_VE23462_Browse>;
+type E_VE42352_Browse=T_Endpoint_Ex<M_VE42352,"browseEndpoint",DE_VE42352_Browse>;
+type E_VE96368_Browse=T_Endpoint_Ex<M_VE96368,"browseEndpoint",DE_VE96368_Browse>;
 //#endregion
 type E_Browse=[
 	E_VE3611_Browse,
@@ -301,12 +305,13 @@ type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngag
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
 type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: R_EngagementPanelTargetId;};
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
-type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: T$Item<R_NotificationText|RA_ReelDismissal>;};
+type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: T_Item<R_NotificationText|RA_ReelDismissal>;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
 type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: {};};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: {};};
+type A_UpdateEngagementPanel={updateEngagementPanelAction: D_UpdateEngagementPanel; clickTrackingParams: string;};
 type A_UpdateNotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: U_NotificationsUnseenCount;};
 //#endregion
 //#region Commands
@@ -325,40 +330,46 @@ type C_RepeatChapter={clickTrackingParams: string; repeatChapterCommand: CD_Repe
 type C_ResetChannelUnreadCount={clickTrackingParams: string; resetChannelUnreadCountCommand: D_ResetChannelUnreadCount;};
 type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: D_ShowReloadUi;};
 //#endregion
-type CT_ClickTracked={continuation: string; clickTrackingParams: string;};
-type E_AddToPlaylistService={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_playlist_get_add_to_playlist;}; addToPlaylistServiceEndpoint: DE_AddToPlaylistService;};
-type E_CreateBackstagePost={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_backstage_create_post;}; createBackstagePostEndpoint: DE_CreateBackstagePost;};
-type E_CreateComment={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_comment_create_comment;}; createCommentEndpoint: DE_CreateComment;};
-type E_Feedback={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_feedback;}; feedbackEndpoint: DE_Feedback;};
-type E_GetNotificationMenu={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_GetNotificationMenu;}; getNotificationMenuEndpoint: DE_GetNotificationMenu;};
-type E_GetReportForm={clickTrackingParams: string; commandMetadata: M_FlagGetForm; getReportFormEndpoint: DE_GetReportForm;};
-type E_GetTranscript={clickTrackingParams: string; commandMetadata: {}; getTranscriptEndpoint: DE_GetTranscript;};
-type E_Like={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;}; likeEndpoint: DE_Like;};
-type E_NotificationOptOut={clickTrackingParams: string; commandMetadata: {}; notificationOptOutEndpoint: AE_NotificationOptOut;};
-type E_PlaylistEdit={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_browse_edit_playlist;}; playlistEditEndpoint: D_PlaylistEdit;};
-type E_PlaylistEditor={clickTrackingParams: string; commandMetadata: {}; playlistEditorEndpoint: DE_PlaylistEditor;};
-type E_RecordNotificationInteractions={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_notification_record_interactions;}; recordNotificationInteractionsEndpoint: DE_RecordNotificationInteractions;};
-type E_ReelWatch={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_VE37414_WC;}; reelWatchEndpoint: D_ReelWatch;};
-type E_Search={clickTrackingParams: string; commandMetadata: M_VE4724; searchEndpoint: D_Search;};
-type E_SetSettingAutonavForDesktop<T extends boolean>={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_account_set_setting;}; setSettingEndpoint: SettingItemAutonavForDesktop<T>;};
+//#region Endpoints
+type E_AddToPlaylistService=T_Endpoint_Ex<{webCommandMetadata: GM_playlist_get_add_to_playlist;},"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
+type E_CreateBackstagePost=T_Endpoint_Ex<{webCommandMetadata: GM_backstage_create_post;},"createBackstagePostEndpoint",DE_CreateBackstagePost>;
+type E_CreateComment=T_Endpoint_Ex<{webCommandMetadata: GM_comment_create_comment;},"createCommentEndpoint",DE_CreateComment>;
+type E_Feedback=T_Endpoint_Ex<{webCommandMetadata: GM_feedback;},"feedbackEndpoint",DE_Feedback>;
+type E_GetNotificationMenu=T_Endpoint_Ex<{webCommandMetadata: GM_GetNotificationMenu;},"getNotificationMenuEndpoint",DE_GetNotificationMenu>;
+type E_GetReportForm=T_Endpoint_Ex<M_FlagGetForm,"getReportFormEndpoint",DE_GetReportForm>;
+type E_GetTranscript=T_Endpoint_Ex<{},"getTranscriptEndpoint",DE_GetTranscript>;
+type E_Like=T_Endpoint_Ex<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
+type E_NotificationOptOut=T_Endpoint_Ex<{},"notificationOptOutEndpoint",AE_NotificationOptOut>;
+type E_PlaylistEdit=T_Endpoint_Ex<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",D_PlaylistEdit>;
+type E_PlaylistEditor=T_Endpoint_Ex<{},"playlistEditorEndpoint",DE_PlaylistEditor>;
+type E_RecordNotificationInteractions=
+T_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
+type E_ReelWatch=
+T_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
+type E_Search=T_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
+type E_SetSettingAutonavForDesktop<T extends boolean>=
+T_Endpoint_Ex<{webCommandMetadata: GM_account_set_setting;},"Endpoint",SettingItemAutonavForDesktop<T>>;
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: D_ShowEngagementPanel;};
-type E_SignalNavigation={clickTrackingParams: string; commandMetadata: M_VE83769; signalNavigationEndpoint: DS_Navigation;};
-type E_Subscribe={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_subscription_subscribe;}; subscribeEndpoint: DE_Subscribe;};
-type E_UndoFeedback={clickTrackingParams: string; commandMetadata: {webCommandMetadata: {};}; undoFeedbackEndpoint: D_UndoFeedback;};
-type E_Upload={clickTrackingParams: string; commandMetadata: {webCommandMetadata: {};}; uploadEndpoint: E_Upload;};
-type E_Url={clickTrackingParams: string; commandMetadata: M_VE83769; urlEndpoint: DE_Url;};
-type E_Watch={clickTrackingParams: string; commandMetadata?: M_VE3832; watchEndpoint: DE_VE3832_Watch;};
-type E_WatchPlaylist={clickTrackingParams: string; commandMetadata: {}; watchPlaylistEndpoint: DE_WatchPlaylist;};
-type E_YpcGetCart={clickTrackingParams: string; commandMetadata: M_YpcGetCart; ypcGetCartEndpoint: D_YpcGetCart;};
-type E_YpcGetOffers={clickTrackingParams: string; commandMetadata: {webCommandMetadata: {};}; ypcGetOffersEndpoint: D_YpcGetOffers;};
+type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DS_Navigation>;
+type E_Subscribe=T_Endpoint_Ex<{webCommandMetadata: GM_subscription_subscribe;},"subscribeEndpoint",DE_Subscribe>;
+type E_UndoFeedback=T_Endpoint_Ex<{webCommandMetadata: {};},"undoFeedbackEndpoint",D_UndoFeedback>;
+type E_Upload=T_Endpoint_Ex<{webCommandMetadata: {};},"uploadEndpoint",B_Hack>;
+type E_Url=T_Endpoint_Ex<M_VE83769,"urlEndpoint",DE_Url>;
+type E_Watch=T_Endpoint_Ex_1<M_VE3832,"watchEndpoint",DE_VE3832_Watch>;
+type E_WatchPlaylist=T_Endpoint_Ex<{},"watchPlaylistEndpoint",DE_WatchPlaylist>;
+type E_YpcGetCart=T_Endpoint_Ex<M_YpcGetCart,"ypcGetCartEndpoint",D_YpcGetCart>;
+type E_YpcGetOffers=T_Endpoint_Ex<{webCommandMetadata: {};},"ypcGetOffersEndpoint",D_YpcGetOffers>;
 type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: D_YpcGetOfflineUpsell;};
-type SE_CreatePlaylist={clickTrackingParams: string; commandMetadata: {webCommandMetadata: {sendPost: true; apiUrl: "/youtubei/v1/playlist/create";};}; createPlaylistServiceEndpoint: DS_CreatePlaylist;};
-type ES_ShareEntity={clickTrackingParams: string; commandMetadata: {webCommandMetadata: GM_share_get_share_panel;}; shareEntityServiceEndpoint: D_ShareEntityService;};
-type SE_Signal_SubscribeButton={clickTrackingParams: string; commandMetadata: M_SendPost; signalServiceEndpoint: G_ClientSignal;};
+//#endregion
+type SE_CreatePlaylist=T_Endpoint_Ex<{webCommandMetadata: {sendPost: true; apiUrl: "/youtubei/v1/playlist/create";};},"createPlaylistServiceEndpoint",DS_CreatePlaylist>;
+type ES_ShareEntity=T_Endpoint_Ex<{webCommandMetadata: GM_share_get_share_panel;},"shareEntityServiceEndpoint",D_ShareEntityService>;
+type SE_Signal_SubscribeButton=T_Endpoint_Ex<M_SendPost,"signalServiceEndpoint",G_ClientSignal>;
 type SE_Signal_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 
-type UA_EngagementPanel={updateEngagementPanelAction: D_UpdateEngagementPanel; clickTrackingParams: string;};
 type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
-type RD_NextContinuation={nextContinuationData: CT_ClickTracked;};
-type D_NextRadioContinuation={nextRadioContinuationData: CT_ClickTracked;};
+
+
+type CT_ClickTracked={continuation: string; clickTrackingParams: string;};
+type RC_Next={nextContinuationData: CT_ClickTracked;};
+type RC_NextRadio={nextRadioContinuationData: CT_ClickTracked;};

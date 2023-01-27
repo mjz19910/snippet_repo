@@ -1,5 +1,5 @@
 type RSG_Transcript={
 	responseContext: RC_ResponseContext;
-	actions: UA_EngagementPanel[];
+	actions: A_UpdateEngagementPanel[];
 	trackingParams: string;
 };

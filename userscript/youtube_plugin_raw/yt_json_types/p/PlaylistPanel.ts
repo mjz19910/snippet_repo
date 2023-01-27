@@ -5,7 +5,7 @@ type D_PlaylistPanel={
 	playlistId: `RD${string}`;
 	ownerName?: R_TextRuns;
 	isInfinite: true;
-	continuations?: D_NextRadioContinuation[];
+	continuations?: RC_NextRadio[];
 	shortBylineText: R_TextRuns;
 	longBylineText?: R_TextRuns;
 	trackingParams: string;
