@@ -224,15 +224,23 @@ class JsonReplacerState {
 			return obj;
 		if (obj === null)
 			return obj;
+		let was_crash_testing = this.is_crash_testing;
 		x: try {
 			if (this.is_crash_testing)
 				break x;
 			this.is_crash_testing = true;
-			let test_state = JsonReplacerState.create_with_flags(this);
+			let test_state = this.clone();
+			debugger;
 			JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
-		} catch {
-			JsonReplacerState.stringify_failed_obj.push(obj);
-			return "TYPE::StringifyFailed:" + Object.keys(obj);
+		} catch (e) {
+			if (e === null) {
+				JsonReplacerState.stringify_failed_obj.push(obj);
+				return "TYPE::StringifyFailed:" + Object.keys(obj);
+			}
+			console.log(e);
+			throw e;
+		} finally {
+			this.is_crash_testing = was_crash_testing;
 		}
 		let x = obj;
 		const { object_store } = this;
@@ -253,7 +261,7 @@ class JsonReplacerState {
 		}
 		if (obj instanceof Node) {
 			const { dom_nodes } = this;
-			dom_nodes.push(obj);
+			if (!dom_nodes.includes(obj)) dom_nodes.push(obj);
 			let obj_index = dom_nodes.indexOf(obj);
 			return `TYPE::Store.dom_nodes[${obj_index}]`;
 		}
@@ -275,6 +283,7 @@ class JsonReplacerState {
 		function is_vue_vnode(x) {
 			return !!("component" in x && x.component?.vnode);
 		}
+		console.log(is_vue_vnode(obj), "component" in x && x.component?.vnode);
 		if (is_vue_vnode(obj)) {
 			if (!vnodes.includes(obj))
 				vnodes.push(obj);
@@ -289,7 +298,7 @@ class JsonReplacerState {
 				};
 			}
 			if (obj.__Z_ignore_replacement) {
-				this.debugger;
+				this.break_debugger;
 				return obj;
 			}
 			if (obj?.__vue_app__) {
@@ -315,15 +324,11 @@ class JsonReplacerState {
 		this.do_json_replace(replace_res, ["cache", this.cache]);
 		return ["TAG::stringify_result", json_res, replace_res];
 	}
-	/** @arg {this} parent */
-	prepare_self(parent) {
-		this.cache = parent.cache;
-		this.json_result_cache = parent.json_result_cache;
-		let parent_history = parent.result_history;
-		parent_history.push(...this.result_history);
-		this.result_history = parent_history;
+	/** @arg {this} other */
+	prepare_self(other) {
+		this.prepare_with_previous(other)
 	}
-	get debugger() {
+	get break_debugger() {
 		{
 			debugger
 		}
@@ -336,7 +341,7 @@ class JsonReplacerState {
 		let res = [];
 		let type_parts = split_string(type, "::");
 		if (type_parts[0] !== "CONTENT") {
-			this.debugger;
+			this.break_debugger;
 			return res;
 		}
 		for (let x of arr) {
@@ -345,16 +350,27 @@ class JsonReplacerState {
 		}
 		return res;
 	}
-	/** @arg {{is_crash_testing:boolean;}} this_ */
-	static create_with_flags(this_) {
+	clone() {
 		let new_state = new JsonReplacerState;
-		new_state.is_crash_testing = this_.is_crash_testing;
+		new_state.prepare_with_previous(this);
 		return new_state;
 	}
 	/** @arg {DataItemReturn} x */
 	run_json_replacement(x) {
-		let new_state = JsonReplacerState.create_with_flags(this);
+		let new_state = this.clone();
 		return new_state.run_json_replacement_with_state(this, x);
+	}
+	/** @arg {this} other */
+	prepare_with_previous(other) {
+		const { is_crash_testing, cache, json_result_cache, result_history: other_history } = other;
+		if (this.result_history.length !== 1) {
+			debugger;
+		}
+		other_history.push(this.result_history[0]);
+		this.is_crash_testing = is_crash_testing;
+		this.cache = cache;
+		this.json_result_cache = json_result_cache;
+		this.result_history = other_history;
 	}
 	/** @arg {DataItemReturn} x @arg {this} parent */
 	run_json_replacement_with_state(parent, x) {
@@ -431,7 +447,7 @@ class JsonReplacerState {
 	/** @arg {any} idx @arg {["TAG::cache_item", number]} data */
 	on_tag_cache_item(idx, data) {
 		let from_cache = this.cache[data[1]];
-		let new_state = JsonReplacerState.create_with_flags(this);
+		let new_state = this.clone();
 		let obj = this.prepare_obj("cache_item_to_log", from_cache);
 		let res = new_state.run_json_replacement_with_state(this, obj);
 		let { cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, id, is_crash_testing, ...os } = new_state;
@@ -500,7 +516,7 @@ class JsonReplacerState {
 		let xu = x;
 		switch (x[0]) {
 			default:
-				this.debugger;
+				this.break_debugger;
 				break;
 			case "TAG::data":
 				{
@@ -536,7 +552,7 @@ class JsonReplacerState {
 							case "TAG::vnode_item":
 								break;
 							default:
-								this.debugger;
+								this.break_debugger;
 								break;
 						}
 					}
@@ -623,7 +639,7 @@ class JsonReplacerState {
 			case "store_object":
 				return this.on_run_with_object_store_type(x[1]);
 			default:
-				this.debugger;
+				this.break_debugger;
 				throw 1;
 		}
 	}
@@ -740,12 +756,10 @@ class JsonReplacerState {
 			return;
 		console.log(log_args);
 	}
-	static default() {
-		return this.create_with_flags({
-			is_crash_testing: false
-		});
+	static create() {
+		return new this;
 	}
 	static {
-		this.default().run();
+		this.create().run();
 	}
 }
