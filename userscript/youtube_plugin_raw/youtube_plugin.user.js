@@ -11552,7 +11552,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @template V @arg {{[U in `${string}Entity`]:V}} x */
 	EN$(x) {return this.w(x,this.get_keys_of(x)[0]);}
-	/** @private @arg {G_Entity} x @returns {G_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?V|null:null:never} */
+	/** @private @arg {G_EY_Entity} x @returns {G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?V|null:null:never} */
 	EntityMutationPayload(x) {
 		const cf="EntityMutationPayload"; this.k(cf,x);
 		if("subscriptionStateEntity" in x) return this.EN$(x);

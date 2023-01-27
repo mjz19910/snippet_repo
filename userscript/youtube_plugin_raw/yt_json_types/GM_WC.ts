@@ -265,7 +265,7 @@ type AD_ShowEngagementPanelScrim={
 	onClickCommands: TA_OpenPopup<{}>[];
 };
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
-type AD_Signal={signal: E_SignalEnum;};
+type AD_Signal={signal: E_SignalStr;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
 type AD_UndoFeedback={};
 type A_UpdateEngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};

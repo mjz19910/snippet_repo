@@ -1,1 +1,1 @@
-type E_Offlineability={offlineabilityEntity: DE_Offlineability;};
+type EY_Offlineability={offlineabilityEntity: DE_Offlineability;};

@@ -1,4 +1,4 @@
-type E_SignalEnum=
+type E_SignalStr=
 	|"ENABLE_CHROME_NOTIFICATIONS"
 	|"HELP"
 	|"HISTORY_BACK"
