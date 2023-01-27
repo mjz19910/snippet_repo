@@ -1531,6 +1531,24 @@ async function wait_for_yt_player() {
 	await ytd_player.playerResolver_.promise;
 }
 function _close_div_scope() {
+	let overlay_content_div=document.createElement("div");
+	let input_modify_css_style=document.createElement("div");
+	let overlay_hide_ui_input=document.createElement("div");
+	let plugin_overlay_element=document.createElement("div");
+	overlay_content_div.style.userSelect="all";
+	overlay_content_div.style.width="max-content";
+	input_modify_css_style.style.float="left";
+	input_modify_css_style.innerHTML="C";
+	input_modify_css_style.onclick=ui_css_toggle_click_handler;
+	overlay_hide_ui_input.style.float="left";
+	overlay_hide_ui_input.style.clear="left";
+	overlay_hide_ui_input.innerHTML="H";
+	overlay_hide_ui_input.onclick=title_display_toggle;
+	plugin_overlay_element.id="mz_overlay";
+	plugin_overlay_element.setAttribute("style",_player_overlay_style_str);
+	plugin_overlay_element.append(overlay_content_div);
+	plugin_overlay_element.append(input_modify_css_style);
+	plugin_overlay_element.append(overlay_hide_ui_input);
 	function title_text_overlay_update() {
 		if(title_text_overlay_enabled) {
 			overlay_hide_ui_input.style.color="";
@@ -1596,24 +1614,6 @@ function _close_div_scope() {
 		}
 		current_timeout=setTimeout(activate_nav,0);
 	}
-	let overlay_content_div=document.createElement("div");
-	let input_modify_css_style=document.createElement("div");
-	let overlay_hide_ui_input=document.createElement("div");
-	let plugin_overlay_element=document.createElement("div");
-	overlay_content_div.style.userSelect="all";
-	overlay_content_div.style.width="max-content";
-	input_modify_css_style.style.float="left";
-	input_modify_css_style.innerHTML="C";
-	input_modify_css_style.onclick=ui_css_toggle_click_handler;
-	overlay_hide_ui_input.style.float="left";
-	overlay_hide_ui_input.style.clear="left";
-	overlay_hide_ui_input.innerHTML="H";
-	overlay_hide_ui_input.onclick=title_display_toggle;
-	plugin_overlay_element.id="mz_overlay";
-	plugin_overlay_element.setAttribute("style",_player_overlay_style_str);
-	plugin_overlay_element.append(overlay_content_div);
-	plugin_overlay_element.append(input_modify_css_style);
-	plugin_overlay_element.append(overlay_hide_ui_input);
 	function activate_nav() {
 		if(is_yt_debug_enabled) console.log("activate_nav:fire");
 		if(!ytd_player) return;
