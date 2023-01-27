@@ -5092,7 +5092,7 @@ class ParserService extends BaseService {
 			case "stats": this.parse_api_stats_url(a[1]); break;
 		}
 	}
-	/** @private @arg {DP_ParseApiUrlStr} x */
+	/** @private @arg {NS_DP_Parse.ParseApiUrlStr} x */
 	parse_api_stats_url(x) {
 		const cf="parse_api_stats_url";
 		let a=split_string_once(x,"?");
@@ -6296,7 +6296,7 @@ class ParserService extends BaseService {
 	cache_playlist_id=[];
 	/** @private @type {string[]} */
 	cache_player_params=[];
-	/** @private @arg {P_ParamsSection} root @arg {Extract<YtUrlFormat,`https://${string}`|`http://${string}`>} x */
+	/** @private @arg {P_ParamsSection} root @arg {Extract<D_UrlFormat,`https://${string}`|`http://${string}`>} x */
 	parse_full_url(root,x) {
 		let r=this.parse_with_url_parse(x);
 		switch(r.host) {
@@ -6318,7 +6318,7 @@ class ParserService extends BaseService {
 			let h=split_string(r.host,".");
 			if(this.TODO_true) return;
 			console.log("yt_ggpht_url",h[0],c[0],v);
-			/** @private @type {YtUrlFormat} */
+			/** @private @type {D_UrlFormat} */
 			return;
 		}
 		switch(r.host) {
@@ -6344,7 +6344,7 @@ class ParserService extends BaseService {
 			} return;
 			default:
 		}
-		/** @private @type {YtUrlFormat|YtExternalUrlFormat} */
+		/** @private @type {D_UrlFormat|YtExternalUrlFormat} */
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
@@ -6352,7 +6352,7 @@ class ParserService extends BaseService {
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
-	/** @api @public @arg {P_ParamsSection} root @arg {YtUrlFormat} x */
+	/** @api @public @arg {P_ParamsSection} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {
 		if(this.str_starts_with("https://",x)) {
 			return this.parse_full_url(root,x);
@@ -6423,8 +6423,8 @@ class ParserService extends BaseService {
 		}
 	}
 	log_channel_handles=false;
-	/** @private @type {YtUrlFormat} */
-	/** @private @arg {P_ParamsSection} root @arg {Extract<T_SplitOnce<T_SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
+	/** @private @type {D_UrlFormat} */
+	/** @private @arg {P_ParamsSection} root @arg {Extract<T_SplitOnce<T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
 	parse_url_2(root,x) {
 		if(this.str_is_search(x)) {
 			return this.parse_url_with_search(root,as(x));

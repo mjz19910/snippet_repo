@@ -1,5 +1,5 @@
 type GM_Base={
-	url?: YtUrlFormat;
+	url?: D_UrlFormat;
 	webPageType?: YtPageTypeEnum;
 	apiUrl?: D_ApiPathFormat;
 	sendPost?: boolean;

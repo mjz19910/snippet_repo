@@ -5,8 +5,8 @@ type D_AdaptiveFormatItem={
 	bitrate: number;
 	width?: number;
 	height?: number;
-	initRange: YtRange;
-	indexRange: YtRange;
+	initRange: D_Range;
+	indexRange: D_Range;
 	lastModified: string;
 	contentLength: string;
 	quality: G_FormatQuality;

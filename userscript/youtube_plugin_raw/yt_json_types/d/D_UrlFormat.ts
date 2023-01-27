@@ -1,4 +1,4 @@
-type YtUrlFormat=[
+type D_UrlFormat=[
 	"android-app://com.google.android.youtube/http/youtube.com/premium",
 	"/",
 	"/channel_switcher",
