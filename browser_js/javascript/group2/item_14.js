@@ -232,12 +232,12 @@ class JsonReplacerState {
 			let test_state = this.clone();
 			debugger; JSON.stringify(obj, this.json_replacer.bind(test_state), "\t");
 		} catch (e) {
-			if (e === null) {
-				JsonReplacerState.stringify_failed_obj.push(obj);
-				return "TYPE::StringifyFailed:" + Object.keys(obj);
+			JsonReplacerState.stringify_failed_obj.push(obj);
+			if (was_crash_testing) {
+				throw e;
 			}
-			console.log(e);
-			throw e;
+			console.log("swallowing error", e);
+			return "TYPE::StringifyFailed:" + Object.keys(obj);
 		} finally {
 			this.is_crash_testing = was_crash_testing;
 		}
