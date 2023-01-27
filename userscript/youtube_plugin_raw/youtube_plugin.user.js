@@ -9296,6 +9296,16 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.sd(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
+	/** @private @arg {AD_Signal} x */
+	AD_Signal(x) {
+		const {signal,...y}=x; this.g(y);
+		switch(signal) {
+			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+		}
+	}
 	/** @private @arg {C_AddToPlaylist} x */
 	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a => this.DC_AddToPlaylist(this.w(a)));}
 	/** @private @arg {DC_AddToPlaylist} x */
@@ -9439,6 +9449,14 @@ class HandleTypes extends ServiceMethods {
 	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar",x,this.D_DecoratedPlayerBar);}
 	/** @private @arg {R_NotificationAction} x */
 	R_NotificationAction(x) {this.H_("R_NotificationAction ",x,this.D_NotificationAction);}
+	/** @private @arg {D_NotificationAction} x */
+	D_NotificationAction(x) {
+		const cf="D_NotificationAction";
+		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
+		this.G_Text(responseText);
+		this.t(actionButton,this.R_Button);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
@@ -12309,6 +12327,36 @@ class HandleTypes extends ServiceMethods {
 		this.do_codegen(cf,x);
 		debugger;
 	}
+	/** @private @arg {R_CommentsEntryPointHeader} x */
+	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader",x,this.D_CommentsEntryPointHeader);}
+	/** @private @arg {D_CommentsEntryPointHeader} x */
+	D_CommentsEntryPointHeader(x) {
+		const cf="D_CommentsEntryPointHeader";
+		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.sd(cf,x); this.g(y);
+		this.R_TextRuns(headerText);
+		this.C_Executor(onTap);
+		this.trackingParams(cf,trackingParams);
+		this.R_SimpleText(commentCount);
+		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);
+		if(targetId!=="comments-entry-point-header-identifier") debugger;
+	}
+	/** @private @arg {D_CommentsEntryPointHeader['contentRenderer']} x */
+	D_CommentsEntryPointHeader_contentRenderer(x) {
+		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
+		debugger;
+	}
+	/** @private @arg {R_CommentsEntryPointTeaser} x */
+	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
+	/** @private @arg {D_CommentsEntryPointTeaser} x */
+	D_CommentsEntryPointTeaser(x) {
+		const cf="D_CommentsEntryPointTeaser";
+		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
+		if(!teaserAvatar.accessibility) debugger;
+		this.R_Thumbnail(teaserAvatar);
+		if(!teaserContent.simpleText) debugger;
+		this.R_SimpleText(teaserContent);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";
@@ -12813,36 +12861,6 @@ class HandleTypes extends ServiceMethods {
 	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList",x,this.D_HorizontalCardList);}
 	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody",x,this.D_ExpandableVideoDescriptionBody);}
-	/** @private @arg {R_CommentsEntryPointHeader} x */
-	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader",x,this.D_CommentsEntryPointHeader);}
-	/** @private @arg {D_CommentsEntryPointHeader} x */
-	D_CommentsEntryPointHeader(x) {
-		const cf="D_CommentsEntryPointHeader";
-		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.sd(cf,x); this.g(y);
-		this.R_TextRuns(headerText);
-		this.C_Executor(onTap);
-		this.trackingParams(cf,trackingParams);
-		this.R_SimpleText(commentCount);
-		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);
-		if(targetId!=="comments-entry-point-header-identifier") debugger;
-	}
-	/** @private @arg {D_CommentsEntryPointHeader['contentRenderer']} x */
-	D_CommentsEntryPointHeader_contentRenderer(x) {
-		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
-		debugger;
-	}
-	/** @private @arg {R_CommentsEntryPointTeaser} x */
-	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser",x,this.D_CommentsEntryPointTeaser);}
-	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {
-		const cf="D_CommentsEntryPointTeaser";
-		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
-		if(!teaserAvatar.accessibility) debugger;
-		this.R_Thumbnail(teaserAvatar);
-		if(!teaserContent.simpleText) debugger;
-		this.R_SimpleText(teaserContent);
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
@@ -12866,24 +12884,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_ExpandableVideoDescriptionBody";
 		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);
 		debugger;
-	}
-	/** @private @arg {D_NotificationAction} x */
-	D_NotificationAction(x) {
-		const cf="D_NotificationAction";
-		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.G_Text(responseText);
-		this.t(actionButton,this.R_Button);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {A_Signal} x */
-	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.sd(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
-	/** @private @arg {AD_Signal} x */
-	AD_Signal(x) {
-		const {signal,...y}=x; this.g(y);
-		switch(signal) {
-			default: debugger; break;
-			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
-		}
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
