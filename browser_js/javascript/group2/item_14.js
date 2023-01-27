@@ -312,7 +312,7 @@ class JsonReplacerState {
 		this.do_json_replace(arr, ["cache", this.cache]);
 		return ["TAG::stringify_result", res];
 	}
-	/** @arg {JsonReplacerState} parent */
+	/** @arg {this} parent */
 	prepare_self(parent) {
 		this.cache = parent.cache;
 		this.json_result_cache = parent.json_result_cache;
@@ -338,7 +338,7 @@ class JsonReplacerState {
 		let new_state = new JsonReplacerState;
 		return new_state.run_json_replacement_with_state(this, x);
 	}
-	/** @arg {DataItemReturn} x @arg {JsonReplacerState} parent */
+	/** @arg {DataItemReturn} x @arg {this} parent */
 	run_json_replacement_with_state(parent, x) {
 		let new_state = this;
 		let this_ = parent;
