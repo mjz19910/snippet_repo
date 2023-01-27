@@ -3,5 +3,5 @@ type T_WCM_={
 	webPageType?: YtPageTypeEnum;
 	apiUrl?: string;
 	sendPost?: boolean;
-	rootVe?: SeenRootVisualElementType;
+	rootVe?: D_RootVisualElementType;
 };
