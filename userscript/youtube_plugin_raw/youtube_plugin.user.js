@@ -14,6 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 //#region done
 //#region basic
+
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {
 	return x;
@@ -10006,7 +10007,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		{debugger;}
 	}
-	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_UrlType,`${string}//studio.youtube.com${string}`>} b */
+	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_UrlStr,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
 		if(!this.str_is_uri(b)) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
@@ -10037,6 +10038,9 @@ class HandleTypes extends ServiceMethods {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with(rp,x)) return this.handle_yt_url(x);
 		let sp=this.parse_with_url_parse(x);
+		if(this.str_starts_with("https://",sp.href)) {
+			return;
+		}
 		this.GM_VE83769_UrlType(sp.href);
 	}
 	/** @private @arg {DE_Url} x */
@@ -10063,14 +10067,14 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
-	/** @private @arg {Extract<GU_VE83769_UrlType,`${string}://music.youtube.com${string}`>} x */
+	/** @private @arg {Extract<GU_VE83769_ExternalUrlStr,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
 		switch(x) {
 			case "https://music.youtube.com/": break;
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {GU_VE83769_UrlType} x */
+	/** @private @arg {GU_VE83769_UrlStr|GU_VE83769_ExternalUrlStr} x */
 	GM_VE83769_UrlType(x) {
 		let up=this.parse_with_url_parse(x);
 		switch(up.host) {
@@ -10080,12 +10084,14 @@ class HandleTypes extends ServiceMethods {
 			case "tv.youtube.com": return;
 			default: debugger; break;
 		}
-		const sh="https://studio.youtube.com",mh="https://music.youtube.com";
-		const yk="https://www.youtubekids.com/?source=youtube_web";
-		if(this.str_starts_with(sh,x)) return;
-		if(this.str_starts_with(mh,x)) return;
-		if(this.str_starts_with(yk,x)) return;
-		if(this.str_starts_with("https://tv.youtube.com",x)) return;
+		const hn_yt_studio="https://studio.youtube.com"
+		const hn_yt_music="https://music.youtube.com";
+		const hn_yt_kids="https://www.youtubekids.com";
+		const hn_yt_tv="https://tv.youtube.com";
+		if(this.str_starts_with(hn_yt_studio,x)) return;
+		if(this.str_starts_with(hn_yt_music,x)) return;
+		if(this.str_starts_with(hn_yt_kids,x)) return;
+		if(this.str_starts_with(hn_yt_tv,x)) return;
 		switch(x) {
 			default: x===""; debugger; break;
 			case "/upload": break;

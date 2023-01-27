@@ -27,12 +27,19 @@ type GU_VE6827_Url_NoParams="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_
 type GU_VE6827_Url_Params="FEtrending"|"FEstorefront";
 type GU_VE6827_UrlType=GU_VE6827_Url_NoParams|GU_VE6827_Url_Params;
 type GU_VE23462_UrlType="SPaccount_notifications"|"SPaccount_overview";
-type GU_VE83769_UrlType=
+type GU_VE83769_UrlStr=
 	|"/upload"
-	|"https://music.youtube.com/"
-	|"https://studio.youtube.com/"
-	|"https://www.youtubekids.com/?source=youtube_web"
+	;
+;
+type GU_VE83769_ExternalUrlStr=
 	|`https://studio.youtube.com/channel/UC${string}`
+	|`https://studio.youtube.com/channel/UC${string}/videos`
+	|"https://studio.youtube.com/"
+	|"https://studio.youtube.com"
+	|"https://music.youtube.com/"
+	|"https://music.youtube.com"
+	|"https://www.youtubekids.com?source=youtube_web"
+	|"https://www.youtubekids.com/?source=youtube_web"
 	|"https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273"
 	;
 ;
@@ -134,7 +141,7 @@ type GM_VE42352_WC={
 	rootVe: 42352; apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE83769_WC={
-	url: GU_VE83769_UrlType;
+	url: GU_VE83769_UrlStr|GU_VE83769_ExternalUrlStr;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };

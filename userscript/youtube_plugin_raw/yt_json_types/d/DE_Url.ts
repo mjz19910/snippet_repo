@@ -3,6 +3,6 @@ type DE_Url={
 	target: "TARGET_NEW_WINDOW";
 	nofollow: true;
 }|{
-	url: DE_Url_UrlType;
+	url: GU_VE83769_ExternalUrlStr;
 	target: "TARGET_NEW_WINDOW";
 };
