@@ -217,6 +217,7 @@ class JsonReplacerState {
 			this.is_crash_testing = first === false;
 			let test_state = this.clone();
 			let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
+			this.json_result_cache.set(x, json_result);
 			return ["TAG::stringify_result", json_result, new InputObjBox];
 		} catch (e) {
 			JsonReplacerState.stringify_failed_obj.push(x);
@@ -224,7 +225,7 @@ class JsonReplacerState {
 				throw e;
 			}
 			console.log("swallowing error", e);
-			return ["TAG::stringify_failed", Object.keys(x).join()];
+			return "TAG::stringify_failed";
 		} finally {
 			this.is_crash_testing = was_crash_testing;
 		}
@@ -319,11 +320,13 @@ class JsonReplacerState {
 		if (this.cache.includes(item)) {
 			return ["TAG::cache_item", this.cache.indexOf(item)];
 		}
-		let json_res = JSON.stringify(item, this.json_replacer.bind(this), "\t");
-		this.json_result_cache.set(item, json_res);
+		let data_res = this.try_json_stringify(item, true);
 		let replace_res = new InputObjBox;
 		this.do_json_replace(replace_res, ["cache", this.cache]);
-		return ["TAG::stringify_result", json_res, replace_res];
+		if (data_res === null) {
+			return ["TAG::null", null];
+		}
+		return data_res;
 	}
 	/** @arg {this} other */
 	prepare_self(other) {
@@ -337,6 +340,7 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 	run_internal(obj) {
+		if (obj === "TAG::stringify_failed") return [];
 		let [type, ...arr] = obj;
 		/** @type {DataItemReturn[]} */
 		let res = [];
@@ -514,6 +518,7 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
 	on_data_item(x, idx) {
+		if (x === "TAG::stringify_failed") return x;
 		let xu = x;
 		switch (x[0]) {
 			default:
@@ -592,7 +597,6 @@ class JsonReplacerState {
 			case "TAG::parsed_json":
 			case "TAG::cache_item_to_log":
 			case "TAG::cache_item_result":
-			case "TAG::stringify_failed":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
