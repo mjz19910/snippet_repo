@@ -1,4 +1,5 @@
 type T_Endpoint_CF=[
+	"A_ReplaceEnclosing",
 	"A_SendFeedback",
 	"A_Signal",
 	"C_AddToPlaylist",

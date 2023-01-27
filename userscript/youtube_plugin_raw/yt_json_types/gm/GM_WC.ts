@@ -1,4 +1,5 @@
 //#region Templates
+type D_Empty_WCM={webCommandMetadata: {};};
 type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
 type EB_Endpoint<T={}>={clickTrackingParams: string; commandMetadata: T;};
 type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
@@ -337,28 +338,25 @@ type E_CreateComment=T_Endpoint_Ex<{webCommandMetadata: GM_comment_create_commen
 type E_Feedback=T_Endpoint_Ex<{webCommandMetadata: GM_feedback;},"feedbackEndpoint",DE_Feedback>;
 type E_GetNotificationMenu=T_Endpoint_Ex<{webCommandMetadata: GM_GetNotificationMenu;},"getNotificationMenuEndpoint",DE_GetNotificationMenu>;
 type E_GetReportForm=T_Endpoint_Ex<M_FlagGetForm,"getReportFormEndpoint",DE_GetReportForm>;
-type E_GetTranscript=T_Endpoint_Ex<{},"getTranscriptEndpoint",DE_GetTranscript>;
+type E_GetTranscript=T_Endpoint_Ex<D_Empty_WCM,"getTranscriptEndpoint",DE_GetTranscript>;
 type E_Like=T_Endpoint_Ex<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
-type E_NotificationOptOut=T_Endpoint_Ex<{},"notificationOptOutEndpoint",AE_NotificationOptOut>;
+type E_NotificationOptOut=T_Endpoint_Ex<D_Empty_WCM,"notificationOptOutEndpoint",AE_NotificationOptOut>;
 type E_PlaylistEdit=T_Endpoint_Ex<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",D_PlaylistEdit>;
-type E_PlaylistEditor=T_Endpoint_Ex<{},"playlistEditorEndpoint",DE_PlaylistEditor>;
-type E_RecordNotificationInteractions=
-	T_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
-type E_ReelWatch=
-	T_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
+type E_PlaylistEditor=T_Endpoint_Ex<D_Empty_WCM,"playlistEditorEndpoint",DE_PlaylistEditor>;
+type E_RecordNotificationInteractions=T_Endpoint_Ex<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
+type E_ReelWatch=T_Endpoint_Ex<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",D_ReelWatch>;
 type E_Search=T_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
-type E_SetSettingAutonavForDesktop<T extends boolean>=
-	T_Endpoint_Ex<{webCommandMetadata: GM_account_set_setting;},"Endpoint",SettingItemAutonavForDesktop<T>>;
+type E_SetSettingAutonavForDesktop<T extends boolean>=T_Endpoint_Ex<{webCommandMetadata: GM_account_set_setting;},"setSettingEndpoint",SettingItemAutonavForDesktop<T>>;
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: D_ShowEngagementPanel;};
 type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DS_Navigation>;
 type E_Subscribe=T_Endpoint_Ex<{webCommandMetadata: GM_subscription_subscribe;},"subscribeEndpoint",DE_Subscribe>;
-type E_UndoFeedback=T_Endpoint_Ex<{webCommandMetadata: {};},"undoFeedbackEndpoint",D_UndoFeedback>;
-type E_Upload=T_Endpoint_Ex<{webCommandMetadata: {};},"uploadEndpoint",B_Hack>;
+type E_UndoFeedback=T_Endpoint_Ex<D_Empty_WCM,"undoFeedbackEndpoint",D_UndoFeedback>;
+type E_Upload=T_Endpoint_Ex<D_Empty_WCM,"uploadEndpoint",B_Hack>;
 type E_Url=T_Endpoint_Ex<M_VE83769,"urlEndpoint",DE_Url>;
 type E_Watch=T_Endpoint_Ex_1<M_VE3832,"watchEndpoint",DE_VE3832_Watch>;
-type E_WatchPlaylist=T_Endpoint_Ex<{},"watchPlaylistEndpoint",DE_WatchPlaylist>;
+type E_WatchPlaylist=T_Endpoint_Ex<D_Empty_WCM,"watchPlaylistEndpoint",DE_WatchPlaylist>;
 type E_YpcGetCart=T_Endpoint_Ex<M_YpcGetCart,"ypcGetCartEndpoint",D_YpcGetCart>;
-type E_YpcGetOffers=T_Endpoint_Ex<{webCommandMetadata: {};},"ypcGetOffersEndpoint",D_YpcGetOffers>;
+type E_YpcGetOffers=T_Endpoint_Ex<D_Empty_WCM,"ypcGetOffersEndpoint",D_YpcGetOffers>;
 type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: D_YpcGetOfflineUpsell;};
 //#endregion
 type SE_CreatePlaylist=T_Endpoint_Ex<{webCommandMetadata: {sendPost: true; apiUrl: "/youtubei/v1/playlist/create";};},"createPlaylistServiceEndpoint",DS_CreatePlaylist>;
