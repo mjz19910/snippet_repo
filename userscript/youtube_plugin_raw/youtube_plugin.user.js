@@ -2945,8 +2945,8 @@ class BaseService extends BaseServicePrivate {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @arg {K} e_name @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
-	y(x,e_name,f) {f.call(this,this.w(x,e_name));}
+	/** @protected @template U @arg {K} e_name @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
+	y(x,e_name,f) {return f.call(this,this.w(x,e_name));}
 	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
@@ -4502,7 +4502,7 @@ class CodegenService extends BaseService {
 		}
 		return "{}";
 	}
-	/** @param {{[U in string]:unknown}} x @returns {string} */
+	/** @api @public @param {{[U in string]:unknown}} x @returns {string} */
 	get_auto_type_name(x) {
 		let type_name=this.json_auto_replace_1(x);
 		if(type_name==="MetadataBadgeRenderer") {
@@ -7487,6 +7487,7 @@ class ServiceMethods extends ServiceData {
 //#region HandleTypes
 /** @template Cls_T,Cls_U @extends {ServiceMethods<Cls_T,Cls_U>}  */
 class HandleTypes extends ServiceMethods {
+	gk=this.get_keys_of;
 	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
 	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @arg {string} a @arg {{}} b */
@@ -7499,6 +7500,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
+	/** @private @arg {string} cf @arg {{}} x */
+	codegen_renderer(cf,x) {
+		this.codegen.generate_renderer(x,cf);
+	}
 	static {
 		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
 		/** @type {{value:ServiceResolver<CG_ServiceResolver,{}>|null}} */
@@ -7507,11 +7512,8 @@ class HandleTypes extends ServiceMethods {
 		let sr=new ServiceResolver({codegen: cg},{});
 		let t=new this({value: sr});
 		this.prototype.minimal_handler_member_use();
-		this.prototype.codegen_renderer;
-	}
-	/** @private @arg {string} cf @arg {{}} x */
-	codegen_renderer(cf,x) {
-		this.codegen.generate_renderer(x,cf);
+		debugger;
+		t.codegen_renderer("",{});
 	}
 	/** @private */
 	minimal_handler_member_use() {
@@ -7531,7 +7533,12 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		let k=this.get_keys_of(x);
 		let cgx=this.get_codegen_name(x);
-		x: if(cgx!==cf) {
+		let cm=cf;
+		if(this.str_starts_with_r(cf,"IC_")) {
+			cm=`E_${split_string_once(cf,"IC_")[1]}`;
+		}
+		x: if(cgx!==cm) {
+			if(this.ignore_incorrect_name_set.has(cf)) break x;
 			if(this.cg_mismatch_set.has(cgx)) break x;
 			this.cg_mismatch_set.add(cgx);
 			this.cg_mismatch_list.push([cgx,cf]);
@@ -8900,6 +8907,9 @@ class HandleTypes extends ServiceMethods {
 	renderer_decode_map=new Map([
 		["PrefetchHintConfig","R_PrefetchHintConfig"],
 	]);
+	ignore_incorrect_name_set=new Set([
+		"D_CommonConfig",
+	]);
 	/** @private @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
 		if(typeof x.type==='string') {
@@ -8924,7 +8934,7 @@ class HandleTypes extends ServiceMethods {
 		if(ren_dec) {
 			return ren_dec;
 		}
-		return dec;
+		return this.codegen.get_auto_type_name(x);
 	}
 	/** @private @arg {RSU_M} x */
 	RSU_M(x) {
@@ -13357,11 +13367,20 @@ class HandleTypes extends ServiceMethods {
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
 	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {
-		this.T_Endpoint("A_ReplaceEnclosing",x,x => {const {replaceEnclosingAction: a,...y}=x; this.g(y); this.AD_ReplaceEnclosing(a);});
-	}
+	A_ReplaceEnclosing(x) {this.T_Endpoint("A_ReplaceEnclosing",x,x => this.y(x,"replaceEnclosingAction",this.AD_ReplaceEnclosing));}
+	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
+	T_Item=(x,f) => this.y(x,"item",f);
+	/** @arg {AD_ReplaceEnclosing['item']} x */
+	AD_ReplaceEnclosing_Item(x) {x;}
 	/** @private @arg {AD_ReplaceEnclosing} x */
-	AD_ReplaceEnclosing(x) {x; debugger;}
+	AD_ReplaceEnclosing(x) {
+		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
+		let k=this.gk(this.w(x,"item"))[0];
+		switch(k) {
+			case "notificationTextRenderer":
+			case "reelDismissalActionRenderer":
+		}
+	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
