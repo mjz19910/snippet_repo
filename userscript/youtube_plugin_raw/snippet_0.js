@@ -1,4 +1,4 @@
-import {Base64Binary} from "./support/Base64Binary";
+import {Base64Binary} from "./support_1/Base64Binary";
 import {KnownDataSaver} from "./support_2/KnownDataSaver";
 import {MyReader} from "./support_2/MyReader";
 `

@@ -1,6 +1,14 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
+/** @template {string} T @template {string} U @typedef {import("./item_types").Split<T,U>} Split */
+/** @typedef {import("./item_14_types").VueApp} VueApp */
+/** @typedef {import("./item_14_types").CacheItemType} CacheItemType */
+/** @typedef {import("./item_14_types").VueVnode} VueVnode */
+/** @typedef {import("./item_14_types").JsonInputType} JsonInputType */
+/** @typedef {import("./item_14_types").DataItemReturn} DataItemReturn */
+/** @typedef {import("./item_14_types").ContentArgsType} ContentArgsType */
+/** @typedef {import("./item_14_types").DataParsable} DataParsable */
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e, x=e) {
@@ -309,7 +317,7 @@ class JsonReplacerState {
 		oh.forEach((/** @type {any} */
 		x)=>add_hist_unique(rh, x));
 	}
-	/** @template {keyof ContentArgsType} T @arg {any[]} json_res_arr @arg {JsonParseArgs<T>} args */
+	/** @template {keyof ContentArgsType} T @arg {any[]} json_res_arr @arg {ContentArgsType[T]} args */
 	do_json_replace(json_res_arr, args) {
 		if (this.id > 64)
 			return;
