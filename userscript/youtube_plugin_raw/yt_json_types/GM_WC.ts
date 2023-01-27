@@ -255,6 +255,7 @@ type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSecti
 type AD_RemoveFromGuideSection={handlerData: "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"; guideEntryId: T_MixPlaylistStr;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
 type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
+type T_Item<T>={item: T;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
 type AD_SendFeedback={bucket: "Kevlar";};
 type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: AD_SetActivePanelItem;};

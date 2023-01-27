@@ -1,1 +1,0 @@
-type T_Key<T>={key: T;};
