@@ -4142,7 +4142,7 @@ class CodegenService extends BaseService {
 		return "R_Thumbnail";
 	}
 	/** @no_mod @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
-	#generate_renderer_body(req_names,x,keys,t_name) {
+	#codegen_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
 		let x1=x;
 		/** @private @type {string[]} */
@@ -4222,13 +4222,13 @@ class CodegenService extends BaseService {
 		}
 	}
 	/** @no_mod @arg {string} x */
-	#generate_padding(x) {
+	#codegen_padding(x) {
 		return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
 			return "\t".repeat(g);
 		});
 	}
 	/** @no_mod @arg {unknown} x @arg {string|null} r_name */
-	#generate_renderer(x,r_name=null) {
+	#codegen_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
 		console.log("gen renderer for",x);
@@ -4239,7 +4239,7 @@ class CodegenService extends BaseService {
 		if(k===null) return null;
 		let t_name=this.uppercase_first(k);
 		let keys=Object.keys(x);
-		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
+		let body=this.#codegen_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
 		d1!/** @private @arg {${t_name}} x */
 		d1!${t_name}(x) {
@@ -4259,7 +4259,7 @@ class CodegenService extends BaseService {
 			let keys_2=Object.keys(val_2);
 			/** @private @type {string[]} */
 			let next_req=[];
-			let body_2=this.#generate_renderer_body(next_req,x,keys_2,t_name);
+			let body_2=this.#codegen_renderer_body(next_req,x,keys_2,t_name);
 			let tmp0=`
 			d1!/** @private @arg {${e}} x */
 			d1!${e}(x) {
@@ -4271,7 +4271,7 @@ class CodegenService extends BaseService {
 		});
 		tmp_1=ex_names.join("")+tmp_1;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
-		let tmp3=this.#generate_padding(tmp2);
+		let tmp3=this.#codegen_padding(tmp2);
 		return `\n${tmp3}`;
 	}
 	/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
@@ -4289,8 +4289,8 @@ class CodegenService extends BaseService {
 	/** @private @type {string[]} */
 	typedef_cache=[];
 	/** @api @public @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_new_typedef(x,gen_name,ret_val) {
-		let new_typedef=this.#_codegen_new_typedef(x,gen_name);
+	codegen_typedef(x,gen_name,ret_val) {
+		let new_typedef=this.#_codegen_typedef(x,gen_name);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
 			if(!this.typedef_cache.includes(new_typedef)) {
@@ -4300,7 +4300,7 @@ class CodegenService extends BaseService {
 		}
 	}
 	/** @private @arg {string} o @arg {string} k1 */
-	json_filter_string(o,k1) {
+	typedef_json_replace_string(o,k1) {
 		const max_str_len=120;
 		if(k1==="apiUrl") return o;
 		if(k1==="targetId") return o;
@@ -4342,26 +4342,13 @@ class CodegenService extends BaseService {
 			&&x.accessibility;
 	}
 	/** @private @arg {JsonReplacerState} state @arg {{}|null} x @arg {string} k1 */
-	json_filter_object(state,x,k1) {
+	typedef_json_replace_object(state,x,k1) {
 		const {gen_name,key_keep_arr}=state;
 		if(x===null) return x;
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
 		}
-		if(!state.object_store.includes(x)) {
-			state.object_store.push(x);
-			let mi=state.object_store.indexOf(x);
-			state.parent_map.set(x,[mi,k1]);
-		}
-		let mi=state.object_store.indexOf(x);
-		let xi=Object.entries(x);
-		for(let [k_in,val] of xi) {
-			if(state.object_store.includes(val)) continue;
-			state.object_store.push(val);
-			state.parent_map.set(val,[mi,k_in]);
-		}
-		state.k1=k1;
 		/** @type {{[U in string]: unknown}} */
 		let b=x;
 		x: if(this.is_GuideEntrySimple(b)&&typeof b.icon==="object"&&b.icon) {
@@ -4393,7 +4380,16 @@ class CodegenService extends BaseService {
 			}
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
-		if(k1==="") return x;
+		let res_type=this.typedef_json_replace_object_2(state,gen_name,x);
+		if(res_type!==null) return res_type;
+		if(key_keep_arr.includes(k1)) return x;
+		state.object_count++;
+		if(state.object_count<3) return x;
+		return {};
+	}
+	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} rep */
+	typedef_json_replacer(state,k1,rep) {
+		state.k1=k1;
 		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
 		/** @private @type {A_FrameworkUpdates} */
@@ -4402,29 +4398,32 @@ class CodegenService extends BaseService {
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
-		let res_type=this.get_replacement_json(state,gen_name,x);
-		if(res_type!==null) return res_type;
-		if(key_keep_arr.includes(k1)) return x;
-		state.object_count++;
-		if(state.object_count<3) return x;
-		return {};
-	}
-	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} rep */
-	json_replacer(state,k1,rep) {
 		/** @private @type {unknown} */
-		let o=rep;
-		if(typeof o==="bigint") return o;
-		else if(typeof o==="boolean") return o;
-		else if(typeof o==="function") return o;
-		else if(typeof o==="number") return o;
-		else if(typeof o==="symbol") return o;
-		else if(typeof o==="undefined") return o;
-		else if(typeof o==="string") return this.json_filter_string(o,k1);
-		else if(typeof o==="object") return this.json_filter_object(state,o,k1);
-		throw new Error();
+		let x=rep;
+		if(typeof x==="bigint") return x;
+		if(typeof x==="boolean") return x;
+		if(typeof x==="function") return x;
+		if(typeof x==="number") return x;
+		if(typeof x==="symbol") return x;
+		if(typeof x==="string") return this.typedef_json_replace_string(x,k1);
+		if(x===null||x===void 0) return x;
+		if(!state.object_store.includes(x)) {
+			state.object_store.push(x);
+			let mi=state.object_store.indexOf(x);
+			state.parent_map.set(x,[mi,k1]);
+		}
+		let mi=state.object_store.indexOf(x);
+		let xi=Object.entries(x);
+		for(let [k_in,val] of xi) {
+			if(state.object_store.includes(val)) continue;
+			state.object_store.push(val);
+			state.parent_map.set(val,[mi,k_in]);
+		}
+		if(k1==="") return rep;
+		return this.typedef_json_replace_object(state,x,k1);
 	}
 	/** @no_mod @arg {{}} x @arg {string} gen_name */
-	#_codegen_new_typedef(x,gen_name) {
+	#_codegen_typedef(x,gen_name) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @private @type {{[x: number|string]:{}}} */
@@ -4436,7 +4435,7 @@ class CodegenService extends BaseService {
 		}
 		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(gen_name,keys);
-		let tc=JSON.stringify(x,this.json_replacer.bind(this,state),"\t");
+		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
@@ -4463,7 +4462,7 @@ class CodegenService extends BaseService {
 		return ret;
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} x */
-	get_replacement_json(state,r,x) {
+	typedef_json_replace_object_2(state,r,x) {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
@@ -4512,7 +4511,7 @@ class CodegenService extends BaseService {
 			if(!x.openPopupAction) break x;
 			let gn=this.get_name_from_keys(x.openPopupAction);
 			if(!gn) break x;
-			let gr=this.#_codegen_new_typedef(x.openPopupAction,gn);
+			let gr=this.#_codegen_typedef(x.openPopupAction,gn);
 			if(!gr) break x;
 			let sr=split_string_once(gr.split("\n").map(e => e.trim()).join(""),"=")[1];
 			if(!sr) break x;
@@ -4929,8 +4928,8 @@ class CodegenService extends BaseService {
 		return td;
 	}
 	/** @api @public @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
-	generate_renderer(x,r,w) {
-		let gen_obj=this.#generate_renderer(x,r);
+	codegen_renderer(x,r,w) {
+		let gen_obj=this.#codegen_renderer(x,r);
 		if(w) return gen_obj;
 		console.log(gen_obj);
 		return null;
@@ -6954,7 +6953,7 @@ class Generate {
 	}
 	/** @api @public @arg {{}} x @arg {string} r */
 	generate_typedef_and_depth(x,r) {
-		let gen=this.x.codegen_new_typedef(x,r,true);
+		let gen=this.x.codegen_typedef(x,r,true);
 		if(!gen) return;
 		this.str_arr.push(gen);
 		let gd=this.x.generate_depth(gen);
@@ -7298,7 +7297,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
 	codegen_new_typedef(x,gen_name,ret_val) {
-		return this.codegen.codegen_new_typedef(x,gen_name,ret_val);
+		return this.codegen.codegen_typedef(x,gen_name,ret_val);
 	}
 	/** @protected @arg {P_ParamsSection} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
@@ -7502,7 +7501,7 @@ class HandleTypes extends ServiceMethods {
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {{}} x */
 	codegen_renderer(cf,x) {
-		this.codegen.generate_renderer(x,cf);
+		this.codegen.codegen_renderer(x,cf);
 	}
 	static {
 		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
