@@ -154,79 +154,9 @@ class DomObserver extends CustomEventTarget {
 	}
 }
 let dom_observer=new DomObserver;
-function yt_watch_page_loaded_handler() {
-	if(!is_watch_page_active()) {
-		return;
-	}
-	if(ytd_page_manager===null) {
-		console.log("no ytd-page-manager");
-		return;
-	}
-	title_text_overlay_update();
-	init_ui_plugin();
-	if(!ytd_player) return;
-	ytd_player.active_nav=false;
-	ytd_player.init_nav=true;
-}
-dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
 let waiting_for_ytd_player=false;
 /** @private @type {number|null} */
 let current_timeout=null;
-function init_ui_plugin() {
-	if(waiting_for_ytd_player) return;
-	if(current_timeout===null)
-		return;
-	if(typeof current_timeout==="number") {
-		if(current_timeout>0) {
-			clearTimeout(current_timeout);
-			current_timeout=null;
-		}
-	} else if("hasRef" in current_timeout) {
-		clearTimeout(current_timeout);
-		current_timeout=null;
-	}
-	if(!ytd_player||!ytd_player.player_) {
-		console.log("wait for player");
-		waiting_for_ytd_player=true;
-		wait_for_yt_player().then(function() {
-			waiting_for_ytd_player=false;
-			init_ui_plugin();
-		});
-		return;
-	}
-	if(!ytd_player.player_.getVideoData) {
-		current_timeout=setTimeout(init_ui_plugin,0);
-		return;
-	}
-	if(ytd_player.active_nav) {
-		console.log("ytd-player:active_nav = true");
-		return;
-	}
-	current_timeout=setTimeout(activate_nav,0);
-}
-function activate_nav() {
-	if(is_yt_debug_enabled) console.log("activate_nav:fire");
-	if(!ytd_player) return;
-	if(!ytd_page_manager) return;
-	if(ytd_player.active_nav) return;
-	ytd_player.active_nav=true;
-	log_current_video_data();
-	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
-		if(!ytd_player) return;
-		if(!ytd_page_manager) return;
-		setTimeout(function() {
-			do_find_video();
-		},80);
-		if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
-			ytd_player.is_watch_page_active=false;
-			plugin_overlay_element&&plugin_overlay_element.remove();
-			return;
-		} else {
-			ytd_player.is_watch_page_active=true;
-		}
-		requestAnimationFrame(page_changed_next_frame);
-	});
-}
 function do_find_video() {
 	if(!audio_gain_controller) return;
 	const element_list=get_html_elements(document,"video");
@@ -320,7 +250,7 @@ function on_ytd_app(element) {
 	});
 }
 /** @private @arg {CustomEventType} event */
-function plugin_init(event) {
+function _plugin_init(event) {
 	async_plugin_init(event).then(() => {},(e) => {
 		console.log("async error",e);
 	});
@@ -505,7 +435,7 @@ async function async_plugin_init(event) {
 let found_element_count=0;
 let expected_element_count=6;
 async_plugin_init.__debug=false;
-let player_overlay_style_str=`
+let _player_overlay_style_str=`
 position: absolute;
 top: 80px;
 left: 68px;
@@ -1220,25 +1150,25 @@ const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrs
 const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
 /** @private @type {any[]} */
 let blob_create_args_arr=[];
-let plr_raw_replace_debug=true;
-function plr_raw_replace(/** @private @type {{ args: { raw_player_response: any; }; }} */ player_config) {
-	let raw_plr_rsp=player_config.args.raw_player_response;
-	if(raw_plr_rsp===void 0) {
-		console.log("yt_cfg",player_config);
-		return;
-	}
-	if(plr_raw_replace_debug) console.log("plr_raw_replace","::","args.raw_player_response.playerAds=",raw_plr_rsp.playerAds);
-	raw_plr_rsp.playerAds=[];
-	if(plr_raw_replace_debug) console.log("plr_raw_replace","::","args.raw_player_response.adPlacements=",raw_plr_rsp.adPlacements);
-	raw_plr_rsp.adPlacements=[];
-	return;
-}
-function plr_raw_replace_embed() {
-	return;
-}
 /** @private @type {any[]} */
 let mk_tree_arr=[];
 function act_found_create_yt_player(/** @private @type {{ data: { type: string; data: [any, any, any]; }; }} */ event) {
+	function plr_raw_replace_embed() {
+		return;
+	}
+	let plr_raw_replace_debug=true;
+	function plr_raw_replace(/** @private @type {{ args: { raw_player_response: any; }; }} */ player_config) {
+		let raw_plr_rsp=player_config.args.raw_player_response;
+		if(raw_plr_rsp===void 0) {
+			console.log("yt_cfg",player_config);
+			return;
+		}
+		if(plr_raw_replace_debug) console.log("plr_raw_replace","::","args.raw_player_response.playerAds=",raw_plr_rsp.playerAds);
+		raw_plr_rsp.playerAds=[];
+		if(plr_raw_replace_debug) console.log("plr_raw_replace","::","args.raw_player_response.adPlacements=",raw_plr_rsp.adPlacements);
+		raw_plr_rsp.adPlacements=[];
+		return;
+	}
 	let tr=event.data.type;
 	if(tr!="yt.player.Application.createAlternate"&&tr!="yt.player.Application.create") return;
 	let [,,value]=event.data.data;
@@ -1414,8 +1344,6 @@ class YtdPageManagerElement extends HTMLElement {
 	/** @returns {YtCurrentPage|undefined} */
 	getCurrentPage() {throw new Error();}
 }
-/** @private @type {string[]} */
-let playlist_arr=[];
 /** @private @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
 /** @private @arg {HTMLElement} element */
@@ -1452,11 +1380,6 @@ function is_watch_page_active() {
 /** @private @arg {Node} value */
 function as_node(value) {
 	return value;
-}
-function page_changed_next_frame() {
-	if(!plugin_overlay_element) return;
-	if(!ytd_page_manager) return;
-	ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
 }
 /** @private @type {Map<string, HTMLElement>} */
 let element_map=new Map;
@@ -1530,7 +1453,7 @@ function ui_css_toggle_click_handler() {
 		ui_plugin_css_enabled=true;
 	}
 }
-dom_observer.addEventListener("async-plugin-init",plugin_init);
+dom_observer.addEventListener("async-plugin-init",_plugin_init);
 /** @private @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 function get_new_video_element_list(element_list,list_box) {
 	let new_video_elements=[];
@@ -1607,51 +1530,177 @@ async function wait_for_yt_player() {
 	}
 	await ytd_player.playerResolver_.promise;
 }
-let overlay_content_div=document.createElement("div");
-let input_modify_css_style=document.createElement("div");
-let overlay_hide_ui_input=document.createElement("div");
-let plugin_overlay_element=document.createElement("div");
-overlay_content_div.style.userSelect="all";
-overlay_content_div.style.width="max-content";
-input_modify_css_style.style.float="left";
-input_modify_css_style.innerHTML="C";
-input_modify_css_style.onclick=ui_css_toggle_click_handler;
-overlay_hide_ui_input.style.float="left";
-overlay_hide_ui_input.style.clear="left";
-overlay_hide_ui_input.innerHTML="H";
-overlay_hide_ui_input.onclick=title_display_toggle;
-plugin_overlay_element.id="mz_overlay";
-plugin_overlay_element.setAttribute("style",player_overlay_style_str);
-plugin_overlay_element.append(overlay_content_div);
-plugin_overlay_element.append(input_modify_css_style);
-plugin_overlay_element.append(overlay_hide_ui_input);
-function update_plugin_overlay_location() {
-	if(!ytd_player) return;
-	/** @private @arg {HTMLElement} element */
-	function sumOffset(element) {
-		let cache={
-			top_offset: 0,
-			left_offset: 0
-		};
-		/** @private @type {HTMLElement|null} */
-		let cur_element=null;
-		cur_element=element;
-		for(;;) {
-			cache.top_offset+=cur_element.offsetTop;
-			cache.left_offset+=cur_element.offsetLeft;
-			/** @private @type {Element|null} */
-			let next_element=cur_element.offsetParent;
-			if(next_element instanceof HTMLElement) {
-				cur_element=next_element;
+function _close_div_scope() {
+	function title_text_overlay_update() {
+		if(title_text_overlay_enabled) {
+			overlay_hide_ui_input.style.color="";
+			if(title_on) {
+				overlay_content_div.style.display="";
 			} else {
-				break;
+				overlay_content_div.style.display="none";
 			}
+		} else {
+			overlay_hide_ui_input.style.color="#888";
+			overlay_content_div.style.display="none";
 		}
-		return cache;
 	}
-	let player_offset=sumOffset(ytd_player);
-	plugin_overlay_element.style.top=player_offset.top_offset+"px";
-	plugin_overlay_element.style.left=player_offset.left_offset+"px";
+	function page_changed_next_frame() {
+		if(!plugin_overlay_element) return;
+		if(!ytd_page_manager) return;
+		ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
+	}
+	function yt_watch_page_loaded_handler() {
+		if(!is_watch_page_active()) {
+			return;
+		}
+		if(ytd_page_manager===null) {
+			console.log("no ytd-page-manager");
+			return;
+		}
+		title_text_overlay_update();
+		init_ui_plugin();
+		if(!ytd_player) return;
+		ytd_player.active_nav=false;
+		ytd_player.init_nav=true;
+	}
+	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
+	function init_ui_plugin() {
+		if(waiting_for_ytd_player) return;
+		if(current_timeout===null)
+			return;
+		if(typeof current_timeout==="number") {
+			if(current_timeout>0) {
+				clearTimeout(current_timeout);
+				current_timeout=null;
+			}
+		} else if("hasRef" in current_timeout) {
+			clearTimeout(current_timeout);
+			current_timeout=null;
+		}
+		if(!ytd_player||!ytd_player.player_) {
+			console.log("wait for player");
+			waiting_for_ytd_player=true;
+			wait_for_yt_player().then(function() {
+				waiting_for_ytd_player=false;
+				init_ui_plugin();
+			});
+			return;
+		}
+		if(!ytd_player.player_.getVideoData) {
+			current_timeout=setTimeout(init_ui_plugin,0);
+			return;
+		}
+		if(ytd_player.active_nav) {
+			console.log("ytd-player:active_nav = true");
+			return;
+		}
+		current_timeout=setTimeout(activate_nav,0);
+	}
+	let overlay_content_div=document.createElement("div");
+	let input_modify_css_style=document.createElement("div");
+	let overlay_hide_ui_input=document.createElement("div");
+	let plugin_overlay_element=document.createElement("div");
+	overlay_content_div.style.userSelect="all";
+	overlay_content_div.style.width="max-content";
+	input_modify_css_style.style.float="left";
+	input_modify_css_style.innerHTML="C";
+	input_modify_css_style.onclick=ui_css_toggle_click_handler;
+	overlay_hide_ui_input.style.float="left";
+	overlay_hide_ui_input.style.clear="left";
+	overlay_hide_ui_input.innerHTML="H";
+	overlay_hide_ui_input.onclick=title_display_toggle;
+	plugin_overlay_element.id="mz_overlay";
+	plugin_overlay_element.setAttribute("style",_player_overlay_style_str);
+	plugin_overlay_element.append(overlay_content_div);
+	plugin_overlay_element.append(input_modify_css_style);
+	plugin_overlay_element.append(overlay_hide_ui_input);
+	function activate_nav() {
+		if(is_yt_debug_enabled) console.log("activate_nav:fire");
+		if(!ytd_player) return;
+		if(!ytd_page_manager) return;
+		if(ytd_player.active_nav) return;
+		ytd_player.active_nav=true;
+		ytd_page_manager.addEventListener("yt-page-type-changed",function() {
+			if(!ytd_player) return;
+			if(!ytd_page_manager) return;
+			setTimeout(function() {
+				do_find_video();
+			},80);
+			if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
+				ytd_player.is_watch_page_active=false;
+				plugin_overlay_element&&plugin_overlay_element.remove();
+				return;
+			} else {
+				ytd_player.is_watch_page_active=true;
+			}
+			requestAnimationFrame(page_changed_next_frame);
+		});
+	}
+	function update_plugin_overlay_location() {
+		if(!ytd_player) return;
+		/** @private @arg {HTMLElement} element */
+		function sumOffset(element) {
+			let cache={
+				top_offset: 0,
+				left_offset: 0
+			};
+			/** @private @type {HTMLElement|null} */
+			let cur_element=null;
+			cur_element=element;
+			for(;;) {
+				cache.top_offset+=cur_element.offsetTop;
+				cache.left_offset+=cur_element.offsetLeft;
+				/** @private @type {Element|null} */
+				let next_element=cur_element.offsetParent;
+				if(next_element instanceof HTMLElement) {
+					cur_element=next_element;
+				} else {
+					break;
+				}
+			}
+			return cache;
+		}
+		let player_offset=sumOffset(ytd_player);
+		plugin_overlay_element.style.top=player_offset.top_offset+"px";
+		plugin_overlay_element.style.left=player_offset.left_offset+"px";
+	}
+	/** @private @type {string[]} */
+	let playlist_arr=[];
+	function log_current_video_data() {
+		if(!ytd_player) return;
+		if(!ytd_player.player_) {
+			wait_for_yt_player().then(log_current_video_data);
+			return;
+		}
+		const video_data=ytd_player.player_.getVideoData();
+		if(video_data.video_id===undefined) return;
+		if(video_data.eventId===void 0) return;
+		const {video_id,title,author}=video_data;
+		const playlist_log_str=`[${author},${video_id}] ${title}`;
+		if(playlist_log_str===playlist_arr.at(-1)) return;
+		playlist_arr.push(playlist_log_str);
+		console.log(playlist_log_str);
+		overlay_content_div.innerText=`[${video_id}] ${title}`;
+	}
+	on_yt_navigate_finish.push(log_current_video_data);
+	/** @private @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
+	function on_yt_action(event) {
+		let {detail}=event;
+		if(is_yt_fullscreen_change_action(detail)) {
+			let {args}=detail;
+			update_plugin_overlay_location();
+			setTimeout(update_plugin_overlay_location);
+			title_text_overlay_enabled=!args[0];
+			title_text_overlay_update();
+		}
+	}
+	document.addEventListener("yt-action",as(on_yt_action));
+	function title_display_toggle() {
+		title_on=!title_on;
+		title_text_overlay_update();
+		if(no_storage_access) return;
+		localStorage["title_save_data"]=JSON.stringify({value: title_on});
+	}
 }
 let no_storage_access=false;
 let title_save;
@@ -1666,59 +1715,11 @@ if(!title_save) {
 		localStorage.setItem("title_save_data",title_save);
 	}
 }
-function log_current_video_data() {
-	if(!ytd_player) return;
-	if(!ytd_player.player_) {
-		wait_for_yt_player().then(log_current_video_data);
-		return;
-	}
-	const video_data=ytd_player.player_.getVideoData();
-	if(video_data.video_id===undefined) return;
-	if(video_data.eventId===void 0) return;
-	const {video_id,title,author}=video_data;
-	const playlist_log_str=`[${author},${video_id}] ${title}`;
-	if(playlist_log_str===playlist_arr.at(-1)) return;
-	playlist_arr.push(playlist_log_str);
-	console.log(playlist_log_str);
-	overlay_content_div.innerText=`[${video_id}] ${title}`;
-}
-on_yt_navigate_finish.push(log_current_video_data);
 let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
-function title_text_overlay_update() {
-	if(title_text_overlay_enabled) {
-		overlay_hide_ui_input.style.color="";
-		if(title_on) {
-			overlay_content_div.style.display="";
-		} else {
-			overlay_content_div.style.display="none";
-		}
-	} else {
-		overlay_hide_ui_input.style.color="#888";
-		overlay_content_div.style.display="none";
-	}
-}
 /** @private @type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}} */
 function is_yt_fullscreen_change_action(detail) {
 	return detail.actionName==="yt-fullscreen-change-action";
-}
-/** @private @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
-function on_yt_action(event) {
-	let {detail}=event;
-	if(is_yt_fullscreen_change_action(detail)) {
-		let {args}=detail;
-		update_plugin_overlay_location();
-		setTimeout(update_plugin_overlay_location);
-		title_text_overlay_enabled=!args[0];
-		title_text_overlay_update();
-	}
-}
-document.addEventListener("yt-action",as(on_yt_action));
-function title_display_toggle() {
-	title_on=!title_on;
-	title_text_overlay_update();
-	if(no_storage_access) return;
-	localStorage["title_save_data"]=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
 	if(is_yt_debug_enabled) console.log("update_ui_plugin");
@@ -1977,6 +1978,7 @@ function main() {
 		exports.services=services;
 	});
 	resolver_value.value=service_resolver;
+	_close_div_scope();
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
@@ -11992,10 +11994,25 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader",x,this.D_PlaylistHeader);}
 	/** @private @arg {R_StructuredDescriptionContent} x */
 	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent",x,this.D_StructuredDescriptionContent);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @private @arg {G_StructuredDescriptionContentItem} x */
+	G_StructuredDescriptionContentItem(x) {
+		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
+		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
+		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		debugger;
+	}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("R_ProductList",x,this.D_ProductList);}
 	/** @private @arg {R_ClipSection} x */
 	R_ClipSection(x) {this.H_("R_ClipSection",x,this.D_ClipSection);}
+	/** @private @arg {D_ClipSection} x */
+	D_ClipSection(x) {this.H_("D_ClipSection",x,x => this.z(x,this.R_ClipCreation));}
+	/** @private @arg {R_ClipCreation} x */
+	R_ClipCreation(x) {this.H_("C_RunAttestation",x,this.D_ClipCreation);}
 	/** @private @arg {R_MacroMarkersList} x */
 	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList",x,this.D_MacroMarkersList);}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
@@ -12385,6 +12402,26 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList",x,this.G_SectionList);}
+	/** @private @arg {R_EndScreenPlaylist} x */
+	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist",x,this.D_EndScreenPlaylist);}
+	/** @private @arg {R_EndScreenVideo} x */
+	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo",x,this.D_EndScreenVideo);}
+	/** @private @arg {R_AddToPlaylistCreate} x */
+	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate",x,this.D_AddToPlaylistCreate);}
+	/** @private @arg {R_PlaylistAddToOption} x */
+	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption",x,this.D_PlaylistAddToOption);}
+	/** @private @arg {A_UpdateSubscribeButton} x */
+	A_UpdateSubscribeButton(x) {this.H_("A_UpdateSubscribeButton",x,this.DAU_SubscribeButton);}
+	/** @private @arg {C_RunAttestation} x */
+	C_RunAttestation(x) {this.H_("C_RunAttestation",x,this.D_RunAttestation);}
+	/** @private @arg {R_VideoDescriptionMusicSection} x */
+	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection",x,this.D_VideoDescriptionMusicSection);}
+	/** @private @arg {R_VideoDescriptionHeader} x */
+	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader",x,this.D_VideoDescriptionHeader);}
+	/** @private @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList",x,this.D_HorizontalCardList);}
+	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
@@ -12421,26 +12458,18 @@ class HandleTypes extends ServiceMethods {
 		const {...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_EndScreenPlaylist} x */
-	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist",x,this.D_EndScreenPlaylist);}
 	/** @private @arg {D_EndScreenPlaylist} x */
 	D_EndScreenPlaylist(x) {
 		const cf="D_EndScreenPlaylist";
 		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo",x,this.D_EndScreenVideo);}
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {
 		const cf="D_SearchBox";
 		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate",x,this.D_AddToPlaylistCreate);}
-	/** @private @arg {R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
 		const cf="D_Comment";
@@ -12477,27 +12506,28 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,addToGuideSectionAction,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {A_UpdateSubscribeButton} x */
-	A_UpdateSubscribeButton(x) {this.H_("A_UpdateSubscribeButton",x,this.DAU_SubscribeButton);}
-	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {this.H_("C_RunAttestation",x,this.D_RunAttestation);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
 		const cf="D_ProductList";
 		const {contents,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {D_ClipSection} x */
-	D_ClipSection(x) {this.H_("D_ClipSection",x,x => this.z(x,this.R_ClipCreation));}
-	/** @private @arg {R_ClipCreation} x */
-	R_ClipCreation(x) {this.H_("C_RunAttestation",x,this.D_ClipCreation);}
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
 		const cf="D_ClipCreation";
 		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=this.sd(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
+		this.R_Thumbnail(userAvatar);
+		titleInput;
 		this.R_ClipCreationScrubber(scrubber);
+		saveButton;
+		displayName;
+		publicityLabel;
+		cancelButton;
+		adStateOverlay;
+		externalVideoId;
+		publicityLabel;
+		this.playerParams;
 		debugger;
 	}
 	/** @private @template {number[]} T @arg {T} a */
@@ -12844,23 +12874,6 @@ class HandleTypes extends ServiceMethods {
 		const {ids,engagementType,...y}=this.sd(cf,x); this.g(y);
 		debugger;
 	}
-	/** @private @arg {G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
-		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
-		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		debugger;
-	}
-	/** @private @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection",x,this.D_VideoDescriptionMusicSection);}
-	/** @private @arg {R_VideoDescriptionHeader} x */
-	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader",x,this.D_VideoDescriptionHeader);}
-	/** @private @arg {R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList",x,this.D_HorizontalCardList);}
-	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
