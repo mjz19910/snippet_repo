@@ -470,15 +470,6 @@ export class Snippet_0_tmp {
 	}
 }
 class ND extends Snippet_0_tmp {
-	/** @private @arg {R_NotificationAction} x */
-	R_New(x) {this.H$R_("A_Notification",x,this.AD_Notification);}
-	/** @pub @arg {D_NotificationAction} x */
-	D_NewData(x) {x;}
-	/** @pub @arg {T_ES_Signal<{},{}>} x */
-	E_New$Endpoint(x) {x;}
-	use() {
-		this.R_New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
-	}
 	/** @private @arg {E_Browse} x */
 	E_Browse(x) {x;}
 	/** @private @arg {R_Thumbnail} x */
@@ -773,17 +764,6 @@ class ND extends Snippet_0_tmp {
 	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
 	/** @protected @arg {E_Subscribe} x */
 	E_Subscribe(x) {this.H_("E_Subscribe",x,() => 0);}
-	/** @protected @template T @arg {T_ES_Signal<{},T>} x */
-	signalServiceEndpoint(x) {
-		this.E_SignalService(x,a => {
-			a;
-			debugger;
-		});
-	}
-	/** @private @template T @arg {T_ES_Signal<{},T>} x @arg {(this:this,x:T)=>void} f */
-	E_SignalService(x,f) {
-		f.call(this,x.signalServiceEndpoint);
-	}
 	/** @protected @template {string} T @arg {T_StyleType<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
 		const cf="ChipCloudStyle";

@@ -16,6 +16,7 @@ type T_Endpoint_CF=[
 	"E_CreateBackstagePost",
 	"E_Feedback",
 	"E_GetNotificationMenu",
+	"E_GetReportForm",
 	"E_GetTranscript",
 	"E_Like",
 	"E_PlaylistEdit",

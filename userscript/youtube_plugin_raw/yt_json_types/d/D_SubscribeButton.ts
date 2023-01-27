@@ -45,8 +45,3 @@ type D_SubscribeButton={
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 };
-type SubscribeButtonData$SignalServiceEndpoint={
-	clickTrackingParams: string;
-	commandMetadata: M_SendPost;
-	signalServiceEndpoint: G_ClientSignal;
-};

@@ -9520,7 +9520,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_AutoplaySwitchButton} x */
 	D_AutoplaySwitchButton(x) {
 		const cf="D_AutoplaySwitchButton";
-		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled}=this.sd(cf,x); this.g(y);
+		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=this.sd(cf,x); this.g(y);
 		this.z([onEnabledCommand,onDisabledCommand],(x) => {
 			const cf="E_SetSettingAutonavForDesktop";
 			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.sd(cf,x); this.g(y);
@@ -9608,15 +9608,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {
-		const cf="E_GetReportForm";
-		const {clickTrackingParams,
-			commandMetadata: {
-				webCommandMetadata: {sendPost: s,apiUrl: u,...y1},...y2},
-			getReportFormEndpoint: {params: p,...y4},...y3}=x; this.z([y1,y2,y3,y4],this.g);
-		this.clickTrackingParams(cf,clickTrackingParams);
+		const cf="E_GetReportForm"; this.T_Endpoint(cf,x,x => {
+			const {getReportFormEndpoint: a,...y}=x; this.g(y);
+			this.DE_GetReportForm(a);
+		},this.M_FlagGetForm);
+	}
+	/** @private @arg {DE_GetReportForm} x */
+	DE_GetReportForm(x) {
+		const cf="DE_GetReportForm";
+		const {params: p,...y}=x; this.g(y);
+		this.params(cf,"get_report_form",p);
+	}
+	/** @private @arg {M_FlagGetForm} x */
+	M_FlagGetForm(x) {
+		const {webCommandMetadata: {sendPost: s,apiUrl: u,...y1},...y2}=x; this.z([y1,y2],this.g);;
 		if(s!==true) debugger;
 		if(u!=="/youtubei/v1/flag/get_form") debugger;
-		this.params(cf,"get_report_form",p);
 	}
 	codegen_all_service_menu_icons() {
 		console.log(this.service_menu_icons.join());
@@ -9706,12 +9713,7 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
-	D_MenuServiceItem_Omit(x,f) {
-		const cf="D_MenuServiceItem_Omit";
-		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		f.call(this,serviceEndpoint);
-		return y;
-	}
+	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
 	D_MenuServiceItem(x) {
 		const cf="D_MenuServiceItem";
@@ -10196,10 +10198,9 @@ class HandleTypes extends ServiceMethods {
 			this.D_AdLayoutLogging(adLayoutLoggingData);
 		}
 	}
-	/** @private @arg {DM_AdSlot} x */
-	DM_AdSlot(x) {
-		const cf="DM_AdSlot";
-		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x); this.g(y);
+	/** @private @arg {string} cf @arg {DM_AdSlot} x */
+	DM_AdSlot_Omit(cf,x) {
+		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x);
 		this.primitive_str(slotId);
 		let do_=false;
 		if(do_) {
@@ -10219,11 +10220,16 @@ class HandleTypes extends ServiceMethods {
 			case "SLOT_TYPE_PAGE_TOP": break;
 			default: debugger; break;
 		}
-		if("adSlotLoggingData" in y) {
-			const {adSlotLoggingData,...y1}=y; this.g(y1);
+		return y;
+	}
+	/** @private @arg {DM_AdSlot} x */
+	DM_AdSlot(x) {
+		const cf="DM_AdSlot",u=this.DM_AdSlot_Omit(cf,x);
+		if("adSlotLoggingData" in u) {
+			const {adSlotLoggingData,...y}=u; this.g(y);
 			return this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
 		}
-		this.g(y);
+		this.g(u);
 	}
 	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
 	D_SerializedSlotAdServingDataEntry(x) {
@@ -10620,19 +10626,14 @@ class HandleTypes extends ServiceMethods {
 			if(sendPost!==true) debugger;
 		});
 	}
+	/** @private @arg {string} cf @arg {DE_RecordNotificationInteractions} x */
+	DE_RecordNotificationInteractions_Omit(cf,x) {const {serializedInteractionsRequest,...y}=this.sd(cf,x); this.params(cf,"record_notification_interactions",serializedInteractionsRequest); return y;}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
-		const {serializedInteractionsRequest,...y}=this.sd(cf,x); this.g(y);
-		this.primitive_str(x.serializedInteractionsRequest);
-		if("actions" in y) {
-			const {actions,...u}=this.sd(cf,y); this.g(u);
-			this.z(actions,a => {
-				this.A_HideEnclosing(a);
-			});
-			return;
-		}
-		this.g(y);
+		const u=this.DE_RecordNotificationInteractions_Omit(cf,x);
+		if("actions" in u) {const {actions,...y}=this.sd(cf,u); this.g(y);return this.z(actions,this.A_HideEnclosing);}
+		return this.g(u);
 	}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {
@@ -11871,7 +11872,7 @@ class HandleTypes extends ServiceMethods {
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_WatchPlaylist(watchPlaylistEndpoint);
 	}
-	/** @private @arg {D_WatchPlaylist} x */
+	/** @private @arg {DE_WatchPlaylist} x */
 	D_WatchPlaylist(x) {
 		const cf="D_WatchPlaylist";
 		const {playlistId,index,params,...y}=this.sd(cf,x); this.g(y);

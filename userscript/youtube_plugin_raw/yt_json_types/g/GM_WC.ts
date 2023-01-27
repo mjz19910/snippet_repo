@@ -1,3 +1,14 @@
+//#region Templates
+type T_ES_Signal<T,U>={
+	clickTrackingParams: string;
+	commandMetadata: T;
+	signalServiceEndpoint: U;
+};
+type EB_Endpoint<T={}>={
+	clickTrackingParams: string;
+	commandMetadata: T;
+};
+//#endregion
 //#region GU_VE
 type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
 type GU_VE6827_Url_NoParams="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
@@ -262,6 +273,10 @@ type DE_VE23462_Browse={browseId: GU_VE23462_UrlType;};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
+type DE_CreateComment={createCommentParams: string;};
+type DE_GetNotificationMenu={ctoken: string;};
+type DE_Subscribe={channelIds: string[]; params: string;};
+type DE_WatchPlaylist={playlistId: `RD${string}`; index: 13; params: string;};
 //#endregion
 //#region E_VE\d+_.+
 type E_VE3611_Browse={
@@ -321,3 +336,141 @@ type E_Browse=[
 	E_VE42352_Browse,
 	E_VE96368_Browse,
 ][number];
+
+type C_GetSurvey={
+	clickTrackingParams: string;
+	commandMetadata: MG_Survey_CMD;
+	getSurveyCommand: D_GetSurvey;
+};
+type D_SubscribeButton_Signal_SE={
+	clickTrackingParams: string;
+	commandMetadata: M_SendPost;
+	signalServiceEndpoint: G_ClientSignal;
+};
+type E_AddToPlaylistService={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_playlist_get_add_to_playlist;};
+	addToPlaylistServiceEndpoint: DE_AddToPlaylistService;
+};
+type ES_CreatePlaylist={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: {
+			sendPost: true;
+			apiUrl: "/youtubei/v1/playlist/create";
+		};
+	};
+	createPlaylistServiceEndpoint: DS_CreatePlaylist;
+};
+type E_Feedback={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_feedback;};
+	feedbackEndpoint: DE_Feedback;
+};
+type E_Like={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;};
+	likeEndpoint: DE_Like;
+};
+type E_PlaylistEdit={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_browse_edit_playlist;};
+	playlistEditEndpoint: D_PlaylistEdit;
+};
+type E_PlaylistEditor={
+	clickTrackingParams: string;
+	commandMetadata: {};
+	playlistEditorEndpoint: DE_PlaylistEditor;
+};
+type ES_ShareEntity={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_share_get_share_panel;};
+	shareEntityServiceEndpoint: D_ShareEntityService;
+};
+type E_Url={
+	clickTrackingParams: string;
+	commandMetadata: M_VE83769;
+	urlEndpoint: DE_Url;
+};
+type E_GetNotificationMenu={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_GetNotificationMenu;};
+	getNotificationMenuEndpoint: DE_GetNotificationMenu;
+};
+type E_GetReportForm={
+	clickTrackingParams: string;
+	commandMetadata: M_FlagGetForm;
+	getReportFormEndpoint: DE_GetReportForm;
+};
+type E_GetTranscript={
+	clickTrackingParams: string;
+	commandMetadata: {};
+	getTranscriptEndpoint: DE_GetTranscript;
+};
+type E_RecordNotificationInteractions={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_notification_record_interactions;};
+	recordNotificationInteractionsEndpoint: DE_RecordNotificationInteractions;
+};
+type E_ReelWatch={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_VE37414_WC;};
+	reelWatchEndpoint: D_ReelWatch;
+};
+type E_Search={
+	clickTrackingParams: string;
+	commandMetadata: M_VE4724;
+	searchEndpoint: D_Search;
+};
+type E_SignalNavigation={
+	clickTrackingParams: string;
+	commandMetadata: M_VE83769;
+	signalNavigationEndpoint: DS_Navigation;
+};
+type E_Subscribe={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_subscription_subscribe;};
+	subscribeEndpoint: DE_Subscribe;
+};
+type E_UndoFeedback={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: {};};
+	undoFeedbackEndpoint: D_UndoFeedback;
+};
+type E_Upload={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: {};};
+	uploadEndpoint: E_Upload;
+};
+type E_YpcGetCart={
+	clickTrackingParams: string;
+	commandMetadata: M_YpcGetCart;
+	ypcGetCartEndpoint: D_YpcGetCart;
+};
+type E_YpcGetOffers={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: {};};
+	ypcGetOffersEndpoint: D_YpcGetOffers;
+};
+type E_WatchPlaylist={
+	clickTrackingParams: string;
+	commandMetadata: {};
+	watchPlaylistEndpoint: DE_WatchPlaylist;
+};
+type E_CreateComment={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_comment_create_comment;};
+	createCommentEndpoint: DE_CreateComment;
+};
+type E_SetSettingAutonavForDesktop<T extends boolean>={
+	clickTrackingParams: string;
+	commandMetadata: {webCommandMetadata: GM_account_set_setting;};
+	setSettingEndpoint: SettingItemAutonavForDesktop<T>;
+};
+type E_NotificationOptOut={
+	clickTrackingParams: string;
+	commandMetadata: {};
+	notificationOptOutEndpoint: AE_NotificationOptOut;
+};
+type EX_GetNotificationMenuRequest=T_ES_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
+type ES_Button=T_ES_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
