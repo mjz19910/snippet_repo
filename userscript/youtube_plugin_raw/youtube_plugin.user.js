@@ -7523,10 +7523,10 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		if(this.get_keys_of(x).length!==1) debugger;
 	}
-	/** @private @template U @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
-	H_(cf,x,f) {
+	/** @private @template U @arg {K} k @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	H_(cf,x,k,f) {
 		this.k(cf,x);
-		return f.call(this,this.w(x));
+		return f.call(this,this.w(x,k));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
