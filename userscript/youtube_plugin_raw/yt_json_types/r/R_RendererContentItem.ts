@@ -1,4 +1,4 @@
-type RendererContentItem=
+type R_RendererContentItem=
 	|R_RichItem
 	|R_RichSection
 	|R_CommentsHeader

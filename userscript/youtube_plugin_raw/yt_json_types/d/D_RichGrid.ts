@@ -1,4 +1,4 @@
-type Todo_D_RichGrid=Record<"contents",RendererContentItem[]>&{
+type Todo_D_RichGrid=Record<"contents",R_RendererContentItem[]>&{
 	masthead: R_VideoMastheadAdV3;
 };
 type D_RichGrid={
