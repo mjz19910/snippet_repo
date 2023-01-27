@@ -4116,9 +4116,9 @@ class JsonReplacerState {
 		this.gen_name=gen_name;
 		this.key_keep_arr=keys;
 		this.k1="";
-		/** @api @public @type {{}[]} */
+		/** @api @public @type {unknown[]} */
 		this.object_store=[];
-		/** @api @public @type {Map<{},[number,string]>} */
+		/** @api @public @type {Map<unknown,[number,string]>} */
 		this.parent_map=new Map;
 	}
 }
@@ -4403,8 +4403,8 @@ class CodegenService extends BaseService {
 		{debugger;}
 		return null;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} rep */
-	typedef_json_replacer(state,k1,rep) {
+	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} o */
+	typedef_json_replacer(state,k1,o) {
 		state.k1=k1;
 		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
@@ -4414,16 +4414,16 @@ class CodegenService extends BaseService {
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
-		/** @private @type {unknown} */
-		let x=rep;
-		if(x===null||x===void 0) return x;
-		if(typeof x==="bigint") return x;
-		if(typeof x==="boolean") return x;
-		if(typeof x==="function") return x;
-		if(typeof x==="number") return x;
-		if(typeof x==="symbol") return x;
-		if(typeof x==="string") return this.typedef_json_replace_string(x,k1);
-		if(typeof x!=="object") return x;
+		if(o===null||o===void 0) return o;
+		if(typeof o==="bigint") return o;
+		if(typeof o==="boolean") return o;
+		if(typeof o==="function") return o;
+		if(typeof o==="number") return o;
+		if(typeof o==="symbol") return o;
+		if(typeof o==="string") return this.typedef_json_replace_string(o,k1);
+		if(typeof o!=="object") return o;
+		/** @private @type {{[U in string]?:unknown}} */
+		let x=o;
 		if(!state.object_store.includes(x)) {
 			state.object_store.push(x);
 			let mi=state.object_store.indexOf(x);
@@ -4436,13 +4436,10 @@ class CodegenService extends BaseService {
 			state.object_store.push(val);
 			state.parent_map.set(val,[mi,k_in]);
 		}
-		if(k1==="") return rep;
-		/** @type {{[U in string]?:unknown}} */
-		let xu=x;
-		const {key_keep_arr}=state;
-		let res_type=this.typedef_json_replace_object(state,xu,k1);
+		if(k1==="") return o;
+		let res_type=this.typedef_json_replace_object(state,x,k1);
 		if(res_type!==null) return res_type;
-		if(key_keep_arr.includes(k1)) return x;
+		if(state.key_keep_arr.includes(k1)) return x;
 		state.object_count++;
 		if(state.object_count<3) return x;
 		return {};
