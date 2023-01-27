@@ -7523,14 +7523,19 @@ class HandleTypes extends ServiceMethods {
 		this.k(cf,x);
 		if(this.get_keys_of(x).length!==1) debugger;
 	}
+	cg_mismatch_set=new Set();
+	/** @type {[string,string][]} */
+	cg_mismatch_list=[];
 	/** @private @template U @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,x,f) {
 		this.k(cf,x);
 		let k=this.get_keys_of(x);
 		let cgx=this.get_codegen_name(x);
-		if(cgx!==cf) {
-			console.log(`\n[${cgx},${cf}],`);
-			debugger;
+		x: if(cgx!==cf) {
+			if(this.cg_mismatch_set.has(cgx)) break x;
+			this.cg_mismatch_set.add(cgx);
+			this.cg_mismatch_list.push([cgx,cf]);
+			console.log(`-- [H_$gen_cgx_mismatch] --\n\n[${cgx},${cf}],`);
 		}
 		if(k.length!==1) debugger;
 		return f.call(this,this.w(x,k[0]));
@@ -8894,7 +8899,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	renderer_decode_map=new Map([
 		["PrefetchHintConfig","R_PrefetchHintConfig"],
-	])
+	]);
 	/** @private @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
 		if(typeof x.type==='string') {
