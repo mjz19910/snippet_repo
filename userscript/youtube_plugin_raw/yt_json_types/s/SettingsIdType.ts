@@ -1,1 +1,0 @@
-type SettingsIdType=`SP${G_SettingsEndpointPages}`;
