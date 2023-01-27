@@ -242,7 +242,7 @@ type E_Browse=[
 ][number];
 //#region Actions 
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
-type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: Enum_GuideAction;};
+type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: D_Enum_GuideAction;};
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
 type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
@@ -607,7 +607,7 @@ type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
 	veType: 139722;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 };
-type D_EngagementPanelSectionTargetId=MakeTargetId<
+type D_EngagementPanelSectionTargetId=T_TargetIdStr<
 	"engagement-panel",[
 		"ads",
 		"clip-create",

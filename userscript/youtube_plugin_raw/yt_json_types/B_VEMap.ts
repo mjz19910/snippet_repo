@@ -1,5 +1,4 @@
-type TMC_VE<T extends VEMap[keyof VEMap]['CommandMetadata']>=T;
-type VEMap={
+type B_VEMap={
 	3832: {CommandMetadata: M_VE3832;};
 	3611: {CommandMetadata: M_VE3611;};
 	3854: {CommandMetadata: M_VE3854;};

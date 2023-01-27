@@ -1,5 +1,5 @@
 // [ELEMENT::structured-description-music-section::@::row-state-id]
-type Element_StructuredDescription=T_ElementId<
+type D_Element_StructuredDescription=T_ElementId<
 	"structured-description-music-section",T_ElementId<
 		[
 			"artists",

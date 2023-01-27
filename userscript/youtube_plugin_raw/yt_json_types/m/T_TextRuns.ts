@@ -1,0 +1,1 @@
+export type T_TextRuns<T>={runs: T;};

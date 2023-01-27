@@ -1,4 +1,4 @@
-type DE_AdPlacementKind=MakeEnum<"AD_PLACEMENT_KIND",[
+type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND",[
 	"END",
 	"SELF_START",
 	"START"

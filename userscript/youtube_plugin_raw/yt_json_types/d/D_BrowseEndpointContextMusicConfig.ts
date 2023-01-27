@@ -1,3 +1,3 @@
 type D_BrowseEndpointContextMusicConfig={
-	pageType: MakeEnum<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;
+	pageType: T_EnumStr<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;
 };

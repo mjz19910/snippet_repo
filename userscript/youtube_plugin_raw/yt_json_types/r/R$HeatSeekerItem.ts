@@ -1,1 +1,1 @@
-type R_HeatSeekerItem=MapTemplate<"HEATSEEKER",D_HeatSeekerItemData>;
+type R_HeatSeekerItem=T_MapEntry<"HEATSEEKER",D_HeatSeekerItemData>;

@@ -14,7 +14,7 @@ type RS_Player={
 	trackingParams: string;
 	attestation?: R_PlayerAttestation;
 	videoQualityPromoSupportedRenderers?: R_VideoQualityPromo;
-	adPlacements?: Maybe<R_AdPlacement>[];
+	adPlacements?: T_AnyObjectOrEmpty<R_AdPlacement>[];
 	frameworkUpdates: A_FrameworkUpdates;
 	endscreen?: R_Endscreen;
 	paidContentOverlay?: {};

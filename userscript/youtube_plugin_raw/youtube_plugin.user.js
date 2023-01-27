@@ -2181,7 +2181,7 @@ class ApiBase {
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
-	/** @protected @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	/** @protected @template {{}} T @arg {T} obj @returns {T_MaybeKeysArray<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
 			debugger;
@@ -2924,7 +2924,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @private @type {string[]} */
 	logged_keys=[];
-	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
+	/** @protected @template {{}} T @arg {{} extends T?T_MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
@@ -2935,7 +2935,7 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s]",jk);
 		{debugger;}
 	}
-	/** @protected @arg {SI} ex_name @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	/** @protected @arg {SI} ex_name @template {T_MaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(x,ex_name,excl=[]) {
 		let ka=this.get_keys_of(x);
 		let keys=this.filter_out_keys(ka,excl);
@@ -2945,7 +2945,7 @@ class BaseService extends BaseServicePrivate {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @template U @arg {K} e_name @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
+	/** @protected @template U @arg {K} e_name @template {T_MaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
 	y(x,e_name,f) {return f.call(this,this.w(x,e_name));}
 	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
@@ -7521,7 +7521,7 @@ class HandleTypes extends ServiceMethods {
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
-	/** @private @template U @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	/** @private @template U @template {T_MaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,x,f) {
 		this.k(cf,x);
 		let k=this.get_keys_of(x);

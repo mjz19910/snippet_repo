@@ -196,11 +196,11 @@ export class Snippet_0_tmp {
 	as(e,x=e) {
 		return x;
 	}
-	/** @private @template {{}} T @arg {Maybe<T>} x @returns {x is T} */
+	/** @private @template {{}} T @arg {T_AnyObjectOrEmpty<T>} x @returns {x is T} */
 	maybe_has_value(x) {
 		return Object.keys(x).length>0;
 	}
-	/** @protected @template {{}} T @arg {Maybe<T>} x @arg {(x:T)=>void} f */
+	/** @protected @template {{}} T @arg {T_AnyObjectOrEmpty<T>} x @arg {(x:T)=>void} f */
 	maybe(x,f) {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
@@ -210,7 +210,7 @@ export class Snippet_0_tmp {
 		let sp=new URLSearchParams(t);
 		return this.as(Object.fromEntries(sp.entries()));
 	}
-	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
+	/** @protected @template {{}} T @arg {{} extends T?T_MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
 		let keys=this.get_keys_of(x);
 		if(!keys.length) return;
@@ -415,7 +415,7 @@ export class Snippet_0_tmp {
 	}
 	//#region dispatch_in_progress
 	//#endregion
-	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	/** @template {{}} T @arg {T} obj @returns {T_MaybeKeysArray<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
 			debugger;
@@ -425,14 +425,14 @@ export class Snippet_0_tmp {
 		let ra=rq;
 		return ra;
 	}
-	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @returns {T[SI]} */
+	/** @public @template {T_MaybeKeys<T>} SI @template {{}} T @arg {T} x @returns {T[SI]} */
 	w(x) {
 		let keys=this.get_keys_of(x);
 		let k=keys[0];
 		let r=x[k];
 		return r;
 	}
-	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	/** @template {T_MaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
 	H$R_(cf,x,f) {
 		this.save_keys(`[${cf}Renderer]`,x);
 		f.call(this,this.w(x));
@@ -558,7 +558,7 @@ class ND extends Snippet_0_tmp {
 			this.do_codegen("Dropdown",x);
 		});
 	}
-	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	/** @template {T_MaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
 	H_(cf,x,f) {
 		this.save_keys(`[${cf}]`,x);
 		f.call(this,this.w(x));
@@ -665,7 +665,7 @@ class ND extends Snippet_0_tmp {
 		this.save_keys(`[${cf}]`,x);
 		return f.call(this,x.item);
 	}
-	/** @protected @template K,V @arg {MapTemplate<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
+	/** @protected @template K,V @arg {T_MapEntry<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
 	MapTemplate(x,f) {
 		f.call(this,x.value,x.key);
 	}

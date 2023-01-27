@@ -1,0 +1,1 @@
+type T_AnyObjectOrEmpty<T extends {}>={}|T;
