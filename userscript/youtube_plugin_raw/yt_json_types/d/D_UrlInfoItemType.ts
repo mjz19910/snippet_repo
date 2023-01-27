@@ -1,4 +1,4 @@
-type YtUrlInfoItemType=[
+type D_UrlInfoItemType=[
 	"PL",
 	"RD",
 	"RDGM",

@@ -11,7 +11,7 @@ type D_PlayerMicroformat={
 	isUnlisted: boolean;
 	hasYpcMetadata: boolean;
 	viewCount: `${number}`;
-	category: YtCategoryStr;
+	category: D_VideoCategory;
 	publishDate: string;
 	ownerChannelName: string;
 	liveBroadcastDetails?: D_LiveBroadcastDetails;

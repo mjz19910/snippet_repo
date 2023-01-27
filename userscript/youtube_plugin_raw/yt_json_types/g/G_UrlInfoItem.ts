@@ -1,4 +1,4 @@
-type YtUrlInfoItem=YtUrlInfoPlaylist|YtUrlInfoVideo|{
+type G_UrlInfoItem=D_UrlInfoPlaylist|D_UrlInfoVideo|{
 	_tag:"video-referral";
 	id: string; 
 }|{

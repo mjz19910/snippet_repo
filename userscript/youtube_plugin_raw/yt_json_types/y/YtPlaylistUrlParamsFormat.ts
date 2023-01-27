@@ -1,1 +1,0 @@
-type YtPlaylistUrlParamsFormat=`list=${PlaylistId}`;

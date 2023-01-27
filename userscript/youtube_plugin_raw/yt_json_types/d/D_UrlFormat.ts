@@ -14,7 +14,7 @@ type D_UrlFormat=[
 	`/premium`,
 	`/reporthistory`,
 	`/shorts/${string}`,
-	YtExternalUrlFormat,
+	D_ExternalUrlFormat,
 	D_VE6827_PageUrl,
 	`/@${string}`,
 	"/upload",
@@ -32,7 +32,7 @@ type YTExternalEncUrl=[
 type YTExternalUrl=T_SplitOnce<T_SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
 type WatchUrlFormat=[
 	D_WatchPageUrl,
-	`/watch?${YtWatchVideoUrlFormat}`,
+	`/watch?${D_WatchUrlStr}`,
 	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`,

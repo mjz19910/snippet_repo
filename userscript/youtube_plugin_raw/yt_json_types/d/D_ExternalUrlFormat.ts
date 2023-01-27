@@ -1,5 +1,5 @@
 // spell:ignore trackclk aclk
-type YtExternalUrlFormat=[
+type D_ExternalUrlFormat=[
 	`https://ad.doubleclick.net/ddm/trackclk/${string}`,
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
 	`https://music.youtube.com${"/"|""}`,

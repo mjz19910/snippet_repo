@@ -1,5 +1,3 @@
-import {Box} from "../../../rebuild_the_universe_raw/ns.js";
-
 type ExtractTypes_5<T>=T extends Promise<infer U>?[Promise<U>]:[null];
 type ExtractTypes_4<T>=T extends (...v:infer A)=>infer R?[(...v:A)=>R,...ExtractTypes_5<T>]:[null,...ExtractTypes_5<T>];
 type ExtractTypes_3<T>=T extends any[]? T extends infer R extends any[]?[R[0][],...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>]:[null,...ExtractTypes_4<T>];
@@ -11,7 +9,7 @@ type ExtractTypes<T>=[ExtractTypeAt<T,0>,ExtractTypeAt<T,1>,ExtractTypeAt<T,2>,E
 ];
 
 export type VV=ExtractTypes<number|string|any[]|(()=>any)|{}>;
-export type vu=ExtractTypes<Box['value']>;
+export type vu=ExtractTypes<import("../../rebuild_the_universe_raw/ns.js").Box['value']>;
 export type Vc_0=vu[0];
 export type Vc_1=vu[1];
 export type Vc_2=vu[2];

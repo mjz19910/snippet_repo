@@ -1,4 +1,4 @@
-type YtCategoryStr=[
+type D_VideoCategory=[
 	"Science & Technology",
 	"Film & Animation",
 	"Autos & Vehicles",

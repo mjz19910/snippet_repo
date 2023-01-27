@@ -5170,7 +5170,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
 	parse_guide_entry_id(x) {
-		/** @private @type {YtUrlInfoItem[]} */
+		/** @private @type {G_UrlInfoItem[]} */
 		let arr=[];
 		if(this.str_starts_with_r(x,"RD")) {
 			arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});
@@ -5184,7 +5184,7 @@ class ParserService extends BaseService {
 	/** @private @arg {P_ParamsSection} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url(root,x) {
 		let vv=split_string(x,"&");
-		/** @private @type {YtUrlInfoItem[]} */
+		/** @private @type {G_UrlInfoItem[]} */
 		let url_info_arr=[];
 		// spell:ignore RDMM
 		for(let prop of vv) {
@@ -6344,7 +6344,7 @@ class ParserService extends BaseService {
 			} return;
 			default:
 		}
-		/** @private @type {D_UrlFormat|YtExternalUrlFormat} */
+		/** @private @type {D_UrlFormat|D_ExternalUrlFormat} */
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
@@ -6383,14 +6383,14 @@ class ParserService extends BaseService {
 		}
 	}
 	log_playlist_index=false;
-	/** @private @arg {YtUrlInfoPlaylist} x */
+	/** @private @arg {D_UrlInfoPlaylist} x */
 	log_playlist_id(x,critical=false) {
 		if(!this.cache_playlist_id.includes(x.id)) {
 			this.cache_playlist_id.push(x.id);
 			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
 		}
 	}
-	/** @private @arg {YtUrlInfoPlaylist} x */
+	/** @private @arg {D_UrlInfoPlaylist} x */
 	get_playlist_url_info_critical(x) {
 		switch(x.id.length) {
 			case 11: return false;
@@ -6399,12 +6399,12 @@ class ParserService extends BaseService {
 			default: debugger; return true;
 		}
 	}
-	/** @private @arg {YtUrlInfoPlaylist} x */
+	/** @private @arg {D_UrlInfoPlaylist} x */
 	parse_playlist_url_info(x) {
 		let is_critical=this.get_playlist_url_info_critical(x);
 		this.log_playlist_id(x,is_critical);
 	}
-	/** @private @arg {YtUrlInfoItem[]} x */
+	/** @private @arg {G_UrlInfoItem[]} x */
 	log_url_info_arr(x) {
 		for(let url_info of x) {
 			switch(url_info._tag) {
@@ -6471,7 +6471,7 @@ class ParserService extends BaseService {
 		}
 		return;
 	}
-	/** @private @arg {YtPlaylistUrlParamsFormat} x */
+	/** @private @arg {D_PlaylistUrlParams} x */
 	parse_playlist_page_url(x) {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");

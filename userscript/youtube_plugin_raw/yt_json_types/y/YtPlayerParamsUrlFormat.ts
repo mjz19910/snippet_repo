@@ -1,1 +1,0 @@
-type YtPlayerParamsUrlFormat=`pp=${string}`;

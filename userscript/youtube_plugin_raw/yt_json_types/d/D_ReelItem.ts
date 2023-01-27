@@ -1,5 +1,5 @@
 type D_ReelItem={
-	videoId: YtVideoId;
+	videoId: D_VideoIdTagStr;
 	headline: R_TextRuns;
 	thumbnail: R_Thumbnail;
 	viewCountText: R_TextRuns;
