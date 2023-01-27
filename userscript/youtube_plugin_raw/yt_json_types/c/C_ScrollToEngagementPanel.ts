@@ -1,1 +1,0 @@
-type C_ScrollToEngagementPanel={clickTrackingParams: string; scrollToEngagementPanelCommand: D_ScrollToEngagementPanel;};

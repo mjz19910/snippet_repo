@@ -13,7 +13,7 @@ type UrlParseRes_noSearch<
 		port: "";
 		protocol: `${Protocol}`;
 		search: "";
-    /*grep-skip*/ searchParams: URLSearchParams;
+    searchParams: URLSearchParams;
 		toJSON(): T;
 		username: "";
 	};

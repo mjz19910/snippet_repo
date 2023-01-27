@@ -1,3 +1,7 @@
+type TA_Continuation<Tid,Type>={
+	targetId: Tid;
+	continuationItems: Type[];
+};
 //#region CommonType
 type D_Empty_WCM={webCommandMetadata: {};};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
@@ -359,9 +363,7 @@ type DE_Feedback={feedbackToken: string; uiActions: D_HideEnclosingContainer; ac
 type E_GetNotificationMenu=TE_Endpoint<{webCommandMetadata: GM_GetNotificationMenu;},"getNotificationMenuEndpoint",DE_GetNotificationMenu>;
 type DE_GetNotificationMenu={ctoken: string;};
 type E_GetReportForm=TE_Endpoint<M_FlagGetForm,"getReportFormEndpoint",D_Params>;
-type DE_GetReportForm={params: string;};
-type E_GetTranscript=TE_Endpoint<D_Empty_WCM,"getTranscriptEndpoint",DE_GetTranscript>;
-type DE_GetTranscript={params: string;};
+type E_GetTranscript=TE_Endpoint<D_Empty_WCM,"getTranscriptEndpoint",D_Params>;
 type E_Like=TE_Endpoint<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
 type DE_Like=E_LikeIndifferent|E_LikeLike|E_LikeDislike;
 type E_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};
@@ -402,10 +404,8 @@ type E_Url=TE_Endpoint<M_VE83769,"urlEndpoint",DE_Url>;
 type E_Watch=TE_Endpoint_1<M_VE3832,"watchEndpoint",DE_VE3832_Watch>;
 type E_WatchPlaylist=TE_Endpoint<D_Empty_WCM,"watchPlaylistEndpoint",DE_WatchPlaylist>;
 type E_YpcGetCart=TE_Endpoint<M_YpcGetCart,"ypcGetCartEndpoint",DE_YpcGetCart>;
-type E_YpcGetOffers=TE_Endpoint<D_Empty_WCM,"ypcGetOffersEndpoint",DE_YpcGetOffers>;
-type DE_YpcGetOffers={params: string;};
-type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: DE_YpcGetOfflineUpsell;};
-type DE_YpcGetOfflineUpsell={params: string;};
+type E_YpcGetOffers=TE_Endpoint<D_Empty_WCM,"ypcGetOffersEndpoint",D_Params>;
+type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: D_Params;};
 type M_CreatePlaylist={webCommandMetadata: GM_CreatePlaylist;};
 //#endregion
 type SE_CreatePlaylist=TE_Endpoint<M_CreatePlaylist,"createPlaylistServiceEndpoint",DS_CreatePlaylist>;
@@ -498,4 +498,163 @@ type DE_VE3832_Watch={
 	watchEndpointMusicSupportedConfigs: R_WatchEndpointMusicConfig;
 	nofollow?: boolean;
 	playerExtraUrlParams: G_ExtraUrlParamItem[];
+};
+type D_EngagementPanelSectionList=
+	|DB_SI_EngagementPanel
+	|SI_VE76278_EngagementPanel
+	|SI_VE99999_EngagementPanel
+	|SI_VE124975_EngagementPanel
+	|SI_VE126250_EngagementPanel
+	|SI_VE139722_EngagementPanel
+	;
+;
+type SI_VE76278_EngagementPanel={
+	panelIdentifier: "comment-item-section";
+	header: R_EngagementPanelTitleHeader;
+	content: R_SectionList;
+	veType: 76278;
+	targetId: "engagement-panel-comments-section";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: D_LoggingDirectives;
+};
+type SI_VE99999_EngagementPanel={
+	panelIdentifier: "shopping_panel_for_entry_point_5";
+	header: R_EngagementPanelTitleHeader;
+	content: R_ProductList;
+	veType: 99999;
+	targetId: "shopping_panel_for_entry_point_5";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: D_LoggingDirectives;
+};
+type SI_VE126250_EngagementPanel={
+	panelIdentifier: "engagement-panel-searchable-transcript";
+	header: R_EngagementPanelTitleHeader;
+	content: R_ContinuationItem;
+	veType: 126250;
+	targetId: "engagement-panel-searchable-transcript";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	onShowCommands: B_C_ScrollToEngagementPanel[];
+	loggingDirectives: D_LoggingDirectives;
+};
+type SI_VE124975_EngagementPanel={
+	panelIdentifier: "engagement-panel-structured-description";
+	header: R_EngagementPanelTitleHeader;
+	content: R_StructuredDescriptionContent;
+	veType: 124975;
+	targetId: "engagement-panel-structured-description";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	identifier?: T_ShortsSurfaceIdentifier<"engagement-panel-structured-description">;
+	loggingDirectives: D_LoggingDirectives;
+}
+type SI_VE139722_EngagementPanel={
+	header: R_EngagementPanelTitleHeader;
+	content: R_SectionList;
+	veType: 139722;
+	targetId: "engagement-panel-comments-section";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
+	identifier: T_ShortsSurfaceIdentifier<"shorts-comments-panel">;
+	loggingDirectives: D_LoggingDirectives;
+};
+type DB_SI_EngagementPanel={
+	content: R_AdsEngagementPanelContent;
+	targetId: "engagement-panel-ads";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	panelIdentifier: "engagement-panel-macro-markers-description-chapters";
+	header: R_EngagementPanelTitleHeader;
+	content: R_MacroMarkersList;
+	targetId: "engagement-panel-macro-markers-description-chapters";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	panelIdentifier: "engagement-panel-clip-create";
+	header: R_EngagementPanelTitleHeader;
+	content: R_ClipSection;
+	targetId: "engagement-panel-clip-create";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	onShowCommands: G_EngagementPanelSectionShowCommands[];
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	panelIdentifier: "engagement-panel-macro-markers-auto-chapters";
+	header: R_EngagementPanelTitleHeader;
+	content: R_MacroMarkersList;
+	targetId: "engagement-panel-macro-markers-auto-chapters";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: D_LoggingDirectives;
+};
+type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|B_C_ScrollToEngagementPanel;
+type AC_Executor=[
+	A_ChangeEngagementPanelVisibility,
+	A_HideEngagementPanelScrim,
+	TA_OpenPopup<{}>,
+	B_C_ScrollToEngagementPanel,
+][number];
+type GC_EngagementPanelSectionShow=
+	|A_ChangeEngagementPanelVisibility
+	|A_ShowEngagementPanelScrim
+	|B_C_ScrollToEngagementPanel
+	;
+;
+type B_C_ScrollToEngagementPanel={clickTrackingParams: string; scrollToEngagementPanelCommand: D_ScrollToEngagementPanel;};
+type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
+	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
+	header: {};
+	identifier: {
+		surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
+		tag: "shorts-comments-panel";
+	};
+	loggingDirectives: {};
+	targetId: "shorts-comments-panel";
+	veType: 139722;
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+};
+type D_EngagementPanelSectionTargetId=MakeTargetId<
+	"engagement-panel",[
+		"ads",
+		"clip-create",
+		"structured-description",
+		"comments-section",
+		"macro-markers-description-chapters",
+	][number]
+>;
+type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
+	header: {};
+	identifier: {
+		surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
+		tag: "engagement-panel-structured-description";
+	};
+	loggingDirectives: {};
+	targetId: "engagement-panel-structured-description";
+	veType: 124975;
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+};
+type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
+type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+
+type D_TargetIdStr=[
+	AD_AppendContinuationItems['targetId'],
+	TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId'],
+	"comments-section",
+	"search-feed",
+	D_EngagementPanelSectionTargetId,
+	D_ScrollToEngagementPanel['targetId'],
+	RS_Search['targetId'],
+	D_TranscriptSearchPanel['targetId'],
+	AD_UpdateEngagementPanel['targetId'],
+	A_WatchNextContinuation['targetId'],
+	D_ChipCloudChip_tid['targetId'],
+	`shopping_panel_for_entry_point_${"5"|"22"}`,
+	"clip-info-button",
+	"sponsorships-button",
+	D_Menu_TargetId,
+	DB_SI_EngagementPanel['targetId'],
+][number];
+type D_UiTargetId="browse-feedFEwhat_to_watch"|"watch-next-feed";
+type D_TranscriptSearchPanel={
+	body: R_TranscriptSegmentList;
+	footer: R_TranscriptFooter;
+	trackingParams: string;
+	targetId: "engagement-panel-searchable-transcript-search-panel";
 };

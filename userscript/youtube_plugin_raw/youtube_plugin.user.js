@@ -2935,17 +2935,18 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s]",jk);
 		{debugger;}
 	}
-	/** @protected @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
-	w(x,excl=[]) {
+	/** @protected @arg {SI} ex_name @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	w(x,ex_name,excl=[]) {
 		let ka=this.get_keys_of(x);
 		let keys=this.filter_out_keys(ka,excl);
 		if(keys.length!==1) debugger;
 		let k=keys[0];
+		if(k!==ex_name) {debugger; let u={}; return as(u);}
 		let r=x[k];
 		return r;
 	}
-	/** @protected @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
-	y(x,f) {f.call(this,this.w(x));}
+	/** @protected @arg {K} e_name @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
+	y(x,e_name,f) {f.call(this,this.w(x,e_name));}
 	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
@@ -6515,7 +6516,7 @@ class ParserService extends BaseService {
 	str_starts_with_r(str,needle) {
 		return this.str_starts_with(needle,str);
 	}
-	/** @api @public @arg {YtTargetIdType} x */
+	/** @api @public @arg {D_TargetIdStr} x */
 	parse_target_id(x) {
 		if(this.str_starts_with("browse-feed",x)) {
 			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
@@ -7309,7 +7310,7 @@ class ServiceMethods extends ServiceData {
 	str_starts_with_r(str,needle) {
 		return this.str_starts_with(needle,str);
 	}
-	/** @protected @arg {string} root @arg {YtTargetIdType} x */
+	/** @protected @arg {string} root @arg {D_TargetIdStr} x */
 	targetId(root,x) {
 		const cf="targetId";
 		this.save_string(`[${root}.${cf}]`,x);
@@ -7487,7 +7488,7 @@ class ServiceMethods extends ServiceData {
 /** @template Cls_T,Cls_U @extends {ServiceMethods<Cls_T,Cls_U>}  */
 class HandleTypes extends ServiceMethods {
 	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y);return f.call(this,x.params,cf);}
+	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
@@ -9291,6 +9292,7 @@ class HandleTypes extends ServiceMethods {
 		}
 
 	}
+	/** @typedef {B_C_ScrollToEngagementPanel} C_ScrollToEngagementPanel */
 	/** @private @arg {C_ScrollToEngagementPanel} x */
 	C_ScrollToEngagementPanel(x) {
 		const cf="C_ScrollToEngagementPanel";
@@ -9649,7 +9651,7 @@ class HandleTypes extends ServiceMethods {
 	E_GetReportForm(x) {
 		const cf="E_GetReportForm"; this.T_Endpoint(cf,x,x => {
 			const {getReportFormEndpoint: a,...y}=x; this.g(y);
-			this.D_Params(`D${cf}`,a,(x,cf)=>this.params(cf,"get_report_form",x));
+			this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_report_form",x));
 		},this.M_FlagGetForm);
 	}
 	/** @private @arg {M_FlagGetForm} x */
@@ -10732,7 +10734,7 @@ class HandleTypes extends ServiceMethods {
 			switch(x.targetId) {
 				default: debugger; return;
 				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
-				case "search-feed": return this.D_SearchFeedSectionList(x);
+				case "search-feed": return this.DC_SectionList_SearchFeed(x);
 			}
 		}
 		const {contents,trackingParams}=this.sd(cf,x);// this.g(y);//#destructure
@@ -10761,17 +10763,6 @@ class HandleTypes extends ServiceMethods {
 	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
-	/** @private @arg {D_SearchFeedSectionList} x */
-	D_SearchFeedSectionList(x) {
-		const cf="D_SearchFeedSectionList";
-		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId}=this.sd(cf,x);// this.g(y);//#destructure
-		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.RD_NextContinuation);
-		this.trackingParams(cf,trackingParams);
-		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
-		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
-		this.t(targetId,a => this.targetId(cf,a));
-	}
 	/** @private @arg {CD_Next} x */
 	RD_NextContinuation(x) {this.H_("RD_NextContinuation",x,x => this.CT_ClickTracked(x,"next"));}
 	/** @private @arg {"next"} section @arg {DC_Generic_CTP} x */
@@ -10852,17 +10843,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {
 		const cf="E_GetTranscript";
-		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint}=this.sd(cf,x);// this.g(y);//#destructure
+		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a}=this.sd(cf,x);// this.g(y);//#destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		{debugger;} commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
-		this.DE_GetTranscript(getTranscriptEndpoint);
-	}
-	/** @private @arg {DE_GetTranscript} x */
-	DE_GetTranscript(x) {
-		const cf="DE_GetTranscript";
-		const {params}=this.sd(cf,x);// this.g(y);//#destructure
-		this.params(cf,"get_transcript.params",params);
+		this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_transcript.params",x));
 	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -11206,13 +11191,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		{debugger;} commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
-		this.D_YpcGetOffers(a);
-	}
-	/** @private @arg {DE_YpcGetOffers} x */
-	D_YpcGetOffers(x) {
-		const cf="D_YpcGetOffers";
-		const {params}=this.sd(cf,x);// this.g(y);//#destructure
-		this.params(cf,"ypc_get_offers.params",params);
+		this.D_Params("D_YpcGetOffers",a,(params,cf) => this.params(cf,"ypc_get_offers.params",params));
 	}
 	/** @private @arg {R_ChannelPage} x */
 	R_ChannelPage(x) {
@@ -13340,13 +13319,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {A_ReplaceEnclosing} x */
 	A_ReplaceEnclosing(x) {
-		this.T_Endpoint("A_ReplaceEnclosing",x,x => {
-			const {replaceEnclosingAction: act,...y}=x; this.g(y);
-
-		});
+		this.w(x);
+		this.T_Endpoint("A_ReplaceEnclosing",x,x => {const {replaceEnclosingAction: a,...y}=x; this.g(y); this.AD_ReplaceEnclosing(a);});
 	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
+	/** @private @arg {DC_SectionList_SearchFeed} x */
+	DC_SectionList_SearchFeed(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
