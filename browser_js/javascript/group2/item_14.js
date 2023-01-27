@@ -286,7 +286,8 @@ class JsonReplacerState {
 				};
 			}
 			if (obj.__Z_ignore_replacement) {
-				debugger; return obj;
+				this.debugger;
+				return obj;
 			}
 			if (obj?.__vue_app__) {
 				this.vue_app = obj.__vue_app__;
@@ -320,13 +321,20 @@ class JsonReplacerState {
 		parent_history.push(...this.result_history);
 		this.result_history = parent_history;
 	}
+	get debugger() {
+		debugger;
+		return;
+	}
 	/** @arg {DataItemReturn} obj @returns {[string,string|number][]} */
 	run_internal(obj) {
 		let [type, ...arr] = obj;
 		/** @type {[string,string|number][]} */
 		let res = [];
 		let type_parts = split_string(type, "::");
-		if (type_parts[0] !== "CONTENT") { debugger; return res; }
+		if (type_parts[0] !== "CONTENT") {
+			this.debugger;
+			return res;
+		}
 		for (let x of arr) {
 			let ri = this.stringify_each(x);
 			res.push(ri);
@@ -483,7 +491,8 @@ class JsonReplacerState {
 		let xu = x;
 		switch (x[0]) {
 			default:
-				debugger; break;
+				this.debugger;
+				break;
 			case "TAG::data":
 				{
 					console.log("[data_item::data]", x[1]);
@@ -518,9 +527,7 @@ class JsonReplacerState {
 							case "TAG::vnode_item":
 								break;
 							default:
-								{
-									debugger;
-								}
+								this.debugger;
 								break;
 						}
 					}
