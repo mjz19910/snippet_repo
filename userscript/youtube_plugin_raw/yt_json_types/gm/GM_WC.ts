@@ -377,6 +377,20 @@ type ES_Button=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 type RC_SectionList={sectionListContinuation: G_SectionList;};
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
+type DC_LiveChat={
+	continuations: G_LiveChatContinuationItem[];
+	actions?: G_LiveChatContinuationActions[];
+	actionPanel?: R_LiveChatMessageInput;
+	itemList?: R_LiveChatItemList;
+	header?: R_LiveChatHeader;
+	ticker?: R_LiveChatTicker;
+	trackingParams?: string;
+	participantsList?: R_LiveChatParticipantsList;
+	popoutMessage?: R_Message;
+	emojis?: D_LiveChatEmoji[];
+	clientMessages?: ClientMessages;
+	viewerName?: string;
+};
 type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
 //#endregion
@@ -415,4 +429,5 @@ type AD_Notification={
 	actionButton?: R_Button;
 	trackingParams: string;
 };
-type BB_RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};
+type RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};
+type G_LiveChatContinuationActions=RA_ReplayChatItem|A_AddChatItem;
