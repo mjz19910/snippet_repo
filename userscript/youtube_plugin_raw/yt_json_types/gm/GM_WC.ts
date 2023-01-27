@@ -7,18 +7,19 @@ type T_MixPlaylistStr=`RD${string}`;
 //#endregion
 //#region Templates
 type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
-type T_E_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=T_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
 type T_Endpoint_Ex_1<C,T extends string,U>={clickTrackingParams: string; commandMetadata?: C;}&{[I in T]: U};
 type T_Endpoint_Ex_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
 type T_Endpoint_Ex<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
 type T_Endpoint_ReqMeta<T={}>={clickTrackingParams: string; commandMetadata: T;};
 type T_Endpoint<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
 type T_SE_Signal<T,U>=T_Endpoint_Ex<T,"signalServiceEndpoint",U>;
+type T_Setting_AutoNavForDesktop<T extends boolean>=TE_SetSetting<"407",T,"AUTONAV_FOR_DESKTOP">;
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
 type TB_ContinuationItemMap_1={"watch-next-feed": G_WatchNext; "comments-section": G_CommentsSection; "browse-feedFEwhat_to_watch": R_BrowseFeed;};
 type TB_ContinuationItemMap_2={[V in `comment-replies-item-${string}`]: R_Comment;};
 type TB_ContinuationItemMap=TB_ContinuationItemMap_1&TB_ContinuationItemMap_2;
+type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=T_Endpoint_Ex<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
 //#endregion
 //#region GU_VE
 type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
@@ -429,7 +430,7 @@ type D_ReelWatch={
 };
 type E_Search=T_Endpoint_Ex<M_VE4724,"searchEndpoint",D_Search>;
 type D_Search={query: string;};
-type E_SetSetting=T_E_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
+type E_SetSetting=TE_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: DE_ShowEngagementPanel;};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type E_SignalNavigation=T_Endpoint_Ex<M_VE83769,"signalNavigationEndpoint",DE_SignalNavigation>;
