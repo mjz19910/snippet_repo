@@ -1,4 +1,4 @@
-type OpportunityTypeOrganicEnum=
+type DE_OpportunityType=
 	|T_EnumStr<"OPPORTUNITY_TYPE",T_EnumStr<"ORGANIC",T_EnumStr<[
 		"BROWSE",
 		"WATCH_NEXT",

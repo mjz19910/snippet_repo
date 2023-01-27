@@ -285,7 +285,7 @@ type AD_UpdateNotificationsUnseenCount={
 type C_AddToPlaylist={clickTrackingParams: string; addToPlaylistCommand: DC_AddToPlaylist;};
 type C_AdsControlFlowOpportunityReceived={clickTrackingParams: string; adsControlFlowOpportunityReceivedCommand: DC_AdsControlFlowOpportunityReceived;};
 type DC_AdsControlFlowOpportunityReceived={
-	opportunityType: OpportunityTypeOrganicEnum;
+	opportunityType: DE_OpportunityType;
 	adSlotAndLayoutMetadata?: DMD_AdSlotAndLayoutItem[];
 	isInitialLoad: boolean;
 	enablePacfLoggingWeb: boolean;
