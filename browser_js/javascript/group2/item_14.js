@@ -336,14 +336,14 @@ class JsonReplacerState {
 	/** @arg {DataItemReturn} x */
 	run_json_replacement(x) {
 		let new_state = new JsonReplacerState;
-		return new_state.run_json_replacement_with_state(this,x);
+		return new_state.run_json_replacement_with_state(this, x);
 	}
 	/** @arg {DataItemReturn} x @arg {JsonReplacerState} parent */
-	run_json_replacement_with_state(parent,x) {
-		let new_state=this;
-		let this_=parent;
+	run_json_replacement_with_state(parent, x) {
+		let new_state = this;
+		let this_ = parent;
 		new_state.prepare_self(this_);
-		let ret=new_state.run_internal(x);
+		let ret = new_state.run_internal(x);
 		this_.post_run();
 		this_.import_state(new_state);
 		return ret;
@@ -398,16 +398,16 @@ class JsonReplacerState {
 		!skip && console.log(`--- [%s[%s]] ---\n%s %o`, section, i, t, ...x);
 	}
 	post_run() {
-		if(JsonReplacerState.stringify_failed_obj.length>0) {
+		if (JsonReplacerState.stringify_failed_obj.length > 0) {
 			console.log("failed to stringify the following objects");
-			for(let failed_obj of JsonReplacerState.stringify_failed_obj) {
-				console.log("[failed_object]",failed_obj);
-				let ek=Object.keys(failed_obj);
-				if(ek.length>0) {
-					console.log("[failed_object_keys]",ek);
+			for (let failed_obj of JsonReplacerState.stringify_failed_obj) {
+				console.log("[failed_object]", failed_obj);
+				let ek = Object.keys(failed_obj);
+				if (ek.length > 0) {
+					console.log("[failed_object_keys]", ek);
 				} else {
 					console.log("[failed_object_no_keys]");
-					debugger;
+					debugger ;
 				}
 			}
 		}
@@ -417,7 +417,7 @@ class JsonReplacerState {
 		let from_cache = this.cache[data[1]];
 		let new_state = new JsonReplacerState;
 		let obj = this.prepare_obj("cache_item_to_log", from_cache);
-		let res=new_state.run_json_replacement_with_state(this,obj);
+		let res = new_state.run_json_replacement_with_state(this, obj);
 		let {cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, id, is_crash_testing, ...os} = new_state;
 		let ns_id = this.id;
 		Z_len_k(os) > 0 && console.log("[json_data_ex]\n%o", os);
