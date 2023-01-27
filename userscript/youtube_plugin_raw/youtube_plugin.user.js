@@ -5717,7 +5717,7 @@ class ParserService extends BaseService {
 				return;
 			}
 			callback(map_entry_value,map_entry_key);
-			/** @arg {number} x @template {number} T @arg {T} mx @returns {x is NumRange<1,T>} */
+			/** @arg {number} x @template {number} T @arg {T} mx @returns {x is T_NumRange<1,T>} */
 			function is_in_range(x,mx) {
 				if(x<=mx) return true;
 				return false;

@@ -1,1 +1,1 @@
-type NumRange<T,U>=NS_MakeNumRange.NumRange<T,U>;
+type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
