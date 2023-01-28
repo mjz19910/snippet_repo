@@ -640,6 +640,7 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
 	on_data_item(x, idx) {
+		debugger;
 		let xu = x;
 		switch (x[0]) {
 			default:
@@ -720,6 +721,7 @@ class JsonReplacerState {
 	}
 	/** @arg {Extract<CacheItemType,{__cache_item:any}>|{}} x */
 	on_run_with_cache_type(x) {
+		debugger;
 		if ("__cache_item" in x)
 			return x;
 		return null;
@@ -816,36 +818,51 @@ class JsonReplacerState {
 	}
 	/** @type {TaggedJsonHistory[]} */
 	history_acc = [];
+	/** @arg {TaggedJsonHistory[]} arg0 */
+	untag_history_acc([first, ...rest]) {
+		return rest.reduce((pv, [, cur]) => pv.concat(cur), first[1]);
+	}
+	/** @arg {TaggedJsonHistory[]} history_acc_arr */
+	iterate_accumulated_history(history_acc_arr) {
+		let history_items = this.untag_history_acc(history_acc_arr);
+		let results = [];
+		let s_ = new H_Iter(this);
+		for (let history of history_items) {
+			s_.done_ids = [];
+			let prev_stack = s_.stack;
+			s_.stack = [history];
+			let ret = this.history_iter(s_);
+			if (ret === null) {
+				return [false, results, [history]];
+			}
+			results.push(res);
+			s_.stack = prev_stack;
+		}
+		return [true, results];
+	}
 	/** @arg {H_Iter} s_ */
 	history_iter(s_, recurse = false) {
 		const { stack } = s_;
 		let all_history_arr = [];
 		while (stack.length > 0) {
 			let x = stack.shift();
-			if (!x)
+			if (!x) {
 				break;
+			}
 			x.id = x.get_id();
-			if (s_.done_ids.includes(x.id))
+			if (s_.done_ids.includes(x.id)) {
 				continue;
+			}
+			s_.done_ids.push(x.id);
 			all_history_arr.push(x);
-			if (x.id > 2)
+			if (x.id > 2) {
 				return null;
+			}
 			console.log("start iter", x.id);
 			let inner_arr = this.iter_history_result(s_, x);
 			this.history_acc.push(["TAG::json_result_history", inner_arr]);
 		}
 		if (recurse) {
-			for (let history of all_history_arr) {
-				s_.done_ids = [];
-				let prev_stack = s_.stack;
-				s_.stack = [history];
-				let ret = this.history_iter(s_);
-				if (ret === null) {
-					console.log("failed at", all_history_arr.indexOf(history));
-					return null;
-				}
-				s_.stack = prev_stack;
-			}
 		}
 		let do_join_str = () => this.join_string(["\n", "%o"], "");
 		/** @arg {any[]} hist */

@@ -61,8 +61,8 @@ type StackLimitReturn = {
 	requested_start: number,
 	requested_target: number,
 };
-type JsonInputType = DataItemReturn | VueAppContainer | Element | Node;
-type CacheItemType = { __cache_item: true; } | JsonInputType | Element | HTMLDivElement;
+type JsonInputType = DataItemReturn | VueAppContainer | Element | Node | HTMLDivElement;
+type CacheItemType = JsonInputType;
 type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
 type DataItemReturnBase = | ["TAG::unpack_vnode::2::res", {}[]];
 type TagVNodeRes_2 = ["TAG::unpack_vnode::2::res", {}[]];
