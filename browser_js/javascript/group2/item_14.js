@@ -158,7 +158,7 @@ const log_gen = new LogGenerator;
 class InputObjBox {
 	/** @type {InputObjBoxItem[][]} */
 	arr = [];
-	/** @type {DataItemReturn[][]} */
+	/** @type {DataItemReturn[]} */
 	return_items = [];
 }
 const overflow_state = new class {
@@ -383,11 +383,24 @@ function history_iter() {
 	return log_args;
 }
 let json_replace_count = 0;
-/** @arg {InputObjBox} res_box @arg {DataItemReturn} args */
-function do_json_replace(res_box, args) {
+/** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
+function do_json_replace(res_box, x) {
 	json_replace_count++;
-	let res = run_json_replacement_with_state(["TYPE::DataItemReturn", args]);
-	res_box.return_items.push(res);
+	console.log(x);
+	if (J_Rep.stringify_failed_obj.length > 0) {
+		console.log("failed to stringify the following objects");
+		for (let failed_obj of J_Rep.stringify_failed_obj) {
+			console.log("[failed_object]", failed_obj);
+			let ek = Object.keys(failed_obj);
+			if (ek.length > 0) {
+				console.log("[failed_object_keys]", ek);
+			} else {
+				console.log("[failed_object_no_keys]");
+				debugger;
+			}
+		}
+	}
+	res_box.return_items.push(x);
 }
 /** @template {object} T @arg {T} x @returns {[boolean,T]} */
 function h_map(x) {
@@ -632,24 +645,6 @@ function on_tag_cache_item(idx, data) {
 function log_data_result(section, i, data_result) {
 	console.log(`--- [%s[%s]] ---\n%s %o`, section, i, data_result);
 	return data_result;
-}
-/** @arg {DataItemReturn} x @returns {DataItemReturn[]} */
-function run_json_replacement_with_state(x) {
-	console.log(x);
-	if (J_Rep.stringify_failed_obj.length > 0) {
-		console.log("failed to stringify the following objects");
-		for (let failed_obj of J_Rep.stringify_failed_obj) {
-			console.log("[failed_object]", failed_obj);
-			let ek = Object.keys(failed_obj);
-			if (ek.length > 0) {
-				console.log("[failed_object_keys]", ek);
-			} else {
-				console.log("[failed_object_no_keys]");
-				debugger;
-			}
-		}
-	}
-	return [];
 }
 /** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 function join_string(x, s) {
