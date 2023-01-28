@@ -329,8 +329,7 @@ function run_json_replace() {
 	if (!run_result) {
 		debugger; return;
 	}
-	debugger;
-	// arr.forEach(arr_iter_func);
+	debugger;// arr.forEach(arr_iter_func);
 	let log_args = history_iter();
 	if (log_args === null)
 		return;
@@ -384,7 +383,13 @@ let json_replace_count = 0;
 /** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
 function do_json_replace(res_box, x) {
 	json_replace_count++;
-	console.log(x);
+	switch (x[0]) {
+		case "EVENT::input":
+			break;
+		default:
+			console.log(x);
+			debugger; break;
+	}
 	if (J_Rep.stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
 		for (let failed_obj of J_Rep.stringify_failed_obj) {
@@ -587,14 +592,12 @@ function filter_array_type(arr, fn) {
 /** @arg {["CONTENT::cache",HTMLDivElement[]][]} vnode_arr */
 function on_data_z(vnode_arr) {
 	console.log(vnode_arr);
-	debugger;
-	// vnode_arr.forEach(x => on_data_item(["TAG::vnode", x]));
+	debugger;// vnode_arr.forEach(x => on_data_item(["TAG::vnode", x]));
 }
 /** @arg {InputObjBoxItem[]} x */
 function arr_iter_func(x) {
 	console.log(x);
-	debugger;
-	// let c = x[0];
+	debugger;// let c = x[0];
 	// if (c[0] === "CONTENT::cache") {
 	// 	let inner_items = c[1];
 	// 	let div_elements = filter_array_type(inner_items, get_div_elements);
@@ -625,8 +628,7 @@ function on_tag_cache_item(idx, data) {
 	let res_box = new InputObjBox;
 	do_json_replace(res_box, ["TYPE::JsonInputType", from_cache]);
 	let first_result = res_box.return_items[0];
-	debugger;
-	log_gen.new_gen();
+	debugger; log_gen.new_gen();
 	log_gen.state_id();
 	let id_log = log_gen.capture();
 	console.log(id_log);
