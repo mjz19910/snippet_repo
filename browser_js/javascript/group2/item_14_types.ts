@@ -66,7 +66,7 @@ type DataItemReturn =
 	| ["TAG::parsed_json", DataParsable]
 	| ["TYPE::parsable_json", string]
 	| ["TAG::stringify_range_error", RangeError]
-	| ["TAG::stringify_result", string, InputObjBox]
+	| ["TAG::stringify_result", string, number & { _tag: "InputObjBox" }]
 	| ["TAG::stringify_seen_failed_obj", number]
 	| ["TAG::unpack_vnode::1", {}]
 	| ["TAG::unpack_vnode::2::res_arr", {}[]]
@@ -78,3 +78,9 @@ type DataItemReturn =
 	| ["TAG::error", string]
 	;
 ;
+type TaggedJsonHistory = ["TAG::json_result_history", JsonReplacerState[]];
+type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
+type IndexBoxMap = {
+	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;
+};
+type IndexUnboxMap<T, O, U> = Map<T, { _inner_tag: U, value: O & { _tag: U } }>;

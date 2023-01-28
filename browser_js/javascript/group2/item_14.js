@@ -219,6 +219,56 @@ class JsonReplacerState {
 	}
 	json_stringify_count = 0;
 	os = overflow_state;
+	/** @type {InputObjBox[]} */
+	index_box_store = [];
+	/** @template T @template {string} U @arg {T} x @arg {U} tag @returns {T&{_tag:U}} */
+	tag_obj(x, tag) {
+		/** @arg {T} _ @returns {asserts _ is T&{_tag:U}} */
+		let assert_assume_true = _ => void 0;
+		/** @template {{}} T @arg {{v:"a";t:T}|{v:"b";t:T&{_tag:U}}} x @arg {U} _v @returns {x is {v:"b";t:T&{_tag:U}}} */
+		let object_remove_optional = (x, _v) => "_tag" in x.t;
+		/** @template {{_tag?:unknown}} T @arg {T} x @arg {U} v @returns {x is T&{_tag:U}} */
+		let object_use_eq = (x, v) => x._tag === v;
+		if (typeof x === "object" || typeof x === "function") {
+			if (x === null) {
+				assert_assume_true(x);
+				return x;
+			}
+			if ("_tag" in x) {
+				if (object_use_eq(x, tag)) {
+					return x;
+				}
+				/** @type {T&{}} */
+				let y1 = x;
+				/** @type {T&{_tag?:U}} */
+				let y2 = y1;
+				y2._tag = tag;
+				/** @type {T&{}} */
+				let y3 = y2;
+				if (object_use_eq(y3, tag)) {
+					return y3;
+				}
+				throw new Error("Failed to set, probably trying to set the tag property [\"_tag\"] but that property is readonly");
+			}
+			/** @arg {T&{}} x @arg {"a"} v @returns {{v:"a",t:(T&{})}|{v:"b",t:(T&{_tag:U})}} */
+			function gy(x, v = "a", t = x) {
+				return {
+					v,
+					t
+				};
+			}
+			/** @type {{v:"a",t:(T&{})}|{v:"b",t:(T&{_tag:U})}} */
+			let y = gy(x);
+			if (object_remove_optional(y, tag)) {
+				y.t._tag = tag;
+				return y.t;
+			}
+		}
+		assert_assume_true(x);
+		return x;
+	}
+	/** @type {Map<number,IndexBoxMap[keyof IndexBoxMap]>} */
+	index_tag_map = new Map;
 	/** @arg {JsonInputType} x @returns {DataItemReturn|null} */
 	try_json_stringify(x, first = false) {
 		if (this.os.ran_out_of_stack) {
@@ -251,7 +301,14 @@ class JsonReplacerState {
 			if (this.os.ran_out_of_stack) {
 				return this.os.stack_limit_json_result;
 			}
-			return ["TAG::stringify_result", json_result, new InputObjBox];
+			let res_box = new InputObjBox;
+			let index = this.index_box_store.push(res_box) - 1;
+			let tagged_val = this.tag_obj(index, "InputObjBox");
+			this.index_tag_map.set(index, {
+				_inner_tag: "InputObjBox",
+				value: tagged_val
+			});
+			return ["TAG::stringify_result", json_result, tagged_val];
 		} catch (e) {
 			if (this.os.ran_out_of_stack) {
 				return this.os.stack_limit_json_result;
@@ -392,8 +449,7 @@ class JsonReplacerState {
 			return ["TAG::null", null];
 		}
 		if (typeof data_res === 'object' && data_res[0] === "TAG::error") {
-			debugger;
-			return ["TAG::null", null];
+			debugger; return ["TAG::null", null];
 		}
 		return data_res;
 	}
@@ -409,20 +465,15 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 	run_internal(obj) {
-		let [type, ...arr] = obj;
+		let [type] = obj;
 		/** @type {DataItemReturn[]} */
-		let res = [];
+		let res = [obj];
 		let type_parts = split_string(type, "::");
 		if (type_parts[0] !== "CONTENT") {
-			this.break_debugger;
-			return res;
-		}
-		for (let x of arr) {
-			let ri = this.stringify_each(x);
-			if (typeof ri === "object" && ri[0] === "TAG::error") {
-				return [ri];
+			{
+				debugger;
 			}
-			res.push(ri);
+			; return res;
 		}
 		return res;
 	}
@@ -610,8 +661,7 @@ class JsonReplacerState {
 				{
 					let item = this.on_tag_cache_item(idx, x);
 					if (item instanceof Array && item[0] === "TAG::error") {
-						debugger;
-						return item;
+						debugger; return item;
 					}
 					return ["TAG::cache_item_result", item];
 				}
@@ -637,6 +687,8 @@ class JsonReplacerState {
 					for (let item of unpacked) {
 						switch (item[0]) {
 							case "TAG::vnode_item":
+								break;
+							case "TAG::null":
 								break;
 							default:
 								this.break_debugger;
@@ -775,6 +827,8 @@ class JsonReplacerState {
 			return x.filter((x) => !o_arr.includes(x));
 		}
 	}
+	/** @type {TaggedJsonHistory[]} */
+	history_acc = [];
 	/** @arg {H_Iter} s_ */
 	history_iter(s_, recurse = true) {
 		const { stack } = s_;
@@ -791,9 +845,7 @@ class JsonReplacerState {
 				return null;
 			console.log("start iter", x.id);
 			let inner_arr = this.iter_history_result(s_, x);
-			if (inner_arr.length <= 0)
-				continue;
-			stack.unshift(...inner_arr);
+			this.history_acc.push(["TAG::json_result_history", inner_arr]);
 		}
 		for (let history of all_history_arr) {
 			if (!recurse)
@@ -862,7 +914,10 @@ class JsonReplacerState {
 		let requested_start = start;
 		let initial_start = start;
 		let hit_known = false;
-		let last_known_zero = start, last_known_miss = start, max_known = 0, min_known = 0xffff;
+		let last_known_zero = start
+			, last_known_miss = start
+			, max_known = 0
+			, min_known = 0xffff;
 		function reset_known() {
 			last_known_zero = requested_start;
 			last_known_miss = requested_start;
@@ -957,12 +1012,10 @@ class JsonReplacerState {
 		let limits_1 = this.get_stack_limits(limit_guess);
 		this.log_limits(limits_1);
 		if (!limits_1.zero) {
-			debugger;
-			throw new Error();
+			debugger; throw new Error();
 		}
 		if (!limits_1.last_crash) {
-			debugger;
-			throw new Error();
+			debugger; throw new Error();
 		}
 		let n_start = limits_1.zero - limits_1.min;
 		let limits_2 = this.get_stack_limits(n_start, 4);
