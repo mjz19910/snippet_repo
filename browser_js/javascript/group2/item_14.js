@@ -190,7 +190,9 @@ class JsonReplacerState {
 	static all_cache_map = [];
 	/** @type {Map<string,JsonInputType[]>} */
 	static cache_map = new Map;
-	static { store_window("__JsonReplacer_cache_map", this.cache_map); }
+	static {
+		store_window("__JsonReplacer_cache_map", this.cache_map);
+	}
 	static _next_id = 1;
 	get next_id() {
 		return JsonReplacerState._next_id++;
@@ -293,7 +295,9 @@ class JsonReplacerState {
 			let space = this.do_has_stack_space(4096);
 			console.log("[stack_left]", space);
 			if (space < 9500) {
-				{ debugger; }
+				{
+					debugger;
+				}
 				os.ran_out_of_stack = true;
 				let stack_exhausted_msg = `RangeError: Ran of stack space, ${space} frames left`;
 				os.ran_out_of_stack_args = [JSON.stringify({
@@ -557,7 +561,8 @@ class JsonReplacerState {
 	on_data_z(vnode_arr) {
 		vnode_arr.forEach((x, idx) => {
 			return this.on_data_item(["TAG::vnode", x], idx);
-		}, this);
+		}
+			, this);
 	}
 	/** @template {DataItemReturn} T @arg {string} section @arg {any} i @arg {T} data_result */
 	log_data_result(section, i, data_result) {
@@ -612,8 +617,10 @@ class JsonReplacerState {
 	/** @arg {TagVNodeInner[1]} x @arg {number} i */
 	unpack_data_item_todo(x, i) {
 		switch (x[0]) {
-			case "CONTENT::cache": return x[1];
-			default: debugger; break;
+			case "CONTENT::cache":
+				return x[1];
+			default:
+				debugger; break;
 		}
 		console.log("TODO: [unpack] [index=%o]", i, x);
 		return null;
@@ -635,7 +642,8 @@ class JsonReplacerState {
 	on_data_item(x, idx) {
 		let xu = x;
 		switch (x[0]) {
-			default: break;
+			default:
+				break;
 			case "CONTENT::empty":
 			case "CONTENT::cache":
 			case "TYPE::parsable_json":
@@ -742,7 +750,8 @@ class JsonReplacerState {
 	}
 	/** @arg {this} other */
 	add_to_history(other) {
-		if (this.result_history.includes(other)) return;
+		if (this.result_history.includes(other))
+			return;
 		this.result_history.push(other);
 	}
 	/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]} x */
@@ -850,8 +859,7 @@ class JsonReplacerState {
 			let inner_arr = this.iter_history_result(s_, x);
 			this.history_acc.push(["TAG::json_result_history", inner_arr]);
 		}
-		if (recurse) {
-		}
+		if (recurse) { }
 		let do_join_str = () => this.join_string(["\n", "%o"], "");
 		/** @arg {any[]} hist */
 		function log_history_items(hist) {
@@ -870,7 +878,9 @@ class JsonReplacerState {
 	}
 	/** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x, s) {
-		if (!x) { debugger; }
+		if (!x) {
+			debugger;
+		}
 		let r = x.join(s);
 		return as(r);
 	}
@@ -1014,6 +1024,29 @@ class JsonReplacerState {
 		overflow_state.last_stack_space = result;
 		return result;
 	}
+	/** @arg {CacheItemType} e @returns {e is HTMLDivElement} */
+	get_div_elements = (e) => e instanceof HTMLDivElement;
+	/** @arg {CacheItemType[]} arr @arg {(v: CacheItemType)=>v is HTMLDivElement} fn @returns {HTMLDivElement[]}  */
+	filter_array_type(arr, fn) {
+		let out = [];
+		for (let i of arr) {
+			if (fn(i)) {
+				out.push(i);
+			}
+		}
+		return out;
+	}
+	/** @arg {DataItemReturn[]} x */
+	arr_iter_func(x) {
+		let c = x[0];
+		if (c[0] === "CONTENT::cache") {
+			let inner_items = c[1];
+			let div_elements = this.filter_array_type(inner_items, this.get_div_elements);
+			this.on_data_z([["CONTENT::cache", div_elements]])
+		} else {
+			debugger;
+		}
+	}
 	run() {
 		let doc_child = document.body.firstElementChild;
 		if (!doc_child)
@@ -1026,22 +1059,7 @@ class JsonReplacerState {
 		for (let item of this.result_history) {
 			all_vnodes.push(...item.vnodes);
 		}
-		arr.forEach(x => {
-			let c = x[0];
-			if (c[0] === "CONTENT::cache") {
-				let inner_items = c[1];
-				/** @arg {CacheItemType} e @returns {e is HTMLDivElement} */
-				let get_div_elements = e => e instanceof HTMLDivElement;
-				/** @arg {CacheItemType[]} arr @arg {(v: CacheItemType)=>v is HTMLDivElement} fn @returns {HTMLDivElement[]}  */
-				function filter_array_type(arr, fn) {
-					return arr.filter(fn);
-				}
-				let div_elements = filter_array_type(inner_items, get_div_elements);
-				this.on_data_z([["CONTENT::cache", div_elements]])
-			} else {
-				debugger;
-			}
-		}, this);
+		arr.forEach(this.arr_iter_func, this);
 		let h_iter_s = new H_Iter(this);
 		let cache = this.cache.slice();
 		let log_args = this.history_iter(h_iter_s);
