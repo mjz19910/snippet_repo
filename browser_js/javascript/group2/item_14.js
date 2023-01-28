@@ -166,6 +166,8 @@ const overflow_state = new class {
 	ran_out_of_stack_args = null;
 	/** @type {["TAG::error",string]|null} */
 	stack_limit_json_result = null;
+	/** @type {number|null} */
+	last_stack_space = null;
 }
 	;
 class JsonReplacerState {
@@ -223,7 +225,7 @@ class JsonReplacerState {
 			return this.os.stack_limit_json_result;
 		}
 		this.json_stringify_count++;
-		if (this.json_stringify_count % 128 === 0) {
+		if (this.json_stringify_count % 64 === 0) {
 			let space = this.do_has_stack_space(4096);
 			console.log("[stack_left]", space);
 			if (space < 9500) {
@@ -246,8 +248,14 @@ class JsonReplacerState {
 			let test_state = this.clone();
 			let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
 			this.json_result_cache.set(x, json_result);
+			if (this.os.ran_out_of_stack) {
+				return this.os.stack_limit_json_result;
+			}
 			return ["TAG::stringify_result", json_result, new InputObjBox];
 		} catch (e) {
+			if (this.os.ran_out_of_stack) {
+				return this.os.stack_limit_json_result;
+			}
 			if (e instanceof RangeError) {
 				return ["TAG::stringify_range_error", e];
 			}
@@ -358,7 +366,7 @@ class JsonReplacerState {
 		}
 		return `TYPE::Store.cache[${cache.indexOf(x)}]`;
 	}
-	/** @arg {number} target_stack */
+	/** @arg {number} target_stack @returns {[number, number]} */
 	check_stack_overflow(target_stack) {
 		try {
 			return this.has_stack_space(target_stack, target_stack);
@@ -372,7 +380,6 @@ class JsonReplacerState {
 			return [num, start];
 		return this.has_stack_space(num - 1, start);
 	}
-	last_stack_space = null;
 	/** @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
 		if (this.cache.includes(item)) {
@@ -840,17 +847,17 @@ class JsonReplacerState {
 	static {
 		this.create_and_run()
 	}
-	/** @arg {number} start */
+	/** @arg {number} start @returns {StackLimitReturn} */
 	get_stack_limits(start, target = start / 2) {
 		target = Math.pow(2, Math.log2(target) | 0)
 		let requested_target = target;
 		let requested_start = start;
 		let initial_start = start;
 		let hit_known = false;
-		let last_known_zero, last_known_miss, max_known = 0, min_known;
+		let last_known_zero = start, last_known_miss = start, max_known = 0, min_known = 0xffff;
 		function reset_known() {
-			last_known_zero = null;
-			last_known_miss = null;
+			last_known_zero = requested_start;
+			last_known_miss = requested_start;
 			max_known = 0;
 			min_known = 0xffff;
 		}
@@ -910,6 +917,7 @@ class JsonReplacerState {
 			requested_target,
 		};
 	}
+	/** @arg {StackLimitReturn} limits_obj */
 	log_limits(limits_obj) {
 		let logging = false;
 		if (!logging)
@@ -920,7 +928,9 @@ class JsonReplacerState {
 		console.log("call stack overflow range", [min, max], "diff from start_at", calc_start - min);
 		console.log("st", start, target);
 	}
+	/** @arg {number} start @arg {number} lower @arg {number} upper @returns {[number, number][]} */
 	get_final_stack_space(start, lower, upper) {
+		/** @type {[number, number][]} */
 		let near_checks = [];
 		let inc = Math.max(1, (upper / 32 | 0));
 		for (let i = lower; i < upper; i += inc) {
@@ -929,21 +939,27 @@ class JsonReplacerState {
 		}
 		return near_checks;
 	}
+	/** @arg {[number,number][]} stk_sp_arr */
 	is_containing_stack_limit(stk_sp_arr) {
-		return stk_sp_arr.find(e => e[0] === 0) && stk_sp_arr.find(e => e[0] === -1);
+		return stk_sp_arr.findIndex(e => e[0] === 0) > -1 && stk_sp_arr.findIndex(e => e[0] === -1) > -1;
 	}
+	/** @arg {number} limit_guess */
 	do_has_stack_space(limit_guess) {
-		let try_count = 0;
-		let space_guess = null;
-		if (this.last_stack_space !== null) { }
+		if (overflow_state.last_stack_space !== null) { }
 		let limits_1 = this.get_stack_limits(limit_guess);
 		this.log_limits(limits_1);
+		if (!limits_1.zero) {
+			debugger;
+			throw new Error();
+		}
+		if (!limits_1.last_crash) {
+			debugger;
+			throw new Error();
+		}
 		let n_start = limits_1.zero - limits_1.min;
-		let diff = limits_1.last_crash - limits_1.start;
 		let limits_2 = this.get_stack_limits(n_start, 4);
 		this.log_limits(limits_2);
 		let near_checks = this.get_final_stack_space(limits_2.start, -5, 5);
-		let has_stack_limit = near_checks.find(e => e[0] === 0) && near_checks.find(e => e[0] === -1);
 		limits_2.target = 32;
 		while (!this.is_containing_stack_limit(near_checks)) {
 			near_checks = this.get_final_stack_space(limits_2.start, 1, limits_2.target);
@@ -954,7 +970,7 @@ class JsonReplacerState {
 			}
 		}
 		let result = near_checks.filter(e => e[0] !== -1).reduce((acc, v) => Math.min(acc, v[1]), Infinity);
-		this.last_stack_space = result;
+		overflow_state.last_stack_space = result;
 		return result;
 	}
 }
