@@ -640,12 +640,9 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
 	on_data_item(x, idx) {
-		debugger;
 		let xu = x;
 		switch (x[0]) {
-			default:
-				this.break_debugger;
-				break;
+			default: break;
 			case "CONTENT::empty":
 			case "CONTENT::cache":
 			case "TYPE::parsable_json":
@@ -731,7 +728,7 @@ class JsonReplacerState {
 		} else {
 			debugger;
 		}
-		if (x !== null) {
+		if (x !== null && !this.cache.includes(x)) {
 			this.cache.push(x);
 		}
 		if (this.vue_app !== null) {
