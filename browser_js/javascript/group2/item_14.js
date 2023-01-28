@@ -633,15 +633,9 @@ function log_data_result(section, i, data_result) {
 	console.log(`--- [%s[%s]] ---\n%s %o`, section, i, data_result);
 	return data_result;
 }
-/** @arg {DataItemReturn} x */
+/** @arg {DataItemReturn} x @returns {DataItemReturn[]} */
 function run_json_replacement_with_state(x) {
-	let ret = run_internal(x);
-	post_run();
-	import_state();
-	return ret;
-}
-function import_state() { }
-function post_run() {
+	console.log(x);
 	if (J_Rep.stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
 		for (let failed_obj of J_Rep.stringify_failed_obj) {
@@ -655,10 +649,6 @@ function post_run() {
 			}
 		}
 	}
-}
-/** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
-function run_internal(obj) {
-	console.log(obj);
 	return [];
 }
 /** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
