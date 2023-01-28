@@ -33,7 +33,7 @@ type VueAppContainer = {
 	__Z_ignore_replacement?: boolean;
 	__vue_app__: VueApp;
 };
-type StackLimitReturn={
+type StackLimitReturn = {
 	target: number,
 	min: number,
 	required_start: number,
@@ -45,32 +45,36 @@ type StackLimitReturn={
 	requested_start: number,
 	requested_target: number,
 };
-type JsonInputType = any[]|DataItemReturn|VueAppContainer | Element | Node;
+type JsonInputType = DataItemReturn | VueAppContainer | Element | Node;
 type CacheItemType = { __cache_item: true; } | JsonInputType | Element;
 type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
 
-type DataItemReturn = | ["TAG::vnode_item", {}] | [
-	"TAG::stringify_failed",
-	["CONTENT::cache", CacheItemType[]],
-	["CONTENT::empty"],
-	["TAG::bad_array", any[]],
-	["TAG::cache_item_result", CacheItemType],
-	["TAG::cache_item_to_log", CacheItemType],
-	["TAG::cache_item", number],
-	["TAG::data", {}],
-	["TAG::empty"],
-	["TAG::failed", null],
-	["TAG::null_arr", null[]],
-	["TAG::null", null],
-	["TAG::parsed_json", DataParsable],
-	["TAG::stringify_range_error", RangeError],
-	["TAG::stringify_result", string, InputObjBox],
-	["TAG::stringify_seen_failed_obj",number],
-	["TAG::unpack_vnode::1", {}],
-	["TAG::unpack_vnode::2::res_arr", {}[]],
-	["TAG::unpack_vnode::2::res", {}],
-	["TAG::unpack_vnode::2", {}],
-	["TAG::vnode_inner", {}],
-	["TAG::vnode", {}],
-	["TAG::error",string],
-][number];
+type DataItemReturn =
+	| ["TAG::vnode_item", {}]
+	| ["TAG::stringify_failed"]
+	| ["CONTENT::cache", CacheItemType[]]
+	| ["CONTENT::empty"]
+	| ["TAG::bad_array", any[]]
+	| ["TAG::cache_item_result", CacheItemType]
+	| ["TAG::cache_item_to_log", CacheItemType]
+	| ["TAG::cache_item", number]
+	| ["TAG::data", {}]
+	| ["TAG::empty"]
+	| ["TAG::failed", null]
+	| ["TAG::null_arr", null[]]
+	| ["TAG::null", null]
+	| ["TAG::parsed_json", DataParsable]
+	| ["TYPE::parsable_json", string]
+	| ["TAG::stringify_range_error", RangeError]
+	| ["TAG::stringify_result", string, InputObjBox]
+	| ["TAG::stringify_seen_failed_obj", number]
+	| ["TAG::unpack_vnode::1", {}]
+	| ["TAG::unpack_vnode::2::res_arr", {}[]]
+	| ["TAG::unpack_vnode::2::res", {}]
+	| ["TAG::unpack_vnode::2", {}]
+	| ["TAG::vnode_inner", {}]
+	| ["TAG::vnode", {}]
+	| ["TAG::result", DataItemReturn]
+	| ["TAG::error", string]
+	;
+;

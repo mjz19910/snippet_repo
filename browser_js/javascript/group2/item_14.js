@@ -391,6 +391,10 @@ class JsonReplacerState {
 		if (data_res === null) {
 			return ["TAG::null", null];
 		}
+		if (typeof data_res === 'object' && data_res[0] === "TAG::error") {
+			debugger;
+			return ["TAG::null", null];
+		}
 		return data_res;
 	}
 	/** @arg {this} other */
@@ -417,6 +421,9 @@ class JsonReplacerState {
 		}
 		for (let x of arr) {
 			let ri = this.stringify_each(x);
+			if (typeof ri === "object" && ri[0] === "TAG::error") {
+				return [ri];
+			}
 			res.push(ri);
 		}
 		return res;
@@ -495,9 +502,10 @@ class JsonReplacerState {
 		let res = vnode_arr.map((x, idx) => this.on_data_item(["TAG::vnode", x], idx), this);
 		console.log(res);
 	}
-	/** @arg {string} section @arg {any} i @arg {["TAG::parsed_json",DataParsable]|["TAG::result",DataItemReturn]} data_result */
+	/** @template {DataItemReturn} T @arg {string} section @arg {any} i @arg {T} data_result */
 	log_data_result(section, i, data_result) {
 		console.log(`--- [%s[%s]] ---\n%s %o`, section, i, ...data_result);
+		return data_result;
 	}
 	post_run() {
 		if (JsonReplacerState.stringify_failed_obj.length > 0) {
@@ -520,6 +528,10 @@ class JsonReplacerState {
 		let new_state = this.clone();
 		let obj = this.prepare_obj("cache_item_to_log", from_cache);
 		let res = new_state.run_json_replacement_with_state(this, obj);
+		if (typeof res[0] === "object" && res[0][0] === "TAG::error") {
+			let ra = res[0];
+			return ra;
+		}
 		let { cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, id, is_crash_testing, ...os } = new_state;
 		let ns_id = this.id;
 		Z_len_k(os) > 0 && console.log("[json_data_ex]\n%o", os);
@@ -551,8 +563,8 @@ class JsonReplacerState {
 		if (typeof inner_arr[0] === "string") {
 			inner_arr[0] = JSON.parse(inner_arr[0]);
 		}
-		this.log_data_result("json_data", idx, ["TAG::result", first_result]);
-		return from_cache;
+		first_result;
+		return this.log_data_result("json_data", idx, ["TAG::result", first_result]);
 	}
 	/** @arg {{}} x @arg {number} i */
 	unpack_data_item_vnode_2(x, i) {
@@ -598,6 +610,10 @@ class JsonReplacerState {
 			case "TAG::cache_item":
 				{
 					let item = this.on_tag_cache_item(idx, x);
+					if (item instanceof Array && item[0] === "TAG::error") {
+						debugger;
+						return item;
+					}
 					return ["TAG::cache_item_result", item];
 				}
 			case "TAG::failed":
@@ -648,10 +664,7 @@ class JsonReplacerState {
 				{
 					const [, ...data] = x;
 					let data_item = data[0];
-					let parsed_item = JSON.parse(data_item, (...r_args) => this.json_reviver(r_args));
-					/** @type {["TAG::parsed_json",DataParsable]} */
-					let p_res = ["TAG::parsed_json", parsed_item];
-					this.log_data_result("vnode", idx, p_res);
+					this.log_data_result("vnode", idx, ["TYPE::parsable_json", data_item]);
 					return p_res;
 				}
 			case "TAG::null_arr":
