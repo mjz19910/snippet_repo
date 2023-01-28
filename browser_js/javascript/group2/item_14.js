@@ -249,43 +249,49 @@ let json_replace_count = 0;
 const stringify_failed_obj = [];
 /** @arg {DataItemReturn} x */
 function do_json_replace_on_input(x) {
-	let res = JSON.stringify(x, json_replacer, "\t");
-	return res;
+	let res;
+	switch (x[0]) {
+		case "COMMAND::unpack":
+			res = JSON.stringify(x[1], json_replacer, "\t");
+			return res;
+		default:
+			res = JSON.stringify(x, json_replacer, "\t");
+			return res;
+	}
 }
 /** @arg {DataItemReturn} x */
 function handle_json_event(x) {
 	switch (x[0]) {
 		case "EVENT::input":
-			return do_json_replace_on_input(x);
+			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::json_cache":
 			console.log("- [EVENT::json_cache] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "EVENT::vnodes":
 			console.log("- [EVENT::vnodes] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "EVENT::dom_nodes":
 			console.log("- [EVENT::dom_nodes] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "RESULT::handle_json_event":
 			console.log("- [EVENT::handle_json_event] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "TYPE::DataItemReturn":
 			console.log("- [EVENT::DataItemReturn] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "TYPE::JsonInputType":
 			console.log("- [EVENT::JsonInputType] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "EVENT::vue_app":
 			console.log("- [EVENT::vue_app] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		case "TYPE::DBG_What":
 			console.log("- [DBG_What] -\n%o", x);
-			break;
+			return do_json_replace_on_input(x);
 		default:
 			console.log(x);
-			debugger; break;
+			return do_json_replace_on_input(x);
 	}
-	return null;
 }
 /** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
 function do_json_replace(res_box, x) {

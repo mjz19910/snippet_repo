@@ -53,6 +53,7 @@ type DataItemReturn =
 	| ["EVENT::dom_nodes", Node[]]
 	| ["EVENT::json_cache", JsonInputType[]]
 	| ["RESULT::handle_json_event", string | null]
+	| ["COMMAND::unpack", any]
 null;
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
