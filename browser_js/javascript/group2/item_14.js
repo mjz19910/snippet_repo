@@ -282,6 +282,20 @@ function do_json_replace_on_input(x) {
 			{
 				let unpack = x[1];
 				switch (unpack[0]) {
+					default: debugger; break;
+					case "string": return unpack[1];
+					case "Element":
+					case "Node":
+					case "JsonInputType":
+					case "VueApp":
+					case "DataItemReturn":
+						{
+							for (let u of unpack[1]) {
+								console.log("[COMMAND::unpack.any]", u);
+								res.push(JSON.stringify(u, json_replacer, "\t"));
+							}
+						}
+						break;
 					case "any":
 						{
 							for (let u of unpack[1]) {
