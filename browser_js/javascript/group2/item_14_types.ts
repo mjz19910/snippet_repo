@@ -95,10 +95,5 @@ type IterObjectStoreType = {
 	arr: CacheIndexWithArr[][];
 };
 
-type IterHistoryResult = {
-	cache: CacheIndexWithArr[];
-	result_history: JsonHistoryType[];
-	object_store: {}[];
-	x1: number[];
-};
+type IterHistoryResult = ReturnType<typeof iter_history_result>;
 type JsonHistoryType = { id: number; items: {}[] };

@@ -1,6 +1,10 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
+/** @template T @arg {T[]} x @arg {T[]} o_arr */
+function filter_arr(x, o_arr) {
+	return x.filter((x) => !o_arr.includes(x));
+}
 /** @type {Map<string,JsonInputType[]>} */
 const cache_map = new Map;
 /** @arg {CacheItemType} e @returns {e is HTMLDivElement} */
@@ -160,7 +164,7 @@ const index_box_store = [];
 class JsonOutputBox {
 	/** @type {DataItemReturn[]} */
 	return_items = [];
-	/** @type {Map<"1",number>} */
+	/** @type {Map<JsonInputType,number>} */
 	cache_index_map = new Map;
 	get_self_for_logging() {
 		let { return_items, cache_index_map } = this;
@@ -168,10 +172,23 @@ class JsonOutputBox {
 		let out = {};
 		for (let k in Object.entries(this)) {
 			/** @returns {(keyof JsonOutputBox)|null} */
-			function rk() { return null }
-			/** @type {keyof this} */
-			let rk = as(k, rk());
-			k;
+			function kx() { return null }
+			/** @type {keyof this&string} */
+			let rk = as(k, kx());
+			let ck = this[rk];
+			if (ck instanceof Map) {
+				if (ck.size <= 0)
+					continue;
+				out[rk] = ck;
+				continue;
+			}
+			if (ck instanceof Array) {
+				if (ck.length <= 0)
+					continue;
+				out[rk] = ck;
+				continue;
+			}
+			debugger;
 		}
 		if (return_items.length > 0) {
 			out.return_items = return_items;
@@ -498,25 +515,15 @@ function iter_history_result(out_res) {
 		json_cache.push(cache_item);
 		new_cache_arr.push(cache_item);
 	}
-	let cache = [];
 	for (let obj of new_cache_arr) {
-		let ret = on_run_request(out_res, ["cache", obj]);
-		if (ret !== null) {
-			cache.push(ret);
-		}
+		on_run_request(out_res, ["cache", obj]);
 	}
-	/** @type {IterHistoryResult} */
 	let ret = {
-		cache,
 		object_store,
 		result_history,
 		x1,
 	};
 	return ret;
-	/** @template T @arg {T[]} x @arg {T[]} o_arr */
-	function filter_arr(x, o_arr) {
-		return x.filter((x) => !o_arr.includes(x));
-	}
 }
 /** @type {{value:VueApp|null}} */
 const vue_app = {
