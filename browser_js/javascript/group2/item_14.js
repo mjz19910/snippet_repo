@@ -687,9 +687,7 @@ class JsonReplacerState {
 	/** @arg {Extract<CacheItemType,{__cache_item:any}>|{}} x */
 	on_run_with_cache_type(x) {
 		if ("__cache_item" in x)
-			return {
-				__cache_item: true
-			};
+			return x;
 		return null;
 	}
 	/** @arg {JsonInputType} x */
