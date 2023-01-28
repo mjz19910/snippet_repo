@@ -830,7 +830,7 @@ class JsonReplacerState {
 	/** @type {TaggedJsonHistory[]} */
 	history_acc = [];
 	/** @arg {H_Iter} s_ */
-	history_iter(s_, recurse = true) {
+	history_iter(s_, recurse = false) {
 		const { stack } = s_;
 		let all_history_arr = [];
 		while (stack.length > 0) {
@@ -847,18 +847,18 @@ class JsonReplacerState {
 			let inner_arr = this.iter_history_result(s_, x);
 			this.history_acc.push(["TAG::json_result_history", inner_arr]);
 		}
-		for (let history of all_history_arr) {
-			if (!recurse)
-				continue;
-			s_.done_ids = [];
-			let prev_stack = s_.stack;
-			s_.stack = [history];
-			let ret = this.history_iter(s_);
-			if (ret === null) {
-				console.log("failed at", all_history_arr.indexOf(history));
-				return null;
+		if (recurse) {
+			for (let history of all_history_arr) {
+				s_.done_ids = [];
+				let prev_stack = s_.stack;
+				s_.stack = [history];
+				let ret = this.history_iter(s_);
+				if (ret === null) {
+					console.log("failed at", all_history_arr.indexOf(history));
+					return null;
+				}
+				s_.stack = prev_stack;
 			}
-			s_.stack = prev_stack;
 		}
 		/** @arg {any[]} hist */
 		function log_history_items(hist) {
