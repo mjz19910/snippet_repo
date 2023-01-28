@@ -349,7 +349,6 @@ function handle_json_unpack_cmd(x) {
 }
 /** @arg {UnpackUnitCommand} x */
 function handle_json_unpack_unit_cmd(x) {
-	console.log("unpack unit cmd run pending", x);
 	if (x[0] !== "COMMAND::unpack_unit") { debugger; return; }
 	let item = x[1];
 	switch (item[0]) {
@@ -361,9 +360,11 @@ function handle_json_unpack_unit_cmd(x) {
 		case "Node":
 		case "VueVnode":
 		case "any":
+			console.log("unpack unit cmd run pending", item);
 			debugger;
 	}
 }
+let processing_commands = false;
 /** @arg {DataItemReturn} x */
 function handle_json_event(x) {
 	let ret;
@@ -388,6 +389,12 @@ function handle_json_event(x) {
 			ret = do_json_replace_on_input(x);
 			break;
 	}
+	process_commands();
+	return ret;
+}
+function process_commands() {
+	if (processing_commands) return;
+	processing_commands = true;
 	for (let command of pending_commands) {
 		let [tag, cmd] = command;
 		tag === "unpack";
@@ -397,7 +404,7 @@ function handle_json_event(x) {
 		}
 	}
 	pending_commands.length = 0;
-	return ret;
+	processing_commands = false;
 }
 /** @arg {JsonOutputBox} res_box @arg {DataItemReturn} x */
 function init_json_event_sys(res_box, x) {
