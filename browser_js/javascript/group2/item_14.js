@@ -283,8 +283,7 @@ class J_Rep {
 			if (tagged_item[0] === "TAG::json_result_history") {
 				history_items.push(...tagged_item[1]);
 			} else if (tagged_item[0] === "TAG::json_result_history:iter_res") {
-				debugger;
-				// history_items.push(...tagged_item[1].result_history);
+				debugger;// history_items.push(...tagged_item[1].result_history);
 			} else {
 				tagged_item[0] === "";
 			}
@@ -317,9 +316,12 @@ const json_cache = [];
 /** @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
 function on_run_request(x) {
 	switch (x[0]) {
-		case "cache": break;
-		case "store_object": break;
-		case "cache_index_and_arr": debugger; return null;
+		case "cache":
+			break;
+		case "store_object":
+			break;
+		case "cache_index_and_arr":
+			debugger; return null;
 	}
 	return on_run_with_object_type(x[1]);
 }
@@ -329,8 +331,7 @@ function run_json_replace() {
 		throw new Error("No firstElement of document.body");
 	let run_result = on_run_request(["store_object", doc_child]);
 	if (!run_result) {
-		debugger;
-		return;
+		debugger; return;
 	}
 	let { arr } = run_result;
 	arr.forEach(arr_iter_func);
