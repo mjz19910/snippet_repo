@@ -364,6 +364,7 @@ function handle_json_unpack_unit_cmd(x) {
 		debugger; return;
 	}
 	let item = x[1];
+	let result;
 	switch (item[0]) {
 		case "string":
 		case "JsonInputType":
@@ -373,8 +374,10 @@ function handle_json_unpack_unit_cmd(x) {
 		case "Node":
 		case "VueVnode":
 		case "any":
+			result = json_stringify_with_cache(["JSON::data", item[1]]);
 			console.log("[json_unpack_unit_cmd] [unpack_item.%s]", item[0], item[1]);
 	}
+	return result;
 }
 let processing_commands = false;
 /** @arg {DataItemReturn} x */
