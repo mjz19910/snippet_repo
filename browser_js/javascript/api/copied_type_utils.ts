@@ -1,4 +1,3 @@
-
 type ObjectType = Record<PropertyKey, unknown>;
 // From https://stackoverflow.com/a/55153000
 type PickByValue<OBJ_T, VALUE_T> = Pick<OBJ_T, { [K in keyof OBJ_T]: OBJ_T[K] extends VALUE_T ? K : never }[keyof OBJ_T]>;
