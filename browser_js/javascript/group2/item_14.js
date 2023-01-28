@@ -453,8 +453,8 @@ function do_map(v) {
 }
 /** @type {JsonHistoryType[]} */
 let target_history = [];
-/** @type {{}|null} */
-let input_obj;
+/** @type {{value:{has_value:false}|{has_value:true;value:unknown;}}} */
+const input_obj = { value: { has_value: false } };
 /** @type {Map<string,{}>} */
 let json_result_cache = new Map;
 /** @type {{}[]} */
@@ -465,7 +465,10 @@ let object_store_info = null;
 function iter_history_result() {
 	let history = result_history.slice();
 	let x1 = history.map((x) => x.id);
-	let x2 = input_obj;
+	if (!input_obj.value.has_value) {
+		return;
+	}
+	let x2 = input_obj.value.value;
 	let nh = filter_arr(history, target_history);
 	let rc = json_result_cache;
 	let cv = [...rc.keys()];
@@ -513,8 +516,12 @@ const vnodes = [];
 const dom_nodes = [];
 /** @type {Map<unknown,[number,string]>} */
 const parent_map = new Map;
-function json_replace_array() {
-
+/** @arg {string} _k @arg {JsonInputType|null} x */
+function json_replace_array(_k, x) {
+	if (input_obj.value.has_value && input_obj.value.value instanceof Array && input_obj.value.value.includes(x)) {
+		return x;
+	}
+	return x;
 }
 /** @arg {string} k @arg {JsonInputType|null} x */
 function json_replacer(k, x) {
@@ -526,8 +533,9 @@ function json_replacer(k, x) {
 		return x;
 	if (x === null)
 		return x;
-	if (x instanceof Array && x[0] === "TAG::error")
-		return x;
+	if (x instanceof Array) {
+		return json_replace_array(k, x);
+	}
 	if (overflow_state.ran_out_of_stack) {
 		return overflow_state.stack_limit_json_result;
 	}
@@ -537,13 +545,13 @@ function json_replacer(k, x) {
 		parent_map.set(x, [mi, k]);
 	}
 	if (k === "") {
-		input_obj = x;
+		input_obj.value = {
+			has_value: true,
+			value: x,
+		};
 		return x;
 	}
 	if (input_obj instanceof Array) {
-		if (input_obj.includes(x)) {
-			return x;
-		}
 	}
 	if (x instanceof Node) {
 		if (!dom_nodes.includes(x))
