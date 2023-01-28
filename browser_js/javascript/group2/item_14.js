@@ -247,57 +247,48 @@ function history_iter() {
 let json_replace_count = 0;
 /** @type {{}[]} */
 const stringify_failed_obj = [];
-/** @template {Extract<DataItemReturn,[any,{__type: "array";}]>} T @arg {T} x @returns {{[U in T[0]]: [U,Extract<T,[U,...any]>[1]['value'][number]][]}[T[0]]} */
+/** @arg {DataItemReturn} x */
 function invert_tag(x) {
-	/** @type {[T[0],T[1]['value'][number]][]} */
-	let res = [];
-	switch (x[0]) {
-		case "EVENT::vnodes": {
-			for (let u of x[1].value) {
-				res.push([x[0], u]);
-			}
-		} break;
-		case "EVENT::dom_nodes": {
-			for (let u of x[1].value) {
-				res.push([x[0], u]);
-			}
-		} break;
-		case "EVENT::json_cache": {
-			for (let u of x[1].value) {
-				res.push([x[0], u]);
-			}
-		} break;
-	}
-	return res;
+	return x[1];
 }
-/** @arg {Extract<DataItemReturn,[any,{__type: "array";}]>} ev */
-function do_json_replace_on_iterate_cmd(ev) {
-	let iv = invert_tag(ev);
+/** @arg {DataItemReturn} x */
+function do_json_replace_on_iterate_cmd(x) {
+	/** @type {["JSON::Data", x[0], string][]} */
 	let res = [];
-	for (let x of iv) {
-		switch (x[0]) {
-			case "EVENT::vnodes":
-				res.push(JSON.stringify(x[1], json_replacer, "\t"));
-				break;
-			case "EVENT::dom_nodes":
-				res.push(JSON.stringify(x[1], json_replacer, "\t"));
-				break;
-			case "EVENT::json_cache":
-				res.push(JSON.stringify(x[1], json_replacer, "\t"));
-				break;
-		}
+	if (!(x[1] instanceof Array)) return res;
+	for (let u of x[1]) {
+		res.push(["JSON::Data", x[0], JSON.stringify(u, json_replacer, "\t")]);
 	}
 	return res;
 }
 /** @arg {DataItemReturn} x */
 function do_json_replace_on_input(x) {
-	let res;
+	/** @type {string[]} */
+	let res = [];
 	switch (x[0]) {
 		case "COMMAND::iterate":
-			return do_json_replace_on_iterate_cmd(x[1].value);
+			{
+				let res_2 = do_json_replace_on_iterate_cmd(x);
+				for (let [, u, v] of res_2) {
+					switch (u) {
+						default: res.push(v);
+					}
+				}
+				return res;
+			}
 		case "COMMAND::unpack":
-			res = JSON.stringify(x[1], json_replacer, "\t");
-			return res;
+			{
+				let unpack = x[1];
+				switch (unpack[0]) {
+					case "any": {
+						for (let u of unpack[1]) {
+							console.log("[COMMAND::unpack.any]", u);
+							res.push(JSON.stringify(u, json_replacer, "\t"));
+						}
+					} break;
+				}
+				return res;
+			}
 		case "TYPE::DBG_What":
 		case "EVENT::input":
 		case "EVENT::vnodes":
@@ -305,10 +296,9 @@ function do_json_replace_on_input(x) {
 		case "EVENT::json_cache":
 		case "RESULT::handle_json_event":
 		case "TYPE::DataItemReturn":
-		case "TYPE::JsonInputType":
 		case "EVENT::vue_app":
 		default:
-			res = JSON.stringify(x, json_replacer, "\t");
+			res.push(JSON.stringify(x, json_replacer, "\t"));
 			return res;
 	}
 }
@@ -323,24 +313,27 @@ function handle_json_event(x) {
 			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::vnodes":
 			console.log("- [EVENT::vnodes.unpack] -\n%o", ...x);
-			return do_json_replace_on_input(["COMMAND::iterate", x[1]]);
+			return do_json_replace_on_input(["COMMAND::iterate", ["VueVnode", x[1]]]);
 		case "EVENT::dom_nodes":
-			console.log("- [EVENT::dom_nodes] -\n%o", x);
-			return do_json_replace_on_input(x);
+			console.log("- [EVENT::dom_nodes.unpack] -\n%o", x);
+			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "RESULT::handle_json_event":
-			console.log("- [EVENT::handle_json_event] -\n%o", x);
-			return do_json_replace_on_input(x);
+			console.log("- [EVENT::handle_json_event.unpack] -\n%o", x);
+			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "TYPE::DataItemReturn":
-			console.log("- [EVENT::DataItemReturn] -\n%o", x);
-			return do_json_replace_on_input(x);
-		case "TYPE::JsonInputType":
-			console.log("- [EVENT::JsonInputType] -\n%o", x);
-			return do_json_replace_on_input(x);
+			console.log("- [EVENT::DataItemReturn.unpack] -\n%o", x);
+			return do_json_replace_on_input(["COMMAND::unpack", ["DataItemReturn", x[1]]]);
 		case "EVENT::vue_app":
-			console.log("- [EVENT::vue_app] -\n%o", x);
-			return do_json_replace_on_input(x);
+			console.log("- [EVENT::vue_app.unpack] -\n%o", x);
+			return do_json_replace_on_input(["COMMAND::unpack", ["VueApp", x[1]]]);
 		case "TYPE::DBG_What":
 			console.log("- [DBG_What] -\n%o", x);
+			return do_json_replace_on_input(x);
+		case "COMMAND::unpack":
+			console.log("- [EVENT::vue_app.unpack] -\n%o", x);
+			return do_json_replace_on_input(x);
+		case "COMMAND::iterate":
+			console.log("- [EVENT::vue_app.unpack] -\n%o", x);
 			return do_json_replace_on_input(x);
 		default:
 			console.log(x);
@@ -351,7 +344,7 @@ function handle_json_event(x) {
 function do_json_replace(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
-	res_box.return_items.push(["RESULT::handle_json_event", res]);
+	res_box.return_items.push(["RESULT::handle_json_event", ["string", res]]);
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
 		for (let failed_obj of stringify_failed_obj) {
@@ -514,7 +507,6 @@ const dom_nodes = [];
 const parent_map = new Map;
 /** @arg {string} _k @arg {JsonInputType|null} x */
 function json_replace_array(_k, x) {
-	debugger;
 	if (input_obj.value.has_value && input_obj.value.value instanceof Array && input_obj.value.value.includes(x)) {
 		return x;
 	}
@@ -592,7 +584,7 @@ function on_run_with_object_type(x) {
 	/** @arg {DataItemReturn} d */
 	let do_json_replace_ = (d) => do_json_replace(res, d);
 	if (x instanceof Element) {
-		do_json_replace_(["EVENT::input", x]);
+		do_json_replace_(["EVENT::input", ["Element", [x]]]);
 	} else {
 		debugger;
 	}
@@ -600,16 +592,16 @@ function on_run_with_object_type(x) {
 		json_cache.push(x);
 	}
 	if (vue_app.value !== null) {
-		do_json_replace_(["EVENT::vue_app", vue_app.value]);
+		do_json_replace_(["EVENT::vue_app", [vue_app.value]]);
 	}
 	if (vnodes.length > 0) {
 		do_json_replace_(["EVENT::vnodes", vnodes]);
 	}
 	if (dom_nodes.length > 0) {
-		do_json_replace_(["EVENT::dom_nodes", dom_nodes]);
+		do_json_replace_(["EVENT::dom_nodes", ["Node", dom_nodes]]);
 	}
 	if (json_cache.length > 0) {
-		do_json_replace_(["EVENT::json_cache", json_cache]);
+		do_json_replace_(["EVENT::json_cache", ["JsonInputType", json_cache]]);
 	}
 	let cache_index = -1;
 	if (x !== null) {

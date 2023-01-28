@@ -44,18 +44,30 @@ type JsonInputType =
 	| HTMLDivElement;
 type CacheItemType = JsonInputType;
 type CommandVerbs = "unpack" | "iterate";
+type JsonUnpackValue =
+	| ["JsonInputType", JsonInputType[]]
+	| ["Element", Element[]]
+	| ["VueApp", VueApp[]]
+	| ["DataItemReturn", DataItemReturn[]]
+	| ["Node", Node[]]
+	| ["string", string[]]
+	;
+;
+type JsonIterateValue =
+	| ["VueVnode", VueVnode[]];
+
 type DataItemReturn =
-	| ["TYPE::DBG_What", { __type: "DBG_What"; __what: true; }]
-	| ["TYPE::DataItemReturn", { __type: "JsonInputType"; custom: true; value: DataItemReturn; }]
-	| ["TYPE::JsonInputType", { __type: "JsonInputType"; custom: true; value: JsonInputType; }]
-	| ["EVENT::input", { __type: "Element", value: Element; }]
-	| ["EVENT::vue_app", { __type: "VueApp", value: VueApp; }]
-	| ["EVENT::vnodes", { __type: "array"; value: VueVnode[]; }]
-	| ["EVENT::dom_nodes", { __type: "array"; value: Node[]; }]
-	| ["EVENT::json_cache", { __type: "array"; value: JsonInputType[]; }]
-	| ["RESULT::handle_json_event", { __type: "string"; nullable: true; value: string | null; }]
-	| [`COMMAND::${CommandVerbs}`, { __type: "__any"; value: any; }]
-null;
+	| ["TYPE::DBG_What", { __what: true; }]
+	| ["TYPE::DataItemReturn", DataItemReturn[]]
+	| ["EVENT::input", ["Element", Element[]]]
+	| ["EVENT::vue_app", VueApp[]]
+	| ["EVENT::vnodes", VueVnode[]]
+	| ["EVENT::dom_nodes", ["Node", Node[]]]
+	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
+	| ["RESULT::handle_json_event", ["string", string[]]]
+	| [`COMMAND::${CommandVerbs}`, ["any", any[]]]
+	| ["COMMAND::unpack", JsonUnpackValue]
+	| ["COMMAND::iterate", JsonIterateValue];
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
 	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;
