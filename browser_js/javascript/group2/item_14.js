@@ -342,6 +342,28 @@ function do_json_replace_on_input(x) {
 			return res;
 	}
 }
+/** @arg {UnpackCommand} x */
+function handle_json_unpack_cmd(x) {
+	console.log("unpack cmd run pending", x);
+	debugger;
+}
+/** @arg {UnpackUnitCommand} x */
+function handle_json_unpack_unit_cmd(x) {
+	console.log("unpack unit cmd run pending", x);
+	if (x[0] !== "COMMAND::unpack_unit") { debugger; return; }
+	let item = x[1];
+	switch (item[0]) {
+		case "string":
+		case "JsonInputType":
+		case "Element":
+		case "VueApp":
+		case "DataItemReturn":
+		case "Node":
+		case "VueVnode":
+		case "any":
+			debugger;
+	}
+}
 /** @arg {DataItemReturn} x */
 function handle_json_event(x) {
 	let ret;
@@ -376,28 +398,6 @@ function handle_json_event(x) {
 	}
 	pending_commands.length = 0;
 	return ret;
-}
-/** @arg {UnpackCommand} x */
-function handle_json_unpack_cmd(x) {
-	console.log("unpack cmd run pending", x);
-	debugger;
-}
-/** @arg {UnpackUnitCommand} x */
-function handle_json_unpack_unit_cmd(x) {
-	console.log("unpack unit cmd run pending", x);
-	if (x[0] !== "COMMAND::unpack_unit") { debugger; return; }
-	let item = x[1];
-	switch (item[0]) {
-		case "string":
-		case "JsonInputType":
-		case "Element":
-		case "VueApp":
-		case "DataItemReturn":
-		case "Node":
-		case "VueVnode":
-		case "any":
-			debugger;
-	}
 }
 /** @arg {JsonOutputBox} res_box @arg {DataItemReturn} x */
 function init_json_event_sys(res_box, x) {
