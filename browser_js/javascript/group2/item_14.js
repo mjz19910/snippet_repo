@@ -340,6 +340,17 @@ function run_json_replace() {
 		return;
 	console.log(...log_args);
 }
+let do_join_str = () => join_string(["\n", "%o"], "");
+/** @arg {any[]} hist */
+function log_history_items(hist) {
+	let log_items = hist.map(h_map);
+	/** @type {"%o"[]} */
+	let log_place = ["%o"];
+	log_place.length = log_items.length;
+	log_place.fill("%o");
+	let log_str = log_place.map(do_join_str).flat().join("");
+	return ["-- [result_history] --" + log_str, ...log_items];
+}
 const history_acc = [];
 /** @type {{}[]} */
 const done_history_items = [];
@@ -364,17 +375,6 @@ function history_iter() {
 		console.log("start iter", done_history_items.length);
 		let inner_arr = iter_history_result();
 		history_acc.push(["TAG::json_result_history:iter_res", inner_arr]);
-	}
-	let do_join_str = () => join_string(["\n", "%o"], "");
-	/** @arg {any[]} hist */
-	function log_history_items(hist) {
-		let log_items = hist.map(h_map);
-		/** @type {"%o"[]} */
-		let log_place = ["%o"];
-		log_place.length = log_items.length;
-		log_place.fill("%o");
-		let log_str = log_place.map(do_join_str).flat().join("");
-		return ["-- [result_history] --" + log_str, ...log_items];
 	}
 	let log_args = log_history_items(target_history);
 	let log_range = to_range(done_ids);
