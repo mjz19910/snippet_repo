@@ -158,6 +158,8 @@ const log_gen = new LogGenerator;
 class InputObjBox {
 	/** @type {InputObjBoxItem[][]} */
 	arr = [];
+	/** @type {DataItemReturn[][]} */
+	return_items = [];
 }
 const overflow_state = new class {
 	ran_out_of_stack = false;
@@ -355,7 +357,6 @@ const done_history_items = [];
 let stack = [];
 function history_iter() {
 	if (stack.length === 0) {
-		debugger;
 		return [];
 	}
 	let all_history_arr = [];
@@ -386,7 +387,7 @@ let json_replace_count = 0;
 function do_json_replace(res_box, args) {
 	json_replace_count++;
 	let res = run_json_replacement_with_state(["CONTENT::cache", args]);
-	res_box.arr.push(res);
+	res_box.return_items.push(res);
 }
 /** @template {object} T @arg {T} x @returns {[boolean,T]} */
 function h_map(x) {
@@ -605,23 +606,21 @@ function prepare_obj(tag, x) {
 /** @arg {number} idx @arg {["TAG::cache_item", number]} data */
 function on_tag_cache_item(idx, data) {
 	let from_cache = json_cache[data[1]];
-	let obj = prepare_obj("cache_item_to_log", from_cache);
-	let res = run_json_replacement_with_state(obj);
-	if (typeof res[0] === "object" && res[0][0] === "TAG::error") {
-		let ra = res[0];
-		return ra;
+	let res = run_json_replacement_with_state(["TYPE::JsonInputType", from_cache]);
+	if (!res) {
+		return res;
 	}
 	let first_result = res[0];
-	let [, ...inner_arr] = first_result;
+	debugger;
 	log_gen.new_gen();
 	log_gen.state_id();
 	let id_log = log_gen.capture();
 	console.log(id_log);
-	if (typeof inner_arr[0] === "string") {
-		inner_arr[0] = JSON.parse(inner_arr[0]);
-	}
+	// if (typeof inner_arr[0] === "string") {
+	// 	inner_arr[0] = JSON.parse(inner_arr[0]);
+	// }
 	first_result;
-	return log_data_result("json_data", idx, ["TAG::result", first_result]);
+	return log_data_result("json_data", idx, ["TYPE::DataItemReturn", first_result]);
 }
 /** @template {DataItemReturn} T @arg {string} section @arg {any} i @arg {T} data_result */
 function log_data_result(section, i, data_result) {
@@ -653,16 +652,9 @@ function post_run() {
 }
 /** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 function run_internal(obj) {
-	let [type] = obj;
 	/** @type {DataItemReturn[]} */
 	let res = [obj];
-	let type_parts = split_string(type, "::");
-	if (type_parts[0] !== "CONTENT") {
-		{
-			debugger;
-		}
-		return res;
-	}
+	debugger;
 	return res;
 }
 /** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */

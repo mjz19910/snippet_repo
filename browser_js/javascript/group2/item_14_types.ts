@@ -40,7 +40,7 @@ type StackLimitReturn = {
 type JsonInputType = VueAppContainer | Element | Node | HTMLDivElement;
 type CacheItemType = JsonInputType;
 // type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
-type DataItemReturn = ["CONTENT::cache", { __template_tag: "T"; from: "do_json_replace"; }] | ["CONTENT::cache", HTMLDivElement] | null;
+type DataItemReturn = ["TYPE::DataItemReturn", DataItemReturn] | ["TYPE::JsonInputType", JsonInputType] | ["CONTENT::cache", { __template_tag: "T"; from: "do_json_replace"; }] | ["CONTENT::cache", HTMLDivElement] | null;
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
 	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;
