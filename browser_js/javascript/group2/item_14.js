@@ -162,6 +162,24 @@ class JsonOutputBox {
 	return_items = [];
 	/** @type {Map<"1",number>} */
 	cache_index_map = new Map;
+	get_self_for_logging() {
+		let { return_items, cache_index_map } = this;
+		/** @type {Partial<this>} */
+		let out = {};
+		for (let k in Object.entries(this)) {
+			/** @returns {(keyof JsonOutputBox)|null} */
+			function rk() { return null }
+			/** @type {keyof this} */
+			let rk = as(k, rk());
+			k;
+		}
+		if (return_items.length > 0) {
+			out.return_items = return_items;
+		}
+		if (cache_index_map.size > 0) {
+			out.cache_index_map = cache_index_map;
+		}
+	}
 }
 const overflow_state = new class {
 	ran_out_of_stack = false;
@@ -197,9 +215,12 @@ function main_start_json_replace() {
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	init_json_event_sys_with_obj(res, doc_child);
-	let log_args = history_iter();
+
+	let history_res = new JsonOutputBox;
+	let log_args = history_iter(history_res);
 	console.log(...log_args);
 	console.log(res);
+	console.log(history_res);
 }
 let do_join_str = () => join_string(["\n", "%o"], "");
 /** @arg {JsonHistoryType[]} hist */
@@ -218,7 +239,8 @@ const done_history_items = [];
 /** @typedef {["TAG::stack", JsonHistoryType[]]|["TAG::old_stack",J_Rep]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
-function history_iter() {
+/** @arg {JsonOutputBox} out_res */
+function history_iter(out_res) {
 	if (stack.length === 0) {
 		return [];
 	}
@@ -237,7 +259,7 @@ function history_iter() {
 			return [];
 		}
 		console.log("start iter", done_history_items.length);
-		let inner_arr = iter_history_result();
+		let inner_arr = iter_history_result(out_res);
 		history_acc.push(["TAG::json_result_history:iter_res", inner_arr]);
 	}
 	let log_args = log_history_items(target_history);
