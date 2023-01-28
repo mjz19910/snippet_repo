@@ -43,6 +43,7 @@ type JsonInputType =
 	| Node
 	| HTMLDivElement;
 type CacheItemType = JsonInputType;
+type CommandVerbs = "unpack" | "iterate";
 type DataItemReturn =
 	| ["TYPE::DBG_What", { __what: true; }]
 	| ["TYPE::DataItemReturn", DataItemReturn]
@@ -53,7 +54,7 @@ type DataItemReturn =
 	| ["EVENT::dom_nodes", Node[]]
 	| ["EVENT::json_cache", JsonInputType[]]
 	| ["RESULT::handle_json_event", string | null]
-	| ["COMMAND::unpack", any]
+	| [`COMMAND::${CommandVerbs}`, any]
 null;
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {

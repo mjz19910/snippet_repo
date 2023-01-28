@@ -270,7 +270,7 @@ function handle_json_event(x) {
 			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::vnodes":
 			console.log("- [EVENT::vnodes.unpack] -\n%o", ...x);
-			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
+			return do_json_replace_on_input(["COMMAND::iterate", x[1]]);
 		case "EVENT::dom_nodes":
 			console.log("- [EVENT::dom_nodes] -\n%o", x);
 			return do_json_replace_on_input(x);
