@@ -524,10 +524,6 @@ function json_replacer(k, x) {
 		if (x?._container === input_obj) {
 			return `Special::Input`;
 		}
-		if (x.__Z_ignore_replacement) {
-			// debugger;
-			return x;
-		}
 		if (x?.__vue_app__) {
 			vue_app.value = x.__vue_app__;
 			return `TYPE::VueApp`;
