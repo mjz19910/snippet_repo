@@ -76,7 +76,8 @@ class H_Iter {
 	done_ids = [];
 	/** @template T @arg {ObjectEntries<T>[number]} v */
 	do_map(v) {
-		const [k, x] = v; if (x === null)
+		const [k, x] = v;
+		if (x === null)
 			return null;
 		if (typeof x !== "object")
 			return v;
@@ -392,8 +393,7 @@ class JsonReplacerState {
 					if (was_crash_testing) {
 						throw e;
 					}
-					debugger;
-					throw e;
+					debugger; throw e;
 				}
 				debugger;
 			}
@@ -745,7 +745,6 @@ const result_history = [];
 /** @type {JsonInputType[]} */
 const json_cache = [];
 //#region on_data_item
-
 /** @arg {["cache", CacheItemType]|["store_object",JsonInputType]} x */
 function on_run_request(x) {
 	return on_run_with_object_type(x[1]);
@@ -769,7 +768,6 @@ function run_json_replace() {
 		return;
 	console.log(...log_args);
 }
-run_json_replace();
 const history_acc = [];
 /** @arg {H_Iter} s_ */
 function history_iter(s_, recurse = false) {
@@ -1076,8 +1074,7 @@ function run_json_replacement_with_state(x) {
 	import_state();
 	return ret;
 }
-function import_state() {
-}
+function import_state() { }
 function post_run() {
 	if (JsonReplacerState.stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
@@ -1116,3 +1113,4 @@ function join_string(x, s) {
 	return as(r);
 }
 //#endregion
+run_json_replace();
