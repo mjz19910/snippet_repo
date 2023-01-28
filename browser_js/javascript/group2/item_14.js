@@ -212,7 +212,6 @@ class JsonReplacerState {
 		let nt = new.target;
 		nt.all_cache.push(this.cache);
 		nt.all_cache_map.push(this.cache_map);
-		this.result_history.push(this);
 	}
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
@@ -489,15 +488,11 @@ class JsonReplacerState {
 	}
 	/** @arg {this} other */
 	prepare_with_previous(other) {
-		const { is_crash_testing, cache, json_result_cache, result_history: other_history } = other;
-		if (this.result_history.length !== 1) {
-			debugger;
-		}
-		other_history.push(this.result_history[0]);
+		other.add_to_history(this);
+		const { is_crash_testing, cache, json_result_cache } = other;
 		this.is_crash_testing = is_crash_testing;
 		this.cache = cache;
 		this.json_result_cache = json_result_cache;
-		this.result_history = other_history;
 	}
 	/** @arg {DataItemReturn} x @arg {this} parent */
 	run_json_replacement_with_state(parent, x) {
@@ -756,6 +751,11 @@ class JsonReplacerState {
 		};
 		return ret_obj;
 	}
+	/** @arg {this} other */
+	add_to_history(other) {
+		if (this.result_history.includes(other)) return;
+		this.result_history.push(other);
+	}
 	/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]} x */
 	on_run_request(x) {
 		switch (x[0]) {
@@ -861,7 +861,6 @@ class JsonReplacerState {
 		let log_args = log_history_items(s_.target_history);
 		let log_range = to_range(s_.done_ids);
 		console.log("[done_ids] " + log_range.map(e => e.length === 2 ? "%o-%o" : "%o").join(", "), ...log_range.flat());
-		console.log(...log_args);
 		return log_args;
 	}
 	/** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
@@ -1044,6 +1043,6 @@ class JsonReplacerState {
 		this.cache = cache;
 		if (log_args === null)
 			return;
-		console.log(log_args);
+		console.log(...log_args);
 	}
 }
