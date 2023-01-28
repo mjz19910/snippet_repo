@@ -328,27 +328,6 @@ class JsonReplacerState {
 			return [-1, target_stack];
 		}
 	}
-	do_has_stack_space(start_at = 600) {
-		let target = start_at / 2;
-		while (true) {
-			try {
-				this.check_stack_overflow(start_at);
-				let prev_start = start_at;
-				start_at = target;
-				target = prev_start + prev_start / 3;
-				console.log("increase", start_at, target);
-			} catch {
-				target = start_at - start_at / 3;
-				console.log("less", start_at, target);
-			}
-			break;
-		}
-		try {
-			return this.check_stack_overflow(start_at + start_at / 3);
-		} catch {
-			return this.check_stack_overflow(start_at - start_at / 3);
-		}
-	}
 	/** @arg {number} num @arg {number} start @returns {[number,number]} */
 	has_stack_space(num, start) {
 		if (num === 0) return [num, start];
@@ -820,5 +799,31 @@ class JsonReplacerState {
 	}
 	static {
 		this.create_and_run()
+	}
+	do_has_stack_space(start_at = 600) {
+		let target = start_at / 2;
+		while (true) {
+			let stack_res = this.check_stack_overflow(start_at);
+			console.log(stack_res);
+			if (stack_res[0] === -1) {
+				target = start_at;
+				start_at = start_at - start_at / 3;
+				console.log("less", start_at, target);
+			} else if (stack_res[1] === start_at) {
+				let prev_start = start_at;
+				start_at = target;
+				target = prev_start + prev_start / 8;
+				console.log("increase", start_at, target);
+				continue;
+			}
+			if (stack_res[0] > -1) {
+				break;
+			}
+		}
+		try {
+			return this.check_stack_overflow(start_at + start_at / 3);
+		} catch {
+			return this.check_stack_overflow(start_at - start_at / 3);
+		}
 	}
 }
