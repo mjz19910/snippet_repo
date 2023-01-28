@@ -870,42 +870,6 @@ class JsonReplacerState {
 		let r = x.join(s);
 		return as(r);
 	}
-	run() {
-		let doc_child = document.body.firstElementChild;
-		if (!doc_child)
-			throw new Error("No firstElement of document.body");
-		let run_result = this.on_run_request(["store_object", doc_child]);
-		if (!run_result || "__cache_item" in run_result)
-			return;
-		let { arr } = run_result;
-		let all_vnodes = [];
-		for (let item of this.result_history) {
-			all_vnodes.push(...item.vnodes);
-		}
-		arr.forEach(x => {
-			let c = x[0];
-			if (c[0] === "CONTENT::cache") {
-				let inner_items = c[1];
-				/** @arg {CacheItemType} e @returns {e is HTMLDivElement} */
-				let get_div_elements = e => e instanceof HTMLDivElement;
-				/** @arg {CacheItemType[]} arr @arg {(v: CacheItemType)=>v is HTMLDivElement} fn @returns {HTMLDivElement[]}  */
-				function filter_array_type(arr, fn) {
-					return arr.filter(fn);
-				}
-				let div_elements = filter_array_type(inner_items, get_div_elements);
-				this.on_data_z([["CONTENT::cache", div_elements]])
-			} else {
-				debugger;
-			}
-		}, this);
-		let h_iter_s = new H_Iter(this);
-		let cache = this.cache.slice();
-		let log_args = this.history_iter(h_iter_s);
-		this.cache = cache;
-		if (log_args === null)
-			return;
-		console.log(log_args);
-	}
 	static create() {
 		return new this;
 	}
@@ -1045,5 +1009,41 @@ class JsonReplacerState {
 		let result = near_checks.filter(e => e[0] !== -1).reduce((acc, v) => Math.min(acc, v[1]), Infinity);
 		overflow_state.last_stack_space = result;
 		return result;
+	}
+	run() {
+		let doc_child = document.body.firstElementChild;
+		if (!doc_child)
+			throw new Error("No firstElement of document.body");
+		let run_result = this.on_run_request(["store_object", doc_child]);
+		if (!run_result || "__cache_item" in run_result)
+			return;
+		let { arr } = run_result;
+		let all_vnodes = [];
+		for (let item of this.result_history) {
+			all_vnodes.push(...item.vnodes);
+		}
+		arr.forEach(x => {
+			let c = x[0];
+			if (c[0] === "CONTENT::cache") {
+				let inner_items = c[1];
+				/** @arg {CacheItemType} e @returns {e is HTMLDivElement} */
+				let get_div_elements = e => e instanceof HTMLDivElement;
+				/** @arg {CacheItemType[]} arr @arg {(v: CacheItemType)=>v is HTMLDivElement} fn @returns {HTMLDivElement[]}  */
+				function filter_array_type(arr, fn) {
+					return arr.filter(fn);
+				}
+				let div_elements = filter_array_type(inner_items, get_div_elements);
+				this.on_data_z([["CONTENT::cache", div_elements]])
+			} else {
+				debugger;
+			}
+		}, this);
+		let h_iter_s = new H_Iter(this);
+		let cache = this.cache.slice();
+		let log_args = this.history_iter(h_iter_s);
+		this.cache = cache;
+		if (log_args === null)
+			return;
+		console.log(log_args);
 	}
 }
