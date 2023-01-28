@@ -163,43 +163,40 @@ const log_gen = new LogGenerator;
 const index_box_store = [];
 class JsonOutputBox {
 	/** @type {DataItemReturn[]} */
-	return_items = [];
+	output_arr = [];
 	/** @type {Map<JsonInputType,number>} */
 	cache_index_map = new Map;
 	get_log_self_args() {
+		let log_self_info = this.get_self_for_logging();
+		if (log_self_info[0] < 1) return;
 		return ["-- [JsonOutputBox] --\n%o", this.get_self_for_logging()]
 	}
-	/** @private */
+	/** @private @returns {[number,Partial<this>]} */
 	get_self_for_logging() {
-		let { return_items, cache_index_map } = this;
 		/** @type {Partial<this>} */
 		let out = {};
-		for (let k in Object.entries(this)) {
-			/** @returns {(keyof JsonOutputBox)|null} */
-			function kx() { return null }
+		let out_size = 0;
+		for (let k of Object.keys(this)) {
 			/** @type {keyof this&string} */
-			let rk = as(k, kx());
+			let rk = as(k);
 			let ck = this[rk];
 			if (ck instanceof Map) {
 				if (ck.size <= 0)
 					continue;
 				out[rk] = ck;
+				out_size++;
 				continue;
 			}
 			if (ck instanceof Array) {
 				if (ck.length <= 0)
 					continue;
 				out[rk] = ck;
+				out_size++;
 				continue;
 			}
 			debugger;
 		}
-		if (return_items.length > 0) {
-			out.return_items = return_items;
-		}
-		if (cache_index_map.size > 0) {
-			out.cache_index_map = cache_index_map;
-		}
+		return [out_size, out];
 	}
 }
 const overflow_state = new class {
@@ -387,7 +384,7 @@ function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
 	if (res.length > 0) {
-		res_box.return_items.push(["RESULT::handle_json_event", ["string", res]]);
+		res_box.output_arr.push(["RESULT::handle_json_event", ["string", res]]);
 	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
