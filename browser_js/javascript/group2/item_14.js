@@ -1,6 +1,20 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
+function main() {
+	store_window("__JsonReplacer_cache_map", JsonReplacerState.cache_map);
+}
+/** @template T @arg {string} key @arg {T} obj */
+function store_window(key, obj) {
+	/** @type {{}} */
+	let win = window;
+	/** @type {{[x: string]: T;}} */
+	let w2 = win;
+	if (w2[key])
+		return w2[key];
+	w2[key] = obj;
+	return obj;
+}
 class LogGenerator {
 	log_str = "";
 	/** @type {JsonReplacerState[]} */
@@ -145,7 +159,7 @@ function reduce_arr_flat(x) {
 	return x.reduce((/** @type {string | any[]} */
 		acc, cur) => acc.concat(cur), []);
 }
-/** @arg {any[]} map */
+/** @arg {Map<string, JsonInputType[]>} map */
 function show_cache_map(map) {
 	let cm_info = [...map.entries()].map(([k, x]) => ["\n", `[${k}]`, ...x]);
 	let r_cm_info = cm_info.reduce((acc, cur) => acc.concat(cur), []);
@@ -169,12 +183,14 @@ const overflow_state = new class {
 	/** @type {number|null} */
 	last_stack_space = null;
 }
-	;
 class JsonReplacerState {
 	/** @type {any[][]} */
 	static all_cache = [];
 	/** @type {Map<any, any>[]} */
 	static all_cache_map = [];
+	/** @type {Map<string,JsonInputType[]>} */
+	static cache_map = new Map;
+	static { store_window("__JsonReplacer_cache_map", this.cache_map); }
 	static _next_id = 1;
 	get next_id() {
 		return JsonReplacerState._next_id++;
@@ -186,11 +202,13 @@ class JsonReplacerState {
 		this.id = id;
 		return id;
 	}
+	init_id() {
+		this.id ??= this.next_id;
+	}
 	/** @type {{}|null} */
 	input_obj = null;
 	/** @type {number|null} */
 	id = null;
-	cache_map = new Map;
 	/** @type {Node[]} */
 	dom_nodes = [];
 	json_result_cache = new Map;
@@ -206,12 +224,9 @@ class JsonReplacerState {
 	parent_map = new Map;
 	/** @type {this[]} */
 	result_history = [];
-	/** @type {string[]} */
-	static cache_map = [];
 	constructor() {
 		let nt = new.target;
 		nt.all_cache.push(this.cache);
-		nt.all_cache_map.push(this.cache_map);
 	}
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
@@ -378,11 +393,10 @@ class JsonReplacerState {
 		if (cache.includes(x)) {
 			return `TYPE::Store.cache[${cache.indexOf(x)}]`;
 		}
-		const { cache_map } = this;
-		if (cache_map.has(k)) {
-			cache_map.get(k).push(x);
+		if (JsonReplacerState.cache_map.has(k)) {
+			JsonReplacerState.cache_map.get(k)?.push(x);
 		} else {
-			cache_map.set(k, [x]);
+			JsonReplacerState.cache_map.set(k, [x]);
 		}
 		if (!cache.includes(x)) {
 			cache.push(x);
@@ -576,33 +590,12 @@ class JsonReplacerState {
 			return ra;
 		}
 		let ns_id = this.id;
-		let ns = new_state;
-		Z_len_k(overflow_state) > 0 && console.log("[json_data_ex]\n%o", overflow_state);
 		let first_result = res[0];
-		let [inner_type, ...inner_arr] = first_result;
-		let skip = true;
-		!skip && console.log("[cache_item]", inner_type, data[0]);
-		!skip && console.log(new_state);
+		let [, ...inner_arr] = first_result;
 		log_gen.new_gen();
 		log_gen.state_id(new_state, ns_id);
 		let id_log = log_gen.capture();
 		console.log(id_log);
-		!skip && console.log("[state_id=%o]", ns_id, ns.cache_map);
-		/** @type {Map<any,any>[]} */
-		let cache_map_arr = [];
-		/** @template T @arg {string} key @arg {T} obj */
-		function store_window(key, obj) {
-			/** @type {{}} */
-			let win = window;
-			/** @type {{[x: string]: T;}} */
-			let w2 = win;
-			if (w2[key])
-				return w2[key];
-			w2[key] = obj;
-			return obj;
-		}
-		cache_map_arr = store_window("cache_map_arr", cache_map_arr);
-		cache_map_arr.push(ns.cache_map);
 		if (typeof inner_arr[0] === "string") {
 			inner_arr[0] = JSON.parse(inner_arr[0]);
 		}
@@ -754,6 +747,7 @@ class JsonReplacerState {
 	}
 	/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]} x */
 	on_run_request(x) {
+		this.get_id();
 		switch (x[0]) {
 			case "cache":
 				return this.on_run_with_cache_type(x[1]);
