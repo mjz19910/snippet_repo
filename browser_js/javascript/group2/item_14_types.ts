@@ -87,10 +87,20 @@ type DataItemReturn =
 	;
 ;
 type TagVNodeInner = ["TAG::vnode_inner", ["CONTENT::cache", HTMLDivElement[]]];
-type TaggedJsonHistory = ["TAG::json_result_history", JsonReplacerState[]];
+type TaggedJsonHistory = ["TAG::json_result_history", JsonReplacerState[]] | ["TAG::json_result_history:iter_res", IterHistoryResult];
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
 	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;
 };
 type IndexUnboxMap<T, O, U> = Map<T, { _inner_tag: U, value: O & { _tag: U } }>;
-type IterHistoryResult = {};
+type CacheIndexWithArr = {
+	cache_index: number;
+	arr: DataItemReturn[][];
+};
+
+type IterHistoryResult = {
+	cache: CacheIndexWithArr[];
+	object_store: { cache_index: number; arr: DataItemReturn[][]; }[];
+	result_history: JsonReplacerState[];
+	x1: number[];
+};

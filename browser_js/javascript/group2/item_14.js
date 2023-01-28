@@ -264,6 +264,7 @@ class JsonReplacerState {
 		this.id = id;
 		return id;
 	}
+	/** @returns {asserts this is {id:number}} */
 	init_id() {
 		this.id ??= this.next_id;
 	}
@@ -773,17 +774,13 @@ class JsonReplacerState {
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
-		x === "";
+		x[0] === "";
 		x = xu;
 		console.log("TODO: unknown_tag_section", x);
 		return ["TAG::failed", null];
 	}
-	/** @arg {CacheItemType} x */
-	on_run_with_cache_type(x) {
-		return this.on_run_with_object_store_type(x);
-	}
 	/** @arg {JsonInputType} x */
-	on_run_with_object_store_type(x) {
+	on_run_with_object_type(x) {
 		let res = new InputObjBox;
 		if (x instanceof Element) {
 			this.do_json_replace(res, ["input", x]);
@@ -803,6 +800,7 @@ class JsonReplacerState {
 		if (x !== null) {
 			cache_index = this.cache.indexOf(x);
 		}
+		/** @type {CacheIndexWithArr} */
 		let ret_obj = {
 			cache_index,
 			arr: res.arr,
@@ -820,9 +818,9 @@ class JsonReplacerState {
 		this.get_id();
 		switch (x[0]) {
 			case "cache":
-				return this.on_run_with_cache_type(x[1]);
+				return this.on_run_with_object_type(x[1]);
 			case "store_object":
-				return this.on_run_with_object_store_type(x[1]);
+				return this.on_run_with_object_type(x[1]);
 			default:
 				this.break_debugger;
 				throw 1;
@@ -830,18 +828,12 @@ class JsonReplacerState {
 	}
 	/** @arg {H_Iter} s_ @arg {JsonReplacerState} x */
 	iter_history_result(s_, x) {
-		const { target_history: mh } = s_;
-		let ret = {};
-		if (!x.id)
-			x.id = x.get_id();
-		let id = this.get_id();
-		x.id = id;
+		x.init_id();
 		s_.done_ids.push(x.id);
 		let history = x.result_history.slice();
 		let x1 = history.map((x) => x.id);
-		ret.x1 = x1;
 		let x2 = x.input_obj;
-		let nh = filter_arr(history, mh);
+		let nh = filter_arr(history, s_.target_history);
 		let rc = x.json_result_cache;
 		let cv = [...rc.keys()];
 		if (cv.length === 1 && cv[0] === x2) {
@@ -849,20 +841,32 @@ class JsonReplacerState {
 			rc.delete(x2);
 			rc.set("TAG::input_obj", k);
 		}
-		ret.result_history = nh.map(x => s_.h_map(x));
-		let new_cache_arr = []
+		/** @type {JsonReplacerState[]} */
+		let result_history = [];
+		nh.map(x => s_.h_map(x)).forEach(x => x === null ? 0 : result_history.push(x));
+		/** @type {JsonInputType[]} */
+		let new_cache_arr = [];
 		for (let cache_item of x.cache) {
 			if (this.cache.includes(cache_item))
 				continue;
 			this.cache.push(cache_item);
 			new_cache_arr.push(cache_item);
 		}
-		ret.cache = new_cache_arr.map((x) => this.on_run_request(["cache", x]));
+		let cache = new_cache_arr.map((x) => this.on_run_request(["cache", x]));
+		/** @type {CacheIndexWithArr[]} */
+		let object_store = [];
 		if (x.object_store) {
-			ret.object_store = x.object_store.map(x => this.on_run_request(["store_object", x]));
+			object_store = x.object_store.map(x => this.on_run_request(["store_object", x]));
 		} else {
 			console.log("no object_store");
 		}
+		/** @type {IterHistoryResult} */
+		let ret = {
+			cache,
+			object_store,
+			result_history,
+			x1,
+		};
 		return ret;
 		/** @template T @arg {T[]} x @arg {T[]} o_arr */
 		function filter_arr(x, o_arr) {
@@ -871,13 +875,23 @@ class JsonReplacerState {
 	}
 	/** @type {TaggedJsonHistory[]} */
 	history_acc = [];
-	/** @arg {TaggedJsonHistory[]} arg0 */
+	/** @arg {["TAG::json_result_history",JsonReplacerState[]][]} arg0 */
 	untag_history_acc([first, ...rest]) {
 		return rest.reduce((pv, [, cur]) => pv.concat(cur), first[1]);
 	}
 	/** @arg {TaggedJsonHistory[]} history_acc_arr */
 	iterate_accumulated_history(history_acc_arr) {
-		let history_items = this.untag_history_acc(history_acc_arr);
+		/** @type {JsonReplacerState[]} */
+		let history_items = [];
+		for (let tagged_item of history_acc_arr) {
+			if (tagged_item[0] === "TAG::json_result_history") {
+				history_items.push(...tagged_item[1]);
+			} else if (tagged_item[0] === "TAG::json_result_history:iter_res") {
+				history_items.push(...tagged_item[1].result_history);
+			} else {
+				tagged_item[0] === "";
+			}
+		}
 		let results = [];
 		let s_ = new H_Iter(this);
 		for (let history of history_items) {
@@ -913,7 +927,7 @@ class JsonReplacerState {
 			}
 			console.log("start iter", x.id);
 			let inner_arr = this.iter_history_result(s_, x);
-			this.history_acc.push(["TAG::json_result_history", inner_arr]);
+			this.history_acc.push(["TAG::json_result_history:iter_res", inner_arr]);
 		}
 		if (recurse) { }
 		let do_join_str = () => this.join_string(["\n", "%o"], "");
