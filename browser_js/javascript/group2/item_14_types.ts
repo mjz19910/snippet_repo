@@ -61,7 +61,6 @@ type IndexUnboxMap<T, O, U> = Map<T, { _inner_tag: U, value: O & { _tag: U } }>;
 type InputObjBoxItem = { __tag: "InputObjBox"; item_level: 2; };
 type CacheIndexWithArr = {
 	cache_index: number;
-	arr: InputObjBoxItem[][];
 };
 
 type IterObjectStoreType = {

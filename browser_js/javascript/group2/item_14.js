@@ -156,8 +156,6 @@ function Z_len_k(x) {
 }
 const log_gen = new LogGenerator;
 class InputObjBox {
-	/** @type {InputObjBoxItem[][]} */
-	arr = [];
 	/** @type {DataItemReturn[]} */
 	return_items = [];
 }
@@ -331,8 +329,8 @@ function run_json_replace() {
 	if (!run_result) {
 		debugger; return;
 	}
-	let { arr } = run_result;
-	arr.forEach(arr_iter_func);
+	debugger;
+	// arr.forEach(arr_iter_func);
 	let log_args = history_iter();
 	if (log_args === null)
 		return;
@@ -573,7 +571,6 @@ function on_run_with_object_type(x) {
 	/** @type {CacheIndexWithArr} */
 	let ret_obj = {
 		cache_index,
-		arr: res.arr,
 	};
 	return ret_obj;
 }
@@ -625,11 +622,9 @@ function prepare_obj(tag, x) {
 /** @arg {number} idx @arg {["TAG::cache_item", number]} data */
 function on_tag_cache_item(idx, data) {
 	let from_cache = json_cache[data[1]];
-	let res = run_json_replacement_with_state(["TYPE::JsonInputType", from_cache]);
-	if (!res) {
-		return res;
-	}
-	let first_result = res[0];
+	let res_box = new InputObjBox;
+	do_json_replace(res_box, ["TYPE::JsonInputType", from_cache]);
+	let first_result = res_box.return_items[0];
 	debugger;
 	log_gen.new_gen();
 	log_gen.state_id();
