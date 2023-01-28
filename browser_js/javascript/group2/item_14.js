@@ -302,6 +302,7 @@ function do_json_replace_on_input(x) {
 		case "TYPE::DataItemReturn":
 		case "EVENT::vue_app":
 		default:
+			debugger;
 			res.push(JSON.stringify(x, json_replacer, "\t"));
 			return res;
 	}
