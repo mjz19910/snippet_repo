@@ -247,18 +247,29 @@ function history_iter() {
 let json_replace_count = 0;
 /** @type {{}[]} */
 const stringify_failed_obj = [];
-/** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
-function do_json_replace(res_box, x) {
-	json_replace_count++;
+/** @arg {DataItemReturn} x */
+function do_json_replace_on_input(x) {
+	let res = JSON.stringify(x, json_replacer, "\t");
+	return res;
+}
+/** @arg {DataItemReturn} x */
+function handle_json_event(x) {
 	switch (x[0]) {
 		case "EVENT::input":
-			break;
+			return do_json_replace_on_input(x);
 		case "EVENT::json_cache":
 			break;
 		default:
 			console.log(x);
 			debugger; break;
 	}
+	return null;
+}
+/** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
+function do_json_replace(res_box, x) {
+	json_replace_count++;
+	let res = handle_json_event(x);
+	res_box.return_items.push(["RESULT::handle_json_event", res]);
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
 		for (let failed_obj of stringify_failed_obj) {
