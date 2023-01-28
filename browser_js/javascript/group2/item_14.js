@@ -217,7 +217,6 @@ class JsonReplacerState {
 		show_cache_map(this.cache_map);
 	}
 	json_stringify_count = 0;
-	os = overflow_state;
 	/** @type {InputObjBox[]} */
 	index_box_store = [];
 	/** @template T @template {string} U @arg {T} x @arg {U} tag @returns {T&{_tag:U}} */
@@ -270,15 +269,16 @@ class JsonReplacerState {
 	index_tag_map = new Map;
 	/** @arg {JsonInputType} x @returns {DataItemReturn|null} */
 	try_json_stringify(x, first = false) {
-		if (this.os.ran_out_of_stack) {
-			return this.os.stack_limit_json_result;
+		let os = overflow_state;
+		if (os.ran_out_of_stack) {
+			return os.stack_limit_json_result;
 		}
 		this.json_stringify_count++;
 		if (this.json_stringify_count % 64 === 0) {
 			let space = this.do_has_stack_space(4096);
 			console.log("[stack_left]", space);
 			if (space < 9500) {
-				debugger; let os = this.os;
+				{ debugger; }
 				os.ran_out_of_stack = true;
 				let stack_exhausted_msg = `RangeError: Ran of stack space, ${space} frames left`;
 				os.ran_out_of_stack_args = [JSON.stringify({
@@ -297,8 +297,8 @@ class JsonReplacerState {
 			let test_state = this.clone();
 			let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
 			this.json_result_cache.set(x, json_result);
-			if (this.os.ran_out_of_stack) {
-				return this.os.stack_limit_json_result;
+			if (os.ran_out_of_stack) {
+				return os.stack_limit_json_result;
 			}
 			let res_box = new InputObjBox;
 			let index = this.index_box_store.push(res_box) - 1;
@@ -309,8 +309,8 @@ class JsonReplacerState {
 			});
 			return ["TAG::stringify_result", json_result, tagged_val];
 		} catch (e) {
-			if (this.os.ran_out_of_stack) {
-				return this.os.stack_limit_json_result;
+			if (os.ran_out_of_stack) {
+				return os.stack_limit_json_result;
 			}
 			if (e instanceof RangeError) {
 				return ["TAG::stringify_range_error", e];
@@ -344,8 +344,8 @@ class JsonReplacerState {
 			return x;
 		if (x instanceof Array && x[0] === "TAG::error")
 			return x;
-		if (this.os.ran_out_of_stack) {
-			return this.os.stack_limit_json_result;
+		if (overflow_state.ran_out_of_stack) {
+			return overflow_state.stack_limit_json_result;
 		}
 		let failure_result = this.try_json_stringify(x);
 		if (failure_result) {
@@ -577,7 +577,7 @@ class JsonReplacerState {
 		}
 		let ns_id = this.id;
 		let ns = new_state;
-		Z_len_k(ns.os) > 0 && console.log("[json_data_ex]\n%o", ns.os);
+		Z_len_k(overflow_state) > 0 && console.log("[json_data_ex]\n%o", overflow_state);
 		let first_result = res[0];
 		let [inner_type, ...inner_arr] = first_result;
 		let skip = true;
