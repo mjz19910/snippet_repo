@@ -258,6 +258,28 @@ function handle_json_event(x) {
 		case "EVENT::input":
 			return do_json_replace_on_input(x);
 		case "EVENT::json_cache":
+			console.log("- [EVENT::json_cache] -\n%o", x);
+			break;
+		case "EVENT::vnodes":
+			console.log("- [EVENT::vnodes] -\n%o", x);
+			break;
+		case "EVENT::dom_nodes":
+			console.log("- [EVENT::dom_nodes] -\n%o", x);
+			break;
+		case "RESULT::handle_json_event":
+			console.log("- [EVENT::handle_json_event] -\n%o", x);
+			break;
+		case "TYPE::DataItemReturn":
+			console.log("- [EVENT::DataItemReturn] -\n%o", x);
+			break;
+		case "TYPE::JsonInputType":
+			console.log("- [EVENT::JsonInputType] -\n%o", x);
+			break;
+		case "EVENT::vue_app":
+			console.log("- [EVENT::vue_app] -\n%o", x);
+			break;
+		case "TYPE::DBG_What":
+			console.log("- [DBG_What] -\n%o", x);
 			break;
 		default:
 			console.log(x);
@@ -362,7 +384,11 @@ function do_map(v) {
 /** @type {JsonHistoryType[]} */
 let target_history = [];
 /** @type {{value:{has_value:false}|{has_value:true;value:unknown;}}} */
-const input_obj = { value: { has_value: false } };
+const input_obj = {
+	value: {
+		has_value: false
+	}
+};
 /** @type {Map<string,{}>} */
 let json_result_cache = new Map;
 /** @type {{}[]} */
@@ -417,7 +443,9 @@ function iter_history_result() {
 	}
 }
 /** @type {{value:VueApp|null}} */
-const vue_app = { value: null };
+const vue_app = {
+	value: null
+};
 /** @type {VueVnode[]} */
 const vnodes = [];
 /** @type {Node[]} */
@@ -459,8 +487,7 @@ function json_replacer(k, x) {
 		};
 		return x;
 	}
-	if (input_obj instanceof Array) {
-	}
+	if (input_obj instanceof Array) { }
 	if (x instanceof Node) {
 		if (!dom_nodes.includes(x))
 			dom_nodes.push(x);

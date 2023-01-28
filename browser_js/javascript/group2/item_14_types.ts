@@ -44,7 +44,7 @@ type JsonInputType =
 	| HTMLDivElement;
 type CacheItemType = JsonInputType;
 type DataItemReturn =
-	| ["TYPE::DBG::What", { __what: true; }]
+	| ["TYPE::DBG_What", { __what: true; }]
 	| ["TYPE::DataItemReturn", DataItemReturn]
 	| ["TYPE::JsonInputType", JsonInputType]
 	| ["EVENT::input", Element]
