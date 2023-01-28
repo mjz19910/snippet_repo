@@ -320,33 +320,39 @@ class JsonReplacerState {
 		}
 		return `TYPE::Store.cache[${cache.indexOf(x)}]`;
 	}
-	do_has_stack_space(start_at = 40) {
-		let target = 20;
-		while (start_at <= target) {
+	/** @arg {number} target_stack */
+	check_stack_overflow(target_stack) {
+		try {
+			return this.has_stack_space(target_stack, target_stack);
+		} catch {
+			return [-1, target_stack];
+		}
+	}
+	do_has_stack_space(start_at = 600) {
+		let target = start_at / 2;
+		while (true) {
 			try {
-				this.has_stack_space();
+				this.check_stack_overflow(start_at);
 				let prev_start = start_at;
 				start_at = target;
 				target = prev_start + prev_start / 3;
+				console.log("increase", start_at, target);
 			} catch {
 				target = start_at - start_at / 3;
+				console.log("less", start_at, target);
 			}
-			try {
-				return this.has_stack_space(start_at + start_at / 3);
-			} catch {
-				return this.has_stack_space(start_at - start_at / 3);
-			}
+			break;
 		}
 		try {
-			return this.has_stack_space(target + 5);
+			return this.check_stack_overflow(start_at + start_at / 3);
 		} catch {
-			return this.has_stack_space(target - 5);
+			return this.check_stack_overflow(start_at - start_at / 3);
 		}
 	}
-	/** @returns {[number,number]} */
-	has_stack_space(num = 40, start = 40) {
+	/** @arg {number} num @arg {number} start @returns {[number,number]} */
+	has_stack_space(num, start) {
 		if (num === 0) return [num, start];
-		return this.has_stack_space(num - 1);
+		return this.has_stack_space(num - 1, start);
 	}
 	/** @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
@@ -354,7 +360,7 @@ class JsonReplacerState {
 			return ["TAG::cache_item", this.cache.indexOf(item)];
 		}
 		let space = this.do_has_stack_space();
-		if (space[1] < 20) {
+		if (space[1] < 400) {
 			console.log('stack space running out', space);
 			debugger;
 		}
@@ -805,7 +811,14 @@ class JsonReplacerState {
 	static create() {
 		return new this;
 	}
-	static {
+	static create_and_run() {
+		let do_create_and_run = false;
+		if (!do_create_and_run)
+			return;
 		this.create().run();
+
+	}
+	static {
+		this.create_and_run()
 	}
 }
