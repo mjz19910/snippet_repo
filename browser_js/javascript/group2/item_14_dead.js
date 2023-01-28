@@ -6,19 +6,7 @@ class JsonReplacerState_DeadItem14Code {
 	json_cache = [];
 	/** @protected @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
-		if (this.json_cache.includes(item)) {
-			return ["TAG::cache_item", this.json_cache.indexOf(item)];
-		}
-		let data_res = this.try_json_stringify(item, true);
-		let replace_res = new InputObjBox;
-		do_json_replace(replace_res, ["cache", this.json_cache]);
-		if (data_res === null) {
-			return ["TAG::null", null];
-		}
-		if (typeof data_res === 'object' && data_res[0] === "TAG::error") {
-			debugger; return ["TAG::null", null];
-		}
-		return data_res;
+		return item;
 	}
 	/** @type {JsonInputType[]} */
 	object_store = [];
@@ -30,95 +18,6 @@ class JsonReplacerState_DeadItem14Code {
 	dom_nodes = [];
 	/** @type {VueVnode[]} */
 	vnodes = [];
-	/** @protected @arg {string} k @arg {JsonInputType|null} x */
-	json_replacer(k, x) {
-		if (typeof x === "function")
-			return null;
-		if (typeof x === "string")
-			return x;
-		if (typeof x !== "object")
-			return x;
-		if (x === null)
-			return x;
-		if (x instanceof Array && x[0] === "TAG::error")
-			return x;
-		if (overflow_state.ran_out_of_stack) {
-			return overflow_state.stack_limit_json_result;
-		}
-		let failure_result = this.try_json_stringify(x);
-		if (failure_result) {
-			return failure_result;
-		}
-		const { object_store } = this;
-		if (!object_store.includes(x)) {
-			object_store.push(x);
-			let mi = object_store.indexOf(x);
-			this.parent_map.set(x, [mi, k]);
-		}
-		if (k === "") {
-			this.input_obj = x;
-			return x;
-		}
-		const { input_obj } = this;
-		if (input_obj instanceof Array) {
-			if (input_obj.includes(x)) {
-				return x;
-			}
-		}
-		if (x instanceof Node) {
-			const { dom_nodes } = this;
-			if (!dom_nodes.includes(x))
-				dom_nodes.push(x);
-			let obj_index = dom_nodes.indexOf(x);
-			return `TYPE::Store.dom_nodes[${obj_index}]`;
-		}
-		const { json_cache: cache } = this;
-		if (cache.includes(x)) {
-			return `TYPE::Store.cache[${cache.indexOf(x)}]`;
-		}
-		if (cache_map.has(k)) {
-			cache_map.get(k)?.push(x);
-		} else {
-			cache_map.set(k, [x]);
-		}
-		if (!cache.includes(x)) {
-			cache.push(x);
-		}
-		const { vnodes } = this;
-		/** @arg {JsonInputType} x @returns {x is VueVnode} */
-		function is_vue_vnode(x) {
-			return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
-		}
-		if (!(x instanceof Array) && is_vue_vnode(x)) {
-			console.log(x.component?.vnode, x, x === x.component?.vnode);
-			if (!vnodes.includes(x))
-				vnodes.push(x);
-			return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
-		}
-		let do_vue = false;
-		if (!(x instanceof Array) && do_vue) {
-			if (x?._container === input_obj) {
-				return {
-					...x,
-					_container: "TYPE::Store.self",
-				};
-			}
-			if (x.__Z_ignore_replacement) {
-				// debugger;
-				return x;
-			}
-			if (x?.__vue_app__) {
-				this.vue_app = x.__vue_app__;
-				return {
-					...x,
-					__vue_app__: "TYPE::Store.vue_app",
-					__Z_ignore_replacement: true,
-				};
-			}
-			return x;
-		}
-		return `TYPE::Store.cache[${cache.indexOf(x)}]`;
-	}
 	json_stringify_count = 0;
 	is_crash_testing = false;
 	/** @type {Map<JsonInputType,string>} */

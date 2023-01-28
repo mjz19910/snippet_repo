@@ -329,7 +329,7 @@ function run_json_replace() {
 	if (!run_result) {
 		debugger; return;
 	}
-	debugger;// arr.forEach(arr_iter_func);
+	debugger;
 	let log_args = history_iter();
 	if (log_args === null)
 		return;
@@ -485,7 +485,7 @@ let target_history = [];
 let input_obj;
 /** @type {Map<string,{}>} */
 let json_result_cache = new Map;
-/** @type {CacheIndexWithArr[]} */
+/** @type {{}[]} */
 let object_store = [];
 /** @type {JsonHistoryType[]} */
 const result_history = [];
@@ -544,6 +544,87 @@ let vue_app = null;
 let vnodes = [];
 /** @type {Node[]} */
 let dom_nodes = [];
+/** @arg {string} k @arg {JsonInputType|null} x */
+function json_replacer(k, x) {
+	if (typeof x === "function")
+		return null;
+	if (typeof x === "string")
+		return x;
+	if (typeof x !== "object")
+		return x;
+	if (x === null)
+		return x;
+	if (x instanceof Array && x[0] === "TAG::error")
+		return x;
+	if (overflow_state.ran_out_of_stack) {
+		return overflow_state.stack_limit_json_result;
+	}
+	if (!object_store.includes(x)) {
+		object_store.push(x);
+		let mi = object_store.indexOf(x);
+		parent_map.set(x, [mi, k]);
+	}
+	if (k === "") {
+		this.input_obj = x;
+		return x;
+	}
+	const { input_obj } = this;
+	if (input_obj instanceof Array) {
+		if (input_obj.includes(x)) {
+			return x;
+		}
+	}
+	if (x instanceof Node) {
+		if (!dom_nodes.includes(x))
+			dom_nodes.push(x);
+		let obj_index = dom_nodes.indexOf(x);
+		return `TYPE::Store.dom_nodes[${obj_index}]`;
+	}
+	if (json_cache.includes(x)) {
+		return `TYPE::Store.cache[${json_cache.indexOf(x)}]`;
+	}
+	if (cache_map.has(k)) {
+		cache_map.get(k)?.push(x);
+	} else {
+		cache_map.set(k, [x]);
+	}
+	if (!json_cache.includes(x)) {
+		json_cache.push(x);
+	}
+	/** @arg {JsonInputType} x @returns {x is VueVnode} */
+	function is_vue_vnode(x) {
+		return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
+	}
+	if (!(x instanceof Array) && is_vue_vnode(x)) {
+		console.log(x.component?.vnode, x, x === x.component?.vnode);
+		if (!vnodes.includes(x))
+			vnodes.push(x);
+		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
+	}
+	let do_vue = false;
+	if (!(x instanceof Array) && do_vue) {
+		if (x?._container === input_obj) {
+			return {
+				...x,
+				_container: "TYPE::Store.self",
+			};
+		}
+		if (x.__Z_ignore_replacement) {
+			// debugger;
+			return x;
+		}
+		if (x?.__vue_app__) {
+			this.vue_app = x.__vue_app__;
+			return {
+				...x,
+				__vue_app__: "TYPE::Store.vue_app",
+				__Z_ignore_replacement: true,
+			};
+		}
+		return x;
+	}
+	return `TYPE::Store.cache[${json_cache.indexOf(x)}]`;
+}
 /** @arg {JsonInputType} x */
 function on_run_with_object_type(x) {
 	let res = new InputObjBox;
@@ -578,70 +659,6 @@ function on_run_with_object_type(x) {
 		cache_index,
 	};
 	return ret_obj;
-}
-/** @arg {CacheItemType[]} arr @arg {(v: CacheItemType)=>v is HTMLDivElement} fn @returns {HTMLDivElement[]}  */
-function filter_array_type(arr, fn) {
-	let out = [];
-	for (let i of arr) {
-		if (fn(i)) {
-			out.push(i);
-		}
-	}
-	return out;
-}
-/** @arg {["CONTENT::cache",HTMLDivElement[]][]} vnode_arr */
-function on_data_z(vnode_arr) {
-	console.log(vnode_arr);
-	debugger;// vnode_arr.forEach(x => on_data_item(["TAG::vnode", x]));
-}
-/** @arg {InputObjBoxItem[]} x */
-function arr_iter_func(x) {
-	console.log(x);
-	debugger;// let c = x[0];
-	// if (c[0] === "CONTENT::cache") {
-	// 	let inner_items = c[1];
-	// 	let div_elements = filter_array_type(inner_items, get_div_elements);
-	// 	on_data_z([["CONTENT::cache", div_elements]])
-	// } else {
-	// 	debugger;
-	// }
-}
-/** @arg {{}} x @arg {number} i */
-function unpack_data_item_vnode_2(x, i) {
-	console.log("should unpack [index=%o]", i, x);
-	x;
-	i;
-	return null;
-}
-/** @arg {["TAG::vnode", {__tag:"vnode";}]} x @returns {["TAG::failed", null]} */
-function on_data_item(x) {
-	console.log("TODO: unknown_tag_section", x);
-	return ["TAG::failed", null];
-}
-/** @template {string} T @arg {T} tag @arg {CacheItemType} x @returns {[`TAG::${T}`, CacheItemType]} */
-function prepare_obj(tag, x) {
-	return [`TAG::${tag}`, x];
-}
-/** @arg {number} idx @arg {["TAG::cache_item", number]} data */
-function on_tag_cache_item(idx, data) {
-	let from_cache = json_cache[data[1]];
-	let res_box = new InputObjBox;
-	do_json_replace(res_box, ["TYPE::JsonInputType", from_cache]);
-	let first_result = res_box.return_items[0];
-	debugger; log_gen.new_gen();
-	log_gen.state_id();
-	let id_log = log_gen.capture();
-	console.log(id_log);
-	// if (typeof inner_arr[0] === "string") {
-	// 	inner_arr[0] = JSON.parse(inner_arr[0]);
-	// }
-	first_result;
-	return log_data_result("json_data", idx, ["TYPE::DataItemReturn", first_result]);
-}
-/** @template {DataItemReturn} T @arg {string} section @arg {any} i @arg {T} data_result */
-function log_data_result(section, i, data_result) {
-	console.log(`--- [%s[%s]] ---\n%s %o`, section, i, data_result);
-	return data_result;
 }
 /** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 function join_string(x, s) {
