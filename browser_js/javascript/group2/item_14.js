@@ -286,10 +286,6 @@ class JsonReplacerState {
 	index_tag_map = new Map;
 	/** @arg {JsonInputType} x @returns {DataItemReturn|null} */
 	try_json_stringify(x, first = false) {
-		let os = overflow_state;
-		if (os.ran_out_of_stack) {
-			return os.stack_limit_json_result;
-		}
 		this.json_stringify_count++;
 		if (this.json_stringify_count % 64 === 0) {
 			let space = this.do_has_stack_space(4096);
@@ -298,6 +294,7 @@ class JsonReplacerState {
 				{
 					debugger;
 				}
+				let os = overflow_state;
 				os.ran_out_of_stack = true;
 				let stack_exhausted_msg = `RangeError: Ran of stack space, ${space} frames left`;
 				os.ran_out_of_stack_args = [JSON.stringify({
@@ -305,7 +302,7 @@ class JsonReplacerState {
 					args: stack_exhausted_msg
 				})];
 				os.stack_limit_json_result = ["TAG::error", ...os.ran_out_of_stack_args];
-				return os.stack_limit_json_result;
+				throw new AggregateError(["TAG::error", ...os.ran_out_of_stack_args], "JsonParse: StackExhausted");
 			}
 		}
 		let was_crash_testing = this.is_crash_testing;
@@ -316,9 +313,6 @@ class JsonReplacerState {
 			let test_state = this.clone();
 			let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
 			this.json_result_cache.set(x, json_result);
-			if (os.ran_out_of_stack) {
-				return os.stack_limit_json_result;
-			}
 			let res_box = new InputObjBox;
 			let index = this.index_box_store.push(res_box) - 1;
 			let tagged_val = this.tag_obj(index, "InputObjBox");
@@ -328,11 +322,18 @@ class JsonReplacerState {
 			});
 			return ["TAG::stringify_result", json_result, tagged_val];
 		} catch (e) {
-			if (os.ran_out_of_stack) {
-				return os.stack_limit_json_result;
-			}
 			if (e instanceof RangeError) {
 				return ["TAG::stringify_range_error", e];
+			}
+			if (e instanceof AggregateError) {
+				if (e.message === "JsonParse: StackExhausted") {
+					if (was_crash_testing) {
+						throw e;
+					}
+					debugger;
+					throw e;
+				}
+				debugger;
 			}
 			if (JsonReplacerState.stringify_failed_obj.includes(x)) {
 				return ["TAG::stringify_seen_failed_obj", JsonReplacerState.stringify_failed_obj.indexOf(x)];
