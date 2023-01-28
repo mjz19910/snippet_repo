@@ -276,32 +276,6 @@ class J_Rep {
 	untag_history_acc([first, ...rest]) {
 		return rest.reduce((pv, [, cur]) => pv.concat(cur), first[1]);
 	}
-	/** @arg {TaggedJsonHistory[]} history_acc_arr */
-	iterate_accumulated_history(history_acc_arr) {
-		/** @type {J_Rep[]} */
-		let history_items = [];
-		for (let tagged_item of history_acc_arr) {
-			console.log(tagged_item);
-			debugger;
-		}
-		let results = [];
-		for (let history of history_items) {
-			done_ids = [];
-			let prev_stack = stack;
-			stack = [["TAG::old_stack", history]];
-			let ret = history_iter();
-			if (ret === null) {
-				return [false, results, [history]];
-			}
-			results.push(res);
-			prev_stack.push(["TAG::stack", [{
-				id: J_Rep.next_id,
-				items: stack
-			}]]);
-			stack = prev_stack;
-		}
-		return [true, results];
-	}
 	static create() {
 		return new this;
 	}
@@ -325,7 +299,7 @@ function run_json_replace() {
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
-	let run_result = on_run_request(["store_object", doc_child]);
+	let run_result = on_run_with_object_type(doc_child);
 	if (!run_result) {
 		debugger; return;
 	}
@@ -627,6 +601,8 @@ function json_replacer(k, x) {
 }
 /** @arg {JsonInputType} x */
 function on_run_with_object_type(x) {
+	// TODO: JSON.stringify
+	// let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
 	let res = new InputObjBox;
 	/** @arg {DataItemReturn} d */
 	let do_json_replace_ = (d) => do_json_replace(res, d);

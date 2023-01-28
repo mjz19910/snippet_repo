@@ -26,7 +26,8 @@ class JsonReplacerState_DeadItem14Code {
 	index_box_store = [];
 	/** @type {Map<number,IndexBoxMap[keyof IndexBoxMap]>} */
 	index_tag_map = new Map;
-	/** @private @arg {JsonInputType} x @returns {DataItemReturn|null} */
+	json_replacer() { }
+	/** @protected @arg {JsonInputType} x @returns {DataItemReturn|null} */
 	try_json_stringify(x, first = false) {
 		this.json_stringify_count++;
 		if (this.json_stringify_count % 64 === 0) {
@@ -62,10 +63,10 @@ class JsonReplacerState_DeadItem14Code {
 				_inner_tag: "InputObjBox",
 				value: tagged_val
 			});
-			return ["TAG::stringify_result", json_result, tagged_val];
+			return null;
 		} catch (e) {
 			if (e instanceof RangeError) {
-				return ["TAG::stringify_range_error", e];
+				return null
 			}
 			if (e instanceof AggregateError) {
 				if (e.message === "JsonParse: StackExhausted") {
@@ -77,14 +78,14 @@ class JsonReplacerState_DeadItem14Code {
 				debugger;
 			}
 			if (J_Rep.stringify_failed_obj.includes(x)) {
-				return ["TAG::stringify_seen_failed_obj", J_Rep.stringify_failed_obj.indexOf(x)];
+				return null
 			}
 			J_Rep.stringify_failed_obj.push(x);
 			if (was_crash_testing) {
 				throw e;
 			}
 			console.log("swallowing error", e);
-			return ["TAG::stringify_failed"];
+			return null
 		} finally {
 			this.is_crash_testing = was_crash_testing;
 		}
