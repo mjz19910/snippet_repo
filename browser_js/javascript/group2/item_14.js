@@ -247,13 +247,66 @@ function history_iter() {
 let json_replace_count = 0;
 /** @type {{}[]} */
 const stringify_failed_obj = [];
+/** @template {Extract<DataItemReturn,[any,{__type: "array";}]>} T @arg {T} x @returns {{[U in T[0]]: [U,Extract<T,[U,...any]>[1]['value'][number]][]}[T[0]]} */
+function invert_tag(x) {
+	/** @type {[T[0],T[1]['value'][number]][]} */
+	let res = [];
+	switch (x[0]) {
+		case "EVENT::vnodes": {
+			for (let u of x[1].value) {
+				res.push([x[0], u]);
+			}
+		} break;
+		case "EVENT::dom_nodes": {
+			for (let u of x[1].value) {
+				res.push([x[0], u]);
+			}
+		} break;
+		case "EVENT::json_cache": {
+			for (let u of x[1].value) {
+				res.push([x[0], u]);
+			}
+		} break;
+	}
+	return res;
+}
+/** @arg {Extract<DataItemReturn,[any,{__type: "array";}]>} ev */
+function do_json_replace_on_iterate_cmd(ev) {
+	let iv = invert_tag(ev);
+	let res = [];
+	for (let x of iv) {
+		switch (x[0]) {
+			case "EVENT::vnodes":
+				res.push(JSON.stringify(x[1], json_replacer, "\t"));
+				break;
+			case "EVENT::dom_nodes":
+				res.push(JSON.stringify(x[1], json_replacer, "\t"));
+				break;
+			case "EVENT::json_cache":
+				res.push(JSON.stringify(x[1], json_replacer, "\t"));
+				break;
+		}
+	}
+	return res;
+}
 /** @arg {DataItemReturn} x */
 function do_json_replace_on_input(x) {
 	let res;
 	switch (x[0]) {
+		case "COMMAND::iterate":
+			return do_json_replace_on_iterate_cmd(x[1].value);
 		case "COMMAND::unpack":
 			res = JSON.stringify(x[1], json_replacer, "\t");
 			return res;
+		case "TYPE::DBG_What":
+		case "EVENT::input":
+		case "EVENT::vnodes":
+		case "EVENT::dom_nodes":
+		case "EVENT::json_cache":
+		case "RESULT::handle_json_event":
+		case "TYPE::DataItemReturn":
+		case "TYPE::JsonInputType":
+		case "EVENT::vue_app":
 		default:
 			res = JSON.stringify(x, json_replacer, "\t");
 			return res;
