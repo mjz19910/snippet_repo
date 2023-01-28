@@ -634,11 +634,8 @@ function on_data_item(x, idx) {
 			return ["TAG::failed", null];
 		case "TAG::unpack_vnode::1":
 			{
-				const [, ...data] = x;
-				if (data.length === 1)
-					return on_data_item(["TAG::unpack_vnode::2", data[0]], 0);
-				let res = data.map((x, i) => unpack_data_item_vnode_2(x, i));
-				return ["TAG::null_arr", res];
+				debugger;
+				return ["TAG::null", null];
 			}
 		case "TAG::vnode":
 			{

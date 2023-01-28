@@ -48,22 +48,23 @@ type StackLimitReturn = {
 type JsonInputType = DataItemReturn | VueAppContainer | Element | Node | HTMLDivElement;
 type CacheItemType = JsonInputType;
 type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
-type DataItemReturnBase = | ["TAG::unpack_vnode::2::res", {}[]];
-type TagVNodeRes_2 = ["TAG::unpack_vnode::2::res", {}[]];
-type TagVNode = ["TAG::vnode", ["CONTENT::cache", HTMLDivElement[]]];
-type TagUnpackVNode_1 = ["TAG::unpack_vnode::1", {}];
-type TagUnpackVNode_Arr_2 = ["TAG::unpack_vnode::2::res_arr", {}[]];
-type TagUnpackVNode_2 = ["TAG::unpack_vnode::2", {}];
+type DataItemReturnBase = TagVNodeRes_2;
+type TagVNodeRes_2 = ["TAG::unpack_vnode::2::res", { unpack_vnode: true; num: 2; unpack_type: "res" }[]];
+type TagVnodeContent = ["CONTENT::cache", HTMLDivElement[]];
+type TagVNode = ["TAG::vnode", TagVnodeContent];
+type TagUnpackVNode_1 = ["TAG::unpack_vnode::1", { unpack_vnode: true; num: 1; }];
+type TagUnpackVNode_Arr_2 = ["TAG::unpack_vnode::2::res_arr", { unpack_vnode_2: true; vnode_res_type: "res_arr"; }[]];
+type TagUnpackVNode_2 = ["TAG::unpack_vnode::2", { unpack_vnode_2: true; vnode_res_type: null; }];
 type TagVnodeItem = ["TAG::vnode_item", TagVNodeInner];
 type DataItemReturn =
 	| DataItemReturnBase
 	| ["CONTENT::cache", CacheItemType[]]
 	| ["CONTENT::empty"]
-	| ["TAG::bad_array", any[]]
+	| ["TAG::bad_array", { bad_array: true; }[]]
 	| ["TAG::cache_item_result", CacheItemType]
 	| ["TAG::cache_item_to_log", CacheItemType]
 	| ["TAG::cache_item", number]
-	| ["TAG::data", {}]
+	| ["TAG::data", { __data_key: ""; }]
 	| ["TAG::empty"]
 	| ["TAG::error", string]
 	| ["TAG::failed", null]
