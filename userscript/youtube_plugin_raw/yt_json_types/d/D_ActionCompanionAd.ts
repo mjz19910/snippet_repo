@@ -8,7 +8,7 @@ type D_ActionCompanionAd={
 	trackingParams: string;
 	adInfoRenderer: RL$ActionCompanionAdInfo;
 	adVideoId: string;
-	impressionPings: T$BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
+	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: D_AdLayoutLogging;
 	associatedCompositePlayerBytesLayoutId?: `${string}-0000-${string}-${string}-${string}`;
 };

@@ -1,1 +1,1 @@
-type T$BaseUrl<T extends string>={baseUrl: T;};
+type T_BaseUrl<T extends string>={baseUrl: T;};

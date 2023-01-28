@@ -546,11 +546,9 @@ class JsonReplacerState {
 	}
 	/** @arg {["CONTENT::cache",HTMLDivElement[]][]} vnode_arr */
 	on_data_z(vnode_arr) {
-		debugger;
-		if (this.id && this.id > 5)
-			return;
-		let res = vnode_arr.map((x, idx) => this.on_data_item(["TAG::vnode", x], idx), this);
-		console.log(res);
+		vnode_arr.forEach((x, idx) => {
+			return this.on_data_item(["TAG::vnode", x], idx);
+		}, this);
 	}
 	/** @template {DataItemReturn} T @arg {string} section @arg {any} i @arg {T} data_result */
 	log_data_result(section, i, data_result) {
@@ -582,9 +580,9 @@ class JsonReplacerState {
 			let ra = res[0];
 			return ra;
 		}
-		let { cache_map, dom_nodes, json_result_cache, cache, vnodes, vue_app, input_obj, object_store, parent_map, result_history, id, is_crash_testing, ...os } = new_state;
 		let ns_id = this.id;
-		Z_len_k(os) > 0 && console.log("[json_data_ex]\n%o", os);
+		let ns = new_state;
+		Z_len_k(ns.os) > 0 && console.log("[json_data_ex]\n%o", ns.os);
 		let first_result = res[0];
 		let [inner_type, ...inner_arr] = first_result;
 		let skip = true;
@@ -594,7 +592,7 @@ class JsonReplacerState {
 		log_gen.state_id(new_state, ns_id);
 		let id_log = log_gen.capture();
 		console.log(id_log);
-		!skip && console.log("[state_id=%o]", ns_id, cache_map);
+		!skip && console.log("[state_id=%o]", ns_id, ns.cache_map);
 		/** @type {Map<any,any>[]} */
 		let cache_map_arr = [];
 		/** @template T @arg {string} key @arg {T} obj */
@@ -609,7 +607,7 @@ class JsonReplacerState {
 			return obj;
 		}
 		cache_map_arr = store_window("cache_map_arr", cache_map_arr);
-		cache_map_arr.push(cache_map);
+		cache_map_arr.push(ns.cache_map);
 		if (typeof inner_arr[0] === "string") {
 			inner_arr[0] = JSON.parse(inner_arr[0]);
 		}
@@ -849,18 +847,28 @@ class JsonReplacerState {
 				s_.stack = prev_stack;
 			}
 		}
+		let do_join_str = () => this.join_string(["\n", "%o"], "");
 		/** @arg {any[]} hist */
 		function log_history_items(hist) {
 			let log_items = hist.map(s_.h_map);
+			/** @type {"%o"[]} */
 			let log_place = ["%o"];
 			log_place.length = log_items.length;
-			return ["-- [result_history] --\n" + log_place.join("\n"), ...log_items];
+			log_place.fill("%o");
+			let log_str = log_place.map(do_join_str).flat().join("");
+			return ["-- [result_history] --" + log_str, ...log_items];
 		}
 		let log_args = log_history_items(s_.target_history);
 		let log_range = to_range(s_.done_ids);
 		console.log("[done_ids] " + log_range.map(e => e.length === 2 ? "%o-%o" : "%o").join(", "), ...log_range.flat());
 		console.log(...log_args);
 		return log_args;
+	}
+	/** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
+	join_string(x, s) {
+		if (!x) { debugger; }
+		let r = x.join(s);
+		return as(r);
 	}
 	run() {
 		let doc_child = document.body.firstElementChild;
