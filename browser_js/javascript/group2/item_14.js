@@ -208,8 +208,6 @@ class J_Rep {
 	vue_app = null;
 	/** @type {JsonInputType[]} */
 	object_store = [];
-	/** @type {Map<unknown,[number,string]>} */
-	parent_map = new Map;
 	/** @type {this[]} */
 	result_history = [];
 	constructor() {
@@ -494,11 +492,6 @@ function iter_history_result() {
 			cache.push(ret);
 		}
 	}
-	if (object_store) {
-		object_store_info = object_store.map(x => on_run_request(["cache_index_and_arr", x]));
-	} else {
-		console.log("no object_store");
-	}
 	/** @type {IterHistoryResult} */
 	let ret = {
 		cache,
@@ -512,12 +505,14 @@ function iter_history_result() {
 		return x.filter((x) => !o_arr.includes(x));
 	}
 }
-/** @type {VueApp|null} */
-let vue_app = null;
+/** @type {{value:VueApp|null}} */
+const vue_app = { value: null };
 /** @type {VueVnode[]} */
-let vnodes = [];
+const vnodes = [];
 /** @type {Node[]} */
-let dom_nodes = [];
+const dom_nodes = [];
+/** @type {Map<unknown,[number,string]>} */
+const parent_map = new Map;
 /** @arg {string} k @arg {JsonInputType|null} x */
 function json_replacer(k, x) {
 	if (typeof x === "function")
@@ -614,8 +609,8 @@ function on_run_with_object_type(x) {
 	if (x !== null && !json_cache.includes(x)) {
 		json_cache.push(x);
 	}
-	if (vue_app !== null) {
-		do_json_replace_(["EVENT::vue_app", vue_app]);
+	if (vue_app.value !== null) {
+		do_json_replace_(["EVENT::vue_app", vue_app.value]);
 	}
 	if (vnodes.length > 0) {
 		do_json_replace_(["EVENT::vnodes", vnodes]);
