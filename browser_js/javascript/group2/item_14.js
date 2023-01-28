@@ -267,7 +267,7 @@ class JsonReplacerState {
 				throw e;
 			}
 			console.log("swallowing error", e);
-			return "TAG::stringify_failed";
+			return ["TAG::stringify_failed"];
 		} finally {
 			this.is_crash_testing = was_crash_testing;
 		}
@@ -409,8 +409,6 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 	run_internal(obj) {
-		if (obj === "TAG::stringify_failed")
-			return [];
 		let [type, ...arr] = obj;
 		/** @type {DataItemReturn[]} */
 		let res = [];
@@ -595,13 +593,14 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
 	on_data_item(x, idx) {
-		if (x === "TAG::stringify_failed")
-			return x;
 		let xu = x;
 		switch (x[0]) {
 			default:
 				this.break_debugger;
 				break;
+			case "CONTENT::empty":
+			case "CONTENT::cache":
+			case "TYPE::parsable_json":
 			case "TAG::data":
 				{
 					console.log("[data_item::data]", x[1]);
@@ -662,15 +661,11 @@ class JsonReplacerState {
 				return ["TAG::failed", null];
 			case "TAG::stringify_result":
 				{
-					const [, ...data] = x;
-					let data_item = data[0];
-					this.log_data_result("vnode", idx, ["TYPE::parsable_json", data_item]);
-					return p_res;
+					const [, [data]] = x;
+					return this.log_data_result("vnode", idx, ["TYPE::parsable_json", data]);
 				}
 			case "TAG::null_arr":
 			case "TAG::null":
-			case "CONTENT::empty":
-			case "CONTENT::cache":
 			case "TAG::bad_array":
 			case "TAG::empty":
 			case "TAG::parsed_json":
@@ -679,6 +674,8 @@ class JsonReplacerState {
 			case "TAG::stringify_range_error":
 			case "TAG::stringify_seen_failed_obj":
 			case "TAG::error":
+			case "TAG::stringify_failed":
+			case "TAG::result":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
