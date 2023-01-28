@@ -155,7 +155,9 @@ function Z_len_k(x) {
 	return Object.keys(x).length;
 }
 const log_gen = new LogGenerator;
-class InputObjBox {
+/** @type {JsonOutputBox[]} */
+const index_box_store = [];
+class JsonOutputBox {
 	/** @type {DataItemReturn[]} */
 	return_items = [];
 	/** @type {Map<"1",number>} */
@@ -177,7 +179,7 @@ class J_Rep {
 /** @type {JsonInputType[]} */
 const json_cache = [];
 //#region on_data_item
-/** @arg {InputObjBox} res @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
+/** @arg {JsonOutputBox} res @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
 function on_run_request(res, x) {
 	switch (x[0]) {
 		case "cache":
@@ -190,7 +192,7 @@ function on_run_request(res, x) {
 	return init_json_event_sys_with_obj(res, x[1]);
 }
 function main_start_json_replace() {
-	let res = new InputObjBox;
+	let res = new JsonOutputBox;
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
@@ -337,7 +339,7 @@ function handle_json_unpack_cmd(x) {
 function handle_json_unpack_unit_cmd(x) {
 	console.log("unpack unit cmd run pending", x);
 }
-/** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
+/** @arg {JsonOutputBox} res_box @arg {DataItemReturn} x */
 function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
@@ -447,7 +449,8 @@ let object_store = [];
 /** @type {JsonHistoryType[]} */
 const result_history = [];
 let object_store_info = null;
-function iter_history_result() {
+/** @arg {JsonOutputBox} out_res */
+function iter_history_result(out_res) {
 	let history = result_history.slice();
 	let x1 = history.map((x) => x.id);
 	if (!input_obj.value.has_value) {
@@ -475,7 +478,7 @@ function iter_history_result() {
 	}
 	let cache = [];
 	for (let obj of new_cache_arr) {
-		let ret = on_run_request(["cache", obj]);
+		let ret = on_run_request(out_res, ["cache", obj]);
 		if (ret !== null) {
 			cache.push(ret);
 		}
@@ -574,7 +577,7 @@ function json_replacer(k, x) {
 	}
 	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
-/** @arg {InputObjBox} res @arg {JsonInputType} x */
+/** @arg {JsonOutputBox} res @arg {JsonInputType} x */
 function init_json_event_sys_with_obj(res, x) {
 	/** @arg {DataItemReturn} d */
 	let do_json_replace_ = (d) => init_json_event_sys(res, d);

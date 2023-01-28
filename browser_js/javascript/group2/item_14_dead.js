@@ -22,8 +22,6 @@ class JsonReplacerState_DeadItem14Code {
 	is_crash_testing = false;
 	/** @type {Map<JsonInputType,string>} */
 	json_result_cache = new Map;
-	/** @type {InputObjBox[]} */
-	index_box_store = [];
 	/** @type {Map<number,IndexBoxMap[keyof IndexBoxMap]>} */
 	index_tag_map = new Map;
 	json_replacer() { }
@@ -58,8 +56,8 @@ class JsonReplacerState_DeadItem14Code {
 			let test_state = this.clone();
 			let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
 			this.json_result_cache.set(x, json_result);
-			let res_box = new InputObjBox;
-			let index = this.index_box_store.push(res_box) - 1;
+			let res_box = new JsonOutputBox;
+			let index = index_box_store.push(res_box) - 1;
 			let tagged_val = this.tag_obj(index, "InputObjBox");
 			this.index_tag_map.set(index, {
 				_inner_tag: "InputObjBox",
