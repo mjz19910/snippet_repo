@@ -506,7 +506,7 @@ function iter_history_result() {
 			rc.set("TAG::input_obj", k);
 		}
 	}
-	nh.map(h_map).forEach(([flag, x]) => flag ? 0 : result_history.push(x));
+	nh.map(h_map).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
 	/** @type {JsonInputType[]} */
 	let new_cache_arr = [];
 	for (let cache_item of json_cache) {
