@@ -534,10 +534,9 @@ function json_replacer(k, x) {
 		parent_map.set(x, [mi, k]);
 	}
 	if (k === "") {
-		this.input_obj = x;
+		input_obj = x;
 		return x;
 	}
-	const { input_obj } = this;
 	if (input_obj instanceof Array) {
 		if (input_obj.includes(x)) {
 			return x;
