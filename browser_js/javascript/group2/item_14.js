@@ -156,7 +156,7 @@ function Z_len_k(x) {
 }
 const log_gen = new LogGenerator;
 class InputObjBox {
-	/** @type {{__tag:"InputObjBox";item_level:2;}[][]} */
+	/** @type {InputObjBoxItem[][]} */
 	arr = [];
 }
 const overflow_state = new class {
@@ -382,26 +382,11 @@ function history_iter() {
 	return log_args;
 }
 let json_replace_count = 0;
-/** @template {keyof ContentArgsType} T @arg {InputObjBox} res_box @arg {ContentArgsType[T]} args */
+/** @template {{__template_tag: "T"; from:"do_json_replace";}} T @arg {InputObjBox} res_box @arg {T} args */
 function do_json_replace(res_box, args) {
 	json_replace_count++;
-	if (json_replace_count > 8)
-		return;
-	switch (args[0]) {
-		case "cache":
-			{
-				const [c_name, target] = args;
-				if (target.length !== 0) {
-					let res = run_json_replacement([`CONTENT::${c_name}`, target]);
-					res_box.arr.push(res);
-				}
-			}
-			break;
-		case "empty":
-			break;
-	}
-	if (args[0] !== "cache")
-		return;
+	let res = run_json_replacement_with_state(["CONTENT::cache", args]);
+	res_box.arr.push(res);
 }
 /** @template {object} T @arg {T} x @returns {[boolean,T]} */
 function h_map(x) {
@@ -536,17 +521,19 @@ function iter_history_result() {
 		return x.filter((x) => !o_arr.includes(x));
 	}
 }
+/** @type {VueApp|null} */
+let vue_app = null;
+/** @type {VueVnode[]} */
+let vnodes = [];
+/** @type {Node[]} */
+let dom_nodes = [];
 /** @arg {JsonInputType} x */
 function on_run_with_object_type(x) {
 	let res = new InputObjBox;
-	/** @type {VueApp|null} */
-	let vue_app = null;
-	/** @type {VueVnode[]} */
-	let vnodes = [];
-	/** @type {Node[]} */
-	let dom_nodes = [];
+	/** @arg {string} k @arg {{}} x */
+	let do_json_replace_ = (k, x) => do_json_replace(res, { __template_tag: "T", from: "do_json_replace", data: [k, x] });
 	if (x instanceof Element) {
-		do_json_replace(res, ["input", x]);
+		do_json_replace_("input", x);
 	} else {
 		debugger;
 	}
@@ -554,11 +541,11 @@ function on_run_with_object_type(x) {
 		json_cache.push(x);
 	}
 	if (vue_app !== null) {
-		do_json_replace(res, ["vue_app", vue_app]);
+		do_json_replace_("vue_app", vue_app);
 	}
-	do_json_replace(res, ["vnodes", vnodes]);
-	do_json_replace(res, ["dom_nodes", dom_nodes]);
-	do_json_replace(res, ["cache", json_cache]);
+	do_json_replace_("vnodes", vnodes);
+	do_json_replace_("dom_nodes", dom_nodes);
+	do_json_replace_("cache", json_cache);
 	let cache_index = -1;
 	if (x !== null) {
 		cache_index = json_cache.indexOf(x);
@@ -582,18 +569,22 @@ function filter_array_type(arr, fn) {
 }
 /** @arg {["CONTENT::cache",HTMLDivElement[]][]} vnode_arr */
 function on_data_z(vnode_arr) {
-	vnode_arr.forEach((x, idx) => on_data_item(["TAG::vnode", x], idx));
+	console.log(vnode_arr);
+	debugger;
+	// vnode_arr.forEach(x => on_data_item(["TAG::vnode", x]));
 }
-/** @arg {DataItemReturn[]} x */
+/** @arg {InputObjBoxItem[]} x */
 function arr_iter_func(x) {
-	let c = x[0];
-	if (c[0] === "CONTENT::cache") {
-		let inner_items = c[1];
-		let div_elements = filter_array_type(inner_items, get_div_elements);
-		on_data_z([["CONTENT::cache", div_elements]])
-	} else {
-		debugger;
-	}
+	console.log(x);
+	debugger;
+	// let c = x[0];
+	// if (c[0] === "CONTENT::cache") {
+	// 	let inner_items = c[1];
+	// 	let div_elements = filter_array_type(inner_items, get_div_elements);
+	// 	on_data_z([["CONTENT::cache", div_elements]])
+	// } else {
+	// 	debugger;
+	// }
 }
 /** @arg {{}} x @arg {number} i */
 function unpack_data_item_vnode_2(x, i) {
@@ -602,44 +593,8 @@ function unpack_data_item_vnode_2(x, i) {
 	i;
 	return null;
 }
-/** @arg {DataItemReturn} x @returns {DataItemReturn} */
+/** @arg {["TAG::vnode", {__tag:"vnode";}]} x @returns {["TAG::failed", null]} */
 function on_data_item(x) {
-	let xu = x;
-	switch (x[0]) {
-		default:
-			break;
-		case "CONTENT::empty":
-		case "CONTENT::cache":
-		case "TAG::null_arr":
-		case "TAG::null":
-		case "TAG::bad_array":
-		case "TAG::empty":
-		case "TAG::parsed_json":
-		case "TAG::cache_item_to_log":
-		case "TAG::cache_item_result":
-		case "TAG::stringify_range_error":
-		case "TAG::stringify_seen_failed_obj":
-		case "TAG::error":
-		case "TAG::stringify_failed":
-		case "TAG::result":
-		case "TAG::vnode_parse_1":
-		case "TAG::cache_item":
-		case "TAG::data":
-		case "TAG::failed":
-		case "TAG::stringify_result":
-		case "TYPE::parsable_json":
-		case "TAG::unpack_vnode::2::res":
-		case "TAG::unpack_vnode::1":
-		case "TAG::unpack_vnode::2::res_arr":
-		case "TAG::unpack_vnode::2":
-		case "TAG::vnode_item":
-		case "TAG::vnode":
-		case "TAG::vnode_inner":
-			console.log("TODO: tag_section", x);
-			return ["TAG::failed", null];
-	}
-	x[0] === "";
-	x = xu;
 	console.log("TODO: unknown_tag_section", x);
 	return ["TAG::failed", null];
 }
@@ -670,23 +625,8 @@ function on_tag_cache_item(idx, data) {
 }
 /** @template {DataItemReturn} T @arg {string} section @arg {any} i @arg {T} data_result */
 function log_data_result(section, i, data_result) {
-	console.log(`--- [%s[%s]] ---\n%s %o`, section, i, ...data_result);
+	console.log(`--- [%s[%s]] ---\n%s %o`, section, i, data_result);
 	return data_result;
-}
-/** @arg {TagVNodeInner[1]} x @arg {number} i */
-function unpack_data_item_todo(x, i) {
-	switch (x[0]) {
-		case "CONTENT::cache":
-			return x[1];
-		default:
-			debugger; break;
-	}
-	console.log("TODO: [unpack] [index=%o]", i, x);
-	return null;
-}
-/** @arg {DataItemReturn} x */
-function run_json_replacement(x) {
-	return run_json_replacement_with_state(x);
 }
 /** @arg {DataItemReturn} x */
 function run_json_replacement_with_state(x) {
