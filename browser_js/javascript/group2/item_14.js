@@ -358,6 +358,8 @@ function do_json_replace(res_box, x) {
 	switch (x[0]) {
 		case "EVENT::input":
 			break;
+		case "EVENT::json_cache":
+			break;
 		default:
 			console.log(x);
 			debugger; break;
