@@ -2235,6 +2235,7 @@ class AsyncAutoBuy {
 		if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,"A");
 		await this.main_async();
 	}
+	/** @returns {Promise<[boolean,number]>} */
 	async maybe_async_reset() {
 		let loss_rate=await this.parent.unit_promote_start();
 		if(this.parent.maybe_run_reset()) return [true,loss_rate];
