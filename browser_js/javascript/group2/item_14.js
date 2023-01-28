@@ -160,6 +160,14 @@ class InputObjBox {
 	/** @type {DataItemReturn[][]} */
 	arr = [];
 }
+const overflow_state = new class {
+	ran_out_of_stack = false;
+	/** @type {[string]|null} */
+	ran_out_of_stack_args = null;
+	/** @type {["TAG::error",string]|null} */
+	stack_limit_json_result = null;
+}
+	;
 class JsonReplacerState {
 	/** @type {any[][]} */
 	static all_cache = [];
@@ -207,8 +215,29 @@ class JsonReplacerState {
 	static show_cache_map() {
 		show_cache_map(this.cache_map);
 	}
+	json_stringify_count = 0;
+	os = overflow_state;
 	/** @arg {JsonInputType} x @returns {DataItemReturn|null} */
 	try_json_stringify(x, first = false) {
+		if (this.os.ran_out_of_stack) {
+			return this.os.stack_limit_json_result;
+		}
+		this.json_stringify_count++;
+		if (this.json_stringify_count % 128 === 0) {
+			let space = this.do_has_stack_space(4096);
+			console.log("[stack_left]", space);
+			if (space < 9500) {
+				debugger; let os = this.os;
+				os.ran_out_of_stack = true;
+				let stack_exhausted_msg = `RangeError: Ran of stack space, ${space} frames left`;
+				os.ran_out_of_stack_args = [JSON.stringify({
+					_tag: "Error",
+					args: stack_exhausted_msg
+				})];
+				os.stack_limit_json_result = ["TAG::error", ...os.ran_out_of_stack_args];
+				return os.stack_limit_json_result;
+			}
+		}
 		let was_crash_testing = this.is_crash_testing;
 		x: try {
 			if (this.is_crash_testing)
@@ -241,10 +270,19 @@ class JsonReplacerState {
 	is_crash_testing = false;
 	/** @arg {string} k @arg {JsonInputType|null} x */
 	json_replacer(k, x) {
+		if (typeof x === "function")
+			return null;
+		if (typeof x === "string")
+			return x;
 		if (typeof x !== "object")
 			return x;
 		if (x === null)
 			return x;
+		if (x instanceof Array && x[0] === "TAG::error")
+			return x;
+		if (this.os.ran_out_of_stack) {
+			return this.os.stack_limit_json_result;
+		}
 		let failure_result = this.try_json_stringify(x);
 		if (failure_result) {
 			return failure_result;
@@ -288,16 +326,16 @@ class JsonReplacerState {
 		const { vnodes } = this;
 		/** @arg {JsonInputType} x @returns {x is VueVnode} */
 		function is_vue_vnode(x) {
-			return !!("component" in x && x.component?.vnode);
+			return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
 		}
-		console.log(is_vue_vnode(x), "component" in x && x.component?.vnode);
-		if (is_vue_vnode(x)) {
+		if (!(x instanceof Array) && is_vue_vnode(x)) {
+			console.log(x.component?.vnode, x, x === x.component?.vnode);
 			if (!vnodes.includes(x))
 				vnodes.push(x);
 			return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
 		}
 		let do_vue = false;
-		if (do_vue) {
+		if (!(x instanceof Array) && do_vue) {
 			if (x?._container === input_obj) {
 				return {
 					...x,
@@ -330,18 +368,15 @@ class JsonReplacerState {
 	}
 	/** @arg {number} num @arg {number} start @returns {[number,number]} */
 	has_stack_space(num, start) {
-		if (num === 0) return [num, start];
+		if (num === 0)
+			return [num, start];
 		return this.has_stack_space(num - 1, start);
 	}
+	last_stack_space = null;
 	/** @arg {any} item @returns {DataItemReturn} */
 	stringify_each(item) {
 		if (this.cache.includes(item)) {
 			return ["TAG::cache_item", this.cache.indexOf(item)];
-		}
-		let space = this.do_has_stack_space();
-		if (space[1] < 400) {
-			console.log('stack space running out', space);
-			debugger;
 		}
 		let data_res = this.try_json_stringify(item, true);
 		let replace_res = new InputObjBox;
@@ -363,7 +398,8 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 	run_internal(obj) {
-		if (obj === "TAG::stringify_failed") return [];
+		if (obj === "TAG::stringify_failed")
+			return [];
 		let [type, ...arr] = obj;
 		/** @type {DataItemReturn[]} */
 		let res = [];
@@ -540,7 +576,8 @@ class JsonReplacerState {
 	}
 	/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
 	on_data_item(x, idx) {
-		if (x === "TAG::stringify_failed") return x;
+		if (x === "TAG::stringify_failed")
+			return x;
 		let xu = x;
 		switch (x[0]) {
 			default:
@@ -621,6 +658,7 @@ class JsonReplacerState {
 			case "TAG::cache_item_result":
 			case "TAG::stringify_range_error":
 			case "TAG::stringify_seen_failed_obj":
+			case "TAG::error":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
@@ -629,10 +667,12 @@ class JsonReplacerState {
 		console.log("TODO: unknown_tag_section", x);
 		return ["TAG::failed", null];
 	}
-	/** @arg {CacheItemType} x */
+	/** @arg {Extract<CacheItemType,{__cache_item:any}>|{}} x */
 	on_run_with_cache_type(x) {
 		if ("__cache_item" in x)
-			return { __cache_item: true };
+			return {
+				__cache_item: true
+			};
 		return null;
 	}
 	/** @arg {JsonInputType} x */
@@ -791,7 +831,7 @@ class JsonReplacerState {
 		return new this;
 	}
 	static create_and_run() {
-		let do_create_and_run = false;
+		let do_create_and_run = true;
 		if (!do_create_and_run)
 			return;
 		this.create().run();
@@ -800,30 +840,121 @@ class JsonReplacerState {
 	static {
 		this.create_and_run()
 	}
-	do_has_stack_space(start_at = 600) {
-		let target = start_at / 2;
-		while (true) {
-			let stack_res = this.check_stack_overflow(start_at);
-			console.log(stack_res);
-			if (stack_res[0] === -1) {
-				target = start_at;
-				start_at = start_at - start_at / 3;
-				console.log("less", start_at, target);
-			} else if (stack_res[1] === start_at) {
-				let prev_start = start_at;
-				start_at = target;
-				target = prev_start + prev_start / 8;
-				console.log("increase", start_at, target);
+	/** @arg {number} start */
+	get_stack_limits(start, target = start / 2) {
+		target = Math.pow(2, Math.log2(target) | 0)
+		let requested_target = target;
+		let requested_start = start;
+		let initial_start = start;
+		let hit_known = false;
+		let last_known_zero, last_known_miss, max_known = 0, min_known;
+		function reset_known() {
+			last_known_zero = null;
+			last_known_miss = null;
+			max_known = 0;
+			min_known = 0xffff;
+		}
+		reset_known();
+		let tries = 0;
+		let set_min = true;
+		while (target > 1) {
+			if (start < 0) {
+				debugger; throw new Error();
+			}
+			let stack_res = this.check_stack_overflow(start);
+			tries++;
+			if (stack_res[0] === 0) {
+				max_known = Math.max(max_known, stack_res[1]);
+				min_known = Math.min(min_known, stack_res[1]);
+			}
+			if (target < 4 && hit_known === false) {
+				initial_start *= 2;
+				target = initial_start;
+				reset_known();
 				continue;
 			}
-			if (stack_res[0] > -1) {
-				break;
+			let do_logging = false;
+			if (target < 4 && do_logging) {
+				console.log(stack_res[0] === 0 ? "up" : "dn", target, stack_res[1]);
+			}
+			if (stack_res[0] === -1) {
+				last_known_miss = start;
+				if (set_min) {
+					min_known = start;
+					set_min = false;
+				}
+				target = target / 2 | 0;
+				if (start - target <= 0) {
+					debugger; break;
+				}
+				start = start - target;
+				continue;
+			} else if (stack_res[0] === 0) {
+				hit_known = true;
+				last_known_zero = start;
+				target = target * 2 | 0;
+				start = start + target;
+				continue;
 			}
 		}
-		try {
-			return this.check_stack_overflow(start_at + start_at / 3);
-		} catch {
-			return this.check_stack_overflow(start_at - start_at / 3);
+		return {
+			target,
+			min: min_known,
+			required_start: initial_start,
+			start: start,
+			zero: last_known_zero,
+			last_crash: last_known_miss,
+			max: max_known,
+			tries,
+			requested_start,
+			requested_target,
+		};
+	}
+	log_limits(limits_obj) {
+		let logging = false;
+		if (!logging)
+			return;
+		const { start, target, zero, last_crash, min, max } = limits_obj;
+		let calc_start = start - target;
+		console.log("call stack overflow known results", [zero, last_crash]);
+		console.log("call stack overflow range", [min, max], "diff from start_at", calc_start - min);
+		console.log("st", start, target);
+	}
+	get_final_stack_space(start, lower, upper) {
+		let near_checks = [];
+		let inc = Math.max(1, (upper / 32 | 0));
+		for (let i = lower; i < upper; i += inc) {
+			let check = this.check_stack_overflow(start + i);
+			near_checks.push(check);
 		}
+		return near_checks;
+	}
+	is_containing_stack_limit(stk_sp_arr) {
+		return stk_sp_arr.find(e => e[0] === 0) && stk_sp_arr.find(e => e[0] === -1);
+	}
+	do_has_stack_space(limit_guess) {
+		let try_count = 0;
+		let space_guess = null;
+		if (this.last_stack_space !== null) { }
+		let limits_1 = this.get_stack_limits(limit_guess);
+		this.log_limits(limits_1);
+		let n_start = limits_1.zero - limits_1.min;
+		let diff = limits_1.last_crash - limits_1.start;
+		let limits_2 = this.get_stack_limits(n_start, 4);
+		this.log_limits(limits_2);
+		let near_checks = this.get_final_stack_space(limits_2.start, -5, 5);
+		let has_stack_limit = near_checks.find(e => e[0] === 0) && near_checks.find(e => e[0] === -1);
+		limits_2.target = 32;
+		while (!this.is_containing_stack_limit(near_checks)) {
+			near_checks = this.get_final_stack_space(limits_2.start, 1, limits_2.target);
+			limits_2.target *= 2;
+			if (limits_2.target > n_start * 2) {
+				console.log("failed to find stack bounds");
+				debugger; throw new Error();
+			}
+		}
+		let result = near_checks.filter(e => e[0] !== -1).reduce((acc, v) => Math.min(acc, v[1]), Infinity);
+		this.last_stack_space = result;
+		return result;
 	}
 }

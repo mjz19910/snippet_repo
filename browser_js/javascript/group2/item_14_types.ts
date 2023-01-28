@@ -33,7 +33,7 @@ type VueAppContainer = {
 	__Z_ignore_replacement?: boolean;
 	__vue_app__: VueApp;
 };
-type JsonInputType = VueAppContainer | Element | Node;
+type JsonInputType = any[]|DataItemReturn|VueAppContainer | Element | Node;
 type CacheItemType = { __cache_item: true; } | JsonInputType | Element;
 type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
 
@@ -60,4 +60,5 @@ type DataItemReturn = | ["TAG::vnode_item", {}] | [
 	["TAG::unpack_vnode::2", {}],
 	["TAG::vnode_inner", {}],
 	["TAG::vnode", {}],
+	["TAG::error",string],
 ][number];
