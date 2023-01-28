@@ -263,13 +263,14 @@ function do_json_replace_on_input(x) {
 function handle_json_event(x) {
 	switch (x[0]) {
 		case "EVENT::input":
+			console.log("- [EVENT::input.unpack] -\n%o", ...x);
 			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::json_cache":
-			console.log("- [EVENT::json_cache] -\n%o", x);
-			return do_json_replace_on_input(x);
+			console.log("- [EVENT::json_cache.unpack] -\n%o", ...x);
+			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::vnodes":
-			console.log("- [EVENT::vnodes] -\n%o", x);
-			return do_json_replace_on_input(x);
+			console.log("- [EVENT::vnodes.unpack] -\n%o", ...x);
+			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::dom_nodes":
 			console.log("- [EVENT::dom_nodes] -\n%o", x);
 			return do_json_replace_on_input(x);
