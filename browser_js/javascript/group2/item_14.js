@@ -262,6 +262,8 @@ function do_json_replace_on_iterate_cmd(x) {
 	}
 	return res;
 }
+/** @type {["COMMAND::unpack",][]} */
+let pending_commands = [];
 /** @arg {DataItemReturn} x */
 function do_json_replace_on_input(x) {
 	/** @type {string[]} */
@@ -285,14 +287,46 @@ function do_json_replace_on_input(x) {
 					default: debugger; throw new Error();
 					case "string": return unpack[1];
 					case "Element":
+						{
+							let [s] = unpack;
+							for (let u of unpack[1]) {
+								console.log("[COMMAND::unpack.Element] [%s]", s, u);
+								res.push(JSON.stringify(u, json_replacer, "\t"));
+							}
+						}
+						break;
 					case "Node":
+						{
+							let [s] = unpack;
+							for (let u of unpack[1]) {
+								console.log("[COMMAND::unpack.Node] [%s]", s, u);
+								res.push(JSON.stringify(u, json_replacer, "\t"));
+							}
+						}
+						break;
 					case "JsonInputType":
+						{
+							let [s] = unpack;
+							for (let u of unpack[1]) {
+								console.log("[COMMAND::unpack.JsonInputType] [%s]", s, u);
+								res.push(JSON.stringify(u, json_replacer, "\t"));
+							}
+						}
+						break;
 					case "VueApp":
+						{
+							let [s] = unpack;
+							for (let u of unpack[1]) {
+								console.log("[COMMAND::unpack.VueApp] [%s]", s, u);
+								res.push(JSON.stringify(u, json_replacer, "\t"));
+							}
+						}
+						break;
 					case "DataItemReturn":
 						{
 							let [s] = unpack;
 							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack] [%s]", s, u);
+								console.log("[COMMAND::unpack.DataItemReturn] [%s]", s, u);
 								res.push(JSON.stringify(u, json_replacer, "\t"));
 							}
 						}

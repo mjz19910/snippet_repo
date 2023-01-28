@@ -55,7 +55,13 @@ type JsonUnpackValue =
 ;
 type JsonIterateValue =
 	| ["VueVnode", VueVnode[]];
-
+;
+type UnpackCommand =
+	| [`COMMAND::${CommandVerbs}`, ["any", any[]]]
+	| ["COMMAND::unpack", JsonUnpackValue]
+	| ["COMMAND::iterate", JsonIterateValue]
+	;
+;
 type DataItemReturn =
 	| ["TYPE::DBG_What", { __what: true; }]
 	| ["TYPE::DataItemReturn", DataItemReturn[]]
@@ -65,9 +71,9 @@ type DataItemReturn =
 	| ["EVENT::dom_nodes", ["Node", Node[]]]
 	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
 	| ["RESULT::handle_json_event", ["string", string[]]]
-	| [`COMMAND::${CommandVerbs}`, ["any", any[]]]
-	| ["COMMAND::unpack", JsonUnpackValue]
-	| ["COMMAND::iterate", JsonIterateValue];
+	| UnpackCommand
+	;
+;
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
 	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;
