@@ -544,8 +544,9 @@ class JsonReplacerState {
 	prepare_obj(tag, x) {
 		return [`TAG::${tag}`, x];
 	}
-	/** @arg {{}[]} vnode_arr */
+	/** @arg {["CONTENT::cache",HTMLDivElement[]][]} vnode_arr */
 	on_data_z(vnode_arr) {
+		debugger;
 		if (this.id && this.id > 5)
 			return;
 		let res = vnode_arr.map((x, idx) => this.on_data_item(["TAG::vnode", x], idx), this);
@@ -622,11 +623,13 @@ class JsonReplacerState {
 		i;
 		return null;
 	}
-	/** @arg {{}} x @arg {number} i */
+	/** @arg {TagVNodeInner[1]} x @arg {number} i */
 	unpack_data_item_todo(x, i) {
+		switch (x[0]) {
+			case "CONTENT::cache": return x[1];
+			default: debugger; break;
+		}
 		console.log("TODO: [unpack] [index=%o]", i, x);
-		x;
-		i;
 		return null;
 	}
 	/** @arg {string} x @returns {DataItemReturn} */
@@ -679,34 +682,19 @@ class JsonReplacerState {
 				}
 			case "TAG::vnode":
 				{
-					const [, ...data] = x;
-					let unwrap_arr = data.map((x, i) => this.on_data_item(["TAG::unpack_vnode::1", x], i));
-					let unpacked = unwrap_arr.map((x, i) => this.on_data_item(["TAG::vnode_inner", x], i));
-					/** @type {"test"[]} */
-					let ok_res = [];
-					for (let item of unpacked) {
-						switch (item[0]) {
-							case "TAG::vnode_item":
-								break;
-							case "TAG::null":
-								break;
-							default:
-								this.break_debugger;
-								break;
-						}
-					}
-					return ["TAG::vnode_item", ok_res];
+					const [, vnode] = x;
+					/** @type {TagVNodeInner} */
+					let unpacked = ["TAG::vnode_inner", vnode];
+					return ["TAG::vnode_item", unpacked];
 				}
 			case "TAG::vnode_inner":
 				let res = this.unpack_data_item_todo(x[1], 0);
-				return ["TAG::null", res];
+				if (res === null)
+					return ["TAG::null", res];
+				return ["TAG::vnode_parse_1", res];
 			case "TAG::unpack_vnode::2":
-				{
-					const [, ...data] = x;
-					if (data.length === 1)
-						return ["TAG::unpack_vnode::2::res", data[0]];
-					return ["TAG::unpack_vnode::2::res_arr", data];
-				}
+				console.log("TODO: unpack: ", x);
+				return ["TAG::null", null];
 			case "TAG::unpack_vnode::2::res":
 				return ["TAG::failed", null];
 			case "TAG::unpack_vnode::2::res_arr":
@@ -728,6 +716,7 @@ class JsonReplacerState {
 			case "TAG::error":
 			case "TAG::stringify_failed":
 			case "TAG::result":
+			case "TAG::vnode_parse_1":
 				console.log("TODO: tag_section", x);
 				return ["TAG::failed", null];
 		}
@@ -885,7 +874,22 @@ class JsonReplacerState {
 		for (let item of this.result_history) {
 			all_vnodes.push(...item.vnodes);
 		}
-		arr.forEach(this.on_data_z, this);
+		arr.forEach(x => {
+			let c = x[0];
+			if (c[0] === "CONTENT::cache") {
+				let inner_items = c[1];
+				/** @arg {CacheItemType} e @returns {e is HTMLDivElement} */
+				let get_div_elements = e => e instanceof HTMLDivElement;
+				/** @arg {CacheItemType[]} arr @arg {(v: CacheItemType)=>v is HTMLDivElement} fn @returns {HTMLDivElement[]}  */
+				function filter_array_type(arr, fn) {
+					return arr.filter(fn);
+				}
+				let div_elements = filter_array_type(inner_items, get_div_elements);
+				this.on_data_z([["CONTENT::cache", div_elements]])
+			} else {
+				debugger;
+			}
+		}, this);
 		let h_iter_s = new H_Iter(this);
 		let cache = this.cache.slice();
 		let log_args = this.history_iter(h_iter_s);

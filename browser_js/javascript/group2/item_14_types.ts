@@ -46,12 +46,23 @@ type StackLimitReturn = {
 	requested_target: number,
 };
 type JsonInputType = DataItemReturn | VueAppContainer | Element | Node;
-type CacheItemType = { __cache_item: true; } | JsonInputType | Element;
+type CacheItemType = { __cache_item: true; } | JsonInputType | Element | HTMLDivElement;
 type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
+type DataItemReturnBase = | ["TAG::unpack_vnode::2::res", {}[]];
+type TagVNodeRes_2 = ["TAG::unpack_vnode::2::res", {}[]];
+
+type TagVNode = ["TAG::vnode", ["CONTENT::cache", HTMLDivElement[]]];
+
+type TagUnpackVNode_1 = ["TAG::unpack_vnode::1", {}];
+
+type TagUnpackVNode_Arr_2 = ["TAG::unpack_vnode::2::res_arr", {}[]];
+
+type TagUnpackVNode_2 = ["TAG::unpack_vnode::2", {}];
+
+type TagVnodeItem = ["TAG::vnode_item", TagVNodeInner];
 
 type DataItemReturn =
-	| ["TAG::vnode_item", {}]
-	| ["TAG::stringify_failed"]
+	| DataItemReturnBase
 	| ["CONTENT::cache", CacheItemType[]]
 	| ["CONTENT::empty"]
 	| ["TAG::bad_array", any[]]
@@ -60,24 +71,28 @@ type DataItemReturn =
 	| ["TAG::cache_item", number]
 	| ["TAG::data", {}]
 	| ["TAG::empty"]
+	| ["TAG::error", string]
 	| ["TAG::failed", null]
 	| ["TAG::null_arr", null[]]
 	| ["TAG::null", null]
 	| ["TAG::parsed_json", DataParsable]
-	| ["TYPE::parsable_json", string]
+	| ["TAG::result", DataItemReturn]
+	| ["TAG::stringify_failed"]
 	| ["TAG::stringify_range_error", RangeError]
 	| ["TAG::stringify_result", string, number & { _tag: "InputObjBox" }]
 	| ["TAG::stringify_seen_failed_obj", number]
-	| ["TAG::unpack_vnode::1", {}]
-	| ["TAG::unpack_vnode::2::res_arr", {}[]]
-	| ["TAG::unpack_vnode::2::res", {}]
-	| ["TAG::unpack_vnode::2", {}]
-	| ["TAG::vnode_inner", {}]
-	| ["TAG::vnode", {}]
-	| ["TAG::result", DataItemReturn]
-	| ["TAG::error", string]
+	| TagUnpackVNode_1
+	| TagUnpackVNode_Arr_2
+	| TagVNodeRes_2
+	| TagUnpackVNode_2
+	| TagVnodeItem
+	| TagVNode
+	| ["TYPE::parsable_json", string]
+	| TagVNodeInner
+	| ["TAG::vnode_parse_1", HTMLDivElement[]]
 	;
 ;
+type TagVNodeInner = ["TAG::vnode_inner", ["CONTENT::cache", HTMLDivElement[]]];
 type TaggedJsonHistory = ["TAG::json_result_history", JsonReplacerState[]];
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
 type IndexBoxMap = {
