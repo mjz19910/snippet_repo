@@ -166,6 +166,10 @@ class JsonOutputBox {
 	return_items = [];
 	/** @type {Map<JsonInputType,number>} */
 	cache_index_map = new Map;
+	get_log_self_args() {
+		return ["-- [JsonOutputBox] --\n%o", this.get_self_for_logging()]
+	}
+	/** @private */
 	get_self_for_logging() {
 		let { return_items, cache_index_map } = this;
 		/** @type {Partial<this>} */
@@ -236,8 +240,8 @@ function main_start_json_replace() {
 	let history_res = new JsonOutputBox;
 	let log_args = history_iter(history_res);
 	console.log(...log_args);
-	console.log(res);
-	console.log(history_res);
+	console.log(...res.get_log_self_args());
+	console.log(...history_res.get_log_self_args());
 }
 let do_join_str = () => join_string(["\n", "%o"], "");
 /** @arg {JsonHistoryType[]} hist */
