@@ -460,10 +460,15 @@ const dom_nodes = [];
 const parent_map = new Map;
 /** @arg {string} _k @arg {JsonInputType|null} x */
 function json_replace_array(_k, x) {
+	debugger;
 	if (input_obj.value.has_value && input_obj.value.value instanceof Array && input_obj.value.value.includes(x)) {
 		return x;
 	}
 	return x;
+}
+/** @arg {JsonInputType} x @returns {x is VueVnode} */
+function is_vue_vnode(x) {
+	return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
 }
 /** @arg {string} k @arg {JsonInputType|null} x */
 function json_replacer(k, x) {
@@ -511,24 +516,17 @@ function json_replacer(k, x) {
 	if (!json_cache.includes(x)) {
 		json_cache.push(x);
 	}
-	/** @arg {JsonInputType} x @returns {x is VueVnode} */
-	function is_vue_vnode(x) {
-		return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
-	}
-	if (!(x instanceof Array) && is_vue_vnode(x)) {
+	if (is_vue_vnode(x)) {
 		if (!vnodes.includes(x))
 			vnodes.push(x);
 		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
 	}
-	if (!(x instanceof Array)) {
-		if (x?._container === input_obj) {
-			return `Special::Input`;
-		}
-		if (x?.__vue_app__) {
-			vue_app.value = x.__vue_app__;
-			return `TYPE::VueApp`;
-		}
-		return x;
+	if (x?._container === input_obj) {
+		return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
+	}
+	if (x?.__vue_app__) {
+		vue_app.value = x.__vue_app__;
+		return `TYPE::VueApp`;
 	}
 	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
