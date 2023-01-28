@@ -185,13 +185,13 @@ function on_run_request(x) {
 		case "cache_index_and_arr":
 			debugger; return null;
 	}
-	return on_run_with_object_type(x[1]);
+	return init_json_event_sys_with_obj(x[1]);
 }
 function run_json_replace() {
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
-	let run_result = on_run_with_object_type(doc_child);
+	let run_result = init_json_event_sys_with_obj(doc_child);
 	if (!run_result) {
 		debugger; return;
 	}
@@ -262,33 +262,22 @@ function do_json_replace_on_iterate_cmd(x) {
 	}
 	return res;
 }
-/** @type {["unpack",UnpackCommand][]} */
+/** @type {PendingCommandItem[]} */
 let pending_commands = [];
 /** @arg {DataItemReturn} x */
 function do_json_replace_on_input(x) {
 	/** @type {string[]} */
 	let res = [];
 	switch (x[0]) {
-		case "COMMAND::iterate":
-			{
-				let res_2 = do_json_replace_on_iterate_cmd(x);
-				for (let [, u, v] of res_2) {
-					switch (u) {
-						default:
-							res.push(v);
-					}
-				}
-				return res;
-			}
 		case "COMMAND::unpack":
 			{
 				let unpack = x[1];
 				let [s] = unpack;
 				for (let u of unpack[1]) {
-					console.log("[COMMAND::unpack] [%s]", s, u);
+					false && console.log("[COMMAND::unpack] [%s]", s, u);
 					/** @type {UnpackUnitCommand} */
 					let pk = as(["COMMAND::unpack_unit", [s, u]]);
-					pending_commands.push(["unpack", pk]);
+					pending_commands.push(["unit", pk]);
 				}
 				return res;
 			}
@@ -308,47 +297,54 @@ function do_json_replace_on_input(x) {
 }
 /** @arg {DataItemReturn} x */
 function handle_json_event(x) {
+	let ret;
 	switch (x[0]) {
 		case "EVENT::input":
-			false && console.log("- [EVENT::input.unpack] -\n%o", ...x);
-			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::json_cache":
-			false && console.log("- [EVENT::json_cache.unpack] -\n%o", ...x);
-			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
+			false && console.log("- [%s] -\n%o", x[0], x[1]);
+			ret = do_json_replace_on_input(["COMMAND::unpack", x[1]]);
+			break;
 		case "EVENT::vnodes":
-			console.log("- [EVENT::vnodes.unpack] -\n%o", ...x);
-			return do_json_replace_on_input(["COMMAND::iterate", ["VueVnode", x[1]]]);
 		case "EVENT::dom_nodes":
-			console.log("- [EVENT::dom_nodes.unpack] -\n%o", x);
-			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "RESULT::handle_json_event":
-			console.log("- [EVENT::handle_json_event.unpack] -\n%o", x);
-			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "TYPE::DataItemReturn":
-			console.log("- [EVENT::DataItemReturn.unpack] -\n%o", x);
-			return do_json_replace_on_input(["COMMAND::unpack", ["DataItemReturn", x[1]]]);
 		case "EVENT::vue_app":
-			console.log("- [EVENT::vue_app.unpack] -\n%o", x);
-			return do_json_replace_on_input(["COMMAND::unpack", ["VueApp", x[1]]]);
+			console.log("- [%s] -\n%o", x[0], x[1]);
+			ret = do_json_replace_on_input(["COMMAND::unpack", x[1]]);
+			break;
 		case "TYPE::DBG_What":
-			console.log("- [DBG_What] -\n%o", x);
-			return do_json_replace_on_input(x);
 		case "COMMAND::unpack":
-			console.log("- [EVENT::vue_app.unpack] -\n%o", x);
-			return do_json_replace_on_input(x);
-		case "COMMAND::iterate":
-			console.log("- [EVENT::vue_app.unpack] -\n%o", x);
-			return do_json_replace_on_input(x);
 		default:
-			console.log(x);
-			return do_json_replace_on_input(x);
+			console.log("- [%s] -\n%o", x[0], x[1]);
+			ret = do_json_replace_on_input(x);
+			break;
 	}
+	for (let command of pending_commands) {
+		let [tag, cmd] = command;
+		tag === "unpack";
+		switch (cmd[0]) {
+			case "COMMAND::unpack": handle_json_unpack_cmd(cmd); break;
+			case "COMMAND::unpack_unit": handle_json_unpack_unit_cmd(cmd); break;
+		}
+	}
+	pending_commands.length = 0;
+	return ret;
+}
+/** @arg {UnpackCommand} x */
+function handle_json_unpack_cmd(x) {
+	console.log("unpack cmd run pending", x);
+}
+/** @arg {UnpackUnitCommand} x */
+function handle_json_unpack_unit_cmd(x) {
+	console.log("unpack unit cmd run pending", x);
 }
 /** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
-function do_json_replace(res_box, x) {
+function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
-	res_box.return_items.push(["RESULT::handle_json_event", ["string", res]]);
+	if (res.length > 0) {
+		res_box.return_items.push(["RESULT::handle_json_event", ["string", res]]);
+	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
 		for (let failed_obj of stringify_failed_obj) {
@@ -581,12 +577,10 @@ function json_replacer(k, x) {
 	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
 /** @arg {JsonInputType} x */
-function on_run_with_object_type(x) {
-	// TODO: JSON.stringify
-	// let json_result = JSON.stringify(x, this.json_replacer.bind(test_state), "\t");
+function init_json_event_sys_with_obj(x) {
 	let res = new InputObjBox;
 	/** @arg {DataItemReturn} d */
-	let do_json_replace_ = (d) => do_json_replace(res, d);
+	let do_json_replace_ = (d) => init_json_event_sys(res, d);
 	if (x instanceof Element) {
 		do_json_replace_(["EVENT::input", ["Element", [x]]]);
 	} else {
@@ -596,10 +590,10 @@ function on_run_with_object_type(x) {
 		json_cache.push(x);
 	}
 	if (vue_app.value !== null) {
-		do_json_replace_(["EVENT::vue_app", [vue_app.value]]);
+		do_json_replace_(["EVENT::vue_app", ["VueApp", [vue_app.value]]]);
 	}
 	if (vnodes.length > 0) {
-		do_json_replace_(["EVENT::vnodes", vnodes]);
+		do_json_replace_(["EVENT::vnodes", ["VueVnode", vnodes]]);
 	}
 	if (dom_nodes.length > 0) {
 		do_json_replace_(["EVENT::dom_nodes", ["Node", dom_nodes]]);

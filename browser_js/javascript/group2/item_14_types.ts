@@ -43,7 +43,6 @@ type JsonInputType =
 	| Node
 	| HTMLDivElement;
 type CacheItemType = JsonInputType;
-type CommandVerbs = "unpack" | "iterate";
 type JsonUnpackValue =
 	| ["JsonInputType", JsonInputType[]]
 	| ["Element", Element[]]
@@ -51,16 +50,14 @@ type JsonUnpackValue =
 	| ["DataItemReturn", DataItemReturn[]]
 	| ["Node", Node[]]
 	| ["string", string[]]
+	| ["VueVnode", VueVnode[]]
+	| ["any", any[]]
 	;
 ;
-type JsonIterateValue =
-	| ["VueVnode", VueVnode[]];
-;
-type UnpackCommand =
-	| [`COMMAND::${CommandVerbs}`, ["any", any[]]]
-	| ["COMMAND::unpack", JsonUnpackValue]
-	| UnpackUnitCommand
-	| ["COMMAND::iterate", JsonIterateValue]
+type UnpackCommand = ["COMMAND::unpack", JsonUnpackValue];
+type PendingCommandItem =
+	| ["unpack", UnpackCommand]
+	| ["unit", UnpackUnitCommand]
 	;
 ;
 type UnpackUnitCommand = [
@@ -72,14 +69,15 @@ type UnpackUnitCommand = [
 ]
 type DataItemReturn =
 	| ["TYPE::DBG_What", { __what: true; }]
-	| ["TYPE::DataItemReturn", DataItemReturn[]]
+	| ["TYPE::DataItemReturn", ["DataItemReturn", DataItemReturn[]]]
 	| ["EVENT::input", ["Element", Element[]]]
-	| ["EVENT::vue_app", VueApp[]]
-	| ["EVENT::vnodes", VueVnode[]]
+	| ["EVENT::vue_app", ["VueApp", VueApp[]]]
+	| ["EVENT::vnodes", ["VueVnode", VueVnode[]]]
 	| ["EVENT::dom_nodes", ["Node", Node[]]]
 	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
 	| ["RESULT::handle_json_event", ["string", string[]]]
 	| UnpackCommand
+	| UnpackUnitCommand
 	;
 ;
 type MakeTagBoxForNonObject<V, K> = { _inner_tag: K, value: V & { _tag: K } }
