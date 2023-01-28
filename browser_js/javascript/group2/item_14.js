@@ -341,7 +341,7 @@ function run_json_replace() {
 	console.log(...log_args);
 }
 let do_join_str = () => join_string(["\n", "%o"], "");
-/** @arg {any[]} hist */
+/** @arg {JsonHistoryType[]} hist */
 function log_history_items(hist) {
 	let log_items = hist.map(h_map);
 	/** @type {"%o"[]} */
@@ -358,6 +358,10 @@ const done_history_items = [];
 /** @type {JsonStackType[]} */
 let stack = [];
 function history_iter() {
+	if (stack.length === 0) {
+		debugger;
+		return [];
+	}
 	let all_history_arr = [];
 	while (stack.length > 0) {
 		let x = stack.shift();
@@ -370,7 +374,7 @@ function history_iter() {
 		done_history_items.push(x);
 		all_history_arr.push(x);
 		if (done_history_items.length > 12) {
-			return null;
+			return [];
 		}
 		console.log("start iter", done_history_items.length);
 		let inner_arr = iter_history_result();
@@ -403,7 +407,7 @@ function do_json_replace(res_box, args) {
 	if (args[0] !== "cache")
 		return;
 }
-/** @template {object} T @arg {T} x @returns {T|null} */
+/** @template {object} T @arg {T} x @returns {[boolean,T]} */
 function h_map(x) {
 	let x1 = Object.entries(x);
 	/** @type {{}} */
@@ -413,7 +417,7 @@ function h_map(x) {
 	let x2 = x1e.map(do_map);
 	let x3 = x2.filter(is_non_null);
 	if (!is_filter_out_null(x3))
-		return null;
+		return [false, x];
 	let x4 = createTypedObjectFromEntries(x3);
 	let x4w = createTypedObjectFromEntries(x1e);
 	x4w;
@@ -424,9 +428,9 @@ function h_map(x) {
 		/** @arg {typeof x5} _ @returns {asserts _ is T} */
 		let assert_assume_true = _ => void 0;
 		assert_assume_true(x5);
-		return x5;
+		return [true, x5];
 	}
-	return null;
+	return [false, x];
 }
 /** @arg {unknown} json_data */
 function filter_json(json_data) {
@@ -502,7 +506,7 @@ function iter_history_result() {
 			rc.set("TAG::input_obj", k);
 		}
 	}
-	nh.map(h_map).forEach(x => x === null ? 0 : result_history.push(x));
+	nh.map(h_map).forEach(([flag, x]) => flag ? 0 : result_history.push(x));
 	/** @type {JsonInputType[]} */
 	let new_cache_arr = [];
 	for (let cache_item of json_cache) {
