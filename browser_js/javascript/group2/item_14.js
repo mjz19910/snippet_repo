@@ -156,7 +156,7 @@ function Z_len_k(x) {
 }
 const log_gen = new LogGenerator;
 class InputObjBox {
-	/** @type {DataItemReturn[][]} */
+	/** @type {{__tag:"InputObjBox";item_level:2;}[][]} */
 	arr = [];
 }
 const overflow_state = new class {
@@ -250,14 +250,14 @@ class J_Rep {
 		this.json_cache = cache;
 		this.json_result_cache = json_result_cache;
 	}
-	/** @arg {string} x @returns {DataItemReturn} */
+	/** @arg {string} x @returns {["TAG::parsed_json", DataParsable]} */
 	json_parser(x) {
 		/** @type {DataParsable} */
 		let parse_res = JSON.parse(x, (...r_args) => this.json_reviver(r_args));
 		console.log(parse_res);
 		return ["TAG::parsed_json", parse_res];
 	}
-	/** @arg {any} x @returns {DataItemReturn} */
+	/** @arg {any} x @returns {["TAG::null", null]} */
 	json_reviver(x) {
 		x;
 		console.log("revive", x);
@@ -269,6 +269,7 @@ class J_Rep {
 			return;
 		this.result_history.push(other);
 	}
+	/** @typedef {{}} TaggedJsonHistory */
 	/** @type {TaggedJsonHistory[]} */
 	history_acc = [];
 	/** @arg {["TAG::json_result_history",J_Rep[]][]} arg0 */
@@ -280,13 +281,8 @@ class J_Rep {
 		/** @type {J_Rep[]} */
 		let history_items = [];
 		for (let tagged_item of history_acc_arr) {
-			if (tagged_item[0] === "TAG::json_result_history") {
-				history_items.push(...tagged_item[1]);
-			} else if (tagged_item[0] === "TAG::json_result_history:iter_res") {
-				debugger;// history_items.push(...tagged_item[1].result_history);
-			} else {
-				tagged_item[0] === "";
-			}
+			console.log(tagged_item);
+			debugger;
 		}
 		let results = [];
 		for (let history of history_items) {
@@ -606,61 +602,14 @@ function unpack_data_item_vnode_2(x, i) {
 	i;
 	return null;
 }
-/** @arg {DataItemReturn} x @arg {any} idx @returns {DataItemReturn} */
-function on_data_item(x, idx) {
+/** @arg {DataItemReturn} x @returns {DataItemReturn} */
+function on_data_item(x) {
 	let xu = x;
 	switch (x[0]) {
 		default:
 			break;
 		case "CONTENT::empty":
 		case "CONTENT::cache":
-		case "TYPE::parsable_json":
-		case "TAG::data":
-			{
-				console.log("[data_item::data]", x[1]);
-				return ["TAG::empty"];
-			}
-		case "TAG::cache_item":
-			{
-				let item = on_tag_cache_item(idx, x);
-				if (item instanceof Array && item[0] === "TAG::error") {
-					debugger; return item;
-				}
-				return ["TAG::cache_item_result", item];
-			}
-		case "TAG::failed":
-			return x;
-		case "TAG::vnode_item":
-			return ["TAG::failed", null];
-		case "TAG::unpack_vnode::1":
-			{
-				debugger;
-				return ["TAG::null", null];
-			}
-		case "TAG::vnode":
-			{
-				const [, vnode] = x;
-				/** @type {TagVNodeInner} */
-				let unpacked = ["TAG::vnode_inner", vnode];
-				return ["TAG::vnode_item", unpacked];
-			}
-		case "TAG::vnode_inner":
-			let res = unpack_data_item_todo(x[1], 0);
-			if (res === null)
-				return ["TAG::null", res];
-			return ["TAG::vnode_parse_1", res];
-		case "TAG::unpack_vnode::2":
-			console.log("TODO: unpack: ", x);
-			return ["TAG::null", null];
-		case "TAG::unpack_vnode::2::res":
-			return ["TAG::failed", null];
-		case "TAG::unpack_vnode::2::res_arr":
-			return ["TAG::failed", null];
-		case "TAG::stringify_result":
-			{
-				const [, [data]] = x;
-				return log_data_result("vnode", idx, ["TYPE::parsable_json", data]);
-			}
 		case "TAG::null_arr":
 		case "TAG::null":
 		case "TAG::bad_array":
@@ -674,6 +623,18 @@ function on_data_item(x, idx) {
 		case "TAG::stringify_failed":
 		case "TAG::result":
 		case "TAG::vnode_parse_1":
+		case "TAG::cache_item":
+		case "TAG::data":
+		case "TAG::failed":
+		case "TAG::stringify_result":
+		case "TYPE::parsable_json":
+		case "TAG::unpack_vnode::2::res":
+		case "TAG::unpack_vnode::1":
+		case "TAG::unpack_vnode::2::res_arr":
+		case "TAG::unpack_vnode::2":
+		case "TAG::vnode_item":
+		case "TAG::vnode":
+		case "TAG::vnode_inner":
 			console.log("TODO: tag_section", x);
 			return ["TAG::failed", null];
 	}
