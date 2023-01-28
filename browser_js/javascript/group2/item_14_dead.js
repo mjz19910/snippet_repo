@@ -177,10 +177,10 @@ class JsonReplacerState_DeadItem14Code {
 				}
 				debugger;
 			}
-			if (JsonReplacerState.stringify_failed_obj.includes(x)) {
-				return ["TAG::stringify_seen_failed_obj", JsonReplacerState.stringify_failed_obj.indexOf(x)];
+			if (J_Rep.stringify_failed_obj.includes(x)) {
+				return ["TAG::stringify_seen_failed_obj", J_Rep.stringify_failed_obj.indexOf(x)];
 			}
-			JsonReplacerState.stringify_failed_obj.push(x);
+			J_Rep.stringify_failed_obj.push(x);
 			if (was_crash_testing) {
 				throw e;
 			}

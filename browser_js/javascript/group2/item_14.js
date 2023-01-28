@@ -21,7 +21,7 @@ function store_window(key, obj) {
 }
 class LogGenerator {
 	log_str = "";
-	/** @type {JsonReplacerState[]} */
+	/** @type {J_Rep[]} */
 	log_args = [];
 	reset([str, args] = ["", []]) {
 		this.log_str = str;
@@ -76,80 +76,6 @@ function createTypedObjectFromEntries(arr) {
 class H_Iter {
 	/** @type {number[]} */
 	done_ids = [];
-	/** @template T @arg {ObjectEntries<T>[number]} v */
-	do_map(v) {
-		const [k, x] = v;
-		if (x === null)
-			return null;
-		if (typeof x !== "object")
-			return v;
-		if (x instanceof Map) {
-			/** @type {Map<string,{test:string}>} */
-			let x_map = x;
-			if (x_map.size <= 0) {
-				return null;
-			}
-			/** @type {[string,Map<M_K,M_V>][]} */
-			let json_result_cache_arr = [];
-			/** @typedef {keyof typeof x_map} M_K */
-			/** @typedef {typeof x_map[M_K]} M_V */
-			if (k === "json_result_cache") {
-				/** @arg {[keyof typeof x_map,M_V]} arg0 @returns {[M_K,M_V]} */
-				let filter_map_entries = ([k, x]) => [k, this.filter_json(x)];
-				/** @type {[M_K,M_V][]} */
-				let map_entries_arr = [...x.entries()];
-				let mk_map = new Map(map_entries_arr.map(filter_map_entries));
-				/** @type {[string,Map<M_K,M_V>]} */
-				let entry = [k, mk_map];
-				json_result_cache_arr.push(entry);
-			}
-		}
-		if (x instanceof Array && x.length <= 0)
-			return null;
-		let x1 = Object.entries(x);
-		if (x1.length <= 0)
-			return null;
-		return v;
-	}
-	/** @template {object} T @arg {T} x @returns {T|null} */
-	h_map(x) {
-		let x1 = Object.entries(x);
-		/** @type {{}} */
-		let x1a = x1;
-		/** @type {ObjectEntries<T>} */
-		let x1e = as(x1a);
-		let x2 = x1e.map(this.do_map, this);
-		let x3 = x2.filter(is_non_null);
-		if (!is_filter_out_null(x3))
-			return null;
-		let x4 = createTypedObjectFromEntries(x3);
-		let x4w = createTypedObjectFromEntries(x1e);
-		x4w;
-		let entries_len = Object.entries(x4).length;
-		if (entries_len > 0) {
-			/** @type {T|{}} */
-			let x5 = x4;
-			/** @arg {typeof x5} _ @returns {asserts _ is T} */
-			let assert_assume_true = _ => void 0;
-			assert_assume_true(x5);
-			return x5;
-		}
-		return null;
-	}
-	/** @arg {unknown} json_data */
-	filter_json(json_data) {
-		if (!json_data)
-			return json_data;
-		if (typeof json_data !== "string")
-			return json_data;
-		let p = () => JSON.parse(json_data);
-		if (json_data.startsWith("[]"[0]))
-			return p();
-		if (json_data.startsWith("{}"[0]))
-			return p();
-		console.log("probably not json", json_data);
-		return json_data;
-	}
 	/** @template {keyof T} T_K @template {T[T_K]} T_V @template {object|Map<M_K,M_V>} T @arg {[T_K,T_V]} v @returns {[T_K,T_V]|null} @template M_V,M_K @arg {[string,Map<M_K,M_V>][]} json_result_cache_arr */
 	obj_ent_rep(v, json_result_cache_arr) {
 		const [k, x] = v;
@@ -163,7 +89,7 @@ class H_Iter {
 			}
 			if (k === "json_result_cache") {
 				/** @arg {[M_K,M_V]} arg0 @returns {[M_K,M_V]} */
-				let filter_map_entries = ([k, x]) => [k, this.filter_json(x)];
+				let filter_map_entries = ([k, x]) => [k, filter_json(x)];
 				/** @type {[M_K,M_V][]} */
 				let map_entries_arr = [...x.entries()];
 				let mk_map = new Map(map_entries_arr.map(filter_map_entries));
@@ -178,11 +104,6 @@ class H_Iter {
 		if (x1.length <= 0)
 			return null;
 		return v;
-	}
-	/** @arg {JsonReplacerState} trg */
-	constructor(trg) {
-		this.stack = trg.result_history.slice();
-		this.target_history = trg.result_history;
 	}
 }
 /** @arg {any[]} range_arr @arg {any} start @arg {any} end */
@@ -247,7 +168,9 @@ const overflow_state = new class {
 	/** @type {number|null} */
 	last_stack_space = null;
 }
-class JsonReplacerState {
+/** @type {number[]} */
+let done_ids = [];
+class J_Rep {
 	/** @type {any[][]} */
 	static all_cache = [];
 	/** @type {Map<any, any>[]} */
@@ -256,19 +179,19 @@ class JsonReplacerState {
 		store_window("__JsonReplacer_cache_map", cache_map);
 	}
 	static _next_id = 0;
-	get next_id() {
-		return JsonReplacerState._next_id++;
+	static get next_id() {
+		return J_Rep._next_id++;
 	}
 	get_id() {
 		if (this.id)
 			return this.id;
-		let id = this.next_id;
+		let id = J_Rep.next_id;
 		this.id = id;
 		return id;
 	}
 	/** @returns {asserts this is {id:number}} */
 	init_id() {
-		this.id ??= this.next_id;
+		this.id ??= J_Rep.next_id;
 	}
 	/** @type {{}|null} */
 	input_obj = null;
@@ -315,7 +238,7 @@ class JsonReplacerState {
 		return;
 	}
 	clone() {
-		let new_state = new JsonReplacerState;
+		let new_state = new J_Rep;
 		new_state.prepare_with_previous(this);
 		return new_state;
 	}
@@ -348,35 +271,39 @@ class JsonReplacerState {
 	}
 	/** @type {TaggedJsonHistory[]} */
 	history_acc = [];
-	/** @arg {["TAG::json_result_history",JsonReplacerState[]][]} arg0 */
+	/** @arg {["TAG::json_result_history",J_Rep[]][]} arg0 */
 	untag_history_acc([first, ...rest]) {
 		return rest.reduce((pv, [, cur]) => pv.concat(cur), first[1]);
 	}
 	/** @arg {TaggedJsonHistory[]} history_acc_arr */
 	iterate_accumulated_history(history_acc_arr) {
-		/** @type {JsonReplacerState[]} */
+		/** @type {J_Rep[]} */
 		let history_items = [];
 		for (let tagged_item of history_acc_arr) {
 			if (tagged_item[0] === "TAG::json_result_history") {
 				history_items.push(...tagged_item[1]);
 			} else if (tagged_item[0] === "TAG::json_result_history:iter_res") {
-				history_items.push(...tagged_item[1].result_history);
+				debugger;
+				// history_items.push(...tagged_item[1].result_history);
 			} else {
 				tagged_item[0] === "";
 			}
 		}
 		let results = [];
-		let s_ = new H_Iter(this);
 		for (let history of history_items) {
-			s_.done_ids = [];
-			let prev_stack = s_.stack;
-			s_.stack = [history];
-			let ret = history_iter(s_);
+			done_ids = [];
+			let prev_stack = stack;
+			stack = [["TAG::old_stack", history]];
+			let ret = history_iter();
 			if (ret === null) {
 				return [false, results, [history]];
 			}
 			results.push(res);
-			s_.stack = prev_stack;
+			prev_stack.push(["TAG::stack", [{
+				id: J_Rep.next_id,
+				items: stack
+			}]]);
+			stack = prev_stack;
 		}
 		return [true, results];
 	}
@@ -384,13 +311,16 @@ class JsonReplacerState {
 		return new this;
 	}
 }
-/** @type {JsonReplacerState[]} */
-const result_history = [];
 /** @type {JsonInputType[]} */
 const json_cache = [];
 //#region on_data_item
-/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]} x */
+/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
 function on_run_request(x) {
+	switch (x[0]) {
+		case "cache": break;
+		case "store_object": break;
+		case "cache_index_and_arr": debugger; return null;
+	}
 	return on_run_with_object_type(x[1]);
 }
 function run_json_replace() {
@@ -398,48 +328,46 @@ function run_json_replace() {
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	let run_result = on_run_request(["store_object", doc_child]);
-	if (!run_result || "__cache_item" in run_result)
+	if (!run_result) {
+		debugger;
 		return;
-	let { arr } = run_result;
-	let all_vnodes = [];
-	for (let item of result_history) {
-		all_vnodes.push(...item.vnodes);
 	}
+	let { arr } = run_result;
 	arr.forEach(arr_iter_func);
-	let h_iter_s = new H_Iter(new JsonReplacerState);
-	let log_args = history_iter(h_iter_s);
+	let log_args = history_iter();
 	if (log_args === null)
 		return;
 	console.log(...log_args);
 }
 const history_acc = [];
-/** @arg {H_Iter} s_ */
-function history_iter(s_, recurse = false) {
-	const { stack } = s_;
+/** @type {{}[]} */
+const done_history_items = [];
+/** @typedef {["TAG::stack", JsonHistoryType[]]|["TAG::old_stack",J_Rep]} JsonStackType */
+/** @type {JsonStackType[]} */
+let stack = [];
+function history_iter() {
 	let all_history_arr = [];
 	while (stack.length > 0) {
 		let x = stack.shift();
 		if (!x) {
 			break;
 		}
-		x.id = x.get_id();
-		if (s_.done_ids.includes(x.id)) {
+		if (done_history_items.includes(x)) {
 			continue;
 		}
-		s_.done_ids.push(x.id);
+		done_history_items.push(x);
 		all_history_arr.push(x);
-		if (x.id > 2) {
+		if (done_history_items.length > 12) {
 			return null;
 		}
-		console.log("start iter", x.id);
-		let inner_arr = iter_history_result(s_, x);
+		console.log("start iter", done_history_items.length);
+		let inner_arr = iter_history_result();
 		history_acc.push(["TAG::json_result_history:iter_res", inner_arr]);
 	}
-	if (recurse) { }
 	let do_join_str = () => join_string(["\n", "%o"], "");
 	/** @arg {any[]} hist */
 	function log_history_items(hist) {
-		let log_items = hist.map(s_.h_map, s_);
+		let log_items = hist.map(h_map);
 		/** @type {"%o"[]} */
 		let log_place = ["%o"];
 		log_place.length = log_items.length;
@@ -447,8 +375,8 @@ function history_iter(s_, recurse = false) {
 		let log_str = log_place.map(do_join_str).flat().join("");
 		return ["-- [result_history] --" + log_str, ...log_items];
 	}
-	let log_args = log_history_items(s_.target_history);
-	let log_range = to_range(s_.done_ids);
+	let log_args = log_history_items(target_history);
+	let log_range = to_range(done_ids);
 	console.log("[done_ids] " + log_range.map(e => e.length === 2 ? "%o-%o" : "%o").join(", "), ...log_range.flat());
 	return log_args;
 }
@@ -474,37 +402,124 @@ function do_json_replace(res_box, args) {
 	if (args[0] !== "cache")
 		return;
 }
-/** @arg {H_Iter} s_ @arg {JsonReplacerState} x */
-function iter_history_result(s_, x) {
-	x.init_id();
-	s_.done_ids.push(x.id);
-	let history = x.result_history.slice();
+/** @template {object} T @arg {T} x @returns {T|null} */
+function h_map(x) {
+	let x1 = Object.entries(x);
+	/** @type {{}} */
+	let x1a = x1;
+	/** @type {ObjectEntries<T>} */
+	let x1e = as(x1a);
+	let x2 = x1e.map(do_map);
+	let x3 = x2.filter(is_non_null);
+	if (!is_filter_out_null(x3))
+		return null;
+	let x4 = createTypedObjectFromEntries(x3);
+	let x4w = createTypedObjectFromEntries(x1e);
+	x4w;
+	let entries_len = Object.entries(x4).length;
+	if (entries_len > 0) {
+		/** @type {T|{}} */
+		let x5 = x4;
+		/** @arg {typeof x5} _ @returns {asserts _ is T} */
+		let assert_assume_true = _ => void 0;
+		assert_assume_true(x5);
+		return x5;
+	}
+	return null;
+}
+/** @arg {unknown} json_data */
+function filter_json(json_data) {
+	if (!json_data)
+		return json_data;
+	if (typeof json_data !== "string")
+		return json_data;
+	let p = () => JSON.parse(json_data);
+	if (json_data.startsWith("[]"[0]))
+		return p();
+	if (json_data.startsWith("{}"[0]))
+		return p();
+	console.log("probably not json", json_data);
+	return json_data;
+}
+/** @template T @arg {ObjectEntries<T>[number]} v */
+function do_map(v) {
+	const [k, x] = v;
+	if (x === null)
+		return null;
+	if (typeof x !== "object")
+		return v;
+	if (x instanceof Map) {
+		/** @type {Map<string,{test:string}>} */
+		let x_map = x;
+		if (x_map.size <= 0) {
+			return null;
+		}
+		/** @type {[string,Map<M_K,M_V>][]} */
+		let json_result_cache_arr = [];
+		/** @typedef {keyof typeof x_map} M_K */
+		/** @typedef {typeof x_map[M_K]} M_V */
+		if (k === "json_result_cache") {
+			/** @arg {[keyof typeof x_map,M_V]} arg0 @returns {[M_K,M_V]} */
+			let filter_map_entries = ([k, x]) => [k, filter_json(x)];
+			/** @type {[M_K,M_V][]} */
+			let map_entries_arr = [...x.entries()];
+			let mk_map = new Map(map_entries_arr.map(filter_map_entries));
+			/** @type {[string,Map<M_K,M_V>]} */
+			let entry = [k, mk_map];
+			json_result_cache_arr.push(entry);
+		}
+	}
+	if (x instanceof Array && x.length <= 0)
+		return null;
+	let x1 = Object.entries(x);
+	if (x1.length <= 0)
+		return null;
+	return v;
+}
+/** @typedef {{id:number;items:{}[]}} JsonHistoryType */
+/** @type {JsonHistoryType[]} */
+let target_history = [];
+/** @type {{}|null} */
+let input_obj;
+/** @type {Map<string,{}>} */
+let json_result_cache = new Map;
+/** @type {CacheIndexWithArr[]} */
+let object_store = [];
+/** @type {JsonHistoryType[]} */
+const result_history = [];
+let object_store_info = null;
+function iter_history_result() {
+	let history = result_history.slice();
 	let x1 = history.map((x) => x.id);
-	let x2 = x.input_obj;
-	let nh = filter_arr(history, s_.target_history);
-	let rc = x.json_result_cache;
+	let x2 = input_obj;
+	let nh = filter_arr(history, target_history);
+	let rc = json_result_cache;
 	let cv = [...rc.keys()];
 	if (cv.length === 1 && cv[0] === x2) {
 		let k = rc.get(x2);
 		rc.delete(x2);
-		rc.set("TAG::input_obj", k);
+		if (k !== void 0) {
+			rc.set("TAG::input_obj", k);
+		}
 	}
-	/** @type {JsonReplacerState[]} */
-	let result_history = [];
-	nh.map(s_.h_map, s_).forEach(x => x === null ? 0 : result_history.push(x));
+	nh.map(h_map).forEach(x => x === null ? 0 : result_history.push(x));
 	/** @type {JsonInputType[]} */
 	let new_cache_arr = [];
-	for (let cache_item of x.json_cache) {
+	for (let cache_item of json_cache) {
 		if (json_cache.includes(cache_item))
 			continue;
 		json_cache.push(cache_item);
 		new_cache_arr.push(cache_item);
 	}
-	let cache = new_cache_arr.map((x) => on_run_request(["cache", x]));
-	/** @type {CacheIndexWithArr[]} */
-	let object_store = [];
-	if (x.object_store) {
-		object_store = x.object_store.map(x => on_run_request(["store_object", x]));
+	let cache = [];
+	for (let obj of new_cache_arr) {
+		let ret = on_run_request(["cache", obj]);
+		if (ret !== null) {
+			cache.push(ret);
+		}
+	}
+	if (object_store) {
+		object_store_info = object_store.map(x => on_run_request(["cache_index_and_arr", x]));
 	} else {
 		console.log("no object_store");
 	}
@@ -720,9 +735,9 @@ function run_json_replacement_with_state(x) {
 }
 function import_state() { }
 function post_run() {
-	if (JsonReplacerState.stringify_failed_obj.length > 0) {
+	if (J_Rep.stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
-		for (let failed_obj of JsonReplacerState.stringify_failed_obj) {
+		for (let failed_obj of J_Rep.stringify_failed_obj) {
 			console.log("[failed_object]", failed_obj);
 			let ek = Object.keys(failed_obj);
 			if (ek.length > 0) {
