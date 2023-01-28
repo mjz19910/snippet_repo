@@ -158,6 +158,8 @@ const log_gen = new LogGenerator;
 class InputObjBox {
 	/** @type {DataItemReturn[]} */
 	return_items = [];
+	/** @type {Map<"1",number>} */
+	cache_index_map = new Map;
 }
 const overflow_state = new class {
 	ran_out_of_stack = false;
@@ -175,8 +177,8 @@ class J_Rep {
 /** @type {JsonInputType[]} */
 const json_cache = [];
 //#region on_data_item
-/** @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
-function on_run_request(x) {
+/** @arg {InputObjBox} res @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
+function on_run_request(res, x) {
 	switch (x[0]) {
 		case "cache":
 			break;
@@ -185,20 +187,17 @@ function on_run_request(x) {
 		case "cache_index_and_arr":
 			debugger; return null;
 	}
-	return init_json_event_sys_with_obj(x[1]);
+	return init_json_event_sys_with_obj(res, x[1]);
 }
-function run_json_replace() {
+function main_start_json_replace() {
+	let res = new InputObjBox;
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
-	let run_result = init_json_event_sys_with_obj(doc_child);
-	if (!run_result) {
-		debugger; return;
-	}
+	init_json_event_sys_with_obj(res, doc_child);
 	let log_args = history_iter();
-	if (log_args === null)
-		return;
 	console.log(...log_args);
+	console.log(res);
 }
 let do_join_str = () => join_string(["\n", "%o"], "");
 /** @arg {JsonHistoryType[]} hist */
@@ -358,7 +357,6 @@ function init_json_event_sys(res_box, x) {
 			}
 		}
 	}
-	res_box.return_items.push(x);
 }
 /** @template {object} T @arg {T} x @returns {[boolean,T]} */
 function h_map(x) {
@@ -576,9 +574,8 @@ function json_replacer(k, x) {
 	}
 	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
-/** @arg {JsonInputType} x */
-function init_json_event_sys_with_obj(x) {
-	let res = new InputObjBox;
+/** @arg {InputObjBox} res @arg {JsonInputType} x */
+function init_json_event_sys_with_obj(res, x) {
 	/** @arg {DataItemReturn} d */
 	let do_json_replace_ = (d) => init_json_event_sys(res, d);
 	if (x instanceof Element) {
@@ -605,11 +602,7 @@ function init_json_event_sys_with_obj(x) {
 	if (x !== null) {
 		cache_index = json_cache.indexOf(x);
 	}
-	/** @type {CacheIndexWithArr} */
-	let ret_obj = {
-		cache_index,
-	};
-	return ret_obj;
+	res.cache_index_map.set(x, cache_index);
 }
 /** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 function join_string(x, s) {
@@ -620,4 +613,4 @@ function join_string(x, s) {
 	return as(r);
 }
 //#endregion
-run_json_replace();
+main_start_json_replace();
