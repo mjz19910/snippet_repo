@@ -290,8 +290,9 @@ function do_json_replace_on_input(x) {
 					case "VueApp":
 					case "DataItemReturn":
 						{
+							let [s] = unpack;
 							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.any]", u);
+								console.log("[COMMAND::unpack] [%s]", s, u);
 								res.push(JSON.stringify(u, json_replacer, "\t"));
 							}
 						}
