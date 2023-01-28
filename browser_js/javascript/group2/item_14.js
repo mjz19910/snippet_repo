@@ -168,8 +168,8 @@ class JsonOutputBox {
 	cache_index_map = new Map;
 	get_log_self_args() {
 		let log_self_info = this.get_self_for_logging();
-		if (log_self_info[0] < 1) return;
-		return ["-- [JsonOutputBox] --\n%o", this.get_self_for_logging()]
+		if (log_self_info[0] < 1) return null;
+		return ["-- [JsonOutputBox] --\n%o", log_self_info[1]];
 	}
 	/** @private @returns {[number,Partial<this>]} */
 	get_self_for_logging() {
@@ -237,8 +237,14 @@ function main_start_json_replace() {
 	let history_res = new JsonOutputBox;
 	let log_args = history_iter(history_res);
 	console.log(...log_args);
-	console.log(...res.get_log_self_args());
-	console.log(...history_res.get_log_self_args());
+	let res_log = res.get_log_self_args();
+	if (res_log) {
+		console.log(...res_log);
+	}
+	let history_log = history_res.get_log_self_args();
+	if (history_log) {
+		console.log(...history_log);
+	}
 }
 let do_join_str = () => join_string(["\n", "%o"], "");
 /** @arg {JsonHistoryType[]} hist */
@@ -374,10 +380,24 @@ function handle_json_event(x) {
 /** @arg {UnpackCommand} x */
 function handle_json_unpack_cmd(x) {
 	console.log("unpack cmd run pending", x);
+	debugger;
 }
 /** @arg {UnpackUnitCommand} x */
 function handle_json_unpack_unit_cmd(x) {
 	console.log("unpack unit cmd run pending", x);
+	if (x[0] !== "COMMAND::unpack_unit") { debugger; return; }
+	let item = x[1];
+	switch (item[0]) {
+		case "string":
+		case "JsonInputType":
+		case "Element":
+		case "VueApp":
+		case "DataItemReturn":
+		case "Node":
+		case "VueVnode":
+		case "any":
+			debugger;
+	}
 }
 /** @arg {JsonOutputBox} res_box @arg {DataItemReturn} x */
 function init_json_event_sys(res_box, x) {
@@ -616,9 +636,6 @@ function init_json_event_sys_with_obj(res, x) {
 	} else {
 		debugger;
 	}
-	if (x !== null && !json_cache.includes(x)) {
-		json_cache.push(x);
-	}
 	if (vue_app.value !== null) {
 		do_json_replace_(["EVENT::vue_app", ["VueApp", [vue_app.value]]]);
 	}
@@ -630,6 +647,9 @@ function init_json_event_sys_with_obj(res, x) {
 	}
 	if (json_cache.length > 0) {
 		do_json_replace_(["EVENT::json_cache", ["JsonInputType", json_cache]]);
+	}
+	if (x !== null && !json_cache.includes(x)) {
+		json_cache.push(x);
 	}
 	let cache_index = -1;
 	if (x !== null) {
