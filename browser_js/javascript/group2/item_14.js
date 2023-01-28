@@ -342,9 +342,16 @@ function dispatch_json_event(x) {
 		case "RESULT::handle_json_event":
 		case "EVENT::vue_app":
 		default:
-			res.push(JSON.stringify(x, json_replacer, "\t"));
+			res.push(json_stringify_with_cache(["JSON::event", x]));
 			return res;
 	}
+}
+/** @arg {["JSON::data",any]|["JSON::event",DataItemReturn]} x */
+function json_stringify_with_cache(x) {
+	if (x[0] === "JSON::data") {
+		debugger;
+	}
+	return JSON.stringify(x[1], json_replacer, "\t");
 }
 /** @arg {UnpackCommand} x */
 function handle_json_unpack_cmd(x) {
