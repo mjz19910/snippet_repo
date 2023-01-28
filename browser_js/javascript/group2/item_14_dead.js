@@ -27,6 +27,8 @@ class JsonReplacerState_DeadItem14Code {
 	/** @type {Map<number,IndexBoxMap[keyof IndexBoxMap]>} */
 	index_tag_map = new Map;
 	json_replacer() { }
+	/** @type {{}[]} */
+	stringify_failed_obj = [];
 	/** @protected @arg {JsonInputType} x @returns {DataItemReturn|null} */
 	try_json_stringify(x, first = false) {
 		this.json_stringify_count++;
@@ -77,10 +79,10 @@ class JsonReplacerState_DeadItem14Code {
 				}
 				debugger;
 			}
-			if (J_Rep.stringify_failed_obj.includes(x)) {
+			if (this.stringify_failed_obj.includes(x)) {
 				return null
 			}
-			J_Rep.stringify_failed_obj.push(x);
+			this.stringify_failed_obj.push(x);
 			if (was_crash_testing) {
 				throw e;
 			}

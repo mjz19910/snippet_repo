@@ -171,112 +171,6 @@ const overflow_state = new class {
 /** @type {number[]} */
 let done_ids = [];
 class J_Rep {
-	/** @type {any[][]} */
-	static all_cache = [];
-	/** @type {Map<any, any>[]} */
-	static all_cache_map = [];
-	static {
-		store_window("__JsonReplacer_cache_map", cache_map);
-	}
-	static _next_id = 0;
-	static get next_id() {
-		return J_Rep._next_id++;
-	}
-	get_id() {
-		if (this.id)
-			return this.id;
-		let id = J_Rep.next_id;
-		this.id = id;
-		return id;
-	}
-	/** @returns {asserts this is {id:number}} */
-	init_id() {
-		this.id ??= J_Rep.next_id;
-	}
-	/** @type {{}|null} */
-	input_obj = null;
-	/** @type {number|null} */
-	id = null;
-	/** @type {Node[]} */
-	dom_nodes = [];
-	json_result_cache = new Map;
-	/** @type {CacheItemType[]} */
-	json_cache = [];
-	/** @type {VueVnode[]} */
-	vnodes = [];
-	/** @type {VueApp|null} */
-	vue_app = null;
-	/** @type {JsonInputType[]} */
-	object_store = [];
-	/** @type {this[]} */
-	result_history = [];
-	constructor() {
-		let nt = new.target;
-		nt.all_cache.push(this.json_cache);
-	}
-	static show_cache_map() {
-		show_cache_map(cache_map);
-	}
-	json_stringify_count = 0;
-	/** @type {InputObjBox[]} */
-	index_box_store = [];
-	/** @type {Map<number,IndexBoxMap[keyof IndexBoxMap]>} */
-	index_tag_map = new Map;
-	/** @type {JsonInputType[]} */
-	static stringify_failed_obj = [];
-	is_crash_testing = false;
-	/** @arg {this} other */
-	prepare_self(other) {
-		this.prepare_with_previous(other)
-	}
-	get break_debugger() {
-		{
-			debugger
-		}
-		return;
-	}
-	clone() {
-		let new_state = new J_Rep;
-		new_state.prepare_with_previous(this);
-		return new_state;
-	}
-	/** @arg {this} other */
-	prepare_with_previous(other) {
-		other.add_to_history(this);
-		const { is_crash_testing, json_cache: cache, json_result_cache } = other;
-		this.is_crash_testing = is_crash_testing;
-		this.json_cache = cache;
-		this.json_result_cache = json_result_cache;
-	}
-	/** @arg {string} x @returns {["TAG::parsed_json", DataParsable]} */
-	json_parser(x) {
-		/** @type {DataParsable} */
-		let parse_res = JSON.parse(x, (...r_args) => this.json_reviver(r_args));
-		console.log(parse_res);
-		return ["TAG::parsed_json", parse_res];
-	}
-	/** @arg {any} x @returns {["TAG::null", null]} */
-	json_reviver(x) {
-		x;
-		console.log("revive", x);
-		return ["TAG::null", null];
-	}
-	/** @arg {this} other */
-	add_to_history(other) {
-		if (this.result_history.includes(other))
-			return;
-		this.result_history.push(other);
-	}
-	/** @typedef {{}} TaggedJsonHistory */
-	/** @type {TaggedJsonHistory[]} */
-	history_acc = [];
-	/** @arg {["TAG::json_result_history",J_Rep[]][]} arg0 */
-	untag_history_acc([first, ...rest]) {
-		return rest.reduce((pv, [, cur]) => pv.concat(cur), first[1]);
-	}
-	static create() {
-		return new this;
-	}
 }
 /** @type {JsonInputType[]} */
 const json_cache = [];
@@ -301,7 +195,6 @@ function run_json_replace() {
 	if (!run_result) {
 		debugger; return;
 	}
-	debugger;
 	let log_args = history_iter();
 	if (log_args === null)
 		return;
@@ -352,6 +245,8 @@ function history_iter() {
 	return log_args;
 }
 let json_replace_count = 0;
+/** @type {{}[]} */
+const stringify_failed_obj = [];
 /** @arg {InputObjBox} res_box @arg {DataItemReturn} x */
 function do_json_replace(res_box, x) {
 	json_replace_count++;
@@ -364,9 +259,9 @@ function do_json_replace(res_box, x) {
 			console.log(x);
 			debugger; break;
 	}
-	if (J_Rep.stringify_failed_obj.length > 0) {
+	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
-		for (let failed_obj of J_Rep.stringify_failed_obj) {
+		for (let failed_obj of stringify_failed_obj) {
 			console.log("[failed_object]", failed_obj);
 			let ek = Object.keys(failed_obj);
 			if (ek.length > 0) {
