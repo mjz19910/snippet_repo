@@ -516,79 +516,77 @@ const parent_map = new Map;
 function json_replace_array() {
 
 }
-class R {
-	/** @arg {string} k @arg {JsonInputType|null} x */
-	json_replacer(k, x) {
-		if (typeof x === "function")
-			return null;
-		if (typeof x === "string")
-			return x;
-		if (typeof x !== "object")
-			return x;
-		if (x === null)
-			return x;
-		if (x instanceof Array && x[0] === "TAG::error")
-			return x;
-		if (overflow_state.ran_out_of_stack) {
-			return overflow_state.stack_limit_json_result;
-		}
-		if (!object_store.includes(x)) {
-			object_store.push(x);
-			let mi = object_store.indexOf(x);
-			parent_map.set(x, [mi, k]);
-		}
-		if (k === "") {
-			input_obj = x;
-			return x;
-		}
-		if (input_obj instanceof Array) {
-			if (input_obj.includes(x)) {
-				return x;
-			}
-		}
-		if (x instanceof Node) {
-			if (!dom_nodes.includes(x))
-				dom_nodes.push(x);
-			let obj_index = dom_nodes.indexOf(x);
-			return `TYPE::Store.dom_nodes[${obj_index}]`;
-		}
-		if (json_cache.includes(x)) {
-			return `TYPE::Store.cache[${json_cache.indexOf(x)}]`;
-		}
-		if (cache_map.has(k)) {
-			cache_map.get(k)?.push(x);
-		} else {
-			cache_map.set(k, [x]);
-		}
-		if (!json_cache.includes(x)) {
-			json_cache.push(x);
-		}
-		/** @arg {JsonInputType} x @returns {x is VueVnode} */
-		function is_vue_vnode(x) {
-			return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
-		}
-		if (!(x instanceof Array) && is_vue_vnode(x)) {
-			console.log(x.component?.vnode, x, x === x.component?.vnode);
-			if (!vnodes.includes(x))
-				vnodes.push(x);
-			return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
-		}
-		if (!(x instanceof Array)) {
-			if (x?._container === input_obj) {
-				return `Special::Input`;
-			}
-			if (x.__Z_ignore_replacement) {
-				// debugger;
-				return x;
-			}
-			if (x?.__vue_app__) {
-				this.vue_app = x.__vue_app__;
-				return `TYPE::VueApp`;
-			}
-			return x;
-		}
-		return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
+/** @arg {string} k @arg {JsonInputType|null} x */
+function json_replacer(k, x) {
+	if (typeof x === "function")
+		return null;
+	if (typeof x === "string")
+		return x;
+	if (typeof x !== "object")
+		return x;
+	if (x === null)
+		return x;
+	if (x instanceof Array && x[0] === "TAG::error")
+		return x;
+	if (overflow_state.ran_out_of_stack) {
+		return overflow_state.stack_limit_json_result;
 	}
+	if (!object_store.includes(x)) {
+		object_store.push(x);
+		let mi = object_store.indexOf(x);
+		parent_map.set(x, [mi, k]);
+	}
+	if (k === "") {
+		input_obj = x;
+		return x;
+	}
+	if (input_obj instanceof Array) {
+		if (input_obj.includes(x)) {
+			return x;
+		}
+	}
+	if (x instanceof Node) {
+		if (!dom_nodes.includes(x))
+			dom_nodes.push(x);
+		let obj_index = dom_nodes.indexOf(x);
+		return `TYPE::Store.dom_nodes[${obj_index}]`;
+	}
+	if (json_cache.includes(x)) {
+		return `TYPE::Store.cache[${json_cache.indexOf(x)}]`;
+	}
+	if (cache_map.has(k)) {
+		cache_map.get(k)?.push(x);
+	} else {
+		cache_map.set(k, [x]);
+	}
+	if (!json_cache.includes(x)) {
+		json_cache.push(x);
+	}
+	/** @arg {JsonInputType} x @returns {x is VueVnode} */
+	function is_vue_vnode(x) {
+		return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
+	}
+	if (!(x instanceof Array) && is_vue_vnode(x)) {
+		console.log(x.component?.vnode, x, x === x.component?.vnode);
+		if (!vnodes.includes(x))
+			vnodes.push(x);
+		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
+	}
+	if (!(x instanceof Array)) {
+		if (x?._container === input_obj) {
+			return `Special::Input`;
+		}
+		if (x.__Z_ignore_replacement) {
+			// debugger;
+			return x;
+		}
+		if (x?.__vue_app__) {
+			vue_app.value = x.__vue_app__;
+			return `TYPE::VueApp`;
+		}
+		return x;
+	}
+	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
 /** @arg {JsonInputType} x */
 function on_run_with_object_type(x) {
