@@ -516,7 +516,6 @@ function json_replacer(k, x) {
 		return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
 	}
 	if (!(x instanceof Array) && is_vue_vnode(x)) {
-		console.log(x.component?.vnode, x, x === x.component?.vnode);
 		if (!vnodes.includes(x))
 			vnodes.push(x);
 		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
