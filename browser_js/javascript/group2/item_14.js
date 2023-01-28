@@ -63,57 +63,118 @@ let is_non_null = x => x !== null;
 function is_filter_out_null(x) {
 	return x.every(x => is_non_null(x));
 }
+// ~~~~~~~~~~~~~~~~~~~~~ Typed Functions ~~~~~~~~~~~~~~~~~~~~~
+/** @template {EntriesType} ARR_T @arg {ARR_T} arr @returns {EntriesToObject<ARR_T>} */
+function createTypedObjectFromEntries(arr) {
+	let fe = Object.fromEntries(arr);
+	/** @type {EntriesToObject<ARR_T>} */
+	return as(fe);
+}
 class H_Iter {
 	/** @type {number[]} */
 	done_ids = [];
-	/** @arg {{}} x */
-	h_map = x => {
-		let x1 = Object.entries(x);
-		let x2 = x1.map(this.obj_ent_rep);
-		let x3 = x2.filter(is_non_null);
-		if (!is_filter_out_null(x3))
-			return null;
-		let x4 = Object.fromEntries(x3);
-		let entries_len = Object.entries(x4).length;
-		if (entries_len > 0)
-			return x4;
-		return null;
-	}
-		;
-	/** @arg {[string,any]} v @returns {[string,any]|[string,Map<any,string>]|null} */
-	obj_ent_rep = v => {
-		const [k, x] = v;
-		if (x === null)
+	/** @template T @arg {ObjectEntries<T>[number]} v */
+	do_map(v) {
+		const [k, x] = v; if (x === null)
 			return null;
 		if (typeof x !== "object")
 			return v;
-		if (x instanceof Map && x.size <= 0)
-			return null;
+		if (x instanceof Map) {
+			/** @type {Map<string,{test:string}>} */
+			let x_map = x;
+			if (x_map.size <= 0) {
+				return null;
+			}
+			/** @type {[string,Map<M_K,M_V>][]} */
+			let json_result_cache_arr = [];
+			/** @typedef {keyof typeof x_map} M_K */
+			/** @typedef {typeof x_map[M_K]} M_V */
+			if (k === "json_result_cache") {
+				/** @arg {[keyof typeof x_map,M_V]} arg0 @returns {[M_K,M_V]} */
+				let filter_map_entries = ([k, x]) => [k, this.filter_json(x)];
+				/** @type {[M_K,M_V][]} */
+				let map_entries_arr = [...x.entries()];
+				let mk_map = new Map(map_entries_arr.map(filter_map_entries));
+				/** @type {[string,Map<M_K,M_V>]} */
+				let entry = [k, mk_map];
+				json_result_cache_arr.push(entry);
+			}
+		}
 		if (x instanceof Array && x.length <= 0)
 			return null;
-		/** @arg {unknown} json_data */
-		function filter_json(json_data) {
-			if (!json_data)
-				return json_data;
-			if (typeof json_data !== "string")
-				return json_data;
-			let p = () => JSON.parse(json_data);
-			if (json_data.startsWith("[]"[0]))
-				return p();
-			if (json_data.startsWith("{}"[0]))
-				return p();
-			console.log("probably not json", json_data);
-			return json_data;
-		}
-		if (k === "json_result_cache") {
-			return [k, new Map([...x.entries()].map(([k, x]) => [k, filter_json(x)]))];
-		}
 		let x1 = Object.entries(x);
 		if (x1.length <= 0)
 			return null;
 		return v;
 	}
-		;
+	/** @template {object} T @arg {T} x @returns {T|null} */
+	h_map(x) {
+		let x1 = Object.entries(x);
+		/** @type {{}} */
+		let x1a = x1;
+		/** @type {ObjectEntries<T>} */
+		let x1e = as(x1a);
+		let x2 = x1e.map(this.do_map, this);
+		let x3 = x2.filter(is_non_null);
+		if (!is_filter_out_null(x3))
+			return null;
+		let x4 = createTypedObjectFromEntries(x3);
+		let x4w = createTypedObjectFromEntries(x1e);
+		x4w;
+		let entries_len = Object.entries(x4).length;
+		if (entries_len > 0) {
+			/** @type {T|{}} */
+			let x5 = x4;
+			/** @arg {typeof x5} _ @returns {asserts _ is T} */
+			let assert_assume_true = _ => void 0;
+			assert_assume_true(x5);
+			return x5;
+		}
+		return null;
+	}
+	/** @arg {unknown} json_data */
+	filter_json(json_data) {
+		if (!json_data)
+			return json_data;
+		if (typeof json_data !== "string")
+			return json_data;
+		let p = () => JSON.parse(json_data);
+		if (json_data.startsWith("[]"[0]))
+			return p();
+		if (json_data.startsWith("{}"[0]))
+			return p();
+		console.log("probably not json", json_data);
+		return json_data;
+	}
+	/** @template {keyof T} T_K @template {T[T_K]} T_V @template {object|Map<M_K,M_V>} T @arg {[T_K,T_V]} v @returns {[T_K,T_V]|null} @template M_V,M_K @arg {[string,Map<M_K,M_V>][]} json_result_cache_arr */
+	obj_ent_rep(v, json_result_cache_arr) {
+		const [k, x] = v;
+		if (x === null)
+			return null;
+		if (typeof x !== "object")
+			return v;
+		if (x instanceof Map) {
+			if (x.size <= 0) {
+				return null;
+			}
+			if (k === "json_result_cache") {
+				/** @arg {[M_K,M_V]} arg0 @returns {[M_K,M_V]} */
+				let filter_map_entries = ([k, x]) => [k, this.filter_json(x)];
+				/** @type {[M_K,M_V][]} */
+				let map_entries_arr = [...x.entries()];
+				let mk_map = new Map(map_entries_arr.map(filter_map_entries));
+				/** @type {[string,Map<M_K,M_V>]} */
+				let entry = [k, mk_map];
+				json_result_cache_arr.push(entry);
+			}
+		}
+		if (x instanceof Array && x.length <= 0)
+			return null;
+		let x1 = Object.entries(x);
+		if (x1.length <= 0)
+			return null;
+		return v;
+	}
 	/** @arg {JsonReplacerState} trg */
 	constructor(trg) {
 		this.stack = trg.result_history.slice();
@@ -156,8 +217,7 @@ function to_range(arr) {
 }
 /** @arg {any[]} x */
 function reduce_arr_flat(x) {
-	return x.reduce((/** @type {string | any[]} */
-		acc, cur) => acc.concat(cur), []);
+	return x.reduce((acc, cur) => acc.concat(cur), []);
 }
 /** @arg {Map<string, JsonInputType[]>} map */
 function show_cache_map(map) {
@@ -720,7 +780,7 @@ class JsonReplacerState {
 	}
 	/** @arg {CacheItemType} x */
 	on_run_with_cache_type(x) {
-		this.on_run_with_object_store_type(x);
+		return this.on_run_with_object_store_type(x);
 	}
 	/** @arg {JsonInputType} x */
 	on_run_with_object_store_type(x) {
@@ -768,48 +828,43 @@ class JsonReplacerState {
 				throw 1;
 		}
 	}
-	/** @arg {H_Iter} s_ @arg {JsonReplacerState} res_in */
-	iter_history_result(s_, res_in) {
+	/** @arg {H_Iter} s_ @arg {JsonReplacerState} x */
+	iter_history_result(s_, x) {
 		const { target_history: mh } = s_;
-		const { cache, object_store, } = res_in;
-		let out_ex = {};
-		if (!res_in.id)
-			res_in.id = res_in.get_id();
+		let ret = {};
+		if (!x.id)
+			x.id = x.get_id();
 		let id = this.get_id();
-		out_ex.id = id;
-		s_.done_ids.push(res_in.id);
-		let history = res_in.result_history.slice();
+		x.id = id;
+		s_.done_ids.push(x.id);
+		let history = x.result_history.slice();
 		let x1 = history.map((x) => x.id);
-		out_ex.x1 = x1;
-		let x2 = res_in.input_obj;
+		ret.x1 = x1;
+		let x2 = x.input_obj;
 		let nh = filter_arr(history, mh);
-		let rc = res_in.json_result_cache;
+		let rc = x.json_result_cache;
 		let cv = [...rc.keys()];
 		if (cv.length === 1 && cv[0] === x2) {
 			let k = rc.get(x2);
 			rc.delete(x2);
 			rc.set("TAG::input_obj", k);
 		}
-		out_ex.result_history = nh.map(s_.h_map);
-		for (let ci of cache) {
-			if (this.cache.includes(ci))
+		ret.result_history = nh.map(x => s_.h_map(x));
+		let new_cache_arr = []
+		for (let cache_item of x.cache) {
+			if (this.cache.includes(cache_item))
 				continue;
-			this.cache.push(ci);
+			this.cache.push(cache_item);
+			new_cache_arr.push(cache_item);
 		}
-		{
-			let item = out_ex;
-			let self = this;
-			const key = "cache";
-			item[key] = filter_arr(cache, self[key]);
-		}
-		if (object_store) {
-			out_ex.object_store = object_store.map(x => this.on_run_request(["store_object", x]));
+		ret.cache = new_cache_arr.map((x) => this.on_run_request(["cache", x]));
+		if (x.object_store) {
+			ret.object_store = x.object_store.map(x => this.on_run_request(["store_object", x]));
 		} else {
 			console.log("no object_store");
 		}
-		out_ex.cache = cache.map((x) => this.on_run_request(["cache", x]));
-		return history;
-		/** @arg {any[]} x @arg {any[]} o_arr */
+		return ret;
+		/** @template T @arg {T[]} x @arg {T[]} o_arr */
 		function filter_arr(x, o_arr) {
 			return x.filter((x) => !o_arr.includes(x));
 		}

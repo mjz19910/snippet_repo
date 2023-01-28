@@ -1,22 +1,6 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14_types.ts
 */
-type Join<T extends string[], U_arg extends string = ","> =
-	string[] extends T ? string : T extends [] ? "" : T extends [infer U extends string, infer C extends string, ...infer Z] ? Z extends string[] ?
-	Join<Z, U_arg> extends "" ? `${U}${U_arg}${C}` :
-	Join<Z, U_arg> extends string ? `${U}${U_arg}${C}${U_arg}${Join<Z, U_arg>}` : `${U}${U_arg}${C}` : `${U}${U_arg}${C}` :
-	T extends [infer C extends string, ...infer U] ?
-	U extends string[] ? Join<U, U_arg> extends "" ? `${C}` : Join<U, U_arg> extends string ? `${C}${U_arg}${Join<U, U_arg>}` : C : C :
-	T[0]
-	;
-;
-function join_as_js<T extends string[], U_arg extends string = ",">(t: T, u_arg: U_arg) {
-	function is<_U>(x: string[], _e: "extends", _f: (x: _U) => void) { x; return Math.random() > 0.5; }
-	if (is(t, "extends", (_u: string[]) => void 0)) {
-
-	}
-	u_arg;
-}
 type ContentArgsType = {
 	empty: ["empty", []];
 	cache: ["cache", CacheItemType[]];
@@ -66,17 +50,11 @@ type CacheItemType = JsonInputType;
 type do_json_replace_functionType<T extends keyof ContentArgsType> = ((...t_args: [res_arr: [string, string | number][][], target_args: ContentArgsType[T]]) => void);
 type DataItemReturnBase = | ["TAG::unpack_vnode::2::res", {}[]];
 type TagVNodeRes_2 = ["TAG::unpack_vnode::2::res", {}[]];
-
 type TagVNode = ["TAG::vnode", ["CONTENT::cache", HTMLDivElement[]]];
-
 type TagUnpackVNode_1 = ["TAG::unpack_vnode::1", {}];
-
 type TagUnpackVNode_Arr_2 = ["TAG::unpack_vnode::2::res_arr", {}[]];
-
 type TagUnpackVNode_2 = ["TAG::unpack_vnode::2", {}];
-
 type TagVnodeItem = ["TAG::vnode_item", TagVNodeInner];
-
 type DataItemReturn =
 	| DataItemReturnBase
 	| ["CONTENT::cache", CacheItemType[]]
@@ -115,3 +93,4 @@ type IndexBoxMap = {
 	InputObjBox: MakeTagBoxForNonObject<number, "InputObjBox">;
 };
 type IndexUnboxMap<T, O, U> = Map<T, { _inner_tag: U, value: O & { _tag: U } }>;
+type IterHistoryResult = {};
