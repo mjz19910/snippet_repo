@@ -168,7 +168,8 @@ class JsonOutputBox {
 	cache_index_map = new Map;
 	get_log_self_args() {
 		let log_self_info = this.get_self_for_logging();
-		if (log_self_info[0] < 1) return null;
+		if (log_self_info[0] < 1)
+			return null;
 		return ["-- [JsonOutputBox] --\n%o", log_self_info[1]];
 	}
 	/** @private @returns {[number,Partial<this>]} */
@@ -312,7 +313,7 @@ function do_json_replace_on_iterate_cmd(x) {
 /** @type {PendingCommandItem[]} */
 let pending_commands = [];
 /** @arg {DataItemReturn} x */
-function do_json_replace_on_input(x) {
+function dispatch_json_event(x) {
 	/** @type {string[]} */
 	let res = [];
 	switch (x[0]) {
@@ -329,6 +330,10 @@ function do_json_replace_on_input(x) {
 				return res;
 			}
 		case "TYPE::DBG_What":
+			{
+				console.log("[DBG_What]", x[1]);
+				return res;
+			}
 		case "TYPE::DataItemReturn":
 		case "EVENT::input":
 		case "EVENT::vnodes":
@@ -337,7 +342,6 @@ function do_json_replace_on_input(x) {
 		case "RESULT::handle_json_event":
 		case "EVENT::vue_app":
 		default:
-			debugger;
 			res.push(JSON.stringify(x, json_replacer, "\t"));
 			return res;
 	}
@@ -349,7 +353,9 @@ function handle_json_unpack_cmd(x) {
 }
 /** @arg {UnpackUnitCommand} x */
 function handle_json_unpack_unit_cmd(x) {
-	if (x[0] !== "COMMAND::unpack_unit") { debugger; return; }
+	if (x[0] !== "COMMAND::unpack_unit") {
+		debugger; return;
+	}
 	let item = x[1];
 	switch (item[0]) {
 		case "string":
@@ -360,8 +366,7 @@ function handle_json_unpack_unit_cmd(x) {
 		case "Node":
 		case "VueVnode":
 		case "any":
-			console.log("unpack unit cmd run pending", item);
-			debugger;
+			console.log("[json_unpack_unit_cmd] [unpack_item.%s]", item[0], item[1]);
 	}
 }
 let processing_commands = false;
@@ -372,7 +377,7 @@ function handle_json_event(x) {
 		case "EVENT::input":
 		case "EVENT::json_cache":
 			false && console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = do_json_replace_on_input(["COMMAND::unpack", x[1]]);
+			ret = dispatch_json_event(["COMMAND::unpack", x[1]]);
 			break;
 		case "EVENT::vnodes":
 		case "EVENT::dom_nodes":
@@ -380,27 +385,32 @@ function handle_json_event(x) {
 		case "TYPE::DataItemReturn":
 		case "EVENT::vue_app":
 			console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = do_json_replace_on_input(["COMMAND::unpack", x[1]]);
+			ret = dispatch_json_event(["COMMAND::unpack", x[1]]);
 			break;
 		case "TYPE::DBG_What":
 		case "COMMAND::unpack":
 		default:
 			console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = do_json_replace_on_input(x);
+			ret = dispatch_json_event(x);
 			break;
 	}
 	process_commands();
 	return ret;
 }
 function process_commands() {
-	if (processing_commands) return;
+	if (processing_commands)
+		return;
 	processing_commands = true;
 	for (let command of pending_commands) {
 		let [tag, cmd] = command;
 		tag === "unpack";
 		switch (cmd[0]) {
-			case "COMMAND::unpack": handle_json_unpack_cmd(cmd); break;
-			case "COMMAND::unpack_unit": handle_json_unpack_unit_cmd(cmd); break;
+			case "COMMAND::unpack":
+				handle_json_unpack_cmd(cmd);
+				break;
+			case "COMMAND::unpack_unit":
+				handle_json_unpack_unit_cmd(cmd);
+				break;
 		}
 	}
 	pending_commands.length = 0;
