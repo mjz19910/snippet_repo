@@ -719,12 +719,9 @@ class JsonReplacerState {
 		console.log("TODO: unknown_tag_section", x);
 		return ["TAG::failed", null];
 	}
-	/** @arg {Extract<CacheItemType,{__cache_item:any}>|{}} x */
+	/** @arg {CacheItemType} x */
 	on_run_with_cache_type(x) {
-		debugger;
-		if ("__cache_item" in x)
-			return x;
-		return null;
+		this.on_run_with_object_store_type(x);
 	}
 	/** @arg {JsonInputType} x */
 	on_run_with_object_store_type(x) {
