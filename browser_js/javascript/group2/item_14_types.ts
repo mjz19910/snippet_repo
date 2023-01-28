@@ -59,9 +59,17 @@ type JsonIterateValue =
 type UnpackCommand =
 	| [`COMMAND::${CommandVerbs}`, ["any", any[]]]
 	| ["COMMAND::unpack", JsonUnpackValue]
+	| UnpackUnitCommand
 	| ["COMMAND::iterate", JsonIterateValue]
 	;
 ;
+type UnpackUnitCommand = [
+	"COMMAND::unpack_unit",
+	{
+		[U in JsonUnpackValue[0]]:
+		Extract<JsonUnpackValue, [U, any]> extends infer V extends Extract<JsonUnpackValue, [U, any]> ? [V[0], V[1][number]] : never
+	}[JsonUnpackValue[0]]
+]
 type DataItemReturn =
 	| ["TYPE::DBG_What", { __what: true; }]
 	| ["TYPE::DataItemReturn", DataItemReturn[]]

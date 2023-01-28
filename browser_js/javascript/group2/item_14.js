@@ -262,7 +262,7 @@ function do_json_replace_on_iterate_cmd(x) {
 	}
 	return res;
 }
-/** @type {["COMMAND::unpack",][]} */
+/** @type {["unpack",UnpackCommand][]} */
 let pending_commands = [];
 /** @arg {DataItemReturn} x */
 function do_json_replace_on_input(x) {
@@ -283,72 +283,22 @@ function do_json_replace_on_input(x) {
 		case "COMMAND::unpack":
 			{
 				let unpack = x[1];
-				switch (unpack[0]) {
-					default: debugger; throw new Error();
-					case "string": return unpack[1];
-					case "Element":
-						{
-							let [s] = unpack;
-							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.Element] [%s]", s, u);
-								res.push(JSON.stringify(u, json_replacer, "\t"));
-							}
-						}
-						break;
-					case "Node":
-						{
-							let [s] = unpack;
-							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.Node] [%s]", s, u);
-								res.push(JSON.stringify(u, json_replacer, "\t"));
-							}
-						}
-						break;
-					case "JsonInputType":
-						{
-							let [s] = unpack;
-							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.JsonInputType] [%s]", s, u);
-								res.push(JSON.stringify(u, json_replacer, "\t"));
-							}
-						}
-						break;
-					case "VueApp":
-						{
-							let [s] = unpack;
-							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.VueApp] [%s]", s, u);
-								res.push(JSON.stringify(u, json_replacer, "\t"));
-							}
-						}
-						break;
-					case "DataItemReturn":
-						{
-							let [s] = unpack;
-							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.DataItemReturn] [%s]", s, u);
-								res.push(JSON.stringify(u, json_replacer, "\t"));
-							}
-						}
-						break;
-					case "any":
-						{
-							for (let u of unpack[1]) {
-								console.log("[COMMAND::unpack.any]", u);
-								res.push(JSON.stringify(u, json_replacer, "\t"));
-							}
-						}
-						break;
+				let [s] = unpack;
+				for (let u of unpack[1]) {
+					console.log("[COMMAND::unpack] [%s]", s, u);
+					/** @type {UnpackUnitCommand} */
+					let pk = as(["COMMAND::unpack_unit", [s, u]]);
+					pending_commands.push(["unpack", pk]);
 				}
 				return res;
 			}
 		case "TYPE::DBG_What":
+		case "TYPE::DataItemReturn":
 		case "EVENT::input":
 		case "EVENT::vnodes":
 		case "EVENT::dom_nodes":
 		case "EVENT::json_cache":
 		case "RESULT::handle_json_event":
-		case "TYPE::DataItemReturn":
 		case "EVENT::vue_app":
 		default:
 			debugger;
