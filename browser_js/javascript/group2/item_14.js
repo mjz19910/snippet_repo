@@ -282,7 +282,7 @@ function do_json_replace_on_input(x) {
 			{
 				let unpack = x[1];
 				switch (unpack[0]) {
-					default: debugger; break;
+					default: debugger; throw new Error();
 					case "string": return unpack[1];
 					case "Element":
 					case "Node":
