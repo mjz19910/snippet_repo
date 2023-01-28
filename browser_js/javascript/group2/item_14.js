@@ -255,7 +255,8 @@ function invert_tag(x) {
 function do_json_replace_on_iterate_cmd(x) {
 	/** @type {["JSON::Data", x[0], string][]} */
 	let res = [];
-	if (!(x[1] instanceof Array)) return res;
+	if (!(x[1] instanceof Array))
+		return res;
 	for (let u of x[1]) {
 		res.push(["JSON::Data", x[0], JSON.stringify(u, json_replacer, "\t")]);
 	}
@@ -271,7 +272,8 @@ function do_json_replace_on_input(x) {
 				let res_2 = do_json_replace_on_iterate_cmd(x);
 				for (let [, u, v] of res_2) {
 					switch (u) {
-						default: res.push(v);
+						default:
+							res.push(v);
 					}
 				}
 				return res;
@@ -280,12 +282,14 @@ function do_json_replace_on_input(x) {
 			{
 				let unpack = x[1];
 				switch (unpack[0]) {
-					case "any": {
-						for (let u of unpack[1]) {
-							console.log("[COMMAND::unpack.any]", u);
-							res.push(JSON.stringify(u, json_replacer, "\t"));
+					case "any":
+						{
+							for (let u of unpack[1]) {
+								console.log("[COMMAND::unpack.any]", u);
+								res.push(JSON.stringify(u, json_replacer, "\t"));
+							}
 						}
-					} break;
+						break;
 				}
 				return res;
 			}
@@ -306,10 +310,10 @@ function do_json_replace_on_input(x) {
 function handle_json_event(x) {
 	switch (x[0]) {
 		case "EVENT::input":
-			console.log("- [EVENT::input.unpack] -\n%o", ...x);
+			false && console.log("- [EVENT::input.unpack] -\n%o", ...x);
 			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::json_cache":
-			console.log("- [EVENT::json_cache.unpack] -\n%o", ...x);
+			false && console.log("- [EVENT::json_cache.unpack] -\n%o", ...x);
 			return do_json_replace_on_input(["COMMAND::unpack", x[1]]);
 		case "EVENT::vnodes":
 			console.log("- [EVENT::vnodes.unpack] -\n%o", ...x);
