@@ -383,10 +383,10 @@ function history_iter() {
 	return log_args;
 }
 let json_replace_count = 0;
-/** @template {{__template_tag: "T"; from:"do_json_replace";}} T @arg {InputObjBox} res_box @arg {T} args */
+/** @arg {InputObjBox} res_box @arg {DataItemReturn} args */
 function do_json_replace(res_box, args) {
 	json_replace_count++;
-	let res = run_json_replacement_with_state(["CONTENT::cache", args]);
+	let res = run_json_replacement_with_state(["TYPE::DataItemReturn", args]);
 	res_box.return_items.push(res);
 }
 /** @template {object} T @arg {T} x @returns {[boolean,T]} */
@@ -531,10 +531,10 @@ let dom_nodes = [];
 /** @arg {JsonInputType} x */
 function on_run_with_object_type(x) {
 	let res = new InputObjBox;
-	/** @arg {string} k @arg {{}} x */
-	let do_json_replace_ = (k, x) => do_json_replace(res, { __template_tag: "T", from: "do_json_replace", data: [k, x] });
+	/** @arg {DataItemReturn} d */
+	let do_json_replace_ = (d) => do_json_replace(res, d);
 	if (x instanceof Element) {
-		do_json_replace_("input", x);
+		do_json_replace_(["EVENT::input", x]);
 	} else {
 		debugger;
 	}
@@ -542,11 +542,17 @@ function on_run_with_object_type(x) {
 		json_cache.push(x);
 	}
 	if (vue_app !== null) {
-		do_json_replace_("vue_app", vue_app);
+		do_json_replace_(["EVENT::vue_app", vue_app]);
 	}
-	do_json_replace_("vnodes", vnodes);
-	do_json_replace_("dom_nodes", dom_nodes);
-	do_json_replace_("cache", json_cache);
+	if (vnodes.length > 0) {
+		do_json_replace_(["EVENT::vnodes", vnodes]);
+	}
+	if (dom_nodes.length > 0) {
+		do_json_replace_(["EVENT::dom_nodes", dom_nodes]);
+	}
+	if (json_cache.length > 0) {
+		do_json_replace_(["EVENT::json_cache", json_cache]);
+	}
 	let cache_index = -1;
 	if (x !== null) {
 		cache_index = json_cache.indexOf(x);
@@ -652,10 +658,8 @@ function post_run() {
 }
 /** @arg {DataItemReturn} obj @returns {DataItemReturn[]} */
 function run_internal(obj) {
-	/** @type {DataItemReturn[]} */
-	let res = [obj];
-	debugger;
-	return res;
+	console.log(obj);
+	return [];
 }
 /** @protected @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 function join_string(x, s) {
