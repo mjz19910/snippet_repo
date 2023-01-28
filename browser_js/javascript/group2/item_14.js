@@ -556,16 +556,17 @@ const vnodes = [];
 const dom_nodes = [];
 /** @type {Map<unknown,[number,string]>} */
 const parent_map = new Map;
+/** @arg {JsonInputType} x @returns {x is VueVnode} */
+function is_vue_vnode(x) {
+	return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
+}
+//#region Json replacer
 /** @arg {string} _k @arg {JsonInputType|null} x */
 function json_replace_array(_k, x) {
 	if (input_obj.value.has_value && input_obj.value.value instanceof Array && input_obj.value.value.includes(x)) {
 		return x;
 	}
 	return x;
-}
-/** @arg {JsonInputType} x @returns {x is VueVnode} */
-function is_vue_vnode(x) {
-	return !!(typeof x === 'object' && "component" in x && x.component?.vnode);
 }
 /** @arg {string} k @arg {JsonInputType|null} x */
 function json_replacer(k, x) {
@@ -595,7 +596,6 @@ function json_replacer(k, x) {
 		};
 		return x;
 	}
-	if (input_obj instanceof Array) { }
 	if (x instanceof Node) {
 		if (!dom_nodes.includes(x))
 			dom_nodes.push(x);
@@ -627,6 +627,7 @@ function json_replacer(k, x) {
 	}
 	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
+//#endregion
 /** @arg {JsonOutputBox} res @arg {JsonInputType} x */
 function init_json_event_sys_with_obj(res, x) {
 	/** @arg {DataItemReturn} d */
