@@ -477,7 +477,6 @@ function do_map(v) {
 		return null;
 	return v;
 }
-/** @typedef {{id:number;items:{}[]}} JsonHistoryType */
 /** @type {JsonHistoryType[]} */
 let target_history = [];
 /** @type {{}|null} */

@@ -104,3 +104,4 @@ type IterHistoryResult = {
 	result_history: JsonHistoryType[];
 	x1: number[];
 };
+type JsonHistoryType = { id: number; items: {}[] };
