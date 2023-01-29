@@ -16,7 +16,7 @@ const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {
 	throw new Error("Failed to load base plugin");
 }
-console.log("Load HandleTypesPlugin");
+console.log("Load HandleTypes Service");
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 const as=required(bs.as_);

@@ -40,7 +40,7 @@ class JsonReplacerState {
 }
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const split_string_once=required(store.mod$YoutubePluginBase).split_string_once;
-/** @template T,U @extends {BaseService<T,U>} */
+/** @template T_LoadAllServices,T_ServiceFlags @extends {BaseService<T_LoadAllServices,T_ServiceFlags>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {
@@ -909,7 +909,7 @@ class CodegenService extends BaseService {
 	}
 	/** @unused_api @protected @arg {{}} x @arg {string} r */
 	use_generated_members(x,r) {
-		/** @type {Generate<T,U>} */
+		/** @type {Generate<T_LoadAllServices,T_ServiceFlags>} */
 		let td=new Generate(this);
 		td.generate_typedef_and_depth(x,r);
 		return td;

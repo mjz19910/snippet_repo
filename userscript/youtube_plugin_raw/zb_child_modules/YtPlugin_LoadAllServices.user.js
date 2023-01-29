@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	YtPlugin LoadServices
+// @name	YtPlugin LoadAllServices Plugin
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.0
 // @description	try to take over the world!
@@ -11,8 +11,9 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
-const __module_name__="mod$LoadServices";
+const __module_name__="mod$LoadAllServices";
 const store=required(window.__plugin_modules__);
+const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {
 	bs.do_export(fn,flags,exports,__module_name__);
@@ -21,25 +22,24 @@ export_(exports => {
 	exports.__is_module_flag__=true;
 });
 
-console.log("Load ServicesLoader");
+console.log("Load LoadAllServices Plugin");
 const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
-const bs=required(store.mod$YoutubePluginBase);
 /** @template T @typedef {NonNullable<T>} N */
 /** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
-class Services {
+class LoadAllServices {
 	start_message_channel_loop() {
 		bs.start_message_channel_loop(this.handle_types);
 	}
-	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
-		/** @template U @extends {HandleTypes<Services,U>}  */
+		/** @template T_ServiceFlags @extends {HandleTypes<LoadAllServices,T_ServiceFlags>}  */
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
 			run(detail) {
 				this.YTNavigateFinishDetail.call(this.x.get("handle_types"),detail);
 			}
 		}
-		/** @template U @extends {HandleTypes<Services,U>}  */
+		/** @template T_ServiceFlags @extends {HandleTypes<LoadAllServices,T_ServiceFlags>}  */
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
 			run(response,x) {
@@ -79,6 +79,6 @@ class Services {
 }
 
 export_(exports => {
-	exports.Services=Services;
+	exports.LoadAllServices=LoadAllServices;
 	exports.__module_loaded__=true;
 });

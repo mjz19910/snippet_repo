@@ -702,14 +702,14 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 const store=required(window.__plugin_modules__);
 /** @template T @typedef {NonNullable<T>} N */
-/** @typedef {N<store['mod$LoadServices']>['Services']} Services */
+/** @typedef {N<store['mod$LoadAllServices']>['LoadAllServices']} LoadAllServices */
 class R_HandleRichGrid$ {
 	enable_logging=false;
 	/** @readonly */
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
 	entry="richGridRenderer";
-	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
@@ -2003,14 +2003,14 @@ class ServiceResolver {
 //#endregion
 //#region main
 function yt_plugin_base_main() {
-	const Services=required(store["mod$LoadServices"]).Services;
+	const LoadAllServices=required(store["mod$LoadAllServices"]).LoadAllServices;
 	setTimeout(() => {
 		window.yt_plugin?.get_data_saver().num_bitmap_console();
 	},4000);
 	const log_enabled_page_type_change=false;
-	/** @private @type {ResolverT<Services,ServiceOptions>} */
+	/** @private @type {ResolverT<LoadAllServices,ServiceOptions>} */
 	const resolver_value={value: null};
-	const services=new Services(resolver_value);
+	const services=new LoadAllServices(resolver_value);
 	const yt_handlers=services.yt_handlers;
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
@@ -2746,7 +2746,7 @@ class KnownDataSaver extends ApiBase {
 	}
 }
 const data_saver=new KnownDataSaver;
-/** @private @template CLS_T,CLS_U */
+/** @private @template T_LoadAllServices,T_ServiceFlags */
 class BaseServicePrivate extends ApiBase {
 	/** @protected @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(x,ex_name,excl=[]) {
@@ -2774,7 +2774,7 @@ class BaseServicePrivate extends ApiBase {
 		return ok_e;
 	}
 	//#region Public
-	/** @constructor @public @arg {ResolverT<CLS_T,CLS_U>} x */
+	/** @constructor @public @arg {ResolverT<T_LoadAllServices,T_ServiceFlags>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
@@ -2786,12 +2786,12 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value;
 	}
-	/** @protected @this {BaseServicePrivate<Services,{}>} */
+	/** @protected @this {BaseServicePrivate<LoadAllServices,{}>} */
 	get parser() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("parser_service");
 	}
-	/** @protected @this {BaseServicePrivate<Services,{}>} */
+	/** @protected @this {BaseServicePrivate<LoadAllServices,{}>} */
 	get codegen() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
@@ -2811,9 +2811,9 @@ class BaseServicePrivate extends ApiBase {
 	//#endregion
 	#x;
 }
-/** @private @template CLS_T,CLS_U @extends {BaseServicePrivate<CLS_T,CLS_U>} */
+/** @private @template T_LoadAllServices,T_ServiceFlags @extends {BaseServicePrivate<T_LoadAllServices,T_ServiceFlags>} */
 class BaseService extends BaseServicePrivate {
-	/** @arg {ServiceMethods<CLS_T,CLS_U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
+	/** @arg {ServiceMethods<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
 	is_normal_service(x) {
 		return x.service_type==="normal";
 	}
@@ -3065,7 +3065,7 @@ class BaseService extends BaseServicePrivate {
 		return this.ds.save_keys(k,x);
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class YtHandlers extends BaseService {
 	/** @api @public @arg {{}} item */
 	filter_renderer_contents_item(item) {
@@ -3077,7 +3077,7 @@ class YtHandlers extends BaseService {
 		}
 		return true;
 	}
-	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} res */
+	/** @constructor @public @arg {ResolverT<LoadAllServices,ServiceOptions>} res */
 	constructor(res) {
 		super(res);
 		this.filter_handler_debug=false;
@@ -3212,7 +3212,7 @@ class YtHandlers extends BaseService {
 		}
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class HandleRendererContentItemArray extends BaseService {
 	debug=false;
 	/** @private @arg {R_RichItem} content_item */
@@ -3341,9 +3341,9 @@ class YtObjectVisitor {
 		state.t.iteration.default_iter(state,renderer);
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class IterateApiResultBase extends BaseService {
-	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
 	constructor(x,obj_visitor) {
 		super(x);
 		this.obj_visitor=obj_visitor;
@@ -3392,7 +3392,7 @@ class IterateApiResultBase extends BaseService {
 		}
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class CsiService extends BaseService {
 	/** @private @type {(T_RidFormat<string>)[]} */
 	rid_keys=[
@@ -3435,7 +3435,7 @@ class CsiService extends BaseService {
 	}
 	/** @private @type {{[x: T_RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @constructor @public @arg {ResolverT<Services,ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		this.data={
@@ -3482,7 +3482,7 @@ class CsiService extends BaseService {
 		}
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class GFeedbackService extends BaseService {
 	data={
 		/** @private @type {number[]|null} */
@@ -3573,7 +3573,7 @@ class GFeedbackService extends BaseService {
 		this.x.get("e_catcher_service").iterate_fexp(this.data.e);
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class GuidedHelpService extends BaseService {
 	data={
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
@@ -3594,7 +3594,7 @@ class GuidedHelpService extends BaseService {
 		}
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class TrackingServices extends BaseService {
 	/** @private @arg {RC_Csi_SPs} service */
 	on_csi_service(service) {
@@ -3637,7 +3637,7 @@ class TrackingServices extends BaseService {
 		}
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class ModifyEnv extends BaseService {
 	/** @private @type {[(obj: Blob|MediaSource) => string,typeof URL,Blob|MediaSource][]} */
 	leftover_args=[];
@@ -3805,11 +3805,11 @@ class ModifyEnv extends BaseService {
 }
 //#endregion Service
 //#region YtPlugin
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class YtPlugin extends BaseService {
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
-	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		inject_api.modules??=new Map;
@@ -3838,9 +3838,9 @@ class DatabaseArguments {
 		this.version=version;
 	}
 }
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class IndexedDbAccessor extends BaseService {
-	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x @arg {string} db_name */
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x @arg {string} db_name */
 	constructor(x,db_name,version=1) {
 		super(x);
 		this.db_args=new DatabaseArguments(db_name,version);
@@ -4092,7 +4092,7 @@ function sizeof_js(obj) {
 }
 //#endregion
 //#region HandleTypesSupport
-/** @template T,U @extends {BaseService<T,U>} */
+/** @template T_LoadAllServices,T_ServiceFlags @extends {BaseService<T_LoadAllServices,T_ServiceFlags>} */
 class ServiceData extends BaseService {
 	/** @protected @type {GA_FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];

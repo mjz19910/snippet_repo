@@ -33,7 +33,7 @@ namespace EX {
 	export type VolumeRange=Base$ImpType["VolumeRange"];
 	export type yt_plugin_base_main=Base$ImpType["yt_plugin_base_main"];
 	export type make_iterator=Base$ImpType["make_iterator"];
-	export type Services=typeof import("./zb_child_modules/YtPlugin_LoadServices.user.js").Services;
+	export type LoadAllServices=typeof import("./zb_child_modules/YtPlugin_LoadAllServices.user.js").LoadAllServices;
 	export type BaseServicePrivate=Base$ImpType["BaseServicePrivate"];
 	export type BaseService=Base$ImpType["BaseService"];
 	export var ServiceMethods: EX.ServiceMethods;
@@ -45,7 +45,7 @@ namespace EX {
 	export var VolumeRange: EX.VolumeRange;
 	export var yt_plugin_base_main: EX.yt_plugin_base_main;
 	export var make_iterator: EX.make_iterator;
-	export var Services: EX.Services;
+	export var LoadAllServices: EX.LoadAllServices;
 	export var BaseServicePrivate: EX.BaseServicePrivate;
 	export var BaseService: EX.BaseService;
 	// youtube_plugin_base

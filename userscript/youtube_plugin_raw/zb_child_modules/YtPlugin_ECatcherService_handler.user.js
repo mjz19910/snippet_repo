@@ -24,8 +24,8 @@ export_(exports => {
 const base_store=required(store.mod$YoutubePluginBase);
 const is_firefox=base_store.is_firefox;
 const BaseService=base_store.BaseService;
-const Services=required(store.mod$LoadServices?.Services);
-/** @extends {BaseService<Services,ServiceOptions>} */
+const LoadAllServices=required(store.mod$LoadAllServices?.LoadAllServices);
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	data={
 		/** @private @type {{name:RC_ECatcherClientName['value'];fexp:number[];version:RC_SomeVer<RC_CsiVarTypes["cver"]>}|null} */

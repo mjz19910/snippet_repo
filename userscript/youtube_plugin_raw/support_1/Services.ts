@@ -1,1 +1,1 @@
-type ServiceTypeVal=ResolverT<import("../youtube_plugin.user.js").Services,ServiceOptions>;
+type ServiceTypeVal=ResolverT<import("../zb_child_modules/YtPlugin_LoadAllServices.user.js").LoadAllServices,ServiceOptions>;

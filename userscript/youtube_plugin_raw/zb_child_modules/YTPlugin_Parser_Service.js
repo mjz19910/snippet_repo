@@ -35,9 +35,9 @@ function required(x) {
 	return x;
 }
 /** @template T @typedef {NonNullable<T>} N */
-/** @typedef {N<store['mod$LoadServices']>['Services']} Services */
+/** @typedef {N<store['mod$LoadAllServices']>['LoadAllServices']} LoadAllServices */
 const BaseService=required(store["mod$YoutubePluginBase"]).BaseService;
-/** @extends {BaseService<Services,ServiceOptions>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
 	/** @api @public @arg {YTNavigateFinishDetail['pageType']} x */

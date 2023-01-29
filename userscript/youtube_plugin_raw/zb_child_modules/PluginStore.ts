@@ -1,5 +1,5 @@
 export interface PluginStore {
-	["mod$LoadServices"]: typeof import("./YtPlugin_LoadServices.user.js");
+	["mod$LoadAllServices"]: typeof import("./YtPlugin_LoadAllServices.user.js");
 	["mod$YoutubePluginBase"]: typeof import("./YtPlugin_Base_Plugin.user.js");
 	["mod$CodegenPlugin"]: typeof import("./YtPlugin_CodegenService.user.js");
 	["mod$ParserService"]: typeof import("./YTPlugin_Parser_Service.js");
