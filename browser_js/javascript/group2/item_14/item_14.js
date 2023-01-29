@@ -278,7 +278,6 @@ function history_iter_iter_stack_tag(out_res, item) {
 	let result_data = HistoryResultData.make(item.items[0]);
 	if (!result_data)
 		return;
-	result_data?.object_store
 	out_res.output_arr.push(["TAG::result_data", result_data]);
 }
 /** @arg {JsonOutputBox} out_res */
@@ -638,6 +637,8 @@ class HistoryResultData {
 		this.result_history = result_history;
 		this.history_item_id_arr = history_item_id_arr;
 	}
+	/** @type {["DATA::from_json", JsonInputType][]}  */
+	json_obj_store = [];
 	/** @arg {JsonOutputBox} res */
 	static make(res) {
 		let history = result_history.slice();
@@ -667,7 +668,20 @@ class HistoryResultData {
 		for (let obj of new_cache_arr) {
 			on_run_request(res, ["cache", obj]);
 		}
-		return new HistoryResultData(object_store, result_history, history_item_id_arr);
+		let this_ = new HistoryResultData(object_store, result_history, history_item_id_arr);
+		this_.add_json_obj_store();
+		return this_;
+	}
+	add_json_obj_store() {
+		let obj_store = this.object_store;
+		for (let i = 0; i < obj_store.length; i++) {
+			this.json_obj_store[i] = this.reconstitute(obj_store[i]);
+		}
+	}
+	/** @template T @arg {T} obj @returns {["DATA::from_json",T]} */
+	reconstitute(obj) {
+		let out = json_stringify_with_cache(["JSON::data", [obj]]);
+		return ["DATA::from_json", JSON.parse(out)];
 	}
 }
 /** @type {{value:VueApp|null}} */
