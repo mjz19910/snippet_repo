@@ -354,7 +354,8 @@ type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: DC_ShowRe
 type DC_ShowReloadUi={targetId: D_UiTargetId;};
 //#endregion
 //#region Endpoints
-type E_AddToPlaylistService=TE_Endpoint<{webCommandMetadata: GM_playlist_get_add_to_playlist;},"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
+type E_AddToPlaylistService=TE_Endpoint<M_AddToPlaylistService,"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
+type M_AddToPlaylistService={webCommandMetadata: GM_playlist_get_add_to_playlist;};
 type DE_AddToPlaylistService={videoId: string;};
 type E_CreateBackstagePost=TE_Endpoint<M_CreateBackstagePost,"createBackstagePostEndpoint",DE_CreateBackstagePost>;
 type M_CreateBackstagePost={webCommandMetadata: GM_CreateBackstagePost;};

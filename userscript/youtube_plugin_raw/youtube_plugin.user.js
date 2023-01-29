@@ -8765,7 +8765,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {
-		const {sendPost,apiUrl,...y}=x; this.g(y);
+		const cf="GM_Next";
+		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/next") debugger;
 	}
@@ -8984,7 +8985,8 @@ class HandleTypes extends HandleTypesEval {
 	M_YpcGetCart(x) {this.H_("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {
-		const {apiUrl,sendPost,...y}=x; this.g(y);
+		const cf="GM_YpcGetCart";
+		const {apiUrl,sendPost,...y}=this.sd(cf,x); this.g(y);//#destructure
 		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -9575,7 +9577,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x => {const {showEngagementPanelEndpoint,...y}=x; this.g(y); this.D_ShowEngagementPanel(showEngagementPanelEndpoint);});}
+	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x => this.y(x,"showEngagementPanelEndpoint",this.D_ShowEngagementPanel));}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel";
@@ -9586,7 +9588,8 @@ class HandleTypes extends HandleTypesEval {
 	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.sd(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
 	/** @private @arg {AD_Signal} x */
 	AD_Signal(x) {
-		const {signal,...y}=x; this.g(y);
+		const cf="AD_Signal";
+		const {signal,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 		switch(signal) {
 			default: debugger; break;
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
@@ -9597,7 +9600,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
-		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y);
+		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 		console.log(`${cf}.listType`,listType);
 		this.SE_CreatePlaylist(onCreateListCommand);
 		this.z([openListPanel,openMiniplayer],this.b_primitive_bool);
@@ -9608,7 +9611,7 @@ class HandleTypes extends HandleTypesEval {
 	SE_CreatePlaylist(x) {
 		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,"createPlaylistServiceEndpoint",this.DS_CreatePlaylist),u => {
 			let x=u.webCommandMetadata;
-			const {sendPost,apiUrl,...y}=x; this.g(y);
+			const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 			if(sendPost!==true) debugger;
 			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
 		});
@@ -9616,7 +9619,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
-		const {params,videoIds,...y}=x; this.g(y);
+		const {params,videoIds,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
@@ -9774,7 +9777,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
 	T_DE_SettingItem_AutonavForDesktop(x) {
 		if("boolValue" in x) {
-			const {settingItemId,boolValue,settingItemIdForClient,...y}=x; this.g(y);
+			const cf="T_DE_SettingItem.407";
+			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 			if(settingItemId!=="407") debugger;
 			this.b_primitive_bool(boolValue);
 			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
@@ -9865,7 +9869,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {
 		const cf="E_GetReportForm"; this.T_Endpoint(cf,x,x => {
-			const {getReportFormEndpoint: a,...y}=x; this.g(y);
+			const {getReportFormEndpoint: a,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 			this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_report_form",x));
 		},this.M_FlagGetForm);
 	}
@@ -9923,7 +9927,10 @@ class HandleTypes extends HandleTypesEval {
 	E_AddToPlaylistService(x) {
 		this.T_Endpoint("E_AddToPlaylistService",x,
 			x => this.DE_AddToPlaylistService(this.w(x,"addToPlaylistServiceEndpoint")),
-			x => {let {webCommandMetadata: a,...y}=x; this.g(y); this.GM_playlist_get_add_to_playlist(a);});
+			x => {
+				const cf="";
+				let {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);/*#destructure*/ this.GM_playlist_get_add_to_playlist(a);
+			});
 	}
 	/** @protected @arg {GM_playlist_get_add_to_playlist} x */
 	GM_playlist_get_add_to_playlist(x) {
@@ -9933,7 +9940,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
-		const {videoId,...y}=x; this.g(y);
+		const cf="DE_AddToPlaylistService";
+		const {videoId,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 		this.videoId(videoId);
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
@@ -11310,7 +11318,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+		const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
 		this.D_Accessibility(accessibility);
 		this.R_SimpleText(formattedTitle);
 		this.ceq(icon.iconType,"HELP");
@@ -11874,10 +11882,16 @@ class HandleTypes extends HandleTypesEval {
 		this.T_Endpoint(cf,x,x => {
 			let u=this.w(this.sd(cf,x),"createBackstagePostEndpoint");
 			this.params(cf,"createBackstagePost.params",this.w(this.sd(`D${cf}`,u),"createBackstagePostParams"));
-		},meta => {
-			console.log(meta);
-			debugger;
-		});
+		},this.M_CreateBackstagePost);
+	}
+	/** @private @arg {M_CreateBackstagePost} x */
+	M_CreateBackstagePost(x) {
+		this.y(x,"webCommandMetadata",this.GM_CreateBackstagePost);
+	}
+	/** @private @arg {GM_CreateBackstagePost} x */
+	GM_CreateBackstagePost(x) {
+		const cf="GM_CreateBackstagePost";
+		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);
 	}
 	/** @private @arg {C_Executor} x */
 	C_Executor(x) {
@@ -12095,7 +12109,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
-		const {targetSectionIdentifier,loadCached,...y}=x; this.g(y);
+		const cf="DC_RelatedChip";
+		const {targetSectionIdentifier,loadCached,...y}=this.sd(cf,x); this.g(y);//#destructure
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
 	}
@@ -12771,7 +12786,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
 		const cf="D_CommentsEntryPointTeaser";
-		const {teaserAvatar,teaserContent,trackingParams,...y}=x; this.g(y);
+		const {teaserAvatar,teaserContent,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure
 		if(!teaserAvatar.accessibility) debugger;
 		this.R_Thumbnail(teaserAvatar);
 		if(!teaserContent.simpleText) debugger;
