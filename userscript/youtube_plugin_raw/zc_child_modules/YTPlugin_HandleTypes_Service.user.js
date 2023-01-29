@@ -4594,8 +4594,17 @@ class HandleTypes extends HandleTypesEval {
 	C_UpdateToggleButtonState(x) {this.c_ep("C_UpdateToggleButtonState",x,"updateToggleButtonStateCommand","commandMetadata",this.DC_UpdateToggleButtonState);}
 	/** @private @arg {DC_UpdateToggleButtonState} x */
 	DC_UpdateToggleButtonState(x) {
-		if(x.buttonId!=="TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION") debugger;
+		this.buttonState_buttonId(x.buttonId);
 		this.b_primitive_bool(x.toggled);
+	}
+	/** @private @arg {DC_UpdateToggleButtonState['buttonId']} x */
+	buttonState_buttonId(x) {
+		const cf="buttonState_buttonId";
+		this.save_enum("TOGGLE_BUTTON_ID_TYPE",x);
+		let ret=this.codegen_new_typedef("buttonState_buttonId",{button_id:x},true);
+		if(ret) {
+			this.save_string(`[${cf}]`,ret);
+		}
 	}
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {this.T_Endpoint("C_Loop",x,a => this.y(a,"loopCommand",this.DC_Loop),(a,cf) => {a; cf; debugger;});}
