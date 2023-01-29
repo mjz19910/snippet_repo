@@ -344,7 +344,7 @@ class CodegenService extends BaseService {
 			let v=this.as$T_Signal(x);
 			let kk=this.get_keys_of(x);
 			if(this.eq_keys(kk,["signal"])) {
-				return `TYPE::T_Signal<"${v.signal}">`
+				return `TYPE::T_Signal<"${v.signal}">`;
 			}
 			debugger;
 		}
@@ -406,7 +406,6 @@ class CodegenService extends BaseService {
 			state.object_store.push(val);
 			state.parent_map.set(val,[mi,k_in]);
 		}
-		if(k1==="") return o;
 		let res_type=this.typedef_json_replace_object(state,x,k1);
 		if(res_type!==null) return res_type;
 		if(state.key_keep_arr.includes(k1)) return x;
