@@ -1950,6 +1950,10 @@ class ServiceResolver {
 function export_(fn) {
 	if(typeof exports==="object") {
 		fn(exports);
+	} else {
+		/** @type {{}} */
+		let u=as(window);
+		fn(as(u));
 	}
 }
 function yt_plugin_base_main() {
@@ -7081,6 +7085,10 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
 	static is_url_with_pathname(x,pathname) {
+		/** @arg {R} x */
+		function use_r(x) {x;use_r_2(x);}
+		/** @arg {R} x */
+		function use_r_2(x) {x;use_r(x);}
 		return x.pathname===pathname;
 	}
 	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
