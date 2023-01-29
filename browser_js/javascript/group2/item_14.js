@@ -359,10 +359,13 @@ function json_stringify_with_cache(x) {
 				{
 					let x = item;
 					let node = x[1];
-					/** @type {(Exclude<keyof (Node extends infer U extends Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never),keyof EventTarget>)[]} */
-					let nk = as(Object.keys(node));
+					/** @typedef {ChromeDomNode} N_Node */
+					/** @type {(keyof (N_Node extends infer U extends N_Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never))[]} */
+					let nk = as(Object.keys(Object.getPrototypeOf(node)));
 					let fk = nk[0];
 					switch (fk) {
+						case "wholeText":
+							break;
 						default:
 							debugger; break;
 					}
@@ -422,17 +425,27 @@ function handle_json_event(x) {
 	switch (x[0]) {
 		case "EVENT::input":
 		case "EVENT::json_cache":
-			false && console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = dispatch_json_event(["COMMAND::unpack", x[1]]);
-			break;
+			{
+				// [handle_json_event_silent_info]
+				let [xk, xv] = x
+					, [xk1, xv1] = xv;
+				false && console.log("- [%s] [%s] -" + xv1.slice().map(() => "\n%o").join(""), xk, xk1, ...xv1);
+				ret = dispatch_json_event(["COMMAND::unpack", x[1]]);
+				break;
+			}
 		case "EVENT::vnodes":
 		case "EVENT::dom_nodes":
 		case "RESULT::handle_json_event":
 		case "TYPE::DataItemReturn":
 		case "EVENT::vue_app":
-			console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = dispatch_json_event(["COMMAND::unpack", x[1]]);
-			break;
+			{
+				// [handle_json_event_info]
+				let [xk, xv] = x
+					, [xk1, xv1] = xv;
+				console.log("- [%s] [%s] -" + xv1.slice().map(() => "\n%o").join(""), xk, xk1, ...xv1);
+				ret = dispatch_json_event(["COMMAND::unpack", xv]);
+				break;
+			}
 		case "TYPE::DBG_What":
 		case "COMMAND::unpack":
 		default:

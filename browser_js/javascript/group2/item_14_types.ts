@@ -120,3 +120,6 @@ namespace NS_NumRange {
 	];
 }
 type NumRange<T, E> = NS_NumRange.NumRange<T, E>;
+interface ChromeDomNode extends Node {
+	get wholeText(): string;
+}
