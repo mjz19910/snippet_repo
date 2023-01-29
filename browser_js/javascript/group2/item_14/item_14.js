@@ -500,13 +500,13 @@ function handle_json_event(x) {
 				ret = dispatch_json_event(["COMMAND::unpack:1", xv]);
 				break;
 			}
+		case "CONTENT::Node":
+		case "COMMAND::unpack_unit":
 		case "TYPE::DBG_What":
 		case "COMMAND::unpack":
 			console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
-		case "CONTENT::Node":
-		case "COMMAND::unpack_unit":
 		default:
 			debugger; console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
