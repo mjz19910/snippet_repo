@@ -7720,11 +7720,10 @@ class HandleTypesEval extends ServiceMethods {
 	}
 	//#endregion
 }
+window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
-HandleTypesEval;
 `;
-const HandleTypesEval_R=eval(handle_types_eval_code);
-HandleTypesEval=HandleTypesEval_R;
+eval(handle_types_eval_code);
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region static & typedefs

@@ -13,6 +13,5 @@ declare global {
 		delete(name: string): void;
 		entries(): IterableIterator<[string,string]>;
 	}
-	var HandleTypesEval: HandleTypesEval_<any,any>;
+	class HandleTypesEval<T,U> extends HandleTypesEval_<T,U> {}
 }
-
