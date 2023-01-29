@@ -311,12 +311,12 @@ function do_json_replace_on_iterate_cmd(x) {
 }
 /** @type {PendingCommandItem[]} */
 let pending_commands = [];
-/** @arg {DataItemReturn} x */
+/** @arg {DataItemReturnAlt} x */
 function dispatch_json_event(x) {
 	/** @type {string[]} */
 	let res = [];
 	switch (x[0]) {
-		case "COMMAND::unpack":
+		case "COMMAND::unpack:1":
 			{
 				let unpack = x[1];
 				let [s] = unpack;
@@ -328,24 +328,24 @@ function dispatch_json_event(x) {
 				}
 				return res;
 			}
-		case "TYPE::DBG_What":
+		case "TYPE::DBG_What:1":
 			{
 				console.log("[DBG_What]", x[1]);
 				return res;
 			}
-		case "TYPE::DataItemReturn":
-		case "EVENT::input":
-		case "EVENT::vnodes":
-		case "EVENT::dom_nodes":
-		case "EVENT::json_cache":
-		case "RESULT::handle_json_event":
-		case "EVENT::vue_app":
+		case "TYPE::DataItemReturn:1":
+		case "EVENT::input:1":
+		case "EVENT::vnodes:1":
+		case "EVENT::dom_nodes:1":
+		case "EVENT::json_cache:1":
+		case "RESULT::handle_json_event:1":
+		case "EVENT::vue_app:1":
 		default:
 			res.push(json_stringify_with_cache(["JSON::event", x]));
 			return res;
 	}
 }
-/** @arg {["JSON::data",[any]]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturn]} x */
+/** @arg {["JSON::data",[any]]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturnAlt]} x */
 function json_stringify_with_cache(x) {
 	if (x[0] === "JSON::data") {
 		let obj_keys = Object.keys(x[1]);
@@ -429,31 +429,31 @@ function handle_json_event(x) {
 				let [xk, xv] = x
 					, [xk1, xv1] = xv;
 				false && console.log("- [%s] [%s] -" + xv1.slice().map(() => "\n%o").join(""), xk, xk1, ...xv1);
-				ret = dispatch_json_event(["COMMAND::unpack", x[1]]);
+				ret = dispatch_json_event(["COMMAND::unpack:1", x[1]]);
 				break;
 			}
 		case "EVENT::vnodes":
 		case "EVENT::dom_nodes":
 		case "RESULT::handle_json_event":
 		case "TYPE::DataItemReturn":
-		case "EVENT::vue_app:1":
+		case "EVENT::vue_app":
 			{
 				// [handle_json_event_info]
 				let [xk, xv] = x
 					, [xk1, xv1] = xv;
 				console.log("- [%s] [%s] -" + xv1.slice().map(() => "\n%o").join(""), xk, xk1, ...xv1);
-				ret = dispatch_json_event(["COMMAND::unpack", xv]);
+				ret = dispatch_json_event(["COMMAND::unpack:1", xv]);
 				break;
 			}
 		case "TYPE::DBG_What":
 		case "COMMAND::unpack":
 			console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = dispatch_json_event(x);
+			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
 		default:
 			debugger;
 			console.log("- [%s] -\n%o", x[0], x[1]);
-			ret = dispatch_json_event(x);
+			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
 	}
 	process_commands();
