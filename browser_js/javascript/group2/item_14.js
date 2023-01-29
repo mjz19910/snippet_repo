@@ -362,19 +362,23 @@ function json_stringify_with_cache(x) {
 					/** @type {(Exclude<keyof (Node extends infer U extends Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never),keyof EventTarget>)[]} */
 					let nk = as(Object.keys(node));
 					let fk = nk[0];
+					switch (fk) {
+						default:
+							debugger; break;
+					}
 					switch (node.nodeType) {
-						default: debugger; break;
-						case 3: break;
+						default:
+							debugger; break;
+						case 3:
+							break;
 					}
 					/** @type {NumRange<3,3>} */
 					let nr = as(node.nodeType);
 					/** @type {NodeContentInfo} */
-					let r = ["CONTENT::Node", node.nodeName, nr, node.nodeValue];
-					fk;
-					r;
+					let node_content_info = ["CONTENT::Node", node.nodeName, nr, node.nodeValue];
 					node;
-					console.log("[pack.%s] [json_cache_with_cache_info]", x[0], node);
-					return JSON.stringify(x[1], json_replacer, "\t");
+					console.log("[pack.%s] [json_cache_node_info]", x[0], node_content_info);
+					return JSON.stringify(node_content_info, json_replacer, "\t");
 				}
 			case "string":
 			case "JsonInputType":
