@@ -262,6 +262,8 @@ let do_join_str = () => join_string(["\n", "%o"], "");
 const result_data_arr = [];
 /** @type {{}[]} */
 const done_history_items = [];
+/** @type {number[]} */
+let done_ids = [];
 /** @typedef {["TAG::stack", JsonHistoryType[]]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
@@ -273,6 +275,7 @@ function history_iter_iter_stack_tag(out_res, arr) {
 		if (result_data) {
 			out_res.output_arr.push(["TAG::result_data", result_data]);
 		}
+		done_ids.push(item.id);
 	}
 }
 /** @arg {JsonOutputBox} out_res */
@@ -280,8 +283,6 @@ function history_iter(out_res) {
 	if (stack.length === 0) {
 		return;
 	}
-	/** @type {number[]} */
-	let done_ids = [];
 	let all_history_arr = [];
 	while (stack.length > 0) {
 		let x = stack.shift();
