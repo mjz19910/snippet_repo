@@ -8585,7 +8585,7 @@ class HandleTypes extends HandleTypesEval {
 	true_() {return true;}
 	/** @private @arg {string} cf @arg {D_Video} x */
 	D_Video_Handle(cf,x) {
-		let {...u}=this.D_Video_Omit(cf,x);
+		let u=this.D_Video_Omit(cf,x);
 		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=u; this.g(y);
 		this.t(descriptionSnippet,this.R_TextRuns);
 		this.t(publishedTimeText,this.R_SimpleText);
@@ -8641,11 +8641,19 @@ class HandleTypes extends HandleTypesEval {
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
+		this.R_Menu(menu);
+		this.R_TextRuns(title);
+		this.videoId(videoId);
+		this.E_Watch(navigationEndpoint);
+		this.R_Thumbnail(thumbnail)
+		this.R_TextRuns(longBylineText)
+		this.R_TextRuns(shortBylineText)
 		return y;
 	}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=this.D_ThumbnailOverlay_Omit(cf,x);
+		let u=this.D_ThumbnailOverlay_Omit(cf,x);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=u;
 		this.R_TextRuns(ownerText);
 		if(showActionMenu!==false) debugger;
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
@@ -10274,7 +10282,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
-		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
+		let u=this.D_ThumbnailOverlay_Omit(cf,x);
+		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=u; this.g(y);
 		this.t(richThumbnail,this.richThumbnail_Video);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
