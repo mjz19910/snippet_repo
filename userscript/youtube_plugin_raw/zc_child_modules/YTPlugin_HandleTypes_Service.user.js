@@ -928,7 +928,7 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
 			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
 			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
-			case "browse-video-menu-button": 
+			case "browse-video-menu-button":
 			case "create-clip-button-action-bar": break;
 			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
@@ -956,7 +956,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => {
 			/** @private @type {D_Button$TargetId} */
 			switch(x) {
-				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}:`); debugger; break
+				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}:`); debugger; break;
 				case "clip-info-button":
 				case "sponsorships-button":
 				case "create-clip-button-action-bar":
@@ -2379,7 +2379,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
-	D_SegmentedLikeDislikeButton(x) {const cf="D_SegmentedLikeDislikeButton"; this.cfl(cf,x);}
+	D_SegmentedLikeDislikeButton(x) {
+		const cf="D_SegmentedLikeDislikeButton";
+		const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);
+		this.R_ToggleButton(likeButton);
+		this.R_ToggleButton(dislikeButton);
+
+	}
 	/** @private @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
@@ -2470,8 +2476,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RD_MenuServiceItem";
 		const u=this.RD_MenuServiceItem_Omit(cf,x);
 		const {hasSeparator,isDisabled,...y}=u; this.g(y);
-		this.t(hasSeparator,x=>this.ceq(x,true));
-		this.t(isDisabled,x=>this.ceq(x,false));
+		this.t(hasSeparator,x => this.ceq(x,true));
+		this.t(isDisabled,x => this.ceq(x,false));
 	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);}
@@ -4449,6 +4455,7 @@ class HandleTypes extends HandleTypesEval {
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		this.do_codegen(cf,x);
 		{debugger;}
 	}
@@ -5494,10 +5501,29 @@ class HandleTypes extends HandleTypesEval {
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 		debugger;
 	}
+	/** @type {string[]} */
+	logged_strings=[];
 	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
-	D_SubscriptionNotificationToggleButton(x) {const cf="D_SubscriptionNotificationToggleButton"; this.cfl(cf,x);}
+	D_SubscriptionNotificationToggleButton(x) {
+		const cf="D_SubscriptionNotificationToggleButton";
+		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);
+		this.z(states,(x,i) => {
+			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
+			console.log("[D_SubscriptionNotificationToggleButton] [btn.next.%o]",i,nextStateId);
+			console.log("[D_SubscriptionNotificationToggleButton] [btn.state.%o]",i,stateId);
+			this.R_Button(state);
+		});
+		if(currentStateId!==2) debugger;
+		this.trackingParams(cf,trackingParams);
+		this.C_Executor(command);
+		if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
+			this.logged_strings.push(`${cf}:${targetId}`);
+			console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
+		}
+		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
+	}
 	/** @private @arg {G_CommentsSection} x */
 	G_CommentsSection(x) {
 		const cf="G_CommentsSection";
