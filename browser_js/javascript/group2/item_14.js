@@ -451,8 +451,7 @@ function handle_json_event(x) {
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
 		default:
-			debugger;
-			console.log("- [%s] -\n%o", x[0], x[1]);
+			debugger; console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
 	}
@@ -463,7 +462,8 @@ function process_commands() {
 	if (processing_commands)
 		return;
 	processing_commands = true;
-	for (let command of pending_commands) {
+	let in_process_arr = pending_commands.slice();
+	for (let command of in_process_arr) {
 		let [tag, cmd] = command;
 		tag === "unpack";
 		switch (cmd[0]) {
@@ -475,7 +475,13 @@ function process_commands() {
 				break;
 		}
 	}
-	pending_commands.length = 0;
+	for (let done of in_process_arr) {
+		let rm_idx = pending_commands.indexOf(done);
+		if (rm_idx < 0) {
+			debugger; throw 1;
+		}
+		pending_commands.splice(rm_idx, 1);
+	}
 	processing_commands = false;
 }
 /** @arg {JsonOutputBox} res_box @arg {DataItemReturn} x */
