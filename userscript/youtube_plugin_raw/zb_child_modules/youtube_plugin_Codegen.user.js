@@ -340,14 +340,6 @@ class CodegenService extends BaseService {
 			if(!sr) break x;
 			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
-		if(x.signal&&typeof x.signal==="string") {
-			let v=this.as$T_Signal(x);
-			let kk=this.get_keys_of(x);
-			if(this.eq_keys(kk,["signal"])) {
-				return `TYPE::T_Signal<"${v.signal}">`;
-			}
-			debugger;
-		}
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
