@@ -7599,6 +7599,9 @@ export_((exports) => {
 	exports.BaseService=BaseService;
 	exports.CodegenService=CodegenService;
 });
+export_(exports=>{
+	exports.base64_url_dec=base64_url_dec;
+});
 
 export_((exports) => {
 	exports.__youtube_plugin_base_loaded__=true;
