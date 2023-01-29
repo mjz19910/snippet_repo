@@ -7597,5 +7597,9 @@ export_((exports) => {
 	exports.yt_plugin_base_main=yt_plugin_base_main;
 	exports.BaseServicePrivate=BaseServicePrivate;
 	exports.BaseService=BaseService;
+	exports.CodegenService=CodegenService;
+});
+
+export_((exports) => {
 	exports.__youtube_plugin_base_loaded__=true;
 });
