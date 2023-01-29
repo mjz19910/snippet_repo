@@ -809,9 +809,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		console.groupCollapsed();
-		this.do_codegen(cf,x);
-		console.groupEnd();
+		this.make_codegen_group(cf,x);
 	}
 	/** @private @template {D_CompactLink} T @arg {D_Link_CF} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
@@ -1493,6 +1491,16 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,openPopupAction: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return a;
+	}
+	/** @private @arg {string} cf @arg {{}} x */
+	make_codegen_group(cf,x,collapsed=true) {
+		if(collapsed) {
+			console.groupCollapsed();
+		} else {
+			console.group();
+		}
+		this.do_codegen(cf,x);
+		console.groupEnd();
 	}
 	/** @private @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
