@@ -254,6 +254,27 @@ class CodegenService extends BaseService {
 			&&x.formattedTitle
 			&&x.accessibility;
 	}
+	/** @arg {string} x */
+	filter_typedef_part_gen(x) {
+		let x_arr=x.split("\n");
+		x_arr=x_arr.map(e => e.trim());
+		x_arr=x_arr.map(e=>e.match(/[\}]];$/)?e.slice(0,-1):e);
+		return x_arr.join("");
+	}
+	/** @template {{}} T @arg {T} x */
+	get_typedef_part(x) {
+		let gn=this.get_name_from_keys(x);
+		if(!gn) return null;
+		let gr=this.#_codegen_typedef(x,gn);
+		if(!gr) return null;
+		let gr_f=this.filter_typedef_part_gen(gr);
+		let sr=split_string_once(gr_f,"=")[1];
+		if(!sr) return null;
+		if(sr.endsWith(";")) {
+			sr=sr.slice(0,-1);
+		}
+		return sr;
+	}
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
@@ -298,15 +319,8 @@ class CodegenService extends BaseService {
 			/** @type {T_SE_Signal<{},{}>} */
 			let xu=as(xc_1);
 			xu.signalServiceEndpoint;
-			let gn=this.get_name_from_keys(x.signalServiceEndpoint);
-			if(!gn) break x;
-			let gr=this.#_codegen_typedef(x.signalServiceEndpoint,gn);
-			if(!gr) break x;
-			let sr=split_string_once(gr.split("\n").map(e => e.trim()).join(""),"=")[1];
+			let sr=this.get_typedef_part(xu.signalServiceEndpoint);
 			if(!sr) break x;
-			if(sr.endsWith(";")) {
-				sr=sr.slice(0,-1);
-			}
 			console.log("[typedef_codegen_res]",sr);
 			debugger;
 			return `TYPE::T_SE_Signal<{webCommandMetadata: {}},${sr}>`;
