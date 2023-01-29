@@ -64,19 +64,19 @@ type GM_WC=[
 	GM_SetSetting,
 	GM_AccountMenu,
 	GM_CreateBackstagePost,
-	GM_browse_edit_playlist,
+	GM_EditPlaylist,
 	GM_Browse,
-	GM_comment_create_comment,
-	GM_feedback,
+	GM_CreateComment,
+	GM_Feedback,
 	GM_FlagGetForm,
-	GM_get_survey,
-	GM_get_transcript,
+	GM_GetSurvey,
+	GM_GetTranscript,
 	GM_GetNotificationMenu,
-	GM_like_dislike,
-	GM_like_like,
-	GM_like_removelike,
+	GM_Dislike,
+	GM_Like,
+	GM_RemoveLike,
 	GM_Next,
-	GM_notification_get_unseen_count,
+	GM_GetUnseenNotificationCount,
 	GM_notification_opt_out,
 	GM_RecordInteractions,
 	GM_CreatePlaylist,
@@ -93,19 +93,19 @@ type GM_WC=[
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
 type GM_AccountMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/account_menu">;
 type GM_CreateBackstagePost=T_GM_PostApi_WithApiUrl<"/youtubei/v1/backstage/create_post">;
-type GM_browse_edit_playlist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse/edit_playlist">;
+type GM_EditPlaylist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse/edit_playlist">;
 type GM_Browse=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse">;
-type GM_comment_create_comment=T_GM_PostApi_WithApiUrl<"/youtubei/v1/comment/create_comment">;
-type GM_feedback=T_GM_PostApi_WithApiUrl<"/youtubei/v1/feedback">;
+type GM_CreateComment=T_GM_PostApi_WithApiUrl<"/youtubei/v1/comment/create_comment">;
+type GM_Feedback=T_GM_PostApi_WithApiUrl<"/youtubei/v1/feedback">;
 type GM_FlagGetForm=T_GM_PostApi_WithApiUrl<"/youtubei/v1/flag/get_form">;
-type GM_get_survey=T_GM_PostApi_WithApiUrl<"/youtubei/v1/get_survey">;
-type GM_get_transcript=T_GM_PostApi_WithApiUrl<"/youtubei/v1/get_transcript">;
+type GM_GetSurvey=T_GM_PostApi_WithApiUrl<"/youtubei/v1/get_survey">;
+type GM_GetTranscript=T_GM_PostApi_WithApiUrl<"/youtubei/v1/get_transcript">;
 type GM_GetNotificationMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/get_notification_menu">;
-type GM_like_dislike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/dislike">;
-type GM_like_like=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/like">;
-type GM_like_removelike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/removelike">;
+type GM_Dislike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/dislike">;
+type GM_Like=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/like">;
+type GM_RemoveLike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/removelike">;
 type GM_Next=T_GM_PostApi_WithApiUrl<"/youtubei/v1/next">;
-type GM_notification_get_unseen_count=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/get_unseen_count">;
+type GM_GetUnseenNotificationCount=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/get_unseen_count">;
 type GM_notification_opt_out=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/opt_out">;
 type GM_RecordInteractions=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/record_interactions">;
 type GM_CreatePlaylist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/create">;
@@ -139,6 +139,7 @@ type M_RecordInteractions=TM_Gen<GM_RecordInteractions>;
 type M_SendPost=TM_Gen<GM_SendPost>;
 type M_SetSetting=TM_Gen<GM_SetSetting>;
 type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
+type M_GetUnseenNotificationCount=TM_Gen<GM_GetUnseenNotificationCount>;
 //#endregion
 //#region DE_VE
 type DE_VE<T>={browseId: T;};
@@ -307,7 +308,7 @@ type E_CreateBackstagePost=TE_Endpoint_3<"createBackstagePostEndpoint",DE_Create
 type M_CreateBackstagePost=TM_Gen<GM_CreateBackstagePost>;
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type E_CreateComment=TE_Endpoint_3<"createCommentEndpoint",DE_CreateComment,M_comment_create_comment>;
-type M_comment_create_comment=TM_Gen<GM_comment_create_comment>;
+type M_comment_create_comment=TM_Gen<GM_CreateComment>;
 type DE_CreateComment={createCommentParams: string;};
 type E_Feedback=TE_Endpoint_3<"feedbackEndpoint",DE_Feedback,M_Feedback>;
 type DE_Feedback={feedbackToken: string; uiActions: D_HideEnclosingContainer; actions?: A_ReplaceEnclosing[];};
@@ -315,13 +316,13 @@ type E_GetNotificationMenu=TE_Endpoint_3<"getNotificationMenuEndpoint",DE_GetNot
 type DE_GetNotificationMenu={ctoken: string;};
 type E_GetReportForm=TE_Endpoint_3<"getReportFormEndpoint",D_Params,M_FlagGetForm>;
 type E_GetTranscript=TE_Endpoint_3<"getTranscriptEndpoint",D_Params,D_Empty_WCM>;
-type M_Like={webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;};
+type M_Like={webCommandMetadata: GM_Like|GM_Dislike|GM_RemoveLike;};
 interface E_Like extends TE_Endpoint_3<"likeEndpoint",DE_Like,M_Like> {};
 type DE_Like=DE_Like_NS.DE_Like;
 type E_NotificationOptOut=TE_Endpoint_3<"notificationOptOutEndpoint",DE_NotificationOptOut,D_Empty_WCM>;
 type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type M_EditPlaylist={
-	webCommandMetadata: GM_browse_edit_playlist;
+	webCommandMetadata: GM_EditPlaylist;
 };
 
 type E_PlaylistEdit=TE_Endpoint_3<"playlistEditEndpoint",DE_PlaylistEdit,M_EditPlaylist>;
@@ -334,7 +335,7 @@ type E_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE3741
 type DE_ReelWatch={videoId: string;}|{thumbnail: R_Thumbnail;}|{playerParams: string; overlay: R_ReelPlayerOverlay; params: string;}|{sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams: string;}|{inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
 type E_Search=TE_Endpoint_3<"searchEndpoint",DE_Search,M_VE4724>;
 type DE_Search={query: string;};
-type M_Feedback=TM_Gen<GM_feedback>;
+type M_Feedback=TM_Gen<GM_Feedback>;
 type E_SetSetting=TE_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
 type S_Client_Item=[
 	E_ShowEngagementPanel,

@@ -2487,7 +2487,7 @@ class HandleTypes extends HandleTypesEval {
 			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
-			this.G_CommandMetadata(commandMetadata,true);
+			this.M_SetSetting(commandMetadata);
 			this.T_DE_SettingItem_AutonavForDesktop(setSettingEndpoint);
 		});
 		this.D_Accessibility(enabledAccessibilityData);
@@ -2495,6 +2495,10 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
+	/** @private @arg {M_SetSetting} x */
+	M_SetSetting(x) {this.y("M_SetSetting",x,"webCommandMetadata",this.GM_SetSetting);}
+	/** @private @arg {GM_SetSetting} x */
+	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
 	T_DE_SettingItem_AutonavForDesktop(x) {
 		if("boolValue" in x) {
@@ -2730,9 +2734,13 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/feedback") debugger;
-		this.G_CommandMetadata(commandMetadata,true);
+		this.M_Feedback(commandMetadata);
 		this.DE_Feedback(feedbackEndpoint);
 	}
+	/** @private @arg {M_Feedback} x */
+	M_Feedback(x) {this.y("M_Feedback",x,"webCommandMetadata",this.GM_Feedback)}
+	/** @private @arg {GM_Feedback} x */
+	GM_Feedback(x) {x;}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
@@ -2743,7 +2751,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
 	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {this.TE_Endpoint_3("A_ReplaceEnclosing",x,"replaceEnclosingAction",this.AD_ReplaceEnclosing);}
+	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
@@ -2787,20 +2795,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="T_Icon";
 		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.save_string("[IconType]",iconType);
-	}
-	/** @private @arg {G_CommandMetadata} x @arg {boolean} handled */
-	G_CommandMetadata(x,handled=false) {
-		if(handled===false) console.log("TODO",x,[new Error]);
-		const cf="G_CommandMetadata";
-		if("resolveUrlCommandMetadata" in x) {
-			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=this.s(cf,x); this.g(y);//#destructure_off
-			webCommandMetadata;
-			debugger;
-			// this.WebCommandMetadata(webCommandMetadata);
-			this.t(resolveUrlCommandMetadata,this.MC_ResolveUrl);
-			return;
-		}
-		this.GM_WC(this.unpack_MG(this.s(cf,x)));
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -5210,21 +5204,21 @@ class HandleTypes extends HandleTypesEval {
 			case "/youtubei/v1/like/like": return this.GM_like_like(a);
 		}
 	}
-	/** @private @arg {GM_like_removelike} x */
+	/** @private @arg {GM_RemoveLike} x */
 	GM_like_removelike(x) {
 		const cf="GM_like_removelike";
 		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="/youtubei/v1/like/removelike") debugger;
 		if(b!==true) debugger;
 	}
-	/** @private @arg {GM_like_dislike} x */
+	/** @private @arg {GM_Dislike} x */
 	GM_like_dislike(x) {
 		const cf="GM_like_dislike";
 		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="/youtubei/v1/like/dislike") debugger;
 		if(b!==true) debugger;
 	}
-	/** @private @arg {GM_like_like} x */
+	/** @private @arg {GM_Like} x */
 	GM_like_like(x) {
 		const cf="GM_like_like";
 		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off

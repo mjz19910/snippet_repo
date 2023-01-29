@@ -9,5 +9,3 @@ type D_NotificationTopbarButton={
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };
-type GM_GetUnseenNotificationCount={sendPost: true;apiUrl: "/youtubei/v1/notification/get_unseen_count";};
-type M_GetUnseenNotificationCount={webCommandMetadata: GM_GetUnseenNotificationCount;};
