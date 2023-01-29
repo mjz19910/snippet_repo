@@ -269,21 +269,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
 	H_=super.H_;
 	//#region Temporary
-	/** @override @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
-	TD_ItemSection_3(x,f) {
+	/** @override @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
+	TD_ItemSection_3(x) {
 		const cf="TD_ItemSection_3";
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
-		f.call(this,[contents,sectionIdentifier,targetId]);
 		this.trackingParams(cf,trackingParams);
 		if(contents.length>0) {
 			let cu=contents[0];
-			if(typeof cu!=="object"||!cu) {debugger; return;}
+			if(typeof cu!=="object"||!cu) {debugger; return null;}
 			let k=this.get_keys_of(cu);
 			switch(k[0]) {
 				case "continuationItemRenderer": break;
 				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
 			}
 		}
+		return [contents,sectionIdentifier,targetId];
 	}
 	//#endregion
 	//#region web_command_metadata
@@ -2988,7 +2988,9 @@ class HandleTypes extends HandleTypesEval {
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
 		let u=this.TR_ItemSection_3(x);
-		this.TD_ItemSection_3(u,this.ItemSection_3_CommentItemSection);
+		let u1=this.TD_ItemSection_3(u);
+		if(!u1) return;
+		this.ItemSection_3_CommentItemSection(u1);
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
 	G_WatchResultItem_ItemSectionGroup(x) {
@@ -3009,27 +3011,26 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
 		let u=this.TR_ItemSection_3(x);
-		this.TD_ItemSection_3(u,a => {
-			let [u,...v]=a;
-			if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u,a => {
-				let cf=this.get_name_from_keys(a);
-				if(!cf) {debugger; return;}
-				this.HD_(`D_${cf}`,a);
-				console.log("[found item_section_watch_data]",cf);
-				debugger;
-			});
+		let a=this.TD_ItemSection_3(u);
+		if(!a) return null;
+		let [u1,...v]=a;
+		if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u1,a => {
+			let cf=this.get_name_from_keys(a);
+			if(!cf) {debugger; return;}
+			this.HD_(`D_${cf}`,a);
+			console.log("[found item_section_watch_data]",cf);
 			debugger;
-			return null;
 		});
+		debugger;
+		return null;
 	}
 	/** @private @arg {G_SecondaryContentsItem} x */
 	G_SecondaryContentsItem(x) {
+		const cf="G_SecondaryContentsItem"; this.k(cf,x);
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
-		let k=this.get_keys_of(x);
-		switch(k[0]) {
-			case "relatedChipCloudRenderer": break;
-			default: debugger; break;
-		}
+		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
+		this.do_codegen(cf,x);
+		return null;
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
 	G_Watch_SecondaryResults_Contents(x) {
@@ -3468,7 +3469,9 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		const {contents,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
-		this.z(contents,this.SectionListItem);
+		let [u]=this.z(contents,this.TR_SectionListItem_3);
+		let [u1]=this.z(u,x => this.TD_ItemSection_3(x));
+		u1;
 		// this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
 		// this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
@@ -3493,26 +3496,14 @@ class HandleTypes extends HandleTypesEval {
 	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
-	/** @private @arg {TR_SectionListItem_3<{},{},{}>} x */
-	SectionListItem(x) {
-		const cf="SectionListItem"; this.k(cf,x); this.k(cf,x);
-		if("itemSectionRenderer" in x) {
-			// return this.ItemSectionRenderer(x);
-			debugger;
-			return;
-		} else if("continuationItemRenderer" in x) {
-			this.R_ContinuationItem(x);
-		} else if("musicCarouselShelfRenderer" in x) {
-			// this.MusicCarouselShelfRenderer(x);
-			debugger;
-			return;
-		} else if("musicShelfRenderer" in x) {
-			// this.MusicShelfRenderer(x);
-			debugger;
-			return;
-		} else {
-			debugger;
-		}
+	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
+	TR_SectionListItem_3(x) {
+		const cf="SectionListItem"; this.k(cf,x);
+		if("itemSectionRenderer" in x) return this.TR_ItemSection_3(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
+		if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
+		debugger;
 	}
 	/** @private @arg {R_ContinuationItem} x */
 	R_ContinuationItem(x) {this.H_("R_ContinuationItem",x,this.D_ContinuationItem);}
@@ -4949,15 +4940,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_Watch_SecondaryResults_R_SectionItem} x */
 	G_Watch_SecondaryResults_R_SectionItem(x) {
 		let u=this.TR_ItemSection_3(x);
-		this.TD_ItemSection_3(u,([a,...section_id_target_id_arr]) => {
-			let section_id_target_id=this.join_string(section_id_target_id_arr,"-");
-			switch(section_id_target_id) {
-				default: debugger; break;
-				case "sid-wn-chips-watch-next-feed": break;
-			}
-			this.z(a,this.G_Watch_SecondaryResults_G_SectionItem);
-			return a;
-		});
+		let u1=this.TD_ItemSection_3(u);
+		if(!u1) return;
+		let [a,...section_arr]=u1;
+		let section_str=this.join_string(section_arr,"-");
+		switch(section_str) {
+			default: debugger; break;
+			case "sid-wn-chips-watch-next-feed": break;
+		}
+		this.z(a,this.G_Watch_SecondaryResults_G_SectionItem);
+		return a;
+
 	}
 	/** @private @arg {G_Watch_SecondaryResults_ItemType_1} x */
 	G_Watch_SecondaryResults_ItemType_1(x) {
@@ -6267,7 +6260,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(carouselLockups,this.R_CarouselLockup);
 		this.R_TopicLink(topicLink);
 		this.R_TextRuns(premiumUpsellLink);
-		debugger;
 	}
 	/** @private @arg {R_TopicLink} x */
 	R_TopicLink(x) {this.H_("R_TopicLink",x,this.D_TopicLink);}
@@ -6288,7 +6280,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(factoid,this.R_Factoid);
 		this.E_Browse(channelNavigationEndpoint);
 		this.R_Thumbnail(channelThumbnail);
-		debugger;
 	}
 	/** @private @arg {R_Factoid} x */
 	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,x,this.D_Factoid);}
@@ -6320,7 +6311,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TextRuns(descriptionBodyText);
 		this.R_SimpleText(showMoreText);
 		this.R_SimpleText(showLessText);
-		debugger;
 	}
 	/** @private @arg {D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x) {

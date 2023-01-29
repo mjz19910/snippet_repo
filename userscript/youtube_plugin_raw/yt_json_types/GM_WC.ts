@@ -432,7 +432,13 @@ type DC_PlaylistPanel={};
 type C_SectionList={sectionListContinuation: DC_SectionList;};
 type T_DC_Content<T>={trackingParams: string; contents: T[];};
 type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
-type DC_SectionList=DC_SectionListBase|DC_SectionList_SearchFeed|DC_SectionList_BrowseFeed_ChannelFeatured|DC_SectionList_BrowseFeed_Subscriptions;
+type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
+type DC_SectionList=
+	|DC_SectionListBase
+	|DC_SectionList_SearchFeed
+	|DC_SectionList_BrowseFeed_ChannelFeatured
+	|DC_SectionList_BrowseFeed_Subscriptions
+	;
 type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3<{},{},{}>>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3<{},{},{}>>;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3<{},{},{}>>;
