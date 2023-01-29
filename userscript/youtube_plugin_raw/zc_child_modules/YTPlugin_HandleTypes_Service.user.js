@@ -5865,7 +5865,7 @@ class HandleTypes extends HandleTypesEval {
 	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter",x,this.D_TranscriptFooter);}
 	/** @private @arg {D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {const cf="D_TranscriptFooter"; this.cfl(cf,x);}
-	static {this.prototype.C_RepeatChapter;}
+	static {/*remove_this_static*/this.prototype.C_RepeatChapter;}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {const cf="C_RepeatChapter"; this.cfl(cf,x);}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
