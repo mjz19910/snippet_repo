@@ -364,6 +364,7 @@ function json_stringify_with_cache(x) {
 					let fk = nk[0];
 					switch (node.nodeType) {
 						default: debugger; break;
+						case 3: break;
 					}
 					/** @type {NumRange<3,3>} */
 					let nr = as(node.nodeType);
