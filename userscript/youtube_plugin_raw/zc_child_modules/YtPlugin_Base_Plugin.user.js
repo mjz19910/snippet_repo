@@ -704,7 +704,7 @@ class ObjectInfo {
 }
 ObjectInfo.instance=new ObjectInfo;
 const store=required(window.__plugin_modules__);
-class R_HandleRichGrid$ {
+class R_HandleRichGrid_Base {
 	enable_logging=false;
 	/** @readonly */
 	class_name="HandleRichGridRenderer";
@@ -715,7 +715,7 @@ class R_HandleRichGrid$ {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
 	/** @handler @public @arg {string} path @arg {Todo_D_RichGrid} renderer */
-	richGridRenderer$(path,renderer) {
+	richGridRenderer(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
@@ -3083,7 +3083,7 @@ class YtHandlers extends BaseService {
 		super(res);
 		this.filter_handler_debug=false;
 		this.handlers={
-			rich_grid: new R_HandleRichGrid$(res),
+			rich_grid: new R_HandleRichGrid_Base(res),
 			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
 		this.iteration=new IterateApiResultBase(res,new YtObjectVisitor);
@@ -3322,7 +3322,7 @@ class YtObjectVisitor {
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer(state,renderer) {
-		state.t.handlers.rich_grid.richGridRenderer$(state.path,renderer);
+		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
