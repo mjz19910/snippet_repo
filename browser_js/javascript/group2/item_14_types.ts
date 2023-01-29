@@ -49,7 +49,7 @@ type JsonUnpackValue =
 	| ["VueApp", VueApp[]]
 	| ["DataItemReturn", DataItemReturn[]]
 	| ["Node", Node[]]
-	| ["string", string[]]
+	| JsonEventResult
 	| ["VueVnode", VueVnode[]]
 	| ["any", any[]]
 	;
@@ -76,6 +76,8 @@ type WhatInfoObj = {
 };
 type WhatInfoItem = ["TYPE::DBG_What", WhatInfoObj];
 
+type JsonEventResult = ["handle_result", [results: string[], command_results: string[]]] | ["string", string[]];
+
 type DataItemReturn =
 	| WhatInfoItem
 	| ["TYPE::DataItemReturn", ["DataItemReturn", DataItemReturn[]]]
@@ -84,7 +86,7 @@ type DataItemReturn =
 	| ["EVENT::vnodes", ["VueVnode", VueVnode[]]]
 	| ["EVENT::dom_nodes", ["Node", Node[]]]
 	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
-	| ["RESULT::handle_json_event", ["string", string[]]]
+	| ["RESULT::handle_json_event", JsonEventResult]
 	| NodeContentInfo
 	| UnpackCommand
 	| UnpackUnitCommand

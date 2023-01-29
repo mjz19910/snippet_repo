@@ -412,23 +412,21 @@ function json_stringify_with_cache(x) {
 	}
 	return JSON.stringify(x[1], json_replacer, "\t");
 }
-/** @arg {UnpackCommand} x */
+/** @arg {UnpackCommand} x @returns {[string]|[]} */
 function handle_json_unpack_cmd(x) {
 	console.log("unpack cmd run pending", x);
 	debugger;
 	return [json_stringify_with_cache(["JSON::pack", ["any", x[1]]])];
 }
-/** @arg {UnpackUnitCommand} x */
+/** @arg {UnpackUnitCommand} x @returns {[string]|[]} */
 function handle_json_unpack_unit_cmd(x) {
 	if (x[0] !== "COMMAND::unpack_unit") {
 		debugger; return [];
 	}
-	let result_arr = [];
-	result_arr.push(json_stringify_with_cache(["JSON::pack", x[1]]));
-	return result_arr;
+	return [json_stringify_with_cache(["JSON::pack", x[1]])];
 }
 let processing_commands = false;
-/** @arg {DataItemReturn} x */
+/** @arg {DataItemReturn} x @returns {[string[],string[]]} */
 function handle_json_event(x) {
 	let ret;
 	switch (x[0]) {
@@ -465,25 +463,31 @@ function handle_json_event(x) {
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
 	}
-	process_commands();
-	debugger;
-	return ret;
+	let process_ret = process_commands();
+	return [ret, process_ret];
 }
 function process_commands() {
 	if (processing_commands)
-		return;
+		return [];
 	processing_commands = true;
+	let command_result_arr = [];
 	let in_process_arr = pending_commands.slice();
 	for (let command of in_process_arr) {
 		let [tag, cmd] = command;
-		tag === "unpack";
+		if (tag !== "unpack") {
+			debugger;
+		}
+		let cmd_res;
 		switch (cmd[0]) {
 			case "COMMAND::unpack":
-				handle_json_unpack_cmd(cmd);
+				cmd_res = handle_json_unpack_cmd(cmd);
 				break;
 			case "COMMAND::unpack_unit":
-				handle_json_unpack_unit_cmd(cmd);
+				cmd_res = handle_json_unpack_unit_cmd(cmd);
 				break;
+		}
+		if (cmd_res.length === 1) {
+			command_result_arr.push(...cmd_res);
 		}
 	}
 	for (let done of in_process_arr) {
@@ -494,13 +498,14 @@ function process_commands() {
 		pending_commands.splice(rm_idx, 1);
 	}
 	processing_commands = false;
+	return command_result_arr;
 }
 /** @arg {JsonOutputBox} res_box @arg {DataItemReturn} x */
 function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
 	if (res.length > 0) {
-		res_box.output_arr.push(["RESULT::handle_json_event", ["string", res]]);
+		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", x[0], res]]);
 	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
