@@ -301,6 +301,8 @@ const done_history_items = [];
 /** @typedef {["TAG::stack", JsonHistoryType[]]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
+function history_iter_iter_stack_tag() {
+}
 /** @arg {JsonOutputBox} out_res */
 function history_iter(out_res) {
 	if (stack.length === 0) {
@@ -322,10 +324,22 @@ function history_iter(out_res) {
 		if (done_history_items.length > 12) {
 			return [];
 		}
-		console.log("start iter", done_history_items.length);
-		let result_data = HistoryResultData.make(out_res);
-		if (result_data) {
-			result_data_arr.push(["TAG::result_data", result_data]);
+		let stack_item = x;
+		switch (stack_item[0]) {
+			default: debugger; break;
+			case "TAG::stack":
+				{
+					let stack_cur = stack_item[1];
+					for (let item of stack_cur) {
+						item;
+						item.id;
+						console.log("start iter", item.id);
+						let result_data = HistoryResultData.make(out_res);
+						if (result_data) {
+							result_data_arr.push(["TAG::result_data", result_data]);
+						}
+					}
+				} break;
 		}
 	}
 	let log_args = log_history_items(target_history);
