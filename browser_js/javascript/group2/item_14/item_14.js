@@ -703,7 +703,7 @@ class HistoryResultData {
 			result.push(val);
 		}
 		if (result.length === 1) {
-			return ["DATA::from_json", JSON.parse(out[0])];
+			return ["DATA::from_json", result[0]];
 		}
 		debugger;
 		/** @type {T|{}} */
