@@ -242,10 +242,14 @@ function main_start_json_replace() {
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	init_json_event_sys_with_obj(res, doc_child);
-	stack.push(["TAG::stack", [{
+	/** @type {JsonHistoryType} */
+	let x1 = {
 		id: next_id++,
 		items: [res],
-	}]]);
+	};
+	/** @type {JsonStackType} */
+	let new_item = ["TAG::stack", x1];
+	stack.push(new_item);
 	let history_res = history_output.reset();
 	history_iter(history_res);
 	let res_log = res.get_log_self_args("results");
@@ -264,19 +268,17 @@ const result_data_arr = [];
 const done_history_items = [];
 /** @type {number[]} */
 let done_ids = [];
-/** @typedef {["TAG::stack", JsonHistoryType[]]} JsonStackType */
+/** @typedef {["TAG::stack", JsonHistoryType]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
-/** @arg {JsonOutputBox} out_res @arg {JsonHistoryType[]} arr */
-function history_iter_iter_stack_tag(out_res, arr) {
-	for (let item of arr) {
-		console.log("start iter", item.id);
-		let result_data = HistoryResultData.make(item.items[0]);
-		if (result_data) {
-			out_res.output_arr.push(["TAG::result_data", result_data]);
-		}
-		done_ids.push(item.id);
+/** @arg {JsonOutputBox} out_res @arg {JsonHistoryType} item */
+function history_iter_iter_stack_tag(out_res, item) {
+	console.log("start iter", item.id);
+	let result_data = HistoryResultData.make(item.items[0]);
+	if (result_data) {
+		out_res.output_arr.push(["TAG::result_data", result_data]);
 	}
+	done_ids.push(item.id);
 }
 /** @arg {JsonOutputBox} out_res */
 function history_iter(out_res) {
@@ -610,8 +612,6 @@ function do_map(v) {
 		return null;
 	return v;
 }
-/** @type {JsonHistoryType[]} */
-let target_history = [];
 /** @type {{value:{has_value:false}|{has_value:true;value:unknown;}}} */
 const input_obj = {
 	value: {
@@ -645,7 +645,7 @@ class HistoryResultData {
 			return null;
 		}
 		let input_value = input_obj.value.value;
-		let history_new_intersection = intersect_array_get_added(history, target_history);
+		let history_new_intersection = intersect_array_get_added(history, result_history);
 		let cv = [...json_cache_map.keys()];
 		if (cv.length === 1 && cv[0] === input_value) {
 			let k = json_cache_map.get(input_value);
