@@ -1,4 +1,4 @@
-import {ServiceMethods} from "./youtube_plugin.user";
+import {ServiceMethods} from "./youtube_plugin_base.user";
 /** @returns {never} */
 function n() {
 	throw new Error("Make never type");

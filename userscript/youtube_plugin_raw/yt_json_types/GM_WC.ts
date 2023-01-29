@@ -600,8 +600,16 @@ type AC_Executor=[
 	A_HideEngagementPanelScrim,
 	B_C_ScrollToEngagementPanel,
 	C_Loop,
+	C_UpdateToggleButtonState,
 	TA_OpenPopup<{}>,
 ][number];
+type C_UpdateToggleButtonState={
+	clickTrackingParams: string;
+	updateToggleButtonStateCommand: {
+		toggled: false;
+		buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION";
+	};
+};
 type GC_EngagementPanelSectionShow=
 	|A_ChangeEngagementPanelVisibility
 	|A_ShowEngagementPanelScrim
