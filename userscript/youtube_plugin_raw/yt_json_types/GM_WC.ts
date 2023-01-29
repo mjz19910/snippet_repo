@@ -63,7 +63,7 @@ type GM_WC=[
 	GM_VE96368_WC_browse,
 	GM_SetSetting,
 	GM_AccountMenu,
-	GM_backstage_create_post,
+	GM_CreateBackstagePost,
 	GM_browse_edit_playlist,
 	GM_Browse,
 	GM_comment_create_comment,
@@ -157,7 +157,7 @@ type GM_VE96368_WC_browse={
 //#region GM_ApiUrl
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
 type GM_AccountMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/account_menu">;
-type GM_backstage_create_post=T_GM_PostApi_WithApiUrl<"/youtubei/v1/backstage/create_post">;
+type GM_CreateBackstagePost=T_GM_PostApi_WithApiUrl<"/youtubei/v1/backstage/create_post">;
 type GM_browse_edit_playlist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse/edit_playlist">;
 type GM_Browse=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse">;
 type GM_comment_create_comment=T_GM_PostApi_WithApiUrl<"/youtubei/v1/comment/create_comment">;
@@ -356,7 +356,8 @@ type DC_ShowReloadUi={targetId: D_UiTargetId;};
 //#region Endpoints
 type E_AddToPlaylistService=TE_Endpoint<{webCommandMetadata: GM_playlist_get_add_to_playlist;},"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
 type DE_AddToPlaylistService={videoId: string;};
-type E_CreateBackstagePost=TE_Endpoint<{webCommandMetadata: GM_backstage_create_post;},"createBackstagePostEndpoint",DE_CreateBackstagePost>;
+type E_CreateBackstagePost=TE_Endpoint<M_CreateBackstagePost,"createBackstagePostEndpoint",DE_CreateBackstagePost>;
+type M_CreateBackstagePost={webCommandMetadata: GM_CreateBackstagePost;};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type E_CreateComment=TE_Endpoint<{webCommandMetadata: GM_comment_create_comment;},"createCommentEndpoint",DE_CreateComment>;
 type DE_CreateComment={createCommentParams: string;};

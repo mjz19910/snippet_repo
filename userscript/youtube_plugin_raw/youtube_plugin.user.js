@@ -6166,7 +6166,20 @@ class ParserService extends BaseService {
 			} break;
 			case "createBackstagePost": {
 				const idx=2;
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "params": u(idx); debugger; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1":
+							case "f2": u(idx); debugger; break;
+						}
+					} break;
+				}
 			} break;
 			case "subscribe": {
 				const idx=2;
@@ -13076,7 +13089,6 @@ class HandleTypes extends HandleTypesEval {
 		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
 		if(!this.eq_keys(t,u)) debugger;
 		this.z([startAccessibility,endAccessibility,durationAccessibility],this.D_Accessibility);
-		debugger;
 	}
 	/** @private @arg {D_MacroMarkersList} x */
 	D_MacroMarkersList(x) {
@@ -13097,7 +13109,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(menu,this.G_EngagementPanelMenu);
 		this.R_Button(visibilityButton);
 		this.trackingParams(cf,trackingParams);
-		debugger;
 	}
 	/** @private @arg {G_EngagementPanelMenu} x */
 	G_EngagementPanelMenu(x) {const cf="G_EngagementPanelMenu"; this.cfl(cf,x);}
