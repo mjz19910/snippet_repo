@@ -42,6 +42,7 @@ function raw_template(x) {
 	}
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
+const ServiceMethods=required(store["mod$YoutubePluginBase"]?.ServiceMethods);
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
@@ -263,7 +264,6 @@ window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
 `;
 eval(handle_types_eval_code);
-const ServiceMethods=required(store["mod$YoutubePluginBase"]?.ServiceMethods);
 
 /** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
 class UrlParseHelper {
