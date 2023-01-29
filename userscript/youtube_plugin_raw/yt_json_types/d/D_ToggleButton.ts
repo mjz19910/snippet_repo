@@ -12,7 +12,7 @@ type D_ToggleButton={
 	style: T_StyleType<"STYLE_TEXT">;
 	isToggled: false;
 	isDisabled: false;
-	defaultIcon: T_Icon<"LIKE">;
+	defaultIcon: T_Icon<"LIKE"|"LOOP">;
 	defaultText: R_SimpleText;
 	defaultServiceEndpoint: C_CommandExecutor;
 	toggledText: R_SimpleText;

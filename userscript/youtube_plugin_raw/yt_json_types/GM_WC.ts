@@ -255,7 +255,12 @@ type AD_HideEngagementPanelTargetId={engagementPanelTargetId: "engagement-panel-
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
 type AD_RemoveFromGuideSection={handlerData: "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"; guideEntryId: T_MixPlaylistStr;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
-type AD_ReplaceEnclosing=T_Item<R_NotificationText|RA_ReelDismissal>;
+type AD_ReplaceEnclosing_Item=R_NotificationText|RA_ReelDismissal|{
+	notificationMultiActionRenderer: {};
+};
+
+type AD_ReplaceEnclosing=T_Item<AD_ReplaceEnclosing_Item>;
+
 type T_Item<T>={item: T;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
 type AD_SendFeedback={bucket: "Kevlar";};

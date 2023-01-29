@@ -1222,6 +1222,11 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
+		switch(defaultIcon.iconType) {
+			default: debugger; break;
+			case "LIKE":
+			case "LOOP": break;
+		}
 		this.ceq(defaultIcon.iconType,"LOOP");
 		if(!defaultServiceEndpoint.commandExecutorCommand) debugger;
 		this.C_CommandExecutor(defaultServiceEndpoint);
@@ -2579,6 +2584,35 @@ class HandleTypes extends HandleTypesEval {
 		this.G_CommandMetadata(commandMetadata,true);
 		this.DE_Feedback(feedbackEndpoint);
 	}
+	/** @private @arg {DE_Feedback} x */
+	DE_Feedback(x) {
+		const cf="DE_Feedback";
+		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
+		let fb_dec=base64_url_dec.decodeByteArray(feedbackToken);
+		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
+		this.D_HideEnclosingContainer(uiActions);
+		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
+	}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {this.T_Endpoint("A_ReplaceEnclosing",x,x => this.y(x,"replaceEnclosingAction",this.AD_ReplaceEnclosing));}
+	/** @private @arg {AD_ReplaceEnclosing} x */
+	AD_ReplaceEnclosing(x) {
+		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
+		let k=this.gk(this.w(x,"item"));
+		switch(k[0]) {
+			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+			case "notificationTextRenderer":
+			case "reelDismissalActionRenderer":
+			case "notificationMultiActionRenderer":
+		}
+	}
+	/** @arg {AD_ReplaceEnclosing_Item} x */
+	AD_ReplaceEnclosing_Item(x) {
+		const cf="AD_ReplaceEnclosing_Item"; this.k(cf,x);
+		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
+	}
+	/** @private @arg {R_NotificationText} x */
+	R_NotificationText(x) {x; debugger;}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
 	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem",x,this.D_ToggleMenuServiceItem);}
 	/** @private @arg {R_MenuNavigationItem} x */
@@ -6484,31 +6518,8 @@ class HandleTypes extends HandleTypesEval {
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption",x,this.D_PdgCommentOption);}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {const cf="D_PdgCommentOption"; this.cfl(cf,x);}
-	/** @private @arg {DE_Feedback} x */
-	DE_Feedback(x) {
-		const cf="DE_Feedback";
-		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
-		let fb_dec=base64_url_dec.decodeByteArray(feedbackToken);
-		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
-		this.D_HideEnclosingContainer(uiActions);
-		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
-	}
-	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {this.T_Endpoint("A_ReplaceEnclosing",x,x => this.y(x,"replaceEnclosingAction",this.AD_ReplaceEnclosing));}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y(x,"item",f);
-	/** @arg {AD_ReplaceEnclosing['item']} x */
-	AD_ReplaceEnclosing_Item(x) {const cf="AD_ReplaceEnclosing_Item"; this.cfl(cf,x);}
-	/** @private @arg {AD_ReplaceEnclosing} x */
-	AD_ReplaceEnclosing(x) {
-		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.gk(this.w(x,"item"));
-		switch(k[0]) {
-			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
-			case "notificationTextRenderer":
-			case "reelDismissalActionRenderer":
-		}
-	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
