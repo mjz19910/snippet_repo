@@ -1492,10 +1492,11 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return a;
 	}
+	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {
 		if(collapsed) {
-			console.groupCollapsed(cf);
+			console.groupCollapsed("[codegen_group] [#%o] [%s]",this.codegen_group_id++,cf);
 		} else {
 			console.group();
 		}
