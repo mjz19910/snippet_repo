@@ -13455,14 +13455,14 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.R_SimpleText(subscriberCountText);
 		this.D_SubscriptionButton(subscriptionButton);
-		this.R_Button(membershipButton);
+		this.t(membershipButton,this.R_Button);
 		this.E_Browse(navigationEndpoint);
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
 	D_SubscriptionButton(x) {x;}
 	/** @private @arg {D_VideoOwner} x */
-	D_VideoOwner(x) {const cf="D_VideoOwner"; let u=this.D_VideoOwner_Omit(cf,x); if("badges" in u) {const {badges,...y}=u; this.g(y); return;} this.g(u);}
+	D_VideoOwner(x) {const cf="D_VideoOwner"; let u=this.D_VideoOwner_Omit(cf,x); const {badges,...y}=u; this.g(y);}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
 		const cf="D_MusicCarouselShelf";
