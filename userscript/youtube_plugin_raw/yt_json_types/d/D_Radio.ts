@@ -1,14 +1,14 @@
 type D_Radio={
 	playlistId: `RD${string}`;
-	title: D_Text;
+	title: G_Text;
 	thumbnail: R_Thumbnail;
-	videoCountText: D_Text;
+	videoCountText: G_Text;
 	navigationEndpoint: E_Watch;
 	trackingParams: string;
 	videos: R_ChildVideo[];
-	thumbnailText: D_Text;
-	longBylineText: D_Text;
+	thumbnailText: G_Text;
+	longBylineText: G_Text;
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
-	videoCountShortText: D_Text;
+	videoCountShortText: G_Text;
 };

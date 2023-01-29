@@ -1,6 +1,6 @@
 type D_VideoDescriptionMusicSection={
-	sectionTitle: D_Text;
+	sectionTitle: G_Text;
 	carouselLockups: R_CarouselLockup[];
 	topicLink: R_TopicLink;
-	premiumUpsellLink: D_Text;
+	premiumUpsellLink: G_Text;
 };

@@ -1,8 +1,8 @@
 type D_PlayerOverlayAutoplay={
-	title: D_Text;
-	videoTitle: D_Text;
-	byline: D_Text;
-	pauseText: D_Text;
+	title: G_Text;
+	videoTitle: G_Text;
+	byline: G_Text;
+	pauseText: G_Text;
 	background: R_Thumbnail;
 	countDownSecs: 3|8;
 	cancelButton: R_Button;
@@ -12,9 +12,9 @@ type D_PlayerOverlayAutoplay={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	preferImmediateRedirect: false;
 	videoId: string;
-	publishedTimeText: D_Text;
+	publishedTimeText: G_Text;
 	webShowNewAutonavCountdown: true;
 	webShowBigThumbnailEndscreen: false;
-	shortViewCountText: D_Text;
+	shortViewCountText: G_Text;
 	countDownSecsForFullscreen: 3;
 };

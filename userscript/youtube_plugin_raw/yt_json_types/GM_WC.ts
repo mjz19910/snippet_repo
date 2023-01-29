@@ -318,7 +318,7 @@ type DC_Executor=Record<"commands",AC_Executor[]>;
 type C_FollowUp={clickTrackingParams: string; addFollowUpSurveyCommand: C_AddFollowUpSurvey;};
 type C_AddFollowUpSurvey={
 	followUpOptions: G_FollowUpOption[];
-	followUpText: D_Text;
+	followUpText: G_Text;
 };
 type C_GetSurvey={clickTrackingParams: string; commandMetadata: MG_Survey_CMD; getSurveyCommand: D_GetSurvey;};
 type D_GetSurvey={
@@ -381,7 +381,7 @@ type M_Like={webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike
 interface E_Like extends TE_Endpoint<M_Like,"likeEndpoint",DE_Like> {};
 type DE_Like=DE_Like_NS.DE_Like;
 type E_NotificationOptOut=TE_Endpoint<D_Empty_WCM,"notificationOptOutEndpoint",DE_NotificationOptOut>;
-type DE_NotificationOptOut={optOutText: D_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
+type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type M_EditPlaylist={
 	webCommandMetadata: GM_browse_edit_playlist;
 };
@@ -389,7 +389,7 @@ type M_EditPlaylist={
 type E_PlaylistEdit=TE_Endpoint<M_EditPlaylist,"playlistEditEndpoint",DE_PlaylistEdit>;
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
 type E_PlaylistEditor=TE_Endpoint<D_Empty_WCM,"playlistEditorEndpoint",DE_PlaylistEditor>;
-type DE_PlaylistEditor={playlistId: string;};
+type DE_PlaylistEditor={playlistId: PlaylistId;};
 type E_RecordNotificationInteractions=TE_Endpoint<M_RecordInteractions,"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions>;
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type E_ReelWatch=TE_Endpoint<{webCommandMetadata: GM_VE37414_WC;},"reelWatchEndpoint",DE_ReelWatch>;
@@ -498,7 +498,7 @@ type AD_ReelDismissal={
 };
 type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
 type AD_Notification={
-	responseText: D_Text;
+	responseText: G_Text;
 	actionButton?: R_Button;
 	trackingParams: string;
 };

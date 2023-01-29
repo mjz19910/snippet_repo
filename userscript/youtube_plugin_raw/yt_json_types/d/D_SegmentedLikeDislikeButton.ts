@@ -5,7 +5,7 @@ type D_SegmentedLikeDislikeButton={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	isDisabled: false;
-	text: D_Text;
+	text: G_Text;
 	serviceEndpoint: SE_ShareEntity;
 	icon: T_Icon<"SHARE">;
 	tooltip: "Share";

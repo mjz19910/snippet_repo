@@ -1,7 +1,7 @@
 type D_ClientMessages={
-	reconnectMessage: D_Text;
-	unableToReconnectMessage: D_Text;
-	fatalError: D_Text;
-	reconnectedMessage: D_Text;
-	genericError: D_Text;
+	reconnectMessage: G_Text;
+	unableToReconnectMessage: G_Text;
+	fatalError: G_Text;
+	reconnectedMessage: G_Text;
+	genericError: G_Text;
 };

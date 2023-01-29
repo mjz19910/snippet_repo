@@ -1,1 +1,1 @@
-type D_DateText={dateText: D_Text;};
+type D_DateText={dateText: G_Text;};

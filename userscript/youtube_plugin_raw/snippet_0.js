@@ -464,7 +464,7 @@ class ND extends Snippet_0_tmp {
 	E_Browse(x) {x;}
 	/** @private @arg {R_Thumbnail} x */
 	D_Thumbnail(x) {x;}
-	/** @private @arg {D_Text} x */
+	/** @private @arg {G_Text} x */
 	D_Text(x) {x;}
 	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
@@ -772,7 +772,7 @@ class ND extends Snippet_0_tmp {
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
 	/** @protected @arg {R_RelatedChipCloud} x */
 	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
-	/** @protected @arg {D_Text} x */
+	/** @protected @arg {G_Text} x */
 	G_Text(x) {x; debugger;}
 	/** @protected @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
 	Omit_Menu_Video(cf,x) {

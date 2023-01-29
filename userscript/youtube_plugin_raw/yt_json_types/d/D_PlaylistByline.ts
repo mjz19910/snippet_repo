@@ -1,1 +1,1 @@
-type D_PlaylistByline={text: D_Text;};
+type D_PlaylistByline={text: G_Text;};

@@ -1,6 +1,6 @@
 type D_MacroMarkersListItem={
-	title: D_Text;
-	timeDescription: D_Text;
+	title: G_Text;
+	timeDescription: G_Text;
 	thumbnail: R_Thumbnail;
 	onTap: E_Watch;
 	trackingParams: string;
@@ -14,8 +14,8 @@ type D_MacroMarkersListItem={
 	darkColorPalette: D$DarkColorPalette;
 	timeDescriptionA11yLabel: `${number} seconds`;
 }|{
-	title: D_Text;
-	timeDescription: D_Text;
+	title: G_Text;
+	timeDescription: G_Text;
 	thumbnail: R_Thumbnail;
 	onTap: E_Watch;
 	trackingParams: string;

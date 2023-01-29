@@ -1,13 +1,13 @@
 type D_ChildVideo={
-	title: D_Text;
+	title: G_Text;
 	navigationEndpoint: E_Watch;
-	lengthText: D_Text;
+	lengthText: G_Text;
 	videoId: string;
 };
 type R_ChildVideo_Omit={
-	title: D_Text;
+	title: G_Text;
 	navigationEndpoint: E_Watch;
-	lengthText: D_Text;
+	lengthText: G_Text;
 	videoId: string;
 };
 type D_ThumbnailOverlay_Omit_Keys=[

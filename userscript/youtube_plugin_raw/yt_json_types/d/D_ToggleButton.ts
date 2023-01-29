@@ -13,9 +13,9 @@ type D_ToggleButton={
 	isToggled: false;
 	isDisabled: false;
 	defaultIcon: T_Icon<"LIKE"|"DISLIKE"|"LOOP">;
-	defaultText: D_Text;
+	defaultText: G_Text;
 	defaultServiceEndpoint: C_CommandExecutor;
-	toggledText: D_Text;
+	toggledText: G_Text;
 	toggledServiceEndpoint: E_Like;
 	accessibility: D_Label;
 	trackingParams: string;

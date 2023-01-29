@@ -3,7 +3,7 @@ type D_GuideEntry_PresentationNone={
 	thumbnail: R_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
 	trackingParams: string;
-	formattedTitle: D_Text;
+	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
 	entryData: R_GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NONE";

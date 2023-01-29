@@ -1,17 +1,17 @@
 type D_CompactVideo={
 	videoId: string;
 	thumbnail: R_Thumbnail;
-	title: D_Text;
-	longBylineText: D_Text;
-	publishedTimeText: D_Text;
-	viewCountText: D_Text;
-	lengthText: D_Text;
+	title: G_Text;
+	longBylineText: G_Text;
+	publishedTimeText: G_Text;
+	viewCountText: G_Text;
+	lengthText: G_Text;
 	navigationEndpoint: E_Watch;
-	shortBylineText: D_Text;
+	shortBylineText: G_Text;
 	channelThumbnail: {};
 	ownerBadges: RMD_Badge[];
 	trackingParams: string;
-	shortViewCountText: D_Text;
+	shortViewCountText: G_Text;
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	accessibility: D_Accessibility;

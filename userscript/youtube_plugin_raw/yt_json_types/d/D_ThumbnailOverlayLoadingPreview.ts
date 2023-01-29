@@ -1,1 +1,1 @@
-type D_ThumbnailOverlayLoadingPreview={text: D_Text;};
+type D_ThumbnailOverlayLoadingPreview={text: G_Text;};

@@ -1,5 +1,5 @@
 type D_PdgCommentChip={
-	chipText: D_Text;
+	chipText: G_Text;
 	chipColorPalette: {
 		backgroundColor: 4280191205;
 		foregroundTitleColor: 4294967295;

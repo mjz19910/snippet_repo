@@ -1,1 +1,1 @@
-type D_ThumbnailOverlayNowPlaying={text: D_Text;};
+type D_ThumbnailOverlayNowPlaying={text: G_Text;};

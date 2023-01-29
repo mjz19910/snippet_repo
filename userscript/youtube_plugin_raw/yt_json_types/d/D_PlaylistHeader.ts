@@ -1,10 +1,10 @@
 type D_PlaylistHeader={
 	playlistId: PlaylistId;
-	title: D_Text;
-	numVideosText: D_Text;
+	title: G_Text;
+	numVideosText: G_Text;
 	descriptionText: {};
-	ownerText: D_Text;
-	viewCountText: D_Text;
+	ownerText: G_Text;
+	viewCountText: G_Text;
 	shareData: D_CanShare;
 	isEditable: boolean;
 	privacy: string;
@@ -12,8 +12,8 @@ type D_PlaylistHeader={
 	editableDetails: D_EditableDetails;
 	trackingParams: string;
 	serviceEndpoints: E_PlaylistEdit[];
-	stats: D_Text[];
-	briefStats: D_Text[];
+	stats: G_Text[];
+	briefStats: G_Text[];
 	editorEndpoint: E_PlaylistEditor;
 	playlistHeaderBanner: R_HeroPlaylistThumbnail;
 	moreActionsMenu: R_Menu;
@@ -22,5 +22,5 @@ type D_PlaylistHeader={
 	onDescriptionTap: TA_OpenPopup<{}>;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
-	descriptionTapText: D_Text;
+	descriptionTapText: G_Text;
 };

@@ -1,4 +1,4 @@
 type D_SettingsSidebar={
-	title: D_Text;
+	title: G_Text;
 	items: R_CompactLink[];
 };

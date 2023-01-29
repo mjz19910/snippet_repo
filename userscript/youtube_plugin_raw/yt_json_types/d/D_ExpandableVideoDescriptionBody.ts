@@ -1,5 +1,5 @@
 type D_ExpandableVideoDescriptionBody={
-	descriptionBodyText: D_Text;
-	showMoreText: D_Text;
-	showLessText: D_Text;
+	descriptionBodyText: G_Text;
+	showMoreText: G_Text;
+	showLessText: G_Text;
 };

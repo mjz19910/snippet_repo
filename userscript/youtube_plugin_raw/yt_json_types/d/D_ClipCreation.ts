@@ -4,7 +4,7 @@ type D_ClipCreation={
 	titleInput: R_ClipCreationTextInput;
 	scrubber: R_ClipCreationScrubber;
 	saveButton: R_Button;
-	displayName: D_Text;
+	displayName: G_Text;
 	publicityLabel: Capitalize<Lowercase<D_PlaylistAddToOption['privacy']>>;
 	cancelButton: R_Button;
 	adStateOverlay: R_ClipAdState;

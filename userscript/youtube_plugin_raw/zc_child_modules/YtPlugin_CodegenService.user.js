@@ -85,7 +85,7 @@ class CodegenService extends BaseService {
 			if(new_code) {ret_arr.push(new_code); continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.D_Text(${k});`); continue;};
-			/** @private @type {D_Text} */
+			/** @private @type {G_Text} */
 			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D_Text(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.${this.#R_ThumbnailStr()}(${k});`); continue;}
@@ -350,10 +350,10 @@ class CodegenService extends BaseService {
 			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
 		if(state.k1==="webCommandMetadata") return x;
-		/** @private @type {D_Text} */
+		/** @private @type {G_Text} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::D_Text";
 		if(x.thumbnails&&x.thumbnails instanceof Array) return `TYPE::${this.#R_ThumbnailStr()}`;
-		/** @private @type {D_Text} */
+		/** @private @type {G_Text} */
 		if(x.simpleText) return "TYPE::D_Text";
 		/** @private @type {T_Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;

@@ -1,1 +1,1 @@
-type D_FeedTabbedHeader={title: D_Text;};
+type D_FeedTabbedHeader={title: G_Text;};

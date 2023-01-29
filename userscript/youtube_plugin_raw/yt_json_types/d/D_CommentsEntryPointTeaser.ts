@@ -2,6 +2,6 @@ type D_CommentsEntryPointTeaser={
 	teaserAvatar: R_Thumbnail&{
 		accessibility: D_Accessibility;
 	};
-	teaserContent: D_Text;
+	teaserContent: G_Text;
 	trackingParams: string;
 };

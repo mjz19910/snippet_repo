@@ -1,6 +1,6 @@
 type D_VideoViewCount={
-	viewCount: D_Text;
+	viewCount: G_Text;
 	isLive?: boolean;
-	extraShortViewCount?: D_Text;
-	shortViewCount?: D_Text;
+	extraShortViewCount?: G_Text;
+	shortViewCount?: G_Text;
 };

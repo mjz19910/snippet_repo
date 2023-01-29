@@ -1,4 +1,4 @@
 type D_PdgCommentOption={
-	commentText: D_Text;
+	commentText: G_Text;
 	chipRenderer: R_PdgCommentChip;
 };

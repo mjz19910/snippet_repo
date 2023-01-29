@@ -1,7 +1,7 @@
 type D_ConfirmDialog={
-	title?: D_Text;
+	title?: G_Text;
 	trackingParams: string;
-	dialogMessages: D_Text[];
+	dialogMessages: G_Text[];
 	confirmButton: R_Button;
 	cancelButton: R_Button;
 	primaryIsCancel: boolean;

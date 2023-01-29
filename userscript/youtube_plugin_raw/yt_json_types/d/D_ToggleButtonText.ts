@@ -1,5 +1,5 @@
 type D_ToggleButtonText={
-	defaultText: D_Text;
-	toggledText: D_Text;
+	defaultText: G_Text;
+	toggledText: G_Text;
 	buttonId: "TOGGLE_BUTTON_ID_TYPE_LIKE";
 };

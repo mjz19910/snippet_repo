@@ -1,1 +1,1 @@
-type DUA_Description={description: D_Text;};
+type DUA_Description={description: G_Text;};

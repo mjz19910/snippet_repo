@@ -1,4 +1,4 @@
 type D_HotkeyDialogSection={
-	title: D_Text;
+	title: G_Text;
 	options: R_HotkeyDialogSectionOption[];
 };

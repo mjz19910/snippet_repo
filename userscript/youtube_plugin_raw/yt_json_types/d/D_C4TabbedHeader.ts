@@ -7,11 +7,11 @@ type D_C4TabbedHeader={
 	badges?: RMD_Badge[];
 	headerLinks: R_ChannelHeaderLinks;
 	subscribeButton: R_SubscribeButton;
-	subscriberCountText: D_Text;
+	subscriberCountText: G_Text;
 	tvBanner: R_Thumbnail;
 	mobileBanner: R_Thumbnail;
 	trackingParams: string;
 	sponsorButton?: R_Button;
-	channelHandleText: D_Text;
-	videosCountText: D_Text;
+	channelHandleText: G_Text;
+	videosCountText: G_Text;
 };

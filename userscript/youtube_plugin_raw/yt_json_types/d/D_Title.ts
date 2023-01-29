@@ -1,1 +1,1 @@
-type D_Title={title: D_Text;};
+type D_Title={title: G_Text;};

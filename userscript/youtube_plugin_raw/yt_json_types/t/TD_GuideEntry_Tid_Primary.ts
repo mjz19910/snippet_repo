@@ -2,7 +2,7 @@ type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>={
 	navigationEndpoint: E_Browse;
 	icon: T_Icon<T_IconType>;
 	trackingParams: string;
-	formattedTitle: D_Text;
+	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
 	targetId: Tid;
 	isPrimary: true;

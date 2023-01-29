@@ -1,8 +1,8 @@
 type D_TextInputFormField={
-	label: D_Text;
+	label: G_Text;
 	maxCharacterLimit: 150;
 	placeholderText: string;
 	validValueRegexp: "[^<>]*";
-	invalidValueErrorMessage: D_Text;
+	invalidValueErrorMessage: G_Text;
 	required: true;
 };

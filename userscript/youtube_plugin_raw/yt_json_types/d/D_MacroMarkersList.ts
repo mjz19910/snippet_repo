@@ -1,5 +1,5 @@
 type D_MacroMarkersList={
 	contents: R_MacroMarkersListItem[];
-	syncButtonLabel: D_Text;
+	syncButtonLabel: G_Text;
 	trackingParams: string;
 };

@@ -1,6 +1,6 @@
 type D_ProfileColumnStatsEntry={
-	label: D_Text;
-	value: D_Text;
+	label: G_Text;
+	value: G_Text;
 };
 type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D_ProfileColumnStatsEntry;};
 type D_ProfileColumnStats={

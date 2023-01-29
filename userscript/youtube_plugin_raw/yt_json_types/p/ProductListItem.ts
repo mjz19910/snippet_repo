@@ -1,5 +1,5 @@
 type D_ProductListItem={
-	title: D_Text;
+	title: G_Text;
 	accessibilityTitle: string;
 	thumbnail: R_Thumbnail;
 	price: `CA_${string}`;

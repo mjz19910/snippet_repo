@@ -1,4 +1,4 @@
 type D_ClipCreationTextInput={
-	placeholderText: D_Text;
+	placeholderText: G_Text;
 	maxCharacterLimit: 140;
 };
