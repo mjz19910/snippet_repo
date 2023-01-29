@@ -23,31 +23,6 @@ function store_window(key, obj) {
 	w2[key] = obj;
 	return obj;
 }
-class LogGenerator {
-	log_str = "";
-	/** @type {{__log_generator_args:true,v:{}}[]} */
-	log_args = [];
-	reset([str, args] = ["", []]) {
-		this.log_str = str;
-		/** @type {any[]} */
-		this.log_args = args;
-	}
-	/** @arg {[string, never[]] | undefined} [cap_state] */
-	new_gen(cap_state) {
-		this.reset(cap_state);
-		return this;
-	}
-	state_id() {
-		this.log_str += "[state_id=%o]";
-		debugger;
-	}
-	get_log_args() {
-		return [this.log_str, ...this.log_args];
-	}
-	capture() {
-		return [this.log_str, this.log_args.slice()];
-	}
-}
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e, x = e) {
@@ -166,7 +141,6 @@ function get_keys_of(obj) {
 	let ra = rq;
 	return ra;
 }
-const log_gen = new LogGenerator;
 /** @type {JsonOutputBox[]} */
 const index_box_store = [];
 class JsonOutputData {
