@@ -900,6 +900,39 @@ class HandleTypes extends HandleTypesEval {
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		{debugger;}
 	}
+	/** @private @type {string[]} */
+	known_target_id=[];
+	/** @protected @arg {string} root @arg {D_TargetIdStr} x */
+	targetId(root,x) {
+		const cf="targetId";
+		this.save_string(`[${root}.${cf}]`,x);
+		this.parser.parse_target_id(x);
+		if(this.str_starts_with_r(x,"comment-replies-item-")) return;
+		if(this.str_starts_with_r(x,"shopping_panel_for_entry_point_")) {
+			switch(x) {
+				case "shopping_panel_for_entry_point_22": return;
+				case "shopping_panel_for_entry_point_5": return;
+				default:
+			}
+			if(!this.known_target_id.includes(x)) {
+				this.known_target_id.push(x);
+				console.log("[target_id.shopping_panel_for_entry_point] [%s]",x);
+			}
+			return;
+		}
+		if(this.str_starts_with_r(x,"browse-feed")) return;
+		switch(x) {
+			case "clip-info-button": case "comments-section":
+			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
+			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
+			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
+			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
+			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
+			case "browse-video-menu-button": 
+			case "create-clip-button-action-bar": break;
+			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
+		}
+	}
 	/** @private @template {D_Button} T @arg {D_Button_CF} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
 		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);

@@ -4445,42 +4445,9 @@ class ServiceMethods extends ServiceData {
 	clickTrackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @private @type {string[]} */
-	known_target_id=[];
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_r(str,needle) {
 		return this.str_starts_with(needle,str);
-	}
-	/** @protected @arg {string} root @arg {D_TargetIdStr} x */
-	targetId(root,x) {
-		const cf="targetId";
-		this.save_string(`[${root}.${cf}]`,x);
-		this.parser.parse_target_id(x);
-		if(this.str_starts_with_r(x,"comment-replies-item-")) return;
-		if(this.str_starts_with_r(x,"shopping_panel_for_entry_point_")) {
-			switch(x) {
-				case "shopping_panel_for_entry_point_22": return;
-				case "shopping_panel_for_entry_point_5": return;
-				default:
-			}
-			if(!this.known_target_id.includes(x)) {
-				this.known_target_id.push(x);
-				console.log("[target_id.shopping_panel_for_entry_point] [%s]",x);
-			}
-			return;
-		}
-		if(this.str_starts_with_r(x,"browse-feed")) return;
-		switch(x) {
-			case "clip-info-button": case "comments-section":
-			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
-			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
-			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
-			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
-			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
-			case "browse-video-menu-button": 
-			case "create-clip-button-action-bar": break;
-			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
-		}
 	}
 	/** @protected @arg {[D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
