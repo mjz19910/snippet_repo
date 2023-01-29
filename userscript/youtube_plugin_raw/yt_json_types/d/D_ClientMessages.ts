@@ -1,4 +1,4 @@
-type ClientMessages={
+type D_ClientMessages={
 	reconnectMessage: R_TextRuns;
 	unableToReconnectMessage: R_TextRuns;
 	fatalError: R_TextRuns;

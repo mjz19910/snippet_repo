@@ -434,11 +434,11 @@ type DC_LiveChat={
 	itemList?: R_LiveChatItemList;
 	header?: R_LiveChatHeader;
 	ticker?: R_LiveChatTicker;
-	trackingParams?: string;
+	trackingParams: string;
 	participantsList?: R_LiveChatParticipantsList;
 	popoutMessage?: R_Message;
 	emojis?: D_LiveChatEmoji[];
-	clientMessages?: ClientMessages;
+	clientMessages?: D_ClientMessages;
 	viewerName?: string;
 };
 type RC_MusicShelf={musicShelfContinuation: {};};
