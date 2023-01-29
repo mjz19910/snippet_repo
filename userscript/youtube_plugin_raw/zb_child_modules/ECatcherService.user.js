@@ -11,6 +11,7 @@ function export_(fn) {
 if(typeof exports==="object") {
 	exports.__is_module_flag__=true;
 }
+const is_firefox=
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	data={
@@ -103,3 +104,7 @@ class ECatcherService extends BaseService {
 		this.data.client=client;
 	}
 }
+export_(exports => {
+	exports.ECatcherService=ECatcherService;
+	exports.__module_loaded__=true;
+});

@@ -15,9 +15,22 @@
 if(!window.__youtube_plugin_base_loaded__) {
 	throw new Error("Failed to load base plugin");
 }
-if(typeof exports==="object") {
-	exports.__is_module_flag__=true;
+const __module_name__="mod$LoadServices";
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn) {
+	if(typeof exports==="object") {
+		fn(exports);
+	} else {
+		window.__plugin_modules__??={};
+		let all_modules=window.__plugin_modules__;
+		let exports={};
+		all_modules[__module_name__]=exports;
+		fn(as(exports));
+	}
 }
+export_(exports => {
+	exports.__is_module_flag__=true;
+});
 
 console.log("Load HandleTypesPlugin");
 
@@ -6409,16 +6422,6 @@ class HandleTypes extends HandleTypesEval {
 }
 //#endregion
 //#region exports
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
-		/** @type {{}} */
-		let u=as(window);
-		fn(as(u));
-	}
-}
 export_((exports) => {
 	exports.HandleTypes=HandleTypes;
 });

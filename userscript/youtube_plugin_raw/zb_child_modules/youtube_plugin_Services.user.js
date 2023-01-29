@@ -11,14 +11,17 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
+const __module_name__="mod$LoadServices";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
-		/** @type {{}} */
-		let u=as(window);
-		fn(as(u));
+		window.__plugin_modules__??={};
+		let all_modules=window.__plugin_modules__;
+		let exports={};
+		all_modules[__module_name__]=exports;
+		fn(as(exports));
 	}
 }
 if(typeof exports==="object") {

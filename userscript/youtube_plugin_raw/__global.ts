@@ -1,3 +1,4 @@
+import {PluginStore} from "./zb_child_modules/PluginStore.js";
 import {HandleTypesEval_} from "./handle_types_eval.js";
 declare global {
 	interface Window {
@@ -14,6 +15,9 @@ declare global {
 		entries(): IterableIterator<[string,string]>;
 	}
 	class HandleTypesEval<T,U> extends HandleTypesEval_<T,U> {}
+	interface Window {
+		__plugin_modules__?: Partial<PluginStore>;
+	}
 	var as: EX.as_;
 	var ServiceMethods: EX.ServiceMethods;
 	var split_string_once: EX.split_string_once;
@@ -30,7 +34,7 @@ declare global {
 	var BaseService: EX.BaseService;
 	// youtube_plugin_base
 	var CsiService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").CsiService;
-	var ECatcherService:  typeof import("./zb_child_modules/youtube_plugin_base.user.js").ECatcherService;
+	var ECatcherService:  typeof import("./zb_child_modules/ECatcherService.user.js").ECatcherService;
 	var GFeedbackService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").GFeedbackService;
 	var GuidedHelpService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").GuidedHelpService;
 	var TrackingServices: typeof import("./zb_child_modules/youtube_plugin_base.user.js").TrackingServices;

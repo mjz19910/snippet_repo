@@ -14,14 +14,17 @@
 
 console.log("Load CodegenPlugin");
 
+const __module_name__="mod$CodegenPlugin";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
-		/** @type {{}} */
-		let u=as(window);
-		fn(as(u));
+		window.__plugin_modules__??={};
+		let all_modules=window.__plugin_modules__;
+		let exports={};
+		all_modules[__module_name__]=exports;
+		fn(as(exports));
 	}
 }
 class JsonReplacerState {

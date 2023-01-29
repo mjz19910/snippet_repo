@@ -1949,14 +1949,17 @@ class ServiceResolver {
 }
 //#endregion
 //#region main
+const __module_name__="YoutubePlugin$Base";
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
-		/** @type {{}} */
-		let u=as(window);
-		fn(as(u));
+		window.__plugin_modules__??={};
+		let all_modules=window.__plugin_modules__;
+		let exports={};
+		all_modules[__module_name__]=exports;
+		fn(as(exports));
 	}
 }
 function yt_plugin_base_main() {
@@ -3785,7 +3788,6 @@ function h_detect_firefox() {
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
 const is_firefox=h_detect_firefox();
-exports.is_firefox=is_firefox;
 //#endregion
 //#region HelperServices
 class DatabaseArguments {
@@ -4610,7 +4612,9 @@ export_(exports => {
 export_(exports => {
 	exports.base64_url_dec=base64_url_dec;
 });
-
+export_(exports => {
+	exports.is_firefox=is_firefox;
+});
 export_((exports) => {
 	exports.__youtube_plugin_base_loaded__=true;
 });
