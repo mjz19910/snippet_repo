@@ -287,6 +287,8 @@ class CodegenService extends BaseService {
 	as_T_SE_Signal=x => as(x);
 	/** @arg {{}} x @returns {TR_MP_Menu<{}>} */
 	as$TR_MP_Menu=x => as(x);
+	/** @arg {{}} x @returns {T_Signal<string>} */
+	as$T_Signal=x => as(x);
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
@@ -337,6 +339,13 @@ class CodegenService extends BaseService {
 			let sr=this.get_typedef_part(v.multiPageMenuRenderer);
 			if(!sr) break x;
 			return `TYPE::TR_MP_Menu<${sr}>`;
+		}
+		if(x.signal&&typeof x.signal==="string") {
+			let v=this.as$T_Signal(x);
+			let kk=this.get_keys_of(x);
+			if(this.eq_keys(kk,["signal"])) {
+				return `TYPE::T_Signal<"${v.signal}">`
+			}
 		}
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
