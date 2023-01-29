@@ -2372,7 +2372,7 @@ class HandleTypes extends HandleTypesEval {
 		this.M_SendPost(commandMetadata);
 		return ["signalServiceEndpoint",signalServiceEndpoint];
 	}
-	/** @private @arg {RD_MenuServiceItem['serviceEndpoint']} x */
+	/** @private @arg {G_SE_MenuService} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		const cf="RD_MenuServiceItem_serviceEndpoint"; this.k(cf,x);
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
@@ -2381,6 +2381,8 @@ class HandleTypes extends HandleTypesEval {
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("" in x) return;
 		this.do_codegen(cf,x);
 		x==="";
 		{debugger;}
@@ -3309,7 +3311,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x) {
 		const cf="G_EngagementPanelSectionShowCommands"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		this.do_codegen(cf,x); x==="";
@@ -4190,7 +4192,7 @@ class HandleTypes extends HandleTypesEval {
 		if(inner!==4) debugger;
 	}
 	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
-	EA_ChangeEngagementPanelVisibility(x) {
+	A_ChangeEngagementPanelVisibility(x) {
 		const cf="EA_ChangeEngagementPanelVisibility";
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -4405,7 +4407,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
@@ -4447,7 +4449,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AC_Executor} x */
 	AC_Executor(x) {
 		const cf="AC_Executor"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
@@ -6111,7 +6113,7 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(defaultExpanded,false);
 		this._primitive_of(descriptionCollapsedLines,"number");
 		this.t(showMoreCommand,this.C_Executor);
-		this.t(showLessCommand,this.EA_ChangeEngagementPanelVisibility);
+		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {RMD_RowContainer} x */
 	R_MetadataRowContainer(x) {this.H_("R_MetadataRowContainer",x,this.D_MetadataRowContainer);}
