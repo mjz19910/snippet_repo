@@ -52,3 +52,12 @@ this.t($1,this.$2)
 ```
 $1this.R_TextRuns($2);
 ```
+# replace renderer cfl with data cfl
+```regexp
+^(\s+)(\w+).+?"R_(\w+)"; this.cfl.+\}
+```
+```js
+$1$2(x) {this.H_("$2",x,this.D_$3);}
+$1/** @private @arg {D_$3} x */
+$1D_$3(x) {const cf="D_$3"; this.cfl(cf,x);}
+```
