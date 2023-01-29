@@ -60,13 +60,11 @@ type PendingCommandItem =
 	| ["unit", UnpackUnitCommand]
 	;
 ;
-type UnpackUnitCommand = [
-	"COMMAND::unpack_unit",
-	{
-		[U in JsonUnpackValue[0]]:
-		Extract<JsonUnpackValue, [U, any]> extends infer V extends Extract<JsonUnpackValue, [U, any]> ? [V[0], V[1][number]] : never
-	}[JsonUnpackValue[0]]
-]
+type UnpackUnitArgs = {
+	[U in JsonUnpackValue[0]]: Extract<JsonUnpackValue, [U, any]> extends infer V extends Extract<JsonUnpackValue, [U, any]> ? [V[0], V[1][number]] : never;
+}[JsonUnpackValue[0]];
+
+type UnpackUnitCommand = ["COMMAND::unpack_unit", UnpackUnitArgs];
 type DataItemReturn =
 	| ["TYPE::DBG_What", { __what: true; }]
 	| ["TYPE::DataItemReturn", ["DataItemReturn", DataItemReturn[]]]

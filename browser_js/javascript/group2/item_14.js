@@ -346,10 +346,29 @@ function dispatch_json_event(x) {
 			return res;
 	}
 }
-/** @arg {["JSON::data",any]|["JSON::event",DataItemReturn]} x */
+/** @arg {["JSON::data",any]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturn]} x */
 function json_stringify_with_cache(x) {
 	if (x[0] === "JSON::data") {
-		debugger;
+		let obj_keys = Object.keys(x[1]);
+		console.log("[json_stringify_keys]", obj_keys.join());
+	}
+	if (x[0] === "JSON::pack") {
+		let item = x[1];
+		switch (item[0]) {
+			case "string":
+			case "JsonInputType":
+			case "Element":
+			case "VueApp":
+			case "DataItemReturn":
+			case "Node":
+			case "VueVnode": {
+				console.log("[json_stringify_with_cache] [pack.%s]", item[0], item[1]);
+				return JSON.stringify(item[1], json_replacer, "\t");
+			}
+			case "any":
+				console.log("[json_stringify_with_cache] [stringify_any]", item[0], item[1]);
+				return JSON.stringify(item[1], json_replacer, "\t");
+		}
 	}
 	return JSON.stringify(x[1], json_replacer, "\t");
 }
@@ -363,21 +382,7 @@ function handle_json_unpack_unit_cmd(x) {
 	if (x[0] !== "COMMAND::unpack_unit") {
 		debugger; return;
 	}
-	let item = x[1];
-	let result;
-	switch (item[0]) {
-		case "string":
-		case "JsonInputType":
-		case "Element":
-		case "VueApp":
-		case "DataItemReturn":
-		case "Node":
-		case "VueVnode":
-		case "any":
-			result = json_stringify_with_cache(["JSON::data", item[1]]);
-			console.log("[json_unpack_unit_cmd] [unpack_item.%s]", item[0], item[1]);
-	}
-	return result;
+	return json_stringify_with_cache(["JSON::data", x[1]]);
 }
 let processing_commands = false;
 /** @arg {DataItemReturn} x */
