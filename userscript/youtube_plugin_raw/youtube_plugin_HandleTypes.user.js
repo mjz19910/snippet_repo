@@ -4398,7 +4398,7 @@ class HandleTypes extends HandleTypesEval {
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
 		if("loopCommand" in x) return this.C_Loop(x);
-		if("updateToggleButtonStateCommand" in x) this.C_UpdateToggleButtonState(x);
+		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
 		this.do_codegen(cf,x);
