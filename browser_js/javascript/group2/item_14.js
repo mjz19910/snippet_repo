@@ -326,6 +326,9 @@ function dispatch_json_event(x) {
 		case "COMMAND::unpack:1":
 			{
 				let unpack = x[1];
+				if (unpack[0] === "handle_result") {
+					return res;
+				}
 				let [s] = unpack;
 				for (let u of unpack[1]) {
 					false && console.log("[COMMAND::unpack] [%s]", s, u);
@@ -441,7 +444,6 @@ function handle_json_event(x) {
 			}
 		case "EVENT::vnodes":
 		case "EVENT::dom_nodes":
-		case "RESULT::handle_json_event":
 		case "TYPE::DataItemReturn":
 		case "EVENT::vue_app":
 			{
@@ -461,6 +463,8 @@ function handle_json_event(x) {
 			debugger; console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
+		case "RESULT::handle_json_event":
+			throw new Error();
 	}
 	let process_ret = process_commands();
 	return [ret, process_ret];
@@ -504,7 +508,7 @@ function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
 	if (res.length > 0) {
-		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", x, res]]);
+		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", { tag: x[0] }, res]]);
 	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
