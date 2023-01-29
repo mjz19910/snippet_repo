@@ -4095,7 +4095,7 @@ class ServiceMethods extends ServiceData {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];
 		return [true,x.popup];
 	}
-	/** @protected @template {number[]} T @arg {T} a */
+	/** @protected @template {any[]} T @arg {T} a */
 	exact_arr(...a) {
 		return a;
 	}
