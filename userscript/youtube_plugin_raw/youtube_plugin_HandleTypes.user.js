@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	youtube plugin HandleTypes
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.2.21
+// @version	0.1.0
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
@@ -12,6 +12,236 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+
+//#region HandleTypes
+/** @arg {TemplateStringsArray} x */
+function raw_template(x) {
+	if(x.raw.length>1) {
+		debugger;
+	}
+	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
+}
+const handle_types_eval_code=raw_template`
+class HandleTypesEval extends ServiceMethods {
+	//#region KR_ResponseContext
+	/** @private @arg {RC_ResponseContext} x */
+	RC_ResponseContext(x) {
+		const cf="RC_ResponseContext";
+		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
+		this.z(serviceTrackingParams,x => {
+			if(!this.is_normal_service(this)) return;
+			const service_tracking=this.x.get("service_tracking");
+			service_tracking.set_service_params(x);
+		});
+		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
+		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
+		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
+		this.t(stateTags,this.RCA_RelevantStateTags);
+	}
+	/** @private @arg {RC_WR_ContextExtension} x */
+	RC_WR_ContextExtension(x) {
+		const cf="RC_WR_ContextExtension";
+		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
+		this.t(ytConfigData,this.D_YtConfig);
+		this.t(webPrefetchData,this.D_WebPrefetch);
+	}
+	/** @private @arg {D_WebPrefetch} x */
+	D_WebPrefetch(x) {
+		const cf="D_WebPrefetch";
+		const {navigationEndpoints,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.z(navigationEndpoints,x => {
+			if("watchEndpoint" in x) {
+				return this.E_Watch(x);
+			}
+			debugger;
+		});
+	}
+	/** @private @arg {RCA_RelevantStateTags} x */
+	RCA_RelevantStateTags(x) {
+		const cf="RCA_RelevantStateTags";
+		const {relevantStateTags,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.z(relevantStateTags,this.B_StateTag);
+	}
+	primitive_str(x) {this.a_primitive_str(x);}
+	primitive_of(x,y) {this._primitive_of(x,y);}
+	/** @private @arg {RC_ConsistencyTokenJar} x */
+	RC_ConsistencyTokenJar(x) {
+		const cf="RC_ConsistencyTokenJar";
+		const {encryptedTokenJarContents,expirationSeconds,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.primitive_str(encryptedTokenJarContents);
+		if(expirationSeconds!=="600") debugger;
+	}
+	/** @private @arg {D_YtConfig} x */
+	D_YtConfig(x) {
+		const cf="D_YtConfig";
+		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.primitive_str(visitorData);
+		if(sessionIndex!==0) debugger;
+		/** @private @type {\`\${typeof rootVisualElementType}\`} */
+		let s=\`\${rootVisualElementType}\`;
+		switch(s) {
+			case "3611": return;
+			case "3832": return;
+			case "3854": return;
+			case "4724": return;
+			case "5754": return;
+			case "6827": return;
+			case "11487": return;
+			case "23462": return;
+			case "37414": return;
+			case "83769": return;
+			case "96368": return;
+			default: debugger; break;
+		}
+	}
+	/** @private @arg {RC_MainAppWebResponseContext} x */
+	RC_MainAppWebResponseContext(x) {
+		const cf="RC_MainAppWebResponseContext";
+		const {datasyncId,loggedOut,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.primitive_str(datasyncId);
+		this.primitive_of(loggedOut,"boolean");
+	}
+	//#endregion
+	//#region init and static init
+	// I use @private stuff that i want in static blocks
+	gk=this.get_keys_of;
+	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
+	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}
+	/** @private @arg {string} a @arg {{}} b */
+	k=(a,b) => this.save_keys(\`[\${a}]\`,b);
+	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	sd(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
+	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
+	save_string_api=this.save_string;
+	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
+	codegen_renderer(cf,x,w) {
+		this.codegen.codegen_renderer(x,cf,w);
+	}
+	static {
+		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
+		/** @type {{value:ServiceResolver<CG_ServiceResolver,{}>|null}} */
+		let v={value: null};
+		let cg=new CodegenService(v);
+		let sr=new ServiceResolver({codegen: cg},{});
+		let t=new this({value: sr});
+		t.codegen_renderer("",{},true);
+	}
+	//#endregion
+	//#region templates
+	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
+	HD_(cf,x) {
+		this.k(cf,x);
+		if(this.get_keys_of(x).length!==1) debugger;
+	}
+	/** @private @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	H_(cf,x,f) {
+		this.k(cf,x);
+		if(!x) {debugger; return;}
+		let k=this.get_keys_of(x);
+		let cgx=this.get_codegen_name(x);
+		let cm=cf;
+		if(this.str_starts_with_r(cf,"IC_")) {
+			cm=\`E_\${split_string_once(cf,"IC_")[1]}\`;
+		}
+		x: if(cgx!==cm) {
+			if(this.ignore_incorrect_name_set.has(cf)) break x;
+			if(this.cg_mismatch_set.has(cgx)) break x;
+			this.cg_mismatch_set.add(cgx);
+			this.cg_mismatch_list.push([cgx,cf]);
+			console.log(\`-- [H_$gen_cgx_mismatch] --\n\n[\${cgx},\${cf}],\`);
+		}
+		if(k.length!==1) debugger;
+		return f.call(this,this.w(x,k[0]));
+	}
+	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
+	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
+	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
+	T_Command_TP(x,f) {
+		const cf="T_Command_TP";
+		const {trackingParams,command: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.trackingParams(cf,trackingParams);
+		f.call(this,a);
+	}
+	/** @private @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
+	T_Commands(x,f) {
+		const cf="T_Commands"; this.k(cf,x);
+		this.z(this.w(x,"commands"),f);
+	}
+	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:string)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:string)=>void} f */
+	T_Endpoint(cf,x,f,f_vm) {
+		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x);
+		f.call(this,y,cf);
+		this.clickTrackingParams(\`\${cf}.endpoint\`,clickTrackingParams);
+		if(f_vm===void 0) {
+			if(commandMetadata!==void 0) debugger;
+			return;
+		}
+		if(commandMetadata===void 0) return;
+		f_vm.call(this,commandMetadata,cf);
+	}
+	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
+	T_Autoplay(x,f) {
+		const cf="T_Autoplay";
+		const {autoplay,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		f.call(this,autoplay);
+	}
+	/** @private @template T @arg {T_Playlist<T>} x @arg {(this:this,x:T)=>void} f */
+	T_Playlist(x,f) {
+		const cf="T_Playlist";
+		const {playlist,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		f.call(this,playlist);
+	}
+	/** @private @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
+	T_SecondaryResults(x,f) {
+		const cf="SecondaryResultsTemplate";
+		const {secondaryResults,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		f.call(this,secondaryResults);
+	}
+	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
+	T_Types(x,_x=null) {
+		const cf="T_Types";
+		const {types,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		/** @private @template {number} T @template {\`\${T} \`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		function parse_number(x,_v) {
+			return as(Number.parseInt(x,10));
+		}
+		return parse_number(types,_x);
+	}
+	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	TD_ItemSection_2_CommentsEntryPoint(x,f) {
+		const cf="TD_ItemSection_2_CommentsEntryPoint";
+		const {contents,trackingParams,sectionIdentifier,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.z(contents,f);
+		this.trackingParams(cf,trackingParams);
+		if(sectionIdentifier!=="comments-entry-point") debugger;
+	}
+	/** @private @arg {R_SimpleText} x */
+	R_SimpleText(x) {
+		const cf="R_SimpleText";
+		const {simpleText,...y}=this.sd(cf,x); this.handle_accessibility(y);
+		this.primitive_str(simpleText);
+	}
+	//#endregion
+	//#region section to support above stuff
+	/** @private @arg {{accessibility?:D_Accessibility}} x */
+	handle_accessibility(x) {
+		this.save_keys("[default.Accessibility]",x);
+		if(x.accessibility) this.D_Accessibility(x.accessibility);
+	}
+	//#endregion
+}
+window.HandleTypesEval=HandleTypesEval;
+//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
+`;
+eval(handle_types_eval_code);
 
 /** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
 class UrlParseHelper {
@@ -6076,4 +6306,5 @@ class HandleTypes extends HandleTypesEval {
 //#region Start main
 console=typeof window==="undefined"? console:(() => window.console)();
 yt_plugin_base_main();
+//#endregion
 //#endregion
