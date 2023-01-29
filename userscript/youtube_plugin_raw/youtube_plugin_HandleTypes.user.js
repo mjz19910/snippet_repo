@@ -32,7 +32,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="RC_ResponseContext";
-		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
 		this.z(serviceTrackingParams,x => {
 			if(!this.is_normal_service(this)) return;
@@ -47,7 +47,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {RC_WR_ContextExtension} x */
 	RC_WR_ContextExtension(x) {
 		const cf="RC_WR_ContextExtension";
-		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
 		this.t(ytConfigData,this.D_YtConfig);
 		this.t(webPrefetchData,this.D_WebPrefetch);
@@ -55,7 +55,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {D_WebPrefetch} x */
 	D_WebPrefetch(x) {
 		const cf="D_WebPrefetch";
-		const {navigationEndpoints,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(navigationEndpoints,x => {
 			if("watchEndpoint" in x) {
 				return this.E_Watch(x);
@@ -66,7 +66,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {RCA_RelevantStateTags} x */
 	RCA_RelevantStateTags(x) {
 		const cf="RCA_RelevantStateTags";
-		const {relevantStateTags,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(relevantStateTags,this.B_StateTag);
 	}
 	primitive_str(x) {this.a_primitive_str(x);}
@@ -74,14 +74,14 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {RC_ConsistencyTokenJar} x */
 	RC_ConsistencyTokenJar(x) {
 		const cf="RC_ConsistencyTokenJar";
-		const {encryptedTokenJarContents,expirationSeconds,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {encryptedTokenJarContents,expirationSeconds,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.primitive_str(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
 	/** @private @arg {D_YtConfig} x */
 	D_YtConfig(x) {
 		const cf="D_YtConfig";
-		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.primitive_str(visitorData);
 		if(sessionIndex!==0) debugger;
 		/** @private @type {\`\${typeof rootVisualElementType}\`} */
@@ -104,7 +104,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {RC_MainAppWebResponseContext} x */
 	RC_MainAppWebResponseContext(x) {
 		const cf="RC_MainAppWebResponseContext";
-		const {datasyncId,loggedOut,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {datasyncId,loggedOut,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.primitive_str(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
 	}
@@ -113,11 +113,11 @@ class HandleTypesEval extends ServiceMethods {
 	// I use @private stuff that i want in static blocks
 	gk=this.get_keys_of;
 	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}
+	D_Params(cf,x,f) {const {params: p,...y}=this.s(cf,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(\`[\${a}]\`,b);
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
-	sd(cf,x) {
+	s(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
 		return x;
@@ -165,13 +165,13 @@ class HandleTypesEval extends ServiceMethods {
 		return f.call(this,this.w(x,k[0]));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
-	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
-	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
-		const {trackingParams,command: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		f.call(this,a);
 	}
@@ -182,7 +182,7 @@ class HandleTypesEval extends ServiceMethods {
 	}
 	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:string)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:string)=>void} f */
 	T_Endpoint(cf,x,f,f_vm) {
-		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x);
+		const {clickTrackingParams,commandMetadata,...y}=this.s(cf,x);
 		f.call(this,y,cf);
 		this.clickTrackingParams(\`\${cf}.endpoint\`,clickTrackingParams);
 		if(f_vm===void 0) {
@@ -195,25 +195,25 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
 		const cf="T_Autoplay";
-		const {autoplay,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {autoplay,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		f.call(this,autoplay);
 	}
 	/** @private @template T @arg {T_Playlist<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Playlist(x,f) {
 		const cf="T_Playlist";
-		const {playlist,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playlist,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		f.call(this,playlist);
 	}
 	/** @private @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
 	T_SecondaryResults(x,f) {
 		const cf="SecondaryResultsTemplate";
-		const {secondaryResults,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {secondaryResults,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		f.call(this,secondaryResults);
 	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
 		const cf="T_Types";
-		const {types,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {types,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		/** @private @template {number} T @template {\`\${T} \`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
@@ -223,7 +223,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TD_ItemSection_2_CommentsEntryPoint(x,f) {
 		const cf="TD_ItemSection_2_CommentsEntryPoint";
-		const {contents,trackingParams,sectionIdentifier,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,trackingParams,sectionIdentifier,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,f);
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
@@ -231,7 +231,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @arg {R_SimpleText} x */
 	R_SimpleText(x) {
 		const cf="R_SimpleText";
-		const {simpleText,...y}=this.sd(cf,x); this.handle_accessibility(y);
+		const {simpleText,...y}=this.s(cf,x); this.handle_accessibility(y);
 		this.primitive_str(simpleText);
 	}
 	//#endregion
