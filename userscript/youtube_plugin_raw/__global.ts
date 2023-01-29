@@ -50,11 +50,11 @@ namespace EX {
 	export var BaseService: EX.BaseService;
 	// youtube_plugin_base
 	export var CsiService: Base$ImpType["CsiService"];
-	export var ECatcherService:  typeof import("./zb_child_modules/ECatcherService.user.js").ECatcherService;
+	export var ECatcherService:  typeof import("./zb_child_modules/YtPlugin_ECatcherService_handler.user.js").ECatcherService;
 	export var GFeedbackService: Base$ImpType["GFeedbackService"];
 	export var GuidedHelpService: Base$ImpType["GuidedHelpService"];
 	export var TrackingServices: Base$ImpType["TrackingServices"];
-	export var ParserService: typeof import("./zb_child_modules/YTPlugin_ParserService.js").ParserService;
+	export var ParserService: typeof import("./zb_child_modules/YTPlugin_Parser_Service.js").ParserService;
 	export var YtHandlers: Base$ImpType["YtHandlers"];
 	export var HandleTypes: typeof import("./zb_child_modules/YTPlugin_HandleTypes_Service.user.js").HandleTypes;
 	export var CodegenService: typeof import("./zb_child_modules/YtPlugin_CodegenService.user.js").CodegenService;

@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	youtube plugin ECatcherService
+// @name	YtPlugin ECatcherService handler
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.0
 // @description	try to take over the world!

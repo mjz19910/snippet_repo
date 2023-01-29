@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	YTPlugin ParserService
+// @name	YTPlugin Parser Service
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.0
 // @description	try to take over the world!
@@ -26,7 +26,7 @@ export_(exports => {
 	exports.__is_module_flag__=true;
 });
 const seen_map=new Set;
-console.log("Load ParserService");
+console.log("Load Parser Service");
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
 	if(x===void 0) {
@@ -34,7 +34,8 @@ function required(x) {
 	}
 	return x;
 }
-const Services=required(store["mod$LoadServices"]).Services;
+/** @template T @typedef {NonNullable<T>} N */
+/** @typedef {N<store['mod$LoadServices']>['Services']} Services */
 const BaseService=required(store["mod$YoutubePluginBase"]).BaseService;
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ParserService extends BaseService {
