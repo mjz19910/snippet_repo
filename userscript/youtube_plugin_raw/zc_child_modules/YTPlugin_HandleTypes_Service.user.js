@@ -43,6 +43,7 @@ function raw_template(x) {
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
 const ServiceMethods=required(store["mod$YoutubePluginBase"]?.ServiceMethods);
+const CodegenService=required(store["mod$CodegenService"]?.CodegenService); CodegenService;
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
