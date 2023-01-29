@@ -650,13 +650,12 @@ function iter_history_result(out_res) {
 	}
 	let input_value = input_obj.value.value;
 	let history_new_intersection = intersect_array_get_added(history, target_history);
-	let res_cache = json_cache_map;
-	let cv = [...res_cache.keys()];
+	let cv = [...json_cache_map.keys()];
 	if (cv.length === 1 && cv[0] === input_value) {
-		let k = res_cache.get(input_value);
-		res_cache.delete(input_value);
+		let k = json_cache_map.get(input_value);
+		json_cache_map.delete(input_value);
 		if (k !== void 0) {
-			res_cache.set("TAG::input_obj", k);
+			json_cache_map.set("TAG::input_obj", k);
 		}
 	}
 	history_new_intersection.map(map_add_is_omitted).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
