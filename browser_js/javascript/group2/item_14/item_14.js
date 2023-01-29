@@ -500,7 +500,6 @@ function handle_json_event(x) {
 				ret = dispatch_json_event(["COMMAND::unpack:1", xv]);
 				break;
 			}
-		case "CONTENT::Node":
 		case "COMMAND::unpack_unit":
 		case "COMMAND::unpack":
 		case "TYPE::DBG_What":

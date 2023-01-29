@@ -69,7 +69,7 @@ type NodeContentInfo = ["CONTENT::Node", string, 3, string | null];
 type Alt<T extends string> = `${T}:1`;
 type MakeAlt<T extends [any, ...any]> = T extends [infer F, ...infer R] ? [Alt<`${F & string}`>, ...R] : never;
 type DataItemReturnAlt = MakeAlt<DataItemReturn>
-	| MakeAlt<["TYPE::wrap", WhatInfoItem | NodeContentInfo | UnpackUnitCommand | UnpackCommand]>
+	| MakeAlt<["TYPE::wrap", WhatInfoItem | UnpackUnitCommand | UnpackCommand]>
 	;
 type WhatInfoObj = {
 	__what: true;
@@ -88,7 +88,6 @@ type DataItemReturn =
 	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
 	| ["RESULT::handle_json_event", JsonEventResult]
 	| ["TAG::result_data", HistoryResultData]
-	| NodeContentInfo
 	| UnpackCommand
 	| UnpackUnitCommand
 	;
