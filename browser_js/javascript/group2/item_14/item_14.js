@@ -247,7 +247,7 @@ let done_ids = [];
 class J_Rep {
 }
 /** @type {JsonInputType[]} */
-const json_cache = [];
+const json_cache_arr = [];
 //#region on_data_item
 /** @arg {JsonOutputBox} res @arg {["cache", CacheItemType]|["store_object",JsonInputType]|["cache_index_and_arr",CacheIndexWithArr]} x */
 function on_run_request(res, x) {
@@ -635,7 +635,7 @@ const input_obj = {
 	}
 };
 /** @type {Map<string,{}>} */
-let json_result_cache = new Map;
+let json_cache_map = new Map;
 /** @type {{}[]} */
 let object_store = [];
 /** @type {JsonHistoryType[]} */
@@ -648,24 +648,24 @@ function iter_history_result(out_res) {
 	if (!input_obj.value.has_value) {
 		return;
 	}
-	let x2 = input_obj.value.value;
+	let input_value = input_obj.value.value;
 	let history_new_intersection = intersect_array_get_added(history, target_history);
-	let rc = json_result_cache;
-	let cv = [...rc.keys()];
-	if (cv.length === 1 && cv[0] === x2) {
-		let k = rc.get(x2);
-		rc.delete(x2);
+	let res_cache = json_cache_map;
+	let cv = [...res_cache.keys()];
+	if (cv.length === 1 && cv[0] === input_value) {
+		let k = res_cache.get(input_value);
+		res_cache.delete(input_value);
 		if (k !== void 0) {
-			rc.set("TAG::input_obj", k);
+			res_cache.set("TAG::input_obj", k);
 		}
 	}
 	history_new_intersection.map(map_add_is_omitted).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
 	/** @type {JsonInputType[]} */
 	let new_cache_arr = [];
-	for (let cache_item of json_cache) {
-		if (json_cache.includes(cache_item))
+	for (let cache_item of json_cache_arr) {
+		if (json_cache_arr.includes(cache_item))
 			continue;
-		json_cache.push(cache_item);
+		json_cache_arr.push(cache_item);
 		new_cache_arr.push(cache_item);
 	}
 	for (let obj of new_cache_arr) {
@@ -734,11 +734,11 @@ function json_replacer(k, x) {
 		let obj_index = dom_nodes.indexOf(x);
 		return `TYPE::Store.dom_nodes[${obj_index}]`;
 	}
-	if (json_cache.includes(x)) {
-		return `TYPE::Store.cache[${json_cache.indexOf(x)}]`;
+	if (json_cache_arr.includes(x)) {
+		return `TYPE::Store.cache[${json_cache_arr.indexOf(x)}]`;
 	}
-	if (!json_cache.includes(x)) {
-		json_cache.push(x);
+	if (!json_cache_arr.includes(x)) {
+		json_cache_arr.push(x);
 	}
 	if (cache_map.has(k)) {
 		cache_map.get(k)?.push(x);
@@ -746,7 +746,7 @@ function json_replacer(k, x) {
 		cache_map.set(k, [x]);
 	}
 	if (x?._container === input_obj) {
-		return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
+		return `TYPE:: Store.cache[${json_cache_arr.indexOf(x)}]`;
 	}
 	if (x?.__vue_app__) {
 		vue_app.value = x.__vue_app__;
@@ -757,7 +757,7 @@ function json_replacer(k, x) {
 			vnodes.push(x);
 		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
 	}
-	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
+	return `TYPE:: Store.cache[${json_cache_arr.indexOf(x)}]`;
 }
 //#endregion
 /** @arg {JsonOutputBox} res @arg {JsonInputType} x */
@@ -778,15 +778,15 @@ function init_json_event_sys_with_obj(res, x) {
 	if (dom_nodes.length > 0) {
 		do_json_replace_(["EVENT::dom_nodes", ["Node", dom_nodes]]);
 	}
-	if (json_cache.length > 0) {
-		do_json_replace_(["EVENT::json_cache", ["JsonInputType", json_cache]]);
+	if (json_cache_arr.length > 0) {
+		do_json_replace_(["EVENT::json_cache", ["JsonInputType", json_cache_arr]]);
 	}
-	if (x !== null && !json_cache.includes(x)) {
-		json_cache.push(x);
+	if (x !== null && !json_cache_arr.includes(x)) {
+		json_cache_arr.push(x);
 	}
 	let cache_index = -1;
 	if (x !== null) {
-		cache_index = json_cache.indexOf(x);
+		cache_index = json_cache_arr.indexOf(x);
 	}
 	res.cache_index_map.set(x, cache_index);
 }
