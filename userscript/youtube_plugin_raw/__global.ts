@@ -29,6 +29,8 @@ declare global {
 	var BaseServicePrivate: EX.BaseServicePrivate;
 	var BaseService: EX.BaseService;
 	var __youtube_plugin_base_loaded__: typeof import("./youtube_plugin_base.user.js").__youtube_plugin_base_loaded__;
+	var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
+	type HandleTypes<T,U>=import("./youtube_plugin_HandleTypes.user.js").HandleTypes<T,U>;
 }
 namespace EX {
 	export type ServiceMethods=typeof import("./youtube_plugin_base.user.js").ServiceMethods;

@@ -15,6 +15,9 @@
 if(!window.__youtube_plugin_base_loaded__) {
 	throw new Error("Failed to load base plugin");
 }
+if(typeof exports==="object") {
+	exports.__is_module_flag__=true;
+}
 //#region HandleTypes
 /** @arg {TemplateStringsArray} x */
 function raw_template(x) {
@@ -6308,5 +6311,19 @@ class HandleTypes extends HandleTypesEval {
 //#region Start main
 console=typeof window==="undefined"? console:(() => window.console)();
 yt_plugin_base_main();
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn) {
+	if(typeof exports==="object") {
+		fn(exports);
+	} else {
+		/** @type {{}} */
+		let u=as(window);
+		fn(as(u));
+	}
+}
+export_((exports)=>{
+	exports.HandleTypes=HandleTypes;
+});
+
 //#endregion
 //#endregion
