@@ -261,10 +261,9 @@ class CodegenService extends BaseService {
 		x_arr=x_arr.map(e => e.match(/;$/)? e.slice(0,-1):e);
 		return x_arr.reduce((prev,cur) => {
 			if(cur==="") return prev+cur;
-			if(prev.endsWith("}")&&cur==="}") return prev+cur;
 			if(cur==="}") return prev+";"+cur;
 			if(cur==="]") return prev+";"+cur;
-			if(prev.match(/[\w"]$/)) {
+			if(prev.match(/[\w">]$/)) {
 				return prev+"; "+cur;
 			}
 			return prev+cur;
