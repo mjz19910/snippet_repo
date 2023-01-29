@@ -5824,19 +5824,46 @@ class ParserService extends BaseService {
 		let key_index=this.parse_key_index;
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,new Map(map_entry_value));
 		let path_parts=split_string(path,".");
-		let pp=this.get_parse_fns(path,[],map_entry_value);
-		let u=pp.u;
+		let {u}=this.get_parse_fns(path,[],map_entry_value);
 		const idx=1;
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
-			case "feedback": u(idx); break;
-			case "get_report_form": u(idx); break;
-			case "service$create_playlist": u(idx); break;
-			case "next": u(idx); break;
-			case "aadc_guidelines_state_entity_key": u(idx); break;
-			case "TimedContinuation": u(idx); break;
-			case "D_Browse": u(idx); break;
+			case "feedback": u(idx); debugger; break;
+			case "get_report_form": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f2": case "f8":
+					case "f11": case "f14": case "f15": case "f18":
+					case "f27":
+					case "f29":{
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1": break;
+						}
+					} break;
+				}
+			} break;
+			case "service$create_playlist": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "f1": u(idx); debugger; break;}
+			} break;
+			case "next": u(idx); debugger; break;
+			case "aadc_guidelines_state_entity_key": u(idx); debugger; break;
+			case "TimedContinuation": u(idx); debugger; break;
+			case "D_Browse": u(idx); debugger; break;
 			case "GetNotificationMenu": {
 				const idx=2;
 				switch(path_parts[1]) {
@@ -13579,7 +13606,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
 	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
-	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.cfl(cf,x);}
+	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.k(cf,x); this.R_TextRuns(this.w(x,"text"));}
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
 	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton",x,this.D_ThumbnailOverlayToggleButton);}
 	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
