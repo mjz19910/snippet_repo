@@ -8645,9 +8645,9 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TextRuns(title);
 		this.videoId(videoId);
 		this.E_Watch(navigationEndpoint);
-		this.R_Thumbnail(thumbnail)
-		this.R_TextRuns(longBylineText)
-		this.R_TextRuns(shortBylineText)
+		this.R_Thumbnail(thumbnail);
+		this.R_TextRuns(longBylineText);
+		this.R_TextRuns(shortBylineText);
 		return y;
 	}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {D_Video} T @arg {T} x */
@@ -11823,10 +11823,10 @@ class HandleTypes extends HandleTypesEval {
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
-		if("loopCommand" in x) {debugger; return;}
-		if("updateToggleButtonStateCommand" in x) {debugger; return;}
-		if("changeMarkersVisibilityCommand" in x) {debugger; return;}
-		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return;}
+		if("loopCommand" in x) {debugger; return this.z([x],a=>a);}
+		if("updateToggleButtonStateCommand" in x) {debugger; return this.z([x],a=>a);}
+		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a=>a);}
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a=>a);}
 		this.do_codegen(cf,x);
 		{debugger;}
 	}
@@ -13521,19 +13521,23 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
 		// TODO: #11 Handle thumbnailOverlay Renderers
 		// Actually iterate over these renderers
-		if("thumbnailOverlaySidePanelRenderer" in x) {debugger; return;}
-		if("thumbnailOverlayHoverTextRenderer" in x) {debugger; return;}
-		if("thumbnailOverlayNowPlayingRenderer" in x) {debugger; return;}
-		if("thumbnailOverlayBottomPanelRenderer" in x) {debugger; return;}
+		if("thumbnailOverlaySidePanelRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlayHoverTextRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlayNowPlayingRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlayBottomPanelRenderer" in x) {debugger; return this.z([x],a=>a);}
 		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayToggleButtonRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayToggleButtonRenderer" in x) {debugger; return this.z([x],a=>a);}
 		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
-		if("thumbnailOverlayResumePlaybackRenderer" in x) {debugger; return;}
-		if("thumbnailOverlayEndorsementRenderer" in x) {debugger; return;}
-		if("thumbnailOverlayInlineUnplayableRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
+		if("thumbnailOverlayEndorsementRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) {debugger; return this.z([x],a=>a);}
 		this.do_codegen(`ThumbnailOverlay$${cf}`,x);
 		debugger;
 	}
+	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
+	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback",x,this.D_ThumbnailOverlayResumePlayback);}
+	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
+	D_ThumbnailOverlayResumePlayback(x) {x;}
 	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
 	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
