@@ -4,5 +4,5 @@ type GE_ResponseReceived=
 	|C_ChangeKeyedMarkersVisibility
 	|C_LoadMarkers
 	|C_ReloadContinuationItems
-	|T_SE_Signal<{},G_ClientSignal>
+	|T_SE_Signal<M_SendPost,G_ClientSignal>
 	;
