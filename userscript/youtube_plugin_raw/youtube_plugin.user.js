@@ -7628,6 +7628,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @private @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,x,f) {
 		this.k(cf,x);
+		if(!x) {debugger; return;}
 		let k=this.get_keys_of(x);
 		let cgx=this.get_codegen_name(x);
 		let cm=cf;
