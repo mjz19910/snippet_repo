@@ -54,7 +54,7 @@ namespace EX {
 	export var GFeedbackService: Base$ImpType["GFeedbackService"];
 	export var GuidedHelpService: Base$ImpType["GuidedHelpService"];
 	export var TrackingServices: Base$ImpType["TrackingServices"];
-	export var ParserService: typeof import("./zb_child_modules/youtube_plugin_Parser.js").ParserService;
+	export var ParserService: typeof import("./zb_child_modules/YTPlugin_ParserService.js").ParserService;
 	export var YtHandlers: Base$ImpType["YtHandlers"];
 	export var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
 	export var CodegenService: typeof import("./zb_child_modules/youtube_plugin_Codegen.user.js").CodegenService;

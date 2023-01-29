@@ -1,1 +1,1 @@
-type UrlTypes=NonNullable<ReturnType<import("../zb_child_modules/youtube_plugin_Parser.js").ParserService["get_url_type"]>>;
+type UrlTypes=NonNullable<ReturnType<import("../zb_child_modules/YTPlugin_ParserService.js").ParserService["get_url_type"]>>;
