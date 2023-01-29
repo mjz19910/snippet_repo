@@ -29,37 +29,37 @@ declare global {
 	var BaseServicePrivate: EX.BaseServicePrivate;
 	var BaseService: EX.BaseService;
 	// youtube_plugin_base
-	var CsiService: typeof import("./youtube_plugin_base.user.js").CsiService;
-	var JsonReplacerState: typeof import("./youtube_plugin_base.user.js").JsonReplacerState;
-	type JsonReplacerState=import("./youtube_plugin_base.user.js").JsonReplacerState;
+	var CsiService: typeof import("./z_child_modules/youtube_plugin_base.user.js").CsiService;
+	var JsonReplacerState: typeof import("./z_child_modules/youtube_plugin_base.user.js").JsonReplacerState;
+	type JsonReplacerState=import("./z_child_modules/youtube_plugin_base.user.js").JsonReplacerState;
 
-	var ECatcherService:  typeof import("./youtube_plugin_base.user.js").ECatcherService;
-	var GFeedbackService: typeof import("./youtube_plugin_base.user.js").GFeedbackService;
-	var GuidedHelpService: typeof import("./youtube_plugin_base.user.js").GuidedHelpService;
-	var TrackingServices: typeof import("./youtube_plugin_base.user.js").TrackingServices;
-	var ParserService: typeof import("./youtube_plugin_base.user.js").ParserService;
-	var YtHandlers: typeof import("./youtube_plugin_base.user.js").YtHandlers;
+	var ECatcherService:  typeof import("./z_child_modules/youtube_plugin_base.user.js").ECatcherService;
+	var GFeedbackService: typeof import("./z_child_modules/youtube_plugin_base.user.js").GFeedbackService;
+	var GuidedHelpService: typeof import("./z_child_modules/youtube_plugin_base.user.js").GuidedHelpService;
+	var TrackingServices: typeof import("./z_child_modules/youtube_plugin_base.user.js").TrackingServices;
+	var ParserService: typeof import("./z_child_modules/youtube_plugin_base.user.js").ParserService;
+	var YtHandlers: typeof import("./z_child_modules/youtube_plugin_base.user.js").YtHandlers;
 	var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
-	var CodegenService: typeof import("./youtube_plugin_Codegen.user.js").CodegenService;
-	var IndexedDbAccessor: typeof import("./youtube_plugin_base.user.js").IndexedDbAccessor;
-	var YtPlugin: typeof import("./youtube_plugin_base.user.js").YtPlugin;
-	var ModifyEnv: typeof import("./youtube_plugin_base.user.js").ModifyEnv;
+	var CodegenService: typeof import("./z_child_modules/youtube_plugin_Codegen.user.js").CodegenService;
+	var IndexedDbAccessor: typeof import("./z_child_modules/youtube_plugin_base.user.js").IndexedDbAccessor;
+	var YtPlugin: typeof import("./z_child_modules/youtube_plugin_base.user.js").YtPlugin;
+	var ModifyEnv: typeof import("./z_child_modules/youtube_plugin_base.user.js").ModifyEnv;
 	// youtube_plugin_HandleTypes
-	var __youtube_plugin_base_loaded__: typeof import("./youtube_plugin_base.user.js").__youtube_plugin_base_loaded__;
+	var __youtube_plugin_base_loaded__: typeof import("./z_child_modules/youtube_plugin_base.user.js").__youtube_plugin_base_loaded__;
 	var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
 	type HandleTypes<T,U>=import("./youtube_plugin_HandleTypes.user.js").HandleTypes<T,U>;
 }
 namespace EX {
-	export type ServiceMethods=typeof import("./youtube_plugin_base.user.js").ServiceMethods;
-	export type split_string_once=typeof import("./youtube_plugin_base.user.js").split_string_once;
-	export type as_=typeof import("./youtube_plugin_base.user.js").as;
-	export type AudioGainController=typeof import("./youtube_plugin_base.user.js").AudioGainController;
-	export type base64_dec=typeof import("./youtube_plugin_base.user.js").base64_dec;
-	export type split_string_once_last=typeof import("./youtube_plugin_base.user.js").split_string_once_last;
-	export type VolumeRange=typeof import("./youtube_plugin_base.user.js").VolumeRange;
-	export type yt_plugin_base_main=typeof import("./youtube_plugin_base.user.js").yt_plugin_base_main;
-	export type make_iterator=typeof import("./youtube_plugin_base.user.js").make_iterator;
-	export type Services=typeof import("./youtube_plugin_Services.user.js").Services;
-	export type BaseServicePrivate=typeof import("./youtube_plugin_base.user.js").BaseServicePrivate;
-	export type BaseService=typeof import("./youtube_plugin_base.user.js").BaseService;
+	export type ServiceMethods=typeof import("./z_child_modules/youtube_plugin_base.user.js").ServiceMethods;
+	export type split_string_once=typeof import("./z_child_modules/youtube_plugin_base.user.js").split_string_once;
+	export type as_=typeof import("./z_child_modules/youtube_plugin_base.user.js").as;
+	export type AudioGainController=typeof import("./z_child_modules/youtube_plugin_base.user.js").AudioGainController;
+	export type base64_dec=typeof import("./z_child_modules/youtube_plugin_base.user.js").base64_dec;
+	export type split_string_once_last=typeof import("./z_child_modules/youtube_plugin_base.user.js").split_string_once_last;
+	export type VolumeRange=typeof import("./z_child_modules/youtube_plugin_base.user.js").VolumeRange;
+	export type yt_plugin_base_main=typeof import("./z_child_modules/youtube_plugin_base.user.js").yt_plugin_base_main;
+	export type make_iterator=typeof import("./z_child_modules/youtube_plugin_base.user.js").make_iterator;
+	export type Services=typeof import("./z_child_modules/youtube_plugin_Services.user.js").Services;
+	export type BaseServicePrivate=typeof import("./z_child_modules/youtube_plugin_base.user.js").BaseServicePrivate;
+	export type BaseService=typeof import("./z_child_modules/youtube_plugin_base.user.js").BaseService;
 }
