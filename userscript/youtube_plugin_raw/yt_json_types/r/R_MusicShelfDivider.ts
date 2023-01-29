@@ -1,3 +1,5 @@
+type D_MusicShelfDivider={};
+
 type R_MusicShelfDivider={
-	musicShelfDividerRenderer: {};
+	musicShelfDividerRenderer: D_MusicShelfDivider;
 };

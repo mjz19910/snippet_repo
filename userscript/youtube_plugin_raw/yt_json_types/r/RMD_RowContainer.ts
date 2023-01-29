@@ -1,0 +1,1 @@
+type RMD_RowContainer={metadataRowContainerRenderer: DMD_RowContainer;};

@@ -1,3 +1,5 @@
+type D_LiveChatItemList={};
+
 type R_LiveChatItemList={
-	liveChatItemListRenderer: {};
+	liveChatItemListRenderer: D_LiveChatItemList;
 };

@@ -1,3 +1,5 @@
+type D_LiveChatParticipantsList={};
+
 type R_LiveChatParticipantsList={
-	liveChatParticipantsListRenderer: {};
+	liveChatParticipantsListRenderer: D_LiveChatParticipantsList;
 };

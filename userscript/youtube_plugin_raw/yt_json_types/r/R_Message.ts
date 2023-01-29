@@ -1,3 +1,5 @@
+type D_Message={};
+
 type R_Message={
-	messageRenderer: {};
+	messageRenderer: D_Message;
 };
