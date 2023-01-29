@@ -1,6 +1,7 @@
 /* --- version_list item 1 ---
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
+"use strict";
 /** @template T @arg {T[]} x @arg {T[]} o_arr */
 function intersect_array_get_added(x, o_arr) {
 	return x.filter((x) => !o_arr.includes(x));
@@ -362,81 +363,93 @@ function dispatch_json_event(x) {
 		case "RESULT::handle_json_event:1":
 		case "EVENT::vue_app:1":
 		default:
-			res.push(json_stringify_with_cache(["JSON::event", x]));
+			let arr = json_stringify_with_cache(["JSON::event", x]);
+			res.push(...arr[1]);
 			return res;
 	}
 }
-/** @arg {["JSON::data",[any]]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturnAlt]} x */
+/** @template {[any]} T @template {["JSON::data",T]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturnAlt]} A @arg {A} x @returns {["T",[string]]|["U",string[]]} */
 function json_stringify_with_cache(x) {
-	if (x[0] === "JSON::data") {
-		let obj_keys = get_keys_of(x[1]);
-		console.log("[json_data_keys]", obj_keys.join());
-	}
-	if (x[0] === "JSON::pack") {
-		let item = x[1];
-		switch (item[0]) {
-			case "Node":
-				{
-					let x = item;
-					let node = x[1];
-					/** @typedef {ChromeDomNode} N_Node */
-					/** @type {(keyof (N_Node extends infer U extends N_Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never))[]} */
-					let nk = as(get_keys_of(Object.getPrototypeOf(node)));
-					let fk = nk[0];
-					switch (fk) {
-						case "wholeText":
-							break;
-						default:
-							debugger; break;
+	switch (x[0]) {
+		default: x[0] === ""; debugger; return ["U", []];
+		case "JSON::data":
+			{
+				let item = x[1];
+				let obj_keys = get_keys_of(x[1]);
+				console.log("[json_data_keys]", obj_keys.join());
+				if (item.length !== 1) {
+					debugger;
+					return ["U", []];
+				}
+				let str = JSON.stringify(item[0], json_replacer, "\t");
+				return ["T", [str]];
+			}
+		case "JSON::pack":
+			let item = x[1];
+			switch (item[0]) {
+				case "Node":
+					{
+						let x = item;
+						let node = x[1];
+						/** @typedef {ChromeDomNode} N_Node */
+						/** @type {(keyof (N_Node extends infer U extends N_Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never))[]} */
+						let nk = as(get_keys_of(Object.getPrototypeOf(node)));
+						let fk = nk[0];
+						switch (fk) {
+							case "wholeText":
+								break;
+							default:
+								debugger; break;
+						}
+						switch (node.nodeType) {
+							default:
+								debugger; break;
+							case 3:
+								break;
+						}
+						/** @type {NumRange<3,3>} */
+						let nr = as(node.nodeType);
+						/** @type {NodeContentInfo} */
+						let node_content_info = ["CONTENT::Node", node.nodeName, nr, node.nodeValue];
+						node;
+						console.log("[pack.%s] [json_cache_node_info]", x[0], node_content_info);
+						return ["U", [JSON.stringify(node_content_info, json_replacer, "\t")]];
 					}
-					switch (node.nodeType) {
-						default:
-							debugger; break;
-						case 3:
-							break;
+				case "string":
+				case "JsonInputType":
+				case "Element":
+				case "VueApp":
+				case "DataItemReturn":
+				case "VueVnode":
+					{
+						let x = item;
+						let obj_keys = get_keys_of(x[1]);
+						console.log("[pack.%s] [json_cache_keys_info]", x[0], obj_keys.join());
+						console.log("[pack.%s] [json_cache_with_cache_info]", x[0], x[1]);
+						return ["U", [JSON.stringify(x[1], json_replacer, "\t")]];
 					}
-					/** @type {NumRange<3,3>} */
-					let nr = as(node.nodeType);
-					/** @type {NodeContentInfo} */
-					let node_content_info = ["CONTENT::Node", node.nodeName, nr, node.nodeValue];
-					node;
-					console.log("[pack.%s] [json_cache_node_info]", x[0], node_content_info);
-					return JSON.stringify(node_content_info, json_replacer, "\t");
-				}
-			case "string":
-			case "JsonInputType":
-			case "Element":
-			case "VueApp":
-			case "DataItemReturn":
-			case "VueVnode":
-				{
-					let x = item;
-					let obj_keys = get_keys_of(x[1]);
-					console.log("[pack.%s] [json_cache_keys_info]", x[0], obj_keys.join());
-					console.log("[pack.%s] [json_cache_with_cache_info]", x[0], x[1]);
-					return JSON.stringify(x[1], json_replacer, "\t");
-				}
-			case "any":
-				{
-					let x = item;
-					console.log("[json_cache_any_info] [stringify_any]", x[0], x[1]);
-					return JSON.stringify(x[1], json_replacer, "\t");
-				}
-		}
+				case "any":
+					{
+						let x = item;
+						console.log("[json_cache_any_info] [stringify_any]", x[0], x[1]);
+						return ["U", [JSON.stringify(x[1], json_replacer, "\t")]];
+					}
+			}
+		case "JSON::event":
+			return ["U", [JSON.stringify(x[1], json_replacer, "\t")]];
 	}
-	return JSON.stringify(x[1], json_replacer, "\t");
 }
-/** @arg {UnpackCommand} x @returns {[string]|[]} */
+/** @arg {UnpackCommand} x @returns {string[]} */
 function handle_json_unpack_cmd(x) {
 	console.log("unpack cmd run pending", x);
-	debugger; return [json_stringify_with_cache(["JSON::pack", ["any", x[1]]])];
+	debugger; return json_stringify_with_cache(["JSON::pack", ["any", x[1]]])[1];
 }
-/** @arg {UnpackUnitCommand} x @returns {[string]|[]} */
+/** @arg {UnpackUnitCommand} x @returns {string[]} */
 function handle_json_unpack_unit_cmd(x) {
 	if (x[0] !== "COMMAND::unpack_unit") {
 		debugger; return [];
 	}
-	return [json_stringify_with_cache(["JSON::pack", x[1]])];
+	return json_stringify_with_cache(["JSON::pack", x[1]])[1];
 }
 let processing_commands = false;
 /** @arg {DataItemReturn} x @returns {[string[],string[]]} */
@@ -681,7 +694,7 @@ class HistoryResultData {
 	/** @template T @arg {T} obj @returns {["DATA::from_json",T]} */
 	reconstitute(obj) {
 		let out = json_stringify_with_cache(["JSON::data", [obj]]);
-		return ["DATA::from_json", JSON.parse(out)];
+		return ["DATA::from_json", JSON.parse(out[0])];
 	}
 }
 /** @type {{value:VueApp|null}} */
