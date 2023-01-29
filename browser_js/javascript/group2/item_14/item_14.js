@@ -158,7 +158,7 @@ function show_cache_map(map) {
 function Z_len_k(x) {
 	return get_keys_of(x).length;
 }
-/** @protected @template {{}} T @arg {T} obj @returns {T_MaybeKeysArray<T>} */
+/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 function get_keys_of(obj) {
 	if (!obj) {
 		debugger;

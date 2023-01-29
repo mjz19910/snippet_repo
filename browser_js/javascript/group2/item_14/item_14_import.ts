@@ -1,6 +1,6 @@
 //#region Imported
-type T_MaybeKeys<T> = T extends infer A ? A extends {} ? keyof A : keyof A : never;
-type T_MaybeKeysArray<T extends {}> = T_MaybeKeys<T> extends never ? [] : T_MaybeKeys<T>[];
+type T_DistributedKeyof<T> = T extends infer A ? keyof A : never;
+type T_DistributedKeysOf<T extends {}> = T_DistributedKeyof<T> extends never ? [] : T_DistributedKeyof<T>[];
 
 namespace NS_NumRange {
 	export type NextMakeNum_3<U extends any[], T> = [any, ...U]['length'] extends T ? [any, any, ...U]['length'] : NextMakeNum_3<[any, ...U], T>;
