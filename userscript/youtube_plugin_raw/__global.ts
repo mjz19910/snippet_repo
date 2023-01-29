@@ -34,7 +34,7 @@ declare global {
 	var GFeedbackService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").GFeedbackService;
 	var GuidedHelpService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").GuidedHelpService;
 	var TrackingServices: typeof import("./zb_child_modules/youtube_plugin_base.user.js").TrackingServices;
-	var ParserService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").ParserService;
+	var ParserService: typeof import("./zb_child_modules/youtube_plugin_Parser.js").ParserService;
 	var YtHandlers: typeof import("./zb_child_modules/youtube_plugin_base.user.js").YtHandlers;
 	var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
 	var CodegenService: typeof import("./zb_child_modules/youtube_plugin_Codegen.user.js").CodegenService;
