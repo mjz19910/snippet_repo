@@ -2171,7 +2171,7 @@ class ApiBase {
 		return id;
 	}
 	/** @protected @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
-	d_eq_keys(src,target) {
+	eq_keys(src,target) {
 		if(src.length!==target.length) return false;
 		for(let i=0;i<src.length;i++) {
 			let a=src[i];
@@ -2397,7 +2397,7 @@ class KnownDataSaver extends ApiBase {
 			target=["many",inner];
 			item[1]=target;
 		}
-		let found=target[1].find(e => this.d_eq_keys(e,x));
+		let found=target[1].find(e => this.eq_keys(e,x));
 		if(!found) return target[1].push(x);
 		return -1;
 	}
@@ -2638,7 +2638,7 @@ class KnownDataSaver extends ApiBase {
 				target=["many",inner];
 				p[1]=target;
 			}
-			let found=target[1].find(e => this.d_eq_keys(e,x));
+			let found=target[1].find(e => this.eq_keys(e,x));
 			if(!found) {
 				was_known=false;
 				target[1].push(x);
@@ -4065,7 +4065,7 @@ class IndexedDbAccessor extends BaseService {
 						let in_db=database_map.get(data.v);
 						if(!in_db) continue;
 						let ok_db=this.get_keys_of(in_db);
-						if(this.d_eq_keys(ok,ok_db)) continue;
+						if(this.eq_keys(ok,ok_db)) continue;
 						console.log("[database_needs_obj_merge]");
 						console.log("[obj_merge_new]",data);
 						console.log("[obj_merge_cur]",in_db);
@@ -4379,7 +4379,7 @@ class CodegenService extends BaseService {
 				return null;
 			}
 			let kk=this.get_keys_of(x);
-			if(this.d_eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
+			if(this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility","entryData"])) {
 				if(!o(x.navigationEndpoint)?.browseEndpoint) {
 					/** @type {TD_GuideEntry_EntryData<any>} */
 					console.log("[Generate.TD_GuideEntry_EntryData.wrong_endpoint]",this.get_keys_of(x));
@@ -4388,7 +4388,7 @@ class CodegenService extends BaseService {
 				return `TYPE::TD_GuideEntry_EntryData<"${ru.iconType}">`;
 			}
 			/** @type {TD_GuideEntry_Simple<any>} */
-			if(!this.d_eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
+			if(!this.eq_keys(kk,["navigationEndpoint","icon","trackingParams","formattedTitle","accessibility"])) {
 				console.log("[Generate.TD_GuideEntry_Simple.keys.overflow]",this.get_keys_of(x));
 				break x;
 			}
@@ -5071,7 +5071,7 @@ class ParserService extends BaseService {
 	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
 		let sp=this.parse_url_search_params(x);
-		if(!this.d_eq_keys(this.get_keys_of(sp),["query"])) debugger;
+		if(!this.eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
 	/** @private @arg {Extract<NS_DP_Parse.ParseUrlStr_2,[`@${string}`,any]>[1]} x */
@@ -5413,7 +5413,7 @@ class ParserService extends BaseService {
 		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),null);
 		parse_key(2);
 		parse_key(5);
-		if(this.d_eq_keys(mk,[])) return;
+		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
 	}
@@ -6302,7 +6302,7 @@ class ParserService extends BaseService {
 			if(!mk.includes(i)) continue;
 			parse_key(i);
 		}
-		if(this.d_eq_keys(mk,[])) return;
+		if(this.eq_keys(mk,[])) return;
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		{debugger;}
 	}
@@ -6318,7 +6318,7 @@ class ParserService extends BaseService {
 			parse_key(i);
 		}
 		parse_key(72);
-		if(this.d_eq_keys(mk,[])) return;
+		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
 	}
@@ -6346,7 +6346,7 @@ class ParserService extends BaseService {
 			if(!mk.includes(i)) continue;
 			parse_key(i);
 		}
-		if(this.d_eq_keys(mk,[])) return;
+		if(this.eq_keys(mk,[])) return;
 		let param_obj=this.to_param_obj(map);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		{debugger;}
@@ -7475,11 +7475,11 @@ class ServiceMethods extends ServiceData {
 		let u3=this.parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
 		x: {
-			if(this.d_eq_keys(u4,["v"])) break x;
-			if(this.d_eq_keys(u4,["v","pp"])) break x;
-			if(this.d_eq_keys(u4,["v","t"])) break x;
-			if(this.d_eq_keys(u4,["v","list","start_radio"])) break x;
-			if(this.d_eq_keys(u4,["v","list","index"])) break x;
+			if(this.eq_keys(u4,["v"])) break x;
+			if(this.eq_keys(u4,["v","pp"])) break x;
+			if(this.eq_keys(u4,["v","t"])) break x;
+			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
+			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
 		}
 		this.parser.parse_url(root,x);
@@ -8769,7 +8769,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Color} x */
 	D_Color(x) {
-		if(!this.d_eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
+		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
 		this.z(Object.values(x),x => this._primitive_of(x,"number"));
 	}
 	/** @private @arg {R_Thumbnail} x */
@@ -9612,7 +9612,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
 			this.T_SE_Signal(`${cf}.SE_Signal`,x,a => {
-				a;
+				if(this.eq_keys(this.get_keys_of(a),["webCommandMetadata"]))
 				debugger;
 			},this.G_ClientSignal);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
@@ -10684,7 +10684,7 @@ class HandleTypes extends HandleTypesEval {
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
 			let yk=this.get_keys_of(identifier);
-			if(!this.d_eq_keys(yk,["surface","tag"])) debugger;
+			if(!this.eq_keys(yk,["surface","tag"])) debugger;
 			switch(identifier.tag) {
 				case "engagement-panel-structured-description": break;
 				default: debugger; return;
@@ -11141,7 +11141,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.trackingParams(cf,trackingParams);
 		this.t(formattedTitle,this.G_Text);
-		if(!this.d_eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
+		if(!this.eq_keys(handlerDatas,["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"])) debugger;
 	}
 	/** @private @arg {D_GuideSection} x */
 	D_GuideSection(x) {
@@ -12599,7 +12599,7 @@ class HandleTypes extends HandleTypesEval {
 	D_WebSearchboxConfig(x) {
 		const cf="D_WebSearchboxConfig";
 		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d}=this.sd(cf,x);// this.g(y);//#destructure
-		if(!this.d_eq_keys([a,b],["en","ca"])) debugger;
+		if(!this.eq_keys([a,b],["en","ca"])) debugger;
 		this.z([!c,d],x => {if(!x) debugger;});
 	}
 	/** @private @arg {R_Channel_MD} x */
@@ -13074,7 +13074,7 @@ class HandleTypes extends HandleTypesEval {
 		if(lengthTemplate!=="$clip_length seconds") debugger;
 		let u=this.exact_arr(60000,5000,15000,120000);
 		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
-		if(!this.d_eq_keys(t,u)) debugger;
+		if(!this.eq_keys(t,u)) debugger;
 		this.z([startAccessibility,endAccessibility,durationAccessibility],this.D_Accessibility);
 		debugger;
 	}
@@ -13794,7 +13794,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {D_HideEnclosingContainer} x */
-	D_HideEnclosingContainer(x) {if(!this.d_eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
+	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {x; debugger;}
 	//#endregion
