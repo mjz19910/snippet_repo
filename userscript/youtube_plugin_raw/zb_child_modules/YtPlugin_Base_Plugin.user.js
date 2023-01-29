@@ -26,7 +26,6 @@ function do_export(fn,flags,exports,module_name) {
 			/** @type {{}} */
 			let win_exp=window;
 			exports=as(win_exp);
-			return;
 		} else {
 			window.__plugin_modules__??={};
 			let all_modules=window.__plugin_modules__;
@@ -42,7 +41,7 @@ function do_export(fn,flags,exports,module_name) {
 function export_(fn,flags={global: false}) {
 	do_export(fn,flags,exports,__module_name__);
 }
-export_(exports=>{
+export_(exports => {
 	exports.do_export=do_export;
 });
 
@@ -698,6 +697,10 @@ function required(x) {
 	}
 	return x;
 }
+export_(exports => {
+	debugger;
+	exports.required=required;
+},{global: true});
 const store=required(window.__plugin_modules__);
 /** @template T @typedef {NonNullable<T>} N */
 /** @typedef {N<store['mod$LoadServices']>['Services']} Services */
@@ -1560,9 +1563,6 @@ function required(x) {
 	}
 	return x;
 }
-export_(exports => {
-	exports.required=required;
-},{global: true});
 /** @template T,U @typedef {InstanceType<NonNullable<store["mod$HandleTypes"]>["HandleTypes"]>} HandleTypes */
 /** @private @arg {HandleTypes<any,any>} handle_types */
 function start_message_channel_loop(handle_types) {
