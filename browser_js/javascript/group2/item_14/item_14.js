@@ -2,7 +2,7 @@
 v1 (cur): snippet_repo/javascript/group2/item_14.js
 */
 /** @template T @arg {T[]} x @arg {T[]} o_arr */
-function filter_arr(x, o_arr) {
+function intersect_array_get_added(x, o_arr) {
 	return x.filter((x) => !o_arr.includes(x));
 }
 /** @type {Map<string,JsonInputType[]>} */
@@ -284,7 +284,7 @@ function main_start_json_replace() {
 let do_join_str = () => join_string(["\n", "%o"], "");
 /** @arg {JsonHistoryType[]} hist */
 function log_history_items(hist) {
-	let log_items = hist.map(h_map);
+	let log_items = hist.map(map_add_is_omitted);
 	/** @type {"%o"[]} */
 	let log_place = ["%o"];
 	log_place.length = log_items.length;
@@ -553,7 +553,7 @@ function init_json_event_sys(res_box, x) {
 	}
 }
 /** @template {object} T @arg {T} x @returns {[boolean,T]} */
-function h_map(x) {
+function map_add_is_omitted(x) {
 	let x1 = Object.entries(x);
 	/** @type {{}} */
 	let x1a = x1;
@@ -649,7 +649,7 @@ function iter_history_result(out_res) {
 		return;
 	}
 	let x2 = input_obj.value.value;
-	let nh = filter_arr(history, target_history);
+	let history_new_intersection = intersect_array_get_added(history, target_history);
 	let rc = json_result_cache;
 	let cv = [...rc.keys()];
 	if (cv.length === 1 && cv[0] === x2) {
@@ -659,7 +659,7 @@ function iter_history_result(out_res) {
 			rc.set("TAG::input_obj", k);
 		}
 	}
-	nh.map(h_map).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
+	history_new_intersection.map(map_add_is_omitted).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
 	/** @type {JsonInputType[]} */
 	let new_cache_arr = [];
 	for (let cache_item of json_cache) {
