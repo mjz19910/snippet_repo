@@ -1235,7 +1235,7 @@ class HandleTypes extends HandleTypesEval {
 		// this.C_Executor(toggledServiceEndpoint);
 		this.E_Like(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.ceq(toggledStyle.styleType,null);
+		this.ceq(toggledStyle.styleType,"STYLE_DEFAULT_ACTIVE");
 		this.D_Accessibility(accessibilityData);
 		// this.D_Accessibility(toggledAccessibilityData);
 		toggleButtonSupportedData;
