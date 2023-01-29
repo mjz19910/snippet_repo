@@ -2749,31 +2749,6 @@ class KnownDataSaver extends ApiBase {
 const data_saver=new KnownDataSaver;
 /** @private @template T_LoadAllServices,T_ServiceFlags */
 class BaseServicePrivate extends ApiBase {
-	/** @protected @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
-	w(x,ex_name,excl=[]) {
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		if(keys.length!==1) debugger;
-		let k=keys[0];
-		if(k!==ex_name) {debugger; let u={}; return as(u);}
-		let r=x[k];
-		return r;
-	}
-	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
-	filter_out_keys(keys,to_remove) {
-		to_remove=to_remove.slice();
-		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-		let ok_e=[];
-		for(let i=0;i<keys.length;i++) {
-			let rm_idx=to_remove.findIndex(e => e===keys[i]);
-			if(rm_idx>=0) {
-				to_remove.splice(rm_idx,1);
-				continue;
-			}
-			ok_e.push(as(keys[i]));
-		}
-		return ok_e;
-	}
 	//#region Public
 	/** @constructor @public @arg {ResolverT<T_LoadAllServices,T_ServiceFlags>} x */
 	constructor(x) {
@@ -3024,8 +2999,6 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s]",jk);
 		{debugger;}
 	}
-	/** @protected @template U @arg {K} e_name @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
-	y(x,e_name,f) {return f.call(this,this.w(x,e_name));}
 	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */

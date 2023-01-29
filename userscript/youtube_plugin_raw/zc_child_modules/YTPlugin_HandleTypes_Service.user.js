@@ -206,18 +206,6 @@ class HandleTypesEval extends ServiceMethods {
 		const cf="T_Commands"; this.k(cf,x);
 		this.z(this.w(x,"commands"),f);
 	}
-	/** @private @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:string)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:string)=>void} f */
-	T_Endpoint(cf,x,f,f_vm) {
-		const {clickTrackingParams,commandMetadata,...y}=this.s(cf,x);
-		f.call(this,y,cf);
-		this.clickTrackingParams(\`\${cf}.endpoint\`,clickTrackingParams);
-		if(f_vm===void 0) {
-			if(commandMetadata!==void 0) debugger;
-			return;
-		}
-		if(commandMetadata===void 0) return;
-		f_vm.call(this,commandMetadata,cf);
-	}
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
 		const cf="T_Autoplay";
@@ -319,6 +307,48 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return [contents,sectionIdentifier,targetId];
 	}
+	//#endregion
+	//#region member functions
+	/** @protected @template {T_Endpoint_CF} CF_T @arg {CF_T} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:`D${CF_T}`)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:`D${CF_T}`)=>void} f */
+	T_Endpoint(cf,x,f,f_vm) {
+		const {clickTrackingParams,commandMetadata,...y}=this.s(cf,x);
+		f.call(this,y,`D${cf}`);
+		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+		if(f_vm===void 0) {
+			if(commandMetadata!==void 0) debugger;
+			return;
+		}
+		if(commandMetadata===void 0) return;
+		f_vm.call(this,commandMetadata,`D${cf}`);
+	}
+	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	filter_out_keys(keys,to_remove) {
+		to_remove=to_remove.slice();
+		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		let ok_e=[];
+		for(let i=0;i<keys.length;i++) {
+			let rm_idx=to_remove.findIndex(e => e===keys[i]);
+			if(rm_idx>=0) {
+				to_remove.splice(rm_idx,1);
+				continue;
+			}
+			ok_e.push(as(keys[i]));
+		}
+		return ok_e;
+	}
+	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	w(cf,x,ex_name,excl=[]) {
+		this.k(cf,x);
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length!==1) debugger;
+		let k=keys[0];
+		if(k!==ex_name) {debugger; let u={}; return as(u);}
+		let r=x[k];
+		return r;
+	}
+	/** @protected @arg {string} cf @template U @arg {K} e_name @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
+	y(cf,x,e_name,f) {return f.call(this,this.w(cf,x,e_name));}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -618,7 +648,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,x => this.D_RefreshPlaylist(this.w(x,"refreshPlaylistCommand")));}
+	C_RefreshPlaylist(x) {const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,(x,cf) => this.D_RefreshPlaylist(this.w(cf,x,"refreshPlaylistCommand")));}
 	/** @private */
 	log_url=false;
 	/** @private @arg {R_BrowsePage} x */
@@ -665,7 +695,7 @@ class HandleTypes extends HandleTypesEval {
 		this.g(y);
 	}
 	/** @private @arg {E_Browse} x */
-	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,x => this.y(x,"browseEndpoint",this.DE_Browse_VE),this.M_VE_Browse);}
+	E_Browse(x) {const cf="E_Browse"; this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"browseEndpoint",this.DE_Browse_VE),this.M_VE_Browse);}
 	/** @private @arg {E_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
@@ -811,8 +841,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
 		const cf="D_SettingsSidebar";
-		const {title,...y}=this.s(cf,x);
-		this.z(this.w(y,"items"),this.R_CompactLink);
+		const {title,items,...y}=this.s(cf,x); this.g(y);
+		this.z(items,this.R_CompactLink);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
 	D_CompactLink_Styled(cf,x) {
@@ -827,7 +857,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {E_Upload} x */
-	E_Upload(x) {this.T_Endpoint("E_Upload",x,x => this.y(x,"uploadEndpoint",this.B_Hack),this.D_Empty_WCM);}
+	E_Upload(x) {this.T_Endpoint("E_Upload",x,(x,cf) => this.y(cf,x,"uploadEndpoint",this.B_Hack),this.D_Empty_WCM);}
 	/** @private @arg {D_Empty_WCM} x */
 	D_Empty_WCM(x) {x; debugger;}
 	/** @private @arg {D_CompactLink} x */
@@ -1250,7 +1280,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",a.id);
 	}
 	/** @private @arg {C_CommandExecutor} x */
-	C_CommandExecutor(x) {this.T_Endpoint("C_CommandExecutor",x,x => this.y(x,"commandExecutorCommand",this.DC_CommandExecutor));}
+	C_CommandExecutor(x) {this.T_Endpoint("C_CommandExecutor",x,(x,cf) => this.y(cf,x,"commandExecutorCommand",this.DC_CommandExecutor));}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {
 		this.T_Commands(x,x => {
@@ -1339,7 +1369,7 @@ class HandleTypes extends HandleTypesEval {
 	C_Continuation(x) {
 		if(!x) {debugger; return;}
 		const cf="C_Continuation";
-		this.T_Endpoint(cf,x,x => this.y(x,"continuationCommand",this.DC_Continuation),x => this.y(x,"webCommandMetadata",this.GM_Next));
+		this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"continuationCommand",this.DC_Continuation),(x,cf) => this.y(cf,x,"webCommandMetadata",this.GM_Next));
 	}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {
@@ -1557,7 +1587,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {
 		const cf="E_YpcGetCart";
-		this.T_Endpoint(cf,x,x => this.y(x,"ypcGetCartEndpoint",this.D_YpcGetCart),this.M_YpcGetCart);
+		this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"ypcGetCartEndpoint",this.D_YpcGetCart),this.M_YpcGetCart);
 	}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.H_("M_YpcGetCart",x,this.GM_YpcGetCart);}
@@ -1571,20 +1601,20 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_YpcGetCart} x */
 	D_YpcGetCart(x) {
 		const cf="D_YpcGetCart";
-		let sp=this.w(x,"transactionParams");
+		let sp=this.w(cf,x,"transactionParams");
 		this.params(cf,"YpcGetCart.transactionParams",sp);
 	}
-	/** @private @template T @arg {{webCommandMetadata: T}} x */
-	unpack_MG(x) {return this.w(x,"webCommandMetadata");}
+	/** @private @template T @arg {string} cf @arg {{webCommandMetadata: T}} x */
+	unpack_MG(cf,x) {return this.w(cf,x,"webCommandMetadata");}
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		const cf="C_GetSurvey";
 		this.T_Endpoint(cf,x,x => {
 			if(!x.getSurveyCommand) debugger;
-			this.D_GetSurvey(this.w(x,"getSurveyCommand"));
+			this.D_GetSurvey(this.w(cf,x,"getSurveyCommand"));
 		},x => {
-			const cf="GetSurveyCommandMetadata"; this.k(cf,x);
-			const {apiUrl,sendPost,...y}=this.unpack_MG(x); this.g(y);
+			const cf="GetSurveyCommandMetadata";
+			const {apiUrl,sendPost,...y}=this.unpack_MG(cf,x); this.g(y);
 			if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 			if(sendPost!==true) debugger;
 		});
@@ -1877,7 +1907,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {
-		const cf="E_Subscribe"; this.T_Endpoint(cf,x,x => this.y(x,"subscribeEndpoint",this.DE_Subscribe),this.M_Subscribe);
+		const cf="E_Subscribe"; this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"subscribeEndpoint",this.DE_Subscribe),this.M_Subscribe);
 	}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
@@ -1984,17 +2014,25 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
-		{const cn="multiPageMenuNotificationSectionRenderer"; if(cn in x) return this.w(x,cn);}
+		const cf="D_NotificationMenu_Popup_SectionItem"; this.k(cf,x);
+		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
 		{debugger;}
 		return null;
+	}
+	/** @private @arg {R_MP_MenuNotificationSection} x */
+	R_MP_MenuNotificationSection(x) {const cf="D_NotificationMenu_PopupItem"; this.H_(cf,x,this.D_MP_MenuNotificationSection);}
+	/** @private @arg {D_MP_MenuNotificationSection} x */
+	D_MP_MenuNotificationSection(x) {
+		const cf="D_MP_MenuNotificationSection";
+		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.z(items,this.R_MP_MenuNotificationSection_Item);
 	}
 	/** @private @arg {D_NotificationMenu_PopupItem} x */
 	D_NotificationMenu_PopupItem(x) {
 		const cf="D_NotificationMenu_PopupItem";
 		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._R_SimpleMenuHeader(header);
-		let [iw]=this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
-		this.z(iw[0].items,this.R_MP_MenuNotificationSection_Item);
+		this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		this.trackingParams(cf,trackingParams);
 	}
@@ -2162,11 +2200,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_ClientSignal} x */
 	G_ClientSignal(x) {
 		const cf="G_ClientSignal";
-		let om=this.Signal_Omit(x,x => {
+		let {actions,...u}=this.Signal_Omit(x,x => {
 			this.save_string(`[${cf}.signal]`,x);
 			if(x!=="CLIENT_SIGNAL") debugger;
 		});
-		this.z(this.w(om,"actions"),x => {
+		this.z(this.w(u,"actions"),x => {
 			/** @type {S_Client_Item} */
 			if("openPopupAction" in x) return this.S_Client_Popup(x);
 			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
@@ -2177,7 +2215,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,x => this.y(x,"showEngagementPanelEndpoint",this.D_ShowEngagementPanel));}
+	E_ShowEngagementPanel(x) {const cf="E_ShowEngagementPanel"; this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"showEngagementPanelEndpoint",this.D_ShowEngagementPanel));}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel";
@@ -2195,8 +2233,12 @@ class HandleTypes extends HandleTypesEval {
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
 		}
 	}
+	/** @template {{}} T @arg {T} x @arg {keyof T} k */
+	T_EP_In(x,k) {
+		return x[k];
+	}
 	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a => this.DC_AddToPlaylist(this.w(a,"addToPlaylistCommand")));}
+	C_AddToPlaylist(x) {this.T_Endpoint("C_AddToPlaylist",x,a => this.DC_AddToPlaylist(this.T_EP_In(a,"addToPlaylistCommand")));}
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
@@ -2209,7 +2251,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {SE_CreatePlaylist} x */
 	SE_CreatePlaylist(x) {
-		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,"createPlaylistServiceEndpoint",this.DS_CreatePlaylist),u => {
+		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"createPlaylistServiceEndpoint",this.DS_CreatePlaylist),u => {
 			let x=u.webCommandMetadata;
 			const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 			if(sendPost!==true) debugger;
@@ -2330,7 +2372,8 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(addToMenu);
 		this.R_PlayerOverlayVideoDetails(videoDetails);
 		if("decoratedPlayerBarRenderer" in y) {
-			return this.R_DecoratedPlayerBar(this.w(y,"decoratedPlayerBarRenderer"));
+			const {decoratedPlayerBarRenderer,...y1}=y; this.g(y1);
+			return this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
 		}
 		this.g(y);
 	}
@@ -2351,7 +2394,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
 		const {playerBar,...y}=this.s(cf,x);
 		if("playerBarActionButton" in y) {
-			return this.R_Button(this.w(y,"playerBarActionButton"));
+			const {playerBarActionButton,...y1}=y; this.g(y1);
+			return this.R_Button(playerBarActionButton);
 		}
 		this.g(y);
 	}
@@ -2619,7 +2663,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
 	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {this.T_Endpoint("A_ReplaceEnclosing",x,x => this.y(x,"replaceEnclosingAction",this.AD_ReplaceEnclosing));}
+	A_ReplaceEnclosing(x) {this.T_Endpoint("A_ReplaceEnclosing",x,(x,cf) => this.y(cf,x,"replaceEnclosingAction",this.AD_ReplaceEnclosing));}
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
@@ -2721,7 +2765,7 @@ class HandleTypes extends HandleTypesEval {
 		return [un_prefix,other];
 	}
 	/** @private @arg {E_Watch} x */
-	E_Watch(x) {const cf="E_Watch"; this.T_Endpoint(cf,x,x => this.y(x,"watchEndpoint",this.DE_VE3832_Watch),this.M_VE3832);}
+	E_Watch(x) {const cf="E_Watch"; this.T_Endpoint(cf,x,(x,cf) => this.y(cf,x,"watchEndpoint",this.DE_VE3832_Watch),this.M_VE3832);}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		const cf="DE_VE3832_Watch";
@@ -4593,7 +4637,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @template {{}} T @template {T_DistributedKeyof<T>} K @arg {K} key @arg {(x:T[K])=>U} fn @template U */
 	eb(key,fn) {
 		/** @arg {T} x */
-		return x => this.y(x,key,fn);
+		return (x,cf) => this.y(cf,x,key,fn);
 	}
 	/** @arg {string} cf @arg {string} ns @template {{}} T */
 	cb(cf,ns) {
@@ -5782,7 +5826,7 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {this.T_Endpoint("E_PlaylistEditor",x,x => this.y(x,"playlistEditorEndpoint",this.DE_PlaylistEditor),this.D_Empty_WCM);}
+	E_PlaylistEditor(x) {this.T_Endpoint("E_PlaylistEditor",x,(x,cf) => this.y(cf,x,"playlistEditorEndpoint",this.DE_PlaylistEditor),this.D_Empty_WCM);}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.k("DE_PlaylistEditor",x); this.y(x,"playlistId",this.playlistId);}
 	/** @private @arg {D_EditableDetails} x */
@@ -6541,10 +6585,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback",x,this.D_ThumbnailOverlayResumePlayback);}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {
-		const cf="D_ThumbnailOverlayResumePlayback";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
-	}
+	D_ThumbnailOverlayResumePlayback(x) {const cf="D_ThumbnailOverlayResumePlayback"; this.k(cf,x); this.y(x,"percentDurationWatched",x => this.save_number("resume_playback.percentDurationWatched",x));}
 	/** @arg {string} cf @arg {object} x */
 	cfl(cf,x) {
 		this.k(cf,x);
