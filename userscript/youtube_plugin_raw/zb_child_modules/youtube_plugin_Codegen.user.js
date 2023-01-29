@@ -258,8 +258,16 @@ class CodegenService extends BaseService {
 	filter_typedef_part_gen(x) {
 		let x_arr=x.split("\n");
 		x_arr=x_arr.map(e => e.trim());
-		x_arr=x_arr.map(e=>e.match(/[\}]];$/)?e.slice(0,-1):e);
-		return x_arr.join("");
+		x_arr=x_arr.map(e => e.match(/;$/)? e.slice(0,-1):e);
+		return x_arr.reduce((prev,cur) => {
+			if(cur==="") return prev+cur;
+			if(cur==="}") return prev+";"+cur;
+			if(cur==="]") return prev+";"+cur;
+			if(prev.match(/[\w"]$/)) {
+				return prev+"; "+cur;
+			}
+			return prev+cur;
+		},"");
 	}
 	/** @template {{}} T @arg {T} x */
 	get_typedef_part(x) {
@@ -324,6 +332,15 @@ class CodegenService extends BaseService {
 			console.log("[typedef_codegen_res]",sr);
 			debugger;
 			return `TYPE::T_SE_Signal<{webCommandMetadata: {}},${sr}>`;
+		}
+		x: if(x.multiPageMenuRenderer) {
+			/** @type {{}} */
+			let xc_1=x;
+			/** @type {TR_MP_Menu<{}>} */
+			let xu=as(xc_1);
+			let sr=this.get_typedef_part(xu.multiPageMenuRenderer);
+			if(!sr) break x;
+			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
@@ -921,7 +938,7 @@ class Generate {
 	}
 }
 
-export_(exports=>{
+export_(exports => {
 	exports.CodegenService=CodegenService;
 	exports.Generate=Generate;
 });
