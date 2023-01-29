@@ -2698,14 +2698,6 @@ class KnownDataSaver extends ApiBase {
 const data_saver=new KnownDataSaver;
 /** @private @template CLS_T,CLS_U */
 class BaseServicePrivate extends ApiBase {
-	/** @arg {ServiceMethods<CLS_T,CLS_U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
-	is_normal_service(x) {
-		return x.service_type==="normal";
-	}
-	/** @returns {"unknown"|"normal"} */
-	get service_type() {
-		return "unknown";
-	}
 	//#region Public
 	/** @constructor @public @arg {ResolverT<CLS_T,CLS_U>} x */
 	constructor(x) {
@@ -2744,11 +2736,15 @@ class BaseServicePrivate extends ApiBase {
 	//#endregion
 	#x;
 }
-/** @private @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
+/** @private @template CLS_T,CLS_U @extends {BaseServicePrivate<CLS_T,CLS_U>} */
 class BaseService extends BaseServicePrivate {
-	/** @override @returns {"unknown"|"normal"} */
+	/** @arg {ServiceMethods<CLS_T,CLS_U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
+	is_normal_service(x) {
+		return x.service_type==="normal";
+	}
+	/** @returns {"unknown"|"normal"} */
 	get service_type() {
-		return "normal";
+		return "unknown";
 	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
@@ -6992,6 +6988,10 @@ class ServiceData extends BaseService {
 }
 /** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
+	/** @override @returns {"unknown"|"normal"} */
+	get service_type() {
+		return "normal";
+	}
 	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
 	static is_url_with_pathname(x,pathname) {
 		return x.pathname===pathname;
