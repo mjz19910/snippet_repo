@@ -3468,7 +3468,7 @@ class ECatcherService extends BaseService {
 		});
 		if(new_expected.length>0) {
 			if(is_firefox) {
-				console.log("[new_fexp_expected]",new_expected);
+				this.log_new_experiments(new_expected);
 				return;
 			}
 			let fexp_log_val;
@@ -3478,11 +3478,16 @@ class ECatcherService extends BaseService {
 				fexp_log_val=new_expected[0];
 			}
 			if(fexp_log_val instanceof Array) {
-				console.log("[new_fexp_expected]",fexp_log_val);
+				this.log_new_experiments(fexp_log_val);
 				return;
 			}
-			console.log("[new_fexp_expected][%o]",fexp_log_val);
+			this.log_new_experiments(fexp_log_val,"[%o]");
 		}
+	}
+	/** @arg {[number|number[],string?]} experiments_arr_log_args */
+	log_new_experiments(...experiments_arr_log_args) {
+		let [arg,tags=""]=experiments_arr_log_args;
+		console.log(`[new_fexp_expected]${tags}`,arg);
 		this.data.expected_client_values.fexp;
 	}
 	/** @api @public @arg {RC_ECatcher_SPs["params"]} params */
