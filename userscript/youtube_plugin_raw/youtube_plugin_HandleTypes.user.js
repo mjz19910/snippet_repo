@@ -6308,9 +6308,7 @@ class HandleTypes extends HandleTypesEval {
 	//#endregion
 }
 //#endregion
-//#region Start main
-console=typeof window==="undefined"? console:(() => window.console)();
-yt_plugin_base_main();
+//#region exports
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==="object") {
@@ -6324,6 +6322,9 @@ function export_(fn) {
 export_((exports)=>{
 	exports.HandleTypes=HandleTypes;
 });
-
+//#endregion
+//#region Start main
+console=typeof window==="undefined"? console:(() => window.console)();
+yt_plugin_base_main();
 //#endregion
 //#endregion
