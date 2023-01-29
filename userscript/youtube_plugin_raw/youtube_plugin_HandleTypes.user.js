@@ -5233,7 +5233,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this._primitive_of(tooltip,"string");
-		this.ceq(updateUnseenCountEndpoint,null);
+		this.do_codegen(`${cf}$updateUnseenCountEndpoint`,updateUnseenCountEndpoint);
+		debugger;
 		this.a_primitive_num(notificationCount);
 		this.ceq(handlerDatas.length,1);
 		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");

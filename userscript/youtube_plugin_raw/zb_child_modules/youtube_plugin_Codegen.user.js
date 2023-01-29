@@ -22,7 +22,19 @@ function export_(fn) {
 		fn(as(u));
 	}
 }
-
+class JsonReplacerState {
+	/** @constructor @public @arg {string} gen_name @arg {string[]} keys */
+	constructor(gen_name,keys) {
+		this.object_count=0;
+		this.gen_name=gen_name;
+		this.key_keep_arr=keys;
+		this.k1="";
+		/** @api @public @type {unknown[]} */
+		this.object_store=[];
+		/** @api @public @type {Map<unknown,[number,string]>} */
+		this.parent_map=new Map;
+	}
+}
 /** @template T,U @extends {BaseService<T,U>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
@@ -279,6 +291,7 @@ class CodegenService extends BaseService {
 			}
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
+		debugger;
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";

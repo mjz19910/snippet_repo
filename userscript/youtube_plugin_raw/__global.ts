@@ -30,9 +30,6 @@ declare global {
 	var BaseService: EX.BaseService;
 	// youtube_plugin_base
 	var CsiService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").CsiService;
-	var JsonReplacerState: typeof import("./zb_child_modules/youtube_plugin_base.user.js").JsonReplacerState;
-	type JsonReplacerState=import("./zb_child_modules/youtube_plugin_base.user.js").JsonReplacerState;
-
 	var ECatcherService:  typeof import("./zb_child_modules/youtube_plugin_base.user.js").ECatcherService;
 	var GFeedbackService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").GFeedbackService;
 	var GuidedHelpService: typeof import("./zb_child_modules/youtube_plugin_base.user.js").GuidedHelpService;

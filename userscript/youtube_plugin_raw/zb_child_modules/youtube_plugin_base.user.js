@@ -4085,19 +4085,6 @@ class IndexedDbAccessor extends BaseService {
 		console.log("idb error",event);
 	}
 }
-class JsonReplacerState {
-	/** @constructor @public @arg {string} gen_name @arg {string[]} keys */
-	constructor(gen_name,keys) {
-		this.object_count=0;
-		this.gen_name=gen_name;
-		this.key_keep_arr=keys;
-		this.k1="";
-		/** @api @public @type {unknown[]} */
-		this.object_store=[];
-		/** @api @public @type {Map<unknown,[number,string]>} */
-		this.parent_map=new Map;
-	}
-}
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
@@ -6710,7 +6697,6 @@ export_(exports => {
 	exports.GuidedHelpService=GuidedHelpService;
 	exports.TrackingServices=TrackingServices;
 	exports.IndexedDbAccessor=IndexedDbAccessor;
-	exports.JsonReplacerState=JsonReplacerState;
 	exports.YtHandlers=YtHandlers;
 });
 export_(exports => {
