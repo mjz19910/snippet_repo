@@ -7637,22 +7637,6 @@ class HandleTypesEval extends ServiceMethods {
 	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
 	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
 	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
-	/** @private @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
-	TD_ItemSection_3(x,f) {
-		const cf="TD_ItemSection_3";
-		const {contents,sectionIdentifier,targetId,trackingParams}=this.sd(cf,x);// this.g(y);//#destructure
-		f.call(this,[contents,sectionIdentifier,targetId]);
-		this.trackingParams(cf,trackingParams);
-		if(contents.length>0) {
-			let cu=contents[0];
-			if(typeof cu!=="object"||!cu) {debugger; return;}
-			let k=this.get_keys_of(cu);
-			switch(k[0]) {
-				case "continuationItemRenderer": break;
-				default: debugger; break;
-			}
-		}
-	}
 	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
@@ -7753,6 +7737,24 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
 	H_=super.H_;
+	//#region Temporary
+	/** @override @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	TD_ItemSection_3(x,f) {
+		const cf="TD_ItemSection_3";
+		const {contents,sectionIdentifier,targetId,trackingParams}=this.sd(cf,x);// this.g(y);//#destructure
+		f.call(this,[contents,sectionIdentifier,targetId]);
+		this.trackingParams(cf,trackingParams);
+		if(contents.length>0) {
+			let cu=contents[0];
+			if(typeof cu!=="object"||!cu) {debugger; return;}
+			let k=this.get_keys_of(cu);
+			switch(k[0]) {
+				case "continuationItemRenderer": break;
+				default: debugger; break;
+			}
+		}
+	}
+	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
@@ -12309,6 +12311,7 @@ class HandleTypes extends HandleTypesEval {
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
 		this.do_codegen(cf,x);
 		{debugger;}
