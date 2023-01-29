@@ -12405,7 +12405,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Watch_SecondaryResults_Results";
 		const {results,trackingParams}=this.sd(cf,x);// this.g(y);//#destructure
 		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
-		trackingParams;
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_RelatedChipCloud} x */
 	R_RelatedChipCloud(x) {
