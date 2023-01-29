@@ -13693,6 +13693,7 @@ class HandleTypes extends HandleTypesEval {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
 		let k=this.gk(this.w(x,"item"))[0];
 		switch(k) {
+			default: debugger; break;
 			case "notificationTextRenderer":
 			case "reelDismissalActionRenderer":
 		}
