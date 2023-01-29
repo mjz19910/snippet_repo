@@ -254,11 +254,14 @@ class HandleTypesEval extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @private @arg {D_Text} x */
-	D_Text(x) {
-		const cf="D_Text";
-		const {simpleText,...y}=this.s(cf,x); this.handle_accessibility(y);
-		this.primitive_str(simpleText);
+	/** @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {G_Text} x */
+	G_Text(x) {
+		const cf="G_Text";
+		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.t(simpleText,this.a_primitive_str);
+		this.tz(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
+		this.t(accessibility,this.D_Accessibility);
 	}
 	//#endregion
 	//#region section to support above stuff
@@ -2798,15 +2801,6 @@ class HandleTypes extends HandleTypesEval {
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		{debugger;}
-	}
-	/** @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
-	/** @private @arg {G_Text} x */
-	G_Text(x) {
-		const cf="G_Text";
-		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
-		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
 	IR_TextRun(x,f_run) {
