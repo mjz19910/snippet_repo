@@ -6978,16 +6978,17 @@ class ServiceData extends BaseService {
 	/** @protected */
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
-/** @template T,U @extends {ServiceData<T,U>}  */
+/** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
-	/** @protected @template T @arg {{pathname:any}} x @arg {T} pathname @returns {x is {pathname:T}} */
-	is_url_with_pathname(x,pathname) {
+	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
+	static is_url_with_pathname(x,pathname) {
 		return x.pathname===pathname;
 	}
-	/** @arg {ServiceMethods<T,U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
+	/** @arg {ServiceMethods<CLS_T,CLS_U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
 	is_normal_service(x) {
-		x;
-		return true;
+		/** @type {ServiceMethods<any,any>} */
+		let xt=x;
+		return !!xt.x.get("codegen");
 	}
 	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
 	get_res_data(url_type,x) {
@@ -7725,6 +7726,18 @@ window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
 `;
 eval(handle_types_eval_code);
+
+/** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
+class UrlParseHelper {
+	/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
+	constructor(x) {
+		this.x=x;
+	}
+	/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
+	get_with_pathname(cx,pname) {
+		return ServiceMethods.is_url_with_pathname(cx,pname);
+	}
+}
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region static & typedefs
@@ -10231,7 +10244,7 @@ class HandleTypes extends HandleTypesEval {
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
 		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=this.D_ThumbnailOverlay_Omit(cf,x); this.g(y);
-		this.richThumbnail_Video(richThumbnail);
+		this.t(richThumbnail,this.richThumbnail_Video);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
@@ -12342,17 +12355,34 @@ class HandleTypes extends HandleTypesEval {
 	D_CompactRadio_shareUrl(b) {
 		const cf="D_CompactRadio_shareUrl";
 		let up=this.parse_with_url_parse(b);
-		if(this.is_url_with_pathname(up,"/watch")) {
-			let {...s}=this.parse_url_search_params(up.search);
-			{
-				let {v,playnext,list,...y}=s; this.g(y);
-				console.log("[CompactRadio.v]",v);
-				console.log("[CompactRadio.playnext]",playnext);
-				console.log("[CompactRadio.list]",list);
+		{
+			let obj=new UrlParseHelper(up);
+			if(obj.get_with_pathname(up,"/watch")) {
+				let {...s}=this.parse_url_search_params(up.search);
+				if("v" in s) {
+					let {v,playnext,list,...y}=s; this.g(y);
+					console.log("[CompactRadio.v]",v);
+					console.log("[CompactRadio.playnext]",playnext);
+					console.log("[CompactRadio.list]",list);
+					return;
+				}
+				return;
 			}
-			return;
 		}
-		this.do_codegen(cf,{from: cf,url: b}); up==="";
+		{
+			let obj=new UrlParseHelper(up);
+			if(obj.get_with_pathname(up,"/playlist")) {
+				let {...s}=this.parse_url_search_params(up.search);
+				if("list" in s) {
+					let {list,...y}=s; this.g(y);
+					console.log("[CompactRadio.list]",list);
+					return;
+				}
+				return;
+			}
+		}
+		// let {...s}=this.parse_url_search_params(up.search);
+		this.do_codegen(cf,{from: cf,url: b});
 		{debugger;}
 	}
 	/** @private @arg {D_CompactRadio} x */

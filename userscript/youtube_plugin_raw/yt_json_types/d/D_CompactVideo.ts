@@ -15,6 +15,6 @@ type D_CompactVideo={
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	accessibility: D_Accessibility;
-	richThumbnail: R_MovingThumbnail;
+	richThumbnail?: R_MovingThumbnail;
 	badges?: RMD_Badge[];
 };
