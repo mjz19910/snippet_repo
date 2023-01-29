@@ -25,7 +25,7 @@ function store_window(key, obj) {
 }
 class LogGenerator {
 	log_str = "";
-	/** @type {J_Rep[]} */
+	/** @type {{__log_generator_args:true,v:{}}[]} */
 	log_args = [];
 	reset([str, args] = ["", []]) {
 		this.log_str = str;
@@ -78,8 +78,6 @@ function createTypedObjectFromEntries(arr) {
 	return as(fe);
 }
 class H_Iter {
-	/** @type {number[]} */
-	done_ids = [];
 	/** @template {keyof T} T_K @template {T[T_K]} T_V @template {object|Map<M_K,M_V>} T @arg {[T_K,T_V]} v @returns {[T_K,T_V]|null} @template M_V,M_K @arg {[string,Map<M_K,M_V>][]} json_result_cache_arr */
 	obj_ent_rep(v, json_result_cache_arr) {
 		const [k, x] = v;
@@ -217,14 +215,16 @@ class JsonOutputBox {
 						if (ck.size <= 0)
 							continue;
 						this.add_to_output(out_state, k, ck);
-					} break;
+					}
+					break;
 				case "output_arr":
 					{
 						let ck = this[k];
 						if (ck.length <= 0)
 							continue;
 						this.add_to_output(out_state, k, ck);
-					} break;
+					}
+					break;
 				default:
 					k === "";
 					debugger;
@@ -243,9 +243,6 @@ const overflow_state = new class {
 	last_stack_space = null;
 }
 /** @type {number[]} */
-let done_ids = [];
-class J_Rep {
-}
 /** @type {JsonInputType[]} */
 const json_cache_arr = [];
 //#region on_data_item
@@ -263,12 +260,17 @@ function on_run_request(res, x) {
 }
 let json_output = new JsonOutputBox;
 let history_output = new JsonOutputBox;
+let next_id = 0;
 function main_start_json_replace() {
 	let res = json_output.reset();
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	init_json_event_sys_with_obj(res, doc_child);
+	stack.push(["TAG::stack", [{
+		id: next_id++,
+		items: [res],
+	}]]);
 	let history_res = history_output.reset();
 	let log_args = history_iter(history_res);
 	console.log(...log_args);
@@ -296,7 +298,7 @@ function log_history_items(hist) {
 const result_data_arr = [];
 /** @type {{}[]} */
 const done_history_items = [];
-/** @typedef {["TAG::stack", JsonHistoryType[]]|["TAG::old_stack",J_Rep]} JsonStackType */
+/** @typedef {["TAG::stack", JsonHistoryType[]]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
 /** @arg {JsonOutputBox} out_res */
@@ -304,6 +306,8 @@ function history_iter(out_res) {
 	if (stack.length === 0) {
 		return [];
 	}
+	/** @type {number[]} */
+	let done_ids = [];
 	let all_history_arr = [];
 	while (stack.length > 0) {
 		let x = stack.shift();
@@ -539,7 +543,9 @@ function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
 	if (res.length > 0) {
-		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", { [Symbol.toStringTag]: x[0] }, res]]);
+		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", {
+			[Symbol.toStringTag]: x[0]
+		}, res]]);
 	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
