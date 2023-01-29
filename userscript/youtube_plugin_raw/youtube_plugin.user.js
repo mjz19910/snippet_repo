@@ -5469,7 +5469,7 @@ class ParserService extends BaseService {
 			console.log(`\n
 			case "${path}":
 				switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
-				/** @private @type {P_PathRoot} */
+				/** @private @type {P_ParamParse_XX} */
 				return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		return {u,gen_next_part,new_path,map_entry_key};
@@ -5504,6 +5504,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "get_report_form":
+						switch(map_entry_key) {case 2: case 8: case 11: case 15: case 18: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_ParamParse_XX} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "service$create_playlist":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_ParamParse_XX} */
@@ -7546,6 +7550,8 @@ class HandleTypesEval extends ServiceMethods {
 		const {relevantStateTags}=this.sd(cf,x);// this.g(y);//#destructure
 		this.z(relevantStateTags,this.B_StateTag);
 	}
+	primitive_str(x) {this.a_primitive_str(x);}
+	primitive_of(x,y) {this._primitive_of(x,y);}
 	/** @private @arg {RC_ConsistencyTokenJar} x */
 	RC_ConsistencyTokenJar(x) {
 		const cf="RC_ConsistencyTokenJar";
@@ -9142,67 +9148,82 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{debugger;}
 	}
+	/** @private @template {D_SubscribeButton} T @arg {string} cf @arg {T} x */
+	D_SubscribeButton_Omit(cf,x) {
+		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.sd(cf,x);
+		this.R_TextRuns(buttonText);
+		this._primitive_of(subscribed,"boolean");
+		if(enabled!==true) debugger;
+		if(type!=="FREE") debugger;
+		this.channelId(channelId);
+		this.trackingParams(cf,trackingParams);
+		if(showPreferences!==false) debugger;
+		return y;
+	}
+	/** @template {Extract<D_SubscribeButton,{subscribedButtonText:any}>} T @arg {string} cf @arg {T} x @returns {YRet} */
+	D_SubButton_Omit_Button(cf,x) {
+		const y=this.D_SubscribeButton_Omit(cf,x);
+		let [sub,o1]=this.unwrap_prefix(y,"subscribed");
+		/** @arg {T_RemovePrefix<D_SubscribeButton,"subscribed">} x */
+		let r_sub=({...x}) => {
+			if("entityKey" in x) {
+				const {buttonText,entityKey,...y}=this.sd(`${cf}.subscribed`,x); this.g(y);
+				this.R_TextRuns(buttonText);
+				console.log("[subscribed.entityKey]",entityKey);
+				return;
+			}
+			if("buttonText" in x) {
+				const {buttonText,...y}=this.sd(`${cf}.subscribed`,x); this.g(y);
+				this.R_TextRuns(buttonText);
+				return;
+			}
+			this.g(x);
+		};
+		r_sub(sub);
+		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
+		/** @arg {T_RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
+		let r_un_sub=({...x}) => {
+			const {buttonText,...y}=this.sd(`${cf}.unsubscribed`,x); this.g(y);
+			this.R_TextRuns(buttonText);
+		};
+		r_un_sub(un_sub);
+		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
+		let [un_sub_2,o4]=this.unwrap_prefix(o3,"unsubscribe");
+		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
+		let r_sub_2=({...x}) => {
+			const {accessibility,...y}=this.sd(`${cf}.subscribe`,x); this.g(y);
+			this.D_Accessibility(accessibility);
+		};
+		r_sub_2(sub_2);
+		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
+		let r_un_sub_2=({...x}) => {
+			const {buttonText,accessibility,...y}=this.sd(`${cf}.unsubscribe`,x); this.g(y);
+			this.R_TextRuns(buttonText);
+			this.D_Accessibility(accessibility);
+		};
+		r_un_sub_2(un_sub_2);
+		/** @typedef {typeof o4} YRet */
+		return o4;
+	}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton";
 		if("serviceEndpoints" in x) {
-			const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,serviceEndpoints,...y}=this.sd(cf,x);
-			this.R_TextRuns(buttonText);
-			this._primitive_of(subscribed,"boolean");
-			if(enabled!==true) debugger;
-			if(type!=="FREE") debugger;
-			this.channelId(channelId);
-			this.trackingParams(cf,trackingParams);
-			if(showPreferences!==false) debugger;
-			let [sub,o1]=this.unwrap_prefix(y,"subscribed");
-			let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
-			/** @arg {RemovePrefix<D_SubscribeButton,"subscribed">} x */
-			let r_sub=({...x}) => {
-				if("entityKey" in x) {
-					const {buttonText,entityKey,...y}=this.sd(`${cf}.subscribed`,x); this.g(y);
-					this.R_TextRuns(buttonText);
-					console.log("[subscribed.entityKey]",entityKey);
-					return;
-				}
-				if("buttonText" in x) {
-					const {buttonText,...y}=this.sd(`${cf}.subscribed`,x); this.g(y);
-					this.R_TextRuns(buttonText);
-					return;
-				}
-				this.g(x);
-			};
-			r_sub(sub);
-			/** @arg {RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
-			let r_un_sub=({...x}) => {
-				const {buttonText,...y}=this.sd(`${cf}.unsubscribed`,x); this.g(y);
-				this.R_TextRuns(buttonText);
-			};
-			r_un_sub(un_sub);
-			let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
-			let [un_sub_2,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
-			/** @arg {RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
-			let r_sub_2=({...x}) => {
-				const {accessibility,...y}=this.sd(`${cf}.subscribe`,x); this.g(y);
-				this.D_Accessibility(accessibility);
-			};
-			r_sub_2(sub_2);
-			/** @arg {RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
-			let r_un_sub_2=({...x}) => {
-				const {buttonText,accessibility,...y}=this.sd(`${cf}.unsubscribe`,x); this.g(y);
-				this.R_TextRuns(buttonText);
-				this.D_Accessibility(accessibility);
-			};
-			r_un_sub_2(un_sub_2);
-			this.g(o4);
+			const {serviceEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x);
+			this.z(serviceEndpoints,this.E_Subscribe);
+			this.g(y);
 			return;
 		}
 		if("targetId" in x) {
-			console.log(`[${cf}.next_key] [%s]`,this.get_keys_of(x)[0]);
-			debugger;
+			const {targetId,notificationPreferenceButton,onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x); this.g(y);
+			this.ceq(targetId,"watch-subscribe");
+			this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 			return;
 		}
 		{debugger;}
 	}
+	/** @private @arg {E_Subscribe} x */
+	E_Subscribe(x) {x;}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
@@ -9933,10 +9954,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.GM_WC(this.unpack_MG(this.sd(cf,x)));
 	}
-	/** @private @template T @template {string} VV @typedef {{[U in keyof T as `${string&U extends `${VV}${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemovePrefix */
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
-		/** @private @type {Partial<RemovePrefix<U,"url">>} */
+		/** @private @type {Partial<T_RemovePrefix<U,"url">>} */
 		let uu={};
 		uu; x;
 		uu.applinksAndroid;
@@ -9950,9 +9970,9 @@ class HandleTypes extends HandleTypesEval {
 			o: o3,
 		};
 	}
-	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
+	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
-		/** @private @type {RemovePrefix<U,VV>} */
+		/** @private @type {T_RemovePrefix<U,VV>} */
 		let un_prefix=as({});
 		/** @private @type {Omit<U,`${VV}${string}`>} */
 		let other=as({});
@@ -9963,7 +9983,7 @@ class HandleTypes extends HandleTypesEval {
 				if(u1x.length!==2) continue;
 				/** @private @type {any} */
 				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
-				/** @private @type {keyof RemovePrefix<U,VV>} */
+				/** @private @type {keyof T_RemovePrefix<U,VV>} */
 				let u1=ac;
 				un_prefix[u1]=cc[1];
 				continue;
@@ -13037,7 +13057,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(shortViewCount,this.R_SimpleText);
 		this.t(extraShortViewCount,this.R_SimpleText);
 		this.t(isLive,this.b_primitive_bool);
-		debugger;
 	}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
@@ -13588,6 +13607,7 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(centerItems,false);
 		debugger;
 	}
+	/** @private @arg {R_RichListHeader} x */
 	R_RichListHeader(x) {x;}
 	/** @private @arg {R_MacroMarkersListItem} x */
 	R_MacroMarkersListItem(x) {x;}
