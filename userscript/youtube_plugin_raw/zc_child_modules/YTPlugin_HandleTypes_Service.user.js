@@ -1221,25 +1221,27 @@ class HandleTypes extends HandleTypesEval {
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
 		const {style,isDisabled,isToggled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		console.log("[D_ToggleButton.style]",style.styleType);
+		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
-		switch(defaultIcon.iconType) {
-			default: debugger; break;
-			case "LIKE":
-			case "LOOP": break;
-		}
+		this.save_string("[D_ToggleButton.defaultIcon.type]",defaultIcon.iconType);
 		if(!defaultServiceEndpoint.commandExecutorCommand) debugger;
 		this.C_CommandExecutor(defaultServiceEndpoint);
 		// this.C_RepeatChapter(defaultServiceEndpoint);
 		// this.C_Executor(toggledServiceEndpoint);
 		this.E_Like(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.ceq(toggledStyle.styleType,"STYLE_DEFAULT_ACTIVE");
+		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
 		this.D_Accessibility(accessibilityData);
 		// this.D_Accessibility(toggledAccessibilityData);
-		toggleButtonSupportedData;
-		if(targetId!=="watch-like") debugger;
+		this.D_ToggleButtonIdData(toggleButtonSupportedData);
+		if(targetId===void 0) {debugger; return;}
+		this.save_string("[D_ToggleButton.targetId]",targetId);
+	}
+	/** @private @arg {D_ToggleButtonIdData} x */
+	D_ToggleButtonIdData(x) {
+		const {toggleButtonIdData: a,...y}=x; this.g(y);
+		this.save_enum("TOGGLE_BUTTON_ID_TYPE",a.id);
 	}
 	/** @private @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {this.T_Endpoint("C_CommandExecutor",x,x => this.y(x,"commandExecutorCommand",this.DC_CommandExecutor));}

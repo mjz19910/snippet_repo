@@ -6,23 +6,23 @@ type C_CommandExecutor={
 	commandExecutorCommand: DC_CommandExecutor;
 };
 type T_Id<T>={id: T;};
-type ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
+type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 
 type D_ToggleButton={
 	style: T_StyleType<"STYLE_TEXT">;
 	isToggled: false;
 	isDisabled: false;
-	defaultIcon: T_Icon<"LIKE"|"LOOP">;
+	defaultIcon: T_Icon<"LIKE"|"DISLIKE"|"LOOP">;
 	defaultText: D_Text;
 	defaultServiceEndpoint: C_CommandExecutor;
 	toggledText: D_Text;
 	toggledServiceEndpoint: E_Like;
 	accessibility: D_Label;
 	trackingParams: string;
-	defaultTooltip: "I like this";
-	toggledTooltip: "Unlike";
+	defaultTooltip: string;
+	toggledTooltip: string;
 	toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
 	accessibilityData: D_Accessibility;
-	toggleButtonSupportedData: ToggleButtonIdData;
-	targetId: "watch-like";
+	toggleButtonSupportedData: D_ToggleButtonIdData;
+	targetId: "watch-like"|"watch-dislike";
 };
