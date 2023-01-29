@@ -6438,6 +6438,5 @@ export_((exports) => {
 //#endregion
 //#region Start main
 console=typeof window==="undefined"? console:(() => window.console)();
-bs.yt_plugin_base_main();
 //#endregion
 //#endregion

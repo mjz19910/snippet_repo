@@ -70,7 +70,7 @@ class LoadAllServices {
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new bs.YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
-		const CodegenService=required(store.mod$CodegenPlugin).CodegenService;
+		const CodegenService=required(store.mod$CodegenService).CodegenService;
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new bs.IndexedDbAccessor(x,"yt_plugin",2);
 		this.yt_plugin=new bs.YtPlugin(x);
