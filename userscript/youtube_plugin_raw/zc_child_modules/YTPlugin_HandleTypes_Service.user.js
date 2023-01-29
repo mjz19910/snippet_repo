@@ -43,7 +43,15 @@ function raw_template(x) {
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
 const ServiceMethods=required(store["mod$YoutubePluginBase"]?.ServiceMethods);
-const CodegenService=required(store["mod$CodegenService"]?.CodegenService); CodegenService;
+const ServiceResolver=required(store["mod$YoutubePluginBase"]?.ServiceResolver);
+const CodegenService=required(store["mod$CodegenService"]?.CodegenService);
+class FakeUseHandleEval {
+	static {
+		CodegenService;
+		ServiceResolver;
+	}
+}
+FakeUseHandleEval;
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext

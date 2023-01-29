@@ -1,4 +1,4 @@
-class ServiceResolver<T,U> {
+export class ServiceResolver<T,U> {
 	/** @type {T|null} */
 	services: T|null=null;
 	/** @type {U|null} */
