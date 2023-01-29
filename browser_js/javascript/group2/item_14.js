@@ -474,7 +474,7 @@ function process_commands() {
 	let in_process_arr = pending_commands.slice();
 	for (let command of in_process_arr) {
 		let [tag, cmd] = command;
-		if (tag !== "unpack") {
+		if (tag !== "unit") {
 			debugger;
 		}
 		let cmd_res;
@@ -505,7 +505,7 @@ function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
 	if (res.length > 0) {
-		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", x[0], res]]);
+		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", x, res]]);
 	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");

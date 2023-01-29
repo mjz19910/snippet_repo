@@ -76,8 +76,8 @@ type WhatInfoObj = {
 };
 type WhatInfoItem = ["TYPE::DBG_What", WhatInfoObj];
 
-type JsonEventResult = ["handle_result", [results: string[], command_results: string[]]] | ["string", string[]];
-
+type JsonEventResult = [type: "handle_result", from: DataItemReturn, data: [results: string[], command_results: string[]]] | ["string", string[]];
+type DataItemTag = DataItemReturn;
 type DataItemReturn =
 	| WhatInfoItem
 	| ["TYPE::DataItemReturn", ["DataItemReturn", DataItemReturn[]]]
