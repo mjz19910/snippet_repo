@@ -5504,6 +5504,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "get_report_form.f18":
+						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_ParamParse_XX} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "get_report_form":
 						switch(map_entry_key) {case 2: case 8: case 11: case 15: case 18: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_ParamParse_XX} */
@@ -7762,7 +7766,7 @@ class HandleTypes extends HandleTypesEval {
 			let k=this.get_keys_of(cu);
 			switch(k[0]) {
 				case "continuationItemRenderer": break;
-				default: debugger; break;
+				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e=>`case "${e}":`).join("\n")}`); break;
 			}
 		}
 	}
