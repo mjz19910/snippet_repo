@@ -1,1 +1,0 @@
-type T_MaybeKeys<T>=T extends infer A? A extends {}? keyof A:keyof A:never;

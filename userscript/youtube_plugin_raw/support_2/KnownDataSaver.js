@@ -1,7 +1,7 @@
 import {no_storage_access} from "../snippet_0";
 
 export class KnownDataSaver {
-	/** @template {{}} T @arg {T} obj @returns {T_MaybeKeysArray<T>} */
+	/** @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
 			debugger;
