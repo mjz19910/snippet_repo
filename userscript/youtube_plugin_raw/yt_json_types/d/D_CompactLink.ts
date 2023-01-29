@@ -9,4 +9,10 @@ type D_CompactLink={
 	navigationEndpoint: E_Browse;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR";
+}|{
+	icon: T_Icon<"CREATION_UPLOAD">;
+	title: R_TextRuns;
+	navigationEndpoint: E_Upload;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
 };

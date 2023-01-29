@@ -780,22 +780,38 @@ class HandleTypes extends HandleTypesEval {
 		const {title,...y}=this.sd(cf,x);
 		this.z(this.w(y,"items"),this.R_CompactLink);
 	}
+	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
+	D_CompactLink_Styled(cf,x) {
+		switch(x.style) {
+			default: debugger; break;
+			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
+			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
+				let u=this.D_Link_Omit(cf,x);
+				const {icon,style: {},navigationEndpoint,...y}=this.sd(`${cf}.icon`,u); this.g(y);
+				this.E_Upload(navigationEndpoint);
+			} break;
+		}
+	}
+	/** @private @arg {E_Upload} x */
+	E_Upload(x) {x;}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink"; this.k(cf,x);
-		if("navigationEndpoint" in x) {
+		if("style" in x) {
+			return this.D_CompactLink_Styled(`${cf}.Styled`,x);
+		}
+		if("icon" in x) {
 			let u=this.D_Link_Omit(cf,x);
-			const {navigationEndpoint,style,...y}=this.sd(`${cf}.nav`,u); this.g(y);
-			this.E_Browse(navigationEndpoint);
-			if(style!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
+			const {icon,...y}=this.sd(`${cf}.icon`,u); this.g(y);
+			switch(x.icon.iconType) {
+				case "PERSON_ADD": break;
+				default: debugger; break;
+			}
 			return;
 		}
-		let u=this.D_Link_Omit(cf,x);
-		const {icon,...y}=this.sd(`${cf}.icon`,u); this.g(y);
-		switch(x.icon.iconType) {
-			case "PERSON_ADD": break;
-			default: debugger; break;
-		}
+		console.groupCollapsed();
+		this.do_codegen(cf,x);
+		console.groupEnd();
 	}
 	/** @private @template {D_CompactLink} T @arg {D_Link_CF} cf @arg {T} x */
 	D_Link_Omit(cf,x) {

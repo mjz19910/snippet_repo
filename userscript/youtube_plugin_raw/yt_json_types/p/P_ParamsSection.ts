@@ -93,6 +93,7 @@ type P_ParamsSection=|string
 ;
 type D_Link_CF=[
 	"D_CompactLink",
+	"D_CompactLink.Styled",
 ][number];
 type D_Button_CF=[
 	"D_Button",
@@ -112,8 +113,3 @@ type Omit_Menu_Radio_CF=[
 type D_ChipCloudChip_Omit_CF=[
 	"D_ChipCloudChip",
 ][number];
-function vv_x(u: keyof import("../../youtube_plugin.user.js").HandleTypes<{},{}>) {
-	switch(u) {
-	}
-}
-vv_x(cast_objects.as(""));
