@@ -2018,13 +2018,9 @@ function yt_plugin_base_main() {
 	}
 }
 export_((exports) => {
-	exports.Services=Services;
-	exports.ParserService=ParserService;
 	exports.ServiceResolver=ServiceResolver;
-	exports.YtPlugin=YtPlugin;
 	exports.VolumeRange=VolumeRange;
 	exports.sizeof_js=sizeof_js;
-	exports.ServiceMethods=ServiceMethods;
 });
 //#endregion
 //#region string manipulation
@@ -7588,6 +7584,10 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#endregion
 export_((exports) => {
+	exports.ParserService=ParserService;
+	exports.Services=Services;
+	exports.YtPlugin=YtPlugin;
+	exports.ServiceMethods=ServiceMethods;
 	exports.split_string_once=split_string_once;
 	exports.as=as;
 	exports.base64_dec=base64_dec;
