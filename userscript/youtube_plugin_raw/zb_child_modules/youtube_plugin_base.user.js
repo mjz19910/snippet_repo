@@ -4695,6 +4695,7 @@ export_(exports => {
 });
 export_(exports => {
 	exports.MyReader=MyReader;
+	exports.split_string=split_string;
 });
 export_(exports => {
 	exports.base64_url_dec=base64_url_dec;
