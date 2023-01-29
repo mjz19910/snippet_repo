@@ -234,7 +234,6 @@ function main_start_json_replace() {
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	init_json_event_sys_with_obj(res, doc_child);
-
 	let history_res = new JsonOutputBox;
 	let log_args = history_iter(history_res);
 	console.log(...log_args);
