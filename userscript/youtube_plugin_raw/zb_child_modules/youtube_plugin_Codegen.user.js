@@ -450,11 +450,7 @@ class CodegenService extends BaseService {
 		}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
 			if(!x.openPopupAction) break x;
-			let gn=this.get_name_from_keys(x.openPopupAction);
-			if(!gn) break x;
-			let gr=this.#_codegen_typedef(x.openPopupAction,gn);
-			if(!gr) break x;
-			let sr=split_string_once(gr.split("\n").map(e => e.trim()).join(""),"=")[1];
+			let sr=this.get_typedef_part(x.openPopupAction);
 			if(!sr) break x;
 			return "TA_OpenPopup<"+sr+">";
 		}
