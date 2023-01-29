@@ -2003,12 +2003,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template T @template U @arg {string} cf @arg {T_SE_Signal<T,U>} x @arg {(this:this,x:T)=>void} f_t @arg {(this:this,x:U)=>void} f_u */
-	T_SE_Signal(cf,x,f_t,f_u) {
+	/** @private @template T @template U @arg {string} cf @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
+	T_SE_Signal(cf,x) {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
-		f_t.call(this,commandMetadata);
-		f_u.call(this,signalServiceEndpoint);
+		return [commandMetadata,signalServiceEndpoint];
 	}
 	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
 	Signal_Omit(x,f) {
@@ -2109,10 +2108,10 @@ class HandleTypes extends HandleTypesEval {
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.T_SE_Signal(`${cf}.SE_Signal`,x,a => {
-				if(!this.eq_keys(this.get_keys_of(a),["webCommandMetadata"])) debugger;
-				this.M_SendPost(a);
-			},this.G_ClientSignal);
+			let [a,gc]=this.T_SE_Signal(`${cf}.SE_Signal`,x);
+			if(!this.eq_keys(this.get_keys_of(a),["webCommandMetadata"])) debugger;
+			this.M_SendPost(a);
+			this.G_ClientSignal(gc);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.C_AdsControlFlowOpportunityReceived(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
@@ -3916,7 +3915,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button_SE} x */
 	ES_Button(x) {
 		const cf="ES_Button";
-		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x,this.M_SendPost,this.G_ClientSignal);
+		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x); x==="";
 		{debugger;}
@@ -4378,7 +4377,7 @@ class HandleTypes extends HandleTypesEval {
 		if("changeEngagementPanelVisibilityAction" in x) return this.EA_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
-		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x,this.M_SendPost,this.G_ClientSignal);
+		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
@@ -5210,7 +5209,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {avatar,menuRequest,...y}=u; this.g(y);//#destructure
 		this.R_Thumbnail(avatar);
-		this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest,this.M_AccountMenu,this.S_GetAccountMenu);
+		let res=this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest);
+		this.M_AccountMenu(res[0]);
+		this.S_GetAccountMenu(res[1]);
 	}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.H_("M_AccountMenu",x,this.GM_AccountMenu);}
@@ -5228,13 +5229,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_NotificationTopbarButton";
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.sd(cf,x); this.g(y);//#destructure_off
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
-		this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest,this.M_GetNotificationMenu,this.Signal_GetNotificationsMenu);
+		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.T_SE_Signal`,menuRequest);
+		this.M_GetNotificationMenu(g_menu);
+		this.Signal_GetNotificationsMenu(menu_signal);
 		this.ceq(style,"NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT");
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this._primitive_of(tooltip,"string");
-		this.do_codegen(cf,x);
-		debugger;
+		this.T_SE_Signal(`${cf}.updateUnseenCount.T_SE_Signal`, updateUnseenCountEndpoint);
 		this.a_primitive_num(notificationCount);
 		this.ceq(handlerDatas.length,1);
 		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
