@@ -4,7 +4,7 @@ type D_PlayerOverlayAutoplay={
 	byline: R_TextRuns;
 	pauseText: G_Text;
 	background: R_Thumbnail;
-	countDownSecs: 8;
+	countDownSecs: 3|8;
 	cancelButton: R_Button;
 	nextButton: R_Button;
 	trackingParams: string;

@@ -10260,6 +10260,10 @@ class HandleTypes extends HandleTypesEval {
 			case "/upload": break;
 		}
 	}
+	/** @template {number} T @arg {T} x @returns {`${T}`} */
+	num_to_string(x) {
+		return `${x}`;
+	}
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
@@ -10268,7 +10272,11 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TextRuns(byline);
 		this.G_Text(pauseText);
 		this.R_Thumbnail(background);
-		if(countDownSecs!==8) debugger;
+		let cds=this.num_to_string(countDownSecs);
+		switch(cds) {
+			default: debugger; break;
+			case "3": case "8":
+		}
 		this.R_Button(cancelButton);
 		this.R_Button(nextButton);
 		this.R_Button(closeButton);
