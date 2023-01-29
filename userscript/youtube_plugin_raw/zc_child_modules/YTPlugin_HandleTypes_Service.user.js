@@ -251,6 +251,23 @@ class HandleTypesEval extends ServiceMethods {
 		this.tz(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
+	/** @private @arg {IR_TextRun_Endpoint} x */
+	IR_TextRun_Endpoint(x) {
+		const cf="IR_TextRun_Endpoint"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		{debugger;}
+	}
+	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
+	IR_TextRun(x,f_run) {
+		const cf="R_TextRun";
+		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.t(navigationEndpoint,f_run);
+		this.a_primitive_str(text);
+		this.t(loggingDirectives,this.D_LoggingDirectives);
+		this.t(bold,this.b_primitive_bool);
+	}
 	//#endregion
 	//#region section to support above stuff
 	/** @private @arg {{accessibility?:D_Accessibility}} x */
@@ -2866,23 +2883,6 @@ class HandleTypes extends HandleTypesEval {
 				console.log(r);
 			}
 		}
-	}
-	/** @private @arg {IR_TextRun_Endpoint} x */
-	IR_TextRun_Endpoint(x) {
-		const cf="IR_TextRun_Endpoint"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.E_Browse(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		{debugger;}
-	}
-	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
-	IR_TextRun(x,f_run) {
-		const cf="R_TextRun";
-		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.t(navigationEndpoint,f_run);
-		this.a_primitive_str(text);
-		this.t(loggingDirectives,this.D_LoggingDirectives);
-		this.t(bold,this.b_primitive_bool);
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
