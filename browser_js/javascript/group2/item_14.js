@@ -161,11 +161,21 @@ function Z_len_k(x) {
 const log_gen = new LogGenerator;
 /** @type {JsonOutputBox[]} */
 const index_box_store = [];
-class JsonOutputBox {
+class JsonOutputData {
 	/** @type {DataItemReturn[]} */
 	output_arr = [];
 	/** @type {Map<JsonInputType,number>} */
 	cache_index_map = new Map;
+
+}
+class JsonOutputBox {
+	data = new JsonOutputData;
+	get output_arr() {
+		return this.data.output_arr;
+	}
+	get cache_index_map() {
+		return this.data.cache_index_map;
+	}
 	reset() {
 		this.output_arr.length = 0;
 		this.cache_index_map.clear();
@@ -173,36 +183,46 @@ class JsonOutputBox {
 	}
 	get_log_self_args() {
 		let log_self_info = this.get_self_for_logging();
-		if (log_self_info[0] < 1)
+		if (log_self_info.size < 1)
 			return null;
-		return ["-- [JsonOutputBox] --\n%o", log_self_info[1]];
+		return ["-- [JsonOutputBox] --\n%o", log_self_info.out];
 	}
-	/** @private @returns {[number,Partial<this>]} */
+	/** @typedef {{out:Partial<JsonOutputData>,size:number}} OutState */
+	/** @template {keyof JsonOutputData} K @arg {OutState} x @arg {K} k @arg {JsonOutputData[K]} v */
+	add_to_output(x, k, v) {
+		x.out[k] = v;
+		x.size++;
+	}
+	/** @private @returns {OutState} */
 	get_self_for_logging() {
-		/** @type {Partial<this>} */
-		let out = {};
-		let out_size = 0;
-		for (let k of Object.keys(this)) {
-			/** @type {keyof this&string} */
-			let rk = as(k);
-			let ck = this[rk];
-			if (ck instanceof Map) {
-				if (ck.size <= 0)
-					continue;
-				out[rk] = ck;
-				out_size++;
-				continue;
-			}
-			if (ck instanceof Array) {
-				if (ck.length <= 0)
-					continue;
-				out[rk] = ck;
-				out_size++;
-				continue;
-			}
-			debugger;
+		let out_state = {
+			out: {},
+			size: 0,
 		}
-		return [out_size, out];
+		for (let k of Object.keys(this)) {
+			/** @type {Extract<keyof JsonOutputData,string>} */
+			let rk = as(k);
+			switch (rk) {
+				case "cache_index_map":
+					{
+						let ck = this[rk];
+						if (ck.size <= 0)
+							continue;
+						this.add_to_output(out_state, rk, ck);
+					} break;
+				case "output_arr":
+					{
+						let ck = this[rk];
+						if (ck.length <= 0)
+							continue;
+						this.add_to_output(out_state, rk, ck);
+					} break;
+				default:
+					rk === "";
+					debugger;
+			}
+		}
+		return out_state;
 	}
 }
 const overflow_state = new class {
@@ -508,7 +528,7 @@ function init_json_event_sys(res_box, x) {
 	json_replace_count++;
 	let res = handle_json_event(x);
 	if (res.length > 0) {
-		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", { tag: x[0] }, res]]);
+		res_box.output_arr.push(["RESULT::handle_json_event", ["handle_result", { [Symbol.toStringTag]: x[0] }, res]]);
 	}
 	if (stringify_failed_obj.length > 0) {
 		console.log("failed to stringify the following objects");
