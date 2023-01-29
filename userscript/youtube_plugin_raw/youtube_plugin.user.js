@@ -5840,9 +5840,10 @@ class ParserService extends BaseService {
 					case "f2": case "f8":
 					case "f11": case "f14": case "f15": case "f18":
 					case "f27":
-					case "f29":{
+					case "f29": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(map_entry_value instanceof Map) return;
 							if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
@@ -5859,7 +5860,17 @@ class ParserService extends BaseService {
 				if(path_parts.length===1) {
 					switch(map_entry_value) {default: debugger; return;}
 				}
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break; case "f1": u(idx); debugger; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f1": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+					} break;
+				}
 			} break;
 			case "next": u(idx); debugger; break;
 			case "aadc_guidelines_state_entity_key": u(idx); debugger; break;
