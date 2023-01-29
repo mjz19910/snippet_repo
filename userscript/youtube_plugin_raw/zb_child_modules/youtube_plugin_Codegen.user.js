@@ -346,6 +346,7 @@ class CodegenService extends BaseService {
 			if(this.eq_keys(kk,["signal"])) {
 				return `TYPE::T_Signal<"${v.signal}">`
 			}
+			debugger;
 		}
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
