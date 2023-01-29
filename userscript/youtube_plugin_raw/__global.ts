@@ -13,6 +13,6 @@ declare global {
 		delete(name: string): void;
 		entries(): IterableIterator<[string,string]>;
 	}
-	class HandleTypesEval<T,U> extends HandleTypesEval_<T,U> {}
+	var HandleTypesEval: HandleTypesEval_<any,any>;
 }
 

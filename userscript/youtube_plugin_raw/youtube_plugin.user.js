@@ -7596,7 +7596,6 @@ class HandleTypesEval extends ServiceMethods {
 		let cg=new CodegenService(v);
 		let sr=new ServiceResolver({codegen: cg},{});
 		let t=new this({value: sr});
-		this.prototype.minimal_handler_member_use();
 		debugger;
 		t.codegen_renderer("",{});
 	}
@@ -7713,15 +7712,19 @@ class HandleTypesEval extends ServiceMethods {
 		this.primitive_str(simpleText);
 	}
 	//#endregion
+	//#region section to support above stuff
 	/** @private @arg {{accessibility?:D_Accessibility}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
+	//#endregion
 }
-//# sourceUrl=plugin://extension/youtube_plugin_handle_types.js
+//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
+HandleTypesEval;
 `;
-eval(handle_types_eval_code);
+const HandleTypesEval_R=eval(handle_types_eval_code);
+HandleTypesEval=HandleTypesEval_R;
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region static & typedefs
