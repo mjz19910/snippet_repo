@@ -6,7 +6,7 @@ declare global {
 		};
 	}
 }
-type Base$ImpType=typeof import("./zb_child_modules/youtube_plugin_base.user.js");
+type Base$ImpType=typeof import("./zb_child_modules/YtPlugin_Base_Plugin.user.js");
 declare global {
 	interface URLSearchParams {
 		[Symbol.iterator](): IterableIterator<[string,string]>;
@@ -26,7 +26,7 @@ declare global {
 namespace EX {
 	export type ServiceMethods=Base$ImpType["ServiceMethods"];
 	export type split_string_once=Base$ImpType["split_string_once"];
-	export type as_=typeof import("./zb_child_modules/youtube_plugin_base.user.js").as_;
+	export type as_=typeof import("./zb_child_modules/YtPlugin_Base_Plugin.user.js").as_;
 	export type AudioGainController=Base$ImpType["AudioGainController"];
 	export type base64_dec=Base$ImpType["base64_dec"];
 	export type split_string_once_last=Base$ImpType["split_string_once_last"];

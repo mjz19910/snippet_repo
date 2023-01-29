@@ -1,4 +1,4 @@
-import {ServiceMethods} from "./zb_child_modules/youtube_plugin_base.user";
+import {ServiceMethods} from "./zb_child_modules/YtPlugin_Base_Plugin.user";
 /** @returns {never} */
 function n() {
 	throw new Error("Make never type");

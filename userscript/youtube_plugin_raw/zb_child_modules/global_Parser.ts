@@ -1,5 +1,5 @@
 export {};
 
 declare global {
-	var MyReader: typeof import("./youtube_plugin_base.user.js").MyReader;
+	var MyReader: typeof import("./YtPlugin_Base_Plugin.user.js").MyReader;
 }
