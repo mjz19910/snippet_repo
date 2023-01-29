@@ -2350,7 +2350,10 @@ class HandleTypes extends HandleTypesEval {
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
 	D_MenuFlexibleItem(x) {
-		const cf="D_MenuFlexibleItem"; this.cfl(cf,x);
+		const cf="D_MenuFlexibleItem";
+		const {menuItem,topLevelButton,...y}=this.s(cf,x); this.g(y);
+		this.R_MenuServiceItem(menuItem);
+		this.R_Button(topLevelButton);
 	}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
