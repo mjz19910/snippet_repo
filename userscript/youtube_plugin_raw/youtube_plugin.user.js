@@ -5505,6 +5505,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "watch.params":
+						switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 39: case 56: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_ParamParse_XX} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "get_report_form.f18.f1":
 						switch(map_entry_key) {case 2: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_ParamParse_XX} */
@@ -5949,6 +5953,7 @@ class ParserService extends BaseService {
 							// [watch.player_params.f25]
 							case "f2": case "f3": case "f7": case "f8": case "f9":
 							case "f12": case "f13": case "f24": case "f27": case "f25":
+							case "f39":
 							case "f33": case "f40": case "f56": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -10055,10 +10060,18 @@ class HandleTypes extends HandleTypesEval {
 				if(this.str_starts_with("RD",playlist_id)) {
 					this.playlistId(as(playlist_id));
 				} else {
-					console.log("D_VssLoggingContext.serializedContextData.fieldId",r[1]);
-					let playlist_id=this._decoder.decode(r[2]);
-					console.log("serializedContextData.decode",playlist_id);
-					debugger;
+					switch(r[1]) {
+						default:
+							console.log("D_VssLoggingContext_serializedContextData_fieldId",r[1]);
+							let playlist_id=this._decoder.decode(r[2]);
+							console.log("serializedContextData_decode",playlist_id);
+							debugger;
+							break;
+						case 3: {
+							let playlist_id=this._decoder.decode(r[2]);
+							console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);
+						} break;
+					}
 				}
 			} else {
 				console.log(r);
