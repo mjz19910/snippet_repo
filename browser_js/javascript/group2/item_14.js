@@ -166,6 +166,10 @@ class JsonOutputBox {
 	output_arr = [];
 	/** @type {Map<JsonInputType,number>} */
 	cache_index_map = new Map;
+	reset() {
+		this.output_arr.length = 0;
+		this.cache_index_map.clear();
+	}
 	get_log_self_args() {
 		let log_self_info = this.get_self_for_logging();
 		if (log_self_info[0] < 1)
@@ -228,13 +232,16 @@ function on_run_request(res, x) {
 	}
 	return init_json_event_sys_with_obj(res, x[1]);
 }
+let json_output = new JsonOutputBox;
+let history_output = new JsonOutputBox;
 function main_start_json_replace() {
-	let res = new JsonOutputBox;
+	let res = json_output;
+	res.reset()
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	init_json_event_sys_with_obj(res, doc_child);
-	let history_res = new JsonOutputBox;
+	let history_res = history_output;
 	let log_args = history_iter(history_res);
 	console.log(...log_args);
 	let res_log = res.get_log_self_args();
@@ -690,18 +697,13 @@ function json_replacer(k, x) {
 	if (json_cache.includes(x)) {
 		return `TYPE::Store.cache[${json_cache.indexOf(x)}]`;
 	}
+	if (!json_cache.includes(x)) {
+		json_cache.push(x);
+	}
 	if (cache_map.has(k)) {
 		cache_map.get(k)?.push(x);
 	} else {
 		cache_map.set(k, [x]);
-	}
-	if (!json_cache.includes(x)) {
-		json_cache.push(x);
-	}
-	if (is_vue_vnode(x)) {
-		if (!vnodes.includes(x))
-			vnodes.push(x);
-		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
 	}
 	if (x?._container === input_obj) {
 		return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
@@ -709,6 +711,11 @@ function json_replacer(k, x) {
 	if (x?.__vue_app__) {
 		vue_app.value = x.__vue_app__;
 		return `TYPE::VueApp`;
+	}
+	if (is_vue_vnode(x)) {
+		if (!vnodes.includes(x))
+			vnodes.push(x);
+		return `TYPE::Store.vnodes[${vnodes.indexOf(x)}]`;
 	}
 	return `TYPE:: Store.cache[${json_cache.indexOf(x)}]`;
 }
