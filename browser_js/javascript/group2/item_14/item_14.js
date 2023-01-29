@@ -156,7 +156,7 @@ function show_cache_map(map) {
 }
 /** @arg {{}} x */
 function Z_len_k(x) {
-	return Object.keys(x).length;
+	return get_keys_of(x).length;
 }
 /** @protected @template {{}} T @arg {T} obj @returns {T_MaybeKeysArray<T>} */
 function get_keys_of(obj) {
@@ -209,26 +209,24 @@ class JsonOutputBox {
 			out: {},
 			size: 0,
 		}
-		for (let k of Object.keys(this.data)) {
-			/** @type {Extract<keyof JsonOutputData,string>} */
-			let rk = as(k);
-			switch (rk) {
+		for (let k of get_keys_of(this.data)) {
+			switch (k) {
 				case "cache_index_map":
 					{
-						let ck = this[rk];
+						let ck = this[k];
 						if (ck.size <= 0)
 							continue;
-						this.add_to_output(out_state, rk, ck);
+						this.add_to_output(out_state, k, ck);
 					} break;
 				case "output_arr":
 					{
-						let ck = this[rk];
+						let ck = this[k];
 						if (ck.length <= 0)
 							continue;
-						this.add_to_output(out_state, rk, ck);
+						this.add_to_output(out_state, k, ck);
 					} break;
 				default:
-					rk === "";
+					k === "";
 					debugger;
 			}
 		}
@@ -388,7 +386,7 @@ function dispatch_json_event(x) {
 /** @arg {["JSON::data",[any]]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturnAlt]} x */
 function json_stringify_with_cache(x) {
 	if (x[0] === "JSON::data") {
-		let obj_keys = Object.keys(x[1]);
+		let obj_keys = get_keys_of(x[1]);
 		console.log("[json_data_keys]", obj_keys.join());
 	}
 	if (x[0] === "JSON::pack") {
@@ -400,7 +398,7 @@ function json_stringify_with_cache(x) {
 					let node = x[1];
 					/** @typedef {ChromeDomNode} N_Node */
 					/** @type {(keyof (N_Node extends infer U extends N_Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never))[]} */
-					let nk = as(Object.keys(Object.getPrototypeOf(node)));
+					let nk = as(get_keys_of(Object.getPrototypeOf(node)));
 					let fk = nk[0];
 					switch (fk) {
 						case "wholeText":
@@ -430,7 +428,7 @@ function json_stringify_with_cache(x) {
 			case "VueVnode":
 				{
 					let x = item;
-					let obj_keys = Object.keys(x[1]);
+					let obj_keys = get_keys_of(x[1]);
 					console.log("[pack.%s] [json_cache_keys_info]", x[0], obj_keys.join());
 					console.log("[pack.%s] [json_cache_with_cache_info]", x[0], x[1]);
 					return JSON.stringify(x[1], json_replacer, "\t");
@@ -544,7 +542,7 @@ function init_json_event_sys(res_box, x) {
 		console.log("failed to stringify the following objects");
 		for (let failed_obj of stringify_failed_obj) {
 			console.log("[failed_object]", failed_obj);
-			let ek = Object.keys(failed_obj);
+			let ek = get_keys_of(failed_obj);
 			if (ek.length > 0) {
 				console.log("[failed_object_keys]", ek);
 			} else {
