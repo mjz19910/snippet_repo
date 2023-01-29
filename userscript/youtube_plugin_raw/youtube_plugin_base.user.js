@@ -6689,9 +6689,6 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#endregion
 export_((exports) => {
-	exports.ParserService=ParserService;
-	exports.YtPlugin=YtPlugin;
-	exports.ServiceMethods=ServiceMethods;
 	exports.split_string_once=split_string_once;
 	exports.as=as;
 	exports.base64_dec=base64_dec;
@@ -6699,8 +6696,13 @@ export_((exports) => {
 	exports.split_string_once_last=split_string_once_last;
 	exports.make_iterator=make_iterator;
 	exports.yt_plugin_base_main=yt_plugin_base_main;
+});
+export_(exports => {
+	exports.ServiceMethods=ServiceMethods;
 	exports.BaseServicePrivate=BaseServicePrivate;
 	exports.BaseService=BaseService;
+	exports.ParserService=ParserService;
+	exports.YtPlugin=YtPlugin;
 	exports.ModifyEnv=ModifyEnv;
 	exports.CsiService=CsiService;
 	exports.ECatcherService=ECatcherService;
@@ -6709,6 +6711,7 @@ export_((exports) => {
 	exports.TrackingServices=TrackingServices;
 	exports.IndexedDbAccessor=IndexedDbAccessor;
 	exports.JsonReplacerState=JsonReplacerState;
+	exports.YtHandlers=YtHandlers;
 });
 export_(exports => {
 	exports.base64_url_dec=base64_url_dec;
