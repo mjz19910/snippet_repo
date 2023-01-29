@@ -346,11 +346,11 @@ function dispatch_json_event(x) {
 			return res;
 	}
 }
-/** @arg {["JSON::data",any]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturn]} x */
+/** @arg {["JSON::data",[any]]|["JSON::pack",UnpackUnitArgs]|["JSON::event",DataItemReturn]} x */
 function json_stringify_with_cache(x) {
 	if (x[0] === "JSON::data") {
 		let obj_keys = Object.keys(x[1]);
-		console.log("[json_stringify_keys]", obj_keys.join());
+		console.log("[json_data_keys]", obj_keys.join());
 	}
 	if (x[0] === "JSON::pack") {
 		let item = x[1];
@@ -364,13 +364,13 @@ function json_stringify_with_cache(x) {
 			case "VueVnode": {
 				let x = item;
 				let obj_keys = Object.keys(x[1]);
-				console.log("[pack.%s] [json_stringify_keys]", x[0], obj_keys.join());
-				console.log("[pack.%s] [json_stringify_with_cache]", x[0], x[1]);
+				console.log("[pack.%s] [json_cache_keys_info]", x[0], obj_keys.join());
+				console.log("[pack.%s] [json_cache_with_cache_info]", x[0], x[1]);
 				return JSON.stringify(x[1], json_replacer, "\t");
 			}
 			case "any": {
 				let x = item;
-				console.log("[json_stringify_with_cache] [stringify_any]", x[0], x[1]);
+				console.log("[json_cache_any_info] [stringify_any]", x[0], x[1]);
 				return JSON.stringify(x[1], json_replacer, "\t");
 			}
 		}
@@ -387,7 +387,7 @@ function handle_json_unpack_unit_cmd(x) {
 	if (x[0] !== "COMMAND::unpack_unit") {
 		debugger; return;
 	}
-	return json_stringify_with_cache(["JSON::data", x[1]]);
+	return json_stringify_with_cache(["JSON::pack", x[1]]);
 }
 let processing_commands = false;
 /** @arg {DataItemReturn} x */
