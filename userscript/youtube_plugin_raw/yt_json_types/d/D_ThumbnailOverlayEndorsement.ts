@@ -1,4 +1,4 @@
 type D_ThumbnailOverlayEndorsement={
-	text: R_TextRuns;
+	text: D_Text;
 	trackingParams: string;
 };

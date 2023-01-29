@@ -1,5 +1,5 @@
 type D_SubFeedOption={
-	name: R_TextRuns;
+	name: D_Text;
 	isSelected: boolean;
 	navigationEndpoint: E_Watch;
 	trackingParams: string;

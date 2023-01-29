@@ -1,8 +1,8 @@
 type D_CommentsEntryPointHeader={
-	headerText: R_TextRuns;
+	headerText: D_Text;
 	onTap: C_Executor;
 	trackingParams: string;
-	commentCount: R_SimpleText;
+	commentCount: D_Text;
 	contentRenderer: R_CommentsEntryPointTeaser;
 	targetId: "comments-entry-point-header-identifier";
 };

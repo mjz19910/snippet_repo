@@ -1,1 +1,1 @@
-type D_PlaylistByline={text: R_TextRuns;};
+type D_PlaylistByline={text: D_Text;};

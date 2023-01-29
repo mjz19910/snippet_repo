@@ -1,5 +1,5 @@
 type D_OptionWithText={
 	options: G_SettingsOptionItem[];
-	title: R_TextRuns;
-	text: R_TextRuns;
+	title: D_Text;
+	text: D_Text;
 };

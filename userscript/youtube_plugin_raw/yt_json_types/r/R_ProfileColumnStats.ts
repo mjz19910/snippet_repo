@@ -1,6 +1,6 @@
 type D_ProfileColumnStatsEntry={
-	label: R_TextRuns;
-	value: R_SimpleText;
+	label: D_Text;
+	value: D_Text;
 };
 type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D_ProfileColumnStatsEntry;};
 type D_ProfileColumnStats={

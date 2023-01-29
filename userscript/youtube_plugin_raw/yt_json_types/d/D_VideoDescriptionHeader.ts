@@ -1,8 +1,8 @@
 type D_VideoDescriptionHeader={
-	title: R_TextRuns;
-	channel: R_SimpleText;
-	views: R_SimpleText;
-	publishDate: R_SimpleText;
+	title: D_Text;
+	channel: D_Text;
+	views: D_Text;
+	publishDate: D_Text;
 	factoid: R_Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
 	channelNavigationEndpoint: E_Browse;

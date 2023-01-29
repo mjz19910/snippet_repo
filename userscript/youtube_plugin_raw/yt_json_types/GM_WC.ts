@@ -318,7 +318,7 @@ type DC_Executor=Record<"commands",AC_Executor[]>;
 type C_FollowUp={clickTrackingParams: string; addFollowUpSurveyCommand: C_AddFollowUpSurvey;};
 type C_AddFollowUpSurvey={
 	followUpOptions: G_FollowUpOption[];
-	followUpText: R_TextRuns;
+	followUpText: D_Text;
 };
 type C_GetSurvey={clickTrackingParams: string; commandMetadata: MG_Survey_CMD; getSurveyCommand: D_GetSurvey;};
 type D_GetSurvey={
@@ -381,7 +381,7 @@ type M_Like={webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike
 interface E_Like extends TE_Endpoint<M_Like,"likeEndpoint",DE_Like> {};
 type DE_Like=DE_Like_NS.DE_Like;
 type E_NotificationOptOut=TE_Endpoint<D_Empty_WCM,"notificationOptOutEndpoint",DE_NotificationOptOut>;
-type DE_NotificationOptOut={optOutText: R_TextRuns; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
+type DE_NotificationOptOut={optOutText: D_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
 type M_EditPlaylist={
 	webCommandMetadata: GM_browse_edit_playlist;
 };
@@ -498,7 +498,7 @@ type AD_ReelDismissal={
 };
 type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
 type AD_Notification={
-	responseText: G_Text;
+	responseText: D_Text;
 	actionButton?: R_Button;
 	trackingParams: string;
 };
@@ -554,7 +554,7 @@ type SI_VE126250_EngagementPanel={
 	veType: 126250;
 	targetId: "engagement-panel-searchable-transcript";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: B_C_ScrollToEngagementPanel[];
+	onShowCommands: C_ScrollToEngagementPanel[];
 	loggingDirectives: D_LoggingDirectives;
 };
 type SI_VE124975_EngagementPanel={
@@ -605,29 +605,31 @@ type DB_SI_EngagementPanel={
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: D_LoggingDirectives;
 };
-type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|B_C_ScrollToEngagementPanel;
+type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,
 	A_HideEngagementPanelScrim,
-	B_C_ScrollToEngagementPanel,
+	C_ScrollToEngagementPanel,
 	C_Loop,
 	C_UpdateToggleButtonState,
 	TA_OpenPopup<{}>,
 ][number];
+type DC_UpdateToggleButtonState={
+	toggled: false;
+	buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION";
+};
+
 type C_UpdateToggleButtonState={
 	clickTrackingParams: string;
-	updateToggleButtonStateCommand: {
-		toggled: false;
-		buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION";
-	};
+	updateToggleButtonStateCommand: DC_UpdateToggleButtonState;
 };
 type GC_EngagementPanelSectionShow=
 	|A_ChangeEngagementPanelVisibility
 	|A_ShowEngagementPanelScrim
-	|B_C_ScrollToEngagementPanel
+	|C_ScrollToEngagementPanel
 	;
 ;
-type B_C_ScrollToEngagementPanel={clickTrackingParams: string; scrollToEngagementPanelCommand: D_ScrollToEngagementPanel;};
+type C_ScrollToEngagementPanel={clickTrackingParams: string; scrollToEngagementPanelCommand: DC_ScrollToEngagementPanel;};
 type D_EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
@@ -669,7 +671,7 @@ type D_TargetIdStr=[
 	"comments-section",
 	"search-feed",
 	D_EngagementPanelSectionTargetId,
-	D_ScrollToEngagementPanel['targetId'],
+	DC_ScrollToEngagementPanel['targetId'],
 	RS_Search['targetId'],
 	D_TranscriptSearchPanel['targetId'],
 	AD_UpdateEngagementPanel['targetId'],

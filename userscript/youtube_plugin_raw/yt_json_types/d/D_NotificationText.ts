@@ -1,6 +1,6 @@
 type D_NotificationText={
-	successResponseText: R_TextRuns;
-	undoText: R_TextRuns;
+	successResponseText: D_Text;
+	undoText: D_Text;
 	undoEndpoint: E_UndoFeedback;
 	trackingParams: string;
 };

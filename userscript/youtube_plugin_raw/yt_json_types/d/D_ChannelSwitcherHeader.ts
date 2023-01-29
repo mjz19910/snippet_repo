@@ -1,4 +1,4 @@
 type D_ChannelSwitcherHeader={
-	title: R_TextRuns;
+	title: D_Text;
 	button: R_Button;
 };

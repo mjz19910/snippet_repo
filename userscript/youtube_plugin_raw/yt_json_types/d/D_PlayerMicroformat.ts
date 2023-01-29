@@ -1,8 +1,8 @@
 type D_PlayerMicroformat={
 	thumbnail: R_Thumbnail;
 	embed: D_MicroformatEmbed;
-	title: R_TextRuns;
-	description?: R_TextRuns;
+	title: D_Text;
+	description?: D_Text;
 	lengthSeconds: `${number}`;
 	ownerProfileUrl: `http://www.youtube.com/channel/UC${string}`;
 	externalChannelId: ChannelId;

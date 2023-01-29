@@ -1,14 +1,14 @@
 type D_SubscribeButton={
-	buttonText: R_TextRuns;
+	buttonText: D_Text;
 	subscribed: false;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
-	subscribedButtonText: R_TextRuns;
-	unsubscribedButtonText: R_TextRuns;
+	subscribedButtonText: D_Text;
+	unsubscribedButtonText: D_Text;
 	trackingParams: string;
-	unsubscribeButtonText: R_TextRuns;
+	unsubscribeButtonText: D_Text;
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 	notificationPreferenceButton?: R_SubscriptionNotificationToggleButton;
@@ -17,30 +17,30 @@ type D_SubscribeButton={
 	onSubscribeEndpoints: E_Subscribe[];
 	onUnsubscribeEndpoints: T_SE_Signal<{},{}>[];
 }|{
-	buttonText: R_TextRuns;
+	buttonText: D_Text;
 	subscribed: boolean;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
-	subscribedButtonText: R_TextRuns;
-	unsubscribedButtonText: R_TextRuns;
+	subscribedButtonText: D_Text;
+	unsubscribedButtonText: D_Text;
 	trackingParams: string;
-	unsubscribeButtonText: R_TextRuns;
+	unsubscribeButtonText: D_Text;
 	serviceEndpoints: E_Subscribe[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 }|{
-	buttonText: R_TextRuns;
+	buttonText: D_Text;
 	subscribed: true;
 	enabled: true;
 	type: "FREE";
 	channelId: "UC7YOGHUfC1Tb6E4pudI9STA";
 	showPreferences: false;
-	subscribedButtonText: R_TextRuns;
-	unsubscribedButtonText: R_TextRuns;
+	subscribedButtonText: D_Text;
+	unsubscribedButtonText: D_Text;
 	trackingParams: string;
-	unsubscribeButtonText: R_TextRuns;
+	unsubscribeButtonText: D_Text;
 	serviceEndpoints: E_Subscribe[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;

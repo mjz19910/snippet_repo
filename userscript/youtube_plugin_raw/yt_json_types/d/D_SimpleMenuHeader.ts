@@ -1,4 +1,4 @@
 type D_SimpleMenuHeader={
-	title: G_Text;
+	title: D_Text;
 	buttons: R_Button[];
 };

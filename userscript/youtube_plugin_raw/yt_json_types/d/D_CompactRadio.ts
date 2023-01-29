@@ -1,14 +1,14 @@
 type D_CompactRadio={
 	playlistId: `RD${string}`|`RDGM${string}`;
 	thumbnail: R_Thumbnail&R_SampledThumbnailColor;
-	title: R_TextRuns;
+	title: D_Text;
 	navigationEndpoint: E_Watch;
-	videoCountText: R_TextRuns;
+	videoCountText: D_Text;
 	secondaryNavigationEndpoint: E_Watch;
-	longBylineText: R_TextRuns;
+	longBylineText: D_Text;
 	trackingParams: string;
-	thumbnailText: R_TextRuns;
-	videoCountShortText: G_Text;
+	thumbnailText: D_Text;
+	videoCountShortText: D_Text;
 	shareUrl:
 	|
 	`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`

@@ -1,10 +1,10 @@
 type D_EndScreenPlaylist={
 	playlistId: `RD${string}`;
-	title: R_SimpleText;
+	title: D_Text;
 	thumbnail: R_Thumbnail;
 	videoCount?: `${number}`;
-	longBylineText: G_Text;
-	videoCountText: R_TextRuns;
+	longBylineText: D_Text;
+	videoCountText: D_Text;
 	navigationEndpoint: E_Watch;
 	trackingParams: string;
 };

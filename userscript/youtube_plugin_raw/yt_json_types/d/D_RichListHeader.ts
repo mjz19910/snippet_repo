@@ -1,5 +1,5 @@
 type D_RichListHeader={
-	title: R_SimpleText;
+	title: D_Text;
 	trackingParams: string;
 	navigationButton: R_Button;
 };

@@ -1,4 +1,4 @@
 type D_ThumbnailOverlaySidePanel={
-	text: R_SimpleText;
+	text: D_Text;
 	icon: T_Icon<"PLAY_ALL">;
 };

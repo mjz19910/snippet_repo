@@ -1,5 +1,5 @@
 type D_HotkeyDialog={
-	title: R_TextRuns;
+	title: D_Text;
 	sections: R_HotkeyDialogSection[];
 	dismissButton: R_Button;
 	trackingParams: string;

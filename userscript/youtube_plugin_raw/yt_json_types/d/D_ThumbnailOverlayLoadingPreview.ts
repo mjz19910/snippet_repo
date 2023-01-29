@@ -1,1 +1,1 @@
-type D_ThumbnailOverlayLoadingPreview={text: R_TextRuns;};
+type D_ThumbnailOverlayLoadingPreview={text: D_Text;};

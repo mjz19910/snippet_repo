@@ -3,12 +3,12 @@ type D_GridVideo={
 	channelThumbnail: R_Thumbnail;
 	menu: R_Menu;
 	navigationEndpoint: {};
-	shortBylineText: R_TextRuns;
-	shortViewCountText: R_TextRuns;
+	shortBylineText: D_Text;
+	shortViewCountText: D_Text;
 	thumbnail: R_Thumbnail;
 	thumbnailOverlay: G_ThumbnailOverlayItem[];
-	title: R_TextRuns;
+	title: D_Text;
 	trackingParams: string;
 	videoId: string;
-	viewCountText: R_TextRuns;
+	viewCountText: D_Text;
 };

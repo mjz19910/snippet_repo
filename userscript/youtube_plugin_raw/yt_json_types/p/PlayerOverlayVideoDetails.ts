@@ -1,4 +1,4 @@
 type D_PlayerOverlayVideoDetails={
-	title: R_SimpleText;
-	subtitle: R_TextRuns;
+	title: D_Text;
+	subtitle: D_Text;
 };

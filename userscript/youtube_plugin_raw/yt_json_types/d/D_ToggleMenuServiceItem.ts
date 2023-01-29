@@ -1,8 +1,8 @@
 type D_ToggleMenuServiceItem={
-	defaultText: R_TextRuns;
+	defaultText: D_Text;
 	defaultIcon: T_Icon<"LIBRARY_ADD">;
 	defaultServiceEndpoint: E_Like;
-	toggledText: R_TextRuns;
+	toggledText: D_Text;
 	toggledIcon: T_Icon<"LIBRARY_REMOVE">;
 	toggledServiceEndpoint: E_Like;
 	trackingParams: string;

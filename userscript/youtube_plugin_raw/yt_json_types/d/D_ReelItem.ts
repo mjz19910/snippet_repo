@@ -1,8 +1,8 @@
 type D_ReelItem={
 	videoId: D_VideoIdTagStr;
-	headline: R_TextRuns;
+	headline: D_Text;
 	thumbnail: R_Thumbnail;
-	viewCountText: R_TextRuns;
+	viewCountText: D_Text;
 	navigationEndpoint: E_ReelWatch;
 	menu: R_Menu;
 	trackingParams: string;

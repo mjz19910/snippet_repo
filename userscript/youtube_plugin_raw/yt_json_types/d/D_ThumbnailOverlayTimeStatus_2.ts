@@ -1,5 +1,5 @@
 type D_ThumbnailOverlayTimeStatus_2={
-	text: R_TextRuns;
+	text: D_Text;
 	style: "LIVE";
 	icon: T_Icon<"LIVE">;
 };

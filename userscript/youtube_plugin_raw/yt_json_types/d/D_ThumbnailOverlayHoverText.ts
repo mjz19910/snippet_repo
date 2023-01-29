@@ -1,4 +1,4 @@
 type D_ThumbnailOverlayHoverText={
-	text: R_TextRuns;
+	text: D_Text;
 	icon: T_Icon<"PLAY_ALL">;
 };

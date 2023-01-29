@@ -1,1 +1,5 @@
-type B_Text={accessibility?: D_Accessibility;};
+type D_Text={
+	runs?: IR_TextRun[];
+	simpleText?: string
+	accessibility?: D_Accessibility;
+};

@@ -1,1 +1,0 @@
-type R_SimpleText={simpleText: string;}&B_Text;

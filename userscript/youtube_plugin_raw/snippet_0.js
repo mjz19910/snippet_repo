@@ -1,6 +1,7 @@
 import {Base64Binary} from "./support_1/Base64Binary";
 import {KnownDataSaver} from "./support_2/KnownDataSaver";
 import {MyReader} from "./support_2/MyReader";
+import {split_string} from "./zc_child_modules/YtPlugin_Base_Plugin.user";
 `
 const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 this.z(actions,a => {
@@ -463,19 +464,17 @@ class ND extends Snippet_0_tmp {
 	E_Browse(x) {x;}
 	/** @private @arg {R_Thumbnail} x */
 	D_Thumbnail(x) {x;}
-	/** @private @arg {R_TextRuns} x */
-	R_TextWithRuns(x) {x;}
-	/** @private @arg {R_SimpleText} x */
-	R_SimpleText(x) {x;}
+	/** @private @arg {D_Text} x */
+	D_Text(x) {x;}
 	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
 		const cf="VideoOwner$Omit"; cf;
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
 		this.D_Thumbnail(thumbnail);
-		this.R_TextWithRuns(title);
+		this.D_Text(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E_Browse(navigationEndpoint);
-		this.t(subscriberCountText,this.R_SimpleText);
+		this.t(subscriberCountText,this.D_Text);
 		trackingParams;
 		return y;
 	}
@@ -563,7 +562,7 @@ class ND extends Snippet_0_tmp {
 			case "INFO": break;
 			default: debugger;
 		}
-		this.R_SimpleText(text);
+		this.D_Text(text);
 		this.R_Button(dismissButton);
 	}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
@@ -673,11 +672,11 @@ class ND extends Snippet_0_tmp {
 		this.primitive_of_string(type);
 		this.primitive_of_string(channelId);
 		this.primitive_of(showPreferences,"boolean");
-		this.R_TextWithRuns(buttonText);
-		this.R_TextWithRuns(subscribedButtonText);
-		this.R_TextWithRuns(unsubscribedButtonText);
+		this.D_Text(buttonText);
+		this.D_Text(subscribedButtonText);
+		this.D_Text(unsubscribedButtonText);
 		trackingParams; cf;
-		this.R_TextWithRuns(unsubscribeButtonText);
+		this.D_Text(unsubscribeButtonText);
 		// this.tz(serviceEndpoints,x => {
 		// 	if("subscribeEndpoint" in x) return this.E_Subscribe(x);
 		// 	if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
@@ -773,7 +772,7 @@ class ND extends Snippet_0_tmp {
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
 	/** @protected @arg {R_RelatedChipCloud} x */
 	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
-	/** @protected @arg {G_Text} x */
+	/** @protected @arg {D_Text} x */
 	G_Text(x) {x; debugger;}
 	/** @protected @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
 	Omit_Menu_Video(cf,x) {

@@ -1,13 +1,13 @@
 type D_PlaylistPanelVideo={
-	title: R_SimpleText;
-	longBylineText: R_TextRuns;
+	title: D_Text;
+	longBylineText: D_Text;
 	thumbnail: R_Thumbnail;
-	lengthText: R_SimpleText;
-	indexText: R_SimpleText;
+	lengthText: D_Text;
+	indexText: D_Text;
 	selected: true;
 	navigationEndpoint: E_Watch;
 	videoId: string;
-	shortBylineText: R_TextRuns;
+	shortBylineText: D_Text;
 	trackingParams: string;
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];

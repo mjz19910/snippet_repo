@@ -1,10 +1,10 @@
 type D_InlineSurvey={
 	dismissalEndpoint: {};
-	title: R_TextRuns;
-	subtitle: R_TextRuns;
+	title: D_Text;
+	subtitle: D_Text;
 	inlineContent: R_CompactVideo;
 	response: R_ExpandableSurvey;
 	trackingParams: string;
-	dismissalText: R_TextRuns;
+	dismissalText: D_Text;
 	impressionEndpoints: {}[];
 };

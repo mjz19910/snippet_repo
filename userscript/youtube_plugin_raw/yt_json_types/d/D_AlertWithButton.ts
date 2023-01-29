@@ -1,5 +1,5 @@
 type D_AlertWithButton={
 	type: "INFO";
-	text: R_SimpleText;
+	text: D_Text;
 	dismissButton: R_Button;
 };

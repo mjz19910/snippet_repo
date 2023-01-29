@@ -1,1 +1,0 @@
-type G_Text=R_SimpleText|R_TextRuns;

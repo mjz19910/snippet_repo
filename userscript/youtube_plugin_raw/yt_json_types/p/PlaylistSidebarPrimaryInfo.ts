@@ -1,11 +1,11 @@
 type D_PlaylistSidebarPrimaryInfo={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
-	title: R_TextRuns;
-	stats: R_TextRuns[];
+	title: D_Text;
+	stats: D_Text[];
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	navigationEndpoint: E_Watch;
 	badges: RMD_Badge[];
 	description: {};
-	showMoreText: R_TextRuns;
+	showMoreText: D_Text;
 };

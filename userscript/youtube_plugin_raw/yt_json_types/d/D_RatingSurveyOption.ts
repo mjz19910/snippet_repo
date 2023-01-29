@@ -1,5 +1,5 @@
 type D_RatingSurveyOption={
-	responseText: R_TextRuns;
+	responseText: D_Text;
 	defaultStateIcon: T_Icon<"STAR_BORDER">;
 	onStateIcon: T_Icon<"STAR">;
 	followUpCommand: C_FollowUp;

@@ -1,1 +1,1 @@
-type D_DateText={dateText: R_SimpleText;};
+type D_DateText={dateText: D_Text;};

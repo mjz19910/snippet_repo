@@ -1,1 +1,1 @@
-type D_SettingsOptions={options: G_SettingsOptionItem[];title: R_TextRuns;};
+type D_SettingsOptions={options: G_SettingsOptionItem[];title: D_Text;};

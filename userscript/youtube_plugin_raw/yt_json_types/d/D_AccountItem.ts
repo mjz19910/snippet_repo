@@ -1,10 +1,10 @@
 type D_AccountItem={
-	accountName: R_TextRuns;
+	accountName: D_Text;
 	accountPhoto: R_Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;
 	serviceEndpoint: {};
-	accountByline: R_TextRuns;
-	channelHandle: R_TextRuns;
+	accountByline: D_Text;
+	channelHandle: D_Text;
 };

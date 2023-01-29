@@ -1,19 +1,19 @@
 type D_CompactPlaylist={
 	playlistId: `PL${string}`;
 	thumbnail: R_Thumbnail;
-	title: R_TextRuns;
-	shortBylineText: R_TextRuns;
-	videoCountText: R_TextRuns;
+	title: D_Text;
+	shortBylineText: D_Text;
+	videoCountText: D_Text;
 	navigationEndpoint: E_Watch;
-	publishedTimeText?: R_TextRuns;
-	videoCountShortText: R_TextRuns;
+	publishedTimeText?: D_Text;
+	videoCountShortText: D_Text;
 	trackingParams: string;
 	sidebarThumbnails: R_Thumbnail[];
-	thumbnailText: R_TextRuns;
+	thumbnailText: D_Text;
 	ownerBadges?: RMD_Badge[];
 	menu: R_Menu;
 	shareUrl: `https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`;
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
-	longBylineText: R_TextRuns;
+	longBylineText: D_Text;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };

@@ -1,10 +1,10 @@
 type D_VideoPrimaryInfo={
-	title: R_TextRuns;
+	title: D_Text;
 	viewCount: R_VideoViewCount;
 	videoActions: R_Menu;
 	trackingParams: string;
-	superTitleLink?: R_TextRuns;
+	superTitleLink?: D_Text;
 	badges?: RMD_Badge[];
-	dateText: R_SimpleText;
-	relativeDateText: R_SimpleText;
+	dateText: D_Text;
+	relativeDateText: D_Text;
 };

@@ -1,8 +1,8 @@
 type D_Notification={
 	thumbnail: R_Thumbnail;
 	videoThumbnail: R_Thumbnail;
-	shortMessage: R_SimpleText;
-	sentTimeText: R_SimpleText;
+	shortMessage: D_Text;
+	sentTimeText: D_Text;
 	navigationEndpoint: E_Watch;
 	read: boolean;
 	recordClickEndpoint: E_RecordNotificationInteractions;

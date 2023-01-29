@@ -1,5 +1,5 @@
 type CaptionTrackItem={
 	baseUrl: string;
-	name: R_SimpleText;
+	name: D_Text;
 	vssId: "a.en";
 };

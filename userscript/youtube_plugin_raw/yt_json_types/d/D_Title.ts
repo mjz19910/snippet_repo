@@ -1,1 +1,1 @@
-type D_Title={title: R_TextRuns;};
+type D_Title={title: D_Text;};

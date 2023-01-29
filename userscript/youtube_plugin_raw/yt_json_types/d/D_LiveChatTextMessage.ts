@@ -1,6 +1,6 @@
 type D_LiveChatTextMessage={
-	message: R_TextRuns;
-	authorName: R_TextRuns;
+	message: D_Text;
+	authorName: D_Text;
 	authorPhoto: R_Thumbnail;
 	contextMenuEndpoint: {};
 	id: string;
@@ -8,5 +8,5 @@ type D_LiveChatTextMessage={
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
 	contextMenuAccessibility: D_Accessibility;
-	timestampText: R_TextRuns;
+	timestampText: D_Text;
 };

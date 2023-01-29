@@ -1,5 +1,5 @@
 type D_MusicShelf=Record<"contents",R_MusicResponsiveListItem[]>&{
-	title: R_TextRuns;
+	title: D_Text;
 	trackingParams: string;
 	continuations: CD_Reload[];
 	shelfDivider: R_MusicShelfDivider;

@@ -7,7 +7,7 @@ type D_Button={
 	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
-	text?: G_Text;
+	text?: D_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
 	targetId?: D_Button$TargetId;
@@ -21,7 +21,7 @@ type D_Button={
 	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
-	text?: G_Text;
+	text?: D_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
 	targetId?: D_Button$TargetId;
@@ -35,7 +35,7 @@ type D_Button={
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	style: D$ButtonStyleType;
-	text?: G_Text;
+	text?: D_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
 	targetId?: D_Button$TargetId;
@@ -50,7 +50,7 @@ type D_Button={
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	style: D$ButtonStyleType;
-	text?: G_Text;
+	text?: D_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
 	targetId?: D_Button$TargetId;

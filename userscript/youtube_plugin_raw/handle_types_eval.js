@@ -17,8 +17,6 @@ export class HandleTypesEval_ extends ServiceMethods {
 	s(cf,x) {cf; x; n();}
 	/** @protected @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:string)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:string)=>void} f */
 	T_Endpoint(cf,x,f,f_vm) {cf; x; f; f_vm;}
-	/** @protected @arg {R_SimpleText} x */
-	R_SimpleText(x) {x;}
 	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {x; f;}
 	/** @protected @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @returns {TD_ItemSection_3<CT, T, U>} */

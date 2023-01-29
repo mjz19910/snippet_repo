@@ -1,1 +1,1 @@
-type DUA_Description={description: R_TextRuns;};
+type DUA_Description={description: D_Text;};

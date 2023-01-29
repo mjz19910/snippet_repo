@@ -1,4 +1,4 @@
 type D_ThumbnailOverlayTimeStatus_1={
-	text: R_SimpleText;
+	text: D_Text;
 	style: "DEFAULT";
 };

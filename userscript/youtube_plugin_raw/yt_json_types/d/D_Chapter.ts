@@ -1,5 +1,5 @@
 type D_Chapter={
-	title: R_SimpleText;
+	title: D_Text;
 	timeRangeStartMillis: 0;
 	onActiveCommand: A_SetActivePanelItem;
 	thumbnail: R_Thumbnail;

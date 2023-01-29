@@ -1,5 +1,5 @@
 type REG_AccountSwitcher={
 	responseContext: RC_ResponseContext;
-	selectText: R_TextRuns;
+	selectText: D_Text;
 	actions: A_MP_GetMenu[];
 };
