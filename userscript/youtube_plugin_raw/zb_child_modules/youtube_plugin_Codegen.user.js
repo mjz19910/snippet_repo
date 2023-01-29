@@ -369,6 +369,7 @@ class CodegenService extends BaseService {
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
+		if(k1==="") return x;
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		{debugger;}
 		return null;
