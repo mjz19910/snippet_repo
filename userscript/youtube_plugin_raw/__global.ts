@@ -21,7 +21,8 @@ declare global {
 	var Type_Ex_NS: typeof EX;
 	var __youtube_plugin_base_loaded__: typeof EX.__youtube_plugin_base_loaded__;
 	var required: Base$ImpType["required"];
-	type PluginStore=import("./zb_plugin_types/PluginStore.js").PluginStore
+	type PluginStore=import("./zb_plugin_types/PluginStore.js").PluginStore;
+	var __yt_plugin_log_imports__: boolean;
 }
 namespace EX {
 	export type ServiceMethods=Base$ImpType["ServiceMethods"];

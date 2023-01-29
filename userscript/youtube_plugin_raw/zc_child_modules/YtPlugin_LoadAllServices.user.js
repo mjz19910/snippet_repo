@@ -22,7 +22,7 @@ export_(exports => {
 	exports.__is_module_flag__=true;
 });
 
-console.log("Load LoadAllServices Plugin");
+if(__yt_plugin_log_imports__) console.log("Load LoadAllServices Plugin");
 const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 /** @template T @typedef {NonNullable<T>} N */
 /** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */

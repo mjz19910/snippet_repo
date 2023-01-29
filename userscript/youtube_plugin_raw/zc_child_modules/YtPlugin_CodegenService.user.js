@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 
-console.log("Load Codegen Service");
+if(__yt_plugin_log_imports__) console.log("Load Codegen Service");
 
 const __module_name__="mod$CodegenService";
 const store=required(window.__plugin_modules__);

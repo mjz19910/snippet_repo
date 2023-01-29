@@ -54,8 +54,11 @@ export_(exports => {
 export_(exports => {
 	exports.do_export=do_export;
 });
-
-console.log("Load PluginBase");
+const log_imports=false;
+export_(exports => {
+	exports.__yt_plugin_log_imports__=log_imports;
+},{global: true});
+if(log_imports) console.log("Load PluginBase");
 
 //#region done
 //#region basic

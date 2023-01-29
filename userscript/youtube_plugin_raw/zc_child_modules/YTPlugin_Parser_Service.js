@@ -26,7 +26,7 @@ export_(exports => {
 	exports.__is_module_flag__=true;
 });
 const seen_map=new Set;
-console.log("Load Parser Service");
+if(__yt_plugin_log_imports__) console.log("Load Parser Service");
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
 	if(x===void 0) {
