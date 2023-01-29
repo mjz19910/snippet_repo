@@ -26,18 +26,8 @@ const split_string_once_last=bs.split_string_once_last;
 const base64_dec=bs.base64_dec;
 const base64_url_dec=bs.base64_url_dec;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
-		window.__plugin_modules__??={};
-		let all_modules=window.__plugin_modules__;
-		/** @type {ExportsT} */
-		let exports=as({});
-		all_modules[__module_name__]=exports;
-		fn(as(exports));
-	}
+function export_(fn,flags={global: false}) {
+	bs.do_export(fn,flags,exports,__module_name__);
 }
 export_(exports => {
 	exports.__is_module_flag__=true;

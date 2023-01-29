@@ -15,8 +15,8 @@
 
 const __module_name__="mod$YoutubePluginBase";
 window.__plugin_modules__??={};
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
+/** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
+function do_export(fn,flags,exports,module_name) {
 	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
@@ -31,13 +31,21 @@ function export_(fn,flags={global: false}) {
 		} else {
 			window.__plugin_modules__??={};
 			let all_modules=window.__plugin_modules__;
-			exports=as({});
-			all_modules[__module_name__]=exports;
-
+			exports=as(all_modules[__module_name__]??{});
+			/** @type {{[U in keyof PluginStore]?:{}}} */
+			let ok_modules=all_modules;
+			ok_modules[module_name]=as(exports);
 		}
 		fn(as(exports));
 	}
 }
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn,flags={global: false}) {
+	do_export(fn,flags,exports,__module_name__);
+}
+export_(exports=>{
+	exports.do_export=do_export;
+});
 
 console.log("Load PluginBase");
 
@@ -45,6 +53,9 @@ console.log("Load PluginBase");
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {return x;}
+export_(exports => {
+	exports.as_=as;
+});
 /** @private @type {YtdAppElement} */
 const YtdAppElement=as({});
 /** @private @type {InstanceType<typeof YtdAppElement>|null} */
@@ -689,7 +700,6 @@ function required(x) {
 	return x;
 }
 const store=required(window.__plugin_modules__);
-const Services=required(store["mod$LoadServices"]).Services;
 /** @template T @typedef {NonNullable<T>} N */
 /** @typedef {N<store['mod$LoadServices']>['Services']} Services */
 class R_HandleRichGrid$ {
@@ -1995,6 +2005,7 @@ class ServiceResolver {
 //#endregion
 //#region main
 function yt_plugin_base_main() {
+	const Services=required(store["mod$LoadServices"]).Services;
 	setTimeout(() => {
 		window.yt_plugin?.get_data_saver().num_bitmap_console();
 	},4000);
@@ -4617,7 +4628,6 @@ class ServiceMethods extends ServiceData {
 //#endregion
 export_((exports) => {
 	exports.split_string_once=split_string_once;
-	exports.as_=as;
 	exports.base64_dec=base64_dec;
 	exports.AudioGainController=AudioGainController;
 	exports.split_string_once_last=split_string_once_last;
