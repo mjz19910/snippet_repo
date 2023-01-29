@@ -2,6 +2,7 @@ type T_Endpoint_CF=[
 	"A_ReplaceEnclosing",
 	"A_SendFeedback",
 	"A_Signal",
+	"E_Subscribe",
 	"C_AddToPlaylist",
 	"C_AdsControlFlowOpportunityReceived",
 	"C_ChangeKeyedMarkersVisibility",

@@ -215,7 +215,7 @@ type DE_VE11487_Browse={browseId: "SPunlimited";};
 type DE_VE23462_Browse={browseId: GU_VE23462_UrlType;};
 type DE_VE42352_Browse={browseId: "FEdownloads";};
 type DE_VE96368_Browse={browseId: "FEsubscriptions";};
-type DE_Subscribe={channelIds: string[]; params: string;};
+type DE_Subscribe={channelIds: ChannelId[]; params: string;};
 type DE_WatchPlaylist={playlistId: `RD${string}`; index: 13; params: string;};
 //#endregion
 //#region E_VE

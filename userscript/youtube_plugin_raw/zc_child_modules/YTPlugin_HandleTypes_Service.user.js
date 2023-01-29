@@ -1051,7 +1051,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MusicQueue} x */
 	R_MusicQueue(x) {this.H_("R_MusicQueue",x,this.D_MusicQueue);}
 	/** @private @arg {D_MusicQueue} x */
-	D_MusicQueue(x) {const cf="D_MusicQueue"; this.cfl(cf,x);}
+	D_MusicQueue(x) {
+		const cf="D_MusicQueue";
+		const {content,hack,...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
@@ -1617,7 +1620,7 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_new_typedef(`${cf}$${u_name}`,x);
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
-	decode_WCM(x) {
+	_decode_WCM(x) {
 		if("rootVe" in x) {
 			return `M_VE${x.rootVe}`;
 		}
@@ -1643,7 +1646,7 @@ class HandleTypes extends HandleTypesEval {
 		if(typeof wc==="object"&&wc!==null) {
 			/** @type {{}} */
 			let wo=wc;
-			let dec=this.decode_WCM(wo);
+			let dec=this._decode_WCM(wo);
 			if(dec) return dec;
 		}
 		let rk=this.filter_keys(this.get_keys_of(x));
@@ -1870,7 +1873,18 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {const cf="E_Subscribe"; this.cfl(cf,x);}
+	E_Subscribe(x) {
+		const cf="E_Subscribe"; this.T_Endpoint(cf,x,x => this.y(x,"subscribeEndpoint",this.DE_Subscribe),this.M_Subscribe);
+	}
+	/** @private @arg {DE_Subscribe} x */
+	DE_Subscribe(x) {
+		const cf="DE_Subscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);
+		this.z(x.channelIds,this.channelId);
+		this.params(cf,"subscribe.params",params);
+	}
+	/** @private @arg {M_Subscribe} x */
+	M_Subscribe(x) {x;}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
@@ -2420,10 +2434,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
 		const cf="D_SegmentedLikeDislikeButton";
-		const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);
-		this.R_ToggleButton(likeButton);
-		this.R_ToggleButton(dislikeButton);
-
+		if("likeButton" in x) {
+			const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);
+			this.R_ToggleButton(likeButton);
+			this.R_ToggleButton(dislikeButton);
+			return;
+		}
+		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);
+		this.save_string(`[${cf}.style]`,style);
+		this.save_string(`[${cf}.size]`,size);
+		if(isDisabled!==false) debugger;
 	}
 	/** @private @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem",x,this.D_MenuFlexibleItem);}
@@ -4603,7 +4623,7 @@ class HandleTypes extends HandleTypesEval {
 	buttonState_buttonId(x) {
 		const cf="buttonState_buttonId";
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",x);
-		let ret=this.codegen_new_typedef("buttonState_buttonId",{button_id:x},true);
+		let ret=this.codegen_new_typedef("buttonState_buttonId",{button_id: x},true);
 		if(ret) {
 			this.save_string(`[${cf}]`,ret);
 		}
@@ -5614,12 +5634,16 @@ class HandleTypes extends HandleTypesEval {
 	D_SubscriptionNotificationToggleButton(x) {
 		const cf="D_SubscriptionNotificationToggleButton";
 		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);
+		console.groupCollapsed();
 		this.z(states,(x,i) => {
 			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
-			console.log("[D_SubscriptionNotificationToggleButton] [btn.next.%o]",i,nextStateId);
-			console.log("[D_SubscriptionNotificationToggleButton] [btn.state.%o]",i,stateId);
+			if(nextStateId!==stateId) {
+				debugger;
+			}
+			console.log("[button.state_id.%s]",i,stateId);
 			this.R_Button(state);
 		});
+		console.groupEnd();
 		if(currentStateId!==2) debugger;
 		this.trackingParams(cf,trackingParams);
 		this.C_Executor(command);
@@ -5717,7 +5741,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_CommentActionButtons} x */
 	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons",x,this.D_CommentActionButtons);}
 	/** @private @arg {D_CommentActionButtons} x */
-	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.cfl(cf,x);}
+	D_CommentActionButtons(x) {
+		const cf="D_CommentActionButtons";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_LiveChat} x */
 	D_LiveChat(x) {
 		const cf="D_LiveChat";
@@ -5761,19 +5788,34 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const cf="E_PlaylistEditor"; this.cfl(cf,x);}
+	E_PlaylistEditor(x) {
+		const cf="E_PlaylistEditor";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_EditableDetails} x */
-	D_EditableDetails(x) {const cf="D_EditableDetails"; this.cfl(cf,x);}
+	D_EditableDetails(x) {
+		const cf="D_EditableDetails";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_CanShare} x */
-	D_CanShare(x) {const cf="D_CanShare"; this.cfl(cf,x);}
+	D_CanShare(x) {
+		const cf="D_CanShare";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {D_HeroPlaylistThumbnail} x */
-	D_HeroPlaylistThumbnail(x) {const cf="D_HeroPlaylistThumbnail"; this.cfl(cf,x);}
+	D_HeroPlaylistThumbnail(x) {
+		const cf="D_HeroPlaylistThumbnail";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_("R_PlaylistByline",x,this.D_PlaylistByline);}
 	/** @private @arg {D_PlaylistByline} x */
-	D_PlaylistByline(x) {const cf="D_PlaylistByline"; this.cfl(cf,x);}
+	D_PlaylistByline(x) {
+		const cf="D_PlaylistByline";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
 	D_WatchEndpointMusicConfig(x) {
 		const cf="D_WatchEndpointMusicConfig";
@@ -5791,7 +5833,10 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {AD_AddToGuideSection} x */
-	AD_AddToGuideSection(x) {const cf="AD_AddToGuideSection"; this.cfl(cf,x);}
+	AD_AddToGuideSection(x) {
+		const cf="AD_AddToGuideSection";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
 		const cf="D_ProductList";
@@ -5803,7 +5848,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ProductListItem} x */
 	R_ProductListItem(x) {this.H_("R_ProductListItem",x,this.D_ProductListItem);}
 	/** @private @arg {D_ProductListItem} x */
-	D_ProductListItem(x) {const cf="D_ProductListItem"; this.cfl(cf,x);}
+	D_ProductListItem(x) {
+		const cf="D_ProductListItem";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
 		const cf="D_ClipCreation";
@@ -5833,11 +5881,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ClipCreationTextInput} x */
 	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput",x,this.D_ClipCreationTextInput);}
 	/** @private @arg {D_ClipCreationTextInput} x */
-	D_ClipCreationTextInput(x) {const cf="D_ClipCreationTextInput"; this.cfl(cf,x);}
+	D_ClipCreationTextInput(x) {
+		const cf="D_ClipCreationTextInput";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ClipAdState} x */
 	R_ClipAdState(x) {this.H_("R_ClipAdState",x,this.D_ClipAdState);}
 	/** @private @arg {D_ClipAdState} x */
-	D_ClipAdState(x) {const cf="D_ClipAdState"; this.cfl(cf,x);}
+	D_ClipAdState(x) {
+		const cf="D_ClipAdState";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ClipCreationScrubber} x */
 	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber",x,this.D_ClipCreationScrubber);}
 	/** @private @arg {D_ClipCreationScrubber} x */
@@ -5871,18 +5925,24 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {G_EngagementPanelMenu} x */
-	G_EngagementPanelMenu(x) {const cf="G_EngagementPanelMenu"; this.cfl(cf,x);}
+	G_EngagementPanelMenu(x) {
+		const cf="G_EngagementPanelMenu";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_Hint} x */
 	D_Hint(x) {
 		const cf="D_Hint";
 		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(hintId,"sponsor-pre-purchase");
 		this.ceq(dwellTimeMs,"60000");
-		this.D_HintCap(hintCap);
+		this.D_ImpressionCap(hintCap);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_ImpressionCap} x */
-	D_HintCap(x) {const cf="D_HintCap"; this.cfl(cf,x);}
+	D_ImpressionCap(x) {
+		const cf="D_ImpressionCap";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_VideoViewCount} x */
 	D_VideoViewCount(x) {
 		const cf="D_VideoViewCount";
@@ -5933,14 +5993,23 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {D_TranscriptSegmentList} x */
-	D_TranscriptSegmentList(x) {const cf="D_TranscriptSegmentList"; this.cfl(cf,x);}
+	D_TranscriptSegmentList(x) {
+		const cf="D_TranscriptSegmentList";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_TranscriptFooter} x */
 	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter",x,this.D_TranscriptFooter);}
 	/** @private @arg {D_TranscriptFooter} x */
-	D_TranscriptFooter(x) {const cf="D_TranscriptFooter"; this.cfl(cf,x);}
+	D_TranscriptFooter(x) {
+		const cf="D_TranscriptFooter";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	static {/*remove_this_static*/this.prototype.C_RepeatChapter;}
 	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {const cf="C_RepeatChapter"; this.cfl(cf,x);}
+	C_RepeatChapter(x) {
+		const cf="C_RepeatChapter";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {
 		const cf="D_PlaylistSidebarPrimaryInfo";
@@ -5958,7 +6027,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PlaylistVideoThumbnail} x */
 	R_PlaylistVideoThumbnail(x) {this.H_("R_PlaylistVideoThumbnail",x,this.D_PlaylistVideoThumbnail);}
 	/** @private @arg {D_PlaylistVideoThumbnail} x */
-	D_PlaylistVideoThumbnail(x) {const cf="D_PlaylistVideoThumbnail"; this.cfl(cf,x);}
+	D_PlaylistVideoThumbnail(x) {
+		const cf="D_PlaylistVideoThumbnail";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {DC_Timed} x */
 	DD_TimedContinuation(x) {
 		const cf="DD_TimedContinuation";
@@ -5988,35 +6060,65 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_Message} x */
 	R_Message(x) {this.H_("R_Message",x,this.D_Message);}
 	/** @private @arg {D_Message} x */
-	D_Message(x) {const cf="D_Message"; this.cfl(cf,x);}
+	D_Message(x) {
+		const cf="D_Message";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_LiveChatParticipantsList} x */
 	R_LiveChatParticipantsList(x) {this.H_("R_LiveChatParticipantsList",x,this.D_LiveChatParticipantsList);}
 	/** @private @arg {D_LiveChatParticipantsList} x */
-	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.cfl(cf,x);}
+	D_LiveChatParticipantsList(x) {
+		const cf="D_LiveChatParticipantsList";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_LiveChatTicker} x */
 	R_LiveChatTicker(x) {this.H_("R_LiveChatTicker",x,this.D_LiveChatTicker);}
 	/** @private @arg {D_LiveChatTicker} x */
-	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.cfl(cf,x);}
+	D_LiveChatTicker(x) {
+		const cf="D_LiveChatTicker";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_LiveChatItemList} x */
 	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList",x,this.D_LiveChatItemList);}
 	/** @private @arg {D_LiveChatItemList} x */
-	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.cfl(cf,x);}
+	D_LiveChatItemList(x) {
+		const cf="D_LiveChatItemList";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_LiveChatHeader} x */
 	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader",x,this.D_LiveChatHeader);}
 	/** @private @arg {D_LiveChatHeader} x */
-	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.cfl(cf,x);}
+	D_LiveChatHeader(x) {
+		const cf="D_LiveChatHeader";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_LiveChatEmoji} x */
-	D_LiveChatEmoji(x) {const cf="D_LiveChatEmoji"; this.cfl(cf,x);}
+	D_LiveChatEmoji(x) {
+		const cf="D_LiveChatEmoji";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_ClientMessages} x */
-	D_ClientMessages(x) {const cf="D_ClientMessages"; this.cfl(cf,x);}
+	D_ClientMessages(x) {
+		const cf="D_ClientMessages";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {G_LiveChatContinuationItem} x */
-	G_LiveChatContinuationItem(x) {const cf="G_LiveChatContinuationItem"; this.cfl(cf,x);}
+	G_LiveChatContinuationItem(x) {
+		const cf="G_LiveChatContinuationItem";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput",x,this.D_LiveChatMessageInput);}
 	/** @private @arg {D_LiveChatMessageInput} x */
-	D_LiveChatMessageInput(x) {const cf="D_LiveChatMessageInput"; this.cfl(cf,x);}
+	D_LiveChatMessageInput(x) {
+		const cf="D_LiveChatMessageInput";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {G_LiveChatContinuationActions} x */
-	G_LiveChatContinuationActions(x) {const cf="G_LiveChatContinuationActions"; this.cfl(cf,x);}
+	G_LiveChatContinuationActions(x) {
+		const cf="G_LiveChatContinuationActions";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
 		const cf="DC_PlaylistPanel";
@@ -6040,7 +6142,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_EmojiPicker} x */
 	R_EmojiPicker(x) {this.H_("R_EmojiPicker",x,this.D_EmojiPicker);}
 	/** @private @arg {D_EmojiPicker} x */
-	D_EmojiPicker(x) {const cf="D_EmojiPicker"; this.cfl(cf,x);}
+	D_EmojiPicker(x) {
+		const cf="D_EmojiPicker";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(!g) debugger;}
 	/** @private @arg {D_SortFilterSubMenu} x */
@@ -6056,7 +6161,10 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {D_ActionSetPlaylistVideoOrder} x */
-	D_ActionSetPlaylistVideoOrder(x) {const cf="D_ActionSetPlaylistVideoOrder"; this.cfl(cf,x);}
+	D_ActionSetPlaylistVideoOrder(x) {
+		const cf="D_ActionSetPlaylistVideoOrder";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
@@ -6102,7 +6210,10 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {D_EmojiImage} x */
-	D_EmojiImage(x) {const cf="D_EmojiImage"; this.cfl(cf,x);}
+	D_EmojiImage(x) {
+		const cf="D_EmojiImage";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
 		const cf="D_PivotButton";
@@ -6165,7 +6276,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ChannelHeaderLinks} x */
 	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {D_ChannelHeaderLinks} x */
-	D_ChannelHeaderLinks(x) {const cf="D_ChannelHeaderLinks"; this.cfl(cf,x);}
+	D_ChannelHeaderLinks(x) {
+		const cf="D_ChannelHeaderLinks";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
@@ -6215,11 +6329,17 @@ class HandleTypes extends HandleTypesEval {
 		this.z(contents,this.G_ChannelSwitcherContent);
 	}
 	/** @private @arg {G_ChannelSwitcherContent} x */
-	G_ChannelSwitcherContent(x) {const cf="G_ChannelSwitcherContent"; this.cfl(cf,x);}
+	G_ChannelSwitcherContent(x) {
+		const cf="G_ChannelSwitcherContent";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader",x,this.D_ChannelSwitcherHeader);}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
-	D_ChannelSwitcherHeader(x) {const cf="D_ChannelSwitcherHeader"; this.cfl(cf,x);}
+	D_ChannelSwitcherHeader(x) {
+		const cf="D_ChannelSwitcherHeader";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {
 		const cf="D_MerchandiseShelf";
@@ -6234,7 +6354,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MerchandiseItem} x */
 	R_MerchandiseItem(x) {this.H_("R_MerchandiseItem",x,this.D_MerchandiseItem);}
 	/** @private @arg {D_MerchandiseItem} x */
-	D_MerchandiseItem(x) {const cf="D_MerchandiseItem"; this.cfl(cf,x);}
+	D_MerchandiseItem(x) {
+		const cf="D_MerchandiseItem";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
 		const cf="D_VideoPrimaryInfo";
@@ -6255,7 +6378,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.t(description,this.D_Text);
 		this.R_SubscribeButton(subscribeButton);
-		this.R_MetadataRowContainer(metadataRowContainer);
+		this.RMD_RowContainer(metadataRowContainer);
 		this.D_Text(showMoreText);
 		this.D_Text(showLessText);
 		this.R_VideoOwner(owner);
@@ -6265,9 +6388,12 @@ class HandleTypes extends HandleTypesEval {
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {RMD_RowContainer} x */
-	R_MetadataRowContainer(x) {this.H_("R_MetadataRowContainer",x,this.D_MetadataRowContainer);}
+	RMD_RowContainer(x) {this.H_("RMD_RowContainer",x,this.DMD_RowContainer);}
 	/** @private @arg {DMD_RowContainer} x */
-	D_MetadataRowContainer(x) {const cf="D_MetadataRowContainer"; this.cfl(cf,x);}
+	DMD_RowContainer(x) {
+		const cf="DMD_RowContainer";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
 	/** @private @arg {D_RefreshPlaylist} x */
@@ -6289,7 +6415,10 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
-	D_SubscriptionButton(x) {const cf="D_SubscriptionButton"; this.cfl(cf,x);}
+	D_SubscriptionButton(x) {
+		const cf="D_SubscriptionButton";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_VideoOwner} x */
 	D_VideoOwner(x) {const cf="D_VideoOwner"; let u=this.D_VideoOwner_Omit(cf,x); const {badges,...y}=u; this.g(y);}
 	/** @private @arg {D_MusicCarouselShelf} x */
@@ -6318,13 +6447,22 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MusicResponsiveListItem} x */
 	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem",x,this.D_MusicResponsiveListItem);}
 	/** @private @arg {D_MusicResponsiveListItem} x */
-	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.cfl(cf,x);}
+	D_MusicResponsiveListItem(x) {
+		const cf="D_MusicResponsiveListItem";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_MusicShelfDivider} x */
 	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider",x,this.D_MusicShelfDivider);}
 	/** @private @arg {D_MusicShelfDivider} x */
-	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.cfl(cf,x);}
+	D_MusicShelfDivider(x) {
+		const cf="D_MusicShelfDivider";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {CD_Reload} x */
-	CD_Reload(x) {const cf="CD_Reload"; this.cfl(cf,x);}
+	CD_Reload(x) {
+		const cf="CD_Reload";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo";
@@ -6368,23 +6506,38 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
 	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable",x,this.D_ThumbnailOverlayInlineUnplayable);}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.cfl(cf,x);}
+	D_ThumbnailOverlayInlineUnplayable(x) {
+		const cf="D_ThumbnailOverlayInlineUnplayable";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
 	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
-	D_ThumbnailOverlayEndorsement(x) {const cf="D_ThumbnailOverlayEndorsement"; this.cfl(cf,x);}
+	D_ThumbnailOverlayEndorsement(x) {
+		const cf="D_ThumbnailOverlayEndorsement";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ThumbnailOverlayHoverText} x */
 	R_ThumbnailOverlayHoverText(x) {this.H_("R_ThumbnailOverlayBottomPanel",x,this.D_ThumbnailOverlayHoverText);}
 	/** @private @arg {D_ThumbnailOverlayHoverText} x */
-	D_ThumbnailOverlayHoverText(x) {const cf="D_ThumbnailOverlayHoverText"; this.cfl(cf,x);}
+	D_ThumbnailOverlayHoverText(x) {
+		const cf="D_ThumbnailOverlayHoverText";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
 	R_ThumbnailOverlaySidePanel(x) {this.H_("R_ThumbnailOverlaySidePanel",x,this.D_ThumbnailOverlaySidePanel);}
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
-	D_ThumbnailOverlaySidePanel(x) {const cf="D_ThumbnailOverlaySidePanel"; this.cfl(cf,x);}
+	D_ThumbnailOverlaySidePanel(x) {
+		const cf="D_ThumbnailOverlaySidePanel";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
 	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel",x,this.D_ThumbnailOverlayBottomPanel);}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {const cf="D_ThumbnailOverlayBottomPanel"; this.cfl(cf,x);}
+	D_ThumbnailOverlayBottomPanel(x) {
+		const cf="D_ThumbnailOverlayBottomPanel";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
 	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
@@ -6392,16 +6545,22 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
 	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton",x,this.D_ThumbnailOverlayToggleButton);}
 	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
-	D_ThumbnailOverlayToggleButton(x) {const cf="D_ThumbnailOverlayToggleButton"; this.cfl(cf,x);}
+	D_ThumbnailOverlayToggleButton(x) {
+		const cf="D_ThumbnailOverlayToggleButton";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback",x,this.D_ThumbnailOverlayResumePlayback);}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
-	D_ThumbnailOverlayResumePlayback(x) {const cf="D_ThumbnailOverlayResumePlayback"; this.cfl(cf,x);}
+	D_ThumbnailOverlayResumePlayback(x) {
+		const cf="D_ThumbnailOverlayResumePlayback";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @arg {string} cf @arg {object} x */
 	cfl(cf,x) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x).join(); ka;
-		console.log(`[cfl_info.${cf}]`,x);
+		console.log(`[gen_new_info.${cf}]`,x);
 		this.codegen_new_typedef(cf,x);
 		debugger;
 	}
@@ -6441,11 +6600,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TextInputFormField} x */
 	R_TextInputFormField(x) {this.H_("R_TextInputFormField",x,this.D_TextInputFormField);}
 	/** @private @arg {D_TextInputFormField} x */
-	D_TextInputFormField(x) {const cf="D_TextInputFormField"; this.cfl(cf,x);}
+	D_TextInputFormField(x) {
+		const cf="D_TextInputFormField";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("R_Dropdown",x,this.D_Dropdown);}
 	/** @private @arg {D_Dropdown_Privacy} x */
-	D_Dropdown(x) {const cf="D_Dropdown"; this.cfl(`${cf}_${x.label}`,x);}
+	D_Dropdown(x) {
+		const cf="D_Dropdown";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_PlaylistAddToOption} x */
 	D_PlaylistAddToOption(x) {
 		const cf="D_PlaylistAddToOption";
@@ -6480,7 +6645,10 @@ class HandleTypes extends HandleTypesEval {
 		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
 	}
 	/** @private @arg {A_ExternalChannelId} x */
-	A_ExternalChannelId(x) {const cf="A_ExternalChannelId"; this.cfl(cf,x);}
+	A_ExternalChannelId(x) {
+		const cf="A_ExternalChannelId";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
@@ -6493,11 +6661,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TopicLink} x */
 	R_TopicLink(x) {this.H_("R_TopicLink",x,this.D_TopicLink);}
 	/** @private @arg {D_TopicLink} x */
-	D_TopicLink(x) {const cf="D_TopicLink"; this.cfl(cf,x);}
+	D_TopicLink(x) {
+		const cf="D_TopicLink";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_CarouselLockup} x */
 	R_CarouselLockup(x) {this.H_("R_CarouselLockup",x,this.D_CarouselLockup);}
 	/** @private @arg {D_CarouselLockup} x */
-	D_CarouselLockup(x) {const cf="D_CarouselLockup"; this.cfl(cf,x);}
+	D_CarouselLockup(x) {
+		const cf="D_CarouselLockup";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_VideoDescriptionHeader} x */
 	D_VideoDescriptionHeader(x) {
 		const cf="D_VideoDescriptionHeader";
@@ -6513,7 +6687,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_Factoid} x */
 	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,x,this.D_Factoid);}
 	/** @private @arg {D_Factoid} x */
-	D_Factoid(x) {const cf="D_Factoid"; this.cfl(cf,x);}
+	D_Factoid(x) {
+		const cf="D_Factoid";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_HorizontalCardList} x */
 	D_HorizontalCardList(x) {
 		const cf="D_HorizontalCardList";
@@ -6528,11 +6705,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_RichListHeader} x */
 	R_RichListHeader(x) {this.H_("R_RichListHeader",x,this.D_RichListHeader);}
 	/** @private @arg {D_RichListHeader} x */
-	D_RichListHeader(x) {const cf="D_RichListHeader"; this.cfl(cf,x);}
+	D_RichListHeader(x) {
+		const cf="D_RichListHeader";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {R_MacroMarkersListItem} x */
 	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem",x,this.D_MacroMarkersListItem);}
 	/** @private @arg {D_MacroMarkersListItem} x */
-	D_MacroMarkersListItem(x) {const cf="D_MacroMarkersListItem"; this.cfl(cf,x);}
+	D_MacroMarkersListItem(x) {
+		const cf="D_MacroMarkersListItem";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
@@ -6556,7 +6739,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption",x,this.D_PdgCommentOption);}
 	/** @private @arg {D_PdgCommentOption} x */
-	D_PdgCommentOption(x) {const cf="D_PdgCommentOption"; this.cfl(cf,x);}
+	D_PdgCommentOption(x) {
+		const cf="D_PdgCommentOption";
+		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y(x,"item",f);
 	/** @private @arg {D_HideEnclosingContainer} x */
