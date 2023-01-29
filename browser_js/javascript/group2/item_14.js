@@ -188,7 +188,7 @@ class JsonOutputBox {
 		return ["-- [JsonOutputBox] --\n%o", log_self_info.out];
 	}
 	/** @typedef {{out:Partial<JsonOutputData>,size:number}} OutState */
-	/** @template {keyof JsonOutputData} K @arg {OutState} x @arg {K} k @arg {JsonOutputData[K]} v */
+	/** @private @template {keyof JsonOutputData} K @arg {OutState} x @arg {K} k @arg {JsonOutputData[K]} v */
 	add_to_output(x, k, v) {
 		x.out[k] = v;
 		x.size++;
