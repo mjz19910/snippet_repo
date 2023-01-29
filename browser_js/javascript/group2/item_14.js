@@ -416,7 +416,7 @@ function json_stringify_with_cache(x) {
 function handle_json_unpack_cmd(x) {
 	console.log("unpack cmd run pending", x);
 	debugger;
-	return [x];
+	return [json_stringify_with_cache(["JSON::pack", ["any", x[1]]])];
 }
 /** @arg {UnpackUnitCommand} x */
 function handle_json_unpack_unit_cmd(x) {
