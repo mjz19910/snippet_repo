@@ -4,5 +4,5 @@ export interface PluginStore {
 	["mod$CodegenPlugin"]: typeof import("./YtPlugin_CodegenService.user.js");
 	["mod$ParserService"]: typeof import("./YTPlugin_ParserService.js");
 	["mod$ECatcherService"]: typeof import("./ECatcherService.user.js");
-	["mod$HandleTypes"]: typeof import("./youtube_plugin_HandleTypes.user.js");
+	["mod$HandleTypes"]: typeof import("./YTPlugin_HandleTypes_Service.user.js");
 }

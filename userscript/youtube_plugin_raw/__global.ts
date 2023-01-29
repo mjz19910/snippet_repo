@@ -56,12 +56,12 @@ namespace EX {
 	export var TrackingServices: Base$ImpType["TrackingServices"];
 	export var ParserService: typeof import("./zb_child_modules/YTPlugin_ParserService.js").ParserService;
 	export var YtHandlers: Base$ImpType["YtHandlers"];
-	export var HandleTypes: typeof import("./zb_child_modules/youtube_plugin_HandleTypes.user.js").HandleTypes;
+	export var HandleTypes: typeof import("./zb_child_modules/YTPlugin_HandleTypes_Service.user.js").HandleTypes;
 	export var CodegenService: typeof import("./zb_child_modules/YtPlugin_CodegenService.user.js").CodegenService;
 	export var IndexedDbAccessor: Base$ImpType["IndexedDbAccessor"];
 	export var YtPlugin: Base$ImpType["YtPlugin"];
 	export var ModifyEnv: Base$ImpType["ModifyEnv"];
 	// youtube_plugin_HandleTypes
 	export var __youtube_plugin_base_loaded__: Base$ImpType["__youtube_plugin_base_loaded__"];
-	export type HandleTypes<T,U>=import("./zb_child_modules/youtube_plugin_HandleTypes.user.js").HandleTypes<T,U>;
+	export type HandleTypes<T,U>=import("./zb_child_modules/YTPlugin_HandleTypes_Service.user.js").HandleTypes<T,U>;
 }

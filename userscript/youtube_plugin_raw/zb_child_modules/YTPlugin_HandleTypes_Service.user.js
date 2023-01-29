@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	youtube plugin HandleTypes
+// @name	YTPlugin HandleTypes Service
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.0
 // @description	try to take over the world!
