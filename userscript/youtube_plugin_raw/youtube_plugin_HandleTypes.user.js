@@ -1495,13 +1495,15 @@ class HandleTypes extends HandleTypesEval {
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {
-		let gca=["[codegen_group] [#%o] [%s]",this.codegen_group_id++,cf];
+		let u_name=this.get_codegen_name(x);
+		let gca=[`[codegen_group] [#%o] [${cf}_${u_name}] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
 		if(collapsed) {
 			console.groupCollapsed(...gca);
 		} else {
 			console.group(...gca);
 		}
-		this.do_codegen(cf,x);
+		let gen_name=`${cf}$${u_name}`;
+		this.codegen_new_typedef(x,gen_name);
 		console.groupEnd();
 	}
 	/** @private @arg {string} cf @arg {{}} x */
