@@ -264,7 +264,7 @@ type AD_SetActivePanelItem={};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type AD_ShowEngagementPanelScrim={
 	engagementPanelTargetId: "engagement-panel-clip-create";
-	onClickCommands: TA_OpenPopup<{popup: R_ConfirmDialog;popupType: "DIALOG";}>[];
+	onClickCommands: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>[];
 };
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type AD_Signal={signal: E_SignalStr;};
@@ -352,6 +352,8 @@ type C_ResetChannelUnreadCount={clickTrackingParams: string; resetChannelUnreadC
 type DC_ResetChannelUnreadCount={};
 type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: DC_ShowReloadUi;};
 type DC_ShowReloadUi={targetId: D_UiTargetId;};
+type C_Loop={clickTrackingParams: string; loopCommand: DC_Loop;};
+type DC_Loop={loop: false;};
 
 //#endregion
 //#region Endpoints
@@ -600,8 +602,6 @@ type AC_Executor=[
 	C_Loop,
 	TA_OpenPopup<{}>,
 ][number];
-type D_Loop={loop: false;};
-type C_Loop={clickTrackingParams: string;loopCommand: D_Loop;};
 type GC_EngagementPanelSectionShow=
 	|A_ChangeEngagementPanelVisibility
 	|A_ShowEngagementPanelScrim

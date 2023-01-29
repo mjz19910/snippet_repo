@@ -11967,8 +11967,12 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {C_Loop} x */
-	C_Loop(x) {this.T_Endpoint("C_Loop",x,a => this.y(a,"loopCommand",this.D_Loop),(a,cf) => {a; cf; debugger;});}
-	D_Loop(x) {x;}
+	C_Loop(x) {this.T_Endpoint("C_Loop",x,a => this.y(a,"loopCommand",this.DC_Loop),(a,cf) => {a; cf; debugger;});}
+	/** @private @arg {DC_Loop} x */
+	DC_Loop(x) {
+		const {loop,...y}=x; this.g(y);
+		this.ceq(loop,false);
+	}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
 		const cf="A_HideEngagementPanelScrim";
