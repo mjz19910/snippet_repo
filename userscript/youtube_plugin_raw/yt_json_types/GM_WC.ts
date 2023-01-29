@@ -675,6 +675,7 @@ type D_TargetIdStr=[
 	"sponsorships-button",
 	D_Menu_TargetId,
 	DB_SI_EngagementPanel['targetId'],
+	D_Button$TargetId,
 ][number];
 type D_UiTargetId="browse-feedFEwhat_to_watch"|"watch-next-feed";
 type D_TranscriptSearchPanel={

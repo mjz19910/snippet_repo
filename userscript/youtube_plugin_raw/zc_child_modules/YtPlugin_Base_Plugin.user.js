@@ -4471,22 +4471,14 @@ class ServiceMethods extends ServiceData {
 		}
 		if(this.str_starts_with_r(x,"browse-feed")) return;
 		switch(x) {
-			case "clip-info-button": return;
-			case "comments-section": return;
-			case "engagement-panel-ads": return;
-			case "engagement-panel-clip-create": return;
-			case "engagement-panel-comments-section": return;
-			case "engagement-panel-macro-markers-description-chapters": return;
-			case "engagement-panel-searchable-transcript-search-panel": return;
-			case "engagement-panel-searchable-transcript": return;
-			case "engagement-panel-structured-description": return;
-			case "engagement-panel-macro-markers-auto-chapters": return;
-			case "feed_filter_chip_bar_second_chip": return;
-			case "search-feed": return;
-			case "search-page": return;
-			case "sponsorships-button": return;
-			case "watch-next-feed": return;
-			case "browse-video-menu-button": return;
+			case "clip-info-button": case "comments-section":
+			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
+			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
+			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
+			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
+			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
+			case "browse-video-menu-button": 
+			case "create-clip-button-action-bar": break;
 			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}

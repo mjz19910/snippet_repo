@@ -923,9 +923,10 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => {
 			/** @private @type {D_Button$TargetId} */
 			switch(x) {
-				case "clip-info-button": break;
-				case "sponsorships-button": return;
-				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`); debugger;
+				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}:`); debugger; break
+				case "clip-info-button":
+				case "sponsorships-button":
+				case "create-clip-button-action-bar":
 			}
 			this.targetId(cf,x);
 		});
