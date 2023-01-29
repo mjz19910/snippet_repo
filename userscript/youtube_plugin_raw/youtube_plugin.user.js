@@ -7600,24 +7600,12 @@ class HandleTypesEval extends ServiceMethods {
 		this.minimal_handler_member_2({});
 	}
 	//#endregion
-}`;
-eval(handle_types_eval_code);
-/** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
-class HandleTypes extends HandleTypesEval {
-	//#region static & typedefs
-	/** @typedef {{}} minimal_handler_member */
-	static {
-		this.prototype.minimal_handler_member_2({});
-	}
 	//#region templates
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
 	HD_(cf,x) {
 		this.k(cf,x);
 		if(this.get_keys_of(x).length!==1) debugger;
 	}
-	cg_mismatch_set=new Set();
-	/** @type {[string,string][]} */
-	cg_mismatch_list=[];
 	/** @private @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,x,f) {
 		this.k(cf,x);
@@ -7625,14 +7613,14 @@ class HandleTypes extends HandleTypesEval {
 		let cgx=this.get_codegen_name(x);
 		let cm=cf;
 		if(this.str_starts_with_r(cf,"IC_")) {
-			cm=`E_${split_string_once(cf,"IC_")[1]}`;
+			cm=\`E_\${split_string_once(cf,"IC_")[1]}\`;
 		}
 		x: if(cgx!==cm) {
 			if(this.ignore_incorrect_name_set.has(cf)) break x;
 			if(this.cg_mismatch_set.has(cgx)) break x;
 			this.cg_mismatch_set.add(cgx);
 			this.cg_mismatch_list.push([cgx,cf]);
-			console.log(`-- [H_$gen_cgx_mismatch] --\n\n[${cgx},${cf}],`);
+			console.log(\`-- [H_$gen_cgx_mismatch] --\n\n[\${cgx;},\${cf;}],\`);
 		}
 		if(k.length!==1) debugger;
 		return f.call(this,this.w(x,k[0]));
@@ -7673,7 +7661,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Endpoint(cf,x,f,f_vm) {
 		const {clickTrackingParams,commandMetadata,...y}=this.sd(cf,x);
 		f.call(this,y,cf);
-		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+		this.clickTrackingParams(\`\${cf}.endpoint\`,clickTrackingParams);
 		if(f_vm===void 0) {
 			if(commandMetadata!==void 0) debugger;
 			return;
@@ -7703,7 +7691,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Types(x,_x=null) {
 		const cf="T_Types";
 		const {types}=this.sd(cf,x);// this.g(y);//#destructure
-		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		/** @private @template {number} T @template {\`\${T} \`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
 		}
@@ -7724,6 +7712,22 @@ class HandleTypes extends HandleTypesEval {
 		this.primitive_str(simpleText);
 	}
 	//#endregion
+	/** @private @arg {{accessibility?:D_Accessibility}} x */
+	handle_accessibility(x) {
+		this.save_keys("[default.Accessibility]",x);
+		if(x.accessibility) this.D_Accessibility(x.accessibility);
+	}
+}`;
+eval(handle_types_eval_code);
+/** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
+class HandleTypes extends HandleTypesEval {
+	//#region static & typedefs
+	/** @typedef {{}} minimal_handler_member */
+	static {
+		this.prototype.minimal_handler_member_2({});
+	}
+	/** @protected @override @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	H_(cf,x,f) {return super.H_(cf,x,f);}
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
@@ -7904,6 +7908,9 @@ class HandleTypes extends HandleTypesEval {
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.sd(cf,x); this.primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
 	//#endregion
 	//#region general done
+	cg_mismatch_set=new Set();
+	/** @type {[string,string][]} */
+	cg_mismatch_list=[];
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("Button",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -9889,11 +9896,6 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		this.GM_WC(this.unpack_MG(this.sd(cf,x)));
-	}
-	/** @private @arg {{accessibility?:D_Accessibility}} x */
-	handle_accessibility(x) {
-		this.save_keys("[default.Accessibility]",x);
-		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
 	/** @private @template T @template {string} VV @typedef {{[U in keyof T as `${string&U extends `${VV}${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemovePrefix */
 	/** @private @template {D_Microformat} U @arg {U} x */
