@@ -106,8 +106,6 @@ type IterObjectStoreType = {
 	cache_index: number;
 	arr: CacheIndexWithArr[][];
 };
-
-type IterHistoryResult = ReturnType<typeof iter_history_result>;
 type JsonHistoryType = { id: number; items: {}[] };
 interface ChromeDomNode extends Node {
 	get wholeText(): string;

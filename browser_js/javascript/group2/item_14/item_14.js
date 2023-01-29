@@ -292,7 +292,8 @@ function log_history_items(hist) {
 	let log_str = log_place.map(do_join_str).flat().join("");
 	return ["-- [result_history] --" + log_str, ...log_items];
 }
-const history_acc = [];
+/** @type {["TAG::result_data", HistoryResultData][]} */
+const result_data_arr = [];
 /** @type {{}[]} */
 const done_history_items = [];
 /** @typedef {["TAG::stack", JsonHistoryType[]]|["TAG::old_stack",J_Rep]} JsonStackType */
@@ -318,8 +319,10 @@ function history_iter(out_res) {
 			return [];
 		}
 		console.log("start iter", done_history_items.length);
-		let inner_arr = iter_history_result(out_res);
-		history_acc.push(["TAG::json_result_history:iter_res", inner_arr]);
+		let result_data = HistoryResultData.make(out_res);
+		if (result_data) {
+			result_data_arr.push(["TAG::result_data", result_data]);
+		}
 	}
 	let log_args = log_history_items(target_history);
 	let log_range = to_range(done_ids);
@@ -636,46 +639,54 @@ const input_obj = {
 };
 /** @type {Map<string,{}>} */
 let json_cache_map = new Map;
-/** @type {{}[]} */
+/** @type {JsonInputType[]} */
 let object_store = [];
 /** @type {JsonHistoryType[]} */
 const result_history = [];
 let object_store_info = null;
-/** @arg {JsonOutputBox} out_res */
-function iter_history_result(out_res) {
-	let history = result_history.slice();
-	let history_item_id_arr = history.map((x) => x.id);
-	if (!input_obj.value.has_value) {
-		return;
+class HistoryResultData {
+	object_store;
+	/** @type {JsonHistoryType[]} */
+	result_history;
+	/** @type {number[]} */
+	history_item_id_arr;
+	/** @arg {JsonInputType[]} object_store @arg {JsonHistoryType[]} result_history @arg {number[]} history_item_id_arr  */
+	constructor(object_store, result_history, history_item_id_arr) {
+		this.object_store = object_store;
+		this.result_history = result_history;
+		this.history_item_id_arr = history_item_id_arr;
 	}
-	let input_value = input_obj.value.value;
-	let history_new_intersection = intersect_array_get_added(history, target_history);
-	let cv = [...json_cache_map.keys()];
-	if (cv.length === 1 && cv[0] === input_value) {
-		let k = json_cache_map.get(input_value);
-		json_cache_map.delete(input_value);
-		if (k !== void 0) {
-			json_cache_map.set("TAG::input_obj", k);
+	/** @arg {JsonOutputBox} res */
+	static make(res) {
+		let history = result_history.slice();
+		let history_item_id_arr = history.map((x) => x.id);
+		if (!input_obj.value.has_value) {
+			return null;
 		}
+		let input_value = input_obj.value.value;
+		let history_new_intersection = intersect_array_get_added(history, target_history);
+		let cv = [...json_cache_map.keys()];
+		if (cv.length === 1 && cv[0] === input_value) {
+			let k = json_cache_map.get(input_value);
+			json_cache_map.delete(input_value);
+			if (k !== void 0) {
+				json_cache_map.set("TAG::input_obj", k);
+			}
+		}
+		history_new_intersection.map(map_add_is_omitted).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
+		/** @type {JsonInputType[]} */
+		let new_cache_arr = [];
+		for (let cache_item of json_cache_arr) {
+			if (json_cache_arr.includes(cache_item))
+				continue;
+			json_cache_arr.push(cache_item);
+			new_cache_arr.push(cache_item);
+		}
+		for (let obj of new_cache_arr) {
+			on_run_request(res, ["cache", obj]);
+		}
+		return new HistoryResultData(object_store, result_history, history_item_id_arr);
 	}
-	history_new_intersection.map(map_add_is_omitted).forEach(([is_omitted, x]) => is_omitted ? 0 : result_history.push(x));
-	/** @type {JsonInputType[]} */
-	let new_cache_arr = [];
-	for (let cache_item of json_cache_arr) {
-		if (json_cache_arr.includes(cache_item))
-			continue;
-		json_cache_arr.push(cache_item);
-		new_cache_arr.push(cache_item);
-	}
-	for (let obj of new_cache_arr) {
-		on_run_request(out_res, ["cache", obj]);
-	}
-	let ret = {
-		object_store,
-		result_history,
-		history_item_id_arr,
-	};
-	return ret;
 }
 /** @type {{value:VueApp|null}} */
 const vue_app = {
