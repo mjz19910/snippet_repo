@@ -328,7 +328,7 @@ class HandleTypes extends HandleTypesEval {
 	//#region member functions
 	/** 
 	 * @protected
-	 * @template {Extract<keyof T_EP,`${string}Endpoint`>} EP_Key
+	 * @template {Extract<keyof T_EP,`${string}${EndpointLikeEndings}`>} EP_Key
 	 * @template {TE_Endpoint_3<EP_Key,T_Data,T_Meta>} T_EP
 	 * @template T_Data
 	 * @template {{webCommandMetadata: any}} T_Meta
@@ -346,34 +346,32 @@ class HandleTypes extends HandleTypesEval {
 		f_vm.call(this,commandMetadata,`D${cf}`);
 		return y;
 	}
+	// @template {T_Endpoint_CF} CF_T
 	/** 
 	 * @protected
-	 * @template {Extract<keyof T_EP,`${string}Endpoint`>} EP_Key
+	 * @template {Extract<keyof T_EP,`${string}${EndpointLikeEndings}`>} EP_Key
 	 * @template {TE_Endpoint_Opt_3<EP_Key,T_Data,T_Meta>} T_EP
 	 * @template T_Data
-	 * @template {{webCommandMetadata: any}} T_Meta
-	 * @template {T_Endpoint_CF} CF_T
-	 * @arg {CF_T} cf
+	 * @template T_Meta
+	 * @arg {string} cf
 	 * @arg {EP_Key} k
-	 * @arg {(this:this,x:T_Meta,cf:`D${CF_T}`)=>void} f_vm
+	 * @arg {(this:this,x:T_EP[EP_Key])=>void} f_ep
+	 * @arg {(this:this,x:NonNullable<T_Meta>)=>void} f_meta
 	 * @arg {T_EP} x
-	 * @arg {(this:this,x:T_EP[EP_Key],cf:`D${CF_T}`)=>void} f
 	 * */
-	TE_Endpoint_Opt_3(cf,x,k,f,f_vm) {
+	TE_Endpoint_Opt_3(cf,k,f_ep,f_meta,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
-		f.call(this,endpoint,`D${cf}`);
+		f_ep.call(this,endpoint);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		if(commandMetadata) {
-			f_vm.call(this,commandMetadata,`D${cf}`);
+			f_meta.call(this,commandMetadata);
 		}
 		return y;
 	}
-	/** @typedef {"Endpoint"|"Command"} EndpointLikeEndings */
 	/**
 	 * @protected
-	 * @template {`${string}${EndpointLikeEndings}`} KeyShape
+	 * @template {Extract<keyof T_EP,`${string}${EndpointLikeEndings}`>} EP_Key
 	 * @template {TE_Endpoint_2<EP_Key,T_Data>} T_EP
-	 * @template {Extract<keyof T_EP,KeyShape>} EP_Key
 	 * @template T_Data
 	 * @arg {T_Endpoint_CF} cf
 	 * @arg {T_EP} x
@@ -1439,7 +1437,12 @@ class HandleTypes extends HandleTypesEval {
 	C_Continuation(x) {
 		if(!x) {debugger; return;}
 		const cf="C_Continuation";
-		this.TE_Endpoint_3(cf,x,"continuationCommand",this.DC_Continuation,(x,cf) => this.y(cf,x,"webCommandMetadata",this.GM_Next));
+		// x => this.y(cf,x,"webCommandMetadata",this.GM_Next)
+		if(x.commandMetadata) {
+			this.GM_Next(x.commandMetadata.webCommandMetadata);
+		}
+		this.DC_Continuation(x.continuationCommand);
+		this.TE_Endpoint_Opt_3(cf,"continuationCommand",x=>x,x=>x,x);
 	}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {
