@@ -1,5 +1,5 @@
 type D_PlaylistHeader={
-	playlistId: string;
+	playlistId: PlaylistId;
 	title: R_TextRuns;
 	numVideosText: R_TextRuns;
 	descriptionText: {};

@@ -11,7 +11,7 @@ type D_PlaylistPanelVideo={
 	trackingParams: string;
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
-	playlistSetVideoId: "56B44F6D10557CC6";
+	playlistSetVideoId: "56B44F6D10557CC6"|string;
 	lightColorPalette: {
 		section2Color: 4076401393;
 		primaryTitleColor: 4279833104;
