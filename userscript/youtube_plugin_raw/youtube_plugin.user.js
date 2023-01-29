@@ -10834,7 +10834,18 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {R_ConfirmDialog} x */
-	R_ConfirmDialog(x) {x;}
+	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog",x,this.D_ConfirmDialog);}
+	/** @private @arg {D_ConfirmDialog} x */
+	D_ConfirmDialog(x) {
+		const cf="D_ConfirmDialog";
+		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.t(title,this.R_SimpleText);
+		this.trackingParams(cf,trackingParams);
+		this.z(dialogMessages,this.G_Text);
+		this.R_Button(confirmButton);
+		this.R_Button(cancelButton);
+		this.b_primitive_bool(primaryIsCancel);
+	}
 	/** @private @arg {DB_SI_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
 		const cf="DB_SI_EngagementPanel";
