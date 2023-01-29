@@ -10,11 +10,11 @@ export class HandleTypesEval_ extends ServiceMethods {
 	/** @protected */
 	gk=this.get_keys_of;
 	/** @protected @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}
+	D_Params(cf,x,f) {const {params: p,...y}=this.s(cf,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @protected @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
 	/** @protected @template {{}} T @arg {string} cf @arg {T} x @returns {T} */
-	sd(cf,x) {cf; x; n();}
+	s(cf,x) {cf; x; n();}
 	/** @protected @arg {T_Endpoint_CF} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:string)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:string)=>void} f */
 	T_Endpoint(cf,x,f,f_vm) {cf; x; f; f_vm;}
 	/** @protected @arg {R_SimpleText} x */

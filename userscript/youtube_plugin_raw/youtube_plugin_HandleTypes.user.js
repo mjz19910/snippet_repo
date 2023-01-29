@@ -272,7 +272,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @override @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
 	TD_ItemSection_3(x) {
 		const cf="TD_ItemSection_3";
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		if(contents.length>0) {
 			let cu=contents[0];
@@ -290,7 +290,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
 		const cf="GM_VE6827_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(url,this.D_VE6827_PageUrl);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==6827) debugger;
@@ -322,7 +322,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE23462_WC} x */
 	GM_VE23462_WC(x) {
 		const cf="GM_VE23462_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		switch(url) {
 			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
 			case "/account": break;
@@ -335,7 +335,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE96368_WC_browse} x */
 	GM_VE96368_WC_browse(x) {
 		const cf="GM_VE96368_WC_browse";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(url!=="/feed/subscriptions") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==96368) debugger;
@@ -419,7 +419,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE11487_WC} x */
 	GM_VE11487_WC(x) {
 		const cf="GM_VE11487_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(url!=="/premium") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==11487) debugger;
@@ -428,7 +428,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE5754_WC} x */
 	GM_VE5754_WC(x) {
 		const cf="GM_VE5754_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let [f,url_playlist_id]=split_string_once(url,"/playlist?list=");
 		if(f!=="") debugger;
 		this.parser.parse_playlist_id(url_playlist_id);
@@ -443,7 +443,7 @@ class HandleTypes extends HandleTypesEval {
 		if("apiUrl" in x&&!("rootVe" in x)) return this.GM_WC_ApiUrl(x);
 		if("rootVe" in x&&"apiUrl" in x) return this.GM_WC_Ex(x);
 		if("sendPost" in x) {
-			const {sendPost,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {sendPost,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			if(sendPost!==true) debugger;
 			return;
 		}
@@ -453,7 +453,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE3854_WC} x */
 	GM_VE3854_WC(x) {
 		const cf="GM_VE3854_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		x: {
 			if(url==="/") break x;
 			debugger;
@@ -463,7 +463,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
-	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.sd(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
+	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.s(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
 	//#endregion
 	//#region general done
 	cg_mismatch_set=new Set();
@@ -504,7 +504,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_WatchPage_1} x */
 	R_Generic_WatchPage(x) {
 		const cf="R_Generic_WatchPage";
-		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.E_Watch(endpoint);
 		this.RS_Watch(response);
 		this.RS_Player(playerResponse);
@@ -515,7 +515,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_VE3832_WatchPage} x */
 	R_VE3832_WatchPage(x) {
 		const cf="R_VE3832_WatchPage";
-		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
@@ -535,7 +535,7 @@ class HandleTypes extends HandleTypesEval {
 				},
 			});
 		}
-		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RC_ResponseContext(responseContext);
 		this.R_TwoColumnWatchNextResults(contents);
 		this.E_Watch(currentVideoEndpoint);
@@ -550,7 +550,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
 		const cf="D_DesktopTopbar";
-		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TopbarLogo(logo);
 		this.R_FusionSearchbox(searchbox);
 		this.trackingParams(cf,trackingParams);
@@ -565,14 +565,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_FrameworkUpdates} x */
 	A_FrameworkUpdates(x) {
 		const cf="A_FrameworkUpdates";
-		const {entityBatchUpdate,elementUpdate,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.D_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
 	/** @private @arg {RSB_EditPlaylist} x */
 	RSB_EditPlaylist(x) {
 		const cf="RSB_EditPlaylist";
-		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(status!=="STATUS_SUCCEEDED") debugger;
 		let [r]=this.z(actions,x => {
 			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
@@ -590,7 +590,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_BrowsePage} x */
 	R_BrowsePage(x) {
 		const cf="R_BrowsePage";
-		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(rootVe,x => this.save_number("[R_BrowsePage.rootVe]",x));
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E_Browse(endpoint);
@@ -615,18 +615,18 @@ class HandleTypes extends HandleTypesEval {
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
 		if("params" in x) {
-			const {browseId: a,params: c,...y}=this.sd(cf,x); this.g(y);//#destructure
+			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);//#destructure
 			this.E_Browse_ParseBrowseId(a);
 			this.params(cf,"D_Browse.param",c);
 			this.g(y);
 			return;
 		}
 		if("canonicalBaseUrl" in x) {
-			const {browseId: a,canonicalBaseUrl: b,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {browseId: a,canonicalBaseUrl: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.E_Browse_ParseBrowseId(a);
 			return this._decode_channel_url(b);
 		}
-		const {browseId: a,...y}=this.sd(cf,x); this.g(y);//#destructure
+		const {browseId: a,...y}=this.s(cf,x); this.g(y);//#destructure
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
@@ -635,7 +635,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
-		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.GM_VE_WC_Browse(a);
 	}
 	/** @private @arg {E_Browse['commandMetadata']['webCommandMetadata']} x */
@@ -663,7 +663,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE42352_WC} x */
 	GM_VE42352_WC(x) {
 		const cf="GM_VE42352_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._decode_browse_url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==42352) debugger;
@@ -672,7 +672,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE3611_WC} x */
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC";
-		const {url,webPageType,rootVe,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._decode_channel_url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
@@ -681,7 +681,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE37414_WC} x */
 	GM_VE37414_WC(x) {
 		const cf="GM_VE37414_WC";
-		const {url,webPageType,rootVe,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(url!=="/shorts/") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 		if(rootVe!==37414) debugger;
@@ -716,7 +716,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
 			debugger;
 		}
-		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RC_ResponseContext(responseContext);
 		this.t(header,this.G_BrowseHeader);
 		this.trackingParams(cf,trackingParams);
@@ -751,11 +751,11 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Microformat";
 		let uw=this.unwrap_microformat(x);
 		{
-			let {tags,familySafe,noindex,unlisted,thumbnail,title,description,schemaDotOrgType,androidPackage,appName,availableCountries,linkAlternates,siteName,ogType,...y}=this.sd(`${cf}.other`,uw.o); this.g(y);
+			let {tags,familySafe,noindex,unlisted,thumbnail,title,description,schemaDotOrgType,androidPackage,appName,availableCountries,linkAlternates,siteName,ogType,...y}=this.s(`${cf}.other`,uw.o); this.g(y);
 		}
-		{let {appArguments,appStoreId,...y}=this.sd(`${cf}.ios`,uw.ios); this.z([appArguments,appStoreId],this.a_primitive_str); this.g(y);}
+		{let {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,uw.ios); this.z([appArguments,appStoreId],this.a_primitive_str); this.g(y);}
 		{
-			let {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=this.sd(`${cf}.url`,uw.url); this.g(y);
+			let {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=this.s(`${cf}.url`,uw.url); this.g(y);
 			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
 			this.g(y);
 		}
@@ -777,7 +777,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
 		const cf="D_SettingsSidebar";
-		const {title,...y}=this.sd(cf,x);
+		const {title,...y}=this.s(cf,x);
 		this.z(this.w(y,"items"),this.R_CompactLink);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
@@ -787,7 +787,7 @@ class HandleTypes extends HandleTypesEval {
 			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
 				let u=this.D_Link_Omit(cf,x);
-				const {icon,style: {},navigationEndpoint,...y}=this.sd(`${cf}.icon`,u); this.g(y);
+				const {icon,style: {},navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
 				this.E_Upload(navigationEndpoint);
 			} break;
 		}
@@ -802,7 +802,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("icon" in x) {
 			let u=this.D_Link_Omit(cf,x);
-			const {icon,...y}=this.sd(`${cf}.icon`,u); this.g(y);
+			const {icon,...y}=this.s(`${cf}.icon`,u); this.g(y);
 			switch(x.icon.iconType) {
 				case "PERSON_ADD": break;
 				default: debugger; break;
@@ -813,7 +813,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {D_CompactLink} T @arg {D_Link_CF} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
-		const {title,trackingParams,...y}=this.sd(cf,x);
+		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -843,7 +843,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow";
-		const {header,content,trackingParams,onCloseCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {header,content,trackingParams,onCloseCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_PdgBuyFlowHeader(header);
 		this.z(content,x => {
 			if(!x.superVodBuyFlowContentRenderer) debugger;
@@ -859,7 +859,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistSidebar} x */
 	D_PlaylistSidebar(x) {
 		const cf="D_PlaylistSidebar";
-		const {items,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(items,this.PlaylistSidebarItem);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -871,7 +871,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {D_Button} T @arg {D_Button_CF} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
-		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.sd(cf,x);
+		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 		this.t(icon,this.T_Icon);
@@ -924,7 +924,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
 		const cf="D_PdgBuyFlowHeader";
-		const {text,helpButton,dismissButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {text,helpButton,dismissButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(text);
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
@@ -952,7 +952,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(x.tabIdentifier) {
 				default: debugger; break;
 				case "FEsubscriptions": {
-					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
+					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
 					this.D_Tab_subscriptionsEndpoint(endpoint);
 					if(selected!==true) debugger;
 					if(!content.sectionListRenderer) debugger;
@@ -960,7 +960,7 @@ class HandleTypes extends HandleTypesEval {
 					this.trackingParams(cf,trackingParams);
 				} break;
 				case "FEwhat_to_watch": {
-					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.sd(`${cf}_WhatToWatch`,x); this.g(y);
+					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
 					if(selected!==true) debugger;
 					if(!content.richGridRenderer) debugger;
 					this.R_RichGrid(content);
@@ -976,7 +976,7 @@ class HandleTypes extends HandleTypesEval {
 		const new_cf=`${cf}_${"R_MusicQueue"}`;
 		{
 			const cf=new_cf;
-			const {content,trackingParams,...y}=this.sd(cf,x); this.g(y);
+			const {content,trackingParams,...y}=this.s(cf,x); this.g(y);
 			this.R_MusicQueue(content);
 			this.trackingParams(cf,trackingParams);
 		}
@@ -989,7 +989,7 @@ class HandleTypes extends HandleTypesEval {
 	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
-		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.sd(cf,x);
+		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
 		this.z(contents,x => {
 			if("richItemRenderer" in x) return this.R_RichItem(x);
 			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
@@ -1018,13 +1018,13 @@ class HandleTypes extends HandleTypesEval {
 	D_RichItem(x) {
 		const cf="D_RichItem";
 		if("rowIndex" in x) {
-			const {content,trackingParams,rowIndex,colIndex,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.G_RichItemContent(content);
 			this.trackingParams(cf,trackingParams);
 			this.save_number("[Item.pos]",[rowIndex,colIndex]);
 			return;
 		}
-		const {content,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_RichItemContent(content);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -1050,11 +1050,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
 		const cf="D_MovingThumbnail";
-		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(movingThumbnailDetails,x => {
 			if("logAsMovingThumbnail" in x) {
 				const cf="D_MovingThumbnail_Thumbnails";
-				const {logAsMovingThumbnail,...y}=this.sd(cf,x);
+				const {logAsMovingThumbnail,...y}=this.s(cf,x);
 				return this.R_Thumbnail(y);
 			}
 			this.R_Thumbnail(x);
@@ -1081,7 +1081,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {R_ChildVideo_Omit} T @arg {string} cf @arg {T} x */
 	D_ChildVideo_Omit(cf,x) {
-		let {title,navigationEndpoint,lengthText,videoId,...y}=this.sd(cf,x);
+		let {title,navigationEndpoint,lengthText,videoId,...y}=this.s(cf,x);
 		this.E_Watch(navigationEndpoint);
 		return y;
 	}
@@ -1119,7 +1119,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.tz(badges,this.RMD_Badge);
 		this.t(upcomingEventData,x => {
-			const {isReminderSet,startTime,upcomingEventText,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {isReminderSet,startTime,upcomingEventText,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			if(isReminderSet!==false) debugger;
 			this.a_primitive_str(startTime);
 			this.R_TextRuns(upcomingEventText);
@@ -1154,7 +1154,7 @@ class HandleTypes extends HandleTypesEval {
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
-		const {thumbnailOverlays,...y}=this.sd(cf,x);
+		const {thumbnailOverlays,...y}=this.s(cf,x);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		return y;
 	}
@@ -1187,7 +1187,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {
 		const cf="D_Video_Owner";
-		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
 		this.E_Browse(navigationEndpoint);
 		this.D_Accessibility(accessibility);
@@ -1197,7 +1197,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
 	/** @private @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
-		const {thumbnail,navigationEndpoint,accessibility,...y}=this.sd(cf,x);
+		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
 		this.R_Thumbnail(thumbnail);
 		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
 		this.D_Accessibility(accessibility);
@@ -1233,7 +1233,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {
 		const cf="GM_Next";
-		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/next") debugger;
 	}
@@ -1256,7 +1256,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_Thumbnail} x */
 	R_Thumbnail(x) {
 		const cf="R_Thumbnail"; this.k(cf,x);
-		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(sampledThumbnailColor,x => this.D_Color(x));
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.D_Accessibility);
@@ -1265,7 +1265,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ThumbnailItem} x */
 	D_ThumbnailItem(x) {
 		const cf="D_ThumbnailItem";
-		const {url,width,height,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,width,height,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(url);
 		this.t(width,x => this._primitive_of(x,"number"));
 		this.t(height,x => this._primitive_of(x,"number"));
@@ -1273,7 +1273,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail";
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.E_Page(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
@@ -1307,7 +1307,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
-		const {responseContext: {},actions,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
@@ -1389,13 +1389,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
-		const {responseContext: {},trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
-		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let pu=this.TA_OpenPopup(command);
 		if("pdgBuyFlowRenderer" in pu) {
 			this.R_PdgBuyFlow(pu);
@@ -1407,7 +1407,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SuperVodBuyFlowContent} x */
 	D_SuperVodBuyFlowContent(x) {
 		const cf="D_SuperVodBuyFlowContent";
-		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {description,buyButton,trackingParams,commentPreview,disclaimerText,colorSlider,defaultPriceTier,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z([description,disclaimerText],this.R_TextRuns);
 		this.R_Button(buyButton);
 		this.trackingParams(cf,trackingParams);
@@ -1419,14 +1419,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {
 		const cf="DE_SuperThanksSelectedTier";
-		const {index,key,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {index,key,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		console.log("super_thanks_selected_tier.index",index);
 		console.log("super_thanks_selected_tier.key",key);
 	}
 	/** @private @arg {D_PdgColorSlider} x */
 	D_PdgColorSlider(x) {
 		const cf="D_PdgColorSlider";
-		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(notches,this.NotchesItem);
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 		this.R_SimpleText(maxTierValue);
@@ -1435,7 +1435,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_NotchesItem} x */
 	NotchesItem(x) {
 		const cf="NotchesItem";
-		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(linearGradientCssStyle) {
 			debugger;
 		}
@@ -1453,7 +1453,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {
 		const cf="GM_YpcGetCart";
-		const {apiUrl,sendPost,...y}=this.sd(cf,x); this.g(y);//#destructure
+		const {apiUrl,sendPost,...y}=this.s(cf,x); this.g(y);//#destructure
 		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -1481,14 +1481,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GetSurvey} x */
 	D_GetSurvey(x) {
 		const cf="D_GetSurvey";
-		const {action,endpoint: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		console.log("GetSurvey.action",action);
 		this.R_PaidDigitalGoods(a);
 	}
 	/** @private @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(x) {
 		const cf="TA_OpenPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return a;
 	}
@@ -1555,7 +1555,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSU_M} x */
 	RSU_M(x) {
 		const cf="RSU_M";
-		const {responseContext: {},continuation,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RD_TimedContinuation(continuation);
 		this.z(actions,x => {
 			if("updateViewershipAction" in x) return this.U_Viewership(x);
@@ -1606,7 +1606,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="RS_Search";
-		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(estimatedResults);
 		this.R_TwoColumnSearchResults(contents);
 		this.trackingParams(cf,trackingParams);
@@ -1621,14 +1621,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
 	C_AdsControlFlowOpportunityReceived(x) {
 		const cf="C_AdsControlFlowOpportunityReceived";
-		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
 	}
 	/** @private @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
 		const cf="RSG_SearchSuggestions";
-		const {responseContext: {},trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_PaidDigitalGoods} x */
@@ -1636,13 +1636,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
-		const {hack,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {hack,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(hack!==true) debugger;
 	}
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player";
-		const {responseContext: {},playabilityStatus,...y}=this.sd(cf,x);
+		const {responseContext: {},playabilityStatus,...y}=this.s(cf,x);
 		console.log("[RS_Player.next_key]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
@@ -1654,7 +1654,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x) {
 		const cf="D_PlayerAnnotationsExpanded";
-		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.D_FeaturedChannel(featuredChannel);
 		this.parse_uuid(annotationId);
 		this.b_primitive_bool(allowSwipeDismiss);
@@ -1673,7 +1673,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeaturedChannel} x */
 	D_FeaturedChannel(x) {
 		const cf="D_FeaturedChannel";
-		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
 		this.R_Thumbnail(watermark);
 		this.trackingParams(cf,trackingParams);
@@ -1694,7 +1694,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {D_SubscribeButton} T @arg {string} cf @arg {T} x */
 	D_SubscribeButton_Omit(cf,x) {
-		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.sd(cf,x);
+		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.s(cf,x);
 		this.R_TextRuns(buttonText);
 		this._primitive_of(subscribed,"boolean");
 		if(enabled!==true) debugger;
@@ -1711,13 +1711,13 @@ class HandleTypes extends HandleTypesEval {
 		/** @arg {T_RemovePrefix<D_SubscribeButton,"subscribed">} x */
 		let r_sub=({...x}) => {
 			if("entityKey" in x) {
-				const {buttonText,entityKey,...y}=this.sd(`${cf}.subscribed`,x); this.g(y);
+				const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
 				this.R_TextRuns(buttonText);
 				console.log("[subscribed.entityKey]",entityKey);
 				return;
 			}
 			if("buttonText" in x) {
-				const {buttonText,...y}=this.sd(`${cf}.subscribed`,x); this.g(y);
+				const {buttonText,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
 				this.R_TextRuns(buttonText);
 				return;
 			}
@@ -1727,7 +1727,7 @@ class HandleTypes extends HandleTypesEval {
 		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
 		/** @arg {T_RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
 		let r_un_sub=({...x}) => {
-			const {buttonText,...y}=this.sd(`${cf}.unsubscribed`,x); this.g(y);
+			const {buttonText,...y}=this.s(`${cf}.unsubscribed`,x); this.g(y);
 			this.R_TextRuns(buttonText);
 		};
 		r_un_sub(un_sub);
@@ -1735,13 +1735,13 @@ class HandleTypes extends HandleTypesEval {
 		let [un_sub_2,o4]=this.unwrap_prefix(o3,"unsubscribe");
 		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
 		let r_sub_2=({...x}) => {
-			const {accessibility,...y}=this.sd(`${cf}.subscribe`,x); this.g(y);
+			const {accessibility,...y}=this.s(`${cf}.subscribe`,x); this.g(y);
 			this.D_Accessibility(accessibility);
 		};
 		r_sub_2(sub_2);
 		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
 		let r_un_sub_2=({...x}) => {
-			const {buttonText,accessibility,...y}=this.sd(`${cf}.unsubscribe`,x); this.g(y);
+			const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
 			this.R_TextRuns(buttonText);
 			this.D_Accessibility(accessibility);
 		};
@@ -1771,7 +1771,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
-		const {responseContext: {},actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.tz(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
@@ -1781,7 +1781,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSL_Dislike} x */
 	RSL_Dislike(x) {
 		const cf="RSL_Dislike";
-		const {responseContext: {},actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
@@ -1791,7 +1791,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSL_RemoveLike} x */
 	RSL_RemoveLike(x) {
 		const cf="RSL_RemoveLike";
-		const {responseContext: {},actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.tz(actions,(x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup(x);
 			debugger;
@@ -1801,7 +1801,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
-		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(entries,x => this.T_Command_TP(x,this.E_ReelWatch));
 		this.trackingParams(cf,trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
@@ -1809,7 +1809,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_VE37414} x */
 	M_VE37414(x) {
 		const cf="M_VE37414";
-		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.GM_VE37414_WC(a);
 	}
 	/** @private @arg {Omit<E_ReelWatch,"clickTrackingParams"|"commandMetadata">} x */
@@ -1821,19 +1821,19 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ReelWatch";
 		if("videoId" in x) {
 			debugger;
-			const {videoId}=this.sd(cf,x);
+			const {videoId}=this.s(cf,x);
 			this.t(videoId,this.videoId);
 			return;
 		}
 		if("inputType" in x) {
 			debugger;
-			const {inputType}=this.sd(cf,x);
+			const {inputType}=this.s(cf,x);
 			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
 			return;
 		}
 		if("sequenceParams" in x) {
 			debugger;
-			const {sequenceProvider,sequenceParams}=this.sd(cf,x);
+			const {sequenceProvider,sequenceParams}=this.s(cf,x);
 			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
 			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
 			return;
@@ -1842,7 +1842,7 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 			return;
 		}
-		const {playerParams,overlay,params,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playerParams,overlay,params,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.params(cf,"reel.player_params",playerParams);
 		this.R_ReelPlayerOverlay(overlay);
 		this.params(cf,"reel.params",params);
@@ -1850,7 +1850,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
 		const cf="RS_GetLiveChat";
-		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
 	}
@@ -1871,7 +1871,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_NotificationMenu_PopupItem} x */
 	D_NotificationMenu_PopupItem(x) {
 		const cf="D_NotificationMenu_PopupItem";
-		const {header,sections,style,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._R_SimpleMenuHeader(header);
 		let [iw]=this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
 		this.z(iw[0].items,this.R_MP_MenuNotificationSection_Item);
@@ -1881,7 +1881,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_NotificationMenu_Popup} x */
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
-		const {popupType: a,popup: b,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="DROPDOWN") debugger;
 		let u=this.TR_MP_Menu(b);
 		this.D_NotificationMenu_PopupItem(u);
@@ -1889,7 +1889,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
 		const cf="RSG_NotificationMenu";
-		const {responseContext: {},actions,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let [ar]=this.z(actions,x => {
 			if(x.openPopupAction) return this.TA_OpenPopup(x);
 			debugger;
@@ -1905,14 +1905,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
-		const {title,buttons,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,buttons,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(title);
 		this.z(buttons,this.R_Button);
 	}
 	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next";
-		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(contents,this.G_NextContents);
 		this.t(currentVideoEndpoint,this.E_Watch);
 		this.trackingParams(cf,trackingParams);
@@ -1944,7 +1944,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
-		const {tabs,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {tabs,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(tabs,this.R_Tab);
 	}
 	/** @private @arg {RC_PlaylistPanel} x */
@@ -1956,7 +1956,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CommentsHeader} x */
 	D_CommentsHeader(x) {
 		const cf="D_CommentsHeader";
-		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(countText);
 		this.R_CommentSimplebox(createRenderer);
 		this.R_SortFilterSubMenu(sortMenu);
@@ -1975,7 +1975,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VoiceSearchDialog} x */
 	D_VoiceSearchDialog(x) {
 		const cf="D_VoiceSearchDialog";
-		const {trackingParams,exitButton,...y}=this.sd(cf,x);
+		const {trackingParams,exitButton,...y}=this.s(cf,x);
 		let u=Object.entries(y);
 		for(let x of u) {
 			let c=x[1];
@@ -1991,28 +1991,28 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ScrollToEngagementPanel} x */
 	C_ScrollToEngagementPanel(x) {
 		const cf="C_ScrollToEngagementPanel";
-		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.D_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
 	}
 	/** @private @arg {D_ScrollToEngagementPanel} x */
 	D_ScrollToEngagementPanel(x) {
 		const cf="D_ScrollToEngagementPanel";
-		const {targetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.targetId(cf,targetId);
 	}
 	//#region pause
 	//#endregion
 	/** @private @template T @template U @arg {string} cf @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf,x) {
-		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return [commandMetadata,signalServiceEndpoint];
 	}
 	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
 	Signal_Omit(x,f) {
 		const cf="Signal_Omit";
-		const {signal,...y}=this.sd(cf,x); f(signal);
+		const {signal,...y}=this.s(cf,x); f(signal);
 		return y;
 	}
 	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']['popup']} x */
@@ -2026,7 +2026,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
-		const {popup,popupType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {popup,popupType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.S_Client_HandlePopup(popup);
 		switch(popupType) {
 			default: debugger; break;
@@ -2036,7 +2036,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>} x */
 	S_Client_Popup(x) {
 		const cf="S_Client_Popup";
-		const {clickTrackingParams,openPopupAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
@@ -2062,15 +2062,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel";
-		const {panelIdentifier,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {A_Signal} x */
-	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.sd(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
+	A_Signal(x) {this.T_Endpoint("A_Signal",x,(x,cf) => {const {signalAction: a,...y}=this.s(`${cf}_Omit`,x); this.g(y); this.AD_Signal(a);});}
 	/** @private @arg {AD_Signal} x */
 	AD_Signal(x) {
 		const cf="AD_Signal";
-		const {signal,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		switch(signal) {
 			default: debugger; break;
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
@@ -2081,7 +2081,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
 		const cf="DC_AddToPlaylist";
-		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		console.log(`${cf}.listType`,listType);
 		this.SE_CreatePlaylist(onCreateListCommand);
 		this.z([openListPanel,openMiniplayer],this.b_primitive_bool);
@@ -2092,7 +2092,7 @@ class HandleTypes extends HandleTypesEval {
 	SE_CreatePlaylist(x) {
 		const cf="ES_CreatePlaylist"; this.T_Endpoint(cf,x,x => this.y(x,"createPlaylistServiceEndpoint",this.DS_CreatePlaylist),u => {
 			let x=u.webCommandMetadata;
-			const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+			const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 			if(sendPost!==true) debugger;
 			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
 		});
@@ -2100,7 +2100,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
-		const {params,videoIds,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+		const {params,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
@@ -2115,17 +2115,17 @@ class HandleTypes extends HandleTypesEval {
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.C_AdsControlFlowOpportunityReceived(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
-			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
 		} else if("loadMarkersCommand" in x) {
-			const {clickTrackingParams,loadMarkersCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {clickTrackingParams,loadMarkersCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.DC_LoadMarkers(loadMarkersCommand);
 		} else if("reloadContinuationItemsCommand" in x) {
 			this.C_ReloadContinuationItems(x);
 		} else if("appendContinuationItemsAction" in x) {
-			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.G_AppendContinuationItems(appendContinuationItemsAction);
 		} else {
@@ -2147,13 +2147,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {
 		const cf="C_ReloadContinuationItems";
-		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
 	}
 	/** @private @template {DC_ReloadContinuationItems} T @arg {string} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
-		const {slot,...y}=this.sd(cf,x);
+		const {slot,...y}=this.s(cf,x);
 		this.save_enum("RELOAD_CONTINUATION_SLOT",x.slot);
 		return y;
 	}
@@ -2182,13 +2182,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_LoadMarkers} x */
 	DC_LoadMarkers(x) {
 		const cf="DC_LoadMarkers";
-		const {entityKeys,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {entityKeys,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(entityKeys,this.a_primitive_str);
 	}
 	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
 	DC_ChangeKeyedMarkersVisibility(x) {
 		const cf="DC_ChangeKeyedMarkersVisibility";
-		const {isVisible,key,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {isVisible,key,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(isVisible!==true) debugger;
 		if(key!=="HEATSEEKER") debugger;
 	}
@@ -2198,7 +2198,7 @@ class HandleTypes extends HandleTypesEval {
 		if("browserMediaSession" in x) {
 			return this.A_BrowserMediaSession(x);
 		}
-		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.sd(cf,x);
+		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.s(cf,x);
 		this.R_WatchNextEndScreen(endScreen);
 		this.R_PlayerOverlayAutoplay(autoplay);
 		this.R_Button(shareButton);
@@ -2222,7 +2222,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_Notification} x */
 	D_NotificationAction(x) {
 		const cf="D_NotificationAction";
-		const {responseText,actionButton,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(responseText);
 		this.t(actionButton,this.R_Button);
 		this.trackingParams(cf,trackingParams);
@@ -2230,7 +2230,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
-		const {playerBar,...y}=this.sd(cf,x);
+		const {playerBar,...y}=this.s(cf,x);
 		if("playerBarActionButton" in y) {
 			return this.R_Button(this.w(y,"playerBarActionButton"));
 		}
@@ -2241,10 +2241,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AutoplaySwitchButton} x */
 	D_AutoplaySwitchButton(x) {
 		const cf="D_AutoplaySwitchButton";
-		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z([onEnabledCommand,onDisabledCommand],(x) => {
 			const cf="E_SetSettingAutonavForDesktop";
-			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
 			this.G_CommandMetadata(commandMetadata,true);
@@ -2259,7 +2259,7 @@ class HandleTypes extends HandleTypesEval {
 	T_DE_SettingItem_AutonavForDesktop(x) {
 		if("boolValue" in x) {
 			const cf="T_DE_SettingItem.407";
-			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 			if(settingItemId!=="407") debugger;
 			this.b_primitive_bool(boolValue);
 			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
@@ -2274,7 +2274,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_WatchNextEndScreen} x */
 	D_WatchNextEndScreen(x) {
 		const cf="D_WatchNextEndScreen";
-		const {results,title,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {results,title,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(results,this.G_WatchNextEndScreenItem);
 		this.R_SimpleText(title);
 		this.trackingParams(cf,trackingParams);
@@ -2289,7 +2289,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
 		const cf="A_BrowserMediaSession";
-		const {actions,browserMediaSession,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {actions,browserMediaSession,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,(x => {
 			if(!x.likeButtonRenderer) debugger;
 			this.R_LikeButton(x);
@@ -2303,7 +2303,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
-		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_MenuItem);
@@ -2333,7 +2333,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template T @arg {T_SE_Signal<M_SendPost, T>} x @returns {["signalServiceEndpoint",T]} */
 	TE_SignalService_I_0(x) {
 		const cf="TE_SignalService_I_0";
-		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_SendPost(commandMetadata);
 		return ["signalServiceEndpoint",signalServiceEndpoint];
@@ -2354,7 +2354,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {
 		const cf="E_GetReportForm"; this.T_Endpoint(cf,x,x => {
-			const {getReportFormEndpoint: a,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+			const {getReportFormEndpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 			this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_report_form",x));
 		},this.M_FlagGetForm);
 	}
@@ -2414,7 +2414,7 @@ class HandleTypes extends HandleTypesEval {
 			x => this.DE_AddToPlaylistService(this.w(x,"addToPlaylistServiceEndpoint")),
 			x => {
 				const cf="M_AddToPlaylistService";
-				let {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);/*#destructure*/ this.GM_playlist_get_add_to_playlist(a);
+				let {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure*/ this.GM_playlist_get_add_to_playlist(a);
 			});
 	}
 	/** @protected @arg {GM_playlist_get_add_to_playlist} x */
@@ -2426,13 +2426,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
 		const cf="DE_AddToPlaylistService";
-		const {videoId,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		this.videoId(videoId);
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {
 		const cf="E_PlaylistEdit"; this.k(cf,x);
-		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.sd(cf,x); this.g(y); this.g(y1);
+		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.s(cf,x); this.g(y); this.g(y1);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
 		this.GM_WC(webCommandMetadata);
@@ -2441,7 +2441,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_PlaylistEdit} x */
 	D_PlaylistEdit(x) {
 		const cf="D_PlaylistEdit";
-		const {playlistId,params,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.playlistId(playlistId);
 		this.t(params,x => this.params(cf,"playlist_edit.params",x));
 		this.z(actions,x => {
@@ -2456,11 +2456,11 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
-	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); f.call(this,serviceEndpoint); return y;}
+	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
 	D_MenuServiceItem(x) {
 		const cf="D_MenuServiceItem";
-		const {text,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(text);
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
@@ -2468,7 +2468,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {E_Feedback} x */
 	E_Feedback(x) {
 		const cf="E_Feedback";
-		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/feedback") debugger;
 		this.G_CommandMetadata(commandMetadata,true);
@@ -2481,7 +2481,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
 		const cf="D_MenuNavigationItem";
-		const {trackingParams,text,icon,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.R_SimpleText(text);
 		if(icon.iconType!=="INFO") debugger;
@@ -2490,7 +2490,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {string} T @arg {T_Icon<T>} x */
 	T_Icon(x) {
 		const cf="T_Icon";
-		const {iconType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.save_string("[IconType]",iconType);
 	}
 	/** @private @arg {G_CommandMetadata} x @arg {boolean} handled */
@@ -2498,14 +2498,14 @@ class HandleTypes extends HandleTypesEval {
 		if(handled===false) console.log("TODO",x,[new Error]);
 		const cf="G_CommandMetadata";
 		if("resolveUrlCommandMetadata" in x) {
-			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			webCommandMetadata;
 			debugger;
 			// this.WebCommandMetadata(webCommandMetadata);
 			this.t(resolveUrlCommandMetadata,this.MC_ResolveUrl);
 			return;
 		}
-		this.GM_WC(this.unpack_MG(this.sd(cf,x)));
+		this.GM_WC(this.unpack_MG(this.s(cf,x)));
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -2554,7 +2554,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		const cf="DE_VE3832_Watch";
-		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,playerExtraUrlParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.videoId(videoId);
 		this.t(playlistId,this.playlistId);
 		if(index!==void 0) this._primitive_of(index,"number");
@@ -2575,7 +2575,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE3832_Watch_WC} x */
 	GM_VE3832_Watch_WC(x) {
 		const cf="GM_VE3832_Watch_WC";
-		const {rootVe,url,webPageType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {rootVe,url,webPageType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(rootVe!==3832) debugger;
 		if(!this.str_starts_with("/watch",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
@@ -2593,7 +2593,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext";
-		const {serializedContextData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		{
 			let x=decodeURIComponent(serializedContextData);
 			let b_res=this._decode_b64_url_proto_obj(x);
@@ -2635,14 +2635,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TextRuns} x */
 	R_TextRuns(x) {
 		const cf="R_TextRuns";
-		const {runs,accessibility,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {runs,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
 	IR_TextRun(x,f_run) {
 		const cf="R_TextRun";
-		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(navigationEndpoint,f_run);
 		this.a_primitive_str(text);
 		this.t(loggingDirectives,this.D_LoggingDirectives);
@@ -2673,18 +2673,18 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x */
-	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @arg {D_WatchResult_ResultsItem} x @returns {G_WatchResult_ContentsItem[]} */
 	D_WatchResult_ResultsItem(x) {
 		const cf="D_WatchResult_ResultsItem";
-		let {trackingParams,contents: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		return a;
 	}
 	/** @private @arg {E_Url} x */
 	E_Url(x) {
 		const cf="E_Url";
-		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_VE83769(commandMetadata);
 		this.DE_Url(urlEndpoint);
@@ -2755,13 +2755,13 @@ class HandleTypes extends HandleTypesEval {
 	DE_Url(x) {
 		const cf="DE_Url";
 		if("nofollow" in x) {
-			const {url,target,nofollow,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {url,target,nofollow,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.GM_E_Url_TargetUrlType(url);
 			if(target!=="TARGET_NEW_WINDOW") debugger;
 			if(nofollow!==true) debugger;
 			return;
 		}
-		const {url,target,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,target,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.GM_E_Url_TargetUrlType(url);
 		if(target!=="TARGET_NEW_WINDOW") debugger;
 	}
@@ -2770,7 +2770,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE83769_WC} x */
 	GM_VE83769_WC(x) {
 		const cf="GM_VE83769_WC";
-		const {url,webPageType,rootVe,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.GM_VE83769_UrlType(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
@@ -2832,7 +2832,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {R_Omit_Compact_Player} T @arg {T} x */
 	Omit_Compact_Player(cf,x) {
-		const {title,trackingParams,...y}=this.sd(cf,x);
+		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -2867,17 +2867,17 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.style) {
 			default: x===0; debugger; break;
 			case "BADGE_STYLE_TYPE_SIMPLE": {
-				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.trackingParams(cf,trackingParams);
 				if(label!=="New") debugger;
 			} break;
 			case "BADGE_STYLE_TYPE_YPC": {
-				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.trackingParams(cf,trackingParams);
 				if(label!=="Fundraiser") debugger;
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
-				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(icon.iconType!=="OFFICIAL_ARTIST_BADGE") debugger;
 				this.T_Icon(icon);
 				if(tooltip!=="Official Artist Channel") debugger;
@@ -2887,7 +2887,7 @@ class HandleTypes extends HandleTypesEval {
 				this.D_Label(accessibilityData);
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED": {
-				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(icon.iconType!=="CHECK_CIRCLE_THICK") debugger;
 				this.T_Icon(icon);
 				if(tooltip!=="Verified") debugger;
@@ -2896,7 +2896,7 @@ class HandleTypes extends HandleTypesEval {
 				this.D_Label(accessibilityData);
 			} break;
 			case "BADGE_STYLE_TYPE_LIVE_NOW": {
-				const {icon,style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(icon.iconType!=="LIVE") debugger;
 				this.T_Icon(icon);
 				this.trackingParams(cf,trackingParams);
@@ -2907,7 +2907,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 			} break;
 			case "BADGE_STYLE_TYPE_COLLECTION": {
-				const {style: {},trackingParams,label,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.trackingParams(cf,trackingParams);
 				this.a_primitive_str(label);
 			} break;
@@ -2918,7 +2918,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AdSlot} x */
 	D_AdSlot(x) {
 		const cf="D_AdSlot";
-		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.DM_AdSlot(adSlotMetadata);
 		this.R_FulfillmentLayout(fulfillmentContent);
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
@@ -2930,7 +2930,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {
 		const cf="D_InFeedAdLayout";
-		const {adLayoutMetadata: a,renderingContent: b,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {adLayoutMetadata: a,renderingContent: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.M_AdLayout(a);
 		if("displayAdRenderer" in b) {
 			this.R_DisplayAd(b);
@@ -2943,7 +2943,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_DisplayAd} x */
 	D_DisplayAd(x) {
 		const cf="D_DisplayAd";
-		const {layout,...y}=this.sd(cf,x);
+		const {layout,...y}=this.s(cf,x);
 		let k=this.get_keys_of(y)[0];
 		console.log("[D_DisplayAd.next_key] [%s]",k);
 	}
@@ -2959,7 +2959,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {MG_AdLayout} x */
 	M_AdLayout(x) {
 		const cf="M_AdLayout";
-		const {layoutId,...y}=this.sd(cf,x);//#destructure_later
+		const {layoutId,...y}=this.s(cf,x);//#destructure_later
 		let ba_id=base64_dec.decodeByteArray(layoutId);
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
 		this.D_AdLayout_TypeStr(y.layoutType);
@@ -2973,7 +2973,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} cf @arg {DMD_AdSlot} x */
 	DM_AdSlot_Omit(cf,x) {
-		const {slotId,slotPhysicalPosition,slotType,...y}=this.sd(cf,x);
+		const {slotId,slotPhysicalPosition,slotType,...y}=this.s(cf,x);
 		this.a_primitive_str(slotId);
 		let do_=false;
 		if(do_) {
@@ -3007,7 +3007,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
 	D_SerializedSlotAdServingDataEntry(x) {
 		const cf="D_SerializedSlotAdServingDataEntry";
-		const {serializedSlotAdServingDataEntry: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
@@ -3063,7 +3063,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
 	G_Watch_SecondaryResults_Contents(x) {
 		const cf="G_Watch_SecondaryResults_Contents";
-		const {contents,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.G_SecondaryContentsItem);
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
@@ -3076,7 +3076,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="D_TwoColumnWatchNextResults";
-		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let u=this.D_WatchResults(results);
 		let u1=this.D_WatchResult_ResultsItem(u);
 		this.z(u1,this.G_WatchResult_ContentsItem);
@@ -3088,7 +3088,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_GetUnseenCount(x) {
 		const cf="RSG_GetUnseenCount";
-		const {responseContext: {},actions,unseenCount,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.tz(actions,(x => {
 			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
 			debugger;
@@ -3098,14 +3098,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
 	AU_NotificationsUnseenCount(x) {
 		const cf="UA_NotificationsUnseenCount";
-		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.U_NotificationsUnseenCount(updateNotificationsUnseenCountAction);
 	}
 	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
 	U_NotificationsUnseenCount(x) {
 		const cf="U_NotificationsUnseenCount";
-		const {handlerData,unseenCount,timeoutMs,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {handlerData,unseenCount,timeoutMs,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(handlerData);
 		this._primitive_of(unseenCount,"number");
 		this._primitive_of(timeoutMs,"number");
@@ -3113,13 +3113,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {REG_DatasyncIds} x */
 	REG_DatasyncIds(x) {
 		const cf="REG_DatasyncIds";
-		const {responseContext: {},datasyncIds,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(datasyncIds,this.a_primitive_str);
 	}
 	/** @private @arg {REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x) {
 		const cf="REG_AccountSwitcher";
-		const {responseContext: {},selectText,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(selectText);
 		this.z(actions,a => {
 			if("getMP_MenuAction" in a) {
@@ -3133,14 +3133,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
-		const {responseContext: {},selectText,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(selectText);
 		this.z(actions,this.A_UpdateChannelSwitcherPage);
 	}
 	/** @private @arg {RSW_ReelItem} x */
 	RSW_ReelItem(x) {
 		const cf="RSW_ReelItem";
-		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(cf,trackingParams);
@@ -3158,7 +3158,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_LikeButton(likeButton);
 		this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
 		this.R_Menu(menu);
@@ -3176,7 +3176,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	T_ShortsSurfaceIdentifier(x) {
 		const cf="T_ShortsSurfaceIdentifier";
-		const {surface,tag,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {surface,tag,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
 		switch(tag) {
 			case "engagement-panel-structured-description": break;
@@ -3187,7 +3187,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
-		const {identifier,...a}=this.sd(`${cf}.identifier`,x); this.g(a);
+		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
 			let yk=this.get_keys_of(identifier);
@@ -3209,7 +3209,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(x.veType) {
 				default: debugger; break;
 				case 76278: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.sd(cf,x);
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x);
 					if(panelIdentifier!=="comment-item-section") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_SectionList(content);
@@ -3223,7 +3223,7 @@ class HandleTypes extends HandleTypesEval {
 					this.g(y);
 				} break;
 				case 99999: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 					if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_ProductList(content);
@@ -3232,7 +3232,7 @@ class HandleTypes extends HandleTypesEval {
 					this.D_LoggingDirectives(loggingDirectives);
 				} break;
 				case 126250: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.sd(cf,x);
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=this.s(cf,x);
 					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_ContinuationItem(content);
@@ -3246,7 +3246,7 @@ class HandleTypes extends HandleTypesEval {
 					this.g(y);
 				} break;
 				case 124975: {
-					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=this.s(cf,x); this.g(y);//#destructure_off
 					if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_StructuredDescriptionContent(content);
@@ -3259,7 +3259,7 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} break;
 				case 139722: {
-					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);//#destructure_off
 					this.R_SectionList(content);
 					this.t(header,this.R_EngagementPanelTitleHeader);
 					this.targetId(cf,targetId);
@@ -3287,14 +3287,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {
 		const cf="A_ShowEngagementPanelScrim";
-		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_ShowEngagementPanelScrim(showEngagementPanelScrimAction);
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
 		const cf="AD_ShowEngagementPanelScrim";
-		const {engagementPanelTargetId,onClickCommands,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
 		let [n]=this.z(onClickCommands,this.TA_OpenPopup);
 		let [x1]=this.z(n,this.unpack_popup_dialog);
@@ -3309,7 +3309,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
 		const cf="D_ConfirmDialog";
-		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(title,this.R_SimpleText);
 		this.trackingParams(cf,trackingParams);
 		this.z(dialogMessages,this.G_Text);
@@ -3323,14 +3323,14 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.targetId) {
 			default: x===""; debugger; break;
 			case "engagement-panel-ads": {
-				const {content,targetId,visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {content,targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.R_AdsEngagementPanelContent(content);
 				if(targetId!=="engagement-panel-ads") debugger;
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-clip-create": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_ClipSection(content);
@@ -3339,7 +3339,7 @@ class HandleTypes extends HandleTypesEval {
 				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
 			} break;
 			case "engagement-panel-macro-markers-description-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_MacroMarkersList(content);
@@ -3347,7 +3347,7 @@ class HandleTypes extends HandleTypesEval {
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-macro-markers-auto-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_MacroMarkersList(content);
@@ -3361,19 +3361,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting";
-		const {responseContext: {},settingItemId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},settingItemId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(settingItemId!=="407") debugger;
 	}
 	/** @private @arg {RS_Feedback} x */
 	RS_Feedback(x) {
 		const cf="RS_Feedback";
-		const {responseContext: {},feedbackResponses,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(feedbackResponses,this.D_FeedbackResponseProcessedStatus);
 	}
 	/** @private @arg {C_ShowReloadUi} x */
 	C_ShowReloadUi(x) {
 		const cf="C_ShowReloadUi"; this.k(cf,x);
-		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.sd(cf,x);
+		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.s(cf,x);
 		this.z([y1,y2],this.g);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		switch(targetId) {
@@ -3383,7 +3383,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {DC_Continuation} T @arg {string} cf @arg {T} x */
 	DC_Continuation_Omit(cf,x) {
-		const {token,request,...y}=this.sd(cf,x);
+		const {token,request,...y}=this.s(cf,x);
 		this.a_primitive_str(token);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
@@ -3397,7 +3397,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_Browse} x */
 	GM_browse(x) {
 		const cf="GM_browse";
-		const {apiUrl,sendPost,...b}=this.sd(cf,x); this.g(b);
+		const {apiUrl,sendPost,...b}=this.s(cf,x); this.g(b);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -3406,7 +3406,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification";
-		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.z([thumbnail,videoThumbnail],this.R_Thumbnail);
 		this.z([shortMessage,sentTimeText],this.R_SimpleText);
@@ -3427,7 +3427,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_RecordNotificationInteractions";
 		this.T_Endpoint(cf,x,a => this.DE_RecordNotificationInteractions(this.w(a,"recordNotificationInteractionsEndpoint")),x => {
 			let y=this.unpack_MG(x),cf="GE_notification_record_interactions";
-			const {apiUrl,sendPost,...u}=this.sd(cf,y); this.g(u);
+			const {apiUrl,sendPost,...u}=this.s(cf,y); this.g(u);
 			if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
 			if(sendPost!==true) debugger;
 		});
@@ -3435,14 +3435,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions";
-		const {serializedInteractionsRequest,actions,...y}=this.sd(cf,x); this.g(y);
+		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);
 		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {
 		const cf="A_HideEnclosing";
-		const {clickTrackingParams,hideEnclosingAction: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,hideEnclosingAction: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_HideEnclosing(a);
 	}
@@ -3451,7 +3451,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_GetNotificationMenu";
 		this.T_Endpoint(cf,x,x => {
 			const u=this.w(x,"getNotificationMenuEndpoint"),cf="DE_GetNotificationMenu";
-			const {ctoken,...y}=this.sd(cf,u); this.g(y);
+			const {ctoken,...y}=this.s(cf,u); this.g(y);
 			this.params(cf,"GetNotificationMenu.ctoken",ctoken);
 			debugger;
 		},a => {
@@ -3496,7 +3496,7 @@ class HandleTypes extends HandleTypesEval {
 				case "search-feed": return this.DC_SectionList_SearchFeed(x);
 			}
 		}
-		const {contents,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let [u]=this.z(contents,this.TR_SectionListItem_3);
 		let [u1]=this.z(u,x => this.TD_ItemSection_3(x));
 		u1;
@@ -3508,7 +3508,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
 		const cf="D_SectionList_BrowseFeed_Subscriptions";
-		const {contents,trackingParams,targetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,x => {
 			if("itemSectionRenderer" in x) {
 				return;
@@ -3538,7 +3538,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem"; this.k(cf,x);
-		const {trigger,continuationEndpoint,...y}=this.sd(cf,x);
+		const {trigger,continuationEndpoint,...y}=this.s(cf,x);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.GE_Continuation(continuationEndpoint);
@@ -3564,7 +3564,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GhostGrid} x */
 	D_GhostGrid(x) {
 		const cf="D_GhostGrid";
-		const {rows,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {rows,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(this.get_keys_of(x).join()!=="rows") debugger;
 		if(rows!==2) debugger;
 	}
@@ -3583,7 +3583,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {
 		const cf="E_GetTranscript";
-		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		{debugger;} commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
@@ -3592,7 +3592,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
 		const cf="RSG_Transcript";
-		const {responseContext: {},actions,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {
 				return this.UA_EngagementPanel(a);
@@ -3604,20 +3604,20 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Success} x */
 	RS_Success(x) {
 		const cf="RS_Success";
-		const {responseContext: {},success,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},success,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._primitive_of(success,"boolean");
 	}
 	/** @private @arg {RS_AttGet} x */
 	RS_AttGet(x) {
 		const cf="RS_AttGet";
-		const {responseContext: {},challenge,bgChallenge,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(challenge);
 		this.D_AttBgChallenge(bgChallenge);
 	}
 	/** @private @arg {RS_Guide} x */
 	RS_Guide(x) {
 		const cf="RS_Guide";
-		const {responseContext: {},items,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -3642,7 +3642,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
 		const cf="D_GuideCollapsibleEntry";
-		const {expanderItem,expandableItems,collapserItem,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {expanderItem,expandableItems,collapserItem,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_GuideEntry(expanderItem);
 		this.z(expandableItems,x => {
 			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
@@ -3653,7 +3653,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideDownloadsEntry} x */
 	D_GuideDownloadsEntry(x) {
 		const cf="D_GuideDownloadsEntry";
-		const {alwaysShow,entryRenderer,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {alwaysShow,entryRenderer,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(alwaysShow!==false) debugger;
 		if(!entryRenderer.guideEntryRenderer) debugger;
 		this.R_GuideEntry(entryRenderer);
@@ -3661,7 +3661,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideSubscriptionsSection} x */
 	D_GuideSubscriptionsSection(x) {
 		const cf="D_GuideSubscriptionsSection";
-		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
 		this.z(items,x => {
 			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
@@ -3676,14 +3676,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideSection} x */
 	D_GuideSection(x) {
 		const cf="D_GuideSection";
-		const {items,trackingParams,formattedTitle,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {items,trackingParams,formattedTitle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
 		this.t(formattedTitle,this.G_Text);
 	}
 	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {string} cf @arg {T} x */
 	D_GuideEntry_Omit(cf,x) {
-		const {accessibility,formattedTitle,trackingParams,...y}=this.sd(cf,x);
+		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
 		this.D_Accessibility(accessibility);
 		this.R_SimpleText(formattedTitle);
 		this.trackingParams(cf,trackingParams);
@@ -3729,13 +3729,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideEntryData} x */
 	D_GuideEntryData(x) {
 		const cf="D_GuideEntryData";
-		const {guideEntryId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {guideEntryId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.parse_guide_entry_id(guideEntryId);
 	}
 	/** @private @arg {D_LiveBroadcastingBadge} x */
 	D_GuideEntryBadges(x) {
 		const cf="D_GuideEntryBadges";
-		const {liveBroadcasting,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(liveBroadcasting!==false) debugger;
 	}
 	/** @private @arg {string} cf @arg {D_GuideEntry} x */
@@ -3827,7 +3827,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);/*#destructure*/
+		const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		this.D_Accessibility(accessibility);
 		this.R_SimpleText(formattedTitle);
 		this.ceq(icon.iconType,"HELP");
@@ -3839,7 +3839,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_GuideEntry"; this.k(cf,x);
 		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		if("presentationStyle" in x) {
-			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.E_Browse(navigationEndpoint);
 			this.R_Thumbnail(thumbnail);
@@ -3861,7 +3861,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
 		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
-		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_GuideEntry(headerEntry);
 		if(expanderIcon.iconType!=="EXPAND") debugger; this.T_Icon(expanderIcon);
 		if(collapserIcon.iconType!=="COLLAPSE") debugger; this.T_Icon(collapserIcon);
@@ -3879,7 +3879,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AutoplayContent} x */
 	D_AutoplayContent(x) {
 		const cf="D_AutoplayContent";
-		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(sets,this.AutoplaySetItem);
 		if(countDownSecs&&countDownSecs!==5) debugger;
 		if(modifiedSets!==void 0) this.z(modifiedSets,this.ModifiedSetItem);
@@ -3888,7 +3888,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const cf="D_PlaylistContent";
-		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.R_SimpleText);
 		this.z(contents,this.R_PlaylistPanelVideo);
@@ -3908,7 +3908,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
 		const cf="D_PlayerOverlayVideoDetails";
-		const {title,subtitle,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,subtitle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_SimpleText(title);
 		this.R_TextRuns(subtitle);
 	}
@@ -3932,7 +3932,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {
 		const cf="E_YpcGetOffers";
-		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		{debugger;} commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
@@ -3941,7 +3941,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ChannelPage} x */
 	R_ChannelPage(x) {
 		const cf="R_ChannelPage";
-		const {page,endpoint,response,url,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="channel") debugger;
 		this.E_Browse(endpoint);
 		this.RS_Channel(response);
@@ -3950,7 +3950,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PlaylistPage} x */
 	R_PlaylistPage(x) {
 		const cf="R_PlaylistPage"; this.k(cf,x);
-		const {url,endpoint,page,response,...y}=this.sd(cf,x);
+		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(page!=="playlist") debugger;
 		this.E_Browse(endpoint);
 		this.RS_Playlist(response);
@@ -3967,7 +3967,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<R_SettingsPage,{rootVe:23462}>} x */
 	Settings_VE23462(x) {
 		const cf="Settings_VE23462";
-		const {page,endpoint,response,url,rootVe,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="settings") debugger;
 		this.E_Browse(endpoint);
 		this.RS_Settings(response);
@@ -3978,7 +3978,7 @@ class HandleTypes extends HandleTypesEval {
 	R_SettingsPage(x) {
 		const cf="R_SettingsPage";
 		if("rootVe" in x) return this.Settings_VE23462(x);
-		const {page,endpoint,response,url,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="settings") debugger;
 		this.E_Browse(endpoint);
 		this.RS_Settings(response);
@@ -3987,7 +3987,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<R_ShortsPage,{rootVe:37414}>} x */
 	Shorts_VE37414(x) {
 		const cf="Shorts_VE37414";
-		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
 		this.RS_Player(playerResponse);
@@ -4003,7 +4003,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ShortsPage(x) {
 		const cf="R_ShortsPage";
 		if("rootVe" in x) return this.Shorts_VE37414(x);
-		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="shorts") debugger;
 		this.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
@@ -4016,7 +4016,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_SearchPage} x */
 	R_SearchPage(x) {
 		const cf="R_SearchPage";
-		const {page,endpoint,response,url,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="search") debugger;
 		this.E_Search(endpoint);
 		this.RS_Search(response);
@@ -4026,7 +4026,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Search} x */
 	E_Search(x) {
 		const cf="E_Search";
-		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_VE4724(commandMetadata);
 		this.D_Search(searchEndpoint);
@@ -4036,7 +4036,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_VE4724_WC} x */
 	GM_VE4724_WC(x) {
 		const cf="GM_VE4724_WC";
-		const {url,webPageType,rootVe,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(!this.str_starts_with("/results?search_query=",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		if(rootVe!==4724) debugger;
@@ -4063,7 +4063,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
 		const cf="CacheMetadata";
-		const {isCacheHit,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {isCacheHit,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(!isCacheHit) debugger;
 	}
 	/** @private @arg {B_StateTag} x */
@@ -4071,11 +4071,11 @@ class HandleTypes extends HandleTypesEval {
 		const cf="StateTag";
 		if(x.stateTag!==3) debugger;
 		if("instruction" in x) {
-			const {stateTag: {},instruction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {stateTag: {},instruction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			if(instruction!=="STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY") debugger;
 			return;
 		}
-		const {stateTag: {},onStateTagModified,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {stateTag: {},onStateTagModified,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
 	}
 	/** @private @arg {G_BrowseContents} x */
@@ -4105,14 +4105,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
 		const cf="MC_ResolveUrl";
-		const {isVanityUrl,parentTrackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {isVanityUrl,parentTrackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(isVanityUrl!==void 0) this._primitive_of(isVanityUrl,"boolean");
 		this.t(parentTrackingParams,a => this.params(cf,"tracking.parentTrackingParams",a));
 	}
 	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
 	DC_AdsControlFlowOpportunityReceived(x) {
 		const cf="DC_AdsControlFlowOpportunityReceived";
-		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
 		this.tz(adSlotAndLayoutMetadata,(this.DMD_AdSlotAndLayoutItem));
 		this._primitive_of(isInitialLoad,"boolean");
@@ -4137,7 +4137,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_AddToPlaylist} x */
 	RSG_AddToPlaylist(x) {
 		const cf="RS_GetAddToPlaylist";
-		const {responseContext: {},contents,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.R_AddToPlaylist);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -4146,7 +4146,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_LoggingDirectives} x */
 	D_LoggingDirectives(x) {
 		const cf="D_LoggingDirectives";
-		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.TM_Visibility(visibility);
 		this.t(gestures,this.D_LoggingDirectives_Gestures);
@@ -4161,34 +4161,34 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
 	EA_ChangeEngagementPanelVisibility(x) {
 		const cf="EA_ChangeEngagementPanelVisibility";
-		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_ChangeEngagementPanelVisibility(changeEngagementPanelVisibilityAction);
 	}
 	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,R_Comment>} x */
 	CommentRepliesItem(x) {
 		const cf="CommentRepliesItem";
-		const {targetId,continuationItems,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.R_Comment);
 	}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {
 		const cf="D_FeedbackResponseProcessedStatus";
-		const {isProcessed,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {isProcessed,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._primitive_of(isProcessed,"boolean");
 	}
 	/** @private @arg {A_UpdateEngagementPanel} x */
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel";
-		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.D_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {D_AttBgChallenge} x */
 	D_AttBgChallenge(x) {
 		const cf="D_AttBgChallenge";
-		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {interpreterUrl,interpreterHash,program,globalName,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(interpreterUrl,a => {
 			let uw=this.UrlWrappedValueT(a);
 			this.a_primitive_str(uw);
@@ -4198,7 +4198,7 @@ class HandleTypes extends HandleTypesEval {
 		if(globalName!=="trayride") debugger;
 	}
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
-	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.sd("T_UrlWrappedValue",x); return a;}
+	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @private @arg {D_ElementUpdate} x */
 	D_ElementUpdate(x) {
 		const cf="D_ElementUpdate"; this.k(cf,x);
@@ -4210,7 +4210,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
 		const cf="D_TemplateUpdate"; this.k(cf,x);
-		const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let idp=split_string_once(identifier,"|");
 		console.log(idp);
 		this.tz(dependencies,dep => {
@@ -4222,21 +4222,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EntityBatchUpdate} x */
 	D_EntityBatchUpdate(x) {
 		const cf="D_EntityBatchUpdate";
-		const {mutations,timestamp,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(mutations,this.D_EntityMutationItem);
 		this.D_TimestampWithNanos(timestamp);
 	}
 	/** @private @arg {D_TimestampWithNanos} x */
 	D_TimestampWithNanos(x) {
 		const cf="D_TimestampWithNanos";
-		const {seconds,nanos,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {seconds,nanos,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(seconds);
 		this._primitive_of(nanos,"number");
 	}
 	/** @private @arg {D_EntityMutationItem} x */
 	D_EntityMutationItem(x) {
 		const cf="D_EntityMutationItem";
-		const {entityKey,type,options,payload,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.params(cf,"entity_key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		this.tf(this.D_EntityMutationOptions)(options);
@@ -4247,7 +4247,7 @@ class HandleTypes extends HandleTypesEval {
 			if("state" in x) return;
 			if("serializedParams" in x) return;
 			if("isHidden" in x) return;
-			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.z([key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives],a => {
 				if(a===void 0) debugger;
 			});
@@ -4273,7 +4273,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_PersistenceOption} x */
 	D_EntityMutationOptions(x) {
 		const cf="D_EntityMutationOptions";
-		const {persistenceOption,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {persistenceOption,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}
 	/** @private @arg {G_TopbarButtonItem} x */
@@ -4287,41 +4287,41 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
 		const cf="D_TwoColumnBrowseResults";
-		const {tabs,secondaryContents,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.G_SecondaryContents);
 	}
 	/** @private @arg {TM_Visibility} x */
 	TM_Visibility(x) {
 		const cf="TM_Visibility";
-		const {types,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {types,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.save_string("[Visibility.types]",types);
 	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation$(x) {
 		const cf="A_CommentsSectionContinuation";
-		const {targetId,continuationItems,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.G_CommentsSection);
 	}
 	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
 	A_BrowseFeed$(x) {
 		const cf="A_BrowseFeed";
-		const {targetId,continuationItems,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.R_BrowseFeed);
 	}
 	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
 	A_WatchNext(x) {
 		const cf="A_WatchNext";
-		const {targetId,continuationItems,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.G_WatchNext);
 	}
 	/** @private @arg {RS_Reel} x */
 	RS_Reel(x) {
 		const cf="RS_Reel";
-		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_ReelPlayerOverlay(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(cf,trackingParams);
@@ -4350,7 +4350,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {SE_ShareEntity} x */
 	ES_ShareEntity(x) {
 		const cf="ES_ShareEntity";
-		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/share/get_share_panel") debugger;
 		this.GM_WC(commandMetadata.webCommandMetadata);
@@ -4359,16 +4359,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ShareEntityService} x */
 	D_ShareEntityService(x) {
 		const cf="D_ShareEntityService";
-		const {serializedShareEntity,commands,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {serializedShareEntity,commands,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(serializedShareEntity);
 		this.z(commands,this.TA_OpenPopup);
 	}
 	/** @private @arg {M_SendPost} x */
-	M_SendPost(x) {const cf="M_SendPost",{webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y); this.GM_SendPost(a);}
+	M_SendPost(x) {const cf="M_SendPost",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y); this.GM_SendPost(a);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {
 		const cf="GM_SendPost";
-		const {sendPost: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sendPost: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!==true) debugger;
 	}
 	/** @private @arg {GC_Button} x */
@@ -4389,8 +4389,8 @@ class HandleTypes extends HandleTypesEval {
 	E_CreateBackstagePost(x) {
 		const cf="E_CreateBackstagePost";
 		this.T_Endpoint(cf,x,x => {
-			let u=this.w(this.sd(cf,x),"createBackstagePostEndpoint");
-			this.params(cf,"createBackstagePost.params",this.w(this.sd(`D${cf}`,u),"createBackstagePostParams"));
+			let u=this.w(this.s(cf,x),"createBackstagePostEndpoint");
+			this.params(cf,"createBackstagePost.params",this.w(this.s(`D${cf}`,u),"createBackstagePostParams"));
 		},this.M_CreateBackstagePost);
 	}
 	/** @private @arg {M_CreateBackstagePost} x */
@@ -4400,12 +4400,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {
 		const cf="GM_CreateBackstagePost";
-		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @private @arg {C_Executor} x */
 	C_Executor(x) {
 		const cf="C_Executor";
-		const {clickTrackingParams,commandExecutorCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_Executor(commandExecutorCommand);
 	}
@@ -4439,14 +4439,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
 		const cf="A_HideEngagementPanelScrim";
-		const {clickTrackingParams,hideEngagementPanelScrimAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,hideEngagementPanelScrimAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.R_EngagementPanelTargetId(hideEngagementPanelScrimAction);
 	}
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
 	R_EngagementPanelTargetId(x) {
 		const cf="R_EngagementPanelTargetId";
-		const {engagementPanelTargetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {engagementPanelTargetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		switch(engagementPanelTargetId) {
 			default: debugger; break;
 			case "engagement-panel-clip-create": break;
@@ -4455,7 +4455,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TopbarLogo} x */
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo";
-		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.T_Icon(iconImage);
 		this.R_TextRuns(tooltipText);
 		this.E_Browse(endpoint);
@@ -4465,14 +4465,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AdSlotAndLayoutItem} x */
 	DMD_AdSlotAndLayoutItem(x) {
 		const cf="DMD_AdSlotAndLayoutItem";
-		const {adLayoutMetadata,adSlotMetadata,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(adLayoutMetadata,this.MMD_AdLayout_1);
 		this.DM_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
 	D_FusionSearchbox(x) {
 		const cf="D_FusionSearchbox";
-		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.T_Icon(icon);
 		this.R_TextRuns(placeholderText);
 		this.R_WebSearchboxConfig(config);
@@ -4483,7 +4483,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility";
-		const {targetId,visibility,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		switch(targetId) {
 			default: targetId===""; this.codegen_new_typedef(x,"AD_ChangeEngagementPanelVisibility_id"); break;
 			case "engagement-panel-clip-create": break;
@@ -4502,7 +4502,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_UpdateEngagementPanel} x */
 	D_UpdateEngagementPanel(x) {
 		const cf="D_UpdateEngagementPanel";
-		const {content,targetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {content,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Transcript(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
@@ -4511,14 +4511,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
 		const cf="D_Transcript"; this.k(cf,x);
-		const {trackingParams,content: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.R_TranscriptSearchPanel(a);
 	}
 	/** @private @arg {RS_Channel} x */
 	RS_Channel(x) {
 		const cf="RS_Channel";
-		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_C4TabbedHeader(header);
 		this.R_Channel_MD(metadata);
@@ -4530,7 +4530,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Playlist} x */
 	RS_Playlist(x) {
 		const cf="RS_Playlist";
-		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_PlaylistHeader(header);
 		this.t(alerts,x => this.Response_alerts(cf,x));
@@ -4550,7 +4550,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Settings} x */
 	RS_Settings(x) {
 		const cf="RS_Settings";
-		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
@@ -4560,7 +4560,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeedFilterChipBar} x */
 	D_FeedFilterChipBar(x) {
 		const cf="D_FeedFilterChipBar";
-		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.R_ChipCloudChip);
 		this.trackingParams(cf,trackingParams);
 		this.R_Button(nextButton);
@@ -4606,7 +4606,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_OmitNav(cf,x) {
-		const {navigationEndpoint: a,...y}=this.sd(cf,x);
+		const {navigationEndpoint: a,...y}=this.s(cf,x);
 		this.D_ChipCloudChip_navigationEndpoint(a);
 		return y;
 	}
@@ -4628,13 +4628,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
 		const cf="DC_RelatedChip";
-		const {targetSectionIdentifier,loadCached,...y}=this.sd(cf,x); this.g(y);//#destructure
+		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);//#destructure
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
 	}
 	/** @arg {D_ChipCloudChip_Omit_CF} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
-		const {style: a,text: b,trackingParams: c,...y}=this.sd(cf,x);
+		const {style: a,text: b,trackingParams: c,...y}=this.s(cf,x);
 		switch(a.styleType) {
 			case "STYLE_DEFAULT":
 			case "STYLE_HOME_FILTER":
@@ -4647,7 +4647,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
 		const cf="AutoplaySetItem";
-		const {mode,autoplayVideo,nextButtonVideo,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {mode,autoplayVideo,nextButtonVideo,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(mode!=="NORMAL") debugger;
 		this.E_Watch(autoplayVideo);
 		this.t(nextButtonVideo,this.E_Watch);
@@ -4655,7 +4655,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ModifiedSetItem} x */
 	ModifiedSetItem(x) {
 		const cf="ModifiedSetItem";
-		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.E_WatchPlaylist(autoplayVideo);
 		this.E_WatchPlaylist(nextButtonVideo);
 		this.t(previousButtonVideo,this.E_WatchPlaylist);
@@ -4663,7 +4663,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {
 		const cf="E_WatchPlaylist";
-		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		{debugger;} commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
@@ -4672,7 +4672,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_WatchPlaylist} x */
 	D_WatchPlaylist(x) {
 		const cf="D_WatchPlaylist";
-		const {playlistId,index,params,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.parser.parse_playlist_id(playlistId);
 		this._primitive_of(index,"number");
 		this.params(cf,"watch_playlist.params",params);
@@ -4680,7 +4680,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_AdLayout_TopImage} x */
 	MMD_AdLayout_1(x) {
 		const cf="MMD_AdLayout_1";
-		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(layoutType);
 		this.a_primitive_str(layoutId);
 		this.D_AdLayoutLogging(adLayoutLoggingData);
@@ -4688,7 +4688,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_HotkeyDialog} x */
 	D_HotkeyDialog(x) {
 		const cf="D_HotkeyDialog";
-		const {title,sections,dismissButton,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,sections,dismissButton,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(title);
 		this.z(sections,this.R_HotkeyDialogSection);
 		this.R_Button(dismissButton);
@@ -4697,14 +4697,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_HotkeyDialogSection} x */
 	D_HotkeyDialogSection(x) {
 		const cf="D_HotkeyDialogSection"; this.k(cf,x);
-		const {title,options: u,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,options: u,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(title);
 		this.z(u,this.R_HotkeyDialogSectionOption);
 	}
 	/** @private @arg {D_HotkeyDialogSectionOption} x */
 	D_HotkeyDialogSectionOption(x) {
 		const cf="D_HotkeyDialogSectionOption"; this.k(cf,x);
-		const {label,hotkey,...y}=this.sd(cf,x);
+		const {label,hotkey,...y}=this.s(cf,x);
 		this.R_TextRuns(label);
 		this.a_primitive_str(hotkey);
 		{const cn="hotkeyAccessibilityLabel"; if(cn in y) return this.D_Accessibility(this.w(y,cn));}
@@ -4713,14 +4713,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {
 		const cf="C_ResetChannelUnreadCount";
-		const {clickTrackingParams,resetChannelUnreadCountCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,resetChannelUnreadCountCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(clickTrackingParams);
 		this.g(resetChannelUnreadCountCommand);
 	}
 	/** @private @arg {D_CinematicContainer} x */
 	D_CinematicContainer(x) {
 		const cf="D_CinematicContainer";
-		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(backgroundImageConfig,this.R_ThumbnailsList);
 		this.D_GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
@@ -4759,7 +4759,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailsList} x */
 	R_ThumbnailsList(x) {
 		const cf="R_ThumbnailsList"; this.k(cf,x);
-		const {thumbnail,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 	}
@@ -4776,14 +4776,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
-		const {serverBuildLabel,resourceStatuses: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {serverBuildLabel,resourceStatuses: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(serverBuildLabel);
 		this.z(a,this.D_ElementResourceStatus);
 	}
 	/** @private @arg {D_ElementResourceStatus} x */
 	D_ElementResourceStatus(x) {
 		const cf="D_ElementResourceStatus";
-		const {identifier,status,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {identifier,status,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		this.a_primitive_str(identifier);
 	}
@@ -4792,7 +4792,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MusicThumbnail} x */
 	D_MusicThumbnail(x) {
 		const cf="D_MusicThumbnail";
-		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams: a,thumbnail,thumbnailCrop,thumbnailScale,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,a);
 		this.R_Thumbnail(thumbnail);
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
@@ -4805,11 +4805,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_SharePanel} x */
 	RSG_SharePanel(x) {
 		const cf="RSG_SharePanel";
-		const {responseContext: {},trackingParams,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},trackingParams,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.z(actions,x => {
 			const cf="RSG_SharePanel.actions[]";
-			const {clickTrackingParams,openPopupAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
@@ -4819,7 +4819,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_Subscribe_ActionItem"; this.k(cf,x);
 		if("openPopupAction" in x) {
 			const cf1=`${cf}.actions[]`;
-			const {clickTrackingParams,openPopupAction,...y}=this.sd(cf1,x); this.g(y);
+			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
 			this.clickTrackingParams(cf1,clickTrackingParams);
 			console.log(`[${cf}.openPopupAction]`,openPopupAction);
 			return;
@@ -4833,7 +4833,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
 		const cf="RS_Subscribe";
-		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,this.RS_Subscribe_ActionItem);
 		this.ceq(newNotificationButton);
 		this.trackingParams(cf,trackingParams);
@@ -4882,17 +4882,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_LikeButton} x */
 	D_LikeButton(x) {
 		const cf="D_LikeButton";
-		const {likesAllowed,...y}=this.sd(cf,x);
+		const {likesAllowed,...y}=this.s(cf,x);
 		if(likesAllowed!==true) debugger;
 		let [{...up},ur]=this.unwrap_prefix(y,"like");
 		{
 			const cf="D_LikeButton.like";
-			const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=this.sd(cf,up); this.g(y);
+			const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=this.s(cf,up); this.g(y);
 		}
 		let [{...ud},{...r2}]=this.unwrap_prefix(ur,"dislike");
 		{
 			const cf="D_LikeButton.dislike";
-			const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.sd(cf,ud); this.g(y);
+			const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.s(cf,ud); this.g(y);
 		}
 		{
 			const cf="D_LikeButton.rest";
@@ -4909,7 +4909,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
 	E_Like_C(x) {
 		const cf="E_Like_C";
-		const {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		switch(a.apiUrl) {
 			default: debugger; break;
 			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
@@ -4920,21 +4920,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_like_removelike} x */
 	GM_like_removelike(x) {
 		const cf="GM_like_removelike";
-		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="/youtubei/v1/like/removelike") debugger;
 		if(b!==true) debugger;
 	}
 	/** @private @arg {GM_like_dislike} x */
 	GM_like_dislike(x) {
 		const cf="GM_like_dislike";
-		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="/youtubei/v1/like/dislike") debugger;
 		if(b!==true) debugger;
 	}
 	/** @private @arg {GM_like_like} x */
 	GM_like_like(x) {
 		const cf="GM_like_like";
-		const {apiUrl: a,sendPost: b,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="/youtubei/v1/like/like") debugger;
 		if(b!==true) debugger;
 	}
@@ -5053,7 +5053,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {
 		const cf="G_Watch_SecondaryResults_Results";
-		const {results,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {results,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -5071,7 +5071,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist";
-		const {playlists,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playlists,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(playlists,this.R_PlaylistAddToOption);
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
@@ -5094,7 +5094,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
 		const cf="D_ProfileColumnStatsEntry";
-		const {label,value,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {label,value,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(label);
 		this.R_SimpleText(value);
 	}
@@ -5103,7 +5103,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ProfileColumnUserInfo} x */
 	D_ProfileColumnUserInfo(x) {
 		const cf="D_ProfileColumnUserInfo";
-		const {title,thumbnail,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,thumbnail,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_SimpleText(title);
 		this.R_Thumbnail(thumbnail);
 	}
@@ -5116,7 +5116,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SubFeedSelector} x */
 	D_SubFeedSelector(x) {
 		const cf="D_SubFeedSelector";
-		const {title,options,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,options,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(title);
 		this.z(options,this.R_SubFeedOption);
 		this.trackingParams(cf,trackingParams);
@@ -5126,7 +5126,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SubFeedOption} x */
 	D_SubFeedOption(x) {
 		const cf="D_SubFeedOption";
-		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(name);
 		this.b_primitive_bool(isSelected);
 		if(!navigationEndpoint.watchEndpoint) debugger;
@@ -5146,7 +5146,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
 		const cf="D_WebSearchboxConfig";
-		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(!this.eq_keys([a,b],["en","ca"])) debugger;
 		this.z([!c,d],x => {if(!x) debugger;});
 	}
@@ -5157,13 +5157,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_AlertWithButton} x */
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton",x,this.D_AlertWithButton);}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,x => {const cf="TA_Page_R_ChannelSwitcherPage",{page: a,...y}=this.sd(cf,x); this.g(y); this.R_ChannelSwitcherPage(a);});}
+	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,x => {const cf="TA_Page_R_ChannelSwitcherPage",{page: a,...y}=this.s(cf,x); this.g(y); this.R_ChannelSwitcherPage(a);});}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {D_MP_GetMenu} x */
 	D_MP_GetMenu(x) {let u=this.H_("D_MP_GetMenu",x,x => this.TR_MP_Menu(x)); this.g(u);}
 	/** @private @template T @arg {TR_MP_Menu<T>} x */
-	TR_MP_Menu(x) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.sd(cf,x); this.g(y); return a;}
+	TR_MP_Menu(x) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,this.D_MerchandiseShelf);}
 	/** @private @arg {R_VideoPrimaryInfo} x */
@@ -5175,7 +5175,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
-		const {sections,trackingParams,style,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
 		let n1=this.T_Items(n);
@@ -5189,7 +5189,7 @@ class HandleTypes extends HandleTypesEval {
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
 	/** @private @arg {string} cf @arg {D_TopbarMenuButton} x */
 	D_TopbarMenuButton_Omit(cf,x) {
-		const {trackingParams,accessibility,tooltip,...y}=this.sd(cf,x);//#destructure
+		const {trackingParams,accessibility,tooltip,...y}=this.s(cf,x);//#destructure
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this.a_primitive_str(tooltip);
@@ -5218,7 +5218,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {
 		const cf="GM_AccountMenu";
-		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
 	}
@@ -5227,7 +5227,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_NotificationTopbarButton} x */
 	D_NotificationTopbarButton(x) {
 		const cf="D_NotificationTopbarButton";
-		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
 		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.T_SE_Signal`,menuRequest);
 		this.M_GetNotificationMenu(g_menu);
@@ -5236,15 +5236,21 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this._primitive_of(tooltip,"string");
-		this.T_SE_Signal(`${cf}.updateUnseenCount.T_SE_Signal`, updateUnseenCountEndpoint);
+		let [m2,s2]=this.T_SE_Signal(`${cf}.updateUnseenCount.T_SE_Signal`,updateUnseenCountEndpoint);
+		this.M_GetUnseenNotificationCount(m2);
+		this.ceq(s2.signal,"GET_UNSEEN_NOTIFICATION_COUNT");
 		this.a_primitive_num(notificationCount);
 		this.ceq(handlerDatas.length,1);
 		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
 	}
+	/** @private @arg {M_GetUnseenNotificationCount} x */
+	M_GetUnseenNotificationCount(x) {this.y(x,"webCommandMetadata",this.GM_GetUnseenNotificationCount);}
+	/** @private @arg {GM_GetUnseenNotificationCount} x */
+	GM_GetUnseenNotificationCount(x) {const {sendPost,apiUrl,...y}=this.s("GM_GetUnseenNotificationCount",x); this.g(y);}
 	/** @private @arg {Signal_GetNotificationsMenu} x */
 	Signal_GetNotificationsMenu(x) {
 		const cf="Signal_GetNotificationsMenu";
-		const {signal,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {signal,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
 		let [u]=this.z(actions,this.TA_OpenPopup);
 		let [u1]=this.z(u,this.P_NotificationMenu_Popup);
@@ -5254,7 +5260,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_NotificationMenuPopupMenuItem} x */
 	D_NotificationMenuPopupMenuItem(x) {
 		const cf="D_NotificationMenuPopupMenuItem";
-		const {trackingParams,style,showLoadingSpinner,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		if(showLoadingSpinner!==true) debugger;
@@ -5262,24 +5268,24 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {P_NotificationMenu_Popup} x */
 	P_NotificationMenu_Popup(x) {
 		const cf="P_NotificationMenu_Popup";
-		const {popup: a,popupType,beReused,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(popupType!=="DROPDOWN") debugger;
 		if(beReused!==true) debugger;
 		return a;
 	}
 	/** @private @arg {M_GetNotificationMenu} x */
-	M_GetNotificationMenu(x) {const cf="M_GetNotificationMenu",{webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y); this.GM_GetNotificationMenu(a);}
+	M_GetNotificationMenu(x) {const cf="M_GetNotificationMenu",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y); this.GM_GetNotificationMenu(a);}
 	/** @private @arg {GM_GetNotificationMenu} x */
 	GM_GetNotificationMenu(x) {
 		const cf="GM_GetNotificationMenu";
-		const {sendPost,apiUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
 	}
 	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const cf="A_SendFeedback.rest",{sendFeedbackAction: a,...y}=this.sd(cf,x); this.g(y); this.AD_SendFeedback(a);});}
+	A_SendFeedback(x) {this.T_Endpoint("A_SendFeedback",x,x => {const cf="A_SendFeedback.rest",{sendFeedbackAction: a,...y}=this.s(cf,x); this.g(y); this.AD_SendFeedback(a);});}
 	/** @private @arg {AD_SendFeedback} x */
-	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.sd(cf,x); this.g(y); if(bucket!=="Kevlar") debugger;}
+	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y); if(bucket!=="Kevlar") debugger;}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
@@ -5292,7 +5298,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CommentsEntryPointHeader} x */
 	D_CommentsEntryPointHeader(x) {
 		const cf="D_CommentsEntryPointHeader";
-		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(headerText);
 		this.C_Executor(onTap);
 		this.trackingParams(cf,trackingParams);
@@ -5310,7 +5316,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
 		const cf="D_CommentsEntryPointTeaser";
-		const {teaserAvatar,teaserContent,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure
+		const {teaserAvatar,teaserContent,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure
 		if(!teaserAvatar.accessibility) debugger;
 		this.R_Thumbnail(teaserAvatar);
 		if(!teaserContent.simpleText) debugger;
@@ -5320,7 +5326,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";
-		const {signal,actions,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {signal,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		let [u]=this.z(actions,this.TA_OpenPopup);
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
@@ -5330,7 +5336,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {
 		const cf="MP_AccountMenu";
-		const {style,trackingParams,showLoadingSpinner,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
 		this.trackingParams(cf,trackingParams);
 		if(showLoadingSpinner!==true) debugger;
@@ -5338,7 +5344,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Popup_GetAccountMenu} x */
 	Popup_GetAccountMenu(x) {
 		const cf="Popup_GetAccountMenu";
-		const {popup: a,popupType: b,beReused: c,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(b!=="DROPDOWN") debugger;
 		if(c!==true) debugger;
 		return a;
@@ -5368,7 +5374,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {
 		const cf="D_ChipCloud";
-		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(chips,this.R_ChipCloudChip);
 		this.trackingParams(cf,trackingParams);
 		if(horizontalScrollable!==false) debugger;
@@ -5377,7 +5383,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ReelPlayerHeader} x */
 	D_ReelPlayerHeader(x) {
 		const cf="D_ReelPlayerHeader";
-		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(reelTitleText);
 		this.R_SimpleText(timestampText);
 		this.E_Browse(channelNavigationEndpoint);
@@ -5393,7 +5399,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
-		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RC_ResponseContext(responseContext);
 		this.z(actions,x => {
 			x;
@@ -5406,7 +5412,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
 		const cf="RSM_ChannelPreference";
-		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RC_ResponseContext(responseContext);
 		this.z(actions,x => {
 			if(!x.openPopupAction) debugger;
@@ -5425,13 +5431,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_CommentsSection} x */
 	G_CommentsSection(x) {
 		const cf="G_CommentsSection";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="D_ExpandableTab";
-		const {endpoint,title,selected,expandedText,content,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(endpoint);
 		this.a_primitive_str(title);
 		this.b_primitive_bool(selected);
@@ -5442,13 +5448,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {
 		const cf="D_FeedNudge";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {R_BrowseFeed} x */
 	R_BrowseFeed(x) {
 		const cf="R_BrowseFeed";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @template {number} T @arg {`${T}`} x */
@@ -5463,7 +5469,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EndScreenPlaylist} x */
 	D_EndScreenPlaylist(x) {
 		const cf="D_EndScreenPlaylist";
-		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.playlistId(playlistId);
 		this.R_Thumbnail(thumbnail);
 		this.R_SimpleText(title);
@@ -5476,7 +5482,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {
 		const cf="D_SearchBox";
-		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(endpoint);
 		this.R_Button(searchButton);
 		this.R_Button(clearButton);
@@ -5487,7 +5493,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
 		const cf="D_Comment";
-		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(authorText);
 		this.R_Thumbnail(authorThumbnail);
 		this.R_CommentActionButtons(actionButtons);
@@ -5514,19 +5520,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_LiveChat} x */
 	D_LiveChat(x) {
 		const cf="D_LiveChat";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ReportFormModal} x */
 	D_ReportFormModal(x) {
 		const cf="D_ReportFormModal";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Button(playButton);
 		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.playlistId(playlistId);
@@ -5570,7 +5576,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
 	D_WatchEndpointMusicConfig(x) {
 		const cf="D_WatchEndpointMusicConfig";
-		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.b_primitive_bool(hasPersistentPlaylistPanel);
 		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
 		debugger;
@@ -5578,7 +5584,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {
 		const cf="A_AddToGuideSection";
-		const {clickTrackingParams,addToGuideSectionAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,addToGuideSectionAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_AddToGuideSection(addToGuideSectionAction);
 		debugger;
@@ -5588,7 +5594,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
 		const cf="D_ProductList";
-		const {contents,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.R_ProductListItem);
 		this.trackingParams(cf,trackingParams);
 		debugger;
@@ -5600,7 +5606,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
 		const cf="D_ClipCreation";
-		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.R_Thumbnail(userAvatar);
 		this.R_ClipCreationTextInput(titleInput);
@@ -5636,7 +5642,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ClipCreationScrubber} x */
 	D_ClipCreationScrubber(x) {
 		const cf="D_ClipCreationScrubber";
-		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(lengthTemplate!=="$clip_length seconds") debugger;
 		let u=this.exact_arr(60000,5000,15000,120000);
 		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
@@ -5646,7 +5652,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MacroMarkersList} x */
 	D_MacroMarkersList(x) {
 		const cf="D_MacroMarkersList";
-		const {contents,syncButtonLabel,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.R_MacroMarkersListItem);
 		this.R_TextRuns(syncButtonLabel);
 		this.trackingParams(cf,trackingParams);
@@ -5655,7 +5661,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
 	D_EngagementPanelTitleHeader(x) {
 		const cf="D_EngagementPanelTitleHeader";
-		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(title);
 		this.t(contextualInfo,this.R_TextRuns);
 		this.t(informationButton,this.R_Button);
@@ -5668,7 +5674,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Hint} x */
 	D_Hint(x) {
 		const cf="D_Hint";
-		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(hintId,"sponsor-pre-purchase");
 		this.ceq(dwellTimeMs,"60000");
 		this.D_HintCap(hintCap);
@@ -5679,7 +5685,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoViewCount} x */
 	D_VideoViewCount(x) {
 		const cf="D_VideoViewCount";
-		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_SimpleText(viewCount);
 		this.t(shortViewCount,this.R_SimpleText);
 		this.t(extraShortViewCount,this.R_SimpleText);
@@ -5691,14 +5697,14 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.status) {
 			case "INDIFFERENT": {
 				const cf="E_LikeIndifferent";
-				const {status,target,removeLikeParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				status;
 				target;
 				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
 			} break;
 			case "LIKE": {
 				const cf="E_LikeLike";
-				const {status,target,actions,likeParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				status;
 				target;
 				actions;
@@ -5706,7 +5712,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "DISLIKE": {
 				const cf="E_LikeDislike";
-				const {status,target,dislikeParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				status;
 				target;
 				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
@@ -5716,7 +5722,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
 		const cf="D_TranscriptSearchPanel";
-		const {body,footer,trackingParams,targetId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {body,footer,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TranscriptSegmentList(body);
 		this.R_TranscriptFooter(footer);
 		this.trackingParams(cf,trackingParams);
@@ -5734,7 +5740,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		console.log("[D_ToggleButton.style]",style.styleType);
 		debugger;
 		this.ceq(isDisabled,false);
@@ -5771,7 +5777,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_Timed} x */
 	DD_TimedContinuation(x) {
 		const cf="DD_TimedContinuation";
-		const {timeoutMs,continuation,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(timeoutMs!==60000) debugger;
 		this.params(cf,"TimedContinuation",continuation);
 		debugger;
@@ -5779,7 +5785,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
 		const cf="DC_LiveChat";
-		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {continuations,actionPanel,actions,clientMessages,emojis,header,itemList,ticker,trackingParams,participantsList,popoutMessage,viewerName,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(continuations,this.G_LiveChatContinuationItem);
 		this.t(actionPanel,this.R_LiveChatMessageInput);
 		this.tz(actions,this.G_LiveChatContinuationActions);
@@ -5829,13 +5835,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
 		const cf="DC_PlaylistPanel";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
 		const cf="D_CommentSimplebox";
-		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Button(submitButton);
 		this.R_Button(cancelButton);
 		this.params(cf,"aadc_guidelines_state_entity_key",aadcGuidelinesStateEntityKey);
@@ -5855,7 +5861,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SortFilterSubMenu} x */
 	D_SortFilterSubMenu(x) {
 		const cf="D_SortFilterSubMenu";
-		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(subMenuItems,this.D_ActionSetPlaylistVideoOrder);
 		this.t(title,this.a_primitive_str);
 		this.dt(icon,x => x.iconType!=="SORT");
@@ -5869,13 +5875,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem";
-		const {defaultText,defaultIcon,defaultServiceEndpoint,toggledText,toggledIcon,toggledServiceEndpoint,trackingParams,isToggled,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {defaultText,defaultIcon,defaultServiceEndpoint,toggledText,toggledIcon,toggledServiceEndpoint,trackingParams,isToggled,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(defaultText);
 		if(defaultIcon.iconType!=="LIBRARY_ADD") debugger;
 		this.E_Like(defaultServiceEndpoint);
@@ -5902,7 +5908,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CustomEmoji} x */
 	D_CustomEmoji(x) {
 		const cf="D_CustomEmoji";
-		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.parse_emoji_id(emojiId);
 		this.z(shortcuts,this.parse_emoji_shortcut);
 		this.z(searchTerms,this.a_primitive_str);
@@ -5915,7 +5921,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
 		const cf="D_PivotButton";
-		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
 		this.E_Browse(onClickCommand);
 		this.trackingParams(cf,trackingParams);
@@ -5926,7 +5932,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo";
-		const {thumbnail,thumbnailOverlays,title,trackingParams,indexText,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {thumbnail,thumbnailOverlays,title,trackingParams,indexText,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.R_SimpleText(title);
@@ -5953,7 +5959,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
 		const cf="D_C4TabbedHeader";
-		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.channelId(channelId);
 		this.a_primitive_str(title);
 		this.E_Browse(navigationEndpoint);
@@ -5978,7 +5984,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
-		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(title);
 		this.a_primitive_str(description);
 		this.a_primitive_str(androidDeepLink);
@@ -6000,7 +6006,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Playlist_MD} x */
 	D_Playlist_MD(x) {
 		const cf="D_Playlist_MD";
-		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,iosAppindexingLink,androidAppindexingLink,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(title);
 		this.a_primitive_str(iosAppindexingLink);
 		this.a_primitive_str(androidAppindexingLink);
@@ -6009,7 +6015,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {
 		const cf="D_AlertWithButton";
-		const {type,text,dismissButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {type,text,dismissButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(type!=="INFO") debugger;
 		this.R_SimpleText(text);
 		this.R_Button(dismissButton);
@@ -6018,7 +6024,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ChannelSwitcherPage} x */
 	D_ChannelSwitcherPage(x) {
 		const cf="D_ChannelSwitcherPage";
-		const {header,targetId,contents,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {header,targetId,contents,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_ChannelSwitcherHeader(header);
 		this.ceq(targetId,"ceq");
 		this.z(contents,this.G_ChannelSwitcherContent);
@@ -6032,7 +6038,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {
 		const cf="D_MerchandiseShelf";
-		const {title,items,trackingParams,showText,hideText,actionButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,items,trackingParams,showText,hideText,actionButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(title);
 		this.z(items,this.R_MerchandiseItem);
 		this.trackingParams(cf,trackingParams);
@@ -6047,7 +6053,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
 		const cf="D_VideoPrimaryInfo";
-		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(title);
 		this.trackingParams(cf,trackingParams);
 		this.R_VideoViewCount(viewCount);
@@ -6060,7 +6066,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {
 		const cf="D_VideoSecondaryInfo";
-		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.t(description,this.R_TextRuns);
 		this.R_SubscribeButton(subscribeButton);
@@ -6082,12 +6088,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist";
-		const {...y}=this.sd(cf,x); this.g(y);
+		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
 	/** @private @arg {string} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
-		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.sd(cf,x);
+		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.s(cf,x);
 		this.R_Thumbnail(thumbnail);
 		this.R_TextRuns(title);
 		this.trackingParams(cf,trackingParams);
@@ -6104,7 +6110,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
 		const cf="D_MusicCarouselShelf";
-		const {contents,header,trackingParams,itemSize,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,header,trackingParams,itemSize,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.ceq);
 		this.ceq(header);
 		this.trackingParams(cf,trackingParams);
@@ -6114,7 +6120,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MusicShelf} x */
 	D_MusicShelf(x) {
 		const cf="D_MusicShelf";
-		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {contents,title,trackingParams,continuations,shelfDivider,autoReloadWhenEmpty,bottomButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.R_MusicResponsiveListItem);
 		this.R_TextRuns(title);
 		this.trackingParams(cf,trackingParams);
@@ -6137,7 +6143,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo";
-		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(videoId);
 		this.G_Text(shortViewCountText);
 		this.R_TextRuns(shortBylineText);
@@ -6233,7 +6239,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate";
-		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_CompactLink(openCreateLink);
 		this.R_TextInputFormField(nameInput);
 		this.R_Dropdown(privacyInput);
@@ -6252,7 +6258,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistAddToOption} x */
 	D_PlaylistAddToOption(x) {
 		const cf="D_PlaylistAddToOption";
-		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.playlistId(playlistId);
 		this.R_SimpleText(title);
 		switch(privacy) {
@@ -6271,14 +6277,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DAU_SubscribeButton} x */
 	DAU_SubscribeButton(x) {
 		const cf="DAU_SubscribeButton";
-		const {subscribed,channelId,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.b_primitive_bool(subscribed);
 		this.channelId(channelId);
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {
 		const cf="D_RunAttestation";
-		const {ids,engagementType,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {ids,engagementType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(ids,this.A_ExternalChannelId);
 		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
 	}
@@ -6287,7 +6293,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
-		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_SimpleText(sectionTitle);
 		this.z(carouselLockups,this.R_CarouselLockup);
 		this.R_TopicLink(topicLink);
@@ -6304,7 +6310,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoDescriptionHeader} x */
 	D_VideoDescriptionHeader(x) {
 		const cf="D_VideoDescriptionHeader";
-		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(title);
 		this.R_SimpleText(channel);
 		this.R_SimpleText(views);
@@ -6320,7 +6326,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_HorizontalCardList} x */
 	D_HorizontalCardList(x) {
 		const cf="D_HorizontalCardList";
-		const {cards,trackingParams,header,style,centerItems,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {cards,trackingParams,header,style,centerItems,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(cards,this.R_MacroMarkersListItem);
 		this.trackingParams(cf,trackingParams);
 		this.R_RichListHeader(header);
@@ -6339,7 +6345,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
 		const cf="D_ExpandableVideoDescriptionBody";
-		const {descriptionBodyText,showMoreText,showLessText,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {descriptionBodyText,showMoreText,showLessText,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(descriptionBodyText);
 		this.R_SimpleText(showMoreText);
 		this.R_SimpleText(showLessText);
@@ -6347,7 +6353,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x) {
 		const cf="D_PdgCommentPreview";
-		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		const {title,authorThumbnail,authorText,commentOptionRenderers,defaultCommentText,editButton,superThanksSelectedTierEntity,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_TextRuns(title);
 		this.R_Thumbnail(authorThumbnail);
 		this.R_SimpleText(authorText);
@@ -6363,7 +6369,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
-		const {feedbackToken,uiActions,actions,...y}=this.sd(cf,x); this.g(y);
+		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
 		let fb_dec=base64_url_dec.decodeByteArray(feedbackToken);
 		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
 		this.D_HideEnclosingContainer(uiActions);
