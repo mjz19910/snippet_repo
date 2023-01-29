@@ -1977,14 +1977,7 @@ function yt_plugin_base_main() {
 	// init section
 	const service_resolver=new ServiceResolver(services,new ServiceFlags);
 	export_((exports) => {
-		exports.Services=Services;
-		exports.ParserService=ParserService;
-		exports.ServiceResolver=ServiceResolver;
-		exports.YtPlugin=YtPlugin;
-		exports.VolumeRange=VolumeRange;
-		exports.sizeof_js=sizeof_js;
 		exports.services=services;
-		exports.ServiceMethods=ServiceMethods;
 	});
 	resolver_value.value=service_resolver;
 	_close_div_scope();
@@ -2024,6 +2017,15 @@ function yt_plugin_base_main() {
 		if(log_enabled_page_type_change) console.log(nav_load_str);
 	}
 }
+export_((exports) => {
+	exports.Services=Services;
+	exports.ParserService=ParserService;
+	exports.ServiceResolver=ServiceResolver;
+	exports.YtPlugin=YtPlugin;
+	exports.VolumeRange=VolumeRange;
+	exports.sizeof_js=sizeof_js;
+	exports.ServiceMethods=ServiceMethods;
+});
 //#endregion
 //#region string manipulation
 /** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
@@ -7086,9 +7088,9 @@ class ServiceMethods extends ServiceData {
 	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
 	static is_url_with_pathname(x,pathname) {
 		/** @arg {R} x */
-		function use_r(x) {x;use_r_2(x);}
+		function use_r(x) {x; use_r_2(x);}
 		/** @arg {R} x */
-		function use_r_2(x) {x;use_r(x);}
+		function use_r_2(x) {x; use_r(x);}
 		return x.pathname===pathname;
 	}
 	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */

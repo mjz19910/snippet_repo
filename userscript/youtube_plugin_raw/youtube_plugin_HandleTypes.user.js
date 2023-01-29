@@ -239,6 +239,7 @@ class HandleTypesEval extends ServiceMethods {
 	//#endregion
 }
 window.HandleTypesEval=HandleTypesEval;
+debugger;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
 `;
 eval(handle_types_eval_code);
