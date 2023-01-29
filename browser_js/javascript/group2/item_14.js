@@ -436,7 +436,7 @@ function handle_json_event(x) {
 		case "EVENT::dom_nodes":
 		case "RESULT::handle_json_event":
 		case "TYPE::DataItemReturn":
-		case "EVENT::vue_app":
+		case "EVENT::vue_app:1":
 			{
 				// [handle_json_event_info]
 				let [xk, xv] = x
@@ -447,7 +447,11 @@ function handle_json_event(x) {
 			}
 		case "TYPE::DBG_What":
 		case "COMMAND::unpack":
+			console.log("- [%s] -\n%o", x[0], x[1]);
+			ret = dispatch_json_event(x);
+			break;
 		default:
+			debugger;
 			console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(x);
 			break;

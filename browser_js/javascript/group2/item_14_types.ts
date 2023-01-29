@@ -66,16 +66,16 @@ type UnpackUnitArgs = {
 
 type UnpackUnitCommand = ["COMMAND::unpack_unit", UnpackUnitArgs];
 type NodeContentInfo = ["CONTENT::Node", string, 3, string | null];
-
+type Alt<T extends string> = T | `${T}:1`;
 type DataItemReturn =
-	| ["TYPE::DBG_What", { __what: true; }]
-	| ["TYPE::DataItemReturn", ["DataItemReturn", DataItemReturn[]]]
-	| ["EVENT::input", ["Element", Element[]]]
-	| ["EVENT::vue_app", ["VueApp", VueApp[]]]
-	| ["EVENT::vnodes", ["VueVnode", VueVnode[]]]
-	| ["EVENT::dom_nodes", ["Node", Node[]]]
-	| ["EVENT::json_cache", ["JsonInputType", JsonInputType[]]]
-	| ["RESULT::handle_json_event", ["string", string[]]]
+	| [Alt<"TYPE::DBG_What">, { __what: true; }]
+	| [Alt<"TYPE::DataItemReturn">, ["DataItemReturn", DataItemReturn[]]]
+	| [Alt<"EVENT::input">, ["Element", Element[]]]
+	| [Alt<"EVENT::vue_app">, ["VueApp", VueApp[]]]
+	| [Alt<"EVENT::vnodes">, ["VueVnode", VueVnode[]]]
+	| [Alt<"EVENT::dom_nodes">, ["Node", Node[]]]
+	| [Alt<"EVENT::json_cache">, ["JsonInputType", JsonInputType[]]]
+	| [Alt<"RESULT::handle_json_event">, ["string", string[]]]
 	| NodeContentInfo
 	| UnpackCommand
 	| UnpackUnitCommand
