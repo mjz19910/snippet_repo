@@ -1495,7 +1495,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {
 		if(collapsed) {
-			console.groupCollapsed();
+			console.groupCollapsed(cf);
 		} else {
 			console.group();
 		}
