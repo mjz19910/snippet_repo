@@ -1215,6 +1215,21 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("R_ToggleButton",x,this.D_ToggleButton);}
+	/** @private @arg {D_ToggleButton} x */
+	D_ToggleButton(x) {
+		const cf="D_ToggleButton";
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		console.log("[D_ToggleButton.style]",style.styleType);
+		this.ceq(isDisabled,false);
+		this.ceq(isToggled,false);
+		this.ceq(defaultIcon.iconType,"LOOP");
+		this.C_RepeatChapter(defaultServiceEndpoint);
+		this.C_Executor(toggledServiceEndpoint);
+		this.trackingParams(cf,trackingParams);
+		this.ceq(toggledStyle.styleType,null);
+		this.D_Accessibility(accessibilityData);
+		this.D_Accessibility(toggledAccessibilityData);
+	}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
@@ -5833,23 +5848,6 @@ class HandleTypes extends HandleTypesEval {
 	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter",x,this.D_TranscriptFooter);}
 	/** @private @arg {D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {const cf="D_TranscriptFooter"; this.cfl(cf,x);}
-	/** @private @arg {D_ToggleButton} x */
-	D_ToggleButton(x) {
-		const cf="D_ToggleButton";
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		console.log("[D_ToggleButton.style]",style.styleType);
-		debugger;
-		this.ceq(isDisabled,false);
-		this.ceq(isToggled,false);
-		this.ceq(defaultIcon.iconType,"LOOP");
-		this.C_RepeatChapter(defaultServiceEndpoint);
-		this.C_Executor(toggledServiceEndpoint);
-		this.trackingParams(cf,trackingParams);
-		this.ceq(toggledStyle.styleType,null);
-		this.D_Accessibility(accessibilityData);
-		this.D_Accessibility(toggledAccessibilityData);
-		debugger;
-	}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {const cf="C_RepeatChapter"; this.cfl(cf,x);}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
