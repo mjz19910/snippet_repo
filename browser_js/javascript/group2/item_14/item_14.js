@@ -301,7 +301,15 @@ const done_history_items = [];
 /** @typedef {["TAG::stack", JsonHistoryType[]]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
-function history_iter_iter_stack_tag() {
+/** @arg {JsonOutputBox} out_res @arg {JsonHistoryType[]} arr */
+function history_iter_iter_stack_tag(out_res, arr) {
+	for (let item of arr) {
+		console.log("start iter", item.id);
+		let result_data = HistoryResultData.make(item.items[0]);
+		if (result_data) {
+			out_res.output_arr.push(["TAG::result_data", result_data]);
+		}
+	}
 }
 /** @arg {JsonOutputBox} out_res */
 function history_iter(out_res) {
@@ -328,18 +336,7 @@ function history_iter(out_res) {
 		switch (stack_item[0]) {
 			default: debugger; break;
 			case "TAG::stack":
-				{
-					let stack_cur = stack_item[1];
-					for (let item of stack_cur) {
-						item;
-						item.id;
-						console.log("start iter", item.id);
-						let result_data = HistoryResultData.make(out_res);
-						if (result_data) {
-							result_data_arr.push(["TAG::result_data", result_data]);
-						}
-					}
-				} break;
+				history_iter_iter_stack_tag(out_res, stack_item[1]);
 		}
 	}
 	let log_args = log_history_items(target_history);
@@ -508,11 +505,13 @@ function handle_json_event(x) {
 			console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
+		case "CONTENT::Node":
+		case "COMMAND::unpack_unit":
 		default:
 			debugger; console.log("- [%s] -\n%o", x[0], x[1]);
 			ret = dispatch_json_event(["TYPE::wrap:1", x]);
 			break;
-		case "RESULT::handle_json_event":
+		case "RESULT::handle_json_event": case "TAG::result_data":
 			throw new Error();
 	}
 	let process_ret = process_commands();
