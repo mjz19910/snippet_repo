@@ -9,7 +9,7 @@ type T_MixPlaylistStr=`RD${string}`;
 //#region Templates
 type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
 type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
-type T_SE_Signal<T_Data,T_Meta extends TM_Gen<any>>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
+type T_SE_Signal<T_Meta extends {webCommandMetadata: any;},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
 type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
 type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId; continuationItems: T_ItemType[];};
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
@@ -17,10 +17,10 @@ type TA_OpenPopup<T_Action>={clickTrackingParams: string; openPopupAction: T_Act
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
 type TB_ContinuationItemMap={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
 type TE_Endpoint_2<EP_Key extends string,T_Data>={clickTrackingParams: string;}&{[I in EP_Key]: T_Data};
-type EndpointLikeEndings="Endpoint"|"Command";
-type TE_Endpoint_3<EP_Key extends `${string}${EndpointLikeEndings}`,T_Data,T_Meta extends TM_Gen<any>>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in EP_Key]: T_Data};
+type EndpointLikeEndings="Endpoint"|"Command"|"Action";
+type TE_Endpoint_3<EP_Key extends `${string}${EndpointLikeEndings}`,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in EP_Key]: T_Data};
 type TE_Endpoint_Opt_1<T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta|undefined;};
-type TE_Endpoint_Opt_3<EP_Key extends string,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta|undefined;}&{[I in EP_Key]: T_Data};
+type TE_Endpoint_Opt_3<EP_Key extends string,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata?: T_Meta;}&{[I in EP_Key]: T_Data};
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint_3<"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>,M_SetSetting>;
 type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
 //#endregion
@@ -80,7 +80,7 @@ type GM_WC=[
 	GM_notification_opt_out,
 	GM_RecordInteractions,
 	GM_CreatePlaylist,
-	GM_playlist_get_add_to_playlist,
+	GM_AddToPlaylistService,
 	GM_SendPost,
 	GM_GetSharePanel,
 	GM_Subscribe,
@@ -88,72 +88,7 @@ type GM_WC=[
 	GM_YpcGetCart,
 ][number];
 //#endregion
-//#region GM_VE
-type GM_VE3611_WC={
-	url:
-	|`/channel/UC${string}`
-	|`/@${string}`
-	|"/gaming"
-	;
-	webPageType: "WEB_PAGE_TYPE_CHANNEL";
-	rootVe: 3611; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE3832_Watch_WC={
-	url: `/watch?${string}`;
-	webPageType: "WEB_PAGE_TYPE_WATCH";
-	rootVe: 3832;
-};
-type GM_VE3854_WC={
-	url: "/";
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 3854; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE4724_WC={
-	url: `/results?search_query=${string}`;
-	webPageType: "WEB_PAGE_TYPE_SEARCH";
-	rootVe: 4724;
-};
-type GM_VE5754_WC={
-	url: `/playlist?list=${"WL"|"LL"|`PL${string}`}`;
-	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
-	rootVe: 5754; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE6827_WC={
-	url?: D_VE6827_PageUrl;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 6827; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE11487_WC={
-	url: "/premium";
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 11487; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE23462_WC={
-	url: "/account"|"/account_notifications";
-	webPageType: "WEB_PAGE_TYPE_SETTINGS";
-	rootVe: 23462; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE37414_WC={
-	url: "/shorts/";
-	webPageType: "WEB_PAGE_TYPE_SHORTS";
-	rootVe: 37414;
-};
-type GM_VE42352_WC={
-	url: "/feed/downloads";
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 42352; apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE83769_WC={
-	url: GU_VE83769_UrlStr|GU_VE83769_ExternalUrlStr;
-	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
-	rootVe: 83769;
-};
-type GM_VE96368_WC_browse={
-	url: "/feed/subscriptions";
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 96368; apiUrl: "/youtubei/v1/browse";
-};
-//#endregion
+
 //#region GM_ApiUrl
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
 type GM_AccountMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/account_menu">;
@@ -174,7 +109,7 @@ type GM_notification_get_unseen_count=T_GM_PostApi_WithApiUrl<"/youtubei/v1/noti
 type GM_notification_opt_out=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/opt_out">;
 type GM_RecordInteractions=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/record_interactions">;
 type GM_CreatePlaylist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/create">;
-type GM_playlist_get_add_to_playlist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/get_add_to_playlist">;
+type GM_AddToPlaylistService=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/get_add_to_playlist">;
 type GM_GetSharePanel=T_GM_PostApi_WithApiUrl<"/youtubei/v1/share/get_share_panel">;
 type GM_Subscribe=T_GM_PostApi_WithApiUrl<"/youtubei/v1/subscription/subscribe">;
 type GM_ypc_get_offers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
@@ -303,7 +238,7 @@ type DC_ChangeKeyedMarkersVisibility={
 	isVisible: true;
 	key: "HEATSEEKER";
 };
-type C_Continuation={clickTrackingParams: string; commandMetadata: M_Next|undefined; continuationCommand: DC_Continuation;};
+type C_Continuation=TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation,M_Next>|{clickTrackingParams: string; commandMetadata: M_Next|undefined; continuationCommand: DC_Continuation;};
 type DC_Continuation={
 	token: string;
 	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
@@ -366,7 +301,7 @@ type DC_Loop={loop: false;};
 //#region Endpoints
 
 type E_AddToPlaylistService=TE_Endpoint_3<"addToPlaylistServiceEndpoint",DE_AddToPlaylistService,M_AddToPlaylistService>;
-type M_AddToPlaylistService=TM_Gen<GM_playlist_get_add_to_playlist>;
+type M_AddToPlaylistService=TM_Gen<GM_AddToPlaylistService>;
 type DE_AddToPlaylistService={videoId: string;};
 type E_CreateBackstagePost=TE_Endpoint_3<"createBackstagePostEndpoint",DE_CreateBackstagePost,M_CreateBackstagePost>;
 type M_CreateBackstagePost=TM_Gen<GM_CreateBackstagePost>;
@@ -430,9 +365,9 @@ type SE_CreatePlaylist=TE_Endpoint_3<"createPlaylistServiceEndpoint",DS_CreatePl
 type M_GetSharePanel=TM_Gen<GM_GetSharePanel>;
 type SE_ShareEntity=TE_Endpoint_3<"shareEntityServiceEndpoint",D_ShareEntityService,M_GetSharePanel>;
 type SE_Signal_SubscribeButton=TE_Endpoint_3<"signalServiceEndpoint",G_ClientSignal,M_SendPost>;
-type SE_Signal_SendPost=T_SE_Signal<G_ClientSignal,M_SendPost>;
+type SE_Signal_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 
-type EX_GetNotificationMenuRequest=T_SE_Signal<Signal_GetNotificationsMenu,M_GetNotificationMenu>;
+type EX_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 
 type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 // TODO #4
