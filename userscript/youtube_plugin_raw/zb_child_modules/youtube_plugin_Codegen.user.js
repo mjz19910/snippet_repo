@@ -356,7 +356,10 @@ class CodegenService extends BaseService {
 		if(x.simpleText) return "TYPE::R_SimpleText";
 		/** @private @type {T_Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T_Icon<"${x.iconType}">`;
-		if(x.signal) return this.decode_Signal(x);
+		if(x.signal) {
+			let sig_type=this.getType$Signal(x);
+			return `TYPE::${sig_type}`;
+		}
 		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
 			let pi=state.parent_map.get(x);
 			if(!pi) break x;
@@ -513,12 +516,27 @@ class CodegenService extends BaseService {
 		return `TYPE::PopupTypeMap["${x.popupType}"]`;
 	}
 	/** @param {{[U in string]:unknown}} x */
-	decode_Signal(x) {
-		/** @private @type {G_ClientSignal} */
-		let u=as(x);
+	getType$Signal(x) {
+		/** @private @type {AllSignalTypes} */
+		let u=as(x),u_log=u;
 		switch(u.signal) {
-			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return `TYPE::GS_Client`; break;
-			default: console.log("[need to decode signal] [%s]",u.signal);
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "GS_Client"; break;
+			case "GET_NOTIFICATIONS_MENU": if(u.actions instanceof Array) {
+				if(u.actions.length!==1) debugger;
+				let action=u.actions[0];
+				if(!action.openPopupAction) debugger;
+				let popup_action=action.openPopupAction;
+				if(popup_action.popupType!=="DROPDOWN") debugger;
+				let popup=popup_action.popup;
+				if(!popup.multiPageMenuRenderer) debugger;
+				let mp=popup.multiPageMenuRenderer;
+				let k=this.get_keys_of(mp);
+				if(!this.eq_keys(k,["trackingParams","style","showLoadingSpinner"])) {
+					debugger;
+				}
+				return "Signal_GetNotificationsMenu";
+			} break;
+			default: console.log("[need to decode signal] [%s]",u_log.signal);
 		}
 		{debugger;}
 		return x;
