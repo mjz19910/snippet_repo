@@ -691,10 +691,24 @@ class HistoryResultData {
 			this.json_obj_store[i] = this.reconstitute(obj_store[i]);
 		}
 	}
-	/** @template T @arg {T} obj @returns {["DATA::from_json",T]} */
+	/** @template {{}|{__failed:true}} T @arg {T} obj @returns {["DATA::from_json",T]} */
 	reconstitute(obj) {
 		let out = json_stringify_with_cache(["JSON::data", [obj]]);
-		return ["DATA::from_json", JSON.parse(out[0])];
+		/** @type {string[]} */
+		let item = out[1];
+		/** @type {T[]} */
+		let result = [];
+		for (let str of item) {
+			let val = JSON.parse(str);
+			result.push(val);
+		}
+		if (result.length === 1) {
+			return ["DATA::from_json", JSON.parse(out[0])];
+		}
+		debugger;
+		/** @type {T|{}} */
+		let empty_ret = as({ __failed: true });
+		return ["DATA::from_json", as(empty_ret)];
 	}
 }
 /** @type {{value:VueApp|null}} */
