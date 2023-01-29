@@ -9612,8 +9612,8 @@ class HandleTypes extends HandleTypesEval {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
 			this.T_SE_Signal(`${cf}.SE_Signal`,x,a => {
-				if(this.eq_keys(this.get_keys_of(a),["webCommandMetadata"]))
-				debugger;
+				if(!this.eq_keys(this.get_keys_of(a),["webCommandMetadata"])) debugger;
+				this.M_SendPost(a);
 			},this.G_ClientSignal);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.C_AdsControlFlowOpportunityReceived(x);
