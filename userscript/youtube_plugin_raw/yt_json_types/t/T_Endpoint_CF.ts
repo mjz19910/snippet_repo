@@ -5,6 +5,7 @@ type T_Endpoint_CF=[
 	"C_AddToPlaylist",
 	"C_AdsControlFlowOpportunityReceived",
 	"C_ChangeKeyedMarkersVisibility",
+	"C_CommandExecutor",
 	"C_Continuation",
 	"C_Executor",
 	"C_FollowUp",

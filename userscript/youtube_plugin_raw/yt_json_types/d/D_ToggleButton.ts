@@ -5,6 +5,8 @@ type C_CommandExecutor={
 	clickTrackingParams: string;
 	commandExecutorCommand: DC_CommandExecutor;
 };
+type T_Id<T>={id: T;};
+type ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 
 type D_ToggleButton={
 	style: T_StyleType<"STYLE_TEXT">;
@@ -15,18 +17,12 @@ type D_ToggleButton={
 	defaultServiceEndpoint: C_CommandExecutor;
 	toggledText: R_SimpleText;
 	toggledServiceEndpoint: E_Like;
-	accessibility: {
-		label: "like this video along with 7,438 other people";
-	};
+	accessibility: D_Label;
 	trackingParams: string;
 	defaultTooltip: "I like this";
 	toggledTooltip: "Unlike";
 	toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
 	accessibilityData: D_Accessibility;
-	toggleButtonSupportedData: {
-		toggleButtonIdData: {
-			id: "TOGGLE_BUTTON_ID_TYPE_LIKE";
-		};
-	};
+	toggleButtonSupportedData: ToggleButtonIdData;
 	targetId: "watch-like";
 };

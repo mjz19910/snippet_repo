@@ -1218,19 +1218,34 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
-		debugger;
-		this.do_codegen(cf,x);
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {style,isDisabled,isToggled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		console.log("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
 		this.ceq(defaultIcon.iconType,"LOOP");
-		this.C_RepeatChapter(defaultServiceEndpoint);
-		this.C_Executor(toggledServiceEndpoint);
+		if(!defaultServiceEndpoint.commandExecutorCommand) debugger;
+		this.C_CommandExecutor(defaultServiceEndpoint);
+		// this.C_RepeatChapter(defaultServiceEndpoint);
+		// this.C_Executor(toggledServiceEndpoint);
+		this.E_Like(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.ceq(toggledStyle.styleType,null);
 		this.D_Accessibility(accessibilityData);
-		this.D_Accessibility(toggledAccessibilityData);
+		// this.D_Accessibility(toggledAccessibilityData);
+		toggleButtonSupportedData;
+		if(targetId!=="watch-like") debugger;
+	}
+	/** @private @arg {C_CommandExecutor} x */
+	C_CommandExecutor(x) {this.T_Endpoint("C_CommandExecutor",x,x => this.y(x,"commandExecutorCommand",this.DC_CommandExecutor));}
+	/** @private @arg {DC_CommandExecutor} x */
+	DC_CommandExecutor(x) {
+		this.T_Commands(x,x => {
+			const cf="DC_CommandExecutor.command"; this.k(cf,x);
+			if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
+			if("likeEndpoint" in x) return this.E_Like(x);
+			this.do_codegen(cf,x);
+			debugger;
+		});
 	}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
@@ -5850,6 +5865,7 @@ class HandleTypes extends HandleTypesEval {
 	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter",x,this.D_TranscriptFooter);}
 	/** @private @arg {D_TranscriptFooter} x */
 	D_TranscriptFooter(x) {const cf="D_TranscriptFooter"; this.cfl(cf,x);}
+	static {this.prototype.C_RepeatChapter;}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {const cf="C_RepeatChapter"; this.cfl(cf,x);}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
