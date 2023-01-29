@@ -42,8 +42,8 @@ function raw_template(x) {
 	}
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
-const ServiceMethods=required(store["mod$YoutubePluginBase"]?.ServiceMethods);
-const ServiceResolver=required(store["mod$YoutubePluginBase"]?.ServiceResolver);
+const ServiceMethods=bs.ServiceMethods;
+const ServiceResolver=bs.ServiceResolver;
 const CodegenService=required(store["mod$CodegenService"]?.CodegenService);
 class FakeUseHandleEval {
 	static {
@@ -291,6 +291,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @typedef {{}} minimal_handler_member */
 	static {
 		this.prototype.minimal_handler_member_2({});
+	}
+	static {
+		const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
+		// [new_fexp_expected]
+		ECatcherService.known_experiments.push(...[
+			[],
+		].flat());
 	}
 	/** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
 	H_=super.H_;
