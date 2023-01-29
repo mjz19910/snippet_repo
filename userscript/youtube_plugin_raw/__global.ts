@@ -28,6 +28,9 @@ declare global {
 	var Services: EX.Services;
 	var BaseServicePrivate: EX.BaseServicePrivate;
 	var BaseService: EX.BaseService;
+	// youtube_plugin_base
+	var CsiService: typeof import("./youtube_plugin_base.user.js").CsiService;
+	// youtube_plugin_HandleTypes
 	var __youtube_plugin_base_loaded__: typeof import("./youtube_plugin_base.user.js").__youtube_plugin_base_loaded__;
 	var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
 	type HandleTypes<T,U>=import("./youtube_plugin_HandleTypes.user.js").HandleTypes<T,U>;
