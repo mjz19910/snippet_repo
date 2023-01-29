@@ -163,11 +163,12 @@ class JsonOutputBox {
 		this.cache_index_map.clear();
 		return this;
 	}
-	get_log_self_args() {
+	/** @arg {"results"|"results_history"} sub_section */
+	get_log_self_args(sub_section) {
 		let log_self_info = this.get_self_for_logging();
 		if (log_self_info.size < 1)
 			return null;
-		return ["-- [JsonOutputBox] --\n%o", log_self_info.out];
+		return [`-- [JsonOutputBox] [${sub_section}] --\n%o`, log_self_info.out];
 	}
 	/** @typedef {{out:Partial<JsonOutputData>,size:number}} OutState */
 	/** @private @template {keyof JsonOutputData} K @arg {OutState} x @arg {K} k @arg {JsonOutputData[K]} v */
@@ -246,28 +247,17 @@ function main_start_json_replace() {
 		items: [res],
 	}]]);
 	let history_res = history_output.reset();
-	let log_args = history_iter(history_res);
-	console.log(...log_args);
-	let res_log = res.get_log_self_args();
+	history_iter(history_res);
+	let res_log = res.get_log_self_args("results");
 	if (res_log) {
 		console.log(...res_log);
 	}
-	let history_log = history_res.get_log_self_args();
+	let history_log = history_res.get_log_self_args("results_history");
 	if (history_log) {
 		console.log(...history_log);
 	}
 }
 let do_join_str = () => join_string(["\n", "%o"], "");
-/** @arg {JsonHistoryType[]} hist */
-function log_history_items(hist) {
-	let log_items = hist.map(map_add_is_omitted);
-	/** @type {"%o"[]} */
-	let log_place = ["%o"];
-	log_place.length = log_items.length;
-	log_place.fill("%o");
-	let log_str = log_place.map(do_join_str).flat().join("");
-	return ["-- [result_history] --" + log_str, ...log_items];
-}
 /** @type {["TAG::result_data", HistoryResultData][]} */
 const result_data_arr = [];
 /** @type {{}[]} */
@@ -288,7 +278,7 @@ function history_iter_iter_stack_tag(out_res, arr) {
 /** @arg {JsonOutputBox} out_res */
 function history_iter(out_res) {
 	if (stack.length === 0) {
-		return [];
+		return;
 	}
 	/** @type {number[]} */
 	let done_ids = [];
@@ -304,7 +294,7 @@ function history_iter(out_res) {
 		done_history_items.push(x);
 		all_history_arr.push(x);
 		if (done_history_items.length > 12) {
-			return [];
+			return;
 		}
 		let stack_item = x;
 		switch (stack_item[0]) {
@@ -313,10 +303,8 @@ function history_iter(out_res) {
 				history_iter_iter_stack_tag(out_res, stack_item[1]);
 		}
 	}
-	let log_args = log_history_items(target_history);
 	let log_range = to_range(done_ids);
 	console.log("[done_ids] " + log_range.map(e => e.length === 2 ? "%o-%o" : "%o").join(", "), ...log_range.flat());
-	return log_args;
 }
 let json_replace_count = 0;
 /** @type {{}[]} */
