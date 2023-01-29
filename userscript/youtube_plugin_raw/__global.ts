@@ -57,7 +57,7 @@ namespace EX {
 	export var ParserService: typeof import("./zb_child_modules/YTPlugin_ParserService.js").ParserService;
 	export var YtHandlers: Base$ImpType["YtHandlers"];
 	export var HandleTypes: typeof import("./youtube_plugin_HandleTypes.user.js").HandleTypes;
-	export var CodegenService: typeof import("./zb_child_modules/youtube_plugin_Codegen.user.js").CodegenService;
+	export var CodegenService: typeof import("./zb_child_modules/YtPlugin_CodegenService.user.js").CodegenService;
 	export var IndexedDbAccessor: Base$ImpType["IndexedDbAccessor"];
 	export var YtPlugin: Base$ImpType["YtPlugin"];
 	export var ModifyEnv: Base$ImpType["ModifyEnv"];
