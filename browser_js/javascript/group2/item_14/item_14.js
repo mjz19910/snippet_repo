@@ -158,6 +158,16 @@ function show_cache_map(map) {
 function Z_len_k(x) {
 	return Object.keys(x).length;
 }
+/** @protected @template {{}} T @arg {T} obj @returns {T_MaybeKeysArray<T>} */
+function get_keys_of(obj) {
+	if (!obj) {
+		debugger;
+	}
+	let rq = Object.keys(obj);
+	/** @private @type {any} */
+	let ra = rq;
+	return ra;
+}
 const log_gen = new LogGenerator;
 /** @type {JsonOutputBox[]} */
 const index_box_store = [];
@@ -199,7 +209,7 @@ class JsonOutputBox {
 			out: {},
 			size: 0,
 		}
-		for (let k of Object.keys(this)) {
+		for (let k of Object.keys(this.data)) {
 			/** @type {Extract<keyof JsonOutputData,string>} */
 			let rk = as(k);
 			switch (rk) {
