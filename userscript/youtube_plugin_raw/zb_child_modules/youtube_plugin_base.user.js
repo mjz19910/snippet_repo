@@ -14,6 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 const __module_name__="mod$YoutubePluginBase";
+window.__plugin_modules__??={};
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {
 	/** @typedef {typeof exports} ExportsT */
@@ -689,6 +690,8 @@ function required(x) {
 }
 const store=required(window.__plugin_modules__);
 const Services=required(store["mod$LoadServices"]).Services;
+/** @template T @typedef {NonNullable<T>} N */
+/** @typedef {N<store['mod$LoadServices']>['Services']} Services */
 class R_HandleRichGrid$ {
 	enable_logging=false;
 	/** @readonly */
