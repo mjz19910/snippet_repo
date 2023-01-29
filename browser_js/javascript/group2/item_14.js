@@ -362,12 +362,17 @@ function json_stringify_with_cache(x) {
 			case "DataItemReturn":
 			case "Node":
 			case "VueVnode": {
-				console.log("[json_stringify_with_cache] [pack.%s]", item[0], item[1]);
-				return JSON.stringify(item[1], json_replacer, "\t");
+				let x = item;
+				let obj_keys = Object.keys(x[1]);
+				console.log("[pack.%s] [json_stringify_keys]", x[0], obj_keys.join());
+				console.log("[pack.%s] [json_stringify_with_cache]", x[0], x[1]);
+				return JSON.stringify(x[1], json_replacer, "\t");
 			}
-			case "any":
-				console.log("[json_stringify_with_cache] [stringify_any]", item[0], item[1]);
-				return JSON.stringify(item[1], json_replacer, "\t");
+			case "any": {
+				let x = item;
+				console.log("[json_stringify_with_cache] [stringify_any]", x[0], x[1]);
+				return JSON.stringify(x[1], json_replacer, "\t");
+			}
 		}
 	}
 	return JSON.stringify(x[1], json_replacer, "\t");
