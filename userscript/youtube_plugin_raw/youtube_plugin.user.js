@@ -6176,7 +6176,14 @@ class ParserService extends BaseService {
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
 							case "f1":
-							case "f2": u(idx); debugger; break;
+							case "f2": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									switch(map_entry_value) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break; }
+							} break;
 						}
 					} break;
 				}
@@ -9928,7 +9935,7 @@ class HandleTypes extends HandleTypesEval {
 		this.T_Endpoint("E_AddToPlaylistService",x,
 			x => this.DE_AddToPlaylistService(this.w(x,"addToPlaylistServiceEndpoint")),
 			x => {
-				const cf="";
+				const cf="M_AddToPlaylistService";
 				let {webCommandMetadata: a,...y}=this.sd(cf,x); this.g(y);/*#destructure*/ this.GM_playlist_get_add_to_playlist(a);
 			});
 	}
