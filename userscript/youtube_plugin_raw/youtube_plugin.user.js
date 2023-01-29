@@ -7598,7 +7598,7 @@ class HandleTypesEval extends ServiceMethods {
 		let cg=new CodegenService(v);
 		let sr=new ServiceResolver({codegen: cg},{});
 		let t=new this({value: sr});
-		t.codegen_renderer("",{});
+		t.codegen_renderer("",{},true);
 	}
 	//#endregion
 	//#region templates
@@ -7732,6 +7732,8 @@ class HandleTypes extends HandleTypesEval {
 	static {
 		this.prototype.minimal_handler_member_2({});
 	}
+	/** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
+	H_=super.H_;
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
