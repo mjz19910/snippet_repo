@@ -7,5 +7,6 @@ type GC_Button=
 	|E_Url
 	|C_Executor
 	|C_GetSurvey
+	|E_AddToPlaylistService
 	;
 ;
