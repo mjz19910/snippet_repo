@@ -355,24 +355,45 @@ function json_stringify_with_cache(x) {
 	if (x[0] === "JSON::pack") {
 		let item = x[1];
 		switch (item[0]) {
+			case "Node":
+				{
+					let x = item;
+					let node = x[1];
+					/** @type {(Exclude<keyof (Node extends infer U extends Node?{[R in keyof U as U[R] extends (NumRange<1,12>|16|32|((...v:any[])=>any))?never:R]:U[R]}:never),keyof EventTarget>)[]} */
+					let nk = as(Object.keys(node));
+					let fk = nk[0];
+					switch (node.nodeType) {
+						default: debugger; break;
+					}
+					/** @type {NumRange<3,3>} */
+					let nr = as(node.nodeType);
+					/** @type {NodeContentInfo} */
+					let r = ["CONTENT::Node", node.nodeName, nr, node.nodeValue];
+					fk;
+					r;
+					node;
+					console.log("[pack.%s] [json_cache_with_cache_info]", x[0], node);
+					return JSON.stringify(x[1], json_replacer, "\t");
+				}
 			case "string":
 			case "JsonInputType":
 			case "Element":
 			case "VueApp":
 			case "DataItemReturn":
-			case "Node":
-			case "VueVnode": {
-				let x = item;
-				let obj_keys = Object.keys(x[1]);
-				console.log("[pack.%s] [json_cache_keys_info]", x[0], obj_keys.join());
-				console.log("[pack.%s] [json_cache_with_cache_info]", x[0], x[1]);
-				return JSON.stringify(x[1], json_replacer, "\t");
-			}
-			case "any": {
-				let x = item;
-				console.log("[json_cache_any_info] [stringify_any]", x[0], x[1]);
-				return JSON.stringify(x[1], json_replacer, "\t");
-			}
+			case "VueVnode":
+				{
+					let x = item;
+					let obj_keys = Object.keys(x[1]);
+					console.log("[pack.%s] [json_cache_keys_info]", x[0], obj_keys.join());
+					console.log("[pack.%s] [json_cache_with_cache_info]", x[0], x[1]);
+					return JSON.stringify(x[1], json_replacer, "\t");
+				}
+			case "any":
+				{
+					let x = item;
+					console.log("[json_cache_any_info] [stringify_any]", x[0], x[1]);
+					return JSON.stringify(x[1], json_replacer, "\t");
+				}
 		}
 	}
 	return JSON.stringify(x[1], json_replacer, "\t");
