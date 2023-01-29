@@ -352,8 +352,10 @@ type C_ResetChannelUnreadCount={clickTrackingParams: string; resetChannelUnreadC
 type DC_ResetChannelUnreadCount={};
 type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: DC_ShowReloadUi;};
 type DC_ShowReloadUi={targetId: D_UiTargetId;};
+
 //#endregion
 //#region Endpoints
+
 type E_AddToPlaylistService=TE_Endpoint<M_AddToPlaylistService,"addToPlaylistServiceEndpoint",DE_AddToPlaylistService>;
 type M_AddToPlaylistService={webCommandMetadata: GM_playlist_get_add_to_playlist;};
 type DE_AddToPlaylistService={videoId: string;};
