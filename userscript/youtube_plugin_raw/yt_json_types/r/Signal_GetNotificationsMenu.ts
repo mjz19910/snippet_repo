@@ -7,4 +7,4 @@ type G_AllSignalTypes=
 |G_ClientSignal
 |G_AllSignalServiceEndpoint['signalServiceEndpoint']
 ;
-type G_AllSignalServiceEndpoint=UpdateUnseenNotificationCountEndpoint;
+type G_AllSignalServiceEndpoint=UE_UnseenNotificationCount;
