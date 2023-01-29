@@ -644,7 +644,7 @@ let object_store_info = null;
 /** @arg {JsonOutputBox} out_res */
 function iter_history_result(out_res) {
 	let history = result_history.slice();
-	let x1 = history.map((x) => x.id);
+	let history_item_id_arr = history.map((x) => x.id);
 	if (!input_obj.value.has_value) {
 		return;
 	}
@@ -673,7 +673,7 @@ function iter_history_result(out_res) {
 	let ret = {
 		object_store,
 		result_history,
-		x1,
+		history_item_id_arr,
 	};
 	return ret;
 }
