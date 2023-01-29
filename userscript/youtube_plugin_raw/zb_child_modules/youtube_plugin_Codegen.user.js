@@ -254,7 +254,8 @@ class CodegenService extends BaseService {
 			&&x.formattedTitle
 			&&x.accessibility;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 */
+	/** @typedef {string|[string]|{}|null} JsonReplacementType */
+	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
 		let g=() => this.json_auto_replace(x);
 		const {gen_name: r,key_keep_arr}=state;
@@ -291,7 +292,25 @@ class CodegenService extends BaseService {
 			}
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
-		debugger;
+		x: if(x.signalServiceEndpoint) {
+			/** @type {{}} */
+			let xc_1=x;
+			/** @type {T_SE_Signal<{},{}>} */
+			let xu=as(xc_1);
+			xu.signalServiceEndpoint;
+			let gn=this.get_name_from_keys(x.signalServiceEndpoint);
+			if(!gn) break x;
+			let gr=this.#_codegen_typedef(x.signalServiceEndpoint,gn);
+			if(!gr) break x;
+			let sr=split_string_once(gr.split("\n").map(e => e.trim()).join(""),"=")[1];
+			if(!sr) break x;
+			if(sr.endsWith(";")) {
+				sr=sr.slice(0,-1);
+			}
+			console.log("[typedef_codegen_res]",sr);
+			debugger;
+			return `TYPE::T_SE_Signal<{webCommandMetadata: {}},${sr}>`;
+		}
 		if(state.k1==="webCommandMetadata") return x;
 		/** @private @type {R_TextRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::R_TextRuns";
