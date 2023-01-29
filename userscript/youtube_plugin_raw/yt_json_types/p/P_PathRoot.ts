@@ -5,6 +5,7 @@ type P_LogItems=[
 	"[parse_value.gen_ns] [get_report_form.f15]",
 	"[parse_value.gen_ns] [get_report_form.f18]",
 	"[parse_value.gen_ns] [get_report_form.f18.f1]",
+	"[parse_value.gen_ns] [get_report_form.f18.f1.f2]",
 ];
 type P_ParamParse_XX=[
 	P_PathRootStr,

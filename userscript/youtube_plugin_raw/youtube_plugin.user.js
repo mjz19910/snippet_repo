@@ -5504,6 +5504,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "get_report_form.f18.f1":
+						switch(map_entry_key) {case 2: break; default: new_ns(); debugger; return;}
+						/** @private @type {P_ParamParse_XX} */
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "get_report_form.f18":
 						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_ParamParse_XX} */
@@ -7766,7 +7770,7 @@ class HandleTypes extends HandleTypesEval {
 			let k=this.get_keys_of(cu);
 			switch(k[0]) {
 				case "continuationItemRenderer": break;
-				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e=>`case "${e}":`).join("\n")}`); break;
+				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
 			}
 		}
 	}
@@ -8627,20 +8631,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.sd(cf,x);
 		this.z(thumbnailOverlays,x => {
-			// TODO: #11 Handle thumbnailOverlay Renderers
-			// Actually iterate over these renderers
-			if("thumbnailOverlaySidePanelRenderer" in x) return;
-			if("thumbnailOverlayHoverTextRenderer" in x) return;
-			if("thumbnailOverlayNowPlayingRenderer" in x) return;
-			if("thumbnailOverlayBottomPanelRenderer" in x) return;
-			if("thumbnailOverlayTimeStatusRenderer" in x) return;
-			if("thumbnailOverlayToggleButtonRenderer" in x) return;
-			if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
-			if("thumbnailOverlayResumePlaybackRenderer" in x) return;
-			if("thumbnailOverlayEndorsementRenderer" in x) return;
-			if("thumbnailOverlayInlineUnplayableRenderer" in x) return;
-			this.do_codegen(`ThumbnailOverlay$${cf}`,x);
-			debugger;
+			this.G_ThumbnailOverlayItem(x);
 		});
 		return y;
 	}
@@ -12859,7 +12850,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TextRuns(videoCountText);
 		this.t(videoCount,this.parse_number_template);
 		this.E_Watch(navigationEndpoint);
-		debugger;
 	}
 	/** @private @arg {D_SearchBox} x */
 	D_SearchBox(x) {
@@ -13518,10 +13508,47 @@ class HandleTypes extends HandleTypesEval {
 			}
 			if(!x.reelWatchEndpoint) debugger;
 		}
-		debugger;
 	}
 	/** @private @arg {G_ThumbnailOverlayItem} x */
-	G_ThumbnailOverlayItem(x) {x;}
+	G_ThumbnailOverlayItem(x) {
+		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
+		// TODO: #11 Handle thumbnailOverlay Renderers
+		// Actually iterate over these renderers
+		if("thumbnailOverlaySidePanelRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayHoverTextRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayNowPlayingRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayBottomPanelRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayEndorsementRenderer" in x) {debugger; return;}
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) {debugger; return;}
+		this.do_codegen(`ThumbnailOverlay$${cf}`,x);
+		debugger;
+	}
+	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
+	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus",x,this.D_ThumbnailOverlayTimeStatus);}
+	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
+	D_ThumbnailOverlayTimeStatus(x) {
+		const {style,text,...y}=x;
+		switch(style) {
+			default: debugger; break;
+			case "DEFAULT":
+			case "LIVE":
+			case "SHORTS":
+		}
+		if("icon" in y) {
+			const {icon,...u}=y; this.g(u);
+			switch(icon.iconType) {
+				default: debugger; break;
+				case "LIVE":
+				case "YOUTUBE_SHORTS_FILL_NO_TRIANGLE_RED_16":
+			}
+			return;
+		}
+		this.g(y);
+	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate";
