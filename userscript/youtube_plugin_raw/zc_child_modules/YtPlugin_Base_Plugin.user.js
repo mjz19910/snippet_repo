@@ -2316,7 +2316,7 @@ class KnownDataSaver extends ApiBase {
 	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
 	do_save_keys_obj=false;
-	/** @private @template {string} T @arg {`[${T}]`} x @returns {T} */
+	/** @public @template {string} T @arg {`[${T}]`} x @returns {T} */
 	unwrap_brackets(x) {
 		/** @returns {T|null} */
 		function gn() {return null;}
@@ -2797,17 +2797,24 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
 	}
-	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
+	/** @protected @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {
-		this.ds.save_string(k,x);
+		this.ds.save_string(`[${k}]`,x);
 	}
-	/** @protected @arg {`[${string}]`} k @arg {boolean} x */
+	/** @protected @arg {string} k @arg {boolean} x */
 	save_boolean(k,x) {
-		this.ds.save_boolean(k,x);
+		this.ds.save_boolean(`[${k}]`,x);
 	}
-	/** @protected @arg {`[${string}]`} k @arg {number|number[]} x */
+	/** @arg {string} x */
+	trim_brackets(x) {
+		/** @type {`[${string}]`} */
+		let y=as(x);
+		return this.ds.unwrap_brackets(y);
+	}
+	/** @protected @arg {string} k @arg {number|number[]} x */
 	save_number(k,x) {
-		this.ds.save_number(k,x);
+		if(k[0]==="[") k=this.trim_brackets(k);
+		this.ds.save_number(`[${k}]`,x);
 	}
 	//#endregion
 	#x;

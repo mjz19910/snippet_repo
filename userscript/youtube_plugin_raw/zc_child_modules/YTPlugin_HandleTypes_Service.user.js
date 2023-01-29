@@ -622,7 +622,7 @@ class HandleTypes extends HandleTypesEval {
 	R_BrowsePage(x) {
 		const cf="R_BrowsePage";
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.t(rootVe,x => this.save_number("[R_BrowsePage.rootVe]",x));
+		this.t(rootVe,x => this.save_number("R_BrowsePage.rootVe",x));
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E_Browse(endpoint);
 		if(page!=="browse") debugger;
@@ -1091,7 +1091,7 @@ class HandleTypes extends HandleTypesEval {
 			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.G_RichItemContent(content);
 			this.trackingParams(cf,trackingParams);
-			this.save_number("[Item.pos]",[rowIndex,colIndex]);
+			this.save_number("Item.pos",[rowIndex,colIndex]);
 			return;
 		}
 		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -6392,7 +6392,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DMD_RowContainer} x */
 	DMD_RowContainer(x) {
 		const cf="DMD_RowContainer";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.tz(rows,this.g);
+		this.save_number(`[${cf}.coll_item_count]`,collapsedItemCount);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
