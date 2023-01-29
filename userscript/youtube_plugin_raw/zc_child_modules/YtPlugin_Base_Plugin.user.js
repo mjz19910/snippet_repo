@@ -2913,9 +2913,9 @@ class BaseService extends BaseServicePrivate {
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @protected @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
-	_2_str_ends_with(x,v) {
-		return x.endsWith(v);
+	/** @protected @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is Extract<T,`${string}${U}`>} */
+	str_ends_with(str,ends_str) {
+		return str.endsWith(ends_str);
 	}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(needle,str) {
@@ -3427,7 +3427,7 @@ class CsiService extends BaseService {
 			this.rid[rid_key]=param.value;
 			return;
 		}
-		if(!this._2_str_ends_with(param.key,"_rid")) {
+		if(!this.str_ends_with(param.key,"_rid")) {
 			console.log("new csi param",param);
 			debugger;
 			return;

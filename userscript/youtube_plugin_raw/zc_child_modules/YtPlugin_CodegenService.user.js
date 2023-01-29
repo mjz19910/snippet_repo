@@ -838,7 +838,7 @@ class CodegenService extends BaseService {
 			;
 		if(hg) {
 			let hr=g();
-			if(hr.endsWith("Command")) {
+			if(this.str_ends_with(hr,"Command")) {
 				let sq=split_string_once(hr,"Command");
 				if(sq[1]==="") {
 					return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;
