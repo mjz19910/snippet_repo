@@ -6183,7 +6183,7 @@ class ParserService extends BaseService {
 									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
-								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break; }
+								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break;}
 							} break;
 						}
 					} break;
@@ -7067,6 +7067,11 @@ class ServiceData extends BaseService {
 }
 /** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
+	/** @template T @template {{popup:T;popupType: "DIALOG";}} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
+	unpack_popup_dialog(x) {
+		if(x.popupType!=="DIALOG") return [false,x.popupType];
+		return [true,x.popup];
+	}
 	/** @protected @template {number[]} T @arg {T} a */
 	exact_arr(...a) {
 		return a;
@@ -10806,6 +10811,30 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x); x==="";
 		{debugger;}
 	}
+	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {
+		const cf="A_ShowEngagementPanelScrim";
+		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.AD_ShowEngagementPanelScrim(showEngagementPanelScrimAction);
+		debugger;
+	}
+	/** @private @arg {AD_ShowEngagementPanelScrim} x */
+	AD_ShowEngagementPanelScrim(x) {
+		const cf="AD_ShowEngagementPanelScrim";
+		const {engagementPanelTargetId,onClickCommands,...y}=this.sd(cf,x); this.g(y);//#destructure_off
+		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
+		let [n]=this.z(onClickCommands,this.TA_OpenPopup);
+		let [x1]=this.z(n,this.unpack_popup_dialog);
+		let [x2]=this.z(x1,x => {
+			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
+			return x[1];
+		});
+		this.z(x2,this.R_ConfirmDialog);
+		debugger;
+	}
+	/** @private @arg {R_ConfirmDialog} x */
+	R_ConfirmDialog(x) {x;}
 	/** @private @arg {DB_SI_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
 		const cf="DB_SI_EngagementPanel";
@@ -13371,23 +13400,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.R_SimpleText(contentDescription);
 		this.R_TextRuns(soundAttributionTitle);
-		debugger;
-	}
-	/** @private @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {
-		const cf="A_ShowEngagementPanelScrim";
-		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=this.sd(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AD_ShowEngagementPanelScrim(showEngagementPanelScrimAction);
-		debugger;
-	}
-	/** @private @arg {AD_ShowEngagementPanelScrim} x */
-	AD_ShowEngagementPanelScrim(x) {
-		const cf="AD_ShowEngagementPanelScrim";
-		const {engagementPanelTargetId,onClickCommands,...y}=this.sd(cf,x); this.g(y);//#destructure_off
-		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		let [n]=this.z(onClickCommands,this.TA_OpenPopup);
-		this.z(n,this.g);
 		debugger;
 	}
 	/** @private @arg {D_PlaylistPanelVideo} x */

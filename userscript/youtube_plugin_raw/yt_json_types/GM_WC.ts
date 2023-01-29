@@ -264,7 +264,7 @@ type AD_SetActivePanelItem={};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type AD_ShowEngagementPanelScrim={
 	engagementPanelTargetId: "engagement-panel-clip-create";
-	onClickCommands: TA_OpenPopup<{}>[];
+	onClickCommands: TA_OpenPopup<{popup: R_ConfirmDialog;popupType: "DIALOG";}>[];
 };
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type AD_Signal={signal: E_SignalStr;};
