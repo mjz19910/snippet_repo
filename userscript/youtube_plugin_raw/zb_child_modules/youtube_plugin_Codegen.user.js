@@ -16,7 +16,7 @@ console.log("Load CodegenPlugin");
 
 const __module_name__="mod$CodegenPlugin";
 const store=required(window.__plugin_modules__);
-const as=required(required(store["mod$YoutubePluginBase"]).as);
+const as=required(required(store["mod$YoutubePluginBase"]).as_);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	/** @typedef {typeof exports} ExportsT */

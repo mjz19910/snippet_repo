@@ -13,7 +13,7 @@
 // ==/UserScript==
 const __module_name__="mod$LoadServices";
 const store=required(window.__plugin_modules__);
-const as=required(required(store["mod$YoutubePluginBase"]).as);
+const as=required(required(store["mod$YoutubePluginBase"]).as_);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	/** @typedef {typeof exports} ExportsT */
@@ -33,12 +33,16 @@ export_(exports => {
 });
 
 console.log("Load ServicesLoader");
+const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
+const bs=required(store.mod$YoutubePluginBase);
 /** @template T @typedef {NonNullable<T>} N */
 /** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
 class Services {
+	start_message_channel_loop() {
+		bs.start_message_channel_loop(this.handle_types);
+	}
 	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
-		const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 		/** @template U @extends {HandleTypes<Services,U>}  */
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */

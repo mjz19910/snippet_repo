@@ -19,7 +19,7 @@ if(!window.__youtube_plugin_base_loaded__) {
 console.log("Load HandleTypesPlugin");
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
-const as=required(bs.as);
+const as=required(bs.as_);
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 const split_string_once_last=bs.split_string_once_last;

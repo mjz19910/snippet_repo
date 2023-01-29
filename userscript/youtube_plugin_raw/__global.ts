@@ -26,7 +26,7 @@ declare global {
 namespace EX {
 	export type ServiceMethods=Base$ImpType["ServiceMethods"];
 	export type split_string_once=Base$ImpType["split_string_once"];
-	export type as_=typeof import("./zb_child_modules/youtube_plugin_base.user.js").as;
+	export type as_=typeof import("./zb_child_modules/youtube_plugin_base.user.js").as_;
 	export type AudioGainController=Base$ImpType["AudioGainController"];
 	export type base64_dec=Base$ImpType["base64_dec"];
 	export type split_string_once_last=Base$ImpType["split_string_once_last"];

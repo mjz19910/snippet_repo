@@ -14,7 +14,14 @@
 
 const __module_name__="mod$ParserService";
 const store=required(window.__plugin_modules__);
-const as=required(required(store["mod$YoutubePluginBase"]).as);
+const bs=required(store["mod$YoutubePluginBase"]);
+/** @returns {(typeof bs)['as_']} */
+function get_as() {
+	return bs.as_;
+}
+const as=get_as();
+const split_string=bs.split_string;
+const split_string_once=bs.split_string_once;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	/** @typedef {typeof exports} ExportsT */
@@ -432,7 +439,7 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		switch(root) {
 			case "D_TemplateUpdate": {
-				let buffer=base64_url_dec.decodeByteArray(x);
+				let buffer=bs.base64_url_dec.decodeByteArray(x);
 				if(!buffer) return;
 				let reader=new MyReader(buffer);
 				reader.pos+=1;

@@ -31,7 +31,7 @@ function export_(fn,flags={global: false}) {
 			window.__plugin_modules__??={};
 			let all_modules=window.__plugin_modules__;
 			exports=as({});
-			all_modules["mod$YoutubePluginBase"]=exports;
+			all_modules[__module_name__]=exports;
 
 		}
 		fn(as(exports));
@@ -1550,9 +1550,8 @@ function required(x) {
 }
 export_(exports => {
 	exports.required=required;
-	exports.as=as;
 },{global: true});
-/** @template T,U @typedef {NonNullable<store["mod$HandleTypes"]>["HandleTypes"]} HandleTypes */
+/** @template T,U @typedef {InstanceType<NonNullable<store["mod$HandleTypes"]>["HandleTypes"]>} HandleTypes */
 /** @private @arg {HandleTypes<any,any>} handle_types */
 function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
@@ -2025,7 +2024,7 @@ function yt_plugin_base_main() {
 	services.modify_env.modify_global_env();
 
 	// wait for plugin requirements
-	start_message_channel_loop(services.handle_types);
+	services.start_message_channel_loop();
 	/** @private @arg {[()=>R_BrowsePage, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
@@ -4615,7 +4614,7 @@ class ServiceMethods extends ServiceData {
 //#endregion
 export_((exports) => {
 	exports.split_string_once=split_string_once;
-	exports.as=as;
+	exports.as_=as;
 	exports.base64_dec=base64_dec;
 	exports.AudioGainController=AudioGainController;
 	exports.split_string_once_last=split_string_once_last;
@@ -4634,6 +4633,9 @@ export_(exports => {
 	exports.TrackingServices=TrackingServices;
 	exports.IndexedDbAccessor=IndexedDbAccessor;
 	exports.YtHandlers=YtHandlers;
+});
+export_(exports => {
+	exports.start_message_channel_loop=start_message_channel_loop;
 });
 export_(exports => {
 	exports.MyReader=MyReader;
