@@ -23,6 +23,7 @@ declare global {
 	var required: Base$ImpType["required"];
 	type PluginStore=import("./zb_plugin_types/PluginStore.js").PluginStore;
 	var __yt_plugin_log_imports__: boolean;
+	type LoadAllServices=import("./zc_child_modules/YtPlugin_LoadAllServices.user.js").LoadAllServices;
 }
 namespace EX {
 	export type ServiceMethods=Base$ImpType["ServiceMethods"];

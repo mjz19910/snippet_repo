@@ -34,8 +34,6 @@ function required(x) {
 	}
 	return x;
 }
-/** @template T @typedef {NonNullable<T>} N */
-/** @typedef {N<store['mod$LoadAllServices']>['LoadAllServices']} LoadAllServices */
 const BaseService=required(store["mod$YoutubePluginBase"]).BaseService;
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class ParserService extends BaseService {

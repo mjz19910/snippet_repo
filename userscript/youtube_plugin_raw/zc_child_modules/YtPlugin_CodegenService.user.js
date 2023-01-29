@@ -206,9 +206,9 @@ class CodegenService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_typedef(x,gen_name,ret_val) {
-		let new_typedef=this.#_codegen_typedef(x,gen_name);
+	/** @api @public @arg {string} cf @arg {{}} x  @arg {boolean} [ret_val] @returns {string|null|void} */
+	codegen_typedef(cf,x,ret_val) {
+		let new_typedef=this.#_codegen_typedef(cf,x);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
 			if(!this.typedef_cache.includes(new_typedef)) {
@@ -278,7 +278,7 @@ class CodegenService extends BaseService {
 	get_typedef_part(x) {
 		let gn=this.get_name_from_keys(x);
 		if(!gn) return null;
-		let gr=this.#_codegen_typedef(x,gn);
+		let gr=this.#_codegen_typedef(gn,x);
 		if(!gr) return null;
 		let gr_f=this.filter_typedef_part_gen(gr);
 		let sr=split_string_once(gr_f,"=")[1];
@@ -414,8 +414,8 @@ class CodegenService extends BaseService {
 		if(state.object_count<3) return x;
 		return {};
 	}
-	/** @no_mod @arg {{}} x @arg {string} gen_name */
-	#_codegen_typedef(x,gen_name) {
+	/** @no_mod @arg {string} cf @arg {{}} x */
+	#_codegen_typedef(cf,x) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @private @type {{[x: number|string]:{}}} */
@@ -426,7 +426,7 @@ class CodegenService extends BaseService {
 			keys=keys.concat(Object.keys(x.response));
 		}
 		/** @private @type {JsonReplacerState} */
-		let state=new JsonReplacerState(gen_name,keys);
+		let state=new JsonReplacerState(cf,keys);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
@@ -446,10 +446,10 @@ class CodegenService extends BaseService {
 		tc=tc.replaceAll(/,$/gm,"");
 		tc=tc.replaceAll(/[^[{;,]$/gm,a => `${a};`);
 		let ret;
-		if(typeof gen_name==="number") {
-			ret=`\ntype ArrayType_${gen_name}=${tc}\n`;
+		if(typeof cf==="number") {
+			ret=`\ntype ArrayType_${cf}=${tc}\n`;
 		} else {
-			ret=`\ntype ${gen_name}=${tc}\n`;
+			ret=`\ntype ${cf}=${tc}\n`;
 		}
 		return ret;
 	}
@@ -908,10 +908,10 @@ class CodegenService extends BaseService {
 		return new Map(typedef_members);
 	}
 	/** @unused_api @protected @arg {{}} x @arg {string} r */
-	use_generated_members(x,r) {
+	use_generated_members(r,x) {
 		/** @type {Generate<T_LoadAllServices,T_ServiceFlags>} */
 		let td=new Generate(this);
-		td.generate_typedef_and_depth(x,r);
+		td.generate_typedef_and_depth(r,x);
 		return td;
 	}
 	/** @api @public @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
@@ -960,9 +960,9 @@ class Generate {
 	get x() {
 		return this.parent;
 	}
-	/** @api @public @arg {{}} x @arg {string} r */
-	generate_typedef_and_depth(x,r) {
-		let gen=this.x.codegen_typedef(x,r,true);
+	/** @api @public @arg {string} cf @arg {{}} x */
+	generate_typedef_and_depth(cf,x) {
+		let gen=this.x.codegen_typedef(cf,x,true);
 		if(!gen) return;
 		this.str_arr.push(gen);
 		let gd=this.x.generate_depth(gen);

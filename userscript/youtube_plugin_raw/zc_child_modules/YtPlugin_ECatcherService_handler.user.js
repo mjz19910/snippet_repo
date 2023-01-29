@@ -24,8 +24,6 @@ export_(exports => {
 const base_store=required(store.mod$YoutubePluginBase);
 const is_firefox=base_store.is_firefox;
 const BaseService=base_store.BaseService;
-/** @template T @typedef {NonNullable<T>} N */
-/** @typedef {N<store['mod$LoadAllServices']>['LoadAllServices']} LoadAllServices */
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	static known_experiments=[

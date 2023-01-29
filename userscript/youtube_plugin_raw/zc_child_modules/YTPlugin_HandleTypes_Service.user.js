@@ -285,19 +285,17 @@ class UrlParseHelper {
 		return ServiceMethods.is_url_with_pathname(cx,pname);
 	}
 }
+const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
+// [new_fexp_expected]
+ECatcherService.known_experiments.push(...[
+	[],
+].flat());
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
 	static {
 		this.prototype.minimal_handler_member_2({});
-	}
-	static {
-		const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
-		// [new_fexp_expected]
-		ECatcherService.known_experiments.push(...[
-			[],
-		].flat());
 	}
 	/** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
 	H_=super.H_;
@@ -387,7 +385,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
 				/** @private @arg {GM_WC} x */
-				let typedef_str=this.codegen_new_typedef(x,`G_${url_type_ex}`,true);
+				let typedef_str=this.codegen_new_typedef(`G_${url_type_ex}`,x,true);
 				const l1="-- [GeneratedWebCommandMetadata] --";
 				const r2="return this.GeneratedWebCommandMetadata(x);";
 				console.log(`\n${l1}\n\n${typedef_str}\n---\n\n\tG_${url_type_ex},\n---\n\n\tcase "${cx}": ${r2}`);
@@ -1536,15 +1534,13 @@ class HandleTypes extends HandleTypesEval {
 			console.group(...gca);
 		}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
-		let gen_name=`${cf}$${u_name}`;
-		this.codegen_new_typedef(x,gen_name);
+		this.codegen_new_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
 	/** @private @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
 		let u_name=this.get_codegen_name(x);
-		let gen_name=`${cf}$${u_name}`;
-		this.codegen_new_typedef(x,gen_name);
+		this.codegen_new_typedef(`${cf}$${u_name}`,x);
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
 	decode_WCM(x) {
@@ -2353,7 +2349,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
-	D_MenuFlexibleItem(x) {const cf="D_MenuFlexibleItem"; this.cfl(cf,x);}
+	D_MenuFlexibleItem(x) {
+		const cf="D_MenuFlexibleItem"; this.cfl(cf,x);
+	}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
 		const cf="G_MenuItem"; this.k(cf,x);
@@ -4518,7 +4516,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AD_ChangeEngagementPanelVisibility";
 		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		switch(targetId) {
-			default: targetId===""; this.codegen_new_typedef(x,"AD_ChangeEngagementPanelVisibility_id"); break;
+			default: targetId===""; this.codegen_new_typedef("AD_ChangeEngagementPanelVisibility_id",x); break;
 			case "engagement-panel-clip-create": break;
 			case "engagement-panel-clip-view": break;
 			case "engagement-panel-comments-section": break;
@@ -4527,7 +4525,7 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-macro-markers-description-chapters": break;
 		}
 		switch(visibility) {
-			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_vis"); break;
+			default: this.codegen_new_typedef("ChangeEngagementPanelVisibilityActionData_vis",x); break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED": break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
@@ -6253,7 +6251,7 @@ class HandleTypes extends HandleTypesEval {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x).join(); ka;
 		console.log(`[cfl_info.${cf}]`,x);
-		this.do_codegen(cf,x);
+		this.codegen_new_typedef(cf,x);
 		debugger;
 	}
 	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */

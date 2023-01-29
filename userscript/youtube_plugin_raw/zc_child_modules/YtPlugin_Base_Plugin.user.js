@@ -704,8 +704,6 @@ class ObjectInfo {
 }
 ObjectInfo.instance=new ObjectInfo;
 const store=required(window.__plugin_modules__);
-/** @template T @typedef {NonNullable<T>} N */
-/** @typedef {N<store['mod$LoadAllServices']>['LoadAllServices']} LoadAllServices */
 class R_HandleRichGrid$ {
 	enable_logging=false;
 	/** @readonly */
@@ -1565,7 +1563,7 @@ function required(x) {
 	}
 	return x;
 }
-/** @template T,U @typedef {InstanceType<NonNullable<store["mod$HandleTypes"]>["HandleTypes"]>} HandleTypes */
+/** @template T,U @typedef {import("./YTPlugin_HandleTypes_Service.user").HandleTypes<T,U>} HandleTypes */
 /** @private @arg {HandleTypes<any,any>} handle_types */
 function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
@@ -4439,9 +4437,9 @@ class ServiceMethods extends ServiceData {
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @protected @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
-	codegen_new_typedef(x,gen_name,ret_val) {
-		return this.codegen.codegen_typedef(x,gen_name,ret_val);
+	/** @protected @arg {string} cf @arg {{}} x @arg {boolean} [ret_val] */
+	codegen_new_typedef(cf,x,ret_val) {
+		return this.codegen.codegen_typedef(cf,x,ret_val);
 	}
 	/** @protected @arg {P_ParamsSection} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
