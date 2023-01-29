@@ -2696,10 +2696,18 @@ class KnownDataSaver extends ApiBase {
 	}
 }
 const data_saver=new KnownDataSaver;
-/** @private @template T,U */
+/** @private @template CLS_T,CLS_U */
 class BaseServicePrivate extends ApiBase {
+	/** @arg {ServiceMethods<CLS_T,CLS_U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
+	is_normal_service(x) {
+		return x.service_type==="normal";
+	}
+	/** @returns {"unknown"|"normal"} */
+	get service_type() {
+		return "unknown";
+	}
 	//#region Public
-	/** @constructor @public @arg {ResolverT<T,U>} x */
+	/** @constructor @public @arg {ResolverT<CLS_T,CLS_U>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
@@ -2738,6 +2746,10 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @private @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
 class BaseService extends BaseServicePrivate {
+	/** @override @returns {"unknown"|"normal"} */
+	get service_type() {
+		return "normal";
+	}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
 		let res_e=this._decode_b64_url_proto_obj(x);
@@ -6983,12 +6995,6 @@ class ServiceMethods extends ServiceData {
 	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
 	static is_url_with_pathname(x,pathname) {
 		return x.pathname===pathname;
-	}
-	/** @arg {ServiceMethods<CLS_T,CLS_U>} x @returns {x is ServiceMethods<Services,ServiceOptions>} */
-	is_normal_service(x) {
-		/** @type {ServiceMethods<any,any>} */
-		let xt=x;
-		return !!xt.x.get("codegen");
 	}
 	/** @protected @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
 	get_res_data(url_type,x) {
