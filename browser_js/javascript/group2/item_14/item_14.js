@@ -490,8 +490,8 @@ function handle_json_event(x) {
 			}
 		case "EVENT::vnodes":
 		case "EVENT::dom_nodes":
-		case "TYPE::DataItemReturn":
 		case "EVENT::vue_app":
+		case "TYPE::DataItemReturn":
 			{
 				// [handle_json_event_info]
 				let [xk, xv] = x
