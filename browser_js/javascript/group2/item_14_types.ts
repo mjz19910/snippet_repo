@@ -69,9 +69,15 @@ type NodeContentInfo = ["CONTENT::Node", string, 3, string | null];
 type Alt<T extends string> = `${T}:1`;
 type MakeAlt<T extends [any, ...any]> = T extends [infer F, ...infer R] ? [Alt<`${F & string}`>, ...R] : never;
 type DataItemReturnAlt = MakeAlt<DataItemReturn>
-	| MakeAlt<["TYPE::wrap", DataItemReturn]>;
+	| MakeAlt<["TYPE::wrap", WhatInfoItem | NodeContentInfo | UnpackUnitCommand | UnpackCommand]>
+	;
+type WhatInfoObj = {
+	__what: true;
+};
+type WhatInfoItem = ["TYPE::DBG_What", WhatInfoObj];
+
 type DataItemReturn =
-	| ["TYPE::DBG_What", { __what: true; }]
+	| WhatInfoItem
 	| ["TYPE::DataItemReturn", ["DataItemReturn", DataItemReturn[]]]
 	| ["EVENT::input", ["Element", Element[]]]
 	| ["EVENT::vue_app", ["VueApp", VueApp[]]]
