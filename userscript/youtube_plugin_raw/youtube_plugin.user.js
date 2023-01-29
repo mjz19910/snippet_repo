@@ -4237,12 +4237,12 @@ class CodegenService extends BaseService {
 	#codegen_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
 		if(x===null) return null;
-		console.log("gen renderer for",x);
 		/** @private @type {string[]} */
 		let req_names=[];
 		let k=this.get_name_from_keys(x);
 		if(r_name) k=r_name;
 		if(k===null) return null;
+		console.log("gen renderer for",x);
 		let t_name=this.uppercase_first(k);
 		let keys=Object.keys(x);
 		let body=this.#codegen_renderer_body(req_names,x,keys,t_name);
@@ -7486,8 +7486,10 @@ class ServiceMethods extends ServiceData {
 //#region HandleTypes
 /** @arg {TemplateStringsArray} x */
 function raw_template(x) {
-	console.log(x);
-	return x.raw[0].replaceAll("\\`","`");
+	if(x.raw.length>1) {
+		debugger;
+	}
+	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
@@ -7596,7 +7598,6 @@ class HandleTypesEval extends ServiceMethods {
 		let cg=new CodegenService(v);
 		let sr=new ServiceResolver({codegen: cg},{});
 		let t=new this({value: sr});
-		debugger;
 		t.codegen_renderer("",{});
 	}
 	//#endregion
@@ -7620,7 +7621,7 @@ class HandleTypesEval extends ServiceMethods {
 			if(this.cg_mismatch_set.has(cgx)) break x;
 			this.cg_mismatch_set.add(cgx);
 			this.cg_mismatch_list.push([cgx,cf]);
-			console.log(\`-- [H_$gen_cgx_mismatch] --\n\n[\${cgx;},\${cf;}],\`);
+			console.log(\`-- [H_$gen_cgx_mismatch] --\n\n[\${cgx},\${cf}],\`);
 		}
 		if(k.length!==1) debugger;
 		return f.call(this,this.w(x,k[0]));
@@ -7731,8 +7732,6 @@ class HandleTypes extends HandleTypesEval {
 	static {
 		this.prototype.minimal_handler_member_2({});
 	}
-	/** @protected @override @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
-	H_(cf,x,f) {return super.H_(cf,x,f);}
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
