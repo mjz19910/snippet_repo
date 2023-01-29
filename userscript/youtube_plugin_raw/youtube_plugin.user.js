@@ -7484,7 +7484,12 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#endregion
 //#region HandleTypes
-const handle_types_eval_code=`
+/** @arg {TemplateStringsArray} x */
+function raw_template(x) {
+	console.log(x);
+	return x.raw[0].replaceAll("\\`","`");
+}
+const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
 	/** @private @arg {RC_ResponseContext} x */
@@ -7594,10 +7599,6 @@ class HandleTypesEval extends ServiceMethods {
 		this.prototype.minimal_handler_member_use();
 		debugger;
 		t.codegen_renderer("",{});
-	}
-	/** @private */
-	minimal_handler_member_use() {
-		this.minimal_handler_member_2({});
 	}
 	//#endregion
 	//#region templates
@@ -7717,7 +7718,9 @@ class HandleTypesEval extends ServiceMethods {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
-}`;
+}
+//# sourceUrl=plugin://extension/youtube_plugin_handle_types.js
+`;
 eval(handle_types_eval_code);
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
