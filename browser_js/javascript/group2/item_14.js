@@ -416,13 +416,16 @@ function json_stringify_with_cache(x) {
 function handle_json_unpack_cmd(x) {
 	console.log("unpack cmd run pending", x);
 	debugger;
+	return [x];
 }
 /** @arg {UnpackUnitCommand} x */
 function handle_json_unpack_unit_cmd(x) {
 	if (x[0] !== "COMMAND::unpack_unit") {
-		debugger; return;
+		debugger; return [];
 	}
-	return json_stringify_with_cache(["JSON::pack", x[1]]);
+	let result_arr = [];
+	result_arr.push(json_stringify_with_cache(["JSON::pack", x[1]]));
+	return result_arr;
 }
 let processing_commands = false;
 /** @arg {DataItemReturn} x */
@@ -463,6 +466,7 @@ function handle_json_event(x) {
 			break;
 	}
 	process_commands();
+	debugger;
 	return ret;
 }
 function process_commands() {
