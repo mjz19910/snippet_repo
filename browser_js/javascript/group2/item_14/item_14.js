@@ -267,18 +267,19 @@ const result_data_arr = [];
 /** @type {{}[]} */
 const done_history_items = [];
 /** @type {number[]} */
-let done_ids = [];
+let started_id_arr = [];
 /** @typedef {["TAG::stack", JsonHistoryType]} JsonStackType */
 /** @type {JsonStackType[]} */
 let stack = [];
 /** @arg {JsonOutputBox} out_res @arg {JsonHistoryType} item */
 function history_iter_iter_stack_tag(out_res, item) {
+	started_id_arr.push(item.id);
 	console.log("start iter", item.id);
 	let result_data = HistoryResultData.make(item.items[0]);
-	if (result_data) {
-		out_res.output_arr.push(["TAG::result_data", result_data]);
-	}
-	done_ids.push(item.id);
+	if (!result_data)
+		return;
+	result_data?.object_store
+	out_res.output_arr.push(["TAG::result_data", result_data]);
 }
 /** @arg {JsonOutputBox} out_res */
 function history_iter(out_res) {
@@ -306,7 +307,7 @@ function history_iter(out_res) {
 				history_iter_iter_stack_tag(out_res, stack_item[1]);
 		}
 	}
-	let log_range = to_range(done_ids);
+	let log_range = to_range(started_id_arr);
 	console.log("[done_ids] " + log_range.map(e => e.length === 2 ? "%o-%o" : "%o").join(", "), ...log_range.flat());
 }
 let json_replace_count = 0;
