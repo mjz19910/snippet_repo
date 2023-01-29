@@ -509,8 +509,11 @@ class CodegenService extends BaseService {
 	}
 	/** @param {{[U in string]:unknown}} x */
 	getType$Signal(x) {
-		/** @private @type {AllSignalTypes} */
+		/** @private @type {G_AllSignalTypes} */
 		let u=as(x),u_log=u;
+		if(this.eq_keys(this.get_keys_of(u),["signal"])) {
+			return `T_Signal<"${u.signal}">`;
+		}
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "GS_Client"; break;
 			case "GET_NOTIFICATIONS_MENU": if(u.actions instanceof Array) {
@@ -528,6 +531,11 @@ class CodegenService extends BaseService {
 				}
 				return "Signal_GetNotificationsMenu";
 			} break;
+			case "GET_UNSEEN_NOTIFICATION_COUNT": {
+				let k=this.get_keys_of(u);
+				if(!this.eq_keys(k,["signal"])) debugger;
+				return `T_Signal<"GET_UNSEEN_NOTIFICATION_COUNT">`;
+			}
 			default: console.log("[need to decode signal] [%s]",u_log.signal);
 		}
 		{debugger;}
