@@ -144,54 +144,32 @@ function create_dbg_api() {
 	//cspell:enable
 	function BridgeInit() { }
 	function BridgeStart() { }
-	/**
-	 * @param {any} size
-	 */
+	/** @arg {any} size */
 	function BridgeAlloc(size) {
 		void size
 	}
-	/**
-	 * @param {any} ptr
-	 */
+	/** @arg {any} ptr */
 	function BridgeFree(ptr) {
 		void ptr
 	}
-	/**
-	 * @param {any} section
-	 * @param {any} key
-	 * @param {any} value
-	 */
+	/** @arg {any} section @arg {any} key @arg {any} value */
 	function BridgeSettingGet(section, key, value) {
 		void section, key, value
 	}
-	/**
-	 * @param {any} section
-	 * @param {any} key
-	 * @param {any} value
-	 */
+	/** @arg {any} section @arg {any} key @arg {any} value */
 	function BridgeSettingGetUint(section, key, value) {
 		void section, key, value
 	}
-	/**
-	 * @param {any} section
-	 * @param {any} key
-	 * @param {any} value
-	 */
+	/** @arg {any} section @arg {any} key @arg {any} value */
 	function BridgeSettingSet(section, key, value) {
 		void section, key, value
 	}
-	/**
-	 * @param {any} section
-	 * @param {any} key
-	 * @param {any} value
-	 */
+	/** @arg {any} section @arg {any} key @arg {any} value */
 	function BridgeSettingSetUint(section, key, value) {
 		void section, key, value
 	}
 	function BridgeSettingFlush() { }
-	/**
-	 * @param {any} errorLine
-	 */
+	/** @arg {any} errorLine */
 	function BridgeSettingRead(errorLine) {
 		void errorLine
 	}
