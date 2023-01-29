@@ -8630,9 +8630,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.sd(cf,x);
-		this.z(thumbnailOverlays,x => {
-			this.G_ThumbnailOverlayItem(x);
-		});
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		return y;
 	}
 	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
