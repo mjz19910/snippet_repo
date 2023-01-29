@@ -5246,7 +5246,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_GetUnseenNotificationCount} x */
 	M_GetUnseenNotificationCount(x) {this.y(x,"webCommandMetadata",this.GM_GetUnseenNotificationCount);}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
-	GM_GetUnseenNotificationCount(x) {const {sendPost,apiUrl,...y}=this.s("GM_GetUnseenNotificationCount",x); this.g(y);}
+	GM_GetUnseenNotificationCount(x) {
+		const {sendPost,apiUrl,...y}=this.s("GM_GetUnseenNotificationCount",x); if(sendPost!==true) debugger; this.g(y);
+		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
+	}
 	/** @private @arg {Signal_GetNotificationsMenu} x */
 	Signal_GetNotificationsMenu(x) {
 		const cf="Signal_GetNotificationsMenu";
