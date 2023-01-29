@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	youtube plugin Codegen
+// @name	youtube plugin Parser
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.0
 // @description	try to take over the world!
@@ -24,6 +24,8 @@ function export_(fn) {
 }
 
 const seen_map=new Set;
+
+console.log("Load ParserService");
 
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ParserService extends BaseService {
@@ -537,7 +539,6 @@ class ParserService extends BaseService {
 		};
 		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
-	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @type {P_LogItems} */

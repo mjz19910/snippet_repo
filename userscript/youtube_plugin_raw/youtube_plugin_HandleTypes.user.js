@@ -18,6 +18,9 @@ if(!window.__youtube_plugin_base_loaded__) {
 if(typeof exports==="object") {
 	exports.__is_module_flag__=true;
 }
+
+console.log("Load HandleTypesPlugin");
+
 //#region HandleTypes
 /** @arg {TemplateStringsArray} x */
 function raw_template(x) {

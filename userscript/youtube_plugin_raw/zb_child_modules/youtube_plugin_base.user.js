@@ -12,6 +12,10 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+
+
+console.log("Load PluginBase");
+
 //#region done
 //#region basic
 
@@ -4688,6 +4692,9 @@ export_(exports => {
 	exports.TrackingServices=TrackingServices;
 	exports.IndexedDbAccessor=IndexedDbAccessor;
 	exports.YtHandlers=YtHandlers;
+});
+export_(exports => {
+	exports.MyReader=MyReader;
 });
 export_(exports => {
 	exports.base64_url_dec=base64_url_dec;

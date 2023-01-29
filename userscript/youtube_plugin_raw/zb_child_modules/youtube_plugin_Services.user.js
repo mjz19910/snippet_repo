@@ -25,6 +25,8 @@ if(typeof exports==="object") {
 	exports.__is_module_flag__=true;
 }
 
+console.log("Load ServicesLoader");
+
 class Services {
 	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
