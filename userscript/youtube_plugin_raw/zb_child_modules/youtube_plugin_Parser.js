@@ -13,20 +13,36 @@
 // ==/UserScript==
 
 const __module_name__="mod$ParserService";
+const store=required(window.__plugin_modules__);
+const as=required(required(store["mod$YoutubePluginBase"]).as);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
+	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
 		window.__plugin_modules__??={};
 		let all_modules=window.__plugin_modules__;
-		let exports={};
+		/** @type {ExportsT} */
+		let exports=as({});
 		all_modules[__module_name__]=exports;
 		fn(as(exports));
 	}
 }
+export_(exports => {
+	exports.__is_module_flag__=true;
+});
 const seen_map=new Set;
 console.log("Load ParserService");
+/** @template T @arg {T|undefined} x @returns {T} */
+function required(x) {
+	if(x===void 0) {
+		throw new Error("missing required");
+	}
+	return x;
+}
+const Services=required(store["mod$LoadServices"]).Services;
+const BaseService=required(store["mod$YoutubePluginBase"]).BaseService;
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;

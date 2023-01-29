@@ -11,20 +11,32 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
+const __template__=true;
+const __module_name__="mod${{name}}";
+const store=required(window.__plugin_modules__);
+const as=required(required(store["mod$YoutubePluginBase"]).as);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
+	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
-		/** @type {{}} */
-		let u=as(window);
-		fn(as(u));
+		window.__plugin_modules__??={};
+		let all_modules=window.__plugin_modules__;
+		/** @type {ExportsT} */
+		let exports=as({});
+		if(__module_name__ in all_modules && !__template__) {
+			all_modules[__module_name__]=exports;
+		}
+		fn(as(exports));
 	}
 }
-if(typeof exports==="object") {
+export_(exports => {
 	exports.__is_module_flag__=true;
-}
+});
 
-export_(exports=>{
+// User code here
+
+export_(exports => {
 	exports.__module_loaded__=true;
 });

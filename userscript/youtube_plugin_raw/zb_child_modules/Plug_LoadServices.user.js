@@ -12,27 +12,33 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 const __module_name__="mod$LoadServices";
+const store=required(window.__plugin_modules__);
+const as=required(required(store["mod$YoutubePluginBase"]).as);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
+	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
 		window.__plugin_modules__??={};
 		let all_modules=window.__plugin_modules__;
-		let exports={};
+		/** @type {ExportsT} */
+		let exports=as({});
 		all_modules[__module_name__]=exports;
 		fn(as(exports));
 	}
 }
-if(typeof exports==="object") {
+export_(exports => {
 	exports.__is_module_flag__=true;
-}
+});
 
 console.log("Load ServicesLoader");
-
+/** @template T @typedef {NonNullable<T>} N */
+/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
 class Services {
 	/** @constructor @public @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
+		const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 		/** @template U @extends {HandleTypes<Services,U>}  */
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
@@ -57,18 +63,25 @@ class Services {
 		}
 		this.ht_caller=new HT_Caller(x);
 		this.response_types_handler=new RT_Caller(x);
+		let bs=required(store.mod$YoutubePluginBase);
+		const CsiService=bs.CsiService;
 		this.csi_service=new CsiService(x);
+		const ECatcherService=required(store.mod$ECatcherService).ECatcherService;
 		this.e_catcher_service=new ECatcherService(x);
+		const GFeedbackService=bs.GFeedbackService;
 		this.g_feedback_service=new GFeedbackService(x);
+		const GuidedHelpService=bs.GuidedHelpService;
 		this.guided_help_service=new GuidedHelpService(x);
-		this.service_tracking=new TrackingServices(x);
+		this.service_tracking=new bs.TrackingServices(x);
+		const ParserService=required(store.mod$ParserService).ParserService;
 		this.parser_service=new ParserService(x);
-		this.yt_handlers=new YtHandlers(x);
+		this.yt_handlers=new bs.YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
+		const CodegenService=required(store.mod$CodegenPlugin).CodegenService;
 		this.codegen=new CodegenService(x);
-		this.indexed_db=new IndexedDbAccessor(x,"yt_plugin",2);
-		this.yt_plugin=new YtPlugin(x);
-		this.modify_env=new ModifyEnv(x);
+		this.indexed_db=new bs.IndexedDbAccessor(x,"yt_plugin",2);
+		this.yt_plugin=new bs.YtPlugin(x);
+		this.modify_env=new bs.ModifyEnv(x);
 	}
 }
 

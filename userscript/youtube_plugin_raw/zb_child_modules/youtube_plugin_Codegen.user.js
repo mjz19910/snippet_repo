@@ -15,18 +15,25 @@
 console.log("Load CodegenPlugin");
 
 const __module_name__="mod$CodegenPlugin";
+const store=required(window.__plugin_modules__);
+const as=required(required(store["mod$YoutubePluginBase"]).as);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
+	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
 		window.__plugin_modules__??={};
 		let all_modules=window.__plugin_modules__;
-		let exports={};
+		/** @type {ExportsT} */
+		let exports=as({});
 		all_modules[__module_name__]=exports;
 		fn(as(exports));
 	}
 }
+export_(exports => {
+	exports.__is_module_flag__=true;
+});
 class JsonReplacerState {
 	/** @constructor @public @arg {string} gen_name @arg {string[]} keys */
 	constructor(gen_name,keys) {
@@ -40,6 +47,8 @@ class JsonReplacerState {
 		this.parent_map=new Map;
 	}
 }
+const BaseService=required(store.mod$YoutubePluginBase).BaseService;
+const split_string_once=required(store.mod$YoutubePluginBase).split_string_once;
 /** @template T,U @extends {BaseService<T,U>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */

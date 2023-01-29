@@ -12,18 +12,29 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {
 	throw new Error("Failed to load base plugin");
 }
-const __module_name__="mod$LoadServices";
+console.log("Load HandleTypesPlugin");
+const store=required(window.__plugin_modules__);
+const bs=required(store["mod$YoutubePluginBase"]);
+const as=required(bs.as);
+const split_string=bs.split_string;
+const split_string_once=bs.split_string_once;
+const split_string_once_last=bs.split_string_once_last;
+const base64_dec=bs.base64_dec;
+const base64_url_dec=bs.base64_url_dec;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
+	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
 		window.__plugin_modules__??={};
 		let all_modules=window.__plugin_modules__;
-		let exports={};
+		/** @type {ExportsT} */
+		let exports=as({});
 		all_modules[__module_name__]=exports;
 		fn(as(exports));
 	}
@@ -32,7 +43,6 @@ export_(exports => {
 	exports.__is_module_flag__=true;
 });
 
-console.log("Load HandleTypesPlugin");
 
 //#region HandleTypes
 /** @arg {TemplateStringsArray} x */
@@ -263,6 +273,7 @@ window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
 `;
 eval(handle_types_eval_code);
+const ServiceMethods=required(store["mod$YoutubePluginBase"]?.ServiceMethods);
 
 /** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
 class UrlParseHelper {
@@ -6428,6 +6439,6 @@ export_((exports) => {
 //#endregion
 //#region Start main
 console=typeof window==="undefined"? console:(() => window.console)();
-yt_plugin_base_main();
+bs.yt_plugin_base_main();
 //#endregion
 //#endregion

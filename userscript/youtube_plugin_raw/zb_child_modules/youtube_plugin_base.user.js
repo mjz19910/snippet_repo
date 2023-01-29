@@ -13,15 +13,37 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+const __module_name__="mod$YoutubePluginBase";
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn,flags={global: false}) {
+	/** @typedef {typeof exports} ExportsT */
+	if(typeof exports==="object") {
+		fn(exports);
+	} else {
+		/** @type {ExportsT} */
+		let exports;
+		if(flags.global) {
+			/** @type {{}} */
+			let win_exp=window;
+			exports=as(win_exp);
+			return;
+		} else {
+			window.__plugin_modules__??={};
+			let all_modules=window.__plugin_modules__;
+			exports=as({});
+			all_modules["mod$YoutubePluginBase"]=exports;
+
+		}
+		fn(as(exports));
+	}
+}
+
 console.log("Load PluginBase");
 
 //#region done
 //#region basic
-
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {
-	return x;
-}
+function as(e,x=e) {return x;}
 /** @private @type {YtdAppElement} */
 const YtdAppElement=as({});
 /** @private @type {InstanceType<typeof YtdAppElement>|null} */
@@ -658,6 +680,15 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
+/** @template T @arg {T|undefined} x @returns {T} */
+function required(x) {
+	if(x===void 0) {
+		throw new Error("missing required");
+	}
+	return x;
+}
+const store=required(window.__plugin_modules__);
+const Services=required(store["mod$LoadServices"]).Services;
 class R_HandleRichGrid$ {
 	enable_logging=false;
 	/** @readonly */
@@ -1510,6 +1541,18 @@ let message_channel=new MessageChannel();
 function fire_observer_event() {
 	dom_observer.notify_with_port(message_channel.port1);
 }
+/** @template T @arg {T|undefined} x @returns {T} */
+function required(x) {
+	if(x===void 0) {
+		throw new Error("missing required");
+	}
+	return x;
+}
+export_(exports => {
+	exports.required=required;
+	exports.as=as;
+},{global: true});
+/** @template T,U @typedef {NonNullable<store["mod$HandleTypes"]>["HandleTypes"]} HandleTypes */
 /** @private @arg {HandleTypes<any,any>} handle_types */
 function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
@@ -1949,19 +1992,6 @@ class ServiceResolver {
 }
 //#endregion
 //#region main
-const __module_name__="YoutubePlugin$Base";
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
-		window.__plugin_modules__??={};
-		let all_modules=window.__plugin_modules__;
-		let exports={};
-		all_modules[__module_name__]=exports;
-		fn(as(exports));
-	}
-}
 function yt_plugin_base_main() {
 	setTimeout(() => {
 		window.yt_plugin?.get_data_saver().num_bitmap_console();
@@ -4617,4 +4647,4 @@ export_(exports => {
 });
 export_((exports) => {
 	exports.__youtube_plugin_base_loaded__=true;
-});
+},{global: true});

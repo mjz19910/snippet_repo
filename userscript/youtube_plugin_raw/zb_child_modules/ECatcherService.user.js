@@ -1,17 +1,27 @@
+const __module_name__="mod$ECatcherService";
+const store=required(window.__plugin_modules__);
+const as=required(required(store["mod$YoutubePluginBase"]).as);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
+	/** @typedef {typeof exports} ExportsT */
 	if(typeof exports==="object") {
 		fn(exports);
 	} else {
-		/** @type {{}} */
-		let u=as(window);
-		fn(as(u));
+		window.__plugin_modules__??={};
+		let all_modules=window.__plugin_modules__;
+		/** @type {ExportsT} */
+		let exports=as({});
+		all_modules[__module_name__]=exports;
+		fn(as(exports));
 	}
 }
-if(typeof exports==="object") {
+export_(exports => {
 	exports.__is_module_flag__=true;
-}
-const is_firefox=
+});
+const base_store=required(store.mod$YoutubePluginBase);
+const is_firefox=base_store.is_firefox;
+const BaseService=base_store.BaseService;
+const Services=required(store.mod$LoadServices?.Services);
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	data={
