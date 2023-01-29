@@ -283,6 +283,10 @@ class CodegenService extends BaseService {
 		}
 		return sr;
 	}
+	/** @arg {{}} x @returns {T_SE_Signal<{},{}>} */
+	as_T_SE_Signal=x => as(x);
+	/** @arg {{}} x @returns {TR_MP_Menu<{}>} */
+	as$TR_MP_Menu=x => as(x);
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
@@ -322,23 +326,15 @@ class CodegenService extends BaseService {
 			return `TYPE::TD_GuideEntry_Simple<"${ru.iconType}">`;
 		}
 		x: if(x.signalServiceEndpoint) {
-			/** @type {{}} */
-			let xc_1=x;
-			/** @type {T_SE_Signal<{},{}>} */
-			let xu=as(xc_1);
-			xu.signalServiceEndpoint;
-			let sr=this.get_typedef_part(xu.signalServiceEndpoint);
+			let v=this.as_T_SE_Signal(x);
+			let sr=this.get_typedef_part(v.signalServiceEndpoint);
 			if(!sr) break x;
-			console.log("[typedef_codegen_res]",sr);
-			debugger;
-			return `TYPE::T_SE_Signal<{webCommandMetadata: {}},${sr}>`;
+			let wc=this.get_typedef_part(v.commandMetadata);
+			return `TYPE::T_SE_Signal<${wc},${sr}>`;
 		}
 		x: if(x.multiPageMenuRenderer) {
-			/** @type {{}} */
-			let xc_1=x;
-			/** @type {TR_MP_Menu<{}>} */
-			let xu=as(xc_1);
-			let sr=this.get_typedef_part(xu.multiPageMenuRenderer);
+			let v=this.as$TR_MP_Menu(x);
+			let sr=this.get_typedef_part(v.multiPageMenuRenderer);
 			if(!sr) break x;
 			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
