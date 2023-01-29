@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
-if(!__youtube_plugin_base_loaded__) {
+if(!window.__youtube_plugin_base_loaded__) {
 	throw new Error("Failed to load base plugin");
 }
 //#region HandleTypes
