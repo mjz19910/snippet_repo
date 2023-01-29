@@ -11959,13 +11959,16 @@ class HandleTypes extends HandleTypesEval {
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
-		if("loopCommand" in x) {debugger; return this.z([x],a => a);}
+		if("loopCommand" in x) return this.C_Loop(x);
 		if("updateToggleButtonStateCommand" in x) {debugger; return this.z([x],a => a);}
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
 		this.do_codegen(cf,x);
 		{debugger;}
 	}
+	/** @private @arg {C_Loop} x */
+	C_Loop(x) {this.T_Endpoint("C_Loop",x,a => this.y(a,"loopCommand",this.D_Loop),(a,cf) => {a; cf; debugger;});}
+	D_Loop(x) {x;}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
 		const cf="A_HideEngagementPanelScrim";

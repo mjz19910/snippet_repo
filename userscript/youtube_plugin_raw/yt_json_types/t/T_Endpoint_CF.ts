@@ -10,6 +10,7 @@ type T_Endpoint_CF=[
 	"C_FollowUp",
 	"C_GetSurvey",
 	"C_LoadMarkers",
+	"C_Loop",
 	"C_RefreshPlaylist",
 	"C_RelatedChip",
 	"C_ReloadContinuationItems",
