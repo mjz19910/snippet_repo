@@ -337,7 +337,6 @@
    "ignoreWords": [],
    "import": [],
    "enableFiletypes": [
-      "!javascript",
       "!json"
    ]
 }
