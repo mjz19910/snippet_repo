@@ -41,6 +41,16 @@ function do_export(fn,flags,exports,module_name) {
 function export_(fn,flags={global: false}) {
 	do_export(fn,flags,exports,__module_name__);
 }
+/** @template T @arg {T|undefined} x @returns {T} */
+function required(x) {
+	if(x===void 0) {
+		throw new Error("missing required");
+	}
+	return x;
+}
+export_(exports => {
+	exports.required=required;
+},{global: true});
 export_(exports => {
 	exports.do_export=do_export;
 });
@@ -690,17 +700,6 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template T @arg {T|undefined} x @returns {T} */
-function required(x) {
-	if(x===void 0) {
-		throw new Error("missing required");
-	}
-	return x;
-}
-export_(exports => {
-	debugger;
-	exports.required=required;
-},{global: true});
 const store=required(window.__plugin_modules__);
 /** @template T @typedef {NonNullable<T>} N */
 /** @typedef {N<store['mod$LoadServices']>['Services']} Services */
