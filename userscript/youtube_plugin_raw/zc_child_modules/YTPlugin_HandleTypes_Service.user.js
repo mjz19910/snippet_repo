@@ -1218,6 +1218,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
+		debugger;
+		this.do_codegen(cf,x);
 		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,toggledAccessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		console.log("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
