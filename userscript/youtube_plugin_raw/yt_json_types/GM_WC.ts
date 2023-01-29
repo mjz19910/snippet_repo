@@ -596,9 +596,12 @@ type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_Sh
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,
 	A_HideEngagementPanelScrim,
-	TA_OpenPopup<{}>,
 	B_C_ScrollToEngagementPanel,
+	C_Loop,
+	TA_OpenPopup<{}>,
 ][number];
+type D_Loop={loop: false;};
+type C_Loop={clickTrackingParams: string;loopCommand: D_Loop;};
 type GC_EngagementPanelSectionShow=
 	|A_ChangeEngagementPanelVisibility
 	|A_ShowEngagementPanelScrim
