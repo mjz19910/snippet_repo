@@ -15,26 +15,12 @@
 const __module_name__="mod$ParserService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
-/** @returns {(typeof bs)['as_']} */
-function get_as() {
-	return bs.as_;
-}
-const as=get_as();
+const as=bs.as_;
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
-		window.__plugin_modules__??={};
-		let all_modules=window.__plugin_modules__;
-		/** @type {ExportsT} */
-		let exports=as({});
-		all_modules[__module_name__]=exports;
-		fn(as(exports));
-	}
+function export_(fn,flags={global: false}) {
+	bs.do_export(fn,flags,exports,__module_name__);
 }
 export_(exports => {
 	exports.__is_module_flag__=true;

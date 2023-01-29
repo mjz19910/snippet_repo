@@ -13,20 +13,9 @@
 // ==/UserScript==
 const __module_name__="mod$LoadServices";
 const store=required(window.__plugin_modules__);
-const as=required(required(store["mod$YoutubePluginBase"]).as_);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
-		window.__plugin_modules__??={};
-		let all_modules=window.__plugin_modules__;
-		/** @type {ExportsT} */
-		let exports=as({});
-		all_modules[__module_name__]=exports;
-		fn(as(exports));
-	}
+function export_(fn,flags={global: false}) {
+	bs.do_export(fn,flags,exports,__module_name__);
 }
 export_(exports => {
 	exports.__is_module_flag__=true;

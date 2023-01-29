@@ -15,22 +15,11 @@ const __template__=true;
 const __module_name__="mod${{name}}";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
-const as=required(bs.as_);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
-		window.__plugin_modules__??={};
-		let all_modules=window.__plugin_modules__;
-		/** @type {ExportsT} */
-		let exports=as({});
-		if(__module_name__ in all_modules && !__template__) {
-			all_modules[__module_name__]=exports;
-		}
-		fn(as(exports));
-	}
+function export_(fn,flags={global: false}) {
+	flags; fn; bs; __module_name__; __template__;
+	throw new Error("FIXME: this is a template");
+	// bs.do_export(fn,flags,exports,__module_name__);
 }
 export_(exports => {
 	exports.__is_module_flag__=true;

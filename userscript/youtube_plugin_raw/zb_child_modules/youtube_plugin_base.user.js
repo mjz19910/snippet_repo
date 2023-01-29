@@ -14,7 +14,6 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 const __module_name__="mod$YoutubePluginBase";
-window.__plugin_modules__??={};
 /** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name) {
 	/** @typedef {typeof exports} ExportsT */
