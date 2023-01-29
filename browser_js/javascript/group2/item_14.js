@@ -169,6 +169,7 @@ class JsonOutputBox {
 	reset() {
 		this.output_arr.length = 0;
 		this.cache_index_map.clear();
+		return this;
 	}
 	get_log_self_args() {
 		let log_self_info = this.get_self_for_logging();
@@ -235,13 +236,12 @@ function on_run_request(res, x) {
 let json_output = new JsonOutputBox;
 let history_output = new JsonOutputBox;
 function main_start_json_replace() {
-	let res = json_output;
-	res.reset()
+	let res = json_output.reset();
 	let doc_child = document.body.firstElementChild;
 	if (!doc_child)
 		throw new Error("No firstElement of document.body");
 	init_json_event_sys_with_obj(res, doc_child);
-	let history_res = history_output;
+	let history_res = history_output.reset();
 	let log_args = history_iter(history_res);
 	console.log(...log_args);
 	let res_log = res.get_log_self_args();
