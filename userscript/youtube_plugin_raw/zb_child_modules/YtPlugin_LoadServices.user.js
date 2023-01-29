@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	youtube plugin LoadServices
+// @name	YtPlugin LoadServices
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.0
 // @description	try to take over the world!
@@ -78,7 +78,7 @@ class Services {
 	}
 }
 
-export_(exports=>{
+export_(exports => {
 	exports.Services=Services;
 	exports.__module_loaded__=true;
 });

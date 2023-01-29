@@ -33,7 +33,7 @@ namespace EX {
 	export type VolumeRange=Base$ImpType["VolumeRange"];
 	export type yt_plugin_base_main=Base$ImpType["yt_plugin_base_main"];
 	export type make_iterator=Base$ImpType["make_iterator"];
-	export type Services=typeof import("./zb_child_modules/Plug_LoadServices.user.js").Services;
+	export type Services=typeof import("./zb_child_modules/YtPlugin_LoadServices.user.js").Services;
 	export type BaseServicePrivate=Base$ImpType["BaseServicePrivate"];
 	export type BaseService=Base$ImpType["BaseService"];
 	export var ServiceMethods: EX.ServiceMethods;
