@@ -2738,7 +2738,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_Feedback(feedbackEndpoint);
 	}
 	/** @private @arg {M_Feedback} x */
-	M_Feedback(x) {this.y("M_Feedback",x,"webCommandMetadata",this.GM_Feedback)}
+	M_Feedback(x) {this.y("M_Feedback",x,"webCommandMetadata",this.GM_Feedback);}
 	/** @private @arg {GM_Feedback} x */
 	GM_Feedback(x) {x;}
 	/** @private @arg {DE_Feedback} x */
@@ -2840,7 +2840,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {
-		let [a,b]=this.TE_Endpoint_3("E_Watch",x,"watchEndpoint");
+		let [a,b]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x);
 		this.M_VE3832(a); this.DE_VE3832_Watch(b);
 	}
 	/** @private @arg {DE_VE3832_Watch} x */
@@ -3685,12 +3685,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {
 		const cf="E_RecordNotificationInteractions";
-		this.TE_Endpoint_3(cf,x,a => this.DE_RecordNotificationInteractions(this.w(a,"recordNotificationInteractionsEndpoint")),x => {
-			let cf="GE_notification_record_interactions",y=this.unpack_MG(cf,x);
-			const {apiUrl,sendPost,...u}=this.s(cf,y); this.g(u);
-			if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
-			if(sendPost!==true) debugger;
-		});
+		let [a,b]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x);
+		this.GE_notification_record_interactions(a);
+		this.DE_RecordNotificationInteractions(b);
+	}
+	/** @private @arg {DE_RecordNotificationInteractions} x */
+	GE_notification_record_interactions(x,a=x) {
+		let cf="GE_notification_record_interactions",y=this.unpack_MG(cf,a);
+		const {apiUrl,sendPost,...u}=this.s(cf,y); this.g(u);
+		if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
+		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
@@ -3709,15 +3713,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {
 		const cf="E_GetNotificationMenu";
-		this.TE_Endpoint_3(cf,x,x => {
-			const u=this.w(x,"getNotificationMenuEndpoint"),cf="DE_GetNotificationMenu";
-			const {ctoken,...y}=this.s(cf,u); this.g(y);
-			this.params(cf,"GetNotificationMenu.ctoken",ctoken);
+		let [a,b,y]=this.TE_Endpoint_3(cf,"getNotificationMenuEndpoint",x); this.g(y);
+		this.M_GetNotificationMenu(a);
+		{
+			const u=b,cf1="DE_GetNotificationMenu";
+			const {ctoken,...y}=this.s(cf1,u); this.g(y);
+			this.params(cf1,"GetNotificationMenu.ctoken",ctoken);
 			debugger;
-		},a => {
-			a;
-			debugger;
-		});
+		}
 	}
 	/** @private @arg {DC_SectionList} x */
 	G_SectionList(x) {

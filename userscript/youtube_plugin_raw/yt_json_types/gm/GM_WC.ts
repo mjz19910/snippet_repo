@@ -181,49 +181,20 @@ type E_Browse=
 ;
 //#region Actions 
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
-type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: D_Enum_GuideAction;};
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
-type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
-type AD_ChangeEngagementPanelVisibility={targetId: D_EngagementPanelTargetId; visibility: D_EngagementPanelVisibility;};
 type A_HideEnclosing={clickTrackingParams: string; hideEnclosingAction: AD_HideEnclosing;};
-type AD_HideEnclosing={notificationId: `${number}`;};
 type A_HideEngagementPanelScrim={clickTrackingParams: string; hideEngagementPanelScrimAction: AD_HideEngagementPanelTargetId;};
-type AD_HideEngagementPanelTargetId={engagementPanelTargetId: "engagement-panel-clip-create";};
 type A_RemoveFromGuideSection={clickTrackingParams: string; removeFromGuideSectionAction: AD_RemoveFromGuideSection;};
-type AD_RemoveFromGuideSection={handlerData: "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"; guideEntryId: T_MixPlaylistStr;};
 type A_ReplaceEnclosing={clickTrackingParams: string; replaceEnclosingAction: AD_ReplaceEnclosing;};
-type AD_ReplaceEnclosing_Item=R_NotificationText|RA_ReelDismissal|{
-	notificationMultiActionRenderer: {};
-};
-
-type AD_ReplaceEnclosing=T_Item<AD_ReplaceEnclosing_Item>;
-
 type T_Item<T>={item: T;};
 type A_SendFeedback={clickTrackingParams: string; sendFeedbackAction: AD_SendFeedback;};
-type AD_SendFeedback={bucket: "Kevlar";};
 type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction: AD_SetActivePanelItem;};
-type AD_SetActivePanelItem={};
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
-type AD_ShowEngagementPanelScrim={
-	engagementPanelTargetId: "engagement-panel-clip-create";
-	onClickCommands: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>[];
-};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
-type AD_Signal={signal: E_SignalStr;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
-type AD_UndoFeedback={};
 type A_UpdateEngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};
-type AD_UpdateEngagementPanel={
-	content: R_Transcript;
-	targetId: "engagement-panel-searchable-transcript";
-};
 type A_UpdateNotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
-type AD_UpdateNotificationsUnseenCount={
-	handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT";
-	unseenCount: number;
-	timeoutMs: number;
-};
 //#endregion
 //#region Commands
 type C_AddToPlaylist={clickTrackingParams: string; addToPlaylistCommand: DC_AddToPlaylist;};
