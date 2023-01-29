@@ -6242,7 +6242,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
 	D_ThumbnailOverlayResumePlayback(x) {const cf="D_ThumbnailOverlayResumePlayback"; this.cfl(cf,x);}
 	/** @arg {string} cf @arg {object} x */
-	cfl(cf,x) {this.k(cf,x); console.log(`[cfl_info.${cf}]`,this.get_keys_of(x).join()); debugger;}
+	cfl(cf,x) {
+		this.k(cf,x);
+		let ka=this.get_keys_of(x).join(); ka;
+		console.log(`[cfl_info.${cf}]`,x);
+		this.do_codegen(cf,x);
+		debugger;
+	}
 	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
 	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
