@@ -11,7 +11,7 @@ type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string
 type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
 type T_SE_Signal<T,U>=TE_Endpoint<T,"signalServiceEndpoint",U>;
 type T_Setting_AutoNavForDesktop<T extends boolean>=TE_SetSetting<"407",T,"AUTONAV_FOR_DESKTOP">;
-type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId;continuationItems: T_ItemType[];};
+type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId; continuationItems: T_ItemType[];};
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
 type TA_OpenPopup<T>={clickTrackingParams: string; openPopupAction: T;};
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
@@ -20,7 +20,7 @@ type TE_Endpoint_1<C,T extends string,U>={clickTrackingParams: string; commandMe
 type TE_Endpoint_2<U extends string,V>={clickTrackingParams: string;}&{[I in U]: V};
 type TE_Endpoint_Default<T={}>={clickTrackingParams: string; commandMetadata: T;};
 type TE_Endpoint_Opt<G_M>={clickTrackingParams: string; commandMetadata?: G_M;};
-type TE_Endpoint<T,U extends `${string}Endpoint`,V>=Decay<{clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V}>;
+type TE_Endpoint<T,U extends `${string}Endpoint`,V>={clickTrackingParams: string; commandMetadata: T;}&{[I in U]: V};
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint<M_SetSetting,"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>>;
 type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
 //#endregion
@@ -230,16 +230,17 @@ type E_VE96368_Browse=TE_Endpoint<M_VE96368,"browseEndpoint",DE_VE96368_Browse>;
 //#endregion
 // TODO: #8 Get the SettingsEndpoint type
 type E_Settings={};
-type E_Browse=[
-	E_VE3611_Browse,
-	E_VE3854_Browse,
-	E_VE5754_Browse,
-	E_VE6827_Browse,
-	E_VE11487_Browse,
-	E_VE23462_Browse,
-	E_VE42352_Browse,
-	E_VE96368_Browse,
-][number];
+type E_Browse=
+	|E_VE3611_Browse
+	|E_VE3854_Browse
+	|E_VE5754_Browse
+	|E_VE6827_Browse
+	|E_VE11487_Browse
+	|E_VE23462_Browse
+	|E_VE42352_Browse
+	|E_VE96368_Browse
+	;
+;
 //#region Actions 
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
 type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: D_Enum_GuideAction;};
@@ -365,11 +366,16 @@ type E_GetNotificationMenu=TE_Endpoint<{webCommandMetadata: GM_GetNotificationMe
 type DE_GetNotificationMenu={ctoken: string;};
 type E_GetReportForm=TE_Endpoint<M_FlagGetForm,"getReportFormEndpoint",D_Params>;
 type E_GetTranscript=TE_Endpoint<D_Empty_WCM,"getTranscriptEndpoint",D_Params>;
-type E_Like=TE_Endpoint<{webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;},"likeEndpoint",DE_Like>;
+type M_Like={webCommandMetadata: GM_like_like|GM_like_dislike|GM_like_removelike;};
+interface E_Like extends TE_Endpoint<M_Like,"likeEndpoint",DE_Like> {};
 type DE_Like=DE_Like_NS.DE_Like;
 type E_NotificationOptOut=TE_Endpoint<D_Empty_WCM,"notificationOptOutEndpoint",DE_NotificationOptOut>;
 type DE_NotificationOptOut={optOutText: R_TextRuns; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
-type E_PlaylistEdit=TE_Endpoint<{webCommandMetadata: GM_browse_edit_playlist;},"playlistEditEndpoint",DE_PlaylistEdit>;
+type M_EditPlaylist={
+	webCommandMetadata: GM_browse_edit_playlist;
+};
+
+type E_PlaylistEdit=TE_Endpoint<M_EditPlaylist,"playlistEditEndpoint",DE_PlaylistEdit>;
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
 type E_PlaylistEditor=TE_Endpoint<D_Empty_WCM,"playlistEditorEndpoint",DE_PlaylistEditor>;
 type DE_PlaylistEditor={playlistId: string;};

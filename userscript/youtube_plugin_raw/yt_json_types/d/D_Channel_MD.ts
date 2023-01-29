@@ -1,8 +1,8 @@
 type D_Channel_MD={
-	title: "CppCon";
+	title: string;
 	description: string;
 	rssUrl: string;
-	externalId: "UCMlGfpWw-RUdWX_JbLCukXg";
+	externalId: `UC${string}`;
 	keywords: string;
 	ownerUrls: [`http://www.youtube.com/@${string}`];
 	avatar: R_Thumbnail;

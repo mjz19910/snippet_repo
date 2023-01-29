@@ -45,3 +45,10 @@ this.t($1,this.$2)
 ```regexp
 ^\s\s((?!return|debugger|break)\w+);
 ```
+# item
+```regexp
+^(\s{1})\s((?!continue|break|return|debugger)\w+);$
+```
+```
+$1this.R_TextRuns($2);
+```
