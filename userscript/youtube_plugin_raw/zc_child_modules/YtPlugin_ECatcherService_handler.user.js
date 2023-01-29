@@ -49,10 +49,7 @@ class ECatcherService extends BaseService {
 	data={
 		/** @private @type {{name:RC_ECatcherClientName['value'];fexp:number[];version:RC_SomeVer<RC_CsiVarTypes["cver"]>}|null} */
 		client: null,
-		expected_client_values: {
-			/** @private @type {number[]} */
-			fexp: 
-		},
+		expected_client_values: {fexp: ECatcherService.known_experiments},
 	};
 	/** @private @type {number[]} */
 	seen_new_expected=[];
