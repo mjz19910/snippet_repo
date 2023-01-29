@@ -1,4 +1,1 @@
-type R_SimpleText={
-	accessibility?: D_Accessibility;
-	simpleText: string;
-};
+type R_SimpleText={simpleText: string;}&B_Text;

@@ -5472,7 +5472,14 @@ class ParserService extends BaseService {
 				/** @private @type {P_ParamParse_XX} */
 				return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
-		return {u,gen_next_part,new_path,map_entry_key};
+		let new_ns=() => {
+			/** @private @type {P_LogItems} */
+			console.log("[parse_value.new_ns_gen]",path);
+			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			console.log(ak_gen.join("\n"));
+			console.log(`-- [parse_value.gen_ns] --\n\n\t${map_keys.map(e => `case ${e}:`).join(" ")} \n`);
+		};
+		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @type {P_LogItems} */
@@ -5485,14 +5492,8 @@ class ParserService extends BaseService {
 			f();
 			console.groupEnd();
 		};
-		let new_ns=() => {
-			console.log("[parse_value.new_ns_gen]",path);
-			/** @private @type {P_LogItems} */
-			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${map_entry_key}`);
-			console.log(`-- [parse_value.gen_ns] --\n\n\t${saved_map_keys.map(e => `case ${e}:`).join(" ")} \n`);
-		};
 		if(map_entry_value!==void 0) {
-			let new_path=this.get_parse_fns(path,saved_map_keys,map_entry_value[0],map_entry_key).new_path;
+			let {new_path,new_ns}=this.get_parse_fns(path,saved_map_keys,map_entry_value[0],map_entry_key);
 			map.delete(map_entry_key);
 			let cx=map_keys.indexOf(map_entry_key);
 			if(cx>-1) map_keys.splice(cx,1);
@@ -5513,7 +5514,7 @@ class ParserService extends BaseService {
 						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "get_report_form":
-						switch(map_entry_key) {case 2: case 8: case 11: case 15: case 18: break; default: new_ns(); debugger; return;}
+						switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29: break; default: new_ns(); debugger; return;}
 						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "service$create_playlist":
@@ -8642,7 +8643,7 @@ class HandleTypes extends HandleTypesEval {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
 		this.R_Menu(menu);
-		this.R_TextRuns(title);
+		this.G_Text(title);
 		this.videoId(videoId);
 		this.E_Watch(navigationEndpoint);
 		this.R_Thumbnail(thumbnail);
@@ -11823,10 +11824,10 @@ class HandleTypes extends HandleTypesEval {
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup(x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
-		if("loopCommand" in x) {debugger; return this.z([x],a=>a);}
-		if("updateToggleButtonStateCommand" in x) {debugger; return this.z([x],a=>a);}
-		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a=>a);}
-		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a=>a);}
+		if("loopCommand" in x) {debugger; return this.z([x],a => a);}
+		if("updateToggleButtonStateCommand" in x) {debugger; return this.z([x],a => a);}
+		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
 		this.do_codegen(cf,x);
 		{debugger;}
 	}
@@ -13521,19 +13522,27 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
 		// TODO: #11 Handle thumbnailOverlay Renderers
 		// Actually iterate over these renderers
-		if("thumbnailOverlaySidePanelRenderer" in x) {debugger; return this.z([x],a=>a);}
-		if("thumbnailOverlayHoverTextRenderer" in x) {debugger; return this.z([x],a=>a);}
-		if("thumbnailOverlayNowPlayingRenderer" in x) {debugger; return this.z([x],a=>a);}
-		if("thumbnailOverlayBottomPanelRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlaySidePanelRenderer" in x) {debugger; return this.z([x],a => a);}
+		if("thumbnailOverlayHoverTextRenderer" in x) {debugger; return this.z([x],a => a);}
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayBottomPanelRenderer" in x) {debugger; return this.z([x],a => a);}
 		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayToggleButtonRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
 		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
 		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
-		if("thumbnailOverlayEndorsementRenderer" in x) {debugger; return this.z([x],a=>a);}
-		if("thumbnailOverlayInlineUnplayableRenderer" in x) {debugger; return this.z([x],a=>a);}
+		if("thumbnailOverlayEndorsementRenderer" in x) {debugger; return this.z([x],a => a);}
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) {debugger; return this.z([x],a => a);}
 		this.do_codegen(`ThumbnailOverlay$${cf}`,x);
 		debugger;
 	}
+	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
+	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying",x,this.D_ThumbnailOverlayNowPlaying);}
+	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
+	D_ThumbnailOverlayNowPlaying(x) {x;}
+	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
+	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton",x,this.D_ThumbnailOverlayToggleButton);}
+	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
+	D_ThumbnailOverlayToggleButton(x) {x;}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback",x,this.D_ThumbnailOverlayResumePlayback);}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
@@ -13695,9 +13704,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.gk(this.w(x,"item"))[0];
-		switch(k) {
-			default: debugger; break;
+		let k=this.gk(this.w(x,"item"));
+		switch(k[0]) {
+			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
 			case "notificationTextRenderer":
 			case "reelDismissalActionRenderer":
 		}
