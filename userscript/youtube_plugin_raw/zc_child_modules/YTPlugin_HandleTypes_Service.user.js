@@ -2433,12 +2433,9 @@ class HandleTypes extends HandleTypesEval {
 	RD_MenuServiceItem(x) {
 		const cf="RD_MenuServiceItem";
 		const u=this.RD_MenuServiceItem_Omit(cf,x);
-		if("hasSeparator" in u) {
-			const {hasSeparator,...y}=u; this.g(y);
-			if(hasSeparator!==true) debugger;
-			return;
-		}
-		this.g(u);
+		const {hasSeparator,isDisabled,...y}=u; this.g(y);
+		this.t(hasSeparator,x=>this.ceq(x,true));
+		this.t(isDisabled,x=>this.ceq(x,false));
 	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);}
