@@ -309,17 +309,38 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#endregion
 	//#region member functions
-	/** @protected @template {T_Endpoint_CF} CF_T @arg {CF_T} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>,cf:`D${CF_T}`)=>void} [f_vm] @template {{}} V$M @template {TE_Endpoint_Opt<V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">,cf:`D${CF_T}`)=>void} f */
-	T_Endpoint(cf,x,f,f_vm) {
-		const {clickTrackingParams,commandMetadata,...y}=this.s(cf,x);
-		f.call(this,y,`D${cf}`);
+	/** 
+	 * @protected 
+	 * @template {Extract<keyof T_EP,`${string}Endpoint`>} T
+	 * @template U
+	 * @template {{}} V
+	 * @template {T_Endpoint_CF} CF_T
+	 * @arg {CF_T} cf
+	 * @arg {T} k
+	 * @arg {(this:this,x:V,cf:`D${CF_T}`)=>void} f_vm
+	 * @template {TE_Endpoint_3<T,U,V>} T_EP @arg {T_EP} x
+	 * @arg {(this:this,x:T_EP[T],cf:`D${CF_T}`)=>void} f
+	 * */
+	T_Endpoint(cf,x,k,f,f_vm) {
+		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
+		f.call(this,endpoint,`D${cf}`);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
-		if(f_vm===void 0) {
-			if(commandMetadata!==void 0) debugger;
-			return;
-		}
-		if(commandMetadata===void 0) return;
 		f_vm.call(this,commandMetadata,`D${cf}`);
+		return y;
+	}
+	/** 
+	 * @protected 
+	 * @template X
+	 * @template {Extract<keyof T,`${string}Endpoint`>} K @arg {K} k
+	 * @template {T_Endpoint_CF} CF_T @arg {CF_T} cf
+	 * @template {TE_Endpoint_2<K,{[R in K]:X}>} T @arg {T} x
+	 * @arg {(this:this,x:T[K],cf:`D${CF_T}`)=>void} f
+	 * */
+	TE_Endpoint_2(cf,x,k,f) {
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
+		f.call(this,endpoint,`D${cf}`);
+		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+		return y;
 	}
 	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
@@ -648,7 +669,15 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {const cf="C_RefreshPlaylist"; this.T_Endpoint(cf,x,(x,cf) => this.D_RefreshPlaylist(this.w(cf,x,"refreshPlaylistCommand")));}
+	C_RefreshPlaylist(x) {
+		const cf="C_RefreshPlaylist";
+		// cf,x,(x,cf) => this.D_RefreshPlaylist(this.w(cf,x,"refreshPlaylistCommand"))
+		this.T_Endpoint(cf,x,"",x => {
+			x;
+		},x => {
+			x;
+		});
+	}
 	/** @private */
 	log_url=false;
 	/** @private @arg {R_BrowsePage} x */
@@ -2200,11 +2229,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_ClientSignal} x */
 	G_ClientSignal(x) {
 		const cf="G_ClientSignal";
-		let {actions,...u}=this.Signal_Omit(x,x => {
+		let {actions,...y}=this.Signal_Omit(x,x => {
 			this.save_string(`[${cf}.signal]`,x);
 			if(x!=="CLIENT_SIGNAL") debugger;
-		});
-		this.z(this.w(u,"actions"),x => {
+		}); this.g(y);
+		this.z(actions,x => {
 			/** @type {S_Client_Item} */
 			if("openPopupAction" in x) return this.S_Client_Popup(x);
 			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
@@ -2590,7 +2619,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {
 		this.T_Endpoint("E_AddToPlaylistService",x,
-			x => this.DE_AddToPlaylistService(this.w(x,"addToPlaylistServiceEndpoint")),
+			x => this.DE_AddToPlaylistService(this.T_EP_In(x,"addToPlaylistServiceEndpoint")),
 			x => {
 				const cf="M_AddToPlaylistService";
 				let {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure*/ this.GM_playlist_get_add_to_playlist(a);
@@ -2667,9 +2696,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.gk(this.w(x,"item"));
+		let k=this.gk(x.item);
 		switch(k[0]) {
-			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
 			case "notificationTextRenderer":
 			case "reelDismissalActionRenderer":
 			case "notificationMultiActionRenderer":
@@ -3626,7 +3655,7 @@ class HandleTypes extends HandleTypesEval {
 	E_RecordNotificationInteractions(x) {
 		const cf="E_RecordNotificationInteractions";
 		this.T_Endpoint(cf,x,a => this.DE_RecordNotificationInteractions(this.w(a,"recordNotificationInteractionsEndpoint")),x => {
-			let y=this.unpack_MG(x),cf="GE_notification_record_interactions";
+			let cf="GE_notification_record_interactions",y=this.unpack_MG(cf,x);
 			const {apiUrl,sendPost,...u}=this.s(cf,y); this.g(u);
 			if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
 			if(sendPost!==true) debugger;
