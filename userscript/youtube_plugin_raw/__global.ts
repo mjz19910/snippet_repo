@@ -1,4 +1,4 @@
-export {};
+import {HandleTypesEval_} from "./handle_types_eval.js";
 declare global {
 	interface Window {
 		Polymer: {
@@ -13,4 +13,6 @@ declare global {
 		delete(name: string): void;
 		entries(): IterableIterator<[string,string]>;
 	}
+	class HandleTypesEval<T,U> extends HandleTypesEval_<T,U> {}
 }
+

@@ -1981,6 +1981,7 @@ function main() {
 		exports.VolumeRange=VolumeRange;
 		exports.sizeof_js=sizeof_js;
 		exports.services=services;
+		exports.ServiceMethods=ServiceMethods;
 	});
 	resolver_value.value=service_resolver;
 	_close_div_scope();
@@ -7483,21 +7484,101 @@ class ServiceMethods extends ServiceData {
 //#endregion
 //#endregion
 //#region HandleTypes
-/** @template Cls_T,Cls_U @extends {ServiceMethods<Cls_T,Cls_U>}  */
-class HandleTypes extends ServiceMethods {
-	/** @typedef {{}} minimal_handler_member */
+const handle_types_eval_code=`
+class HandleTypesEval extends ServiceMethods {
+	//#region KR_ResponseContext
+	/** @private @arg {RC_ResponseContext} x */
+	RC_ResponseContext(x) {
+		const cf="RC_ResponseContext";
+		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags}=this.sd(cf,x);// this.g(y);//#destructure
+		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
+		this.z(serviceTrackingParams,x => {
+			if(!this.is_normal_service(this)) return;
+			const service_tracking=this.x.get("service_tracking");
+			service_tracking.set_service_params(x);
+		});
+		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
+		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
+		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
+		this.t(stateTags,this.RCA_RelevantStateTags);
+	}
+	/** @private @arg {RC_WR_ContextExtension} x */
+	RC_WR_ContextExtension(x) {
+		const cf="RC_WR_ContextExtension";
+		const {hasDecorated,ytConfigData,webPrefetchData}=this.sd(cf,x);// this.g(y);//#destructure
+		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
+		this.t(ytConfigData,this.D_YtConfig);
+		this.t(webPrefetchData,this.D_WebPrefetch);
+	}
+	/** @private @arg {D_WebPrefetch} x */
+	D_WebPrefetch(x) {
+		const cf="D_WebPrefetch";
+		const {navigationEndpoints}=this.sd(cf,x);// this.g(y);//#destructure
+		this.z(navigationEndpoints,x => {
+			if("watchEndpoint" in x) {
+				return this.E_Watch(x);
+			}
+			debugger;
+		});
+	}
+	/** @private @arg {RCA_RelevantStateTags} x */
+	RCA_RelevantStateTags(x) {
+		const cf="RCA_RelevantStateTags";
+		const {relevantStateTags}=this.sd(cf,x);// this.g(y);//#destructure
+		this.z(relevantStateTags,this.B_StateTag);
+	}
+	/** @private @arg {RC_ConsistencyTokenJar} x */
+	RC_ConsistencyTokenJar(x) {
+		const cf="RC_ConsistencyTokenJar";
+		const {encryptedTokenJarContents,expirationSeconds}=this.sd(cf,x);// this.g(y);//#destructure
+		this.primitive_str(encryptedTokenJarContents);
+		if(expirationSeconds!=="600") debugger;
+	}
+	/** @private @arg {D_YtConfig} x */
+	D_YtConfig(x) {
+		const cf="D_YtConfig";
+		const {visitorData,sessionIndex,rootVisualElementType}=this.sd(cf,x);// this.g(y);//#destructure
+		this.primitive_str(visitorData);
+		if(sessionIndex!==0) debugger;
+		/** @private @type {\`\${typeof rootVisualElementType}\`} */
+		let s=\`\${rootVisualElementType}\`;
+		switch(s) {
+			case "3611": return;
+			case "3832": return;
+			case "3854": return;
+			case "4724": return;
+			case "5754": return;
+			case "6827": return;
+			case "11487": return;
+			case "23462": return;
+			case "37414": return;
+			case "83769": return;
+			case "96368": return;
+			default: debugger; break;
+		}
+	}
+	/** @private @arg {RC_MainAppWebResponseContext} x */
+	RC_MainAppWebResponseContext(x) {
+		const cf="RC_MainAppWebResponseContext";
+		const {datasyncId,loggedOut}=this.sd(cf,x);// this.g(y);//#destructure
+		this.primitive_str(datasyncId);
+		this.primitive_of(loggedOut,"boolean");
+	}
+	//#endregion
+	//#region init and static init
+	// I use @private stuff that i want in static blocks
 	gk=this.get_keys_of;
 	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
 	D_Params(cf,x,f) {const {params: p,...y}=this.sd(cf,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @arg {string} a @arg {{}} b */
-	k=(a,b) => this.save_keys(`[${a}]`,b);
+	k=(a,b) => this.save_keys(\`[\${a}]\`,b);
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	sd(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
 		return x;
 	}
-	/** @protected @arg {`[${string}]`} k @arg {string|string[]} x */
+	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {{}} x */
 	codegen_renderer(cf,x) {
@@ -7517,6 +7598,16 @@ class HandleTypes extends ServiceMethods {
 	/** @private */
 	minimal_handler_member_use() {
 		this.minimal_handler_member_2({});
+	}
+	//#endregion
+}`;
+eval(handle_types_eval_code);
+/** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
+class HandleTypes extends HandleTypesEval {
+	//#region static & typedefs
+	/** @typedef {{}} minimal_handler_member */
+	static {
+		this.prototype.minimal_handler_member_2({});
 	}
 	//#region templates
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
@@ -7811,7 +7902,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.sd(cf,x); this.primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
-	//#endregion {E_}
+	//#endregion
 	//#region general done
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("Button",x,this.D_Button);}
@@ -8043,83 +8134,6 @@ class HandleTypes extends ServiceMethods {
 				if(this.str_starts_with("UC",y1)) return;
 			} break;
 		}
-	}
-	/** @private @arg {RC_ResponseContext} x */
-	RC_ResponseContext(x) {
-		const cf="RC_ResponseContext";
-		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags}=this.sd(cf,x);// this.g(y);//#destructure
-		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
-		this.z(serviceTrackingParams,x => {
-			if(!this.is_normal_service(this)) return;
-			const service_tracking=this.x.get("service_tracking");
-			service_tracking.set_service_params(x);
-		});
-		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
-		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
-		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
-		this.t(stateTags,this.RCA_RelevantStateTags);
-	}
-	/** @private @arg {RCA_RelevantStateTags} x */
-	RCA_RelevantStateTags(x) {
-		const cf="RCA_RelevantStateTags";
-		const {relevantStateTags}=this.sd(cf,x);// this.g(y);//#destructure
-		this.z(relevantStateTags,this.B_StateTag);
-	}
-	/** @private @arg {RC_ConsistencyTokenJar} x */
-	RC_ConsistencyTokenJar(x) {
-		const cf="RC_ConsistencyTokenJar";
-		const {encryptedTokenJarContents,expirationSeconds}=this.sd(cf,x);// this.g(y);//#destructure
-		this.primitive_str(encryptedTokenJarContents);
-		if(expirationSeconds!=="600") debugger;
-	}
-	/** @private @arg {RC_WR_ContextExtension} x */
-	RC_WR_ContextExtension(x) {
-		const cf="RC_WR_ContextExtension";
-		const {hasDecorated,ytConfigData,webPrefetchData}=this.sd(cf,x);// this.g(y);//#destructure
-		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
-		this.t(ytConfigData,this.D_YtConfig);
-		this.t(webPrefetchData,this.D_WebPrefetch);
-	}
-	/** @private @arg {D_YtConfig} x */
-	D_YtConfig(x) {
-		const cf="D_YtConfig";
-		const {visitorData,sessionIndex,rootVisualElementType}=this.sd(cf,x);// this.g(y);//#destructure
-		this.primitive_str(visitorData);
-		if(sessionIndex!==0) debugger;
-		/** @private @type {`${typeof rootVisualElementType}`} */
-		let s=`${rootVisualElementType}`;
-		switch(s) {
-			case "3611": return;
-			case "3832": return;
-			case "3854": return;
-			case "4724": return;
-			case "5754": return;
-			case "6827": return;
-			case "11487": return;
-			case "23462": return;
-			case "37414": return;
-			case "83769": return;
-			case "96368": return;
-			default: debugger; break;
-		}
-	}
-	/** @private @arg {D_WebPrefetch} x */
-	D_WebPrefetch(x) {
-		const cf="D_WebPrefetch";
-		const {navigationEndpoints}=this.sd(cf,x);// this.g(y);//#destructure
-		this.z(navigationEndpoints,x => {
-			if("watchEndpoint" in x) {
-				return this.E_Watch(x);
-			}
-			debugger;
-		});
-	}
-	/** @private @arg {RC_MainAppWebResponseContext} x */
-	RC_MainAppWebResponseContext(x) {
-		const cf="RC_MainAppWebResponseContext";
-		const {datasyncId,loggedOut}=this.sd(cf,x);// this.g(y);//#destructure
-		this.primitive_str(datasyncId);
-		this.primitive_of(loggedOut,"boolean");
 	}
 	/** @private @arg {RS_Browse} x */
 	RS_Browse(x) {
@@ -8376,8 +8390,22 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
-		{debugger;}
+		if("selected" in x) {
+			return;
+		}
+		/** @type {`${cf}_${"R_MusicQueue"}`} */
+		const new_cf=`${cf}_${"R_MusicQueue"}`;
+		{
+			const cf=new_cf;
+			const {content,trackingParams,...y}=this.sd(cf,x); this.g(y);
+			this.R_MusicQueue(content);
+			this.trackingParams(cf,trackingParams);
+		}
 	}
+	/** @private @arg {R_MusicQueue} x */
+	R_MusicQueue(x) {this.H_("R_MusicQueue",x,this.D_MusicQueue);}
+	/** @private @arg {D_MusicQueue} x */
+	D_MusicQueue(x) {x;}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
