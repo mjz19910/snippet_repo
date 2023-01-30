@@ -36,7 +36,7 @@ type GU_VE83769_ExternalUrlStr=
 ;
 //#endregion
 //#region GM_WC
-type GM_WC=[
+type GM_WC_VE=[
 	GM_VE3611_WC,
 	GM_VE3832_Watch_WC,
 	GM_VE3854_WC,
@@ -49,6 +49,8 @@ type GM_WC=[
 	GM_VE42352_WC,
 	GM_VE83769_WC,
 	GM_VE96368_WC_browse,
+][number];
+type GM_WC_PostApi=[
 	GM_SetSetting,
 	GM_AccountMenu,
 	GM_CreateBackstagePost,
@@ -74,6 +76,10 @@ type GM_WC=[
 	GM_Subscribe,
 	GM_ypc_get_offers,
 	GM_YpcGetCart,
+][number];
+type GM_WC=[
+	GM_WC_VE,
+	GM_WC_PostApi,
 ][number];
 //#endregion
 
