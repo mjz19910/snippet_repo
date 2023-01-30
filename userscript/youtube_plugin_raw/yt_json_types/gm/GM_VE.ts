@@ -1,4 +1,3 @@
-//#region GM_VE
 type GM_VE3611_WC={
 	url:
 	|`/channel/UC${string}`
@@ -63,4 +62,3 @@ type GM_VE96368_WC_browse={
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 96368; apiUrl: "/youtubei/v1/browse";
 };
-//#endregion
