@@ -1046,7 +1046,7 @@ class HandleTypes extends HandleTypesEval {
 		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
-		this.t(icon,x=>this.T_Icon_AnyOf(x,this.expected_button_iconTypes));
+		this.t(icon,x => this.T_Icon_AnyOf(x,this.expected_button_iconTypes));
 		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
 		this.t(serviceEndpoint,this.ES_Button);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
@@ -2822,7 +2822,7 @@ class HandleTypes extends HandleTypesEval {
 		if(icon.iconType!=="INFO") debugger;
 		this.TA_OpenPopup(navigationEndpoint);
 	}
-	/** @private @template {string} T @arg {T_Icon<T>} x @arg {T} e_ty */
+	/** @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} e_ty */
 	T_Icon(x,e_ty) {
 		const cf="T_Icon";
 		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -2833,8 +2833,10 @@ class HandleTypes extends HandleTypesEval {
 	T_Icon_AnyOf(x,ty_arr) {
 		const cf="T_Icon";
 		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(!ty_arr.includes(iconType)) debugger;
+		const is_not_in_set=!ty_arr.includes(iconType);
+		if(is_not_in_set) {console.log("[missing_icon]",iconType);}
 		this.save_string("[IconType]",iconType);
+		return is_not_in_set;
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -3175,8 +3177,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
-				if(icon.iconType!=="OFFICIAL_ARTIST_BADGE") debugger;
-				this.T_Icon(icon);
+				this.T_Icon(icon,"OFFICIAL_ARTIST_BADGE");
 				if(tooltip!=="Official Artist Channel") debugger;
 				this.a_primitive_str(tooltip);
 				this.trackingParams(cf,trackingParams);
@@ -3185,8 +3186,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
-				if(icon.iconType!=="CHECK_CIRCLE_THICK") debugger;
-				this.T_Icon(icon);
+				this.T_Icon(icon,"CHECK_CIRCLE_THICK");
 				if(tooltip!=="Verified") debugger;
 				this.a_primitive_str(tooltip);
 				this.trackingParams(cf,trackingParams);
@@ -3194,8 +3194,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_LIVE_NOW": {
 				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
-				if(icon.iconType!=="LIVE") debugger;
-				this.T_Icon(icon);
+				this.T_Icon(icon,"LIVE");
 				this.trackingParams(cf,trackingParams);
 				switch(label) {
 					default: debugger; break;
@@ -3985,12 +3984,7 @@ class HandleTypes extends HandleTypesEval {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
 		this.E_Browse(navigationEndpoint);
-		this.T_Icon(icon);
-		switch(icon.iconType) {
-			default: debugger; break;
-			case "OFFLINE_DOWNLOAD":
-			case "VIDEO_LIBRARY_WHITE": break;
-		}
+		this.T_Icon_AnyOf(icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
 		switch(targetId) {
 			default: console.log(`case "${x}": break;`); debugger; break;
 			case "downloads-guide-item":
@@ -4029,6 +4023,52 @@ class HandleTypes extends HandleTypesEval {
 		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(liveBroadcasting!==false) debugger;
 	}
+	/** @type {Extract<Exclude<Extract<D_GuideEntry,{navigationEndpoint:any}>,{isPrimary:any}>,{icon:any}>['icon']['iconType'][]} */
+	D_GuideEntry_IconTypes=[
+		"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
+		"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
+		"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
+		"ADD_CIRCLE",
+	];
+	/** @arg {"D_GuideEntry"} cf @arg {Extract<Exclude<D_GuideEntry,{entryData:any}>,{navigationEndpoint:any}>} x */
+	D_GuideEntry_2(cf,x) {
+		if("targetId" in x) this.GE_GuideEntry_WithTargetId(cf,x);
+		if("isPrimary" in x) {
+			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			if(!navigationEndpoint.browseEndpoint) debugger;
+			this.E_Browse(navigationEndpoint);
+			switch(icon.iconType) {
+				case "SUBSCRIPTIONS": break;
+				case "WHAT_TO_WATCH": break;
+				default: debugger; break;
+			}
+			if(isPrimary!==true) debugger;
+			return;
+		}
+		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+		x: {
+			let x=navigationEndpoint;
+			if("browseEndpoint" in x) {
+				this.E_Browse(x);
+				break x;
+			}
+			if("urlEndpoint" in x) {
+				this.E_Url(x);
+				break x;
+			}
+			debugger;
+		}
+		let is_not_in_set=this.T_Icon_AnyOf(icon,[]);
+		if(is_not_in_set) {
+			this.do_codegen(cf,x);
+		}
+		{
+			let x=navigationEndpoint;
+			if("urlEndpoint" in x) return this.E_Url(x);
+			if("browseEndpoint" in x) return this.E_Browse(x);;
+			debugger;
+		}
+	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
 		if("entryData" in x) {
@@ -4052,52 +4092,7 @@ class HandleTypes extends HandleTypesEval {
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
 		}
-		if("navigationEndpoint" in x) {
-			if("targetId" in x) {
-				this.GE_GuideEntry_WithTargetId(cf,x);
-				return;
-			}
-			if("isPrimary" in x) {
-				const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
-				if(!navigationEndpoint.browseEndpoint) debugger;
-				this.E_Browse(navigationEndpoint);
-				switch(icon.iconType) {
-					case "SUBSCRIPTIONS": break;
-					case "WHAT_TO_WATCH": break;
-					default: debugger; break;
-				}
-				if(isPrimary!==true) debugger;
-				return;
-			}
-			const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
-			x: {
-				let x=navigationEndpoint;
-				if("browseEndpoint" in x) {
-					this.E_Browse(x);
-					break x;
-				}
-				if("urlEndpoint" in x) {
-					this.E_Url(x);
-					break x;
-				}
-				debugger;
-			}
-			this.T_Icon(icon);
-			switch(icon.iconType) {
-				default: icon===""; this.do_codegen(cf,x); break;
-				case "MY_VIDEOS": case "TRENDING": case "WATCH_HISTORY": case "WATCH_LATER": case "CLAPPERBOARD": case "MUSIC": case "LIVE":
-				case "GAMING_LOGO": case "COURSE": case "TROPHY": case "NEWS": case "YOUTUBE_ROUND": case "FASHION_LOGO": case "FLAG":
-				case "CREATOR_STUDIO_RED_LOGO": case "YOUTUBE_MUSIC": case "YOUTUBE_KIDS_ROUND": case "UNPLUGGED_LOGO": case "SETTINGS":
-				case "ADD_CIRCLE":
-			}
-			{
-				let x=navigationEndpoint;
-				if("urlEndpoint" in x) return this.E_Url(x);
-				if("browseEndpoint" in x) return this.E_Browse(x);;
-				debugger;
-			}
-			return;
-		}
+		if("navigationEndpoint" in x) return this.D_GuideEntry_2(cf,x);
 		if("isPrimary" in x) {
 			const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			if(icon.iconType!=="TAB_SHORTS") debugger;
@@ -4156,8 +4151,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_GuideEntry(headerEntry);
-		if(expanderIcon.iconType!=="EXPAND") debugger; this.T_Icon(expanderIcon);
-		if(collapserIcon.iconType!=="COLLAPSE") debugger; this.T_Icon(collapserIcon);
+		this.T_Icon(expanderIcon,"EXPAND");
+		this.T_Icon(collapserIcon,"COLLAPSE");
 		this.z(sectionItems,this.G_GuideSectionItem);
 		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
@@ -4773,7 +4768,7 @@ class HandleTypes extends HandleTypesEval {
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo";
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.T_Icon(iconImage);
+		this.T_Icon(iconImage,"YOUTUBE_LOGO");
 		this.G_Text(tooltipText);
 		this.E_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
@@ -4790,7 +4785,7 @@ class HandleTypes extends HandleTypesEval {
 	D_FusionSearchbox(x) {
 		const cf="D_FusionSearchbox";
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.T_Icon(icon);
+		this.T_Icon(icon,"SEARCH");
 		this.G_Text(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
@@ -6685,23 +6680,67 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
 	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {
-		const cf="D_ThumbnailOverlayBottomPanel"; this.y(cf,"icon",x,x => {
-			if(x.iconType!=="MIX") debugger;
-			this.T_Icon(x);
-		});
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
-	}
+	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon(x,"MIX"));}
 	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
 	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying","thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
 	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
 	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton","thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
+	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
+		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
+		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);
+		this.D_Accessibility(accessibility);
+		this.T_Icon(icon,"CHECK");
+	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
+	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
+		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
+		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);
+		this.D_Accessibility(accessibility);
+		this.T_Icon(icon,"WATCH_LATER");
+	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "toggled">} x */
+	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
+		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
+		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);
+		this.D_Accessibility(accessibility);
+		this.T_Icon(icon,"PLAYLIST_ADD_CHECK");
+	}
+	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "untoggled">} x */
+	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
+		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
+		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);
+		this.D_Accessibility(accessibility);
+		this.T_Icon(icon,"ADD_TO_QUEUE_TAIL");
+	}
+	/**
+	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
+	 * @returns {[p1,p2,o2]}
+	 * */
+	D_ThumbnailOverlayToggleButton_Omit(cf,x) {
+		this.k(cf,x);
+		let [p1,{...o1}]=this.unwrap_prefix(x,"toggled");
+		let [p2,{trackingParams,...o2}]=this.unwrap_prefix(o1,"untoggled");
+		this.trackingParams(cf,trackingParams);
+		return [p1,p2,o2];
+	}
+	/** @returns {false} */
+	false_() {return false;}
 	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
 	D_ThumbnailOverlayToggleButton(x) {
 		const cf="D_ThumbnailOverlayToggleButton";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		if("toggledServiceEndpoint" in x) {
+			const [{...o1},{...o2},{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);//#destructure_off
+			this.ceq(isToggled,this.false_());
+			this.D_ThumbnailOverlayToggleButton_ToggledPrefix_1(o1);
+			this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(o2);
+			return;
+		}
+		const [{...o1},{...o2},y]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);//#destructure_off
+		o1;
+		o2;
 	}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback","thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
@@ -6719,7 +6758,8 @@ class HandleTypes extends HandleTypesEval {
 	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus","thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x) {
-		const {style,text,...y}=x;
+		const cf="D_ThumbnailOverlayTimeStatus";
+		const {style,text,...y}=this.s(cf,x);
 		switch(style) {
 			default: debugger; break;
 			case "DEFAULT":
@@ -6798,7 +6838,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_ExternalChannelId} x */
 	A_ExternalChannelId(x) {
 		const cf="A_ExternalChannelId";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {externalChannelId,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.channelId(externalChannelId);
 	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
@@ -6815,6 +6856,11 @@ class HandleTypes extends HandleTypesEval {
 	D_TopicLink(x) {
 		const cf="D_TopicLink";
 		const {thumbnailDetails,title,trackingParams,endpoint,callToActionIcon,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		thumbnailDetails;
+		title;
+		trackingParams;
+		endpoint;
+		callToActionIcon;
 	}
 	/** @private @arg {R_CarouselLockup} x */
 	R_CarouselLockup(x) {this.H_("R_CarouselLockup","carouselLockupRenderer",x,this.D_CarouselLockup);}
@@ -6865,7 +6911,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		let u1=this.D_VideoOwner_Omit(cf,x);
+		const {title,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
