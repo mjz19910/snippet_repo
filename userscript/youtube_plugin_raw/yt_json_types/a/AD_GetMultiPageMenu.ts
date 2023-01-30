@@ -1,0 +1,1 @@
+type AD_GetMultiPageMenu=T_Menu<TR_MultiPageMenu<{}>>;

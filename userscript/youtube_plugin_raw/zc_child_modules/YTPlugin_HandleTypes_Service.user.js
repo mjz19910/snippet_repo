@@ -2863,10 +2863,7 @@ class HandleTypes extends HandleTypesEval {
 		return [un_prefix,other];
 	}
 	/** @private @arg {E_Watch} x */
-	E_Watch(x) {
-		let [a,b]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x);
-		this.M_VE3832(a); this.DE_VE3832_Watch(b);
-	}
+	E_Watch(x) {let [a,b]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		const cf="DE_VE3832_Watch";
@@ -3411,7 +3408,7 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		});
 	}
-	/** @private @arg {A_MP_GetMenu} x */
+	/** @private @arg {A_GetMultiPageMenu} x */
 	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu","getMP_MenuAction",x,this.D_MP_GetMenu);}
 	/** @private @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
@@ -5380,19 +5377,14 @@ class HandleTypes extends HandleTypesEval {
 		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {D_RelatedChipCloud} x */
-	D_RelatedChipCloud(x) {
-		const cf="R_RelatedChipCloud.content"; this.k(cf,x);
-		this.R_ChipCloud(this.w(cf,x,"content"));
-	}
 	/** @private @arg {R_RelatedChipCloud} x */
-	R_RelatedChipCloud(x) {
-		this.H_("RC_LiveChat","relatedChipCloudRenderer",x,this.D_RelatedChipCloud);
-	}
+	R_RelatedChipCloud(x) {this.H_("R_RelatedChipCloud","relatedChipCloudRenderer",x,this.D_RelatedChipCloud);}
+	/** @private @arg {D_RelatedChipCloud} x */
+	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
 	/** @private @arg {R_ChipCloud} x */
-	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
+	R_ChipCloud(x) {this.H_("R_ChipCloud","chipCloudRenderer",x,this.D_ChipCloud);}
 	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {this.H_("AD_HideEnclosing",x,this.a_primitive_str);}
+	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist";
@@ -5401,7 +5393,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
 	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {this.H_("D_ProfileColumn",x,x => this.z(x,this.G_ProfileColumnItem));}
+	D_ProfileColumn(x) {this.y("D_ProfileColumn","items",x,x => this.z(x,this.G_ProfileColumnItem));}
 	/** @private @arg {G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x) {
 		const cf="G_ProfileColumnItem"; this.k(cf,x);
@@ -5411,11 +5403,11 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_ProfileColumnStats} x */
-	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats",x,this.D_ProfileColumnStats);}
+	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
 	/** @private @arg {D_ProfileColumnStats} x */
-	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
+	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats","items",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
 	/** @private @arg {R_ProfileColumnStatsEntry} x */
-	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry",x,this.D_ProfileColumnStatsEntry);}
+	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
 		const cf="D_ProfileColumnStatsEntry";
@@ -5424,7 +5416,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(value);
 	}
 	/** @private @arg {R_ProfileColumnUserInfo} x */
-	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo",x,this.D_ProfileColumnUserInfo);}
+	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
 	/** @private @arg {D_ProfileColumnUserInfo} x */
 	D_ProfileColumnUserInfo(x) {
 		const cf="D_ProfileColumnUserInfo";
@@ -5433,11 +5425,11 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Thumbnail(thumbnail);
 	}
 	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions",x,x => this.z(x,this.G_BrowseFeedContent));}
+	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
 	/** @private @arg {R_SearchBox} x */
-	R_SearchBox(x) {this.H_("D_ProfileColumn",x,this.D_SearchBox);}
+	R_SearchBox(x) {this.H_("D_ProfileColumn","searchBoxRenderer",x,this.D_SearchBox);}
 	/** @private @arg {R_SubFeedSelector} x */
-	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector",x,this.D_SubFeedSelector);}
+	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
 	/** @private @arg {D_SubFeedSelector} x */
 	D_SubFeedSelector(x) {
 		const cf="D_SubFeedSelector";
@@ -5447,14 +5439,13 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_SubFeedOption} x */
-	R_SubFeedOption(x) {this.H_("R_SubFeedOption",x,this.D_SubFeedOption);}
+	R_SubFeedOption(x) {this.H_("R_SubFeedOption","subFeedOptionRenderer",x,this.D_SubFeedOption);}
 	/** @private @arg {D_SubFeedOption} x */
 	D_SubFeedOption(x) {
 		const cf="D_SubFeedOption";
 		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(name);
 		this.b_primitive_bool(isSelected);
-		if(!navigationEndpoint.watchEndpoint) debugger;
 		this.E_Watch(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -5476,18 +5467,22 @@ class HandleTypes extends HandleTypesEval {
 		this.z([!c,d],x => {if(!x) debugger;});
 	}
 	/** @private @arg {R_Channel_MD} x */
-	R_Channel_MD(x) {this.H_("R_Channel_MD",x,this.D_Channel_MD);}
+	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
 	/** @private @arg {R_Playlist_MD} x */
-	R_Playlist_MD(x) {this.H_("R_Playlist_MD",x,this.D_Playlist_MD);}
+	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
 	/** @private @arg {R_AlertWithButton} x */
-	R_AlertWithButton(x) {this.H_("R_AlertWithButton",x,this.D_AlertWithButton);}
+	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
+	/** @private @arg {TA_Page_CF} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	TA_Page(cf,x,f) {f.call(this,this.w(cf,x,"page"));}
+	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
+	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage",x,x => {const cf="TA_Page_R_ChannelSwitcherPage",{page: a,...y}=this.s(cf,x); this.g(y); this.R_ChannelSwitcherPage(a);});}
+	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
-	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage",x,this.D_ChannelSwitcherPage);}
-	/** @private @arg {D_MP_GetMenu} x */
-	D_MP_GetMenu(x) {let u=this.H_("D_MP_GetMenu",x,x => this.TR_MP_Menu(x)); this.g(u);}
-	/** @private @template T @arg {TR_MP_Menu<T>} x */
+	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
+	/** @private @arg {AD_GetMultiPageMenu} x */
+	D_MP_GetMenu(x) {let u=this.H_("D_MP_GetMenu","menu",x,x => this.TR_MP_Menu(x)); this.g(u);}
+	/** @private @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MP_Menu(x) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf",x,this.D_MerchandiseShelf);}

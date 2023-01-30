@@ -1,2 +1,2 @@
-type Popup_GetAccountMenu={popup: TR_MP_Menu<MP_AccountMenu>;popupType: "DROPDOWN";beReused: true;};
+type Popup_GetAccountMenu={popup: TR_MultiPageMenu<MP_AccountMenu>;popupType: "DROPDOWN";beReused: true;};
 type MP_AccountMenu={trackingParams: string;style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";showLoadingSpinner: true;};

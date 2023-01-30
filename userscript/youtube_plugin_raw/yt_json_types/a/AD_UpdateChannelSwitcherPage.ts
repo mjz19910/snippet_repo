@@ -1,0 +1,1 @@
+type AD_UpdateChannelSwitcherPage=TA_Page<R_ChannelSwitcherPage>;

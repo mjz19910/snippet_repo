@@ -1,3 +1,1 @@
-type A_UpdateChannelSwitcherPage={
-	updateChannelSwitcherPageAction: TA_Page<R_ChannelSwitcherPage>;
-};
+type A_UpdateChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};

@@ -1,6 +1,6 @@
 type G_PopupItem=
 	|R_ConfirmDialog
-	|TR_MP_Menu<{}>
+	|TR_MultiPageMenu<{}>
 	|RA_NotificationAction
 	|R_PdgBuyFlow
 	|R_UnifiedSharePanel

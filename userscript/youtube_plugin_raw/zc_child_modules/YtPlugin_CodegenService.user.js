@@ -294,7 +294,7 @@ class CodegenService extends BaseService {
 	}
 	/** @arg {{}} x @returns {T_SE_Signal<{},{}>} */
 	as_T_SE_Signal=x => as(x);
-	/** @arg {{}} x @returns {TR_MP_Menu<{}>} */
+	/** @arg {{}} x @returns {TR_MultiPageMenu<{}>} */
 	as$TR_MP_Menu=x => as(x);
 	/** @arg {{}} x @returns {T_Signal<string>} */
 	as$T_Signal=x => as(x);

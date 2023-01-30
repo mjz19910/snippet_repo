@@ -5,7 +5,7 @@ type D_TopbarMenuButton_MenuItem={
 };
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
-	menuRenderer: TR_MP_Menu<D_TopbarMenuButton_MenuItem>;
+	menuRenderer: TR_MultiPageMenu<D_TopbarMenuButton_MenuItem>;
 	trackingParams: string;
 	accessibility: D_Accessibility;
 	tooltip: string;

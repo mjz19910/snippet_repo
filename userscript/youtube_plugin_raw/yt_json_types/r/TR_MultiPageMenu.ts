@@ -1,0 +1,1 @@
+type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
