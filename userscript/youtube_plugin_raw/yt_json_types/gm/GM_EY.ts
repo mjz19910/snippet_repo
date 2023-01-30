@@ -1,12 +1,3 @@
-type G_EY_Entity=
-	|EY_MacroMarkersList
-	|EY_Offlineability
-	|EY_TranscriptTrackSelection
-	|S_EY_PlaylistLoop
-	|S_EY_Subscription
-	|S_EY_TranscriptSearchBox
-	;
-;
 type EY_MacroMarkersList={macroMarkersListEntity: DS_EY_MacroMarkersList;};
 type EY_Offlineability={offlineabilityEntity: D_EY_Offlineability;};
 type S_EY_Subscription={subscriptionStateEntity: DS_EY_Subscription;};
