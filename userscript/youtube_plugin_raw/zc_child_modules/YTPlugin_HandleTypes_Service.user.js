@@ -335,8 +335,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#endregion
 	//#region member functions
-	/** @typedef {`${string}${EndpointLikeEndings}`} EPL */
-	/** @template {EPL} EP_Key @template {TE_Endpoint_2<EP_Key,T_Data>} T_EP @template T_Data @arg {T_Endpoint_CF} cf @arg {T_EP} x @arg {EP_Key} k @returns {[endpoint,y]} */
+	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
+	/**
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_Endpoint_CF} cf @arg {T_EP} x @arg {EP_Key} k 
+	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
+	 * */
 	TE_Endpoint_2(cf,k,x) {
 		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
@@ -3686,13 +3689,15 @@ class HandleTypes extends HandleTypesEval {
 	E_RecordNotificationInteractions(x) {
 		const cf="E_RecordNotificationInteractions";
 		let [a,b]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x);
-		this.GE_notification_record_interactions(a);
+		this.M_RecordInteractions(a);
 		this.DE_RecordNotificationInteractions(b);
 	}
-	/** @private @arg {DE_RecordNotificationInteractions} x */
-	GE_notification_record_interactions(x,a=x) {
-		let cf="GE_notification_record_interactions",y=this.unpack_MG(cf,a);
-		const {apiUrl,sendPost,...u}=this.s(cf,y); this.g(u);
+	/** @private @arg {M_RecordInteractions} x */
+	M_RecordInteractions(x) {this.y("M_RecordInteractions",x,"webCommandMetadata",this.GM_RecordInteractions);}
+	/** @private @arg {GM_RecordInteractions} a */
+	GM_RecordInteractions(a) {
+		const cf="GM_RecordInteractions";
+		const {apiUrl,sendPost,...u}=this.s(cf,a); this.g(u);
 		if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -3818,12 +3823,7 @@ class HandleTypes extends HandleTypesEval {
 		this.g(y);
 	}
 	/** @private @arg {R_GhostGrid} x */
-	R_GhostGrid(x) {
-		const cf="R_GhostGrid"; this.k(cf,x);
-		if(!x.ghostGridRenderer) debugger;
-		let y=this.w(x,"ghostGridRenderer");
-		this.D_GhostGrid(y);
-	}
+	R_GhostGrid(x) {this.H_("R_GhostGrid",x,this.D_GhostGrid);}
 	/** @private @arg {D_GhostGrid} x */
 	D_GhostGrid(x) {
 		const cf="D_GhostGrid";
@@ -4219,7 +4219,8 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Playlist(response);
 		this.a_primitive_str(url);
 		if("rootVe" in y) {
-			switch(this.w(y,"rootVe")) {
+			const {rootVe,...u}=y; this.g(u);
+			switch(rootVe) {
 				default: debugger; break;
 				case 5754: break;
 			}
@@ -4321,7 +4322,8 @@ class HandleTypes extends HandleTypesEval {
 	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
-		this.G_Text(this.w(x,"title"));
+		const cf="D_FeedTabbedHeader";
+		this.G_Text(this.w(cf,x,"title"));
 	}
 	/** @private @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
@@ -4351,11 +4353,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_FeedFilterChipBar} x */
 	R_FeedFilterChipBar(x) {
-		this.D_FeedFilterChipBar(this.w(x,"feedFilterChipBarRenderer"));
+		this.D_FeedFilterChipBar(this.w("R_FeedFilterChipBar",x,"feedFilterChipBarRenderer"));
 	}
 	/** @private @arg {R_TwoColumnBrowseResults} x */
 	R_TwoColumnBrowseResults(x) {
-		this.D_TwoColumnBrowseResults(this.w(x,"twoColumnBrowseResultsRenderer"));
+		this.D_TwoColumnBrowseResults(this.w("R_TwoColumnBrowseResults",x,"twoColumnBrowseResultsRenderer"));
 	}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
@@ -4516,20 +4518,20 @@ class HandleTypes extends HandleTypesEval {
 			});
 		}
 	}
-	/** @private @template V @arg {{[U in `${string}Entity`]:V}} x */
-	EN$(x) {return this.w(x,this.get_keys_of(x)[0]);}
+	/** @private @arg {string} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
+	EN$(cf,x) {return this.w(cf,x,this.get_keys_of(x)[0]);}
 	/** @private @arg {G_EY_Entity} x @returns {G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?V|null:null:never} */
 	EntityMutationPayload(x) {
-		const cf="EntityMutationPayload"; this.k(cf,x);
-		if("subscriptionStateEntity" in x) return this.EN$(x);
-		if("transcriptTrackSelectionEntity" in x) return this.EN$(x);
-		if("transcriptSearchBoxStateEntity" in x) return this.EN$(x);
-		if("offlineabilityEntity" in x) return this.EN$(x);
-		if("playlistLoopStateEntity" in x) return this.EN$(x);
-		if("macroMarkersListEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
-		if("superThanksSelectedTierEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
+		const cf="EntityMutationPayload";
+		if("subscriptionStateEntity" in x) return this.EN$(cf,x);
+		if("transcriptTrackSelectionEntity" in x) return this.EN$(cf,x);
+		if("transcriptSearchBoxStateEntity" in x) return this.EN$(cf,x);
+		if("offlineabilityEntity" in x) return this.EN$(cf,x);
+		if("playlistLoopStateEntity" in x) return this.EN$(cf,x);
+		if("macroMarkersListEntity" in x) {let ret=this.EN$(cf,x); console.log(ret); debugger; return null;};
+		if("superThanksSelectedTierEntity" in x) {let ret=this.EN$(cf,x); console.log(ret); debugger; return null;};
 		this.do_codegen(cf,x);
-		this.do_codegen(`${cf}$entity`,this.EN$(x));
+		this.do_codegen(`${cf}$entity`,this.EN$(cf,x));
 		{debugger;}
 		return null;
 	}
@@ -4652,14 +4654,18 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {
 		const cf="E_CreateBackstagePost";
-		this.TE_Endpoint_3(cf,x,x => {
-			let u=this.w(this.s(cf,x),"createBackstagePostEndpoint");
-			this.params(cf,"createBackstagePost.params",this.w(this.s(`D${cf}`,u),"createBackstagePostParams"));
-		},this.M_CreateBackstagePost);
+		let [a,b]=this.TE_Endpoint_3(cf,"createBackstagePostEndpoint",x);
+		this.DE_CreateBackstagePost(b);
+		this.M_CreateBackstagePost(a);
+	}
+	/** @private @arg {DE_CreateBackstagePost} x */
+	DE_CreateBackstagePost(x) {
+		const cf="DE_CreateBackstagePost";
+		this.y(cf,x,"createBackstagePostParams",x => this.params(cf,"createBackstagePost.params",x));
 	}
 	/** @private @arg {M_CreateBackstagePost} x */
 	M_CreateBackstagePost(x) {
-		this.y(x,"webCommandMetadata",this.GM_CreateBackstagePost);
+		this.y("M_CreateBackstagePost",x,"webCommandMetadata",this.GM_CreateBackstagePost);
 	}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {
@@ -4909,12 +4915,7 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {C_RelatedChip} x */
-	C_RelatedChip(x) {
-		this.TE_Endpoint_3("C_RelatedChip",x,x => {
-			if(!x.relatedChipCommand) debugger;
-			this.DC_RelatedChip(this.w(x,"relatedChipCommand"));
-		});
-	}
+	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
 		const cf="DC_RelatedChip";
@@ -4993,11 +4994,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_HotkeyDialogSectionOption} x */
 	D_HotkeyDialogSectionOption(x) {
-		const cf="D_HotkeyDialogSectionOption"; this.k(cf,x);
+		const cf="D_HotkeyDialogSectionOption";
 		const {label,hotkey,...y}=this.s(cf,x);
 		this.G_Text(label);
 		this.a_primitive_str(hotkey);
-		{const cn="hotkeyAccessibilityLabel"; if(cn in y) return this.D_Accessibility(this.w(y,cn));}
+		if("hotkeyAccessibilityLabel" in y) {
+			const {hotkeyAccessibilityLabel,...y1}=y; this.g(y1);
+			return this.D_Accessibility(hotkeyAccessibilityLabel);
+		}
+
 		this.g(y);
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
@@ -5192,10 +5197,12 @@ class HandleTypes extends HandleTypesEval {
 			this.z(serviceEndpoints,this.E_Like);
 		}
 	}
-	/** @private @type {(x:Pick<E_Like,"likeEndpoint">)=>void} */
-	E_Like_D({likeEndpoint: a,...y},_=this.g(y)) {this.DE_Like(a);}
 	/** @private @arg {E_Like} x */
-	E_Like(x) {this.TE_Endpoint_3("E_Like",x,this.E_Like_D,this.E_Like_C);}
+	E_Like(x) {
+		let [a,b]=this.TE_Endpoint_3("E_Like","likeEndpoint",x);
+		this.E_Like_C(a);
+		this.DE_Like(b);
+	}
 	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
 	E_Like_C(x) {
 		const cf="E_Like_C";
