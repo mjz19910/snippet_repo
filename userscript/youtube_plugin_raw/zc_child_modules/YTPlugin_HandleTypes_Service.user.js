@@ -6732,15 +6732,15 @@ class HandleTypes extends HandleTypesEval {
 	D_ThumbnailOverlayToggleButton(x) {
 		const cf="D_ThumbnailOverlayToggleButton";
 		if("toggledServiceEndpoint" in x) {
-			const [{...o1},{...o2},{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);//#destructure_off
+			const [o1,o2,{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);//#destructure_off
 			this.ceq(isToggled,this.false_());
 			this.D_ThumbnailOverlayToggleButton_ToggledPrefix_1(o1);
 			this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(o2);
 			return;
 		}
-		const [{...o1},{...o2},y]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);//#destructure_off
-		o1;
-		o2;
+		const [o1,o2,y]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);//#destructure_off
+		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
+		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
 	}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback","thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
@@ -6911,8 +6911,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem";
-		let u1=this.D_VideoOwner_Omit(cf,x);
-		const {title,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {title,timeDescription,...y}=this.s(cf,x);
+		console.log(`[${cf}.next_key]`,this.get_keys_of(y)[0]);
 	}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
