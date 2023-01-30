@@ -386,8 +386,10 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @arg {string} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
+	/** @protected @arg {string} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(cf,x,k));}
+	/** @protected @arg {string} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
+	zy(cf,k,x,f) {return this.z(this.w(cf,x,k),f);}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -6337,7 +6339,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.G_Text(contentDescription);
 		this.G_Text(soundAttributionTitle);
-		debugger;
 	}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
@@ -6364,7 +6365,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(lengthText);
 		this.R_Menu(menu);
 		this.E_Watch(navigationEndpoint);
-		debugger;
 	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
@@ -6385,14 +6385,13 @@ class HandleTypes extends HandleTypesEval {
 		this.t(sponsorButton,this.R_Button);
 		this.G_Text(channelHandleText);
 		this.G_Text(videosCountText);
-		debugger;
 	}
 	/** @private @arg {R_ChannelHeaderLinks} x */
-	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks",x,this.D_ChannelHeaderLinks);}
+	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {D_ChannelHeaderLinks} x */
 	D_ChannelHeaderLinks(x) {
 		const cf="D_ChannelHeaderLinks";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.zy(cf,"primaryLinks",x,this.D_PrimaryLinkItem);
 	}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
@@ -6444,15 +6443,19 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
-		const cf="G_ChannelSwitcherContent";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("accountItem" in x) this.A_AccountItem(x);
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
-	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader",x,this.D_ChannelSwitcherHeader);}
+	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
 		const cf="D_ChannelSwitcherHeader";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {title,button,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		title;
+		button;
 	}
 	/** @private @arg {D_MerchandiseShelf} x */
 	D_MerchandiseShelf(x) {
@@ -6466,11 +6469,24 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(actionButton);
 	}
 	/** @private @arg {R_MerchandiseItem} x */
-	R_MerchandiseItem(x) {this.H_("R_MerchandiseItem",x,this.D_MerchandiseItem);}
+	R_MerchandiseItem(x) {this.H_("R_MerchandiseItem","merchandiseItemRenderer",x,this.D_MerchandiseItem);}
 	/** @private @arg {D_MerchandiseItem} x */
 	D_MerchandiseItem(x) {
 		const cf="D_MerchandiseItem";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {thumbnail,description,title,price,vendorName,trackingParams,buttonText,buttonCommand,accessibilityTitle,buttonAccessibilityText,fromVendorText,additionalFeesText,regionFormat,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		thumbnail;
+		description;
+		title;
+		price;
+		vendorName;
+		trackingParams;
+		buttonText;
+		buttonCommand;
+		accessibilityTitle;
+		buttonAccessibilityText;
+		fromVendorText;
+		additionalFeesText;
+		regionFormat;
 	}
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
@@ -6502,7 +6518,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
 	/** @private @arg {RMD_RowContainer} x */
-	RMD_RowContainer(x) {this.H_("RMD_RowContainer",x,this.DMD_RowContainer);}
+	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {DMD_RowContainer} x */
 	DMD_RowContainer(x) {
 		const cf="DMD_RowContainer";
@@ -6512,12 +6528,11 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_VideoOwner} x */
-	R_VideoOwner(x) {this.H_("R_VideoOwner",x,this.D_VideoOwner);}
+	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
-		const cf="D_RefreshPlaylist";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
+		const cf="D_RefreshPlaylist"; this.k(cf,x);
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {string} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
@@ -6545,7 +6560,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_MusicCarouselShelf";
 		const {contents,header,trackingParams,itemSize,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(contents,this.ceq);
-		this.ceq(header);
+		this.g(header);
 		this.trackingParams(cf,trackingParams);
 		this.ceq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
 		debugger;
@@ -6564,24 +6579,28 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {R_MusicResponsiveListItem} x */
-	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem",x,this.D_MusicResponsiveListItem);}
+	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.D_MusicResponsiveListItem);}
 	/** @private @arg {D_MusicResponsiveListItem} x */
 	D_MusicResponsiveListItem(x) {
 		const cf="D_MusicResponsiveListItem";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
 	/** @private @arg {R_MusicShelfDivider} x */
-	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider",x,this.D_MusicShelfDivider);}
+	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.D_MusicShelfDivider);}
 	/** @private @arg {D_MusicShelfDivider} x */
 	D_MusicShelfDivider(x) {
 		const cf="D_MusicShelfDivider";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {CD_Reload} x */
-	CD_Reload(x) {
-		const cf="CD_Reload";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+	/** @private @arg {string} cf1 @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
+	DC_Generic_CTP(cf1,path,x) {
+		const cf2="DC_Generic_CTP";
+		const {continuation,clickTrackingParams,...y}=this.s(cf2,x); this.g(y);
+		this.params(cf1,path,continuation);
+		this.clickTrackingParams(cf1,clickTrackingParams);
 	}
+	/** @private @arg {CD_Reload} x */
+	CD_Reload(x) {this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo";
@@ -6860,13 +6879,17 @@ class HandleTypes extends HandleTypesEval {
 		const {commentText,chipRenderer,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
-	T_Item=(x,f) => this.y("T_Item",x,"item",f);
+	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {x; debugger;}
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {x; debugger;}
+	/** @private @arg {D_PrimaryLinkItem} x */
+	D_PrimaryLinkItem(x) {x; debugger;}
+	/** @private @arg {A_AccountItem} x */
+	A_AccountItem(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
