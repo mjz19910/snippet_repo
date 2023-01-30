@@ -510,7 +510,7 @@ class HandleTypes extends HandleTypesEval {
 			default: {
 				x===0;
 				/** @private @arg {GM_WC} x */
-				this.codegen_new_typedef(x,`G_VE${cx}`);
+				this.codegen_str(`G_VE${cx}`,x);
 				console.log(`\n\tG_VE${cx},`);
 				console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 			} break;
@@ -1750,7 +1750,7 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_new_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
-	/** @private @arg {string} cf @arg {{}} x */
+	/** @private @arg {string} cf @arg {object} x */
 	do_codegen(cf,x) {
 		let u_name=this.get_codegen_name(x);
 		this.codegen_new_typedef(`${cf}$${u_name}`,x);
@@ -1768,8 +1768,12 @@ class HandleTypes extends HandleTypesEval {
 	ignore_incorrect_name_set=new Set([
 		"D_CommonConfig",
 	]);
-	/** @private @arg {{[U in string]: unknown}} x */
-	get_codegen_name(x) {
+	/** @private @arg {object} x1 */
+	get_codegen_name(x1) {
+		/** @type {{}} */
+		let x2=x1;
+		/** @type {{[x:string]:unknown;}} */
+		let x=x2;
 		if(typeof x.type==='string') {
 			return x.type.split(".").map(x => {
 				if(x.includes("_")) {
@@ -1787,6 +1791,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
+		if(typeof kk==="number") return null;
 		let dec=this.uppercase_first(kk);
 		let ren_dec=this.renderer_decode_map.get(dec);
 		if(ren_dec) {
@@ -1927,11 +1932,15 @@ class HandleTypes extends HandleTypesEval {
 	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @arg {D_STR_CF} cf @arg {string} x */
 	codegen_str(cf,x) {
+		if(x.startsWith("UC")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}=UC\${string}`);
+		}
+		cf;
 		x;
 	}
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {
-		const cf="channelId";
+		const cf="D_ChannelId";
 		if(this.str_starts_with("UC",x)) {
 			if(x.length===24) return;
 			console.log("[channelId.length]",x.length);
@@ -1939,7 +1948,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @template {D_SubscribeButton} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_SubscribeButton} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {[u1,x1]} */
 	D_SubscribeButton_Omit(cf,x) {
 		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.s(cf,x);
 		this.G_Text(buttonText);
@@ -1949,28 +1958,28 @@ class HandleTypes extends HandleTypesEval {
 		this.D_ChannelId(channelId);
 		this.trackingParams(cf,trackingParams);
 		if(showPreferences!==false) debugger;
-		return y;
+		let [u1,x1]=this.unwrap_prefix(y,"subscribed");
+		return [u1,x1];
 	}
-	/** @template {Extract<D_SubscribeButton,{subscribedButtonText:any}>} T @arg {string} cf @arg {T} x @returns {YRet} */
+	/** @arg {"D_SubscribeButton"} cf @arg {T_RemovePrefix<D_SubscribeButton,"subscribed">} x */
+	D_SubButton_Prefix_1(cf,x) {
+		if("entityKey" in x) {
+			const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
+			this.G_Text(buttonText);
+			console.log("[subscribed.entityKey]",entityKey);
+			return;
+		}
+		if("buttonText" in x) {
+			const {buttonText,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
+			this.G_Text(buttonText);
+			return;
+		}
+		this.g(x);
+	}
+	/** @template {Extract<D_SubscribeButton,{subscribedButtonText:any}>} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {YRet} */
 	D_SubButton_Omit_Button(cf,x) {
-		const y=this.D_SubscribeButton_Omit(cf,x);
-		let [sub,o1]=this.unwrap_prefix(y,"subscribed");
-		/** @arg {T_RemovePrefix<D_SubscribeButton,"subscribed">} x */
-		let r_sub=({...x}) => {
-			if("entityKey" in x) {
-				const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
-				this.G_Text(buttonText);
-				console.log("[subscribed.entityKey]",entityKey);
-				return;
-			}
-			if("buttonText" in x) {
-				const {buttonText,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
-				this.G_Text(buttonText);
-				return;
-			}
-			this.g(x);
-		};
-		r_sub(sub);
+		const [sub,o1]=this.D_SubscribeButton_Omit(cf,x);
+		this.D_SubButton_Prefix_1(cf,sub);
 		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
 		/** @arg {T_RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
 		let r_un_sub=({...x}) => {
@@ -3021,9 +3030,10 @@ class HandleTypes extends HandleTypesEval {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @private @arg {Extract<DE_Url['url'],`${string}www.youtube.com${string}`>} uv */
-	handle_yt_url(uv) {
-		let [p1,s1]=split_string_once(uv,"//"); if(p1!=="https:") debugger;
+	/** @private @arg {D_YoutubeUrl} x */
+	D_YoutubeUrl(x) {
+		const cf="D_YoutubeUrl";
+		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
 		let [h,sp]=split_string_once(s1,"/");
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
@@ -3037,7 +3047,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-		this.do_codegen(cf,x);
+		this.codegen_str(cf,x);
 	}
 	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_UrlStr,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
@@ -3059,16 +3069,17 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {Extract<DE_Url['url']|"https://www.youtubekids.com/?source=youtube_web",`https://www.youtubekids.com${string}`>} x */
-	handle_yt_kids_url(x) {
+	/** @private @arg {D_YoutubeKidsUrl} x */
+	D_YoutubeKidsUrl(x) {
+		const cf="D_YoutubeKidsUrl";
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
-		this.do_codegen(cf,x);
+		this.codegen_str(cf,x);
 	}
 	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
-		if(this.str_starts_with(rp,x)) return this.handle_yt_url(x);
+		if(this.str_starts_with(rp,x)) return this.D_YoutubeUrl(x);
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with("https://",sp.href)) {
 			return;
@@ -3112,7 +3123,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(up.host) {
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
 			case "studio.youtube.com": return this.handle_yt_studio_url(up.href);
-			case "www.youtubekids.com": return this.handle_yt_kids_url(up.href);
+			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
 			default: debugger; break;
 		}
@@ -5392,8 +5403,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		// let {...s}=this.parse_url_search_params(up.search);
-		this.do_codegen(cf,{from: cf,url: b});
-		this.do_codegen(cf,x);
+		this.codegen_str(cf,b);
 	}
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {

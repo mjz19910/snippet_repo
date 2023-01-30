@@ -4413,7 +4413,7 @@ class ServiceMethods extends ServiceData {
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
-	/** @protected @arg {string} cf @arg {{}} x @arg {boolean} [ret_val] */
+	/** @protected @arg {string} cf @arg {object} x @arg {boolean} [ret_val] */
 	codegen_new_typedef(cf,x,ret_val) {
 		return this.codegen.codegen_typedef(cf,x,ret_val);
 	}

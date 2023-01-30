@@ -210,7 +210,7 @@ class CodegenService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {string} cf @arg {{}} x  @arg {boolean} [ret_val] @returns {string|null|void} */
+	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,ret_val) {
 		let new_typedef=this.#_codegen_typedef(cf,x);
 		if(ret_val) return new_typedef;
@@ -418,7 +418,7 @@ class CodegenService extends BaseService {
 		if(state.object_count<3) return x;
 		return {};
 	}
-	/** @no_mod @arg {string} cf @arg {{}} x */
+	/** @no_mod @arg {string} cf @arg {object} x */
 	#_codegen_typedef(cf,x) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
