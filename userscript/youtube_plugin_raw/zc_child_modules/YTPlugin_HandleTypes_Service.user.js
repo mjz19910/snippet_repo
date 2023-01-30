@@ -2578,7 +2578,12 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.tz(flexibleItems,this.R_MenuFlexibleItem);
-		this.tz(topLevelButtons,this.R_SegmentedLikeDislikeButton);
+		this.tz(topLevelButtons,x => {
+			const cf="D_Menu_Button"; this.k(cf,x);
+			if("buttonRenderer" in x) return this.R_Button(x);
+			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+			this.do_codegen(cf,x);
+		});
 	}
 	/** @private @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
