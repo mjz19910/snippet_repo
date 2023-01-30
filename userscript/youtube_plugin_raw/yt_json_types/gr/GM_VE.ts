@@ -5,7 +5,8 @@ type GM_VE3611_WC={
 	|"/gaming"
 	;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
-	rootVe: 3611; apiUrl: "/youtubei/v1/browse";
+	rootVe: 3611;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE3832_Watch_WC={
 	url: `/watch?${string}`;
@@ -15,7 +16,8 @@ type GM_VE3832_Watch_WC={
 type GM_VE3854_WC={
 	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 3854; apiUrl: "/youtubei/v1/browse";
+	rootVe: 3854;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE4724_WC={
 	url: `/results?search_query=${string}`;
@@ -25,22 +27,28 @@ type GM_VE4724_WC={
 type GM_VE5754_WC={
 	url: `/playlist?list=${"WL"|"LL"|`PL${string}`}`;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
-	rootVe: 5754; apiUrl: "/youtubei/v1/browse";
+	rootVe: 5754;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE6827_WC={
 	url?: D_VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 6827; apiUrl: "/youtubei/v1/browse";
+	rootVe: 6827;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE11487_WC={
 	url: "/premium";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 11487; apiUrl: "/youtubei/v1/browse";
+	rootVe: 11487;
+	apiUrl: "/youtubei/v1/browse";
 };
+type GU_VE23462="/account"|"/account_notifications";
+
 type GM_VE23462_WC={
-	url: "/account"|"/account_notifications";
+	url: GU_VE23462;
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
-	rootVe: 23462; apiUrl: "/youtubei/v1/browse";
+	rootVe: 23462;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE37414_WC={
 	url: "/shorts/";
@@ -50,7 +58,8 @@ type GM_VE37414_WC={
 type GM_VE42352_WC={
 	url: "/feed/downloads";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 42352; apiUrl: "/youtubei/v1/browse";
+	rootVe: 42352;
+	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE83769_WC={
 	url: GU_VE83769_UrlStr|GU_VE83769_ExternalUrlStr;
@@ -60,5 +69,6 @@ type GM_VE83769_WC={
 type GM_VE96368_WC_browse={
 	url: "/feed/subscriptions";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 96368; apiUrl: "/youtubei/v1/browse";
+	rootVe: 96368;
+	apiUrl: "/youtubei/v1/browse";
 };
