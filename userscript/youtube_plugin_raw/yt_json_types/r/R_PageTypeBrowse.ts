@@ -5,3 +5,7 @@ type R_PageTypeBrowse={
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
+type E_Page=YTNavigateFinishDetail['endpoint'];
+type D_STR_CF=[
+	"channelId",
+][number];

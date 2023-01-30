@@ -1,9 +1,13 @@
-type D_SubscribeButton={
+
+type D_ChannelId=`UC${string}`;
+type D_SubscribeButton_Base={
+	type: "FREE";
+	channelId: D_ChannelId;
+};
+type D_SubscribeButton_Alts={
 	buttonText: G_Text;
 	subscribed: false;
 	enabled: true;
-	type: "FREE";
-	channelId: `UC${string}`;
 	showPreferences: false;
 	subscribedButtonText: G_Text;
 	unsubscribedButtonText: G_Text;
@@ -20,8 +24,6 @@ type D_SubscribeButton={
 	buttonText: G_Text;
 	subscribed: boolean;
 	enabled: true;
-	type: "FREE";
-	channelId: `UC${string}`;
 	showPreferences: false;
 	subscribedButtonText: G_Text;
 	unsubscribedButtonText: G_Text;
@@ -34,8 +36,6 @@ type D_SubscribeButton={
 	buttonText: G_Text;
 	subscribed: true;
 	enabled: true;
-	type: "FREE";
-	channelId: "UC7YOGHUfC1Tb6E4pudI9STA";
 	showPreferences: false;
 	subscribedButtonText: G_Text;
 	unsubscribedButtonText: G_Text;
@@ -45,3 +45,4 @@ type D_SubscribeButton={
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 };
+type D_SubscribeButton=D_SubscribeButton_Base&D_SubscribeButton_Alts;

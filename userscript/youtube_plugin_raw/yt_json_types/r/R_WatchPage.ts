@@ -1,1 +1,1 @@
-type R_WatchPage=R_WatchPage_1|R_VE3832_WatchPage;
+type R_WatchPage=R_WatchPage_Generic|R_WatchPage_VE3832;

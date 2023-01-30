@@ -232,7 +232,7 @@ class HandleTypesEval extends ServiceMethods {
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
 	IR_TextRun(x,f_run) {
@@ -566,7 +566,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		x===0;
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {GM_VE3854_WC} x */
 	GM_VE3854_WC(x) {
@@ -613,15 +613,15 @@ class HandleTypes extends HandleTypesEval {
 	R_WatchPage(x) {
 		const cf="R_WatchPage"; this.k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: this.R_VE3832_WatchPage(x); break;
+			case 3832: this.R_WatchPage_VE3832(x); break;
 			default: debugger; break;
 		} else {
-			this.R_Generic_WatchPage(x);
+			this.R_WatchPage_Generic(x);
 		}
 	}
-	/** @private @arg {R_WatchPage_1} x */
-	R_Generic_WatchPage(x) {
-		const cf="R_Generic_WatchPage";
+	/** @private @arg {R_WatchPage_Generic} x */
+	R_WatchPage_Generic(x) {
+		const cf="R_WatchPage_Generic";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.E_Watch(endpoint);
 		this.RS_Watch(response);
@@ -630,9 +630,9 @@ class HandleTypes extends HandleTypesEval {
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
-	/** @private @arg {R_VE3832_WatchPage} x */
-	R_VE3832_WatchPage(x) {
-		const cf="R_VE3832_WatchPage";
+	/** @private @arg {R_WatchPage_VE3832} x */
+	R_WatchPage_VE3832(x) {
+		const cf="R_WatchPage_VE3832";
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
@@ -727,7 +727,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
-		if(this.str_starts_with("UC",x)) return this.channelId(x);
+		if(this.str_starts_with("UC",x)) return this.D_ChannelId(x);
 		if(this.str_starts_with("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
@@ -907,14 +907,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Browse_MD"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar"; this.k(cf,x);
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
@@ -1008,14 +1008,15 @@ class HandleTypes extends HandleTypesEval {
 	D_PlaylistSidebar(x) {
 		const cf="D_PlaylistSidebar";
 		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(items,this.PlaylistSidebarItem);
+		this.z(items,this.G_PlaylistSidebarItem);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {PlaylistSidebarItem} x */
-	PlaylistSidebarItem(x) {
+	/** @private @arg {G_PlaylistSidebarItem} x */
+	G_PlaylistSidebarItem(x) {
+		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -1120,7 +1121,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RG_Result"; this.k(cf,x);
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
@@ -1221,20 +1222,20 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_RichItemContent} x */
 	G_RichItemContent(x) {
+		const cf="G_RichItemContent"; this.k(cf,x);
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_FeedNudge} x */
 	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
-	/** @private @arg {R_MovingThumbnail} x */
-	richThumbnail_Video(x) {
-		if(!x) {debugger; return;}
+	/** @private @arg {D_VideoLike_richThumbnail} x */
+	D_VideoLike_richThumbnail(x) {
+		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
-		console.log("rich.thumb",x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_MovingThumbnail} x */
 	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
@@ -1450,12 +1451,13 @@ class HandleTypes extends HandleTypesEval {
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
-	/** @private @arg {E_Watch} x */
+	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
+		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
@@ -1520,12 +1522,12 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(fromHistory,"boolean");
 		this._primitive_of(navigationDoneMs,"number");
 	}
-	/** @private @arg {YTNavigateFinishDetail['endpoint']} x */
+	/** @private @arg {E_Page} x */
 	E_Page(x) {
-		if(!("clickTrackingParams" in x)) return;
+		const cf="E_Page"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
@@ -1542,7 +1544,7 @@ class HandleTypes extends HandleTypesEval {
 			default: break;
 		}
 		console.log("pt",x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
@@ -1923,14 +1925,19 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_SubscribeButton} x */
 	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	/** @arg {D_STR_CF} cf @arg {string} x */
+	codegen_str(cf,x) {
+		x;
+	}
 	/** @private @arg {`UC${string}`} x */
-	channelId(x) {
+	D_ChannelId(x) {
+		const cf="channelId";
 		if(this.str_starts_with("UC",x)) {
 			if(x.length===24) return;
 			console.log("[channelId.length]",x.length);
 			return;
 		}
-		{debugger;}
+		this.codegen_str(cf,x);
 	}
 	/** @private @template {D_SubscribeButton} T @arg {string} cf @arg {T} x */
 	D_SubscribeButton_Omit(cf,x) {
@@ -1939,7 +1946,7 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(subscribed,"boolean");
 		if(enabled!==true) debugger;
 		if(type!=="FREE") debugger;
-		this.channelId(channelId);
+		this.D_ChannelId(channelId);
 		this.trackingParams(cf,trackingParams);
 		if(showPreferences!==false) debugger;
 		return y;
@@ -2004,7 +2011,7 @@ class HandleTypes extends HandleTypesEval {
 			this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 			return;
 		}
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {
@@ -2015,7 +2022,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_Subscribe(x) {
 		const cf="DE_Subscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);
-		this.z(x.channelIds,this.channelId);
+		this.z(x.channelIds,this.D_ChannelId);
 		this.params(cf,"subscribe.params",params);
 	}
 	/** @private @arg {M_Subscribe} x */
@@ -2113,13 +2120,13 @@ class HandleTypes extends HandleTypesEval {
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
 		const cf="D_NotificationMenu_Popup_SectionItem"; this.k(cf,x);
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 		return null;
 	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
@@ -2194,7 +2201,7 @@ class HandleTypes extends HandleTypesEval {
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 		this.do_codegen(cf,x);
 		x===0;
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
@@ -2281,7 +2288,7 @@ class HandleTypes extends HandleTypesEval {
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
@@ -2564,7 +2571,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
@@ -2656,7 +2663,7 @@ class HandleTypes extends HandleTypesEval {
 		if("" in x) return;
 		this.do_codegen(cf,x);
 		x==="";
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {
@@ -2987,7 +2994,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y); return a;}
@@ -3030,7 +3037,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_UrlStr,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
@@ -3056,7 +3063,7 @@ class HandleTypes extends HandleTypesEval {
 	handle_yt_kids_url(x) {
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
@@ -3168,7 +3175,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_CompactVideo";
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=u; this.g(y);
-		this.t(richThumbnail,this.richThumbnail_Video);
+		this.t(richThumbnail,this.D_VideoLike_richThumbnail);
 		this.D_Accessibility(accessibility);
 		console.log("chan.thumb",channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
@@ -3348,7 +3355,7 @@ class HandleTypes extends HandleTypesEval {
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
@@ -3384,7 +3391,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -3508,7 +3515,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -3590,7 +3597,7 @@ class HandleTypes extends HandleTypesEval {
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		this.do_codegen(cf,x); x==="";
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {
@@ -3787,7 +3794,7 @@ class HandleTypes extends HandleTypesEval {
 					function wx() {return "UCx";}
 					let [cid,fe]=split_string_once_last(sa,"featured",wx());
 					if(fe!=="") debugger;
-					this.channelId(cid);
+					this.D_ChannelId(cid);
 					return;
 				}
 				console.log("target_id.ll",ll);
@@ -3893,7 +3900,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_GetTranscript";
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
-		{debugger;} commandMetadata;
+		this.do_codegen(cf,x); commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_transcript.params",x));
 	}
@@ -3945,7 +3952,7 @@ class HandleTypes extends HandleTypesEval {
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
 		this.do_codegen(cf,x); x==="";
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
@@ -4162,7 +4169,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		this.do_codegen(cf,x); x==="";
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
@@ -4224,7 +4231,7 @@ class HandleTypes extends HandleTypesEval {
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x); x==="";
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
@@ -4233,14 +4240,14 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {
 		const cf="E_YpcGetOffers";
 		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
-		{debugger;} commandMetadata;
+		this.do_codegen(cf,x); commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_Params("D_YpcGetOffers",a,(params,cf) => this.params(cf,"ypc_get_offers.params",params));
 	}
@@ -4357,7 +4364,7 @@ class HandleTypes extends HandleTypesEval {
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
@@ -4392,7 +4399,7 @@ class HandleTypes extends HandleTypesEval {
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_FeedFilterChipBar} x */
 	R_FeedFilterChipBar(x) {
@@ -4408,7 +4415,7 @@ class HandleTypes extends HandleTypesEval {
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	static {
 		this.prototype.MC_ResolveUrl;
@@ -4509,7 +4516,7 @@ class HandleTypes extends HandleTypesEval {
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
@@ -4571,7 +4578,7 @@ class HandleTypes extends HandleTypesEval {
 		if("superThanksSelectedTierEntity" in x) {let ret=this.EN$(cf,x); console.log(ret); debugger; return null;};
 		this.do_codegen(cf,x);
 		this.do_codegen(`${cf}$entity`,this.EN$(cf,x));
-		{debugger;}
+		this.do_codegen(cf,x);
 		return null;
 	}
 	/** @private @arg {DE_PersistenceOption} x */
@@ -4586,7 +4593,7 @@ class HandleTypes extends HandleTypesEval {
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -4641,7 +4648,7 @@ class HandleTypes extends HandleTypesEval {
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
@@ -4649,7 +4656,7 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {SE_ShareEntity} x */
 	ES_ShareEntity(x) {
@@ -4688,7 +4695,7 @@ class HandleTypes extends HandleTypesEval {
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {
@@ -4729,7 +4736,7 @@ class HandleTypes extends HandleTypesEval {
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
@@ -4946,7 +4953,7 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
@@ -4990,7 +4997,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_WatchPlaylist";
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
-		{debugger;} commandMetadata;
+		this.do_codegen(cf,x); commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
 		this.D_WatchPlaylist(watchPlaylistEndpoint);
 	}
@@ -5160,7 +5167,7 @@ class HandleTypes extends HandleTypesEval {
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.A_UpdateSubscribeButton(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
@@ -5187,7 +5194,7 @@ class HandleTypes extends HandleTypesEval {
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("R_ProductList","productListRenderer",x,this.D_ProductList);}
@@ -5288,7 +5295,7 @@ class HandleTypes extends HandleTypesEval {
 		if("videoId" in x) return this.videoId(this.w(cf,x,"videoId"));
 		if("playlistId" in x) return this.playlistId(this.w(cf,x,"playlistId"));
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
@@ -5306,7 +5313,7 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 		this.G_Text(x);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_R_SectionItem} x */
@@ -5330,7 +5337,7 @@ class HandleTypes extends HandleTypesEval {
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
 		if("itemSectionRenderer" in x) return this.G_Watch_SecondaryResults_R_SectionItem(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
@@ -5386,7 +5393,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		// let {...s}=this.parse_url_search_params(up.search);
 		this.do_codegen(cf,{from: cf,url: b});
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_CompactRadio} x */
 	D_CompactRadio(x) {
@@ -5424,7 +5431,7 @@ class HandleTypes extends HandleTypesEval {
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		this.do_codegen(cf,x); x===0;
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_ProfileColumnStats} x */
 	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
@@ -5481,7 +5488,7 @@ class HandleTypes extends HandleTypesEval {
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		this.do_codegen(cf,x); x===0;
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
@@ -5639,7 +5646,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_CommentItemSection_EntryPoint";
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
 		this.do_codegen(cf,x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_CommentsEntryPointHeader} x */
 	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader","commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
@@ -5657,7 +5664,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CommentsEntryPointHeader['contentRenderer']} x */
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
-		{debugger;}
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
@@ -5768,7 +5775,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.trackingParams(cf,trackingParams);
 		this.R_EntityBatchUpdate(frameworkUpdates);
-		this.channelId(channelId);
+		this.D_ChannelId(channelId);
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 		debugger;
 	}
@@ -6323,7 +6330,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {
 		let eid=split_string_once(x,"/");
-		this.channelId(eid[0]);
+		this.D_ChannelId(eid[0]);
 		console.log(eid[1]);
 		debugger;
 	}
@@ -6397,7 +6404,7 @@ class HandleTypes extends HandleTypesEval {
 	D_C4TabbedHeader(x) {
 		const cf="D_C4TabbedHeader";
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.channelId(channelId);
+		this.D_ChannelId(channelId);
 		this.a_primitive_str(title);
 		this.E_Browse(navigationEndpoint);
 		this.R_Thumbnail(avatar);
@@ -6844,7 +6851,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DAU_SubscribeButton";
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_bool(subscribed);
-		this.channelId(channelId);
+		this.D_ChannelId(channelId);
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {
@@ -6857,7 +6864,7 @@ class HandleTypes extends HandleTypesEval {
 	A_ExternalChannelId(x) {
 		const cf="A_ExternalChannelId";
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.channelId(externalChannelId);
+		this.D_ChannelId(externalChannelId);
 	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {

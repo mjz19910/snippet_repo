@@ -601,7 +601,7 @@ type R_VE5754_PlaylistPage={
 	url: string;
 	rootVe: 5754;
 };
-type R_VE3832_WatchPage={
+type R_WatchPage_VE3832={
 	rootVe: 3832;
 	url: D_WatchPageUrl;
 	endpoint: E_Watch;

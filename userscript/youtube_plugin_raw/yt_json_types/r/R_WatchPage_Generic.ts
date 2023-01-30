@@ -1,4 +1,4 @@
-type R_WatchPage_1={
+type R_WatchPage_Generic={
 	page: "watch";
 	endpoint: E_Watch;
 	response: RS_Watch;

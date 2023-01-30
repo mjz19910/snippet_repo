@@ -7,3 +7,4 @@ type D_Menu={
 	loggingDirectives?: D_LoggingDirectives;
 	flexibleItems?: R_MenuFlexibleItem[];
 };
+type D_VideoLike_richThumbnail=R_MovingThumbnail;

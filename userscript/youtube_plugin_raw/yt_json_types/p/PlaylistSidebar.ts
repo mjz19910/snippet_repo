@@ -1,4 +1,4 @@
 type D_PlaylistSidebar={
-	items: PlaylistSidebarItem[];
+	items: G_PlaylistSidebarItem[];
 	trackingParams: string;
 };

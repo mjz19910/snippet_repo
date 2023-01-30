@@ -26,3 +26,4 @@ type D_Video={
 	owner?: D_Video_Owner;
 	buttons?: R_ToggleButton[];
 };
+type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
