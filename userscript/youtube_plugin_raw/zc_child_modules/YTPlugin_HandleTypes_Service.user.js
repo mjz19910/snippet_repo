@@ -5380,13 +5380,14 @@ class HandleTypes extends HandleTypesEval {
 		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
 		this.trackingParams(cf,trackingParams);
 	}
-	R_RelatedChipCloud_Content(x) {
+	/** @private @arg {D_RelatedChipCloud} x */
+	D_RelatedChipCloud(x) {
 		const cf="R_RelatedChipCloud.content"; this.k(cf,x);
 		this.R_ChipCloud(this.w(cf,x,"content"));
 	}
 	/** @private @arg {R_RelatedChipCloud} x */
 	R_RelatedChipCloud(x) {
-		this.H_("RC_LiveChat","relatedChipCloudRenderer",x,this.R_RelatedChipCloud_Content);
+		this.H_("RC_LiveChat","relatedChipCloudRenderer",x,this.D_RelatedChipCloud);
 	}
 	/** @private @arg {R_ChipCloud} x */
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
