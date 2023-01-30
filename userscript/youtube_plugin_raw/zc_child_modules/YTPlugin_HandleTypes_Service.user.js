@@ -279,8 +279,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @template {any[]} T @arg {T} a */
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
-	/** @private @template T @arg {D_CF_UnpackMG} cf @arg {{webCommandMetadata: T}} x */
-	unpack_MG(cf,x) {return this.w(cf,x,"webCommandMetadata");}
+	/** @private @template T @arg {D_CF["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
+	unpack_T_WCM(cf,x) {return this.w(`D_CF:Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @arg {string} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
 	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s(cf,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
 	//#endregion
@@ -377,15 +377,15 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return ok_e;
 	}
-	/** @protected @arg {D_CF_w} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
-	w(cf,x,ex_name,excl=[]) {
+	/** @protected @arg {D_CF_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	w(cf,k,x,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
 		let keys=this.filter_out_keys(ka,excl);
 		if(keys.length!==1) debugger;
-		let k=keys[0];
-		if(k!==ex_name) {debugger; throw new Error();}
-		let r=x[k];
+		let hk=keys[0];
+		if(hk!==k) {debugger; throw new Error();}
+		let r=x[hk];
 		return r;
 	}
 	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {(Exclude<T[SI],null>)|null} */
@@ -400,9 +400,9 @@ class HandleTypes extends HandleTypesEval {
 		return r;
 	}
 	/** @protected @arg {D_CF_y} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.w(cf,x,k));}
+	y(cf,k,x,f) {return f.call(this,this.w(`D_CF:y:${cf}`,k,x));}
 	/** @protected @arg {D_CF_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
-	zy(cf,k,x,f) {return this.z(this.w(cf,x,k),f);}
+	zy(cf,k,x,f) {return this.z(this.w(`D_CF:zy:${cf}`,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
@@ -445,9 +445,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @private @arg {D_CF_TA_Page} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	TA_Page(cf,x,f) {f.call(this,this.w(cf,x,"page"));}
-	/** @private @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(x) {return this.w("TR_MultiPageMenu",x,"multiPageMenuRenderer");}
+	TA_Page(cf,x,f) {f.call(this,this.w(`D_CF:TA_Page:${cf}`,"page",x));}
+	/** @private @arg {D_CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
+	TR_MultiPageMenu(cf,x) {return this.w(`D_CF:TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -1763,7 +1763,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="C_GetSurvey";
 		const {commandMetadata: a,getSurveyCommand: b,...y}=this.ctp(cf,x); this.g(y);
 		this.D_GetSurvey(b);
-		const {apiUrl,sendPost,...y1}=this.unpack_MG("MG_Survey_CMD",a); this.g(y1);
+		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",a); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -2198,7 +2198,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="DROPDOWN") debugger;
-		let u=this.TR_MultiPageMenu(b);
+		let u=this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",b);
 		this.D_NotificationMenu_PopupItem(u);
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
