@@ -6592,12 +6592,11 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_MusicShelfDivider";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {string} cf1 @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
-	DC_Generic_CTP(cf1,path,x) {
-		const cf2="DC_Generic_CTP";
-		const {continuation,clickTrackingParams,...y}=this.s(cf2,x); this.g(y);
-		this.params(cf1,path,continuation);
-		this.clickTrackingParams(cf1,clickTrackingParams);
+	/** @private @arg {DC_Generic_CTP_CF} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
+	DC_Generic_CTP(cf,path,x) {
+		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
+		this.params(cf,path,continuation);
+		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {CD_Reload} x */
 	CD_Reload(x) {this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));}
