@@ -384,8 +384,8 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @arg {string} cf @template U @arg {K} e_name @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
-	y(cf,x,e_name,f) {return f.call(this,this.w(cf,x,e_name));}
+	/** @protected @arg {string} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>U} f */
+	y(cf,k,x,f) {return f.call(this,this.w(cf,x,k));}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -869,7 +869,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(linkAlternates,this.B_HrefUrl);
 	}
 	/** @private @arg {B_HrefUrl} x */
-	B_HrefUrl(x) {this.y("B_HrefUrl",x,"hrefUrl",x => this.parser.parse_url("B_HrefUrl.url",x));}
+	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
 	/** @private @arg {D_Microformat} x */
 	D_Microformat(x) {
 		const cf="D_Microformat";
@@ -950,27 +950,27 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
-	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo",x,this.D_PlaylistSidebarPrimaryInfo);}
+	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo","playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
 	/** @private @arg {D_Label} x */
-	D_Label(x) {this.H_("Label",x,this.a_primitive_str);}
+	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
 	/** @private @arg {D_Accessibility} x */
-	D_Accessibility(x) {this.H_("D_Accessibility",x,this.D_Label);}
+	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
 	/** @private @arg {R_Tab} x */
-	R_Tab(x) {this.H_("Tab",x,this.D_Tab);}
+	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {R_ExpandableTab} x */
-	R_ExpandableTab(x) {this.H_("R_ExpandableTab",x,this.D_ExpandableTab);}
+	R_ExpandableTab(x) {this.H_("R_ExpandableTab","expandableTabRenderer",x,this.D_ExpandableTab);}
 	/** @private @arg {R_PdgBuyFlow} x */
-	R_PdgBuyFlow(x) {this.H_("R_PdgBuyFlow",x,this.D_PdgBuyFlow);}
+	R_PdgBuyFlow(x) {this.H_("R_PdgBuyFlow","pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
 	/** @private @arg {R_SuperVodBuyFlowContent} x */
-	R_SuperVodBuyFlowContent(x) {this.H_("R_SuperVodBuyFlowContent",x,this.D_SuperVodBuyFlowContent);}
+	R_SuperVodBuyFlowContent(x) {this.H_("R_SuperVodBuyFlowContent","superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
 	/** @private @arg {R_PdgColorSlider} x */
-	R_PdgColorSlider(x) {this.H_("R_PdgColorSlider",x,this.D_PdgColorSlider);}
+	R_PdgColorSlider(x) {this.H_("R_PdgColorSlider","pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
 	/** @private @arg {R_PdgCommentPreview} x */
-	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview",x,this.D_PdgCommentPreview);}
+	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview","pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
-	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader",x,this.D_PdgBuyFlowHeader);}
+	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
 	/** @private @arg {R_Menu} x */
-	R_Menu(x) {this.H_("R_Menu",x,this.D_Menu);}
+	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow";
@@ -1147,14 +1147,16 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {R_MusicQueue} x */
-	R_MusicQueue(x) {this.H_("R_MusicQueue",x,this.D_MusicQueue);}
+	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {D_MusicQueue} x */
 	D_MusicQueue(x) {
 		const cf="D_MusicQueue";
 		const {content,hack,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.t(content,this.R_PlaylistPanel);
+		this.t(hack,x => {if(x!==true) debugger;});
 	}
 	/** @private @arg {R_RichGrid} x */
-	R_RichGrid(x) {this.H_("R_RichGrid",x,this.D_RichGrid);}
+	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
@@ -1181,7 +1183,7 @@ class HandleTypes extends HandleTypesEval {
 		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
 	}
 	/** @private @arg {R_RichItem} x */
-	R_RichItem(x) {this.H_("R_RichItem",x,this.D_RichItem);}
+	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
 	/** @private @arg {D_RichItem} x */
 	D_RichItem(x) {
 		const cf="D_RichItem";
@@ -1205,7 +1207,7 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_FeedNudge} x */
-	R_FeedNudge(x) {this.H_("R_FeedNudge",x,this.D_FeedNudge);}
+	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {R_MovingThumbnail} x */
 	richThumbnail_Video(x) {
 		if(!x) {debugger; return;}
@@ -1214,7 +1216,7 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_MovingThumbnail} x */
-	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail",x,this.D_MovingThumbnail);}
+	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
 		const cf="D_MovingThumbnail";
@@ -1231,7 +1233,7 @@ class HandleTypes extends HandleTypesEval {
 		if(enableOverlay!==true) debugger;
 	}
 	/** @private @arg {R_Radio} x */
-	R_Radio(x) {this.H_("R_Radio",x,this.D_Radio);}
+	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {
 		const cf="D_Radio";
@@ -1240,7 +1242,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(videos,this.R_ChildVideo);
 	}
 	/** @private @arg {R_ChildVideo} x */
-	R_ChildVideo(x) {this.H_("R_Radio",x,this.D_ChildVideo);}
+	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
 	/** @private @arg {D_ChildVideo} x */
 	D_ChildVideo(x) {
 		const cf="D_ChildVideo";
@@ -1317,7 +1319,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Video_Handle("D_Video_Other",x);
 	}
 	/** @private @arg {R_ToggleButton} x */
-	R_ToggleButton(x) {this.H_("R_ToggleButton",x,this.D_ToggleButton);}
+	R_ToggleButton(x) {this.H_("R_ToggleButton","toggleButtonRenderer",x,this.D_ToggleButton);}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
@@ -1361,7 +1363,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {R_Video} x */
-	R_Video(x) {this.H_("R_Video",x,this.D_Video);}
+	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
 	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
@@ -1369,9 +1371,9 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
-	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview",x,this.D_ThumbnailOverlayLoadingPreview);}
+	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
-	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview",x,this.G_Text);}
+	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
@@ -1404,7 +1406,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(title);
 	}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
-	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink",x,this.D_ChannelThumbnailWithLink);}
+	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
 	/** @private @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
 		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
@@ -1665,7 +1667,7 @@ class HandleTypes extends HandleTypesEval {
 		this.M_YpcGetCart(a); this.D_YpcGetCart(b);
 	}
 	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.H_("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	M_YpcGetCart(x) {this.H_("M_YpcGetCart","webCommandMetadata",x,this.GM_YpcGetCart);}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {
 		const cf="GM_YpcGetCart";
@@ -1840,7 +1842,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_PaidDigitalGoods} x */
-	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods",x,this.B_Hack);}
+	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
 	/** @private @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
@@ -1855,7 +1857,7 @@ class HandleTypes extends HandleTypesEval {
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
-	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded",x,this.D_PlayerAnnotationsExpanded);}
+	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
 	static {
 		(new this({value: null})).R_PlayerAnnotationsExpanded;
 	}
@@ -1890,7 +1892,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_SubscribeButton(subscribeButton);
 	}
 	/** @private @arg {R_SubscribeButton} x */
-	R_SubscribeButton(x) {this.H_("R_SubscribeButton",x,this.D_SubscribeButton);}
+	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @private @arg {`UC${string}`} x */
 	channelId(x) {
 		if(this.str_starts_with("UC",x)) {
@@ -2091,7 +2093,7 @@ class HandleTypes extends HandleTypesEval {
 		return null;
 	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {const cf="D_NotificationMenu_PopupItem"; this.H_(cf,x,this.D_MP_MenuNotificationSection);}
+	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
 	D_MP_MenuNotificationSection(x) {
 		const cf="D_MP_MenuNotificationSection";
@@ -2130,7 +2132,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
-	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader",x,this.D_SimpleMenuHeader);}
+	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
@@ -2165,11 +2167,11 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
-	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults",x,this.R_Tabbed);}
+	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
 	/** @private @arg {R_Tabbed} x */
-	R_Tabbed(x) {this.H_("R_Tabbed",x,this.R_WatchNextTabbedResults);}
+	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
-	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults",x,this.D_WatchNextTabbedResults);}
+	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
@@ -2177,11 +2179,11 @@ class HandleTypes extends HandleTypesEval {
 		this.z(tabs,this.R_Tab);
 	}
 	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel",x,this.DC_PlaylistPanel);}
+	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.DC_PlaylistPanel);}
 	/** @private @arg {R_VoiceSearchDialog} x */
-	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog",x,this.D_VoiceSearchDialog);}
+	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {R_CommentsHeader} x */
-	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog",x,this.D_CommentsHeader);}
+	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog","commentsHeaderRenderer",x,this.D_CommentsHeader);}
 	/** @private @arg {D_CommentsHeader} x */
 	D_CommentsHeader(x) {
 		const cf="D_CommentsHeader";
@@ -2198,9 +2200,9 @@ class HandleTypes extends HandleTypesEval {
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {R_CommentSimplebox} x */
-	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox",x,this.D_CommentSimplebox);}
+	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {R_SortFilterSubMenu} x */
-	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu",x,this.D_SortFilterSubMenu);}
+	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 	/** @private @arg {D_VoiceSearchDialog} x */
 	D_VoiceSearchDialog(x) {
 		const cf="D_VoiceSearchDialog";
@@ -2459,9 +2461,9 @@ class HandleTypes extends HandleTypesEval {
 		this.g(y);
 	}
 	/** @private @arg {R_DecoratedPlayerBar} x */
-	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar",x,this.D_DecoratedPlayerBar);}
+	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar","decoratedPlayerBarRenderer",x,this.D_DecoratedPlayerBar);}
 	/** @private @arg {RA_NotificationAction} x */
-	R_NotificationAction(x) {this.H_("R_NotificationAction ",x,this.D_NotificationAction);}
+	R_NotificationAction(x) {this.H_("R_NotificationAction","notificationActionRenderer",x,this.D_NotificationAction);}
 	/** @private @arg {AD_Notification} x */
 	D_NotificationAction(x) {
 		const cf="D_NotificationAction";
@@ -2481,7 +2483,7 @@ class HandleTypes extends HandleTypesEval {
 		this.g(y);
 	}
 	/** @private @arg {R_AutoplaySwitchButton} x */
-	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton",x,this.D_AutoplaySwitchButton);}
+	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton","autoplaySwitchButtonRenderer",x,this.D_AutoplaySwitchButton);}
 	/** @private @arg {D_AutoplaySwitchButton} x */
 	D_AutoplaySwitchButton(x) {
 		const cf="D_AutoplaySwitchButton";
@@ -2500,7 +2502,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
 	/** @private @arg {M_SetSetting} x */
-	M_SetSetting(x) {this.y("M_SetSetting",x,"webCommandMetadata",this.GM_SetSetting);}
+	M_SetSetting(x) {this.y("M_SetSetting","webCommandMetadata",x,this.GM_SetSetting);}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
@@ -2516,9 +2518,9 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
-	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay",x,this.D_PlayerOverlayAutoplay);}
+	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay","playerOverlayAutoplayRenderer",x,this.D_PlayerOverlayAutoplay);}
 	/** @private @arg {R_WatchNextEndScreen} x */
-	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen",x,this.D_WatchNextEndScreen);}
+	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
 	/** @private @arg {D_WatchNextEndScreen} x */
 	D_WatchNextEndScreen(x) {
 		const cf="D_WatchNextEndScreen";
@@ -2545,7 +2547,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
 	/** @private @arg {R_BrowserMediaSession} x */
-	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession",x,this.AD_BrowserMediaSession);}
+	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.AD_BrowserMediaSession);}
 	/** @private @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
 	/** @private @arg {D_Menu} x */
@@ -2562,7 +2564,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(topLevelButtons,this.R_SegmentedLikeDislikeButton);
 	}
 	/** @private @arg {R_SegmentedLikeDislikeButton} x */
-	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton",x,this.D_SegmentedLikeDislikeButton);}
+	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
 		const cf="D_SegmentedLikeDislikeButton";
@@ -2578,7 +2580,7 @@ class HandleTypes extends HandleTypesEval {
 		if(isDisabled!==false) debugger;
 	}
 	/** @private @arg {R_MenuFlexibleItem} x */
-	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem",x,this.D_MenuFlexibleItem);}
+	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
 	D_MenuFlexibleItem(x) {
 		const cf="D_MenuFlexibleItem";
@@ -2674,7 +2676,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(isDisabled,x => this.ceq(x,false));
 	}
 	/** @private @arg {R_MenuServiceItem} x */
-	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem",x,this.RD_MenuServiceItem);}
+	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {
 		let [a,b]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x);
@@ -2682,7 +2684,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_AddToPlaylistService(b);
 	}
 	/** @protected @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.y("M_AddToPlaylistService",x,"webCommandMetadata",this.GM_AddToPlaylistService);}
+	M_AddToPlaylistService(x) {this.y("M_AddToPlaylistService","webCommandMetadata",x,this.GM_AddToPlaylistService);}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {
 		const cf="GM_AddToPlaylistService";
@@ -2742,9 +2744,14 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_Feedback(feedbackEndpoint);
 	}
 	/** @private @arg {M_Feedback} x */
-	M_Feedback(x) {this.y("M_Feedback",x,"webCommandMetadata",this.GM_Feedback);}
+	M_Feedback(x) {this.y("M_Feedback","webCommandMetadata",x,this.GM_Feedback);}
 	/** @private @arg {GM_Feedback} x */
-	GM_Feedback(x) {x;}
+	GM_Feedback(x) {
+		const cf="GM_Feedback";
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/feedback") debugger;
+	}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
@@ -2773,18 +2780,22 @@ class HandleTypes extends HandleTypesEval {
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
 	/** @private @arg {R_NotificationText} x */
-	R_NotificationText(x) {this.H_("R_NotificationText",x,this.D_NotificationText);}
+	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
 	/** @private @arg {D_NotificationText} x */
 	D_NotificationText(x) {
 		const cf="D_NotificationText";
 		const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(successResponseText);
+		this.G_Text(undoText);
+		this.E_UndoFeedback(undoEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {E_UndoFeedback} x */
+	E_UndoFeedback(x) {x; debugger;}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
-	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem",x,this.D_ToggleMenuServiceItem);}
+	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
 	/** @private @arg {R_MenuNavigationItem} x */
-	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem",x,this.D_MenuNavigationItem);}
+	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
 		const cf="D_MenuNavigationItem";
@@ -2867,7 +2878,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
 	}
 	/** @private @arg {M_VE3832} x */
-	M_VE3832(x) {this.H_("M_VE3832",x,this.GM_VE3832_Watch_WC);}
+	M_VE3832(x) {this.H_("M_VE3832","webCommandMetadata",x,this.GM_VE3832_Watch_WC);}
 	/** @private @arg {GM_VE3832_Watch_WC} x */
 	GM_VE3832_Watch_WC(x) {
 		const cf="GM_VE3832_Watch_WC";
@@ -2877,13 +2888,13 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
 	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
-	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
+	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig","html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
 	/** @private @arg {R_CommonConfig} x */
-	R_CommonConfig(x) {this.H_("R_CommonConfig",x,this.D_CommonConfig);}
+	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {D_CommonConfig} x */
-	D_CommonConfig(x) {const cf="D_CommonConfig"; this.H_(cf,x,x => this.parser.parse_url(cf,x));}
+	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
 	/** @private @arg {R_VssLoggingContext} x */
-	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,this.D_VssLoggingContext);}
+	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext","vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @private */
 	_decoder=new TextDecoder();
 	/** @private @arg {D_VssLoggingContext} x */
@@ -3030,7 +3041,7 @@ class HandleTypes extends HandleTypesEval {
 		if(target!=="TARGET_NEW_WINDOW") debugger;
 	}
 	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.H_("M_VE83769",x,this.GM_VE83769_WC);}
+	M_VE83769(x) {this.H_("M_VE83769","webCommandMetadata",x,this.GM_VE83769_WC);}
 	/** @private @arg {GM_VE83769_WC} x */
 	GM_VE83769_WC(x) {
 		const cf="GM_VE83769_WC";
@@ -3123,7 +3134,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(publishedTimeText);
 	}
 	/** @private @arg {RMD_Badge} x */
-	RMD_Badge(x) {this.H_("RMD_Badge",x,this.DMD_Badge);}
+	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
@@ -3178,7 +3189,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {R_AdSlot} x */
-	R_AdSlot(x) {this.H_("R_AdSlot",x,this.D_AdSlot);}
+	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {D_AdSlot} x */
 	D_AdSlot(x) {
 		const cf="D_AdSlot";
@@ -3188,9 +3199,9 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
 	/** @private @arg {R_FulfillmentLayout} x */
-	R_FulfillmentLayout(x) {this.H_("R_FulfillmentLayout",x,this.R_InFeedAdLayout);}
+	R_FulfillmentLayout(x) {this.H_("R_FulfillmentLayout","fulfilledLayout",x,this.R_InFeedAdLayout);}
 	/** @private @arg {R_InFeedAdLayout} x */
-	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout",x,this.D_InFeedAdLayout);}
+	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {
 		const cf="D_InFeedAdLayout";
@@ -3203,7 +3214,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {R_DisplayAd} x */
-	R_DisplayAd(x) {this.H_("R_DisplayAd",x,this.D_DisplayAd);}
+	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
 	/** @private @arg {D_DisplayAd} x */
 	D_DisplayAd(x) {
 		const cf="D_DisplayAd";
@@ -3393,7 +3404,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {A_MP_GetMenu} x */
-	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu",x,this.D_MP_GetMenu);}
+	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu","getMP_MenuAction",x,this.D_MP_GetMenu);}
 	/** @private @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
@@ -3414,11 +3425,11 @@ class HandleTypes extends HandleTypesEval {
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
 	/** @private @arg {R_ReelPlayerOverlay} x */
-	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,this.D_ReelPlayerOverlay);}
+	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
 	/** @private @arg {R_ReelPlayerHeader} x */
-	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader",x,this.D_ReelPlayerHeader);}
+	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
 	/** @private @arg {R_PivotButton} x */
-	R_PivotButton(x) {this.H_("R_PivotButton",x,this.D_PivotButton);}
+	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
@@ -3436,7 +3447,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_PivotButton(pivotButton);
 	}
 	/** @private @arg {R_EngagementPanelSectionList} x */
-	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList",x,this.D_EngagementPanelSectionList);}
+	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	T_ShortsSurfaceIdentifier(x) {
 		const cf="T_ShortsSurfaceIdentifier";
@@ -3569,7 +3580,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(x2,this.R_ConfirmDialog);
 	}
 	/** @private @arg {R_ConfirmDialog} x */
-	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog",x,this.D_ConfirmDialog);}
+	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
 		const cf="D_ConfirmDialog";
@@ -3621,7 +3632,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {R_AdsEngagementPanelContent} x */
-	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent",x,this.B_Hack);}
+	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent","adsEngagementPanelContentRenderer",x,this.B_Hack);}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting";
@@ -3666,7 +3677,7 @@ class HandleTypes extends HandleTypesEval {
 		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {R_Notification} x */
-	R_Notification(x) {this.H_("R_Notification",x,this.D_Notification);}
+	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification";
@@ -3694,7 +3705,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_RecordNotificationInteractions(b);
 	}
 	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.y("M_RecordInteractions",x,"webCommandMetadata",this.GM_RecordInteractions);}
+	M_RecordInteractions(x) {this.H_("M_RecordInteractions","webCommandMetadata",x,this.GM_RecordInteractions);}
 	/** @private @arg {GM_RecordInteractions} a */
 	GM_RecordInteractions(a) {
 		const cf="GM_RecordInteractions";
@@ -3790,9 +3801,9 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId!=="browse-feedFEsubscriptions") debugger;
 	}
 	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf",x,this.D_MusicCarouselShelf);}
+	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {this.H_("R_MusicShelf",x,this.D_MusicShelf);}
+	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
 	TR_SectionListItem_3(x) {
 		const cf="SectionListItem"; this.k(cf,x);
@@ -3803,7 +3814,7 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {R_ContinuationItem} x */
-	R_ContinuationItem(x) {this.H_("R_ContinuationItem",x,this.D_ContinuationItem);}
+	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem"; this.k(cf,x);
@@ -3824,7 +3835,7 @@ class HandleTypes extends HandleTypesEval {
 		this.g(y);
 	}
 	/** @private @arg {R_GhostGrid} x */
-	R_GhostGrid(x) {this.H_("R_GhostGrid",x,this.D_GhostGrid);}
+	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
 	/** @private @arg {D_GhostGrid} x */
 	D_GhostGrid(x) {
 		const cf="D_GhostGrid";
@@ -3886,11 +3897,11 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
-	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection",x,this.D_GuideSubscriptionsSection);}
+	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection","guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
-	R_GuideDownloadsEntry(x) {this.H_("R_GuideDownloadsEntry",x,this.D_GuideDownloadsEntry);}
+	R_GuideDownloadsEntry(x) {this.H_("R_GuideDownloadsEntry","guideDownloadsEntryRenderer",x,this.D_GuideDownloadsEntry);}
 	/** @private @arg {R_GuideCollapsibleEntry} x */
-	R_GuideCollapsibleEntry(x) {this.H_("R_GuideCollapsibleEntry",x,this.D_GuideCollapsibleEntry);}
+	R_GuideCollapsibleEntry(x) {this.H_("R_GuideCollapsibleEntry","guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
 		const cf="G_GuideSectionItem"; this.k(cf,x);
@@ -3972,7 +3983,7 @@ class HandleTypes extends HandleTypesEval {
 		if(isPrimary!==true) debugger;
 	}
 	/** @private @arg {R_GuideEntryData} x */
-	R_GuideEntryData(x) {this.H_("R_GuideEntryData",x,this.D_GuideEntryData);}
+	R_GuideEntryData(x) {this.H_("R_GuideEntryData","guideEntryData",x,this.D_GuideEntryData);}
 	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
 	parse_guide_entry_id(x) {
 		if(this.str_starts_with("UC",x)) {
@@ -4135,11 +4146,11 @@ class HandleTypes extends HandleTypesEval {
 		if(handlerDatas.length!==2) debugger;
 	}
 	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
-	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry",x,this.D_GuideCollapsibleSectionEntry);}
+	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry","guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
 	/** @private @arg {R_GuideEntry} x */
-	R_GuideEntry(x) {this.H_("R_GuideEntry",x,this.D_GuideEntry);}
+	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
-	R_GuideSection(x) {this.H_("R_GuideSection",x,this.D_GuideSection);}
+	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
 	/** @private @arg {D_AutoplayContent} x */
 	D_AutoplayContent(x) {
 		const cf="D_AutoplayContent";
@@ -4168,7 +4179,7 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isCourse,"boolean");
 	}
 	/** @private @arg {R_PlaylistPanelVideo} x */
-	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo",x,this.D_PlaylistPanelVideo);}
+	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
 		const cf="D_PlayerOverlayVideoDetails";
@@ -4297,7 +4308,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Search(searchEndpoint);
 	}
 	/** @private @arg {M_VE4724} x */
-	M_VE4724(x) {this.H_("M_VE4724",x,this.GM_VE4724_WC);}
+	M_VE4724(x) {this.H_("M_VE4724","webCommandMetadata",x,this.GM_VE4724_WC);}
 	/** @private @arg {GM_VE4724_WC} x */
 	GM_VE4724_WC(x) {
 		const cf="GM_VE4724_WC";
@@ -4307,7 +4318,7 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==4724) debugger;
 	}
 	/** @private @arg {DE_Search} x */
-	D_Search(x) {this.H_("D_Search",x,this.a_primitive_str);}
+	D_Search(x) {this.y("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader"; this.k(cf,x);
@@ -4367,6 +4378,9 @@ class HandleTypes extends HandleTypesEval {
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		this.do_codegen(cf,x);
 		{debugger;}
+	}
+	static {
+		this.prototype.MC_ResolveUrl;
 	}
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
@@ -6830,18 +6844,20 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
 	/** @private @arg {R_PdgCommentOption} x */
-	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption",x,this.D_PdgCommentOption);}
+	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {
 		const cf="D_PdgCommentOption";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {commentText,chipRenderer,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
-	T_Item=(x,f) => this.y(x,"item",f);
+	T_Item=(x,f) => this.y("T_Item",x,"item",f);
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {x; debugger;}
+	/** @private @arg {R_PlaylistPanel} x */
+	R_PlaylistPanel(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
