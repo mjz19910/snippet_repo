@@ -1876,7 +1876,7 @@ class HandleTypes extends HandleTypesEval {
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.D_FeaturedChannel(featuredChannel);
 		this.parse_uuid(annotationId);
-		this.b_primitive_bool(allowSwipeDismiss);
+		this.a_primitive_bool(allowSwipeDismiss);
 	}
 	/** @private @arg {UUIDString} x */
 	parse_uuid(x) {
@@ -2335,7 +2335,7 @@ class HandleTypes extends HandleTypesEval {
 		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		console.log(`${cf}.listType`,listType);
 		this.SE_CreatePlaylist(onCreateListCommand);
-		this.z([openListPanel,openMiniplayer],this.b_primitive_bool);
+		this.z([openListPanel,openMiniplayer],this.a_primitive_bool);
 		this.videoId(videoId);
 		this.z(videoIds,this.videoId);
 	}
@@ -2520,7 +2520,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="T_DE_SettingItem.407";
 			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 			if(settingItemId!=="407") debugger;
-			this.b_primitive_bool(boolValue);
+			this.a_primitive_bool(boolValue);
 			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
 			return;
 		}
@@ -3590,7 +3590,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(dialogMessages,this.G_Text);
 		this.R_Button(confirmButton);
 		this.R_Button(cancelButton);
-		this.b_primitive_bool(primaryIsCancel);
+		this.a_primitive_bool(primaryIsCancel);
 	}
 	/** @private @arg {DB_SI_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
@@ -4718,7 +4718,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_UpdateToggleButtonState} x */
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);
-		this.b_primitive_bool(a);
+		this.a_primitive_bool(a);
 		this.buttonState_buttonId(b);
 	}
 	/** @private @arg {DC_UpdateToggleButtonState['buttonId']} x */
@@ -4869,7 +4869,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {boolean} x */
-	b_primitive_bool(x) {
+	a_primitive_bool(x) {
 		if(typeof x!=="boolean") debugger;
 	}
 	/** @private @arg {R_ChipCloudChip} x */
@@ -4890,7 +4890,7 @@ class HandleTypes extends HandleTypesEval {
 		let {style,text,trackingParams,...x1}=this.D_ChipCloudChip_OmitNav(cf,x);
 		if("isSelected" in x1) {
 			const {isSelected: a,...y}=x1; this.g(y);
-			this.b_primitive_bool(a);
+			this.a_primitive_bool(a);
 			return;
 		}
 		if("uniqueId" in x1) {
@@ -5440,7 +5440,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SubFeedOption";
 		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(name);
-		this.b_primitive_bool(isSelected);
+		this.a_primitive_bool(isSelected);
 		this.E_Watch(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -5782,7 +5782,7 @@ class HandleTypes extends HandleTypesEval {
 		const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.g(endpoint);
 		this.a_primitive_str(title);
-		this.b_primitive_bool(selected);
+		this.a_primitive_bool(selected);
 		this.t(expandedText,this.a_primitive_str);
 		this.t(content,this.R_SectionList);
 		debugger;
@@ -5841,13 +5841,13 @@ class HandleTypes extends HandleTypesEval {
 		this.R_CommentActionButtons(actionButtons);
 		this.R_Menu(actionMenu);
 		this.g(authorEndpoint);
-		this.b_primitive_bool(authorIsChannelOwner);
+		this.a_primitive_bool(authorIsChannelOwner);
 		this.R_Button(collapseButton);
 		console.log(`[${cf}.commentId]`,commentId);
 		this.G_Text(contentText);
 		this.R_Thumbnail(currentUserReplyThumbnail);
 		this.G_Text(voteCount);
-		this.b_primitive_bool(isLiked);
+		this.a_primitive_bool(isLiked);
 		this.R_Button(expandButton);
 		this.G_Text(publishedTimeText);
 		this.ceq(voteStatus,"INDIFFERENT");
@@ -5886,7 +5886,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.D_EditableDetails(editableDetails);
 		this.E_PlaylistEditor(editorEndpoint);
-		this.b_primitive_bool(isEditable);
+		this.a_primitive_bool(isEditable);
 		this.E_Browse(ownerEndpoint);
 		this.z(serviceEndpoints,this.E_PlaylistEdit);
 		this.R_Menu(moreActionsMenu);
@@ -5932,7 +5932,7 @@ class HandleTypes extends HandleTypesEval {
 	D_WatchEndpointMusicConfig(x) {
 		const cf="D_WatchEndpointMusicConfig";
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.b_primitive_bool(hasPersistentPlaylistPanel);
+		this.a_primitive_bool(hasPersistentPlaylistPanel);
 		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
 		debugger;
 	}
@@ -6065,7 +6065,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(viewCount);
 		this.t(shortViewCount,this.G_Text);
 		this.t(extraShortViewCount,this.G_Text);
-		this.t(isLive,this.b_primitive_bool);
+		this.t(isLive,this.a_primitive_bool);
 	}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
@@ -6204,31 +6204,34 @@ class HandleTypes extends HandleTypesEval {
 	D_LiveChatEmoji(x) {
 		const cf="D_LiveChatEmoji";
 		const {isLocked,...y}=this.D_CustomEmoji_Omit(cf,x); this.g(y);//#destructure_off
+		this.a_primitive_bool(isLocked);
 	}
 	/** @private @arg {D_ClientMessages} x */
 	D_ClientMessages(x) {this.k("D_ClientMessages",x); this.z(Object.values(x),this.G_Text);}
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
-		const cf="G_LiveChatContinuationItem";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
+		if("invalidationContinuationData" in x) return;
+		if("liveChatReplayContinuationData" in x) return;
+		if("playerSeekContinuationData" in x) return;
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_LiveChatMessageInput} x */
-	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput",x,this.D_LiveChatMessageInput);}
+	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.D_LiveChatMessageInput);}
 	/** @private @arg {D_LiveChatMessageInput} x */
 	D_LiveChatMessageInput(x) {
 		const cf="D_LiveChatMessageInput";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {G_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
 		const cf="DC_PlaylistPanel";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
@@ -6245,11 +6248,11 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(emojiButton);
 	}
 	/** @private @arg {R_EmojiPicker} x */
-	R_EmojiPicker(x) {this.H_("R_EmojiPicker",x,this.D_EmojiPicker);}
+	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.D_EmojiPicker);}
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.do_codegen(cf,x);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(!g) debugger;}
@@ -6263,18 +6266,16 @@ class HandleTypes extends HandleTypesEval {
 		this.t(accessibility,this.D_Accessibility);
 		this.t(tooltip,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
-		debugger;
 	}
 	/** @private @arg {D_ActionSetPlaylistVideoOrder} x */
 	D_ActionSetPlaylistVideoOrder(x) {
 		const cf="D_ActionSetPlaylistVideoOrder";
-		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {title,selected,continuation,serviceEndpoint,accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
 	/** @private @arg {D_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
+		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
@@ -6287,7 +6288,7 @@ class HandleTypes extends HandleTypesEval {
 		if(toggledIcon.iconType!=="LIBRARY_REMOVE") debugger;
 		this.E_Like(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.b_primitive_bool(isToggled);
+		this.a_primitive_bool(isToggled);
 		debugger;
 	}
 	/** @arg {D_CustomEmoji['emojiId']} x */
@@ -6310,7 +6311,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(shortcuts,this.parse_emoji_shortcut);
 		this.z(searchTerms,this.a_primitive_str);
 		this.D_EmojiImage(image);
-		this.b_primitive_bool(isCustomEmoji);
+		this.a_primitive_bool(isCustomEmoji);
 		return y;
 	}
 	/** @private @arg {D_CustomEmoji} x */
@@ -6535,7 +6536,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SubscriptionButton";
 		const {type,subscribed,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.save_string("button.type",type);
-		this.t(subscribed,this.b_primitive_bool);
+		this.t(subscribed,this.a_primitive_bool);
 	}
 	/** @private @arg {D_VideoOwner} x */
 	D_VideoOwner(x) {const cf="D_VideoOwner"; let u=this.D_VideoOwner_Omit(cf,x); const {badges,...y}=u; this.g(y);}
@@ -6749,7 +6750,7 @@ class HandleTypes extends HandleTypesEval {
 	DAU_SubscribeButton(x) {
 		const cf="DAU_SubscribeButton";
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.b_primitive_bool(subscribed);
+		this.a_primitive_bool(subscribed);
 		this.channelId(channelId);
 	}
 	/** @private @arg {D_RunAttestation} x */

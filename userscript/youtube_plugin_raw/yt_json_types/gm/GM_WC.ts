@@ -362,8 +362,8 @@ type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
 //#endregion
 type G_LiveChatContinuationItem=
-	|CD_LiveChatReplay
 	|CD_Invalidation
+	|CD_LiveChatReplay
 	|CD_PlayerSeek
 	;
 ;
