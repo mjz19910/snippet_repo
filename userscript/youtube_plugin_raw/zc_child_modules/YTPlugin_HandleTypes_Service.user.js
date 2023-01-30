@@ -5270,11 +5270,11 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */
-	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel",x,this.D_TranscriptSearchPanel);}
+	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
 	/** @private @arg {CD_TimedContinuation} x */
-	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation",x,this.DD_TimedContinuation);}
+	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation","timedContinuationData",x,this.DD_TimedContinuation);}
 	/** @private @arg {RC_LiveChat} x */
-	RC_LiveChat(x) {this.H_("RC_LiveChat",x,this.DC_LiveChat);}
+	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
 		const cf="G_Watch_SecondaryResults_G_SectionItem";
@@ -5312,7 +5312,7 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
+	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {string} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
 		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
@@ -5327,7 +5327,7 @@ class HandleTypes extends HandleTypesEval {
 		const {...p}=y; p;
 	}
 	/** @private @arg {R_CompactRadio} x */
-	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
+	R_CompactRadio(x) {this.H_("R_CompactRadio","compactRadioRenderer",x,this.D_CompactRadio);}
 	/** @private @arg {D_CompactRadio['secondaryNavigationEndpoint']} x */
 	D_CompactRadio_NavE(x) {
 		if(!x.watchEndpoint) debugger;
@@ -5380,12 +5380,13 @@ class HandleTypes extends HandleTypesEval {
 		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
 		this.trackingParams(cf,trackingParams);
 	}
+	R_RelatedChipCloud_Content(x) {
+		const cf="R_RelatedChipCloud.content"; this.k(cf,x);
+		this.R_ChipCloud(this.w(cf,x,"content"));
+	}
 	/** @private @arg {R_RelatedChipCloud} x */
 	R_RelatedChipCloud(x) {
-		this.H_("RC_LiveChat",x,x => {
-			const cf="R_RelatedChipCloud.content"; this.k(cf,x);
-			this.R_ChipCloud(this.w(cf,x,"content"));
-		});
+		this.H_("RC_LiveChat","relatedChipCloudRenderer",x,this.R_RelatedChipCloud_Content);
 	}
 	/** @private @arg {R_ChipCloud} x */
 	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}

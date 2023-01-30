@@ -1,0 +1,1 @@
+type D_RelatedChipCloud={content: R_ChipCloud;};

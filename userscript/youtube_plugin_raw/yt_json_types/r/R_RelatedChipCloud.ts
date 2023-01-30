@@ -1,1 +1,1 @@
-type R_RelatedChipCloud={relatedChipCloudRenderer: Record<"content",R_ChipCloud>;};
+type R_RelatedChipCloud={relatedChipCloudRenderer: D_RelatedChipCloud;};
