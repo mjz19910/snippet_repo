@@ -6,3 +6,4 @@ type D_CommentsEntryPointHeader={
 	contentRenderer: R_CommentsEntryPointTeaser;
 	targetId: "comments-entry-point-header-identifier";
 };
+type D_CommentsEntryPointHeader_contentRenderer=D_CommentsEntryPointHeader["contentRenderer"];

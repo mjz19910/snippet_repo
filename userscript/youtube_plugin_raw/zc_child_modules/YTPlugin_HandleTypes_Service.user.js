@@ -5311,7 +5311,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
 	/** @private @arg {CD_TimedContinuation} x */
-	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation","timedContinuationData",x,this.DD_TimedContinuation);}
+	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
@@ -5671,8 +5671,9 @@ class HandleTypes extends HandleTypesEval {
 		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);
 		if(targetId!=="comments-entry-point-header-identifier") debugger;
 	}
-	/** @private @arg {D_CommentsEntryPointHeader['contentRenderer']} x */
+	/** @private @arg {D_CommentsEntryPointHeader_contentRenderer} x */
 	D_CommentsEntryPointHeader_contentRenderer(x) {
+		const cf="D_CommentsEntryPointHeader_contentRenderer";
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
 		this.do_codegen(cf,x);
 	}
@@ -6188,8 +6189,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {DC_Timed} x */
-	DD_TimedContinuation(x) {
-		const cf="DD_TimedContinuation";
+	DC_Timed(x) {
+		const cf="DC_Timed";
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(timeoutMs!==60000) debugger;
 		this.params(cf,"TimedContinuation",continuation);
@@ -6318,7 +6319,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ActionSetPlaylistVideoOrder";
 		const {title,selected,continuation,serviceEndpoint,accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {D_BrowserMediaSession} x */
+	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
 		this.do_codegen(cf,x);
