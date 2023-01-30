@@ -1,8 +1,8 @@
 type D_LiveChatEmoji={
-	emojiId: string;
+	emojiId: `UC${string}/${string}`;
 	shortcuts: `:${string}:`[];
 	searchTerms: string[];
-	image: R_Thumbnail;
+	image: D_EmojiImage;
 	isCustomEmoji: boolean;
 	isLocked: boolean;
 };

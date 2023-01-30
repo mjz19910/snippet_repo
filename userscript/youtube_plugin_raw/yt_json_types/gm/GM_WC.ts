@@ -361,6 +361,12 @@ type DC_LiveChat={
 type RC_MusicShelf={musicShelfContinuation: {};};
 //#region ActionData
 //#endregion
+type G_LiveChatContinuationItem=
+	|CD_LiveChatReplay
+	|CD_Invalidation
+	|CD_PlayerSeek
+	;
+;
 type CD_Invalidation={invalidationContinuationData: DC_Invalidation;};
 type CD_LiveChatReplay={liveChatReplayContinuationData: DC_LiveChatReplay;};
 type CD_Next={nextContinuationData: DC_Generic_CTP;};
