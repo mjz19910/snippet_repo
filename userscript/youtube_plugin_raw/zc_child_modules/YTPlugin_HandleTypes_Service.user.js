@@ -1061,7 +1061,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(command,this.GC_Button);
 		this.t(icon,x => this.T_Icon_AnyOf(x,this.expected_button_iconTypes));
 		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
-		this.t(serviceEndpoint,this.ES_Button);
+		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
@@ -4219,8 +4219,8 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(subtitle);
 	}
 	/** @private @arg {D_Button_SE} x */
-	ES_Button(x) {
-		const cf="ES_Button";
+	D_Button_SE(x) {
+		const cf="D_Button_SE";
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		this.do_codegen(cf,x); x==="";
