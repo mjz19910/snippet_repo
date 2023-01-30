@@ -25,8 +25,6 @@ export class HandleTypesEval_ extends ServiceMethods {
 	TR_ItemSection_2(x) {x; n();}
 	/** @protected @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
 	TD_ItemSection_2_CommentsEntryPoint(x,f) {x; f; n();}
-	/** @protected @arg {string} cf @public @template {{}} T @arg {T} x */
-	HD_(cf,x) {cf; x;}
 	/** @protected @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
 	T_SecondaryResults(x,f) {x; f;}
 	/** @protected @template T @arg {T_Playlist<T>} x @arg {(this:this,x:T)=>void} f */

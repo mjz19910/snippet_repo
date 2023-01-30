@@ -165,11 +165,6 @@ class HandleTypesEval extends ServiceMethods {
 	}
 	//#endregion
 	//#region templates
-	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
-	HD_(cf,x) {
-		this.k(cf,x);
-		if(this.get_keys_of(x).length!==1) debugger;
-	}
 	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
@@ -297,6 +292,13 @@ class HandleTypes extends HandleTypesEval {
 	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
 	// H_=super.H_;
 	//#region Temporary
+	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
+	HD_(cf,k,x) {
+		this.k(cf,x);
+		let kx=this.get_keys_of(x);
+		if(kx.length!==1) debugger;
+		if(kx[0]!==k) debugger;
+	}
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,k,x,f) {
 		if(!x) {debugger; return;}
@@ -1602,6 +1604,13 @@ class HandleTypes extends HandleTypesEval {
 			case "pdg.get_pdg_buy_flow": return this.RSG_PdgBuyFlow(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @private @arg {RSG_AddToPlaylist} x */
+	RSG_AddToPlaylist(x) {
+		const cf="RS_GetAddToPlaylist";
+		const {responseContext: {},contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.z(contents,this.R_AddToPlaylist);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {RSG_Survey} x */
 	RSG_Survey(x) {
@@ -3320,7 +3329,6 @@ class HandleTypes extends HandleTypesEval {
 		if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u1,a => {
 			let cf=this.get_name_from_keys(a);
 			if(!cf) {debugger; return;}
-			this.HD_(`D_${cf}`,a);
 			console.log("[found item_section_watch_data]",cf);
 			debugger;
 		});
@@ -4329,9 +4337,9 @@ class HandleTypes extends HandleTypesEval {
 		{debugger;}
 	}
 	/** @private @arg {R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader",x,this.D_C4TabbedHeader);}
+	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
 	/** @private @arg {R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader",x,this.D_FeedTabbedHeader);}
+	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
 		const cf="D_FeedTabbedHeader";
@@ -4399,30 +4407,23 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
 	/** @private @arg {R_AddToPlaylist} x */
-	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist",x,this.D_AddToPlaylist);}
+	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
 	/** @private @arg {RS_AttLog_RC} x */
-	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC",x);}
+	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
 	/** @private @arg {R_Comment} x */
-	R_Comment(x) {this.H_("Comment",x,this.D_Comment);}
+	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
 	/** @private @arg {R_ElementUpdate} x */
-	R_ElementUpdate(x) {this.H_("ElementUpdate",x,x => this.z(x,this.D_ElementUpdate));}
+	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
 	/** @private @arg {R_TemplateUpdate} x */
-	R_TemplateUpdate(x) {this.H_("TemplateUpdate",x,this.D_TemplateUpdate);}
+	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
 	/** @private @arg {R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_("ProfileColumn",x,this.D_ProfileColumn);}
+	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
 	/** @private @arg {R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions",x,this.D_BrowseFeedActions);}
+	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
 	/** @private @arg {R_WebSearchboxConfig} x */
-	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
-	/** @private @arg {RSG_AddToPlaylist} x */
-	RSG_AddToPlaylist(x) {
-		const cf="RS_GetAddToPlaylist";
-		const {responseContext: {},contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(contents,this.R_AddToPlaylist);
-		this.trackingParams(cf,trackingParams);
-	}
+	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig","webSearchboxConfig",x,this.D_WebSearchboxConfig);}
 	/** @private @arg {R_CompactVideo} x */
-	R_CompactVideo(x) {this.H_("R_CompactVideo",x,this.D_CompactVideo);}
+	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
 	/** @private @arg {D_LoggingDirectives} x */
 	D_LoggingDirectives(x) {
 		const cf="D_LoggingDirectives";
