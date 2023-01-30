@@ -279,7 +279,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @template {any[]} T @arg {T} a */
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
-	/** @private @template T @arg {string} cf @arg {{webCommandMetadata: T}} x */
+	/** @private @template T @arg {D_CF_UnpackMG} cf @arg {{webCommandMetadata: T}} x */
 	unpack_MG(cf,x) {return this.w(cf,x,"webCommandMetadata");}
 	/** @arg {string} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
 	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s(cf,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
@@ -377,7 +377,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return ok_e;
 	}
-	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	/** @protected @arg {D_CF_w} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(cf,x,ex_name,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
@@ -399,10 +399,55 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @arg {string} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	/** @protected @arg {D_CF_y} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(cf,x,k));}
-	/** @protected @arg {string} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
+	/** @protected @arg {D_CF_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
 	zy(cf,k,x,f) {return this.z(this.w(cf,x,k),f);}
+	//#endregion
+	//#region CheckedTemplates
+	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
+	T_Item=(x,f) => this.y("T_Item","item",x,f);
+	/** @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} e_ty */
+	T_Icon(x,e_ty) {
+		const cf="T_Icon";
+		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		if(iconType!==e_ty) debugger;
+		this.save_string("[IconType]",iconType);
+	}
+	/** @private @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	T_Icon_AnyOf(x,ty_arr) {
+		const cf="T_Icon";
+		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const is_not_in_set=!ty_arr.includes(iconType);
+		if(is_not_in_set) {console.log("[missing_icon]",iconType);}
+		this.save_string("[IconType]",iconType);
+		return is_not_in_set;
+	}
+	/** @private @template T @arg {TA_OpenPopup<T>} x */
+	TA_OpenPopup(x) {
+		const cf="TA_OpenPopup";
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		return a;
+	}
+	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
+	T_ShortsSurfaceIdentifier(x) {
+		const cf="T_ShortsSurfaceIdentifier";
+		const {surface,tag,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+		switch(tag) {
+			case "engagement-panel-structured-description": break;
+			case "shorts-comments-panel": break;
+			default: debugger; break;
+		}
+		return tag;
+	}
+	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
+	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
+	/** @private @arg {D_CF_TA_Page} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	TA_Page(cf,x,f) {f.call(this,this.w(cf,x,"page"));}
+	/** @private @template T @arg {TR_MultiPageMenu<T>} x */
+	TR_MultiPageMenu(x) {return this.w("TR_MultiPageMenu",x,"multiPageMenuRenderer");}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -1710,7 +1755,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_YpcGetCart} x */
 	D_YpcGetCart(x) {
 		const cf="D_YpcGetCart";
-		let sp=this.w(cf,x,"transactionParams");
+		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
 	}
 	/** @private @arg {C_GetSurvey} x */
@@ -1718,7 +1763,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="C_GetSurvey";
 		const {commandMetadata: a,getSurveyCommand: b,...y}=this.ctp(cf,x); this.g(y);
 		this.D_GetSurvey(b);
-		const {apiUrl,sendPost,...y1}=this.unpack_MG("GetSurveyCommandMetadata",a); this.g(y1);
+		const {apiUrl,sendPost,...y1}=this.unpack_MG("MG_Survey_CMD",a); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}
@@ -1728,13 +1773,6 @@ class HandleTypes extends HandleTypesEval {
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		console.log("GetSurvey.action",action);
 		this.R_PaidDigitalGoods(a);
-	}
-	/** @private @template T @arg {TA_OpenPopup<T>} x */
-	TA_OpenPopup(x) {
-		const cf="TA_OpenPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		return a;
 	}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
@@ -2547,8 +2585,10 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
+	/** @private @template {object} T @template U @arg {D_CF_T_WCM} cf @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
+	T_WCM(cf,x,f) {this.y(cf,"webCommandMetadata",x,f);}
 	/** @private @arg {M_SetSetting} x */
-	M_SetSetting(x) {this.y("M_SetSetting","webCommandMetadata",x,this.GM_SetSetting);}
+	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
@@ -2735,7 +2775,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_AddToPlaylistService(b);
 	}
 	/** @protected @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.y("M_AddToPlaylistService","webCommandMetadata",x,this.GM_AddToPlaylistService);}
+	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {
 		const cf="GM_AddToPlaylistService";
@@ -2855,22 +2895,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(text);
 		if(icon.iconType!=="INFO") debugger;
 		this.TA_OpenPopup(navigationEndpoint);
-	}
-	/** @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} e_ty */
-	T_Icon(x,e_ty) {
-		const cf="T_Icon";
-		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(iconType!==e_ty) debugger;
-		this.save_string("[IconType]",iconType);
-	}
-	/** @private @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
-	T_Icon_AnyOf(x,ty_arr) {
-		const cf="T_Icon";
-		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		const is_not_in_set=!ty_arr.includes(iconType);
-		if(is_not_in_set) {console.log("[missing_icon]",iconType);}
-		this.save_string("[IconType]",iconType);
-		return is_not_in_set;
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -3499,18 +3523,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
-	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
-	T_ShortsSurfaceIdentifier(x) {
-		const cf="T_ShortsSurfaceIdentifier";
-		const {surface,tag,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-		switch(tag) {
-			case "engagement-panel-structured-description": break;
-			case "shorts-comments-panel": break;
-			default: debugger; break;
-		}
-		return tag;
-	}
 	/** @private @arg {string} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
 		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
@@ -4519,8 +4531,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(program);
 		if(globalName!=="trayride") debugger;
 	}
-	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
-	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @private @arg {D_ElementUpdate} x */
 	D_ElementUpdate(x) {
 		const cf="D_ElementUpdate"; this.k(cf,x);
@@ -5513,8 +5523,6 @@ class HandleTypes extends HandleTypesEval {
 	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
 	/** @private @arg {R_AlertWithButton} x */
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
-	/** @private @arg {TA_Page_CF} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	TA_Page(cf,x,f) {f.call(this,this.w(cf,x,"page"));}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
@@ -5523,8 +5531,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu(x));}
-	/** @private @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(x) {const cf="TR_MultiPageMenu",{multiPageMenuRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf","merchandiseShelfRenderer",x,this.D_MerchandiseShelf);}
 	/** @private @arg {R_VideoPrimaryInfo} x */
@@ -6977,8 +6983,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_PdgCommentOption";
 		const {commentText,chipRenderer,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
-	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */

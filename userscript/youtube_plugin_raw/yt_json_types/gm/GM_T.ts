@@ -20,3 +20,4 @@ type TE_Endpoint_Opt_3<EP_Key extends string,T_Data,T_Meta>={clickTrackingParams
 type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_Endpoint_3<"setSettingEndpoint",T_DE_SettingItem<T_ItemId,T,T_ClientItemId>,M_SetSetting>;
 
 type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
+type TM_Gen<T>={webCommandMetadata: T;};
