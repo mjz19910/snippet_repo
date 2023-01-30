@@ -1,1 +1,1 @@
-type D_EntityMutationItem=T_UnionToPartial<NS_DiscriminatedEnums.D_EntityMutationItem>;
+type D_EntityMutationItem=T_UnionToPartial<DE_D_EntityMutationItem>;
