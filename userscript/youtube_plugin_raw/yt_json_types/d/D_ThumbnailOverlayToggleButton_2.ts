@@ -3,7 +3,7 @@ type D_ThumbnailOverlayToggleButton_2={
 	toggledIcon: T_Icon<"PLAYLIST_ADD_CHECK">;
 	untoggledTooltip: "Add to queue";
 	toggledTooltip: "Added";
-	untoggledServiceEndpoint: T_SE_Signal<{},G_ClientSignal>;
+	untoggledServiceEndpoint: T_SE_Signal<D_Empty_WCM,G_ClientSignal>;
 	untoggledAccessibility: D_Accessibility;
 	toggledAccessibility: D_Accessibility;
 	trackingParams: string;

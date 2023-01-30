@@ -15,7 +15,7 @@ type D_SubscribeButton={
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
 	onSubscribeEndpoints: E_Subscribe[];
-	onUnsubscribeEndpoints: T_SE_Signal<{},{}>[];
+	onUnsubscribeEndpoints: T_SE_Signal<D_Empty_WCM,{}>[];
 }|{
 	buttonText: G_Text;
 	subscribed: boolean;
