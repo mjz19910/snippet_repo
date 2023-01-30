@@ -1,11 +1,3 @@
-type D_EY_Offlineability={
-	key: string;
-	command: C_Innertube;
-	addToOfflineButtonState: D_AddToOfflineButtonState;
-	contentCheckOk: false;
-	racyCheckOk: false;
-	loggingDirectives: D_LoggingDirectives;
-};
 //#region DS_
 type DS_EY_MacroMarkersList={key: string;};
 type DS_EY_Subscription={key: string; subscribed: true;};
