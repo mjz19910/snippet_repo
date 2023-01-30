@@ -299,10 +299,12 @@ class HandleTypes extends HandleTypesEval {
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
 	}
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
 	H_(cf,k,x,f) {
 		if(!x) {debugger; return;}
-		return f.call(this,this.w(cf,x,k));
+		let wr=this.wn(cf,x,k);
+		if(!wr) return;
+		return f.call(this,wr);
 	}
 	/** @override @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
 	TD_ItemSection_3(x) {
@@ -382,7 +384,18 @@ class HandleTypes extends HandleTypesEval {
 		let keys=this.filter_out_keys(ka,excl);
 		if(keys.length!==1) debugger;
 		let k=keys[0];
-		if(k!==ex_name) {debugger; let u={}; return as(u);}
+		if(k!==ex_name) {debugger; throw new Error();}
+		let r=x[k];
+		return r;
+	}
+	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {(Exclude<T[SI],null>)|null} */
+	wn(cf,x,ex_name,excl=[]) {
+		this.k(cf,x);
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length!==1) debugger;
+		let k=keys[0];
+		if(k!==ex_name) {debugger; return null;}
 		let r=x[k];
 		return r;
 	}
