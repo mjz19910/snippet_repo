@@ -1,10 +1,3 @@
-type D_AddToOfflineButtonState=T_EnumStr<
-	"ADD_TO_OFFLINE_BUTTON_STATE",[
-		"UNKNOWN",
-		"ENABLED"
-	][number]
->;
-
 type G_EY_Entity=
 	|EY_MacroMarkersList
 	|EY_Offlineability
