@@ -1,0 +1,2 @@
+type D_CF_M_VE=["M_VE3611","M_VE3832","M_VE3854","M_VE4724","M_VE5754","M_VE6827","M_VE11487","M_VE23462","M_VE37414","M_VE42352","M_VE83769","M_VE96368",][number];
+type D_CF_T_WCM=["M_AccountMenu","M_AddToPlaylistService","M_AddToPlaylistService","M_Browse","M_CreateComment","M_CreateBackstagePost","M_CreatePlaylist","M_EditPlaylist","M_Feedback","M_FlagGetForm","M_GetNotificationMenu","M_GetSharePanel","M_GetUnseenNotificationCount","M_Like","M_Next","M_RecordInteractions","M_SendPost","M_SetSetting","M_SetSetting","M_Subscribe","M_YpcGetCart"][number];
