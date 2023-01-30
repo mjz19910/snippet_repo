@@ -3409,7 +3409,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {A_GetMultiPageMenu} x */
-	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu","getMP_MenuAction",x,this.D_MP_GetMenu);}
+	A_MP_GetMenu(x) {this.H_("A_MP_GetMenu","getMP_MenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
@@ -5481,7 +5481,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
-	D_MP_GetMenu(x) {this.H_("D_MP_GetMenu","menu",x,x => this.TR_MP_Menu(x));}
+	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MP_Menu(x));}
 	/** @private @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MP_Menu(x) {const cf="TR_MP_Menu",{multiPageMenuRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
 	/** @private @arg {R_MerchandiseShelf} x */
