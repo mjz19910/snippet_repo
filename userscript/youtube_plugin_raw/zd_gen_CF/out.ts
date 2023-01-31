@@ -3,7 +3,6 @@ import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.From.accessibility";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.From.navigationEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.Mixed" | "D_Button.WithAccessibility";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}

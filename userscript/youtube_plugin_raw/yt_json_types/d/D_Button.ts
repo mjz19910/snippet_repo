@@ -1,4 +1,15 @@
-type D_Button={
+type D_Button=|
+{
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: false;
+	text: G_Text;
+	serviceEndpoint: E_ShareEntityService;
+	icon: T_Icon<"SHARE">;
+	tooltip: "Share";
+	trackingParams: string;
+	accessibilityData: D_Accessibility;
+}|{
 	serviceEndpoint: D_Button_SE;
 }|{
 	accessibility: D_Label;
@@ -38,3 +49,14 @@ type D_Button={
 	command: E_AddToPlaylistService;
 };
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
+type E_ShareEntityService=TE_Endpoint_3<"shareEntityServiceEndpoint",{},{}>|{
+	clickTrackingParams: string;
+	commandMetadata: M_GetSharePanel;
+	shareEntityServiceEndpoint: {
+		serializedShareEntity: string;
+		commands: TA_OpenPopup<T_DialogPopup_ReuseFlag<>|{
+			popup: {};
+			popupType: "Dialog"
+		}>[];
+	};
+};

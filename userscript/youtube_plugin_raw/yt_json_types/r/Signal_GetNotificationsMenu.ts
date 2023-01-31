@@ -1,10 +1,6 @@
 type P_NotificationMenu_Popup=TR_MultiPageMenu<D_NotificationMenuPopupMenuItem>;
 
-type G_Action_GetNotificationsMenu_Popup={
-	popup: P_NotificationMenu_Popup;
-	popupType: "DROPDOWN";
-	beReused: true;
-};
+type G_Action_GetNotificationsMenu_Popup=T_DialogPopup_ReuseFlag<P_NotificationMenu_Popup,true>;
 
 type G_Action_GetNotificationsMenu=TA_OpenPopup<G_Action_GetNotificationsMenu_Popup>;
 

@@ -151,26 +151,32 @@ type TR_SectionListItem_3<T_ContentType,B,C>=
 	|R_MusicCarouselShelf
 	|R_MusicShelf
 	;
-	type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
-	type T_Actions<T>={
-		actions: T[];
-	};
-	type T_AnyObjectOrEmpty<T extends {}>={}|T;
-	type T_Autoplay<T>={
-		autoplay: T;
-	};
-	type T_BaseUrl<T extends string>={baseUrl: T;};
-	type T_Command$<T>={
-		command: T;
-		trackingParams: string;
-	};
-	type T_DialogPopup<T=R_ConfirmDialog>={
-		popup: T;
-		popupType: "DIALOG";
-	};
-	type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
-	type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
-	type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
+;
+type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
+type T_Actions<T>={
+	actions: T[];
+};
+type T_AnyObjectOrEmpty<T extends {}>={}|T;
+type T_Autoplay<T>={
+	autoplay: T;
+};
+type T_BaseUrl<T extends string>={baseUrl: T;};
+type T_Command$<T>={
+	command: T;
+	trackingParams: string;
+};
+type T_DialogPopup<T=R_ConfirmDialog>={
+	popup: T;
+	popupType: "DIALOG";
+};
+type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog,BeReused=false>={
+	popup: T;
+	popupType: "DIALOG";
+	beReused: BeReused;
+};
+type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
+type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
+type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
 type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
 type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
 type T_ExtractKeyValue<T,U extends string>=T extends {
@@ -184,7 +190,7 @@ type T_GetTypeof<T>=
 	T extends boolean? "boolean":
 	T extends {}? "object":
 	never;
-	type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
+type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
 type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
 type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
 type T_Icon<T extends string>={iconType: T;};

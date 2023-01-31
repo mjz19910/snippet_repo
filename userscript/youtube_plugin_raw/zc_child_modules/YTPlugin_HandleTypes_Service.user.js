@@ -1637,7 +1637,7 @@ class HandleTypes extends HandleTypesEval {
 		// });
 		return y;
 	}
-	/** @private @arg {"D_Button.From.targetId"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
+	/** @private @arg {`D_Button.${number}.From.targetId`} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
 		/** @private @type {D_Button_TargetId} */
 		switch(x) {
@@ -1681,12 +1681,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{style:any}>} x1 */
 	D_Button_Omit_1(cf,x1) {
-		let u=this.D_Button_Omit_FromStyle(`${cf}.Mixed`,x1);
-		if("targetId" in u) {
-			debugger;
+		let x=this.D_Button_Omit_FromStyle(`${cf}.Mixed`,x1);
+		if("targetId" in x) {
+			const {targetId,...y}=x; this.g(y);
+			this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
 			return;
 		}
-		const {accessibility,...y}=u; this.g(y);
+		const {accessibility,...y}=x; this.g(y);
 		this.t(accessibility,this.D_Label);
 		// this.t(hint,this.R_Hint);
 	}
@@ -1700,7 +1701,7 @@ class HandleTypes extends HandleTypesEval {
 		const u=this.D_Button_Omit_FromStyle(`${cf}.WithAccessibility`,x);
 		if("targetId" in u) {
 			const {targetId,...y}=u; this.g(y);
-			this.D_Button_TargetId(`${cf}.From.targetId`,targetId);
+			this.D_Button_TargetId(`${cf}.2.From.targetId`,targetId);
 			return;
 		}
 		if("accessibility" in u) {
