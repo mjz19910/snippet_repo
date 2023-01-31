@@ -570,7 +570,12 @@ class ParserService extends BaseService {
 						return;
 					}
 					case "get_report_form.f18.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
-					case "get_report_form": switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "get_report_form": switch(map_entry_key) {
+						case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29:
+							if(map_entry_key===2) debugger;
+							return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+						default: new_ns(); debugger; return;
+					}
 					case "like.removeLikeParams": switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "like.dislikeParams": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
