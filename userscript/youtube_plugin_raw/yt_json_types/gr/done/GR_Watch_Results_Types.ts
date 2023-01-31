@@ -1,6 +1,20 @@
 //#region Renderer
 type R_TwoColumnWatchNextResults={twoColumnWatchNextResults: D_TwoColumnWatchNextResults;};
 //#endregion
+//#region Used by renderer
+type D_TwoColumnWatchNextResults={
+	results: T_Results<G_Watch_ResultsItem>;
+	secondaryResults: T_SecondaryResults<G_Watch_SecondaryResults>;
+	playlist?: T_Playlist<D_PlaylistContent>;
+	autoplay?: T_Autoplay<D_AutoplayContent>;
+	conversationBar?: G_ConversationBar;
+};
+//#endregion
+//#region Used by data
+type G_Watch_ResultsItem={trackingParams: string; contents: G_Watch_ContentsItem[];};
+type G_Watch_SecondaryResults=G_Watch_SecondaryResults_Contents|G_Watch_SecondaryResults_Results;
+type G_ConversationBar=R_LiveChat;
+//#endregion
 //#region Grouped
 namespace GR_Watch_Results_Types {}
 //#region G_Watch_Secondary
@@ -19,19 +33,7 @@ type G_Watch_ContentsItem=[
 ][number];
 //#endregion
 //#endregion
-//#region Used by data
-type G_Watch_ResultsItem={trackingParams: string; contents: G_Watch_ContentsItem[];};
-type G_Watch_SecondaryResults=G_Watch_SecondaryResults_Contents|G_Watch_SecondaryResults_Results;
-type G_ConversationBar=R_LiveChat;
-//#endregion
 //#region Data
-type D_TwoColumnWatchNextResults={
-	results: T_Results<G_Watch_ResultsItem>;
-	secondaryResults: T_SecondaryResults<G_Watch_SecondaryResults>;
-	playlist?: T_Playlist<D_PlaylistContent>;
-	autoplay?: T_Autoplay<D_AutoplayContent>;
-	conversationBar?: G_ConversationBar;
-};
 type D_PlaylistContent={
 	title: string;
 	contents: R_PlaylistPanelVideo[];
