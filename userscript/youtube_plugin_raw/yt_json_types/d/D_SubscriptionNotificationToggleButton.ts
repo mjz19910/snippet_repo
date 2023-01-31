@@ -19,6 +19,6 @@ type D_SubscriptionNotificationToggleButton={
 	currentStateId: 2;
 	trackingParams: string;
 	command: C_Executor;
-	targetId: string;
+	targetId: "notification-bell";
 	secondaryIcon: T_Icon<"EXPAND_MORE">;
 };
