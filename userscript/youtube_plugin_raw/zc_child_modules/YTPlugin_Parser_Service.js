@@ -680,6 +680,32 @@ class ParserService extends BaseService {
 							}
 						}
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "aadc_guidelines_state_entity_key":
+					case "feedback.feedbackToken":
+					case "next.continuation":
+					case "next.queue_context_params":
+					case "playlist_edit.params":
+					case "record_notification_interactions":
+					case "reel.sequence_params":
+					case "reload.continuation":
+					case "report.params":
+					case "subscribe.params":
+					case "TimedContinuation":
+					case "tracking.parentTrackingParams":
+					case "transcriptTrackSelection.serializedParams":
+					case "UndoFeedback.undoToken":
+					case "watch_page_url.pp":
+					case "watch_playlist.params":
+					case "YpcGetCart.transactionParams":
+					case "get_report_form.f2":
+					case "get_report_form.f8":
+					case "get_report_form.f11":
+					case "get_report_form.f14":
+					case "get_report_form.f15":
+					case "get_report_form.f18.f1.f2":
+					case "get_report_form.f27":
+					case "get_report_form.f29":
+					case "watch.params.f39":
 					case "AdServingDataEntry.f10.f1":
 					case "AdServingDataEntry.f10.f11":
 					case "AdServingDataEntry.f10.f6":
@@ -694,6 +720,7 @@ class ParserService extends BaseService {
 					case "AdServingDataEntry.f9.f3":
 					case "browse$param.f84.f5":
 					case "browse$param.f93.f1":
+					case "browse$param.f93.f3":
 					case "create_playlist.params.f84.f5":
 					case "create_playlist.params.f84":
 					case "createBackstagePost.params.f1":
@@ -704,23 +731,16 @@ class ParserService extends BaseService {
 					case "get_transcript.params.f1":
 					case "get_transcript.params.f6":
 					case "GetNotificationMenu.ctoken.f1":
-					case "like.likeParams.f1.f1":
-					case "like.likeParams.f4":
-					case "like.likeParams.f5":
-					case "like.likeParams.f6.f2":
-					case "like.likeParams.f7":
 					case "record_notification_interactions.f2.f1":
 					case "record_notification_interactions.f2.f14.f1.f1":
 					case "record_notification_interactions.f2.f14.f1.f2":
 					case "record_notification_interactions.f2.f14.f2":
 					case "record_notification_interactions.f2":
 					case "record_notification_interactions.f5":
-					case "record_notification_interactions":
 					case "reel.params.f1":
 					case "reel.player_params.f30":
 					case "reel.player_params.f71":
 					case "reel.sequence_params.f1":
-					case "reel.sequence_params":
 					case "report.params.f11":
 					case "report.params.f15":
 					case "report.params.f18.f1.f2":
@@ -740,7 +760,7 @@ class ParserService extends BaseService {
 					case "report.params.f28.f1[].f3":
 					case "report.params.f28.f1[]":
 					case "report.params.f8":
-					case "report.params":
+					case "service$create_playlist.f1":
 					case "slot_ad_serving_data_entry.f1.f1":
 					case "slot_ad_serving_data_entry.f1.f2":
 					case "slot_ad_serving_data_entry.f1.f3":
@@ -751,7 +771,6 @@ class ParserService extends BaseService {
 					case "subscribe.params.f2.f1":
 					case "subscribe.params.f3":
 					case "subscribe.params.f4":
-					case "subscribe.params":
 					case "tracking.trackingParams.f10":
 					case "tracking.trackingParams.f11":
 					case "tracking.trackingParams.f16.f1":
@@ -794,8 +813,6 @@ class ParserService extends BaseService {
 					case "ypc_get_offers.params.f5.f3":
 					case "ypc_get_offers.params.f5.f5.f1":
 					case "ypc_get_offers.params.f5.f9":
-					case "YpcGetCart.transactionParams":
-					case "tracking.parentTrackingParams":
 					case "tracking.trackingParams.f1":
 					case "tracking.trackingParams.f19.f1":
 					case "tracking.trackingParams.f19.f2":
@@ -805,10 +822,42 @@ class ParserService extends BaseService {
 					case "tracking.trackingParams.f6.f12":
 					case "tracking.trackingParams.f6.f13":
 					case "tracking.trackingParams.f9":
-					case "next.queue_context_params":
-					case "playlist_edit.params":
-					case "watch_page_url.pp":
-					case "watch_playlist.params": {
+					case "like.dislikeParams.f1.f1":
+					case "like.dislikeParams.f2":
+					case "like.dislikeParams.f3":
+					case "like.dislikeParams.f4.f1":
+					case "like.dislikeParams.f4.f2":
+					case "like.dislikeParams.f5.f1":
+					case "like.dislikeParams.f5.f2":
+					case "like.dislikeParams.f5":
+					case "like.dislikeParams.f6.f1":
+					case "like.dislikeParams.f6.f2":
+					case "like.dislikeParams.f6":
+					case "like.dislikeParams.f7":
+					case "like.likeParams.f1.f1":
+					case "like.likeParams.f2":
+					case "like.likeParams.f3":
+					case "like.likeParams.f4.f1":
+					case "like.likeParams.f4.f2":
+					case "like.likeParams.f4":
+					case "like.likeParams.f5.f1":
+					case "like.likeParams.f5.f2":
+					case "like.likeParams.f5":
+					case "like.likeParams.f6.f1":
+					case "like.likeParams.f6.f2":
+					case "like.likeParams.f7":
+					case "like.removeLikeParams.f1.f1":
+					case "like.removeLikeParams.f2":
+					case "like.removeLikeParams.f3":
+					case "like.removeLikeParams.f4.f1":
+					case "like.removeLikeParams.f4.f2":
+					case "like.removeLikeParams.f4":
+					case "like.removeLikeParams.f5.f1":
+					case "like.removeLikeParams.f5.f2":
+					case "like.removeLikeParams.f6.f1":
+					case "like.removeLikeParams.f6.f2":
+					case "like.removeLikeParams.f6":
+					case "like.removeLikeParams.f7": {
 						new_path();
 						debugger;
 					}
