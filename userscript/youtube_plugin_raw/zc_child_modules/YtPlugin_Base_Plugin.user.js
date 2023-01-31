@@ -2234,6 +2234,15 @@ class ApiBase {
 		let as_any=Object.fromEntries(sp.entries());
 		return as_any;
 	}
+	/** @protected @template {string} T @arg {T} t @returns {TP_KeyofSearchParams<T>} */
+	keyof_search_params(t) {
+		let tmp=this.parse_url_search_params(t);
+		let ret=[];
+		for(let k in tmp) {
+			ret.push(k);
+		}
+		return ret;
+	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
@@ -4481,9 +4490,11 @@ class ServiceMethods extends ServiceData {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=this.parse_url_search_params(u2);
+		/** @type {TP_KeyofSearchParams<typeof u2>} */
 		let u4=this.get_keys_of(u3);
 		x: {
 			if(this.eq_keys(u4,["v"])) break x;
+			u4;
 			if(this.eq_keys(u4,["v","pp"])) break x;
 			if(this.eq_keys(u4,["v","t"])) break x;
 			if(this.eq_keys(u4,["v","list","start_radio"])) break x;

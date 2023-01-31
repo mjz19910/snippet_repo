@@ -1,4 +1,5 @@
-function do_test_url_parse_test_0() {
+async function do_test_url_parse_test_0() {
+	let mod=await import("../../zc_child_modules/YtPlugin_Base_Plugin.user.js");
 	function parse_with_url_parse<T extends string>(str: T): UrlParse<T> {
 		let s=new URL(str);
 		return s as any as UrlParse<T>;
@@ -13,11 +14,14 @@ function do_test_url_parse_test_0() {
 	};
 	let vv=parse_with_url_parse(url_test_value_ytimg_vi_jpg);
 
-	let rt_u=vv;rt_u;
-	const search_str=split_string(vv.search,"?")[1];
-	console.log('rt_u.search has_sqp=%o',rt_u.search.includes("sqp")?"yes":"no");
+	let rt_u=vv; rt_u;
+	const search_str=mod.split_string(vv.search,"?")[1];
+	console.log('rt_u.search has_sqp=%o',rt_u.search.includes("sqp")? "yes":"no");
 	console.log("rs",get_url_params(search_str,"rs"));
 	console.log("sqp",get_url_params(search_str,"sqp"));
 }
 
-do_test_url_parse_test_0();
+do_test_url_parse_test_0().then(e => {
+	if(e!==void 0) debugger;
+	console.log("done");
+});
