@@ -1932,9 +1932,9 @@ class HandleTypes extends HandleTypesEval {
 					if(!res) break x;
 					if(this.missing_codegen_types.includes(res)) break x;
 					this.missing_codegen_types.push(res);
-					for(let type of this.missing_codegen_types) {
-						console.log(type);
-					}
+					let all_types=this.missing_codegen_types.join("|");
+					console.log(all_types);
+					debugger;
 				}
 				console.groupEnd();
 			}
