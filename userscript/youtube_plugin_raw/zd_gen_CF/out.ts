@@ -5,8 +5,8 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithCommand:command.omit";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithCommand:targetId.case";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithStyle:text";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
@@ -269,6 +269,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:Scope_1:targetId:clip-info-button" | "D_Button:WithCommand:text:Scope_1:targetId:clip-info-button";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:Scope_1:targetId:create-clip-button-action-bar" | "D_Button:WithCommand:text:Scope_1:targetId:create-clip-button-action-bar";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:Scope_1:tooltip" | "D_Button:WithCommand:text:Scope_1:tooltip";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button_WithText_Omit1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CarouselLockup";}

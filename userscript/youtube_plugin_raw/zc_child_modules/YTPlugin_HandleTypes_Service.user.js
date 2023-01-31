@@ -1679,11 +1679,10 @@ class HandleTypes extends HandleTypesEval {
 	expected_button_iconTypes=[
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
 		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
-		"CLOSE",
+		"CLOSE","MICROPHONE_ON",
 	];
 	expected_button_iconTypes_ex=[
-		"SETTINGS","DELETE","MICROPHONE_ON",
-		"NOTIFICATIONS_ACTIVE",
+		"SETTINGS","DELETE","NOTIFICATIONS_ACTIVE",
 	];
 	/** @private @arg {CF_D_Button} cf @template {D_Button} T @arg {T} x */
 	D_Button_Omit(cf,x) {
@@ -1747,26 +1746,27 @@ class HandleTypes extends HandleTypesEval {
 		// this.t(command,this.GC_Button);
 		return y;
 	}
-	/** @arg {string} cf1 @arg {D_Button_Ex_1_Omit_Size} x */
+	/** @arg {"D_Button"|"D_Button:WithCommand:text"} cf1 @arg {D_Button_Ex_1_Omit_Size} x */
 	D_Button_Scope_1(cf1,x) {
-		const cf2="D_Button_Scope_1";
+		/** @type {`${typeof cf1}:Scope_1`} */
+		const cf2=`${cf1}:Scope_1`;
 		if("targetId" in x) {
-			/** @type {`${cf2}:targetId`} */
-			const cf3=`${cf2}:targetId`;
+			/** @type {`${typeof cf2}:targetId`} */
+			const cf3=`${cf2}:targetId`; this.k(cf3,x);
 			switch(x.targetId) {
 				default: debugger; break;
 				case "clip-info-button": {
-					const {accessibilityData,icon,targetId,...y}=x; y;
-					/** @type {`${cf3}:${targetId}`} */
-					const cf4=`${cf3}:${targetId}`;
+					/** @type {`${typeof cf3}:${(typeof x)["targetId"]}`} */
+					const cf4=`${cf3}:${x.targetId}`;
+					const {accessibilityData,icon,targetId,...y}=this.s(cf4,x); y;
 					this.D_Accessibility(accessibilityData);
 					if(icon.iconType!=="INFO") debugger;
 					console.timeStamp(cf4);
 				} break;
 				case "create-clip-button-action-bar": {
-					const {accessibilityData,icon,targetId,tooltip,...y}=x; y;
-					/** @type {`${cf3}:${targetId}`} */
-					const cf4=`${cf3}:${targetId}`;
+					/** @type {`${typeof cf3}:${(typeof x)["targetId"]}`} */
+					const cf4=`${cf3}:${x.targetId}`;
+					const {accessibilityData,icon,targetId,tooltip,...y}=this.s(cf4,x); y;
 					this.D_Accessibility(accessibilityData);
 					if(icon.iconType!=="CONTENT_CUT") debugger;
 					if(tooltip!=="Clip") debugger;
@@ -1785,7 +1785,7 @@ class HandleTypes extends HandleTypesEval {
 			let ka=this.get_keys_of(serviceEndpoint);
 			for(let k of ka) {
 				switch(k) {
-					default: this.generate_case(`${cf3}.endpoint.keyof().iter()`,k); break;
+					default: this.generate_case(`${cf3}.service.case`,k); break;
 					case "clickTrackingParams":
 					case "commandMetadata":
 					case "signalServiceEndpoint":
@@ -1796,7 +1796,9 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("tooltip" in x) {
-			const {accessibilityData,icon,tooltip,accessibility,...y}=x; y;
+			/** @type {`${cf2}:tooltip`} */
+			const cf3=`${cf2}:tooltip`;
+			const {accessibilityData,icon,tooltip,accessibility,...y}=this.s(cf3,x); y;
 			this.D_Accessibility(accessibilityData);
 			if(icon.iconType!="PLAYLIST_ADD") debugger;
 			if(tooltip!=="Clip") debugger;
@@ -1862,7 +1864,7 @@ class HandleTypes extends HandleTypesEval {
 			let {targetId,isDisabled,icon,accessibilityData,style,size,...y}=this.D_Button_Omit_Command(`${cf1}.With.command.targetId`,x); this.g(y);
 			switch(targetId) {
 				case "clip-info-button": break;
-				default: this.codegen_case(`${cf3}.case`,targetId);this.do_codegen(cf3,x); break;
+				default: this.codegen_case(`${cf3}.case`,targetId); this.do_codegen(cf3,x); break;
 			}
 			if(isDisabled!==false) debugger;
 			if(style!=="STYLE_DEFAULT") debugger;
@@ -1893,16 +1895,20 @@ class HandleTypes extends HandleTypesEval {
 		let z=y;
 		return z;
 	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Style} x */
-	D_Button_WithStyle(cf,x) {
+	/** @private @arg {"D_Button"} cf1 @arg {D_Button_EX_1_Style} x */
+	D_Button_WithStyle(cf1,x) {
+		/** @type {`${cf1}:WithStyle`} */
+		const cf2=`${cf1}:WithStyle`;
 		if(!("text" in x)) {
-			let {icon,isDisabled,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.serviceEndpoint`,x); this.g(y);
-			switch(icon.iconType) {default: this.codegen_case(cf,icon.iconType); break; case "MICROPHONE_ON": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
+			/** @type {`${cf2}:text`} */
+			const cf3=`${cf2}:text`;
+			let {icon,isDisabled,...y}=this.D_Button_Omit_FromStyle(`${cf1}.With.serviceEndpoint`,x); this.g(y);
+			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "MICROPHONE_ON": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
 			if(isDisabled!==false) debugger;
 			return;
 		}
 		if("serviceEndpoint" in x) {
-			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x); this.g(y);
+			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(`${cf1}.With.serviceEndpoint`,x); this.g(y);
 			this.t(serviceEndpoint,this.D_Button_SE);
 			if(icon.iconType!=="SHARE") debugger;
 			this.D_Accessibility(accessibilityData);
