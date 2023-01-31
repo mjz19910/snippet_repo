@@ -1129,14 +1129,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_BrowsePage} x */
 	RS_BrowsePage(x) {
 		const cf="R_BrowsePage";
+		if(!("rootVe" in x&&typeof x.rootVe==="number"&&"expirationTime" in x&&"previousCsn" in x)) {debugger; return;}
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.t(rootVe,x => this.save_number("R_BrowsePage.rootVe",x));
+		this.t(rootVe,x => {
+			if(typeof x!=="number") {debugger; return;}
+			this.save_number("R_BrowsePage.rootVe",x);
+		});
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E_Browse(endpoint);
 		if(page!=="browse") debugger;
 		this.RS_Browse(response);
 		this.t(expirationTime,x => this._primitive_of(x,"number"));
-		if(previousCsn!==void 0) this._previousCsn(previousCsn);
+		this.t(previousCsn,x => {
+			if(typeof x!=="string") {debugger; return;}
+			this._previousCsn(x);
+		});
 	}
 	//#region Grouped Endpoints
 	// in this case, inferred (E_Page is a index accessed type)
@@ -2210,7 +2217,7 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {
 
-			} break
+			} break;
 		}
 		this.D_GetSurvey_Endpoint(a);
 	}
@@ -7020,7 +7027,7 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {A_AccountItem} x */
-	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem)}
+	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem";
