@@ -3,9 +3,11 @@ type D_TopbarMenuButton_MenuItem={
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 };
+type R_TopbarMenu=TR_MultiPageMenu<D_TopbarMenuButton_MenuItem>;
+
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
-	menuRenderer: TR_MultiPageMenu<D_TopbarMenuButton_MenuItem>;
+	menuRenderer: R_TopbarMenu;
 	trackingParams: string;
 	accessibility: D_Accessibility;
 	tooltip: string;

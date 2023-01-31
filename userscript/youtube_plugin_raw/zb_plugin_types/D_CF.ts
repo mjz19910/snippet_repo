@@ -8,10 +8,15 @@ type D_CF_w=[
 	`G_EY_Entity_Any:G_EY_Entity`,
 	`T_Items:${T_Items_CF}`,
 ][number];
-type T_Items_CF="";
+type T_Items_CF=[
+	"R_CompactLink_Items",
+	"D_ProfileColumn",
+][number];
 type TR_MultiPageMenu_CF=[
 	"D_NotificationMenu_PopupItemMenu",
 	"TR_MultiPageMenu_Empty",
+	"P_NotificationMenu_Popup",
+	"R_TopbarMenu",
 ][number];
 type D_CF_y=[
 	"AD_HideEnclosing",

@@ -276,9 +276,6 @@ ECatcherService.known_experiments.push(...[
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region moved members
-	/** @protected @template {any[]} T @arg {T} a */
-	exact_arr(...a) {return a;}
-	xa=this.exact_arr;
 	/** @private @template T @arg {D_CF["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @arg {string} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
@@ -1744,7 +1741,7 @@ class HandleTypes extends HandleTypesEval {
 		this.M_YpcGetCart(a); this.D_YpcGetCart(b);
 	}
 	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.H_("M_YpcGetCart","webCommandMetadata",x,this.GM_YpcGetCart);}
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {
 		const cf="GM_YpcGetCart";
@@ -2198,21 +2195,23 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(a!=="DROPDOWN") debugger;
-		let u=this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",b);
-		this.D_NotificationMenu_PopupItem(u);
+		return b;
+	}
+	/** @private @arg {RSG_NotificationMenu_Action} x */
+	RSG_NotificationMenu_Action(x) {
+		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
+		if(x.openPopupAction) return this.TA_OpenPopup(x);
+		this.do_codegen(cf,x);
+		return null;
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
 	RSG_NotificationMenu(x) {
 		const cf="RSG_NotificationMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		let [ar]=this.z(actions,x => {
-			if(x.openPopupAction) return this.TA_OpenPopup(x);
-			debugger;
-			return null;
-		});
-		this.z(ar,x => {
-			this.D_NotificationMenu_Popup(x);
-		});
+		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
+		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
+		let [u3]=this.z(u2,x => this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
+		this.z(u3,this.D_NotificationMenu_PopupItem);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -2960,7 +2959,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
 	}
 	/** @private @arg {M_VE3832} x */
-	M_VE3832(x) {this.H_("M_VE3832","webCommandMetadata",x,this.GM_VE3832_Watch_WC);}
+	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832_Watch_WC);}
 	/** @private @arg {GM_VE3832_Watch_WC} x */
 	GM_VE3832_Watch_WC(x) {
 		const cf="GM_VE3832_Watch_WC";
@@ -3125,7 +3124,7 @@ class HandleTypes extends HandleTypesEval {
 		if(target!=="TARGET_NEW_WINDOW") debugger;
 	}
 	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.H_("M_VE83769","webCommandMetadata",x,this.GM_VE83769_WC);}
+	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
 	/** @private @arg {GM_VE83769_WC} x */
 	GM_VE83769_WC(x) {
 		const cf="GM_VE83769_WC";
@@ -3768,7 +3767,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_RecordNotificationInteractions(b);
 	}
 	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.H_("M_RecordInteractions","webCommandMetadata",x,this.GM_RecordInteractions);}
+	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {GM_RecordInteractions} a */
 	GM_RecordInteractions(a) {
 		const cf="GM_RecordInteractions";
@@ -4369,7 +4368,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Search(searchEndpoint);
 	}
 	/** @private @arg {M_VE4724} x */
-	M_VE4724(x) {this.H_("M_VE4724","webCommandMetadata",x,this.GM_VE4724_WC);}
+	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
 	/** @private @arg {GM_VE4724_WC} x */
 	GM_VE4724_WC(x) {
 		const cf="GM_VE4724_WC";
@@ -5617,7 +5616,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
-	/** @arg {string} cf @template T @private @arg {T_Items<T>} x */
+	/** @arg {T_Items_CF} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @template T @private @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
@@ -5636,7 +5635,7 @@ class HandleTypes extends HandleTypesEval {
 		if("menuRenderer" in u) {
 			const {icon,menuRenderer,style,...y}=u; this.g(y);//#destructure
 			if(icon.iconType!=="VIDEO_CALL") debugger;
-			let uv=this.TR_MultiPageMenu(menuRenderer);
+			let uv=this.TR_MultiPageMenu("R_TopbarMenu",menuRenderer);
 			this.D_TopbarMenuButton_MenuItem(uv);
 			if(style!=="STYLE_DEFAULT") debugger;
 			return;
@@ -5648,7 +5647,7 @@ class HandleTypes extends HandleTypesEval {
 		this.S_GetAccountMenu(res[1]);
 	}
 	/** @private @arg {M_AccountMenu} x */
-	M_AccountMenu(x) {this.y("M_AccountMenu","webCommandMetadata",x,this.GM_AccountMenu);}
+	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {
 		const cf="GM_AccountMenu";
@@ -5678,7 +5677,7 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
 	}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
-	M_GetUnseenNotificationCount(x) {this.y("M_GetUnseenNotificationCount","webCommandMetadata",x,this.GM_GetUnseenNotificationCount);}
+	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
 	GM_GetUnseenNotificationCount(x) {
 		const {sendPost,apiUrl,...y}=this.s("GM_GetUnseenNotificationCount",x); this.g(y);
@@ -5690,9 +5689,11 @@ class HandleTypes extends HandleTypesEval {
 		const cf="Signal_GetNotificationsMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
+		/** @type {[(G_Action_GetNotificationsMenu["openPopupAction"])[], never[]]} */
 		let [u]=this.z(actions,this.TA_OpenPopup);
-		let [u1]=this.z(u,this.P_NotificationMenu_Popup);
-		let [u2]=this.z(u1,this.TR_MultiPageMenu);
+		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
+		/** @type {[P_NotificationMenu_Popup[], never[]]} */
+		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.D_NotificationMenuPopupMenuItem);
 	}
 	/** @private @arg {D_NotificationMenuPopupMenuItem} x */
@@ -5703,9 +5704,9 @@ class HandleTypes extends HandleTypesEval {
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		if(showLoadingSpinner!==true) debugger;
 	}
-	/** @private @arg {P_NotificationMenu_Popup} x */
-	P_NotificationMenu_Popup(x) {
-		const cf="P_NotificationMenu_Popup";
+	/** @private @arg {G_Action_GetNotificationsMenu_Popup} x */
+	G_Action_GetNotificationsMenu_Popup(x) {
+		const cf="G_Action_GetNotificationsMenu_Popup";
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(popupType!=="DROPDOWN") debugger;
 		if(beReused!==true) debugger;

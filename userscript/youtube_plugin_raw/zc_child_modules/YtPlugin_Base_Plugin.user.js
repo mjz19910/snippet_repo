@@ -2165,6 +2165,9 @@ const general_service_state={
 	premium_membership: null,
 };
 class ApiBase {
+	/** @protected @template {any[]} T @arg {T} a */
+	exact_arr(...a) {return a;}
+	xa=this.exact_arr;
 	/** @protected @arg {string} x */
 	uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
@@ -2241,7 +2244,11 @@ class ApiBase {
 		for(let k in tmp) {
 			ret.push(k);
 		}
-		return ret;
+		/** @type {any} */
+		let as_any=ret;
+		/** @type {TP_KeyofSearchParams<T>} */
+		let ret_val=as_any;
+		return ret_val;
 	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
@@ -4485,20 +4492,28 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		}
 	}
+	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
+	is_eq_keys(src,target) {
+		return this.eq_keys(src,target);
+	}
 	/** @protected @arg {P_ParamsSection} root @arg {D_WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=this.parse_url_search_params(u2);
-		/** @type {TP_KeyofSearchParams<typeof u2>} */
-		let u4=this.get_keys_of(u3);
+		let u4=this.keyof_search_params(u2);
 		x: {
-			if(this.eq_keys(u4,["v"])) break x;
+			if(this.is_eq_keys(u4,this.exact_arr("v"))) {
+				u4;
+				return;
+			}
+			if(this.is_eq_keys(u4,this.exact_arr("v","pp"))) break x;
 			u4;
-			if(this.eq_keys(u4,["v","pp"])) break x;
-			if(this.eq_keys(u4,["v","t"])) break x;
-			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
-			if(this.eq_keys(u4,["v","list","index"])) break x;
+			if(this.is_eq_keys(u4,this.exact_arr("v","t"))) break x;
+			u4;
+			if(this.is_eq_keys(u4,this.exact_arr("v","list","start_radio"))) break x;
+			if(this.is_eq_keys(u4,this.exact_arr("v","list","index"))) break x;
+			u4==="";
 			debugger;
 		}
 		this.parser.parse_url(root,x);
