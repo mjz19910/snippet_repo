@@ -3054,7 +3054,7 @@ class HandleTypes extends HandleTypesEval {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @private @arg {D_YoutubeUrl} x */
+	/** @private @arg {D_EX_YoutubeUrl} x */
 	D_YoutubeUrl(x) {
 		const cf="D_YoutubeUrl";
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
@@ -3073,7 +3073,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_Url_Internal,`${string}//studio.youtube.com${string}`>} b */
+	/** @private @arg {Extract<DU_DE_Url['url']|GU_VE83769_Url_Internal,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
 		if(!this.str_is_uri(b)) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
@@ -3093,14 +3093,14 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {D_YoutubeKidsUrl} x */
+	/** @private @arg {D_EX_YoutubeKidsUrl} x */
 	D_YoutubeKidsUrl(x) {
 		const cf="D_YoutubeKidsUrl";
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		this.codegen_str(cf,x);
 	}
-	/** @private @arg {DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @private @arg {DU_DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with(rp,x)) return this.D_YoutubeUrl(x);
@@ -3110,7 +3110,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.GM_VE83769_UrlType(sp.href);
 	}
-	/** @private @arg {DE_Url} x */
+	/** @private @arg {DU_DE_Url} x */
 	DE_Url(x) {
 		const cf="DE_Url";
 		if("nofollow" in x) {
@@ -4562,7 +4562,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(seconds);
 		this._primitive_of(nanos,"number");
 	}
-	/** @private @arg {D_EntityMutationItem} x */
+	/** @private @arg {DE_MutationItem} x */
 	D_EntityMutationItem(x) {
 		const cf="D_EntityMutationItem";
 		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);//#destructure_off
