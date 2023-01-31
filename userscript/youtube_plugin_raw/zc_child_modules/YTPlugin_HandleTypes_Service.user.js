@@ -1342,7 +1342,7 @@ class HandleTypes extends HandleTypesEval {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
-	/** @private @arg {string} cf @arg {D_Video} x */
+	/** @private @arg {D_CF_D_Video_Handle} cf @arg {D_Video} x */
 	D_Video_Handle(cf,x) {
 		let u=this.D_Video_Omit(cf,x);
 		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=u; this.g(y);
@@ -2316,10 +2316,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template {{webCommandMetadata:any}} T @template U @arg {string} cf @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
+	/** @private @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf,x) {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(`T_SE_Signal:${cf}`,clickTrackingParams);
 		return [commandMetadata,signalServiceEndpoint];
 	}
 	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
@@ -2737,7 +2737,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	service_menu_icons=[];
-	/** @private @arg {string} cf @arg {RD_MenuServiceItem} x */
+	/** @private @arg {"RD_MenuServiceItem"} cf @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem_Omit(cf,x) {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x;
 		this.G_Text(text);

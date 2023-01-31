@@ -131,6 +131,7 @@ type D_CF_L_Params_base=
 	|"R_VE3832_WatchPage"
 	|"R_WatchPage_Generic"
 	|"R_WatchPage_VE3832"
+	|"RD_MenuServiceItem"
 	|"RS_AccountMenu"
 	|"RS_Browse"
 	|"RS_Channel"
@@ -172,7 +173,10 @@ type D_CF_L_Params_ext=
 	|D_CF_GE_ResponseReceived
 	|D_CF_Omit_Menu_Radio
 	|D_CF_T_Endpoint
-	|D_CF_D_Params;
+	|D_CF_D_Params
+	|`T_SE_Signal:${CF_T_SE_Signal}`
+	;
+;
 type D_CF_D_Link=[
 	|"D_CompactLink"
 	|"D_CompactLink.Styled"
@@ -189,5 +193,6 @@ type D_CF_Omit_Menu_Radio=
 	|"D_PlayerOverlayAutoplay"
 	|"D_PlaylistSidebarPrimaryInfo"
 	|"D_Radio"
-	|"D_Video";
+	|"D_Video"
+	|D_CF_D_Video_Handle;
 type D_CF_D_ChipCloudChip_Omit="D_ChipCloudChip";
