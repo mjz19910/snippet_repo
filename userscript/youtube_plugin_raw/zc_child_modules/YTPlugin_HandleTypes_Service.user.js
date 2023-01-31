@@ -245,19 +245,19 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Text";
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
+		this.tz(runs,x => this.R_TextRun(x,this.R_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {R_TextRun_Endpoint} x */
-	IR_TextRun_Endpoint(x) {
-		const cf="IR_TextRun_Endpoint"; this.k(cf,x);
+	R_TextRun_Endpoint(x) {
+		const cf="R_TextRun_Endpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_TextRun} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
-	IR_TextRun(x,f_run) {
+	R_TextRun(x,f_run) {
 		const cf="R_TextRun";
 		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(navigationEndpoint,f_run);
