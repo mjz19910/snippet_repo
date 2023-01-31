@@ -31,9 +31,9 @@ type D_RadioShareUrl=
 	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`
 	|`https://www.youtube.com/playlist?list=PL${string}`
 	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=PL${string}`
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`
 	;
 ;
-
 type D_CompactRadio={
 	playlistId: `RD${string}`|`RDGM${string}`;
 	thumbnail: R_Thumbnail&R_SampledThumbnailColor;
