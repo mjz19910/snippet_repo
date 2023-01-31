@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
-
+//#region module init
 const __module_name__="mod$YoutubePluginBase";
 /** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name) {
@@ -59,34 +59,60 @@ export_(exports => {
 	exports.__yt_plugin_log_imports__=log_imports;
 },{global: true});
 if(log_imports) console.log("Load PluginBase");
-
-//#region done
+//#endregion
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {return x;}
 export_(exports => {
 	exports.as_=as;
 });
+//#endregion
+//#region helper
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
+function split_string_once(s,d=as(",")) {
+	if(s==="") {
+		/** @private @type {[]} */
+		let r=[];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.indexOf(d);
+	if(i===-1) {
+		/** @private @type {[S]} */
+		let r=[s];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @private @type {[string,string]} */
+	let r=[a,b];
+	/** @private @type {any} */
+	let q=r;
+	return as(q);
+}
+//#endregion
+//#region constants
 /** @private @type {YtdAppElement} */
 const YtdAppElement=as({});
+const is_yt_debug_enabled=false;
+//#endregion
+//#region vars
 /** @private @type {InstanceType<typeof YtdAppElement>|null} */
 let ytd_app=null;
 /** @private @type {HTMLElement|null} */
 let ytcp_app=null;
 /** @private @type {HTMLElement|null} */
 let ytmusic_app=null;
-{
-	/** @private @type {Exclude<typeof window[InjectApiStr],undefined>} */
-	let inject_api=window.inject_api??as({});
-	window.inject_api=inject_api;
-}
 /** @private @type {Map<string, Blob|MediaSource>} */
 let created_blobs=new Map;
 /** @private @type {Set<string>} */
 let active_blob_set=new Set;
 /** @private @type {D_Saved} */
 let saved_data=as({});
-const is_yt_debug_enabled=false;
+//#endregion
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>x is X} */
 function assume_is_instanceof(_value,_constructor_type) {
 	return true;
@@ -2077,31 +2103,6 @@ function split_string(x,s=as(",")) {
 	if(!x) {debugger;}
 	let r=x.split(s);
 	return as(r);
-}
-/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
-function split_string_once(s,d=as(",")) {
-	if(s==="") {
-		/** @private @type {[]} */
-		let r=[];
-		/** @private @type {any} */
-		let q=r;
-		return as(q);
-	}
-	let i=s.indexOf(d);
-	if(i===-1) {
-		/** @private @type {[S]} */
-		let r=[s];
-		/** @private @type {any} */
-		let q=r;
-		return as(q);
-	}
-	let a=s.slice(0,i);
-	let b=s.slice(i+d.length);
-	/** @private @type {[string,string]} */
-	let r=[a,b];
-	/** @private @type {any} */
-	let q=r;
-	return as(q);
 }
 /** @private @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {S extends `${D}${infer U}`?U extends `${WA}${infer A}`?["",`${WA}${A}`]:never:[S]} */
 function split_string_once_ex(s,d=as(","),_wa) {
@@ -4559,7 +4560,7 @@ class ServiceMethods extends ServiceData {
 	}
 }
 //#endregion
-//#endregion
+//#region exports
 export_((exports) => {
 	exports.split_string_once=split_string_once;
 	exports.base64_dec=base64_dec;
@@ -4569,8 +4570,13 @@ export_((exports) => {
 	exports.yt_plugin_base_main=yt_plugin_base_main;
 });
 export_(exports => {
-	exports.ServiceMethods=ServiceMethods;
+	exports.ApiBase=ApiBase;
+});
+export_(exports => {
 	exports.BaseServicePrivate=BaseServicePrivate;
+});
+export_(exports => {
+	exports.ServiceMethods=ServiceMethods;
 	exports.BaseService=BaseService;
 	exports.YtPlugin=YtPlugin;
 	exports.ModifyEnv=ModifyEnv;
@@ -4594,6 +4600,18 @@ export_(exports => {
 export_(exports => {
 	exports.is_firefox=is_firefox;
 });
+//#endregion
+//#region global exports
 export_((exports) => {
 	exports.__youtube_plugin_base_loaded__=true;
+	/** @returns {Exclude<window["inject_api"],undefined>} */
+	function fake_inject_api() {
+		/** @type {Exclude<window["inject_api"],undefined>} */
+		let res=as({});
+		return res;
+	}
+	/** @private @type {Exclude<window["inject_api"],undefined>} */
+	let inject_api=window.inject_api??fake_inject_api();
+	window.inject_api=inject_api;
 },{global: true});
+//#endregion
