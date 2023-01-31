@@ -134,6 +134,36 @@ ECatcherService.known_experiments.push(...[
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region templates
+	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
+	HD_(cf,k,x) {
+		this.k(cf,x);
+		let kx=this.get_keys_of(x);
+		if(kx.length!==1) debugger;
+		if(kx[0]!==k) debugger;
+	}
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	H_(cf,k,x,f) {
+		if(!x) {debugger; return;}
+		let wr=this.wn(cf,x,k);
+		if(!wr) return;
+		return f.call(this,wr);
+	}
+	/** @arg {CF_TD_ItemSection_3} cf1 @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
+	TD_ItemSection_3(cf1,x) {
+		const cf2="TD_ItemSection_3";
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
+		this.trackingParams(cf2,trackingParams);
+		if(contents.length>0) {
+			let cu=contents[0];
+			if(typeof cu!=="object"||!cu) {debugger; return null;}
+			let k=this.get_keys_of(cu);
+			switch(k[0]) {
+				case "continuationItemRenderer": break;
+				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+			}
+		}
+		return [contents,sectionIdentifier,targetId];
+	}
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x */
 	H_Get(cf,k,x) {return this.wn(cf,x,k);}
 	// const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;
@@ -242,37 +272,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
 	// H_=super.H_;
-	//#region Temporary
-	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
-	HD_(cf,k,x) {
-		this.k(cf,x);
-		let kx=this.get_keys_of(x);
-		if(kx.length!==1) debugger;
-		if(kx[0]!==k) debugger;
-	}
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
-	H_(cf,k,x,f) {
-		if(!x) {debugger; return;}
-		let wr=this.wn(cf,x,k);
-		if(!wr) return;
-		return f.call(this,wr);
-	}
-	/** @arg {CF_TD_ItemSection_3} cf1 @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
-	TD_ItemSection_3(cf1,x) {
-		const cf2="TD_ItemSection_3";
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
-		this.trackingParams(cf2,trackingParams);
-		if(contents.length>0) {
-			let cu=contents[0];
-			if(typeof cu!=="object"||!cu) {debugger; return null;}
-			let k=this.get_keys_of(cu);
-			switch(k[0]) {
-				case "continuationItemRenderer": break;
-				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
-			}
-		}
-		return [contents,sectionIdentifier,targetId];
-	}
 	//#endregion
 	//#region member functions
 	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
