@@ -1,5 +1,6 @@
+type CF_L_Params=CF_L_CTP_Params|CF_L_TP_Params;
+
 type CF_mod=import("./D_CF_mod.js").D_CF_mod;
-type CF_T_Endpoint_3=""|"a";
 type CF_M_s_priv=
 	|`D_Params:${CF_D_Params}`
 	|`T_Endpoint_Tracking:${"C_GetSurvey"}`
@@ -57,16 +58,18 @@ type CF_T_SE_Signal=
 	|T_ExtractImport<"CF_T_SE_Signal">
 	;
 ;
-type CF_L_Params=
-	T_ExtractImport<"CF_L_Params">
+type CF_L_TP_Params=
+	T_ExtractImport<"CF_L_TP_Params">
 	|`${CF_TE_Endpoint_2}.endpoint`
 	|`${CF_TE_Endpoint_3}.endpoint`
 	|`${CF_TE_Endpoint_Opt_3}.endpoint`
 	|CF_D_Link
 	|CF_D_Button
 	|CF_D_Menu_Omit
+	|`T_SE_Signal:${CF_T_SE_Signal}`
 	;
 ;
+type CF_L_CTP_Params=T_ExtractImport<"CF_L_CTP_Params">;
 type CF_D_Link=T_ExtractImport<"CF_D_Link">;
 type CF_D_Button=T_ExtractImport<"CF_D_Button">;
 type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">;

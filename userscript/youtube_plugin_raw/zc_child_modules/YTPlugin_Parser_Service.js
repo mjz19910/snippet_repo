@@ -262,7 +262,7 @@ class ParserService extends BaseService {
 		this.log_url_info_arr(arr);
 	}
 	log_start_radio=false;
-	/** @private @arg {CF_L_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	/** @private @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url(root,x) {
 		let vv=split_string(x,"&");
 		/** @private @type {G_UrlInfoItem[]} */
@@ -416,7 +416,7 @@ class ParserService extends BaseService {
 		console.log("[new_get_transcript_endpoint_params]",param_obj);
 		{debugger;}
 	}
-	/** @api @public @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @api @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
@@ -451,7 +451,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
-	/** @api @public @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @api @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_player_params(root,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -462,7 +462,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	cache_interaction_requests=[];
-	/** @unused_api @protected @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @unused_api @protected @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_serialized_interactions_request_params(root,path,x) {
 		if(this.cache_interaction_requests.includes(x)) return;
 		this.cache_interaction_requests.push(x);
@@ -470,7 +470,7 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		this.parse_serialized_interactions_request(root,path,param_map);
 	}
-	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
+	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_serialized_interactions_request(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -550,7 +550,7 @@ class ParserService extends BaseService {
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @type {P_LogItems} */
-	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
+	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
 		let saved_map_keys=map_keys.slice();
 		/** @private @arg {string} ns @arg {()=>void} f */
@@ -850,7 +850,7 @@ class ParserService extends BaseService {
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
-	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,tva) {
 		let off=1;
 		for(let val of tva) {
@@ -883,7 +883,7 @@ class ParserService extends BaseService {
 		this.save_number(`[${path}]`,x[1]);
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
-	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
 	parse_param_next(root,path,tva) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,tva);
 		if(tva.length!==1) return;
@@ -1380,7 +1380,7 @@ class ParserService extends BaseService {
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 	}
-	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
+	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_any_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -1396,7 +1396,7 @@ class ParserService extends BaseService {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
+	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_player_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -1412,7 +1412,7 @@ class ParserService extends BaseService {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @api @public @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
+	/** @api @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_endpoint_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -1458,7 +1458,7 @@ class ParserService extends BaseService {
 	cache_playlist_id=[];
 	/** @private @type {string[]} */
 	cache_player_params=[];
-	/** @private @arg {CF_L_Params} root @arg {Extract<D_UrlFormat,`https://${string}`|`http://${string}`>} x */
+	/** @private @arg {CF_L_TP_Params} root @arg {Extract<D_UrlFormat,`https://${string}`|`http://${string}`>} x */
 	parse_full_url(root,x) {
 		let r=this.parse_with_url_parse(x);
 		switch(r.host) {
@@ -1514,7 +1514,7 @@ class ParserService extends BaseService {
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
-	/** @api @public @arg {CF_L_Params} root @arg {D_UrlFormat} x */
+	/** @api @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {
 		if(this.str_starts_with("https://",x)) {
 			return this.parse_full_url(root,x);
@@ -1536,7 +1536,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_url_1(root,up[1]);
 	}
-	/** @private @arg {CF_L_Params} root @arg {NS_DP_Parse.ParseUrlStr_0} x */
+	/** @private @arg {CF_L_TP_Params} root @arg {NS_DP_Parse.ParseUrlStr_0} x */
 	parse_url_1(root,x) {
 		let v=split_string_once(x,"/");
 		switch(v.length) {
@@ -1576,7 +1576,7 @@ class ParserService extends BaseService {
 			}
 		}
 	}
-	/** @private @arg {CF_L_Params} root @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
+	/** @private @arg {CF_L_TP_Params} root @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
 	parse_url_with_search(root,x) {
 		let a=split_string(x,"?");
 		switch(a[0]) {
@@ -1586,7 +1586,7 @@ class ParserService extends BaseService {
 	}
 	log_channel_handles=false;
 	/** @private @type {D_UrlFormat} */
-	/** @private @arg {CF_L_Params} root @arg {Extract<T_SplitOnce<T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
+	/** @private @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<T_SplitOnce<Exclude<D_UrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
 	parse_url_2(root,x) {
 		if(this.str_is_search(x)) {
 			return this.parse_url_with_search(root,as(x));

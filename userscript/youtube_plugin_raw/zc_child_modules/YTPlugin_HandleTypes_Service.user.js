@@ -2203,7 +2203,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
-		if(x.openPopupAction) return this.TA_OpenPopup(x);
+		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
 		this.do_codegen(cf,x);
 		return null;
 	}
@@ -2322,6 +2322,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf,x) {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		/** @type {`T_SE_Signal:${CF_T_SE_Signal}`} */
 		this.clickTrackingParams(`T_SE_Signal:${cf}`,clickTrackingParams);
 		return [commandMetadata,signalServiceEndpoint];
 	}

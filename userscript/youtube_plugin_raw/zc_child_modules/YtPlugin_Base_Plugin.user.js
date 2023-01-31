@@ -3022,7 +3022,7 @@ class BaseService extends BaseServicePrivate {
 		if(!x) return;
 		this.z(x,f);
 	}
-	/** @protected @template {CF_L_Params} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
+	/** @protected @template {CF_L_TP_Params} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
 	t_cf(cf,x,f) {
 		if(x===void 0) return;
 		f.call(this,cf,x);
@@ -4423,7 +4423,7 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
-	/** @protected @arg {CF_L_Params} cf @arg {string} x */
+	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -4431,7 +4431,7 @@ class ServiceMethods extends ServiceData {
 	codegen_new_typedef(cf,x,ret_val) {
 		return this.codegen.codegen_typedef(cf,x,ret_val);
 	}
-	/** @protected @arg {CF_L_Params} cf @arg {string} x */
+	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -4494,7 +4494,7 @@ class ServiceMethods extends ServiceData {
 	is_eq_keys(src,target) {
 		return this.eq_keys(src,target);
 	}
-	/** @protected @arg {CF_L_Params} root @arg {D_WatchPageUrl} x */
+	/** @protected @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
@@ -4573,7 +4573,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @protected @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @protected @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
