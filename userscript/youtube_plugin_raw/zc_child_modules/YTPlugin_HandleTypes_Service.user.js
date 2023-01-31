@@ -774,7 +774,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_Feedback(feedbackEndpoint);
 	}
 	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {x; debugger;}
+	E_UndoFeedback(x) {let [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DE_UndoFeedback(b);}
 	/** @private @arg {E_Url} x */
 	E_Url(x) {let [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
@@ -784,7 +784,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DC_GetTranscript_Params("get_transcript.params",b);}
 	/** @private @arg {"get_transcript.params"} path @arg {DC_Params} a */
-	DC_GetTranscript_Params(path,a) {this.D_Params(`DE_GetTranscript`,a,(x,cf) => this.params(cf,path,x));}
+	DC_GetTranscript_Params(path,a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,path,x));}
+	/** @private @arg {DE_UndoFeedback} x */
+	DE_UndoFeedback(x) {x;}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_GetTranscript",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */

@@ -99,7 +99,7 @@ type CF_L_TP_Params=
 	;
 ;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
-type CF_D_Params=T_ExtractImport<"CF_D_Params">|"CF_D_Params"|"a";
+type CF_D_Params=T_ExtractImport<"CF_D_Params">|"DC_GetTranscript_Params"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
 type CF_TE_Endpoint_3=
 	|T_ExtractImport<"CF_TE_Endpoint_3">
