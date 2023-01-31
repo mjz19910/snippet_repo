@@ -45,4 +45,5 @@ type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DC_Params,DC_Empty_WCM>;
 type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: DC_Params;};
 //#endregion
+// TODO: #8 Get the SettingsEndpoint type
 type E_Settings={_tag:"E_Settings"};
