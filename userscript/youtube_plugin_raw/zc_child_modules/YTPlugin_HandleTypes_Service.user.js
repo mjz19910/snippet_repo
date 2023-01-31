@@ -1203,6 +1203,10 @@ class HandleTypes extends HandleTypesEval {
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DE_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.DE_ShareEntityService(b); this.M_GetSharePanel("DC_PlaylistEditor",a);}
+	/** @private @arg {M_GetSharePanel} x */
+	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
+	/** @private @arg {GM_GetSharePanel} x */
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x);}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {x;}
 	/** @type {Map<string,string[]>} */
@@ -1239,8 +1243,8 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @protected @arg {CF_GM_WC_2} cf @template T @arg {{sendPost: true;apiUrl: T;}} x */
-	GM_WC_2(cf,x) {
+	/** @protected @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x */
+	T_GM(cf,x) {
 		const {}=this.s(cf,x);
 	}
 	/** @protected @arg {GM_EditPlaylist} x */

@@ -352,7 +352,7 @@ class CodegenService extends BaseService {
 		if(x.webCommandMetadata) {
 			/** @type {{webCommandMetadata:{rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
 			let v=as(x);
-			let u1=v.webCommandMetadata.apiUrl; 
+			let u1=v.webCommandMetadata.apiUrl;
 			let u2=v.webCommandMetadata.rootVe;
 			if(u2) return `TYPE::M_VE${u2}`;
 			if(u1) {
@@ -549,7 +549,10 @@ class CodegenService extends BaseService {
 				let action=u.actions[0];
 				if(!action.openPopupAction) debugger;
 				let popup_action=action.openPopupAction;
-				if(popup_action.popupType!=="DROPDOWN") debugger;
+				switch(popup_action.popupType) {
+					default: debugger; break;
+					case "DIALOG":
+				}
 				let popup=popup_action.popup;
 				if(!popup.multiPageMenuRenderer) debugger;
 				let mp=popup.multiPageMenuRenderer;
