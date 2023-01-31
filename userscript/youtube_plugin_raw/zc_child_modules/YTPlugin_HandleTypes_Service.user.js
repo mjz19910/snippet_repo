@@ -1846,7 +1846,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("command" in x) {
-			let {...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x);
+			this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x);
 			return;
 		}
 		this.g(x);
