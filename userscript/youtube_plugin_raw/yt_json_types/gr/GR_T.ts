@@ -6,6 +6,11 @@ type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 type T_Item<T>={item: T;};
 type T_Menu<T>={menu: T;};
 //#endregion
+//#region Object conversion Templates
+type T_RemovePrefix<T,T2 extends string>={
+	[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];
+};
+//#endregion
 //#region TA_
 type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId; continuationItems: T_ItemType[];};
 type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[E]>}[keyof T];
