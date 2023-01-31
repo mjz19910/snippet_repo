@@ -5688,15 +5688,16 @@ class HandleTypes extends HandleTypesEval {
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
-		/** @type {R_CompactLink[]} */
-		let n1=this.T_Items("R_CompactLink_Items",n);
+		let n1=this.T_Items_TP("R_CompactLink_Items",n);
 		this.z(n1,this.R_CompactLink);
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
-	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
+	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
-		const {}=x;
+		const {trackingParams,...y}=x;
+		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
+		return this.w(`T_Items_TP:${cf}`,"items",y);
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}

@@ -53,6 +53,7 @@ type CF_M_s_gen=
 type CF_M_s=CF_M_s_gen|T_ExtractImport<"CF_M_s">;
 type CF_L_TP_Params=
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
+	|`T_Items_TP:${CF_T_Items_TP}`
 	|CF_D_Link
 	|CF_D_Button
 	|CF_D_Menu_Omit
@@ -74,6 +75,7 @@ type CF_M_w=
 	|`G_EY_Entity_Any:G_EY_Entity`
 	|`T_Items:${CF_T_Items}`
 	|`T_Commands:${CF_T_Commands}`
+	|`T_Items_TP:${CF_T_Items_TP}`
 	|"D_ImpressionCap"
 	;
 ;
