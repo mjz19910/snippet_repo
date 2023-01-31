@@ -2202,8 +2202,14 @@ class HandleTypes extends HandleTypesEval {
 	D_GetSurvey(x) {
 		const cf="D_GetSurvey";
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		console.log("GetSurvey.action",action);
-		this.R_PaidDigitalGoods(a);
+		this.save_string("GetSurvey.action",action);
+		this.D_GetSurvey_Endpoint(a);
+	}
+	/** @private @arg {D_GetSurvey['endpoint']} x */
+	D_GetSurvey_Endpoint(x) {
+		const cf="D_GetSurvey_Endpoint";
+		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
+		this.do_codegen(cf,x);
 	}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */

@@ -32,14 +32,13 @@ type C_AddFollowUpSurvey={
 	followUpText: G_Text;
 };
 type C_GetSurvey={clickTrackingParams: string; commandMetadata: MG_Survey_CMD; getSurveyCommand: D_GetSurvey;};
+type D_Survey_Watch={hack: true;};
+type R_Survey_Watch={watch: D_Survey_Watch;};
 type D_GetSurvey={
-	endpoint: R_PaidDigitalGoods;
+	endpoint: R_PaidDigitalGoods|R_Survey_Watch;
 	action: string;
 };
 type C_LoadMarkers={clickTrackingParams: string; loadMarkersCommand: DC_LoadMarkers;};
-type DC_LoadMarkers={
-	entityKeys: string[];
-};
 type C_RefreshPlaylist={clickTrackingParams: string; refreshPlaylistCommand: D_RefreshPlaylist;};
 type D_RefreshPlaylist={};
 type C_RelatedChip={clickTrackingParams: string; relatedChipCommand: DC_RelatedChip;};
@@ -48,26 +47,8 @@ type DC_RelatedChip={
 	loadCached: true;
 };
 type C_ReloadContinuationItems={clickTrackingParams: string; reloadContinuationItemsCommand: DC_ReloadContinuationItems;};
-type DC_ReloadContinuationItems={
-	slot: "RELOAD_CONTINUATION_SLOT_BODY";
-	targetId: "browse-feedFEwhat_to_watch";
-	continuationItems: G_SectionItem[];
-}|{
-	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
-	targetId: "comments-section";
-	continuationItems: R_CommentsHeader[];
-};
 type C_RepeatChapter={clickTrackingParams: string; repeatChapterCommand: DC_RepeatChapter;};
-type DC_RepeatChapter={
-	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT";
-	startTimeMs: "0";
-	endTimeMs: "60000";
-	repeatStateEntityKey: string;
-};
 type C_ResetChannelUnreadCount={clickTrackingParams: string; resetChannelUnreadCountCommand: DC_ResetChannelUnreadCount;};
-type DC_ResetChannelUnreadCount={};
 type C_ShowReloadUi={clickTrackingParams: string; showReloadUiCommand: DC_ShowReloadUi;};
-type DC_ShowReloadUi={targetId: D_UiTargetId;};
 type C_Loop={clickTrackingParams: string; loopCommand: DC_Loop;};
-type DC_Loop={loop: false;};
 //#endregion
