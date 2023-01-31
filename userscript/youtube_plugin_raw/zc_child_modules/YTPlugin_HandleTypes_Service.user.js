@@ -4853,7 +4853,7 @@ class HandleTypes extends HandleTypesEval {
 	DMD_AdSlotAndLayoutItem(x) {
 		const cf="DMD_AdSlotAndLayoutItem";
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(adLayoutMetadata,this.MMD_AdLayout_1);
+		this.z(adLayoutMetadata,this.MMD_AdLayout_TopImage);
 		this.DMD_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
@@ -5050,9 +5050,9 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(index,"number");
 		this.params(cf,"watch_playlist.params",params);
 	}
-	/** @private @arg {M_AdLayout_TopImage} x */
-	MMD_AdLayout_1(x) {
-		const cf="MMD_AdLayout_1";
+	/** @private @arg {MMD_AdLayout_TopImage} x */
+	MMD_AdLayout_TopImage(x) {
+		const cf="MMD_AdLayout_TopImage";
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(layoutType);
 		this.a_primitive_str(layoutId);
