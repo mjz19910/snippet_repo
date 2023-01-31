@@ -62,15 +62,17 @@ type CF_M_s_gen=
 	;
 ;
 type CF_M_s=
+	|CF_M_s_gen
+	|"G_Text"
+	|"GM_FlagGetForm"
+	|"GM_Like"
 	|"GM_Subscribe"
+	|"MG_AdLayout"
+	|"R_TextRun"
 	|"T_Autoplay"
 	|"T_Playlist"
 	|"T_SecondaryResults"
 	|"T_Types"
-	|"G_Text"
-	|"R_TextRun"
-	|"MG_AdLayout"
-	|"GM_Like"
 	;
 ;
 type CF_L_Common_Params=
