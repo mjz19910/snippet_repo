@@ -4425,7 +4425,7 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
-	/** @protected @arg {D_CF_L_Params} cf @arg {string} x */
+	/** @protected @arg {CF_L_Params} cf @arg {string} x */
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -4433,7 +4433,7 @@ class ServiceMethods extends ServiceData {
 	codegen_new_typedef(cf,x,ret_val) {
 		return this.codegen.codegen_typedef(cf,x,ret_val);
 	}
-	/** @protected @arg {D_CF_L_Params} cf @arg {string} x */
+	/** @protected @arg {CF_L_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -4496,7 +4496,7 @@ class ServiceMethods extends ServiceData {
 	is_eq_keys(src,target) {
 		return this.eq_keys(src,target);
 	}
-	/** @protected @arg {D_CF_L_Params} root @arg {D_WatchPageUrl} x */
+	/** @protected @arg {CF_L_Params} root @arg {D_WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
@@ -4525,7 +4525,7 @@ class ServiceMethods extends ServiceData {
 		this._primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @protected @arg {D_CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
+	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
@@ -4575,7 +4575,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @protected @arg {D_CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @protected @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}

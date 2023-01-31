@@ -410,7 +410,7 @@ class HandleTypes extends HandleTypesEval {
 		if(iconType!==w) debugger;
 		this.save_string(`[${cf1}.IconType]`,iconType);
 	}
-	/** @private @arg {D_CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);//#destructure_off
@@ -1312,7 +1312,7 @@ class HandleTypes extends HandleTypesEval {
 		let y=this.D_ChildVideo_Omit(cf,x);
 		this.g(y);
 	}
-	/** @private @template {R_ChildVideo_Omit} T @arg {string} cf @arg {T} x */
+	/** @private @template {R_ChildVideo_Omit} T @arg {"D_ChildVideo"} cf @arg {T} x */
 	D_ChildVideo_Omit(cf,x) {
 		let {title,navigationEndpoint,lengthText,videoId,...y}=this.s(cf,x);
 		this.E_Watch(navigationEndpoint);
@@ -1470,7 +1470,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
-	/** @private @template {D_ChannelThumbnailWithLink} T @arg {string} cf @arg {T} x */
+	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
 		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
 		this.R_Thumbnail(thumbnail);
@@ -1592,7 +1592,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_AccountMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			debugger;
 			return null;
 		});
@@ -1686,7 +1686,7 @@ class HandleTypes extends HandleTypesEval {
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		let pu=this.TA_OpenPopup(command);
+		let pu=this.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
 		if("pdgBuyFlowRenderer" in pu) {
 			this.R_PdgBuyFlow(pu);
 		}

@@ -1,17 +1,19 @@
 function setup {
-	mv "$DEST_DIR/out.ts" "$DEST_DIR/out.ts.bak";
-	cp "$DEST_DIR/out_empty.ts" "$DEST_DIR/out.ts";
-	cp "$DEST_DIR/gen_export_out.ts" "$DEST_DIR/gen_export_out.ts.bak";
-	cp "$DEST_DIR/gen_export_tmp.ts.txt" "$DEST_DIR/gen_export_out.ts";
+	pushd $DEST_DIR;
+	mv "out.ts" "out.ts.bak";
+	cp "out_empty.ts" "out.ts";
+	cp "gen_export_out.ts" "gen_export_out.ts.bak";
+	cp "gen_export_tmp.ts.txt" "gen_export_out.ts";
 }
 function restore_on_failure {
-	mv "$DEST_DIR/out.ts.bak" "$DEST_DIR/out.ts";
+	echo FAILED;
+	mv "out.ts.bak" "out.ts";
 }
 function restore {
-	mv "$DEST_DIR/gen_export_out.ts.bak" "$DEST_DIR/gen_export_out.ts";
+	mv "gen_export_out.ts.bak" "gen_export_out.ts";
 }
 function gen_find_type_is_not {
-	grep -Po "(?<=of type ')\".+?\"(?=' is not).+"
+	grep -Po "(?<=of type ')\".+?\"(?=' is not).+" "$@"
 }
 function generate_ts {
 	# |{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
@@ -19,17 +21,19 @@ function generate_ts {
 }
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF/";
 setup;
+cp out_empty.ts tmp.ts;
+tsc > /tmp/errors.out;
 {
-	cat "$DEST_DIR/out_prelude.ts";
+	cat "out_prelude.ts";
 	echo "export namespace Gen {\n\texport type CF_Generated=";
-	tsc -p userscript | gen_find_type_is_not | generate_ts | sort -u;
+	gen_find_type_is_not /tmp/errors.out | generate_ts | sort -u;
 	echo "\t\t;";
 	echo "}";
 } > /tmp/tmp.ts;
-mv /tmp/tmp.ts "$DEST_DIR/tmp.ts";
-tsc -p userscript&&cp "$DEST_DIR/tmp.ts" "$DEST_DIR/out.ts" || restore_on_failure;
+mv /tmp/tmp.ts "tmp.ts";
+tsc && cp "tmp.ts" "out.ts" || restore_on_failure;
 restore;
-cp "$DEST_DIR/tmp.ts" "$DEST_DIR/tmp.bak.mts";
-rm "$DEST_DIR/tmp.ts";
-
+cp "tmp.ts" "tmp.bak.mts";
+rm "tmp.ts";
+popd;
 unfunction restore;
