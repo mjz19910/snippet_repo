@@ -67,16 +67,16 @@ type CF_L_TP_Params=
 	|CF_D_Link
 	|CF_D_Button
 	|CF_D_Menu_Omit
-	|`T_SE_Signal:${CF_T_SE_Signal}`
 	;
 ;
 type CF_L_CTP_Params=
-	|T_ExtractImport<"CF_L_CTP_Params">
+	|`${CF_TA_OpenPopup}.tracking`
 	|`${CF_TE_Endpoint_2}.endpoint`
 	|`${CF_TE_Endpoint_3}.endpoint`
 	|`${CF_TE_Endpoint_Opt_3}.endpoint`
-	|`${CF_TA_OpenPopup}.tracking`
+	|`T_SE_Signal:${CF_T_SE_Signal}`
 	|CF_DC_Generic_CTP
+	|T_ExtractImport<"CF_L_CTP_Params">
 	;
 ;
 type CF_D_Link=T_ExtractImport<"CF_D_Link">;
