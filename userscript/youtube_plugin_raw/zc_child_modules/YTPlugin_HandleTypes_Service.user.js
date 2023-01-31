@@ -1923,8 +1923,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {"D_Button_WithText_Omit1"} cf @arg {D_Button_EX_2_Text} x @returns {D_Button_DoOmit<D_Button_EX_2_Text,"size"|"style"|"text"|"trackingParams">} */
 	D_Button_Omit_EX2_Text(cf,x) {
 		let {size,style,text,trackingParams,...y}=this.s(cf,x);
-		if(size!=="SIZE_DEFAULT") debugger;
-		switch(style) {case "STYLE_DEFAULT": case "STYLE_SUGGESTIVE": break; default: debugger; break;}
+		let ia=this.DMD_Badge_labels.get(cf);
+		if(!ia) this.DMD_Badge_labels.set(cf,ia=[]);
+		ia.push(["size",[size]]);
+		ia.push(["style",[style]]);
 		this.G_Text(text);
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -5633,6 +5635,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_WithNav(cf,x) {
 		let {style,text,trackingParams,...x1}=this.D_ChipCloudChip_OmitNav(cf,x);
+		let ia=this.DMD_Badge_labels.get(cf);
+		if(!ia) this.DMD_Badge_labels.set(cf,ia=[]);
+		ia.push(["style.styleType",[style.styleType]]);
+		this.trackingParams(cf,trackingParams);
 		if("isSelected" in x1) {
 			const {isSelected: a,...y}=x1; this.g(y);
 			this.a_primitive_bool(a);
@@ -6219,7 +6225,7 @@ class HandleTypes extends HandleTypesEval {
 		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.menuRequest.T_SE_Signal`,menuRequest);
 		this.M_GetNotificationMenu(g_menu);
 		this.Signal_GetNotificationsMenu(menu_signal);
-		this.ceq(style,"NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT");
+		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this._primitive_of(tooltip,"string");
