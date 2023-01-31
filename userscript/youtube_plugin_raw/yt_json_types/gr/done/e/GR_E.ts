@@ -17,19 +17,6 @@ type E_RecordNotificationInteractions=TE_Endpoint_3<"recordNotificationInteracti
 type E_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE37414_WC>>;
 type E_Search=TE_Endpoint_3<"searchEndpoint",DE_Search,M_VE4724>;
 type E_SetSetting=TE_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
-type G_ClientSignal={
-	signal: "CLIENT_SIGNAL";
-	actions: G_ClientSignal_Item[];
-};
-type Popup_ClientSignal=TA_OpenPopup_Toast<RA_NotificationAction>|TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>;
-type OpenPopup_ClientSignal=TA_OpenPopup<Popup_ClientSignal>;
-type G_ClientSignal_Item=[
-	A_SendFeedback,
-	A_Signal,
-	C_AddToPlaylist,
-	E_ShowEngagementPanel,
-	OpenPopup_ClientSignal,
-][number];
 type E_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type E_ShareEntityService=TE_Endpoint_3<"shareEntityServiceEndpoint",DE_ShareEntityService,M_GetSharePanel>;
 type E_ShowEngagementPanel=TE_Endpoint_2<"showEngagementPanelEndpoint",DE_ShowEngagementPanel>;

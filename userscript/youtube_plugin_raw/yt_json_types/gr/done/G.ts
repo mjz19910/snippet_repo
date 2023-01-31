@@ -264,3 +264,11 @@ type G_DC_SectionList=
 	|DC_SectionList_BrowseFeed_Subscriptions
 	;
 ;
+type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
+type G_ClientSignal_Item=[
+	A_SendFeedback,
+	A_Signal,
+	C_AddToPlaylist,
+	E_ShowEngagementPanel,
+	OP_ClientSignal,
+][number];
