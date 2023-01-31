@@ -622,7 +622,6 @@ class ParserService extends BaseService {
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.likeParams.f6":
 						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						if(map_entry_key===1) debugger;
 						/** @private @type {P_ParamParse_XX} */
 						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 					case "like.likeParams.f1":
