@@ -724,6 +724,11 @@ class ParserService extends BaseService {
 					case "f29": {
 						const idx=3;
 						if(parts.length===2) {
+							if(parts[1]==="f2") {
+								if(typeof map_entry_value==="string") return this.parse_video_id(map_entry_value);
+								debugger;
+								return;
+							}
 							if(map_entry_value instanceof Map) return;
 							if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
