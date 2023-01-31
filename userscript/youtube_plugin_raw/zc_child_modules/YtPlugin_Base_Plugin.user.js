@@ -2345,7 +2345,7 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @api @public @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
 	save_keys(k,x) {
-		if(!x) {debugger; return;}
+		if(!x) return;
 		let ki=this.unwrap_brackets(k);
 		if(this.do_save_keys_obj) {
 			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={

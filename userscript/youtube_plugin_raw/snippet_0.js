@@ -89,18 +89,6 @@ class CodegenService {
 export class Snippet_0_tmp {
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @arg {D_Accessibility} x */
-	Accessibility(x) {
-		this.save_keys("[Accessibility]",x);
-		const {accessibilityData,...y}=x; this.g(y);
-		this.AccessibilityData(accessibilityData);
-	}
-	/** @arg {D_Label} x */
-	AccessibilityData(x) {
-		this.save_keys("[AccessibilityData]",x);
-		const {label,...y}=x; this.g(y);
-		if(label) this.primitive_of(label,"string");
-	}
 	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
@@ -339,10 +327,6 @@ export class Snippet_0_tmp {
 		return true;
 	}
 	ds=new KnownDataSaver;
-	/** @public @type {this['ds']['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
-	save_keys(k,x) {
-		this.ds.save_keys(k,x);
-	}
 	parser=new ParserService;
 	codegen=new CodegenService;
 	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
@@ -357,7 +341,6 @@ export class Snippet_0_tmp {
 	}
 	/** @arg {GM_WC} x */
 	GenericWebCommandMetadata(x) {
-		this.save_keys("[GenericWebCommandMetadata]",x);
 		if(!("apiUrl" in x)) return;
 		let cx=x.apiUrl;
 		switch(x.apiUrl) {
@@ -417,22 +400,18 @@ export class Snippet_0_tmp {
 		let r=x[k];
 		return r;
 	}
-	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
-	H$R_(cf,x,f) {
-		this.save_keys(`[${cf}Renderer]`,x);
+	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
+	H$R_(x,f) {
 		f.call(this,this.w(x));
 	}
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
 	/** @protected @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
-		const cf="SectionListRendererTemplate";
-		this.save_keys(`[${cf}]`,x);
 		this.SectionListDataTemplate(this.w(x));
 	}
 	/** @private @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">['sectionListRenderer']} x */
 	SectionListDataTemplate(x) {
-		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
 		this.SectionListItemTemplate(this.w(x));
 	}
 	/** @private @template {{}} T @arg {TR_ItemSection_3<T,"comment-item-section","engagement-panel-comments-section">} x */
@@ -473,8 +452,6 @@ class ND extends Snippet_0_tmp {
 	}
 	/** @private @arg {D_SubscriptionButton} x */
 	SubscriptionButton(x) {
-		const cf="SubscriptionButton";
-		this.save_keys(`[${cf}]`,x);
 		const {type,subscribed,...y}=x; this.g(y); // ! #destructure
 		if(type!=="FREE") debugger;
 		this.t(subscribed,a => this.primitive_of(a,"boolean"));
@@ -539,51 +516,37 @@ class ND extends Snippet_0_tmp {
 			this.do_codegen("Dropdown",x);
 		});
 	}
-	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
-	H_(cf,x,f) {
-		this.save_keys(`[${cf}]`,x);
+	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
+	H_(x,f) {
 		f.call(this,this.w(x));
 	}
-	/** @private @arg {R_Button} x */
-	R_Button(x) {this.H_("R_Button",x,() => {debugger;});}
 	/** @protected @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {
-		const cf="AlertWithButton";
-		this.save_keys(`[${cf}]`,x);
 		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
 		switch(type) {
 			case "INFO": break;
 			default: debugger;
 		}
 		this.G_Text(text);
-		this.R_Button(dismissButton);
 	}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
 	/** @protected @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
-		const cf/**/="ItemsTemplate";
-		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
 	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
 	ContentsArrayTemplate(x,f) {
-		const cf="ContentsArrayTemplate";
-		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
 	/** @protected @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
 	CommandsTemplate$Omit(x,f) {
-		const cf="CommandsTemplate";
-		this.save_keys(`[${cf}]`,x);
 		const {commands,...y}=x;
 		let ca=this.z(commands,f);
 		return [y,ca];
 	}
 	/** @protected @template T @arg {T_Results<T>} x @arg {(this:this,x:T)=>void} f */
 	ResultsTemplate(x,f) {
-		const cf="ResultsTemplate";
-		this.save_keys(`[${cf}]`,x);
 		const {results,...y}=x; this.g(y); // ! #destructure
 		f.call(this,results);
 	}
@@ -642,8 +605,6 @@ class ND extends Snippet_0_tmp {
 	}
 	/** @protected @template T @arg {T_Item<T>} x @arg {(x:T)=>void} f */
 	ItemTemplate(x,f) {
-		const cf="ItemTemplate";
-		this.save_keys(`[${cf}]`,x);
 		return f.call(this,x.item);
 	}
 	/** @protected @template K,V @arg {T_MapEntry<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
@@ -658,7 +619,6 @@ class ND extends Snippet_0_tmp {
 	/** @protected @template {D_SubscribeButton} T @arg {T} x */
 	SubscribeButton$Omit(x) {
 		const cf="SubscribeButton";
-		this.save_keys(`[${cf}]`,x);
 		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
 		this.primitive_of(subscribed,"boolean");
 		this.primitive_of(enabled,"boolean");
@@ -677,21 +637,10 @@ class ND extends Snippet_0_tmp {
 		// 	this.do_codegen(cf,x);
 		// 	debugger;
 		// });
-		this.D_Accessibility(subscribeAccessibility);
-		this.D_Accessibility(unsubscribeAccessibility);
 		return y;
 	}
-	/** @private @arg {CF_L_TP_Params} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
-	_decode_TD_ItemSection(cf,x) {
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
-		this.trackingParams(cf,trackingParams);
-		return [x.contents,x.sectionIdentifier,x.targetId];
-	}
-	/** @arg {string} a @arg {{}} b */
-	k=(a,b) => this.save_keys(`[${a}]`,b);
-	/** @template {{}} T @arg {string} cf @arg {T} x */
-	sd(cf,x) {
-		this.k(cf,x);
+	/** @template {{}} T @arg {T} x */
+	sd(x) {
 		return x;
 	}
 	/** @api @public @arg {string} str */
@@ -701,75 +650,16 @@ class ND extends Snippet_0_tmp {
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
-	/** @private @arg {D_CompactRadio} x */
-	D_CompactRadio(x) {x; debugger;}
-	/** @private @arg {R_CompactRadio} x */
-	R_CompactRadio(x) {this.H_("R_CompactRadio",x,this.D_CompactRadio);}
-	/** @private @arg {D_CompactPlaylist} x */
-	D_CompactPlaylist(x) {x; debugger;}
-	/** @private @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist",x,this.D_CompactPlaylist);}
-	/** @private @arg {R_CompactVideo} x */
-	R_CompactVideo(x) {x; debugger;}
-	/** @private @arg {R_ContinuationItem} x */
-	R_ContinuationItem(x) {x; debugger;}
-	/** @private @arg {R_AdSlot} x */
-	R_AdSlot(x) {x; debugger;}
-	/** @private @arg {TD_ItemSection_3<G_ItemSectionItems,"sid-wn-chips","watch-next-feed">} x */
-	D_ItemSection(x) {
-		const cf="D_ItemSection_2_CommentItemSection";
-		let [i,...a]=this._decode_TD_ItemSection(cf,x); i;
-		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
-		this.z(i,x => {
-			/** @arg {string} v */
-			let sc=(v) => {this.save_string("[ItemSection.T_ContentType]",v);};
-			if("compactVideoRenderer" in x) {sc("t1.cvr"); return this.R_CompactVideo(x);}
-			if("continuationItemRenderer" in x) {sc("t1.cir"); return this.R_ContinuationItem(x);}
-			if("commentThreadRenderer" in x) {sc("t1.ctr"); debugger; return;}
-			if("commentsHeaderRenderer" in x) {sc("t1.chr"); debugger; return;}
-			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return this.R_CompactPlaylist(x);}
-			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); debugger; return;}
-			if("commentRenderer" in x) {sc("t1.cr"); debugger; return;}
-			if("itemSectionRenderer" in x) {sc("t1.isr"); debugger; return;}
-			if("compactRadioRenderer" in x) {sc("t1.crr"); return this.R_CompactRadio(x);}
-			if("adSlotRenderer" in x) {sc("t1.asr"); return this.R_AdSlot(x);}
-			x;
-			debugger;
-		});
-	}
-	/** @protected @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {TR_ItemSection_3<T,U,V>} x */
-	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
-	/** @private @arg {D_Accessibility} x */
-	D_Accessibility(x) {this.H_("A_Accessibility",x,this.D_Label);}
-	/** @private @arg {D_Label} x */
-	D_Label(x) {this.H_("Label",x,this.primitive_of_string);}
-	/** @protected @arg {E_Subscribe} x */
-	E_Subscribe(x) {this.H_("E_Subscribe",x,() => 0);}
 	/** @protected @template {string} T @arg {T_StyleType<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
-		const cf="ChipCloudStyle";
-		this.save_keys(`[${cf}]`,x);
 		const {styleType,...y}=x; this.g(y); // ! #destructure
 		f.call(this,styleType);
 	}
-	/** @private @arg {D_ChipCloud} x */
-	D_ChipCloud(x) {
-		const cf="D_ChipCloud";
-		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.sd(cf,x); this.g(y);
-		this.trackingParams(cf,trackingParams);
-		if(!horizontalScrollable) debugger;
-		this.R_Button(nextButton);
-		this.R_Button(previousButton);
-	}
-	/** @private @arg {R_ChipCloud} x */
-	R_ChipCloud(x) {this.H_("R_ChipCloud",x,this.D_ChipCloud);}
-	/** @protected @arg {R_RelatedChipCloud} x */
-	R_RelatedClipCloud(x) {this.H_("R_RelatedChipCloud",x,a => {this.R_ChipCloud(a.content);});}
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {x; debugger;}
-	/** @protected @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {string} cf @arg {U} x */
-	Omit_Menu_Video(cf,x) {
-		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(cf,x);
+	/** @protected @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {U} x */
+	Omit_Menu_Video(x) {
+		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(x);
 		this.D_Thumbnail(thumbnail);
 		this.G_Text(longBylineText);
 		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
@@ -782,7 +672,7 @@ class ND extends Snippet_0_tmp {
 	/** @arg {"next"} section @arg {DC_Generic_CTP} x */
 	CT_ClickTracked(x,section) {
 		const cf="D_NextContinuation";
-		const {continuation,clickTrackingParams}=this.sd(cf,x);// this.g(y);//#destructure
+		const {continuation,clickTrackingParams}=this.sd(x);// this.g(y);//#destructure
 		this.params(cf,`${section}.continuation`,continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
