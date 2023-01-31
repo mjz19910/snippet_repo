@@ -770,6 +770,170 @@ class HandleTypes extends HandleTypesEval {
 		this.t(expirationTime,x => this._primitive_of(x,"number"));
 		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
+	//#region Grouped Endpoints
+	// in this case, inferred (E_Page is a index accessed type)
+	/** @private @arg {E_Page} x */
+	E_Page(x) {
+		const cf="E_Page"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		this.do_codegen(cf,x);
+	}
+	//#region E_ (Endpoints)
+	/** @private @arg {E_Watch} x */
+	E_Watch(x) {let [a,b]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
+	/** @private @arg {E_Upload} x */
+	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.D_Empty_WCM(a); this.B_Hack(b);}
+	/** @private @arg {E_YpcGetCart} x */
+	E_YpcGetCart(x) {
+		const cf="E_YpcGetCart";
+		let [a,b]=this.TE_Endpoint_3(cf,"ypcGetCartEndpoint",x);
+		this.M_YpcGetCart(a); this.D_YpcGetCart(b);
+	}
+	/** @private @arg {E_Subscribe} x */
+	E_Subscribe(x) {
+		let [a,b]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x);
+		this.M_Subscribe(a); this.DE_Subscribe(b);
+	}
+	/** @private @arg {E_ReelWatch} x */
+	E_ReelWatch(x) {
+		let [a,b]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x);
+		this.M_VE37414(a); this.D_ReelWatch(b);
+	}
+	/** @private @arg {E_ShowEngagementPanel} x */
+	E_ShowEngagementPanel(x) {
+		const cf="E_ShowEngagementPanel";
+		let [a,b]=this.TE_Endpoint_2(cf,"showEngagementPanelEndpoint",x);
+		this.D_ShowEngagementPanel(a);
+		this.g(b);
+	}
+	/** @private @arg {E_GetReportForm} x */
+	E_GetReportForm(x) {
+		const cf="E_GetReportForm";
+		let [a,b,y]=this.TE_Endpoint_3(cf,"getReportFormEndpoint",x); this.g(y);//#destructure
+		this.D_Params(`D${cf}`,b,(x,cf) => this.params(cf,"get_report_form",x));
+		this.M_FlagGetForm(a);
+	}
+	/** @protected @arg {E_AddToPlaylistService} x */
+	E_AddToPlaylistService(x) {
+		let [a,b]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x);
+		this.M_AddToPlaylistService(a);
+		this.DE_AddToPlaylistService(b);
+	}
+	/** @protected @arg {E_PlaylistEdit} x */
+	E_PlaylistEdit(x) {
+		const cf="E_PlaylistEdit"; this.k(cf,x);
+		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.s(cf,x); this.g(y); this.g(y1);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		this.GM_WC(webCommandMetadata);
+		this.D_PlaylistEdit(playlistEditEndpoint);
+	}
+	/** @protected @arg {E_Feedback} x */
+	E_Feedback(x) {
+		const cf="E_Feedback";
+		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/feedback") debugger;
+		this.M_Feedback(commandMetadata);
+		this.DE_Feedback(feedbackEndpoint);
+	}
+	/** @private @arg {E_UndoFeedback} x */
+	E_UndoFeedback(x) {x; debugger;}
+	/** @private @arg {E_Url} x */
+	E_Url(x) {
+		const cf="E_Url";
+		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.M_VE83769(commandMetadata);
+		this.DE_Url(urlEndpoint);
+	}
+	/** @private @arg {E_RecordNotificationInteractions} x */
+	E_RecordNotificationInteractions(x) {
+		const cf="E_RecordNotificationInteractions";
+		let [a,b]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x);
+		this.M_RecordInteractions(a);
+		this.DE_RecordNotificationInteractions(b);
+	}
+	/** @private @arg {E_GetNotificationMenu} x */
+	E_GetNotificationMenu(x) {
+		const cf="E_GetNotificationMenu";
+		let [a,b,y]=this.TE_Endpoint_3(cf,"getNotificationMenuEndpoint",x); this.g(y);
+		this.M_GetNotificationMenu(a);
+		{
+			const u=b,cf1="DE_GetNotificationMenu";
+			const {ctoken,...y}=this.s(cf1,u); this.g(y);
+			this.params(cf1,"GetNotificationMenu.ctoken",ctoken);
+			debugger;
+		}
+	}
+	/** @private @arg {E_GetTranscript} x */
+	E_GetTranscript(x) {
+		const cf="E_GetTranscript";
+		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.do_codegen(cf,x); commandMetadata;
+		// this.G_CommandMetadata(commandMetadata);
+		this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_transcript.params",x));
+	}
+	/** @private @arg {E_YpcGetOffers} x */
+	E_YpcGetOffers(x) {
+		const cf="E_YpcGetOffers";
+		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.do_codegen(cf,x); commandMetadata;
+		// this.G_CommandMetadata(commandMetadata);
+		this.D_Params("DE_YpcGetOffers",a,params => {
+			this.params("DE_YpcGetOffers.params","ypc_get_offers.params",params);
+		});
+	}
+	/** @private @arg {E_Search} x */
+	E_Search(x) {
+		const cf="E_Search";
+		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.M_VE4724(commandMetadata);
+		this.D_Search(searchEndpoint);
+	}
+	/** @private @arg {E_CreateBackstagePost} x */
+	E_CreateBackstagePost(x) {
+		const cf="E_CreateBackstagePost";
+		let [a,b]=this.TE_Endpoint_3(cf,"createBackstagePostEndpoint",x);
+		this.DE_CreateBackstagePost(b);
+		this.M_CreateBackstagePost(a);
+	}
+	/** @private @arg {E_WatchPlaylist} x */
+	E_WatchPlaylist(x) {
+		const cf="E_WatchPlaylist";
+		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.do_codegen(cf,x); commandMetadata;
+		// this.G_CommandMetadata(commandMetadata);
+		this.D_WatchPlaylist(watchPlaylistEndpoint);
+	}
+	/** @private @arg {E_Like} x */
+	E_Like(x) {
+		let [a,b]=this.TE_Endpoint_3("E_Like","likeEndpoint",x);
+		this.E_Like_C(a);
+		this.DE_Like(b);
+	}
+	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
+	E_Like_C(x) {
+		const cf="E_Like_C";
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		switch(a.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
+			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
+			case "/youtubei/v1/like/like": return this.GM_like_like(a);
+		}
+	}
+	/** @private @arg {E_PlaylistEditor} x */
+	E_PlaylistEditor(x) {
+		let [a,b]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x);
+		this.DE_PlaylistEditor(b);
+		this.D_Empty_WCM(a);
+	}
 	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
 		if(this.str_starts_with("UC",x)) return this.D_ChannelId(x);
@@ -782,6 +946,8 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
 		};
 	}
+	/** @private @arg {GE_Browse} x */
+	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
 	/** @private @arg {GE_Browse['browseEndpoint']} x */
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
@@ -801,8 +967,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
-	/** @private @arg {GE_Browse} x */
-	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
 	/** @private @arg {GE_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
@@ -978,12 +1142,6 @@ class HandleTypes extends HandleTypesEval {
 				this.E_Upload(navigationEndpoint);
 			} break;
 		}
-	}
-	/** @private @arg {E_Upload} x */
-	E_Upload(x) {
-		let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y);
-		this.D_Empty_WCM(a);
-		this.B_Hack(b);
 	}
 	/** @private @arg {DC_Empty_WCM} x */
 	D_Empty_WCM(x) {x; debugger;}
@@ -1567,13 +1725,6 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(fromHistory,"boolean");
 		this._primitive_of(navigationDoneMs,"number");
 	}
-	/** @private @arg {E_Page} x */
-	E_Page(x) {
-		const cf="E_Page"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.E_Browse(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.do_codegen(cf,x);
-	}
 	/** @private @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType"; this.k(cf,x);
@@ -1736,12 +1887,6 @@ class HandleTypes extends HandleTypesEval {
 		if(knobColorArgb!==4280191205) debugger;
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
-	}
-	/** @private @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {
-		const cf="E_YpcGetCart";
-		let [a,b]=this.TE_Endpoint_3(cf,"ypcGetCartEndpoint",x);
-		this.M_YpcGetCart(a); this.D_YpcGetCart(b);
 	}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
@@ -2061,11 +2206,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {
-		let [a,b]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x);
-		this.M_Subscribe(a); this.DE_Subscribe(b);
-	}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
 		const cf="DE_Subscribe";
@@ -2118,11 +2258,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="M_VE37414";
 		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.GM_VE37414_WC(a);
-	}
-	/** @private @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {
-		let [a,b]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x);
-		this.M_VE37414(a); this.D_ReelWatch(b);
 	}
 	/** @private @arg {DE_ReelWatch} x */
 	D_ReelWatch(x) {
@@ -2374,13 +2509,6 @@ class HandleTypes extends HandleTypesEval {
 			if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
 			debugger;
 		});
-	}
-	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {
-		const cf="E_ShowEngagementPanel";
-		let [a,b]=this.TE_Endpoint_2(cf,"showEngagementPanelEndpoint",x);
-		this.D_ShowEngagementPanel(a);
-		this.g(b);
 	}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
@@ -2718,13 +2846,6 @@ class HandleTypes extends HandleTypesEval {
 		x==="";
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {
-		const cf="E_GetReportForm";
-		let [a,b,y]=this.TE_Endpoint_3(cf,"getReportFormEndpoint",x); this.g(y);//#destructure
-		this.D_Params(`D${cf}`,b,(x,cf) => this.params(cf,"get_report_form",x));
-		this.M_FlagGetForm(a);
-	}
 	/** @private @arg {M_FlagGetForm} x */
 	M_FlagGetForm(x) {
 		const {webCommandMetadata: {sendPost: s,apiUrl: u,...y1},...y2}=x; this.z([y1,y2],this.g);;
@@ -2772,12 +2893,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
-	/** @protected @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {
-		let [a,b]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x);
-		this.M_AddToPlaylistService(a);
-		this.DE_AddToPlaylistService(b);
-	}
 	/** @protected @arg {M_AddToPlaylistService} x */
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @protected @arg {GM_AddToPlaylistService} x */
@@ -2792,15 +2907,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_AddToPlaylistService";
 		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		this.videoId(videoId);
-	}
-	/** @protected @arg {E_PlaylistEdit} x */
-	E_PlaylistEdit(x) {
-		const cf="E_PlaylistEdit"; this.k(cf,x);
-		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.s(cf,x); this.g(y); this.g(y1);
-		this.clickTrackingParams(cf,clickTrackingParams);
-		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		this.GM_WC(webCommandMetadata);
-		this.D_PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @private @arg {DE_PlaylistEdit} x */
 	D_PlaylistEdit(x) {
@@ -2828,15 +2934,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(text);
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @protected @arg {E_Feedback} x */
-	E_Feedback(x) {
-		const cf="E_Feedback";
-		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/feedback") debugger;
-		this.M_Feedback(commandMetadata);
-		this.DE_Feedback(feedbackEndpoint);
 	}
 	/** @private @arg {M_Feedback} x */
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
@@ -2885,8 +2982,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_UndoFeedback(undoEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {x; debugger;}
 	/** @private @arg {R_ToggleMenuServiceItem} x */
 	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
 	/** @private @arg {R_MenuNavigationItem} x */
@@ -2942,8 +3037,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return [un_prefix,other];
 	}
-	/** @private @arg {E_Watch} x */
-	E_Watch(x) {let [a,b]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		const cf="DE_VE3832_Watch";
@@ -3041,14 +3134,6 @@ class HandleTypes extends HandleTypesEval {
 		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		return a;
-	}
-	/** @private @arg {E_Url} x */
-	E_Url(x) {
-		const cf="E_Url";
-		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.M_VE83769(commandMetadata);
-		this.DE_Url(urlEndpoint);
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {
@@ -3748,13 +3833,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
-	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {
-		const cf="E_RecordNotificationInteractions";
-		let [a,b]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x);
-		this.M_RecordInteractions(a);
-		this.DE_RecordNotificationInteractions(b);
-	}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {GM_RecordInteractions} a */
@@ -3777,18 +3855,6 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,hideEnclosingAction: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_HideEnclosing(a);
-	}
-	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {
-		const cf="E_GetNotificationMenu";
-		let [a,b,y]=this.TE_Endpoint_3(cf,"getNotificationMenuEndpoint",x); this.g(y);
-		this.M_GetNotificationMenu(a);
-		{
-			const u=b,cf1="DE_GetNotificationMenu";
-			const {ctoken,...y}=this.s(cf1,u); this.g(y);
-			this.params(cf1,"GetNotificationMenu.ctoken",ctoken);
-			debugger;
-		}
 	}
 	/** @private @arg {DC_SectionList} x */
 	G_SectionList(x) {
@@ -3905,15 +3971,6 @@ class HandleTypes extends HandleTypesEval {
 		} else {
 			debugger;
 		}
-	}
-	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {
-		const cf="E_GetTranscript";
-		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); commandMetadata;
-		// this.G_CommandMetadata(commandMetadata);
-		this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_transcript.params",x));
 	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -4253,17 +4310,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {
-		const cf="E_YpcGetOffers";
-		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); commandMetadata;
-		// this.G_CommandMetadata(commandMetadata);
-		this.D_Params("DE_YpcGetOffers",a,params => {
-			this.params("DE_YpcGetOffers.params","ypc_get_offers.params",params);
-		});
-	}
 	/** @private @arg {R_ChannelPage} x */
 	R_ChannelPage(x) {
 		const cf="R_ChannelPage";
@@ -4349,14 +4395,6 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
-	}
-	/** @private @arg {E_Search} x */
-	E_Search(x) {
-		const cf="E_Search";
-		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.M_VE4724(commandMetadata);
-		this.D_Search(searchEndpoint);
 	}
 	/** @private @arg {M_VE4724} x */
 	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
@@ -4764,13 +4802,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {
-		const cf="E_CreateBackstagePost";
-		let [a,b]=this.TE_Endpoint_3(cf,"createBackstagePostEndpoint",x);
-		this.DE_CreateBackstagePost(b);
-		this.M_CreateBackstagePost(a);
-	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
 	/** @private @arg {M_CreateBackstagePost} x */
@@ -5057,15 +5088,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_WatchPlaylist(nextButtonVideo);
 		this.t(previousButtonVideo,this.E_WatchPlaylist);
 	}
-	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {
-		const cf="E_WatchPlaylist";
-		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); commandMetadata;
-		// this.G_CommandMetadata(commandMetadata);
-		this.D_WatchPlaylist(watchPlaylistEndpoint);
-	}
 	/** @private @arg {DE_WatchPlaylist} x */
 	D_WatchPlaylist(x) {
 		const cf="D_WatchPlaylist";
@@ -5315,23 +5337,6 @@ class HandleTypes extends HandleTypesEval {
 			this.D_LikeApi(target);
 			this.trackingParams(cf,trackingParams);
 			this.z(serviceEndpoints,this.E_Like);
-		}
-	}
-	/** @private @arg {E_Like} x */
-	E_Like(x) {
-		let [a,b]=this.TE_Endpoint_3("E_Like","likeEndpoint",x);
-		this.E_Like_C(a);
-		this.DE_Like(b);
-	}
-	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
-	E_Like_C(x) {
-		const cf="E_Like_C";
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		switch(a.apiUrl) {
-			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
-			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
-			case "/youtubei/v1/like/like": return this.GM_like_like(a);
 		}
 	}
 	/** @private @arg {GM_RemoveLike} x */
@@ -6006,12 +6011,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
 		debugger;
-	}
-	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {
-		let [a,b]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x);
-		this.DE_PlaylistEditor(b);
-		this.D_Empty_WCM(a);
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
