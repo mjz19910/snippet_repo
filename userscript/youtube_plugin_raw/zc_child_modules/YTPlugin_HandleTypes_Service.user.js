@@ -2330,7 +2330,7 @@ class HandleTypes extends HandleTypesEval {
 		const {signal,...y}=this.s(cf,x); f(signal);
 		return y;
 	}
-	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']['popup']} x */
+	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']['popup']} x */
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
@@ -2338,7 +2338,7 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>['openPopupAction']} x */
+	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog";
 		const {popup,popupType,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -2348,7 +2348,7 @@ class HandleTypes extends HandleTypesEval {
 			case "TOAST": case "TOP_ALIGNED_DIALOG":
 		}
 	}
-	/** @private @arg {Extract<S_Client_Item,TA_OpenPopup<any>>} x */
+	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>} x */
 	S_Client_Popup(x) {
 		const cf="S_Client_Popup";
 		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -2363,7 +2363,7 @@ class HandleTypes extends HandleTypesEval {
 			if(x!=="CLIENT_SIGNAL") debugger;
 		}); this.g(y);
 		this.z(actions,x => {
-			/** @type {S_Client_Item} */
+			/** @type {G_ClientSignal_Item} */
 			if("openPopupAction" in x) return this.S_Client_Popup(x);
 			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
 			if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
