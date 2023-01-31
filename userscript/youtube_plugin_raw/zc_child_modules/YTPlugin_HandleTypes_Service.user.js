@@ -1925,6 +1925,7 @@ class HandleTypes extends HandleTypesEval {
 				this.missing_expected_button_iconTypes.push(icon.iconType);
 				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
 				console.log("-- [D_Button.icon] --",arr_items);
+				debugger;
 			}
 		}
 		if("text" in x) return this.D_Button_WithText_Omit1(cf,x);
