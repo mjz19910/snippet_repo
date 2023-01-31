@@ -1128,6 +1128,9 @@ class ParserService extends BaseService {
 									case "f2": case "f1": {
 										const idx=5;
 										if(parts.length===4) {
+											// [like.*.f1.f1] = [video_id]
+											if(parts[2]=="f1"&&parts[3]=="f1") return;
+											// timestamps for each binary param
 											// [like.dislikeParams.f4.f1]
 											if(parts[2]=="f4"&&parts[3]=="f1") return;
 											// [like.dislikeParams.f4.f2]
