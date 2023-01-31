@@ -1,3 +1,12 @@
+// all from GR_CD.ts
+type G_LiveChatContinuationItem=
+	|CD_Invalidation
+	|CD_LiveChatReplay
+	|CD_PlayerSeek
+	;
+;
+
+// all from GR_EY.ts
 type G_EY_Entity=
 	|EY_MacroMarkersList
 	|EY_Offlineability
