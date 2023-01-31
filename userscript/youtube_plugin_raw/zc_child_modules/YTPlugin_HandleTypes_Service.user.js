@@ -212,11 +212,8 @@ class HandleTypes extends HandleTypesEval {
 		this.t(bold,this.a_primitive_bool);
 	}
 	//#endregion
-	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf1 @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
-	T_Commands(cf1,x,f) {
-		const cf2="T_Commands"; this.k(cf1,x);
-		this.z(this.w(`${cf2}:${cf1}`,"commands",x),f);
-	}
+	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
+	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
 	/** @private @template {CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
 	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
@@ -602,13 +599,12 @@ class HandleTypes extends HandleTypesEval {
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
 	/** @private @arg {R_WatchPage} x */
 	R_WatchPage(x) {
-		const cf="R_WatchPage"; this.k(cf,x);
+		const cf="R_WatchPage"; this.g_k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: this.R_WatchPage_VE3832(x); break;
-			default: debugger; break;
-		} else {
-			this.R_WatchPage_Generic(x);
+			case 3832: return this.R_WatchPage_VE3832(x);
+			default: debugger; return;
 		}
+		this.R_WatchPage_Generic(x);
 	}
 	/** @private @arg {R_WatchPage_Generic} x */
 	R_WatchPage_Generic(x) {
@@ -898,7 +894,7 @@ class HandleTypes extends HandleTypesEval {
 	GM_FlagGetForm(x) {const {sendPost: a,apiUrl: b,...y}=this.s("GM_FlagGetForm",x); this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/flag/get_form");}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
-		const cf="GM_Like"; this.k(cf,x);
+		const cf="GM_Like"; this.g_k(cf,x);
 		switch(x.apiUrl) {
 			default: debugger; break;
 			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(x);
@@ -1683,7 +1679,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
 	ResponseTypes(response,x) {
-		const cf="ResponseTypes"; this.k(cf,x);
+		const cf="ResponseTypes"; this.g_k(cf,x);
 		if(!response.ok) {
 			console.log("not ok",x);
 			return;
@@ -2766,8 +2762,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_MenuServiceItem(menuItem);
 		this.R_Button(topLevelButton);
 	}
-	/** @protected @arg {string} cf @arg {{}} x */
-	g_k(cf,x) {this.k(cf,x);}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
 		const cf="G_MenuItem"; this.g_k(cf,x);
@@ -2915,7 +2909,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {AD_ReplaceEnclosing_Item} x */
 	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item";
+		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x);
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
 	/** @private @arg {R_NotificationText} x */
@@ -3864,7 +3858,7 @@ class HandleTypes extends HandleTypesEval {
 	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
 	TR_SectionListItem_3(x) {
-		const cf="SectionListItem";
+		const cf="SectionListItem"; this.g_k(cf,x);
 		if("itemSectionRenderer" in x) return this.TR_ItemSection_3(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
@@ -3903,7 +3897,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
-		const cf="GE_Continuation";
+		const cf="GE_Continuation"; this.g_k(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) {
 			this.C_Continuation(x);
@@ -4452,7 +4446,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
-		const cf="D_LoggingDirectives_Gestures";
+		const cf="D_LoggingDirectives_Gestures"; this.g_k(cf,x);
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
 	}
@@ -6106,7 +6100,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
-		const cf="DE_Like";
+		const cf="DE_Like"; this.g_k(cf,x);
 		switch(x.status) {
 			case "INDIFFERENT": {
 				const cf="E_LikeIndifferent";
