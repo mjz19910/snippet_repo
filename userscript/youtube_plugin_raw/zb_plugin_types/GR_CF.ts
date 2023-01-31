@@ -76,6 +76,7 @@ type CF_L_CTP_Params=
 	|`${CF_TE_Endpoint_Opt_3}.endpoint`
 	|`T_SE_Signal:${CF_T_SE_Signal}`
 	|CF_DC_Generic_CTP
+	|CF_GE_ResponseReceived
 	|T_ExtractImport<"CF_L_CTP_Params">
 	;
 ;
