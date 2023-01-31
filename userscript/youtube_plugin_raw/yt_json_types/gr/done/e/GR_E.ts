@@ -7,7 +7,6 @@ type E_CreateBackstagePost=TE_Endpoint_3<"createBackstagePostEndpoint",DE_Create
 type E_CreateComment=TE_Endpoint_3<"createCommentEndpoint",DE_CreateComment,M_CreateComment>;
 type E_Feedback=TE_Endpoint_3<"feedbackEndpoint",DE_Feedback,M_Feedback>;
 type E_GetNotificationMenu=TE_Endpoint_3<"getNotificationMenuEndpoint",DE_GetNotificationMenu,M_GetNotificationMenu>;
-type E_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type E_GetReportForm=TE_Endpoint_3<"getReportFormEndpoint",DE_GetReportForm,M_FlagGetForm>;
 type E_GetTranscript=TE_Endpoint_3<"getTranscriptEndpoint",DE_GetTranscript,DE_Empty_WCM>;
 type E_Like=TE_Endpoint_3<"likeEndpoint",DE_Like,M_Like>;
@@ -58,3 +57,4 @@ type DE_GetTranscript=DC_Params;
 type DE_YpcGetOffers=DC_Params;
 type DE_YpcGetOfflineUpsell=DC_Params;
 //#endregion
+type ER_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
