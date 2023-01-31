@@ -822,8 +822,14 @@ class HandleTypes extends HandleTypesEval {
 	DE_UndoFeedback(x) {
 		const cf="DE_UndoFeedback";
 		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);
-		this.params(cf,"UndoFeedback.undoToken",undoToken);
+		this.parse_undo_token(undoToken);
 		this.z(actions,this.A_UndoFeedback);
+	}
+	/** @private @arg {string} x */
+	parse_undo_token(x) {
+		let token_bin=bs.base64_url_dec.decodeByteArray(x);
+		if(!token_bin) {debugger; return;}
+		this.save_number("undo_token[0]",token_bin[0]);
 	}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
