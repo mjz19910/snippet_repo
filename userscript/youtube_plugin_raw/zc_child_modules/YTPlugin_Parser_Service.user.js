@@ -1140,7 +1140,7 @@ class ParserService extends BaseService {
 											if(parts[2]=="f6"&&parts[3]=="f1") return;
 											// [like.likeParams.f6.f2]
 											if(parts[2]=="f6"&&parts[3]=="f2") return;
-											console.log(`[parse_bin.${root}]`,parts,typeof map_entry_value);
+											console.log(`[parse_bin.${root}] [%s] [type:%s] [%o]`,path,typeof map_entry_value,map_entry_value);
 											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 											if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
