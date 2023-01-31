@@ -2,30 +2,90 @@ import {Prelude} from "./out_support.js"; export {Prelude};
 import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.Mixed";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.Styled";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.WithAccessibility";}
-		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
-		|{n: Prelude.CF_D_Link; t: Types.CF_D_Link_; v: "D_CompactLink";}
-		|{n: Prelude.CF_D_Link; t: Types.CF_D_Link_; v: "D_CompactLink.Styled";}
+		|{n: Prelude."" | "CF_D_Button"; t: Types."" | "CF_D_Button"_; v: "D_Button";}
+		|{n: Prelude."" | "CF_D_Button"; t: Types."" | "CF_D_Button"_; v: "D_Button.Mixed";}
+		|{n: Prelude."" | "CF_D_Button"; t: Types."" | "CF_D_Button"_; v: "D_Button.Styled";}
+		|{n: Prelude."" | "CF_D_Button"; t: Types."" | "CF_D_Button"_; v: "D_Button.WithAccessibility";}
+		|{n: Prelude."" | "CF_D_ChipCloudChip_Omit"; t: Types."" | "CF_D_ChipCloudChip_Omit"_; v: "D_ChipCloudChip";}
+		|{n: Prelude."" | "CF_D_Link"; t: Types."" | "CF_D_Link"_; v: "D_CompactLink";}
+		|{n: Prelude."" | "CF_D_Link"; t: Types."" | "CF_D_Link"_; v: "D_CompactLink.Styled";}
+		|{n: Prelude."" | "CF_D_Params"; t: Types."" | "CF_D_Params"_; v: "DE_GetReportForm";}
+		|{n: Prelude."" | "CF_D_Params"; t: Types."" | "CF_D_Params"_; v: "DE_GetTranscript";}
+		|{n: Prelude."" | "CF_D_Params"; t: Types."" | "CF_D_Params"_; v: "DE_YpcGetOffers";}
+		|{n: Prelude."" | "CF_D_Playlist_Omit"; t: Types."" | "CF_D_Playlist_Omit"_; v: "D_CompactPlaylist";}
+		|{n: Prelude."" | "CF_D_Video_Handle"; t: Types."" | "CF_D_Video_Handle"_; v: "D_Video_Accessibility";}
+		|{n: Prelude."" | "CF_D_Video_Handle"; t: Types."" | "CF_D_Video_Handle"_; v: "D_Video_Other";}
+		|{n: Prelude."" | "CF_D_Video_Handle"; t: Types."" | "CF_D_Video_Handle"_; v: "D_Video_Owner";}
+		|{n: Prelude."" | "CF_D_Video_Handle"; t: Types."" | "CF_D_Video_Handle"_; v: "D_Video_videoId";}
+		|{n: Prelude."" | "CF_D_Video_Handle"; t: Types."" | "CF_D_Video_Handle"_; v: "D_Video_videoId_2";}
+		|{n: Prelude."" | "CF_D_Video_Handle"; t: Types."" | "CF_D_Video_Handle"_; v: "D_Video_videoId_3";}
+		|{n: Prelude."" | "CF_GE_ResponseReceived"; t: Types."" | "CF_GE_ResponseReceived"_; v: "RS_Next";}
+		|{n: Prelude."" | "CF_GE_ResponseReceived"; t: Types."" | "CF_GE_ResponseReceived"_; v: "RS_Watch";}
+		|{n: Prelude."" | "CF_M_zy"; t: Types."" | "CF_M_zy"_; v: "D_ChannelHeaderLinks";}
+		|{n: Prelude."" | "CF_TA_OpenPopup"; t: Types."" | "CF_TA_OpenPopup"_; v: "G_Action_GetNotificationsMenu";}
+		|{n: Prelude."" | "CF_TA_OpenPopup"; t: Types."" | "CF_TA_OpenPopup"_; v: "RSG_NotificationMenu_Action";}
+		|{n: Prelude."" | "CF_TA_OpenPopup"; t: Types."" | "CF_TA_OpenPopup"_; v: "TA_OpenPopup:R_PdgBuyFlow";}
+		|{n: Prelude."" | "CF_TA_OpenPopup"; t: Types."" | "CF_TA_OpenPopup"_; v: "TA_OpenPopup_Empty";}
+		|{n: Prelude."" | "CF_TA_Page"; t: Types."" | "CF_TA_Page"_; v: "AD_UpdateChannelSwitcherPage";}
+		|{n: Prelude."" | "CF_TD_ItemSection_3"; t: Types."" | "CF_TD_ItemSection_3"_; v: "TD_ItemSection_3<\";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "A_ReplaceEnclosing";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "A_SendFeedback";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "A_Signal";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "C_AddToPlaylist";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "C_CommandExecutor";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "C_Loop";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "C_RefreshPlaylist";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "C_RelatedChip";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "C_RepeatChapter";}
+		|{n: Prelude."" | "CF_TE_Endpoint_2"; t: Types."" | "CF_TE_Endpoint_2"_; v: "E_ShowEngagementPanel";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "ES_CreatePlaylist";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_AddToPlaylistService";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_Browse";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_CreateBackstagePost";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_GetNotificationMenu";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_GetReportForm";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_Like";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_PlaylistEditor";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_RecordNotificationInteractions";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_ReelWatch";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_Subscribe";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_Upload";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_Watch";}
+		|{n: Prelude."" | "CF_TE_Endpoint_3"; t: Types."" | "CF_TE_Endpoint_3"_; v: "E_YpcGetCart";}
+		|{n: Prelude."" | "CF_TE_Endpoint_Opt_3"; t: Types."" | "CF_TE_Endpoint_Opt_3"_; v: "C_Continuation";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "DMD_Badge_LiveNow";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "DMD_Badge_Verified";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "DMD_Badge_VerifiedArtist";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Guide_CollapseIcon";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Guide_ExpandIcon";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon:ADD_TO_QUEUE_TAIL";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon:PLAYLIST_ADD_CHECK";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon_Check";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon_Mix";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon_Search";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon_WatchLater";}
+		|{n: Prelude."" | "CF_T_Icon"; t: Types."" | "CF_T_Icon"_; v: "D_Icon_YoutubeLogo";}
+		|{n: Prelude."" | "CF_T_Icon_Any"; t: Types."" | "CF_T_Icon_Any"_; v: "D_Icon_Button";}
+		|{n: Prelude."" | "CF_T_Items"; t: Types."" | "CF_T_Items"_; v: "D_ProfileColumn";}
+		|{n: Prelude."" | "CF_T_Items"; t: Types."" | "CF_T_Items"_; v: "R_CompactLink_Items";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_AccountMenu";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_AddToPlaylistService";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_CreateBackstagePost";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_Feedback";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_GetUnseenNotificationCount";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_RecordInteractions";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_SetSetting";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_VE3832";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_VE4724";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_VE83769";}
+		|{n: Prelude."" | "CF_T_WCM"; t: Types."" | "CF_T_WCM"_; v: "M_YpcGetCart";}
+		|{n: Prelude."" | "CF_T_WCM_Unpack"; t: Types."" | "CF_T_WCM_Unpack"_; v: "MG_Survey_CMD";}
+		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "" | ";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_CompactRadio";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_CompactVideo";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlayerOverlayAutoplay";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlaylistSidebarPrimaryInfo";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
-		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
-		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
-		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
-		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
-		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Accessibility";}
-		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
-		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Owner";}
-		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_videoId";}
-		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_videoId_2";}
-		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_videoId_3";}
-		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Next";}
-		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Watch";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "A_AddToGuideSection";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "A_HideEnclosing";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "A_HideEngagementPanelScrim";}
@@ -51,10 +111,10 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
-		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "T_SE_Signal:.SE_Signal";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_EngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_NotificationsUnseenCount";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.createBackstagePostParams";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "" | ";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: ".createBackstagePostParams";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
@@ -76,6 +136,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "" | ";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_LiveChat";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DE_VE3832_Watch";}
@@ -193,6 +254,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_Generic";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_3";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "" | ";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ChangeEngagementPanelVisibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
@@ -229,6 +291,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChat";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LoadMarkers";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_RelatedChip";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ReloadContinuationItems";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Timed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_UpdateToggleButtonState";}
@@ -243,6 +306,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_SuperThanksSelectedTier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832_Watch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlotAndLayoutItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_Badge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_RowContainer";}
@@ -595,69 +659,11 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_YpcGetCart";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
-		|{n: Prelude.CF_M_zy; t: Types.CF_M_zy_; v: "D_ChannelHeaderLinks";}
-		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "G_Action_GetNotificationsMenu";}
-		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "RSG_NotificationMenu_Action";}
-		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup:R_PdgBuyFlow";}
-		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup_Empty";}
-		|{n: Prelude.CF_TA_Page; t: Types.CF_TA_Page_; v: "AD_UpdateChannelSwitcherPage";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_ReplaceEnclosing";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_SendFeedback";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_Signal";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_AddToPlaylist";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_CommandExecutor";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_Loop";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RefreshPlaylist";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RelatedChip";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RepeatChapter";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_ShowEngagementPanel";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "ES_CreatePlaylist";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_AddToPlaylistService";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Browse";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreateBackstagePost";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetNotificationMenu";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetReportForm";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Like";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_PlaylistEditor";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_RecordNotificationInteractions";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_ReelWatch";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Subscribe";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Upload";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Watch";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetCart";}
-		|{n: Prelude.CF_TE_Endpoint_Opt_3; t: Types.CF_TE_Endpoint_Opt_3_; v: "C_Continuation";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon:ADD_TO_QUEUE_TAIL";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon:PLAYLIST_ADD_CHECK";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Check";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Mix";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_WatchLater";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_YoutubeLogo";}
-		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}
-		|{n: Prelude.CF_T_Items; t: Types.CF_T_Items_; v: "D_ProfileColumn";}
-		|{n: Prelude.CF_T_Items; t: Types.CF_T_Items_; v: "R_CompactLink_Items";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_Button_SE.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_GuideEntry.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.U_UnseenCount.T_SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.menuRequest.T_SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_TopbarMenuButton.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "GC_Button.SE_Signal";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Feedback";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_RecordInteractions";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SetSetting";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE4724";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE83769";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetCart";}
-		|{n: Prelude.CF_T_WCM_Unpack; t: Types.CF_T_WCM_Unpack_; v: "MG_Survey_CMD";}
 		;
 }

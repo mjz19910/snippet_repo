@@ -11,12 +11,39 @@ type CF_M_s_priv=
 	|`TA_OpenPopup:${CF_TA_OpenPopup}`
 	;
 ;
-type CF_TA_OpenPopup=T_ExtractImport<"CF_TA_OpenPopup">;
-type CF_T_Icon_Any=T_ExtractImport<"CF_T_Icon_Any">;
+type CF_TA_OpenPopup=
+	|T_ExtractImport<"CF_TA_OpenPopup">
+	|"TA_OpenPopup<Popup_ConfirmDialog>"
+	|"TA_OpenPopup<D_GetAccountMenu_Popup>"
+	;
+;
+type CF_T_Icon_Any=
+	|T_ExtractImport<"CF_T_Icon_Any">
+	|"D_GuideEntry_Icon"
+	;
+;
+type CF_L_params_no_gen=
+	|"DE_GetReportForm"
+	|"DE_GetTranscript"
+	|"DE_YpcGetOffers"
+	;
+;
 type CF_L_Params=
 	|T_ExtractImport<"CF_L_Params">
 	|CF_L_CTP_Params
 	|CF_L_TP_Params
+	|CF_L_params_no_gen
+	;
+;
+type CF_parse_identifier=
+	|"unknown_parse"
+	|"D_EngagementPanelSectionList";
+type CF_M_s_no_gen=
+	|"DC_ReloadContinuationItems"
+	|"DMD_AdSlot"
+	|`${CF_parse_identifier}.identifier`
+	|".identifier"
+	|"DC_Continuation"
 	;
 ;
 type CF_M_s=
@@ -26,13 +53,20 @@ type CF_M_s=
 	|CF_D_Video_Handle
 	|CF_D_Menu_Omit
 	|CF_T_SE_Signal
+	|CF_M_s_no_gen
 	;
 ;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">;
 type CF_D_Params=T_ExtractImport<"CF_D_Params">;
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">;
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">;
-type CF_TD_ItemSection_3=T_ExtractImport<"CF_TD_ItemSection_3">;
+type CF_TD_ItemSection_3=
+	|T_ExtractImport<"CF_TD_ItemSection_3">
+	|`TD_ItemSection_3<"comment-item-section">`
+	|`TD_ItemSection_3<"watch-next-feed">`
+	|"TR_SectionListItem_3_Empty"
+	;
+;
 type CF_T_WCM_Unpack=T_ExtractImport<"CF_T_WCM_Unpack">;
 type CF_M_w=
 	|`y:${CF_M_y}`
@@ -63,10 +97,11 @@ type CF_T_SE_Signal=
 	;
 ;
 type CF_L_TP_Params=
-	T_ExtractImport<"CF_L_TP_Params">
+	|T_ExtractImport<"CF_L_TP_Params">
 	|CF_D_Link
 	|CF_D_Button
 	|CF_D_Menu_Omit
+	|CF_D_ChipCloudChip_Omit
 	;
 ;
 type CF_L_CTP_Params=
@@ -84,7 +119,7 @@ type CF_D_Link=T_ExtractImport<"CF_D_Link">;
 type CF_D_Button=T_ExtractImport<"CF_D_Button">;
 type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">;
 type CF_D_Menu_Omit=
-	T_ExtractImport<"CF_D_Menu_Omit">
+	|T_ExtractImport<"CF_D_Menu_Omit">
 	|CF_D_Video_Handle
 	;
 ;
@@ -94,6 +129,4 @@ type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">;
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">;
 type CF_M_VE=T_ExtractImport<"CF_M_VE">;
 type CF_T_WCM=T_ExtractImport<"CF_T_WCM">;
-type CF_DC_Generic_CTP=[
-	"D_CD_Reload",
-][number];
+type CF_DC_Generic_CTP="D_CD_Reload"|"";

@@ -2480,7 +2480,7 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
 	}
-	/** @private @template {DC_ReloadContinuationItems} T @arg {string} cf @arg {T} x */
+	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
 		const {slot,...y}=this.s(cf,x);
 		this.save_enum("RELOAD_CONTINUATION_SLOT",x.slot);
@@ -3276,7 +3276,7 @@ class HandleTypes extends HandleTypesEval {
 	D_AdSlot(x) {
 		const cf="D_AdSlot";
 		const {adSlotMetadata,fulfillmentContent,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.DM_AdSlot(adSlotMetadata);
+		this.DMD_AdSlot(adSlotMetadata);
 		this.R_FulfillmentLayout(fulfillmentContent);
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
@@ -3328,8 +3328,8 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {string} cf @arg {DMD_AdSlot} x */
-	DM_AdSlot_Omit(cf,x) {
+	/** @private @arg {"DMD_AdSlot"} cf @arg {DMD_AdSlot} x */
+	DMD_AdSlot_Omit(cf,x) {
 		const {slotId,slotPhysicalPosition,slotType,...y}=this.s(cf,x);
 		this.a_primitive_str(slotId);
 		let do_=false;
@@ -3353,8 +3353,8 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @arg {DMD_AdSlot} x */
-	DM_AdSlot(x) {
-		const cf="DM_AdSlot",u=this.DM_AdSlot_Omit(cf,x);
+	DMD_AdSlot(x) {
+		const cf="DMD_AdSlot",u=this.DMD_AdSlot_Omit(cf,x);
 		if("adSlotLoggingData" in u) {
 			const {adSlotLoggingData,...y}=u; this.g(y);
 			return this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
@@ -3373,7 +3373,7 @@ class HandleTypes extends HandleTypesEval {
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
 		let u=this.TR_ItemSection_3(x);
-		let u1=this.TD_ItemSection_3(u);
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section">`,u);
 		if(!u1) return;
 		this.ItemSection_3_CommentItemSection(u1);
 	}
@@ -3396,7 +3396,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
 	RG_Watch_ItemSection(x) {
 		let u=this.TR_ItemSection_3(x);
-		let a=this.TD_ItemSection_3(u);
+		let a=this.TD_ItemSection_3(`TD_ItemSection_3<"watch-next-feed">`,u);
 		if(!a) return null;
 		let [u1,...v]=a;
 		if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u1,a => {
@@ -3524,7 +3524,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_EngagementPanelSectionList} x */
 	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
-	/** @private @arg {string} cf @arg {Record<"identifier",unknown>} x */
+	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
 		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
@@ -3635,7 +3635,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AD_ShowEngagementPanelScrim";
 		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		let [n]=this.z(onClickCommands,this.TA_OpenPopup);
+		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
 		let [x1]=this.z(n,this.unpack_popup_dialog);
 		let [x2]=this.z(x1,x => {
 			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
@@ -3720,7 +3720,7 @@ class HandleTypes extends HandleTypesEval {
 			case "browse-feedFEwhat_to_watch": case "watch-next-feed":
 		}
 	}
-	/** @private @template {DC_Continuation} T @arg {string} cf @arg {T} x */
+	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.s(cf,x);
 		this.a_primitive_str(token);
@@ -3842,7 +3842,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let [u]=this.z(contents,this.TR_SectionListItem_3);
-		let [u1]=this.z(u,x => this.TD_ItemSection_3(x));
+		let [u1]=this.z(u,x => this.TD_ItemSection_3("TR_SectionListItem_3_Empty",x));
 		u1;
 		// this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
@@ -4033,7 +4033,7 @@ class HandleTypes extends HandleTypesEval {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
 		this.E_Browse(navigationEndpoint);
-		this.T_Icon_AnyOf(icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
+		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
 		switch(targetId) {
 			default: console.log(`case "${x}": break;`); debugger; break;
 			case "downloads-guide-item":
@@ -4107,7 +4107,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-		let is_not_in_set=this.T_Icon_AnyOf(icon,[]);
+		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,[]);
 		if(is_not_in_set) {
 			this.do_codegen(cf,x);
 		}
@@ -4750,7 +4750,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ShareEntityService";
 		const {serializedShareEntity,commands,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(serializedShareEntity);
-		this.z(commands,this.TA_OpenPopup);
+		this.z(commands,x => this.TA_OpenPopup("TA_OpenPopup_Empty",x));
 	}
 	/** @private @arg {M_SendPost} x */
 	M_SendPost(x) {const cf="M_SendPost",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y); this.GM_SendPost(a);}
@@ -4765,7 +4765,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="GC_Button"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
-		if("openPopupAction" in x) return this.TA_OpenPopup(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
@@ -4807,7 +4807,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AC_Executor"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		if("openPopupAction" in x) return this.TA_OpenPopup(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
 		if("loopCommand" in x) return this.C_Loop(x);
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
@@ -4882,7 +4882,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DMD_AdSlotAndLayoutItem";
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(adLayoutMetadata,this.MMD_AdLayout_1);
-		this.DM_AdSlot(adSlotMetadata);
+		this.DMD_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
 	D_FusionSearchbox(x) {
@@ -5771,7 +5771,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="S_GetAccountMenu";
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		let [u]=this.z(actions,this.TA_OpenPopup);
+		let [u]=this.z(actions,x => this.TA_OpenPopup("TA_OpenPopup<D_GetAccountMenu_Popup>",x));
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
 		this.z(u2,this.MP_AccountMenu);

@@ -36,11 +36,13 @@ type DC_SectionList=
 	|DC_SectionList_BrowseFeed_ChannelFeatured
 	|DC_SectionList_BrowseFeed_Subscriptions
 	;
-type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3<{},{},{}>>;
-type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3<{},{},{}>>;
-type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3<{},{},{}>>;
-type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3<{},{},{}>>;
-type DC_SectionListBase=T_DC_Content<TR_SectionListItem_3<{},{},{}>>;
+	;
+type TR_SectionListItem_3_Empty=TR_SectionListItem_3<{},{},{}>;
+type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
+type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
+type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_SectionListBase=T_DC_Content<TR_SectionListItem_3_Empty>;
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type DC_LiveChat={
 	continuations: G_LiveChatContinuationItem[];
