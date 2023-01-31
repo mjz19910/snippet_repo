@@ -1,6 +1,3 @@
-//#region Renderer
-type R_TwoColumnWatchNextResults={twoColumnWatchNextResults: D_TwoColumnWatchNextResults;};
-//#endregion
 //#region Used by renderer
 type D_TwoColumnWatchNextResults={
 	results: T_Results<G_Watch_ResultsItem>;
@@ -59,4 +56,6 @@ type D_AutoplayContent={
 	modifiedSets?: D_ModifiedSetItem[];
 	trackingParams: string;
 };
+// TODO #2
+type D_LiveChat={};
 //#endregion
