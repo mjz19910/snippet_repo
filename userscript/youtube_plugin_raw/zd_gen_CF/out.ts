@@ -18,8 +18,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
-		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DC_GetTranscript";}
-		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DC_GetTranscript_Params";}
 		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Accessibility";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
@@ -53,6 +51,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_EngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_NotificationsUnseenCount";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_GetTranscript_Params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
@@ -60,8 +59,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_MutationItem";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_GetTranscript";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_GetTranscript_Params";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_UndoFeedback";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
@@ -243,6 +241,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_SuperThanksSelectedTier";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_UndoFeedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlotAndLayoutItem";}

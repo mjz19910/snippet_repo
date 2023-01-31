@@ -30,6 +30,7 @@ type P_PathRootStr=
 	|"tracking.trackingParams"
 	|"transcript_target_id.param"
 	|"transcriptTrackSelection.serializedParams"
+	|"UndoFeedback.undoToken"
 	|"watch_page_url.pp"
 	|"watch_playlist.params"
 	|"watch.params"

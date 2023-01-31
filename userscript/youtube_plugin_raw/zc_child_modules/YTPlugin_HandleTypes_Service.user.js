@@ -782,11 +782,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DC_GetTranscript_Params("get_transcript.params",b);}
-	/** @private @arg {"get_transcript.params"} path @arg {DC_Params} a */
-	DC_GetTranscript_Params(path,a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,path,x));}
-	/** @private @arg {DE_UndoFeedback} x */
-	DE_UndoFeedback(x) {x;}
+	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_GetTranscript",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
@@ -839,6 +835,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
+	/** @private @arg {DC_Params} a */
+	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
+	/** @private @arg {DE_UndoFeedback} x */
+	DE_UndoFeedback(x) {
+		const cf="DE_UndoFeedback";
+		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);
+		this.params(cf,"UndoFeedback.undoToken",undoToken);
+
+	}
 	/** @private @arg {DE_GetNotificationMenu} x */
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu";
