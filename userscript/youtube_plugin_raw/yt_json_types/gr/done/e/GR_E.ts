@@ -9,7 +9,7 @@ type E_Feedback=TE_Endpoint_3<"feedbackEndpoint",DE_Feedback,M_Feedback>;
 type E_GetNotificationMenu=TE_Endpoint_3<"getNotificationMenuEndpoint",DE_GetNotificationMenu,M_GetNotificationMenu>;
 type E_GetReportForm=TE_Endpoint_3<"getReportFormEndpoint",DE_GetReportForm,M_FlagGetForm>;
 type E_GetTranscript=TE_Endpoint_3<"getTranscriptEndpoint",DE_GetTranscript,DE_Empty_WCM>;
-interface E_Like extends TE_Endpoint_3<"likeEndpoint",DE_Like,M_Like> {};
+type E_Like=TE_Endpoint_3<"likeEndpoint",DE_Like,M_Like>;
 type E_NotificationOptOut=TE_Endpoint_3<"notificationOptOutEndpoint",DE_NotificationOptOut,DE_Empty_WCM>;
 type E_PlaylistEdit=TE_Endpoint_3<"playlistEditEndpoint",DE_PlaylistEdit,M_EditPlaylist>;
 type E_PlaylistEditor=TE_Endpoint_3<"playlistEditorEndpoint",DE_PlaylistEditor,DE_Empty_WCM>;
