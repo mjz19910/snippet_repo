@@ -3,8 +3,11 @@ import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.From.navigationEndpoint";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.Mixed" | "D_Button.WithAccessibility";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.accessibility";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.accessibility.navigationEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.accessibility";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.targetId";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.serviceEndpoint";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
@@ -77,7 +80,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DMD_RowContainer";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button.Mixed" | "D_Button.WithAccessibility";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
