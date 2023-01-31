@@ -7,6 +7,8 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.Styled";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.WithAccessibility";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
+		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
+		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
 		|{n: Prelude.CF_D_Link; t: Types.CF_D_Link_; v: "D_CompactLink";}
 		|{n: Prelude.CF_D_Link; t: Types.CF_D_Link_; v: "D_CompactLink.Styled";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_CompactRadio";}
@@ -51,10 +53,9 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
-		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "T_SE_Signal:.SE_Signal";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_EngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_NotificationsUnseenCount";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.createBackstagePostParams";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: ".createBackstagePostParams";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
@@ -326,7 +327,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.dislike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.like";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChat";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatEmoji";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatItemList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChatParticipantsList";}
