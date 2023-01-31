@@ -28,7 +28,7 @@ type G_SI_DB_EngagementPanel=
 
 // from Action Renderers and Actions (GR_RA.ts, GR_A.ts)
 type G_RA_LiveChatContinuationActions=
-	|RA_ReplayChatItem
+	|A_ReplayChatItem
 	|A_AddChatItem
 	;
 ;

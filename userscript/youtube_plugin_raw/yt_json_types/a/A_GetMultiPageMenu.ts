@@ -1,1 +1,0 @@
-type A_GetMultiPageMenu={getMultiPageMenuAction: AD_GetMultiPageMenu;};

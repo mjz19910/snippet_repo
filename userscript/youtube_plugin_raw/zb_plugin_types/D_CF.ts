@@ -6,16 +6,21 @@ type D_CF_w=[
 	`TA_Page:${TA_Page_CF}`,
 	`TR_MultiPageMenu:${TR_MultiPageMenu_CF}`,
 	`G_EY_Entity_Any:G_EY_Entity`,
+	`T_Items:${T_Items_CF}`,
 ][number];
+type T_Items_CF="";
 type TR_MultiPageMenu_CF=[
 	"D_NotificationMenu_PopupItemMenu",
+	"TR_MultiPageMenu_Empty",
 ][number];
 type D_CF_y=[
-	`T_WCM:${T_WCM_CF}`,
+	"AD_HideEnclosing",
+	"B_HrefUrl",
+	"D_RelatedChipCloud",
+	"D_YpcGetCart",
 	"DE_CreateBackstagePost",
 	"T_Item",
-	"B_HrefUrl",
-	"D_YpcGetCart",
+	`T_WCM:${T_WCM_CF}`,
 ][number];
 type D_CF_zy=[
 	"T_Item",

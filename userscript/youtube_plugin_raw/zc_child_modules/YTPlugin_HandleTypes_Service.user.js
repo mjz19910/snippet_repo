@@ -1851,21 +1851,21 @@ class HandleTypes extends HandleTypesEval {
 			console.log(x);
 		});
 	}
-	/** @private @arg {UA_Description} x */
+	/** @private @arg {AU_Description} x */
 	UA_Description(x) {
 		const cf="UA_Description"; this.k(cf,x);
 		let x1=x.updateDescriptionAction;
 		this.save_keys(`[UA_DescriptionData]`,x1);
 		this.G_Text(x1.description);
 	}
-	/** @private @arg {U_Title} x */
+	/** @private @arg {A_UpdateTitle} x */
 	U_Title(x) {
 		const cf="UA_Title"; this.k(cf,x);
 		let x1=x.updateTitleAction;
 		this.save_keys(`[UA_TitleData]`,x1);
 		this.G_Text(x1.title);
 	}
-	/** @private @arg {U_DateText} x */
+	/** @private @arg {AU_DateText} x */
 	U_DateText(x) {
 		const cf="UA_DateText"; this.k(cf,x);
 		let x1=x.updateDateTextAction;
@@ -1881,7 +1881,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(x1.defaultText);
 		this.G_Text(x1.toggledText);
 	}
-	/** @private @arg {U_Viewership} x */
+	/** @private @arg {A_UpdateViewership} x */
 	U_Viewership(x) {
 		const cf="UA_Viewership"; this.k(cf,x);
 		let x1=x.updateViewershipAction;
@@ -5511,7 +5511,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
 	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {this.y("D_ProfileColumn","items",x,x => this.z(x,this.G_ProfileColumnItem));}
+	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
 	/** @private @arg {G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x) {
 		const cf="G_ProfileColumnItem"; this.k(cf,x);
@@ -5592,12 +5592,12 @@ class HandleTypes extends HandleTypesEval {
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
-	/** @private @arg {A_UpdateChannelSwitcherPage} x */
+	/** @private @arg {AU_ChannelSwitcherPage} x */
 	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
-	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu(x));}
+	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {R_MerchandiseShelf} x */
 	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf","merchandiseShelfRenderer",x,this.D_MerchandiseShelf);}
 	/** @private @arg {R_VideoPrimaryInfo} x */
@@ -5612,13 +5612,13 @@ class HandleTypes extends HandleTypesEval {
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
-		let n1=this.T_Items(n);
+		let n1=this.T_Items("R_CompactLink_Items",n);
 		this.z(n1,this.R_CompactLink);
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
-	/** @template T @private @arg {T_Items<T>} x */
-	T_Items(x) {return x.items;}
+	/** @arg {string} cf @template T @private @arg {T_Items<T>} x */
+	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @template T @private @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
 	/** @private @arg {string} cf @arg {D_TopbarMenuButton} x */

@@ -1,1 +1,0 @@
-type A_UpdateChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};
