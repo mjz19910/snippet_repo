@@ -3628,7 +3628,7 @@ class HandleTypes extends HandleTypesEval {
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		this.codegen_str(cf,x);
 	}
-	/** @private @arg {DU_DE_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
+	/** @private @arg {DU_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with(rp,x)) return this.D_YoutubeUrl(x);
@@ -3638,7 +3638,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.GM_VE83769_UrlType(sp.href);
 	}
-	/** @private @arg {DU_DE_Url} x */
+	/** @private @arg {DU_Url} x */
 	DE_Url(x) {
 		const cf="DE_Url";
 		if("nofollow" in x) {
@@ -5071,7 +5071,7 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
-	/** @private @arg {DE_PersistenceOption} x */
+	/** @private @arg {O_DU_Persistence} x */
 	DE_PersistenceOption(x) {
 		const cf="DE_PersistenceOption";
 		const {persistenceOption,...y}=this.s(cf,x); this.g(y);

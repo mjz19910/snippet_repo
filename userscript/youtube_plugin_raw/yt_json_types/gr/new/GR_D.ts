@@ -218,3 +218,29 @@ type D_CompactRadio={
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
+type DE_SuperThanksSelectedTier={key: string; index: number;};
+type D_PdgColorSlider={
+	notches: D_NotchesItem[];
+	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
+	maxTierValue: G_Text;
+	minTierValue: G_Text;
+};
+type D_SuperVodBuyFlowContent={
+	description: G_Text;
+	buyButton: R_Button;
+	trackingParams: string;
+	commentPreview: R_PdgCommentPreview;
+	disclaimerText: G_Text;
+	colorSlider: R_PdgColorSlider;
+	defaultPriceTier: number;
+	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
+};
+type D_PdgCommentPreview={
+	title: G_Text;
+	authorThumbnail: R_Thumbnail;
+	authorText: G_Text;
+	commentOptionRenderers: R_PdgCommentOption[];
+	defaultCommentText: G_Text;
+	editButton: R_Button;
+	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
+};
