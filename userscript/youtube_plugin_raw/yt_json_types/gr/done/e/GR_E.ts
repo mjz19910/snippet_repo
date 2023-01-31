@@ -44,6 +44,8 @@ type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,DE_Empty_WCM>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
 //#endregion
+//#region DE_
+//#region Objects
 type DE_AddToPlaylistService={videoId: string;};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type DE_CreateComment={createCommentParams: string;};
@@ -62,8 +64,10 @@ type DE_Search={query: string;};
 type DE_ShareEntityService={serializedShareEntity: string; commands: TA_OpenPopup<Popup_ShareEntityService>[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type DE_SignalNavigation=T_Signal<"CHANNEL_SWITCHER"|"LIVE_CONTROL_ROOM">;
-
+//#endregion
+//#region Only params
 type DE_GetReportForm=DC_Params;
 type DE_GetTranscript=DC_Params;
 type DE_YpcGetOffers=DC_Params;
 type DE_YpcGetOfflineUpsell=DC_Params;
+//#endregion
