@@ -3,11 +3,8 @@ type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 //#endregion
 //#region Templates
 //#region T_
-type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
-type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
 type T_Item<T>={item: T;};
-type T_SE_Signal<T_Meta extends {webCommandMetadata: any;},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
-type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
+type T_Menu<T>={menu: T;};
 //#endregion
 //#region TA_
 type TA_Continuation<T_TargetId,T_ItemType>={targetId: T_TargetId; continuationItems: T_ItemType[];};
@@ -29,4 +26,15 @@ type TE_SetSetting<T_ItemId,T extends boolean,T_ClientItemId extends string>=TE_
 type TM_GetByVE<T extends keyof B_VEMap>=B_VEMap[T]['CommandMetadata'];
 type TM_Gen<T>={webCommandMetadata: T;};
 //#endregion
+//#region T_DE_
+type T_DE_SettingItem<T_ItemId,T_V extends boolean,T_ClientItemId extends string>={settingItemId: T_ItemId; boolValue: T_V; settingItemIdForClient: T_ClientItemId;};
+//#endregion
+//#region T_GM
+type T_GM_PostApi_WithApiUrl<T extends string>={/**/sendPost: true; apiUrl: T;};
+//#endregion
+//#region T_SE
+type T_SE_Signal<T_Meta extends {webCommandMetadata: any;},T_Data>=TE_Endpoint_3<"signalServiceEndpoint",T_Data,T_Meta>;
+//#endregion
+//#region T_Setting
+type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
 //#endregion

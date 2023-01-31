@@ -1,7 +1,7 @@
 type D_PlaylistContent=Record<"contents",R_PlaylistPanelVideo[]>&{
 	title: string;
 	currentIndex: number;
-	playlistId: PlaylistId;
+	playlistId: D_PlaylistId;
 	ownerName: G_Text;
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;

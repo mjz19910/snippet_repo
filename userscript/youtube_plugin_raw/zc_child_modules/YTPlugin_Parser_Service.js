@@ -51,7 +51,7 @@ class ParserService extends BaseService {
 			case "watch": break;
 		}
 	}
-	/** @api @public @arg {PlaylistId} x */
+	/** @api @public @arg {D_PlaylistId} x */
 	parse_playlist_id(x) {
 		if(x===void 0) {debugger; return;}
 		x: {

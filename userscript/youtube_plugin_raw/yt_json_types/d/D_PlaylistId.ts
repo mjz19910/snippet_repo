@@ -1,4 +1,4 @@
-type PlaylistId=[
+type D_PlaylistId=[
 	`RD${string}`,
 	`RDMM${string}`,
 	`RDGM${string}`,

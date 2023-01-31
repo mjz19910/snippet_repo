@@ -6,7 +6,7 @@ async function D_Watch$Test$playlistId(): Promise<void> {
 		return async <T extends string>(a: T,s: (T extends infer V? V extends `${M}${string}`? M:never:never)) => ((await import("../../support_1/make/assert_is_equal_t.js")).assert_is_equal<`${typeof s}${string}`>(a),1)&&!str_starts_with(s,a)? a as any as Exclude<T,`${M}${string}`>:Promise.reject([a,1]);
 	}
 	{
-		type UU=PlaylistId;
+		type UU=D_PlaylistId;
 		let xa: UU="LL" as UU;
 		type sw=T_SplitIntoGroups<UU,`${string}`>;
 		{

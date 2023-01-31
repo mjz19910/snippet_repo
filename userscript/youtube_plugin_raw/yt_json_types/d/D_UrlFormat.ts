@@ -38,4 +38,4 @@ type WatchUrlFormat=[
 	`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`,
 ][number];
 type ResultsPageUrl=`/results?search_query=${string}`;
-type PlaylistUrlFormat=`/playlist?list=${PlaylistId}`;
+type PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;

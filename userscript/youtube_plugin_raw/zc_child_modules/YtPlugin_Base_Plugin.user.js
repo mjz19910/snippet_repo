@@ -4503,7 +4503,7 @@ class ServiceMethods extends ServiceData {
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
-	/** @protected @arg {PlaylistId} x */
+	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}

@@ -1,1 +1,1 @@
-type D_PlaylistUrlParams=`list=${PlaylistId}`;
+type D_PlaylistUrlParams=`list=${D_PlaylistId}`;

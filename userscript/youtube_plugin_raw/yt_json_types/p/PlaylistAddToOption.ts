@@ -1,5 +1,5 @@
 type D_PlaylistAddToOption={
-	playlistId: PlaylistId;
+	playlistId: D_PlaylistId;
 	title: G_Text;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";

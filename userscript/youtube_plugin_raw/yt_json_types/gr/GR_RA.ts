@@ -3,7 +3,7 @@ type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
 type RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};
 type DE_VE3832_Watch={
 	videoId: string;
-	playlistId: PlaylistId;
+	playlistId: D_PlaylistId;
 	index: number;
 	playlistSetVideoId: string;
 	params: string;
