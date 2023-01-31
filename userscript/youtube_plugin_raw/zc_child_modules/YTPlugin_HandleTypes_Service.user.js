@@ -1660,9 +1660,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	missing_expected_button_iconTypes=[];
-	/** @private @template {Extract<D_Button,{style:any}>} T @arg {CF_D_Button} cf @arg {T} x */
+	/** @private @arg {CF_D_Button} cf @template {Extract<D_Button,{style:any}>} T @arg {T} x */
 	D_Button_Omit_FromStyle(cf,x) {
-		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,...y}=this.D_Button_Omit(cf,x);
+		const {style,size,icon,trackingParams,accessibilityData,...y}=this.D_Button_Omit(cf,x);
 		this.t(style,x => this.save_string("[Button.style]",x));
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(icon,x => {
@@ -1675,8 +1675,6 @@ class HandleTypes extends HandleTypesEval {
 				console.log("-- [D_Button.icon] --",arr_items);
 			}
 		});
-		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
-		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
 				default: this.generate_case(`${cf}.size`,size); break;
@@ -1684,65 +1682,56 @@ class HandleTypes extends HandleTypesEval {
 				// case "SIZE_SMALL": break;
 			}
 		}
-		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
+		return y;
+	}
+	/** @private @template {D_Button_EX_Command} T @arg {CF_D_Button} cf @arg {T} x */
+	D_Button_Omit_Command(cf,x) {
+		let {command,text,tooltip,...y}=this.D_Button_Omit_FromStyle(cf,x);
+		this.t(command,this.GC_Button);
+		if(tooltip&&typeof tooltip!=="string") debugger;
+		this.t(text,this.G_Text);
 		return y;
 	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Command} x */
 	D_Button_WithCommand(cf,x) {
 		if("targetId" in x) {
-			let {command,targetId,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.command.targetId`,x); this.g(y);
+			let {targetId,isDisabled,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
+			this._primitive_of(isDisabled,"boolean");
 			return;
 		}
-		let {command,accessibility,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.command.accessibility`,x); this.g(y);
-		this.t(command,this.GC_Button);
+		let {accessibility,isDisabled,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
 	}
+	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x */
+	D_Button_Omit_Text(cf,x) {
+		let {text,tooltip,...y}=this.D_Button_Omit_FromStyle(cf,x);
+		return y;
+	} 
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Style} x */
 	D_Button_WithStyle(cf,x) {
-		let {serviceEndpoint,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.serviceEndpoint`,x); this.g(y);
-		this.t(serviceEndpoint,this.D_Button_SE);
+		if("serviceEndpoint" in x) {
+			let {serviceEndpoint,isDisabled,...y}=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x); this.g(y);
+			this.t(serviceEndpoint,this.D_Button_SE);
+			this._primitive_of(isDisabled,"boolean");
+		}
+		x;
 		// this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
 		// this.t(accessibility,this.D_Label);
 		// this.t(hint,this.R_Hint);
-	}
-	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{accessibility:any}>} x */
-	D_Button_WithAccessibility(cf,x) {
-		if("navigationEndpoint" in x) {
-			const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.With.accessibility.navigationEndpoint`,x); this.g(y);
-			this.t(navigationEndpoint,this.Button_navigationEndpoint);
-			return;
-		}
-		const u=this.D_Button_Omit_FromStyle(`${cf}.With.accessibility`,x);
-		// this.D_Button_TargetId(`${cf}.2.From.targetId`,targetId);
-		if("accessibility" in u) {
-			const {accessibility,command,...y}=u; this.g(y);
-			if(!accessibility.label) debugger;
-			this.D_Label(accessibility);
-			return;
-		}
-		debugger;
-	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_SrvEp} x */
-	D_Button_Omit_ServiceEndpoint(cf,x) {
-		const {serviceEndpoint,...y}=this.D_Button_Omit(cf,x); this.g(y);
-		this.t(serviceEndpoint,this.D_Button_SE);
+		// this.t(navigationEndpoint,this.Button_navigationEndpoint);
+		// const u=this.D_Button_Omit_FromStyle(`${cf}.With.accessibility`,x);
+		// if(!accessibility.label) debugger;
+		// this.D_Label(accessibility);
+		// this._primitive_of(isDisabled,"boolean");
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
 		if("command" in x) return this.D_Button_WithCommand(cf,x);
 		if("style" in x) return this.D_Button_WithStyle(cf,x);
-		if("accessibility" in x) return this.D_Button_WithAccessibility(cf,x);
-		if("serviceEndpoint" in x) return this.D_Button_Omit_ServiceEndpoint(cf,x);
-		if("trackingParams" in x) {
-			const {trackingParams,hint,...y}=x; this.g(y);
-			debugger;
-			return;
-		}
-		if("icon" in x) {
-			const {icon,text,...y}=x; this.g(y);
-			debugger;
+		if("navigationEndpoint" in x) {
+			const {navigationEndpoint,...y}=x; this.g(y);
 			return;
 		}
 		this.g(x);
@@ -2973,7 +2962,7 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
-		const code_template=(x=>{let x1=x.split("/*Start*/")[1];return x1.split("/*End*/")[0]})(`
+		const code_template=(x => {let x1=x.split("/*Start*/")[1]; return x1.split("/*End*/")[0];})(`
 		switch(x.listType) {
 			default: break;
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
@@ -4665,13 +4654,15 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		this.do_codegen(cf,x); x==="";
 	}
+	static {
+		this.prototype.Button_navigationEndpoint;
+	}
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint";
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {RS_ChannelPage} x */

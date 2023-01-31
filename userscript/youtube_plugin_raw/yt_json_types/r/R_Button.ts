@@ -1,1 +1,0 @@
-type R_Button={buttonRenderer: D_Button;};
