@@ -75,6 +75,13 @@ type CF_M_s=
 	|"T_Playlist"
 	|"T_SecondaryResults"
 	|"T_Types"
+	|"RC_ResponseContext"
+	|"RC_ConsistencyTokenJar"
+	|"RC_WR_ContextExtension"
+	|"D_WebPrefetch"
+	|"RCA_RelevantStateTags"
+	|"DC_Loop"
+	|"D_PrefetchHintConfig"
 	;
 ;
 type CF_L_Common_Params=

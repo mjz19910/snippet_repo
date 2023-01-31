@@ -8,6 +8,8 @@ n;
 export class HandleTypesEval_ extends ServiceMethods {
 	/** @protected @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {x;}
+	/** @protected @arg {D_YtConfig} x */
+	D_YtConfig(x) {x;}
 	/** @protected */
 	gk=this.get_keys_of;
 	// /** @protected @arg {D_CF_D_Params} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:DC_Params['params'],cf:string)=>U} f */

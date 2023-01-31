@@ -57,13 +57,6 @@ class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
 	primitive_str(x) {this.a_primitive_str(x);}
 	primitive_of(x,y) {this._primitive_of(x,y);}
-	/** @private @arg {RC_ConsistencyTokenJar} x */
-	RC_ConsistencyTokenJar(x) {
-		const cf="RC_ConsistencyTokenJar";
-		const {encryptedTokenJarContents,expirationSeconds,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.primitive_str(encryptedTokenJarContents);
-		if(expirationSeconds!=="600") debugger;
-	}
 	/** @private @arg {D_YtConfig} x */
 	D_YtConfig(x) {
 		const cf="D_YtConfig";
@@ -203,7 +196,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_TextRun_Endpoint} x */
 	R_TextRun_Endpoint(x) {
-		const cf="R_TextRun_Endpoint"; this.k(cf,x);
+		const cf="R_TextRun_Endpoint";
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
@@ -727,7 +720,7 @@ class HandleTypes extends HandleTypesEval {
 	// in this case, inferred (E_Page is a index accessed type)
 	/** @private @arg {E_Page} x */
 	E_Page(x) {
-		const cf="E_Page"; this.k(cf,x);
+		const cf="E_Page";
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
@@ -765,7 +758,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {
-		const cf="E_PlaylistEdit"; this.k(cf,x);
+		const cf="E_PlaylistEdit";
 		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.s(cf,x); this.g(y); this.g(y1);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
@@ -1053,14 +1046,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
-		const cf="G_Browse_MD"; this.k(cf,x);
+		const cf="G_Browse_MD";
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
-		const cf="G_BrowseSidebar"; this.k(cf,x);
+		const cf="G_BrowseSidebar";
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
 		this.do_codegen(cf,x);
@@ -1087,7 +1080,7 @@ class HandleTypes extends HandleTypesEval {
 	DC_Empty_WCM(x) {x; debugger;}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
-		const cf="D_CompactLink"; this.k(cf,x);
+		const cf="D_CompactLink";
 		if("style" in x) {
 			return this.D_CompactLink_Styled(`${cf}.Styled`,x);
 		}
@@ -1156,7 +1149,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x) {
-		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
+		const cf="G_PlaylistSidebarItem";
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		this.do_codegen(cf,x);
@@ -1261,14 +1254,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RG_Result} x */
 	RG_Result(x) {
-		const cf="RG_Result"; this.k(cf,x);
+		const cf="RG_Result";
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
-		const cf="D_Tab_subscriptionsEndpoint"; this.k(cf,x);
+		const cf="D_Tab_subscriptionsEndpoint";
 		switch(x.commandMetadata.webCommandMetadata.rootVe) {
 			default: this.do_codegen(cf,x); debugger; break;
 			case 96368: break;
@@ -1277,7 +1270,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
-		const cf="D_Tab"; this.k(cf,x);
+		const cf="D_Tab";
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				default: debugger; break;
@@ -1365,7 +1358,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_RichItemContent} x */
 	G_RichItemContent(x) {
-		const cf="G_RichItemContent"; this.k(cf,x);
+		const cf="G_RichItemContent";
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
@@ -1376,7 +1369,7 @@ class HandleTypes extends HandleTypesEval {
 	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
-		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
+		const cf="D_VideoLike_richThumbnail";
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
 		this.do_codegen(cf,x);
 	}
@@ -1515,7 +1508,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {
 		this.T_Commands("DC_CommandExecutor",x,x => {
-			const cf="DC_CommandExecutor.command"; this.k(cf,x);
+			const cf="DC_CommandExecutor.command";
 			if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 			if("likeEndpoint" in x) return this.E_Like(x);
 			this.do_codegen(cf,x);
@@ -1587,13 +1580,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
-		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
+		const cf="D_ChannelThumbnail_navigationEndpoint";
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
-		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
+		const cf="D_Video_inlinePlaybackEndpoint";
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
 	}
@@ -1635,7 +1628,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_Thumbnail} x */
 	R_Thumbnail(x) {
-		const cf="R_Thumbnail"; this.k(cf,x);
+		const cf="R_Thumbnail";
 		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(sampledThumbnailColor,x => this.D_Color(x));
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
@@ -1662,7 +1655,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
-		const cf="DataResponsePageType"; this.k(cf,x);
+		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.R_BrowsePage(x);
@@ -1922,51 +1915,43 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.RD_TimedContinuation(continuation);
 		this.z(actions,x => {
-			if("updateViewershipAction" in x) return this.U_Viewership(x);
-			if("updateToggleButtonTextAction" in x) return this.U_ToggleButtonText(x);
-			if("updateDateTextAction" in x) return this.U_DateText(x);
-			if("updateTitleAction" in x) return this.U_Title(x);
+			if("updateViewershipAction" in x) return this.UA_Viewership(x);
+			if("updateToggleButtonTextAction" in x) return this.UA_ToggleButtonText(x);
+			if("updateDateTextAction" in x) return this.UA_DateText(x);
+			if("updateTitleAction" in x) return this.UA_Title(x);
 			if("updateDescriptionAction" in x) return this.UA_Description(x);
 			console.log(x);
 		});
 	}
-	/** @private @arg {AU_Description} x */
+	/** @private @arg {UA_Description} x */
 	UA_Description(x) {
-		const cf="UA_Description"; this.k(cf,x);
-		let x1=x.updateDescriptionAction;
-		this.save_keys(`[UA_DescriptionData]`,x1);
-		this.G_Text(x1.description);
+		this.y("UA_Description","updateDescriptionAction",x,x => {
+			this.save_keys(`[UA_DescriptionData]`,x);
+			this.G_Text(x.description);
+		});
 	}
-	/** @private @arg {AU_Title} x */
-	U_Title(x) {
-		const cf="UA_Title"; this.k(cf,x);
-		let x1=x.updateTitleAction;
-		this.save_keys(`[UA_TitleData]`,x1);
-		this.G_Text(x1.title);
-	}
-	/** @private @arg {AU_DateText} x */
-	U_DateText(x) {
-		const cf="UA_DateText"; this.k(cf,x);
+	/** @private @arg {UA_Title} x */
+	UA_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
+	/** @private @arg {UA_DateText} x */
+	UA_DateText(x) {
+		this.y("UA_DateText","updateTitleAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));
+		const cf="UA_DateText";
 		let x1=x.updateDateTextAction;
 		this.save_keys(`[UA_DateTextData]`,x1);
 		this.G_Text(x1.dateText);
 	}
-	/** @private @arg {U_ToggleButtonText} x */
-	U_ToggleButtonText(x) {
-		const cf="UA_ToggleButtonText"; this.k(cf,x);
-		let x1=x.updateToggleButtonTextAction; x1;
-		this.save_keys(`[UA_ToggleButtonTextData]`,x1);
-		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
-		this.G_Text(x1.defaultText);
-		this.G_Text(x1.toggledText);
+	/** @private @arg {UA_ToggleButtonText} x */
+	UA_ToggleButtonText(x) {
+		this.y("UA_ToggleButtonText","updateTitleAction",x,x1 => {
+			const cf="UA_ToggleButtonTextData";
+			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
+			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
+			this.G_Text(defaultText);
+			this.G_Text(toggledText);
+		});
 	}
-	/** @private @arg {AU_Viewership} x */
-	U_Viewership(x) {
-		const cf="UA_Viewership"; this.k(cf,x);
-		let x1=x.updateViewershipAction;
-		this.save_keys(`[UA_ViewershipData]`,x1);
-		this.R_VideoViewCount(x1.viewCount);
-	}
+	/** @private @arg {UA_Viewership} x */
+	UA_Viewership(x) {this.y("UA_Viewership","updateTitleAction",x,x => this.y("UA_ViewershipData","title",x,this.R_VideoViewCount));}
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="RS_Search";
@@ -2232,7 +2217,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
-		const cf="D_NotificationMenu_Popup_SectionItem"; this.k(cf,x);
+		const cf="D_NotificationMenu_Popup_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
 		this.do_codegen(cf,x);
 		return null;
@@ -2263,7 +2248,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
-		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
+		const cf="RSG_NotificationMenu_Action";
 		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
 		this.do_codegen(cf,x);
 		return null;
@@ -2306,7 +2291,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_NextContents} x */
 	G_NextContents(x) {
-		const cf="G_NextContents"; this.k(cf,x);
+		const cf="G_NextContents";
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 		this.do_codegen(cf,x);
@@ -2333,6 +2318,13 @@ class HandleTypes extends HandleTypesEval {
 		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
 		if(maxAgeSeconds!==void 0) this._primitive_of(maxAgeSeconds,"number");
 		this.t(stateTags,this.RCA_RelevantStateTags);
+	}
+	/** @private @arg {RC_ConsistencyTokenJar} x */
+	RC_ConsistencyTokenJar(x) {
+		const cf="RC_ConsistencyTokenJar";
+		const {encryptedTokenJarContents,expirationSeconds,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.a_primitive_str(encryptedTokenJarContents);
+		if(expirationSeconds!=="600") debugger;
 	}
 	/** @private @arg {RC_WR_ContextExtension} x */
 	RC_WR_ContextExtension(x) {
@@ -2441,7 +2433,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']['popup']} x */
 	S_Client_HandlePopup(x) {
-		const cf="S_Client_HandlePopup"; this.k(cf,x);
+		const cf="S_Client_HandlePopup";
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
 		this.do_codegen(cf,x);
@@ -2565,7 +2557,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	G_AppendContinuationItems(x) {
-		const cf="G_AppendContinuationItems"; this.k(cf,x); this.targetId(cf,x.targetId);
+		const cf="G_AppendContinuationItems"; this.targetId(cf,x.targetId);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
@@ -2625,7 +2617,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlayerOverlay} x */
 	D_PlayerOverlay(x) {
-		const cf="D_PlayerOverlay"; this.k(cf,x);
+		const cf="D_PlayerOverlay";
 		if("browserMediaSession" in x) {
 			return this.A_BrowserMediaSession(x);
 		}
@@ -2661,7 +2653,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
-		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
+		const cf="D_DecoratedPlayerBar";
 		const {playerBar,...y}=this.s(cf,x);
 		if("playerBarActionButton" in y) {
 			const {playerBarActionButton,...y1}=y; this.g(y1);
@@ -2716,7 +2708,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
 	G_WatchNextEndScreenItem(x) {
-		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
+		const cf="G_WatchNextEndScreenItem";
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		this.do_codegen(cf,x);
@@ -2747,7 +2739,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.tz(flexibleItems,this.R_MenuFlexibleItem);
 		this.tz(topLevelButtons,x => {
-			const cf="D_Menu_Button"; this.k(cf,x);
+			const cf="D_Menu_Button";
 			if("buttonRenderer" in x) return this.R_Button(x);
 			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
 			this.do_codegen(cf,x);
@@ -2780,7 +2772,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
-		const cf="G_MenuItem"; this.k(cf,x);
+		const cf="G_MenuItem";
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
@@ -2797,7 +2789,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_SE_MenuService} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
-		const cf="RD_MenuServiceItem_serviceEndpoint"; this.k(cf,x);
+		const cf="RD_MenuServiceItem_serviceEndpoint";
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		if("signalServiceEndpoint" in x) {
 			x;
@@ -2925,7 +2917,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {AD_ReplaceEnclosing_Item} x */
 	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item"; this.k(cf,x);
+		const cf="AD_ReplaceEnclosing_Item";
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
 	/** @private @arg {R_NotificationText} x */
@@ -3076,7 +3068,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {TD_ItemSection_3_I_1} x */
 	TD_ItemSection_3_I_1(x) {
-		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
+		const cf="TR_ItemSection_3_I_1";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
@@ -3410,7 +3402,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
-		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
+		const cf="G_WatchResultItem_ItemSection";
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
 		let u=this.TR_ItemSection_3(x); if(!u) return;
@@ -3426,7 +3418,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
-		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
+		const cf="G_WatchResult_ContentsItem";
 		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
@@ -3435,7 +3427,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_AnyResultItem} x */
 	G_Watch_AnyResultItem(x) {
-		const cf="G_SecondaryContentsItem"; this.k(cf,x);
+		const cf="G_SecondaryContentsItem";
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
 		this.do_codegen(cf,x);
@@ -3449,7 +3441,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
-		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
+		const cf="G_Watch_SecondaryResults";
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
 		this.do_codegen(cf,x);
@@ -3568,7 +3560,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
-		const cf="D_EngagementPanelSectionList"; this.k(cf,x);
+		const cf="D_EngagementPanelSectionList";
 		if("veType" in x) {
 			switch(x.veType) {
 				default: debugger; break;
@@ -3641,7 +3633,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x) {
-		const cf="G_EngagementPanelSectionShowCommands"; this.k(cf,x);
+		const cf="G_EngagementPanelSectionShowCommands";
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
@@ -3736,7 +3728,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {C_ShowReloadUi} x */
 	C_ShowReloadUi(x) {
-		const cf="C_ShowReloadUi"; this.k(cf,x);
+		const cf="C_ShowReloadUi";
 		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.s(cf,x);
 		this.z([y1,y2],this.g);
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -3874,7 +3866,7 @@ class HandleTypes extends HandleTypesEval {
 	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
 	TR_SectionListItem_3(x) {
-		const cf="SectionListItem"; this.k(cf,x);
+		const cf="SectionListItem";
 		if("itemSectionRenderer" in x) return this.TR_ItemSection_3(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
@@ -3885,7 +3877,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
-		const cf="D_ContinuationItem"; this.k(cf,x);
+		const cf="D_ContinuationItem";
 		const {trigger,continuationEndpoint,...y}=this.s(cf,x);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
@@ -3913,7 +3905,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
-		const cf="GE_Continuation"; this.k(cf,x);
+		const cf="GE_Continuation";
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) {
 			this.C_Continuation(x);
@@ -3963,7 +3955,7 @@ class HandleTypes extends HandleTypesEval {
 	R_GuideCollapsibleEntry(x) {this.H_("R_GuideCollapsibleEntry","guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
-		const cf="G_GuideSectionItem"; this.k(cf,x);
+		const cf="G_GuideSectionItem";
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
@@ -4168,7 +4160,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
-		const cf="D_GuideEntry"; this.k(cf,x);
+		const cf="D_GuideEntry";
 		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4192,7 +4184,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
-		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
+		const cf="D_GuideCollapsibleSectionEntry";
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_GuideEntry(headerEntry);
 		this.T_Icon("D_Guide_ExpandIcon",expanderIcon,"EXPAND");
@@ -4272,7 +4264,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_PlaylistPage} x */
 	R_PlaylistPage(x) {
-		const cf="R_PlaylistPage"; this.k(cf,x);
+		const cf="R_PlaylistPage";
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(page!=="playlist") debugger;
 		this.E_Browse(endpoint);
@@ -4359,7 +4351,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {
-		const cf="G_BrowseHeader"; this.k(cf,x);
+		const cf="G_BrowseHeader";
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
@@ -4396,7 +4388,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_BrowseContents} x */
 	G_BrowseContents(x) {
-		const cf="G_BrowseContents"; this.k(cf,x);
+		const cf="G_BrowseContents";
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		this.do_codegen(cf,x);
@@ -4408,7 +4400,7 @@ class HandleTypes extends HandleTypesEval {
 	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
-		const cf="A_ResponseReceived"; this.k(cf,x);
+		const cf="A_ResponseReceived";
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		this.do_codegen(cf,x);
@@ -4462,7 +4454,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
-		const cf="D_LoggingDirectives_Gestures"; this.k(cf,x);
+		const cf="D_LoggingDirectives_Gestures";
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
 	}
@@ -4507,7 +4499,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ElementUpdate} x */
 	D_ElementUpdate(x) {
-		const cf="D_ElementUpdate"; this.k(cf,x);
+		const cf="D_ElementUpdate";
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
 		this.do_codegen(cf,x);
@@ -4515,7 +4507,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
-		const cf="D_TemplateUpdate"; this.k(cf,x);
+		const cf="D_TemplateUpdate";
 		const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let idp=split_string_once(identifier,"|");
 		console.log(idp);
@@ -4643,7 +4635,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_TopbarButtonItem} x */
 	G_TopbarButtonItem(x) {
-		const cf="G_TopbarButtonItem"; this.k(cf,x);
+		const cf="G_TopbarButtonItem";
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
 		this.do_codegen(cf,x);
@@ -4698,7 +4690,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
-		const cf="G_SecondaryContents"; this.k(cf,x);
+		const cf="G_SecondaryContents";
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
 		this.do_codegen(cf,x);
@@ -4706,7 +4698,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
-		const cf="G_WatchNext"; this.k(cf,x);
+		const cf="G_WatchNext";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		this.do_codegen(cf,x);
@@ -4746,7 +4738,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GC_Button} x */
 	GC_Button(x) {
-		const cf="GC_Button"; this.k(cf,x);
+		const cf="GC_Button";
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
@@ -4777,7 +4769,7 @@ class HandleTypes extends HandleTypesEval {
 	DC_Executor(x) {this.T_Commands("DC_Executor",x,this.AC_Executor);}
 	/** @private @arg {AC_Executor} x */
 	AC_Executor(x) {
-		const cf="AC_Executor"; this.k(cf,x);
+		const cf="AC_Executor";
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
@@ -4895,7 +4887,7 @@ class HandleTypes extends HandleTypesEval {
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
-		const cf="D_Transcript"; this.k(cf,x);
+		const cf="D_Transcript";
 		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.R_TranscriptSearchPanel(a);
@@ -5067,7 +5059,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_HotkeyDialogSection} x */
 	D_HotkeyDialogSection(x) {
-		const cf="D_HotkeyDialogSection"; this.k(cf,x);
+		const cf="D_HotkeyDialogSection";
 		const {title,options: u,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(title);
 		this.z(u,this.R_HotkeyDialogSectionOption);
@@ -5133,7 +5125,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_ThumbnailsList} x */
 	R_ThumbnailsList(x) {
-		const cf="R_ThumbnailsList"; this.k(cf,x);
+		const cf="R_ThumbnailsList";
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);
@@ -5144,7 +5136,7 @@ class HandleTypes extends HandleTypesEval {
 	R_PrefetchHintConfig(x) {this.H_("R_PrefetchHintConfig","prefetchHintConfig",x,this.D_PrefetchHintConfig);}
 	/** @private @arg {D_PrefetchHintConfig} x */
 	D_PrefetchHintConfig(x) {
-		const cf="D_PrefetchHintConfig"; this.k(cf,x);
+		const cf="D_PrefetchHintConfig";
 		const {prefetchPriority,countdownUiRelativeSecondsPrefetchCondition,playbackRelativeSecondsPrefetchCondition,...y}=this.s(cf,x); this.g(y);
 		this.ceq(prefetchPriority,0);
 		if(prefetchPriority!==0) debugger;
@@ -5153,7 +5145,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
-		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
+		const cf="D_ResourceStatusInResponseCheckData";
 		const {serverBuildLabel,resourceStatuses: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.a_primitive_str(serverBuildLabel);
 		this.z(a,this.D_ElementResourceStatus);
@@ -5194,7 +5186,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RS_Subscribe_ActionItem} x */
 	RS_Subscribe_ActionItem(x) {
-		const cf="RS_Subscribe_ActionItem"; this.k(cf,x);
+		const cf="RS_Subscribe_ActionItem";
 		if("openPopupAction" in x) {
 			/** @type {`${typeof cf}_Action`} */
 			const cf1=`${cf}_Action`;
@@ -5228,7 +5220,7 @@ class HandleTypes extends HandleTypesEval {
 	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent","items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
+		const cf="G_StructuredDescriptionContentItem";
 		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
@@ -5451,7 +5443,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
 	/** @private @arg {G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x) {
-		const cf="G_ProfileColumnItem"; this.k(cf,x);
+		const cf="G_ProfileColumnItem";
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		this.do_codegen(cf,x); x===0;
@@ -5506,7 +5498,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_BrowseFeedContent} x */
 	G_BrowseFeedContent(x) {
-		const cf="G_BrowseFeedContent"; this.k(cf,x);
+		const cf="G_BrowseFeedContent";
 		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
@@ -6116,7 +6108,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
-		const cf="DE_Like"; this.k(cf,x);
+		const cf="DE_Like";
 		switch(x.status) {
 			case "INDIFFERENT": {
 				const cf="E_LikeIndifferent";
@@ -6257,7 +6249,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ClientMessages(x) {this.k("D_ClientMessages",x); this.z(Object.values(x),this.G_Text);}
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
-		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
+		const cf="G_LiveChatContinuationItem";
 		if("invalidationContinuationData" in x) return;
 		if("liveChatReplayContinuationData" in x) return;
 		if("playerSeekContinuationData" in x) return;
@@ -6488,7 +6480,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
-		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
+		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) this.A_AccountItem(x);
 		this.do_codegen(cf,x);
@@ -6576,7 +6568,7 @@ class HandleTypes extends HandleTypesEval {
 	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
-		const cf="D_RefreshPlaylist"; this.k(cf,x);
+		const cf="D_RefreshPlaylist";
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
@@ -6669,7 +6661,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_ThumbnailOverlayItem} x */
 	G_ThumbnailOverlayItem(x) {
-		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
+		const cf="G_ThumbnailOverlayItem";
 		// TODO: #11 Handle thumbnailOverlay Renderers
 		// Actually iterate over these renderers
 		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);

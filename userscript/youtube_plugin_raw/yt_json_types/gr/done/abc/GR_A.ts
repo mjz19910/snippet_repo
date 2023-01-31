@@ -22,11 +22,11 @@ type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPane
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
 type AU_ChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};
-type AU_DateText={updateDateTextAction: D_DateText;};
-type AU_Description={updateDescriptionAction: DUA_Description;};
+type UA_DateText={updateDateTextAction: D_DateText;};
+type UA_Description={updateDescriptionAction: DUA_Description;};
 type AU_EngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};
 type AU_NotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
 type AU_SubscribeButton={updateSubscribeButtonAction: DAU_SubscribeButton;};
-type AU_Title={updateTitleAction: D_Title;};type U_ToggleButtonText={updateToggleButtonTextAction: D_ToggleButtonText;};
-type AU_Viewership={updateViewershipAction: D_ViewCount;};
+type UA_Title={updateTitleAction: D_Title;};type UA_ToggleButtonText={updateToggleButtonTextAction: D_ToggleButtonText;};
+type UA_Viewership={updateViewershipAction: D_ViewCount;};
 //#endregion
