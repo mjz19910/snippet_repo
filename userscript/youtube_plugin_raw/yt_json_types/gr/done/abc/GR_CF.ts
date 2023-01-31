@@ -162,6 +162,10 @@ type CF_T_WCM=
 	|T_ExtractImport<"CF_T_WCM">
 	|"M_VE_Browse"
 	|"M_Like"
+	|"M_VE37414"
+	|"M_AdLayout"
+	|"M_GetNotificationMenu"
+	|"M_SendPost"
 	;
 ;
 type CF_DC_Generic_CTP="D_CD_Reload"|"a";

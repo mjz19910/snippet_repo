@@ -918,8 +918,20 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
+	/** @private @arg {CF_T_WCM} cf @template {object} T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
+	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	/** @private @arg {M_Like} x */
 	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {GE_Browse['commandMetadata']} x */
+	M_VE_Browse(x) {this.T_WCM("M_VE_Browse",x,this.GM_VE_WC_Browse);}
+	/** @private @arg {M_Subscribe} x */
+	M_Subscribe(x) {x;}
+	/** @private @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414_WC);}
+	/** @private @arg {M_SetSetting} x */
+	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
 		switch(x.apiUrl) {
@@ -929,10 +941,6 @@ class HandleTypes extends HandleTypesEval {
 			case "/youtubei/v1/like/like": return this.GM_like_like(x);
 		}
 	}
-	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {GE_Browse['commandMetadata']} x */
-	M_VE_Browse(x) {this.T_WCM("M_VE_Browse",x,this.GM_VE_WC_Browse);}
 	/** @private @arg {GE_Browse['commandMetadata']['webCommandMetadata']} x */
 	GM_VE_WC_Browse(x) {
 		switch(x.rootVe) {
@@ -2167,8 +2175,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(x.channelIds,this.D_ChannelId);
 		this.params(cf,"subscribe.params",params);
 	}
-	/** @private @arg {M_Subscribe} x */
-	M_Subscribe(x) {x;}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
@@ -2206,12 +2212,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(entries,x => this.T_Command_TP(x,this.E_ReelWatch));
 		this.trackingParams(cf,trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
-	}
-	/** @private @arg {M_VE37414} x */
-	M_VE37414(x) {
-		const cf="M_VE37414";
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.GM_VE37414_WC(a);
 	}
 	/** @private @arg {DE_ReelWatch} x */
 	D_ReelWatch(x) {
@@ -2671,10 +2671,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
-	/** @private @arg {CF_T_WCM} cf @template {object} T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
-	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
-	/** @private @arg {M_SetSetting} x */
-	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
