@@ -19,7 +19,9 @@ const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {
-	__template__;
+	if(__template__) {
+		throw new Error("Template probably has placeholders");
+	}
 	bs.do_export(fn,flags,exports,__module_name__);
 }
 export_(exports => {
