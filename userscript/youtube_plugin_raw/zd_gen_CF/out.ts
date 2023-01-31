@@ -501,7 +501,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MC_ResolveUrl";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_1";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ModifiedSetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
