@@ -1,3 +1,6 @@
+//#region Template strings
+type T_MixPlaylistStr=`RD${string}`;
+//#endregion
 //#region Enum templates
 type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 //#endregion

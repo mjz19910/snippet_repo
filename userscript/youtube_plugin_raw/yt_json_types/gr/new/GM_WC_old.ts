@@ -1,6 +1,3 @@
-//#region TemplateStrings
-type T_MixPlaylistStr=`RD${string}`;
-//#endregion
 //#region GU_VE
 //#endregion
 // TODO: #8 Get the SettingsEndpoint type
