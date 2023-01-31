@@ -156,12 +156,44 @@ class HandleTypesEval extends ServiceMethods {
 		t.codegen_renderer("",{},true);
 	}
 	//#endregion
+	//#region section to support above stuff
+	/** @private @arg {{accessibility?:D_Accessibility}} x */
+	handle_accessibility(x) {
+		this.save_keys("[default.Accessibility]",x);
+		if(x.accessibility) this.D_Accessibility(x.accessibility);
+	}
+	//#endregion
+}
+window.HandleTypesEval=HandleTypesEval;
+//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
+`;
+eval(handle_types_eval_code);
+
+/** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
+class UrlParseHelper {
+	/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
+	constructor(x) {
+		this.x=x;
+	}
+	/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
+	get_with_pathname(cx,pname) {
+		return ServiceMethods.is_url_with_pathname(cx,pname);
+	}
+}
+const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
+// [new_fexp_expected]
+ECatcherService.known_experiments.push(...[
+	[],
+].flat());
+/** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
+class HandleTypes extends HandleTypesEval {
+	//#region moved members
 	//#region templates
-	/** @private @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
+	/** @protected @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
-	/** @private @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
+	/** @protected @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
 	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
-	/** @private @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
 		const {trackingParams,command: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -205,7 +237,7 @@ class HandleTypesEval extends ServiceMethods {
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
 	/** @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
-	/** @private @arg {G_Text} x */
+	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text";
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -231,38 +263,6 @@ class HandleTypesEval extends ServiceMethods {
 		this.t(bold,this.b_primitive_bool);
 	}
 	//#endregion
-	//#region section to support above stuff
-	/** @private @arg {{accessibility?:D_Accessibility}} x */
-	handle_accessibility(x) {
-		this.save_keys("[default.Accessibility]",x);
-		if(x.accessibility) this.D_Accessibility(x.accessibility);
-	}
-	//#endregion
-}
-window.HandleTypesEval=HandleTypesEval;
-//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
-`;
-eval(handle_types_eval_code);
-
-/** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
-class UrlParseHelper {
-	/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
-	constructor(x) {
-		this.x=x;
-	}
-	/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
-	get_with_pathname(cx,pname) {
-		return ServiceMethods.is_url_with_pathname(cx,pname);
-	}
-}
-const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
-// [new_fexp_expected]
-ECatcherService.known_experiments.push(...[
-	[],
-].flat());
-/** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
-class HandleTypes extends HandleTypesEval {
-	//#region moved members
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf1 @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf1,x,f) {
 		const cf2="T_Commands"; this.k(cf1,x);
