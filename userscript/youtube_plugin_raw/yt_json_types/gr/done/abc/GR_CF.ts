@@ -69,6 +69,8 @@ type CF_M_s=
 	|"GM_Subscribe"
 	|"MG_AdLayout"
 	|"R_TextRun"
+	|"RC_MainAppWebResponseContext"
+	|"RD_MenuServiceItem"
 	|"T_Autoplay"
 	|"T_Playlist"
 	|"T_SecondaryResults"

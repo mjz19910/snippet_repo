@@ -61,3 +61,12 @@ $1$2(x) {this.H_("$2",x,this.D_$3);}
 $1/** @private @arg {D_$3} x */
 $1D_$3(x) {const cf="D_$3"; this.cfl(cf,x);}
 ```
+
+# save
+```regexp
+\{(\w+),\.\.\.y\}=this\.s\(cf,x\); this\.g\(y\);
+?\s+(.+)\1,((\n|.)+?)
+```
+```result
+this.y(cf,"$1",x,x=>{$2x$3})
+```

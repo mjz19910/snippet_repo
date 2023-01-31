@@ -55,46 +55,6 @@ FakeUseHandleEval;
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
-	/** @private @arg {RC_ResponseContext} x */
-	RC_ResponseContext(x) {
-		const cf="RC_ResponseContext";
-		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
-		this.z(serviceTrackingParams,x => {
-			if(!this.is_normal_service(this)) return;
-			const service_tracking=this.x.get("service_tracking");
-			service_tracking.set_service_params(x);
-		});
-		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
-		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
-		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
-		this.t(stateTags,this.RCA_RelevantStateTags);
-	}
-	/** @private @arg {RC_WR_ContextExtension} x */
-	RC_WR_ContextExtension(x) {
-		const cf="RC_WR_ContextExtension";
-		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
-		this.t(ytConfigData,this.D_YtConfig);
-		this.t(webPrefetchData,this.D_WebPrefetch);
-	}
-	/** @private @arg {D_WebPrefetch} x */
-	D_WebPrefetch(x) {
-		const cf="D_WebPrefetch";
-		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(navigationEndpoints,x => {
-			if("watchEndpoint" in x) {
-				return this.E_Watch(x);
-			}
-			debugger;
-		});
-	}
-	/** @private @arg {RCA_RelevantStateTags} x */
-	RCA_RelevantStateTags(x) {
-		const cf="RCA_RelevantStateTags";
-		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(relevantStateTags,this.B_StateTag);
-	}
 	primitive_str(x) {this.a_primitive_str(x);}
 	primitive_of(x,y) {this._primitive_of(x,y);}
 	/** @private @arg {RC_ConsistencyTokenJar} x */
@@ -126,13 +86,6 @@ class HandleTypesEval extends ServiceMethods {
 			case "96368": return;
 			default: debugger; break;
 		}
-	}
-	/** @private @arg {RC_MainAppWebResponseContext} x */
-	RC_MainAppWebResponseContext(x) {
-		const cf="RC_MainAppWebResponseContext";
-		const {datasyncId,loggedOut,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.primitive_str(datasyncId);
-		this.primitive_of(loggedOut,"boolean");
 	}
 	//#endregion
 	//#region init and static init
@@ -206,25 +159,25 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
 		const cf="T_Autoplay";
-		const {autoplay,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {autoplay,...y}=this.s(cf,x); this.g(y);
 		f.call(this,autoplay);
 	}
 	/** @private @template T @arg {T_Playlist<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Playlist(x,f) {
 		const cf="T_Playlist";
-		const {playlist,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {playlist,...y}=this.s(cf,x); this.g(y);
 		f.call(this,playlist);
 	}
 	/** @private @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
 	T_SecondaryResults(x,f) {
 		const cf="T_SecondaryResults";
-		const {secondaryResults,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {secondaryResults,...y}=this.s(cf,x); this.g(y);
 		f.call(this,secondaryResults);
 	}
 	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {
 		const cf="T_Types";
-		const {types,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {types,...y}=this.s(cf,x); this.g(y);
 		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
@@ -606,7 +559,7 @@ class HandleTypes extends HandleTypesEval {
 		if("apiUrl" in x&&!("rootVe" in x)) return this.GM_WC_ApiUrl(x);
 		if("rootVe" in x&&"apiUrl" in x) return this.GM_WC_Ex(x);
 		if("sendPost" in x) {
-			const {sendPost,...y}=this.s(cf,x); this.g(y);//#destructure_off
+			const {sendPost,...y}=this.s(cf,x); this.g(y);
 			if(sendPost!==true) debugger;
 			return;
 		}
@@ -2047,7 +2000,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
-		const {hack,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {hack,...y}=this.s(cf,x); this.g(y);
 		if(hack!==true) debugger;
 	}
 	/** @private @arg {RS_Player} x */
@@ -2358,7 +2311,53 @@ class HandleTypes extends HandleTypesEval {
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 		this.do_codegen(cf,x);
 		x===0;
-		this.do_codegen(cf,x);
+	}
+	/** @private @arg {RC_MainAppWebResponseContext} x */
+	RC_MainAppWebResponseContext(x) {
+		const cf="RC_MainAppWebResponseContext";
+		const {datasyncId,loggedOut,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.a_primitive_str(datasyncId);
+		this._primitive_of(loggedOut,"boolean");
+	}
+	/** @override @protected @arg {RC_ResponseContext} x */
+	RC_ResponseContext(x) {
+		const cf="RC_ResponseContext";
+		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
+		this.z(serviceTrackingParams,x => {
+			if(!this.is_normal_service(this)) return;
+			const service_tracking=this.x.get("service_tracking");
+			service_tracking.set_service_params(x);
+		});
+		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
+		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
+		if(maxAgeSeconds!==void 0) this._primitive_of(maxAgeSeconds,"number");
+		this.t(stateTags,this.RCA_RelevantStateTags);
+	}
+	/** @private @arg {RC_WR_ContextExtension} x */
+	RC_WR_ContextExtension(x) {
+		const cf="RC_WR_ContextExtension";
+		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		if(hasDecorated!==void 0) this._primitive_of(hasDecorated,"boolean");
+		this.t(ytConfigData,this.D_YtConfig);
+		this.t(webPrefetchData,this.D_WebPrefetch);
+	}
+	/** @private @arg {D_WebPrefetch} x */
+	D_WebPrefetch(x) {
+		const cf="D_WebPrefetch";
+		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);
+		this.z(navigationEndpoints,x => {
+			if("watchEndpoint" in x) {
+				return this.E_Watch(x);
+			}
+			debugger;
+		});
+	}
+	/** @private @arg {RCA_RelevantStateTags} x */
+	RCA_RelevantStateTags(x) {
+		const cf="RCA_RelevantStateTags";
+		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);
+		this.z(relevantStateTags,this.B_StateTag);
 	}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
@@ -2369,7 +2368,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
-		const {tabs,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {tabs,...y}=this.s(cf,x); this.g(y);
 		this.z(tabs,this.R_Tab);
 	}
 	/** @private @arg {RC_PlaylistPanel} x */
@@ -2422,7 +2421,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_ScrollToEngagementPanel} x */
 	DC_ScrollToEngagementPanel(x) {
 		const cf="DC_ScrollToEngagementPanel";
-		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {targetId,...y}=this.s(cf,x); this.g(y);
 		this.targetId(cf,targetId);
 	}
 	//#region pause
@@ -2485,7 +2484,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel";
-		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {A_Signal} x */
@@ -2614,7 +2613,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_LoadMarkers} x */
 	DC_LoadMarkers(x) {
 		const cf="DC_LoadMarkers";
-		const {entityKeys,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {entityKeys,...y}=this.s(cf,x); this.g(y);
 		this.z(entityKeys,this.a_primitive_str);
 	}
 	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
@@ -3035,7 +3034,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext";
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);
 		{
 			let x=decodeURIComponent(serializedContextData);
 			let b_res=this._decode_b64_url_proto_obj(x);
@@ -3445,7 +3444,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
 	G_Watch_SecondaryResults_Contents(x) {
 		const cf="G_Watch_SecondaryResults_Contents";
-		const {contents,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {contents,...y}=this.s(cf,x); this.g(y);
 		this.z(contents,this.G_Watch_AnyResultItem);
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
@@ -3908,7 +3907,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GhostGrid} x */
 	D_GhostGrid(x) {
 		const cf="D_GhostGrid";
-		const {rows,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {rows,...y}=this.s(cf,x); this.g(y);
 		if(this.get_keys_of(x).join()!=="rows") debugger;
 		if(rows!==2) debugger;
 	}
@@ -4059,13 +4058,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideEntryData} x */
 	D_GuideEntryData(x) {
 		const cf="D_GuideEntryData";
-		const {guideEntryId,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {guideEntryId,...y}=this.s(cf,x); this.g(y);
 		this.parse_guide_entry_id(guideEntryId);
 	}
 	/** @private @arg {D_LiveBroadcastingBadge} x */
 	D_GuideEntryBadges(x) {
 		const cf="D_GuideEntryBadges";
-		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);
 		if(liveBroadcasting!==false) debugger;
 	}
 	/** @type {Extract<Exclude<Extract<D_GuideEntry,{navigationEndpoint:any}>,{isPrimary:any}>,{icon:any}>['icon']['iconType'][]} */
@@ -4374,13 +4373,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
 		const cf="D_FeedTabbedHeader";
-		const {title,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {title,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(title);
 	}
 	/** @private @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
 		const cf="CacheMetadata";
-		const {isCacheHit,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {isCacheHit,...y}=this.s(cf,x); this.g(y);
 		if(!isCacheHit) debugger;
 	}
 	/** @private @arg {B_StateTag} x */
@@ -4484,7 +4483,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {
 		const cf="D_FeedbackResponseProcessedStatus";
-		const {isProcessed,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {isProcessed,...y}=this.s(cf,x); this.g(y);
 		this._primitive_of(isProcessed,"boolean");
 	}
 	/** @private @arg {AU_EngagementPanel} x */
@@ -4602,7 +4601,7 @@ class HandleTypes extends HandleTypesEval {
 				let pk=pr[1];
 				let x=pr[2];
 				if("key" in x) {
-					const {key,...y}=this.s(cf,x); this.g(y);//#destructure_off
+					const {key,...y}=this.s(cf,x); this.g(y);
 					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
 				} else {
 					debugger;
@@ -4639,7 +4638,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_PersistenceOption} x */
 	DE_PersistenceOption(x) {
 		const cf="DE_PersistenceOption";
-		const {persistenceOption,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {persistenceOption,...y}=this.s(cf,x); this.g(y);
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}
 	/** @private @arg {G_TopbarButtonItem} x */
@@ -4660,7 +4659,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {TM_Visibility} x */
 	TM_Visibility(x) {
 		const cf="TM_Visibility";
-		const {types,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {types,...y}=this.s(cf,x); this.g(y);
 		this.save_string("[Visibility.types]",types);
 	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
@@ -4821,7 +4820,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {const {loop,...y}=this.s(cf,x); this.g(y); this.ceq(loop,this.false_());}
+	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
 		const cf="A_HideEngagementPanelScrim";
@@ -4832,7 +4831,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
 	R_EngagementPanelTargetId(x) {
 		const cf="R_EngagementPanelTargetId";
-		const {engagementPanelTargetId,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {engagementPanelTargetId,...y}=this.s(cf,x); this.g(y);
 		switch(engagementPanelTargetId) {
 			default: debugger; break;
 			case "engagement-panel-clip-create": break;
@@ -6875,7 +6874,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_ExternalChannelId} x */
 	A_ExternalChannelId(x) {
 		const cf="A_ExternalChannelId";
-		const {externalChannelId,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {externalChannelId,...y}=this.s(cf,x); this.g(y);
 		this.D_ChannelId(externalChannelId);
 	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
@@ -6904,7 +6903,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CarouselLockup} x */
 	D_CarouselLockup(x) {
 		const cf="D_CarouselLockup";
-		const {infoRows,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {infoRows,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @private @arg {D_VideoDescriptionHeader} x */
 	D_VideoDescriptionHeader(x) {
