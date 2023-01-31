@@ -1128,9 +1128,17 @@ class ParserService extends BaseService {
 									case "f2": case "f1": {
 										const idx=5;
 										if(parts.length===4) {
+											// [like.dislikeParams.f4.f1]
 											if(parts[2]=="f4"&&parts[3]=="f1") return;
-											if(parts[2]=="f5"&&parts[3]=="f2") return;
+											// [like.dislikeParams.f4.f2]
+											if(parts[2]=="f4"&&parts[3]=="f2") return;
+											// [like.removeLikeParams.f5.f1]
+											if(parts[2]=="f5"&&parts[3]=="f1") return;
+											// [like.removeLikeParams.f5.f2]
+											if(parts[2]=="f5"&&parts[3]=="f2") {debugger; return;}
+											// [like.likeParams.f6.f1]
 											if(parts[2]=="f6"&&parts[3]=="f1") return;
+											// [like.likeParams.f6.f2]
 											if(parts[2]=="f6"&&parts[3]=="f2") return;
 											console.log(`[parse_bin.${root}]`,parts,typeof map_entry_value);
 											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
