@@ -1,6 +1,6 @@
-type R_TextRun={
+type D_TextRun={
 	text: string;
-	navigationEndpoint?: R_TextRun_Endpoint;
+	navigationEndpoint?: G_TextRun_Endpoint;
 	loggingDirectives?: D_LoggingDirectives;
 	bold?: boolean;
 };

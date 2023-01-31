@@ -233,25 +233,25 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text";
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,x => this.R_TextRun(x,this.R_TextRun_Endpoint));
+		this.tz(runs,x => this.D_TextRun(x,this.G_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @private @arg {R_TextRun_Endpoint} x */
-	R_TextRun_Endpoint(x) {
-		const cf="R_TextRun_Endpoint";
+	/** @private @arg {G_TextRun_Endpoint} x */
+	G_TextRun_Endpoint(x) {
+		const cf="G_TextRun_Endpoint";
 		if("browseEndpoint" in x) return this.E_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_TextRun} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
-	R_TextRun(x,f_run) {
+	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
+	D_TextRun(x,f_run) {
 		const cf="R_TextRun";
 		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(navigationEndpoint,f_run);
@@ -594,9 +594,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.s(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
 	//#endregion
 	//#region general done
-	cg_mismatch_set=new Set();
-	/** @type {[string,string][]} */
-	cg_mismatch_list=[];
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -619,8 +616,413 @@ class HandleTypes extends HandleTypesEval {
 	R_FusionSearchbox(x) {this.H_("R_FusionSearchbox","fusionSearchboxRenderer",x,this.D_FusionSearchbox);}
 	/** @private @arg {R_HotkeyDialog} x */
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
+	/** @private @arg {C_SectionList} x */
+	C_SectionList(x) {this.H_("C_SectionList","sectionListContinuation",x,this.G_SectionList);}
+	/** @private @arg {R_Microformat} x */
+	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
+	/** @private @arg {R_EntityBatchUpdate} x */
+	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate","entityBatchUpdate",x,this.D_EntityBatchUpdate);}
+	/** @private @arg {R_SettingsSidebar} x */
+	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
+	/** @private @arg {R_CompactLink} x */
+	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
+	/** @private @arg {R_PlaylistSidebar} x */
+	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar","playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
+	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
+	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo","playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
+	/** @private @arg {D_Label} x */
+	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
+	/** @private @arg {D_Accessibility} x */
+	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
+	/** @private @arg {R_Tab} x */
+	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
+	/** @private @arg {R_ExpandableTab} x */
+	R_ExpandableTab(x) {this.H_("R_ExpandableTab","expandableTabRenderer",x,this.D_ExpandableTab);}
+	/** @private @arg {R_PdgBuyFlow} x */
+	R_PdgBuyFlow(x) {this.H_("R_PdgBuyFlow","pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
+	/** @private @arg {R_SuperVodBuyFlowContent} x */
+	R_SuperVodBuyFlowContent(x) {this.H_("R_SuperVodBuyFlowContent","superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
+	/** @private @arg {R_PdgColorSlider} x */
+	R_PdgColorSlider(x) {this.H_("R_PdgColorSlider","pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
+	/** @private @arg {R_PdgCommentPreview} x */
+	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview","pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
+	/** @private @arg {R_PdgBuyFlowHeader} x */
+	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
+	/** @private @arg {R_Menu} x */
+	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
+	/** @private @arg {R_MusicQueue} x */
+	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
+	/** @private @arg {R_RichGrid} x */
+	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
+	/** @private @arg {R_RichItem} x */
+	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
+	/** @private @arg {R_FeedNudge} x */
+	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
+	/** @private @arg {R_MovingThumbnail} x */
+	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
+	/** @private @arg {R_Radio} x */
+	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
+	/** @private @arg {R_ChildVideo} x */
+	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
+	/** @private @arg {R_ToggleButton} x */
+	R_ToggleButton(x) {this.H_("R_ToggleButton","toggleButtonRenderer",x,this.D_ToggleButton);}
+	/** @private @arg {R_Video} x */
+	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
+	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
+	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
+	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
+	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
+	/** @private @arg {R_ChannelThumbnailWithLink} x */
+	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
+	/** @private @arg {R_PaidDigitalGoods} x */
+	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
+	/** @private @arg {R_PlayerAnnotationsExpanded} x */
+	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
+	/** @private @arg {R_SubscribeButton} x */
+	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	/** @private @arg {R_MP_MenuNotificationSection} x */
+	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
+	/** @private @arg {R_SimpleMenuHeader} x */
+	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
+	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
+	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
+	/** @private @arg {R_Tabbed} x */
+	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
+	/** @private @arg {R_WatchNextTabbedResults} x */
+	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
+	/** @private @arg {RC_PlaylistPanel} x */
+	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.DC_PlaylistPanel);}
+	/** @private @arg {R_VoiceSearchDialog} x */
+	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
+	/** @private @arg {R_CommentsHeader} x */
+	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog","commentsHeaderRenderer",x,this.D_CommentsHeader);}
+	/** @private @arg {R_CommentSimplebox} x */
+	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
+	/** @private @arg {R_SortFilterSubMenu} x */
+	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
+	/** @private @arg {R_DecoratedPlayerBar} x */
+	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar","decoratedPlayerBarRenderer",x,this.D_DecoratedPlayerBar);}
+	/** @private @arg {RA_NotificationAction} x */
+	R_NotificationAction(x) {this.H_("R_NotificationAction","notificationActionRenderer",x,this.D_NotificationAction);}
+	/** @private @arg {R_AutoplaySwitchButton} x */
+	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton","autoplaySwitchButtonRenderer",x,this.D_AutoplaySwitchButton);}
+	/** @private @arg {R_PlayerOverlayAutoplay} x */
+	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay","playerOverlayAutoplayRenderer",x,this.D_PlayerOverlayAutoplay);}
+	/** @private @arg {R_WatchNextEndScreen} x */
+	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
+	/** @private @arg {R_BrowserMediaSession} x */
+	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.AD_BrowserMediaSession);}
+	/** @private @arg {R_SegmentedLikeDislikeButton} x */
+	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
+	/** @private @arg {R_MenuFlexibleItem} x */
+	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
+	/** @private @arg {R_MenuServiceItem} x */
+	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
+	/** @private @arg {R_NotificationText} x */
+	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
+	/** @private @arg {R_ToggleMenuServiceItem} x */
+	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
+	/** @private @arg {R_MenuNavigationItem} x */
+	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
+	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
+	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig","html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
+	/** @private @arg {R_CommonConfig} x */
+	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
+	/** @private @arg {D_CommonConfig} x */
+	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
+	/** @private @arg {R_VssLoggingContext} x */
+	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext","vssLoggingContext",x,this.D_VssLoggingContext);}
+	/** @private @arg {RMD_Badge} x */
+	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
+	/** @private @arg {R_AdSlot} x */
+	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
+	/** @private @arg {R_FulfillmentLayout} x */
+	R_FulfillmentLayout(x) {this.H_("R_FulfillmentLayout","fulfilledLayout",x,this.R_InFeedAdLayout);}
+	/** @private @arg {R_InFeedAdLayout} x */
+	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
+	/** @private @arg {R_DisplayAd} x */
+	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
+	/** @private @arg {A_GetMultiPageMenu} x */
+	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
+	/** @private @arg {R_ReelPlayerOverlay} x */
+	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {R_ReelPlayerHeader} x */
+	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
+	/** @private @arg {R_PivotButton} x */
+	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
+	/** @private @arg {R_EngagementPanelSectionList} x */
+	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
+	/** @private @arg {R_ConfirmDialog} x */
+	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
+	/** @private @arg {R_AdsEngagementPanelContent} x */
+	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent","adsEngagementPanelContentRenderer",x,this.B_Hack);}
+	/** @private @arg {R_Notification} x */
+	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
+	/** @private @arg {R_MusicCarouselShelf} x */
+	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
+	/** @private @arg {R_MusicShelf} x */
+	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
+	/** @private @arg {R_ContinuationItem} x */
+	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
+	/** @private @arg {R_GhostGrid} x */
+	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
+	/** @private @arg {R_GuideSubscriptionsSection} x */
+	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection","guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
+	/** @private @arg {R_GuideDownloadsEntry} x */
+	R_GuideDownloadsEntry(x) {this.H_("R_GuideDownloadsEntry","guideDownloadsEntryRenderer",x,this.D_GuideDownloadsEntry);}
+	/** @private @arg {R_GuideCollapsibleEntry} x */
+	R_GuideCollapsibleEntry(x) {this.H_("R_GuideCollapsibleEntry","guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
+	/** @private @arg {R_GuideEntryData} x */
+	R_GuideEntryData(x) {this.H_("R_GuideEntryData","guideEntryData",x,this.D_GuideEntryData);}
+	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
+	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry","guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
+	/** @private @arg {R_GuideEntry} x */
+	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
+	/** @private @arg {R_GuideSection} x */
+	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
+	/** @private @arg {R_PlaylistPanelVideo} x */
+	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
+	/** @private @arg {DE_Search} x */
+	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
+	/** @private @arg {R_C4TabbedHeader} x */
+	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
+	/** @private @arg {R_FeedTabbedHeader} x */
+	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
+	/** @private @arg {R_FeedFilterChipBar} x */
+	R_FeedFilterChipBar(x) {this.H_("R_FeedFilterChipBar","feedFilterChipBarRenderer",x,this.D_FeedFilterChipBar);}
+	/** @private @arg {R_TwoColumnBrowseResults} x */
+	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
+	/** @private @arg {R_AddToPlaylist} x */
+	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
+	/** @private @arg {R_Comment} x */
+	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
+	/** @private @arg {R_ElementUpdate} x */
+	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
+	/** @private @arg {R_TemplateUpdate} x */
+	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
+	/** @private @arg {R_ProfileColumn} x */
+	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
+	/** @private @arg {R_BrowseFeedActions} x */
+	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
+	/** @private @arg {R_WebSearchboxConfig} x */
+	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig","webSearchboxConfig",x,this.D_WebSearchboxConfig);}
+	/** @private @arg {R_CompactVideo} x */
+	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
+	/** @private @arg {R_Transcript} x */
+	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
+	/** @private @arg {R_ChipCloudChip} x */
+	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
+	/** @private @arg {R_PrefetchHintConfig} x */
+	R_PrefetchHintConfig(x) {this.H_("R_PrefetchHintConfig","prefetchHintConfig",x,this.D_PrefetchHintConfig);}
+	/** @private @arg {R_ResourceStatusInResponseCheck} x */
+	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
+	/** @private @arg {R_MusicThumbnail} x */
+	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
+	/** @private @arg {R_LiveChat} x */
+	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.D_LiveChat);}
+	/** @private @arg {R_ReportFormModal} x */
+	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.D_ReportFormModal);}
+	/** @private @arg {R_WatchEndpointMusicConfig} x */
+	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig","watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
+	/** @private @arg {R_PlaylistHeader} x */
+	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
+	/** @private @arg {R_StructuredDescriptionContent} x */
+	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent","structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent","items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @private @arg {R_ProductList} x */
+	R_ProductList(x) {this.H_("R_ProductList","productListRenderer",x,this.D_ProductList);}
+	/** @private @arg {R_ClipSection} x */
+	R_ClipSection(x) {this.H_("R_ClipSection","clipSectionRenderer",x,this.D_ClipSection);}
+	/** @private @arg {D_ClipSection} x */
+	D_ClipSection(x) {this.H_("D_ClipSection","contents",x,x => this.z(x,this.R_ClipCreation));}
+	/** @private @arg {R_ClipCreation} x */
+	R_ClipCreation(x) {this.H_("C_RunAttestation","clipCreationRenderer",x,this.D_ClipCreation);}
+	/** @private @arg {R_MacroMarkersList} x */
+	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
+	/** @private @arg {R_EngagementPanelTitleHeader} x */
+	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
+	/** @private @arg {R_Hint} x */
+	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
+	/** @private @arg {R_VideoViewCount} x */
+	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
+	/** @private @arg {R_TwoColumnSearchResults} x */
+	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults","twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
+	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
+	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo","playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
+	/** @private @arg {R_LikeButton} x */
+	R_LikeButton(x) {this.H_("R_LikeButton","likeButtonRenderer",x,this.D_LikeButton);}
+	/** @private @arg {R_TranscriptSearchPanel} x */
+	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
+	/** @private @arg {CD_TimedContinuation} x */
+	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
+	/** @private @arg {RC_LiveChat} x */
+	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
+	/** @private @arg {R_CompactPlaylist} x */
+	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
+	/** @private @arg {R_CompactRadio} x */
+	R_CompactRadio(x) {this.H_("R_CompactRadio","compactRadioRenderer",x,this.D_CompactRadio);}
+	/** @private @arg {R_RelatedChipCloud} x */
+	R_RelatedChipCloud(x) {this.H_("R_RelatedChipCloud","relatedChipCloudRenderer",x,this.D_RelatedChipCloud);}
+	/** @private @arg {R_ChipCloud} x */
+	R_ChipCloud(x) {this.H_("R_ChipCloud","chipCloudRenderer",x,this.D_ChipCloud);}
+	/** @private @arg {R_ProfileColumnStats} x */
+	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
+	/** @private @arg {D_ProfileColumnStats} x */
+	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats","items",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
+	/** @private @arg {R_ProfileColumnStatsEntry} x */
+	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
+	/** @private @arg {R_ProfileColumnUserInfo} x */
+	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
+	/** @private @arg {D_BrowseFeedActions} x */
+	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
+	/** @private @arg {R_SearchBox} x */
+	R_SearchBox(x) {this.H_("D_ProfileColumn","searchBoxRenderer",x,this.D_SearchBox);}
+	/** @private @arg {R_SubFeedSelector} x */
+	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
+	/** @private @arg {R_SubFeedOption} x */
+	R_SubFeedOption(x) {this.H_("R_SubFeedOption","subFeedOptionRenderer",x,this.D_SubFeedOption);}
+	/** @private @arg {R_Channel_MD} x */
+	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
+	/** @private @arg {R_Playlist_MD} x */
+	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
+	/** @private @arg {R_AlertWithButton} x */
+	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
+	/** @private @arg {AU_ChannelSwitcherPage} x */
+	AU_ChannelSwitcherPage(x) {this.H_("AU_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	/** @private @arg {R_ChannelSwitcherPage} x */
+	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
+	/** @private @arg {AD_GetMultiPageMenu} x */
+	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
+	/** @private @arg {R_MerchandiseShelf} x */
+	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf","merchandiseShelfRenderer",x,this.D_MerchandiseShelf);}
+	/** @private @arg {R_VideoPrimaryInfo} x */
+	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo","videoPrimaryInfoRenderer",x,this.D_VideoPrimaryInfo);}
+	/** @private @arg {R_VideoSecondaryInfo} x */
+	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo","videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
+	/** @private @arg {R_TopbarMenuButton} x */
+	R_TopbarMenuButton(x) {this.H_("R_TopbarMenuButton","topbarMenuButtonRenderer",x,this.D_TopbarMenuButton);}
+	/** @private @arg {R_NotificationTopbarButton} x */
+	R_NotificationTopbarButton(x) {this.H_("R_NotificationTopbarButton","notificationTopbarButtonRenderer",x,this.D_NotificationTopbarButton);}
+	/** @private @arg {R_CommentsEntryPointHeader} x */
+	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader","commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
+	/** @private @arg {R_CommentsEntryPointTeaser} x */
+	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
+	/** @private @arg {R_SectionList} x */
+	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.G_SectionList);}
+	/** @private @arg {R_EndScreenPlaylist} x */
+	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist","endScreenPlaylistRenderer",x,this.D_EndScreenPlaylist);}
+	/** @private @arg {R_EndScreenVideo} x */
+	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo","endScreenVideoRenderer",x,this.D_EndScreenVideo);}
+	/** @private @arg {R_AddToPlaylistCreate} x */
+	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
+	/** @private @arg {R_PlaylistAddToOption} x */
+	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
+	/** @private @arg {AU_SubscribeButton} x */
+	AU_SubscribeButton(x) {this.H_("AU_SubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
+	/** @private @arg {C_RunAttestation} x */
+	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
+	/** @private @arg {R_VideoDescriptionMusicSection} x */
+	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection","videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
+	/** @private @arg {R_VideoDescriptionHeader} x */
+	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader","videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
+	/** @private @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
+	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @private @arg {D_TwoColumnSearchResults} x */
+	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
+	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo","videoOwner",x,this.R_VideoOwner);}
+	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
+	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
+	/** @private @arg {R_CommentActionButtons} x */
+	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
+	/** @private @arg {R_HeroPlaylistThumbnail} x */
+	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
+	/** @private @arg {R_PlaylistByline} x */
+	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
+	/** @private @arg {R_ProductListItem} x */
+	R_ProductListItem(x) {this.H_("R_ProductListItem","productListItemRenderer",x,this.D_ProductListItem);}
+	/** @private @arg {R_ClipCreationTextInput} x */
+	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput","clipCreationTextInputRenderer",x,this.D_ClipCreationTextInput);}
+	/** @private @arg {R_ClipAdState} x */
+	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
+	/** @private @arg {R_ClipCreationScrubber} x */
+	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber","clipCreationScrubberRenderer",x,this.D_ClipCreationScrubber);}
+	/** @private @arg {R_TranscriptSegmentList} x */
+	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
+	/** @private @arg {R_TranscriptFooter} x */
+	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter","transcriptFooterRenderer",x,this.D_TranscriptFooter);}
+	/** @private @arg {D_TranscriptFooter} x */
+	D_TranscriptFooter(x) {this.H_("D_TranscriptFooter","languageMenu",x,this.R_SortFilterSubMenu);}
+	/** @private @arg {R_PlaylistVideoThumbnail} x */
+	R_PlaylistVideoThumbnail(x) {this.H_("R_PlaylistVideoThumbnail","playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
+	/** @private @arg {R_Message} x */
+	R_Message(x) {this.H_("R_Message","messageRenderer",x,this.D_Message);}
+	/** @private @arg {R_LiveChatParticipantsList} x */
+	R_LiveChatParticipantsList(x) {this.H_("R_LiveChatParticipantsList","liveChatParticipantsListRenderer",x,this.D_LiveChatParticipantsList);}
+	/** @private @arg {R_LiveChatTicker} x */
+	R_LiveChatTicker(x) {this.H_("R_LiveChatTicker","liveChatTickerRenderer",x,this.D_LiveChatTicker);}
+	/** @private @arg {R_LiveChatItemList} x */
+	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.D_LiveChatItemList);}
+	/** @private @arg {R_LiveChatHeader} x */
+	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.D_LiveChatHeader);}
+	/** @private @arg {R_LiveChatMessageInput} x */
+	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.D_LiveChatMessageInput);}
+	/** @private @arg {R_EmojiPicker} x */
+	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.D_EmojiPicker);}
+	/** @private @arg {R_ChannelHeaderLinks} x */
+	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
+	/** @private @arg {R_ChannelSwitcherHeader} x */
+	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
+	/** @private @arg {R_MerchandiseItem} x */
+	R_MerchandiseItem(x) {this.H_("R_MerchandiseItem","merchandiseItemRenderer",x,this.D_MerchandiseItem);}
+	/** @private @arg {RMD_RowContainer} x */
+	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
+	/** @private @arg {R_VideoOwner} x */
+	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
+	/** @private @arg {R_MusicResponsiveListItem} x */
+	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.D_MusicResponsiveListItem);}
+	/** @private @arg {R_MusicShelfDivider} x */
+	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.D_MusicShelfDivider);}
+	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
+	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
+	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
+	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
+	/** @private @arg {R_ThumbnailOverlayHoverText} x */
+	R_ThumbnailOverlayHoverText(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
+	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
+	R_ThumbnailOverlaySidePanel(x) {this.H_("R_ThumbnailOverlaySidePanel","thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
+	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
+	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
+	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
+	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying","thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
+	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
+	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton","thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
+	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
+	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback","thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
+	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
+	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus","thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
+	/** @private @arg {R_TextInputFormField} x */
+	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
+	/** @private @arg {R_Dropdown} x */
+	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
+	/** @private @arg {R_TopicLink} x */
+	R_TopicLink(x) {this.H_("R_TopicLink","topicLinkRenderer",x,this.D_TopicLink);}
+	/** @private @arg {R_CarouselLockup} x */
+	R_CarouselLockup(x) {this.H_("R_CarouselLockup","carouselLockupRenderer",x,this.D_CarouselLockup);}
+	/** @private @arg {R_RichListHeader} x */
+	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
+	/** @private @arg {R_MacroMarkersListItem} x */
+	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem","macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
+	/** @private @arg {R_PdgCommentOption} x */
+	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
+	cg_mismatch_set=new Set();
+	/** @type {[string,string][]} */
+	cg_mismatch_list=[];
 	/** @private @arg {R_WatchPage} x */
-	R_WatchPage(x) {
+	RS_WatchPage(x) {
 		const cf="R_WatchPage"; this.g_k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
 			case 3832: return this.R_WatchPage_VE3832(x);
@@ -723,7 +1125,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private */
 	log_url=false;
 	/** @private @arg {R_BrowsePage} x */
-	R_BrowsePage(x) {
+	RS_BrowsePage(x) {
 		const cf="R_BrowsePage";
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(rootVe,x => this.save_number("R_BrowsePage.rootVe",x));
@@ -1013,18 +1415,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(continuationContents,this.C_SectionList);
 		this.t_cf(cf,alerts,this.Response_alerts);
 	}
-	/** @private @arg {C_SectionList} x */
-	C_SectionList(x) {this.H_("C_SectionList","sectionListContinuation",x,this.G_SectionList);}
-	/** @private @arg {R_Microformat} x */
-	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
-	/** @private @arg {R_EntityBatchUpdate} x */
-	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate","entityBatchUpdate",x,this.D_EntityBatchUpdate);}
-	/** @private @arg {R_SettingsSidebar} x */
-	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
-	/** @private @arg {R_CompactLink} x */
-	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
-	/** @private @arg {R_PlaylistSidebar} x */
-	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar","playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @arg {Omit<Omit<Omit<D_Microformat, `url${string}`>, `ios${string}`>, `twitter${string}`>} x */
 	D_Microformat_Other(x) {
 		const cf="D_Microformat_Other";
@@ -1115,28 +1505,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
-	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo","playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
-	/** @private @arg {D_Label} x */
-	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
-	/** @private @arg {D_Accessibility} x */
-	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
-	/** @private @arg {R_Tab} x */
-	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
-	/** @private @arg {R_ExpandableTab} x */
-	R_ExpandableTab(x) {this.H_("R_ExpandableTab","expandableTabRenderer",x,this.D_ExpandableTab);}
-	/** @private @arg {R_PdgBuyFlow} x */
-	R_PdgBuyFlow(x) {this.H_("R_PdgBuyFlow","pdgBuyFlowRenderer",x,this.D_PdgBuyFlow);}
-	/** @private @arg {R_SuperVodBuyFlowContent} x */
-	R_SuperVodBuyFlowContent(x) {this.H_("R_SuperVodBuyFlowContent","superVodBuyFlowContentRenderer",x,this.D_SuperVodBuyFlowContent);}
-	/** @private @arg {R_PdgColorSlider} x */
-	R_PdgColorSlider(x) {this.H_("R_PdgColorSlider","pdgColorSliderRenderer",x,this.D_PdgColorSlider);}
-	/** @private @arg {R_PdgCommentPreview} x */
-	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview","pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
-	/** @private @arg {R_PdgBuyFlowHeader} x */
-	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
-	/** @private @arg {R_Menu} x */
-	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow";
@@ -1317,8 +1685,6 @@ class HandleTypes extends HandleTypesEval {
 			this.trackingParams(cf,trackingParams);
 		}
 	}
-	/** @private @arg {R_MusicQueue} x */
-	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {D_MusicQueue} x */
 	D_MusicQueue(x) {
 		const cf="D_MusicQueue";
@@ -1326,8 +1692,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(content,this.R_PlaylistPanel);
 		this.t(hack,x => {if(x!==true) debugger;});
 	}
-	/** @private @arg {R_RichGrid} x */
-	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
@@ -1353,8 +1717,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
 	}
-	/** @private @arg {R_RichItem} x */
-	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
 	/** @private @arg {D_RichItem} x */
 	D_RichItem(x) {
 		const cf="D_RichItem";
@@ -1378,16 +1740,12 @@ class HandleTypes extends HandleTypesEval {
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_FeedNudge} x */
-	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
 		const cf="D_VideoLike_richThumbnail";
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_MovingThumbnail} x */
-	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
 		const cf="D_MovingThumbnail";
@@ -1403,8 +1761,6 @@ class HandleTypes extends HandleTypesEval {
 		if(enableHoveredLogging!==true) debugger;
 		if(enableOverlay!==true) debugger;
 	}
-	/** @private @arg {R_Radio} x */
-	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {
 		const cf="D_Radio";
@@ -1412,8 +1768,6 @@ class HandleTypes extends HandleTypesEval {
 		const {videos,...z}=y; this.g(z);
 		this.z(videos,this.R_ChildVideo);
 	}
-	/** @private @arg {R_ChildVideo} x */
-	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
 	/** @private @arg {D_ChildVideo} x */
 	D_ChildVideo(x) {
 		const cf="D_ChildVideo";
@@ -1489,8 +1843,6 @@ class HandleTypes extends HandleTypesEval {
 		console.log("video.other",this.get_keys_of(x).join());
 		this.D_Video_Handle("D_Video_Other",x);
 	}
-	/** @private @arg {R_ToggleButton} x */
-	R_ToggleButton(x) {this.H_("R_ToggleButton","toggleButtonRenderer",x,this.D_ToggleButton);}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
@@ -1528,18 +1880,12 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		});
 	}
-	/** @private @arg {R_Video} x */
-	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		return y;
 	}
-	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
-	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
-	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
-	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
@@ -1571,8 +1917,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibility);
 		this.a_primitive_str(title);
 	}
-	/** @private @arg {R_ChannelThumbnailWithLink} x */
-	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
 	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
 		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
@@ -1671,13 +2015,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
-			case "browse": return this.R_BrowsePage(x);
-			case "watch": return this.R_WatchPage(x);
-			case "channel": return this.R_ChannelPage(x);
-			case "playlist": return this.R_PlaylistPage(x);
-			case "settings": return this.R_SettingsPage(x);
-			case "shorts": return this.R_ShortsPage(x);
-			case "search": return this.R_SearchPage(x);
+			case "browse": return this.RS_BrowsePage(x);
+			case "watch": return this.RS_WatchPage(x);
+			case "channel": return this.RS_ChannelPage(x);
+			case "playlist": return this.RS_PlaylistPage(x);
+			case "settings": return this.RS_SettingsPage(x);
+			case "shorts": return this.RS_ShortsPage(x);
+			case "search": return this.RS_SearchPage(x);
 			default: break;
 		}
 		console.log("pt",x);
@@ -1989,8 +2333,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_PaidDigitalGoods} x */
-	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
 	/** @private @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack";
@@ -2004,8 +2346,6 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[RS_Player.next_key]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
-	/** @private @arg {R_PlayerAnnotationsExpanded} x */
-	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
 	static {
 		(new this({value: null})).R_PlayerAnnotationsExpanded;
 	}
@@ -2039,8 +2379,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
 	}
-	/** @private @arg {R_SubscribeButton} x */
-	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @arg {D_STR_CF} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {
@@ -2231,8 +2569,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		return null;
 	}
-	/** @private @arg {R_MP_MenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
 	D_MP_MenuNotificationSection(x) {
 		const cf="D_MP_MenuNotificationSection";
@@ -2272,8 +2608,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(u3,this.D_NotificationMenu_PopupItem);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_SimpleMenuHeader} x */
-	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
@@ -2360,24 +2694,12 @@ class HandleTypes extends HandleTypesEval {
 		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);
 		this.z(relevantStateTags,this.B_StateTag);
 	}
-	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
-	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
-	/** @private @arg {R_Tabbed} x */
-	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
-	/** @private @arg {R_WatchNextTabbedResults} x */
-	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
 		const {tabs,...y}=this.s(cf,x); this.g(y);
 		this.z(tabs,this.R_Tab);
 	}
-	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.DC_PlaylistPanel);}
-	/** @private @arg {R_VoiceSearchDialog} x */
-	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
-	/** @private @arg {R_CommentsHeader} x */
-	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog","commentsHeaderRenderer",x,this.D_CommentsHeader);}
 	/** @private @arg {D_CommentsHeader} x */
 	D_CommentsHeader(x) {
 		const cf="D_CommentsHeader";
@@ -2393,10 +2715,6 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.parse_url(cf,as(unicodeEmojisUrl));
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {R_CommentSimplebox} x */
-	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
-	/** @private @arg {R_SortFilterSubMenu} x */
-	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 	/** @private @arg {D_VoiceSearchDialog} x */
 	D_VoiceSearchDialog(x) {
 		const cf="D_VoiceSearchDialog";
@@ -2410,7 +2728,6 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-
 	}
 	/** @private @arg {C_ScrollToEngagementPanel} x */
 	C_ScrollToEngagementPanel(x) {
@@ -2648,10 +2965,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {R_DecoratedPlayerBar} x */
-	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar","decoratedPlayerBarRenderer",x,this.D_DecoratedPlayerBar);}
-	/** @private @arg {RA_NotificationAction} x */
-	R_NotificationAction(x) {this.H_("R_NotificationAction","notificationActionRenderer",x,this.D_NotificationAction);}
 	/** @private @arg {AD_Notification} x */
 	D_NotificationAction(x) {
 		const cf="D_NotificationAction";
@@ -2670,8 +2983,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {R_AutoplaySwitchButton} x */
-	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton","autoplaySwitchButtonRenderer",x,this.D_AutoplaySwitchButton);}
 	/** @private @arg {D_AutoplaySwitchButton} x */
 	D_AutoplaySwitchButton(x) {
 		const cf="D_AutoplaySwitchButton";
@@ -2703,10 +3014,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @private @arg {R_PlayerOverlayAutoplay} x */
-	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay","playerOverlayAutoplayRenderer",x,this.D_PlayerOverlayAutoplay);}
-	/** @private @arg {R_WatchNextEndScreen} x */
-	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
 	/** @private @arg {D_WatchNextEndScreen} x */
 	D_WatchNextEndScreen(x) {
 		const cf="D_WatchNextEndScreen";
@@ -2732,8 +3039,6 @@ class HandleTypes extends HandleTypesEval {
 		}));
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
-	/** @private @arg {R_BrowserMediaSession} x */
-	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.AD_BrowserMediaSession);}
 	/** @private @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
 	/** @private @arg {D_Menu} x */
@@ -2754,8 +3059,6 @@ class HandleTypes extends HandleTypesEval {
 			this.do_codegen(cf,x);
 		});
 	}
-	/** @private @arg {R_SegmentedLikeDislikeButton} x */
-	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
 		const cf="D_SegmentedLikeDislikeButton";
@@ -2770,8 +3073,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`[${cf}.size]`,size);
 		if(isDisabled!==false) debugger;
 	}
-	/** @private @arg {R_MenuFlexibleItem} x */
-	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */
 	D_MenuFlexibleItem(x) {
 		const cf="D_MenuFlexibleItem";
@@ -2853,8 +3154,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(hasSeparator,x => this.ceq(x,true));
 		this.t(isDisabled,x => this.ceq(x,false));
 	}
-	/** @private @arg {R_MenuServiceItem} x */
-	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {
 		const cf="GM_AddToPlaylistService";
@@ -2929,8 +3228,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x);
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
-	/** @private @arg {R_NotificationText} x */
-	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
 	/** @private @arg {D_NotificationText} x */
 	D_NotificationText(x) {
 		const cf="D_NotificationText";
@@ -2940,10 +3237,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_UndoFeedback(undoEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_ToggleMenuServiceItem} x */
-	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
-	/** @private @arg {R_MenuNavigationItem} x */
-	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
 		const cf="D_MenuNavigationItem";
@@ -3022,14 +3315,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.str_starts_with("/watch",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
-	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
-	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig","html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
-	/** @private @arg {R_CommonConfig} x */
-	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
-	/** @private @arg {D_CommonConfig} x */
-	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
-	/** @private @arg {R_VssLoggingContext} x */
-	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext","vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @private */
 	_decoder=new TextDecoder();
 	/** @private @arg {D_VssLoggingContext} x */
@@ -3260,8 +3545,6 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.G_Text(publishedTimeText);
 	}
-	/** @private @arg {RMD_Badge} x */
-	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
@@ -3312,8 +3595,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {R_AdSlot} x */
-	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {D_AdSlot} x */
 	D_AdSlot(x) {
 		const cf="D_AdSlot";
@@ -3322,10 +3603,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_FulfillmentLayout(fulfillmentContent);
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {R_FulfillmentLayout} x */
-	R_FulfillmentLayout(x) {this.H_("R_FulfillmentLayout","fulfilledLayout",x,this.R_InFeedAdLayout);}
-	/** @private @arg {R_InFeedAdLayout} x */
-	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {
 		const cf="D_InFeedAdLayout";
@@ -3337,8 +3614,6 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		}
 	}
-	/** @private @arg {R_DisplayAd} x */
-	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
 	/** @private @arg {D_DisplayAd} x */
 	D_DisplayAd(x) {
 		const cf="D_DisplayAd";
@@ -3505,8 +3780,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(selectText);
 		this.z(actions,this.A_GetMultiPageMenu);
 	}
-	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
@@ -3526,12 +3799,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
-	/** @private @arg {R_ReelPlayerOverlay} x */
-	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
-	/** @private @arg {R_ReelPlayerHeader} x */
-	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
-	/** @private @arg {R_PivotButton} x */
-	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
@@ -3548,8 +3815,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(shareButton);
 		this.R_PivotButton(pivotButton);
 	}
-	/** @private @arg {R_EngagementPanelSectionList} x */
-	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
 		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
@@ -3669,8 +3934,6 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.z(x2,this.R_ConfirmDialog);
 	}
-	/** @private @arg {R_ConfirmDialog} x */
-	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
 		const cf="D_ConfirmDialog";
@@ -3721,8 +3984,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {R_AdsEngagementPanelContent} x */
-	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent","adsEngagementPanelContentRenderer",x,this.B_Hack);}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting";
@@ -3766,8 +4027,6 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		if(sendPost!==true) debugger;
 	}
-	/** @private @arg {R_Notification} x */
-	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification";
@@ -3869,10 +4128,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(targetId!=="browse-feedFEsubscriptions") debugger;
 	}
-	/** @private @arg {R_MusicCarouselShelf} x */
-	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
-	/** @private @arg {R_MusicShelf} x */
-	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
 	TR_SectionListItem_3(x) {
 		const cf="SectionListItem"; this.g_k(cf,x);
@@ -3882,8 +4137,6 @@ class HandleTypes extends HandleTypesEval {
 		if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
 		debugger;
 	}
-	/** @private @arg {R_ContinuationItem} x */
-	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem";
@@ -3903,8 +4156,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {R_GhostGrid} x */
-	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
 	/** @private @arg {D_GhostGrid} x */
 	D_GhostGrid(x) {
 		const cf="D_GhostGrid";
@@ -3956,12 +4207,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_GuideSubscriptionsSection} x */
-	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection","guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
-	/** @private @arg {R_GuideDownloadsEntry} x */
-	R_GuideDownloadsEntry(x) {this.H_("R_GuideDownloadsEntry","guideDownloadsEntryRenderer",x,this.D_GuideDownloadsEntry);}
-	/** @private @arg {R_GuideCollapsibleEntry} x */
-	R_GuideCollapsibleEntry(x) {this.H_("R_GuideCollapsibleEntry","guideCollapsibleEntryRenderer",x,this.D_GuideCollapsibleEntry);}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
 		const cf="G_GuideSectionItem";
@@ -4037,8 +4282,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(isPrimary!==true) debugger;
 	}
-	/** @private @arg {R_GuideEntryData} x */
-	R_GuideEntryData(x) {this.H_("R_GuideEntryData","guideEntryData",x,this.D_GuideEntryData);}
 	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
 	parse_guide_entry_id(x) {
 		if(this.str_starts_with("UC",x)) {
@@ -4203,12 +4446,6 @@ class HandleTypes extends HandleTypesEval {
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
 		if(handlerDatas.length!==2) debugger;
 	}
-	/** @private @arg {R_GuideCollapsibleSectionEntry} x */
-	R_GuideCollapsibleSectionEntry(x) {this.H_("R_GuideCollapsibleSectionEntry","guideCollapsibleSectionEntryRenderer",x,this.D_GuideCollapsibleSectionEntry);}
-	/** @private @arg {R_GuideEntry} x */
-	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
-	/** @private @arg {R_GuideSection} x */
-	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
 	/** @private @arg {D_AutoplayContent} x */
 	D_AutoplayContent(x) {
 		const cf="D_AutoplayContent";
@@ -4236,8 +4473,6 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isEditable,"boolean");
 		this._primitive_of(isCourse,"boolean");
 	}
-	/** @private @arg {R_PlaylistPanelVideo} x */
-	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {
 		const cf="D_PlayerOverlayVideoDetails";
@@ -4263,7 +4498,7 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_ChannelPage} x */
-	R_ChannelPage(x) {
+	RS_ChannelPage(x) {
 		const cf="R_ChannelPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="channel") debugger;
@@ -4272,7 +4507,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(url);
 	}
 	/** @private @arg {R_PlaylistPage} x */
-	R_PlaylistPage(x) {
+	RS_PlaylistPage(x) {
 		const cf="R_PlaylistPage";
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(page!=="playlist") debugger;
@@ -4289,7 +4524,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {Extract<R_SettingsPage,{rootVe:23462}>} x */
+	/** @private @arg {Extract<RS_SettingsPage,{rootVe:23462}>} x */
 	Settings_VE23462(x) {
 		const cf="Settings_VE23462";
 		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4299,8 +4534,8 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(url);
 		if(rootVe!==23462) debugger;
 	}
-	/** @private @arg {R_SettingsPage} x */
-	R_SettingsPage(x) {
+	/** @private @arg {RS_SettingsPage} x */
+	RS_SettingsPage(x) {
 		const cf="R_SettingsPage";
 		if("rootVe" in x) return this.Settings_VE23462(x);
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4309,7 +4544,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 	}
-	/** @private @arg {Extract<R_ShortsPage,{rootVe:37414}>} x */
+	/** @private @arg {Extract<RS_ShortsPage,{rootVe:37414}>} x */
 	Shorts_VE37414(x) {
 		const cf="Shorts_VE37414";
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4324,9 +4559,9 @@ class HandleTypes extends HandleTypesEval {
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
-	/** @private @arg {R_ShortsPage} x */
-	R_ShortsPage(x) {
-		const cf="R_ShortsPage";
+	/** @private @arg {RS_ShortsPage} x */
+	RS_ShortsPage(x) {
+		const cf="RS_ShortsPage";
 		if("rootVe" in x) return this.Shorts_VE37414(x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="shorts") debugger;
@@ -4339,8 +4574,8 @@ class HandleTypes extends HandleTypesEval {
 		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
 	/** @private @arg {R_SearchPage} x */
-	R_SearchPage(x) {
-		const cf="R_SearchPage";
+	RS_SearchPage(x) {
+		const cf="RS_SearchPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="search") debugger;
 		this.E_Search(endpoint);
@@ -4356,8 +4591,6 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		if(rootVe!==4724) debugger;
 	}
-	/** @private @arg {DE_Search} x */
-	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader";
@@ -4367,10 +4600,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_C4TabbedHeader} x */
-	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
 		const cf="D_FeedTabbedHeader";
@@ -4403,10 +4632,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_FeedFilterChipBar} x */
-	R_FeedFilterChipBar(x) {this.H_("R_FeedFilterChipBar","feedFilterChipBarRenderer",x,this.D_FeedFilterChipBar);}
-	/** @private @arg {R_TwoColumnBrowseResults} x */
-	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
 		const cf="A_ResponseReceived";
@@ -4434,24 +4659,8 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isInitialLoad,"boolean");
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {R_AddToPlaylist} x */
-	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
-	/** @private @arg {R_Comment} x */
-	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
-	/** @private @arg {R_ElementUpdate} x */
-	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
-	/** @private @arg {R_TemplateUpdate} x */
-	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
-	/** @private @arg {R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
-	/** @private @arg {R_BrowseFeedActions} x */
-	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
-	/** @private @arg {R_WebSearchboxConfig} x */
-	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig","webSearchboxConfig",x,this.D_WebSearchboxConfig);}
-	/** @private @arg {R_CompactVideo} x */
-	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
 	/** @private @arg {D_LoggingDirectives} x */
 	D_LoggingDirectives(x) {
 		const cf="D_LoggingDirectives";
@@ -4892,8 +5101,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Transcript(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @private @arg {R_Transcript} x */
-	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
 		const cf="D_Transcript";
@@ -4953,8 +5160,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(previousButton);
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @private @arg {R_ChipCloudChip} x */
-	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
 		const cf="D_ChipCloudChip";
@@ -5079,7 +5284,6 @@ class HandleTypes extends HandleTypesEval {
 			const {hotkeyAccessibilityLabel,...y1}=y; this.g(y1);
 			return this.D_Accessibility(hotkeyAccessibilityLabel);
 		}
-
 		this.g(y);
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
@@ -5137,8 +5341,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_AdLayoutLogging} x */
 	D_AdLayoutLogging(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"AdServingDataEntry",x));}
-	/** @private @arg {R_PrefetchHintConfig} x */
-	R_PrefetchHintConfig(x) {this.H_("R_PrefetchHintConfig","prefetchHintConfig",x,this.D_PrefetchHintConfig);}
 	/** @private @arg {D_PrefetchHintConfig} x */
 	D_PrefetchHintConfig(x) {
 		const cf="D_PrefetchHintConfig";
@@ -5146,8 +5348,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(prefetchPriority,0);
 		if(prefetchPriority!==0) debugger;
 	}
-	/** @private @arg {R_ResourceStatusInResponseCheck} x */
-	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData";
@@ -5162,8 +5362,6 @@ class HandleTypes extends HandleTypesEval {
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		this.a_primitive_str(identifier);
 	}
-	/** @private @arg {R_MusicThumbnail} x */
-	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {D_MusicThumbnail} x */
 	D_MusicThumbnail(x) {
 		const cf="D_MusicThumbnail";
@@ -5173,10 +5371,6 @@ class HandleTypes extends HandleTypesEval {
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
-	/** @private @arg {R_LiveChat} x */
-	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.D_LiveChat);}
-	/** @private @arg {R_ReportFormModal} x */
-	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.D_ReportFormModal);}
 	/** @private @arg {RSG_SharePanel} x */
 	RSG_SharePanel(x) {
 		const cf="RSG_SharePanel";
@@ -5215,14 +5409,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.A_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {R_WatchEndpointMusicConfig} x */
-	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig","watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
-	/** @private @arg {R_PlaylistHeader} x */
-	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @private @arg {R_StructuredDescriptionContent} x */
-	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent","structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent","items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
 		const cf="G_StructuredDescriptionContentItem";
@@ -5233,28 +5419,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_ProductList} x */
-	R_ProductList(x) {this.H_("R_ProductList","productListRenderer",x,this.D_ProductList);}
-	/** @private @arg {R_ClipSection} x */
-	R_ClipSection(x) {this.H_("R_ClipSection","clipSectionRenderer",x,this.D_ClipSection);}
-	/** @private @arg {D_ClipSection} x */
-	D_ClipSection(x) {this.H_("D_ClipSection","contents",x,x => this.z(x,this.R_ClipCreation));}
-	/** @private @arg {R_ClipCreation} x */
-	R_ClipCreation(x) {this.H_("C_RunAttestation","clipCreationRenderer",x,this.D_ClipCreation);}
-	/** @private @arg {R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
-	/** @private @arg {R_EngagementPanelTitleHeader} x */
-	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
-	/** @private @arg {R_Hint} x */
-	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
-	/** @private @arg {R_VideoViewCount} x */
-	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
-	/** @private @arg {R_TwoColumnSearchResults} x */
-	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults","twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
-	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
-	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo","playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
-	/** @private @arg {R_LikeButton} x */
-	R_LikeButton(x) {this.H_("R_LikeButton","likeButtonRenderer",x,this.D_LikeButton);}
 	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
 	D_LikeButton_Like(x) {
 		const cf="D_LikeButton.like";
@@ -5328,12 +5492,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_TranscriptSearchPanel} x */
-	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {CD_TimedContinuation} x */
-	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {RC_LiveChat} x */
-	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
 		const cf="G_Watch_SecondaryResults_G_SectionItem";
@@ -5361,8 +5519,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(a,this.G_Watch_SecondaryResults_G_SectionItem);
 		return a;
 	}
-	/** @private @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
 		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
@@ -5376,8 +5532,6 @@ class HandleTypes extends HandleTypesEval {
 		let y=this.D_Playlist_Omit("D_CompactPlaylist",x);
 		const {...p}=y; p;
 	}
-	/** @private @arg {R_CompactRadio} x */
-	R_CompactRadio(x) {this.H_("R_CompactRadio","compactRadioRenderer",x,this.D_CompactRadio);}
 	/** @private @arg {D_CompactRadio['secondaryNavigationEndpoint']} x */
 	D_CompactRadio_NavE(x) {
 		if(!x.watchEndpoint) debugger;
@@ -5429,12 +5583,8 @@ class HandleTypes extends HandleTypesEval {
 		this.z(results,this.G_Watch_AnyResultItem);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_RelatedChipCloud} x */
-	R_RelatedChipCloud(x) {this.H_("R_RelatedChipCloud","relatedChipCloudRenderer",x,this.D_RelatedChipCloud);}
 	/** @private @arg {D_RelatedChipCloud} x */
 	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
-	/** @private @arg {R_ChipCloud} x */
-	R_ChipCloud(x) {this.H_("R_ChipCloud","chipCloudRenderer",x,this.D_ChipCloud);}
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {D_AddToPlaylist} x */
@@ -5454,12 +5604,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x); x===0;
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_ProfileColumnStats} x */
-	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
-	/** @private @arg {D_ProfileColumnStats} x */
-	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats","items",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
-	/** @private @arg {R_ProfileColumnStatsEntry} x */
-	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
 		const cf="D_ProfileColumnStatsEntry";
@@ -5467,8 +5611,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(label);
 		this.G_Text(value);
 	}
-	/** @private @arg {R_ProfileColumnUserInfo} x */
-	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
 	/** @private @arg {D_ProfileColumnUserInfo} x */
 	D_ProfileColumnUserInfo(x) {
 		const cf="D_ProfileColumnUserInfo";
@@ -5476,12 +5618,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.R_Thumbnail(thumbnail);
 	}
-	/** @private @arg {D_BrowseFeedActions} x */
-	D_BrowseFeedActions(x) {this.H_("D_BrowseFeedActions","contents",x,x => this.z(x,this.G_BrowseFeedContent));}
-	/** @private @arg {R_SearchBox} x */
-	R_SearchBox(x) {this.H_("D_ProfileColumn","searchBoxRenderer",x,this.D_SearchBox);}
-	/** @private @arg {R_SubFeedSelector} x */
-	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
 	/** @private @arg {D_SubFeedSelector} x */
 	D_SubFeedSelector(x) {
 		const cf="D_SubFeedSelector";
@@ -5490,8 +5626,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(options,this.R_SubFeedOption);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_SubFeedOption} x */
-	R_SubFeedOption(x) {this.H_("R_SubFeedOption","subFeedOptionRenderer",x,this.D_SubFeedOption);}
 	/** @private @arg {D_SubFeedOption} x */
 	D_SubFeedOption(x) {
 		const cf="D_SubFeedOption";
@@ -5518,28 +5652,8 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.eq_keys([a,b],["en","ca"])) debugger;
 		this.z([!c,d],x => {if(!x) debugger;});
 	}
-	/** @private @arg {R_Channel_MD} x */
-	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
-	/** @private @arg {R_Playlist_MD} x */
-	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
-	/** @private @arg {R_AlertWithButton} x */
-	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
-	/** @private @arg {AU_ChannelSwitcherPage} x */
-	AU_ChannelSwitcherPage(x) {this.H_("AU_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
-	/** @private @arg {R_ChannelSwitcherPage} x */
-	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @private @arg {AD_GetMultiPageMenu} x */
-	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
-	/** @private @arg {R_MerchandiseShelf} x */
-	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf","merchandiseShelfRenderer",x,this.D_MerchandiseShelf);}
-	/** @private @arg {R_VideoPrimaryInfo} x */
-	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo","videoPrimaryInfoRenderer",x,this.D_VideoPrimaryInfo);}
-	/** @private @arg {R_VideoSecondaryInfo} x */
-	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo","videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
-	/** @private @arg {R_TopbarMenuButton} x */
-	R_TopbarMenuButton(x) {this.H_("R_TopbarMenuButton","topbarMenuButtonRenderer",x,this.D_TopbarMenuButton);}
 	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem";
@@ -5588,8 +5702,6 @@ class HandleTypes extends HandleTypesEval {
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
 	}
-	/** @private @arg {R_NotificationTopbarButton} x */
-	R_NotificationTopbarButton(x) {this.H_("R_NotificationTopbarButton","notificationTopbarButtonRenderer",x,this.D_NotificationTopbarButton);}
 	/** @private @arg {D_NotificationTopbarButton} x */
 	D_NotificationTopbarButton(x) {
 		const cf="D_NotificationTopbarButton";
@@ -5661,8 +5773,6 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_CommentsEntryPointHeader} x */
-	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader","commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
 	/** @private @arg {D_CommentsEntryPointHeader} x */
 	D_CommentsEntryPointHeader(x) {
 		const cf="D_CommentsEntryPointHeader";
@@ -5680,8 +5790,6 @@ class HandleTypes extends HandleTypesEval {
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_CommentsEntryPointTeaser} x */
-	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
 		const cf="D_CommentsEntryPointTeaser";
@@ -5718,28 +5826,6 @@ class HandleTypes extends HandleTypesEval {
 		if(c!==true) debugger;
 		return a;
 	}
-	/** @private @arg {R_SectionList} x */
-	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.G_SectionList);}
-	/** @private @arg {R_EndScreenPlaylist} x */
-	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist","endScreenPlaylistRenderer",x,this.D_EndScreenPlaylist);}
-	/** @private @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo","endScreenVideoRenderer",x,this.D_EndScreenVideo);}
-	/** @private @arg {R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
-	/** @private @arg {R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
-	/** @private @arg {AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.H_("AU_SubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
-	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
-	/** @private @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection","videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
-	/** @private @arg {R_VideoDescriptionHeader} x */
-	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader","videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
-	/** @private @arg {R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
-	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {
 		const cf="D_ChipCloud";
@@ -5761,10 +5847,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 	}
-	/** @private @arg {D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
-	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
-	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo","videoOwner",x,this.R_VideoOwner);}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
@@ -5795,8 +5877,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	logged_strings=[];
-	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
-	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
 	D_SubscriptionNotificationToggleButton(x) {
 		const cf="D_SubscriptionNotificationToggleButton";
@@ -5905,8 +5985,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_LoggingDirectives(loggingDirectives);
 		debugger;
 	}
-	/** @private @arg {R_CommentActionButtons} x */
-	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
 	/** @private @arg {D_CommentActionButtons} x */
 	D_CommentActionButtons(x) {
 		const cf="D_CommentActionButtons";
@@ -5961,15 +6039,11 @@ class HandleTypes extends HandleTypesEval {
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
 	/** @private @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
-	/** @private @arg {R_HeroPlaylistThumbnail} x */
-	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {D_HeroPlaylistThumbnail} x */
 	D_HeroPlaylistThumbnail(x) {
 		const cf="D_HeroPlaylistThumbnail";
 		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_PlaylistByline} x */
-	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
@@ -6001,8 +6075,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		debugger;
 	}
-	/** @private @arg {R_ProductListItem} x */
-	R_ProductListItem(x) {this.H_("R_ProductListItem","productListItemRenderer",x,this.D_ProductListItem);}
 	/** @private @arg {D_ProductListItem} x */
 	D_ProductListItem(x) {
 		const cf="D_ProductListItem";
@@ -6034,22 +6106,16 @@ class HandleTypes extends HandleTypesEval {
 			case "PRIVACY_PUBLIC":
 		}
 	}
-	/** @private @arg {R_ClipCreationTextInput} x */
-	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput","clipCreationTextInputRenderer",x,this.D_ClipCreationTextInput);}
 	/** @private @arg {D_ClipCreationTextInput} x */
 	D_ClipCreationTextInput(x) {
 		const cf="D_ClipCreationTextInput";
 		const {placeholderText,maxCharacterLimit,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_ClipAdState} x */
-	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
 	/** @private @arg {D_ClipAdState} x */
 	D_ClipAdState(x) {
 		const cf="D_ClipAdState";
 		const {title,body,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_ClipCreationScrubber} x */
-	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber","clipCreationScrubberRenderer",x,this.D_ClipCreationScrubber);}
 	/** @private @arg {D_ClipCreationScrubber} x */
 	D_ClipCreationScrubber(x) {
 		const cf="D_ClipCreationScrubber";
@@ -6149,17 +6215,11 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
 		debugger;
 	}
-	/** @private @arg {R_TranscriptSegmentList} x */
-	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {D_TranscriptSegmentList} x */
 	D_TranscriptSegmentList(x) {
 		const cf="D_TranscriptSegmentList";
 		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_TranscriptFooter} x */
-	R_TranscriptFooter(x) {this.H_("R_TranscriptFooter","transcriptFooterRenderer",x,this.D_TranscriptFooter);}
-	/** @private @arg {D_TranscriptFooter} x */
-	D_TranscriptFooter(x) {this.H_("D_TranscriptFooter","languageMenu",x,this.R_SortFilterSubMenu);}
 	static {/*remove_this_static*/this.prototype.C_RepeatChapter;}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x);}
@@ -6176,8 +6236,6 @@ class HandleTypes extends HandleTypesEval {
 		this.g(description);
 		this.G_Text(showMoreText);
 	}
-	/** @private @arg {R_PlaylistVideoThumbnail} x */
-	R_PlaylistVideoThumbnail(x) {this.H_("R_PlaylistVideoThumbnail","playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
 	/** @private @arg {D_PlaylistVideoThumbnail} x */
 	D_PlaylistVideoThumbnail(x) {
 		const cf="D_PlaylistVideoThumbnail";
@@ -6209,36 +6267,26 @@ class HandleTypes extends HandleTypesEval {
 		this.t(popoutMessage,this.R_Message);
 		this.t(viewerName,this.a_primitive_str);
 	}
-	/** @private @arg {R_Message} x */
-	R_Message(x) {this.H_("R_Message","messageRenderer",x,this.D_Message);}
 	/** @private @arg {D_Message} x */
 	D_Message(x) {
 		const cf="D_Message";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_LiveChatParticipantsList} x */
-	R_LiveChatParticipantsList(x) {this.H_("R_LiveChatParticipantsList","liveChatParticipantsListRenderer",x,this.D_LiveChatParticipantsList);}
 	/** @private @arg {D_LiveChatParticipantsList} x */
 	D_LiveChatParticipantsList(x) {
 		const cf="D_LiveChatParticipantsList";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_LiveChatTicker} x */
-	R_LiveChatTicker(x) {this.H_("R_LiveChatTicker","liveChatTickerRenderer",x,this.D_LiveChatTicker);}
 	/** @private @arg {D_LiveChatTicker} x */
 	D_LiveChatTicker(x) {
 		const cf="D_LiveChatTicker";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_LiveChatItemList} x */
-	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.D_LiveChatItemList);}
 	/** @private @arg {D_LiveChatItemList} x */
 	D_LiveChatItemList(x) {
 		const cf="D_LiveChatItemList";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_LiveChatHeader} x */
-	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.D_LiveChatHeader);}
 	/** @private @arg {D_LiveChatHeader} x */
 	D_LiveChatHeader(x) {
 		const cf="D_LiveChatHeader";
@@ -6260,8 +6308,6 @@ class HandleTypes extends HandleTypesEval {
 		if("playerSeekContinuationData" in x) return;
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_LiveChatMessageInput} x */
-	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.D_LiveChatMessageInput);}
 	/** @private @arg {D_LiveChatMessageInput} x */
 	D_LiveChatMessageInput(x) {
 		const cf="D_LiveChatMessageInput";
@@ -6291,8 +6337,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.R_Button(emojiButton);
 	}
-	/** @private @arg {R_EmojiPicker} x */
-	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.D_EmojiPicker);}
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker";
@@ -6428,8 +6472,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(channelHandleText);
 		this.G_Text(videosCountText);
 	}
-	/** @private @arg {R_ChannelHeaderLinks} x */
-	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {D_ChannelHeaderLinks} x */
 	D_ChannelHeaderLinks(x) {
 		const cf="D_ChannelHeaderLinks";
@@ -6490,8 +6532,6 @@ class HandleTypes extends HandleTypesEval {
 		if("accountItem" in x) this.A_AccountItem(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_ChannelSwitcherHeader} x */
-	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
 		const cf="D_ChannelSwitcherHeader";
@@ -6510,8 +6550,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(hideText);
 		this.R_Menu(actionButton);
 	}
-	/** @private @arg {R_MerchandiseItem} x */
-	R_MerchandiseItem(x) {this.H_("R_MerchandiseItem","merchandiseItemRenderer",x,this.D_MerchandiseItem);}
 	/** @private @arg {D_MerchandiseItem} x */
 	D_MerchandiseItem(x) {
 		const cf="D_MerchandiseItem";
@@ -6559,8 +6597,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(showMoreCommand,this.C_Executor);
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
-	/** @private @arg {RMD_RowContainer} x */
-	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {DMD_RowContainer} x */
 	DMD_RowContainer(x) {
 		const cf="DMD_RowContainer";
@@ -6569,8 +6605,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`[${cf}.coll_item_count]`,collapsedItemCount);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_VideoOwner} x */
-	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist";
@@ -6620,15 +6654,11 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(bottomButton);
 		debugger;
 	}
-	/** @private @arg {R_MusicResponsiveListItem} x */
-	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.D_MusicResponsiveListItem);}
 	/** @private @arg {D_MusicResponsiveListItem} x */
 	D_MusicResponsiveListItem(x) {
 		const cf="D_MusicResponsiveListItem";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_MusicShelfDivider} x */
-	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.D_MusicShelfDivider);}
 	/** @private @arg {D_MusicShelfDivider} x */
 	D_MusicShelfDivider(x) {
 		const cf="D_MusicShelfDivider";
@@ -6682,44 +6712,30 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(`ThumbnailOverlay$${cf}`,x);
 		debugger;
 	}
-	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {
 		const cf="D_ThumbnailOverlayInlineUnplayable";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
-	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement";
 		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_ThumbnailOverlayHoverText} x */
-	R_ThumbnailOverlayHoverText(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
 	/** @private @arg {D_ThumbnailOverlayHoverText} x */
 	D_ThumbnailOverlayHoverText(x) {
 		const cf="D_ThumbnailOverlayHoverText";
 		const {text,icon,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
-	R_ThumbnailOverlaySidePanel(x) {this.H_("R_ThumbnailOverlaySidePanel","thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
 	D_ThumbnailOverlaySidePanel(x) {
 		const cf="D_ThumbnailOverlaySidePanel";
 		const {text,icon,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
-	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
 	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon("D_Icon_Mix",x,"MIX"));}
-	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
-	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying","thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
 	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
-	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
-	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton","thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
@@ -6775,8 +6791,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
 		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
 	}
-	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
-	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback","thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
 	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
 	/** @arg {string} cf @arg {object} x */
@@ -6787,8 +6801,6 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_new_typedef(cf,x);
 		debugger;
 	}
-	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
-	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus","thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x) {
 		const cf="D_ThumbnailOverlayTimeStatus";
@@ -6821,15 +6833,11 @@ class HandleTypes extends HandleTypesEval {
 		this.SE_CreatePlaylist(serviceEndpoint);
 		debugger;
 	}
-	/** @private @arg {R_TextInputFormField} x */
-	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {D_TextInputFormField} x */
 	D_TextInputFormField(x) {
 		const cf="D_TextInputFormField";
 		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_Dropdown} x */
-	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
 	/** @private @arg {D_Dropdown_Privacy} x */
 	D_Dropdown(x) {
 		const cf="D_Dropdown";
@@ -6883,8 +6891,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TopicLink(topicLink);
 		this.G_Text(premiumUpsellLink);
 	}
-	/** @private @arg {R_TopicLink} x */
-	R_TopicLink(x) {this.H_("R_TopicLink","topicLinkRenderer",x,this.D_TopicLink);}
 	/** @private @arg {D_TopicLink} x */
 	D_TopicLink(x) {
 		const cf="D_TopicLink";
@@ -6895,8 +6901,6 @@ class HandleTypes extends HandleTypesEval {
 		endpoint;
 		callToActionIcon;
 	}
-	/** @private @arg {R_CarouselLockup} x */
-	R_CarouselLockup(x) {this.H_("R_CarouselLockup","carouselLockupRenderer",x,this.D_CarouselLockup);}
 	/** @private @arg {D_CarouselLockup} x */
 	D_CarouselLockup(x) {
 		const cf="D_CarouselLockup";
@@ -6932,15 +6936,16 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(centerItems,false);
 		debugger;
 	}
-	/** @private @arg {R_RichListHeader} x */
-	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
 	/** @private @arg {D_RichListHeader} x */
 	D_RichListHeader(x) {
 		const cf="D_RichListHeader";
 		const {title,trackingParams,navigationButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {R_MacroMarkersListItem} x */
-	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem","macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
+	/** @private @arg {R_PlaylistPanel} x */
+	R_PlaylistPanel(x) {
+		const cf="R_PlaylistPanel"; this.k(cf,x);
+		this.do_codegen(cf,x);
+	}
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem";
@@ -6967,8 +6972,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(editButton);
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {R_PdgCommentOption} x */
-	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @private @arg {D_PdgCommentOption} x */
 	D_PdgCommentOption(x) {
 		const cf="D_PdgCommentOption";
@@ -6981,14 +6984,22 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_SectionList_SearchFeed";
 		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);
 	}
-	/** @private @arg {R_PlaylistPanel} x */
-	R_PlaylistPanel(x) {x; debugger;}
 	/** @private @arg {D_PrimaryLinkItem} x */
-	D_PrimaryLinkItem(x) {x; debugger;}
+	D_PrimaryLinkItem(x) {
+		const cf="D_PrimaryLinkItem"; this.k(cf,x);
+		this.do_codegen(cf,x);
+	}
 	/** @private @arg {A_AccountItem} x */
-	A_AccountItem(x) {x; debugger;}
+	A_AccountItem(x) {
+		const cf="A_AccountItem"; this.k(cf,x);
+		this.do_codegen(cf,x);
+	}
 	/** @private @arg {AD_UndoFeedback} x */
-	AD_UndoFeedback(x) {x; debugger;}
+	AD_UndoFeedback(x) {
+		const cf="AD_UndoFeedback"; this.k(cf,x);
+		if("hack" in x) return this.B_Hack(x);
+		this.do_codegen(cf,x);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

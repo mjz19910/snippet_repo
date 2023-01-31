@@ -1,4 +1,4 @@
-type R_ShortsPage={
+type RS_ShortsPage={
 	page: "shorts";
 	endpoint: E_ReelWatch;
 	response: RS_Reel;

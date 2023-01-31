@@ -1,4 +1,4 @@
-type R_SettingsPage={
+type RS_SettingsPage={
 	page: "settings";
 	endpoint: GE_Browse;
 	response: RS_Settings;

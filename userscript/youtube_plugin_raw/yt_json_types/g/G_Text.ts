@@ -1,5 +1,5 @@
 type G_Text={
-	runs?: R_TextRun[];
+	runs?: D_TextRun[];
 	simpleText?: string
 	accessibility?: D_Accessibility;
 };
