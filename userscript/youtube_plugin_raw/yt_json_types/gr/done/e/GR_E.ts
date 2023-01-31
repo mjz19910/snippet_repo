@@ -39,9 +39,9 @@ type E_Url=TE_Endpoint_3<"urlEndpoint",DU_DE_Url,M_VE83769>;
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>;
 type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,DC_Empty_WCM>;
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
-type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DC_Params,DC_Empty_WCM>;
+type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,DC_Empty_WCM>;
 type E_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
-type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: DC_Params;};
+type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
 //#endregion
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
 type DE_PlaylistEditor={playlistId: D_PlaylistId;};
