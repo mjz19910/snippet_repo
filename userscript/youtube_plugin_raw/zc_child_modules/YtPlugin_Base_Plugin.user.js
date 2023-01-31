@@ -3017,7 +3017,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
 		if(!x) return;
 		this.z(x,f);

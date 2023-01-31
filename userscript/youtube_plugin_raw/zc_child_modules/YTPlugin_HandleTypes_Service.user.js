@@ -344,7 +344,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return ok_e;
 	}
-	/** @protected @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x */
+	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
 	w_priv(k,x) {
 		if(!(k in x)) {debugger; return null;}
 		return x[k];
@@ -5694,15 +5694,15 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
 		let n1=this.T_Items_TP("R_CompactLink_Items",n);
-		this.z(n1,this.R_CompactLink);
+		this.tz(n1,this.R_CompactLink);
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
 	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
-		const {trackingParams,items,...y}=x; this.g(y);
+		const {trackingParams,...y}=x;
 		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
-		return items;
+		return this.w_priv("items",y);
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
