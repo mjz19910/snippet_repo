@@ -1,7 +1,6 @@
 type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
 type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
 type RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};
-type G_LiveChatContinuationActions=RA_ReplayChatItem|A_AddChatItem;
 type DE_VE3832_Watch={
 	videoId: string;
 	playlistId: PlaylistId;

@@ -6325,7 +6325,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_LiveChatMessageInput";
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {G_LiveChatContinuationActions} x */
+	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions";
 		this.do_codegen(cf,x);

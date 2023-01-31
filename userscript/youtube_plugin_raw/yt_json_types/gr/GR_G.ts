@@ -25,3 +25,10 @@ type G_SI_DB_EngagementPanel=
 	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters
 	;
 ;
+
+// from Action Renderers and Actions
+type G_RA_LiveChatContinuationActions=
+	|RA_ReplayChatItem
+	|A_AddChatItem
+	;
+;

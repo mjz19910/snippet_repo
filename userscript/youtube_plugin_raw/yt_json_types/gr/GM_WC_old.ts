@@ -44,7 +44,7 @@ type DC_SectionListBase=T_DC_Content<TR_SectionListItem_3<{},{},{}>>;
 type RC_LiveChat={liveChatContinuation: DC_LiveChat;};
 type DC_LiveChat={
 	continuations: G_LiveChatContinuationItem[];
-	actions?: G_LiveChatContinuationActions[];
+	actions?: G_RA_LiveChatContinuationActions[];
 	actionPanel?: R_LiveChatMessageInput;
 	itemList?: R_LiveChatItemList;
 	header?: R_LiveChatHeader;
