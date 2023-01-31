@@ -2063,7 +2063,7 @@ function yt_plugin_base_main() {
 
 	// wait for plugin requirements
 	services.start_message_channel_loop();
-	/** @private @arg {[()=>R_BrowsePage, object, []]} apply_args */
+	/** @private @arg {[()=>RS_BrowsePage, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
 	}

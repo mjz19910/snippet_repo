@@ -411,7 +411,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
-	/** @private @arg {CF_TA_Page} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
@@ -1046,7 +1046,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_VE3832_Page_Watch} x */
 	R_WatchPage_VE3832(x) {
 		const cf="R_WatchPage_VE3832";
-		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
@@ -1126,7 +1126,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	log_url=false;
-	/** @private @arg {R_BrowsePage} x */
+	/** @private @arg {RS_BrowsePage} x */
 	RS_BrowsePage(x) {
 		const cf="R_BrowsePage";
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4518,7 +4518,7 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {R_ChannelPage} x */
+	/** @private @arg {RS_ChannelPage} x */
 	RS_ChannelPage(x) {
 		const cf="R_ChannelPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4527,7 +4527,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Channel(response);
 		this.a_primitive_str(url);
 	}
-	/** @private @arg {R_PlaylistPage} x */
+	/** @private @arg {G_RS_Page_Playlist} x */
 	RS_PlaylistPage(x) {
 		const cf="R_PlaylistPage";
 		const {url,endpoint,page,response,...y}=this.s(cf,x);

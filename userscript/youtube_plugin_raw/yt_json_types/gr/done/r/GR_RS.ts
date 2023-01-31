@@ -16,8 +16,9 @@ type RS_AccountMenu={
 };
 type RS_AccountsList={
 	responseContext: RC_ResponseContext;
+	actions: AU_ChannelSwitcherPage[];
 	selectText: G_Text;
-}&T_Actions<AU_ChannelSwitcherPage>;
+};
 type RS_AttGet={
 	responseContext: RC_ResponseContext;
 	challenge: string;
@@ -201,6 +202,56 @@ type RS_Page_Shorts={
 	reelWatchSequenceResponse?: RS_ReelWatchSequence;
 	url: `/shorts/${string}`;
 	cachedReelWatchSequenceResponse?: RS_ReelWatchSequence;
+};
+type RS_Page_Watch={
+	page: "watch";
+	endpoint: E_Watch;
+	response: RS_Watch;
+	playerResponse: RS_Player;
+	url: D_WatchPageUrl;
+	previousCsn?: string;
+};
+type RS_BrowsePage={
+	page: "browse";
+	url: string;
+	endpoint: GE_Browse;
+	response: RS_Browse;
+};
+type RS_ChannelPage={
+	page: "channel";
+	endpoint: GE_Browse;
+	response: RS_Channel;
+	url: string;
+};
+type RS_Page_Playlist={
+	page: "playlist";
+	endpoint: GE_Browse;
+	response: RS_Playlist;
+	url: string;
+};
+type R_SearchPage={
+	page: "search";
+	endpoint: E_Search;
+	response: RS_Search;
+	url: `/results?search_query=${string}`;
+};
+//#endregion
+//#region RS_VE
+type RS_VE3832_Page_Watch={
+	rootVe: 3832;
+	url: D_WatchPageUrl;
+	endpoint: E_Watch;
+	page: "watch";
+	preconnect?: [D_VE3832_PreconnectUrl];
+	playerResponse: RS_Player;
+	response: RS_Watch;
+};
+type RS_VE5754_Page_Playlist={
+	page: "playlist";
+	endpoint: GE_Browse;
+	response: RS_Playlist;
+	url: string;
+	rootVe: 5754;
 };
 type RS_VE37414_Shorts={
 	page: "shorts";

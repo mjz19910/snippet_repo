@@ -8,11 +8,17 @@ type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 //#region T_
 type T_Item<T>={item: T;};
 type T_Menu<T>={menu: T;};
+type T_Page<T>={page: T;};
 //#endregion
 //#region Object conversion Templates
 type T_RemovePrefix<T,T2 extends string>={
 	[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];
 };
+//#endregion
+//#region TA_
+type TA_OpenPopup_Dropdown<T>={popup: T; popupType: "DROPDOWN";};
+type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
+type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
 //#endregion
 //#region TB_
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
@@ -41,10 +47,6 @@ type T_SE_Signal<T_Meta extends {webCommandMetadata: any;},T_Data>=TE_Endpoint_3
 //#region T_Setting
 type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
 //#endregion
-//#region TA_
-type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
-type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
-//#endregion
 //#region T_Extract
 type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=
 	Extract<CF_Generated_NS.CF_Generated,{n: T;}>["v"]
@@ -67,8 +69,6 @@ type TAD_OpenPopup_Dialog<T>={
 	popup: T;
 	popupType: "DIALOG";
 };
-type TA_OpenPopup_Dropdown<T>={popup: T; popupType: "DROPDOWN";};
-type TA_Page<T>={page: T;};
 type TD_ContinuationItem_CE<T>={
 	trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
 	continuationEndpoint: T;
