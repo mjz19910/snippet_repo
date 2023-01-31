@@ -1,3 +1,5 @@
+// WARNING, this is a TEMPLATE: remove the @ts-nocheck when you have removed all the placeholders
+// @ts-nocheck
 // ==UserScript==
 // @name	`${name}`
 // @namespace	https://github.com/mjz19910/

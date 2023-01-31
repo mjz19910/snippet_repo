@@ -37,6 +37,7 @@
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
-		"./build"
+		"./build",
+		"*/_template.user.js",
 	],
 }
