@@ -1274,11 +1274,8 @@ class HandleTypes extends HandleTypesEval {
 		let known=this.cases_map.get(cf);
 		if(!known) {known=[]; this.cases_map.set(cf,known);}
 		if(!known.includes(str)) known.push(JSON.stringify(str));
-		if(code) {
-			console.log(`-- [js_gen_code:case_gen_${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
-			return;
-		}
-		console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
+		if(code) return console.log(`-- [js_gen_code:user_code:${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
+		console.log(`-- [js_gen_code:no_code:${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
 	}
 	/** @private @arg {DE_SignalNavigation} x */
 	DE_SignalNavigation(x) {
@@ -1707,10 +1704,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {`D_Button.From.command.targetId`} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
+		/** @type {string} */
+		let ux=x;
+		/** @type {(typeof x)|"clip-info-button"} */
+		let rx=as(ux);
 		/** @private @type {D_Button_TargetId} */
-		switch(x) {
+		switch(rx) {
 			default: this.generate_case("D_Button_TargetId",x); break;
-			// case "clip-info-button":
+			case "clip-info-button": debugger; break;
 			// case "sponsorships-button":
 			case "create-clip-button-action-bar":
 		}
@@ -1745,10 +1746,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {D_Button_EX_Command} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit_Command(cf,x) {
-		let {command,text,tooltip,...y}=this.D_Button_Omit_FromStyle(cf,x);
+		let {command,...y}=this.D_Button_Omit_FromStyle(cf,x);
 		this.t(command,this.GC_Button);
-		if(tooltip&&typeof tooltip!=="string") debugger;
-		this.t(text,this.G_Text);
 		return y;
 	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Command} x */
@@ -1759,7 +1758,9 @@ class HandleTypes extends HandleTypesEval {
 			this._primitive_of(isDisabled,"boolean");
 			return;
 		}
-		let {accessibility,isDisabled,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
+		let {accessibility,isDisabled,text,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
+		if(typeof tooltip!=="string") debugger;
+		this.t(text,this.G_Text);
 	}
 	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit_Text(cf,x) {
@@ -5813,18 +5814,18 @@ class HandleTypes extends HandleTypesEval {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
 	}
-	/** @private @arg {string} k @arg {string} x */
-	save_next_char(k,x) {
+	/** @private @arg {string} user_key @arg {string} x */
+	save_next_char(user_key,x) {
 		let f=x;
-		let ki=`${k}.data[0]["${f}"]`;
-		this.save_string(`${k}.data[0]`,f);
-		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===ki);
+		let k=`${user_key}.data[0]["${f}"]`;
+		this.save_string(`${user_key}.data[0]`,f);
+		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
 		if(!s_url_data) return this.save_number(k,1);
 		let wd=s_url_data[1];
 		if(wd[0]!=="one") {debugger; return;}
 		let [,di]=wd;
-		if(di.length!==1) {debugger; return;}
-		let n=di[0]+1; di.length=0;
+		if(!di.length) return this.save_number(k,1);
+		let n=di[0]+1;
 		this.save_number(k,n);
 	}
 	/** @private @arg {D_RadioShareUrl} b */

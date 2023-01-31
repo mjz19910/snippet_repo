@@ -104,7 +104,16 @@ type D_TranscriptSearchPanel={
 type D_UiTargetId="browse-feedFEwhat_to_watch"|"watch-next-feed";
 
 type R_Button={buttonRenderer: D_Button;};
-type D_Button=|
+type D_Button=|{
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: false;
+	icon: T_Icon<"INFO">;
+	trackingParams: string;
+	accessibilityData: D_Accessibility;
+	targetId: "clip-info-button";
+	command: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>;
+}|
 {
 	style: "STYLE_TEXT";
 	size: "SIZE_DEFAULT";
@@ -154,7 +163,7 @@ type D_Button=|
 	accessibility: {
 		label: "Save to";
 	};
-	tooltip: "Save";
+	tooltip: string;
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 	command: E_AddToPlaylistService;
