@@ -505,10 +505,6 @@ class CodegenService extends BaseService {
 			let real_val=split_string_once_last(type_name,"Command")[0];
 			return `C_${real_val}`;
 		}
-		if(type_name.endsWith("ServiceEndpoint")) {
-			let real_val=split_string_once_last(type_name,"ServiceEndpoint")[0];
-			return `SE_${real_val}`;
-		}
 		if(type_name.endsWith("Endpoint")) {
 			let real_val=split_string_once_last(type_name,"Endpoint")[0];
 			return `E_${real_val}`;

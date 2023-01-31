@@ -23,5 +23,18 @@ type D_Button={
 	accessibilityData: D_Accessibility;
 	targetId: "create-clip-button-action-bar";
 	command: A_ChangeEngagementPanelVisibility;
+}|{
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: false;
+	text: G_Text;
+	icon: T_Icon<"PLAYLIST_ADD">;
+	accessibility: {
+		label: "Save to";
+	};
+	tooltip: "Save";
+	trackingParams: string;
+	accessibilityData: D_Accessibility;
+	command: E_AddToPlaylistService;
 };
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;
