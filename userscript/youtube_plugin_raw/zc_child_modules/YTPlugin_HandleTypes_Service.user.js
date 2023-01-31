@@ -6612,7 +6612,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`[${cf}.coll_item_count]`,collapsedItemCount);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {D_RefreshPlaylist} x */
+	/** @private @arg {DC_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist";
 		this.do_codegen(cf,x);
