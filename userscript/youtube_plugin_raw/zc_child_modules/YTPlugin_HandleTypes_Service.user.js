@@ -1753,7 +1753,6 @@ class HandleTypes extends HandleTypesEval {
 					const {accessibilityData,icon,targetId: {},...y}=x; y;
 					this.D_Accessibility(accessibilityData);
 					if(icon.iconType!=="INFO") debugger;
-					debugger;
 				} break;
 				case "create-clip-button-action-bar": {
 					const {accessibilityData,icon,targetId: {},tooltip,...y}=x; y;
@@ -1783,18 +1782,27 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
+		if("icon" in x) {
+			const {icon,accessibilityData,accessibility,...y}=x; y;
+			if(icon.iconType!="NOTIFICATIONS_ACTIVE") debugger;
+			this.D_Accessibility(accessibilityData);
+			if(accessibility.label!=="") debugger;
+			return;
+		}
+		debugger;
 	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Command} x */
 	D_Button_WithCommand(cf,x) {
 		if("text" in x) {
 			{
-				const {size,style,isDisabled,trackingParams,command,text,...y1}=x; y1;
+				const {isDisabled,text,...y1}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); y1;
+				if(isDisabled!==false) debugger;
+				this.G_Text(text);
 				this.D_Button_Scope_1(y1);
 			}
 			return;
 		}
 		if("targetId" in x) {
-			{const {size,style,isDisabled,icon,trackingParams,accessibilityData,targetId,command,...y1}=x; y1;}
 			let {targetId,isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
 			if(isDisabled!==false) debugger;

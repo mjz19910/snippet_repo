@@ -18,7 +18,7 @@ type D_Button_1={
 	size: "SIZE_DEFAULT";
 	isDisabled: false;
 	icon: T_Icon<"NOTIFICATIONS_ACTIVE">;
-	accessibility: D_Label;
+	accessibility: {label: "";};
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 };
