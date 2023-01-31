@@ -5829,7 +5829,22 @@ class HandleTypes extends HandleTypesEval {
 					if(this.str_starts_with_rx(w.a,"RD")) {
 						w.k=2; w.k==2&&this.playlistId(w.a);
 					} else {
-						console.log("[share_url.v]",w.a);
+						let f=w.a[0];
+						let k=`share_url.v.data[0]["${f}"]`;
+						this.save_string("[share_url.v.data[0]]",w.a[0]);
+						let count=0;
+						x: {
+							let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
+							if(!s_url_data) {debugger; break x;}
+							let wd=s_url_data[1];
+							if(wd[0]==="one") {
+								break x;
+							}
+							console.log(s_url_data);
+						}
+						debugger;
+						count++;
+						this.save_number(k,count);
 						this.videoId(w.a);
 					}
 					if(playnext!=="1") debugger;
