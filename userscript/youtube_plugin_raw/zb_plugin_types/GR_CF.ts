@@ -1,12 +1,3 @@
-type CF_L_Params=
-	CF_L_CTP_Params|
-	CF_L_TP_Params
-	// TODO
-	|"D_TemplateUpdate"
-	|"DE_GetTranscript"
-	;
-;
-
 type CF_mod=import("./D_CF_mod.js").D_CF_mod;
 type CF_M_s_priv=
 	|`D_Params:${CF_D_Params}`
@@ -22,9 +13,14 @@ type CF_M_s_priv=
 ;
 type CF_TA_OpenPopup=T_ExtractImport<"CF_TA_OpenPopup">;
 type CF_T_Icon_Any=T_ExtractImport<"CF_T_Icon_Any">;
-type CF_A_MG_s=T_ExtractImport<"CF_M_s">;
+type CF_L_Params=
+	|T_ExtractImport<"CF_L_Params">
+	|CF_L_CTP_Params
+	|CF_L_TP_Params
+	;
+;
 type CF_M_s=
-	|CF_A_MG_s
+	|T_ExtractImport<"CF_M_s">
 	|CF_D_Button
 	|CF_D_Link
 	|CF_D_Video_Handle
@@ -79,8 +75,8 @@ type CF_L_CTP_Params=
 	|`${CF_TE_Endpoint_2}.endpoint`
 	|`${CF_TE_Endpoint_3}.endpoint`
 	|`${CF_TE_Endpoint_Opt_3}.endpoint`
+	|`${CF_TA_OpenPopup}.tracking`
 	|CF_DC_Generic_CTP
-	|CF_TA_OpenPopup
 	;
 ;
 type CF_D_Link=T_ExtractImport<"CF_D_Link">;

@@ -424,7 +424,7 @@ class HandleTypes extends HandleTypesEval {
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf2,clickTrackingParams);
+		this.clickTrackingParams(`${cf1}.tracking`,clickTrackingParams);
 		return a;
 	}
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
