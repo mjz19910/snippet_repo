@@ -1,6 +1,7 @@
 type D_CF=import("./D_CF_mod.js").D_CF;
-type DF_Sub_s=`D_CF_D_Params:${string}`;
+type DF_Sub_s=`D_CF_D_Params:${D_CF_s}`;
 type D_CF_s=[
+	"",
 ][number];
 type D_CF_D_Params=
 	|"DE_GetReportForm"
