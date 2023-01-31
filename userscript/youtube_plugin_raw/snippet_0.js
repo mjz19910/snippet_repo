@@ -73,9 +73,9 @@ function split_string_once(s,d=as(",")) {
 class ParserService {
 	/** @arg {T_Split<D_ApiPathFormat_1,"/">} x @returns {Join<T_Split<D_ApiPathFormat_1,"/">,".">} */
 	get_url_type(x) {x; throw 1;}
-	/** @public @arg {P_ParamsSection} root @arg {D_UrlFormat} x */
+	/** @public @arg {D_CF_L_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {root; x;}
-	/** @public @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @public @arg {D_CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_endpoint_params(root,path,x) {if(x===void 0) {debugger; return;} root; x; path;}
 }
 class CodegenService {
@@ -101,11 +101,11 @@ export class Snippet_0_tmp {
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
 	}
-	/** @public @arg {P_ParamsSection} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @public @arg {D_CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
-	/** @public @arg {P_ParamsSection} cf @arg {string} x */
+	/** @public @arg {D_CF_L_Params} cf @arg {string} x */
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -113,7 +113,7 @@ export class Snippet_0_tmp {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @protected @arg {P_ParamsSection} cf @arg {string} x */
+	/** @protected @arg {D_CF_L_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
 	}
@@ -683,7 +683,7 @@ class ND extends Snippet_0_tmp {
 		this.D_Accessibility(unsubscribeAccessibility);
 		return y;
 	}
-	/** @private @arg {P_ParamsSection} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
+	/** @private @arg {D_CF_L_Params} cf @template T1,T2,T3 @arg {TD_ItemSection_3<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
 	_decode_TD_ItemSection(cf,x) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.sd(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);

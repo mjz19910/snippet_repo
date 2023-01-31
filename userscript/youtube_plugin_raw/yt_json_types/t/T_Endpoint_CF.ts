@@ -1,4 +1,4 @@
-type T_Endpoint_CF=[
+type D_CF_T_Endpoint=[
 	"A_ReplaceEnclosing",
 	"A_SendFeedback",
 	"A_Signal",

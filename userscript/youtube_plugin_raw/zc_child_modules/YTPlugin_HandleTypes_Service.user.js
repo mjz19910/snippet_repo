@@ -138,16 +138,8 @@ class HandleTypesEval extends ServiceMethods {
 	//#region init and static init
 	// I use @private stuff that i want in static blocks
 	gk=this.get_keys_of;
-	/** @private @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:D_Params['params'],cf:string)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.s(cf,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(\`[\${a}]\`,b);
-	/** @private @template {{}} T @arg {string} cf @arg {T} x */
-	s(cf,x) {
-		if(!x) debugger;
-		this.k(cf,x);
-		return x;
-	}
 	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
@@ -276,9 +268,17 @@ ECatcherService.known_experiments.push(...[
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region moved members
+	/** @private @template {D_CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
+	D_Params(cf,x,f) {const {params: p,...y}=this.s(`D_CF_D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
+	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	s(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
 	/** @private @template T @arg {D_CF["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
-	/** @arg {string} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
+	/** @arg {D_CF_T_Endpoint} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
 	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s(cf,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
 	//#endregion
 	//#region static & typedefs
@@ -323,7 +323,7 @@ class HandleTypes extends HandleTypesEval {
 	//#region member functions
 	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_Endpoint_CF} cf @arg {T_EP} x @arg {EP_Key} k 
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {D_CF_T_Endpoint} cf @arg {T_EP} x @arg {EP_Key} k 
 	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
 	 * */
 	TE_Endpoint_2(cf,k,x) {
@@ -332,7 +332,7 @@ class HandleTypes extends HandleTypesEval {
 		return [endpoint,y];
 	}
 	/** 
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_Endpoint_CF} cf @arg {T_EP} x
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {D_CF_T_Endpoint} cf @arg {T_EP} x
 	 * @arg {EP_Key} k
 	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
 	 */
@@ -353,7 +353,7 @@ class HandleTypes extends HandleTypesEval {
 		/** @typedef {[typeof endpoint,typeof y]} EP_Ret */
 		return [endpoint,y];
 	}
-	/** @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {T_Endpoint_CF} cf @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
+	/** @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {D_CF_T_Endpoint} cf @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
@@ -404,12 +404,12 @@ class HandleTypes extends HandleTypesEval {
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
-	/** @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} e_ty */
-	T_Icon(x,e_ty) {
+	/** @arg {D_CF_T_Icon} cf_in @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} w */
+	T_Icon(cf_in,x,w) {
 		const cf="T_Icon";
 		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(iconType!==e_ty) debugger;
-		this.save_string("[IconType]",iconType);
+		if(iconType!==w) debugger;
+		this.save_string(`[${cf_in}.IconType]`,iconType);
 	}
 	/** @private @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(x,ty_arr) {
@@ -1001,7 +1001,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.make_codegen_group(cf,x);
 	}
-	/** @private @template {D_CompactLink} T @arg {D_Link_CF} cf @arg {T} x */
+	/** @private @template {D_CompactLink} T @arg {D_CF_D_Link} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
 		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
@@ -1097,7 +1097,7 @@ class HandleTypes extends HandleTypesEval {
 	expected_button_iconTypes=[
 		"DELETE","NOTIFICATIONS_ACTIVE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS",
 	];
-	/** @private @template {D_Button} T @arg {D_Button_CF} cf @arg {T} x */
+	/** @private @template {D_Button} T @arg {D_CF_D_Button} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
 		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
@@ -1319,13 +1319,13 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Watch(navigationEndpoint);
 		return y;
 	}
-	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
+	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {D_CF_Omit_Menu_Radio} cf @arg {T} x */
 	R_Omit_Menu_Radio(cf,x) {
 		let {navigationEndpoint,menu,...y}=this.Omit_Compact_Player(cf,x);
 		this.R_Menu(menu);
 		return y;
 	}
-	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
+	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {D_CF_Omit_Menu_Radio} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
 		if("adSlotMetadata" in x) {debugger; throw new Error();}
 		let u=this.R_Omit_Menu_Radio(cf,x);
@@ -1428,7 +1428,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
-	/** @private @arg {Omit_Menu_Radio_CF} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
+	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
@@ -1438,7 +1438,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
-	/** @private @template {D_CompactVideo|D_Video} T @arg {Omit_Menu_Radio_CF} cf @arg {T} x */
+	/** @private @template {D_CompactVideo|D_Video} T @arg {D_CF_Omit_Menu_Radio} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
@@ -1451,7 +1451,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(shortBylineText);
 		return y;
 	}
-	/** @private @arg {Omit_Menu_Radio_CF} cf @template {D_Video} T @arg {T} x */
+	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=u;
@@ -2431,7 +2431,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
-	/** @private @arg {GE_ResponseReceived_CF} cf @arg {GE_ResponseReceived} x */
+	/** @private @arg {D_CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
@@ -3188,14 +3188,14 @@ class HandleTypes extends HandleTypesEval {
 		if(!webShowNewAutonavCountdown) debugger;
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @private @arg {Omit_Menu_Radio_CF} cf @template {R_Omit_Compact_Player} T @arg {T} x */
+	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {R_Omit_Compact_Player} T @arg {T} x */
 	Omit_Compact_Player(cf,x) {
 		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {Omit_Menu_Radio_CF} cf @template {R_Omit_Compact_Video} T @arg {T} x */
+	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {R_Omit_Compact_Video} T @arg {T} x */
 	Omit_Compact_Video(cf,x) {
 		let u=this.Omit_Compact_Player(cf,x);
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
@@ -3236,7 +3236,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
-				this.T_Icon(icon,"OFFICIAL_ARTIST_BADGE");
+				this.T_Icon("DMD_Badge_VerifiedArtist",icon,"OFFICIAL_ARTIST_BADGE");
 				if(tooltip!=="Official Artist Channel") debugger;
 				this.a_primitive_str(tooltip);
 				this.trackingParams(cf,trackingParams);
@@ -3245,7 +3245,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
-				this.T_Icon(icon,"CHECK_CIRCLE_THICK");
+				this.T_Icon("DMD_Badge_Verified",icon,"CHECK_CIRCLE_THICK");
 				if(tooltip!=="Verified") debugger;
 				this.a_primitive_str(tooltip);
 				this.trackingParams(cf,trackingParams);
@@ -3253,7 +3253,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_LIVE_NOW": {
 				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
-				this.T_Icon(icon,"LIVE");
+				this.T_Icon("DMD_Badge_LiveNow",icon,"LIVE");
 				this.trackingParams(cf,trackingParams);
 				switch(label) {
 					default: debugger; break;
@@ -4198,8 +4198,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_GuideEntry(headerEntry);
-		this.T_Icon(expanderIcon,"EXPAND");
-		this.T_Icon(collapserIcon,"COLLAPSE");
+		this.T_Icon("D_Guide_ExpandIcon",expanderIcon,"EXPAND");
+		this.T_Icon("D_Guide_CollapseIcon",collapserIcon,"COLLAPSE");
 		this.z(sectionItems,this.G_GuideSectionItem);
 		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
@@ -4271,7 +4271,7 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.do_codegen(cf,x); commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
-		this.D_Params("D_YpcGetOffers",a,(params,cf) => this.params(cf,"ypc_get_offers.params",params));
+		this.D_Params("DE_YpcGetOffers",a,(params,cf) => this.params(cf,"ypc_get_offers.params",params));
 	}
 	/** @private @arg {R_ChannelPage} x */
 	R_ChannelPage(x) {
@@ -4869,7 +4869,7 @@ class HandleTypes extends HandleTypesEval {
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo";
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.T_Icon(iconImage,"YOUTUBE_LOGO");
+		this.T_Icon("D_Icon_YoutubeLogo",iconImage,"YOUTUBE_LOGO");
 		this.G_Text(tooltipText);
 		this.E_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
@@ -4886,7 +4886,7 @@ class HandleTypes extends HandleTypesEval {
 	D_FusionSearchbox(x) {
 		const cf="D_FusionSearchbox";
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.T_Icon(icon,"SEARCH");
+		this.T_Icon("D_Icon_Search",icon,"SEARCH");
 		this.G_Text(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
@@ -5040,7 +5040,7 @@ class HandleTypes extends HandleTypesEval {
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
 	}
-	/** @arg {D_ChipCloudChip_Omit_CF} cf @private @template {D_ChipCloudChip} T @arg {T} x */
+	/** @arg {D_CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
 		const {style: a,text: b,trackingParams: c,...y}=this.s(cf,x);
 		switch(a.styleType) {
@@ -6790,7 +6790,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
 	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon(x,"MIX"));}
+	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon("D_Icon_Mix",x,"MIX"));}
 	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
 	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying","thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
@@ -6802,28 +6802,28 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);
 		this.D_Accessibility(accessibility);
-		this.T_Icon(icon,"CHECK");
+		this.T_Icon("D_Icon_Check",icon,"CHECK");
 	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);
 		this.D_Accessibility(accessibility);
-		this.T_Icon(icon,"WATCH_LATER");
+		this.T_Icon("D_Icon_WatchLater",icon,"WATCH_LATER");
 	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix";
 		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);
 		this.D_Accessibility(accessibility);
-		this.T_Icon(icon,"PLAYLIST_ADD_CHECK");
+		this.T_Icon("D_Icon:PLAYLIST_ADD_CHECK",icon,"PLAYLIST_ADD_CHECK");
 	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);
 		this.D_Accessibility(accessibility);
-		this.T_Icon(icon,"ADD_TO_QUEUE_TAIL");
+		this.T_Icon("D_Icon:ADD_TO_QUEUE_TAIL",icon,"ADD_TO_QUEUE_TAIL");
 	}
 	/**
 	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x

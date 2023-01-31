@@ -1,4 +1,14 @@
 type D_CF=import("./D_CF_mod.js").D_CF;
+type DF_Sub_s=[
+	`D_CF_D_Params:${string}`,
+][number];
+type D_CF_s=[
+][number];
+type D_CF_D_Params=[
+	"DE_GetReportForm",
+	"DE_GetTranscript",
+	"DE_YpcGetOffers",
+][number];
 type D_CF_w=[
 	`y:${D_CF_y}`,
 	`zy:${D_CF_zy}`,
@@ -26,4 +36,18 @@ type T_WCM_CF_Unpack=[
 ][number];
 type TA_Page_CF=[
 	"AD_UpdateChannelSwitcherPage",
+][number];
+type D_CF_T_Icon=[
+	"DMD_Badge_VerifiedArtist",
+	"DMD_Badge_Verified",
+	"DMD_Badge_LiveNow",
+	"D_Guide_ExpandIcon",
+	"D_Guide_CollapseIcon",
+	"D_Icon_YoutubeLogo",
+	"D_Icon_Search",
+	"D_Icon_Mix",
+	"D_Icon_Check",
+	"D_Icon_WatchLater",
+	"D_Icon:PLAYLIST_ADD_CHECK",
+	"D_Icon:ADD_TO_QUEUE_TAIL",
 ][number];

@@ -9,12 +9,14 @@ export class HandleTypesEval_ extends ServiceMethods {
 	RC_ResponseContext(x) {x;}
 	/** @protected */
 	gk=this.get_keys_of;
-	/** @protected @arg {string} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:DC_Params['params'],cf:string)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.s(cf,x); this.g(y); return f.call(this,x.params,cf);}
+	// /** @protected @arg {D_CF_D_Params} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:DC_Params['params'],cf:string)=>U} f */
+	// D_Params(cf,x,f) {const {params: p,...y}=this.s(`D_CF_D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @protected @arg {string} a @arg {{}} b */
 	k=(a,b) => this.save_keys(`[${a}]`,b);
-	/** @protected @template {{}} T @arg {string} cf @arg {T} x @returns {T} */
-	s(cf,x) {cf; x; n();}
+	// /** @protected @template {{}} T @arg {D_CF_s} cf @arg {T} x @returns {T} */
+	// s_priv(cf,x) {this.s(cf,x);}
+	// /** @protected @template {{}} T @arg {D_CF_s} cf @arg {T} x @returns {T} */
+	// s(cf,x) {cf; x; n();}
 	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {x; f;}
 	/** @protected @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @returns {TD_ItemSection_3<CT, T, U>} */
