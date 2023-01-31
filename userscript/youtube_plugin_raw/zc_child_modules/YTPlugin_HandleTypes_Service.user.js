@@ -529,7 +529,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @arg {GM_WC} x */
 				this.codegen_str(`G_VE${cx}`,x);
 				console.log(`\n\tG_VE${cx},`);
-				console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
+				this.generate_case("GM_WC_RootVe",x,"return this.GeneratedWebCommandMetadata(x);");
 			} break;
 			case 3832: return this.GM_VE3832_Watch_WC(x);
 			case 4724: return this.GM_VE4724_WC(x);
@@ -1200,12 +1200,16 @@ class HandleTypes extends HandleTypesEval {
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @type {Map<string,string[]>} */
 	cases_map=new Map;
-	/** @arg {string} cf @arg {string} str */
-	generate_case(cf,str) {
+	/** @arg {string} cf @arg {string} str @arg {string} [code] */
+	generate_case(cf,str,code) {
 		let known=this.cases_map.get(cf);
 		if(!known) {known=[]; this.cases_map.set(cf,known);}
 		if(!known.includes(str)) known.push(JSON.stringify(str));
-		console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e=>`case ${e}: break;`).join("\n")}`);
+		if(code) {
+			console.log(`-- [js_gen_code:case_gen_${cf}] --\n\n${known.map(e=>`case ${e}: ${code}`).join("\n")}`);
+			return;
+		}
+		console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e=>`case ${e}:`).join("\n")}`);
 	}
 	/** @private @arg {DE_SignalNavigation} x */
 	DE_SignalNavigation(x) {
@@ -1601,7 +1605,7 @@ class HandleTypes extends HandleTypesEval {
 			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
 			case "browse-video-menu-button":
 			case "create-clip-button-action-bar": break;
-			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
+			default: x===""; this.generate_case(cf,x); break;
 		}
 	}
 	/** @type {NonNullable<D_Button["icon"]>["iconType"][]} */
@@ -1631,7 +1635,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => {
 			/** @private @type {D_Button_TargetId} */
 			switch(x) {
-				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}:`); debugger; break;
+				default: this.generate_case("D_Button_TargetId",x); break;
 				case "clip-info-button":
 				case "sponsorships-button":
 				case "create-clip-button-action-bar":
