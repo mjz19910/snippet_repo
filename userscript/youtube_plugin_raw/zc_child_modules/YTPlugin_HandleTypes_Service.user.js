@@ -336,6 +336,7 @@ class HandleTypes extends HandleTypesEval {
 	TE_Endpoint_2(cf1,k,x) {
 		const cf2="TE_Endpoint_2";
 		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
 		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [endpoint,y];
 	}
@@ -349,12 +350,14 @@ class HandleTypes extends HandleTypesEval {
 	TE_Endpoint_3(cf1,k,x) {
 		const cf2="TE_Endpoint_3";
 		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_3}.endpoint`} */
 		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
 	/** @private @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
 		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
+		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
@@ -1757,10 +1760,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		const cf="C_GetSurvey";
-		const {clickTrackingParams,commandMetadata: a,getSurveyCommand: b,...y}=this.s(cf,x); this.g(y);
-		this.clickTrackingParams(cf,x);
-		this.D_GetSurvey(b);
-		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",a); this.g(y1);
+		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);
+		this.clickTrackingParams(cf,a);
+		this.D_GetSurvey(c);
+		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}

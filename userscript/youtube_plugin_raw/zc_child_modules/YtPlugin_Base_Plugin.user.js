@@ -3022,7 +3022,7 @@ class BaseService extends BaseServicePrivate {
 		if(!x) return;
 		this.z(x,f);
 	}
-	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
+	/** @protected @template {CF_L_Params} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
 	t_cf(cf,x,f) {
 		if(x===void 0) return;
 		f.call(this,cf,x);
@@ -3042,14 +3042,12 @@ class BaseService extends BaseServicePrivate {
 			f.call(this,cf,a,i);
 		}
 	}
-	/** @private @arg {U|null} _rv @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
-	t_ex(_rv,f,x) {if(!x) return; return f.call(this,x);}
+	/** @private @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	t_ex(f,x) {if(!x) return; return f.call(this,x);}
 	/** @protected @template U @template {{}} T @arg {(this:this,x:T)=>U} f */
 	tf(f) {
-		/** @returns {U|null} */
-		function mu() {return null;}
 		/** @param {T|undefined} x @returns {U|undefined} */
-		return x => this.t_ex(mu(),f,x);
+		return x => this.t_ex(f,x);
 	}
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
