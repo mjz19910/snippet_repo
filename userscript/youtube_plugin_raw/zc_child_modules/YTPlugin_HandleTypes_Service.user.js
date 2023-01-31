@@ -5839,11 +5839,10 @@ class HandleTypes extends HandleTypesEval {
 							if(wd[0]==="one") {
 								let [,di]=wd;
 								let dw=di.slice();
-								di.pop();
+								di.length=0;
 								dw[0]??=0;
 								dw[0]++;
-								di[0]=dw[0];
-								this.save_number(k,0);
+								this.save_number(k,dw[0]);
 								break x;
 							}
 							this.save_number(k,1);
