@@ -133,7 +133,6 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
-	//#region moved members
 	//#region templates
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x */
 	H_Get(cf,k,x) {return this.wn(cf,x,k);}
@@ -235,7 +234,6 @@ class HandleTypes extends HandleTypesEval {
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
-	//#endregion
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
