@@ -5838,8 +5838,11 @@ class HandleTypes extends HandleTypesEval {
 							let wd=s_url_data[1];
 							if(wd[0]==="one") {
 								let [,di]=wd;
-								di[0]??=0;
-								di[0]++;
+								let dw=di.slice();
+								di.pop();
+								dw[0]??=0;
+								dw[0]++;
+								di[0]=dw[0];
 								this.save_number(k,0);
 								break x;
 							}
