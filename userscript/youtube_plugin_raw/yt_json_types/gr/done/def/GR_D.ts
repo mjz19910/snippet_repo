@@ -29,3 +29,6 @@ type D_AddToPlaylistCreate={
 //#region Icons
 type D_Icon_Button=T_Icon<DE_IconType_Button>;
 //#endregion
+//#region 
+type D_Survey_Watch={watch: B_Hack;};
+//#endregion

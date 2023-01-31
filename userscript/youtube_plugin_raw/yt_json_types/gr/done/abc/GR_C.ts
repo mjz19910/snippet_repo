@@ -5,13 +5,7 @@ type C_ChangeKeyedMarkersVisibility=TE_Endpoint_2<"changeKeyedMarkersVisibilityC
 type C_Continuation=TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation,M_Next>;
 type C_Executor=TE_Endpoint_2<"commandExecutorCommand",DC_Executor>;
 type C_FollowUp=TE_Endpoint_2<"addFollowUpSurveyCommand",DC_AddFollowUpSurvey>;
-type C_GetSurvey=TE_Endpoint_3<"getSurveyCommand",D_GetSurvey,MG_Survey_CMD>;
-type D_Survey_Watch={hack: true;};
-type R_Survey_Watch={watch: D_Survey_Watch;};
-type D_GetSurvey={
-	endpoint: R_PaidDigitalGoods|R_Survey_Watch;
-	action: string;
-};
+type C_GetSurvey=TE_Endpoint_3<"getSurveyCommand",DC_GetSurvey,MG_Survey_CMD>;
 type C_LoadMarkers=TE_Endpoint_2<"loadMarkersCommand",DC_LoadMarkers>;
 type C_RefreshPlaylist=TE_Endpoint_2<"refreshPlaylistCommand",DC_RefreshPlaylist>;
 type C_RelatedChip=TE_Endpoint_2<"relatedChipCommand",DC_RelatedChip>;

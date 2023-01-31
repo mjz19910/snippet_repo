@@ -1,1 +1,1 @@
-type R_PaidDigitalGoods={paidDigitalGoods: B_Hack;};
+type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};

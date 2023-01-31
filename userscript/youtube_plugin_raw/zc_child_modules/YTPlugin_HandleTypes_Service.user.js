@@ -676,7 +676,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
-	/** @private @arg {R_PaidDigitalGoods} x */
+	/** @private @arg {D_PaidDigitalGoods} x */
 	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
@@ -2198,14 +2198,14 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}
-	/** @private @arg {D_GetSurvey} x */
+	/** @private @arg {DC_GetSurvey} x */
 	D_GetSurvey(x) {
 		const cf="D_GetSurvey";
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.save_string("GetSurvey.action",action);
 		this.D_GetSurvey_Endpoint(a);
 	}
-	/** @private @arg {D_GetSurvey['endpoint']} x */
+	/** @private @arg {DC_GetSurvey['endpoint']} x */
 	D_GetSurvey_Endpoint(x) {
 		const cf="D_GetSurvey_Endpoint";
 		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
