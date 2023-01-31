@@ -927,13 +927,32 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GE_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {this.T_WCM("M_VE_Browse",x,this.GM_VE_WC_Browse);}
 	/** @private @arg {M_Subscribe} x */
-	M_Subscribe(x) {x;}
+	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {M_VE37414} x */
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414_WC);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
+	/** @private @arg {M_FlagGetForm} x */
+	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
+	/** @protected @arg {M_AddToPlaylistService} x */
+	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
+	/** @private @arg {M_Feedback} x */
+	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
+	/** @private @arg {M_VE3832} x */
+	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832_Watch_WC);}
+	/** @private @arg {M_VE83769} x */
+	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
+	/** @private @arg {M_RecordInteractions} x */
+	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
+	/** @private @arg {M_VE4724} x */
+	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
+	/** @private @arg {GM_Subscribe} x */
+	GM_Subscribe(x) {const {sendPost: a,apiUrl: b,...y}=x; this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/subscription/subscribe");}
+	/** @private @arg {GM_FlagGetForm} x */
+	GM_FlagGetForm(x) {const {sendPost: a,apiUrl: b,...y}=x; this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/flag/get_form");}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
+		const cf="GM_Like"; this.k(cf,x);
 		switch(x.apiUrl) {
 			default: debugger; break;
 			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(x);
@@ -1467,7 +1486,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(videoCountShortText);
 		return y;
 	}
-	/** @private @template T @arg {T} v1 @arg {T} v2 */
+	/** @private @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
@@ -2796,12 +2815,6 @@ class HandleTypes extends HandleTypesEval {
 		x==="";
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {M_FlagGetForm} x */
-	M_FlagGetForm(x) {
-		const {webCommandMetadata: {sendPost: s,apiUrl: u,...y1},...y2}=x; this.z([y1,y2],this.g);;
-		if(s!==true) debugger;
-		if(u!=="/youtubei/v1/flag/get_form") debugger;
-	}
 	codegen_all_service_menu_icons() {
 		console.log(this.service_menu_icons.join());
 	}
@@ -2843,8 +2856,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
-	/** @protected @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {
 		const cf="GM_AddToPlaylistService";
@@ -2885,8 +2896,6 @@ class HandleTypes extends HandleTypesEval {
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {M_Feedback} x */
-	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {GM_Feedback} x */
 	GM_Feedback(x) {
 		const cf="GM_Feedback";
@@ -3006,8 +3015,6 @@ class HandleTypes extends HandleTypesEval {
 		if(nofollow!==void 0) this._primitive_of(nofollow,"boolean");
 		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
 	}
-	/** @private @arg {M_VE3832} x */
-	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832_Watch_WC);}
 	/** @private @arg {GM_VE3832_Watch_WC} x */
 	GM_VE3832_Watch_WC(x) {
 		const cf="GM_VE3832_Watch_WC";
@@ -3163,8 +3170,6 @@ class HandleTypes extends HandleTypesEval {
 		this.GM_E_Url_TargetUrlType(url);
 		if(target!=="TARGET_NEW_WINDOW") debugger;
 	}
-	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
 	/** @private @arg {GM_VE83769_WC} x */
 	GM_VE83769_WC(x) {
 		const cf="GM_VE83769_WC";
@@ -3326,7 +3331,7 @@ class HandleTypes extends HandleTypesEval {
 	D_InFeedAdLayout(x) {
 		const cf="D_InFeedAdLayout";
 		const {adLayoutMetadata: a,renderingContent: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.M_AdLayout(a);
+		this.MG_AdLayout(a);
 		if("displayAdRenderer" in b) {
 			this.R_DisplayAd(b);
 		} else {
@@ -3352,8 +3357,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {MG_AdLayout} x */
-	M_AdLayout(x) {
-		const cf="M_AdLayout";
+	MG_AdLayout(x) {
+		const cf="MG_AdLayout";
 		const {layoutId,...y}=this.s(cf,x);//#destructure_later
 		let ba_id=base64_dec.decodeByteArray(layoutId);
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
@@ -3783,8 +3788,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
-	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {GM_RecordInteractions} a */
 	GM_RecordInteractions(a) {
 		const cf="GM_RecordInteractions";
@@ -4346,8 +4349,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @private @arg {M_VE4724} x */
-	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
 	/** @private @arg {GM_VE4724_WC} x */
 	GM_VE4724_WC(x) {
 		const cf="GM_VE4724_WC";
@@ -4730,7 +4731,15 @@ class HandleTypes extends HandleTypesEval {
 		this.z(commands,x => this.TA_OpenPopup("TA_OpenPopup_Empty",x));
 	}
 	/** @private @arg {M_SendPost} x */
-	M_SendPost(x) {const cf="M_SendPost",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y); this.GM_SendPost(a);}
+	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
+	/** @private @arg {M_CreateBackstagePost} x */
+	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
+	/** @private @arg {M_AccountMenu} x */
+	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
+	/** @private @arg {M_GetUnseenNotificationCount} x */
+	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
+	/** @private @arg {M_GetNotificationMenu} x */
+	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {
 		const cf="GM_SendPost";
@@ -4754,8 +4763,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
-	/** @private @arg {M_CreateBackstagePost} x */
-	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {
 		const cf="GM_CreateBackstagePost";
@@ -5579,8 +5586,6 @@ class HandleTypes extends HandleTypesEval {
 		this.M_AccountMenu(res[0]);
 		this.S_GetAccountMenu(res[1]);
 	}
-	/** @private @arg {M_AccountMenu} x */
-	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {
 		const cf="GM_AccountMenu";
@@ -5609,8 +5614,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(handlerDatas.length,1);
 		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
 	}
-	/** @private @arg {M_GetUnseenNotificationCount} x */
-	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
 	GM_GetUnseenNotificationCount(x) {
 		const {sendPost,apiUrl,...y}=this.s("GM_GetUnseenNotificationCount",x); this.g(y);
@@ -5645,8 +5648,6 @@ class HandleTypes extends HandleTypesEval {
 		if(beReused!==true) debugger;
 		return a;
 	}
-	/** @private @arg {M_GetNotificationMenu} x */
-	M_GetNotificationMenu(x) {const cf="M_GetNotificationMenu",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y); this.GM_GetNotificationMenu(a);}
 	/** @private @arg {GM_GetNotificationMenu} x */
 	GM_GetNotificationMenu(x) {
 		const cf="GM_GetNotificationMenu";
@@ -5947,7 +5948,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.G_Text(numVideosText);
 		this.G_Text(descriptionTapText);
-		this.ceq(descriptionText,null);
+		this.g(descriptionText);
 		if(!onDescriptionTap.openPopupAction) debugger;
 		this.g(onDescriptionTap.openPopupAction);
 		this.D_CanShare(shareData);
@@ -6398,13 +6399,13 @@ class HandleTypes extends HandleTypesEval {
 		this.videoId(videoId);
 		this.a_primitive_str(playlistSetVideoId);
 		this.ceq(darkColorPalette.primaryTitleColor,4294961637);
-		this.ceq(darkColorPalette.secondaryTitleColor,4294961637);
-		this.ceq(darkColorPalette.section2Color,4294961637);
-		this.ceq(darkColorPalette.section4Color,4294961637);
-		this.ceq(lightColorPalette.primaryTitleColor,4294961637);
-		this.ceq(lightColorPalette.secondaryTitleColor,4294961637);
-		this.ceq(lightColorPalette.section2Color,4294961637);
-		this.ceq(lightColorPalette.section4Color,4294961637);
+		this.ceq(darkColorPalette.secondaryTitleColor,4291602851);
+		this.ceq(darkColorPalette.section2Color,4063436571);
+		this.ceq(darkColorPalette.section4Color,4061728525);
+		this.ceq(lightColorPalette.primaryTitleColor,4279833104);
+		this.ceq(lightColorPalette.secondaryTitleColor,4286207567);
+		this.ceq(lightColorPalette.section2Color,4076401393);
+		this.ceq(lightColorPalette.section4Color,4075544541);
 		this.G_Text(longBylineText);
 		this.G_Text(shortBylineText);
 		this.ceq(selected,true);

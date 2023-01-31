@@ -65,6 +65,8 @@ type CF_M_s=
 	|CF_L_Common_Params
 	|"G_Text"
 	|"R_TextRun"
+	|"MG_AdLayout"
+	|"GM_Like"
 	;
 ;
 type CF_L_Common_Params=
@@ -166,6 +168,8 @@ type CF_T_WCM=
 	|"M_AdLayout"
 	|"M_GetNotificationMenu"
 	|"M_SendPost"
+	|"M_Subscribe"
+	|"M_FlagGetForm"
 	;
 ;
 type CF_DC_Generic_CTP="D_CD_Reload"|"a";
