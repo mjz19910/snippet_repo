@@ -178,9 +178,10 @@ class HandleTypes extends HandleTypesEval {
 			if(typeof cu!=="object"||!cu) {debugger; return null;}
 			let k=this.get_keys_of(cu);
 			switch(k[0]) {
-				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+				default: console.log(`-- [TD_Section_3.${cf1}.Section_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
 				case "continuationItemRenderer":
 				case "compactVideoRenderer":
+				case "compactRadioRenderer":
 			}
 		}
 		return [contents,sectionIdentifier,targetId];
