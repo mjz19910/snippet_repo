@@ -145,6 +145,7 @@ const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[24455878],
+	[24281897,24448383,24458839],
 ].flat());
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
