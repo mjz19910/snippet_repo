@@ -53,6 +53,26 @@ type CF_M_s=
 	|T_ExtractImport<"CF_M_s">
 	;
 ;
+type CF_T_Signal=
+	|"DE_SignalNavigation"
+	|""
+	|"b"
+	;
+;
+type CF_M_w=
+	|`y:${CF_M_y}`
+	|`zy:${CF_M_zy}`
+	|`Unpack:T_WCM:${CF_T_WCM_Unpack}`
+	|`TA_Page:${CF_TA_Page}`
+	|`TR_MultiPageMenu:${CF_TR_MultiPageMenu}`
+	|`G_EY_Entity_Any:G_EY_Entity`
+	|`T_Items:${CF_T_Items}`
+	|`T_Commands:${CF_T_Commands}`
+	|`T_Items_TP:${CF_T_Items_TP}`
+	|"D_ImpressionCap"
+	|CF_T_Signal
+	;
+;
 type CF_GM_WC_2=CF_GM_WC_2_gen|"CF_GM_WC_2"|"a";
 type CF_L_TP_Params=
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
@@ -69,19 +89,6 @@ type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a"
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3"|"a";
 type CF_TD_ItemSection_3=T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a";
 type CF_T_WCM_Unpack=T_ExtractImport<"CF_T_WCM_Unpack">|"CF_T_WCM_Unpack"|"a";
-type CF_M_w=
-	|`y:${CF_M_y}`
-	|`zy:${CF_M_zy}`
-	|`Unpack:T_WCM:${CF_T_WCM_Unpack}`
-	|`TA_Page:${CF_TA_Page}`
-	|`TR_MultiPageMenu:${CF_TR_MultiPageMenu}`
-	|`G_EY_Entity_Any:G_EY_Entity`
-	|`T_Items:${CF_T_Items}`
-	|`T_Commands:${CF_T_Commands}`
-	|`T_Items_TP:${CF_T_Items_TP}`
-	|"D_ImpressionCap"
-	;
-;
 type CF_T_Commands=T_ExtractImport<"CF_T_Commands">|"CF_T_Commands"|"a";
 type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";
 type CF_T_Items_TP=T_ExtractImport<"CF_T_Items_TP">|"CF_T_Items_TP"|"a";

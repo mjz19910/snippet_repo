@@ -1199,7 +1199,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_SignalNavigation} x */
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {DE_SignalNavigation} x */
-	DE_SignalNavigation(x) {x; debugger;}
+	DE_SignalNavigation(x) {
+		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x);
+		switch(a) {
+			default: debugger; break;
+			case "CHANNEL_SWITCHER":
+			case "LIVE_CONTROL_ROOM":
+		}
+	}
+	/** @private @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
+	T_Signal(cf,x) {return this.w(cf,"signal",x)}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.DE_GetReportForm(b); this.M_FlagGetForm(a);}
 	/** @protected @arg {DE_GetReportForm} x */
