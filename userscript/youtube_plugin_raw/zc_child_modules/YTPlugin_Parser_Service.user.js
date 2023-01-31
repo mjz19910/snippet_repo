@@ -1135,7 +1135,7 @@ class ParserService extends BaseService {
 											// [like.removeLikeParams.f5.f1]
 											if(parts[2]=="f5"&&parts[3]=="f1") return;
 											// [like.removeLikeParams.f5.f2]
-											if(parts[2]=="f5"&&parts[3]=="f2") {debugger; return;}
+											if(parts[2]=="f5"&&parts[3]=="f2") return;
 											// [like.likeParams.f6.f1]
 											if(parts[2]=="f6"&&parts[3]=="f1") return;
 											// [like.likeParams.f6.f2]
