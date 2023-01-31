@@ -23,6 +23,7 @@ setup;
 	cat "$DEST_DIR/out_prelude.ts";
 	echo "export namespace Gen {\n\texport type CF_Generated=";
 	tsc -p userscript | gen_find_type_is_not | generate_ts | sort -u;
+	echo "\t\t;";
 	echo "}";
 } > /tmp/tmp.ts;
 mv /tmp/tmp.ts "$DEST_DIR/tmp.ts";

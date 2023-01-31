@@ -438,5 +438,6 @@ export namespace Gen {
 		|{n: Prelude.D_CF_L_Params; t: Types.D_CF_L_Params_; v: "E_Search";}
 		|{n: Prelude.D_CF_L_Params; t: Types.D_CF_L_Params_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.D_CF_L_Params; t: Types.D_CF_L_Params_; v: "E_WatchPlaylist";}
-		|{n: Prelude.D_CF_L_Params; t: Types.D_CF_L_Params_; v: "E_YpcGetOffers";};
+		|{n: Prelude.D_CF_L_Params; t: Types.D_CF_L_Params_; v: "E_YpcGetOffers";}
+		;
 }
