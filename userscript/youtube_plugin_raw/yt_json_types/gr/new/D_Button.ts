@@ -104,5 +104,17 @@ type D_Button=
 	|D_SuggestiveButton
 	|D_PlaylistAddButton_Save
 	|D_PlaylistAddButton_Clip
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		accessibility: {
+			label: "Save to";
+		};//:<"Cancel auto-play for this video"">;
+		trackingParams: string;
+		accessibilityData: D_Accessibility;//:<"Cancel auto-play for this video"">;
+		command: C_GetSurvey;
+	}
 	;
 ;

@@ -578,13 +578,13 @@ class CodegenService extends BaseService {
 			/** @type {{accessibilityData?:Partial<D_Label>}} */
 			let xu=b;
 			if(!xu?.accessibilityData?.label) break x;
-			return `TYPE::D_Accessibility;//:<${JSON.stringify(xu.accessibilityData.label)}">`;
+			return `TYPE::TD_Accessibility<${JSON.stringify(xu.accessibilityData.label)}>`;
 		}
 		x: if(b.label) {
 			/** @type {Partial<D_Label>} */
 			let xu=b;
 			if(!xu.label) break x;
-			return `TYPE::D_Label;//:<${JSON.stringify(xu.label)}">`;
+			return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
 		}
 		let g=() => this.json_auto_replace(b);
 		let hg=false
