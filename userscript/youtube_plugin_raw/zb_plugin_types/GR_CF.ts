@@ -1,4 +1,11 @@
-type CF_L_Params=CF_L_CTP_Params|CF_L_TP_Params;
+type CF_L_Params=
+	CF_L_CTP_Params|
+	CF_L_TP_Params
+	// TODO
+	|"D_TemplateUpdate"
+	|"DE_GetTranscript"
+	;
+;
 
 type CF_mod=import("./D_CF_mod.js").D_CF_mod;
 type CF_M_s_priv=
@@ -25,6 +32,7 @@ type CF_M_s=
 	|CF_T_SE_Signal
 	;
 ;
+type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">;
 type CF_D_Params=T_ExtractImport<"CF_D_Params">;
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">;
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">;
@@ -69,7 +77,11 @@ type CF_L_TP_Params=
 	|`T_SE_Signal:${CF_T_SE_Signal}`
 	;
 ;
-type CF_L_CTP_Params=T_ExtractImport<"CF_L_CTP_Params">;
+type CF_L_CTP_Params=
+	|T_ExtractImport<"CF_L_CTP_Params">
+	|DC_Generic_CTP_CF
+	;
+;
 type CF_D_Link=T_ExtractImport<"CF_D_Link">;
 type CF_D_Button=T_ExtractImport<"CF_D_Button">;
 type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">;

@@ -416,7 +416,7 @@ class ParserService extends BaseService {
 		console.log("[new_get_transcript_endpoint_params]",param_obj);
 		{debugger;}
 	}
-	/** @api @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @api @public @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
@@ -550,7 +550,7 @@ class ParserService extends BaseService {
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @type {P_LogItems} */
-	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
+	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {ParamMapValue[]|undefined} map_entry_value @arg {ParseCallbackFunction|null} callback */
 	parse_value(root,path,map,map_keys,map_entry_key,map_entry_value,callback) {
 		let saved_map_keys=map_keys.slice();
 		/** @private @arg {string} ns @arg {()=>void} f */
@@ -850,7 +850,7 @@ class ParserService extends BaseService {
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
-	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,tva) {
 		let off=1;
 		for(let val of tva) {
@@ -883,7 +883,7 @@ class ParserService extends BaseService {
 		this.save_number(`[${path}]`,x[1]);
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
-	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
+	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapValue[]} tva */
 	parse_param_next(root,path,tva) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,tva);
 		if(tva.length!==1) return;
@@ -1380,7 +1380,7 @@ class ParserService extends BaseService {
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 	}
-	/** @private @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
+	/** @private @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_any_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -1412,7 +1412,7 @@ class ParserService extends BaseService {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @api @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
+	/** @api @public @arg {CF_L_Params} root @arg {P_ParamParse_XX} path @arg {ParamMapType} map */
 	parse_endpoint_param(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;

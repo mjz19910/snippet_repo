@@ -2,14 +2,15 @@ export namespace Prelude {
 	export type AllNames=
 		|"CF_D_Button"
 		|"CF_D_ChipCloudChip_Omit"
+		|"CF_D_CustomEmoji"
 		|"CF_D_Link"
 		|"CF_D_Menu_Omit"
 		|"CF_D_Params"
 		|"CF_D_Playlist_Omit"
 		|"CF_D_Video_Handle"
 		|"CF_GE_ResponseReceived"
-		|"CF_L_TP_Params"
 		|"CF_L_CTP_Params"
+		|"CF_L_TP_Params"
 		|"CF_M_s"
 		|"CF_M_VE"
 		|"CF_M_y"
@@ -33,16 +34,13 @@ export namespace Prelude {
 	;
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_ChipCloudChip_Omit="CF_D_ChipCloudChip_Omit";
+	export type CF_D_CustomEmoji="CF_D_CustomEmoji";
 	export type CF_D_Link="CF_D_Link";
 	export type CF_D_Menu_Omit="CF_D_Menu_Omit";
 	export type CF_D_Params="CF_D_Params";
 	export type CF_D_Playlist_Omit="CF_D_Playlist_Omit";
 	export type CF_D_Video_Handle="CF_D_Video_Handle";
 	export type CF_GE_ResponseReceived="CF_GE_ResponseReceived";
-	/*
-	|"CF_L_TP_Params"
-	|"CF_L_CTP_Params"
-	*/
 	export type CF_L_TP_Params="CF_L_TP_Params";
 	export type CF_L_CTP_Params="CF_L_CTP_Params";
 	export type CF_M_s="CF_M_s";
@@ -68,6 +66,7 @@ export namespace Prelude {
 export namespace Types {
 	export type CF_D_Button_=CF_D_Button;
 	export type CF_D_ChipCloudChip_Omit_=CF_D_ChipCloudChip_Omit;
+	export type CF_D_CustomEmoji_=CF_D_CustomEmoji;
 	export type CF_D_Link_=CF_D_Link;
 	export type CF_D_Menu_Omit_=CF_D_Menu_Omit;
 	export type CF_D_Params_=CF_D_Params;
