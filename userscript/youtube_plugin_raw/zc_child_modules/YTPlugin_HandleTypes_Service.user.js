@@ -4783,7 +4783,7 @@ class HandleTypes extends HandleTypesEval {
 		this.M_CreateBackstagePost(a);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,(x,cf) => this.params(cf,"createBackstagePost.params",x));}
+	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
 	/** @private @arg {M_CreateBackstagePost} x */
 	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {GM_CreateBackstagePost} x */
