@@ -5692,7 +5692,7 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {[(G_Action_GetNotificationsMenu["openPopupAction"])[], never[]]} */
 		let [u]=this.z(actions,this.TA_OpenPopup);
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
-		/** @type {[P_NotificationMenu_Popup[], never[]]} */
+		/** @type {[D_NotificationMenuPopupMenuItem[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.D_NotificationMenuPopupMenuItem);
 	}
@@ -5770,7 +5770,7 @@ class HandleTypes extends HandleTypesEval {
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		let [u]=this.z(actions,this.TA_OpenPopup);
 		let [u1]=this.z(u,this.Popup_GetAccountMenu);
-		let [u2]=this.z(u1,this.TR_MultiPageMenu);
+		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
 		this.z(u2,this.MP_AccountMenu);
 	}
 	/** @private @arg {MP_AccountMenu} x */

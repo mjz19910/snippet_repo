@@ -12,19 +12,8 @@ type T_Items_CF=[
 	"R_CompactLink_Items",
 	"D_ProfileColumn",
 ][number];
-type TR_MultiPageMenu_CF=[
-	"D_NotificationMenu_PopupItemMenu",
-	"TR_MultiPageMenu_Empty",
-	"P_NotificationMenu_Popup",
-	"R_TopbarMenu",
-][number];
 type D_CF_y=[
-	"AD_HideEnclosing",
-	"B_HrefUrl",
-	"D_RelatedChipCloud",
-	"D_YpcGetCart",
-	"DE_CreateBackstagePost",
-	"T_Item",
+	D_CF_y_str,
 	`T_WCM:${T_WCM_CF}`,
 ][number];
 type D_CF_zy=[
