@@ -1708,7 +1708,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Button_Omit_Text(cf,x) {
 		let {text,tooltip,...y}=this.D_Button_Omit_FromStyle(cf,x);
 		return y;
-	} 
+	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Style} x */
 	D_Button_WithStyle(cf,x) {
 		if("serviceEndpoint" in x) {
@@ -2527,7 +2527,7 @@ class HandleTypes extends HandleTypesEval {
 		cf;
 		x;
 	}
-	/** @arg {D_STR_CF} cf @arg {string} x */
+	/** @arg {D_CaseGen_CF} cf @arg {string} x */
 	codegen_case(cf,x) {console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);}
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {
@@ -3302,7 +3302,7 @@ class HandleTypes extends HandleTypesEval {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
 		switch(icon.iconType) {
-			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break; 
+			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break;
 			case "NOT_INTERESTED":
 			case "ADD_TO_QUEUE_TAIL":
 		}
@@ -3580,24 +3580,45 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @arg {Extract<DU_DE_Url['url']|GU_VE83769_Url_Internal,`${string}//studio.youtube.com${string}`>} b */
+	/** @private @arg {GU_VE83769_Url_External} b */
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
+		b;
 		if(!this.str_is_uri(b)) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
 		if(x[0]!=="studio.youtube.com") {debugger; return;}
 		if(x.length===1) return;
+		switch(x.length) {
+			case 2: {
+				if(x[1]!=="") debugger;
+			} break;
+			case 3: {
+				if(!this.str_starts_with("UC",x[2])) {debugger; return;}
+			} break;
+			case 4: {
+				if(x[1]!=="channel") {debugger; return;}
+				if(x[2]==="UC") {
+					let [,,,v3]=x;
+					switch(v3) {
+						default: this.codegen_case(cf,v3); break;
+						case "livestreaming": break;
+					}
+					return;
+				}
+				let [,v1,v2,v3]=x;
+				if(!this.str_starts_with("UC",v2)) {debugger; return;}
+				v1; v3;
+				switch(v3) {
+					default: this.codegen_case(cf,v3); break;
+					case "videos": break;
+				}
+
+			} break;
+		}
 		switch(x[1]) {
 			default: debugger; break;
 			case "": return;
 			case "channel": {
-				let v=x[2];
-				if(!this.str_starts_with("UC",v)) {debugger; return;}
-				let v1=x[3];
-				switch(v1) {
-					default: this.codegen_case(cf,v1); break;
-					case "videos": if(x.length!==4) debugger; break;
-				}
 			} break;
 		}
 	}

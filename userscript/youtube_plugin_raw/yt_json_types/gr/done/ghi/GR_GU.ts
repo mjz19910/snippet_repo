@@ -7,9 +7,11 @@ type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE37414_Url="/shorts/";
 type GU_VE83769_Url=GU_VE83769_Url_Internal|GU_VE83769_Url_External;
 type GU_VE83769_Url_Internal="/upload";
+type D_StrOnlyLen<T extends number,U extends string>=T_Split<U,"">['length'] extends T? U:never;
 type GU_VE83769_Url_External=
-	|`https://studio.youtube.com/channel/UC${string}`
-	|`https://studio.youtube.com/channel/UC${string}/videos`
+	|"https://studio.youtube.com/channel/UC/livestreaming"
+	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}`
+	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}/videos`
 	|"https://studio.youtube.com/"
 	|"https://studio.youtube.com"
 	|"https://music.youtube.com/"
