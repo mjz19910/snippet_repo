@@ -877,6 +877,8 @@ class CodegenService extends BaseService {
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
 		if(b.button_id) return `TYPE::ButtonId<"${b.button_id}">`;
+		/** @private @type {D_Label} */
+		if(b.label) return "TYPE::D_Label";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		{debugger;}
 		return null;

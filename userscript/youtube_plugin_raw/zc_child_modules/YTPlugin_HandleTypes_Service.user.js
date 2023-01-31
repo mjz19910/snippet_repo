@@ -1698,9 +1698,9 @@ class HandleTypes extends HandleTypesEval {
 		let {command,accessibility,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.command.accessibility`,x); this.g(y);
 		this.t(command,this.GC_Button);
 	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Style} x1 */
-	D_Button_WithStyle(cf,x1) {
-		let {serviceEndpoint,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.serviceEndpoint`,x1); this.g(y);
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Style} x */
+	D_Button_WithStyle(cf,x) {
+		let {serviceEndpoint,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.serviceEndpoint`,x); this.g(y);
 		this.t(serviceEndpoint,this.D_Button_SE);
 		// this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
 		// this.t(accessibility,this.D_Label);
@@ -6063,7 +6063,7 @@ class HandleTypes extends HandleTypesEval {
 	D_SubscriptionNotificationToggleButton(x) {
 		const cf="D_SubscriptionNotificationToggleButton";
 		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);
-		console.groupCollapsed();
+		console.group(`--- [${cf}] ---`);
 		this.z(states,(x,i) => {
 			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
 			if(nextStateId!==stateId) {
