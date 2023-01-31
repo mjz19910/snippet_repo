@@ -1,7 +1,7 @@
 type UMA_Item=[
-	A_UpdateViewership,
+	AU_Viewership,
 	U_ToggleButtonText,
 	AU_DateText,
-	A_UpdateTitle,
+	AU_Title,
 	AU_Description
 ][number];

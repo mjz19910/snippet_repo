@@ -1858,7 +1858,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_keys(`[UA_DescriptionData]`,x1);
 		this.G_Text(x1.description);
 	}
-	/** @private @arg {A_UpdateTitle} x */
+	/** @private @arg {AU_Title} x */
 	U_Title(x) {
 		const cf="UA_Title"; this.k(cf,x);
 		let x1=x.updateTitleAction;
@@ -1881,7 +1881,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(x1.defaultText);
 		this.G_Text(x1.toggledText);
 	}
-	/** @private @arg {A_UpdateViewership} x */
+	/** @private @arg {AU_Viewership} x */
 	U_Viewership(x) {
 		const cf="UA_Viewership"; this.k(cf,x);
 		let x1=x.updateViewershipAction;
@@ -3450,7 +3450,7 @@ class HandleTypes extends HandleTypesEval {
 		}));
 		if(unseenCount!==void 0) this._primitive_of(unseenCount,"number");
 	}
-	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
+	/** @private @arg {AU_NotificationsUnseenCount} x */
 	AU_NotificationsUnseenCount(x) {
 		const cf="UA_NotificationsUnseenCount";
 		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -3485,7 +3485,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_AccountsList";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(selectText);
-		this.z(actions,this.A_UpdateChannelSwitcherPage);
+		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
 	/** @private @arg {RSW_ReelItem} x */
 	RSW_ReelItem(x) {
@@ -4509,7 +4509,7 @@ class HandleTypes extends HandleTypesEval {
 		const {isProcessed,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this._primitive_of(isProcessed,"boolean");
 	}
-	/** @private @arg {A_UpdateEngagementPanel} x */
+	/** @private @arg {AU_EngagementPanel} x */
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -5242,7 +5242,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
-		if("updateSubscribeButtonAction" in x) return this.A_UpdateSubscribeButton(x);
+		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
@@ -5593,7 +5593,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_("A_UpdateChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	AU_ChannelSwitcherPage(x) {this.H_("AU_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
@@ -5798,8 +5798,8 @@ class HandleTypes extends HandleTypesEval {
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
-	/** @private @arg {A_UpdateSubscribeButton} x */
-	A_UpdateSubscribeButton(x) {this.H_("A_UpdateSubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
+	/** @private @arg {AU_SubscribeButton} x */
+	AU_SubscribeButton(x) {this.H_("AU_SubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
 	/** @private @arg {R_VideoDescriptionMusicSection} x */
