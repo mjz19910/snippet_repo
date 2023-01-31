@@ -25,6 +25,7 @@ type P_PathRootStr=
 	|"service$create_playlist"
 	|"slot_ad_serving_data_entry"
 	|"subscribe.params"
+	|"subscribed.entityKey"
 	|"TimedContinuation"
 	|"tracking.parentTrackingParams"
 	|"tracking.trackingParams"

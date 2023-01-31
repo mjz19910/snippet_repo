@@ -2557,7 +2557,7 @@ class HandleTypes extends HandleTypesEval {
 		if("entityKey" in x) {
 			const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
 			this.G_Text(buttonText);
-			console.log("[subscribed.entityKey]",entityKey);
+			this.params(cf,"subscribed.entityKey",entityKey);
 			return;
 		}
 		if("buttonText" in x) {
