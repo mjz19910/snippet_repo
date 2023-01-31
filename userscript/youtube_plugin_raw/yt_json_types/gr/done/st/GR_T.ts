@@ -42,11 +42,11 @@ type T_SE_Signal<T_Meta extends {webCommandMetadata: any;},T_Data>=TE_Endpoint_3
 type T_Setting_AutoNavForDesktop<T_Opt extends boolean>=TE_SetSetting<"407",T_Opt,"AUTONAV_FOR_DESKTOP">;
 //#endregion
 type GenNs_AllNames=import("../../../../zd_gen_CF/gen_export_cur.js").Prelude.AllNames;
-type T_ExtractImport_<T extends (GenNs_AllNames|import("../../../../zd_gen_CF/gen_export_cur.js").Gen.CF_Generated['n'])>=
-	Extract<import("../../../../zd_gen_CF/gen_export_cur.js").Gen.CF_Generated,{n: T;}>["v"]
+type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=
+	Extract<CF_Generated_NS.CF_Generated,{n: T;}>["v"]
 	;
 ;
-type T_ExtractImport<T extends (GenNs_AllNames|import("../../../../zd_gen_CF/gen_export_cur.js").Gen.CF_Generated['n'])>=T_ExtractImport_<T>;
+type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=T_ExtractImport_<T>;
 //#region TA_
 type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
 type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
