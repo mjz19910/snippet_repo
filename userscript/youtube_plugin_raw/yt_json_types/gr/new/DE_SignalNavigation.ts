@@ -1,1 +1,0 @@
-type DE_SignalNavigation=S_ChannelSwitcher|S_LiveControlRoom;

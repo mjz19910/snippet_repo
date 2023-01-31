@@ -4552,7 +4552,7 @@ class HandleTypes extends HandleTypesEval {
 	D_EntityBatchUpdate(x) {
 		const cf="D_EntityBatchUpdate";
 		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(mutations,this.D_EntityMutationItem);
+		this.z(mutations,this.DE_MutationItem);
 		this.D_TimestampWithNanos(timestamp);
 	}
 	/** @private @arg {D_TimestampWithNanos} x */
@@ -4563,34 +4563,40 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(nanos,"number");
 	}
 	/** @private @arg {DE_MutationItem} x */
-	D_EntityMutationItem(x) {
-		const cf="D_EntityMutationItem";
+	DE_MutationItem(x) {
+		const cf="DE_MutationItem";
 		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.params(cf,"entity_key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
-		this.tf(this.D_EntityMutationOptions)(options);
+		this.tf(this.DE_PersistenceOption)(options);
 		let pr=this.tf(this.G_EY_Entity)(payload);
 		if(!pr) return;
 		const [pi,px]=pr;
 		switch(pi) {
 			case "offlineabilityEntity": {
+				const cf="D_EY_Offlineability";
 				const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,px); this.g(y);//#destructure_off
-				console.log("D_EY_Offlineability.key",key);
-				console.log("D_EY_Offlineability.command",command);
+				console.log(`${cf}.key`,key);
+				console.log(`${cf}.command`,command);
 				switch(addToOfflineButtonState) {
 					default: debugger; break;
 					case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
 					case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED":
 				}
+				if(contentCheckOk!==false) debugger;
+				if(racyCheckOk!==false) debugger;
+				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "subscriptionStateEntity": {
+				const cf="DS_EY_Subscription";
 				const {key,subscribed,...y}=this.s(cf,px); this.g(y);//#destructure_off
-				console.log("DS_EY_Subscription.key",key);
+				console.log(`${cf}.key`,key);
 				if(subscribed!==true) debugger;
 			} break;
 			case "playlistLoopStateEntity": {
+				const cf="DS_EY_PlaylistLoop";
 				const {key,state,...y}=this.s(cf,px); this.g(y);//#destructure_off
-				console.log("DS_EY_PlaylistLoop.key",key);
+				console.log(`${cf}.key`,key);
 				switch(state) {
 					default: debugger; break;
 					case "PLAYLIST_LOOP_STATE_NONE":
@@ -4607,6 +4613,7 @@ class HandleTypes extends HandleTypesEval {
 				const cf="DS_EY_TranscriptSearchBox";
 				const {key,isHidden,...y}=this.s(cf,px); this.g(y);//#destructure_off
 				console.log(`${cf}.key`,key);
+				if(isHidden!==false) debugger;
 			} break;
 			case "macroMarkersListEntity": {
 				const cf="EY_MacroMarkersList";
@@ -4625,21 +4632,21 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
-	EN$(cf,x) {return this.w(`G_EY_Entity:${cf}`,this.get_keys_of(x)[0],x);}
+	/** @private @arg {"G_EY_Entity_Any"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
+	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
 	/** 
 	 * @private @arg {G_EY_Entity} x
 	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
 	 */
 	G_EY_Entity(x) {
 		const cf="G_EY_Entity";
-		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.EN$(cf,x)];}
-		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.EN$(cf,x)];}
-		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.EN$(cf,x)];}
-		{const cn="offlineabilityEntity"; if(cn in x) return [cn,this.EN$(cf,x)];}
-		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,this.EN$(cf,x)];}
-		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,this.EN$(cf,x)];}
-		{const cn="superThanksSelectedTierEntity"; if(cn in x) return ["unknown",cn,this.EN$(cf,x)];}
+		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="offlineabilityEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="superThanksSelectedTierEntity"; if(cn in x) return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];}
 		/** @returns {[]|[string]} */
 		const get_kl=() => {return this.get_keys_of(x);};
 		let kl=get_kl();
@@ -4648,12 +4655,12 @@ class HandleTypes extends HandleTypesEval {
 		if(cr.length!==0) debugger;
 		if(!cn) return null;
 		this.do_codegen(cf,x);
-		this.do_codegen(`${cf}$entity`,this.EN$(cf,x));
-		return ["unknown",cn,this.EN$(cf,x)];
+		this.do_codegen(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
+		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
 	/** @private @arg {DE_PersistenceOption} x */
-	D_EntityMutationOptions(x) {
-		const cf="D_EntityMutationOptions";
+	DE_PersistenceOption(x) {
+		const cf="DE_PersistenceOption";
 		const {persistenceOption,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}

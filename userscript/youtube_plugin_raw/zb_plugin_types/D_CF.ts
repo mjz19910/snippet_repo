@@ -6,7 +6,7 @@ type D_CF_w=[
 	`D_CF:TA_Page:${D_CF_TA_Page}`,
 	`D_CF:Fix:${D_CF_Fix}`,
 	`D_CF:TR_MultiPageMenu:${D_CF_TR_MultiPageMenu}`,
-	`G_EY_Entity:G_EY_Entity`,
+	`G_EY_Entity_Any:G_EY_Entity`,
 ][number];
 type D_CF_TR_MultiPageMenu=[
 	"D_NotificationMenu_PopupItemMenu",

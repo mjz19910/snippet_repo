@@ -7,3 +7,4 @@ type DE_SignalStr=
 	|"TOGGLE_TRANSCRIPT_TIMESTAMPS"
 	;
 ;
+type DE_SignalNavigation=S_ChannelSwitcher|S_LiveControlRoom;

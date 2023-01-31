@@ -15,3 +15,9 @@ namespace DE_Like_NS {
 	type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
 }
 //#endregion
+//#region Entity data
+type DE_SuperThanksSelectedTier={
+	key: string;
+	index: number;
+};
+type DE_PersistenceOption={persistenceOption: "ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST";};
