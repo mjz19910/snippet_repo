@@ -5851,21 +5851,22 @@ class HandleTypes extends HandleTypesEval {
 						let w=list;
 						// cspell:ignore RDCMUC
 						if(this.str_starts_with_rx("RDCMUC",w)) {
-							let rr=split_string_once(w,"RDCMUC");
-							let q=rr[1]; q;
+							let [,q]=split_string_once(w,"RDCMUC");
+							this.save_next_char("share_url.list.RD.CM.UC",q[0]);
 							break x;
 						}
 						if(this.str_starts_with_rx("RD",w)) {
-							let rr=split_string_once(w,"RD");
-							let [,q]=rr;
-							this.save_next_char("share_url.v",q[0]);
+							let [,q]=split_string_once(w,"RD");
+							this.save_next_char("share_url.list>RD",q[0]);
 							this.playlistId(w);
 							break x;
 						}
 						if(this.str_starts_with_rx(w,"PL")) {
+							let [,q]=split_string_once(w,"PL");
+							this.save_next_char("share_url.list.PL",q[0]);
 							this.playlistId(w);
 						} else {
-							debugger;
+							this.save_next_char("share_url.list.other",w[0]);
 						}
 					}
 					return;
