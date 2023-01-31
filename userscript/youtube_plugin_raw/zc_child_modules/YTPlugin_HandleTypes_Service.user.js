@@ -12,6 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+//#region module setup
 const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {
 	throw new Error("Failed to load base plugin");
@@ -32,16 +33,20 @@ function export_(fn,flags={global: false}) {
 export_(exports => {
 	exports.__is_module_flag__=true;
 });
-
-
-//#region HandleTypes
-/** @arg {TemplateStringsArray} x */
-function raw_template(x) {
-	if(x.raw.length>1) {
-		debugger;
-	}
-	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
+//#endregion
+//#region module init
+function init_module() {
+	//#region exports
+	export_((exports) => {
+		exports.HandleTypes=HandleTypes;
+	});
+	//#endregion
+	//#region Start main
+	console=typeof window==="undefined"? console:(() => window.console)();
+	//#endregion
 }
+//#endregion
+//#region module imports
 const ServiceMethods=bs.ServiceMethods;
 const ServiceResolver=bs.ServiceResolver;
 const CodegenService=required(store["mod$CodegenService"]?.CodegenService);
@@ -52,6 +57,15 @@ class FakeUseHandleEval {
 	}
 }
 FakeUseHandleEval;
+//#endregion
+//#region HandleTypesEval
+/** @arg {TemplateStringsArray} x */
+function raw_template(x) {
+	if(x.raw.length>1) {
+		debugger;
+	}
+	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
+}
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
@@ -114,7 +128,8 @@ window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
 `;
 eval(handle_types_eval_code);
-
+//#endregion
+//#region HandleTypes
 /** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
 class UrlParseHelper {
 	/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
@@ -842,8 +857,10 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_UndoFeedback";
 		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);
 		this.params(cf,"UndoFeedback.undoToken",undoToken);
-
+		this.z(actions,this.A_UndoFeedback);
 	}
+	/** @private @arg {A_UndoFeedback} x */
+	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
 	/** @private @arg {DE_GetNotificationMenu} x */
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu";
@@ -6984,6 +7001,8 @@ class HandleTypes extends HandleTypesEval {
 	D_PrimaryLinkItem(x) {x; debugger;}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {x; debugger;}
+	/** @private @arg {AD_UndoFeedback} x */
+	AD_UndoFeedback(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
@@ -6991,12 +7010,6 @@ class HandleTypes extends HandleTypesEval {
 	//#endregion
 }
 //#endregion
-//#region exports
-export_((exports) => {
-	exports.HandleTypes=HandleTypes;
-});
-//#endregion
-//#region Start main
-console=typeof window==="undefined"? console:(() => window.console)();
+init_module();
 //#endregion
 //#endregion
