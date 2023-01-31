@@ -632,7 +632,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_HotkeyDialog} x */
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
 	/** @private @arg {RC_SectionList} x */
-	C_SectionList(x) {this.H_("C_SectionList","sectionListContinuation",x,this.G_SectionList);}
+	C_SectionList(x) {this.H_("C_SectionList","sectionListContinuation",x,this.G_DC_SectionList);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {R_EntityBatchUpdate} x */
@@ -927,7 +927,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {R_SectionList} x */
-	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.G_SectionList);}
+	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.G_DC_SectionList);}
 	/** @private @arg {R_EndScreenPlaylist} x */
 	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist","endScreenPlaylistRenderer",x,this.D_EndScreenPlaylist);}
 	/** @private @arg {R_EndScreenVideo} x */
@@ -4278,9 +4278,9 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_HideEnclosing(a);
 	}
-	/** @private @arg {DC_SectionList} x */
-	G_SectionList(x) {
-		const cf="G_SectionList";
+	/** @private @arg {G_DC_SectionList} x */
+	G_DC_SectionList(x) {
+		const cf="G_DC_SectionList";
 		if("targetId" in x) {
 			if(this.str_starts_with(x.targetId,"browse-feed")) {
 				let ss=split_string(x.targetId,"browse-feed");

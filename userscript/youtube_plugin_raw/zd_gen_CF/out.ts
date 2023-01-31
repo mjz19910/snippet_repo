@@ -155,7 +155,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_WatchNextEndScreen";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_WatchResult_ResultsItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GM_WC_Base";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_SectionList";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_DC_SectionList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RD_MenuServiceItem";}
@@ -498,7 +498,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_like_removelike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Action_GetNotificationsMenu_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_CommentsSection";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_SectionList";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_DC_SectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Text";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}

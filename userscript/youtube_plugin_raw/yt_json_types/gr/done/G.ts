@@ -256,3 +256,11 @@ type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_Sh
 
 type G_Action_GetNotificationsMenu_Popup=T_DropdownPopup_ReuseFlag<P_NotificationMenu_Popup>;
 type G_Action_GetNotificationsMenu=TA_OpenPopup<G_Action_GetNotificationsMenu_Popup>;
+
+type G_DC_SectionList=
+	|DC_SectionListBase
+	|DC_SectionList_SearchFeed
+	|DC_SectionList_BrowseFeed_ChannelFeatured
+	|DC_SectionList_BrowseFeed_Subscriptions
+	;
+;
