@@ -26,3 +26,6 @@ type D_AddToPlaylistCreate={
 	createAction: R_Button;
 	serviceEndpoint: SE_CreatePlaylist;
 };
+//#region Icons
+type D_Icon_Button=T_Icon<DE_IconType_Button>;
+//#endregion

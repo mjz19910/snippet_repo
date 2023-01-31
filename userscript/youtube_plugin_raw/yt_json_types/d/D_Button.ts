@@ -1,7 +1,7 @@
 type D_Button={
 	accessibilityData?: D_Accessibility;
 	command?: GC_Button;
-	icon?: D$ButtonIcon;
+	icon?: D_Icon_Button;
 	isDisabled?: boolean;
 	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
@@ -15,7 +15,7 @@ type D_Button={
 	accessibility: D_Label;
 	accessibilityData?: D_Accessibility;
 	command?: GC_Button;
-	icon?: D$ButtonIcon;
+	icon?: D_Icon_Button;
 	isDisabled?: boolean;
 	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
@@ -28,7 +28,7 @@ type D_Button={
 }|{
 	accessibilityData?: D_Accessibility;
 	command?: GC_Button;
-	icon?: D$ButtonIcon;
+	icon?: D_Icon_Button;
 	isDisabled?: boolean;
 	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;
@@ -43,7 +43,7 @@ type D_Button={
 	accessibility: D_Label;
 	accessibilityData?: D_Accessibility;
 	command?: GC_Button;
-	icon?: D$ButtonIcon;
+	icon?: D_Icon_Button;
 	isDisabled?: boolean;
 	serviceEndpoint?: D_Button_SE;
 	navigationEndpoint?: GE_Button_navigation;

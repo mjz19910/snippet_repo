@@ -8,6 +8,10 @@ type DE_OpportunityType=T_EnumStr<"OPPORTUNITY_TYPE",T_EnumStr<"ORGANIC",T_EnumS
 	"BROWSE",
 	"WATCH_NEXT",
 ][number],"RESPONSE_RECEIVED">>>;
+type DE_IconType_Button=[
+	"SETTINGS"|"DELETE",
+	"NOTIFICATIONS_ACTIVE"|"NOTIFICATIONS_NONE"|"NOTIFICATIONS_OFF"
+][number];
 namespace DE_Like_NS {
 	export type DE_Like=DE_LikeIndifferent|DE_LikeLike|DE_LikeDislike;
 	type DE_LikeIndifferent={status: "INDIFFERENT"; target: D_LikeApi; removeLikeParams?: string;};

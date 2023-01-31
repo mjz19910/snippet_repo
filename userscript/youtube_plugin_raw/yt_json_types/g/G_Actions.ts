@@ -7,6 +7,6 @@ type G_Actions=
 	|AU_SubscribeButton
 	|C_RefreshPlaylist
 	|C_RunAttestation
-	|TA_OpenPopup<{}>
+	|TA_OpenPopup_Empty
 	;
 ;

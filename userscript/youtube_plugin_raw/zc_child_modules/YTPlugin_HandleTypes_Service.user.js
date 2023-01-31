@@ -735,7 +735,7 @@ class HandleTypes extends HandleTypesEval {
 		if(status!=="STATUS_SUCCEEDED") debugger;
 		let [r]=this.z(actions,x => {
 			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
-			if("openPopupAction" in x) return this.TA_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			debugger;
 		});
 		this.z(r,a => a);
@@ -1101,7 +1101,7 @@ class HandleTypes extends HandleTypesEval {
 		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
-		this.t(icon,x => this.T_Icon_AnyOf(x,this.expected_button_iconTypes));
+		this.t(icon,x => this.T_Icon_AnyOf("D_ButtonIcon",x,this.expected_button_iconTypes));
 		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
@@ -5690,7 +5690,7 @@ class HandleTypes extends HandleTypesEval {
 		const {signal,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(signal!=="GET_NOTIFICATIONS_MENU") debugger;
 		/** @type {[(G_Action_GetNotificationsMenu["openPopupAction"])[], never[]]} */
-		let [u]=this.z(actions,this.TA_OpenPopup);
+		let [u]=this.z(actions,x => this.TA_OpenPopup("G_Action_GetNotificationsMenu",x));
 		let [u1]=this.z(u,this.G_Action_GetNotificationsMenu_Popup);
 		/** @type {[D_NotificationMenuPopupMenuItem[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));

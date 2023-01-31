@@ -1,7 +1,7 @@
 type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_Continuation
-	|TA_OpenPopup<{}>
+	|TA_OpenPopup_Empty
 	|T_SE_Signal<M_SendPost,G_ClientSignal>
 	|E_CreateBackstagePost
 	|E_Url

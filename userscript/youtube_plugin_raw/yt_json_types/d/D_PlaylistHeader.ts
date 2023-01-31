@@ -19,7 +19,7 @@ type D_PlaylistHeader={
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;
 	shufflePlayButton: R_Button;
-	onDescriptionTap: TA_OpenPopup<{}>;
+	onDescriptionTap: TA_OpenPopup_Empty;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: G_Text;

@@ -89,7 +89,7 @@ type AC_Executor=[
 	C_ScrollToEngagementPanel,
 	C_Loop,
 	C_UpdateToggleButtonState,
-	TA_OpenPopup<{}>,
+	TA_OpenPopup_Empty,
 ][number];
 type DC_UpdateToggleButtonState={
 	toggled: false;

@@ -1,1 +1,1 @@
-type RSL_Dislike=RRC_ResponseContext&T_Actions<TA_OpenPopup<{}>>;
+type RSL_Dislike=RRC_ResponseContext&T_Actions<TA_OpenPopup_Empty>;
