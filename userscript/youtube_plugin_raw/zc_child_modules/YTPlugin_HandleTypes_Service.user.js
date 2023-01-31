@@ -284,8 +284,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
-	/** @arg {"C_GetSurvey"} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
-	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s_priv(`T_Endpoint_Tracking:${cf}`,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
@@ -6716,7 +6714,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_MusicShelfDivider";
 		const {...y}=this.s(cf,x); this.g(y);//#destructure_off
 	}
-	/** @private @arg {DC_Generic_CTP_CF} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
+	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(cf,path,x) {
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
 		this.params(cf,path,continuation);

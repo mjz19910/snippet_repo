@@ -68,9 +68,6 @@ type CF_T_SE_Signal=
 ;
 type CF_L_TP_Params=
 	T_ExtractImport<"CF_L_TP_Params">
-	|`${CF_TE_Endpoint_2}.endpoint`
-	|`${CF_TE_Endpoint_3}.endpoint`
-	|`${CF_TE_Endpoint_Opt_3}.endpoint`
 	|CF_D_Link
 	|CF_D_Button
 	|CF_D_Menu_Omit
@@ -79,7 +76,11 @@ type CF_L_TP_Params=
 ;
 type CF_L_CTP_Params=
 	|T_ExtractImport<"CF_L_CTP_Params">
-	|DC_Generic_CTP_CF
+	|`${CF_TE_Endpoint_2}.endpoint`
+	|`${CF_TE_Endpoint_3}.endpoint`
+	|`${CF_TE_Endpoint_Opt_3}.endpoint`
+	|CF_DC_Generic_CTP
+	|CF_TA_OpenPopup
 	;
 ;
 type CF_D_Link=T_ExtractImport<"CF_D_Link">;
@@ -96,3 +97,6 @@ type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">;
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">;
 type CF_M_VE=T_ExtractImport<"CF_M_VE">;
 type CF_T_WCM=T_ExtractImport<"CF_T_WCM">;
+type CF_DC_Generic_CTP=[
+	"D_CD_Reload",
+][number];
