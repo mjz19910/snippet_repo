@@ -4,13 +4,14 @@ export namespace Gen {
 	export type CF_Generated=
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithCommand:command.omit";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:!text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:accessibility";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:accessibilityData";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:serviceEndpoint:text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:text";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithCommand:targetId.case";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithStyle:!text";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithStyle:accessibility";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithStyle:accessibilityData";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}

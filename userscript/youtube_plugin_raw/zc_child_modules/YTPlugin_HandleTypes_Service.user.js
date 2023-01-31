@@ -1799,11 +1799,10 @@ class HandleTypes extends HandleTypesEval {
 					case "Next": case "Previous": case "Save to":
 					case "Cancel auto-play for this video":
 					case "Current setting is personalised notifications. Tap to change your notification setting for ScarletFlameFlandre":
-					case "Current setting is to receive no notifications. Tap to change your notification setting for ScarletFlameFlandre":
 				}
 			}
 			const {icon,...y}=x;
-			// if(icon.iconType!="NOTIFICATIONS_ACTIVE") debugger;
+			switch(icon.iconType) {default: debugger; break; case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "NOTIFICATIONS_ACTIVE": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": case "CLOSE": break;}
 			if("accessibility" in y&&"accessibilityData" in y) {
 				const {accessibility,accessibilityData,...y1}=y; this.g(y1);
 				//cspell:ignoreRegExp /setting for .+?"/
@@ -1869,39 +1868,39 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(x);
 	}
-	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "style"|"size"|"trackingParams"|"text"|"isDisabled">:never} */
-	D_Button_Omit_Text(cf,x) {
-		let {text,isDisabled,...y}=this.D_Button_Omit_FromStyle(cf,x);
-		this.G_Text(text);
+	/** @private @template {Extract<D_Button,{isDisabled:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "style"|"size"|"trackingParams"|"isDisabled">:never} */
+	D_Button_Omit_IsDisabled(cf,x) {
+		let {isDisabled,...y}=this.D_Button_Omit_FromStyle(cf,x);
 		if(isDisabled!==false) debugger;
 		/** @type {any} */
 		let z=y;
 		return z;
 	}
+	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "style"|"size"|"trackingParams"|"text"|"isDisabled">:never} */
+	D_Button_Omit_Text(cf,x) {
+		let {text,...y}=this.D_Button_Omit_IsDisabled(cf,x);
+		this.G_Text(text);
+		/** @type {any} */
+		let z=y;
+		return z;
+	}
+	/** @arg {string} cf @arg {string} k @arg {string} x */
+	add_string_to_map(cf,k,x) {
+		let group_arr=this.strings_map.get(cf);
+		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
+		let group_entry=group_arr.find(e => e[0]===k);
+		x: {
+			if(!group_entry) break x;
+			if(group_entry[1].includes(x)) return;
+			group_entry[1].push(x);
+		}
+		group_arr.push([k,[x]]);
+	}
 	/** @private @arg {"D_Button"} cf1 @arg {D_Button_EX_1_Style} x */
 	D_Button_WithStyle(cf1,x) {
 		/** @type {`${cf1}:WithStyle`} */
 		const cf2=`${cf1}:WithStyle`;
-		if("accessibility" in x) {
-			/** @type {`${cf2}:accessibility`} */
-			const cf3=`${cf2}:accessibility`;
-			let {icon,isDisabled,accessibility,...y}=this.D_Button_Omit_FromStyle(cf3,x); this.g(y);
-			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
-			if(isDisabled!==false) debugger;
-			return;
-		}
-		if(!("text" in x)) {
-			/** @type {`${cf2}:!text`} */
-			const cf3=`${cf2}:!text`;
-			let {icon,isDisabled,serviceEndpoint,tooltip,accessibilityData,...y}=this.D_Button_Omit_FromStyle(cf3,x); this.g(y);
-			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "MICROPHONE_ON": }
-			if(isDisabled!==false) debugger;
-			this.t(serviceEndpoint,this.D_Button_SE);
-			if(tooltip!=="Search with your voice") debugger;
-			if(accessibilityData.accessibilityData.label!=="Search with your voice") debugger;
-			return;
-		}
-		if("serviceEndpoint" in x) {
+		if("serviceEndpoint" in x&&"text" in x) {
 			/** @type {`${cf2}:serviceEndpoint:text`} */
 			const cf3=`${cf2}:serviceEndpoint:text`;
 			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(cf3,x); this.g(y);
@@ -1909,6 +1908,33 @@ class HandleTypes extends HandleTypesEval {
 			if(icon.iconType!=="SHARE") debugger;
 			this.D_Accessibility(accessibilityData);
 			if(tooltip!=="Share") debugger;
+			return;
+		}
+		if("serviceEndpoint" in x) {
+			/** @type {`${cf2}:serviceEndpoint`} */
+			const cf3=`${cf2}:serviceEndpoint`;
+			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_IsDisabled(cf3,x); this.g(y);
+			this.t(serviceEndpoint,this.D_Button_SE);
+			if(icon.iconType!=="MICROPHONE_ON") debugger;
+			this.D_Accessibility(accessibilityData);
+			if(tooltip!=="Search with your voice") debugger;
+			return;
+		}
+		if("accessibilityData" in x) {
+			/** @type {`${cf2}:accessibilityData`} */
+			const cf3=`${cf2}:accessibilityData`;
+			let {icon,accessibility,accessibilityData,...y}=this.D_Button_Omit_IsDisabled(cf3,x); this.g(y);
+			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "NOTIFICATIONS_ACTIVE": break;}
+
+			this.add_string_to_map(cf3,"accessibility.label",accessibility.label);
+			return;
+		}
+		if("accessibility" in x) {
+			/** @type {`${cf2}:accessibility`} */
+			const cf3=`${cf2}:accessibility`;
+			let {icon,isDisabled,accessibility,...y}=this.D_Button_Omit_FromStyle(cf3,x); this.g(y);
+			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
+			if(isDisabled!==false) debugger;
 			return;
 		}
 		if("text" in x) return this.g(this.D_Button_Omit_Text(`${cf2}:text`,x));
@@ -1969,8 +1995,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {"D_Button_WithText_Omit1"} cf @arg {D_Button_EX_2_Text} x @returns {D_Button_DoOmit<D_Button_EX_2_Text,"size"|"style"|"text"|"trackingParams">} */
 	D_Button_Omit_EX2_Text(cf,x) {
 		let {size,style,text,trackingParams,...y}=this.s(cf,x);
-		let ia=this.DMD_Badge_labels.get(cf);
-		if(!ia) this.DMD_Badge_labels.set(cf,ia=[]);
+		let ia=this.strings_map.get(cf);
+		if(!ia) this.strings_map.set(cf,ia=[]);
 		ia.push(["size",[size]]);
 		ia.push(["style",[style]]);
 		this.G_Text(text);
@@ -4043,13 +4069,13 @@ class HandleTypes extends HandleTypesEval {
 		let y=this.D_CompactVideo_Omit(cf,x); this.g(y);
 	}
 	/** @type {Map<string,[string,string[]][]>} */
-	DMD_Badge_labels=new Map;
+	strings_map=new Map;
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
 		this.save_enum("BADGE_STYLE_TYPE",x.style);
-		let ia=this.DMD_Badge_labels.get(x.style);
-		if(!ia) this.DMD_Badge_labels.set(x.style,ia=[]);
+		let ia=this.strings_map.get(x.style);
+		if(!ia) this.strings_map.set(x.style,ia=[]);
 		switch(x.style) {
 			default: x===0; debugger; break;
 			case "BADGE_STYLE_TYPE_SIMPLE": {
@@ -5693,8 +5719,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_WithNav(cf,x) {
 		let {style,text,trackingParams,...x1}=this.D_ChipCloudChip_OmitNav(cf,x);
-		let ia=this.DMD_Badge_labels.get(cf);
-		if(!ia) this.DMD_Badge_labels.set(cf,ia=[]);
+		let ia=this.strings_map.get(cf);
+		if(!ia) this.strings_map.set(cf,ia=[]);
 		ia.push(["style.styleType",[style.styleType]]);
 		this.trackingParams(cf,trackingParams);
 		if("isSelected" in x1) {
