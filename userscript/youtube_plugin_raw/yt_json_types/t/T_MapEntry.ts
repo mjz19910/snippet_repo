@@ -1,1 +1,0 @@
-type T_MapEntry<T,U>={key: T; value: U;};

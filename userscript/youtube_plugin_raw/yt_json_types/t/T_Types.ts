@@ -1,1 +1,0 @@
-type T_Types<T extends number>={types: `${T}`;};

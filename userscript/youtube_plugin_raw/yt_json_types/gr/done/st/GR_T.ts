@@ -63,3 +63,208 @@ type T_Items_TP<T>={
 	trackingParams: string;
 };
 type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items<T>;};
+type TAD_OpenPopup_Dialog<T>={
+	popup: T;
+	popupType: "DIALOG";
+};
+type TA_OpenPopup_Dropdown<T>={popup: T; popupType: "DROPDOWN";};
+type TA_Page<T>={page: T;};
+type TD_ContinuationItem_CE<T>={
+	trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
+	continuationEndpoint: T;
+};
+type TD_GuideEntry_EntryData<T extends string>={
+	navigationEndpoint: GE_Browse;
+	icon: T_Icon<T>;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+	entryData: R_GuideEntryData;
+};
+type TD_GuideEntry_NotPrimary<T extends string>={
+	navigationEndpoint: GE_Browse;
+	icon: T_Icon<T>;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+};
+type TD_GuideEntry_Primary<T_IconType extends string>={
+	navigationEndpoint: GE_Browse;
+	icon: T_Icon<T_IconType>;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+	isPrimary: true;
+};
+type TD_GuideEntry_Simple<T extends string>={
+	navigationEndpoint: GE_Browse;
+	icon: T_Icon<T>;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+};
+type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>={
+	navigationEndpoint: GE_Browse;
+	icon: T_Icon<T_IconType>;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+	targetId: Tid;
+	isPrimary: true;
+};
+type TD_ItemSection_2<T_ContentType,T_sectionIdentifier>=Record<"contents",T_ContentType[]>&{
+	trackingParams: string;
+	sectionIdentifier: T_sectionIdentifier;
+};
+type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>=Record<"contents",T_ContentType[]>&{
+	trackingParams: string;
+	sectionIdentifier: T_sectionIdentifier;
+	targetId: T_targetId;
+};
+type TD_ItemSection_3_I_1=R_ContinuationItem;
+type TD_Label<T>={label: T;};
+type TG_SecondaryResultsItem_3<A,B,C>=[
+	R_RelatedChipCloud,
+	TR_ItemSection_3<A,B,C>
+][number];
+type TM_Visibility=T_Types<12|14|15>;
+type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;
+type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
+type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
+type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
+type UC=TP_ParseUrlItems<"x=3&r=12">;
+type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {
+	[V in U]: C;
+}:T;
+type TRS_Actions={
+	responseContext: RC_ResponseContext;
+	actions: G_ResponseActions[];
+};
+type TR_ContinuationItem_CE<T>={
+	continuationItemRenderer: TD_ContinuationItem_CE<T>;
+};
+type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
+type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
+type TR_SectionListItem_3<T_ContentType,B,C>=
+	|R_ContinuationItem
+	|TR_ItemSection_3<T_ContentType,B,C>
+	|R_MusicCarouselShelf
+	|R_MusicShelf
+	;
+	type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
+	type T_Actions<T>={
+		actions: T[];
+	};
+	type T_AnyObjectOrEmpty<T extends {}>={}|T;
+	type T_Autoplay<T>={
+		autoplay: T;
+	};
+	type T_BaseUrl<T extends string>={baseUrl: T;};
+	type T_Command$<T>={
+		command: T;
+		trackingParams: string;
+	};
+	type T_DialogPopup<T=R_ConfirmDialog>={
+		popup: T;
+		popupType: "DIALOG";
+	};
+	type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
+	type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
+	type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
+type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
+type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
+type T_ExtractKeyValue<T,U extends string>=T extends {
+	[C in U]: any;
+}? T:never;
+type T_FeedEntry<T extends string>=`FE${T}`;
+type T_GetTypeof<T>=
+	T extends undefined? "undefined":
+	T extends number? "number":
+	T extends string? "string":
+	T extends boolean? "boolean":
+	T extends {}? "object":
+	never;
+	type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
+type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
+type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
+type T_Icon<T extends string>={iconType: T;};
+type T_IsColorHelper<T,U>=U extends `0x${infer I}`? T_Split<I,""> extends infer G extends T_Split<I,"">? G['length'] extends 6|8? T_EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;
+type T_MapEntry<T,U>={key: T; value: U;};
+type T_SettingsPageStr<T extends string>=`SP${T}`;
+type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
+type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
+type R_Omit_Compact_Player={
+	title: G_Text;
+	trackingParams: string;
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
+};
+type T_Omit_Compact_Player<T extends R_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
+type R_Omit_Compact_Video=R_Omit_Compact_Player&{
+	videoId: string;
+	shortViewCountText: G_Text;
+	publishedTimeText: G_Text;
+};
+type T_Omit_Compact_Video<T extends R_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
+type R_Omit_Menu_Video={
+	thumbnail: R_Thumbnail;
+	longBylineText: G_Text;
+	viewCountText: G_Text;
+	navigationEndpoint: E_Watch;
+	shortBylineText: G_Text;
+	menu: R_Menu;
+};
+type R_Omit_Menu_Radio={
+	navigationEndpoint: E_Watch;
+	menu: R_Menu;
+};
+type R_Omit_Menu_Video_Ex={
+	ownerBadges: RMD_Badge[];
+};
+type T_Playlist<T>={
+	playlist: T;
+};
+type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
+type T_Results<T>={
+	results: T;
+};
+type T_ResultsArray<T>={
+	results: T[];
+	trackingParams: string;
+};
+type T_RidFormat<T extends string>=`${T}_rid`;
+type T_SecondaryResults<T>={
+	secondaryResults: T;
+};
+type T_ShortsSurfaceIdentifier<T>={
+	surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
+	tag: T;
+};
+type T_Signal<T>=Record<"signal",T>;
+type T_SplitIntoGroups<S extends string,D extends string>=
+	string extends S? string[]:
+	S extends ''? []:
+	S extends `${infer T}${infer X extends D}${infer U}`? [`${T}${X}`,...T_SplitIntoGroups<U,D>]:
+	[S];
+type T_SplitOnce<S extends string,D extends string>=string extends S?
+	[string]|[string,string]:S extends ''? []:S extends `${infer T}${D}${infer U}`? [T,U]:[S];
+type T_StyleType<T>={
+	styleType: T;
+};
+type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
+type T_Text<T>={text: T;};
+type T_TextRuns<T>={runs: T;};
+type T_TrackingParamsAsString<T,V extends string>=V extends "trackingParams"? string:T;
+type T_Types<T extends number>={types: `${T}`;};
+type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
+type T_UrlWrappedValue<T extends string>={
+	privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;
+};
+type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
+type T_VideoListStr<T extends string>=`VL${T}`;
+type T_WCM_={
+	url?: string;
+	webPageType?: YtPageTypeEnum;
+	apiUrl?: string;
+	sendPost?: boolean;
+	rootVe?: D_RootVisualElementType;
+};

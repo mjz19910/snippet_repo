@@ -1,1 +1,0 @@
-type T_BaseUrl<T extends string>={baseUrl: T;};

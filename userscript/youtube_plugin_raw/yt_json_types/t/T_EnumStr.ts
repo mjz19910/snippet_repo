@@ -1,1 +1,0 @@
-type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;

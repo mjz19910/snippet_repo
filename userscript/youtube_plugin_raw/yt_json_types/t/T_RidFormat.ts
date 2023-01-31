@@ -1,1 +1,0 @@
-type T_RidFormat<T extends string>=`${T}_rid`;

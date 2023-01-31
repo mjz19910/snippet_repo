@@ -1,1 +1,0 @@
-type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;

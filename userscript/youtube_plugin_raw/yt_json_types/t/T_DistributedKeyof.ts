@@ -1,1 +1,0 @@
-type T_DistributedKeyof<T>=T extends infer A? keyof A:never;

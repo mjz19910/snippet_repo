@@ -1,1 +1,0 @@
-type T_Signal<T>=Record<"signal",T>;
