@@ -57,4 +57,4 @@ type DE_GetTranscript=DC_Params;
 type DE_YpcGetOffers=DC_Params;
 type DE_YpcGetOfflineUpsell=DC_Params;
 //#endregion
-type ER_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
+type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
