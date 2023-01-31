@@ -1740,8 +1740,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {D_Button_EX_1_Command} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit_Command(cf,x) {
-		let {command,...y}=this.D_Button_Omit_FromStyle(cf,x);
-		this.t(command,this.GC_Button);
+		let {command,trackingParams,...y}=this.s(cf,x);
+		this.trackingParams(cf,trackingParams);
+		// if(isDisabled!==false) debugger;
+		// this.t(command,this.GC_Button);
 		return y;
 	}
 	/** @arg {D_Button_Ex_1_Omit_Size} x */
@@ -1808,17 +1810,18 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("targetId" in x) {
-			let {targetId,isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
+			let {targetId,isDisabled,icon,accessibilityData,style,size,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			switch(targetId) {
 				case "clip-info-button": break;
 				default: this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId); break;
 			}
 			if(isDisabled!==false) debugger;
+			if(style!=="STYLE_DEFAULT") debugger;
+			if(size!=="SIZE_DEFAULT") debugger;
 			return;
 		}
 		if("command" in x) {
-			let {isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
-			if(isDisabled!==false) debugger;
+			let {...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			return;
 		}
 		this.g(x);
@@ -1841,7 +1844,6 @@ class HandleTypes extends HandleTypesEval {
 			this.D_Accessibility(accessibilityData);
 			if(tooltip!=="Share") debugger;
 		}
-		x;
 		// this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
 		// this.t(accessibility,this.D_Label);
 		// this.t(hint,this.R_Hint);
@@ -1854,27 +1856,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {{command:U}} T @template {Extract<D_Button,{command:any}>['command']} U @arg {T} x @returns {T extends infer V?Omit<V,"command">:never} */
 	D_Button_UseCommand(x) {
 		let {command,...y}=x;
+		this.GC_Button(command);
 		/** @type {any} */
 		let z=y;
 		return z;
 	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_2_Text} x */
-	D_Button_WithText(cf,x) {
-		let {size,style,text,trackingParams,...y1}=x;
-		if("command" in y1) {
-
-		}
-		let r=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x);
-		if(!("command" in r)) {
-			const {serviceEndpoint,icon,tooltip,accessibilityData,...y}=r; this.g(y);
-			return;
-		}
-		let {...x1}=this.D_Button_UseCommand(r);
+	/** @arg {"D_Button"} cf1 @arg {D_Button_EX_2_Text} x */
+	D_Button_WithText_Omit1(cf1,x) {
+		const cf2="D_Button_WithText_Omit1"; cf1;
+		let {isDisabled,...x1}=this.D_Button_Omit_EX2_Text(cf2,x);
+		if(isDisabled!==false) debugger;
 		if("targetId" in x1) {
 			switch(x1.targetId) {
 				default: debugger; break;
 				case "create-clip-button-action-bar": {
-					let {icon,tooltip,accessibilityData,targetId: {},...y}=x1; this.g(y);
+					let {icon,tooltip,accessibilityData,targetId: {},...y}=this.D_Button_UseCommand(x1); this.g(y);
 					if(icon.iconType!=="CONTENT_CUT") debugger;
 					if(tooltip!=="Clip") debugger;
 					this.D_Accessibility(accessibilityData);
@@ -1882,36 +1878,44 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		if("icon" in x1) {
-			let {icon,tooltip,accessibilityData,accessibility,...y}=x1; this.g(y);
+		if("command" in x1) {
+			const {...x2}=this.D_Button_UseCommand(x1);
+			if(!("accessibility" in x2)) return this.g(x2);
+			const {accessibilityData,accessibility,...y}=x2;
+			this.D_Accessibility(accessibilityData);
+			switch(accessibility.label) {case "Cancel auto-play for this video": case "unknown": case "Save to": break; default: debugger; break;}
+			if(!("icon" in y)) return this.g(y);
+			const {icon,tooltip,...x}=y; this.g(x);
 			if(icon.iconType!=="PLAYLIST_ADD") debugger;
-			this.D_Accessibility(accessibilityData);
-			{
-				let x=accessibility;
-				if("label" in x) {
-					if(x.label!=="Save to") debugger;
-				}
-			}
+			switch(tooltip) {case "Clip": case "Save": break; default: debugger;}
 			return;
 		}
-		if("accessibilityData" in x1) {
-			let {accessibilityData,accessibility,...y}=x1; this.g(y);
-			this.D_Accessibility(accessibilityData);
-			switch(accessibility.label) {
-				default: debugger; break;
-				case "Cancel auto-play for this video": break;
-			}
-			return;
-		}
-		if("accessibility" in x1) {
-			debugger;
-			return;
-		}
-		this.g(x1);
+		const {accessibilityData,serviceEndpoint,icon,tooltip,...x2}=x1; this.g(x2);
+		this.D_Accessibility(accessibilityData);
+		if(!serviceEndpoint.shareEntityServiceEndpoint) debugger;
+		this.E_ShareEntityService(serviceEndpoint);
+	}
+	/** @private @arg {"D_Button_WithText_Omit1"} cf @arg {D_Button_EX_2_Text} x @returns {D_Button_DoOmit<D_Button_EX_2_Text,"size"|"style"|"text"|"trackingParams">} */
+	D_Button_Omit_EX2_Text(cf,x) {
+		let {size,style,text,trackingParams,...y}=this.s(cf,x);
+		if(size!=="SIZE_DEFAULT") debugger;
+		switch(style) {case "STYLE_DEFAULT": case "STYLE_SUGGESTIVE": break; default: debugger; break;}
+		this.G_Text(text);
+		this.trackingParams(cf,trackingParams);
+		return y;
+	}
+	/** @private @arg {"D_Button"} cf @arg {Exclude<Exclude<D_Button,{icon:any;}>,{style:any;}>} x */
+	D_Button_2_Only(cf,x) {
+		const {trackingParams,command,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
+		let [x1,x2]=this.T_SE_Signal(`${cf}.SE_Signal`,command);
+		this.G_ClientSignal(x2);
+		this.M_SendPost(x1);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
+		if(!("icon" in x||"style" in x)) return this.D_Button_2_Only(cf,x);
 		if("icon" in x) {
 			const {icon}=x;
 			let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
@@ -1923,7 +1927,7 @@ class HandleTypes extends HandleTypesEval {
 				console.log("-- [D_Button.icon] --",arr_items);
 			}
 		}
-		if("text" in x) return this.D_Button_WithText(cf,x);
+		if("text" in x) return this.D_Button_WithText_Omit1(cf,x);
 		if("command" in x) return this.D_Button_WithCommand(cf,x);
 		if("style" in x) return this.D_Button_WithStyle(cf,x);
 		this.g(x);

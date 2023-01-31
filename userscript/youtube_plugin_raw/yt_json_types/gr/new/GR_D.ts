@@ -111,7 +111,9 @@ type TD_Accessibility<T>={
 };
 type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
 type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
-type D_Button_Ex_1_Omit_Size=D_Button extends infer T? (T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never) extends infer Z? {[U in keyof Z]: Z[U]}:never:never;
+type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=T_Btn extends infer T? (T extends infer Y? Omit<Y,U>:never) extends infer Z? {[U in keyof Z]: Z[U]}:never:never
+type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
+
 type D_Button_EX_1_Style=Extract<Exclude<D_Button,D_Button_EX_1_Command>,{style: any;}>;
 type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
 type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;

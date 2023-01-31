@@ -537,9 +537,9 @@ class CodegenService extends BaseService {
 		let u=as(x);
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": {
-				if(u.actions instanceof Array) return "GS_Client";
+				if(u.actions instanceof Array) return "G_ClientSignal";
 				console.log("[no_actions_arr] %o",u);
-				return "GS_Client";
+				return "G_ClientSignal";
 			}
 			case "GET_NOTIFICATIONS_MENU": {
 				if(!(u.actions instanceof Array)) {
@@ -891,10 +891,16 @@ class CodegenService extends BaseService {
 		if(b.button_id) return `TYPE::ButtonId<"${b.button_id}">`;
 		/** @private @type {D_Label} */
 		if(b.label) return "TYPE::D_Label";
-		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
-		{debugger;}
-		return null;
+		let g_res=g();
+		let k_str=keys.join();
+		if(!this.logged_replace_keys.includes(k_str)) {
+			this.logged_replace_keys.push(k_str);
+			console.log("[json_maybe_replace]%o\n[%s] [%s] [%s]",b,keys.join(","),g(),r);
+		}
+		return g_res;
 	}
+	/** @type {string[]} */
+	logged_replace_keys=[];
 	/** @api @public @arg {string} x1 */
 	generate_depth(x1) {
 		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);

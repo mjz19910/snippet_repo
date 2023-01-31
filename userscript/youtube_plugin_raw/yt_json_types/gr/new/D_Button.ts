@@ -16,6 +16,20 @@ type D_Button=
 		trackingParams: string;
 		accessibilityData: TD_Accessibility<"Close">;
 		command: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>;
+	}|{
+		trackingParams: string;
+		command: T_SE_Signal<{webCommandMetadata: {sendPost: true;};},G_ClientSignal>;
+	}|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		icon: T_Icon<"CONTENT_CUT">;
+		tooltip: "Clip";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Clip">;
+		targetId: "create-clip-button-action-bar";
+		command: A_ChangeEngagementPanelVisibility;
 	}
 	;
 ;
@@ -96,7 +110,7 @@ type D_PlaylistAddButton_Save={
 	isDisabled: false;
 	text: G_Text;
 	icon: T_Icon<"PLAYLIST_ADD">;
-	accessibility: {};
+	accessibility: {label: "unknown";};
 	tooltip: "Save";
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
