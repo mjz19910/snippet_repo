@@ -56,7 +56,7 @@ type CF_M_s=
 	|CF_M_s_no_gen
 	;
 ;
-type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">;
+type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|""|"A";
 type CF_D_Params=T_ExtractImport<"CF_D_Params">;
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">;
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">;
@@ -64,6 +64,7 @@ type CF_TD_ItemSection_3=
 	|T_ExtractImport<"CF_TD_ItemSection_3">
 	|`TD_ItemSection_3<"comment-item-section">`
 	|`TD_ItemSection_3<"watch-next-feed">`
+	|`TD_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem, "sid-wn-chips", "watch-next-feed">`
 	|"TR_SectionListItem_3_Empty"
 	;
 ;
@@ -121,6 +122,7 @@ type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">;
 type CF_D_Menu_Omit=
 	|T_ExtractImport<"CF_D_Menu_Omit">
 	|CF_D_Video_Handle
+	|"D_CompactPlaylist"
 	;
 ;
 type CF_D_ChipCloudChip_Omit=T_ExtractImport<"CF_D_ChipCloudChip_Omit">;

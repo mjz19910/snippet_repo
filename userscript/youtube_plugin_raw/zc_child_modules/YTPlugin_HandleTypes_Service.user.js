@@ -5409,7 +5409,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_Watch_SecondaryResults_R_SectionItem} x */
 	G_Watch_SecondaryResults_R_SectionItem(x) {
 		let u=this.TR_ItemSection_3(x);
-		let u1=this.TD_ItemSection_3(u);
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem, "sid-wn-chips", "watch-next-feed">`,u);
 		if(!u1) return;
 		let [a,...section_arr]=u1;
 		let section_str=this.join_string(section_arr,"-");
@@ -6428,7 +6428,7 @@ class HandleTypes extends HandleTypesEval {
 		let ls=split_string_once_last(fs[1],":",null);
 		console.log("[emoji_shortcut_info]",ls[0]);
 	}
-	/** @private @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {"D_CustomEmoji"|"D_LiveChatEmoji"} cf @arg {T} x */
+	/** @private @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {CF_D_CustomEmoji} cf @arg {T} x */
 	D_CustomEmoji_Omit(cf,x) {
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.s(cf,x);
 		this.parse_emoji_id(emojiId);
