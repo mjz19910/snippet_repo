@@ -3033,9 +3033,9 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {T_Results<D_WatchResult_ResultsItem>} x */
+	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y); return a;}
-	/** @private @arg {D_WatchResult_ResultsItem} x @returns {G_WatchResult_ContentsItem[]} */
+	/** @private @arg {G_Watch_ResultsItem} x @returns {G_Watch_ContentsItem[]} */
 	D_WatchResult_ResultsItem(x) {
 		const cf="D_WatchResult_ResultsItem";
 		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -3370,7 +3370,7 @@ class HandleTypes extends HandleTypesEval {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
-	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
+	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
 		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
 		this.k(`${cf}.section`,x.itemSectionRenderer);
@@ -3379,14 +3379,14 @@ class HandleTypes extends HandleTypesEval {
 		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section">`,u); if(!u1) return;
 		this.ItemSection_3_CommentItemSection(u1);
 	}
-	/** @private @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
+	/** @private @arg {Extract<G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
 	G_WatchResultItem_ItemSectionGroup(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
 		let u=this.TR_ItemSection_2(x); if(!u) return;
 		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
 	}
-	/** @private @arg {G_WatchResult_ContentsItem} x */
+	/** @private @arg {G_Watch_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
 		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
 		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
@@ -3395,11 +3395,11 @@ class HandleTypes extends HandleTypesEval {
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {G_SecondaryContentsItem} x */
-	G_SecondaryContentsItem(x) {
+	/** @private @arg {G_Watch_AnyResultItem} x */
+	G_Watch_AnyResultItem(x) {
 		const cf="G_SecondaryContentsItem"; this.k(cf,x);
-		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
+		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
 		this.do_codegen(cf,x);
 		return null;
 	}
@@ -3407,7 +3407,7 @@ class HandleTypes extends HandleTypesEval {
 	G_Watch_SecondaryResults_Contents(x) {
 		const cf="G_Watch_SecondaryResults_Contents";
 		const {contents,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(contents,this.G_SecondaryContentsItem);
+		this.z(contents,this.G_Watch_AnyResultItem);
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
@@ -5407,14 +5407,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(a,this.G_Watch_SecondaryResults_G_SectionItem);
 		return a;
 	}
-	/** @private @arg {G_Watch_SecondaryResults_ItemType_1} x */
-	G_Watch_SecondaryResults_ItemType_1(x) {
-		const cf="G_Watch_SecondaryResults_ItemType_1"; this.k(cf,x);
-		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
-		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
-	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
@@ -5480,7 +5472,7 @@ class HandleTypes extends HandleTypesEval {
 	G_Watch_SecondaryResults_Results(x) {
 		const cf="G_Watch_SecondaryResults_Results";
 		const {results,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(results,this.G_Watch_SecondaryResults_ItemType_1);
+		this.z(results,this.G_Watch_AnyResultItem);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_RelatedChipCloud} x */
@@ -5714,7 +5706,7 @@ class HandleTypes extends HandleTypesEval {
 	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.AD_SendFeedback(a); this.g(b);}
 	/** @private @arg {AD_SendFeedback} x */
 	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y); if(bucket!=="Kevlar") debugger;}
-	/** @private @arg {Extract<G_WatchResult_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
+	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
