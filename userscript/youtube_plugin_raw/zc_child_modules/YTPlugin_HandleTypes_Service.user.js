@@ -177,8 +177,9 @@ class HandleTypes extends HandleTypesEval {
 			if(typeof cu!=="object"||!cu) {debugger; return null;}
 			let k=this.get_keys_of(cu);
 			switch(k[0]) {
-				case "continuationItemRenderer": break;
 				default: console.log(`-- [TD_Section_3_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+				case "continuationItemRenderer":
+				case "compactVideoRenderer":
 			}
 		}
 		return [contents,sectionIdentifier,targetId];
@@ -3291,9 +3292,9 @@ class HandleTypes extends HandleTypesEval {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
 		switch(icon.iconType) {
-			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break;
+			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break; 
 			case "NOT_INTERESTED":
-			case "ADD_TO_QUEUE_TAIL": break;
+			case "ADD_TO_QUEUE_TAIL":
 		}
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
 		this.t(res,u => {
