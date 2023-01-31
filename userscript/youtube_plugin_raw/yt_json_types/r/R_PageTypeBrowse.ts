@@ -8,7 +8,7 @@ type R_PageTypeBrowse={
 type E_Page=YTNavigateFinishDetail['endpoint'];
 type D_STR_CF=[
 	"D_ChannelId",
-	"D_CompactRadio_shareUrl",
+	"D_RadioShareUrl",
 	"D_YoutubeKidsUrl",
 	"D_YoutubeUrl",
 	"G_VE3832",

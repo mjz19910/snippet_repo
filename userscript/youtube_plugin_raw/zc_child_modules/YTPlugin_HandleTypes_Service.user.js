@@ -2532,8 +2532,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
 			return;
 		}
-		cf;
-		x;
+		debugger;
 	}
 	/** @arg {D_CaseGen_CF} cf @arg {string} x */
 	codegen_case(cf,x) {console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);}
@@ -5751,7 +5750,7 @@ class HandleTypes extends HandleTypesEval {
 		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
 		this.G_Text(shortBylineText);
 		this.z(sidebarThumbnails,this.R_Thumbnail);
-		this.D_CompactRadio_shareUrl(shareUrl);
+		this.D_RadioShareUrl(shareUrl);
 		return y;
 	}
 	/** @private @arg {D_CompactPlaylist} x */
@@ -5764,9 +5763,9 @@ class HandleTypes extends HandleTypesEval {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
 	}
-	/** @private @arg {D_CompactRadio['shareUrl']} b */
-	D_CompactRadio_shareUrl(b) {
-		const cf="D_CompactRadio_shareUrl";
+	/** @private @arg {D_RadioShareUrl} b */
+	D_RadioShareUrl(b) {
+		const cf="D_RadioShareUrl";
 		let up=this.parse_with_url_parse(b);
 		{
 			let obj=new UrlParseHelper(up);
@@ -5774,8 +5773,24 @@ class HandleTypes extends HandleTypesEval {
 				let {...s}=this.parse_url_search_params(up.search);
 				if("v" in s) {
 					let {v,playnext,list,...y}=s; this.g(y);
-					console.log("[CompactRadio.v]",v);
-					console.log("[CompactRadio.playnext]",playnext);
+					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
+					let gw=() => ({k: 1,a: v});
+					let w=gw();
+					if(this.str_starts_with(w.a,"RD")) {
+						w.k=2; w.k==2&&this.playlistId(w.a);
+					} else {
+						console.log("[share_url.v]",w.a);
+						this.videoId(w.a);
+					}
+					if(playnext!=="1") debugger;
+					{
+						let w={a: list};
+						if(this.str_starts_with(w.a,"PL")) {
+							this.playlistId(w.a);
+						} else {
+							debugger;
+						}
+					}
 					console.log("[CompactRadio.list]",list);
 					return;
 				}
@@ -5801,7 +5816,7 @@ class HandleTypes extends HandleTypesEval {
 	D_CompactRadio(x) {
 		const cf="D_CompactRadio";
 		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.Omit_Menu_Radio(cf,x); o;
-		this.D_CompactRadio_NavE(a); this.D_CompactRadio_shareUrl(b);
+		this.D_CompactRadio_NavE(a); this.D_RadioShareUrl(b);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Results} x */
 	G_Watch_SecondaryResults_Results(x) {
@@ -6132,9 +6147,12 @@ class HandleTypes extends HandleTypesEval {
 		if(currentStateId!==2) debugger;
 		this.trackingParams(cf,trackingParams);
 		this.C_Executor(command);
-		if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
-			this.logged_strings.push(`${cf}:${targetId}`);
-			console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
+		switch(targetId) {
+			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
+				this.logged_strings.push(`${cf}:${targetId}`);
+				console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
+			} break;
+			case "notification-bell": break;
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
