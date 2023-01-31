@@ -5857,7 +5857,7 @@ class HandleTypes extends HandleTypesEval {
 						}
 						if(this.str_starts_with_rx("RD",w)) {
 							let [,q]=split_string_once(w,"RD");
-							this.save_next_char("share_url.list>RD",q[0]);
+							this.save_next_char("share_url.list.RD",q[0]);
 							this.playlistId(w);
 							break x;
 						}
