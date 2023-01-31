@@ -3,6 +3,6 @@ type D_GuideEntry_ShortsTab={
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
-	serviceEndpoint: T_SE_Signal<D_Empty_WCM,{}>|E_ReelWatch;
+	serviceEndpoint: T_SE_Signal<DC_Empty_WCM,{}>|E_ReelWatch;
 	isPrimary: true;
 };

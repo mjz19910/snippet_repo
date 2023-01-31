@@ -985,7 +985,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Empty_WCM(a);
 		this.B_Hack(b);
 	}
-	/** @private @arg {D_Empty_WCM} x */
+	/** @private @arg {DC_Empty_WCM} x */
 	D_Empty_WCM(x) {x; debugger;}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
