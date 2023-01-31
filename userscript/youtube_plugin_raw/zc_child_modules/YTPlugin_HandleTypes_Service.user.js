@@ -3375,16 +3375,15 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		let u=this.TR_ItemSection_3(x);
-		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section">`,u);
-		if(!u1) return;
+		let u=this.TR_ItemSection_3(x); if(!u) return;
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section">`,u); if(!u1) return;
 		this.ItemSection_3_CommentItemSection(u1);
 	}
 	/** @private @arg {Extract<G_WatchResult_ContentsItem,{itemSectionRenderer:any}>} x */
 	G_WatchResultItem_ItemSectionGroup(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-		let u=this.TR_ItemSection_2(x);
+		let u=this.TR_ItemSection_2(x); if(!u) return;
 		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
 	}
 	/** @private @arg {G_WatchResult_ContentsItem} x */
@@ -3395,21 +3394,6 @@ class HandleTypes extends HandleTypesEval {
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
 		this.do_codegen(cf,x);
-	}
-	/** @private @arg {Extract<G_SecondaryContentsItem,{itemSectionRenderer:any}>} x */
-	RG_Watch_ItemSection(x) {
-		let u=this.TR_ItemSection_3(x);
-		let a=this.TD_ItemSection_3(`TD_ItemSection_3<"watch-next-feed">`,u);
-		if(!a) return null;
-		let [u1,...v]=a;
-		if(this.join_string(v,"-")==="sid-wn-chips-watch-next-feed") return this.z(u1,a => {
-			let cf=this.get_name_from_keys(a);
-			if(!cf) {debugger; return;}
-			console.log("[found item_section_watch_data]",cf);
-			debugger;
-		});
-		debugger;
-		return null;
 	}
 	/** @private @arg {G_SecondaryContentsItem} x */
 	G_SecondaryContentsItem(x) {
@@ -5409,10 +5393,10 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 		this.G_Text(x);
 	}
-	/** @private @arg {G_Watch_SecondaryResults_R_SectionItem} x */
-	G_Watch_SecondaryResults_R_SectionItem(x) {
-		let u=this.TR_ItemSection_3(x);
-		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem, "sid-wn-chips", "watch-next-feed">`,u);
+	/** @private @arg {RG_Watch_ItemSection} x */
+	RG_Watch_ItemSection(x) {
+		let u=this.TR_ItemSection_3(x); if(!u) return;
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"watch-next-feed">`,u);
 		if(!u1) return;
 		let [a,...section_arr]=u1;
 		let section_str=this.join_string(section_arr,"-");
@@ -5422,13 +5406,12 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.z(a,this.G_Watch_SecondaryResults_G_SectionItem);
 		return a;
-
 	}
 	/** @private @arg {G_Watch_SecondaryResults_ItemType_1} x */
 	G_Watch_SecondaryResults_ItemType_1(x) {
 		const cf="G_Watch_SecondaryResults_ItemType_1"; this.k(cf,x);
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
-		if("itemSectionRenderer" in x) return this.G_Watch_SecondaryResults_R_SectionItem(x);
+		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
 	}

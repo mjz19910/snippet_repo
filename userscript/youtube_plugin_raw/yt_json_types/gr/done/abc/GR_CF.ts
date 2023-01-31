@@ -88,7 +88,6 @@ type CF_TD_ItemSection_3=
 	|T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a"
 	|`TD_ItemSection_3<"comment-item-section">`
 	|`TD_ItemSection_3<"watch-next-feed">`
-	|`TD_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem, "sid-wn-chips", "watch-next-feed">`
 	|"TR_SectionListItem_3_Empty"
 	;
 ;
