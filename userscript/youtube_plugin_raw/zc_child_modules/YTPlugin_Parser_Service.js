@@ -579,7 +579,7 @@ class ParserService extends BaseService {
 					case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "reel.player_params": switch(map_entry_key) {case 30: case 71: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "slot_ad_serving_data_entry": switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
-					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}

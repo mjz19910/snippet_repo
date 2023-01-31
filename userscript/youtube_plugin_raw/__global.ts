@@ -60,7 +60,7 @@ namespace EX {
 	export var YtHandlers: Base$ImpType["YtHandlers"];
 	export var HandleTypes: typeof import("./zc_child_modules/YTPlugin_HandleTypes_Service.user.js").HandleTypes;
 	export var CodegenService: typeof import("./zc_child_modules/YtPlugin_CodegenService.user.js").CodegenService;
-	export var IndexedDbAccessor: Base$ImpType["IndexedDbAccessor"];
+	export var IndexedDatabaseService: typeof import("./zc_child_modules/IndexedDatabaseService.user.js").IndexedDatabaseService;
 	export var YtPlugin: Base$ImpType["YtPlugin"];
 	export var ModifyEnv: Base$ImpType["ModifyEnv"];
 	// youtube_plugin_HandleTypes

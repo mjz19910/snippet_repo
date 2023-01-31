@@ -72,7 +72,7 @@ class LoadAllServices {
 		this.handle_types=new HandleTypes(x);
 		const CodegenService=required(store.mod$CodegenService).CodegenService;
 		this.codegen=new CodegenService(x);
-		this.indexed_db=new bs.IndexedDbAccessor(x,"yt_plugin",2);
+		this.indexed_db=new required(store.mod$).(x,"yt_plugin",2);
 		this.yt_plugin=new bs.YtPlugin(x);
 		this.modify_env=new bs.ModifyEnv(x);
 	}
