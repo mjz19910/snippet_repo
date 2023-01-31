@@ -551,7 +551,7 @@ class CodegenService extends BaseService {
 				let popup_action=action.openPopupAction;
 				switch(popup_action.popupType) {
 					default: debugger; break;
-					case "DIALOG":
+					case "DROPDOWN":
 				}
 				let popup=popup_action.popup;
 				if(!popup.multiPageMenuRenderer) debugger;

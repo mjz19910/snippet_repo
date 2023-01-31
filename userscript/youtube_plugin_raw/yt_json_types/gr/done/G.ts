@@ -87,7 +87,7 @@ type GD_EngagementPanelMenu={
 };
 type GD_Icon=NonNullable<[
 	T_Icon<D$AnyIconStr>,
-	D_Button['icon'],
+	Extract<D_Button,{icon: any;}>['icon'],
 	D_InfoRow['expandIcon'],
 	D_TopicLink['callToActionIcon'],
 	T_Icon<"LIBRARY_REMOVE">,

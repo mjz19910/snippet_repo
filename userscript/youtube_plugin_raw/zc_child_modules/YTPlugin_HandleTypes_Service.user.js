@@ -1646,7 +1646,7 @@ class HandleTypes extends HandleTypesEval {
 		// });
 		return y;
 	}
-	/** @private @arg {`D_Button.${number}.From.targetId`} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
+	/** @protected @arg {`D_Button.${number}.From.targetId`} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
 		/** @private @type {D_Button_TargetId} */
 		switch(x) {
