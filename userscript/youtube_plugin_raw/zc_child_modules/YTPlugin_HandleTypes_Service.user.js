@@ -160,7 +160,7 @@ class HandleTypes extends HandleTypesEval {
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
 	}
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f */
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(cf,k,x,f) {
 		if(!x) {debugger; return;}
 		let wr=this.wn(cf,x,k);
@@ -225,7 +225,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return parse_number(types,_x);
 	}
-	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(this:this,x:T)=>void} f */
 	TD_ItemSection_2_CommentsEntryPoint(x,f) {
 		const cf="TD_ItemSection_2_CommentsEntryPoint";
 		const {contents,trackingParams,sectionIdentifier,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -291,7 +291,7 @@ class HandleTypes extends HandleTypesEval {
 	static {
 		this.prototype.minimal_handler_member_2({});
 	}
-	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(x:T[K])=>U)=>U} */
+	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(this:this,x:T[K])=>U)=>U} */
 	// H_=super.H_;
 	//#endregion
 	//#region member functions
@@ -1200,13 +1200,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DE_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DE_Empty_WCM("DC_PlaylistEditor",a);}
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.M_VE83769(a);}
 	/** @private @arg {E_ShareEntityService} x */
-	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.DE_ShareEntityService(b); this.M_GetSharePanel("DC_PlaylistEditor",a);}
+	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.DE_ShareEntityService(b); this.M_GetSharePanel(a);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x);}
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {x;}
 	/** @type {Map<string,string[]>} */
@@ -1243,9 +1243,10 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @protected @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x */
-	T_GM(cf,x) {
-		const {}=this.s(cf,x);
+	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
+	T_GM(cf,x,f) {
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
+		return f.call(this,apiUrl);
 	}
 	/** @protected @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {
@@ -1717,8 +1718,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{serviceEndpoint:any}>} x */
-	D_Button_Omit_3(cf,x) {
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_SrvEp} x */
+	D_Button_Omit_ServiceEndpoint(cf,x) {
 		const {serviceEndpoint,...y}=this.D_Button_Omit(cf,x); this.g(y);
 		this.t(serviceEndpoint,this.D_Button_SE);
 	}
@@ -1728,19 +1729,7 @@ class HandleTypes extends HandleTypesEval {
 		if("command" in x) return this.D_Button_WithCommand(cf,x);
 		if("style" in x) return this.D_Button_WithStyle(cf,x);
 		if("accessibility" in x) return this.D_Button_WithAccessibility(cf,x);
-		if("serviceEndpoint" in x) return this.D_Button_Omit_3(cf,x);
-		if("targetId" in x) {
-			const {targetId,...y}=this.D_Button_Omit(cf,x);
-			this.t(targetId,x => {
-				/** @private @type {D_Button_TargetId} */
-				switch(x) {
-					default: this.generate_case("D_Button_TargetId",x); break;
-					case "create-clip-button-action-bar":
-				}
-				this.targetId(cf,x);
-			});
-			return;
-		}
+		if("serviceEndpoint" in x) return this.D_Button_Omit_ServiceEndpoint(cf,x);
 		if("trackingParams" in x) {
 			const {trackingParams,hint,...y}=x; this.g(y);
 			debugger;
@@ -1992,8 +1981,8 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId===void 0) {debugger; return;}
 		this.save_string("[D_ToggleButton.targetId]",targetId);
 	}
-	/** @template T,U @arg {T_Id<T>} x @arg {(x:T)=>U} f */
-	T_Id(x,f) {return f(x.id);}
+	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
+	T_Id(x,f) {return f.call(this,x.id);}
 	/** @private @arg {D_ToggleButtonIdData} x */
 	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
 	/** @private @arg {C_CommandExecutor} x */
@@ -5910,7 +5899,7 @@ class HandleTypes extends HandleTypesEval {
 	G_Action_GetNotificationsMenu_Popup(x) {
 		const cf="G_Action_GetNotificationsMenu_Popup";
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(popupType!=="DROPDOWN") debugger;
+		if(popupType!=="DIALOG") debugger;
 		if(beReused!==true) debugger;
 		return a;
 	}

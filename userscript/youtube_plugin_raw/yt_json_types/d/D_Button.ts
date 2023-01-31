@@ -51,6 +51,10 @@ type DCE_Button={
 };
 type D_Button_EX_Command=Extract<D_Button,{command: any;}>;
 type D_Button_EX_Style=Extract<Exclude<D_Button,D_Button_EX_Command>,{style: any;}>;
+type D_Button_NP_Style=D_Button_EX_Command|D_Button_EX_Style;
+type D_Button_EX_SrvEp=Extract<Exclude<D_Button,D_Button_NP_Style>,{serviceEndpoint: any;}>;
+type D_Button_NP_SrvEp=D_Button_NP_Style|D_Button_EX_SrvEp;
+type D_Button_ER_Rest=Exclude<D_Button,D_Button_NP_SrvEp>;
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 
