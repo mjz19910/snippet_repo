@@ -17,6 +17,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlaylistSidebarPrimaryInfo";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
+		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DC_GetTranscript";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DC_GetTranscript_Params";}
 		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
