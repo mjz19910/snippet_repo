@@ -6,7 +6,6 @@ type G_Watch_SecondaryResults_G_SectionItem=R_CompactPlaylist|R_CompactVideo|R_C
 type G_Watch_AnyResultItem=R_RelatedChipCloud|RG_Watch_ItemSection;
 type G_Watch_SecondaryResults_Results={trackingParams: string; results: G_Watch_AnyResultItem[];};
 type G_Watch_SecondaryResults_Contents={contents: G_Watch_AnyResultItem[];};
-
 //#region ContentsItem
 type G_Watch_ContentsItem=[
 	TR_ItemSection_3<R_ContinuationItem,"comment-item-section","comments-section">,
