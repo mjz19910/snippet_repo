@@ -5,6 +5,7 @@ type P_PathRootStr=
 	|"create_playlist.params"
 	|"createBackstagePost.params"
 	|"D_Browse.param"
+	|"subscribed.entityKey"
 	|"entity_key"
 	|"feedback.feedbackToken"
 	|"get_report_form"

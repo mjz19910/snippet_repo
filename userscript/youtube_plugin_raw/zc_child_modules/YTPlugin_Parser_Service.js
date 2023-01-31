@@ -590,7 +590,8 @@ class ParserService extends BaseService {
 					case "browse$param.f93":
 					case "report.params.f28.f1": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "browse$param.f84": switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
-					case "entity_key": switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "subscribed.entityKey":
+						switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					// Object type {f1:any;f2:any;}
 					case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "record_notification_interactions.f2.f14.f1":
 					case "ypc_get_offers.params.f1": case "record_notification_interactions.f2.f14":
@@ -662,9 +663,6 @@ class ParserService extends BaseService {
 					case "create_playlist.params.f84":
 					case "createBackstagePost.params.f1":
 					case "createBackstagePost.params.f2":
-					case "entity_key.f2":
-					case "entity_key.f4":
-					case "entity_key.f5":
 					case "get_transcript.params.f1":
 					case "get_transcript.params.f6":
 					case "GetNotificationMenu.ctoken.f1":
@@ -1052,6 +1050,32 @@ class ParserService extends BaseService {
 										}
 									} break;
 								}
+							} break;
+						}
+					} break;
+				}
+			} break;
+			case "subscribed": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "entityKey": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {
+							default: u(idx); debugger; parts[2]===""; break;
+							case "f2":
+							case "f4":
+							case "f5": {
+								const idx=3;
+								if(parts.length===3) {
+									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									switch(map_entry_value) {default: u(idx-1); debugger; return;}
+								}
+								switch(parts[2]) {default: u(idx); debugger; parts[3]===""; break;}
 							} break;
 						}
 					} break;
