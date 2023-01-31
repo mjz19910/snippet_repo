@@ -5223,7 +5223,7 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},trackingParams,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.trackingParams(cf,trackingParams);
 		this.z(actions,x => {
-			const cf="RSG_SharePanel.actions[]";
+			const cf="RSG_SharePanel_Action";
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			this.clickTrackingParams(cf,clickTrackingParams);
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
@@ -5233,7 +5233,8 @@ class HandleTypes extends HandleTypesEval {
 	RS_Subscribe_ActionItem(x) {
 		const cf="RS_Subscribe_ActionItem"; this.k(cf,x);
 		if("openPopupAction" in x) {
-			const cf1=`${cf}.actions[]`;
+			/** @type {`${typeof cf}_Action`} */
+			const cf1=`${cf}_Action`;
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
 			this.clickTrackingParams(cf1,clickTrackingParams);
 			console.log(`[${cf}.openPopupAction]`,openPopupAction);
@@ -5428,7 +5429,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
-	/** @private @arg {string} cf @arg {D_CompactPlaylist} x */
+	/** @private @arg {D_CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
 		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
 		this.G_Text(shortBylineText);
@@ -5620,7 +5621,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @template T @private @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
-	/** @private @arg {string} cf @arg {D_TopbarMenuButton} x */
+	/** @private @arg {"D_TopbarMenuButton"} cf @arg {D_TopbarMenuButton} x */
 	D_TopbarMenuButton_Omit(cf,x) {
 		const {trackingParams,accessibility,tooltip,...y}=this.s(cf,x);//#destructure
 		this.trackingParams(cf,trackingParams);
@@ -6653,7 +6654,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RefreshPlaylist"; this.k(cf,x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {string} cf @arg {D_VideoOwner} x */
+	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
 		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.s(cf,x);
 		this.R_Thumbnail(thumbnail);
@@ -6673,7 +6674,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(subscribed,this.a_primitive_bool);
 	}
 	/** @private @arg {D_VideoOwner} x */
-	D_VideoOwner(x) {const cf="D_VideoOwner"; let u=this.D_VideoOwner_Omit(cf,x); const {badges,...y}=u; this.g(y);}
+	D_VideoOwner(x) {let u=this.D_VideoOwner_Omit("D_VideoOwner",x); const {badges,...y}=u; this.g(y);}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
 		const cf="D_MusicCarouselShelf";

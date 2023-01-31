@@ -87,9 +87,11 @@ type D_CF_L_Params_base=
 	|"D_ToggleMenuServiceItem"
 	|"D_TopbarLogo"
 	|"D_TopbarMenuButton_MenuItem"
+	|"D_TopbarMenuButton"
 	|"D_Transcript"
 	|"D_TranscriptSearchPanel"
 	|"D_Video"
+	|"D_VideoOwner"
 	|"D_VideoPrimaryInfo"
 	|"D_VideoSecondaryInfo"
 	|"D_Watch"
@@ -145,13 +147,14 @@ type D_CF_L_Params_base=
 	|"RS_ReelWatchSequence"
 	|"RS_Search"
 	|"RS_Settings"
+	|"RS_Subscribe_ActionItem_Action"
 	|"RS_Subscribe"
 	|"RS_Unsubscribe"
 	|"RSB_EditPlaylist"
 	|"RSG_NotificationMenu"
 	|"RSG_PdgBuyFlow"
 	|"RSG_SearchSuggestions"
-	|"RSG_SharePanel.actions[]"
+	|"RSG_SharePanel_Action"
 	|"RSG_SharePanel"
 	|"RSG_Survey"
 	|"RSG_Transcript"
@@ -194,5 +197,7 @@ type D_CF_Omit_Menu_Radio=
 	|"D_PlaylistSidebarPrimaryInfo"
 	|"D_Radio"
 	|"D_Video"
-	|D_CF_D_Video_Handle;
+	|D_CF_D_Video_Handle
+	|D_CF_D_Playlist_Omit;
 type D_CF_D_ChipCloudChip_Omit="D_ChipCloudChip";
+type D_CF_D_Playlist_Omit="D_Playlist"|"D_CompactPlaylist";
