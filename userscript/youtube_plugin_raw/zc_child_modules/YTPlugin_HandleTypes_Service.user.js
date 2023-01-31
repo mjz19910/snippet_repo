@@ -1579,7 +1579,7 @@ class HandleTypes extends HandleTypesEval {
 			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
 				let u=this.D_Link_Omit(cf,x);
-				const {icon,style: {},navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
+				const {icon,style,navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
 				this.D_CompactLink_NavEndpoint(navigationEndpoint);
 			} break;
 		}
@@ -3986,43 +3986,45 @@ class HandleTypes extends HandleTypesEval {
 		}
 		let y=this.D_CompactVideo_Omit(cf,x); this.g(y);
 	}
+	/** @type {Map<string,[string,string[]][]>} */
+	DMD_Badge_labels=new Map;
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
 		this.save_enum("BADGE_STYLE_TYPE",x.style);
+		let ia=this.DMD_Badge_labels.get(x.style);
+		if(!ia) this.DMD_Badge_labels.set(x.style,ia=[]);
 		switch(x.style) {
 			default: x===0; debugger; break;
 			case "BADGE_STYLE_TYPE_SIMPLE": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {style,trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.trackingParams(cf,trackingParams);
-				if(label!=="New") debugger;
+				ia.push(["label",[label]]);
 			} break;
 			case "BADGE_STYLE_TYPE_YPC": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {style,trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.trackingParams(cf,trackingParams);
-				if(label!=="Fundraiser") debugger;
+				ia.push(["label",[label]]);
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
-				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.T_Icon("DMD_Badge_VerifiedArtist",icon,"OFFICIAL_ARTIST_BADGE");
-				if(tooltip!=="Official Artist Channel") debugger;
-				this.a_primitive_str(tooltip);
+				ia.push(["tooltip",[tooltip]]);
 				this.trackingParams(cf,trackingParams);
-				if(accessibilityData.label!=="Official Artist Channel") debugger;
-				this.D_Label(accessibilityData);
+				ia.push(["accessibilityData.label",[accessibilityData.label]]);
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED": {
-				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {icon,style,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.T_Icon("DMD_Badge_Verified",icon,"CHECK_CIRCLE_THICK");
-				if(tooltip!=="Verified") debugger;
-				this.a_primitive_str(tooltip);
+				ia.push(["tooltip",[tooltip]]);
 				this.trackingParams(cf,trackingParams);
-				this.D_Label(accessibilityData);
+				ia.push(["accessibilityData.label",[accessibilityData.label]]);
 			} break;
 			case "BADGE_STYLE_TYPE_LIVE_NOW": {
-				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {icon,style,trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.T_Icon("DMD_Badge_LiveNow",icon,"LIVE");
 				this.trackingParams(cf,trackingParams);
+				ia.push(["label",[label]]);
 				switch(label) {
 					default: debugger; break;
 					case "LIVE": break;
@@ -4030,9 +4032,9 @@ class HandleTypes extends HandleTypesEval {
 				}
 			} break;
 			case "BADGE_STYLE_TYPE_COLLECTION": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {style,trackingParams,label,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				this.trackingParams(cf,trackingParams);
-				this.a_primitive_str(label);
+				ia.push(["label",[label]]);
 			} break;
 		}
 	}
