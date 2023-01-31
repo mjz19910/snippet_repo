@@ -3400,7 +3400,11 @@ class HandleTypes extends HandleTypesEval {
 							break;
 						case 3: {
 							let playlist_id=this._decoder.decode(r[2]);
-							console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);
+							if(this.str_starts_with("RD",playlist_id)) {
+								this.playlistId(playlist_id);
+							} else {
+								console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);
+							}
 						} break;
 					}
 				}
