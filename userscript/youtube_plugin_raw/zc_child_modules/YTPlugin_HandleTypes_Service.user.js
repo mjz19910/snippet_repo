@@ -947,9 +947,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_VE4724} x */
 	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
 	/** @private @arg {GM_Subscribe} x */
-	GM_Subscribe(x) {const {sendPost: a,apiUrl: b,...y}=x; this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/subscription/subscribe");}
+	GM_Subscribe(x) {const {sendPost: a,apiUrl: b,...y}=this.s("GM_Subscribe",x); this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/subscription/subscribe");}
 	/** @private @arg {GM_FlagGetForm} x */
-	GM_FlagGetForm(x) {const {sendPost: a,apiUrl: b,...y}=x; this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/flag/get_form");}
+	GM_FlagGetForm(x) {const {sendPost: a,apiUrl: b,...y}=this.s("GM_FlagGetForm",x); this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/flag/get_form");}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
 		const cf="GM_Like"; this.k(cf,x);
@@ -1553,11 +1553,10 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId===void 0) {debugger; return;}
 		this.save_string("[D_ToggleButton.targetId]",targetId);
 	}
+	/** @template T,U @arg {T_Id<T>} x @arg {(x:T)=>U} f */
+	T_Id(x,f) {return f(x.id);}
 	/** @private @arg {D_ToggleButtonIdData} x */
-	D_ToggleButtonIdData(x) {
-		const {toggleButtonIdData: a,...y}=x; this.g(y);
-		this.save_enum("TOGGLE_BUTTON_ID_TYPE",a.id);
-	}
+	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
 	/** @private @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
@@ -2828,7 +2827,7 @@ class HandleTypes extends HandleTypesEval {
 	service_menu_icons=[];
 	/** @private @arg {"RD_MenuServiceItem"} cf @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem_Omit(cf,x) {
-		const {text,icon,serviceEndpoint,trackingParams,...y}=x;
+		const {text,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
 		switch(icon.iconType) {
 			default: this.new_service_icon(icon.iconType); break;
@@ -4822,7 +4821,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {const {loop,...y}=x; this.g(y); this.ceq(loop,this.false_());}
+	DC_Loop(x) {const {loop,...y}=this.s(cf,x); this.g(y); this.ceq(loop,this.false_());}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
 		const cf="A_HideEngagementPanelScrim";
@@ -5147,7 +5146,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PrefetchHintConfig} x */
 	D_PrefetchHintConfig(x) {
 		const cf="D_PrefetchHintConfig"; this.k(cf,x);
-		const {prefetchPriority,countdownUiRelativeSecondsPrefetchCondition,playbackRelativeSecondsPrefetchCondition,...y}=x; this.g(y);
+		const {prefetchPriority,countdownUiRelativeSecondsPrefetchCondition,playbackRelativeSecondsPrefetchCondition,...y}=this.s(cf,x); this.g(y);
 		this.ceq(prefetchPriority,0);
 		if(prefetchPriority!==0) debugger;
 	}
@@ -6982,7 +6981,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
-	DC_SectionList_SearchFeed(x) {x; debugger;}
+	DC_SectionList_SearchFeed(x) {
+		const cf="DC_SectionList_SearchFeed";
+		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);
+	}
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {x; debugger;}
 	/** @private @arg {D_PrimaryLinkItem} x */

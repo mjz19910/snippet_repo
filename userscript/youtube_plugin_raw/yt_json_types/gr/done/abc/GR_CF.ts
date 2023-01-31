@@ -46,7 +46,7 @@ type CF_M_s_no_gen=
 	|"DC_Continuation"
 	;
 ;
-type CF_M_s=
+type CF_M_s_gen=
 	|`${CF_parse_identifier}.identifier`
 	|CF_D_Button
 	|CF_D_ChipCloudChip_Omit
@@ -55,14 +55,18 @@ type CF_M_s=
 	|CF_D_Menu_Omit
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
+	|CF_L_Common_Params
 	|CF_M_s_no_gen
 	|CF_T_SE_Signal
 	|T_ExtractImport<"CF_M_s">
+	;
+;
+type CF_M_s=
+	|"GM_Subscribe"
 	|"T_Autoplay"
 	|"T_Playlist"
 	|"T_SecondaryResults"
 	|"T_Types"
-	|CF_L_Common_Params
 	|"G_Text"
 	|"R_TextRun"
 	|"MG_AdLayout"
@@ -122,6 +126,7 @@ type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";
 type CF_M_y=
 	|T_ExtractImport<"CF_M_y">|"CF_M_y"|"a"
 	|`T_WCM:${CF_T_WCM}`
+	|"D_ToggleButtonIdData"
 	;
 ;
 type CF_M_zy=T_ExtractImport<"CF_M_zy">|"CF_M_zy"|"a";
