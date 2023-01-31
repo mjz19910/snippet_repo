@@ -2194,7 +2194,7 @@ class HandleTypes extends HandleTypesEval {
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(a!=="DROPDOWN") debugger;
+		if(a!=="DROPDOWN") {this.do_codegen(cf,x); return null;}
 		return b;
 	}
 	/** @private @arg {RSG_NotificationMenu_Action} x */
