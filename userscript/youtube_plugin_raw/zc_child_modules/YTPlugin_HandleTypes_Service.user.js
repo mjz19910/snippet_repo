@@ -211,11 +211,12 @@ class HandleTypes extends HandleTypesEval {
 		this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.t(bold,this.a_primitive_bool);
 	}
-	//#endregion
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
 	/** @private @template {CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
 	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
+	//#endregion
+	//#region helpers
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
@@ -228,8 +229,13 @@ class HandleTypes extends HandleTypesEval {
 		this.k(cf,x);
 		return x;
 	}
+	/** @protected @arg {string} cf @arg {{}} x */
+	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	/** @protected @arg {string} cf @arg {{}} x */
+	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
+	//#endregion
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */

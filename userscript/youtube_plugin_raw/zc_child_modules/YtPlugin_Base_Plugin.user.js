@@ -4104,10 +4104,6 @@ class ServiceData extends BaseService {
 }
 /** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
-	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
-	/** @protected @arg {string} cf @arg {{}} x */
-	g_k=(cf,x) => this.k(cf,x);
 	/** @template T @template {{popup:T;popupType: "DIALOG";}} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
 	unpack_popup_dialog(x) {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];
