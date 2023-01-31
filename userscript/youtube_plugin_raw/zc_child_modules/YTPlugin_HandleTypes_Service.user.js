@@ -781,25 +781,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region E_ (Endpoints)
 	/** @private @arg {E_Watch} x */
-	E_Watch(x) {let [a,b]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
+	E_Watch(x) {let [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
 	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.D_Empty_WCM(a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {
-		const cf="E_YpcGetCart";
-		let [a,b]=this.TE_Endpoint_3(cf,"ypcGetCartEndpoint",x);
-		this.M_YpcGetCart(a); this.D_YpcGetCart(b);
-	}
+	E_YpcGetCart(x) {let [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {
-		let [a,b]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x);
-		this.M_Subscribe(a); this.DE_Subscribe(b);
-	}
+	E_Subscribe(x) {let [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {
-		let [a,b]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x);
-		this.M_VE37414(a); this.D_ReelWatch(b);
-	}
+	E_ReelWatch(x) {let [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.D_ReelWatch(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {
 		const cf="E_ShowEngagementPanel";
@@ -816,7 +806,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {
-		let [a,b]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x);
+		let [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y);
 		this.M_AddToPlaylistService(a);
 		this.DE_AddToPlaylistService(b);
 	}
@@ -841,20 +831,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {x; debugger;}
 	/** @private @arg {E_Url} x */
-	E_Url(x) {
-		const cf="E_Url";
-		const {clickTrackingParams,commandMetadata,urlEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.M_VE83769(commandMetadata);
-		this.DE_Url(urlEndpoint);
-	}
+	E_Url(x) {const cf="E_Url"; let [a,b,y]=this.TE_Endpoint_3(cf,"urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {
-		const cf="E_RecordNotificationInteractions";
-		let [a,b]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x);
-		this.M_RecordInteractions(a);
-		this.DE_RecordNotificationInteractions(b);
-	}
+	E_RecordNotificationInteractions(x) {const cf="E_RecordNotificationInteractions"; let [a,b,y]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {
 		const cf="E_GetNotificationMenu";
@@ -898,7 +877,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {
 		const cf="E_CreateBackstagePost";
-		let [a,b]=this.TE_Endpoint_3(cf,"createBackstagePostEndpoint",x);
+		let [a,b,y]=this.TE_Endpoint_3(cf,"createBackstagePostEndpoint",x); this.g(y);
 		this.DE_CreateBackstagePost(b);
 		this.M_CreateBackstagePost(a);
 	}
@@ -913,7 +892,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {
-		let [a,b]=this.TE_Endpoint_3("E_Like","likeEndpoint",x);
+		let [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y);
 		this.E_Like_C(a);
 		this.DE_Like(b);
 	}
@@ -930,7 +909,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {
-		let [a,b]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x);
+		let [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y);
 		this.DE_PlaylistEditor(b);
 		this.D_Empty_WCM(a);
 	}
@@ -948,6 +927,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
+	/** @private @arg {DE_GetNotificationMenu} x */
+	DE_GetNotificationMenu(x) {x;}
 	/** @private @arg {GE_Browse['browseEndpoint']} x */
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
@@ -1572,11 +1553,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",a.id);
 	}
 	/** @private @arg {C_CommandExecutor} x */
-	C_CommandExecutor(x) {
-		let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x);
-		this.DC_CommandExecutor(a);
-		this.g(b);
-	}
+	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {
 		this.T_Commands("DC_CommandExecutor",x,x => {
@@ -1671,7 +1648,7 @@ class HandleTypes extends HandleTypesEval {
 			this.GM_Next(x.commandMetadata.webCommandMetadata);
 		}
 		this.DC_Continuation(x.continuationCommand);
-		let [a,b]=this.TE_Endpoint_Opt_3(cf,"continuationCommand",x);
+		let [a,b,y]=this.TE_Endpoint_Opt_3(cf,"continuationCommand",x); this.g(y);
 		a;
 		b;
 	}
@@ -4863,12 +4840,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {C_Loop} x */
-	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.DC_Loop(a); this.g(b);}
+	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {
-		const {loop,...y}=x; this.g(y);
-		this.ceq(loop,false);
-	}
+	DC_Loop(x) {const {loop,...y}=x; this.g(y); this.ceq(loop,this.false_());}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {
 		const cf="A_HideEngagementPanelScrim";
@@ -5708,7 +5682,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
 	}
 	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.AD_SendFeedback(a); this.g(b);}
+	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
 	/** @private @arg {AD_SendFeedback} x */
 	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y); if(bucket!=="Kevlar") debugger;}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
