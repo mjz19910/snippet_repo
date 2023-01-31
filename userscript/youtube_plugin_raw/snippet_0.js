@@ -460,16 +460,16 @@ class ND extends Snippet_0_tmp {
 	/** @private @arg {R_Thumbnail} x */
 	D_Thumbnail(x) {x;}
 	/** @private @arg {G_Text} x */
-	D_Text(x) {x;}
+	G_Text(x) {x;}
 	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
 		const cf="VideoOwner$Omit"; cf;
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
 		this.D_Thumbnail(thumbnail);
-		this.D_Text(title);
+		this.G_Text(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E_Browse(navigationEndpoint);
-		this.t(subscriberCountText,this.D_Text);
+		this.t(subscriberCountText,this.G_Text);
 		trackingParams;
 		return y;
 	}
@@ -557,7 +557,7 @@ class ND extends Snippet_0_tmp {
 			case "INFO": break;
 			default: debugger;
 		}
-		this.D_Text(text);
+		this.G_Text(text);
 		this.R_Button(dismissButton);
 	}
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
@@ -667,11 +667,11 @@ class ND extends Snippet_0_tmp {
 		this.primitive_of_string(type);
 		this.primitive_of_string(channelId);
 		this.primitive_of(showPreferences,"boolean");
-		this.D_Text(buttonText);
-		this.D_Text(subscribedButtonText);
-		this.D_Text(unsubscribedButtonText);
+		this.G_Text(buttonText);
+		this.G_Text(subscribedButtonText);
+		this.G_Text(unsubscribedButtonText);
 		trackingParams; cf;
-		this.D_Text(unsubscribeButtonText);
+		this.G_Text(unsubscribeButtonText);
 		// this.tz(serviceEndpoints,x => {
 		// 	if("subscribeEndpoint" in x) return this.E_Subscribe(x);
 		// 	if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);

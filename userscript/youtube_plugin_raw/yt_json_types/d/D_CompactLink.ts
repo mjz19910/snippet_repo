@@ -15,4 +15,10 @@ type D_CompactLink={
 	navigationEndpoint: E_Upload;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
+}|{
+	icon: T_Icon<"CREATION_LIVE">;
+	title: G_Text;
+	navigationEndpoint: E_SignalNavigation;
+	trackingParams: string;
+	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
 };

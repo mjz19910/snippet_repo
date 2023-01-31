@@ -1479,6 +1479,13 @@ class HandleTypes extends HandleTypesEval {
 		const {title,items,...y}=this.s(cf,x); this.g(y);
 		this.z(items,this.R_CompactLink);
 	}
+	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
+	D_CompactLink_NavEndpoint(x) {
+		if("uploadEndpoint" in x) return this.E_Upload(x);
+		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("signalNavigationEndpoint" in x) return this.T_SE_Signal("D_CompactLink.nav",x)
+		x;
+	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
 	D_CompactLink_Styled(cf,x) {
 		switch(x.style) {
@@ -1487,6 +1494,7 @@ class HandleTypes extends HandleTypesEval {
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
 				let u=this.D_Link_Omit(cf,x);
 				const {icon,style: {},navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
+				if(!navigationEndpoint.uploadEndpoint) {debugger; break;}
 				this.E_Upload(navigationEndpoint);
 			} break;
 		}
