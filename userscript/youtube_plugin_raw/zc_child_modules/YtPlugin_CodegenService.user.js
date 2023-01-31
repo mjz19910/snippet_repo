@@ -349,12 +349,14 @@ class CodegenService extends BaseService {
 			if(!sr) break x;
 			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
-		if(state.k1==="webCommandMetadata") {
-			/** @type {{webCommandMetadata:{apiUrl?:`/youtubei/v1/${string}`;}}} */
+		if(x.webCommandMetadata) {
+			/** @type {{webCommandMetadata:{rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
 			let v=as(x);
-			let u=v.webCommandMetadata.apiUrl;
-			if(u) {
-				let ss=this.split_str(u,"/");
+			let u1=v.webCommandMetadata.apiUrl; 
+			let u2=v.webCommandMetadata.rootVe;
+			if(u2) return `TYPE::M_VE${u2}`;
+			if(u1) {
+				let ss=this.split_str(u1,"/");
 				if(ss[0]!=="") debugger;
 				let [,a2,a3,...rest]=ss;
 				if(a2!=="youtubei") debugger;

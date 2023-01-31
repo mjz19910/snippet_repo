@@ -809,7 +809,7 @@ class ParserService extends BaseService {
 					case "playlist_edit.params":
 					case "watch_page_url.pp":
 					case "watch_playlist.params": {
-						new_ns();
+						new_path();
 						debugger;
 					}
 				}
