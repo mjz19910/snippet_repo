@@ -1708,14 +1708,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {`D_Button.From.command.targetId`} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
-		/** @type {string} */
-		let ux=x;
-		/** @type {(typeof x)|"clip-info-button"} */
-		let rx=as(ux);
+		///** @type {string} */
+		//let ux=x;
+		///** @type {(typeof x)|"clip-info-button"} */
+		// let x=as(ux);
 		/** @private @type {D_Button_TargetId} */
-		switch(rx) {
+		switch(x) {
 			default: this.generate_case("D_Button_TargetId",x); break;
-			case "clip-info-button": debugger; break;
+			case "clip-info-button":
 			// case "sponsorships-button":
 			case "create-clip-button-action-bar":
 		}
@@ -1884,7 +1884,10 @@ class HandleTypes extends HandleTypesEval {
 		if("accessibilityData" in x1) {
 			let {accessibilityData,accessibility,...y}=x1; this.g(y);
 			this.D_Accessibility(accessibilityData);
-			if(accessibility.label!=="Save to") debugger;
+			switch(accessibility.label) {
+				default: debugger; break;
+				case "Cancel auto-play for this video": break;
+			}
 			return;
 		}
 		if("accessibility" in x1) {

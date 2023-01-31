@@ -1,3 +1,30 @@
+type D_Button_ClipInfoButton={
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: false;
+	icon: T_Icon<"INFO">;
+	trackingParams: string;
+	accessibilityData: TD_Accessibility<"Learn more">;
+	targetId: "clip-info-button";
+	command: TA_OpenPopup<{
+		popup: R_ConfirmDialog;
+		popupType: "DIALOG";
+	}>;
+};
+
+type D_Button=
+	|D_ClipInfoButton
+	|D_ButtonCancelAutoplay
+	|D_Button_1
+	|D_ShareButton
+	|D_CreateClipButton
+	|D_SuggestiveButton
+	|D_PlaylistAddButton_Save
+	|D_PlaylistAddButton_Clip
+	|D_Button_ClipInfoButton
+	;
+;
+
 type R_Button={buttonRenderer: D_Button;};
 type D_ClipInfoButton={
 	style: "STYLE_DEFAULT";
@@ -96,25 +123,13 @@ type D_PlaylistAddButton_Clip={
 	command: E_AddToPlaylistService;
 };
 
-type D_Button=
-	|D_ClipInfoButton
-	|D_Button_1
-	|D_ShareButton
-	|D_CreateClipButton
-	|D_SuggestiveButton
-	|D_PlaylistAddButton_Save
-	|D_PlaylistAddButton_Clip
-	|{
-		style: "STYLE_DEFAULT";
-		size: "SIZE_DEFAULT";
-		isDisabled: false;
-		text: G_Text;
-		accessibility: {
-			label: "Save to";
-		};//:<"Cancel auto-play for this video"">;
-		trackingParams: string;
-		accessibilityData: D_Accessibility;//:<"Cancel auto-play for this video"">;
-		command: C_GetSurvey;
-	}
-	;
-;
+type D_ButtonCancelAutoplay={
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: false;
+	text: G_Text;
+	accessibility: TD_Label<"Cancel auto-play for this video">;
+	trackingParams: string;
+	accessibilityData: TD_Accessibility<"Cancel auto-play for this video">;
+	command: C_GetSurvey;
+};
