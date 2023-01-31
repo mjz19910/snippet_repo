@@ -170,10 +170,15 @@ type T_DialogPopup<T=R_ConfirmDialog>={
 	popup: T;
 	popupType: "DIALOG";
 };
-type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog,BeReused=false>={
+type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog>={
 	popup: T;
 	popupType: "DIALOG";
-	beReused: BeReused;
+	beReused: false;
+};
+type T_DropdownPopup_ReuseFlag<T>={
+	popup: T;
+	popupType: "DROPDOWN";
+	beReused: true;
 };
 type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
 type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
@@ -280,3 +285,15 @@ type T_DC_Content<T>={trackingParams: string; contents: T[];};
 type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
 type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
 
+
+type Signal_GetNotificationsMenu={
+	signal: "GET_NOTIFICATIONS_MENU";
+	actions: G_Action_GetNotificationsMenu[];
+};
+type G_AllSignalTypes=
+	|Signal_GetNotificationsMenu
+	|G_ClientSignal
+	|G_AllSignalServiceEndpoint['signalServiceEndpoint']
+	;
+;
+type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];

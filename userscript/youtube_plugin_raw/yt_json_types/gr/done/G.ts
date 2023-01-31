@@ -253,3 +253,6 @@ type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
 	A_ShowEngagementPanelScrim|
 	C_ScrollToEngagementPanel;
 type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
+
+type G_Action_GetNotificationsMenu_Popup=T_DropdownPopup_ReuseFlag<P_NotificationMenu_Popup>;
+type G_Action_GetNotificationsMenu=TA_OpenPopup<G_Action_GetNotificationsMenu_Popup>;

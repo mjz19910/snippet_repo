@@ -5899,7 +5899,7 @@ class HandleTypes extends HandleTypesEval {
 	G_Action_GetNotificationsMenu_Popup(x) {
 		const cf="G_Action_GetNotificationsMenu_Popup";
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(popupType!=="DIALOG") debugger;
+		if(popupType!=="DROPDOWN") debugger;
 		if(beReused!==true) debugger;
 		return a;
 	}
