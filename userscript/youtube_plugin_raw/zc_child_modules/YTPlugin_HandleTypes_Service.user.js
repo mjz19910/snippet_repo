@@ -1101,7 +1101,7 @@ class HandleTypes extends HandleTypesEval {
 		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
-		this.t(icon,x => this.T_Icon_AnyOf("D_ButtonIcon",x,this.expected_button_iconTypes));
+		this.t(icon,x => this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes));
 		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);

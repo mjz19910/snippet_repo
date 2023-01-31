@@ -14,18 +14,19 @@ function gen_find_type_is_not {
 	grep -Po "(?<=of type ')\".+?\"(?=' is not).+"
 }
 function generate_ts {
-	perl -pe 's/"(.+?)".+type .(.+).\./\t|{n:Prelude.$2,t:Types.$2,v:"$1"}/gm'
+	# |{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
+	perl -pe 's/"(.+?)".+type .(.+).\./\t\t|{n: Prelude.$2; t: Types.$2_; v: "$1";}/gm'
 }
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF/";
 setup;
 {
 	cat "$DEST_DIR/out_prelude.ts";
 	echo "export namespace Gen {\n\texport type CF_Generated=";
-	tsc -p userscript | gen_find_type_is_not |generate_ts|sort -u;
+	tsc -p userscript | gen_find_type_is_not | generate_ts | sort -u;
 	echo "}";
 } > /tmp/tmp.ts;
 mv /tmp/tmp.ts "$DEST_DIR/tmp.ts";
-tsc -p userscript&&cp "$DEST_DIR/tmp.ts" "$DEST_DIR/out.ts"||restore_on_failure;
+tsc -p userscript&&cp "$DEST_DIR/tmp.ts" "$DEST_DIR/out.ts" || restore_on_failure;
 restore;
 cp "$DEST_DIR/tmp.ts" "$DEST_DIR/tmp.bak.mts";
 rm "$DEST_DIR/tmp.ts";

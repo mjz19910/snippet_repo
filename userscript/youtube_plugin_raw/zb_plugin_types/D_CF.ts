@@ -20,6 +20,7 @@ type CF_TA_OpenPopup=
 	;
 ;
 type D_CF_T_Icon_Any=
+	|"D_Icon_Button"
 	|""
 	|"a"
 	;
