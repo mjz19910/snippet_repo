@@ -2514,9 +2514,22 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_STR_CF} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {
-			console.log(`-- [string.${cf}] --\n\ntype D_${cf}=UC\${string}`);
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);
+		}
+		if(x.startsWith("https://")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
+			return;
+		}
+		if(x.startsWith("http://")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
+			return;
 		}
 		cf;
+		x;
+	}
+	/** @arg {D_STR_CF} cf @arg {string} x */
+	codegen_case(cf,x) {
+		console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);
 		x;
 	}
 	/** @private @arg {`UC${string}`} x */

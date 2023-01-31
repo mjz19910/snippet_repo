@@ -16,3 +16,6 @@ type D_STR_CF=[
 	"G_VE37414",
 	"G_VE83769",
 ][number];
+type D_CaseGen_CF=[
+	"codegen_case",
+][number];
