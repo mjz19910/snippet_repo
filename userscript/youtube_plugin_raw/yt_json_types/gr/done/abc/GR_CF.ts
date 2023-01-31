@@ -38,7 +38,8 @@ type CF_L_Params=
 	;
 ;
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
-type CF_M_s_gen=
+type CF_GM_WC_2_gen=T_ExtractImport<"CF_GM_WC_2">;
+type CF_M_s=
 	|`${CF_parse_identifier}.identifier`
 	|CF_D_Button
 	|CF_D_ChipCloudChip_Omit
@@ -47,11 +48,11 @@ type CF_M_s_gen=
 	|CF_D_Menu_Omit
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
+	|CF_GM_WC_2
 	|CF_T_SE_Signal
+	|T_ExtractImport<"CF_M_s">
 	;
 ;
-type CF_GM_WC_2_gen=T_ExtractImport<"CF_GM_WC_2">;
-type CF_M_s=CF_M_s_gen|T_ExtractImport<"CF_M_s">;
 type CF_GM_WC_2=CF_GM_WC_2_gen|"CF_GM_WC_2"|"a";
 type CF_L_TP_Params=
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"

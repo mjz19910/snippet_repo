@@ -1210,7 +1210,7 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @protected @arg {string} cf @template T @arg {{sendPost: true;apiUrl: T;}} x */
+	/** @protected @arg {CF_GM_WC_2} cf @template T @arg {{sendPost: true;apiUrl: T;}} x */
 	GM_WC_2(cf,x) {
 		const {}=this.s(cf,x); 
 	}
