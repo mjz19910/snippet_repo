@@ -172,7 +172,6 @@ type D_Button_ER_Rest=Exclude<D_Button,D_Button_NP_SrvEp>;
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 
-type DE_ShareEntityService={serializedShareEntity: string; commands: TA_OpenPopup<Popup_ShareEntityService>[];};
 type D_SubscriptionNotificationToggleButton={
 	states: [
 		{

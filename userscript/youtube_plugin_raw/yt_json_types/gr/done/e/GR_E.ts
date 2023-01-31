@@ -44,11 +44,6 @@ type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,DE_Empty_WCM>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
 //#endregion
-type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
-type DE_PlaylistEditor={playlistId: D_PlaylistId;};
-type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
-type DE_ReelWatch={videoId: string;}|{thumbnail: R_Thumbnail;}|{playerParams: string; overlay: R_ReelPlayerOverlay; params: string;}|{sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams: string;}|{inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
-type DE_Search={query: string;};
 type DE_AddToPlaylistService={videoId: string;};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type DE_CreateComment={createCommentParams: string;};
@@ -56,3 +51,10 @@ type DE_Feedback={feedbackToken: string; uiActions: D_HideEnclosingContainer; ac
 type DE_GetNotificationMenu={ctoken: string;};
 type DE_Like=DE_Like_NS.DE_Like;
 type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serializedRecordInteractionsRequest: string;};
+type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
+type DE_PlaylistEditor={playlistId: D_PlaylistId;};
+type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
+type DE_ReelWatch={videoId: string;}|{thumbnail: R_Thumbnail;}|{playerParams: string; overlay: R_ReelPlayerOverlay; params: string;}|{sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams: string;}|{inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
+type DE_Search={query: string;};
+type DE_ShareEntityService={serializedShareEntity: string; commands: TA_OpenPopup<Popup_ShareEntityService>[];};
+
