@@ -21,8 +21,6 @@ export class HandleTypesEval_ extends ServiceMethods {
 	T_Command_TP(x,f) {x; f;}
 	/** @protected @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x @returns {TD_ItemSection_3<CT, T, U>} */
 	TR_ItemSection_3(x) {x; n();}
-	/** @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
-	TD_ItemSection_3(x,f) {x; f;}
 	/** @protected @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x @returns {TD_ItemSection_2<T, "comments-entry-point">} */
 	TR_ItemSection_2(x) {x; n();}
 	/** @protected @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(x:T)=>void} f */

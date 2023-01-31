@@ -269,8 +269,14 @@ ECatcherService.known_experiments.push(...[
 class HandleTypes extends HandleTypesEval {
 	//#region moved members
 	/** @private @template {D_CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.s(`D_CF_D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
-	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_CF_D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
+	/** @private @template {{}} T @arg {DF_Sub_s} cf @arg {T} x */
+	s_priv(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
+	/** @private @template {{}} T @arg {D_CF_s} cf @arg {T} x */
 	s(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
@@ -279,7 +285,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template T @arg {D_CF["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @arg {D_CF_T_Endpoint} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
-	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s(cf,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
+	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s_priv(`T_Endpoint_Tracking:${cf}`,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
@@ -303,11 +309,11 @@ class HandleTypes extends HandleTypesEval {
 		if(!wr) return;
 		return f.call(this,wr);
 	}
-	/** @override @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
-	TD_ItemSection_3(x) {
-		const cf="TD_ItemSection_3";
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.trackingParams(cf,trackingParams);
+	/** @arg {CF_TD_ItemSection_3} cf1 @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
+	TD_ItemSection_3(cf1,x) {
+		const cf2="TD_ItemSection_3";
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
+		this.trackingParams(cf2,trackingParams);
 		if(contents.length>0) {
 			let cu=contents[0];
 			if(typeof cu!=="object"||!cu) {debugger; return null;}
@@ -323,22 +329,26 @@ class HandleTypes extends HandleTypesEval {
 	//#region member functions
 	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {D_CF_T_Endpoint} cf @arg {T_EP} x @arg {EP_Key} k 
+	 * @arg {CF_TE_Endpoint_2} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k 
 	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
 	 * */
-	TE_Endpoint_2(cf,k,x) {
-		const {clickTrackingParams,[k]: endpoint,...y}=this.s(cf,x);
-		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+	TE_Endpoint_2(cf1,k,x) {
+		const cf2="TE_Endpoint_2";
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [endpoint,y];
 	}
 	/** 
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {D_CF_T_Endpoint} cf @arg {T_EP} x
+	 * @arg {TE_Endpoint_3_CF} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
 	 * @arg {EP_Key} k
 	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
 	 */
-	TE_Endpoint_3(cf,k,x) {
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s(cf,x);
-		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+	TE_Endpoint_3(cf1,k,x) {
+		const cf2="TE_Endpoint_3";
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
 	/** @template {EPL} EP_Key @template {TE_Endpoint_3<EP_Key,T_Data,T_Meta>} T_EP @template T_Data @template T_Meta @arg {Omit<T_EP,"clickTrackingParams">} x @returns {EP_Ret} */
