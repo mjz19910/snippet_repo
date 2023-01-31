@@ -268,23 +268,23 @@ ECatcherService.known_experiments.push(...[
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region moved members
-	/** @private @template {D_CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_CF_D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
-	/** @private @template {{}} T @arg {DF_Sub_s} cf @arg {T} x */
+	/** @private @template {CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
+	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
+	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
 		return x;
 	}
-	/** @private @template {{}} T @arg {D_CF_s} cf @arg {T} x */
+	/** @private @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
 		return x;
 	}
-	/** @private @template T @arg {D_CF["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
+	/** @private @template T @arg {CF_mod["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
-	/** @arg {D_CF_T_Endpoint} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
+	/** @arg {"C_GetSurvey"} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
 	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s_priv(`T_Endpoint_Tracking:${cf}`,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
 	//#endregion
 	//#region static & typedefs
@@ -340,7 +340,8 @@ class HandleTypes extends HandleTypesEval {
 		return [endpoint,y];
 	}
 	/** 
-	 * @arg {TE_Endpoint_3_CF} cf1
+	 * @private
+	 * @arg {CF_TE_Endpoint_3} cf1
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
 	 * @arg {EP_Key} k
 	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
@@ -351,21 +352,9 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
-	/** @template {EPL} EP_Key @template {TE_Endpoint_3<EP_Key,T_Data,T_Meta>} T_EP @template T_Data @template T_Meta @arg {Omit<T_EP,"clickTrackingParams">} x @returns {EP_Ret} */
-	TE_Endpoint_3_2(x) {
-		const {commandMetadata,...y}=x;
-		/** @typedef {[typeof commandMetadata,typeof y]} EP_Ret */
-		return [commandMetadata,y];
-	}
-	/** @template {keyof T_EP} EP_Key @template {{[U in EP_Key]:T_Data}} T_EP @template T_Data @arg {T_EP} x @arg {EP_Key} k @returns {EP_Ret} */
-	TE_Endpoint_3_3(x,k) {
-		const {[k]: endpoint,...y}=x;
-		/** @typedef {[typeof endpoint,typeof y]} EP_Ret */
-		return [endpoint,y];
-	}
-	/** @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {D_CF_T_Endpoint} cf @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
+	/** @private @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
-		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s(cf,x);
+		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
@@ -414,27 +403,27 @@ class HandleTypes extends HandleTypesEval {
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
-	/** @arg {D_CF_T_Icon} cf_in @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} w */
-	T_Icon(cf_in,x,w) {
-		const cf="T_Icon";
-		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
+	/** @arg {D_CF_T_Icon} cf1 @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} w */
+	T_Icon(cf1,x,w) {
+		const cf2="T_Icon";
+		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
 		if(iconType!==w) debugger;
-		this.save_string(`[${cf_in}.IconType]`,iconType);
+		this.save_string(`[${cf1}.IconType]`,iconType);
 	}
-	/** @private @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
-	T_Icon_AnyOf(x,ty_arr) {
-		const cf="T_Icon";
-		const {iconType,...y}=this.s(cf,x); this.g(y);//#destructure_off
+	/** @private @arg {D_CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	T_Icon_AnyOf(cf1,x,ty_arr) {
+		const cf2="T_Icon";
+		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);//#destructure_off
 		const is_not_in_set=!ty_arr.includes(iconType);
 		if(is_not_in_set) {console.log("[missing_icon]",iconType);}
 		this.save_string("[IconType]",iconType);
 		return is_not_in_set;
 	}
-	/** @private @template T @arg {TA_OpenPopup<T>} x */
-	TA_OpenPopup(x) {
-		const cf="TA_OpenPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
+	/** @private @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
+	TA_OpenPopup(cf1,x) {
+		const cf2="TA_OpenPopup";
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
+		this.clickTrackingParams(cf2,clickTrackingParams);
 		return a;
 	}
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
