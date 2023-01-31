@@ -282,7 +282,7 @@ class HandleTypes extends HandleTypesEval {
 		this.k(cf,x);
 		return x;
 	}
-	/** @private @template T @arg {CF_mod["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
+	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @arg {"C_GetSurvey"} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
 	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s_priv(`T_Endpoint_Tracking:${cf}`,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
@@ -373,7 +373,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return ok_e;
 	}
-	/** @protected @arg {D_CF_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(cf,k,x,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
@@ -395,15 +395,15 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @template {D_CF_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
-	/** @protected @arg {D_CF_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
+	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
 	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
-	/** @arg {D_CF_T_Icon} cf1 @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} w */
+	/** @arg {CF_T_Icon} cf1 @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} w */
 	T_Icon(cf1,x,w) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);//#destructure_off
@@ -440,9 +440,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
-	/** @private @arg {TA_Page_CF} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	/** @private @arg {CF_TA_Page} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
-	/** @private @arg {TR_MultiPageMenu_CF} cf @template T @arg {TR_MultiPageMenu<T>} x */
+	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
 	//#endregion
 	//#region web_command_metadata
@@ -1000,7 +1000,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.make_codegen_group(cf,x);
 	}
-	/** @private @template {D_CompactLink} T @arg {D_CF_D_Link} cf @arg {T} x */
+	/** @private @template {D_CompactLink} T @arg {CF_D_Link} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
 		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
@@ -1096,7 +1096,7 @@ class HandleTypes extends HandleTypesEval {
 	expected_button_iconTypes=[
 		"DELETE","NOTIFICATIONS_ACTIVE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS",
 	];
-	/** @private @template {D_Button} T @arg {D_CF_D_Button} cf @arg {T} x */
+	/** @private @template {D_Button} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
 		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
@@ -1318,13 +1318,13 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Watch(navigationEndpoint);
 		return y;
 	}
-	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {D_CF_Omit_Menu_Radio} cf @arg {T} x */
+	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	R_Omit_Menu_Radio(cf,x) {
 		let {navigationEndpoint,menu,...y}=this.Omit_Compact_Player(cf,x);
 		this.R_Menu(menu);
 		return y;
 	}
-	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {D_CF_Omit_Menu_Radio} cf @arg {T} x */
+	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
 		if("adSlotMetadata" in x) {debugger; throw new Error();}
 		let u=this.R_Omit_Menu_Radio(cf,x);
@@ -1341,7 +1341,7 @@ class HandleTypes extends HandleTypesEval {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
-	/** @private @arg {D_CF_D_Video_Handle} cf @arg {D_Video} x */
+	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */
 	D_Video_Handle(cf,x) {
 		let u=this.D_Video_Omit(cf,x);
 		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=u; this.g(y);
@@ -1427,7 +1427,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
-	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
@@ -1437,7 +1437,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
-	/** @private @template {D_CompactVideo|D_Video} T @arg {D_CF_Omit_Menu_Radio} cf @arg {T} x */
+	/** @private @template {D_CompactVideo|D_Video} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
 		this.trackingParams(cf,trackingParams);
@@ -1450,7 +1450,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(shortBylineText);
 		return y;
 	}
-	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {D_Video} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=u;
@@ -1757,7 +1757,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
 		const cf="C_GetSurvey";
-		const {commandMetadata: a,getSurveyCommand: b,...y}=this.ctp(cf,x); this.g(y);
+		const {clickTrackingParams,commandMetadata: a,getSurveyCommand: b,...y}=this.s(cf,x); this.g(y);
+		this.clickTrackingParams(cf,x);
 		this.D_GetSurvey(b);
 		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",a); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
@@ -2075,7 +2076,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSL_Like";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.tz(actions,x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			debugger;
 			return null;
 		});
@@ -2085,7 +2086,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSL_Dislike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			debugger;
 			return null;
 		});
@@ -2095,7 +2096,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSL_RemoveLike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.TA_OpenPopup(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			debugger;
 			return null;
 		}));
@@ -2430,7 +2431,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
-	/** @private @arg {D_CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
+	/** @private @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
@@ -2583,7 +2584,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
-	/** @private @template {object} T @template U @arg {T_WCM_CF} cf @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
+	/** @private @template {object} T @template U @arg {CF_T_WCM} cf @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
 	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
@@ -2892,7 +2893,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.G_Text(text);
 		if(icon.iconType!=="INFO") debugger;
-		this.TA_OpenPopup(navigationEndpoint);
+		this.TA_OpenPopup("TA_OpenPopup_Empty",navigationEndpoint);
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -3187,14 +3188,14 @@ class HandleTypes extends HandleTypesEval {
 		if(!webShowNewAutonavCountdown) debugger;
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {R_Omit_Compact_Player} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {R_Omit_Compact_Player} T @arg {T} x */
 	Omit_Compact_Player(cf,x) {
 		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {D_CF_Omit_Menu_Radio} cf @template {R_Omit_Compact_Video} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {R_Omit_Compact_Video} T @arg {T} x */
 	Omit_Compact_Video(cf,x) {
 		let u=this.Omit_Compact_Player(cf,x);
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
@@ -5039,7 +5040,7 @@ class HandleTypes extends HandleTypesEval {
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
 	}
-	/** @arg {D_CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
+	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
 		const {style: a,text: b,trackingParams: c,...y}=this.s(cf,x);
 		switch(a.styleType) {
@@ -5428,7 +5429,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
-	/** @private @arg {D_CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
+	/** @private @arg {CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
 		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
 		this.G_Text(shortBylineText);
@@ -5616,7 +5617,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
-	/** @arg {T_Items_CF} cf @template T @private @arg {T_Items<T>} x */
+	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @template T @private @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
