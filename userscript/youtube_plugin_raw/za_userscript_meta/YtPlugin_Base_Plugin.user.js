@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name	youtube plugin base
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.0
+// @version	0.1.1
 // @description	try to take over the world!
 // @author	@mjz19910
-// @copyright	@mjz19910 2020-2022
+// @copyright	@mjz19910 2020-2023
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start

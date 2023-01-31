@@ -2,16 +2,16 @@
 // @ts-nocheck
 // ==UserScript==
 // @name	`${name}`
-// @namespace	https://github.com/mjz19910/
+// @namespace	`${namespace||"https://github.com/mjz19910/"}`
 // @version	0.1.0
 // @description	try to take over the world!
-// @author	@mjz19910
-// @copyright	@mjz19910 2020-2022
-// @match	https://www.youtube.com/*
+// @author	`${author||"@mjz19910"}`
+// @copyright	`${author||"@mjz19910"}` 2023
+// @match	`${match||"https://www.youtube.com/*"}`
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
+// @updateURL	`${updateURL}`
+// @downloadURL	`${downloadURL}`
 // ==/UserScript==
 const __template__=true;
 const __module_name__="mod${{name}}";
