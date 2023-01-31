@@ -783,7 +783,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {let [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
-	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.D_Empty_WCM(a); this.B_Hack(b);}
+	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {let [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
@@ -831,48 +831,24 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {x; debugger;}
 	/** @private @arg {E_Url} x */
-	E_Url(x) {const cf="E_Url"; let [a,b,y]=this.TE_Endpoint_3(cf,"urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
+	E_Url(x) {let [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {const cf="E_RecordNotificationInteractions"; let [a,b,y]=this.TE_Endpoint_3(cf,"recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
+	E_RecordNotificationInteractions(x) {let [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {
-		const cf="E_GetNotificationMenu";
-		let [a,b,y]=this.TE_Endpoint_3(cf,"getNotificationMenuEndpoint",x); this.g(y);
-		this.M_GetNotificationMenu(a);
-		{
-			const u=b,cf1="DE_GetNotificationMenu";
-			const {ctoken,...y}=this.s(cf1,u); this.g(y);
-			this.params(cf1,"GetNotificationMenu.ctoken",ctoken);
-			debugger;
-		}
-	}
+	E_GetNotificationMenu(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {
-		const cf="E_GetTranscript";
-		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); commandMetadata;
-		// this.G_CommandMetadata(commandMetadata);
-		this.D_Params(`D${cf}`,a,(x,cf) => this.params(cf,"get_transcript.params",x));
-	}
+	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DC_GetTranscript_Params("get_transcript.params",b);}
+	/** @private @arg {"get_transcript.params"} path @arg {DC_Params} a */
+	DC_GetTranscript_Params(path,a) {this.D_Params(`DE_GetTranscript`,a,(x,cf) => this.params(cf,path,x));}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {
-		const cf="E_YpcGetOffers";
-		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); commandMetadata;
-		// this.G_CommandMetadata(commandMetadata);
-		this.D_Params("DE_YpcGetOffers",a,params => {
-			this.params("DE_YpcGetOffers.params","ypc_get_offers.params",params);
-		});
-	}
+	E_YpcGetOffers(x) {const cf="E_GetTranscript",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {
 		const cf="E_Search";
-		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata: a,searchEndpoint: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.M_VE4724(commandMetadata);
-		this.D_Search(searchEndpoint);
+		this.M_VE4724(a);
+		this.D_Search(b);
 	}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {
@@ -884,34 +860,23 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {
 		const cf="E_WatchPlaylist";
-		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		const {clickTrackingParams,commandMetadata: a,watchPlaylistEndpoint: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); commandMetadata;
+		this.do_codegen(cf,x); a;
 		// this.G_CommandMetadata(commandMetadata);
-		this.D_WatchPlaylist(watchPlaylistEndpoint);
+		this.D_WatchPlaylist(b);
 	}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {
 		let [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y);
-		this.E_Like_C(a);
+		this.M_Like(a);
 		this.DE_Like(b);
-	}
-	/** @private @type {(x:E_Like['commandMetadata'])=>void} */
-	E_Like_C(x) {
-		const cf="E_Like_C";
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		switch(a.apiUrl) {
-			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
-			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
-			case "/youtubei/v1/like/like": return this.GM_like_like(a);
-		}
 	}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {
 		let [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y);
 		this.DE_PlaylistEditor(b);
-		this.D_Empty_WCM(a);
+		this.DC_Empty_WCM(a);
 	}
 	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
@@ -928,7 +893,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
 	/** @private @arg {DE_GetNotificationMenu} x */
-	DE_GetNotificationMenu(x) {x;}
+	DE_GetNotificationMenu(x) {
+		const cf="DE_GetNotificationMenu";
+		const {ctoken,...y}=this.s(cf,x); this.g(y);
+		this.params(cf,"GetNotificationMenu.ctoken",ctoken);
+		debugger;
+	}
 	/** @private @arg {GE_Browse['browseEndpoint']} x */
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
@@ -947,6 +917,17 @@ class HandleTypes extends HandleTypesEval {
 		const {browseId: a,...y}=this.s(cf,x); this.g(y);//#destructure
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
+	}
+	/** @private @type {(x:M_Like)=>void} */
+	M_Like(x) {
+		const cf="M_Like";
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		switch(a.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
+			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
+			case "/youtubei/v1/like/like": return this.GM_like_like(a);
+		}
 	}
 	/** @private @arg {GE_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
@@ -1125,7 +1106,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {DC_Empty_WCM} x */
-	D_Empty_WCM(x) {x; debugger;}
+	DC_Empty_WCM(x) {x; debugger;}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink"; this.k(cf,x);

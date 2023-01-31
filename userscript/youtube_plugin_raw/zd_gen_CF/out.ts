@@ -461,7 +461,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Like_C";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_PlaylistEdit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Search";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
@@ -506,9 +505,10 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_GetNotificationMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_Like";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_SendPost";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE37414";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_Browse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE37414";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ModifiedSetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}

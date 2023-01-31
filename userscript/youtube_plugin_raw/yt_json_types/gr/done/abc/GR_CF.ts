@@ -34,6 +34,7 @@ type CF_L_Params=
 	|CF_L_CTP_Params
 	|CF_L_TP_Params
 	|CF_L_params_no_gen
+	|`${CF_D_Params}.params`
 	;
 ;
 type CF_parse_identifier=
@@ -83,7 +84,12 @@ type CF_L_TP_Params=
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
 type CF_D_Params=T_ExtractImport<"CF_D_Params">|"CF_D_Params"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
-type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3"|"a";
+type CF_TE_Endpoint_3=
+	|T_ExtractImport<"CF_TE_Endpoint_3">
+	|"E_Url"
+	|"E_GetTranscript"
+	;
+;
 type CF_TD_ItemSection_3=
 	|T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a"
 	|`TD_ItemSection_3<"comment-item-section">`
