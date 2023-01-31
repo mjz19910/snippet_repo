@@ -80,7 +80,14 @@ type CF_M_w=
 	|`TR_MultiPageMenu:${CF_TR_MultiPageMenu}`
 	|`G_EY_Entity_Any:G_EY_Entity`
 	|`T_Items:${CF_T_Items}`
+	|`T_Commands:${CF_T_Commands}`
 	|"D_ImpressionCap"
+	;
+;
+type CF_T_Commands=
+	|"CF_T_Commands"
+	|"DC_CommandExecutor"
+	|"DC_Executor"
 	;
 ;
 type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";

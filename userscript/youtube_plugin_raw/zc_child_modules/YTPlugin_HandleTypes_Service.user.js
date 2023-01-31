@@ -168,11 +168,6 @@ class HandleTypesEval extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		f.call(this,a);
 	}
-	/** @private @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
-	T_Commands(x,f) {
-		const cf="T_Commands"; this.k(cf,x);
-		this.z(this.w(cf,x,"commands"),f);
-	}
 	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Autoplay(x,f) {
 		const cf="T_Autoplay";
@@ -268,6 +263,11 @@ ECatcherService.known_experiments.push(...[
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region moved members
+	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf1 @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
+	T_Commands(cf1,x,f) {
+		const cf2="T_Commands"; this.k(cf1,x);
+		this.z(this.w(`${cf2}:${cf1}`,"commands",x),f);
+	}
 	/** @private @template {CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
 	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
@@ -1418,7 +1418,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {
-		this.T_Commands(x,x => {
+		this.T_Commands("DC_CommandExecutor",x,x => {
 			const cf="DC_CommandExecutor.command"; this.k(cf,x);
 			if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 			if("likeEndpoint" in x) return this.E_Like(x);
@@ -4801,9 +4801,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DC_Executor(commandExecutorCommand);
 	}
 	/** @private @arg {DC_Executor} x */
-	DC_Executor(x) {
-		this.T_Commands(x,this.AC_Executor);
-	}
+	DC_Executor(x) {this.T_Commands("DC_Executor",x,this.AC_Executor);}
 	/** @private @arg {AC_Executor} x */
 	AC_Executor(x) {
 		const cf="AC_Executor"; this.k(cf,x);

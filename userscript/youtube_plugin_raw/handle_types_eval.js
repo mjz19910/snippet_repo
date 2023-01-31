@@ -33,8 +33,6 @@ export class HandleTypesEval_ extends ServiceMethods {
 	T_Autoplay(x,f) {x; f;}
 	/** @protected @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
 	T_Types(x,_x=null) {x; n();}
-	/** @protected @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
-	T_Commands(x,f) {x; f;}
 	// /** @protected @template U @template {T_DistributedKeyof<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>U} f @returns {U} */
 	// H_(cf,x,f) {cf; x; f; n();}
 	/** @protected @arg {G_Text} x */
