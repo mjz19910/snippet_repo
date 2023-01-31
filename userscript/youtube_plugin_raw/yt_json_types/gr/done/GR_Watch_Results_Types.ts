@@ -6,10 +6,8 @@ type G_Watch_SecondaryResults_G_SectionItem=R_CompactPlaylist|R_CompactVideo|R_C
 type G_Watch_AnyResultItem=R_RelatedChipCloud|RG_Watch_ItemSection;
 type G_Watch_SecondaryResults_Results={trackingParams: string; results: G_Watch_AnyResultItem[];};
 type G_Watch_SecondaryResults_Contents={contents: G_Watch_AnyResultItem[];};
-type G_Watch_SecondaryResults=G_Watch_SecondaryResults_Contents|G_Watch_SecondaryResults_Results;
 
 //#region ContentsItem
-type G_Watch_ResultsItem={trackingParams: string; contents: G_Watch_ContentsItem[];};
 type G_Watch_ContentsItem=[
 	TR_ItemSection_3<R_ContinuationItem,"comment-item-section","comments-section">,
 	TR_ItemSection_2<R_CommentsEntryPointHeader,"comments-entry-point">,
@@ -18,6 +16,10 @@ type G_Watch_ContentsItem=[
 	R_VideoSecondaryInfo,
 ][number];
 //#endregion
+//#endregion
+//#region Used by data
+type G_Watch_ResultsItem={trackingParams: string; contents: G_Watch_ContentsItem[];};
+type G_Watch_SecondaryResults=G_Watch_SecondaryResults_Contents|G_Watch_SecondaryResults_Results;
 type G_ConversationBar=R_LiveChat;
 //#endregion
 //#region Data
