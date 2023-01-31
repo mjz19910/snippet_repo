@@ -344,6 +344,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return ok_e;
 	}
+	/** @protected @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x */
+	w_priv(k,x) {
+		if(!(k in x)) {debugger; return null;}
+		return x[k];
+	}
 	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(cf,k,x,excl=[]) {
 		this.k(cf,x);
@@ -5695,9 +5700,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
-		const {trackingParams,...y}=x;
+		const {trackingParams,items,...y}=x; this.g(y);
 		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
-		return this.w(`T_Items_TP:${cf}`,"items",y);
+		return items;
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
