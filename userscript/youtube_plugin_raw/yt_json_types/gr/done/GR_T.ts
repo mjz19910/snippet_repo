@@ -45,6 +45,9 @@ type GenNs_AllNames=import("../../../zd_gen_CF/gen_export_cur.js").Prelude.AllNa
 type T_ExtractImport_<T extends (GenNs_AllNames|import("../../../zd_gen_CF/gen_export_cur.js").Gen.CF_Generated['n'])>=
 	Extract<import("../../../zd_gen_CF/gen_export_cur.js").Gen.CF_Generated,{n: T;}>["v"]
 	;
+;
 type T_ExtractImport<T extends (GenNs_AllNames|import("../../../zd_gen_CF/gen_export_cur.js").Gen.CF_Generated['n'])>=T_ExtractImport_<T>;
+//#region TA_
 type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
 type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
+//#endregion
