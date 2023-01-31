@@ -1677,8 +1677,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
 	expected_button_iconTypes=[
-		"DELETE","NOTIFICATIONS_ACTIVE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS",
-		"CONTENT_CUT","PLAYLIST_ADD","SHARE","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE","INFO","CLOSE","MICROPHONE_ON",
+		"NOTIFICATIONS_ACTIVE",
+		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
+	];
+	expected_button_iconTypes_ex=[
+		"DELETE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
+		"CLOSE","MICROPHONE_ON",
 	];
 	/** @private @arg {CF_D_Button} cf @template {D_Button} T @arg {T} x */
 	D_Button_Omit(cf,x) {
@@ -1721,19 +1725,9 @@ class HandleTypes extends HandleTypesEval {
 	missing_expected_button_iconTypes=[];
 	/** @private @arg {CF_D_Button} cf @template {Extract<D_Button,{style:any}>} T @arg {T} x */
 	D_Button_Omit_FromStyle(cf,x) {
-		const {style,size,icon,trackingParams,accessibilityData,...y}=this.D_Button_Omit(cf,x);
+		const {style,size,trackingParams,...y}=this.D_Button_Omit(cf,x);
 		this.t(style,x => this.save_string("[Button.style]",x));
-		this.t(accessibilityData,this.D_Accessibility);
-		this.t(icon,x => {
-			let missing=this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes);
-			if(missing) {
-				let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",x,this.missing_expected_button_iconTypes);
-				if(missing_ex===false) return;
-				this.missing_expected_button_iconTypes.push(x.iconType);
-				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
-				console.log("-- [D_Button.icon] --",arr_items);
-			}
-		});
+		// this.t(accessibilityData,this.D_Accessibility);
 		if(size) {
 			switch(size) {
 				default: this.generate_case(`${cf}.size`,size); break;
@@ -1744,48 +1738,44 @@ class HandleTypes extends HandleTypesEval {
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		return y;
 	}
-	/** @private @template {D_Button_EX_Command} T @arg {CF_D_Button} cf @arg {T} x */
+	/** @private @template {D_Button_EX_1_Command} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit_Command(cf,x) {
 		let {command,...y}=this.D_Button_Omit_FromStyle(cf,x);
 		this.t(command,this.GC_Button);
 		return y;
 	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Command} x */
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Command} x */
 	D_Button_WithCommand(cf,x) {
-		if("accessibility" in x) {
-			let {accessibility,isDisabled,text,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
-			this.D_Label(accessibility);
-			if(isDisabled!==false) debugger;
-			this.t(text,this.G_Text);
-			if(tooltip!=="Clip") debugger;
-			return;
-		}
 		if("text" in x) {
-			let {text,isDisabled,targetId,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
-			if(isDisabled!==false) debugger;
-			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
-			if(tooltip!=="Clip") debugger;
 			return;
 		}
 		if("targetId" in x) {
-			let {targetId,isDisabled,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
+			{const {size,style,isDisabled,icon,trackingParams,accessibilityData,targetId,command,...y1}=x; y1;}
+			let {targetId,isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
 			if(isDisabled!==false) debugger;
+			// if(tooltip!=="Clip") debugger;
 			return;
 		}
 		this.g(x);
 	}
-	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x */
+	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "style"|"size"|"trackingParams"|"text"|"isDisabled">:never} */
 	D_Button_Omit_Text(cf,x) {
-		let {text,tooltip,...y}=this.D_Button_Omit_FromStyle(cf,x);
-		return y;
+		let {text,isDisabled,...y}=this.D_Button_Omit_FromStyle(cf,x);
+		this.G_Text(text);
+		if(isDisabled!==false) debugger;
+		/** @type {any} */
+		let z=y;
+		return z;
 	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Style} x */
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Style} x */
 	D_Button_WithStyle(cf,x) {
 		if("serviceEndpoint" in x) {
-			let {serviceEndpoint,isDisabled,...y}=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x); this.g(y);
+			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x); this.g(y);
 			this.t(serviceEndpoint,this.D_Button_SE);
-			this._primitive_of(isDisabled,"boolean");
+			if(icon.iconType!=="SHARE") debugger;
+			this.D_Accessibility(accessibilityData);
+			if(tooltip!=="Share") debugger;
 		}
 		x;
 		// this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
@@ -1797,15 +1787,68 @@ class HandleTypes extends HandleTypesEval {
 		// this.D_Label(accessibility);
 		// this._primitive_of(isDisabled,"boolean");
 	}
+	/** @private @template {{command:U}} T @template {Extract<D_Button,{command:any}>['command']} U @arg {T} x @returns {T extends infer V?Omit<V,"command">:never} */
+	D_Button_UseCommand(x) {
+		let {command,...y}=x;
+		/** @type {any} */
+		let z=y;
+		return z;
+	}
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_2_Text} x */
+	D_Button_WithText(cf,x) {
+		let {size,style,text,trackingParams,...y1}=x;
+		if("command" in y1) {
+
+		}
+		let r=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x);
+		if(!("command" in r)) {
+			const {serviceEndpoint,icon,tooltip,accessibilityData,...y}=r; this.g(y);
+			return;
+		}
+		let {...nc}=this.D_Button_UseCommand(r);
+		if("targetId" in nc) {
+			switch(nc.targetId) {
+				default: debugger; break;
+				case "create-clip-button-action-bar": {
+					let {icon,tooltip,accessibilityData,targetId: {},...y}=nc; this.g(y);
+					if(icon.iconType!=="CONTENT_CUT") debugger;
+					if(tooltip!=="Clip") debugger;
+					this.D_Accessibility(accessibilityData);
+				} break;
+			}
+			return;
+		}
+		if("icon" in nc) {
+			let {icon,tooltip,accessibilityData,accessibility,...y}=nc; this.g(y);
+			if(icon.iconType!=="PLAYLIST_ADD") debugger;
+			this.D_Accessibility(accessibilityData);
+			{
+				let x=accessibility;
+				if("label" in x) {
+					if(x.label!=="Save to") debugger;
+				}
+			}
+			return;
+		}
+		this.g(nc);
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
+		if("icon" in x) {
+			const {icon}=x;
+			let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
+			if(missing) {
+				let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
+				if(missing_ex===false) return;
+				this.missing_expected_button_iconTypes.push(icon.iconType);
+				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
+				console.log("-- [D_Button.icon] --",arr_items);
+			}
+		}
+		if("text" in x) return this.D_Button_WithText(cf,x);
 		if("command" in x) return this.D_Button_WithCommand(cf,x);
 		if("style" in x) return this.D_Button_WithStyle(cf,x);
-		if("navigationEndpoint" in x) {
-			const {navigationEndpoint,...y}=x; this.g(y);
-			return;
-		}
 		this.g(x);
 		debugger;
 	}

@@ -102,82 +102,17 @@ type D_TranscriptSearchPanel={
 	targetId: "engagement-panel-searchable-transcript-search-panel";
 };
 type D_UiTargetId="browse-feedFEwhat_to_watch"|"watch-next-feed";
-
-type R_Button={buttonRenderer: D_Button;};
-type D_Button=|{
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	icon: T_Icon<"INFO">;
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	targetId: "clip-info-button";
-	command: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>;
-}|
-{
-	style: "STYLE_TEXT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	icon: T_Icon<"NOTIFICATIONS_ACTIVE">;
-	accessibility: D_Label;
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-}|
-{
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	serviceEndpoint: D_Button_SE|E_ShareEntityService;
-	icon: T_Icon<"SHARE">;
-	tooltip: "Share";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-}|{
-	navigationEndpoint: GE_Button_navigation;
-}|{
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	text: G_Text;
-	icon: Exclude<D_Icon_Button,T_Icon<"CONTENT_CUT">>;
-	tooltip: string;
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-}|{
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	icon: T_Icon<"CONTENT_CUT">;
-	tooltip: "Clip";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	targetId: "create-clip-button-action-bar";
-	command: A_ChangeEngagementPanelVisibility;
-}|{
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	icon: T_Icon<"PLAYLIST_ADD">;
-	accessibility: {
-		label: "Save to";
-	};
-	tooltip: "Clip";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	command: E_AddToPlaylistService;
-};
 type DCE_Button={
 	command: GC_Button;
 	targetId: D_Button_TargetId;
 };
-type D_Button_EX_Command=Extract<D_Button,{command: any;}>;
-type D_Button_EX_Style=Extract<Exclude<D_Button,D_Button_EX_Command>,{style: any;}>;
-type D_Button_NP_Style=D_Button_EX_Command|D_Button_EX_Style;
-type D_Button_EX_SrvEp=Extract<Exclude<D_Button,D_Button_NP_Style>,{serviceEndpoint: any;}>;
-type D_Button_NP_SrvEp=D_Button_NP_Style|D_Button_EX_SrvEp;
-type D_Button_ER_Rest=Exclude<D_Button,D_Button_NP_SrvEp>;
+type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
+type D_Button_EX_1_Style=Extract<Exclude<D_Button,D_Button_EX_1_Command>,{style: any;}>;
+type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
+type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
+type D_Button_EX_1_SrvEp=Extract<Exclude<D_Button,D_Button_NP_1_Style>,{serviceEndpoint: any;}>;
+type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
+type D_Button_ER_1_Rest=Exclude<D_Button,D_Button_NP_1_SrvEp>;
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 

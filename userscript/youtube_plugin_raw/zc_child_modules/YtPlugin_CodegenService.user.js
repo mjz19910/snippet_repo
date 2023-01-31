@@ -574,6 +574,18 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(state,r,b,keys) {
+		x: if(b.accessibilityData) {
+			/** @type {{accessibilityData?:Partial<D_Label>}} */
+			let xu=b;
+			if(!xu?.accessibilityData?.label) break x;
+			return `TYPE::D_Accessibility;//:<${JSON.stringify(xu.accessibilityData.label)}">`;
+		}
+		x: if(b.label) {
+			/** @type {Partial<D_Label>} */
+			let xu=b;
+			if(!xu.label) break x;
+			return `TYPE::D_Label;//:<${JSON.stringify(xu.label)}">`;
+		}
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
