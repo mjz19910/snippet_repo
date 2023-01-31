@@ -46,8 +46,7 @@ type DC_Continuation={
 type DC_Executor=Record<"commands",AC_Executor[]>;
 type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[];followUpText: G_Text;};
 type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips";loadCached: true;};
-type DC_GetSurvey_Endpoint=D_PaidDigitalGoods|D_Survey_Watch;
-type DC_GetSurvey={endpoint: DC_GetSurvey_Endpoint;action: string;};
+type DC_GetSurvey={endpoint: GDC_GetSurvey_Endpoint;action: string;};
 // TODO: #14 Need type of DC_RefreshPlaylist
 type DC_RefreshPlaylist={};
 //#endregion

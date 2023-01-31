@@ -44,3 +44,4 @@ type GE_Browse=
 	;
 ;
 type GE_Browse_WCM=GE_Browse["commandMetadata"];
+type GDC_GetSurvey_Endpoint=D_PaidDigitalGoods|D_Survey_Watch;
