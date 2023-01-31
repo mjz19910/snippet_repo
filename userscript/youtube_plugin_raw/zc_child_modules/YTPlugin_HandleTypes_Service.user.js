@@ -6080,13 +6080,18 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SubscriptionNotificationToggleButton";
 		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);
 		console.group(`--- [${cf}] ---`);
+		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
+		const n2=2,n3=3,n0=0;
+		/** @type {[n2,n3,n0]} */
+		const ids_e=[n2,n3,n0];
+		let log_states=false;
+		if(!this.eq_keys(ids,ids_e)) log_states=true;
 		this.z(states,(x,i) => {
 			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
-			if(nextStateId!==stateId) {
-				debugger;
-			}
-			console.log("[button.state_id.%s]",i,stateId);
+			if(nextStateId!==stateId) debugger;
+			if(log_states) console.log("[button.state_id.%s]",i,stateId);
 			this.R_Button(state);
+			return stateId;
 		});
 		console.groupEnd();
 		if(currentStateId!==2) debugger;
