@@ -1926,17 +1926,23 @@ class HandleTypes extends HandleTypesEval {
 				this.missing_expected_button_iconTypes.push(icon.iconType);
 				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
 				console.group("-- [D_Button.codegen] --");
-				x: {
+				x: try {
 					console.log("-- [D_Button.icon] --",arr_items);
 					let res=this.codegen_new_typedef(cf,x,true);
 					if(!res) break x;
 					if(this.missing_codegen_types.includes(res)) break x;
 					this.missing_codegen_types.push(res);
-					let all_types=this.missing_codegen_types.join("|");
+					let all_ty_1=this.missing_codegen_types.map(e => {
+						let ss=split_string_once(e,"=");
+						if(ss.length==1) throw new Error();
+						return ss[1].trim().slice(0,-1);
+					});
+					let all_types=all_ty_1.join("|");
 					console.log(all_types);
 					debugger;
+				} finally {
+					console.groupEnd();
 				}
-				console.groupEnd();
 			}
 		}
 		if(!("icon" in x||"style" in x)) return this.D_Button_2_Only(cf,x);
