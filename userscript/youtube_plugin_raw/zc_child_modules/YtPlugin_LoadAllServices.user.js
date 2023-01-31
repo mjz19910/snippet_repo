@@ -24,9 +24,9 @@ export_(exports => {
 
 if(__yt_plugin_log_imports__) console.log("Load LoadAllServices Plugin");
 const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
-/** @template T @typedef {NonNullable<T>} N */
-/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
 class LoadAllServices {
+	/** @template T @typedef {NonNullable<T>} N */
+	/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
 	start_message_channel_loop() {
 		bs.start_message_channel_loop(this.handle_types);
 	}
