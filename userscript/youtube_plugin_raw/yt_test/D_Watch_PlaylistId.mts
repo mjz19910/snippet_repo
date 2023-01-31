@@ -1,5 +1,5 @@
-namespace Test {
-	async function D_Watch_Test_PlaylistId(): Promise<void> {
+export namespace Test {
+	export async function D_Watch_Test_PlaylistId(): Promise<void> {
 		const assert_is_equal=(await import("../support_1/make/assert_is_equal_t.js")).assert_is_equal;
 		function str_starts_with<T_Needle extends string,T_Str extends string>(needle: T_Needle,str: T_Str): str is Extract<T_Str,`${T_Needle}${string}`> {
 			return str.startsWith(needle);
@@ -49,4 +49,8 @@ namespace Test {
 			}
 		}
 	}
+}
+
+export async function run_tests() {
+	await Test.D_Watch_Test_PlaylistId();
 }
