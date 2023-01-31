@@ -6088,11 +6088,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	logged_strings=[];
+	group_sub_noti_toggle_btn=false;
 	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
 	D_SubscriptionNotificationToggleButton(x) {
 		const cf="D_SubscriptionNotificationToggleButton";
 		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);
-		console.group(`--- [${cf}] ---`);
+		if(this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
 		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
 		const n2=2,n3=3,n0=0;
 		/** @type {[n2,n3,n0]} */
@@ -6106,7 +6107,7 @@ class HandleTypes extends HandleTypesEval {
 			this.R_Button(state);
 			return stateId;
 		});
-		console.groupEnd();
+		if(this.group_sub_noti_toggle_btn) console.groupEnd();
 		if(currentStateId!==2) debugger;
 		this.trackingParams(cf,trackingParams);
 		this.C_Executor(command);
