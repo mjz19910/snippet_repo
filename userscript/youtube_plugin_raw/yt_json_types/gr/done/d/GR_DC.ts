@@ -86,7 +86,7 @@ type DC_LiveChatReplay={
 };
 // TODO #4
 type DC_PlaylistPanel={};
-type DC_SectionListBase=T_DC_Content<TR_SectionListItem_3_Empty>;
+type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section","engagement-panel-comments-section">>;
 type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;

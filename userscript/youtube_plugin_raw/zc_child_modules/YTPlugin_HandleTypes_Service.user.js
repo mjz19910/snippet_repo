@@ -178,9 +178,10 @@ class HandleTypes extends HandleTypesEval {
 			if(typeof cu!=="object"||!cu) {debugger; return null;}
 			let k=this.get_keys_of(cu);
 			switch(cf1) {
-				case `TD_ItemSection_3<"comment-item-section">`: break;
-				case `TD_ItemSection_3<"watch-next-feed">`: break;
-				case `TR_SectionListItem_3_Empty`: debugger; break;
+				default: debugger; break;
+				case `TD_ItemSection_3<"comment-item-section","comments-section">`: break;
+				case `TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`: break;
+				case `TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`: break;
 			}
 			switch(k[0]) {
 				default: console.log(`-- [TD_Section_3.${cf1}.Section_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
@@ -3537,7 +3538,7 @@ class HandleTypes extends HandleTypesEval {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @private @arg {[TD_ItemSection_3_I_1[], "comment-item-section", "comments-section"]} x */
+	/** @private @arg {[TD_ItemSection_3_I_1[],"comment-item-section","comments-section"]} x */
 	ItemSection_3_CommentItemSection(x) {
 		if(x[1]!=="comment-item-section") debugger;
 		if(x[2]!=="comments-section") debugger;
@@ -3901,7 +3902,7 @@ class HandleTypes extends HandleTypesEval {
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
 		let u=this.TR_ItemSection_3(x); if(!u) return;
-		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section">`,u); if(!u1) return;
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section","comments-section">`,u); if(!u1) return;
 		this.ItemSection_3_CommentItemSection(u1);
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
@@ -4317,7 +4318,20 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		let [u]=this.z(contents,this.TR_SectionListItem_3);
-		let [u1]=this.z(u,x => this.TD_ItemSection_3("TR_SectionListItem_3_Empty",x));
+		let [u1]=this.z(u,x => this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x));
+		this.z(u1,x => {
+			switch(x[1]) {
+				default: debugger; break;
+				case "comment-item-section": {
+					let [x0,,x2]=x;
+					if(x2!=="engagement-panel-comments-section") debugger;
+					this.z(x0,x => {
+						if(!x.continuationItemRenderer) debugger;
+						return this.R_ContinuationItem(x);
+					});
+				} break;
+			}
+		});
 		u1;
 		// this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
@@ -5721,7 +5735,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RG_Watch_ItemSection} x */
 	RG_Watch_ItemSection(x) {
 		let u=this.TR_ItemSection_3(x); if(!u) return;
-		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"watch-next-feed">`,u);
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`,u);
 		if(!u1) return;
 		let [a,...section_arr]=u1;
 		let section_str=this.join_string(section_arr,"-");
