@@ -2886,7 +2886,7 @@ class BaseService extends BaseServicePrivate {
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @protected @template {string} T @arg {T} str @returns {UrlParse<T>} */
+	/** @protected @template {`https://${string}`|`http://${string}`} T @arg {T} str @returns {UrlParse<T>} */
 	parse_with_url_parse(str) {
 		let s=new URL(str);
 		/** @private @type {any} */

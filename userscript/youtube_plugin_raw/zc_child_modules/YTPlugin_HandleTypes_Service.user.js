@@ -3662,6 +3662,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_External} x */
 	GM_VE83769_UrlType(x) {
+		if(this.str_starts_with("/",x)) {
+			switch(x) {
+				default: x===""; debugger; break;
+				case "/upload": break;
+			}
+			return;
+		}
 		let up=this.parse_with_url_parse(x);
 		switch(up.host) {
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
@@ -3678,10 +3685,6 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(hn_yt_music,x)) return;
 		if(this.str_starts_with(hn_yt_kids,x)) return;
 		if(this.str_starts_with(hn_yt_tv,x)) return;
-		switch(x) {
-			default: x===""; debugger; break;
-			case "/upload": break;
-		}
 	}
 	/** @template {number} T @arg {T} x @returns {`${T}`} */
 	num_to_string(x) {

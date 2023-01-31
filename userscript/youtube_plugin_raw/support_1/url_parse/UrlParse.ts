@@ -1,2 +1,2 @@
-type UrlParse<T extends string>=
+type UrlParse<T extends (`https://${string}`|`http://${string}`)>=
 UrlParseImpl<T> extends never? UrlParseErr<T>:UrlParseImpl<T>;

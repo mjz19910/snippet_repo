@@ -1270,6 +1270,8 @@ class ParserService extends BaseService {
 									case "f2": case "f1": {
 										const idx=5;
 										if(parts.length===4) {
+											if(parts[2]=="f4"&&parts[3]=="f1") return;
+											if(parts[2]=="f5"&&parts[3]=="f2") return;
 											if(parts[2]=="f6"&&parts[3]=="f1") return;
 											console.log(`[parse_bin.${root}]`,parts,typeof map_entry_value);
 											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
