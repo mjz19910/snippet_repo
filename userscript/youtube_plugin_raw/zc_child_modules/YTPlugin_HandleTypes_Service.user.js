@@ -3402,6 +3402,8 @@ class HandleTypes extends HandleTypesEval {
 							let playlist_id=this._decoder.decode(r[2]);
 							if(this.str_starts_with("RD",playlist_id)) {
 								this.playlistId(playlist_id);
+							} else if(this.str_starts_with("PL",playlist_id)) {
+								this.playlistId(playlist_id);
 							} else {
 								console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);
 							}
