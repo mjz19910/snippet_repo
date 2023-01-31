@@ -50,7 +50,9 @@ type CF_M_s_gen=
 	|CF_T_SE_Signal
 	;
 ;
+type CF_GM_WC_2_gen=T_ExtractImport<"CF_GM_WC_2">;
 type CF_M_s=CF_M_s_gen|T_ExtractImport<"CF_M_s">;
+type CF_GM_WC_2=CF_GM_WC_2_gen|"CF_GM_WC_2"|"a";
 type CF_L_TP_Params=
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
 	|`T_Items_TP:${CF_T_Items_TP}`

@@ -1,6 +1,7 @@
 type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
+		|"CF_GM_WC_2"
 		|"CF_T_Items_TP"
 		|"CF_D_Button"
 		|"CF_parse_identifier"
@@ -37,8 +38,10 @@ export namespace Prelude {
 		|"CF_TE_Endpoint_Opt_3"
 		;
 	;
-	//
-	// |"CF_T_Items_TP"
+	/*
+		|"CF_GM_WC_2"
+	*/
+	export type CF_GM_WC_2="CF_GM_WC_2";
 	export type CF_T_Items_TP="CF_T_Items_TP";
 	export type CF_parse_identifier="CF_parse_identifier";
 	export type CF_T_Commands="CF_T_Commands";
@@ -78,6 +81,7 @@ export namespace TypesTemplate {
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 }
 export namespace Types {
+	export type CF_GM_WC_2_=CF_GM_WC_2;
 	export type CF_T_Items_TP_=CF_T_Items_TP;
 	export type CF_parse_identifier_=CF_parse_identifier;
 	export type CF_T_Commands_=CF_T_Commands;
