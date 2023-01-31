@@ -1783,10 +1783,15 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("icon" in x) {
-			const {icon,accessibilityData,accessibility,...y}=x; y;
+			const {icon,accessibilityData,...y}=x;
 			if(icon.iconType!="NOTIFICATIONS_ACTIVE") debugger;
 			this.D_Accessibility(accessibilityData);
-			if(accessibility.label!=="") debugger;
+			if("accessibility" in y) {
+				const {accessibility,...y1}=y; this.g(y1);
+				if(accessibility.label!=="") debugger;
+				return;
+			}
+			this.g(y);
 			return;
 		}
 		debugger;
@@ -1804,7 +1809,15 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("targetId" in x) {
 			let {targetId,isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
-			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
+			switch(targetId) {
+				case "clip-info-button": break;
+				default: this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId); break;
+			}
+			if(isDisabled!==false) debugger;
+			return;
+		}
+		if("command" in x) {
+			let {isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			if(isDisabled!==false) debugger;
 			return;
 		}

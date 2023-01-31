@@ -1,17 +1,3 @@
-type D_Button_ClipInfoButton={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	icon: T_Icon<"INFO">;
-	trackingParams: string;
-	accessibilityData: TD_Accessibility<"Learn more">;
-	targetId: "clip-info-button";
-	command: TA_OpenPopup<{
-		popup: R_ConfirmDialog;
-		popupType: "DIALOG";
-	}>;
-};
-
 type D_Button=
 	|D_ClipInfoButton
 	|D_ButtonCancelAutoplay
@@ -22,6 +8,15 @@ type D_Button=
 	|D_PlaylistAddButton_Save
 	|D_PlaylistAddButton_Clip
 	|D_Button_ClipInfoButton
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		icon: T_Icon<"CLOSE">;
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Close">;
+		command: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>;
+	}
 	;
 ;
 
@@ -133,3 +128,17 @@ type D_ButtonCancelAutoplay={
 	accessibilityData: TD_Accessibility<"Cancel auto-play for this video">;
 	command: C_GetSurvey;
 };
+type D_Button_ClipInfoButton={
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: false;
+	icon: T_Icon<"INFO">;
+	trackingParams: string;
+	accessibilityData: TD_Accessibility<"Learn more">;
+	targetId: "clip-info-button";
+	command: TA_OpenPopup<{
+		popup: R_ConfirmDialog;
+		popupType: "DIALOG";
+	}>;
+};
+
