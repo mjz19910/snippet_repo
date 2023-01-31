@@ -350,7 +350,7 @@ class CodegenService extends BaseService {
 			return `TYPE::TR_MP_Menu<${sr}>`;
 		}
 		if(x.webCommandMetadata) {
-			/** @type {{webCommandMetadata:{rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
+			/** @type {{webCommandMetadata:{sendPost?:true;rootVe?:number; apiUrl?:`/youtubei/v1/${string}`;}}} */
 			let v=as(x);
 			let u1=v.webCommandMetadata.apiUrl;
 			let u2=v.webCommandMetadata.rootVe;
@@ -363,7 +363,9 @@ class CodegenService extends BaseService {
 				if(a3!=="v1") debugger;
 				let cq=this.join_string(rest,"_");
 				return `TYPE::M_${cq}`;
-			};
+			}
+			/** @type {M_SendPost} */
+			if(this.eq_keys(this.get_keys_of(v.webCommandMetadata),["sendPost"])) return "TYPE::M_SendPost";
 			debugger;
 		}
 		/** @private @type {G_Text} */

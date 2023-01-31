@@ -1915,6 +1915,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(tooltip) {case "Clip": case "Save": break; default: debugger;}
 			return;
 		}
+		if(!("icon" in x1)) return this.g(x1);
 		const {accessibilityData,serviceEndpoint,icon,tooltip,...x2}=x1; this.g(x2);
 		this.D_Accessibility(accessibilityData);
 		if(!serviceEndpoint.shareEntityServiceEndpoint) debugger;

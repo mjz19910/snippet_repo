@@ -2,6 +2,13 @@
 
 type D_Button=
 	|{
+		style: "STYLE_BLUE_TEXT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		trackingParams: string;
+	}
+	|{
 		style: "STYLE_TEXT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
