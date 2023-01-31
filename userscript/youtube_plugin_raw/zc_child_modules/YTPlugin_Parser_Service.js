@@ -821,43 +821,7 @@ class ParserService extends BaseService {
 					case "tracking.trackingParams.f4.f1":
 					case "tracking.trackingParams.f6.f12":
 					case "tracking.trackingParams.f6.f13":
-					case "tracking.trackingParams.f9":
-					case "like.dislikeParams.f1.f1":
-					case "like.dislikeParams.f2":
-					case "like.dislikeParams.f3":
-					case "like.dislikeParams.f4.f1":
-					case "like.dislikeParams.f4.f2":
-					case "like.dislikeParams.f5.f1":
-					case "like.dislikeParams.f5.f2":
-					case "like.dislikeParams.f5":
-					case "like.dislikeParams.f6.f1":
-					case "like.dislikeParams.f6.f2":
-					case "like.dislikeParams.f6":
-					case "like.dislikeParams.f7":
-					case "like.likeParams.f1.f1":
-					case "like.likeParams.f2":
-					case "like.likeParams.f3":
-					case "like.likeParams.f4.f1":
-					case "like.likeParams.f4.f2":
-					case "like.likeParams.f4":
-					case "like.likeParams.f5.f1":
-					case "like.likeParams.f5.f2":
-					case "like.likeParams.f5":
-					case "like.likeParams.f6.f1":
-					case "like.likeParams.f6.f2":
-					case "like.likeParams.f7":
-					case "like.removeLikeParams.f1.f1":
-					case "like.removeLikeParams.f2":
-					case "like.removeLikeParams.f3":
-					case "like.removeLikeParams.f4.f1":
-					case "like.removeLikeParams.f4.f2":
-					case "like.removeLikeParams.f4":
-					case "like.removeLikeParams.f5.f1":
-					case "like.removeLikeParams.f5.f2":
-					case "like.removeLikeParams.f6.f1":
-					case "like.removeLikeParams.f6.f2":
-					case "like.removeLikeParams.f6":
-					case "like.removeLikeParams.f7": {
+					case "tracking.trackingParams.f9": {
 						new_path();
 						debugger;
 					}
