@@ -2,9 +2,6 @@ import {Prelude} from "./out_support.js"; export {Prelude};
 import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.accessibility";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.accessibility.navigationEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.accessibility";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.serviceEndpoint";}
@@ -67,6 +64,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_YpcGetCart";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
@@ -624,9 +622,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup:R_PdgBuyFlow";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup_Empty";}
 		|{n: Prelude.CF_TA_Page; t: Types.CF_TA_Page_; v: "AD_UpdateChannelSwitcherPage";}
-		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\">";}
-		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"watch-next-feed\">";}
-		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TR_SectionListItem_3_Empty";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_ReplaceEnclosing";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_SendFeedback";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_Signal";}
