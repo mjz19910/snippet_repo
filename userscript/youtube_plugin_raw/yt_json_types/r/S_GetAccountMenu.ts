@@ -1,1 +1,1 @@
-type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU";actions: TA_OpenPopup<Popup_GetAccountMenu>[];};
+type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU";actions: TA_OpenPopup<D_GetAccountMenu_Popup>[];};

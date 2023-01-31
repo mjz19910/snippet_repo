@@ -1121,7 +1121,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,this.R_Hint);
 		this.t(targetId,x => {
-			/** @private @type {D_Button$TargetId} */
+			/** @private @type {D_Button_TargetId} */
 			switch(x) {
 				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}:`); debugger; break;
 				case "clip-info-button":
@@ -5769,7 +5769,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(showLoadingSpinner!==true) debugger;
 	}
-	/** @private @arg {Popup_GetAccountMenu} x */
+	/** @private @arg {D_GetAccountMenu_Popup} x */
 	Popup_GetAccountMenu(x) {
 		const cf="Popup_GetAccountMenu";
 		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);//#destructure_off

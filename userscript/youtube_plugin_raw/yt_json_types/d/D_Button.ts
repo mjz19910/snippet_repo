@@ -10,7 +10,7 @@ type D_Button={
 	text?: G_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
-	targetId?: D_Button$TargetId;
+	targetId?: D_Button_TargetId;
 }|{
 	accessibility: D_Label;
 	accessibilityData?: D_Accessibility;
@@ -24,7 +24,7 @@ type D_Button={
 	text?: G_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
-	targetId?: D_Button$TargetId;
+	targetId?: D_Button_TargetId;
 }|{
 	accessibilityData?: D_Accessibility;
 	command?: GC_Button;
@@ -38,7 +38,7 @@ type D_Button={
 	text?: G_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
-	targetId?: D_Button$TargetId;
+	targetId?: D_Button_TargetId;
 }|{
 	accessibility: D_Label;
 	accessibilityData?: D_Accessibility;
@@ -53,6 +53,6 @@ type D_Button={
 	text?: G_Text;
 	trackingParams?: string;
 	hint?: R_Hint;
-	targetId?: D_Button$TargetId;
+	targetId?: D_Button_TargetId;
 };
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers;

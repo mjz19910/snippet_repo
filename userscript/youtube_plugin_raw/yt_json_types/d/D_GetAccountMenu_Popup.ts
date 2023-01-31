@@ -1,0 +1,1 @@
+type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<MP_AccountMenu>;popupType: "DROPDOWN";beReused: true;};
