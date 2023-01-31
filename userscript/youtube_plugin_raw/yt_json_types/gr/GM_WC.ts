@@ -1,10 +1,10 @@
 //#region CommonType
 type D_Empty_WCM={webCommandMetadata: {};};
+type D_Params={params: string;};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 type DC_Generic_CTP_CF=[
 	"D_CD_Reload",
 ][number];
-type D_Params={params: string;};
 //#endregion
 //#region TemplateStrings
 type T_MixPlaylistStr=`RD${string}`;
