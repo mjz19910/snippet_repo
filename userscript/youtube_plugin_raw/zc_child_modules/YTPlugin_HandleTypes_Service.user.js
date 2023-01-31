@@ -1679,10 +1679,11 @@ class HandleTypes extends HandleTypesEval {
 	expected_button_iconTypes=[
 		"NOTIFICATIONS_ACTIVE",
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
+		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
+		"CLOSE",
 	];
 	expected_button_iconTypes_ex=[
-		"DELETE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
-		"CLOSE","MICROPHONE_ON",
+		"SETTINGS","DELETE","MICROPHONE_ON",
 	];
 	/** @private @arg {CF_D_Button} cf @template {D_Button} T @arg {T} x */
 	D_Button_Omit(cf,x) {
@@ -1939,7 +1940,6 @@ class HandleTypes extends HandleTypesEval {
 					});
 					let all_types=all_ty_1.join("|");
 					console.log(all_types);
-					debugger;
 				} finally {
 					console.groupEnd();
 				}
