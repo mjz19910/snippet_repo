@@ -1,5 +1,5 @@
+//#region Grouped
 namespace G_Watch_Results_Types {}
-
 //#region G_Watch_Secondary
 type RG_Watch_ItemSection=TR_ItemSection_3<G_Watch_SecondaryResults_G_SectionItem,"sid-wn-chips","watch-next-feed">;
 type G_Watch_SecondaryResults_G_SectionItem=R_CompactPlaylist|R_CompactVideo|R_CompactRadio|R_AdSlot;
@@ -17,6 +17,8 @@ type G_Watch_ContentsItem=[
 	R_VideoPrimaryInfo,
 	R_VideoSecondaryInfo,
 ][number];
+//#endregion
+type G_ConversationBar=R_LiveChat;
 //#endregion
 //#region Data
 type D_TwoColumnWatchNextResults={
@@ -51,4 +53,7 @@ type D_AutoplayContent={
 	modifiedSets?: D_ModifiedSetItem[];
 	trackingParams: string;
 };
+//#endregion
+//#region Renderer
+type R_TwoColumnWatchNextResults={twoColumnWatchNextResults: D_TwoColumnWatchNextResults;};
 //#endregion
