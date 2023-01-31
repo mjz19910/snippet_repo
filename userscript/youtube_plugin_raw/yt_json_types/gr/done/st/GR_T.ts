@@ -56,3 +56,4 @@ type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n']
 type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
 type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
+type TA_OpenPopup_Empty=TA_OpenPopup<{}>;

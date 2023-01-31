@@ -1,1 +1,0 @@
-type G_GuideItem=R_GuideSection|R_GuideSubscriptionsSection;

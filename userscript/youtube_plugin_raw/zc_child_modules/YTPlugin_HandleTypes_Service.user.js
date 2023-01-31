@@ -3795,7 +3795,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
-	/** @private @arg {RSW_ReelItem} x */
+	/** @private @arg {RS_WatchReelItem} x */
 	RSW_ReelItem(x) {
 		const cf="RSW_ReelItem";
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -5391,7 +5391,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
-	/** @private @arg {RS_Subscribe_ActionItem} x */
+	/** @private @arg {G_RS_Subscribe_Action} x */
 	RS_Subscribe_ActionItem(x) {
 		const cf="RS_Subscribe_ActionItem";
 		if("openPopupAction" in x) {

@@ -1,1 +1,0 @@
-type D_ProfileColumn={items: G_ProfileColumnItem[];};

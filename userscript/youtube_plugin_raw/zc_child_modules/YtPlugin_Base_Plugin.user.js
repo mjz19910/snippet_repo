@@ -3627,7 +3627,7 @@ class ModifyEnv extends BaseService {
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
-		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_Response} response_obj */
+		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_RS_AllResponses} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
 			try {
 				yt_handlers.on_handle_api(request,response,response_obj);
@@ -4236,7 +4236,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {RSW_ReelItem} */
+				/** @private @type {RS_WatchReelItem} */
 				data: as(x),
 			};
 			case "reel_watch_sequence": return {

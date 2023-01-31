@@ -32,3 +32,4 @@ type D_Icon_Button=T_Icon<DE_IconType_Button>;
 //#region 
 type D_Survey_Watch={watch: B_Hack;};
 //#endregion
+type D_ProfileColumn={items: G_ProfileColumnItem[];};

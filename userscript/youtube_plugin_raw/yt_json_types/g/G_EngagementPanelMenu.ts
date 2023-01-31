@@ -1,1 +1,0 @@
-type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;

@@ -1,1 +1,0 @@
-type G_ChannelSwitcherContent=R_Button|A_AccountItem;

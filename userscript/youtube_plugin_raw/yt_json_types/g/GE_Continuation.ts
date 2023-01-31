@@ -1,1 +1,0 @@
-type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
