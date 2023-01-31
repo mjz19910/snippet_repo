@@ -163,7 +163,7 @@ type D_Button=|{
 	accessibility: {
 		label: "Save to";
 	};
-	tooltip: string;
+	tooltip: "Clip";
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 	command: E_AddToPlaylistService;

@@ -1752,15 +1752,27 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Command} x */
 	D_Button_WithCommand(cf,x) {
+		if("accessibility" in x) {
+			let {accessibility,isDisabled,text,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
+			this.D_Label(accessibility);
+			if(isDisabled!==false) debugger;
+			this.t(text,this.G_Text);
+			if(typeof tooltip!=="string") debugger;
+			return;
+		}
+		if("text" in x) {
+			let {text,isDisabled,targetId,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
+			if(isDisabled!==false) debugger;
+			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
+			return;
+		}
 		if("targetId" in x) {
 			let {targetId,isDisabled,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
-			this._primitive_of(isDisabled,"boolean");
+			if(isDisabled!==false) debugger;
 			return;
 		}
-		let {accessibility,isDisabled,text,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
-		if(typeof tooltip!=="string") debugger;
-		this.t(text,this.G_Text);
+		this.g(x);
 	}
 	/** @private @template {Extract<D_Button,{text:any}>} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit_Text(cf,x) {
