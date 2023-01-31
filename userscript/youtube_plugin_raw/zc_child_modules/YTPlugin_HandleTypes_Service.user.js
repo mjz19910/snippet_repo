@@ -1707,7 +1707,7 @@ class HandleTypes extends HandleTypesEval {
 		// });
 		return y;
 	}
-	/** @protected @arg {`D_Button.From.command.targetId`} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
+	/** @protected @arg {"D_Button:WithCommand:targetId.case"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
 		///** @type {string} */
 		//let ux=x;
@@ -1862,7 +1862,7 @@ class HandleTypes extends HandleTypesEval {
 			let {targetId,isDisabled,icon,accessibilityData,style,size,...y}=this.D_Button_Omit_Command(`${cf1}.With.command.targetId`,x); this.g(y);
 			switch(targetId) {
 				case "clip-info-button": break;
-				default: this.D_Button_TargetId(`${cf3}.case`,targetId); break;
+				default: this.codegen_case(`${cf3}.case`,targetId);this.do_codegen(cf3,x); break;
 			}
 			if(isDisabled!==false) debugger;
 			if(style!=="STYLE_DEFAULT") debugger;
