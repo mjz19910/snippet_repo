@@ -1,21 +1,19 @@
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF/";
+BACKUP_DATE=$(date '+%F_%H%M');
 function setup {
 	pushd $DEST_DIR;
-	mv "out.ts" "out.ts.bak";
+	mkdir "bak/$BACKUP_DATE";
+	mv "out.ts" "bak/"${BACKUP_DATE}"/out.ts.bak";
 	cp "out_empty.ts" "out.ts";
 	cp "gen_export_tmp.ts" "gen_export_cur.ts";
-	cp out_empty.ts tmp.ts;
+	cp "out_empty.ts" "tmp.ts";
 	popd;
 }
-function restore_on_failure {
+function on_failure {
 	echo FAILED;
-	sleep 12;
-	cp "out.ts.bak" "/tmp/out.ts.bak";
-	mv "out.ts.bak" "out.ts";
 }
 function restore {
 	cp "gen_export_out.ts" "gen_export_cur.ts";
-	[[ -f "out.ts.bak" ]] && rm "out.ts.bak"
 }
 function gen_find_type_is_not {
 	grep -Po "(?<=of type ')\".+?\"(?=' is not).+ of type '(?!\")\w+'." "$@"
@@ -35,9 +33,9 @@ pushd $DEST_DIR;
 	echo "}";
 } > /tmp/tmp.ts;
 mv /tmp/tmp.ts "tmp.ts";
-tsc && cp "tmp.ts" "out.ts" || restore_on_failure;
+tsc || on_failure;
+cp "tmp.ts" "out.ts";
 restore;
-mv "tmp.ts" "/tmp/tmp.bak.mts"
-cp "out_empty.ts" "tmp.ts";
+mv "tmp.ts" "bak/"${BACKUP_DATE}"/tmp.ts.bak";
 popd;
 unfunction restore;

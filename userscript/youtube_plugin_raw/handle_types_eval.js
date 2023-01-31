@@ -14,8 +14,8 @@ export class HandleTypesEval_ extends ServiceMethods {
 	gk=this.get_keys_of;
 	// /** @protected @arg {D_CF_D_Params} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:DC_Params['params'],cf:string)=>U} f */
 	// D_Params(cf,x,f) {const {params: p,...y}=this.s(`D_CF_D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
-	/** @protected @arg {string} a @arg {{}} b */
-	k=(a,b) => this.save_keys(`[${a}]`,b);
+	/** @protected @arg {string} cf @arg {{}} x */
+	k=(cf,x) => this.save_keys(`[${cf}]`,x);
 	// /** @protected @template {{}} T @arg {D_CF_s} cf @arg {T} x @returns {T} */
 	// s_priv(cf,x) {this.s(cf,x);}
 	// /** @protected @template {{}} T @arg {D_CF_s} cf @arg {T} x @returns {T} */

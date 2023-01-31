@@ -1934,15 +1934,11 @@ class HandleTypes extends HandleTypesEval {
 	UA_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
 	/** @private @arg {UA_DateText} x */
 	UA_DateText(x) {
-		this.y("UA_DateText","updateTitleAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));
-		const cf="UA_DateText";
-		let x1=x.updateDateTextAction;
-		this.save_keys(`[UA_DateTextData]`,x1);
-		this.G_Text(x1.dateText);
+		this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));
 	}
 	/** @private @arg {UA_ToggleButtonText} x */
 	UA_ToggleButtonText(x) {
-		this.y("UA_ToggleButtonText","updateTitleAction",x,x1 => {
+		this.y("UA_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
 			const cf="UA_ToggleButtonTextData";
 			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
 			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
@@ -1951,7 +1947,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {UA_Viewership} x */
-	UA_Viewership(x) {this.y("UA_Viewership","updateTitleAction",x,x => this.y("UA_ViewershipData","title",x,this.R_VideoViewCount));}
+	UA_Viewership(x) {this.y("UA_Viewership","updateViewershipAction",x,x => this.y("UA_ViewershipData","viewCount",x,this.R_VideoViewCount));}
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="RS_Search";
@@ -2770,9 +2766,11 @@ class HandleTypes extends HandleTypesEval {
 		this.R_MenuServiceItem(menuItem);
 		this.R_Button(topLevelButton);
 	}
+	/** @protected @arg {string} cf @arg {{}} x */
+	g_k(cf,x) {this.k(cf,x);}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
-		const cf="G_MenuItem";
+		const cf="G_MenuItem"; this.g_k(cf,x);
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
