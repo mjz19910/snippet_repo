@@ -3247,17 +3247,6 @@ class HandleRendererContentItemArray extends BaseService {
 			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
 			return true;
 		}
-		if(!rich_shelf.title.runs) {
-			if(this.debug) console.log("rich shelf title",rich_shelf.title);
-			return true;
-		}
-		if(rich_shelf.title.runs[0]) {
-			if(rich_shelf.title.runs[0].text==="Breaking news") {
-				return false;
-			}
-			if(this.debug) console.log("rich shelf title",rich_shelf.title.runs[0]);
-			return true;
-		}
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}

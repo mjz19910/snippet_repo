@@ -5798,7 +5798,6 @@ class HandleTypes extends HandleTypesEval {
 		const {teaserAvatar,teaserContent,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure
 		if(!teaserAvatar.accessibility) debugger;
 		this.R_Thumbnail(teaserAvatar);
-		if(!teaserContent.simpleText) debugger;
 		this.G_Text(teaserContent);
 		this.trackingParams(cf,trackingParams);
 	}
