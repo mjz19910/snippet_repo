@@ -391,7 +391,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);//#destructure_off
 		const is_not_in_set=!ty_arr.includes(iconType);
-		if(is_not_in_set) {console.log("[missing_icon]",iconType);}
+		if(is_not_in_set) {console.log("[missing_icon]",iconType); debugger;}
 		this.save_string("[IconType]",iconType);
 		return is_not_in_set;
 	}
@@ -1614,13 +1614,11 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @private @template {D_Button} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
-		const {accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
+		const {accessibilityData,command,icon,isDisabled,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 		this.t(icon,x => this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes));
 		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
-		this.t(serviceEndpoint,this.D_Button_SE);
-		this.t(navigationEndpoint,this.Button_navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
@@ -1647,23 +1645,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		if("style" in x&&"accessibility" in x) {
-			const {accessibility,style,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
-			if(accessibility) return this.D_Label(accessibility);
-			this.t(style,x => this.save_string("[Button.style]",x));
-			return;
-		}
 		if("style" in x) {
-			const {style,...y}=this.D_Button_Omit(`${cf}.Styled`,x); this.g(y);
+			const {style,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
 			this.t(style,x => this.save_string("[Button.style]",x));
 			return;
 		}
 		if("accessibility" in x) {
-			const {accessibility,...y}=this.D_Button_Omit(`${cf}.WithAccessibility`,x); this.g(y);
+			const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.WithAccessibility`,x); this.g(y);
+			this.t(navigationEndpoint,this.Button_navigationEndpoint);
 			if(accessibility) return this.D_Label(accessibility);
 			return;
 		}
-		const {...y}=this.D_Button_Omit(cf,x); this.g(y);
+		const {serviceEndpoint,...y}=this.D_Button_Omit(cf,x); this.g(y);
+		this.t(serviceEndpoint,this.D_Button_SE);
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {

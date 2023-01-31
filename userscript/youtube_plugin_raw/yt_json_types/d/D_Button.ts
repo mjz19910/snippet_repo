@@ -3,8 +3,7 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D_Icon_Button;
 	isDisabled?: boolean;
-	serviceEndpoint?: D_Button_SE;
-	navigationEndpoint?: GE_Button_navigation;
+	serviceEndpoint: D_Button_SE;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	text?: G_Text;
@@ -17,8 +16,7 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D_Icon_Button;
 	isDisabled?: boolean;
-	serviceEndpoint?: D_Button_SE;
-	navigationEndpoint?: GE_Button_navigation;
+	navigationEndpoint: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	text?: G_Text;
@@ -30,23 +28,6 @@ type D_Button={
 	command?: GC_Button;
 	icon?: D_Icon_Button;
 	isDisabled?: boolean;
-	serviceEndpoint?: D_Button_SE;
-	navigationEndpoint?: GE_Button_navigation;
-	tooltip?: string;
-	size?: D$ButtonSizeType;
-	style: D$ButtonStyleType;
-	text?: G_Text;
-	trackingParams?: string;
-	hint?: R_Hint;
-	targetId?: D_Button_TargetId;
-}|{
-	accessibility: D_Label;
-	accessibilityData?: D_Accessibility;
-	command?: GC_Button;
-	icon?: D_Icon_Button;
-	isDisabled?: boolean;
-	serviceEndpoint?: D_Button_SE;
-	navigationEndpoint?: GE_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	style: D$ButtonStyleType;
