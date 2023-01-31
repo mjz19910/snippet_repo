@@ -4164,7 +4164,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibility);
 		this.G_Text(formattedTitle);
 		this.ceq(icon.iconType,"HELP");
-		let [cm,se_des]=this.T_SE_Signal(cf,serviceEndpoint);
+		let [cm,se_des]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
 		this.g(cm.webCommandMetadata);
 		this.g(se_des);
 		this.trackingParams(cf,trackingParams);
