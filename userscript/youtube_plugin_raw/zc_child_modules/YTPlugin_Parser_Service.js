@@ -896,6 +896,7 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "UndoFeedback":
 			case "reload":
 			case "transcriptTrackSelection":
 			case "feedback": u(idx); debugger; break;

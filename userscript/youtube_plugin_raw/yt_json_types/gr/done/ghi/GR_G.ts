@@ -43,3 +43,4 @@ type GE_Browse=
 	|E_VE96368_Browse
 	;
 ;
+type GE_Browse_WCM=GE_Browse["commandMetadata"];

@@ -37,5 +37,6 @@ tsc || on_failure;
 cp "tmp.ts" "out.ts";
 restore;
 mv "tmp.ts" "bak/"${BACKUP_DATE}"/tmp.ts.bak";
+cp "out_empty.ts" "tmp.ts";
 popd;
 unfunction restore;

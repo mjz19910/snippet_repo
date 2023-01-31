@@ -893,8 +893,12 @@ class HandleTypes extends HandleTypesEval {
 	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {GE_Browse['commandMetadata']} x */
-	M_VE_Browse(x) {this.T_WCM("M_VE_Browse",x,this.GM_VE_WC_Browse);}
+	/** @private @arg {GE_Browse_WCM} x */
+	M_VE_Browse(x) {
+		const cf="M_VE_Browse";
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);
+		this.GM_VE_WC_Browse(a);
+	}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {M_VE37414} x */

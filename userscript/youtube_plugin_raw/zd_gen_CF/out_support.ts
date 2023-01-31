@@ -1,6 +1,8 @@
+type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
 		|"CF_D_Button"
+		|"CF_parse_identifier"
 		|"CF_D_ChipCloudChip_Omit"
 		|"CF_D_CustomEmoji"
 		|"CF_D_Link"
@@ -17,6 +19,7 @@ export namespace Prelude {
 		|"CF_M_y"
 		|"CF_M_zy"
 		|"CF_MG_s"
+		|"CF_T_Commands"
 		|"CF_T_Endpoint"
 		|"CF_T_Icon_Any"
 		|"CF_T_Icon"
@@ -33,6 +36,9 @@ export namespace Prelude {
 		|"CF_TE_Endpoint_Opt_3"
 		;
 	;
+	// |"CF_parse_identifier"
+	export type CF_parse_identifier="CF_parse_identifier";
+	export type CF_T_Commands="CF_T_Commands";
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_ChipCloudChip_Omit="CF_D_ChipCloudChip_Omit";
 	export type CF_D_CustomEmoji="CF_D_CustomEmoji";
@@ -66,6 +72,9 @@ export namespace Prelude {
 	export type CF_TE_Endpoint_Opt_3="CF_TE_Endpoint_Opt_3";
 }
 export namespace Types {
+	export type CF_NEW_GEN_=CF_NEW_GEN;
+	export type CF_parse_identifier_=CF_parse_identifier;
+	export type CF_T_Commands_=CF_T_Commands;
 	export type CF_D_Button_=CF_D_Button;
 	export type CF_D_ChipCloudChip_Omit_=CF_D_ChipCloudChip_Omit;
 	export type CF_D_CustomEmoji_=CF_D_CustomEmoji;

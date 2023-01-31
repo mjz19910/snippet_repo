@@ -500,6 +500,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_Browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ModifiedSetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
@@ -586,6 +587,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ToggleButtonIdData";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_YpcGetCart";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateText";}
@@ -629,6 +631,8 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Watch";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetCart";}
 		|{n: Prelude.CF_TE_Endpoint_Opt_3; t: Types.CF_TE_Endpoint_Opt_3_; v: "C_Continuation";}
+		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
+		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_Executor";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
@@ -654,9 +658,15 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Feedback";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_FlagGetForm";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetNotificationMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Like";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_RecordInteractions";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SendPost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SetSetting";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE37414";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE4724";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE83769";}

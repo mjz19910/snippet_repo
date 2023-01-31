@@ -37,15 +37,7 @@ type CF_L_Params=
 	|`${CF_D_Params}.params`
 	;
 ;
-type CF_parse_identifier=
-	|"unknown_parse"
-	|"D_EngagementPanelSectionList";
-type CF_M_s_no_gen=
-	|"DC_ReloadContinuationItems"
-	|"DMD_AdSlot"
-	|"DC_Continuation"
-	;
-;
+type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
 type CF_M_s_gen=
 	|`${CF_parse_identifier}.identifier`
 	|CF_D_Button
@@ -55,40 +47,11 @@ type CF_M_s_gen=
 	|CF_D_Menu_Omit
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
-	|CF_L_Common_Params
-	|CF_M_s_no_gen
 	|CF_T_SE_Signal
 	|T_ExtractImport<"CF_M_s">
 	;
 ;
-type CF_M_s=
-	|CF_M_s_gen
-	|"G_Text"
-	|"GM_FlagGetForm"
-	|"GM_Like"
-	|"GM_Subscribe"
-	|"MG_AdLayout"
-	|"R_TextRun"
-	|"RC_MainAppWebResponseContext"
-	|"RD_MenuServiceItem"
-	|"T_Autoplay"
-	|"T_Playlist"
-	|"T_SecondaryResults"
-	|"T_Types"
-	|"RC_ResponseContext"
-	|"RC_ConsistencyTokenJar"
-	|"RC_WR_ContextExtension"
-	|"D_WebPrefetch"
-	|"RCA_RelevantStateTags"
-	|"DC_Loop"
-	|"D_PrefetchHintConfig"
-	;
-;
-type CF_L_Common_Params=
-	|"TD_ItemSection_2_CommentsEntryPoint"
-	|"T_Command_TP"
-	;
-;
+type CF_M_s=CF_M_s_gen;
 type CF_L_TP_Params=
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
 	|CF_D_Link
@@ -101,19 +64,8 @@ type CF_L_TP_Params=
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
 type CF_D_Params=T_ExtractImport<"CF_D_Params">|"DC_GetTranscript_Params"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
-type CF_TE_Endpoint_3=
-	|T_ExtractImport<"CF_TE_Endpoint_3">
-	|"E_Url"
-	|"E_GetTranscript"
-	;
-;
-type CF_TD_ItemSection_3=
-	|T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a"
-	|`TD_ItemSection_3<"comment-item-section">`
-	|`TD_ItemSection_3<"watch-next-feed">`
-	|"TR_SectionListItem_3_Empty"
-	;
-;
+type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3"|"a";
+type CF_TD_ItemSection_3=T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a";
 type CF_T_WCM_Unpack=T_ExtractImport<"CF_T_WCM_Unpack">|"CF_T_WCM_Unpack"|"a";
 type CF_M_w=
 	|`y:${CF_M_y}`
@@ -127,17 +79,11 @@ type CF_M_w=
 	|"D_ImpressionCap"
 	;
 ;
-type CF_T_Commands=
-	|"CF_T_Commands"
-	|"DC_CommandExecutor"
-	|"DC_Executor"
-	;
-;
+type CF_T_Commands=T_ExtractImport<"CF_T_Commands">|"CF_T_Commands"|"a";
 type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";
 type CF_M_y=
 	|T_ExtractImport<"CF_M_y">|"CF_M_y"|"a"
 	|`T_WCM:${CF_T_WCM}`
-	|"D_ToggleButtonIdData"
 	;
 ;
 type CF_M_zy=T_ExtractImport<"CF_M_zy">|"CF_M_zy"|"a";
@@ -176,16 +122,5 @@ type CF_D_Playlist_Omit=T_ExtractImport<"CF_D_Playlist_Omit">|"CF_D_Playlist_Omi
 type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|"CF_TE_Endpoint_Opt_3"|"a";
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|"CF_T_Endpoint"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
-type CF_T_WCM=
-	|T_ExtractImport<"CF_T_WCM">
-	|"M_VE_Browse"
-	|"M_Like"
-	|"M_VE37414"
-	|"M_AdLayout"
-	|"M_GetNotificationMenu"
-	|"M_SendPost"
-	|"M_Subscribe"
-	|"M_FlagGetForm"
-	;
-;
+type CF_T_WCM=T_ExtractImport<"CF_T_WCM">|"CF_T_WCM"|"a";
 type CF_DC_Generic_CTP="D_CD_Reload"|"a";
