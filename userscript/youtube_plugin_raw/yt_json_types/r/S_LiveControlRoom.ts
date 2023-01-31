@@ -1,1 +1,0 @@
-type S_LiveControlRoom=T_Signal<"LIVE_CONTROL_ROOM">;
