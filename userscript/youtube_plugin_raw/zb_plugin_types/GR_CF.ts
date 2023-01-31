@@ -26,6 +26,7 @@ type CF_L_params_no_gen=
 	|"DE_GetReportForm"
 	|"DE_GetTranscript"
 	|"DE_YpcGetOffers"
+	|"DE_CreateBackstagePost.createBackstagePostParams"
 	;
 ;
 type CF_L_Params=
@@ -49,11 +50,12 @@ type CF_M_s_no_gen=
 type CF_M_s=
 	|T_ExtractImport<"CF_M_s">|""|"a"
 	|CF_D_Button
+	|CF_D_CustomEmoji
 	|CF_D_Link
-	|CF_D_Video_Handle
 	|CF_D_Menu_Omit
-	|CF_T_SE_Signal
+	|CF_D_Video_Handle
 	|CF_M_s_no_gen
+	|CF_T_SE_Signal
 	;
 ;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|""|"a"|""|"A";
