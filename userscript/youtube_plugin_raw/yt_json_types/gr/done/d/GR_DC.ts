@@ -22,7 +22,7 @@ type DC_ReloadContinuationItems={
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 	targetId: "comments-section";
 	continuationItems: R_CommentsHeader[];
-};type DC_AdsControlFlowOpportunityReceived={
+}; type DC_AdsControlFlowOpportunityReceived={
 	opportunityType: DE_OpportunityType;
 	adSlotAndLayoutMetadata?: D_AdSlotAndLayoutItem[];
 	isInitialLoad: boolean;
@@ -43,10 +43,18 @@ type DC_Continuation={
 	token: string;
 	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
 };
+type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 type DC_Executor=Record<"commands",AC_Executor[]>;
-type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[];followUpText: G_Text;};
-type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips";loadCached: true;};
-type DC_GetSurvey={endpoint: GDC_GetSurvey_Endpoint;action: string;};
+type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
+type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
+// type GDC_GetSurvey_Endpoint=D_PaidDigitalGoods|D_Survey_Watch;
+type DC_GetSurvey={
+	endpoint: D_Survey_Watch;
+	action: "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
+}|{
+	endpoint: D_PaidDigitalGoods;
+	action: "FOR_D_PaidDigitalGoods";
+};
 // TODO: #14 Need type of DC_RefreshPlaylist
 type DC_RefreshPlaylist={};
 //#endregion
