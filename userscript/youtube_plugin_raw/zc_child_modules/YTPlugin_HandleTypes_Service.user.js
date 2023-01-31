@@ -148,6 +148,10 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
+	/** @private @arg {boolean} x */
+	a_primitive_bool(x) {
+		if(typeof x!=="boolean") debugger;
+	}
 	//#region templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD_(cf,k,x) {
@@ -4942,10 +4946,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(nextButton);
 		this.R_Button(previousButton);
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
-	}
-	/** @private @arg {boolean} x */
-	a_primitive_bool(x) {
-		if(typeof x!=="boolean") debugger;
 	}
 	/** @private @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}

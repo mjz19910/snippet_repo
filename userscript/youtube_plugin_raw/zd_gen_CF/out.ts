@@ -207,7 +207,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_HideEngagementPanelScrim";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_ShowEngagementPanelScrim";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AutoplaySetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_AdsControlFlowOpportunityReceived";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_Executor";}
@@ -263,6 +262,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AlertWithButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AttBgChallenge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplayContent";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CarouselLockup";}
@@ -350,6 +350,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat.ios";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat.url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat_Other";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ModifiedSetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MovingThumbnail";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MovingThumbnail_Thumbnails";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MusicCarouselShelf";}
@@ -508,7 +509,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_Browse";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ModifiedSetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RCA_RelevantStateTags";}
