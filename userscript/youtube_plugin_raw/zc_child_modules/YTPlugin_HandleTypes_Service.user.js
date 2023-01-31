@@ -2218,7 +2218,10 @@ class HandleTypes extends HandleTypesEval {
 	D_GetSurvey_Endpoint(x) {
 		const cf="D_GetSurvey_Endpoint";
 		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
-		x.watch;
+		if("watch" in x) {
+			if("hack" in x.watch&&x.watch.hack) return;
+			debugger;
+		}
 		this.do_codegen(cf,x);
 	}
 	codegen_group_id=1;
