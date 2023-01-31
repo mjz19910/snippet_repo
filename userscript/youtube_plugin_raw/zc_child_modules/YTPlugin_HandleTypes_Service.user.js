@@ -280,7 +280,7 @@ class HandleTypes extends HandleTypesEval {
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
 	/** @private @template T @arg {D_CF["Unpack"]["T_WCM"]} cf @arg {{webCommandMetadata: T}} x */
-	unpack_T_WCM(cf,x) {return this.w(`D_CF:Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
+	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @arg {string} cf @template {{clickTrackingParams:string;}} T @arg {T} x */
 	ctp(cf,x) {const {clickTrackingParams: a,...y}=this.s(cf,x); this.clickTrackingParams(`${cf}.endpoint`,a); return y;}
 	//#endregion
@@ -399,10 +399,10 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @arg {D_CF_y} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.w(`D_CF:y:${cf}`,k,x));}
+	/** @protected @template {D_CF_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_CF_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
-	zy(cf,k,x,f) {return this.z(this.w(`D_CF:zy:${cf}`,k,x),f);}
+	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
@@ -444,10 +444,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
-	/** @private @arg {D_CF_TA_Page} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	TA_Page(cf,x,f) {f.call(this,this.w(`D_CF:TA_Page:${cf}`,"page",x));}
-	/** @private @arg {D_CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(cf,x) {return this.w(`D_CF:TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
+	/** @private @arg {TA_Page_CF} cf @template T @arg {TA_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
+	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
+	/** @private @arg {TR_MultiPageMenu_CF} cf @template T @arg {TR_MultiPageMenu<T>} x */
+	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -2585,8 +2585,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
-	/** @private @template {object} T @template U @arg {D_CF_T_WCM} cf @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
-	T_WCM(cf,x,f) {this.y(`D_CF:T_WCM:${cf}`,"webCommandMetadata",x,f);}
+	/** @private @template {object} T @template U @arg {T_WCM_CF} cf @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
+	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {GM_SetSetting} x */
@@ -4782,9 +4782,9 @@ class HandleTypes extends HandleTypesEval {
 		this.M_CreateBackstagePost(a);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {this.y("DE_CreateBackstagePost","createBackstagePostParams",x,x => this.params(cf,"createBackstagePost.params",x));}
+	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,(x,cf) => this.params(cf,"createBackstagePost.params",x));}
 	/** @private @arg {M_CreateBackstagePost} x */
-	M_CreateBackstagePost(x) {this.y("M_CreateBackstagePost","webCommandMetadata",x,this.GM_CreateBackstagePost);}
+	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {
 		const cf="GM_CreateBackstagePost";
@@ -5369,9 +5369,20 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		const cf="D_LikeApi";
-		if("videoId" in x) return this.videoId(this.w(cf,x,"videoId"));
-		if("playlistId" in x) return this.playlistId(this.w(cf,x,"playlistId"));
-		this.do_codegen(cf,x);
+		{
+			const cn="videoId";
+			if(cn in x) {
+				const {[cn]: a,...y}=this.s(cf,x); this.g(y);
+				return this[cn](a);
+			}
+		}
+		{
+			const cn="playlistId";
+			if(cn in x) {
+				const {[cn]: a,...y}=this.s(cf,x); this.g(y);
+				return this[cn](a);
+			}
+		}
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {R_TranscriptSearchPanel} x */

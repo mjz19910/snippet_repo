@@ -3,15 +3,15 @@ type D_CF_w=[
 	`y:${D_CF_y}`,
 	`zy:${D_CF_zy}`,
 	`Unpack:T_WCM:${D_CF["Unpack"]["T_WCM"]}`,
-	`TA_Page:${D_CF_TA_Page}`,
-	`TR_MultiPageMenu:${D_CF_TR_MultiPageMenu}`,
+	`TA_Page:${TA_Page_CF}`,
+	`TR_MultiPageMenu:${TR_MultiPageMenu_CF}`,
 	`G_EY_Entity_Any:G_EY_Entity`,
 ][number];
-type D_CF_TR_MultiPageMenu=[
+type TR_MultiPageMenu_CF=[
 	"D_NotificationMenu_PopupItemMenu",
 ][number];
 type D_CF_y=[
-	`T_WCM:${D_CF_T_WCM}`,
+	`T_WCM:${T_WCM_CF}`,
 	"DE_CreateBackstagePost",
 	"T_Item",
 	"B_HrefUrl",
@@ -20,10 +20,9 @@ type D_CF_y=[
 type D_CF_zy=[
 	"T_Item",
 ][number];
-type D_CF_Unpack_T_WCM=[
-	"D_CF_Unpack_T_WCM",
+type T_WCM_CF_Unpack=[
 	"MG_Survey_CMD",
 ][number];
-type D_CF_TA_Page=[
+type TA_Page_CF=[
 	"AD_UpdateChannelSwitcherPage",
 ][number];
