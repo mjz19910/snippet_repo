@@ -191,6 +191,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_2_CommentsEntryPoint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_3";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "T_Command_TP";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AccountItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ChangeEngagementPanelVisibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
@@ -383,6 +384,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistVideoThumbnail";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Playlist_MD";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PrefetchHintConfig";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PrimaryLinkItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProductList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProductListItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfileColumnStatsEntry";}

@@ -1,1 +1,1 @@
-type R_AccountItem={accountItemRenderer: D_AccountItem;};
+type R_AccountItem={accountItemRenderer: AD_AccountItem;};

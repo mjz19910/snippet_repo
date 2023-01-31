@@ -1,4 +1,4 @@
-type D_AccountItem={
+type AD_AccountItem={
 	accountName: G_Text;
 	accountPhoto: R_Thumbnail;
 	isSelected: boolean;

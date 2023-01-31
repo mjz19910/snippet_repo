@@ -237,7 +237,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text";
-		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
+		/** @type {T_UnionToPartial<G_Text>} */
+		let x1=x;
+		const {runs,simpleText,accessibility,...y}=this.s(cf,x1); this.g(y);//#destructure_off
 		this.t(simpleText,this.a_primitive_str);
 		this.tz(runs,x => this.D_TextRun(x,this.G_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
@@ -6987,18 +6989,31 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PrimaryLinkItem} x */
 	D_PrimaryLinkItem(x) {
 		const cf="D_PrimaryLinkItem"; this.k(cf,x);
-		this.do_codegen(cf,x);
-	}
-	/** @private @arg {A_AccountItem} x */
-	A_AccountItem(x) {
-		const cf="A_AccountItem"; this.k(cf,x);
-		this.do_codegen(cf,x);
+		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);
+		this.E_Url(navigationEndpoint);
+		this.R_Thumbnail(icon);
+		this.G_Text(title);
 	}
 	/** @private @arg {AD_UndoFeedback} x */
 	AD_UndoFeedback(x) {
 		const cf="AD_UndoFeedback"; this.k(cf,x);
 		if("hack" in x) return this.B_Hack(x);
 		this.do_codegen(cf,x);
+	}
+	/** @private @arg {A_AccountItem} x */
+	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem)}
+	/** @private @arg {AD_AccountItem} x */
+	AD_AccountItem(x) {
+		const cf="AD_AccountItem";
+		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(accountName);
+		this.R_Thumbnail(accountPhoto);
+		this.a_primitive_bool(isSelected);
+		this.a_primitive_bool(isDisabled);
+		this.a_primitive_bool(hasChannel);
+		this.g(serviceEndpoint);
+		this.G_Text(accountByline);
+		this.G_Text(channelHandle);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
