@@ -459,8 +459,6 @@ class ND extends Snippet_0_tmp {
 	E_Browse(x) {x;}
 	/** @private @arg {R_Thumbnail} x */
 	D_Thumbnail(x) {x;}
-	/** @private @arg {G_Text} x */
-	G_Text(x) {x;}
 	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
 		const cf="VideoOwner$Omit"; cf;

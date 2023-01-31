@@ -1205,19 +1205,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
 	/** @protected @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {
-		const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y);
-		this.M_AddToPlaylistService(a);
-		this.DE_AddToPlaylistService(b);
-	}
+	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @protected @arg {E_PlaylistEdit} x */
-	E_PlaylistEdit(x) {
-		const cf="E_PlaylistEdit";
-		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y1},playlistEditEndpoint,...y}=this.s(cf,x); this.g(y); this.g(y1);
-		this.clickTrackingParams(cf,clickTrackingParams);
-		if(webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		this.GM_WC(webCommandMetadata);
-		this.D_PlaylistEdit(playlistEditEndpoint);
+	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
+	/** @protected @arg {M_EditPlaylist} x */
+	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
+	/** @protected @arg {GM_EditPlaylist} x1 */
+	GM_EditPlaylist(x1) {
+		if(x1.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		this.GM_WC(x1);
 	}
 	/** @protected @arg {E_Feedback} x */
 	E_Feedback(x) {
@@ -3204,7 +3200,7 @@ class HandleTypes extends HandleTypesEval {
 		this.videoId(videoId);
 	}
 	/** @private @arg {DE_PlaylistEdit} x */
-	D_PlaylistEdit(x) {
+	DE_PlaylistEdit(x) {
 		const cf="D_PlaylistEdit";
 		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.playlistId(playlistId);
