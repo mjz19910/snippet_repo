@@ -51,7 +51,7 @@ type D_PlaylistContent={
 	nextVideoLabel: G_Text;
 };
 type D_AutoplayContent={
-	sets: AutoplaySetItem[];
+	sets: D_AutoplaySetItem[];
 	countDownSecs?: 5;
 	modifiedSets?: D_ModifiedSetItem[];
 	trackingParams: string;

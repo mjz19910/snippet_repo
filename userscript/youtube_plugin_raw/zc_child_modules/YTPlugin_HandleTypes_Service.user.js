@@ -741,15 +741,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region E_ (Endpoints)
 	/** @private @arg {E_Watch} x */
-	E_Watch(x) {let [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
+	E_Watch(x) {const [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
-	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_Upload",a); this.B_Hack(b);}
+	E_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_Upload",a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {let [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
+	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {let [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
+	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {let [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.D_ReelWatch(b);}
+	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.D_ReelWatch(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {
 		const cf="E_ShowEngagementPanel";
@@ -760,13 +760,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {
 		const cf="E_GetReportForm";
-		let [a,b,y]=this.TE_Endpoint_3(cf,"getReportFormEndpoint",x); this.g(y);//#destructure
+		const [a,b,y]=this.TE_Endpoint_3(cf,"getReportFormEndpoint",x); this.g(y);//#destructure
 		this.D_Params(`D${cf}`,b,(x,cf) => this.params(cf,"get_report_form",x));
 		this.M_FlagGetForm(a);
 	}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {
-		let [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y);
+		const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y);
 		this.M_AddToPlaylistService(a);
 		this.DE_AddToPlaylistService(b);
 	}
@@ -789,65 +789,27 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_Feedback(feedbackEndpoint);
 	}
 	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {let [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.DE_UndoFeedback(b);}
+	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.DE_UndoFeedback(b);}
 	/** @private @arg {E_Url} x */
-	E_Url(x) {let [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
+	E_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {let [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
+	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
+	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_GetTranscript",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
-	E_Search(x) {
-		const cf="E_Search";
-		const {clickTrackingParams,commandMetadata: a,searchEndpoint: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.M_VE4724(a);
-		this.D_Search(b);
-	}
+	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {
-		const cf="E_CreateBackstagePost";
-		let [a,b,y]=this.TE_Endpoint_3(cf,"createBackstagePostEndpoint",x); this.g(y);
-		this.DE_CreateBackstagePost(b);
-		this.M_CreateBackstagePost(a);
-	}
+	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {
-		const cf="E_WatchPlaylist";
-		const {clickTrackingParams,commandMetadata: a,watchPlaylistEndpoint: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.do_codegen(cf,x); a;
-		// this.G_CommandMetadata(commandMetadata);
-		this.D_WatchPlaylist(b);
-	}
+	E_WatchPlaylist(x) {const cf="E_WatchPlaylist",[a,b,y]=this.TE_Endpoint_3(cf,"watchPlaylistEndpoint",x); this.g(y); this.DC_Empty_WCM(`DC_${cf}`,a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {E_Like} x */
-	E_Like(x) {
-		let [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y);
-		this.M_Like(a);
-		this.DE_Like(b);
-	}
+	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {
-		let [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y);
-		this.DE_PlaylistEditor(b);
-		this.DC_Empty_WCM("DC_UndoFeedback",a);
-	}
-	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
-	E_Browse_ParseBrowseId(x) {
-		if(this.str_starts_with("UC",x)) return this.D_ChannelId(x);
-		if(this.str_starts_with("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
-		switch(x) {
-			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
-			case "FEguide_builder": case "FEstorefront": break;
-			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
-			case "SPaccount_overview": break;
-			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
-		};
-	}
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
 	/** @private @arg {DC_Params} a */
@@ -873,19 +835,31 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_Browse_VE";
 		if("params" in x) {
 			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);//#destructure
-			this.E_Browse_ParseBrowseId(a);
+			this.GU_E_BrowseId(a);
 			this.params(cf,"D_Browse.param",c);
 			this.g(y);
 			return;
 		}
 		if("canonicalBaseUrl" in x) {
 			const {browseId: a,canonicalBaseUrl: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
-			this.E_Browse_ParseBrowseId(a);
+			this.GU_E_BrowseId(a);
 			return this._decode_channel_url(b);
 		}
 		const {browseId: a,...y}=this.s(cf,x); this.g(y);//#destructure
-		this.E_Browse_ParseBrowseId(a);
+		this.GU_E_BrowseId(a);
 		this.g(y);
+	}
+	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
+	GU_E_BrowseId(x) {
+		if(this.str_starts_with("UC",x)) return this.D_ChannelId(x);
+		if(this.str_starts_with("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
+		switch(x) {
+			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
+			case "FEguide_builder": case "FEstorefront": break;
+			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
+			case "SPaccount_overview": break;
+			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
+		};
 	}
 	/** @private @arg {CF_T_WCM} cf @template {object} T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
 	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
@@ -1628,7 +1602,7 @@ class HandleTypes extends HandleTypesEval {
 			this.GM_Next(x.commandMetadata.webCommandMetadata);
 		}
 		this.DC_Continuation(x.continuationCommand);
-		let [a,b,y]=this.TE_Endpoint_Opt_3(cf,"continuationCommand",x); this.g(y);
+		const [a,b,y]=this.TE_Endpoint_Opt_3(cf,"continuationCommand",x); this.g(y);
 		a;
 		b;
 	}
@@ -4229,9 +4203,9 @@ class HandleTypes extends HandleTypesEval {
 	D_AutoplayContent(x) {
 		const cf="D_AutoplayContent";
 		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(sets,this.AutoplaySetItem);
+		this.z(sets,this.D_AutoplaySetItem);
 		if(countDownSecs&&countDownSecs!==5) debugger;
-		if(modifiedSets!==void 0) this.z(modifiedSets,this.ModifiedSetItem);
+		if(modifiedSets!==void 0) this.z(modifiedSets,this.D_ModifiedSetItem);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_PlaylistContent} x */
@@ -4373,7 +4347,7 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==4724) debugger;
 	}
 	/** @private @arg {DE_Search} x */
-	D_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
+	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader";
@@ -5041,25 +5015,25 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,c);
 		return y;
 	}
-	/** @private @arg {AutoplaySetItem} x */
-	AutoplaySetItem(x) {
-		const cf="AutoplaySetItem";
+	/** @private @arg {D_AutoplaySetItem} x */
+	D_AutoplaySetItem(x) {
+		const cf="D_AutoplaySetItem";
 		const {mode,autoplayVideo,nextButtonVideo,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(mode!=="NORMAL") debugger;
 		this.E_Watch(autoplayVideo);
 		this.t(nextButtonVideo,this.E_Watch);
 	}
 	/** @private @arg {D_ModifiedSetItem} x */
-	ModifiedSetItem(x) {
-		const cf="ModifiedSetItem";
+	D_ModifiedSetItem(x) {
+		const cf="D_ModifiedSetItem";
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.E_WatchPlaylist(autoplayVideo);
 		this.E_WatchPlaylist(nextButtonVideo);
 		this.t(previousButtonVideo,this.E_WatchPlaylist);
 	}
 	/** @private @arg {DE_WatchPlaylist} x */
-	D_WatchPlaylist(x) {
-		const cf="D_WatchPlaylist";
+	DE_WatchPlaylist(x) {
+		const cf="DE_WatchPlaylist";
 		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.parser.parse_playlist_id(playlistId);
 		this._primitive_of(index,"number");
