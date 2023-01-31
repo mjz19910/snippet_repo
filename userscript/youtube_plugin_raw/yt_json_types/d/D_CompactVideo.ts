@@ -8,7 +8,7 @@ type D_CompactVideo={
 	lengthText: G_Text;
 	navigationEndpoint: E_Watch;
 	shortBylineText: G_Text;
-	channelThumbnail: {};
+	channelThumbnail: R_Thumbnail;
 	ownerBadges: RMD_Badge[];
 	trackingParams: string;
 	shortViewCountText: G_Text;

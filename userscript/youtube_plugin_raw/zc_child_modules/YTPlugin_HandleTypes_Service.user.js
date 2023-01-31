@@ -2967,15 +2967,42 @@ class HandleTypes extends HandleTypesEval {
 		let [a]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x);
 		this.DC_AddToPlaylist(a);
 	}
+	/** @type {string[]} */
+	DC_AddToPlaylist_listTypes=[
+		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
+	];
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
+		const code_template=(x=>{let x1=x.split("/*Start*/")[1];return x1.split("/*End*/")[0]})(`
+		switch(x.listType) {
+			default: break;
+			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
+				const {listType: {},onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+				this.SE_CreatePlaylist(onCreateListCommand);
+				this.z([openListPanel,openMiniplayer],this.a_primitive_bool);
+				this.videoId(videoId);
+				this.z(videoIds,this.videoId);
+			}/*End*/
+		}`);
 		const cf="DC_AddToPlaylist";
-		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
-		console.log(`${cf}.listType`,listType);
-		this.SE_CreatePlaylist(onCreateListCommand);
-		this.z([openListPanel,openMiniplayer],this.a_primitive_bool);
-		this.videoId(videoId);
-		this.z(videoIds,this.videoId);
+		this.save_string(`${cf}.listType`,x.listType);
+		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
+			let known=this.DC_AddToPlaylist_listTypes;
+			this.DC_AddToPlaylist_listTypes.push(x.listType);
+			this.do_codegen(cf,x);
+			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
+			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
+			debugger;
+		}
+		switch(x.listType) {
+			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
+				const {listType: {},onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+				this.SE_CreatePlaylist(onCreateListCommand);
+				this.z([openListPanel,openMiniplayer],this.a_primitive_bool);
+				this.videoId(videoId);
+				this.z(videoIds,this.videoId);
+			}
+		}
 	}
 	/** @private @arg {SE_CreatePlaylist} x */
 	SE_CreatePlaylist(x) {
@@ -3257,14 +3284,16 @@ class HandleTypes extends HandleTypesEval {
 		x==="";
 		this.do_codegen(cf,x);
 	}
-	codegen_all_service_menu_icons() {
-		console.log(this.service_menu_icons.join());
+	/** @arg {string} cf */
+	codegen_all_service_menu_icons(cf) {
+		let arr_items=JSON.stringify(this.service_menu_icons,null,"\t");
+		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
 	}
-	/** @arg {string} x */
-	new_service_icon(x) {
+	/** @arg {string} cf @arg {string} x */
+	new_service_icon(cf,x) {
 		if(this.service_menu_icons.includes(x)) return;
 		this.service_menu_icons.push(x);
-		this.codegen_all_service_menu_icons();
+		this.codegen_all_service_menu_icons(cf);
 	}
 	/** @private @type {string[]} */
 	service_menu_icons=[];
@@ -3273,7 +3302,7 @@ class HandleTypes extends HandleTypesEval {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
 		switch(icon.iconType) {
-			default: this.new_service_icon(icon.iconType); break;
+			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break;
 			case "NOT_INTERESTED":
 			case "ADD_TO_QUEUE_TAIL": break;
 		}
@@ -3688,7 +3717,7 @@ class HandleTypes extends HandleTypesEval {
 		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=u; this.g(y);
 		this.t(richThumbnail,this.D_VideoLike_richThumbnail);
 		this.D_Accessibility(accessibility);
-		console.log("chan.thumb",channelThumbnail);
+		this.R_Thumbnail(channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
 		this.tz(ownerBadges,this.RMD_Badge);
 		this.G_Text(publishedTimeText);
