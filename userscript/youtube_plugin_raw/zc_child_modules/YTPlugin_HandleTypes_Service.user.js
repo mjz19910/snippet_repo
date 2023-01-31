@@ -308,7 +308,7 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	D_TextRun(x,f_run) {
@@ -641,7 +641,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		x===0;
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {GM_VE3854_WC} x */
 	GM_VE3854_WC(x) {
@@ -1218,7 +1218,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_Page";
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
@@ -1550,14 +1550,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Browse_MD";
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar";
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
@@ -1586,7 +1586,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} cf @arg {DE_Empty_WCM} x */
 	DE_Empty_WCM(cf,x) {
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
@@ -1640,7 +1640,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_PlaylistSidebarItem";
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -1747,32 +1747,52 @@ class HandleTypes extends HandleTypesEval {
 		// this.t(command,this.GC_Button);
 		return y;
 	}
-	/** @arg {D_Button_Ex_1_Omit_Size} x */
-	D_Button_Scope_1(x) {
+	/** @arg {string} cf1 @arg {D_Button_Ex_1_Omit_Size} x */
+	D_Button_Scope_1(cf1,x) {
+		const cf2="D_Button_Scope_1";
 		if("targetId" in x) {
+			/** @type {`${cf2}:targetId`} */
+			const cf3=`${cf2}:targetId`;
 			switch(x.targetId) {
 				default: debugger; break;
 				case "clip-info-button": {
-					const {accessibilityData,icon,targetId: {},...y}=x; y;
+					const {accessibilityData,icon,targetId,...y}=x; y;
+					/** @type {`${cf3}:${targetId}`} */
+					const cf4=`${cf3}:${targetId}`;
 					this.D_Accessibility(accessibilityData);
 					if(icon.iconType!=="INFO") debugger;
+					console.timeStamp(cf4);
 				} break;
 				case "create-clip-button-action-bar": {
-					const {accessibilityData,icon,targetId: {},tooltip,...y}=x; y;
+					const {accessibilityData,icon,targetId,tooltip,...y}=x; y;
+					/** @type {`${cf3}:${targetId}`} */
+					const cf4=`${cf3}:${targetId}`;
 					this.D_Accessibility(accessibilityData);
 					if(icon.iconType!=="CONTENT_CUT") debugger;
 					if(tooltip!=="Clip") debugger;
+					console.timeStamp(cf4);
 				} break;
 			}
 			return;
 		}
 		if("serviceEndpoint" in x) {
+			/** @type {`${cf2}:serviceEndpoint`} */
+			const cf3=`${cf2}:serviceEndpoint`;
 			const {accessibilityData,icon,tooltip,serviceEndpoint,...y}=x; y;
 			this.D_Accessibility(accessibilityData);
 			if(icon.iconType!="SHARE") debugger;
 			if(tooltip!=="Share") debugger;
-			if(!serviceEndpoint.shareEntityServiceEndpoint) debugger;
-			this.E_ShareEntityService(serviceEndpoint);
+			let ka=this.get_keys_of(serviceEndpoint);
+			for(let k of ka) {
+				switch(k) {
+					default: this.generate_case(`${cf3}.endpoint.keyof().iter()`,k); break;
+					case "clickTrackingParams":
+					case "commandMetadata":
+					case "signalServiceEndpoint":
+					case "shareEntityServiceEndpoint": continue;
+				}
+			}
+			this.D_Button_SE(serviceEndpoint);
 			return;
 		}
 		if("tooltip" in x) {
@@ -1823,22 +1843,26 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Command} x */
-	D_Button_WithCommand(cf,x) {
+	/** @private @arg {"D_Button"} cf1 @arg {D_Button_EX_1_Command} x */
+	D_Button_WithCommand(cf1,x) {
+		/** @type {`${cf1}:WithCommand`} */
+		const cf2=`${cf1}:WithCommand`;
 		if("text" in x) {
-			{
-				const {isDisabled,text,...y1}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); y1;
-				if(isDisabled!==false) debugger;
-				this.G_Text(text);
-				this.D_Button_Scope_1(y1);
-			}
+			/** @type {`${cf2}:text`} */
+			const cf3=`${cf2}:text`;
+			const {isDisabled,text,...y1}=this.D_Button_Omit_Command(`${cf1}.With.command.targetId`,x); y1;
+			if(isDisabled!==false) debugger;
+			this.G_Text(text);
+			this.D_Button_Scope_1(cf3,y1);
 			return;
 		}
 		if("targetId" in x) {
-			let {targetId,isDisabled,icon,accessibilityData,style,size,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
+			/** @type {`${cf2}:targetId`} */
+			const cf3=`${cf2}:targetId`;
+			let {targetId,isDisabled,icon,accessibilityData,style,size,...y}=this.D_Button_Omit_Command(`${cf1}.With.command.targetId`,x); this.g(y);
 			switch(targetId) {
 				case "clip-info-button": break;
-				default: this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId); break;
+				default: this.D_Button_TargetId(`${cf3}.case`,targetId); break;
 			}
 			if(isDisabled!==false) debugger;
 			if(style!=="STYLE_DEFAULT") debugger;
@@ -1846,7 +1870,16 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("command" in x) {
-			this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x);
+			/** @type {`${cf2}:command`} */
+			const cf3=`${cf2}:command`;
+			let r=this.D_Button_Omit_Command(`${cf3}.omit`,x);
+			let ka=this.get_keys_of(r);
+			for(let k of ka) {
+				switch(k) {
+					default: this.generate_case(cf3,k); this.do_codegen(cf3,x); break;
+					case "": break;
+				}
+			}
 			return;
 		}
 		this.g(x);
@@ -1862,6 +1895,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Style} x */
 	D_Button_WithStyle(cf,x) {
+		if(!("text" in x)) {
+			let {icon,isDisabled,...y}=this.D_Button_Omit_FromStyle(`${cf}.With.serviceEndpoint`,x); this.g(y);
+			switch(icon.iconType) {default: this.codegen_case(cf,icon.iconType); break; case "MICROPHONE_ON": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
+			if(isDisabled!==false) debugger;
+			return;
+		}
 		if("serviceEndpoint" in x) {
 			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(`${cf}.With.serviceEndpoint`,x); this.g(y);
 			this.t(serviceEndpoint,this.D_Button_SE);
@@ -1895,7 +1934,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(x1.targetId) {
 				default: debugger; break;
 				case "create-clip-button-action-bar": {
-					let {icon,tooltip,accessibilityData,targetId: {},...y}=this.D_Button_UseCommand(x1); this.g(y);
+					let {icon,tooltip,accessibilityData,targetId,...y}=this.D_Button_UseCommand(x1); this.g(y);
 					if(icon.iconType!=="CONTENT_CUT") debugger;
 					if(tooltip!=="Clip") debugger;
 					this.D_Accessibility(accessibilityData);
@@ -1940,8 +1979,26 @@ class HandleTypes extends HandleTypesEval {
 		this.G_ClientSignal(x2);
 		this.M_SendPost(x1);
 	}
-	/** @type {string[]} */
-	missing_codegen_types=[];
+	/** @type {Map<string,string[]>} */
+	missing_codegen_types=new Map;
+	/** @private @arg {string} cf @arg {{}} x */
+	codegen_log_all(cf,x) {
+		this.do_codegen;
+		let res=this.codegen_new_typedef(cf,x,true);
+		if(!res) return;
+		let ci=this.missing_codegen_types.get(cf);
+		if(ci&&ci.includes(res)) return;
+		if(!ci) this.missing_codegen_types.set(cf,ci=[]);
+		ci.push(res);
+		let all_ty_1=ci.map(e => {
+			let ss=split_string_once(e,"=");
+			if(ss.length==1) throw new Error();
+			return ss[1].trim().slice(0,-1);
+		});
+		let all_types=all_ty_1.join("|");
+		console.group(`-- [${cf}.gen_result] --`);
+		console.log(all_types);
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
@@ -1956,17 +2013,7 @@ class HandleTypes extends HandleTypesEval {
 				console.group("-- [D_Button.codegen] --");
 				x: try {
 					console.log("-- [D_Button.icon] --",arr_items);
-					let res=this.codegen_new_typedef(cf,x,true);
-					if(!res) break x;
-					if(this.missing_codegen_types.includes(res)) break x;
-					this.missing_codegen_types.push(res);
-					let all_ty_1=this.missing_codegen_types.map(e => {
-						let ss=split_string_once(e,"=");
-						if(ss.length==1) throw new Error();
-						return ss[1].trim().slice(0,-1);
-					});
-					let all_types=all_ty_1.join("|");
-					console.log(all_types);
+					this.codegen_log_all(cf,x);
 				} finally {
 					console.groupEnd();
 				}
@@ -1992,13 +2039,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RG_Result";
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
 		const cf="D_Tab_subscriptionsEndpoint";
 		switch(x.commandMetadata.webCommandMetadata.rootVe) {
-			default: this.do_codegen(cf,x); debugger; break;
+			default: this.codegen_log_all(cf,x); debugger; break;
 			case 96368: break;
 		}
 		this.GE_Browse(x);
@@ -2092,13 +2139,13 @@ class HandleTypes extends HandleTypesEval {
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
 		const cf="D_VideoLike_richThumbnail";
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
@@ -2230,7 +2277,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="DC_CommandExecutor.command";
 			if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 			if("likeEndpoint" in x) return this.E_Like(x);
-			this.do_codegen(cf,x);
+			this.codegen_log_all(cf,x);
 			debugger;
 		});
 	}
@@ -2293,13 +2340,13 @@ class HandleTypes extends HandleTypesEval {
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint";
 		if("browseEndpoint" in x) return this.GE_Browse(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
 		const cf="D_Video_inlinePlaybackEndpoint";
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
@@ -2379,7 +2426,7 @@ class HandleTypes extends HandleTypesEval {
 			default: break;
 		}
 		console.log("pt",x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
@@ -2574,7 +2621,7 @@ class HandleTypes extends HandleTypesEval {
 			if("hack" in x.watch&&x.watch.hack===true) return;
 			debugger;
 		}
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
@@ -2851,7 +2898,7 @@ class HandleTypes extends HandleTypesEval {
 			this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 			return;
 		}
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
@@ -2941,14 +2988,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_MP_MenuNotificationSection_Item";
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
 		const cf="D_NotificationMenu_Popup_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		return null;
 	}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
@@ -2970,14 +3017,14 @@ class HandleTypes extends HandleTypesEval {
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(a!=="DROPDOWN") {this.do_codegen(cf,x); return null;}
+		if(a!=="DROPDOWN") {this.codegen_log_all(cf,x); return null;}
 		return b;
 	}
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action";
 		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		return null;
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
@@ -3019,7 +3066,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_NextContents";
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		x===0;
 	}
 	/** @private @arg {RC_MainAppWebResponseContext} x */
@@ -3144,8 +3191,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="S_Client_HandlePopup";
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
@@ -3229,7 +3276,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
 			let known=this.DC_AddToPlaylist_listTypes;
 			this.DC_AddToPlaylist_listTypes.push(x.listType);
-			this.do_codegen(cf,x);
+			this.codegen_log_all(cf,x);
 			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
 			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
 			debugger;
@@ -3436,7 +3483,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_WatchNextEndScreenItem";
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
@@ -3465,7 +3512,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="D_Menu_Button";
 			if("buttonRenderer" in x) return this.R_Button(x);
 			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-			this.do_codegen(cf,x);
+			this.codegen_log_all(cf,x);
 		});
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
@@ -3520,9 +3567,9 @@ class HandleTypes extends HandleTypesEval {
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("" in x) return;
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		x==="";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @arg {string} cf */
 	codegen_all_service_menu_icons(cf) {
@@ -3780,8 +3827,8 @@ class HandleTypes extends HandleTypesEval {
 	TD_ItemSection_3_I_1(x) {
 		const cf="TR_ItemSection_3_I_1";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y); return a;}
@@ -4153,14 +4200,14 @@ class HandleTypes extends HandleTypesEval {
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {G_Watch_AnyResultItem} x */
 	G_Watch_AnyResultItem(x) {
 		const cf="G_SecondaryContentsItem";
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		return null;
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
@@ -4174,7 +4221,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Watch_SecondaryResults";
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -4276,7 +4323,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -4357,8 +4404,8 @@ class HandleTypes extends HandleTypesEval {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		this.do_codegen(cf,x); x==="";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x); x==="";
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {
@@ -4404,7 +4451,7 @@ class HandleTypes extends HandleTypesEval {
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-clip-create": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {panelIdentifier,header,content,targetId,visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_ClipSection(content);
@@ -4413,7 +4460,7 @@ class HandleTypes extends HandleTypesEval {
 				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
 			} break;
 			case "engagement-panel-macro-markers-description-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {panelIdentifier,header,content,targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_MacroMarkersList(content);
@@ -4421,7 +4468,7 @@ class HandleTypes extends HandleTypesEval {
 				this.D_LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-macro-markers-auto-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
+				const {panelIdentifier,header,content,targetId,visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);//#destructure_off
 				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
 				this.R_EngagementPanelTitleHeader(header);
 				this.R_MacroMarkersList(content);
@@ -4675,8 +4722,8 @@ class HandleTypes extends HandleTypesEval {
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		this.do_codegen(cf,x); x==="";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x); x==="";
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
@@ -4807,7 +4854,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,[]);
 		if(is_not_in_set) {
-			this.do_codegen(cf,x);
+			this.codegen_log_all(cf,x);
 		}
 		{
 			let x=navigationEndpoint;
@@ -4824,7 +4871,7 @@ class HandleTypes extends HandleTypesEval {
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.GE_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: icon===""; this.do_codegen(cf,x); break;
+					default: icon===""; this.codegen_log_all(cf,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
 				}
 				return this.R_GuideEntryData(entryData);
@@ -4890,8 +4937,8 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		this.do_codegen(cf,x); x==="";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x); x==="";
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
@@ -4942,10 +4989,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
 		const cf="D_Button_SE";
-		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
+		if("signalServiceEndpoint" in x) {
+			let [a,b]=this.T_SE_Signal(`${cf}.SE_Signal`,x);
+			this.M_SendPost(a); this.G_ClientSignal(b);
+			return;
+		}
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		this.do_codegen(cf,x); x==="";
+		this.codegen_log_all(cf,x); x==="";
 	}
 	static {
 		this.prototype.Button_navigationEndpoint;
@@ -4956,7 +5007,7 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {RS_ChannelPage} x */
 	RS_ChannelPage(x) {
@@ -5058,8 +5109,8 @@ class HandleTypes extends HandleTypesEval {
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
@@ -5090,16 +5141,16 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_BrowseContents";
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
 		const cf="A_ResponseReceived";
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	static {
 		this.prototype.MC_ResolveUrl;
@@ -5181,8 +5232,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ElementUpdate";
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
@@ -5303,7 +5354,7 @@ class HandleTypes extends HandleTypesEval {
 		let [cn,...cr]=kl;
 		if(cr.length!==0) debugger;
 		if(!cn) return null;
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		this.do_codegen(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
@@ -5318,8 +5369,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_TopbarButtonItem";
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -5373,16 +5424,16 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_SecondaryContents";
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
 		const cf="G_WatchNext";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {SE_ShareEntity} x */
 	ES_ShareEntity(x) {
@@ -5428,8 +5479,8 @@ class HandleTypes extends HandleTypesEval {
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
@@ -5458,8 +5509,8 @@ class HandleTypes extends HandleTypesEval {
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
@@ -5668,8 +5719,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ChipCloudChip_navigationEndpoint";
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
@@ -5863,8 +5914,8 @@ class HandleTypes extends HandleTypesEval {
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
@@ -5882,8 +5933,8 @@ class HandleTypes extends HandleTypesEval {
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
 	D_LikeButton_Like(x) {
@@ -5956,7 +6007,7 @@ class HandleTypes extends HandleTypesEval {
 				return this[cn](a);
 			}
 		}
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
@@ -5967,8 +6018,8 @@ class HandleTypes extends HandleTypesEval {
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 		this.G_Text(x);
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
@@ -6111,8 +6162,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ProfileColumnItem";
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		this.do_codegen(cf,x); x===0;
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x); x===0;
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
@@ -6152,8 +6203,8 @@ class HandleTypes extends HandleTypesEval {
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		this.do_codegen(cf,x); x===0;
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x); x===0;
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
@@ -6286,8 +6337,8 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
-		this.do_codegen(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointHeader} x */
 	D_CommentsEntryPointHeader(x) {
@@ -6304,7 +6355,7 @@ class HandleTypes extends HandleTypesEval {
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer";
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
@@ -6675,7 +6726,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_EngagementPanelMenu";
 		if("menuRenderer" in x) return this.R_Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 		debugger;
 	}
 	/** @private @arg {D_Hint} x */
@@ -6830,22 +6881,22 @@ class HandleTypes extends HandleTypesEval {
 		if("invalidationContinuationData" in x) return;
 		if("liveChatReplayContinuationData" in x) return;
 		if("playerSeekContinuationData" in x) return;
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_LiveChatMessageInput} x */
 	D_LiveChatMessageInput(x) {
 		const cf="D_LiveChatMessageInput";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
 		const cf="DC_PlaylistPanel";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
@@ -6864,7 +6915,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
@@ -6887,7 +6938,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
@@ -7054,7 +7105,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) this.A_AccountItem(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
@@ -7132,7 +7183,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist";
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
@@ -7468,7 +7519,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {
 		const cf="R_PlaylistPanel"; this.k(cf,x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
@@ -7520,7 +7571,7 @@ class HandleTypes extends HandleTypesEval {
 	AD_UndoFeedback(x) {
 		const cf="AD_UndoFeedback"; this.k(cf,x);
 		if("hack" in x) return this.B_Hack(x);
-		this.do_codegen(cf,x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}

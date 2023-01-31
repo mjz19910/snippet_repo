@@ -4,6 +4,8 @@ export namespace Gen {
 	export type CF_Generated=
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.command.targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button.With.serviceEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithCommand:command.omit";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
@@ -82,6 +84,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button_WithText_Omit1";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Comment";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentSimplebox";}
