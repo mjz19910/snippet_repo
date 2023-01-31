@@ -4632,7 +4632,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {"G_EY_Entity_Any"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
+	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
 	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
 	/** 
 	 * @private @arg {G_EY_Entity} x
@@ -4782,7 +4782,7 @@ class HandleTypes extends HandleTypesEval {
 		this.M_CreateBackstagePost(a);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params(cf,"createBackstagePost.params",x));}
+	DE_CreateBackstagePost(x) {this.y("DE_CreateBackstagePost","createBackstagePostParams",x,x => this.params(cf,"createBackstagePost.params",x));}
 	/** @private @arg {M_CreateBackstagePost} x */
 	M_CreateBackstagePost(x) {this.y("M_CreateBackstagePost","webCommandMetadata",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {GM_CreateBackstagePost} x */
