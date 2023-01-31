@@ -33,10 +33,7 @@ type S_Client_Item=[
 	C_AddToPlaylist,
 	TA_OpenPopup<TA_OpenPopup_Toast<RA_NotificationAction>|TA_OpenPopup_TopAlignedDialog<R_VoiceSearchDialog>>,
 ][number];
-type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
-type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
 type E_ShowEngagementPanel={clickTrackingParams: string; showEngagementPanelEndpoint: DE_ShowEngagementPanel;};
-type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
 type E_SignalNavigation=TE_Endpoint_3<"signalNavigationEndpoint",DU_SignalNavigation,M_VE83769>;
 type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,DC_Empty_WCM>;
@@ -48,3 +45,4 @@ type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DC_Params,DC_Empty_WCM>;
 type E_YpcGetOfflineUpsell={clickTrackingParams: string; ypcGetOfflineUpsellEndpoint: DC_Params;};
 //#endregion
+type E_Settings={_tag:"E_Settings"};

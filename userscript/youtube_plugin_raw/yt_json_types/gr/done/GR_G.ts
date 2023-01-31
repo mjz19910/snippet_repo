@@ -32,3 +32,14 @@ type G_RA_LiveChatContinuationActions=
 	|A_AddChatItem
 	;
 ;
+type GE_Browse=
+	|E_VE3611_Browse
+	|E_VE3854_Browse
+	|E_VE5754_Browse
+	|E_VE6827_Browse
+	|E_VE11487_Browse
+	|E_VE23462_Browse
+	|E_VE42352_Browse
+	|E_VE96368_Browse
+	;
+;
