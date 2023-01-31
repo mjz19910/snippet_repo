@@ -189,10 +189,13 @@ ECatcherService.known_experiments.push(...[
 class HandleTypes extends HandleTypesEval {
 	//#region moved members
 	//#region templates
+	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x */
+	H_Get(cf,k,x) {return this.wn(cf,x,k);}
+	// const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;
 	/** @protected @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
-	TR_ItemSection_2(x) {const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
+	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
 	/** @protected @template CT,T,U @arg {TR_ItemSection_3<CT,T,U>} x */
-	TR_ItemSection_3(x) {const cf="TR_ItemSection_3"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y); return a;}
+	TR_ItemSection_3(x) {return this.wn("TR_ItemSection_3",x,"itemSectionRenderer");}
 	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
@@ -214,7 +217,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
 	T_SecondaryResults(x,f) {
-		const cf="SecondaryResultsTemplate";
+		const cf="T_SecondaryResults";
 		const {secondaryResults,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		f.call(this,secondaryResults);
 	}
@@ -222,7 +225,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Types(x,_x=null) {
 		const cf="T_Types";
 		const {types,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		/** @private @template {number} T @template {\`\${T} \`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
 		}
@@ -236,7 +239,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text";
@@ -245,7 +248,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(runs,x => this.IR_TextRun(x,this.IR_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @private @arg {IR_TextRun_Endpoint} x */
+	/** @private @arg {R_TextRun_Endpoint} x */
 	IR_TextRun_Endpoint(x) {
 		const cf="IR_TextRun_Endpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_Browse(x);
@@ -253,14 +256,14 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
 	}
-	/** @private @arg {IR_TextRun} x @arg {(x:NonNullable<IR_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {R_TextRun} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
 	IR_TextRun(x,f_run) {
 		const cf="R_TextRun";
 		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.t(navigationEndpoint,f_run);
 		this.a_primitive_str(text);
 		this.t(loggingDirectives,this.D_LoggingDirectives);
-		this.t(bold,this.b_primitive_bool);
+		this.t(bold,this.a_primitive_bool);
 	}
 	//#endregion
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf1 @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */

@@ -56,7 +56,28 @@ type CF_M_s=
 	|CF_GE_ResponseReceived
 	|CF_M_s_no_gen
 	|CF_T_SE_Signal
-	|T_ExtractImport<"CF_M_s">|"CF_M_s"|"a"
+	|T_ExtractImport<"CF_M_s">
+	|"T_Autoplay"
+	|"T_Playlist"
+	|"T_SecondaryResults"
+	|"T_Types"
+	|CF_L_Common_Params
+	|"G_Text"
+	|"R_TextRun"
+	;
+;
+type CF_L_Common_Params=
+	|"TD_ItemSection_2_CommentsEntryPoint"
+	|"T_Command_TP"
+	;
+;
+type CF_L_TP_Params=
+	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
+	|CF_D_Link
+	|CF_D_Button
+	|CF_D_Menu_Omit
+	|CF_D_ChipCloudChip_Omit
+	|CF_L_Common_Params
 	;
 ;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
@@ -105,14 +126,6 @@ type CF_T_SE_Signal=
 	|`${CF_GE_ResponseReceived}.SE_Signal`
 	|`${CF_T_SE_Signal_P1}.SE_Signal`
 	|T_ExtractImport<"CF_T_SE_Signal">|"CF_T_SE_Signal"|"a"
-	;
-;
-type CF_L_TP_Params=
-	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
-	|CF_D_Link
-	|CF_D_Button
-	|CF_D_Menu_Omit
-	|CF_D_ChipCloudChip_Omit
 	;
 ;
 type CF_L_CTP_Params=
