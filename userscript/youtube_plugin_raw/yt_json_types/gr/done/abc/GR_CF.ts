@@ -64,7 +64,6 @@ type CF_D_Params=T_ExtractImport<"CF_D_Params">|"DC_GetTranscript_Params"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3"|"a";
 type CF_TD_ItemSection_3=T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a";
-type UUR=Exclude<T_ExtractImport<"CF_TD_ItemSection_3">,string>["v"];
 type CF_T_WCM_Unpack=T_ExtractImport<"CF_T_WCM_Unpack">|"CF_T_WCM_Unpack"|"a";
 type CF_M_w=
 	|`y:${CF_M_y}`
