@@ -1,6 +1,6 @@
 async function do_test_url_parse_test_0() {
 	let mod=await import("../../zc_child_modules/YtPlugin_Base_Plugin.user.js");
-	function parse_with_url_parse<T extends string>(str: T): UrlParse<T> {
+	function parse_with_url_parse<T extends `https://${string}`>(str: T): UrlParse<T> {
 		let s=new URL(str);
 		return s as any as UrlParse<T>;
 	}
