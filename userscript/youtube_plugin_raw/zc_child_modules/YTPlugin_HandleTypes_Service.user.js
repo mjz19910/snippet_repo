@@ -5804,7 +5804,6 @@ class HandleTypes extends HandleTypesEval {
 							debugger;
 						}
 					}
-					console.log("[CompactRadio.list]",list);
 					return;
 				}
 				return;
@@ -5817,6 +5816,7 @@ class HandleTypes extends HandleTypesEval {
 				if("list" in s) {
 					let {list,...y}=s; this.g(y);
 					console.log("[CompactRadio.list]",list);
+					debugger;
 					return;
 				}
 				return;
