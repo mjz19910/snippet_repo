@@ -1615,7 +1615,7 @@ class HandleTypes extends HandleTypesEval {
 	expected_button_iconTypes=[
 		"DELETE","NOTIFICATIONS_ACTIVE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS",
 	];
-	/** @private @template {D_Button} T @arg {CF_D_Button} cf @arg {T} x */
+	/** @private @arg {CF_D_Button} cf @template {D_Button} T @arg {T} x */
 	D_Button_Omit(cf,x) {
 		const {...y}=this.s(cf,x);
 		// this.t(accessibilityData,this.D_Accessibility);
@@ -1649,9 +1649,14 @@ class HandleTypes extends HandleTypesEval {
 	missing_expected_button_iconTypes=[];
 	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{style:any}>} x */
 	D_Button_Omit_1(cf,x) {
-		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
+		if("targetId" in x) {
+			debugger;
+			return;
+		}
+		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibility,accessibilityData,command,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
 		this.t(style,x => this.save_string("[Button.style]",x));
 		this.t(accessibilityData,this.D_Accessibility);
+		this.t(accessibility,this.D_Label);
 		this.t(command,this.GC_Button);
 		this.t(icon,x => {
 			let missing=this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes);
@@ -1675,19 +1680,15 @@ class HandleTypes extends HandleTypesEval {
 		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		// this.t(hint,this.R_Hint);
-		this.t(targetId,x => {
-			/** @private @type {D_Button_TargetId} */
-			switch(x) {
-				default: this.generate_case("D_Button_TargetId",x); break;
-				case "create-clip-button-action-bar":
-			}
-			this.targetId(cf,x);
-		});
 	}
 	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{accessibility:any}>} x */
 	D_Button_Omit_2(cf,x) {
-		const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.WithAccessibility`,x); this.g(y);
-		this.t(navigationEndpoint,this.Button_navigationEndpoint);
+		if("navigationEndpoint" in x) {
+			const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.From.navigationEndpoint`,x); this.g(y);
+			this.t(navigationEndpoint,this.Button_navigationEndpoint);
+			return;
+		}
+		const {accessibility,style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,command,...y}=this.D_Button_Omit(`${cf}.WithAccessibility`,x); this.g(y);
 		if(accessibility) return this.D_Label(accessibility);
 	}
 	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{serviceEndpoint:any}>} x */
@@ -1701,7 +1702,28 @@ class HandleTypes extends HandleTypesEval {
 		if("style" in x) return this.D_Button_Omit_1(cf,x);
 		if("accessibility" in x) return this.D_Button_Omit_2(cf,x);
 		if("serviceEndpoint" in x) return this.D_Button_Omit_3(cf,x);
-		x;
+		if("targetId" in x) {
+			const {targetId,command,...y}=this.D_Button_Omit(cf,x); this.g(y);
+			this.t(targetId,x => {
+				/** @private @type {D_Button_TargetId} */
+				switch(x) {
+					default: this.generate_case("D_Button_TargetId",x); break;
+					case "create-clip-button-action-bar":
+				}
+				this.targetId(cf,x);
+			});
+			return;
+		}
+		if("trackingParams" in x) {
+			const {trackingParams,hint,...y}=x; this.g(y);
+			debugger;
+			return;
+		}
+		if("icon" in x) {
+			const {icon,text,...y}=x; this.g(y);
+			debugger;
+			return;
+		}
 		debugger;
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
