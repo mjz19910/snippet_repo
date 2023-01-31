@@ -5783,10 +5783,23 @@ class HandleTypes extends HandleTypesEval {
 						this.videoId(w.a);
 					}
 					if(playnext!=="1") debugger;
-					{
-						let w={a: list};
-						if(this.str_starts_with(w.a,"PL")) {
-							this.playlistId(w.a);
+					x: {
+						let w=list;
+						// cspell:ignore RDCMUC
+						if(this.str_starts_with("RDCMUC",w)) {
+							let rr=split_string_once(w,"RDCMUC");
+							let q=rr[1]; q;
+							break x;
+						}
+						if(this.str_starts_with("RD",w)) {
+							let rr=split_string_once(w,"RD");
+							let q=rr[1]; q;
+							console.log(q.slice(0,4));
+							this.playlistId(w);
+							break x;
+						}
+						if(this.str_starts_with(w,"PL")) {
+							this.playlistId(w);
 						} else {
 							debugger;
 						}
