@@ -58,6 +58,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_AdLayoutLogging";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_CommentSimplebox";}

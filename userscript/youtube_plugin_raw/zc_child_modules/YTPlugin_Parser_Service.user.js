@@ -128,11 +128,11 @@ class ParserService extends BaseService {
 	}
 	/** @private @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [string,`${U}${string}`,...string[]]} */
 	str_starts_with_at_1(x,w) {
-		return this.str_starts_with(x[1],w);
+		return this.str_starts_with_rx(x[1],w);
 	}
 	/** @private @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [`${U}${string}`,...string[]]} */
 	str_starts_with_at_0(x,w) {
-		return this.str_starts_with(x[0],w);
+		return this.str_starts_with_rx(x[0],w);
 	}
 	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
@@ -278,18 +278,18 @@ class ParserService extends BaseService {
 				} break;
 				case "list": {
 					let v=res[1];
-					if(this.str_starts_with("RD",v)) {
-						if(this.str_starts_with("RDMM",v)) {
+					if(this.str_starts_with_rx("RD",v)) {
+						if(this.str_starts_with_rx("RDMM",v)) {
 							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
-						} else if(this.str_starts_with("RDGM",v)) {
+						} else if(this.str_starts_with_rx("RDGM",v)) {
 							url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)});
-						} else if(this.str_starts_with("RDCM",v)) {
+						} else if(this.str_starts_with_rx("RDCM",v)) {
 							// url_info[playlist] "RDCM" still needs a valid `UC${string}` channel id
 							url_info_arr.push({_tag: "playlist",type: "RDCM",id: v.slice(4)});
 						} else {
 							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
 						}
-					} else if(this.str_starts_with(v,"PL")) {
+					} else if(this.str_starts_with_rx(v,"PL")) {
 						url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});
 					} else {
 						debugger;
@@ -1318,7 +1318,7 @@ class ParserService extends BaseService {
 		}
 		/** @private @template {UrlParseRes_noSearch<any,string,any,any>|UrlParseRes<any,string,any,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
 		let host_starts_with=(x,v) => {
-			return this.str_starts_with(x.host,v);
+			return this.str_starts_with_rx(x.host,v);
 		};
 		if(host_starts_with(r,"yt")) {
 			let c=split_string(r.pathname,"=");
@@ -1358,20 +1358,20 @@ class ParserService extends BaseService {
 	}
 	/** @unused_api @protected @arg {GM_VE3832_Watch_WC['url']} x */
 	parse_url_VE3832(x) {
-		if(!this.str_starts_with("/watch?",x)) debugger;
+		if(!this.str_starts_with_rx("/watch?",x)) debugger;
 	}
 	/** @api @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {
-		if(this.str_starts_with("https://",x)) {
+		if(this.str_starts_with_rx("https://",x)) {
 			return this.parse_full_url(root,x);
 		}
-		if(this.str_starts_with("http://",x)) {
+		if(this.str_starts_with_rx("http://",x)) {
 			return this.parse_full_url(root,x);
 		}
-		if(this.str_starts_with("android-app://",x)) {
+		if(this.str_starts_with_rx("android-app://",x)) {
 			return;
 		}
-		if(this.str_starts_with("ios-app://",x)) {
+		if(this.str_starts_with_rx("ios-app://",x)) {
 			return;
 		}
 		if(x==="/") return;
@@ -1437,11 +1437,11 @@ class ParserService extends BaseService {
 		if(this.str_is_search(x)) {
 			return this.parse_url_with_search(root,as(x));
 		}
-		if(this.str_starts_with("@",x)) {
+		if(this.str_starts_with_rx("@",x)) {
 			if(this.log_channel_handles) console.log("[channel_handle]",x);
 			return;
 		}
-		if(this.str_starts_with("account",x)) {
+		if(this.str_starts_with_rx("account",x)) {
 			return this.parse_account_url(x);
 		}
 		switch(x) {
@@ -1515,15 +1515,15 @@ class ParserService extends BaseService {
 	}
 	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_r(str,needle) {
-		return this.str_starts_with(needle,str);
+		return this.str_starts_with_rx(needle,str);
 	}
 	/** @api @public @arg {D_TargetIdStr} x */
 	parse_target_id(x) {
-		if(this.str_starts_with("browse-feed",x)) {
+		if(this.str_starts_with_rx("browse-feed",x)) {
 			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
-		if(this.str_starts_with("comment-replies-item",x)) {
+		if(this.str_starts_with_rx("comment-replies-item",x)) {
 			return this.save_enum("comment-replies-item",x);
 		}
 		if(this.str_starts_with_r(x,"engagement-panel")) {

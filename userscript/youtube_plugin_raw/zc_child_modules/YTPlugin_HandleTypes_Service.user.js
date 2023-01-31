@@ -149,6 +149,55 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
+	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
+	is_eq_keys(src,target) {
+		return this.eq_keys(src,target);
+	}
+	/** @protected @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
+	parse_watch_page_url(root,x) {
+		let u1=split_string_once(x,"/")[1];
+		let u2=split_string_once(u1,"?")[1];
+		let u3=this.parse_url_search_params(u2);
+		let u4=this.keyof_search_params(u2);
+		x: {
+			if(this.is_eq_keys(u4,this.exact_arr("v"))) {
+				u4;
+				return;
+			}
+			if(this.is_eq_keys(u4,this.exact_arr("v","pp"))) break x;
+			u4;
+			if(this.is_eq_keys(u4,this.exact_arr("v","t"))) break x;
+			u4;
+			if(this.is_eq_keys(u4,this.exact_arr("v","list","start_radio"))) break x;
+			if(this.is_eq_keys(u4,this.exact_arr("v","list","index"))) break x;
+			u4==="";
+			debugger;
+		}
+		this.parser.parse_url(root,x);
+		return u3;
+	}
+	/** @protected @arg {string} x */
+	videoId(x) {
+		if(!this.is_normal_service(this)) return;
+		this._primitive_of(x,"string");
+		this.x.get("indexed_db").put({v: x});
+	}
+	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
+	params(root,path,x) {
+		this.parser.on_endpoint_params(root,path,x);
+	}
+	/** @protected @arg {D_PlaylistId} x */
+	playlistId(x) {
+		this.parser.parse_playlist_id(x);
+	}
+	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
+	trackingParams(cf,x) {
+		this.params(cf,"tracking.trackingParams",x);
+	}
+	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
+	clickTrackingParams(cf,x) {
+		this.params(cf,"tracking.trackingParams",x);
+	}
 	/** @private @arg {boolean} x */
 	a_primitive_bool(x) {
 		if(typeof x!=="boolean") debugger;
@@ -1317,8 +1366,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	GU_E_BrowseId(x) {
-		if(this.str_starts_with("UC",x)) return this.D_ChannelId(x);
-		if(this.str_starts_with("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
+		if(this.str_starts_with_rx("UC",x)) return this.D_ChannelId(x);
+		if(this.str_starts_with_rx("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
 			case "FEguide_builder": case "FEstorefront": break;
@@ -1423,7 +1472,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GM_VE3611_WC['url']} x */
 	_decode_channel_url(x) {
-		if(this.str_starts_with("/@",x)) return;
+		if(this.str_starts_with_rx("/@",x)) return;
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
 		let a1=split_string_once(y,"/");
 		switch(a1[0]) {
@@ -1431,7 +1480,7 @@ class HandleTypes extends HandleTypesEval {
 			case "gaming": if(a1.length!==1) debugger; break;
 			case "channel": {
 				let [,y1]=a1;
-				if(this.str_starts_with("UC",y1)) return;
+				if(this.str_starts_with_rx("UC",y1)) return;
 			} break;
 		}
 	}
@@ -1603,8 +1652,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="targetId";
 		this.save_string(`[${root}.${cf}]`,x);
 		this.parser.parse_target_id(x);
-		if(this.str_starts_with_r(x,"comment-replies-item-")) return;
-		if(this.str_starts_with_r(x,"shopping_panel_for_entry_point_")) {
+		if(this.str_starts_with(x,"comment-replies-item-")) return;
+		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			switch(x) {
 				case "shopping_panel_for_entry_point_22": return;
 				case "shopping_panel_for_entry_point_5": return;
@@ -1616,7 +1665,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		if(this.str_starts_with_r(x,"browse-feed")) return;
+		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			case "clip-info-button": case "comments-section":
 			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
@@ -2539,7 +2588,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {
 		const cf="D_ChannelId";
-		if(this.str_starts_with("UC",x)) {
+		if(this.str_starts_with_rx("UC",x)) {
 			if(x.length===24) return;
 			console.log("[channelId.length]",x.length);
 			return;
@@ -3447,7 +3496,7 @@ class HandleTypes extends HandleTypesEval {
 		let other=as({});
 		for(let cc of Object.entries(x)) {
 			let c1=cc[0];
-			if(this.str_starts_with(pf,c1)) {
+			if(this.str_starts_with_rx(pf,c1)) {
 				let u1x=split_string_once(c1,pf);
 				if(u1x.length!==2) continue;
 				/** @private @type {any} */
@@ -3489,7 +3538,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="GM_VE3832_Watch_WC";
 		const {rootVe,url,webPageType,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(rootVe!==3832) debugger;
-		if(!this.str_starts_with("/watch",url)) debugger;
+		if(!this.str_starts_with_rx("/watch",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
 	/** @private */
@@ -3506,7 +3555,7 @@ class HandleTypes extends HandleTypesEval {
 			let [r]=b_res;
 			if(r[0]==="child"&&r[1]===3) {
 				let playlist_id=this._decoder.decode(r[2]);
-				if(this.str_starts_with("RD",playlist_id)) {
+				if(this.str_starts_with_rx("RD",playlist_id)) {
 					this.playlistId(as(playlist_id));
 				} else {
 					switch(r[1]) {
@@ -3518,9 +3567,9 @@ class HandleTypes extends HandleTypesEval {
 							break;
 						case 3: {
 							let playlist_id=this._decoder.decode(r[2]);
-							if(this.str_starts_with("RD",playlist_id)) {
+							if(this.str_starts_with_rx("RD",playlist_id)) {
 								this.playlistId(playlist_id);
-							} else if(this.str_starts_with("PL",playlist_id)) {
+							} else if(this.str_starts_with_rx("PL",playlist_id)) {
 								this.playlistId(playlist_id);
 							} else {
 								console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);
@@ -3599,7 +3648,7 @@ class HandleTypes extends HandleTypesEval {
 				if(x[1]!=="") debugger;
 			} break;
 			case 3: {
-				if(!this.str_starts_with("UC",x[2])) {debugger; return;}
+				if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;}
 			} break;
 			case 4: {
 				if(x[1]!=="channel") {debugger; return;}
@@ -3612,7 +3661,7 @@ class HandleTypes extends HandleTypesEval {
 					return;
 				}
 				let [,,v2,v3]=x;
-				if(!this.str_starts_with("UC",v2)) {debugger; return;}
+				if(!this.str_starts_with_rx("UC",v2)) {debugger; return;}
 				switch(v3) {
 					default: this.codegen_case(cf,v3); break;
 					case "videos": break;
@@ -3631,9 +3680,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DU_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
-		if(this.str_starts_with(rp,x)) return this.D_YoutubeUrl(x);
+		if(this.str_starts_with_rx(rp,x)) return this.D_YoutubeUrl(x);
 		let sp=this.parse_with_url_parse(x);
-		if(this.str_starts_with("https://",sp.href)) {
+		if(this.str_starts_with_rx("https://",sp.href)) {
 			return;
 		}
 		this.GM_VE83769_UrlType(sp.href);
@@ -3669,7 +3718,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_External} x */
 	GM_VE83769_UrlType(x) {
-		if(this.str_starts_with("/",x)) {
+		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
 				default: x===""; debugger; break;
 				case "/upload": break;
@@ -3688,10 +3737,10 @@ class HandleTypes extends HandleTypesEval {
 		const hn_yt_music="https://music.youtube.com";
 		const hn_yt_kids="https://www.youtubekids.com";
 		const hn_yt_tv="https://tv.youtube.com";
-		if(this.str_starts_with(hn_yt_studio,x)) return;
-		if(this.str_starts_with(hn_yt_music,x)) return;
-		if(this.str_starts_with(hn_yt_kids,x)) return;
-		if(this.str_starts_with(hn_yt_tv,x)) return;
+		if(this.str_starts_with_rx(hn_yt_studio,x)) return;
+		if(this.str_starts_with_rx(hn_yt_music,x)) return;
+		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
+		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
 	}
 	/** @template {number} T @arg {T} x @returns {`${T}`} */
 	num_to_string(x) {
@@ -4282,13 +4331,13 @@ class HandleTypes extends HandleTypesEval {
 	G_DC_SectionList(x) {
 		const cf="G_DC_SectionList";
 		if("targetId" in x) {
-			if(this.str_starts_with(x.targetId,"browse-feed")) {
+			if(this.str_starts_with_rx(x.targetId,"browse-feed")) {
 				let ss=split_string(x.targetId,"browse-feed");
 				if(ss.length!==2) {debugger; return;}
 				let sa=ss[1];
 				if(sa==="FEsubscriptions") return;
 				let ll=sa.slice(24);
-				if(this.str_starts_with(sa,"UC")&&ll==="featured") {
+				if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
 					/** @returns {`UC${string}`} */
 					function wx() {return "UCx";}
 					let [cid,fe]=split_string_once_last(sa,"featured",wx());
@@ -4297,7 +4346,7 @@ class HandleTypes extends HandleTypesEval {
 					return;
 				}
 				console.log("target_id.ll",ll);
-				if(this.str_starts_with(sa,"UC")) {
+				if(this.str_starts_with_rx(sa,"UC")) {
 					let floc=sa.indexOf("featured");
 					if(floc<0) {debugger; return;}
 					let s1=sa.slice(0,floc);
@@ -4508,12 +4557,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
 	parse_guide_entry_id(x) {
-		if(this.str_starts_with("UC",x)) {
+		if(this.str_starts_with_rx("UC",x)) {
 			if(x.length===24) return;
 			console.log("[guideEntryId.channel.length]",x.length);
 			return;
 		}
-		if(this.str_starts_with("PL",x)) {
+		if(this.str_starts_with_rx("PL",x)) {
 			if(x.length===34) return;
 			console.log("[guideEntryId.playlist.length]",x.length);
 			return;
@@ -4780,7 +4829,7 @@ class HandleTypes extends HandleTypesEval {
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(!this.str_starts_with_rx(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
@@ -4795,7 +4844,7 @@ class HandleTypes extends HandleTypesEval {
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(!this.str_starts_with_rx(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
@@ -4806,14 +4855,14 @@ class HandleTypes extends HandleTypesEval {
 		if(page!=="search") debugger;
 		this.E_Search(endpoint);
 		this.RS_Search(response);
-		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
+		if(!this.str_starts_with_rx(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
 	/** @private @arg {GM_VE4724_WC} x */
 	GM_VE4724_WC(x) {
 		const cf="GM_VE4724_WC";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		if(!this.str_starts_with("/results?search_query=",url)) debugger;
+		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		if(rootVe!==4724) debugger;
 	}
@@ -5003,7 +5052,8 @@ class HandleTypes extends HandleTypesEval {
 			case "subscriptionStateEntity": {
 				const cf="DS_EY_Subscription";
 				const {key,subscribed,...y}=this.s(cf,px); this.g(y);//#destructure_off
-				console.log(`${cf}.key`,key);
+				this.params(cf,"subscriptionState.key",key);
+				// console.log(`${cf}.key`,key);
 				if(subscribed!==true) debugger;
 			} break;
 			case "playlistLoopStateEntity": {
@@ -5776,7 +5826,7 @@ class HandleTypes extends HandleTypesEval {
 					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
 					let gw=() => ({k: 1,a: v});
 					let w=gw();
-					if(this.str_starts_with(w.a,"RD")) {
+					if(this.str_starts_with_rx(w.a,"RD")) {
 						w.k=2; w.k==2&&this.playlistId(w.a);
 					} else {
 						console.log("[share_url.v]",w.a);
@@ -5786,19 +5836,19 @@ class HandleTypes extends HandleTypesEval {
 					x: {
 						let w=list;
 						// cspell:ignore RDCMUC
-						if(this.str_starts_with("RDCMUC",w)) {
+						if(this.str_starts_with_rx("RDCMUC",w)) {
 							let rr=split_string_once(w,"RDCMUC");
 							let q=rr[1]; q;
 							break x;
 						}
-						if(this.str_starts_with("RD",w)) {
+						if(this.str_starts_with_rx("RD",w)) {
 							let rr=split_string_once(w,"RD");
 							let q=rr[1]; q;
 							console.log(q.slice(0,4));
 							this.playlistId(w);
 							break x;
 						}
-						if(this.str_starts_with(w,"PL")) {
+						if(this.str_starts_with_rx(w,"PL")) {
 							this.playlistId(w);
 						} else {
 							debugger;
@@ -5815,9 +5865,9 @@ class HandleTypes extends HandleTypesEval {
 				let {...s}=this.parse_url_search_params(up.search);
 				if("list" in s) {
 					let {list,...y}=s; this.g(y);
-					console.log("[CompactRadio.list]",list);
+					let w=list;
+					if(this.str_starts_with(w,"PL")) return this.playlistId(w);
 					debugger;
-					return;
 				}
 				return;
 			}
@@ -6763,7 +6813,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(keywords);
 		if(ownerUrls.length!==1) debugger;
 		let ur=this.parse_with_url_parse(ownerUrls[0]);
-		this.ceq(this.str_starts_with("/@",ur.pathname),true);
+		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
 		this.a_primitive_str(channelUrl);
 		this.a_primitive_str(vanityChannelUrl);
 		debugger;

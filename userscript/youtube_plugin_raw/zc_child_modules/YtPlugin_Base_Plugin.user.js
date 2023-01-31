@@ -2922,7 +2922,7 @@ class BaseService extends BaseServicePrivate {
 		return str.endsWith(ends_str);
 	}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
-	str_starts_with(needle,str) {
+	str_starts_with_rx(needle,str) {
 		return str.startsWith(needle);
 	}
 	/** @protected */
@@ -3135,7 +3135,7 @@ class YtHandlers extends BaseService {
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
-			if(this.str_starts_with("youtubei/v1/",ss1)) {
+			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {
 				return split_string_once(ss1,"youtubei/v1/")[1];
 			} else {
 				return ss1;
@@ -4210,21 +4210,13 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
-	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {
-		this.params(cf,"tracking.trackingParams",x);
-	}
 	/** @protected @arg {string} cf @arg {object} x @arg {boolean} [ret_val] */
 	codegen_new_typedef(cf,x,ret_val) {
 		return this.codegen.codegen_typedef(cf,x,ret_val);
 	}
-	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {
-		this.params(cf,"tracking.trackingParams",x);
-	}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
-	str_starts_with_r(str,needle) {
-		return this.str_starts_with(needle,str);
+	str_starts_with(str,needle) {
+		return this.str_starts_with_rx(needle,str);
 	}
 	/** @protected @arg {[D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
@@ -4242,11 +4234,11 @@ class ServiceMethods extends ServiceData {
 		/** @type {T_Split<T_Split<RE_D_VE3832_PreconnectUrl,"/">[2],".">[0]} */
 		let ux=as(ss1[0]);
 		let ss2=split_string(ux,"---");
-		if(!this.str_starts_with_r(ss2[0],"rr")) debugger;
+		if(!this.str_starts_with(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
-		if(this.str_starts_with("57yn",ss4)) {
+		if(this.str_starts_with_rx("57yn",ss4)) {
 			let [,,,,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
 			switch(ss6) {
@@ -4259,7 +4251,7 @@ class ServiceMethods extends ServiceData {
 				case "sz": break;
 				default: ss6===""; debugger;
 			}
-		} else if(this.str_starts_with("5s7n",ss4)) {
+		} else if(this.str_starts_with_rx("5s7n",ss4)) {
 			let [,,,,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
 			switch(ss6) {
@@ -4276,47 +4268,6 @@ class ServiceMethods extends ServiceData {
 			ss4==="";
 			debugger;
 		}
-	}
-	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
-	is_eq_keys(src,target) {
-		return this.eq_keys(src,target);
-	}
-	/** @protected @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
-	parse_watch_page_url(root,x) {
-		let u1=split_string_once(x,"/")[1];
-		let u2=split_string_once(u1,"?")[1];
-		let u3=this.parse_url_search_params(u2);
-		let u4=this.keyof_search_params(u2);
-		x: {
-			if(this.is_eq_keys(u4,this.exact_arr("v"))) {
-				u4;
-				return;
-			}
-			if(this.is_eq_keys(u4,this.exact_arr("v","pp"))) break x;
-			u4;
-			if(this.is_eq_keys(u4,this.exact_arr("v","t"))) break x;
-			u4;
-			if(this.is_eq_keys(u4,this.exact_arr("v","list","start_radio"))) break x;
-			if(this.is_eq_keys(u4,this.exact_arr("v","list","index"))) break x;
-			u4==="";
-			debugger;
-		}
-		this.parser.parse_url(root,x);
-		return u3;
-	}
-	/** @protected @arg {string} x */
-	videoId(x) {
-		if(!this.is_normal_service(this)) return;
-		this._primitive_of(x,"string");
-		this.x.get("indexed_db").put({v: x});
-	}
-	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
-	params(root,path,x) {
-		this.parser.on_endpoint_params(root,path,x);
-	}
-	/** @protected @arg {D_PlaylistId} x */
-	playlistId(x) {
-		this.parser.parse_playlist_id(x);
 	}
 	/** @private @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
@@ -4350,7 +4301,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {
-		if(!this.str_starts_with_r(x,"/@")) debugger;
+		if(!this.str_starts_with(x,"/@")) debugger;
 	}
 	/** @protected @arg {string} x */
 	_previousCsn(x) {
@@ -4358,7 +4309,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {
-		return this.str_starts_with(x.targetId,w);
+		return this.str_starts_with_rx(x.targetId,w);
 	}
 	/** @protected @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
 	playerParams(root,path,x) {
