@@ -460,7 +460,7 @@ export class Snippet_0_tmp {
 	}
 }
 class ND extends Snippet_0_tmp {
-	/** @private @arg {E_Browse} x */
+	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {x;}
 	/** @private @arg {R_Thumbnail} x */
 	D_Thumbnail(x) {x;}

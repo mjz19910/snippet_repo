@@ -1,5 +1,5 @@
 type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>={
-	navigationEndpoint: E_Browse;
+	navigationEndpoint: GE_Browse;
 	icon: T_Icon<T_IconType>;
 	trackingParams: string;
 	formattedTitle: G_Text;

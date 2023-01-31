@@ -770,7 +770,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(expirationTime,x => this._primitive_of(x,"number"));
 		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
-	/** @private @arg {E_Browse['browseEndpoint']['browseId']} x */
+	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
 		if(this.str_starts_with("UC",x)) return this.D_ChannelId(x);
 		if(this.str_starts_with("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
@@ -782,7 +782,7 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
 		};
 	}
-	/** @private @arg {E_Browse['browseEndpoint']} x */
+	/** @private @arg {GE_Browse['browseEndpoint']} x */
 	DE_Browse_VE(x) {
 		const cf="DE_Browse_VE";
 		if("params" in x) {
@@ -801,15 +801,15 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
-	/** @private @arg {E_Browse} x */
+	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
-	/** @private @arg {E_Browse['commandMetadata']} x */
+	/** @private @arg {GE_Browse['commandMetadata']} x */
 	M_VE_Browse(x) {
 		const cf="M_VE_Browse";
 		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.GM_VE_WC_Browse(a);
 	}
-	/** @private @arg {E_Browse['commandMetadata']['webCommandMetadata']} x */
+	/** @private @arg {GE_Browse['commandMetadata']['webCommandMetadata']} x */
 	GM_VE_WC_Browse(x) {
 		switch(x.rootVe) {
 			case 3611: this.GM_VE3611_WC(x); break;

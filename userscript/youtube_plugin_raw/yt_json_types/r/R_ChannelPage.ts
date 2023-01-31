@@ -1,6 +1,6 @@
 type R_ChannelPage={
 	page: "channel";
-	endpoint: E_Browse;
+	endpoint: GE_Browse;
 	response: RS_Channel;
 	url: string;
 };

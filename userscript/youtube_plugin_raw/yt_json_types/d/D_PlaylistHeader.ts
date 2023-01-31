@@ -8,7 +8,7 @@ type D_PlaylistHeader={
 	shareData: D_CanShare;
 	isEditable: boolean;
 	privacy: string;
-	ownerEndpoint: E_Browse;
+	ownerEndpoint: GE_Browse;
 	editableDetails: D_EditableDetails;
 	trackingParams: string;
 	serviceEndpoints: E_PlaylistEdit[];

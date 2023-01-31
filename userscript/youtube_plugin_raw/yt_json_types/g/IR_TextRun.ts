@@ -1,4 +1,4 @@
-type IR_TextRun_Endpoint=E_Url|E_Browse|E_Watch;
+type IR_TextRun_Endpoint=E_Url|GE_Browse|E_Watch;
 
 type IR_TextRun={
 	text: string;

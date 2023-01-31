@@ -3,69 +3,9 @@ type T_MixPlaylistStr=`RD${string}`;
 //#endregion
 //#region GU_VE
 //#endregion
-//#region M_VE\d+
-type M_VE3611=TM_Gen<GM_VE3611_WC>;
-type M_VE3832=TM_Gen<GM_VE3832_Watch_WC>;
-type M_VE3854=TM_Gen<GM_VE3854_WC>;
-type M_VE4724=TM_Gen<GM_VE4724_WC>;
-type M_VE5754=TM_Gen<GM_VE5754_WC>;
-type M_VE6827=TM_Gen<GM_VE6827_WC>;
-type M_VE11487=TM_Gen<GM_VE11487_WC>;
-type M_VE23462=TM_Gen<GM_VE23462_WC>;
-type M_VE37414=TM_Gen<GM_VE37414_WC>;
-type M_VE42352=TM_Gen<GM_VE42352_WC>;
-type M_VE83769=TM_Gen<GM_VE83769_WC>;
-type M_VE96368=TM_Gen<GM_VE96368_WC_browse>;
-//#endregion
-//#region M_*
-type M_AccountMenu=TM_Gen<GM_AccountMenu>;
-type M_AddToPlaylistService=TM_Gen<GM_AddToPlaylistService>;
-type M_Browse=TM_Gen<GM_Browse>;
-type M_CreateBackstagePost=TM_Gen<GM_CreateBackstagePost>;
-type M_CreateComment=TM_Gen<GM_CreateComment>;
-type M_CreatePlaylist=TM_Gen<GM_CreatePlaylist>;
-type M_EditPlaylist=TM_Gen<GM_EditPlaylist>;
-type M_Feedback=TM_Gen<GM_Feedback>;
-type M_FlagGetForm=TM_Gen<GM_FlagGetForm>;
-type M_GetNotificationMenu=TM_Gen<GM_GetNotificationMenu>;
-type M_GetSharePanel=TM_Gen<GM_GetSharePanel>;
-type M_GetUnseenNotificationCount=TM_Gen<GM_GetUnseenNotificationCount>;
-type M_Like=TM_Gen<GM_Like|GM_Dislike|GM_RemoveLike>;
-type M_Next=TM_Gen<GM_Next>;
-type M_RecordInteractions=TM_Gen<GM_RecordInteractions>;
-type M_SendPost=TM_Gen<GM_SendPost>;
-type M_SetSetting=TM_Gen<GM_SetSetting>;
-type M_Subscribe=TM_Gen<GM_Subscribe>;
-type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
-//#endregion
-//#region DE_VE
-type DE_VE<T>={browseId: T;};
-type DE_VE3611_Browse={browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`;};
-type DE_VE3854_Browse=DE_VE<"FEwhat_to_watch">;
-type DE_VE5754_Browse=DE_VE<GU_VE5754_Id>;
-type DE_VE6827_NoParams=DE_VE<GU_VE6827_Id_1>;
-type DE_VE6827_Params={browseId: GU_VE6827_Id_Params; params: string;};
-type DE_VE6827_Browse=DE_VE6827_NoParams|DE_VE6827_Params;
-type DE_VE11487_Browse=DE_VE<"SPunlimited">;
-type DE_VE23462_Browse=DE_VE<GU_VE23462_Id>;
-type DE_VE42352_Browse=DE_VE<"FEdownloads">;
-type DE_VE96368_Browse=DE_VE<"FEsubscriptions">;
-type DE_Subscribe={channelIds: ChannelId[]; params: string;};
-type DE_WatchPlaylist={playlistId: `RD${string}`; index: 13; params: string;};
-//#endregion
-//#region E_VE
-type E_VE3611_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3611_Browse,M_VE3611>;
-type E_VE3854_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3854_Browse,M_VE3854>;
-type E_VE5754_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE5754_Browse,M_VE5754>;
-type E_VE6827_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE6827_Browse,M_VE6827>;
-type E_VE11487_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE11487_Browse,M_VE11487>;
-type E_VE23462_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE23462_Browse,M_VE23462>;
-type E_VE42352_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE42352_Browse,M_VE42352>;
-type E_VE96368_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE96368_Browse,M_VE96368>;
-//#endregion
 // TODO: #8 Get the SettingsEndpoint type
-type E_Settings={};
-type E_Browse=
+type E_Settings={_tag:"E_Settings"};
+type GE_Browse=
 	|E_VE3611_Browse
 	|E_VE3854_Browse
 	|E_VE5754_Browse
@@ -491,7 +431,7 @@ type D_TranscriptSearchPanel={
 };
 type R_VE5754_PlaylistPage={
 	page: "playlist";
-	endpoint: E_Browse;
+	endpoint: GE_Browse;
 	response: RS_Playlist;
 	url: string;
 	rootVe: 5754;

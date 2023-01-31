@@ -1,5 +1,5 @@
 type D_GuideEntry_PresentationNewContent={
-	navigationEndpoint: E_Browse;
+	navigationEndpoint: GE_Browse;
 	thumbnail: R_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
 	trackingParams: string;
