@@ -3724,17 +3724,27 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(shortViewCountText);
 		return y;
 	}
-	/** @private @arg {D_CompactVideo} x */
-	D_CompactVideo(x) {
-		const cf="D_CompactVideo";
+	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x */
+	D_CompactVideo_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
-		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,publishedTimeText,lengthText,viewCountText,shortViewCountText,...y}=u; this.g(y);
+		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,viewCountText,shortViewCountText,...y}=u;
 		this.t(richThumbnail,this.D_VideoLike_richThumbnail);
 		this.D_Accessibility(accessibility);
 		this.R_Thumbnail(channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
 		this.tz(ownerBadges,this.RMD_Badge);
-		this.G_Text(publishedTimeText);
+		return y;
+	}
+	/** @private @arg {D_CompactVideo} x */
+	D_CompactVideo(x) {
+		const cf="D_CompactVideo";
+		if("publishedTimeText" in x) {
+			let {publishedTimeText,lengthText,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
+			this.G_Text(publishedTimeText);
+			this.G_Text(lengthText);
+			return;
+		}
+		let y=this.D_CompactVideo_Omit(cf,x); this.g(y);
 	}
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {

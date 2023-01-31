@@ -17,4 +17,21 @@ type D_CompactVideo={
 	accessibility: D_Accessibility;
 	richThumbnail?: R_MovingThumbnail;
 	badges?: RMD_Badge[];
+}|{
+	videoId: string;
+	thumbnail: R_Thumbnail;
+	title: G_Text;
+	longBylineText: G_Text;
+	viewCountText: G_Text;
+	navigationEndpoint: E_Watch;
+	shortBylineText: G_Text;
+	badges: RMD_Badge[];
+	channelThumbnail: R_Thumbnail;
+	ownerBadges: RMD_Badge[];
+	trackingParams: string;
+	shortViewCountText: G_Text;
+	menu: R_Menu;
+	thumbnailOverlays: R_ThumbnailOverlayToggleButton[];
+	accessibility: D_Accessibility;
+	richThumbnail: R_MovingThumbnail;
 };
