@@ -22,7 +22,7 @@ type P_known_param=[
 	"create_playlist.params.f84",
 	"createBackstagePost.params.f1",
 	"createBackstagePost.params.f2",
-	`${"subscribed.entityKey"|"entity_key"}.${"f2"|"f4"|"f5"}`,
+	`${"entity_key.subscribed"|"entity_key.normal"}.${"f2"|"f4"|"f5"}`,
 	"get_transcript.params.f1",
 	"get_transcript.params.f6",
 	"GetNotificationMenu.ctoken.f1",

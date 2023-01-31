@@ -2557,7 +2557,7 @@ class HandleTypes extends HandleTypesEval {
 		if("entityKey" in x) {
 			const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
 			this.G_Text(buttonText);
-			this.params(cf,"subscribed.entityKey",entityKey);
+			this.params(cf,"entity_key.subscribed",entityKey);
 			return;
 		}
 		if("buttonText" in x) {
@@ -4956,7 +4956,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_MutationItem(x) {
 		const cf="DE_MutationItem";
 		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.params(cf,"entity_key",entityKey);
+		this.params(cf,"entity_key.normal",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		this.tf(this.DE_PersistenceOption)(options);
 		let pr=this.tf(this.G_EY_Entity)(payload);
