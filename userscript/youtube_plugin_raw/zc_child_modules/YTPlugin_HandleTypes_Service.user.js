@@ -1830,13 +1830,13 @@ class HandleTypes extends HandleTypesEval {
 	D_PdgColorSlider(x) {
 		const cf="D_PdgColorSlider";
 		const {notches,superThanksSelectedTierEntity,maxTierValue,minTierValue,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.z(notches,this.NotchesItem);
+		this.z(notches,this.D_NotchesItem);
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 		this.G_Text(maxTierValue);
 		this.G_Text(minTierValue);
 	}
 	/** @private @arg {D_NotchesItem} x */
-	NotchesItem(x) {
+	D_NotchesItem(x) {
 		const cf="NotchesItem";
 		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(linearGradientCssStyle) {
