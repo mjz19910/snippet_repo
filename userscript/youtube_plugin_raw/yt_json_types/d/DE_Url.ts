@@ -3,7 +3,7 @@ type DE_Url={
 	target: "TARGET_NEW_WINDOW";
 	nofollow: true;
 }|{
-	url: GU_VE83769_ExternalUrlStr;
+	url: GU_VE83769_Url_External;
 	target: "TARGET_NEW_WINDOW";
 };
 type D_YoutubeUrl=Extract<DE_Url['url'],`${string}www.youtube.com${string}`>;

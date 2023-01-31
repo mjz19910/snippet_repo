@@ -3073,7 +3073,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_UrlStr,`${string}//studio.youtube.com${string}`>} b */
+	/** @private @arg {Extract<DE_Url['url']|GU_VE83769_Url_Internal,`${string}//studio.youtube.com${string}`>} b */
 	handle_yt_studio_url(b) {
 		if(!this.str_is_uri(b)) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
@@ -3134,14 +3134,14 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
-	/** @private @arg {Extract<GU_VE83769_ExternalUrlStr,`${string}://music.youtube.com${string}`>} x */
+	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
 		switch(x) {
 			case "https://music.youtube.com/": break;
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {GU_VE83769_UrlStr|GU_VE83769_ExternalUrlStr} x */
+	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_External} x */
 	GM_VE83769_UrlType(x) {
 		let up=this.parse_with_url_parse(x);
 		switch(up.host) {

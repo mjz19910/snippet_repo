@@ -2,27 +2,6 @@
 type T_MixPlaylistStr=`RD${string}`;
 //#endregion
 //#region GU_VE
-type GU_VE5754_UrlType=`VL${"LL"|"WL"|`PL${string}`}`;
-type GU_VE6827_Url_NoParams="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
-type GU_VE6827_Url_Params="FEtrending"|"FEstorefront";
-type GU_VE6827_UrlType=GU_VE6827_Url_NoParams|GU_VE6827_Url_Params;
-type GU_VE23462_UrlType="SPaccount_notifications"|"SPaccount_overview";
-type GU_VE83769_UrlStr=
-	|"/upload"
-	;
-;
-type GU_VE83769_ExternalUrlStr=
-	|`https://studio.youtube.com/channel/UC${string}`
-	|`https://studio.youtube.com/channel/UC${string}/videos`
-	|"https://studio.youtube.com/"
-	|"https://studio.youtube.com"
-	|"https://music.youtube.com/"
-	|"https://music.youtube.com"
-	|"https://www.youtubekids.com?source=youtube_web"
-	|"https://www.youtubekids.com/?source=youtube_web"
-	|"https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273"
-	;
-;
 //#endregion
 //#region GM_WC
 type GM_WC_VE=[
@@ -138,12 +117,12 @@ type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
 type DE_VE<T>={browseId: T;};
 type DE_VE3611_Browse={browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`;};
 type DE_VE3854_Browse=DE_VE<"FEwhat_to_watch">;
-type DE_VE5754_Browse=DE_VE<GU_VE5754_UrlType>;
-type DE_VE6827_NoParams=DE_VE<GU_VE6827_Url_NoParams>;
-type DE_VE6827_Params={browseId: GU_VE6827_Url_Params; params: string;};
+type DE_VE5754_Browse=DE_VE<GU_VE5754_Id>;
+type DE_VE6827_NoParams=DE_VE<GU_VE6827_Id_1>;
+type DE_VE6827_Params={browseId: GU_VE6827_Id_Params; params: string;};
 type DE_VE6827_Browse=DE_VE6827_NoParams|DE_VE6827_Params;
 type DE_VE11487_Browse=DE_VE<"SPunlimited">;
-type DE_VE23462_Browse=DE_VE<GU_VE23462_UrlType>;
+type DE_VE23462_Browse=DE_VE<GU_VE23462_Id>;
 type DE_VE42352_Browse=DE_VE<"FEdownloads">;
 type DE_VE96368_Browse=DE_VE<"FEsubscriptions">;
 type DE_Subscribe={channelIds: ChannelId[]; params: string;};
