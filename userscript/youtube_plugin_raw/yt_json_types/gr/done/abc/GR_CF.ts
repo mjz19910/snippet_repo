@@ -48,17 +48,15 @@ type CF_M_s_gen=
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
 	|CF_T_SE_Signal
-	|T_ExtractImport<"CF_M_s">
 	;
 ;
-type CF_M_s=CF_M_s_gen;
+type CF_M_s=CF_M_s_gen|T_ExtractImport<"CF_M_s">;
 type CF_L_TP_Params=
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
 	|CF_D_Link
 	|CF_D_Button
 	|CF_D_Menu_Omit
 	|CF_D_ChipCloudChip_Omit
-	|CF_L_Common_Params
 	;
 ;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
@@ -66,6 +64,7 @@ type CF_D_Params=T_ExtractImport<"CF_D_Params">|"DC_GetTranscript_Params"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3"|"a";
 type CF_TD_ItemSection_3=T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a";
+type UUR=Exclude<T_ExtractImport<"CF_TD_ItemSection_3">,string>["v"];
 type CF_T_WCM_Unpack=T_ExtractImport<"CF_T_WCM_Unpack">|"CF_T_WCM_Unpack"|"a";
 type CF_M_w=
 	|`y:${CF_M_y}`

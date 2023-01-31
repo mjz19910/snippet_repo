@@ -1,8 +1,8 @@
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF/";
-BACKUP_DATE=$(date '+%F_%H%M');
+BACKUP_DATE=$(date '+%F_%H/%M');
 function setup {
 	pushd $DEST_DIR;
-	mkdir "bak/$BACKUP_DATE";
+	mkdir -p "bak/$BACKUP_DATE";
 	mv "out.ts" "bak/"${BACKUP_DATE}"/out.ts.bak";
 	cp "out_empty.ts" "out.ts";
 	cp "gen_export_tmp.ts" "gen_export_cur.ts";
@@ -16,11 +16,11 @@ function restore {
 	cp "gen_export_out.ts" "gen_export_cur.ts";
 }
 function gen_find_type_is_not {
-	grep -Po "(?<=of type ')\".+?\"(?=' is not).+ of type '(?!\")\w+'." "$@"
+	grep -Po "(?<=of type )'\".+?\"'(?= is not).+ of type '(?!\")\w+'." "$@"
 }
 function generate_ts {
 	# |{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
-	perl -pe 's/"(.+?)".+type .(.+).\./\t\t|{n: Prelude.$2; t: Types.$2_; v: "$1";}/gm'
+	perl -p gen.pm
 }
 setup;
 tsc -p userscript > /tmp/errors.out;
