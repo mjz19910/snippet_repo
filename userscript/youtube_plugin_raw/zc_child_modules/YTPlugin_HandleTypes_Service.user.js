@@ -1677,13 +1677,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
 	expected_button_iconTypes=[
-		"NOTIFICATIONS_ACTIVE",
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
 		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
 		"CLOSE",
 	];
 	expected_button_iconTypes_ex=[
 		"SETTINGS","DELETE","MICROPHONE_ON",
+		"NOTIFICATIONS_ACTIVE",
 	];
 	/** @private @arg {CF_D_Button} cf @template {D_Button} T @arg {T} x */
 	D_Button_Omit(cf,x) {
@@ -1786,15 +1786,39 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("icon" in x) {
-			const {icon,accessibilityData,...y}=x;
-			if(icon.iconType!="NOTIFICATIONS_ACTIVE") debugger;
-			this.D_Accessibility(accessibilityData);
-			if("accessibility" in y) {
-				const {accessibility,...y1}=y; this.g(y1);
-				if(accessibility.label!=="") debugger;
+			/** @arg {Extract<(D_Button_Ex_1_Omit_Size extends infer A?A extends infer V?{[U in keyof V as U extends "accessibility"?U:never]: V[U]}:never:never),{accessibility:any}>["accessibility"]["label"]} x1 */
+			function al(x1) {
+				switch(x1) {
+					default: debugger; break;
+					case "unknown": debugger; break;
+					case "Next": case "Previous": case "Save to":
+					case "Cancel auto-play for this video":
+					case "Current setting is personalised notifications. Tap to change your notification setting for ScarletFlameFlandre":
+					case "Current setting is to receive no notifications. Tap to change your notification setting for ScarletFlameFlandre":
+				}
+			}
+			const {icon,...y}=x;
+			// if(icon.iconType!="NOTIFICATIONS_ACTIVE") debugger;
+			if("accessibility" in y&&"accessibilityData" in y) {
+				const {accessibility,accessibilityData,...y1}=y; this.g(y1);
+				//cspell:ignoreRegExp /setting for .+?"/
+				al(accessibilityData.accessibilityData.label);
 				return;
 			}
-			this.g(y);
+			if("accessibility" in y) {
+				const {accessibility,...x1}=y; this.g(x1);
+				al(accessibility.label);
+				return;
+			}
+			const {accessibilityData,...x1}=y; this.g(x1);
+			/** @arg {(typeof accessibilityData)["accessibilityData"]["label"]} x */
+			function a2(x) {
+				switch(x) {
+					default: debugger; break;
+					case "Close": break;
+				}
+			}
+			a2(accessibilityData.accessibilityData.label);
 			return;
 		}
 		debugger;

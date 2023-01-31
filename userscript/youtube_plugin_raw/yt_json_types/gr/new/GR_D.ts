@@ -124,16 +124,6 @@ type D_ClipInfoButton={
 	}>;
 };
 
-type D_Button_NotificationsActive={
-	style: "STYLE_TEXT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	icon: T_Icon<"NOTIFICATIONS_ACTIVE">;
-	accessibility: {label: "";};
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-};
-
 type D_ShareButton={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
@@ -234,7 +224,6 @@ type D_Button_ClipInfoButton={
 type D_Button_2=
 	|D_ClipInfoButton
 	|D_ButtonCancelAutoplay
-	|D_Button_NotificationsActive
 	|D_ShareButton
 	|D_CreateClipButton
 	|D_SuggestiveButton
