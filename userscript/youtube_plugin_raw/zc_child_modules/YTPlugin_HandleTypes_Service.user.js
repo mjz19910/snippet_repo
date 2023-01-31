@@ -849,6 +849,9 @@ class HandleTypes extends HandleTypesEval {
 	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
+	static {
+		this.prototype.R_Hint;
+	}
 	/** @private @arg {R_Hint} x */
 	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
 	/** @private @arg {R_VideoViewCount} x */
@@ -1608,13 +1611,44 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; this.generate_case(cf,x); break;
 		}
 	}
-	/** @type {NonNullable<D_Button["icon"]>["iconType"][]} */
+	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
 	expected_button_iconTypes=[
 		"DELETE","NOTIFICATIONS_ACTIVE","NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","SETTINGS",
 	];
 	/** @private @template {D_Button} T @arg {CF_D_Button} cf @arg {T} x */
 	D_Button_Omit(cf,x) {
-		const {accessibilityData,command,icon,isDisabled,tooltip,size,text,trackingParams,hint,targetId,...y}=this.s(cf,x);
+		const {...y}=this.s(cf,x);
+		// this.t(accessibilityData,this.D_Accessibility);
+		// this.t(command,this.GC_Button);
+		// this.t(icon,x => this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes));
+		// if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
+		// if(tooltip&&typeof tooltip!=="string") debugger;
+		// if(size) {
+		// 	switch(size) {
+		// 		default: debugger; break;
+		// 		case "SIZE_DEFAULT": break;
+		// 		case "SIZE_SMALL": break;
+		// 	}
+		// }
+		// this.t(text,this.G_Text);
+		// this.t_cf(cf,trackingParams,this.trackingParams);
+		// this.t(hint,this.R_Hint);
+		// this.t(targetId,x => {
+		// 	/** @private @type {D_Button_TargetId} */
+		// 	switch(x) {
+		// 		default: this.generate_case("D_Button_TargetId",x); break;
+		// 		case "clip-info-button":
+		// 		case "sponsorships-button":
+		// 		case "create-clip-button-action-bar":
+		// 	}
+		// 	this.targetId(cf,x);
+		// });
+		return y;
+	}
+	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{style:any}>} x */
+	D_Button_Omit_1(cf,x) {
+		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
+		this.t(style,x => this.save_string("[Button.style]",x));
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 		this.t(icon,x => this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes));
@@ -1622,42 +1656,42 @@ class HandleTypes extends HandleTypesEval {
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
-				default: debugger; break;
+				default: this.generate_case(`${cf}.size`,size); break;
 				case "SIZE_DEFAULT": break;
-				case "SIZE_SMALL": break;
+				// case "SIZE_SMALL": break;
 			}
 		}
 		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
-		this.t(hint,this.R_Hint);
+		// this.t(hint,this.R_Hint);
 		this.t(targetId,x => {
 			/** @private @type {D_Button_TargetId} */
 			switch(x) {
 				default: this.generate_case("D_Button_TargetId",x); break;
-				case "clip-info-button":
-				case "sponsorships-button":
 				case "create-clip-button-action-bar":
 			}
 			this.targetId(cf,x);
 		});
-		return y;
+	}
+	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{accessibility:any}>} x */
+	D_Button_Omit_2(cf,x) {
+		const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.WithAccessibility`,x); this.g(y);
+		this.t(navigationEndpoint,this.Button_navigationEndpoint);
+		if(accessibility) return this.D_Label(accessibility);
+	}
+	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{serviceEndpoint:any}>} x */
+	D_Button_Omit_3(cf,x) {
+		const {serviceEndpoint,...y}=this.D_Button_Omit(cf,x); this.g(y);
+		this.t(serviceEndpoint,this.D_Button_SE);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		if("style" in x) {
-			const {style,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
-			this.t(style,x => this.save_string("[Button.style]",x));
-			return;
-		}
-		if("accessibility" in x) {
-			const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.WithAccessibility`,x); this.g(y);
-			this.t(navigationEndpoint,this.Button_navigationEndpoint);
-			if(accessibility) return this.D_Label(accessibility);
-			return;
-		}
-		const {serviceEndpoint,...y}=this.D_Button_Omit(cf,x); this.g(y);
-		this.t(serviceEndpoint,this.D_Button_SE);
+		if("style" in x) return this.D_Button_Omit_1(cf,x);
+		if("accessibility" in x) return this.D_Button_Omit_2(cf,x);
+		if("serviceEndpoint" in x) return this.D_Button_Omit_3(cf,x);
+		x;
+		debugger;
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
