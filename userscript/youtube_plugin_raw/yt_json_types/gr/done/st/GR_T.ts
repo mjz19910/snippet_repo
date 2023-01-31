@@ -52,3 +52,7 @@ type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'
 ;
 type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=T_ExtractImport_<T>;
 //#endregion
+//#region Check if the passed in type meets certain conditions
+type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
+type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
+//#endregion

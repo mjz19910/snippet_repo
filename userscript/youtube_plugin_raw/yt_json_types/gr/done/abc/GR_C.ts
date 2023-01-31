@@ -15,5 +15,3 @@ type C_ResetChannelUnreadCount=TE_Endpoint_2<"resetChannelUnreadCountCommand",DC
 type C_ShowReloadUi=TE_Endpoint_2<"showReloadUiCommand",DC_ShowReloadUi>;
 type C_Loop=TE_Endpoint_2<"loopCommand",DC_Loop>;
 //#endregion
-type Cmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
-type Cmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
