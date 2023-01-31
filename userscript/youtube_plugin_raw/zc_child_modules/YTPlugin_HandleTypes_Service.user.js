@@ -292,7 +292,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k 
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
 	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
 	 * */
 	TE_Endpoint_2(cf1,k,x) {
@@ -302,7 +302,7 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [endpoint,y];
 	}
-	/** 
+	/**
 	 * @private
 	 * @arg {CF_TE_Endpoint_3} cf1
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
@@ -743,7 +743,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {let [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
-	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.B_Hack(b);}
+	E_Upload(x) {let [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_Upload",a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {let [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
@@ -789,7 +789,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_Feedback(feedbackEndpoint);
 	}
 	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {let [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DE_UndoFeedback(b);}
+	E_UndoFeedback(x) {let [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.DE_UndoFeedback(b);}
 	/** @private @arg {E_Url} x */
 	E_Url(x) {let [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
@@ -797,9 +797,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {let [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_GetTranscript",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM(a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	E_YpcGetOffers(x) {const cf="E_GetTranscript",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {
 		const cf="E_Search";
@@ -834,7 +834,7 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEditor(x) {
 		let [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y);
 		this.DE_PlaylistEditor(b);
-		this.DC_Empty_WCM(a);
+		this.DC_Empty_WCM("DC_UndoFeedback",a);
 	}
 	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	E_Browse_ParseBrowseId(x) {
@@ -1103,8 +1103,10 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {DC_Empty_WCM} x */
-	DC_Empty_WCM(x) {x; debugger;}
+	/** @private @arg {string} cf @arg {DC_Empty_WCM} x */
+	DC_Empty_WCM(cf,x) {
+		this.do_codegen(cf,x);
+	}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink";
@@ -4626,7 +4628,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
 	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
-	/** 
+	/**
 	 * @private @arg {G_EY_Entity} x
 	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
 	 */
