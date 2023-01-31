@@ -1912,10 +1912,11 @@ class HandleTypes extends HandleTypesEval {
 		this.G_ClientSignal(x2);
 		this.M_SendPost(x1);
 	}
+	/** @type {string[]} */
+	missing_codegen_types=[];
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		if(!("icon" in x||"style" in x)) return this.D_Button_2_Only(cf,x);
 		if("icon" in x) {
 			const {icon}=x;
 			let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
@@ -1924,10 +1925,21 @@ class HandleTypes extends HandleTypesEval {
 				if(missing_ex===false) return;
 				this.missing_expected_button_iconTypes.push(icon.iconType);
 				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
-				console.log("-- [D_Button.icon] --",arr_items);
-				debugger;
+				console.group("-- [D_Button.codegen] --");
+				x: {
+					console.log("-- [D_Button.icon] --",arr_items);
+					let res=this.codegen_new_typedef(cf,x,true);
+					if(!res) break x;
+					if(this.missing_codegen_types.includes(res)) break x;
+					this.missing_codegen_types.push(res);
+					for(let type of this.missing_codegen_types) {
+						console.log(type);
+					}
+				}
+				console.groupEnd();
 			}
 		}
+		if(!("icon" in x||"style" in x)) return this.D_Button_2_Only(cf,x);
 		if("text" in x) return this.D_Button_WithText_Omit1(cf,x);
 		if("command" in x) return this.D_Button_WithCommand(cf,x);
 		if("style" in x) return this.D_Button_WithStyle(cf,x);
