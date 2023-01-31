@@ -918,23 +918,21 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Browse_ParseBrowseId(a);
 		this.g(y);
 	}
-	/** @private @type {(x:M_Like)=>void} */
-	M_Like(x) {
-		const cf="M_Like";
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		switch(a.apiUrl) {
+	/** @private @arg {M_Like} x */
+	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
+	/** @private @arg {GM_Like} x */
+	GM_Like(x) {
+		switch(x.apiUrl) {
 			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(a);
-			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(a);
-			case "/youtubei/v1/like/like": return this.GM_like_like(a);
+			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(x);
+			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(x);
+			case "/youtubei/v1/like/like": return this.GM_like_like(x);
 		}
 	}
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {GE_Browse['commandMetadata']} x */
-	M_VE_Browse(x) {
-		const cf="M_VE_Browse";
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.GM_VE_WC_Browse(a);
-	}
+	M_VE_Browse(x) {this.T_WCM("M_VE_Browse",x,this.GM_VE_WC_Browse);}
 	/** @private @arg {GE_Browse['commandMetadata']['webCommandMetadata']} x */
 	GM_VE_WC_Browse(x) {
 		switch(x.rootVe) {
@@ -1846,8 +1844,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
-	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {
 		const cf="GM_YpcGetCart";
@@ -2675,7 +2671,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
-	/** @private @template {object} T @template U @arg {CF_T_WCM} cf @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
+	/** @private @arg {CF_T_WCM} cf @template {object} T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
 	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
@@ -5308,7 +5304,7 @@ class HandleTypes extends HandleTypesEval {
 		if(a!=="/youtubei/v1/like/dislike") debugger;
 		if(b!==true) debugger;
 	}
-	/** @private @arg {GM_Like} x */
+	/** @private @arg {GM_Like_1} x */
 	GM_like_like(x) {
 		const cf="GM_like_like";
 		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);//#destructure_off

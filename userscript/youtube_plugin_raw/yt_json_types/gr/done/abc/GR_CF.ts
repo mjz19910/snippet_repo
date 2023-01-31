@@ -158,5 +158,10 @@ type CF_D_Playlist_Omit=T_ExtractImport<"CF_D_Playlist_Omit">|"CF_D_Playlist_Omi
 type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|"CF_TE_Endpoint_Opt_3"|"a";
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|"CF_T_Endpoint"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
-type CF_T_WCM=T_ExtractImport<"CF_T_WCM">|"CF_T_WCM"|"a";
+type CF_T_WCM=
+	|T_ExtractImport<"CF_T_WCM">
+	|"M_VE_Browse"
+	|"M_Like"
+	;
+;
 type CF_DC_Generic_CTP="D_CD_Reload"|"a";
