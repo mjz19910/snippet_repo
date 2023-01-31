@@ -4273,7 +4273,9 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.do_codegen(cf,x); commandMetadata;
 		// this.G_CommandMetadata(commandMetadata);
-		this.D_Params("DE_YpcGetOffers",a,(params,cf) => this.params(cf,"ypc_get_offers.params",params));
+		this.D_Params("DE_YpcGetOffers",a,params => {
+			this.params("DE_YpcGetOffers.params","ypc_get_offers.params",params);
+		});
 	}
 	/** @private @arg {R_ChannelPage} x */
 	R_ChannelPage(x) {
