@@ -1,3 +1,6 @@
+//#region Renderer
+type R_TwoColumnWatchNextResults={twoColumnWatchNextResults: D_TwoColumnWatchNextResults;};
+//#endregion
 //#region Grouped
 namespace GR_Watch_Results_Types {}
 //#region G_Watch_Secondary
@@ -54,7 +57,4 @@ type D_AutoplayContent={
 	modifiedSets?: D_ModifiedSetItem[];
 	trackingParams: string;
 };
-//#endregion
-//#region Renderer
-type R_TwoColumnWatchNextResults={twoColumnWatchNextResults: D_TwoColumnWatchNextResults;};
 //#endregion
