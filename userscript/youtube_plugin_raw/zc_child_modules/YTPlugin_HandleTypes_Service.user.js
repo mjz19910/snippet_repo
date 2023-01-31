@@ -247,7 +247,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_TextRun_Endpoint} x */
 	G_TextRun_Endpoint(x) {
 		const cf="G_TextRun_Endpoint";
-		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
@@ -1141,7 +1141,7 @@ class HandleTypes extends HandleTypesEval {
 			this.save_number("R_BrowsePage.rootVe",x);
 		});
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
-		this.E_Browse(endpoint);
+		this.GE_Browse(endpoint);
 		if(page!=="browse") debugger;
 		this.RS_Browse(response);
 		this.t(expirationTime,x => this._primitive_of(x,"number"));
@@ -1155,11 +1155,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Page} x */
 	E_Page(x) {
 		const cf="E_Page";
-		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
 	}
 	//#region E_ (Endpoints)
+	/** @private @arg {GE_Browse} x */
+	GE_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {const [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
@@ -1171,19 +1173,37 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.D_ReelWatch(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {
-		const cf="E_ShowEngagementPanel";
-		let [a,b]=this.TE_Endpoint_2(cf,"showEngagementPanelEndpoint",x);
-		this.D_ShowEngagementPanel(a);
-		this.g(b);
-	}
+	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.D_ShowEngagementPanel(a);}
+	/** @private @arg {E_UndoFeedback} x */
+	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.DE_UndoFeedback(b);}
+	/** @private @arg {E_Url} x */
+	E_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
+	/** @private @arg {E_RecordNotificationInteractions} x */
+	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
+	/** @private @arg {E_GetNotificationMenu} x */
+	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
+	/** @private @arg {E_GetTranscript} x */
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
+	/** @private @arg {E_YpcGetOffers} x */
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	/** @private @arg {E_Search} x */
+	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
+	/** @private @arg {E_CreateBackstagePost} x */
+	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
+	/** @private @arg {E_WatchPlaylist} x */
+	E_WatchPlaylist(x) {const cf="E_WatchPlaylist",[a,b,y]=this.TE_Endpoint_3(cf,"watchPlaylistEndpoint",x); this.g(y); this.DC_Empty_WCM(`DC_${cf}`,a); this.DE_WatchPlaylist(b);}
+	/** @private @arg {E_Like} x */
+	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
+	/** @private @arg {E_PlaylistEditor} x */
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
+	/** @private @arg {E_SignalNavigation} x */
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
+	/** @private @arg {DE_SignalNavigation} x */
+	DE_SignalNavigation(x) {x; debugger;}
 	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {
-		const cf="E_GetReportForm";
-		const [a,b,y]=this.TE_Endpoint_3(cf,"getReportFormEndpoint",x); this.g(y);//#destructure
-		this.D_Params(`D${cf}`,b,(x,cf) => this.params(cf,"get_report_form",x));
-		this.M_FlagGetForm(a);
-	}
+	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.DE_GetReportForm(b); this.M_FlagGetForm(a);}
+	/** @protected @arg {DE_GetReportForm} x */
+	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {
 		const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y);
@@ -1208,30 +1228,6 @@ class HandleTypes extends HandleTypesEval {
 		this.M_Feedback(commandMetadata);
 		this.DE_Feedback(feedbackEndpoint);
 	}
-	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_UndoFeedback",a); this.DE_UndoFeedback(b);}
-	/** @private @arg {E_Url} x */
-	E_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
-	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
-	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
-	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
-	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
-	/** @private @arg {E_Search} x */
-	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
-	/** @private @arg {E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
-	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {const cf="E_WatchPlaylist",[a,b,y]=this.TE_Endpoint_3(cf,"watchPlaylistEndpoint",x); this.g(y); this.DC_Empty_WCM(`DC_${cf}`,a); this.DE_WatchPlaylist(b);}
-	/** @private @arg {E_Like} x */
-	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
-	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
-	/** @private @arg {GE_Browse} x */
-	E_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.M_VE_Browse(x2); this.DE_Browse_VE(x4); this.g(x5);}
 	/** @private @arg {DC_Params} a */
 	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
 	/** @private @arg {DE_UndoFeedback} x */
@@ -1482,8 +1478,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
 	D_CompactLink_NavEndpoint(x) {
 		if("uploadEndpoint" in x) return this.E_Upload(x);
-		if("browseEndpoint" in x) return this.E_Browse(x);
-		if("signalNavigationEndpoint" in x) return this.T_SE_Signal("D_CompactLink.nav",x)
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
 		x;
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
@@ -1494,8 +1490,7 @@ class HandleTypes extends HandleTypesEval {
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
 				let u=this.D_Link_Omit(cf,x);
 				const {icon,style: {},navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
-				if(!navigationEndpoint.uploadEndpoint) {debugger; break;}
-				this.E_Upload(navigationEndpoint);
+				this.D_CompactLink_NavEndpoint(navigationEndpoint);
 			} break;
 		}
 	}
@@ -1669,7 +1664,7 @@ class HandleTypes extends HandleTypesEval {
 			default: this.do_codegen(cf,x); debugger; break;
 			case 96368: break;
 		}
-		this.E_Browse(x);
+		this.GE_Browse(x);
 	}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
@@ -1935,7 +1930,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Video_Owner";
 		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
-		this.E_Browse(navigationEndpoint);
+		this.GE_Browse(navigationEndpoint);
 		this.D_Accessibility(accessibility);
 		this.a_primitive_str(title);
 	}
@@ -1960,7 +1955,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint";
-		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
@@ -2416,7 +2411,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
 		this.R_Thumbnail(watermark);
 		this.trackingParams(cf,trackingParams);
-		this.E_Browse(navigationEndpoint);
+		this.GE_Browse(navigationEndpoint);
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
 	}
@@ -4314,7 +4309,7 @@ class HandleTypes extends HandleTypesEval {
 	GE_GuideEntry_WithTargetId(cf,x) {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
-		this.E_Browse(navigationEndpoint);
+		this.GE_Browse(navigationEndpoint);
 		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
 		switch(targetId) {
 			default: console.log(`case "${x}": break;`); debugger; break;
@@ -4365,7 +4360,7 @@ class HandleTypes extends HandleTypesEval {
 		if("isPrimary" in x) {
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.E_Browse(navigationEndpoint);
+			this.GE_Browse(navigationEndpoint);
 			switch(icon.iconType) {
 				case "SUBSCRIPTIONS": break;
 				case "WHAT_TO_WATCH": break;
@@ -4378,7 +4373,7 @@ class HandleTypes extends HandleTypesEval {
 		x: {
 			let x=navigationEndpoint;
 			if("browseEndpoint" in x) {
-				this.E_Browse(x);
+				this.GE_Browse(x);
 				break x;
 			}
 			if("urlEndpoint" in x) {
@@ -4394,7 +4389,7 @@ class HandleTypes extends HandleTypesEval {
 		{
 			let x=navigationEndpoint;
 			if("urlEndpoint" in x) return this.E_Url(x);
-			if("browseEndpoint" in x) return this.E_Browse(x);;
+			if("browseEndpoint" in x) return this.GE_Browse(x);;
 			debugger;
 		}
 	}
@@ -4404,7 +4399,7 @@ class HandleTypes extends HandleTypesEval {
 			if("icon" in x) {
 				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 				if(!navigationEndpoint.browseEndpoint) debugger;
-				this.E_Browse(navigationEndpoint);
+				this.GE_Browse(navigationEndpoint);
 				switch(icon.iconType) {
 					default: icon===""; this.do_codegen(cf,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
@@ -4415,7 +4410,7 @@ class HandleTypes extends HandleTypesEval {
 			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=u; this.g(y);
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.E_Browse(navigationEndpoint);
+			this.GE_Browse(navigationEndpoint);
 			this.R_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
@@ -4458,7 +4453,7 @@ class HandleTypes extends HandleTypesEval {
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			this.E_Browse(navigationEndpoint);
+			this.GE_Browse(navigationEndpoint);
 			this.R_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			this.trackingParams(cf,trackingParams);
@@ -4533,7 +4528,7 @@ class HandleTypes extends HandleTypesEval {
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint";
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
-		if("browseEndpoint" in x) return this.E_Browse(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.do_codegen(cf,x);
 		this.do_codegen(cf,x);
@@ -4543,7 +4538,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_ChannelPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="channel") debugger;
-		this.E_Browse(endpoint);
+		this.GE_Browse(endpoint);
 		this.RS_Channel(response);
 		this.a_primitive_str(url);
 	}
@@ -4552,7 +4547,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_PlaylistPage";
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(page!=="playlist") debugger;
-		this.E_Browse(endpoint);
+		this.GE_Browse(endpoint);
 		this.RS_Playlist(response);
 		this.a_primitive_str(url);
 		if("rootVe" in y) {
@@ -4570,7 +4565,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="Settings_VE23462";
 		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="settings") debugger;
-		this.E_Browse(endpoint);
+		this.GE_Browse(endpoint);
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 		if(rootVe!==23462) debugger;
@@ -4581,7 +4576,7 @@ class HandleTypes extends HandleTypesEval {
 		if("rootVe" in x) return this.Settings_VE23462(x);
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(page!=="settings") debugger;
-		this.E_Browse(endpoint);
+		this.GE_Browse(endpoint);
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 	}
@@ -5094,7 +5089,7 @@ class HandleTypes extends HandleTypesEval {
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.T_Icon("D_Icon_YoutubeLogo",iconImage,"YOUTUBE_LOGO");
 		this.G_Text(tooltipText);
-		this.E_Browse(endpoint);
+		this.GE_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
 		this.a_primitive_str(overrideEntityKey);
 	}
@@ -5887,7 +5882,7 @@ class HandleTypes extends HandleTypesEval {
 		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(reelTitleText);
 		this.G_Text(timestampText);
-		this.E_Browse(channelNavigationEndpoint);
+		this.GE_Browse(channelNavigationEndpoint);
 		this.G_Text(channelTitleText);
 		this.R_Thumbnail(channelThumbnail);
 		this.trackingParams(cf,trackingParams);
@@ -6061,7 +6056,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_EditableDetails(editableDetails);
 		this.E_PlaylistEditor(editorEndpoint);
 		this.a_primitive_bool(isEditable);
-		this.E_Browse(ownerEndpoint);
+		this.GE_Browse(ownerEndpoint);
 		this.z(serviceEndpoints,this.E_PlaylistEdit);
 		this.R_Menu(moreActionsMenu);
 		this.G_Text(title);
@@ -6467,7 +6462,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_PivotButton";
 		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.R_Thumbnail(thumbnail);
-		this.E_Browse(onClickCommand);
+		this.GE_Browse(onClickCommand);
 		this.trackingParams(cf,trackingParams);
 		this.G_Text(contentDescription);
 		this.G_Text(soundAttributionTitle);
@@ -6504,7 +6499,7 @@ class HandleTypes extends HandleTypesEval {
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.D_ChannelId(channelId);
 		this.a_primitive_str(title);
-		this.E_Browse(navigationEndpoint);
+		this.GE_Browse(navigationEndpoint);
 		this.R_Thumbnail(avatar);
 		this.R_Thumbnail(banner);
 		this.tz(badges,this.RMD_Badge);
@@ -6665,7 +6660,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(subscriberCountText);
 		this.D_SubscriptionButton(subscriptionButton);
 		this.t(membershipButton,this.R_Button);
-		this.E_Browse(navigationEndpoint);
+		this.GE_Browse(navigationEndpoint);
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
@@ -6961,7 +6956,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(views);
 		this.G_Text(publishDate);
 		this.z(factoid,this.R_Factoid);
-		this.E_Browse(channelNavigationEndpoint);
+		this.GE_Browse(channelNavigationEndpoint);
 		this.R_Thumbnail(channelThumbnail);
 	}
 	/** @private @arg {R_Factoid} x */

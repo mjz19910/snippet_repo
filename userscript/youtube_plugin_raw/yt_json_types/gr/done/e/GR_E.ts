@@ -7,8 +7,8 @@ type E_CreateBackstagePost=TE_Endpoint_3<"createBackstagePostEndpoint",DE_Create
 type E_CreateComment=TE_Endpoint_3<"createCommentEndpoint",DE_CreateComment,M_CreateComment>;
 type E_Feedback=TE_Endpoint_3<"feedbackEndpoint",DE_Feedback,M_Feedback>;
 type E_GetNotificationMenu=TE_Endpoint_3<"getNotificationMenuEndpoint",DE_GetNotificationMenu,M_GetNotificationMenu>;
-type E_GetReportForm=TE_Endpoint_3<"getReportFormEndpoint",DC_Params,M_FlagGetForm>;
-type E_GetTranscript=TE_Endpoint_3<"getTranscriptEndpoint",DC_Params,DC_Empty_WCM>;
+type E_GetReportForm=TE_Endpoint_3<"getReportFormEndpoint",DE_GetReportForm,M_FlagGetForm>;
+type E_GetTranscript=TE_Endpoint_3<"getTranscriptEndpoint",DE_GetTranscript,DC_Empty_WCM>;
 interface E_Like extends TE_Endpoint_3<"likeEndpoint",DE_Like,M_Like> {};
 type E_NotificationOptOut=TE_Endpoint_3<"notificationOptOutEndpoint",DE_NotificationOptOut,DC_Empty_WCM>;
 type E_PlaylistEdit=TE_Endpoint_3<"playlistEditEndpoint",DE_PlaylistEdit,M_EditPlaylist>;
@@ -31,7 +31,7 @@ type G_ClientSignal_Item=[
 	OpenPopup_ClientSignal,
 ][number];
 type E_ShowEngagementPanel=TE_Endpoint_2<"showEngagementPanelEndpoint",DE_ShowEngagementPanel>;
-type E_SignalNavigation=TE_Endpoint_3<"signalNavigationEndpoint",DU_SignalNavigation,M_VE83769>;
+type E_SignalNavigation=TE_Endpoint_3<"signalNavigationEndpoint",DE_SignalNavigation,M_VE83769>;
 type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,DC_Empty_WCM>;
 type E_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,DC_Empty_WCM>;
