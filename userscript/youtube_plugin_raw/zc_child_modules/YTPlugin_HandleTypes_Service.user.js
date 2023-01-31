@@ -1198,17 +1198,26 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {E_SignalNavigation} x */
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
+	/** @type {Map<string,string[]>} */
+	cases_map=new Map;
+	/** @arg {string} cf @arg {string} str */
+	generate_case(cf,str) {
+		let known=this.cases_map.get(cf);
+		if(!known) {known=[]; this.cases_map.set(cf,known);}
+		if(!known.includes(str)) known.push(JSON.stringify(str));
+		console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e=>`case ${e}: break;`).join("\n")}`);
+	}
 	/** @private @arg {DE_SignalNavigation} x */
 	DE_SignalNavigation(x) {
 		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x);
 		switch(a) {
-			default: debugger; break;
+			default: this.generate_case(cf,a); break;
 			case "CHANNEL_SWITCHER":
 			case "LIVE_CONTROL_ROOM":
 		}
 	}
 	/** @private @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
-	T_Signal(cf,x) {return this.w(cf,"signal",x)}
+	T_Signal(cf,x) {return this.w(cf,"signal",x);}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.DE_GetReportForm(b); this.M_FlagGetForm(a);}
 	/** @protected @arg {DE_GetReportForm} x */
@@ -1221,7 +1230,7 @@ class HandleTypes extends HandleTypesEval {
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @protected @arg {CF_GM_WC_2} cf @template T @arg {{sendPost: true;apiUrl: T;}} x */
 	GM_WC_2(cf,x) {
-		const {}=this.s(cf,x); 
+		const {}=this.s(cf,x);
 	}
 	/** @protected @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {
