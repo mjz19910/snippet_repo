@@ -1757,13 +1757,14 @@ class HandleTypes extends HandleTypesEval {
 			this.D_Label(accessibility);
 			if(isDisabled!==false) debugger;
 			this.t(text,this.G_Text);
-			if(typeof tooltip!=="string") debugger;
+			if(tooltip!=="Clip") debugger;
 			return;
 		}
 		if("text" in x) {
 			let {text,isDisabled,targetId,tooltip,...y}=this.D_Button_Omit_Command(`${cf}.With.command.accessibility`,x); this.g(y);
 			if(isDisabled!==false) debugger;
 			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
+			if(tooltip!=="Clip") debugger;
 			return;
 		}
 		if("targetId" in x) {
