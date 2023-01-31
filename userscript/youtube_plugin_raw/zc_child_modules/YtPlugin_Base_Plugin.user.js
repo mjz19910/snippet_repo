@@ -2812,6 +2812,12 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @private @template T_LoadAllServices,T_ServiceFlags @extends {BaseServicePrivate<T_LoadAllServices,T_ServiceFlags>} */
 class BaseService extends BaseServicePrivate {
+	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
+	split_str(x,s=as(",")) {
+		if(!x) {debugger;}
+		let r=x.split(s);
+		return as(r);
+	}
 	/** @arg {ServiceMethods<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
 	is_normal_service(x) {
 		return x.service_type==="normal";
