@@ -3303,8 +3303,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(text);
 		switch(icon.iconType) {
 			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break;
-			case "NOT_INTERESTED":
-			case "ADD_TO_QUEUE_TAIL":
+			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
 		}
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
 		this.t(res,u => {
@@ -3605,20 +3604,13 @@ class HandleTypes extends HandleTypesEval {
 					}
 					return;
 				}
-				let [,v1,v2,v3]=x;
+				let [,,v2,v3]=x;
 				if(!this.str_starts_with("UC",v2)) {debugger; return;}
-				v1; v3;
 				switch(v3) {
 					default: this.codegen_case(cf,v3); break;
 					case "videos": break;
 				}
 
-			} break;
-		}
-		switch(x[1]) {
-			default: debugger; break;
-			case "": return;
-			case "channel": {
 			} break;
 		}
 	}
