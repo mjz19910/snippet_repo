@@ -2534,7 +2534,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @arg {D_CaseGen_CF} cf @arg {string} x */
+	/** @arg {CF_D_CaseGen} cf @arg {string} x */
 	codegen_case(cf,x) {console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);}
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {

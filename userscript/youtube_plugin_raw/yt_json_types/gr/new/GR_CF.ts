@@ -1,4 +1,4 @@
-type CF_mod=import("./CF_mod.js").CF_mod;
+type CF_mod=import("../done/abc/CF_mod.js").CF_mod;
 type CF_M_s_priv=
 	|`D_Params:${CF_D_Params}`
 	|`T_Endpoint_Tracking:${"C_GetSurvey"}`
@@ -140,3 +140,4 @@ type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|"CF_T_Endpoint"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
 type CF_T_WCM=T_ExtractImport<"CF_T_WCM">|"CF_T_WCM"|"a";
 type CF_DC_Generic_CTP="D_CD_Reload"|"a";
+type CF_D_CaseGen=|"D_YtStudio_Url"|"a";

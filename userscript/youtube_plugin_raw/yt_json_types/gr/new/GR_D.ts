@@ -172,9 +172,50 @@ type D_Button_ER_Rest=Exclude<D_Button,D_Button_NP_SrvEp>;
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 
-type DE_ShareEntityService={
-	serializedShareEntity: string;
-	commands: TA_OpenPopup<Popup_ShareEntityService>[];
+type DE_ShareEntityService={serializedShareEntity: string; commands: TA_OpenPopup<Popup_ShareEntityService>[];};
+type D_SubscriptionNotificationToggleButton={
+	states: [
+		{
+			stateId: 2;
+			nextStateId: 2;
+			state: R_Button;
+		},
+		{
+			stateId: 3;
+			nextStateId: 3;
+			state: R_Button;
+		},
+		{
+			stateId: 0;
+			nextStateId: 0;
+			state: R_Button;
+		}
+	];
+	currentStateId: 2;
+	trackingParams: string;
+	command: C_Executor;
+	targetId: "notification-bell";
+	secondaryIcon: T_Icon<"EXPAND_MORE">;
 };
-
-type E_ShareEntityService=TE_Endpoint_3<"shareEntityServiceEndpoint",DE_ShareEntityService,M_GetSharePanel>;
+type D_RadioShareUrl=
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`
+	|`https://www.youtube.com/playlist?list=PL${string}`
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=PL${string}`
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`
+	;
+;
+type D_CompactRadio={
+	playlistId: `RD${string}`|`RDGM${string}`;
+	thumbnail: R_Thumbnail&R_SampledThumbnailColor;
+	title: G_Text;
+	navigationEndpoint: E_Watch;
+	videoCountText: G_Text;
+	secondaryNavigationEndpoint: E_Watch;
+	longBylineText: G_Text;
+	trackingParams: string;
+	thumbnailText: G_Text;
+	videoCountShortText: G_Text;
+	shareUrl: D_RadioShareUrl;
+	menu: R_Menu;
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
+};
