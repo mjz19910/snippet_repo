@@ -11,11 +11,11 @@ function setup {
 function restore_on_failure {
 	echo FAILED;
 	sleep 12;
+	cp "out.ts.bak" "/tmp/out.ts.bak"
 	mv "out.ts.bak" "out.ts";
 }
 function restore {
 	cp "gen_export_out.ts" "gen_export_cur.ts";
-	mv "out.ts.bak" /tmp/
 }
 function gen_find_type_is_not {
 	grep -Po "(?<=of type ')\".+?\"(?=' is not).+ of type '(?!\")\w+'." "$@"

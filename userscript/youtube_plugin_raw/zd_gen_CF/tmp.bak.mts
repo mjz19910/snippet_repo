@@ -226,10 +226,12 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AddToPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AdsControlFlowOpportunityReceived";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ChangeKeyedMarkersVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Generic_CTP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChat";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LoadMarkers";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_RelatedChip";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ReloadContinuationItems";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Timed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_UpdateToggleButtonState";}
@@ -244,6 +246,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_SuperThanksSelectedTier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832_Watch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlotAndLayoutItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_Badge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_RowContainer";}

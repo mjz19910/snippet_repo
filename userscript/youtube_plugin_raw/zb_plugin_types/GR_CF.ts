@@ -33,7 +33,7 @@ type CF_L_Params=
 	|T_ExtractImport<"CF_L_Params">|""|"a"
 	|CF_L_CTP_Params
 	|CF_L_TP_Params
-	|CF_L_params_no_gen
+	// |CF_L_params_no_gen
 	;
 ;
 type CF_parse_identifier=
@@ -42,19 +42,19 @@ type CF_parse_identifier=
 type CF_M_s_no_gen=
 	|"DC_ReloadContinuationItems"
 	|"DMD_AdSlot"
-	|`${CF_parse_identifier}.identifier`
 	|".identifier"
 	|"DC_Continuation"
 	;
 ;
 type CF_M_s=
 	|T_ExtractImport<"CF_M_s">|""|"a"
+	|`${CF_parse_identifier}.identifier`
 	|CF_D_Button
 	|CF_D_CustomEmoji
 	|CF_D_Link
 	|CF_D_Menu_Omit
 	|CF_D_Video_Handle
-	|CF_M_s_no_gen
+	// |CF_M_s_no_gen
 	|CF_T_SE_Signal
 	;
 ;
