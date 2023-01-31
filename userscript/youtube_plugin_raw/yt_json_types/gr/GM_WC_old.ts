@@ -57,8 +57,6 @@ type DC_LiveChat={
 	viewerName?: string;
 };
 type RC_MusicShelf={musicShelfContinuation: {};};
-//#region ActionData
-//#endregion
 type DC_Generic={continuation: string;};
 type DC_Invalidation={
 	invalidationId: D_InvalidationId;
@@ -75,35 +73,6 @@ type DC_Timed={
 	continuation: string;
 };
 
-type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
-type AD_ReelDismissal={
-	onDismissalCompletionRenderer: RA_NotificationAction;
-	trackingParams: string;
-};
-type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
-type AD_Notification={
-	responseText: G_Text;
-	actionButton?: R_Button;
-	trackingParams: string;
-};
-type RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};
-type G_LiveChatContinuationActions=RA_ReplayChatItem|A_AddChatItem;
-type DE_VE3832_Watch={
-	videoId: string;
-	playlistId: PlaylistId;
-	index: number;
-	playlistSetVideoId: string;
-	params: string;
-	startTimeSeconds?: number;
-	continuePlayback?: false;
-	loggingContext: R_VssLoggingContext;
-	watchEndpointSupportedOnesieConfig: R_Html5PlaybackOnesieConfig;
-	watchEndpointSupportedPrefetchConfig: R_PrefetchHintConfig;
-	playerParams: string;
-	watchEndpointMusicSupportedConfigs: R_WatchEndpointMusicConfig;
-	nofollow?: boolean;
-	playerExtraUrlParams: G_ExtraUrlParamItem[];
-};
 type D_EngagementPanelSectionList=
 	|DB_SI_EngagementPanel
 	|SI_VE76278_EngagementPanel
