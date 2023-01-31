@@ -7,6 +7,7 @@ type D_CF_w=[
 	`TR_MultiPageMenu:${TR_MultiPageMenu_CF}`,
 	`G_EY_Entity_Any:G_EY_Entity`,
 	`T_Items:${T_Items_CF}`,
+	"D_ImpressionCap",
 ][number];
 type T_Items_CF=[
 	"R_CompactLink_Items",
@@ -18,6 +19,7 @@ type D_CF_y=[
 ][number];
 type D_CF_zy=[
 	"T_Item",
+	"D_ChannelHeaderLinks",
 ][number];
 type T_WCM_CF_Unpack=[
 	"MG_Survey_CMD",
