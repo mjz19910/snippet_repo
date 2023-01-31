@@ -50,7 +50,3 @@ export namespace Test {
 		}
 	}
 }
-
-export async function run_tests() {
-	await Test.D_PlaylistId();
-}
