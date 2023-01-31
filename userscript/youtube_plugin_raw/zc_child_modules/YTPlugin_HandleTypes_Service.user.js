@@ -1168,7 +1168,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {const [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
-	E_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_Upload",a); this.B_Hack(b);}
+	E_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.DE_Empty_WCM("DC_Upload",a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
@@ -1186,21 +1186,25 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DE_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DC_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DE_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {const cf="E_WatchPlaylist",[a,b,y]=this.TE_Endpoint_3(cf,"watchPlaylistEndpoint",x); this.g(y); this.DC_Empty_WCM(`DC_${cf}`,a); this.DE_WatchPlaylist(b);}
+	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.DE_Empty_WCM("DE_WatchPlaylist",a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DE_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DC_Empty_WCM("DC_PlaylistEditor",a);}
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.DE_Empty_WCM("DC_PlaylistEditor",a);}
+	/** @private @arg {E_ShareEntityService} x */
+	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.DE_ShareEntityService(b); this.M_GetSharePanel("DC_PlaylistEditor",a);}
+	/** @private @arg {DE_ShareEntityService} x */
+	DE_ShareEntityService(x) {x;}
 	/** @type {Map<string,string[]>} */
 	cases_map=new Map;
 	/** @arg {string} cf @arg {string} str @arg {string} [code] */
@@ -1520,8 +1524,8 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {string} cf @arg {DC_Empty_WCM} x */
-	DC_Empty_WCM(cf,x) {
+	/** @private @arg {string} cf @arg {DE_Empty_WCM} x */
+	DE_Empty_WCM(cf,x) {
 		this.do_codegen(cf,x);
 	}
 	/** @private @arg {D_CompactLink} x */
@@ -1642,20 +1646,19 @@ class HandleTypes extends HandleTypesEval {
 		/** @private @type {D_Button_TargetId} */
 		switch(x) {
 			default: this.generate_case("D_Button_TargetId",x); break;
-			case "clip-info-button":
-			case "sponsorships-button":
+			// case "clip-info-button":
+			// case "sponsorships-button":
 			case "create-clip-button-action-bar":
 		}
 		this.targetId(cf,x);
 	}
 	/** @type {string[]} */
 	missing_expected_button_iconTypes=[];
-	/** @private @arg {"D_Button.Mixed"|`D_Button.WithAccessibility`} cf @arg {Extract<D_Button,{style:any}>} x */
+	/** @private @template {Extract<D_Button,{style:any}>} T @arg {"D_Button.Mixed"|`D_Button.WithAccessibility`} cf @arg {T} x */
 	D_Button_Omit_FromStyle(cf,x) {
-		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,command,...y}=this.D_Button_Omit(cf,x);
+		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,...y}=this.D_Button_Omit(cf,x);
 		this.t(style,x => this.save_string("[Button.style]",x));
 		this.t(accessibilityData,this.D_Accessibility);
-		this.t(command,this.GC_Button);
 		this.t(icon,x => {
 			let missing=this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes);
 			if(missing) {
@@ -1679,33 +1682,31 @@ class HandleTypes extends HandleTypesEval {
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		return y;
 	}
-	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{style:any}>} x1 */
-	D_Button_Omit_1(cf,x1) {
-		let x=this.D_Button_Omit_FromStyle(`${cf}.Mixed`,x1);
-		if("targetId" in x) {
-			const {targetId,...y}=x; this.g(y);
-			this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
-			return;
-		}
-		const {accessibility,...y}=x; this.g(y);
-		this.t(accessibility,this.D_Label);
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Command} x */
+	D_Button_WithCommand(cf,x) {
+		let {...u}=this.D_Button_Omit_FromStyle(`${cf}.Mixed`,x);
+		const {command,...y}=u; this.g(y);
+		this.t(command,this.GC_Button);
+	}
+	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_Style} x1 */
+	D_Button_WithStyle(cf,x1) {
+		let {serviceEndpoint,...y}=this.D_Button_Omit_FromStyle(`${cf}.Mixed`,x1); this.g(y);
+		this.t(serviceEndpoint,this.D_Button_SE);
+		// this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
+		// this.t(accessibility,this.D_Label);
 		// this.t(hint,this.R_Hint);
 	}
 	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{accessibility:any}>} x */
-	D_Button_Omit_2(cf,x) {
+	D_Button_WithAccessibility(cf,x) {
 		if("navigationEndpoint" in x) {
 			const {accessibility,navigationEndpoint,...y}=this.D_Button_Omit(`${cf}.From.navigationEndpoint`,x); this.g(y);
 			this.t(navigationEndpoint,this.Button_navigationEndpoint);
 			return;
 		}
 		const u=this.D_Button_Omit_FromStyle(`${cf}.WithAccessibility`,x);
-		if("targetId" in u) {
-			const {targetId,...y}=u; this.g(y);
-			this.D_Button_TargetId(`${cf}.2.From.targetId`,targetId);
-			return;
-		}
+		// this.D_Button_TargetId(`${cf}.2.From.targetId`,targetId);
 		if("accessibility" in u) {
-			const {accessibility,...y}=u; this.g(y);
+			const {accessibility,command,...y}=u; this.g(y);
 			if(!accessibility.label) debugger;
 			this.D_Label(accessibility);
 			return;
@@ -1720,11 +1721,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		if("style" in x) return this.D_Button_Omit_1(cf,x);
-		if("accessibility" in x) return this.D_Button_Omit_2(cf,x);
+		if("command" in x) return this.D_Button_WithCommand(cf,x);
+		if("style" in x) return this.D_Button_WithStyle(cf,x);
+		if("accessibility" in x) return this.D_Button_WithAccessibility(cf,x);
 		if("serviceEndpoint" in x) return this.D_Button_Omit_3(cf,x);
 		if("targetId" in x) {
-			const {targetId,command,...y}=this.D_Button_Omit(cf,x); this.g(y);
+			const {targetId,...y}=this.D_Button_Omit(cf,x);
 			this.t(targetId,x => {
 				/** @private @type {D_Button_TargetId} */
 				switch(x) {
@@ -4632,8 +4634,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Button_SE";
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		this.do_codegen(cf,x); x==="";
-		this.do_codegen(cf,x);
 	}
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {

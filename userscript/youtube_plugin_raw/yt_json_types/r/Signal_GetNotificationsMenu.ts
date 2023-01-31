@@ -9,8 +9,9 @@ type Signal_GetNotificationsMenu={
 	actions: G_Action_GetNotificationsMenu[];
 };
 type G_AllSignalTypes=
-|Signal_GetNotificationsMenu
-|G_ClientSignal
-|G_AllSignalServiceEndpoint['signalServiceEndpoint']
+	|Signal_GetNotificationsMenu
+	|G_ClientSignal
+	|G_AllSignalServiceEndpoint['signalServiceEndpoint']
+	;
 ;
 type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];

@@ -649,6 +649,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_RecordNotificationInteractions";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_ReelWatch";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Search";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_ShareEntityService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_SignalNavigation";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Subscribe";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_UndoFeedback";}
