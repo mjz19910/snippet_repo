@@ -1686,24 +1686,8 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @private @arg {CF_D_Button} cf @template {D_Button} T @arg {T} x */
 	D_Button_Omit(cf,x) {
-		const {...y}=this.s(cf,x);
-		// this.t(accessibilityData,this.D_Accessibility);
-		// this.t(command,this.GC_Button);
-		// this.t(icon,x => this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes));
-		// if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
-		// if(tooltip&&typeof tooltip!=="string") debugger;
-		// if(size) {
-		// 	switch(size) {
-		// 		default: debugger; break;
-		// 		case "SIZE_DEFAULT": break;
-		// 		case "SIZE_SMALL": break;
-		// 	}
-		// }
-		// this.t(text,this.G_Text);
-		// this.t_cf(cf,trackingParams,this.trackingParams);
-		// this.t(hint,this.R_Hint);
-		// this.t(targetId,x => {
-		// });
+		const {trackingParams: a,...y}=this.s(cf,x);
+		this.trackingParams(cf,a);
 		return y;
 	}
 	/** @protected @arg {"D_Button:WithCommand:targetId.case"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
@@ -1725,7 +1709,7 @@ class HandleTypes extends HandleTypesEval {
 	missing_expected_button_iconTypes=[];
 	/** @private @arg {CF_D_Button} cf @template {Extract<D_Button,{style:any}>} T @arg {T} x */
 	D_Button_Omit_FromStyle(cf,x) {
-		const {style,size,trackingParams,...y}=this.D_Button_Omit(cf,x);
+		const {style,size,...y}=this.D_Button_Omit(cf,x);
 		this.t(style,x => this.save_string("[Button.style]",x));
 		// this.t(accessibilityData,this.D_Accessibility);
 		if(size) {
@@ -1735,7 +1719,6 @@ class HandleTypes extends HandleTypesEval {
 				// case "SIZE_SMALL": break;
 			}
 		}
-		this.t_cf(cf,trackingParams,this.trackingParams);
 		return y;
 	}
 	/** @private @template {D_Button_EX_1_Command} T @arg {CF_D_Button} cf @arg {T} x */
@@ -1899,21 +1882,38 @@ class HandleTypes extends HandleTypesEval {
 	D_Button_WithStyle(cf1,x) {
 		/** @type {`${cf1}:WithStyle`} */
 		const cf2=`${cf1}:WithStyle`;
-		if(!("text" in x)) {
-			/** @type {`${cf2}:text`} */
-			const cf3=`${cf2}:text`;
-			let {icon,isDisabled,...y}=this.D_Button_Omit_FromStyle(`${cf1}.With.serviceEndpoint`,x); this.g(y);
-			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "MICROPHONE_ON": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
+		if("accessibility" in x) {
+			/** @type {`${cf2}:accessibility`} */
+			const cf3=`${cf2}:accessibility`;
+			let {icon,isDisabled,accessibility,...y}=this.D_Button_Omit_FromStyle(cf3,x); this.g(y);
+			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": }
 			if(isDisabled!==false) debugger;
 			return;
 		}
+		if(!("text" in x)) {
+			/** @type {`${cf2}:!text`} */
+			const cf3=`${cf2}:!text`;
+			let {icon,isDisabled,serviceEndpoint,tooltip,accessibilityData,...y}=this.D_Button_Omit_FromStyle(cf3,x); this.g(y);
+			switch(icon.iconType) {default: this.codegen_case(cf3,x.icon.iconType); break; case "MICROPHONE_ON": }
+			if(isDisabled!==false) debugger;
+			this.t(serviceEndpoint,this.D_Button_SE);
+			if(tooltip!=="Search with your voice") debugger;
+			if(accessibilityData.accessibilityData.label!=="Search with your voice") debugger;
+			return;
+		}
 		if("serviceEndpoint" in x) {
-			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(`${cf1}.With.serviceEndpoint`,x); this.g(y);
+			/** @type {`${cf2}:serviceEndpoint:text`} */
+			const cf3=`${cf2}:serviceEndpoint:text`;
+			let {serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_Text(cf3,x); this.g(y);
 			this.t(serviceEndpoint,this.D_Button_SE);
 			if(icon.iconType!=="SHARE") debugger;
 			this.D_Accessibility(accessibilityData);
 			if(tooltip!=="Share") debugger;
+			return;
 		}
+		if("text" in x) return this.g(this.D_Button_Omit_Text(`${cf2}:text`,x));
+		this.codegen_log_all(cf2,x);
+		debugger;
 		// this.D_Button_TargetId(`${cf}.1.From.targetId`,targetId);
 		// this.t(accessibility,this.D_Label);
 		// this.t(hint,this.R_Hint);
