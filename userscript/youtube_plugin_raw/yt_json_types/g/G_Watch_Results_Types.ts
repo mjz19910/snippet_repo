@@ -18,3 +18,37 @@ type G_Watch_ContentsItem=[
 	R_VideoSecondaryInfo,
 ][number];
 //#endregion
+//#region Data
+type D_TwoColumnWatchNextResults={
+	results: T_Results<G_Watch_ResultsItem>;
+	secondaryResults: T_SecondaryResults<G_Watch_SecondaryResults>;
+	playlist?: T_Playlist<D_PlaylistContent>;
+	autoplay?: T_Autoplay<D_AutoplayContent>;
+	conversationBar?: G_ConversationBar;
+};
+type D_PlaylistContent={
+	title: string;
+	contents: R_PlaylistPanelVideo[];
+	currentIndex: number;
+	playlistId: D_PlaylistId;
+	ownerName: G_Text;
+	isInfinite: boolean;
+	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
+	shortBylineText: G_Text;
+	longBylineText: G_Text;
+	trackingParams: string;
+	titleText: G_Text;
+	isEditable: true;
+	menu: R_Menu;
+	localCurrentIndex: 0|25;
+	playlistButtons: R_Menu;
+	isCourse: false;
+	nextVideoLabel: G_Text;
+};
+type D_AutoplayContent={
+	sets: AutoplaySetItem[];
+	countDownSecs?: 5;
+	modifiedSets?: D_ModifiedSetItem[];
+	trackingParams: string;
+};
+//#endregion
