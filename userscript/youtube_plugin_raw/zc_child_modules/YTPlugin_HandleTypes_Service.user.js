@@ -391,7 +391,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);//#destructure_off
 		const is_not_in_set=!ty_arr.includes(iconType);
-		if(is_not_in_set) {console.log("[missing_icon]",iconType); debugger;}
+		if(is_not_in_set) {console.log(`[missing_icon.${cf1}]`,iconType);}
 		this.save_string("[IconType]",iconType);
 		return is_not_in_set;
 	}
@@ -1645,13 +1645,24 @@ class HandleTypes extends HandleTypesEval {
 		// });
 		return y;
 	}
+	/** @type {string[]} */
+	missing_expected_button_iconTypes=[];
 	/** @private @arg {"D_Button"} cf @arg {Extract<D_Button,{style:any}>} x */
 	D_Button_Omit_1(cf,x) {
 		const {style,size,isDisabled,text,icon,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.D_Button_Omit(`${cf}.Mixed`,x); this.g(y);
 		this.t(style,x => this.save_string("[Button.style]",x));
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
-		this.t(icon,x => this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes));
+		this.t(icon,x => {
+			let missing=this.T_Icon_AnyOf("D_Icon_Button",x,this.expected_button_iconTypes);
+			if(missing) {
+				let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",x,this.missing_expected_button_iconTypes);
+				if(missing_ex===false) return;
+				this.missing_expected_button_iconTypes.push(x.iconType);
+				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
+				console.log("-- [D_Button.icon] --",arr_items);
+			}
+		});
 		if(isDisabled!==void 0) this._primitive_of(isDisabled,"boolean");
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
