@@ -1744,9 +1744,53 @@ class HandleTypes extends HandleTypesEval {
 		this.t(command,this.GC_Button);
 		return y;
 	}
+	/** @arg {D_Button_Ex_1_Omit_Size} x */
+	D_Button_Scope_1(x) {
+		if("targetId" in x) {
+			switch(x.targetId) {
+				default: debugger; break;
+				case "clip-info-button": {
+					const {accessibilityData,icon,targetId: {},...y}=x; y;
+					this.D_Accessibility(accessibilityData);
+					if(icon.iconType!=="INFO") debugger;
+					debugger;
+				} break;
+				case "create-clip-button-action-bar": {
+					const {accessibilityData,icon,targetId: {},tooltip,...y}=x; y;
+					this.D_Accessibility(accessibilityData);
+					if(icon.iconType!=="CONTENT_CUT") debugger;
+					if(tooltip!=="Clip") debugger;
+				} break;
+			}
+			return;
+		}
+		if("serviceEndpoint" in x) {
+			const {accessibilityData,icon,tooltip,serviceEndpoint,...y}=x; y;
+			this.D_Accessibility(accessibilityData);
+			if(icon.iconType!="SHARE") debugger;
+			if(tooltip!=="Share") debugger;
+			if(!serviceEndpoint.shareEntityServiceEndpoint) debugger;
+			this.E_ShareEntityService(serviceEndpoint);
+			return;
+		}
+		if("tooltip" in x) {
+			const {accessibilityData,icon,tooltip,accessibility,...y}=x; y;
+			this.D_Accessibility(accessibilityData);
+			if(icon.iconType!="PLAYLIST_ADD") debugger;
+			if(tooltip!=="Clip") debugger;
+			if("label" in accessibility) {
+				if(accessibility.label!=="Save to") debugger;
+			}
+			return;
+		}
+	}
 	/** @private @arg {"D_Button"} cf @arg {D_Button_EX_1_Command} x */
 	D_Button_WithCommand(cf,x) {
 		if("text" in x) {
+			{
+				const {size,style,isDisabled,trackingParams,command,text,...y1}=x; y1;
+				this.D_Button_Scope_1(y1);
+			}
 			return;
 		}
 		if("targetId" in x) {
@@ -1754,7 +1798,6 @@ class HandleTypes extends HandleTypesEval {
 			let {targetId,isDisabled,icon,accessibilityData,...y}=this.D_Button_Omit_Command(`${cf}.With.command.targetId`,x); this.g(y);
 			this.D_Button_TargetId(`${cf}.From.command.targetId`,targetId);
 			if(isDisabled!==false) debugger;
-			// if(tooltip!=="Clip") debugger;
 			return;
 		}
 		this.g(x);

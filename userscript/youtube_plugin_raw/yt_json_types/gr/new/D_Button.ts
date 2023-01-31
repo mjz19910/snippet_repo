@@ -28,7 +28,8 @@ type D_ShareButton={
 	size: "SIZE_DEFAULT";
 	isDisabled: false;
 	text: G_Text;
-	serviceEndpoint: D_Button_SE|E_ShareEntityService;
+	// D_Button_SE
+	serviceEndpoint: E_ShareEntityService;
 	icon: T_Icon<"SHARE">;
 	tooltip: "Share";
 	trackingParams: string;
