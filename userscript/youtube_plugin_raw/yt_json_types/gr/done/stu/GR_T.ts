@@ -64,7 +64,7 @@ type T_Items_TP<T>={
 	items: T[];
 	trackingParams: string;
 };
-type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items<T>;};
+type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
 type TAD_OpenPopup_Dialog<T>={
 	popup: T;
 	popupType: "DIALOG";

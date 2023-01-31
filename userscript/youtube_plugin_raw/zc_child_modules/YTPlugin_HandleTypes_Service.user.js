@@ -5695,6 +5695,10 @@ class HandleTypes extends HandleTypesEval {
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
+	T_Items_TP(cf,x) {
+		const {}=x;
+	}
+	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @template T @private @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}

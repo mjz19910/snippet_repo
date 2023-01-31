@@ -79,6 +79,7 @@ type CF_M_w=
 ;
 type CF_T_Commands=T_ExtractImport<"CF_T_Commands">|"CF_T_Commands"|"a";
 type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";
+type CF_T_Items_TP=T_ExtractImport<"CF_T_Items_TP">|"CF_T_Items_TP"|"a";
 type CF_M_y=
 	|T_ExtractImport<"CF_M_y">|"CF_M_y"|"a"
 	|`T_WCM:${CF_T_WCM}`
