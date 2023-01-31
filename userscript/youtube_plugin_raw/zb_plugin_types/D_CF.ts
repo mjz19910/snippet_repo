@@ -62,16 +62,14 @@ type D_CF_D_Video_Handle=
 ;
 type CF_T_SE_Signal_P1=
 	|"D_GuideEntry"
-	|"D_NotificationTopbarButton"
 	|"D_Button_SE"
 	|"GC_Button"
 	|"D_TopbarMenuButton"
-	|"D_NotificationTopbarButton"
-	|"D_NotificationTopbarButton.updateUnseenCount"
 	;
 ;
 type CF_T_SE_Signal=
 	|`${D_CF_GE_ResponseReceived}.SE_Signal`
 	|`${CF_T_SE_Signal_P1}.SE_Signal`
+	|`D_NotificationTopbarButton.${"menuRequest"|"U_UnseenCount"}.T_SE_Signal`
 	;
 ;

@@ -5663,14 +5663,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_NotificationTopbarButton";
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		if(icon.iconType!=="NOTIFICATIONS") debugger;
-		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.T_SE_Signal`,menuRequest);
+		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.menuRequest.T_SE_Signal`,menuRequest);
 		this.M_GetNotificationMenu(g_menu);
 		this.Signal_GetNotificationsMenu(menu_signal);
 		this.ceq(style,"NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT");
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this._primitive_of(tooltip,"string");
-		let [m2,s2]=this.T_SE_Signal(`${cf}.updateUnseenCount.T_SE_Signal`,updateUnseenCountEndpoint);
+		let [m2,s2]=this.T_SE_Signal(`${cf}.U_UnseenCount.T_SE_Signal`,updateUnseenCountEndpoint);
 		this.M_GetUnseenNotificationCount(m2);
 		this.ceq(s2.signal,"GET_UNSEEN_NOTIFICATION_COUNT");
 		this.a_primitive_num(notificationCount);
