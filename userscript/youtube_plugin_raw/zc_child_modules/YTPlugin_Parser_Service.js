@@ -532,11 +532,7 @@ class ParserService extends BaseService {
 			console.log("[parse_value.new_path_gen]",path);
 			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n
-			case "${path}":
-				switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} break; default: new_ns(); debugger; return;}
-				/** @private @type {P_ParamParse_XX} */
-				return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value);\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+			console.log(`\n\n\tcase "${path}":switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value); default: new_ns(); debugger; return;}\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
@@ -570,104 +566,45 @@ class ParserService extends BaseService {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						debugger;
+						/** @private @type {P_ParamParse_XX} */
 						return;
 					}
-					case "watch.params":
-						switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 39: case 56: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "get_report_form.f18.f1":
-						switch(map_entry_key) {case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "get_report_form.f18":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "get_report_form":
-						switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "service$create_playlist":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "browse$param.f93":
-						switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.removeLikeParams.f5":
-						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.removeLikeParams.f1":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.removeLikeParams":
-						switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.dislikeParams.f4":
-						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.dislikeParams.f1":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.dislikeParams":
-						switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.likeParams.f6":
-						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.likeParams.f1":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "like.likeParams": case "like.dislikeParams":
-						switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "reel.params":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "get_report_form.f18.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "get_report_form": switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "like.removeLikeParams": switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "like.dislikeParams": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "like.likeParams": case "like.dislikeParams": switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1":
-					case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "reel.player_params":
-						switch(map_entry_key) {case 30: case 71: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "slot_ad_serving_data_entry":
-						switch(map_entry_key) {case 1: case 3: case 4: break; default: new_ns(); debugger; return;}
-						/** @private @type {P_ParamParse_XX} */
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "report.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "report.params.f28.f1": switch(map_entry_key) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "browse$param.f84": switch(map_entry_key) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "entity_key": switch(map_entry_key) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
-					case "createBackstagePost.params": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "record_notification_interactions.f2.f14":
-						switch(map_entry_key) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "reel.player_params": switch(map_entry_key) {case 30: case 71: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "slot_ad_serving_data_entry": switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "report.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "browse$param.f93":
+					case "report.params.f28.f1": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "browse$param.f84": switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "entity_key": switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					// Object type {f1:any;f2:any;}
+					case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "record_notification_interactions.f2.f14.f1":
+					case "ypc_get_offers.params.f1": case "record_notification_interactions.f2.f14":
+						switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "create_playlist.params": case "browse$param": case "D_Browse.param":
 						switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_value);
-					case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
-						switch(map_entry_key) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+					case "get_report_form.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "reel.params":
+					case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2":
+					case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
+						switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "tracking.trackingParams.f16.f4": case "transcript_target_id.param": case "watch.player_params.f40.f1":
-						switch(map_entry_key) {case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+						switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "slot_ad_serving_data_entry.f3": case "AdServingDataEntry.f10":
-						switch(map_entry_key) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
+						switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "tracking.trackingParams":
 						switch(map_entry_key) {
 							case 16: case 19: break;
@@ -909,6 +846,7 @@ class ParserService extends BaseService {
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "subscribed":
 			case "UndoFeedback":
 			case "reload":
 			case "transcriptTrackSelection":
