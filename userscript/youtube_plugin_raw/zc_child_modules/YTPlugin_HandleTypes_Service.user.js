@@ -2528,10 +2528,7 @@ class HandleTypes extends HandleTypesEval {
 		x;
 	}
 	/** @arg {D_STR_CF} cf @arg {string} x */
-	codegen_case(cf,x) {
-		console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);
-		x;
-	}
+	codegen_case(cf,x) {console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);}
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {
 		const cf="D_ChannelId";
@@ -3584,7 +3581,8 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_str(cf,x);
 	}
 	/** @private @arg {Extract<DU_DE_Url['url']|GU_VE83769_Url_Internal,`${string}//studio.youtube.com${string}`>} b */
-	handle_yt_studio_url(b) {
+	D_YtStudio_Url(b) {
+		const cf="D_YtStudio_Url";
 		if(!this.str_is_uri(b)) {debugger; return;}
 		let x=split_string(split_string_once(b,"//")[1],"/");
 		if(x[0]!=="studio.youtube.com") {debugger; return;}
@@ -3597,7 +3595,7 @@ class HandleTypes extends HandleTypesEval {
 				if(!this.str_starts_with("UC",v)) {debugger; return;}
 				let v1=x[3];
 				switch(v1) {
-					default: debugger; break;
+					default: this.codegen_case(cf,v1); break;
 					case "videos": if(x.length!==4) debugger; break;
 				}
 			} break;
@@ -3654,7 +3652,7 @@ class HandleTypes extends HandleTypesEval {
 		let up=this.parse_with_url_parse(x);
 		switch(up.host) {
 			case "music.youtube.com": return this.handle_yt_music_url(up.href);
-			case "studio.youtube.com": return this.handle_yt_studio_url(up.href);
+			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
 			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
 			default: debugger; break;
