@@ -5681,6 +5681,7 @@ class HandleTypes extends HandleTypesEval {
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.ceq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
+		/** @type {R_CompactLink[]} */
 		let n1=this.T_Items("R_CompactLink_Items",n);
 		this.z(n1,this.R_CompactLink);
 		this.trackingParams(cf,trackingParams);
@@ -6363,7 +6364,7 @@ class HandleTypes extends HandleTypesEval {
 		this.do_codegen(cf,x);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
-	dt(x,f) {if(!x) return; let g=f.call(this,x); if(!g) debugger;}
+	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
 	/** @private @arg {D_SortFilterSubMenu} x */
 	D_SortFilterSubMenu(x) {
 		const cf="D_SortFilterSubMenu";

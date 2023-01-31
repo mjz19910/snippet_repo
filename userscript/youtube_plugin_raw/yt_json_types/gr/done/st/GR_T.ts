@@ -57,3 +57,9 @@ type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
 type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
 type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
+type T_Items<T>={items: T[];};
+type T_Items_TP<T>={
+	items: T[];
+	trackingParams: string;
+};
+type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items<T>;};

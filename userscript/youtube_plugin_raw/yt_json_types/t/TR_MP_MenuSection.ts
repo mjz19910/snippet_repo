@@ -1,1 +1,0 @@
-type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items<T>;};

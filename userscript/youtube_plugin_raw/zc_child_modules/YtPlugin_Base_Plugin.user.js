@@ -2831,9 +2831,9 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @arg {D_DecTypeNum[]} res_e */
 	make_param_map(res_e) {
-		/** @private @type {ParamMapType} */
+		/** @private @type {V_ParamMapType} */
 		let ret_map=new Map();
-		/** @private @arg {number} key @arg {ParamMapValue} value */
+		/** @private @arg {number} key @arg {V_ParamMapValue} value */
 		let do_set=(key,value) => {
 			if(ret_map.has(key)) {
 				let v=ret_map.get(key);
