@@ -30,3 +30,11 @@ type AU_SubscribeButton={updateSubscribeButtonAction: DAU_SubscribeButton;};
 type UA_Title={updateTitleAction: D_Title;};type UA_ToggleButtonText={updateToggleButtonTextAction: D_ToggleButtonText;};
 type UA_Viewership={updateViewershipAction: D_ViewCount;};
 //#endregion
+type AC_Executor=[
+	A_ChangeEngagementPanelVisibility,
+	A_HideEngagementPanelScrim,
+	C_ScrollToEngagementPanel,
+	C_Loop,
+	C_UpdateToggleButtonState,
+	TA_OpenPopup_Empty
+][number];

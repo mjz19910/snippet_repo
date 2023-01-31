@@ -57,4 +57,50 @@ type DC_GetSurvey={
 };
 // TODO: #14 Need type of DC_RefreshPlaylist
 type DC_RefreshPlaylist={};
+type DC_Generic={continuation: string;};
+type DC_Invalidation={
+	invalidationId: D_InvalidationId;
+	timeoutMs: 10000;
+	continuation: string;
+	clickTrackingParams?: string;
+};
+type DC_LiveChat={
+	continuations: G_LiveChatContinuationItem[];
+	actions?: G_RA_LiveChatContinuationActions[];
+	actionPanel?: R_LiveChatMessageInput;
+	itemList?: R_LiveChatItemList;
+	header?: R_LiveChatHeader;
+	ticker?: R_LiveChatTicker;
+	trackingParams: string;
+	participantsList?: R_LiveChatParticipantsList;
+	popoutMessage?: R_Message;
+	emojis?: D_LiveChatEmoji[];
+	clientMessages?: D_ClientMessages;
+	viewerName?: string;
+};
+// TODO: #15 Need type of DC_MusicShelf
+type DC_MusicShelf={};
+type DC_LiveChatReplay={
+	timeUntilLastMessageMsec: number;
+	continuation: string;
+};
+// TODO #4
+type DC_PlaylistPanel={};
+type DC_SectionList=DC_SectionListBase|
+	DC_SectionList_SearchFeed|
+	DC_SectionList_BrowseFeed_ChannelFeatured|
+	DC_SectionList_BrowseFeed_Subscriptions;
+type DC_SectionListBase=T_DC_Content<TR_SectionListItem_3_Empty>;
+type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
+type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
+type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_Timed={
+	timeoutMs: 60000;
+	continuation: string;
+};
+type DC_UpdateToggleButtonState={
+	toggled: false;
+	buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION";
+};
 //#endregion

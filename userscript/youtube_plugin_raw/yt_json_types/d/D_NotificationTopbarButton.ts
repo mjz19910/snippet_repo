@@ -1,6 +1,6 @@
 type D_NotificationTopbarButton={
 	icon: T_Icon<"NOTIFICATIONS">;
-	menuRequest: EX_GetNotificationMenuRequest;
+	menuRequest: E_GetNotificationMenuRequest;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	trackingParams: string;
 	accessibility: D_Accessibility;

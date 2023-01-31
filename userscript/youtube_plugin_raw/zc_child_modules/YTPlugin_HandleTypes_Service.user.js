@@ -618,7 +618,7 @@ class HandleTypes extends HandleTypesEval {
 	R_FusionSearchbox(x) {this.H_("R_FusionSearchbox","fusionSearchboxRenderer",x,this.D_FusionSearchbox);}
 	/** @private @arg {R_HotkeyDialog} x */
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
-	/** @private @arg {C_SectionList} x */
+	/** @private @arg {RC_SectionList} x */
 	C_SectionList(x) {this.H_("C_SectionList","sectionListContinuation",x,this.G_SectionList);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
@@ -1023,7 +1023,7 @@ class HandleTypes extends HandleTypesEval {
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
-	/** @private @arg {R_WatchPage} x */
+	/** @private @arg {G_RS_WatchPage} x */
 	RS_WatchPage(x) {
 		const cf="R_WatchPage"; this.g_k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
@@ -1032,7 +1032,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.R_WatchPage_Generic(x);
 	}
-	/** @private @arg {R_WatchPage_Generic} x */
+	/** @private @arg {RS_Page_Watch} x */
 	R_WatchPage_Generic(x) {
 		const cf="R_WatchPage_Generic";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -1043,7 +1043,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
-	/** @private @arg {R_WatchPage_VE3832} x */
+	/** @private @arg {RS_VE3832_Page_Watch} x */
 	R_WatchPage_VE3832(x) {
 		const cf="R_WatchPage_VE3832";
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4545,7 +4545,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {Extract<RS_SettingsPage,{rootVe:23462}>} x */
+	/** @private @arg {Extract<G_RS_Page_Settings,{rootVe:23462}>} x */
 	Settings_VE23462(x) {
 		const cf="Settings_VE23462";
 		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4555,7 +4555,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(url);
 		if(rootVe!==23462) debugger;
 	}
-	/** @private @arg {RS_SettingsPage} x */
+	/** @private @arg {G_RS_Page_Settings} x */
 	RS_SettingsPage(x) {
 		const cf="R_SettingsPage";
 		if("rootVe" in x) return this.Settings_VE23462(x);
@@ -4565,7 +4565,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Settings(response);
 		this.a_primitive_str(url);
 	}
-	/** @private @arg {Extract<RS_ShortsPage,{rootVe:37414}>} x */
+	/** @private @arg {Extract<G_RS_Page_Shorts,{rootVe:37414}>} x */
 	Shorts_VE37414(x) {
 		const cf="Shorts_VE37414";
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);//#destructure_off
@@ -4580,7 +4580,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
-	/** @private @arg {RS_ShortsPage} x */
+	/** @private @arg {G_RS_Page_Shorts} x */
 	RS_ShortsPage(x) {
 		const cf="RS_ShortsPage";
 		if("rootVe" in x) return this.Shorts_VE37414(x);

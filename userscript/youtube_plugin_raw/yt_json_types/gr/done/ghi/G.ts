@@ -245,5 +245,7 @@ type G_PopupItem=
 	;
 ;
 type G_ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
-type G_RS_AllResponses=RS_WatchReelItem|RS_Channel|RS_Channel|RS_Browse|RS_Channel|R_Page;
-type G_RS_Subscribe_Action=A_AddToGuideSection|TA_OpenPopup_Empty|C_RunAttestation|AU_SubscribeButton;
+type GC_EngagementPanelSectionShow=A_ChangeEngagementPanelVisibility|
+	A_ShowEngagementPanelScrim|
+	C_ScrollToEngagementPanel;
+type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;

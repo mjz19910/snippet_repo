@@ -9,36 +9,6 @@ type RS_WatchReelItem={
 	desktopTopbar: R_DesktopTopbar;
 	engagementPanels: R_EngagementPanelSectionList[];
 };
-type RS_SettingsPage={
-	page: "settings";
-	endpoint: GE_Browse;
-	response: RS_Settings;
-	url: string;
-}|{
-	page: "settings";
-	endpoint: GE_Browse;
-	response: RS_Settings;
-	url: string;
-	rootVe: 23462;
-};
-type RS_ShortsPage={
-	page: "shorts";
-	endpoint: E_ReelWatch;
-	response: RS_Reel;
-	playerResponse: RS_Player;
-	reelWatchSequenceResponse?: RS_ReelWatchSequence;
-	url: `/shorts/${string}`;
-	cachedReelWatchSequenceResponse?: RS_ReelWatchSequence;
-}|{
-	rootVe: 37414;
-	url: `/shorts/${string}`;
-	endpoint: E_ReelWatch;
-	page: "shorts";
-	playerResponse: RS_Player;
-	reelWatchSequenceResponse: RS_ReelWatchSequence|undefined;
-	response: RS_Reel;
-	cachedReelWatchSequenceResponse: RS_ReelWatchSequence;
-};
 type RS_AccountMenu={
 	responseContext: RC_ResponseContext;
 	actions: TA_OpenPopup_Empty[];
@@ -57,7 +27,7 @@ type RS_AttLog_RC={responseContext: RC_ResponseContext;};
 type RS_Browse={
 	responseContext: RC_ResponseContext;
 	contents?: G_BrowseContents;
-	continuationContents?: C_SectionList;
+	continuationContents?: RC_SectionList;
 	header?: G_BrowseHeader;
 	alerts?: R_AlertWithButton[];
 	metadata?: G_Browse_MD;
@@ -206,5 +176,40 @@ type RS_Unsubscribe={
 	actions: (A_RemoveFromGuideSection|TA_OpenPopup_Empty|AU_SubscribeButton)[];
 	trackingParams: string;
 	frameworkUpdates: A_FrameworkUpdates;
+};
+//#endregion
+//#region Response page
+
+type RS_Page_Settings={
+	page: "settings";
+	endpoint: GE_Browse;
+	response: RS_Settings;
+	url: string;
+};
+type RS_VE23462_Page_Settings={
+	page: "settings";
+	endpoint: GE_Browse;
+	response: RS_Settings;
+	url: string;
+	rootVe: 23462;
+};
+type RS_Page_Shorts={
+	page: "shorts";
+	endpoint: E_ReelWatch;
+	response: RS_Reel;
+	playerResponse: RS_Player;
+	reelWatchSequenceResponse?: RS_ReelWatchSequence;
+	url: `/shorts/${string}`;
+	cachedReelWatchSequenceResponse?: RS_ReelWatchSequence;
+};
+type RS_VE37414_Shorts={
+	page: "shorts";
+	endpoint: E_ReelWatch;
+	response: RS_Reel;
+	playerResponse: RS_Player;
+	reelWatchSequenceResponse: RS_ReelWatchSequence|undefined;
+	url: `/shorts/${string}`;
+	cachedReelWatchSequenceResponse: RS_ReelWatchSequence;
+	rootVe: 37414;
 };
 //#endregion
