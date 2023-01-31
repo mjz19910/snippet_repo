@@ -26,7 +26,7 @@ type CF_L_params_no_gen=
 	|"DE_GetReportForm"
 	|"DE_GetTranscript"
 	|"DE_YpcGetOffers.params"
-	// |"D_TemplateUpdate"
+	|"D_TemplateUpdate"
 	;
 ;
 type CF_L_Params=
