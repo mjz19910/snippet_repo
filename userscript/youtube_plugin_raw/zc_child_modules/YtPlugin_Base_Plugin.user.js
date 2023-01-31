@@ -1564,7 +1564,7 @@ function required(x) {
 	return x;
 }
 /** @template T,U @typedef {import("./YTPlugin_HandleTypes_Service.user").HandleTypes<T,U>} HandleTypes */
-/** @private @arg {HandleTypes<any,any>} handle_types */
+/** @private @arg {HandleTypes<LoadAllServices, ServiceOptions>} handle_types */
 function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
