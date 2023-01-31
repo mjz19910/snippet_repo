@@ -74,7 +74,7 @@ type DC_Timed={
 };
 
 type D_EngagementPanelSectionList=
-	|DB_SI_EngagementPanel
+	|G_SI_DB_EngagementPanel
 	|SI_VE76278_EngagementPanel
 	|SI_VE99999_EngagementPanel
 	|SI_VE124975_EngagementPanel
@@ -82,82 +82,6 @@ type D_EngagementPanelSectionList=
 	|SI_VE139722_EngagementPanel
 	;
 ;
-type SI_VE76278_EngagementPanel={
-	panelIdentifier: "comment-item-section";
-	header: R_EngagementPanelTitleHeader;
-	content: R_SectionList;
-	veType: 76278;
-	targetId: "engagement-panel-comments-section";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: D_LoggingDirectives;
-};
-type SI_VE99999_EngagementPanel={
-	panelIdentifier: "shopping_panel_for_entry_point_5";
-	header: R_EngagementPanelTitleHeader;
-	content: R_ProductList;
-	veType: 99999;
-	targetId: "shopping_panel_for_entry_point_5";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: D_LoggingDirectives;
-};
-type SI_VE126250_EngagementPanel={
-	panelIdentifier: "engagement-panel-searchable-transcript";
-	header: R_EngagementPanelTitleHeader;
-	content: R_ContinuationItem;
-	veType: 126250;
-	targetId: "engagement-panel-searchable-transcript";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: C_ScrollToEngagementPanel[];
-	loggingDirectives: D_LoggingDirectives;
-};
-type SI_VE124975_EngagementPanel={
-	panelIdentifier: "engagement-panel-structured-description";
-	header: R_EngagementPanelTitleHeader;
-	content: R_StructuredDescriptionContent;
-	veType: 124975;
-	targetId: "engagement-panel-structured-description";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	identifier?: T_ShortsSurfaceIdentifier<"engagement-panel-structured-description">;
-	loggingDirectives: D_LoggingDirectives;
-};
-type SI_VE139722_EngagementPanel={
-	header: R_EngagementPanelTitleHeader;
-	content: R_SectionList;
-	veType: 139722;
-	targetId: "engagement-panel-comments-section";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
-	identifier: T_ShortsSurfaceIdentifier<"shorts-comments-panel">;
-	loggingDirectives: D_LoggingDirectives;
-};
-type DB_SI_EngagementPanel={
-	content: R_AdsEngagementPanelContent;
-	targetId: "engagement-panel-ads";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: D_LoggingDirectives;
-}|{
-	panelIdentifier: "engagement-panel-macro-markers-description-chapters";
-	header: R_EngagementPanelTitleHeader;
-	content: R_MacroMarkersList;
-	targetId: "engagement-panel-macro-markers-description-chapters";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: D_LoggingDirectives;
-}|{
-	panelIdentifier: "engagement-panel-clip-create";
-	header: R_EngagementPanelTitleHeader;
-	content: R_ClipSection;
-	targetId: "engagement-panel-clip-create";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: G_EngagementPanelSectionShowCommands[];
-	loggingDirectives: D_LoggingDirectives;
-}|{
-	panelIdentifier: "engagement-panel-macro-markers-auto-chapters";
-	header: R_EngagementPanelTitleHeader;
-	content: R_MacroMarkersList;
-	targetId: "engagement-panel-macro-markers-auto-chapters";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	loggingDirectives: D_LoggingDirectives;
-};
 type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_ShowEngagementPanelScrim|C_ScrollToEngagementPanel;
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,
@@ -234,7 +158,7 @@ type D_TargetIdStr=[
 	"clip-info-button",
 	"sponsorships-button",
 	D_Menu_TargetId,
-	DB_SI_EngagementPanel['targetId'],
+	G_SI_DB_EngagementPanel['targetId'],
 	D_Button$TargetId,
 ][number];
 type D_UiTargetId="browse-feedFEwhat_to_watch"|"watch-next-feed";

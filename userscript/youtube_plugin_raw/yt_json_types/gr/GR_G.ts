@@ -16,3 +16,12 @@ type G_EY_Entity=
 	|S_EY_TranscriptSearchBox
 	;
 ;
+
+// from GR_SI.ts
+type G_SI_DB_EngagementPanel=
+	|SI_DB_EngagementPanel_Ads
+	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters
+	|SI_DB_EngagementPanel_ClipCreate
+	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters
+	;
+;

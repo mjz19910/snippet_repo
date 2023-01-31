@@ -3655,7 +3655,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(cancelButton);
 		this.a_primitive_bool(primaryIsCancel);
 	}
-	/** @private @arg {DB_SI_EngagementPanel} x */
+	/** @private @arg {G_SI_DB_EngagementPanel} x */
 	DB_SI_EngagementPanel(x) {
 		const cf="DB_SI_EngagementPanel";
 		switch(x.targetId) {
