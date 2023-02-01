@@ -242,6 +242,57 @@ type RS_Page_Search={
 	url: `/results?search_query=${string}`;
 };
 //#endregion
+//#region {pageType:string}
+type R_PageTypeWatch={
+	pageType: "watch";
+	endpoint: E_Watch;
+	response: G_RS_WatchPage;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+type R_PageTypeBrowse={
+	pageType: "browse";
+	endpoint: GE_Browse;
+	response: RS_Page_Browse;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+type R_PageTypeChannel={
+	pageType: "channel";
+	endpoint: {};
+	response: RS_Page_Channel;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+type R_PageTypePlaylist={
+	pageType: "playlist";
+	endpoint: {};
+	response: G_RS_Page_Playlist;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+type R_PageTypeSearch={
+	pageType: "search";
+	endpoint: E_Search;
+	response: RS_Page_Search;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+type R_PageTypeSettings={
+	pageType: "settings";
+	endpoint: E_Settings;
+	response: G_RS_Page_Settings;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+type R_PageTypeShorts={
+	pageType: "shorts";
+	endpoint: E_ReelWatch;
+	response: G_RS_Page_Shorts;
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};
+//#endregion
 //#region RS_VE
 type RS_VE3832_Page_Watch={
 	rootVe: 3832;
@@ -270,3 +321,15 @@ type RS_VE37414_Shorts={
 	rootVe: 37414;
 };
 //#endregion
+type E_Page=YTNavigateFinishDetail['endpoint'];
+type D_STR_CF=
+	|"D_ChannelId"
+	|"D_RadioShareUrl"
+	|"D_YoutubeKidsUrl"
+	|"D_YoutubeUrl"
+	|"G_VE3832"
+	|"G_VE4724"
+	|"G_VE37414"
+	|"G_VE83769"
+	;
+;
