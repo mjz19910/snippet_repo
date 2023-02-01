@@ -478,6 +478,8 @@ class HandleTypes extends HandleTypesEval {
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
+	/** @private @arg {CF_T_WCM} cf @template {object} T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
+	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
@@ -1261,8 +1263,59 @@ class HandleTypes extends HandleTypesEval {
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.M_VE83769(a);}
 	/** @private @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.DE_ShareEntityService(b); this.M_GetSharePanel(a);}
+	/** @private @arg {E_GetReportForm} x */
+	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.DE_GetReportForm(b); this.M_FlagGetForm(a);}
+	/** @private @arg {T_SE_Signal<M_SendPost, G_ClientSignal>} x */
+	E_SE_Signal_Button(x) {let [a,b]=this.T_SE_Signal("E_SE_Signal_Button",x); this.M_SendPost(a); this.G_ClientSignal(b);}
+	/** @protected @arg {E_AddToPlaylistService} x */
+	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
+	/** @protected @arg {E_PlaylistEdit} x */
+	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
+	/** @protected @arg {E_Feedback} x */
+	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
+	/** @protected @arg {M_EditPlaylist} x */
+	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
+	/** @private @arg {M_Like} x */
+	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
+	/** @private @arg {M_YpcGetCart} x */
+	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {GE_Browse_WCM} x */
+	M_VE_Browse(x) {this.T_WCM("M_VE_Browse",x,this.GM_VE_WC_Browse);}
+	/** @private @arg {M_Subscribe} x */
+	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
+	/** @private @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414_WC);}
+	/** @private @arg {M_SetSetting} x */
+	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
+	/** @private @arg {M_FlagGetForm} x */
+	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
+	/** @protected @arg {M_AddToPlaylistService} x */
+	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
+	/** @private @arg {M_Feedback} x */
+	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
+	/** @private @arg {M_VE3832} x */
+	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832_Watch_WC);}
+	/** @private @arg {M_VE83769} x */
+	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
+	/** @private @arg {M_RecordInteractions} x */
+	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
+	/** @private @arg {M_VE4724} x */
+	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
+	/** @protected @arg {DE_GetReportForm} x */
+	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
+	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
+	T_GM(cf,x,f) {
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
+		return f.call(this,apiUrl);
+	}
+	/** @protected @arg {GM_EditPlaylist} x */
+	GM_EditPlaylist(x) {
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(x.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		this.GM_WC(x);
+	}
 	/** @private @arg {GM_GetSharePanel} x */
 	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @private @arg {DE_ShareEntityService} x */
@@ -1288,36 +1341,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(cf,"signal",x);}
-	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.DE_GetReportForm(b); this.M_FlagGetForm(a);}
-	/** @protected @arg {DE_GetReportForm} x */
-	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
-	/** @protected @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
-	/** @protected @arg {E_PlaylistEdit} x */
-	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
-	/** @protected @arg {M_EditPlaylist} x */
-	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
-	T_GM(cf,x,f) {
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
-		return f.call(this,apiUrl);
-	}
-	/** @protected @arg {GM_EditPlaylist} x */
-	GM_EditPlaylist(x) {
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		if(x.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		this.GM_WC(x);
-	}
-	/** @protected @arg {E_Feedback} x */
-	E_Feedback(x) {
-		const cf="E_Feedback";
-		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=this.s(cf,x); this.g(y);//#destructure_off
-		this.clickTrackingParams(cf,clickTrackingParams);
-		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/feedback") debugger;
-		this.M_Feedback(commandMetadata);
-		this.DE_Feedback(feedbackEndpoint);
-	}
 	/** @private @arg {DC_Params} a */
 	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
 	/** @private @arg {DE_UndoFeedback} x */
@@ -1373,38 +1396,6 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
 		};
 	}
-	/** @private @arg {CF_T_WCM} cf @template {object} T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f*/
-	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
-	/** @private @arg {M_Like} x */
-	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
-	/** @private @arg {M_YpcGetCart} x */
-	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {GE_Browse_WCM} x */
-	M_VE_Browse(x) {
-		const cf="M_VE_Browse";
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);
-		this.GM_VE_WC_Browse(a);
-	}
-	/** @private @arg {M_Subscribe} x */
-	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
-	/** @private @arg {M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414_WC);}
-	/** @private @arg {M_SetSetting} x */
-	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
-	/** @private @arg {M_FlagGetForm} x */
-	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
-	/** @protected @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
-	/** @private @arg {M_Feedback} x */
-	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
-	/** @private @arg {M_VE3832} x */
-	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832_Watch_WC);}
-	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
-	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
-	/** @private @arg {M_VE4724} x */
-	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
 	/** @private @arg {GM_Subscribe} x */
 	GM_Subscribe(x) {const {sendPost: a,apiUrl: b,...y}=this.s("GM_Subscribe",x); this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/subscription/subscribe");}
 	/** @private @arg {GM_FlagGetForm} x */
@@ -1702,7 +1693,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	missing_expected_button_iconTypes=[];
-	/** @private @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
+	/** @private @private @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
 	D_Button_Omit_TP(cf,x) {
 		let {trackingParams,...y}=this.s(cf,x);
 		this.trackingParams(cf,trackingParams);
@@ -1710,106 +1701,9 @@ class HandleTypes extends HandleTypesEval {
 		let z=y;
 		return z;
 	}
-	/** @arg {"D_Button"|"D_Button:WithCommand:text"} cf1 @arg {D_Button_Ex_1_Omit_Size} x */
-	D_Button_Scope_1(cf1,x) {
-		/** @type {`${typeof cf1}:Scope_1`} */
-		const cf2=`${cf1}:Scope_1`;
-		if("targetId" in x) {
-			/** @type {`${typeof cf2}:targetId`} */
-			const cf3=`${cf2}:targetId`; this.k(cf3,x);
-			switch(x.targetId) {
-				default: debugger; break;
-				case "clip-info-button": {
-					/** @type {`${typeof cf3}:${(typeof x)["targetId"]}`} */
-					const cf4=`${cf3}:${x.targetId}`;
-					const {accessibilityData,icon,targetId,...y}=this.s(cf4,x); y;
-					this.D_Accessibility(accessibilityData);
-					if(icon.iconType!=="INFO") debugger;
-					console.timeStamp(cf4);
-				} break;
-				case "create-clip-button-action-bar": {
-					/** @type {`${typeof cf3}:${(typeof x)["targetId"]}`} */
-					const cf4=`${cf3}:${x.targetId}`;
-					const {accessibilityData,icon,targetId,tooltip,...y}=this.s(cf4,x); y;
-					this.D_Accessibility(accessibilityData);
-					if(icon.iconType!=="CONTENT_CUT") debugger;
-					if(tooltip!=="Clip") debugger;
-					console.timeStamp(cf4);
-				} break;
-			}
-			return;
-		}
-		if("serviceEndpoint" in x) {
-			/** @type {`${cf2}:serviceEndpoint`} */
-			const cf3=`${cf2}:serviceEndpoint`;
-			const {accessibilityData,icon,tooltip,serviceEndpoint,...y}=x; y;
-			this.D_Accessibility(accessibilityData);
-			if(icon.iconType!="SHARE") debugger;
-			if(tooltip!=="Share") debugger;
-			let ka=this.get_keys_of(serviceEndpoint);
-			for(let k of ka) {
-				switch(k) {
-					default: this.generate_case(`${cf3}.service.case`,k); break;
-					case "clickTrackingParams":
-					case "commandMetadata":
-					case "signalServiceEndpoint":
-					case "shareEntityServiceEndpoint": continue;
-				}
-			}
-			this.D_Button_SE(serviceEndpoint);
-			return;
-		}
-		if("tooltip" in x) {
-			/** @type {`${cf2}:tooltip`} */
-			const cf3=`${cf2}:tooltip`;
-			const {accessibilityData,icon,tooltip,accessibility,...y}=this.s(cf3,x); y;
-			this.D_Accessibility(accessibilityData);
-			if(icon.iconType!="PLAYLIST_ADD") debugger;
-			if(tooltip!=="Clip") debugger;
-			if("label" in accessibility) {
-				if(accessibility.label!=="Save to") debugger;
-			}
-			return;
-		}
-		if("icon" in x) {
-			/** @arg {Extract<(D_Button_Ex_1_Omit_Size extends infer A?A extends infer V?{[U in keyof V as U extends "accessibility"?U:never]: V[U]}:never:never),{accessibility:any}>["accessibility"]["label"]} x1 */
-			function al(x1) {
-				switch(x1) {
-					default: debugger; break;
-					case "unknown": debugger; break;
-					case "Next": case "Previous": case "Save to":
-					case "Cancel auto-play for this video":
-					case "Current setting is personalised notifications. Tap to change your notification setting for ScarletFlameFlandre":
-				}
-			}
-			const {icon,...y}=x;
-			switch(icon.iconType) {default: debugger; break; case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF": case "NOTIFICATIONS_ACTIVE": case "CHEVRON_RIGHT": case "CHEVRON_LEFT": case "REMOVE": case "CLOSE": break;}
-			if("accessibility" in y&&"accessibilityData" in y) {
-				const {accessibility,accessibilityData,...y1}=y; this.g(y1);
-				//cspell:ignoreRegExp /setting for .+?"/
-				al(accessibilityData.accessibilityData.label);
-				return;
-			}
-			if("accessibility" in y) {
-				const {accessibility,...x1}=y; this.g(x1);
-				al(accessibility.label);
-				return;
-			}
-			const {accessibilityData,...x1}=y; this.g(x1);
-			/** @arg {(typeof accessibilityData)["accessibilityData"]["label"]} x */
-			function a2(x) {
-				switch(x) {
-					default: debugger; break;
-					case "Close": break;
-				}
-			}
-			a2(accessibilityData.accessibilityData.label);
-			return;
-		}
-		debugger;
-	}
-	/** @arg {string} cf @arg {string} k @arg {string} x */
-	add_string_to_map(cf,k,x) {
+	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
+	add_string_to_map(cf,k_arg,x) {
+		let k=`${cf}:${k_arg}`;
 		let group_arr=this.strings_map.get(cf);
 		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
 		let group_entry=group_arr.find(e => e[0]===k);
@@ -1820,61 +1714,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		group_arr.push([k,[x]]);
 	}
-	/** @private @template {{command:U}} T @template {Extract<D_Button,{command:any}>['command']} U @arg {T} x @returns {T extends infer V?Omit<V,"command">:never} */
-	D_Button_UseCommand(x) {
-		let {command,...y}=x;
-		this.GC_Button(command);
-		/** @type {any} */
-		let z=y;
-		return z;
-	}
-	/** @arg {"D_Button"} cf1 @arg {D_Button_EX_2_Text} x */
-	D_Button_WithText_Omit1(cf1,x) {
-		const cf2="D_Button_WithText_Omit1"; cf1;
-		let {isDisabled,...x1}=this.D_Button_Omit_EX2_Text(cf2,x);
-		if(isDisabled!==false) debugger;
-		if("targetId" in x1) {
-			switch(x1.targetId) {
-				default: debugger; break;
-				case "create-clip-button-action-bar": {
-					let {icon,tooltip,accessibilityData,targetId,...y}=this.D_Button_UseCommand(x1); this.g(y);
-					if(icon.iconType!=="CONTENT_CUT") debugger;
-					if(tooltip!=="Clip") debugger;
-					this.D_Accessibility(accessibilityData);
-				} break;
-			}
-			return;
-		}
-		if("command" in x1) {
-			const {...x2}=this.D_Button_UseCommand(x1);
-			if(!("accessibility" in x2)) return this.g(x2);
-			const {accessibilityData,accessibility,...y}=x2;
-			this.D_Accessibility(accessibilityData);
-			switch(accessibility.label) {case "Cancel auto-play for this video": case "unknown": case "Save to": break; default: debugger; break;}
-			if(!("icon" in y)) return this.g(y);
-			const {icon,tooltip,...x}=y; this.g(x);
-			if(icon.iconType!=="PLAYLIST_ADD") debugger;
-			switch(tooltip) {case "Clip": case "Save": break; default: debugger;}
-			return;
-		}
-		if(!("icon" in x1)) return this.g(x1);
-		const {accessibilityData,serviceEndpoint,icon,tooltip,...x2}=x1; this.g(x2);
-		this.D_Accessibility(accessibilityData);
-		if(!serviceEndpoint.shareEntityServiceEndpoint) debugger;
-		this.E_ShareEntityService(serviceEndpoint);
-	}
-	/** @private @arg {"D_Button_WithText_Omit1"} cf @arg {D_Button_EX_2_Text} x @returns {D_Button_DoOmit<D_Button_EX_2_Text,"size"|"style"|"text"|"trackingParams">} */
-	D_Button_Omit_EX2_Text(cf,x) {
-		let {size,style,text,trackingParams,...y}=this.s(cf,x);
-		let ia=this.strings_map.get(cf);
-		if(!ia) this.strings_map.set(cf,ia=[]);
-		ia.push(["size",[size]]);
-		ia.push(["style",[style]]);
-		this.G_Text(text);
-		this.trackingParams(cf,trackingParams);
-		return y;
-	}
-	/** @type {Map<string,string[]>} */
+	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @private @arg {string} cf @arg {{}} x */
 	codegen_log_all(cf,x) {
@@ -1893,6 +1733,28 @@ class HandleTypes extends HandleTypesEval {
 		let all_types=all_ty_1.join("|");
 		console.group(`-- [${cf}.gen_result] --`);
 		console.log(all_types);
+	}
+	static {
+		this.prototype.D_Button_SE;
+	}
+	/** @private @arg {D_Button_SE} x */
+	D_Button_SE(x) {
+		const cf="D_Button_SE"; this.k(cf,x);
+		if("signalServiceEndpoint" in x) return this.E_SE_Signal_Button(x);
+		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		this.codegen_log_all(cf,x); x==="";
+	}
+	static {
+		this.prototype.Button_navigationEndpoint;
+	}
+	/** @private @arg {GE_Button_navigation} x */
+	Button_navigationEndpoint(x) {
+		const cf="Button_navigationEndpoint";
+		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
@@ -2235,6 +2097,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
 		this.D_Accessibility(accessibilityData);
+		this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
 		// this.D_Accessibility(toggledAccessibilityData);
 		this.D_ToggleButtonIdData(toggleButtonSupportedData);
 		if(targetId===void 0) {debugger; return;}
@@ -4960,29 +4823,6 @@ class HandleTypes extends HandleTypesEval {
 		const {title,subtitle,...y}=this.s(cf,x); this.g(y);//#destructure_off
 		this.G_Text(title);
 		this.G_Text(subtitle);
-	}
-	/** @private @arg {D_Button_SE} x */
-	D_Button_SE(x) {
-		const cf="D_Button_SE";
-		if("signalServiceEndpoint" in x) {
-			let [a,b]=this.T_SE_Signal(`${cf}.SE_Signal`,x);
-			this.M_SendPost(a); this.G_ClientSignal(b);
-			return;
-		}
-		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		this.codegen_log_all(cf,x); x==="";
-	}
-	static {
-		this.prototype.Button_navigationEndpoint;
-	}
-	/** @private @arg {GE_Button_navigation} x */
-	Button_navigationEndpoint(x) {
-		const cf="Button_navigationEndpoint";
-		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_log_all(cf,x);
 	}
 	/** @private @arg {RS_ChannelPage} x */
 	RS_ChannelPage(x) {
