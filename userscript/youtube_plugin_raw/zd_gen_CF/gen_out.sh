@@ -4,14 +4,14 @@ DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF"
 TMP_DIR="/dev/shm/snippet_repo_tmp"
 function make_tmp_git_repo {
 	pushd /dev/shm
-	if git -C "$TMP_DIR" rev-parse --is-inside-work-tree; then
+	if git -C "$TMP_DIR" rev-parse 2>/dev/null; then
 		pushd "$TMP_DIR"
-		git reset --hard
-		git pull "$PROJ_DIR"
+		git reset --hard -q
+		git pull -q "$PROJ_DIR"
 		popd
 	else
 		echo not in git repo at $TMP_DIR
-		git clone "$PROJ_DIR" snippet_repo_tmp
+		git clone "$PROJ_DIR" snippet_repo_tmp -q
 	fi
 	popd
 }
