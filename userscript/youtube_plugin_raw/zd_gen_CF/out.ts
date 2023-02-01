@@ -62,7 +62,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_NotificationsUnseenCount";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_GetTranscript_Params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_MutationItem";}
@@ -83,6 +82,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "G_DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
@@ -247,7 +247,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Timed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_UpdateToggleButtonState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_AddToPlaylistService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Browse_VE";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Feedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_GetNotificationMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_MutationItem";}
@@ -513,6 +512,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Action_GetNotificationsMenu_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_CommentsSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_DC_SectionList";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_DE_Browse_VE";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Text";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
