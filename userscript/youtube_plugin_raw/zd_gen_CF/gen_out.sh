@@ -2,23 +2,36 @@ BACKUP_DATE=$(date '+%F_%H/%M')
 PROJ_DIR="$PWD"
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF"
 TMP_DIR="/dev/shm/snippet_repo_tmp"
-function setup {
+function make_tmp_git_repo {
 	pushd /dev/shm
-	if git -C $TMP_DIR rev-parse --is-inside-work-tree; then
-		echo in git repo at $TMP_DIR
+	if git -C "$TMP_DIR" rev-parse --is-inside-work-tree; then
+		pushd "$TMP_DIR"
+		git reset --hard
+		git pull "$PROJ_DIR"
+		popd
 	else
 		echo not in git repo at $TMP_DIR
+		git clone "$PROJ_DIR" snippet_repo_tmp
 	fi
-	git clone "$PROJ_DIR" snippet_repo_tmp
 	popd
-	pushd $DEST_DIR
+}
+function make_backup_of_generated_output {
+	pushd "$DEST_DIR"
 	mkdir -p "bak/$BACKUP_DATE"
 	cp "out.ts" "bak/"${BACKUP_DATE}"/out.ts.bak"
 	popd
-	pushd "$TMP_DIR/$DEST_DIR"
+}
+function init_cwd_for_codegen_from_errors {
 	cp "out_empty.ts" "out.ts"
 	cp "gen_export_tmp.ts" "gen_export_cur.ts"
 	cp "out_empty.ts" "tmp.ts"
+
+}
+function setup {
+	make_tmp_git_repo
+	make_backup_of_generated_output
+	pushd "$TMP_DIR/$DEST_DIR"
+	init_cwd_for_codegen_from_errors
 }
 function restore {
 	cp "gen_export_out.ts" "gen_export_cur.ts"
