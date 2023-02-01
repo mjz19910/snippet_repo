@@ -97,7 +97,7 @@ type GD_Icon=NonNullable<[
 ][number]>;
 // TODO #6
 type GD_SD_Item={};
-type GE_Button_navigation=SE_ShareEntity|E_Watch|GE_Browse;
+type GE_Button_navigation=E_ShareEntityService|E_Watch|GE_Browse;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 type GM_Base={
 	url?: D_UrlFormat;

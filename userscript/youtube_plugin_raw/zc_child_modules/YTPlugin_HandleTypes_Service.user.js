@@ -5261,7 +5261,7 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_log_all(cf,x);
 		this.codegen_log_all(cf,x);
 	}
-	/** @private @arg {SE_ShareEntity} x */
+	/** @private @arg {E_ShareEntityService} x */
 	ES_ShareEntity(x) {
 		const cf="ES_ShareEntity";
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.s(cf,x); this.g(y);

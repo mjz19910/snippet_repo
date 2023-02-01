@@ -3,8 +3,8 @@ type G_SE_MenuService=
 	|E_AddToPlaylistService
 	|E_PlaylistEdit
 	|E_Feedback
-	|SE_Signal_SendPost
-	|SE_ShareEntity
+	|E_SignalService_SendPost
+	|E_ShareEntityService
 	|E_GetReportForm
 	;
 ;
