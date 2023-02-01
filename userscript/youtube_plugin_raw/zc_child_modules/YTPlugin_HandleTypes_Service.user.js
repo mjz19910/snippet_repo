@@ -4800,7 +4800,7 @@ class HandleTypes extends HandleTypesEval {
 		"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
 		"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
 		"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
-		"ADD_CIRCLE",
+		"ADD_CIRCLE","HELP",
 	];
 	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
 	D_GuideEntry_MissingIconType=[];
