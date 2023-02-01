@@ -11,13 +11,16 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibilityData";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:command";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:isDisabled";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:serviceEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:navigationEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:size";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:style";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:text";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:tooltip";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:targetId.case";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:serviceEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:targetId";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button_OnIcon:targetId.case";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}

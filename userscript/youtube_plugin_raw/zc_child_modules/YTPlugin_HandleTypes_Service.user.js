@@ -1757,33 +1757,69 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.codegen_log_all(cf,x);
 	}
+	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
+	D_Button_OnIcon(x) {
+		const cf="D_Button_OnIcon";
+		let ka=this.get_keys_of(x);
+		this.codegen_log_all(cf,x);
+		const {icon,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf,x); y;
+		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
+		if(missing) {
+			let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
+			if(missing_ex===false) return;
+			this.missing_expected_button_iconTypes.push(icon.iconType);
+			let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
+			console.group("-- [D_Button.codegen] --");
+			try {
+				console.log("-- [D_Button.icon] --",arr_items);
+				this.codegen_log_all(cf,x);
+			} finally {
+				console.groupEnd();
+			}
+		}
+		for(let k of ka) {
+			switch(k) {
+				case "serviceEndpoint": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {isDisabled,size,style,serviceEndpoint,icon,accessibilityData,tooltip,...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "tooltip": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {isDisabled,size,style,accessibilityData,icon,tooltip,...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "targetId": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					const {targetId,accessibilityData,command,size,style,icon,isDisabled,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					switch(targetId) {
+						case "clip-info-button": break;
+						default: this.codegen_case(`${cf1}.case`,targetId); this.do_codegen(cf1,x); break;
+					}
+					this.codegen_log_all(cf1,x);
+				}
+			}
+		}
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
+		if("icon" in x) return this.D_Button_OnIcon(x);
 		let ka=this.get_keys_of(x);
 		for(let k of ka) {
 			switch(k) {
 				default: debugger; break;
-				case "icon": {
+				case "command": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					this.codegen_log_all(cf1,x);
-					const {icon}=x;
-					let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
-					if(missing) {
-						let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
-						if(missing_ex===false) return;
-						this.missing_expected_button_iconTypes.push(icon.iconType);
-						let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
-						console.group("-- [D_Button.codegen] --");
-						try {
-							console.log("-- [D_Button.icon] --",arr_items);
-							this.codegen_log_all(cf,x);
-						} finally {
-							console.groupEnd();
-						}
-					}
+					let {command,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					this.GC_Button(command);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
 				} break;
 				case "style": {
 					if(!(k in x)) return;
@@ -1796,6 +1832,14 @@ class HandleTypes extends HandleTypesEval {
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
 					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+				} break;
+				case "isDisabled": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
 				} break;
 				case "text": {
 					if(!(k in x)) return;
@@ -1804,60 +1848,32 @@ class HandleTypes extends HandleTypesEval {
 					const {text,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					this.G_Text(text);
 				} break;
-				case "command": {
+				case "navigationEndpoint": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {command,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					this.GC_Button(command);
-				} break;
-				case "isDisabled": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+					const {isDisabled,size,style,navigationEndpoint,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
 				} break;
 				case "accessibility": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+					let {isDisabled,size,style,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+				} break;
+				case "accessibilityData": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {isDisabled,size,style,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
 				} break;
 				case "trackingParams": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
 					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
 				} break;
-				case "accessibilityData": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
-				} break;
-				case "serviceEndpoint": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
-				} break;
-				case "tooltip": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
-				} break;
-				case "targetId": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					const {targetId,...y}=x; y;
-					switch(targetId) {
-						case "clip-info-button": break;
-						default: this.codegen_case(`${cf1}.case`,targetId); this.do_codegen(cf1,x); break;
-					}
-					this.codegen_log_all(cf1,x);
-				}
 			}
 		}
 	}

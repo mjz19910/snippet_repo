@@ -2,6 +2,14 @@
 
 type D_Button=
 	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		navigationEndpoint: E_Watch;
+		accessibility: TD_Label<"Play next video">;
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Play next video">;
+	}|{
 		style: "STYLE_TEXT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
