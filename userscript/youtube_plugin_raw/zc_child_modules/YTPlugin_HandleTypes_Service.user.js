@@ -1194,24 +1194,41 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	log_url=false;
-	/** @private @arg {RS_Page_Browse} x */
-	RS_BrowsePage(x) {
-		const cf="R_BrowsePage";
-		if(!("rootVe" in x&&typeof x.rootVe==="number"&&"expirationTime" in x&&"previousCsn" in x)) {debugger; return;}
-		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=this.s(cf,x); this.g(y);
-		this.t(rootVe,x => {
-			if(typeof x!=="number") {debugger; return;}
-			this.save_number("R_BrowsePage.rootVe",x);
-		});
+	/** @private @arg {"RS_Page_Browse"} cf @template {RS_Page_Browse} T @arg {T} x */
+	RS_BrowsePage_Omit(cf,x) {
+		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.GE_Browse(endpoint);
 		if(page!=="browse") debugger;
 		this.RS_Browse(response);
-		this.t(expirationTime,x => this._primitive_of(x,"number"));
-		this.t(previousCsn,x => {
-			if(typeof x!=="string") {debugger; return;}
-			this._previousCsn(x);
-		});
+		return y;
+	}
+	/** @private @arg {RS_Page_Browse} x */
+	RS_Page_Browse(x) {
+		const cf="RS_Page_Browse";
+		if("rootVe" in x) {
+			const {rootVe,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+			this.t(rootVe,x => {
+				if(typeof x!=="number") {debugger; return;}
+				this.save_number(`${cf}.rootVe`,x);
+				debugger;
+			});
+			return;
+		}
+		if("expirationTime" in x) {
+			const {expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+			this.t(expirationTime,x => this._primitive_of(x,"number"));
+			return;
+		}
+		if("previousCsn" in x) {
+			const {previousCsn,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+			this.t(previousCsn,x => {
+				if(typeof x!=="string") {debugger; return;}
+				this._previousCsn(x);
+			});
+			return;
+		}
+		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
 	}
 	//#region Grouped Endpoints
 	// in this case, inferred (E_Page is a index accessed type)
@@ -2265,7 +2282,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
-			case "browse": return this.RS_BrowsePage(x);
+			case "browse": return this.RS_Page_Browse(x);
 			case "watch": return this.RS_WatchPage(x);
 			case "channel": return this.RS_ChannelPage(x);
 			case "playlist": return this.RS_PlaylistPage(x);

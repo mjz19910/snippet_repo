@@ -213,9 +213,15 @@ type RS_Page_Watch={
 };
 type RS_Page_Browse={
 	page: "browse";
-	url: string;
 	endpoint: GE_Browse;
 	response: RS_Browse;
+	url: "/";
+}|{
+	page: "browse";
+	endpoint: GE_Browse;
+	response: RS_Browse;
+	url: "/";
+	expirationTime: number;
 };
 type RS_Page_Channel={
 	page: "channel";
