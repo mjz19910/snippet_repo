@@ -2,6 +2,24 @@
 
 type D_Button=
 	|{
+		style: "STYLE_OPACITY";
+		size: "SIZE_DEFAULT";
+		icon: T_Icon<"EXPAND">;
+		accessibility: TD_Label<"Show more">;
+		tooltip: "Show more";
+		trackingParams: string;
+	}
+	|{
+		style: "STYLE_OPACITY";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		serviceEndpoint: E_Feedback;
+		icon: T_Icon<"DISMISSAL">;
+		tooltip: "Not interested";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Not interested">;
+	}
+	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;

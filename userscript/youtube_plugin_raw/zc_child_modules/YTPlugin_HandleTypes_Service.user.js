@@ -1763,7 +1763,7 @@ class HandleTypes extends HandleTypesEval {
 	expected_button_iconTypes=[
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
 		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
-		"CLOSE","MICROPHONE_ON",
+		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND",
 	];
 	expected_button_iconTypes_ex=[
 		"SETTINGS","DELETE","NOTIFICATIONS_ACTIVE",
@@ -1816,9 +1816,9 @@ class HandleTypes extends HandleTypesEval {
 			if(ss.length==1) throw new Error();
 			return ss[1].trim().slice(0,-1);
 		});
-		let all_types=all_ty_1.join("|");
+		let all_types=all_ty_1.reduce((p,c) => p+"|"+c+"\n","");
 		console.group(`-- [${cf}.gen_result] --`);
-		console.log(all_types);
+		console.log("\n%s",all_types);
 		console.groupEnd();
 	}
 	static {
@@ -1847,7 +1847,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Button_OnIcon(x) {
 		const cf="D_Button_OnIcon";
 		let ka=this.get_keys_of(x);
-		const {icon,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
+		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
 		if(missing) {
 			this.missing_expected_button_iconTypes.push(icon.iconType);
@@ -1873,7 +1873,7 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {isDisabled,size,style,accessibilityData,icon,tooltip,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					let {size,style,icon,tooltip,...y}=this.D_Button_Omit_TP(cf1,x); y;
 				} break;
 				case "targetId": {
 					if(!(k in x)) return;
