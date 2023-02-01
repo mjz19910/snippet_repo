@@ -1850,9 +1850,8 @@ class HandleTypes extends HandleTypesEval {
 		const {icon,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
 		if(missing) {
-			let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
-			if(missing_ex===false) return;
 			this.missing_expected_button_iconTypes.push(icon.iconType);
+			this.expected_button_iconTypes.push(icon.iconType);
 			let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
 			console.group("-- [D_Button.codegen] --");
 			try {
