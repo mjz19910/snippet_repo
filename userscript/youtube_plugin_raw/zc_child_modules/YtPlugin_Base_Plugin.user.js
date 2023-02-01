@@ -3215,7 +3215,7 @@ class YtHandlers extends BaseService {
 }
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class HandleRendererContentItemArray extends BaseService {
-	debug=false;
+	flag_log_debug=false;
 	/** @private @arg {R_RichItem} content_item */
 	filter_for_rich_item_renderer(content_item) {
 		let noisy_logging=this.x.get_param("noisy_logging");
@@ -3253,7 +3253,12 @@ class HandleRendererContentItemArray extends BaseService {
 			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
 			return true;
 		}
+		let t=rich_shelf.title;
+		if("runs" in t) {
+			if(t.runs[0].text==="Breaking news") return false;
+		}
 		console.log("rich shelf",rich_shelf);
+		debugger;
 		return true;
 	}
 	/** @api @public @template {R_BrowseFeed[]|G_WatchNext[]|G_CommentsSection[]|G_SectionItem[]} T @arg {T} arr @returns {T} */
