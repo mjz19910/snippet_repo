@@ -1733,7 +1733,6 @@ class HandleTypes extends HandleTypesEval {
 	missing_codegen_types=new Map;
 	/** @private @arg {string} cf @arg {{}} x */
 	codegen_log_all(cf,x) {
-		this.do_codegen;
 		let res=this.codegen_new_typedef(cf,x,true);
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
@@ -1813,7 +1812,7 @@ class HandleTypes extends HandleTypesEval {
 					const {targetId,accessibilityData,command,size,style,icon,isDisabled,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					switch(targetId) {
 						case "clip-info-button": break;
-						default: this.codegen_case(`${cf1}.case`,targetId); this.do_codegen(cf1,x); break;
+						default: this.codegen_case(`${cf1}.case`,targetId); this.codegen_log_all(cf1,x); break;
 					}
 					this.codegen_log_all(cf1,x);
 				}
@@ -1959,17 +1958,21 @@ class HandleTypes extends HandleTypesEval {
 		this.t(content,this.R_PlaylistPanel);
 		this.t(hack,x => {if(x!==true) debugger;});
 	}
+	/** @arg {G_RichGridContent} x */
+	D_RichGridContent(x) {
+		const cf="D_RichGridContent"; this.k(cf,x);
+		if("richItemRenderer" in x) return this.R_RichItem(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		this.codegen_log_all(cf,x);
+		x;
+	}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
-		this.z(contents,x => {
-			if("richItemRenderer" in x) return this.R_RichItem(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			debugger;
-		});
+		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
+		this.z(contents,this.D_RichGridContent);
 		this.R_FeedFilterChipBar(header);
 		this.trackingParams(cf,trackingParams);
-		if(targetId!=="browse-feedFEwhat_to_watch") debugger;
 		if(reflowOptions.minimumRowsOfVideosAtStart!==2) debugger;
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
@@ -2509,11 +2512,6 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
 		this.codegen_new_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
-	}
-	/** @private @arg {string} cf @arg {object} x */
-	do_codegen(cf,x) {
-		let u_name=this.get_codegen_name(x);
-		this.codegen_new_typedef(`${cf}$${u_name}`,x);
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
 	_decode_WCM(x) {
@@ -3419,7 +3417,7 @@ class HandleTypes extends HandleTypesEval {
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-		this.do_codegen("MenuItems",x);
+		this.codegen_log_all("MenuItems",x);
 		this.G_Text(x);
 	}
 	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["signalServiceEndpoint",T]} */
@@ -5214,7 +5212,7 @@ class HandleTypes extends HandleTypesEval {
 		if(cr.length!==0) debugger;
 		if(!cn) return null;
 		this.codegen_log_all(cf,x);
-		this.do_codegen(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
+		this.codegen_log_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
 	/** @private @arg {O_DU_Persistence} x */
@@ -5373,7 +5371,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
-		this.do_codegen(`${cf}.commandMetadata`,x);
+		this.codegen_log_all(`${cf}.commandMetadata`,x);
 		debugger;
 	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
@@ -5509,7 +5507,7 @@ class HandleTypes extends HandleTypesEval {
 	Response_alerts(cf,x) {
 		this.z(x,x => {
 			if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
-			this.do_codegen(`${cf}$alerts$iterate`,x);
+			this.codegen_log_all(`${cf}$alerts$iterate`,x);
 		});
 	}
 	/** @private @arg {RS_Settings} x */
@@ -7143,7 +7141,7 @@ class HandleTypes extends HandleTypesEval {
 		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
 		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
 		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
-		this.do_codegen(`ThumbnailOverlay$${cf}`,x);
+		this.codegen_log_all(`ThumbnailOverlay$${cf}`,x);
 		debugger;
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
