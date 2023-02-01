@@ -45,6 +45,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
+		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Accessibility";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
@@ -82,7 +83,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
@@ -637,7 +637,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_CanShare";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistByline";}

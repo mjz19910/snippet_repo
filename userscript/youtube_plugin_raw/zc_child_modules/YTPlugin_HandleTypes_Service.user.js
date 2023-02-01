@@ -1336,25 +1336,25 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_Empty_WCM("M_GetTranscript",a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("M_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_Empty_WCM("DE_WatchPlaylist",a); this.DE_WatchPlaylist(b);}
+	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_Empty_WCM("M_WatchPlaylist",a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.M_Empty_WCM("DC_PlaylistEditor",a);}
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.M_VE83769(a);}
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {E_ShareEntityService} x */
-	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.DE_ShareEntityService(b); this.M_GetSharePanel(a);}
+	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.DE_GetReportForm(b); this.M_FlagGetForm(a);}
+	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
 	/** @private @arg {T_SE_Signal<M_SendPost, G_ClientSignal>} x */
 	E_SE_Signal_Button(x) {let [a,b]=this.T_SE_Signal("E_SE_Signal_Button",x); this.M_SendPost(a); this.G_ClientSignal(b);}
 	/** @protected @arg {E_AddToPlaylistService} x */
@@ -1365,8 +1365,6 @@ class HandleTypes extends HandleTypesEval {
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @protected @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
-	/** @protected @arg {DE_YpcGetOfflineUpsell} x */
-	DE_YpcGetOfflineUpsell(x) {this.y("DE_YpcGetOfflineUpsell","params",x,x => this.params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x));}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
@@ -1395,6 +1393,8 @@ class HandleTypes extends HandleTypesEval {
 	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
+	/** @protected @arg {DE_YpcGetOfflineUpsell} x */
+	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,(x,cf) => this.params(cf,"ypc_get_offline_upsell",x));}
 	/** @protected @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
 	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */

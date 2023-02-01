@@ -38,7 +38,7 @@ type P_PathRootStr=
 	|"watch.params"
 	|"watch.player_params"
 	|"ypc_get_offers.params"
-	|"ypc_get_offline_upsell.params"
+	|"ypc_get_offline_upsell"
 	|"YpcGetCart.transactionParams"
 	;
 ;

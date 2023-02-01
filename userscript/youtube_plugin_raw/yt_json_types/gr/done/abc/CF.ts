@@ -26,6 +26,7 @@ type CF_L_params_no_gen=
 	|"DE_GetTranscript"
 	|"DE_YpcGetOffers.params"
 	|"D_TemplateUpdate"
+	|"DE_YpcGetOfflineUpsell"
 	;
 ;
 type CF_L_Params=
