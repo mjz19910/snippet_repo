@@ -53,7 +53,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ReloadContinuationItems";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ShowReloadUi";}
-		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_UpdateToggleButtonState";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "EA_ChangeEngagementPanelVisibility";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "ES_ShareEntity";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "E_SetSettingAutonavForDesktop";}
@@ -236,7 +235,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ReloadContinuationItems";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ShowReloadUi";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_UpdateToggleButtonState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CacheMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CommentRepliesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DAU_SubscribeButton";}
@@ -667,6 +665,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RelatedChip";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RepeatChapter";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_ResetChannelUnreadCount";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_UpdateToggleButtonState";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_ShowEngagementPanel";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "ES_CreatePlaylist";}
