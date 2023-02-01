@@ -3113,7 +3113,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.listType) {
 			default: break;
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
-				const {listType: {},onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+				const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 				this.SE_CreatePlaylist(onCreateListCommand);
 				this.t(openListPanel,this.a_primitive_bool);
 				this.z([openMiniplayer],this.a_primitive_bool);
@@ -3133,9 +3133,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x.listType) {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
-				const {listType: {},onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+				const {openMiniplayer,videoId,listType,onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 				this.SE_CreatePlaylist(onCreateListCommand);
-				this.z([openListPanel,openMiniplayer],this.a_primitive_bool);
+				if(openListPanel!==void 0) debugger;
+				this.t(openListPanel,this.a_primitive_bool);
+				this.a_primitive_bool(openMiniplayer);
 				this.videoId(videoId);
 				this.z(videoIds,this.videoId);
 			}
