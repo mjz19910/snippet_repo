@@ -1693,14 +1693,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	missing_expected_button_iconTypes=[];
-	/** @private @private @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
-	D_Button_Omit_TP(cf,x) {
-		let {trackingParams,...y}=this.s(cf,x);
-		this.trackingParams(cf,trackingParams);
-		/** @type {any} */
-		let z=y;
-		return z;
-	}
+	/** @private @private @arg {any} z @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
+	D_Button_Omit_TP(cf,x,dc=true,z=null) {if(dc) {const {trackingParams,...y}=this.s(cf,x); z=y;} else {const {trackingParams,...y}=x; this.trackingParams(cf,trackingParams); z=y;} return z;}
 	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x) {
 		let k=`${cf}:${k_arg}`;
@@ -1762,7 +1756,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Button_OnIcon";
 		let ka=this.get_keys_of(x);
 		this.codegen_log_all(cf,x);
-		const {icon,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf,x); y;
+		const {icon,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
 		if(missing) {
 			let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
@@ -3121,7 +3115,8 @@ class HandleTypes extends HandleTypesEval {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
 				const {listType: {},onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 				this.SE_CreatePlaylist(onCreateListCommand);
-				this.z([openListPanel,openMiniplayer],this.a_primitive_bool);
+				this.t(openListPanel,this.a_primitive_bool);
+				this.z([openMiniplayer],this.a_primitive_bool);
 				this.videoId(videoId);
 				this.z(videoIds,this.videoId);
 			}/*End*/
@@ -3146,7 +3141,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {SE_CreatePlaylist} x */
+	/** @private @arg {E_CreatePlaylistService} x */
 	SE_CreatePlaylist(x) {
 		const cf="ES_CreatePlaylist"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x);
 		this.DS_CreatePlaylist(b);

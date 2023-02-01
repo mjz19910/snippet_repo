@@ -24,7 +24,7 @@ type D_AddToPlaylistCreate={
 	nameInput: R_TextInputFormField;
 	privacyInput: R_Dropdown;
 	createAction: R_Button;
-	serviceEndpoint: SE_CreatePlaylist;
+	serviceEndpoint: E_CreatePlaylistService;
 };
 //#region Icons
 type D_Icon_Button=T_Icon<DE_IconType_Button>;
