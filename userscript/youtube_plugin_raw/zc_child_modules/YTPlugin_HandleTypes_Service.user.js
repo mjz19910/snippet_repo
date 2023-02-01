@@ -1100,7 +1100,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {R_SourcePivotHeader} x */
 	R_SourcePivotHeader(x) {this.H_("R_SourcePivotHeader","sourcePivotHeaderRenderer",x,this.D_SourcePivotHeader);}
 	/** @arg {D_RichSection} x */
-	D_RichSection(x) {this.y("D_RichSection","content",x,this.G_RichSection);}
+	D_RichSection(x) {
+		const cf="D_RichSection";
+		const {content: a,trackingParams: b,fullBleed,...y}=x; this.g(y);
+		this.G_RichSection(a);
+		this.trackingParams(cf,b);
+		if(fullBleed!==false) debugger;
+	}
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
 		const cf="G_RichSection";

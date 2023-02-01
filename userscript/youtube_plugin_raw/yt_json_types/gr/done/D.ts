@@ -330,7 +330,11 @@ type D_NotificationTopbarButton={
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };
-type D_RichSection={content: G_RichSection;};
+type D_RichSection={
+	content: G_RichSection;
+	trackingParams: string;
+	fullBleed: false;
+};
 type D_RichShelf={icon: T_Icon<"YOUTUBE_SHORTS_BRAND_24">; title: G_Text;};
 type D_InlineSurvey={
 	dismissalEndpoint: {};
