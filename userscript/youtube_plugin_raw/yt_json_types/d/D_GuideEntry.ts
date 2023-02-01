@@ -1,4 +1,10 @@
 type D_GuideEntry=
+	|{
+		icon: T_Icon<"EXPAND">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Show more">;
+	}
 	|D_GuideEntry_HelpService
 	|D_GuideEntry_MyVideosTab
 	|D_GuideEntry_OfflineDownloadEntry

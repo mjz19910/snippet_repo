@@ -552,7 +552,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
 				/** @private @arg {GM_WC} x */
-				let typedef_str=this.codegen_new_typedef(`G_${url_type_ex}`,x,true);
+				let typedef_str=this.codegen.codegen_typedef(`G_${url_type_ex}`,x,true);
 				const l1="-- [GeneratedWebCommandMetadata] --";
 				const r2="return this.GeneratedWebCommandMetadata(x);";
 				console.log(`\n${l1}\n\n${typedef_str}\n---\n\n\tG_${url_type_ex},\n---\n\n\tcase "${cx}": ${r2}`);
@@ -1805,7 +1805,7 @@ class HandleTypes extends HandleTypesEval {
 	missing_codegen_types=new Map;
 	/** @private @arg {string} cf @arg {{}} x */
 	codegen_typedef_all(cf,x) {
-		let res=this.codegen_new_typedef(cf,x,true);
+		let res=this.codegen.codegen_typedef(cf,x,true);
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
 		if(ci&&ci.includes(res)) return;
@@ -2601,7 +2601,7 @@ class HandleTypes extends HandleTypesEval {
 			console.group(...gca);
 		}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
-		this.codegen_new_typedef(`${cf}$${u_name}`,x);
+		this.codegen.codegen_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
@@ -4887,19 +4887,23 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure*/
-		this.D_Accessibility(accessibility);
-		this.G_Text(formattedTitle);
-		{
-			let x=icon.iconType;
-			switch(x) {
-				default: this.codegen_case(`${cf}.icon`,x); break;
+		if("serviceEndpoint" in x) {
+			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+			this.D_Accessibility(accessibility);
+			this.G_Text(formattedTitle);
+			{
+				let x=icon.iconType;
+				switch(x) {
+					default: this.codegen_case(`${cf}.icon`,x); break;
+				}
 			}
+			let [cm,se_des]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
+			this.M_Empty_WCM(`${cf}.SE_Signal.web_meta`,cm);
+			this.g(se_des);
+			this.trackingParams(cf,trackingParams);
+			return;
 		}
-		let [cm,se_des]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
-		this.M_Empty_WCM(`${cf}.SE_Signal.web_meta`,cm);
-		this.g(se_des);
-		this.trackingParams(cf,trackingParams);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
@@ -5497,7 +5501,7 @@ class HandleTypes extends HandleTypesEval {
 	buttonState_buttonId(x) {
 		const cf="buttonState_buttonId";
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",x);
-		let ret=this.codegen_new_typedef("buttonState_buttonId",{button_id: x},true);
+		let ret=this.codegen.codegen_typedef("buttonState_buttonId",{button_id: x},true);
 		if(ret) {
 			this.save_string(`[${cf}]`,ret);
 		}
@@ -5553,7 +5557,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AD_ChangeEngagementPanelVisibility";
 		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);
 		switch(targetId) {
-			default: targetId===""; this.codegen_new_typedef("AD_ChangeEngagementPanelVisibility_id",x); break;
+			default: targetId===""; this.codegen_case(`${cf}.targetId`,targetId); break;
 			case "engagement-panel-clip-create": break;
 			case "engagement-panel-clip-view": break;
 			case "engagement-panel-comments-section": break;
@@ -5562,7 +5566,7 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-macro-markers-description-chapters": break;
 		}
 		switch(visibility) {
-			default: this.codegen_new_typedef("ChangeEngagementPanelVisibilityActionData_vis",x); break;
+			default: this.codegen_case(`${cf}.visibility`,visibility); break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED": break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
@@ -7306,14 +7310,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
 	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
-	/** @arg {string} cf @arg {object} x */
-	cfl(cf,x) {
-		this.k(cf,x);
-		let ka=this.get_keys_of(x).join(); ka;
-		console.log(`[gen_new_info.${cf}]`,x);
-		this.codegen_new_typedef(cf,x);
-		debugger;
-	}
 	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
 	D_ThumbnailOverlayTimeStatus(x) {
 		const cf="D_ThumbnailOverlayTimeStatus";

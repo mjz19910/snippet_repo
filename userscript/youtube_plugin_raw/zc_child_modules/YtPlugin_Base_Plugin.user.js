@@ -4210,10 +4210,6 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
-	/** @protected @arg {string} cf @arg {object} x @arg {boolean} [ret_val] */
-	codegen_new_typedef(cf,x,ret_val) {
-		return this.codegen.codegen_typedef(cf,x,ret_val);
-	}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {
 		return this.str_starts_with_rx(needle,str);
