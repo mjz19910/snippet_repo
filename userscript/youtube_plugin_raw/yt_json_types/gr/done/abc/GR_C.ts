@@ -2,7 +2,25 @@
 type C_AddToPlaylist=TE_Endpoint_2<"addToPlaylistCommand",DC_AddToPlaylist>;
 type C_AdsControlFlowOpportunityReceived=TE_Endpoint_2<"adsControlFlowOpportunityReceivedCommand",DC_AdsControlFlowOpportunityReceived>;
 type C_ChangeKeyedMarkersVisibility=TE_Endpoint_2<"changeKeyedMarkersVisibilityCommand",DC_ChangeKeyedMarkersVisibility>;
-type C_Continuation=TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation,M_Next>;
+type C_Continuation=
+	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_WatchNext,M_Next>
+	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_ReelWatchSeq,M_Empty_WCM>
+	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Empty_WCM>
+	;
+;
+type DC_Continuation_ReelWatchSeq={
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
+};
+type DC_Continuation_Browse={
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
+	command: C_ShowReloadUi;
+};
+type DC_Continuation_WatchNext={
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
+};
 type C_Executor=TE_Endpoint_2<"commandExecutorCommand",DC_Executor>;
 type C_FollowUp=TE_Endpoint_2<"addFollowUpSurveyCommand",DC_AddFollowUpSurvey>;
 type C_GetSurvey=TE_Endpoint_3<"getSurveyCommand",DC_GetSurvey,MG_Survey_CMD>;

@@ -1,5 +1,5 @@
 //#region Common data
-type DE_Empty_WCM={webCommandMetadata: {};};
+type M_Empty_WCM={webCommandMetadata: {};};
 type DC_Params={params: string;};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 //#endregion
@@ -32,6 +32,10 @@ type DC_ChangeKeyedMarkersVisibility={
 	isVisible: true;
 	key: "HEATSEEKER";
 };
+type DC_Continuation_Shape={
+	token:string;
+	request: DC_Continuation["request"];
+}
 type DC_Continuation={
 	token: string;
 	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";

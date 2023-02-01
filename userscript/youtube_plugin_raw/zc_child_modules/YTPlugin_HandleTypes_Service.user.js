@@ -147,6 +147,8 @@ ECatcherService.known_experiments.push(...[
 	[24455878],
 	[24281897,24448383,24458839],
 ].flat());
+/** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
+function as_any(e,x=e) {return x;}
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -1593,7 +1595,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {string} cf @arg {DE_Empty_WCM} x */
+	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	DE_Empty_WCM(cf,x) {
 		this.codegen_log_all(cf,x);
 	}
@@ -2217,17 +2219,20 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
-		if(!x) {debugger; return;}
-		const cf="C_Continuation";
-		// x => this.y(cf,x,"webCommandMetadata",this.GM_Next)
-		if(x.commandMetadata) {
-			this.GM_Next(x.commandMetadata.webCommandMetadata);
+		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
+		function is_m_next(x) {
+			return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";
 		}
-		this.DC_Continuation(x.continuationCommand);
-		const [a,b,y]=this.TE_Endpoint_Opt_3(cf,"continuationCommand",x); this.g(y);
-		a;
-		b;
+		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+		x: {
+			if(!a) break x;
+			if(!is_m_next(a)) break x;
+			this.M_Next(a);
+		}
+		this.DC_Continuation(b);
 	}
+	/** @private @arg {M_Next} x */
+	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {
 		const cf="GM_Next";
@@ -2239,12 +2244,12 @@ class HandleTypes extends HandleTypesEval {
 	DC_Continuation(x) {
 		if("continuationCommand" in x) debugger;
 		const cf="DC_Continuation";
-		if("command" in x) {
-			const {command: x1,...b}=this.DC_Continuation_Omit(cf,x); this.g(b);
-			this.C_ShowReloadUi(x1);
-			return;
+		switch(x.request) {
+			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": return this.g(this.DC_Continuation_Omit(cf,x));
 		}
-		this.g(this.DC_Continuation_Omit(cf,x));
 	}
 	/** @private @arg {D_Color} x */
 	D_Color(x) {

@@ -612,6 +612,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEnclosing";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "B_HrefUrl";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Reload";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
@@ -711,6 +712,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetSharePanel";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Like";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Next";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_RecordInteractions";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SendPost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SetSetting";}

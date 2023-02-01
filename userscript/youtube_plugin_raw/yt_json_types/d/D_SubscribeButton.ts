@@ -19,7 +19,7 @@ type D_SubscribeButton_Alts={
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
 	onSubscribeEndpoints: E_Subscribe[];
-	onUnsubscribeEndpoints: T_SE_Signal<DE_Empty_WCM,{}>[];
+	onUnsubscribeEndpoints: T_SE_Signal<M_Empty_WCM,{}>[];
 }|{
 	buttonText: G_Text;
 	subscribed: boolean;
