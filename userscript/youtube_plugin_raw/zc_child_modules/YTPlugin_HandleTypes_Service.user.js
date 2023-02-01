@@ -997,12 +997,8 @@ class HandleTypes extends HandleTypesEval {
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
 	/** @arg {C_Innertube} x */
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
-	/** @private @arg {C_RefreshPlaylist} e */
-	C_RefreshPlaylist(e) {
-		let [r,r2]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",e);
-		this.D_RefreshPlaylist(r);
-		this.g(r2);
-	}
+	/** @private @arg {C_RefreshPlaylist} x */
+	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.D_RefreshPlaylist(a);}
 	/** @arg {C_Innertube['innertubeCommand']} x */
 	G_Innertube(x) {
 		const cf="G_Innertube";
@@ -7498,9 +7494,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RichShelf} x */
 	D_RichShelf(x) {
 		const cf="D_RichShelf";
-		const {icon,title,...y}=this.s(cf,x); this.g(y);
-		if(icon.iconType!=="YOUTUBE_SHORTS_BRAND_24") debugger;
+		/** @type {T_UnionToPartial<D_RichShelf>} */
+		let pt=x;
+		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
+		if(icon&&icon.iconType!=="YOUTUBE_SHORTS_BRAND_24") debugger;
 		this.G_Text(title);
+		this.z(contents,this.R_RichItem);
+		this.trackingParams(cf,trackingParams);
+		this.R_Menu(menu);
+		this.R_Button(showMoreButton);
+		if(rowIndex!==2) debugger;
 	}
 	/** @arg {D_ProfilePageHeaderTitle_Content} x */
 	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,this.a_primitive_str);}

@@ -335,7 +335,15 @@ type D_RichSection={
 	trackingParams: string;
 	fullBleed: false;
 };
-type D_RichShelf={icon: T_Icon<"YOUTUBE_SHORTS_BRAND_24">; title: G_Text;};
+type D_RichShelf={
+	icon?: T_Icon<"YOUTUBE_SHORTS_BRAND_24">;
+	title: G_Text;
+	contents: R_RichItem[];
+	trackingParams: string;
+	menu: R_Menu;
+	showMoreButton: R_Button;
+	rowIndex: 2;
+};
 type D_InlineSurvey={
 	dismissalEndpoint: {};
 	title: G_Text;
