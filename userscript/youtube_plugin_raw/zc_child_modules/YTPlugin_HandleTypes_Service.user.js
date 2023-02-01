@@ -4840,6 +4840,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
+		if("targetId" in x) {
+			return;
+		}
 		if("entryData" in x) {
 			if("icon" in x) {
 				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);

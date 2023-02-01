@@ -207,6 +207,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_GetLiveChat";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Guide";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Next";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Playlist";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Reel";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_ReelWatchSequence";}
@@ -215,7 +216,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Subscribe";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Watch";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_Generic";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_2_CommentsEntryPoint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_3";}
@@ -580,6 +580,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Guide";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Next";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Browse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Player";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Playlist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Reel";}
@@ -599,7 +600,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_Generic";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_GetAccountMenu";}
