@@ -1211,8 +1211,8 @@ class HandleTypes extends HandleTypesEval {
 			this.t(rootVe,x => {
 				if(typeof x!=="number") {debugger; return;}
 				this.save_number(`${cf}.rootVe`,x);
-				debugger;
 			});
+			debugger;
 			return;
 		}
 		if("expirationTime" in x) {
@@ -1226,6 +1226,7 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof x!=="string") {debugger; return;}
 				this._previousCsn(x);
 			});
+			debugger;
 			return;
 		}
 		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
