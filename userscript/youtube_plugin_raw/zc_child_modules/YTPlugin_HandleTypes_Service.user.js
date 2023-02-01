@@ -1091,6 +1091,24 @@ class HandleTypes extends HandleTypesEval {
 	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem","macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
+	/** @arg {R_RichSection} x */
+	R_RichSection(x) {this.H_("R_RichSection","richSectionRenderer",x,this.D_RichSection);}
+	/** @arg {R_RichShelf} x */
+	R_RichShelf(x) {this.H_("R_RichShelf","richShelfRenderer",x,this.D_RichShelf);}
+	/** @arg {R_InlineSurvey} x */
+	R_InlineSurvey(x) {this.H_("R_InlineSurvey","inlineSurveyRenderer",x,this.D_InlineSurvey);}
+	/** @arg {R_SourcePivotHeader} x */
+	R_SourcePivotHeader(x) {this.H_("R_SourcePivotHeader","sourcePivotHeaderRenderer",x,this.D_SourcePivotHeader);}
+	/** @arg {D_RichSection} x */
+	D_RichSection(x) {this.y("D_RichSection","content",x,this.G_RichSection);}
+	/** @arg {G_RichSection} x */
+	G_RichSection(x) {
+		const cf="G_RichSection";
+		if("richShelfRenderer" in x) return this.R_RichShelf(x);
+		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
+		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
+		this.codegen_log_all(cf,x);
+	}
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
@@ -1966,8 +1984,6 @@ class HandleTypes extends HandleTypesEval {
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
 		this.codegen_log_all(cf,x);
 	}
-	/** @arg {R_RichSection} x */
-	R_RichSection(x) {x;}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
@@ -7447,6 +7463,12 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(accountByline);
 		this.G_Text(channelHandle);
 	}
+	/** @arg {D_InlineSurvey} x */
+	D_InlineSurvey(x) {x; debugger;}
+	/** @arg {D_RichShelf} x */
+	D_RichShelf(x) {x; debugger;}
+	/** @arg {D_SourcePivotHeader} x */
+	D_SourcePivotHeader(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

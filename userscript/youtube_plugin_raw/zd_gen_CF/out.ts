@@ -620,6 +620,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistByline";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RelatedChipCloud";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RichSection";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
