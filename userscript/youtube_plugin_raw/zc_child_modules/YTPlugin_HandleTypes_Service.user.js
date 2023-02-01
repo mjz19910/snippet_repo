@@ -3964,7 +3964,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout";
-		const {layoutId,...y}=this.s(cf,x);_later
+		const {layoutId,...y}=this.s(cf,x);
 		let ba_id=base64_dec.decodeByteArray(layoutId);
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
 		this.D_AdLayout_TypeStr(y.layoutType);
