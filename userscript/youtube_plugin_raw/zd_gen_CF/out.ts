@@ -72,6 +72,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
@@ -90,6 +91,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_LiveChat";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_SectionList_SearchFeed";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DMD_Badge";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DMD_RowContainer";}
@@ -119,6 +121,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Hint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HorizontalCardList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HotkeyDialog";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LikeButton.rest";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MacroMarkersList";}
@@ -149,9 +152,12 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichGrid";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichItem";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichListHeader";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SearchBox";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SectionList_BrowseFeed_Subscriptions";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SortFilterSubMenu";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SourcePivotHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SubFeedOption";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SubFeedSelector";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SubscribeButton";}
@@ -315,6 +321,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelSectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelTitleHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EntityBatchUpdate";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableSurveyResponse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableTab";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableVideoDescriptionBody";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Factoid";}
@@ -341,6 +348,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSectionOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.dislike";}
@@ -404,6 +412,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProductListItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfileColumnStatsEntry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfileColumnUserInfo";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfilePageHeaderInformation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelWatch";}
@@ -412,6 +421,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichGrid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichListHeader";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RunAttestation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SearchBox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SectionList_BrowseFeed_Subscriptions";}
@@ -422,6 +432,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ShowEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SimpleMenuHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SortFilterSubMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SourcePivotHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubFeedOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubFeedSelector";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton";}
@@ -616,11 +627,13 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_CanShare";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistByline";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle_Content";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RelatedChipCloud";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RichSection";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
@@ -655,6 +668,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RelatedChip";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RepeatChapter";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_ShowEngagementPanel";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "ES_CreatePlaylist";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_AddToPlaylistService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Browse";}

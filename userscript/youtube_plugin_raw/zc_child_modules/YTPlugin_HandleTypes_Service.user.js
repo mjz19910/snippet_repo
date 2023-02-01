@@ -311,7 +311,7 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	D_TextRun(x,f_run) {
@@ -646,7 +646,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		x===0;
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {GM_VE3854_WC} x */
 	GM_VE3854_WC(x) {
@@ -995,6 +995,14 @@ class HandleTypes extends HandleTypesEval {
 	AU_SubscribeButton(x) {this.H_("AU_SubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
+	/** @arg {C_Innertube} x */
+	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
+	/** @arg {C_Innertube['innertubeCommand']} x */
+	G_Innertube(x) {
+		const cf="G_Innertube";
+		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {R_VideoDescriptionMusicSection} x */
 	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection","videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
 	/** @private @arg {R_VideoDescriptionHeader} x */
@@ -1099,6 +1107,10 @@ class HandleTypes extends HandleTypesEval {
 	R_InlineSurvey(x) {this.H_("R_InlineSurvey","inlineSurveyRenderer",x,this.D_InlineSurvey);}
 	/** @arg {R_SourcePivotHeader} x */
 	R_SourcePivotHeader(x) {this.H_("R_SourcePivotHeader","sourcePivotHeaderRenderer",x,this.D_SourcePivotHeader);}
+	/** @arg {R_ProfilePageHeaderInformationViewModel} x */
+	R_ProfilePageHeaderInformationViewModel(x) {this.H_("R_ProfilePageHeaderInformationViewModel","profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
+	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
+	R_ProfilePageHeaderTitleViewModel(x) {this.H_("R_ProfilePageHeaderTitleViewModel","profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection";
@@ -1113,7 +1125,7 @@ class HandleTypes extends HandleTypesEval {
 		if("richShelfRenderer" in x) return this.R_RichShelf(x);
 		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
 		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
@@ -1265,7 +1277,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_Page";
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
@@ -1320,6 +1332,10 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @protected @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
+	/** @protected @arg {E_YpcGetOfflineUpsell} x */
+	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
+	/** @protected @arg {DE_YpcGetOfflineUpsell} x */
+	DE_YpcGetOfflineUpsell(x) {this.y("DE_YpcGetOfflineUpsell","params",x,x => this.params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x));}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
@@ -1586,14 +1602,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Browse_MD";
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar";
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
@@ -1622,7 +1638,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	DE_Empty_WCM(cf,x) {
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
@@ -1676,7 +1692,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_PlaylistSidebarItem";
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -1756,7 +1772,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @private @arg {string} cf @arg {{}} x */
-	codegen_log_all(cf,x) {
+	codegen_typedef_all(cf,x) {
 		let res=this.codegen_new_typedef(cf,x,true);
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
@@ -1782,7 +1798,7 @@ class HandleTypes extends HandleTypesEval {
 		if("signalServiceEndpoint" in x) return this.E_SE_Signal_Button(x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		this.codegen_log_all(cf,x); x==="";
+		this.codegen_typedef_all(cf,x); x==="";
 	}
 	static {
 		this.prototype.Button_navigationEndpoint;
@@ -1793,13 +1809,13 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_OnIcon(x) {
 		const cf="D_Button_OnIcon";
 		let ka=this.get_keys_of(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		const {icon,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
 		if(missing) {
@@ -1810,7 +1826,7 @@ class HandleTypes extends HandleTypesEval {
 			console.group("-- [D_Button.codegen] --");
 			try {
 				console.log("-- [D_Button.icon] --",arr_items);
-				this.codegen_log_all(cf,x);
+				this.codegen_typedef_all(cf,x);
 			} finally {
 				console.groupEnd();
 			}
@@ -1836,9 +1852,9 @@ class HandleTypes extends HandleTypesEval {
 					const {targetId,accessibilityData,command,size,style,icon,isDisabled,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					switch(targetId) {
 						case "clip-info-button": break;
-						default: this.codegen_case(`${cf1}.case`,targetId); this.codegen_log_all(cf1,x); break;
+						default: this.codegen_case(`${cf1}.case`,targetId); this.codegen_typedef_all(cf1,x); break;
 					}
-					this.codegen_log_all(cf1,x);
+					this.codegen_typedef_all(cf1,x);
 				}
 			}
 		}
@@ -1928,13 +1944,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RG_Result";
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
 		const cf="D_Tab_subscriptionsEndpoint";
 		switch(x.commandMetadata.webCommandMetadata.rootVe) {
-			default: this.codegen_log_all(cf,x); debugger; break;
+			default: this.codegen_typedef_all(cf,x); debugger; break;
 			case 96368: break;
 		}
 		this.GE_Browse(x);
@@ -1988,7 +2004,7 @@ class HandleTypes extends HandleTypesEval {
 		if("richItemRenderer" in x) return this.R_RichItem(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
@@ -2032,13 +2048,13 @@ class HandleTypes extends HandleTypesEval {
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
 		const cf="D_VideoLike_richThumbnail";
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
@@ -2174,7 +2190,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="DC_CommandExecutor.command";
 			if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 			if("likeEndpoint" in x) return this.E_Like(x);
-			this.codegen_log_all(cf,x);
+			this.codegen_typedef_all(cf,x);
 			debugger;
 		});
 	}
@@ -2237,13 +2253,13 @@ class HandleTypes extends HandleTypesEval {
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint";
 		if("browseEndpoint" in x) return this.GE_Browse(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
 		const cf="D_Video_inlinePlaybackEndpoint";
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
@@ -2326,7 +2342,7 @@ class HandleTypes extends HandleTypesEval {
 			default: break;
 		}
 		console.log("pt",x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
@@ -2521,7 +2537,7 @@ class HandleTypes extends HandleTypesEval {
 			if("hack" in x.watch&&x.watch.hack===true) return;
 			debugger;
 		}
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
@@ -2793,7 +2809,7 @@ class HandleTypes extends HandleTypesEval {
 			this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 			return;
 		}
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
@@ -2884,14 +2900,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_MP_MenuNotificationSection_Item";
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
 		const cf="D_NotificationMenu_Popup_SectionItem";
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		return null;
 	}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
@@ -2913,14 +2929,14 @@ class HandleTypes extends HandleTypesEval {
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup";
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);
-		if(a!=="DROPDOWN") {this.codegen_log_all(cf,x); return null;}
+		if(a!=="DROPDOWN") {this.codegen_typedef_all(cf,x); return null;}
 		return b;
 	}
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action";
 		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		return null;
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
@@ -2962,7 +2978,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_NextContents";
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		x===0;
 	}
 	/** @private @arg {RC_MainAppWebResponseContext} x */
@@ -3087,8 +3103,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="S_Client_HandlePopup";
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
@@ -3173,7 +3189,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
 			let known=this.DC_AddToPlaylist_listTypes;
 			this.DC_AddToPlaylist_listTypes.push(x.listType);
-			this.codegen_log_all(cf,x);
+			this.codegen_typedef_all(cf,x);
 			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
 			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
 			debugger;
@@ -3382,7 +3398,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_WatchNextEndScreenItem";
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
@@ -3411,7 +3427,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="D_Menu_Button";
 			if("buttonRenderer" in x) return this.R_Button(x);
 			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-			this.codegen_log_all(cf,x);
+			this.codegen_typedef_all(cf,x);
 		});
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
@@ -3441,7 +3457,7 @@ class HandleTypes extends HandleTypesEval {
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-		this.codegen_log_all("MenuItems",x);
+		this.codegen_typedef_all("MenuItems",x);
 		this.G_Text(x);
 	}
 	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["signalServiceEndpoint",T]} */
@@ -3466,9 +3482,9 @@ class HandleTypes extends HandleTypesEval {
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("" in x) return;
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		x==="";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf */
 	codegen_all_service_menu_icons(cf) {
@@ -3732,8 +3748,8 @@ class HandleTypes extends HandleTypesEval {
 	TD_ItemSection_3_I_1(x) {
 		const cf="TR_ItemSection_3_I_1";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y); return a;}
@@ -4104,14 +4120,14 @@ class HandleTypes extends HandleTypesEval {
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_Watch_AnyResultItem} x */
 	G_Watch_AnyResultItem(x) {
 		const cf="G_SecondaryContentsItem";
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		return null;
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
@@ -4125,7 +4141,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Watch_SecondaryResults";
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -4227,7 +4243,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -4308,8 +4324,8 @@ class HandleTypes extends HandleTypesEval {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		this.codegen_log_all(cf,x); x==="";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x); x==="";
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {
@@ -4626,8 +4642,8 @@ class HandleTypes extends HandleTypesEval {
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		this.codegen_log_all(cf,x); x==="";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x); x==="";
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
@@ -4758,7 +4774,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,[]);
 		if(is_not_in_set) {
-			this.codegen_log_all(cf,x);
+			this.codegen_typedef_all(cf,x);
 		}
 		{
 			let x=navigationEndpoint;
@@ -4775,7 +4791,7 @@ class HandleTypes extends HandleTypesEval {
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.GE_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: icon===""; this.codegen_log_all(cf,x); break;
+					default: icon===""; this.codegen_typedef_all(cf,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
 				}
 				return this.R_GuideEntryData(entryData);
@@ -4841,8 +4857,8 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		this.codegen_log_all(cf,x); x==="";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x); x==="";
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
@@ -4990,8 +5006,8 @@ class HandleTypes extends HandleTypesEval {
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
@@ -5022,16 +5038,16 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_BrowseContents";
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
 		const cf="A_ResponseReceived";
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	static {
 		this.prototype.MC_ResolveUrl;
@@ -5113,8 +5129,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ElementUpdate";
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
@@ -5235,8 +5251,8 @@ class HandleTypes extends HandleTypesEval {
 		let [cn,...cr]=kl;
 		if(cr.length!==0) debugger;
 		if(!cn) return null;
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
 	/** @private @arg {O_DU_Persistence} x */
@@ -5250,8 +5266,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_TopbarButtonItem";
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -5305,16 +5321,16 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_SecondaryContents";
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
 		const cf="G_WatchNext";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {E_ShareEntityService} x */
 	ES_ShareEntity(x) {
@@ -5360,8 +5376,8 @@ class HandleTypes extends HandleTypesEval {
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
@@ -5390,12 +5406,12 @@ class HandleTypes extends HandleTypesEval {
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
-		this.codegen_log_all(`${cf}.commandMetadata`,x);
+		this.codegen_typedef_all(`${cf}.commandMetadata`,x);
 		debugger;
 	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
@@ -5531,7 +5547,7 @@ class HandleTypes extends HandleTypesEval {
 	Response_alerts(cf,x) {
 		this.z(x,x => {
 			if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
-			this.codegen_log_all(`${cf}$alerts$iterate`,x);
+			this.codegen_typedef_all(`${cf}$alerts$iterate`,x);
 		});
 	}
 	/** @private @arg {RS_Settings} x */
@@ -5600,8 +5616,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ChipCloudChip_navigationEndpoint";
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
@@ -5686,11 +5702,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {
-		const cf="C_ResetChannelUnreadCount";
-		const {clickTrackingParams,resetChannelUnreadCountCommand,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(clickTrackingParams);
-		this.g(resetChannelUnreadCountCommand);
+		let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);
 	}
+	/** @private @arg {DC_ResetChannelUnreadCount} x */
+	DC_ResetChannelUnreadCount(x) {x;}
+	/** @private @arg {C_RepeatChapter} x */
+	C_RepeatChapter(x) {this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x);}
+	/** @arg {C_FollowUp} x */
+	C_FollowUp(x) {x;}
 	/** @private @arg {D_CinematicContainer} x */
 	D_CinematicContainer(x) {
 		const cf="D_CinematicContainer";
@@ -5795,8 +5814,8 @@ class HandleTypes extends HandleTypesEval {
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
@@ -5814,8 +5833,8 @@ class HandleTypes extends HandleTypesEval {
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
 	D_LikeButton_Like(x) {
@@ -5888,7 +5907,7 @@ class HandleTypes extends HandleTypesEval {
 				return this[cn](a);
 			}
 		}
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
@@ -5899,8 +5918,8 @@ class HandleTypes extends HandleTypesEval {
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		this.G_Text(x);
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
@@ -6043,8 +6062,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ProfileColumnItem";
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		this.codegen_log_all(cf,x); x===0;
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x); x===0;
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
@@ -6084,8 +6103,8 @@ class HandleTypes extends HandleTypesEval {
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		this.codegen_log_all(cf,x); x===0;
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x); x===0;
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
@@ -6218,8 +6237,8 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
-		this.codegen_log_all(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointHeader} x */
 	D_CommentsEntryPointHeader(x) {
@@ -6236,7 +6255,7 @@ class HandleTypes extends HandleTypesEval {
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer";
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
@@ -6607,7 +6626,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_EngagementPanelMenu";
 		if("menuRenderer" in x) return this.R_Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 		debugger;
 	}
 	/** @private @arg {D_Hint} x */
@@ -6677,8 +6696,6 @@ class HandleTypes extends HandleTypesEval {
 		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=this.s(cf,x); this.g(y);
 	}
 	static {/*remove_this_static*/this.prototype.C_RepeatChapter;}
-	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x);}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {
 		const cf="D_PlaylistSidebarPrimaryInfo";
@@ -6762,22 +6779,22 @@ class HandleTypes extends HandleTypesEval {
 		if("invalidationContinuationData" in x) return;
 		if("liveChatReplayContinuationData" in x) return;
 		if("playerSeekContinuationData" in x) return;
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_LiveChatMessageInput} x */
 	D_LiveChatMessageInput(x) {
 		const cf="D_LiveChatMessageInput";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
 		const cf="DC_PlaylistPanel";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
@@ -6796,7 +6813,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
@@ -6819,7 +6836,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
@@ -6986,7 +7003,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ChannelSwitcherContent";
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) this.A_AccountItem(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
@@ -7064,7 +7081,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist";
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
@@ -7165,7 +7182,7 @@ class HandleTypes extends HandleTypesEval {
 		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
 		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
 		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
-		this.codegen_log_all(`ThumbnailOverlay$${cf}`,x);
+		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
 		debugger;
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
@@ -7396,11 +7413,12 @@ class HandleTypes extends HandleTypesEval {
 	D_RichListHeader(x) {
 		const cf="D_RichListHeader";
 		const {title,trackingParams,navigationButton,...y}=this.s(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {
 		const cf="R_PlaylistPanel"; this.k(cf,x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
@@ -7439,6 +7457,7 @@ class HandleTypes extends HandleTypesEval {
 	DC_SectionList_SearchFeed(x) {
 		const cf="DC_SectionList_SearchFeed";
 		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_PrimaryLinkItem} x */
 	D_PrimaryLinkItem(x) {
@@ -7452,7 +7471,7 @@ class HandleTypes extends HandleTypesEval {
 	AD_UndoFeedback(x) {
 		const cf="AD_UndoFeedback"; this.k(cf,x);
 		if("hack" in x) return this.B_Hack(x);
-		this.codegen_log_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
@@ -7470,11 +7489,84 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(channelHandle);
 	}
 	/** @arg {D_InlineSurvey} x */
-	D_InlineSurvey(x) {x; debugger;}
+	D_InlineSurvey(x) {
+		const cf="D_InlineSurvey";
+		const {dismissalEndpoint,title,subtitle,inlineContent,response,trackingParams,dismissalText,impressionEndpoints,...y}=this.s(cf,x); this.g(y);
+		this.codegen_typedef_all(`${cf}.dismissalEndpoint`,dismissalEndpoint);
+		this.G_Text(title);
+		this.G_Text(subtitle);
+		this.R_CompactVideo(inlineContent);
+		this.R_ExpandableSurveyResponse(response);
+		this.trackingParams(cf,trackingParams);
+		this.G_Text(dismissalText);
+		this.z(impressionEndpoints,x => {
+			const cf="D_InlineSurvey_impressionEndpoints";
+			this.codegen_typedef_all(cf,x);
+		});
+	}
 	/** @arg {D_RichShelf} x */
-	D_RichShelf(x) {x; debugger;}
+	D_RichShelf(x) {
+		const cf="D_RichShelf";
+		const {icon,title,...y}=this.s(cf,x); this.g(y);
+		if(icon.iconType!=="YOUTUBE_SHORTS_BRAND_24") debugger;
+		this.G_Text(title);
+	}
+	/** @arg {D_ProfilePageHeaderTitle_Content} x */
+	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,this.a_primitive_str);}
+	/** @arg {D_ProfilePageHeaderTitle} x */
+	D_ProfilePageHeaderTitle(x) {this.y("D_ProfilePageHeaderTitle","title",x,this.D_ProfilePageHeaderTitle_Content);}
 	/** @arg {D_SourcePivotHeader} x */
-	D_SourcePivotHeader(x) {x; debugger;}
+	D_SourcePivotHeader(x) {
+		const cf="D_SourcePivotHeader";
+		const {headerInformation,buttonRow,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.R_ProfilePageHeaderInformationViewModel(headerInformation);
+		this.R_ProfilePageHeaderButtonRowViewModel(buttonRow);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @arg {D_ProfilePageHeaderInformation} x */
+	D_ProfilePageHeaderInformation(x) {
+		const cf="D_ProfilePageHeaderInformation";
+		const {title,metadata,thumbnail,alignment,onTap,...y}=this.s(cf,x); this.g(y);
+		this.R_ProfilePageHeaderTitleViewModel(title);
+		this.R_ProfilePageHeaderMetadataViewModel(metadata);
+		this.R_ProfilePageHeaderThumbnailViewModel(thumbnail);
+		if(alignment!=="a") debugger;
+		this.C_Innertube(onTap);
+	}
+	/** @arg {D_ExpandableSurveyResponse} x */
+	D_ExpandableSurveyResponse(x) {
+		const cf="D_ExpandableSurveyResponse";
+		const {options,submitButton,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.R_RatingSurvey(options);
+		this.R_Button(submitButton);
+	}
+	/** @arg {D_RatingSurvey} x */
+	D_RatingSurvey(x) {
+		const cf="D_ExpandableSurveyResponse";
+		const {ratings,trackingParams,notSureButton,undoButton,notSureEndpoint,...y}=this.s(cf,x); this.g(y);
+		this.z(ratings,this.R_RatingSurveyOption);
+	}
+	/** @arg {D_RatingSurveyOption} x */
+	D_RatingSurveyOption(x) {
+		const cf="D_ExpandableSurveyResponse";
+		const {responseText,defaultStateIcon,onStateIcon,followUpCommand,responseEndpoint,trackingParams,checked,selected,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(responseText);
+		if(defaultStateIcon.iconType!=="STAR_BORDER") debugger;
+		if(onStateIcon.iconType!=="STAR") debugger;
+		this.C_FollowUp(followUpCommand);
+	}
+	/** @arg {R_RatingSurveyOption} x */
+	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
+	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
+	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
+	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
+	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
+	/** @arg {R_ExpandableSurveyResponse} x */
+	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
+	/** @arg {R_RatingSurvey} x */
+	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
