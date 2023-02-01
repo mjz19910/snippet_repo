@@ -1843,7 +1843,7 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.codegen_typedef_all(cf,x);
 	}
-	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {"D_Button_OnIcon"|"D_GuideEntry_WithNavEP"} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
+	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
 	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
 		expected_arr.push(icon.iconType);
 		missing_arr.push(icon.iconType);
@@ -4844,20 +4844,21 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		}
 	}
-	/** @private @arg {"D_GuideEntry"} cf @arg {D_GuideEntry} x */
-	D_GuideEntry_WithIcon(cf,x) {
+	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
+	D_GuideEntry_WithIcon(cf1,x) {
+		const cf2="D_GuideEntry_WithIcon";
 		if("entryData" in x) {
 			if("icon" in x) {
-				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.GE_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: icon===""; this.codegen_typedef_all(cf,x); break;
+					default: icon===""; this.codegen_typedef_all(cf1,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
 				}
 				return this.R_GuideEntryData(entryData);
 			}
-			const {...u}=this.D_GuideEntry_Omit(cf,x);
+			const {...u}=this.D_GuideEntry_Omit(cf1,x);
 			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=u; this.g(y);
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
@@ -4867,9 +4868,9 @@ class HandleTypes extends HandleTypesEval {
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
 		}
-		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf,x);
+		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
 		if("isPrimary" in x) {
-			const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 			if(icon.iconType!=="TAB_SHORTS") debugger;
 			if(isPrimary!==true) debugger;
 			x: {
@@ -4889,30 +4890,26 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("serviceEndpoint" in x) {
-			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf1,x); this.g(y);
 			this.D_Accessibility(accessibility);
 			this.G_Text(formattedTitle);
-			{
-				let x=icon.iconType;
-				switch(x) {
-					default: this.codegen_case(`${cf}.icon`,x); break;
-				}
-			}
-			let [a,b]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
+			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,this.D_GuideEntry_IconType);
+			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType,this.D_GuideEntry_MissingIconType);
+			let [a,b]=this.T_SE_Signal(`${cf1}.SE_Signal`,serviceEndpoint);
 			this.M_SendPost(a);
 			this.G_ClientSignal(b);
-			this.trackingParams(cf,trackingParams);
+			this.trackingParams(cf1,trackingParams);
 			return;
 		}
 		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x) {
-			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf,x); this.g(y);
+			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf1,x); this.g(y);
 			this.D_Accessibility(accessibility);
-			this.trackingParams(cf,trackingParams);
+			this.trackingParams(cf1,trackingParams);
 			this.G_Text(formattedTitle);
 			this.D_Accessibility(accessibility);
 			return;
 		}
-		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf1,x);
 	}
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {

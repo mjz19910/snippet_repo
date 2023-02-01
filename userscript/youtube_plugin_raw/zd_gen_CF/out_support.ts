@@ -1,6 +1,8 @@
 type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
+		|"CF_onMissingIcon"
+		//#region
 		|"CF_D_Button"
 		|"CF_D_CaseGen"
 		|"CF_D_ChipCloudChip_Omit"
@@ -37,8 +39,12 @@ export namespace Prelude {
 		|"CF_TE_Endpoint_2"
 		|"CF_TE_Endpoint_3"
 		|"CF_TE_Endpoint_Opt_3"
+		//#endregion
 		;
 	;
+	// |"CF_onMissingIcon"
+	export type CF_onMissingIcon="CF_onMissingIcon";
+	//#region
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_CaseGen="CF_D_CaseGen";
 	export type CF_D_ChipCloudChip_Omit="CF_D_ChipCloudChip_Omit";
@@ -75,14 +81,18 @@ export namespace Prelude {
 	export type CF_TE_Endpoint_2="CF_TE_Endpoint_2";
 	export type CF_TE_Endpoint_3="CF_TE_Endpoint_3";
 	export type CF_TE_Endpoint_Opt_3="CF_TE_Endpoint_Opt_3";
+	//#endregion
 }
 export namespace TypesTemplate {
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 }
 export namespace Types {
 	/*
-		|"CF_D_CaseGen"
-	 */
+	// |"CF_onMissingIcon"
+	export type CF_onMissingIcon="CF_onMissingIcon";"
+	*/
+	export type CF_onMissingIcon_=CF_onMissingIcon;
+	//#region
 	export type CF_D_Button_=CF_D_Button;
 	export type CF_D_CaseGen_=CF_D_CaseGen;
 	export type CF_D_ChipCloudChip_Omit_=CF_D_ChipCloudChip_Omit;
@@ -118,4 +128,5 @@ export namespace Types {
 	export type CF_TE_Endpoint_2_=CF_TE_Endpoint_2;
 	export type CF_TE_Endpoint_3_=CF_TE_Endpoint_3;
 	export type CF_TE_Endpoint_Opt_3_=CF_TE_Endpoint_Opt_3;
+	//#endregion
 }

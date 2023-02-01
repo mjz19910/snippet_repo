@@ -141,3 +141,4 @@ type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
 type CF_T_WCM=T_ExtractImport<"CF_T_WCM">|"CF_T_WCM"|"a";
 type CF_DC_Generic_CTP="D_CD_Reload"|"a";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen"|"a";
+type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|"CF_onMissingIcon"|"a";
