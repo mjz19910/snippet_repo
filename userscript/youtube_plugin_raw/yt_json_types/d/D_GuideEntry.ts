@@ -1,4 +1,12 @@
 type D_GuideEntry=
+	|never
+	|{
+		icon: T_Icon<"FEEDBACK">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Send feedback">;
+		serviceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+	}
 	|{
 		icon: T_Icon<"EXPAND">;
 		trackingParams: string;
