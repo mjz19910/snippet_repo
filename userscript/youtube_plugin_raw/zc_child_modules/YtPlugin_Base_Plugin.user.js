@@ -3891,7 +3891,7 @@ class ServiceData extends BaseService {
 }
 /** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
-	/** @template T @template {{popup:T;popupType: "DIALOG";}} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
+	/** @template T @template {T_OpenPopup_Dialog<T>} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
 	unpack_popup_dialog(x) {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];
 		return [true,x.popup];
