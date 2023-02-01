@@ -293,3 +293,4 @@ type G_SE_MenuService=
 	|E_GetReportForm
 	;
 ;
+type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;

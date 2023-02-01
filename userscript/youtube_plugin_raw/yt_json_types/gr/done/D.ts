@@ -924,3 +924,28 @@ type D_TextRun={
 	loggingDirectives?: D_LoggingDirectives;
 	bold?: boolean;
 };
+type D_PlaylistPanel={
+	title: "YouTube Mix";
+	contents: G_PlaylistPanel_Item[];
+	currentIndex?: number;
+	playlistId: `RD${string}`;
+	ownerName?: G_Text;
+	isInfinite: true;
+	continuations?: CD_NextRadio[];
+	shortBylineText: G_Text;
+	longBylineText?: G_Text;
+	trackingParams: string;
+	titleText: G_Text;
+	isEditable: true;
+	previewDescription?: {};
+	numItemsToShow?: 25;
+};
+type D_PlaylistId=
+	|`RD${string}`
+	|`RDMM${string}`
+	|`RDGM${string}`
+	|`PL${string}`
+	|"WL"
+	|"LL"
+	;
+;
