@@ -394,6 +394,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationMenu_PopupItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationText";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationTopbarButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PageTopAdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgBuyFlow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgBuyFlowHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgColorSlider";}

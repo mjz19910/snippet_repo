@@ -427,7 +427,8 @@ type D_ReelPlayerOverlay={
 type D_AccountLinkButton={
 	providerKey: K_AccountLinkProviderKey;
 	unlinkedButton: R_Button;
-}; type D_ActionCompanionAd={
+};
+type D_ActionCompanionAd={
 	headline: D_TemplatedText;
 	description: D_TemplatedText;
 	actionButton: R_Button;
@@ -440,11 +441,13 @@ type D_AccountLinkButton={
 	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: D_AdLayoutLoggingData;
 	associatedCompositePlayerBytesLayoutId?: `${string}-0000-${string}-${string}-${string}`;
-}; type D_AlertWithButton={
+};
+type D_AlertWithButton={
 	type: "INFO";
 	text: G_Text;
 	dismissButton: R_Button;
-}; type D_C4TabbedHeader={
+};
+type D_C4TabbedHeader={
 	channelId: `UC${string}`;
 	title: string;
 	navigationEndpoint: GE_Browse;
@@ -460,7 +463,8 @@ type D_AccountLinkButton={
 	sponsorButton?: R_Button;
 	channelHandleText: G_Text;
 	videosCountText: G_Text;
-}; type D_CardCollection={
+};
+type D_CardCollection={
 	cards: R_Card[];
 	headerText: G_Text;
 	icon: R_InfoCardIcon;
@@ -468,13 +472,15 @@ type D_AccountLinkButton={
 	trackingParams: string;
 	allowTeaserDismiss: boolean;
 	logIconVisibilityUpdates: boolean;
-}; type D_ChipCloud={
+};
+type D_ChipCloud={
 	chips: R_ChipCloudChip[];
 	trackingParams: string;
 	horizontalScrollable: false;
 	nextButton: R_Button;
 	previousButton: R_Button;
-}; type D_ClipCreation={
+};
+type D_ClipCreation={
 	trackingParams: string;
 	userAvatar: R_Thumbnail;
 	titleInput: R_ClipCreationTextInput;
@@ -486,7 +492,8 @@ type D_AccountLinkButton={
 	adStateOverlay: R_ClipAdState;
 	externalVideoId: string;
 	publicityLabelIcon: `PRIVACY_${D_PlaylistAddToOption['privacy']}`;
-}; type D_Comment={
+};
+type D_Comment={
 	authorText: G_Text;
 	authorThumbnail: R_Thumbnail;
 	authorEndpoint: {};
@@ -504,7 +511,8 @@ type D_AccountLinkButton={
 	expandButton: R_Button;
 	collapseButton: R_Button;
 	loggingDirectives: D_LoggingDirectives;
-}; type D_CommentSimplebox={
+};
+type D_CommentSimplebox={
 	submitButton: R_Button;
 	cancelButton: R_Button;
 	authorThumbnail: R_Thumbnail;
@@ -514,29 +522,34 @@ type D_AccountLinkButton={
 	emojiButton: R_Button;
 	emojiPicker: R_EmojiPicker;
 	aadcGuidelinesStateEntityKey: string;
-}; type D_ConfirmDialog={
+};
+type D_ConfirmDialog={
 	title?: G_Text;
 	trackingParams: string;
 	dialogMessages: G_Text[];
 	confirmButton: R_Button;
 	cancelButton: R_Button;
 	primaryIsCancel: boolean;
-}; type D_ConnectedApp={
+};
+type D_ConnectedApp={
 	icon: {};
 	title: {};
 	text: {};
 	connectButton: R_Button;
-}; type D_CopyLink={
+};
+type D_CopyLink={
 	copyButton: R_Button;
 	shortUrl: string;
 	trackingParams: string;
 	style: "COPY_LINK_RENDERER_STYLE_SETTINGS";
-}; type D_DecoratedPlayerBar={
+};
+type D_DecoratedPlayerBar={
 	playerBar: R_MultiMarkersPlayerBar;
 }|{
 	playerBar: R_MultiMarkersPlayerBar;
 	playerBarActionButton: R_Button;
-}; type D_DesktopTopbar={
+};
+type D_DesktopTopbar={
 	logo: R_TopbarLogo;
 	searchbox: R_FusionSearchbox;
 	trackingParams: string;
@@ -547,7 +560,8 @@ type D_AccountLinkButton={
 	forwardButton: R_Button;
 	a11ySkipNavigationButton: R_Button;
 	voiceSearchButton: R_Button;
-}; type D_DisplayAd={
+};
+type D_DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: G_Text;
 	image: R_ThumbnailsList;
@@ -561,14 +575,16 @@ type D_AccountLinkButton={
 	mediaHoverOverlay: R_Button;
 	mediaBadge: DMD_Badge;
 	trackingParams: string;
-}; type D_EngagementPanelTitleHeader={
+};
+type D_EngagementPanelTitleHeader={
 	title: G_Text;
 	contextualInfo?: G_Text;
 	informationButton?: R_Button;
 	menu?: G_EngagementPanelMenu;
 	visibilityButton: R_Button;
 	trackingParams: string;
-}; type D_FeaturedChannel={
+};
+type D_FeaturedChannel={
 	startTimeMs: `${number}`;
 	endTimeMs: `${number}`;
 	watermark: R_Thumbnail;
@@ -576,19 +592,22 @@ type D_AccountLinkButton={
 	navigationEndpoint: GE_Browse;
 	channelName: string;
 	subscribeButton: R_SubscribeButton;
-}; type D_FeedFilterChipBar=Record<"contents",R_ChipCloudChip[]>&{
+};
+type D_FeedFilterChipBar=Record<"contents",R_ChipCloudChip[]>&{
 	trackingParams: string;
 	nextButton: R_Button;
 	previousButton: R_Button;
 	styleType: D_ChannelPageGrid;
-}; type D_FusionSearchbox={
+};
+type D_FusionSearchbox={
 	icon: T_Icon<"SEARCH">;
 	placeholderText: G_Text;
 	config: R_WebSearchboxConfig;
 	trackingParams: string;
 	searchEndpoint: E_Search;
 	clearButton: R_Button;
-}; type AD_AccountItem={
+};
+type AD_AccountItem={
 	accountName: G_Text;
 	accountPhoto: R_Thumbnail;
 	isSelected: boolean;
@@ -597,13 +616,15 @@ type D_AccountLinkButton={
 	serviceEndpoint: {};
 	accountByline: G_Text;
 	channelHandle: G_Text;
-}; type D_ChannelOptions={
+};
+type D_ChannelOptions={
 	avatar: R_Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: G_Text[];
 	avatarAccessibility: D_Accessibility;
-}; type D_ChannelThumbnailWithLink={
+};
+type D_ChannelThumbnailWithLink={
 	thumbnail: R_Thumbnail;
 	navigationEndpoint: GE_Browse;
 	accessibility: D_Accessibility;
@@ -612,18 +633,20 @@ type D_AccountLinkButton={
 	thumbnail: R_Thumbnail;
 	navigationEndpoint: GE_Browse;
 	accessibility: D_Accessibility;
-}; type D_CheckboxSurveyOption={
+};
+type D_CheckboxSurveyOption={
 	responseText: G_Text;
 	responseEndpoint: {};
 	value: T_Split<"ANSWER_FOLLOWUP_DISAPPOINTING,ANSWER_FOLLOWUP_MEDIOCRE,ANSWER_FOLLOWUP_IRRELEVANT,ANSWER_FOLLOWUP_DIFFERENT,ANSWER_FOLLOWUP_OTHER,ANSWER_FOLLOWUP_RELAXING,ANSWER_FOLLOWUP_USEFUL,ANSWER_REASON_INFORMATIVE,ANSWER_FOLLOWUP_HELPS_FOCUS,ANSWER_FOLLOWUP_ENTERTAINING,ANSWER_FOLLOWUP_NOVEL,ANSWER_FOLLOWUP_INSPIRING,ANSWER_FOLLOWUP_CALMING,ANSWER_FOLLOWUP_ENJOYABLE,ANSWER_FOLLOWUP_LIFE_CHANGING,ANSWER_FOLLOWUP_HEARTWARMING">[number];
 	trackingParams: string;
-}; type D_ChildVideo={
+};
+type D_ChildVideo={
 	title: G_Text;
 	navigationEndpoint: E_Watch;
 	lengthText: G_Text;
 	videoId: string;
 };
-type R_ChildVideo_Omit={
+type D_ChildVideo_Omit={
 	title: G_Text;
 	navigationEndpoint: E_Watch;
 	lengthText: G_Text;
@@ -648,7 +671,8 @@ type D_Video_Omit_Keys=D_ThumbnailOverlay_Omit_Keys|[
 	"channelThumbnailSupportedRenderers",
 	"inlinePlaybackEndpoint",
 ][number];
-type D_Video_Omit_Owner_Keys=D_ThumbnailOverlay_Omit_Keys|"owner"; type D_ChipCloudChip_tid={
+type D_Video_Omit_Owner_Keys=D_ThumbnailOverlay_Omit_Keys|"owner";
+type D_ChipCloudChip_tid={
 	style: T_StyleType<"STYLE_DEFAULT"|"STYLE_HOME_FILTER"|"STYLE_REFRESH_TO_NOVEL_CHIP">;
 	text: G_Text;
 	trackingParams: string;
@@ -656,7 +680,8 @@ type D_Video_Omit_Owner_Keys=D_ThumbnailOverlay_Omit_Keys|"owner"; type D_ChipCl
 }|{
 	navigationEndpoint: C_Continuation|C_RelatedChip;
 	targetId: "feed_filter_chip_bar_second_chip";
-}; type D_ChipCloudChip_Style=[
+};
+type D_ChipCloudChip_Style=[
 	"STYLE_DEFAULT",
 	"STYLE_HOME_FILTER",
 	"STYLE_REFRESH_TO_NOVEL_CHIP",
@@ -698,7 +723,8 @@ type D_ChipCloudChip=
 		navigationEndpoint: C_Continuation;
 		trackingParams: string;
 		targetId: "feed_filter_chip_bar_second_chip";
-	}; type EG_CompactLink$1=E_Upload|E_SignalNavigation;
+	};
+	type EG_CompactLink$1=E_Upload|E_SignalNavigation;
 
 type D_CompactLink={
 	icon: T_Icon<"PERSON_ADD">;
@@ -721,7 +747,8 @@ type D_CompactLink={
 	navigationEndpoint: E_SignalNavigation;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
-}; type D_CompactPlaylist={
+};
+type D_CompactPlaylist={
 	playlistId: `PL${string}`;
 	thumbnail: R_Thumbnail;
 	title: G_Text;
@@ -739,7 +766,8 @@ type D_CompactLink={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	longBylineText: G_Text;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
-}; type D_ContinuationItem={
+};
+type D_ContinuationItem={
 	trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
 	continuationEndpoint: C_Continuation;
 }|{
@@ -750,11 +778,13 @@ type D_CompactLink={
 	trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
 	continuationEndpoint: C_Continuation;
 	ghostCards: R_GhostGrid;
-}; type D_AutoplaySetItem={
+};
+type D_AutoplaySetItem={
 	mode: "NORMAL";
 	autoplayVideo: E_Watch;
 	nextButtonVideo?: E_Watch;
-}; type D_EndScreenPlaylist={
+};
+type D_EndScreenPlaylist={
 	playlistId: `RD${string}`;
 	title: G_Text;
 	thumbnail: R_Thumbnail;
@@ -763,7 +793,8 @@ type D_CompactLink={
 	videoCountText: G_Text;
 	navigationEndpoint: E_Watch;
 	trackingParams: string;
-}; type D_EndScreenVideo={
+};
+type D_EndScreenVideo={
 	videoId: string;
 	thumbnail: R_Thumbnail;
 	title: G_Text;
@@ -775,13 +806,15 @@ type D_CompactLink={
 	shortViewCountText: G_Text;
 	publishedTimeText: G_Text;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
-}; type D_HeroPlaylistThumbnail={
+};
+type D_HeroPlaylistThumbnail={
 	thumbnail: R_Thumbnail;
 	maxRatio: 0.5625;
 	trackingParams: string;
 	onTap: E_Watch;
 	thumbnailOverlays: G_ThumbnailOverlayItem;
-}; type D_MacroMarkersListItem={
+};
+type D_MacroMarkersListItem={
 	title: G_Text;
 	timeDescription: G_Text;
 	thumbnail: R_Thumbnail;
@@ -804,7 +837,8 @@ type D_CompactLink={
 	trackingParams: string;
 	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-}; type D_Notification={
+};
+type D_Notification={
 	thumbnail: R_Thumbnail;
 	videoThumbnail: R_Thumbnail;
 	shortMessage: G_Text;
@@ -815,7 +849,8 @@ type D_CompactLink={
 	contextualMenu: R_Menu;
 	trackingParams: string;
 	notificationId: `${number}`;
-}; type D_PlaylistPanelVideo={
+};
+type D_PlaylistPanelVideo={
 	title: G_Text;
 	longBylineText: G_Text;
 	thumbnail: R_Thumbnail;
@@ -841,7 +876,8 @@ type D_CompactLink={
 		secondaryTitleColor: 4291602851;
 		section4Color: 4061728525;
 	};
-}; type D_PlaylistSidebarPrimaryInfo={
+};
+type D_PlaylistSidebarPrimaryInfo={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	title: G_Text;
 	stats: G_Text[];
@@ -851,7 +887,8 @@ type D_CompactLink={
 	badges: RMD_Badge[];
 	description: {};
 	showMoreText: G_Text;
-}; type D_Radio={
+};
+type D_Radio={
 	playlistId: `RD${string}`;
 	title: G_Text;
 	thumbnail: R_Thumbnail;

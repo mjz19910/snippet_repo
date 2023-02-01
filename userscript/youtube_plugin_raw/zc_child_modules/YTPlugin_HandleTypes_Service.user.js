@@ -2088,7 +2088,7 @@ class HandleTypes extends HandleTypesEval {
 		let y=this.D_ChildVideo_Omit(cf,x);
 		this.g(y);
 	}
-	/** @private @template {R_ChildVideo_Omit} T @arg {"D_ChildVideo"} cf @arg {T} x */
+	/** @private @template {D_ChildVideo_Omit} T @arg {"D_ChildVideo"} cf @arg {T} x */
 	D_ChildVideo_Omit(cf,x) {
 		let {title,navigationEndpoint,lengthText,videoId,...y}=this.s(cf,x);
 		this.G_Text(title);
@@ -2099,9 +2099,25 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	R_Omit_Menu_Radio(cf,x) {
-		let {navigationEndpoint,menu,...y}=this.Omit_Compact_Player(cf,x);
+		let {navigationEndpoint,menu,...y}=this.R_Omit_Compact_Player(cf,x);
 		this.R_Menu(menu);
 		return y;
+	}
+	/** @private @arg {R_Thumbnail} x */
+	R_Thumbnail(x) {
+		const cf="R_Thumbnail";
+		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);
+		this.t(sampledThumbnailColor,x => this.D_Color(x));
+		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
+		this.t(accessibility,this.D_Accessibility);
+		this.z(a,this.D_ThumbnailItem);
+	}
+	/** @private @arg {R_MP_MenuNotificationSection_Item} x */
+	R_MP_MenuNotificationSection_Item(x) {
+		const cf="R_MP_MenuNotificationSection_Item";
+		if("notificationRenderer" in x) return this.R_Notification(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
@@ -2325,15 +2341,6 @@ class HandleTypes extends HandleTypesEval {
 	D_Color(x) {
 		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
 		this.z(Object.values(x),x => this._primitive_of(x,"number"));
-	}
-	/** @private @arg {R_Thumbnail} x */
-	R_Thumbnail(x) {
-		const cf="R_Thumbnail";
-		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);
-		this.t(sampledThumbnailColor,x => this.D_Color(x));
-		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
-		this.t(accessibility,this.D_Accessibility);
-		this.z(a,this.D_ThumbnailItem);
 	}
 	/** @private @arg {D_ThumbnailItem} x */
 	D_ThumbnailItem(x) {
@@ -2901,14 +2908,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
-	}
-	/** @private @arg {R_MP_MenuNotificationSection_Item} x */
-	R_MP_MenuNotificationSection_Item(x) {
-		const cf="R_MP_MenuNotificationSection_Item";
-		if("notificationRenderer" in x) return this.R_Notification(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.codegen_typedef_all(cf,x);
-		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
 	D_NotificationMenu_Popup_SectionItem(x) {
@@ -3923,7 +3922,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
-		let {background,videoTitle,byline,pauseText,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.Omit_Compact_Video(cf,x); this.g(y);
+		let {background,videoTitle,byline,pauseText,countDownSecs,cancelButton,nextButton,closeButton,preferImmediateRedirect,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,countDownSecsForFullscreen,...y}=this.R_Omit_Compact_Video(cf,x); this.g(y);
 		this.G_Text(videoTitle);
 		this.G_Text(byline);
 		this.G_Text(pauseText);
@@ -3942,20 +3941,33 @@ class HandleTypes extends HandleTypesEval {
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {R_Omit_Compact_Player} T @arg {T} x */
-	Omit_Compact_Player(cf,x) {
+	R_Omit_Compact_Player(cf,x) {
 		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {R_Omit_Compact_Video} T @arg {T} x */
-	Omit_Compact_Video(cf,x) {
-		let u=this.Omit_Compact_Player(cf,x);
+	R_Omit_Compact_Video(cf,x) {
+		let u=this.R_Omit_Compact_Player(cf,x);
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.videoId(videoId);
 		this.G_Text(publishedTimeText);
 		this.G_Text(shortViewCountText);
 		return y;
+	}
+	/** @private @arg {R_ThumbnailsList} x */
+	R_ThumbnailsList(x) {
+		const cf="R_ThumbnailsList";
+		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.R_Thumbnail(thumbnail);
+		this.t_cf(cf,trackingParams,this.trackingParams);
+	}
+	/** @private @arg {R_BrowseFeed} x */
+	R_BrowseFeed(x) {
+		const cf="R_BrowseFeed";
+		const {...y}=this.s(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x */
 	D_CompactVideo_Omit(cf,x) {
@@ -5757,13 +5769,6 @@ class HandleTypes extends HandleTypesEval {
 			if(u!=="4278190080") debugger;
 		}
 	}
-	/** @private @arg {R_ThumbnailsList} x */
-	R_ThumbnailsList(x) {
-		const cf="R_ThumbnailsList";
-		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.R_Thumbnail(thumbnail);
-		this.t_cf(cf,trackingParams,this.trackingParams);
-	}
 	/** @private @arg {D_AdLayoutLoggingData} x */
 	D_AdLayoutLogging(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"AdServingDataEntry",x));}
 	/** @private @arg {D_PrefetchHintConfig} x */
@@ -6403,12 +6408,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {
 		const cf="D_FeedNudge";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
-	}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {
-		const cf="R_BrowseFeed";
 		const {...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
@@ -7401,6 +7400,26 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_Factoid} x */
 	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
+	/** @private @arg {R_PlaylistPanel} x */
+	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
+	/** @arg {R_RatingSurveyOption} x */
+	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
+	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
+	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
+	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
+	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
+	/** @arg {R_ExpandableSurveyResponse} x */
+	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
+	/** @arg {R_RatingSurvey} x */
+	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
+	/** @arg {R_PageTopAdLayout} x */
+	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
+	/** @arg {R_AutomixPreviewVideo} x */
+	R_AutomixPreviewVideo(x) {x;}
+	/** @arg {R_VideoMastheadAdV3} x */
+	R_VideoMastheadAdV3(x) {x;}
 	/** @private @arg {D_Factoid} x */
 	D_Factoid(x) {
 		const cf="D_Factoid";
@@ -7423,22 +7442,6 @@ class HandleTypes extends HandleTypesEval {
 		const {title,trackingParams,navigationButton,...y}=this.s(cf,x); this.g(y);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {R_PlaylistPanel} x */
-	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
-	/** @arg {R_RatingSurveyOption} x */
-	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
-	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
-	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
-	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
-	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
-	/** @arg {R_ExpandableSurveyResponse} x */
-	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
-	/** @arg {R_RatingSurvey} x */
-	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
-	/** @arg {R_PageTopAdLayout} x */
-	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem";
@@ -7591,10 +7594,14 @@ class HandleTypes extends HandleTypesEval {
 		this.C_FollowUp(followUpCommand);
 	}
 	/** @arg {D_PageTopAdLayout} x */
-	D_PageTopAdLayout(x) {x;}
+	D_PageTopAdLayout(x) {
+		const cf="D_PageTopAdLayout";
+		const {adLayoutMetadata,renderingContent,...y}=this.s(cf,x); this.g(y);
+		this.R_VideoMastheadAdV3(renderingContent);
+	}
 	/** @arg {G_PlaylistPanel_Item} x */
 	G_PlaylistPanel_Item(x) {
-		const cf="G_PlaylistPanel_Item"
+		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
 		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
 		this.codegen_typedef_all(cf,x);
@@ -7609,8 +7616,6 @@ class HandleTypes extends HandleTypesEval {
 		this.playlistId(playlistId);
 		y;
 	}
-	/** @arg {R_AutomixPreviewVideo} x */
-	R_AutomixPreviewVideo(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
