@@ -1120,6 +1120,34 @@ class HandleTypes extends HandleTypesEval {
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("R_ProfilePageHeaderInformationViewModel","profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("R_ProfilePageHeaderTitleViewModel","profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
+	/** @private @arg {R_Factoid} x */
+	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
+	/** @private @arg {R_PlaylistPanel} x */
+	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
+	/** @arg {R_RatingSurveyOption} x */
+	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
+	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
+	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
+	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
+	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
+	/** @arg {R_ExpandableSurveyResponse} x */
+	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
+	/** @arg {R_RatingSurvey} x */
+	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
+	/** @arg {R_PageTopAdLayout} x */
+	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
+	/** @arg {R_AutomixPreviewVideo} x */
+	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.D_AutomixPreviewVideo);}
+	/** @arg {R_VideoMastheadAdV3} x */
+	R_VideoMastheadAdV3(x) {this.H_("R_VideoMastheadAdV3","videoMastheadAdV3Renderer",x,this.D_VideoMastheadAdV3);}
+	/** @private @arg {R_BrowseFeed} x */
+	R_BrowseFeed(x) {this.codegen_typedef_all("R_BrowseFeed",x);}
+	/** @private @arg {D_VideoMastheadAdV3} x */
+	D_VideoMastheadAdV3(x) {x;}
+	/** @private @arg {D_AutomixPreviewVideo} x */
+	D_AutomixPreviewVideo(x) {x;}
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection";
@@ -1143,14 +1171,14 @@ class HandleTypes extends HandleTypesEval {
 	RS_WatchPage(x) {
 		const cf="R_WatchPage"; this.g_k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: return this.R_WatchPage_VE3832(x);
+			case 3832: return this.RS_VE3832_Page_Watch(x);
 			default: debugger; return;
 		}
-		this.R_WatchPage_Generic(x);
+		this.RS_Page_Watch(x);
 	}
 	/** @private @arg {RS_Page_Watch} x */
-	R_WatchPage_Generic(x) {
-		const cf="R_WatchPage_Generic";
+	RS_Page_Watch(x) {
+		const cf="RS_Page_Watch";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);
 		this.E_Watch(endpoint);
 		this.RS_Watch(response);
@@ -1160,7 +1188,7 @@ class HandleTypes extends HandleTypesEval {
 		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
 	/** @private @arg {RS_VE3832_Page_Watch} x */
-	R_WatchPage_VE3832(x) {
+	RS_VE3832_Page_Watch(x) {
 		const cf="R_WatchPage_VE3832";
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);
 		if(rootVe!==3832) debugger;
@@ -2098,7 +2126,7 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @template {D_Omit_Menu_Radio&D_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
-	R_Omit_Menu_Radio(cf,x) {
+	D_Omit_Menu_Radio(cf,x) {
 		let {navigationEndpoint,menu,...y}=this.D_Omit_Compact_Player(cf,x);
 		this.R_Menu(menu);
 		return y;
@@ -2112,8 +2140,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(accessibility,this.D_Accessibility);
 		this.z(a,this.D_ThumbnailItem);
 	}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {this.codegen_typedef_all("R_BrowseFeed",x);}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x) {
 		const cf="R_MP_MenuNotificationSection_Item";
@@ -2124,7 +2150,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
 		if("adSlotMetadata" in x) {debugger; throw new Error();}
-		let u=this.R_Omit_Menu_Radio(cf,x);
+		let u=this.D_Omit_Menu_Radio(cf,x);
 		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
 		this.playlistId(playlistId);
 		this.D_Thumbnail(thumbnail);
@@ -3288,7 +3314,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
-			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed$(x); break;
+			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
 			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
 			case "watch-next-feed": this.A_WatchNext(x); break;
 			default: x===0; debugger;
@@ -5319,7 +5345,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(continuationItems,this.G_CommentsSection);
 	}
 	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
-	A_BrowseFeed$(x) {
+	A_BrowseFeed(x) {
 		const cf="A_BrowseFeed";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);
 		this.targetId(cf,targetId);
@@ -7394,28 +7420,6 @@ class HandleTypes extends HandleTypesEval {
 		this.GE_Browse(channelNavigationEndpoint);
 		this.D_Thumbnail(channelThumbnail);
 	}
-	/** @private @arg {R_Factoid} x */
-	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
-	/** @private @arg {R_PlaylistPanel} x */
-	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
-	/** @arg {R_RatingSurveyOption} x */
-	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
-	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
-	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
-	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
-	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
-	/** @arg {R_ExpandableSurveyResponse} x */
-	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
-	/** @arg {R_RatingSurvey} x */
-	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
-	/** @arg {R_PageTopAdLayout} x */
-	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
-	/** @arg {R_AutomixPreviewVideo} x */
-	R_AutomixPreviewVideo(x) {x;}
-	/** @arg {R_VideoMastheadAdV3} x */
-	R_VideoMastheadAdV3(x) {x;}
 	/** @private @arg {D_Factoid} x */
 	D_Factoid(x) {
 		const cf="D_Factoid";
