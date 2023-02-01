@@ -7605,7 +7605,7 @@ class HandleTypes extends HandleTypesEval {
 		const {title,contents,currentIndex,playlistId,ownerName,isInfinite,continuations,shortBylineText,longBylineText,trackingParams,titleText,isEditable,previewDescription,numItemsToShow,...y}=this.s(cf,x); this.g(y);
 		if(title!=="YouTube Mix") debugger;
 		this.z(contents,this.G_PlaylistPanel_Item);
-		this.t(currentIndex,this.a_primitive_str);
+		this.t(currentIndex,this.a_primitive_num);
 		this.playlistId(playlistId);
 		y;
 	}

@@ -1,4 +1,3 @@
-type CF_mod=import("./CF_mod.js").CF_mod;
 type CF_M_s_priv=
 	|`D_Params:${CF_D_Params}`
 	|`T_Endpoint_Tracking:${"C_GetSurvey"}`
