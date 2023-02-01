@@ -592,7 +592,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @arg {GM_WC} x */
 				this.codegen_str(`G_VE${cx}`,x);
 				console.log(`\n\tG_VE${cx},`);
-				this.generate_case("GM_WC_RootVe",x,"return this.GeneratedWebCommandMetadata(x);");
+				this.codegen_case("GM_WC_RootVe",x,"return this.GeneratedWebCommandMetadata(x);");
 			} break;
 			case 3832: return this.GM_VE3832_Watch_WC(x);
 			case 4724: return this.GM_VE4724_WC(x);
@@ -1377,13 +1377,14 @@ class HandleTypes extends HandleTypesEval {
 	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {x;}
-	/** @type {Map<string,string[]>} */
+	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;
-	/** @arg {string} cf @arg {string} str @arg {string} [code] */
-	generate_case(cf,str,code) {
+	/** @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
+	codegen_case(cf,val,code) {
 		let known=this.cases_map.get(cf);
 		if(!known) {known=[]; this.cases_map.set(cf,known);}
-		if(!known.includes(str)) known.push(JSON.stringify(str));
+		let val_str=JSON.stringify(val);
+		if(!known.includes(val_str)) known.push(val_str);
 		if(code) return console.log(`-- [js_gen_code:user_code:${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
 		console.log(`-- [js_gen_code:no_code:${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
 	}
@@ -1391,7 +1392,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_SignalNavigation(x) {
 		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x);
 		switch(a) {
-			default: this.generate_case(cf,a); break;
+			default: this.codegen_case(`${cf}.signal`,a); break;
 			case "CHANNEL_SWITCHER":
 			case "LIVE_CONTROL_ROOM":
 		}
@@ -1720,7 +1721,7 @@ class HandleTypes extends HandleTypesEval {
 			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
 			case "browse-video-menu-button":
 			case "create-clip-button-action-bar": break;
-			default: x===""; this.generate_case(cf,x); break;
+			default: x===""; this.codegen_case(cf,x); break;
 		}
 	}
 	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
@@ -1740,7 +1741,7 @@ class HandleTypes extends HandleTypesEval {
 		// let x=as(ux);
 		/** @private @type {D_Button_TargetId} */
 		switch(x) {
-			default: this.generate_case("D_Button_TargetId",x); break;
+			default: this.codegen_case("D_Button_TargetId",x); break;
 			case "clip-info-button":
 			// case "sponsorships-button":
 			case "create-clip-button-action-bar":
@@ -2726,8 +2727,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @arg {CF_D_CaseGen} cf @arg {string} x */
-	codegen_case(cf,x) {console.log(`-- [string.${cf}] --\n\n\tcase "${x}":`);}
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {
 		const cf="D_ChannelId";
@@ -4231,6 +4230,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
+		if("reelPlayerNavigationModel" in x) {
+			const {style: a,trackingParams: b,reelPlayerNavigationModel: c,...y}=this.s(cf,x); this.g(y);
+			if(a!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+			this.trackingParams(cf,b);
+			switch(c) {
+				default: this.codegen_case(cf,c); this.codegen_typedef_all(cf,x); break;
+				case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED": break;
+			}
+			return;
+		}
 		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);
 		this.R_LikeButton(likeButton);
 		this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
@@ -7502,13 +7511,22 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {T_UnionToPartial<D_RichShelf>} */
 		let pt=x;
 		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
-		if(icon&&icon.iconType!=="YOUTUBE_SHORTS_BRAND_24") debugger;
+		if(icon) {
+			switch(icon.iconType) {
+				default: this.codegen_case(`${cf}.icon`,icon.iconType); break;
+				case "YOUTUBE_SHORTS_BRAND_24": break;
+			}
+
+		}
 		this.G_Text(title);
 		this.z(contents,this.R_RichItem);
 		this.trackingParams(cf,trackingParams);
 		this.R_Menu(menu);
 		this.R_Button(showMoreButton);
-		if(rowIndex!==2) debugger;
+		switch(rowIndex) {
+			default: this.codegen_case(`${cf}.rowIndex`,rowIndex); break;
+			case 2: case 4: break;
+		}
 	}
 	/** @arg {D_ProfilePageHeaderTitle_Content} x */
 	D_ProfilePageHeaderTitle_Content(x) {this.y("D_ProfilePageHeaderTitle_Content","content",x,this.a_primitive_str);}

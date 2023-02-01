@@ -342,7 +342,7 @@ type D_RichShelf={
 	trackingParams: string;
 	menu: R_Menu;
 	showMoreButton: R_Button;
-	rowIndex: 2;
+	rowIndex: 2|4;
 };
 type D_InlineSurvey={
 	dismissalEndpoint: {};
@@ -419,6 +419,10 @@ type D_ReelPlayerOverlay={
 	trackingParams: string;
 	shareButton: R_Button;
 	pivotButton: R_PivotButton;
+}|{
+	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
+	trackingParams: string;
+	reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
 };
 type D_AccountLinkButton={
 	providerKey: K_AccountLinkProviderKey;
