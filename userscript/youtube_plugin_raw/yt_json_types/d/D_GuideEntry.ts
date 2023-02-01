@@ -1,16 +1,5 @@
-type D_GuideEntry_Library={
-	navigationEndpoint: GE_Browse;
-	icon: T_Icon<"VIDEO_LIBRARY_WHITE">;
-	trackingParams: string;
-	formattedTitle: G_Text;
-	accessibility: TD_Accessibility<"Library">;
-	targetId: "library-guide-item";
-	isPrimary: true;
-};
-
 type D_GuideEntry=
 	|D_GuideEntry_HelpService
-	|D_GuideEntry_Library
 	|D_GuideEntry_MyVideosTab
 	|D_GuideEntry_OfflineDownloadEntry
 	|D_GuideEntry_PresentationNewContent

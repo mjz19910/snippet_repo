@@ -4751,7 +4751,7 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
-	GE_GuideEntry_WithTargetId(cf,x) {
+	D_GuideEntry_WithTargetId(cf,x) {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
 		this.GE_Browse(navigationEndpoint);
@@ -4801,7 +4801,7 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @arg {"D_GuideEntry"} cf @arg {Extract<Exclude<D_GuideEntry,{entryData:any}>,{navigationEndpoint:any}>} x */
 	D_GuideEntry_2(cf,x) {
-		if("targetId" in x) this.GE_GuideEntry_WithTargetId(cf,x);
+		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf,x);
 		if("isPrimary" in x) {
 			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
@@ -4840,9 +4840,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {"D_GuideEntry"} cf @arg {D_GuideEntry} x */
 	D_GuideEntry_WithIcon(cf,x) {
-		if("targetId" in x) {
-			return;
-		}
 		if("entryData" in x) {
 			if("icon" in x) {
 				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
@@ -4897,6 +4894,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
 		const cf="D_GuideEntry";
+		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf,x);
 		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);
