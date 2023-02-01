@@ -211,13 +211,13 @@ type RS_Page_Watch={
 	url: D_WatchPageUrl;
 	previousCsn?: string;
 };
-type RS_BrowsePage={
+type RS_Page_Browse={
 	page: "browse";
 	url: string;
 	endpoint: GE_Browse;
 	response: RS_Browse;
 };
-type RS_ChannelPage={
+type RS_Page_Channel={
 	page: "channel";
 	endpoint: GE_Browse;
 	response: RS_Channel;
@@ -229,7 +229,7 @@ type RS_Page_Playlist={
 	response: RS_Playlist;
 	url: string;
 };
-type R_SearchPage={
+type RS_Page_Search={
 	page: "search";
 	endpoint: E_Search;
 	response: RS_Search;

@@ -1194,7 +1194,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	log_url=false;
-	/** @private @arg {RS_BrowsePage} x */
+	/** @private @arg {RS_Page_Browse} x */
 	RS_BrowsePage(x) {
 		const cf="R_BrowsePage";
 		if(!("rootVe" in x&&typeof x.rootVe==="number"&&"expirationTime" in x&&"previousCsn" in x)) {debugger; return;}
@@ -4837,7 +4837,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.G_Text(subtitle);
 	}
-	/** @private @arg {RS_ChannelPage} x */
+	/** @private @arg {RS_Page_Channel} x */
 	RS_ChannelPage(x) {
 		const cf="R_ChannelPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);
@@ -4913,7 +4913,7 @@ class HandleTypes extends HandleTypesEval {
 		if(url.includes("&")) debugger;
 		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
-	/** @private @arg {R_SearchPage} x */
+	/** @private @arg {RS_Page_Search} x */
 	RS_SearchPage(x) {
 		const cf="RS_SearchPage";
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);

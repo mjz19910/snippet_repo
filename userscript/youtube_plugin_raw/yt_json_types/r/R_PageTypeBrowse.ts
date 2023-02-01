@@ -1,7 +1,7 @@
 type R_PageTypeBrowse={
 	pageType: "browse";
 	endpoint: GE_Browse;
-	response: RS_BrowsePage;
+	response: RS_Page_Browse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
