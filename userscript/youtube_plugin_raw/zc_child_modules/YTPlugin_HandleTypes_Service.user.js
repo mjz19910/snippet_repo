@@ -3187,7 +3187,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_Signal} x */
 	AD_Signal(x) {
 		const cf="AD_Signal";
-		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+		const {signal,...y}=this.s(cf,x); this.g(y);
 		switch(signal) {
 			default: debugger; break;
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
@@ -3232,7 +3232,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.listType) {
 			default: break;
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
-				const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+				const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);
 				this.SE_CreatePlaylist(onCreateListCommand);
 				this.t(openListPanel,this.a_primitive_bool);
 				this.z([openMiniplayer],this.a_primitive_bool);
@@ -3252,7 +3252,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x.listType) {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
-				const {openMiniplayer,videoId,listType,onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+				const {openMiniplayer,videoId,listType,onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);
 				this.SE_CreatePlaylist(onCreateListCommand);
 				if(openListPanel!==void 0) debugger;
 				this.t(openListPanel,this.a_primitive_bool);
@@ -3268,7 +3268,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DS_CreatePlaylist(b);
 		{
 			let x=u.webCommandMetadata;
-			const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+			const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
 			if(sendPost!==true) debugger;
 			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
 		}
@@ -3276,7 +3276,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
-		const {params,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+		const {params,videoIds,...y}=this.s(cf,x); this.g(y);
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
@@ -3426,7 +3426,7 @@ class HandleTypes extends HandleTypesEval {
 	T_DE_SettingItem_AutonavForDesktop(x) {
 		if("boolValue" in x) {
 			const cf="T_DE_SettingItem.407";
-			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.s(cf,x); this.g(y);
 			if(settingItemId!=="407") debugger;
 			this.a_primitive_bool(boolValue);
 			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
@@ -3578,14 +3578,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {
 		const cf="GM_AddToPlaylistService";
-		const {apiUrl,sendPost,...y1}=this.s(cf,x); this.g(y1);/*#destructure*/
+		const {apiUrl,sendPost,...y1}=this.s(cf,x); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
 		if(sendPost!==true) debugger;
 	}
 	/** @protected @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
 		const cf="DE_AddToPlaylistService";
-		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+		const {videoId,...y}=this.s(cf,x); this.g(y);
 		this.videoId(videoId);
 	}
 	/** @private @arg {DE_PlaylistEdit} x */
@@ -4889,7 +4889,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("serviceEndpoint" in x) {
-			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure*/
+			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
 			this.D_Accessibility(accessibility);
 			this.G_Text(formattedTitle);
 			{
@@ -4898,10 +4898,18 @@ class HandleTypes extends HandleTypesEval {
 					default: this.codegen_case(`${cf}.icon`,x); break;
 				}
 			}
-			let [cm,se_des]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
-			this.M_Empty_WCM(`${cf}.SE_Signal.web_meta`,cm);
-			this.G_ClientSignal(se_des);
+			let [a,b]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
+			this.M_SendPost(a);
+			this.G_ClientSignal(b);
 			this.trackingParams(cf,trackingParams);
+			return;
+		}
+		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x) {
+			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf,x); this.g(y);
+			this.D_Accessibility(accessibility);
+			this.trackingParams(cf,trackingParams);
+			this.G_Text(formattedTitle);
+			this.D_Accessibility(accessibility);
 			return;
 		}
 		this.codegen_typedef_all(cf,x);
