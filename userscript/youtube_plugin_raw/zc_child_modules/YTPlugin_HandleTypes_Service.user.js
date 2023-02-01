@@ -3558,10 +3558,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_NotificationText} x */
 	D_NotificationText(x) {
 		const cf="D_NotificationText";
-		const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+		if("undoText" in x) {
+			const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+			this.G_Text(successResponseText);
+			this.G_Text(undoText);
+			this.E_UndoFeedback(undoEndpoint);
+			this.trackingParams(cf,trackingParams);
+			return;
+		}
+		const {successResponseText,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(successResponseText);
-		this.G_Text(undoText);
-		this.E_UndoFeedback(undoEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_MenuNavigationItem} x */

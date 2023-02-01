@@ -3,4 +3,7 @@ type D_NotificationText={
 	undoText: G_Text;
 	undoEndpoint: E_UndoFeedback;
 	trackingParams: string;
+}|{
+	successResponseText: G_Text;
+	trackingParams: string;
 };
