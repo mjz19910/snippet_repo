@@ -3140,7 +3140,6 @@ class HandleTypes extends HandleTypesEval {
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
 		this.codegen_typedef_all(cf,x);
-		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
@@ -3797,7 +3796,6 @@ class HandleTypes extends HandleTypesEval {
 	TD_ItemSection_3_I_1(x) {
 		const cf="TR_ItemSection_3_I_1";
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.codegen_typedef_all(cf,x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
@@ -5679,7 +5677,6 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
 		this.codegen_typedef_all(cf,x);
-		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_ResetChannelUnreadCount} x */
 	DC_ResetChannelUnreadCount(x) {x;}
@@ -5860,7 +5857,6 @@ class HandleTypes extends HandleTypesEval {
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
 		this.codegen_typedef_all(cf,x);
-		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
@@ -5878,7 +5874,6 @@ class HandleTypes extends HandleTypesEval {
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		this.codegen_typedef_all(cf,x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
@@ -5963,7 +5958,6 @@ class HandleTypes extends HandleTypesEval {
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
-		this.codegen_typedef_all(cf,x);
 		this.codegen_typedef_all(cf,x);
 		this.G_Text(x);
 	}
@@ -6282,7 +6276,6 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint";
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
-		this.codegen_typedef_all(cf,x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointHeader} x */
@@ -7616,7 +7609,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(contents,this.G_PlaylistPanel_Item);
 		this.t(currentIndex,this.a_primitive_num);
 		this.playlistId(playlistId);
-		y;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
