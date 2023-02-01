@@ -10,7 +10,6 @@ type AD_ReplaceEnclosing_Item=R_NotificationText|RA_ReelDismissal|R_Notification
 type AD_ReplaceEnclosing=T_Item<AD_ReplaceEnclosing_Item>;
 type AD_SendFeedback={bucket: "Kevlar";};
 type AD_SetActivePanelItem={};
-type Popup_ConfirmDialog={popup: R_ConfirmDialog; popupType: "DIALOG";};
 type AD_ShowEngagementPanelScrim={engagementPanelTargetId: "engagement-panel-clip-create"; onClickCommands: TA_OpenPopup<Popup_ConfirmDialog>[];};
 type AD_Signal={signal: DU_SignalStr;};
 type AD_UndoFeedback=B_Hack;
@@ -20,3 +19,13 @@ type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE
 //#endregion
 type AD_ReelDismissal={onDismissalCompletionRenderer: RA_NotificationAction; trackingParams: string;};
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};
+type AD_AccountItem={
+	accountName: G_Text;
+	accountPhoto: R_Thumbnail;
+	isSelected: boolean;
+	isDisabled: boolean;
+	hasChannel: boolean;
+	serviceEndpoint: {};
+	accountByline: G_Text;
+	channelHandle: G_Text;
+};

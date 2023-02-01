@@ -294,3 +294,10 @@ type G_SE_MenuService=
 	;
 ;
 type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
+type G_AllSignalTypes=
+	|Signal_GetNotificationsMenu
+	|G_ClientSignal
+	|G_AllSignalServiceEndpoint['signalServiceEndpoint']
+	;
+;
+type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];

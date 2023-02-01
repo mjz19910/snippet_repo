@@ -2097,7 +2097,7 @@ class HandleTypes extends HandleTypesEval {
 		this.videoId(videoId);
 		return y;
 	}
-	/** @private @template {R_Omit_Menu_Radio&R_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
+	/** @private @template {D_Omit_Menu_Radio&D_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	R_Omit_Menu_Radio(cf,x) {
 		let {navigationEndpoint,menu,...y}=this.R_Omit_Compact_Player(cf,x);
 		this.R_Menu(menu);
@@ -3940,14 +3940,14 @@ class HandleTypes extends HandleTypesEval {
 		if(!webShowNewAutonavCountdown) debugger;
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @private @arg {CF_D_Menu_Omit} cf @template {R_Omit_Compact_Player} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Player} T @arg {T} x */
 	R_Omit_Compact_Player(cf,x) {
 		const {title,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {CF_D_Menu_Omit} cf @template {R_Omit_Compact_Video} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Video} T @arg {T} x */
 	R_Omit_Compact_Video(cf,x) {
 		let u=this.R_Omit_Compact_Player(cf,x);
 		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);

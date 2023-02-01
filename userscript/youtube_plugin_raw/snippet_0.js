@@ -657,7 +657,7 @@ class ND extends Snippet_0_tmp {
 	}
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {x; debugger;}
-	/** @protected @template {R_Omit_Menu_Video&R_Omit_Compact_Video} U @arg {U} x */
+	/** @protected @template {D_Omit_Menu_Video&D_Omit_Compact_Video} U @arg {U} x */
 	Omit_Menu_Video(x) {
 		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(x);
 		this.D_Thumbnail(thumbnail);

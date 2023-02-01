@@ -607,16 +607,6 @@ type D_FusionSearchbox={
 	searchEndpoint: E_Search;
 	clearButton: R_Button;
 };
-type AD_AccountItem={
-	accountName: G_Text;
-	accountPhoto: R_Thumbnail;
-	isSelected: boolean;
-	isDisabled: boolean;
-	hasChannel: boolean;
-	serviceEndpoint: {};
-	accountByline: G_Text;
-	channelHandle: G_Text;
-};
 type D_ChannelOptions={
 	avatar: R_Thumbnail;
 	avatarEndpoint: {};
@@ -986,3 +976,23 @@ type D_PlaylistId=
 	|"LL"
 	;
 ;
+type D_Omit_Menu_Video={
+	thumbnail: R_Thumbnail;
+	longBylineText: G_Text;
+	viewCountText: G_Text;
+	navigationEndpoint: E_Watch;
+	shortBylineText: G_Text;
+	menu: R_Menu;
+};
+type D_Omit_Menu_Radio={
+	navigationEndpoint: E_Watch;
+	menu: R_Menu;
+};
+type D_Omit_Menu_Video_Ex={
+	ownerBadges: RMD_Badge[];
+};
+type D_NotificationMenu_PopupItemMenu=TR_MultiPageMenu<D_NotificationMenu_PopupItem>;
+type D_NotificationMenu_Popup={
+	popup: D_NotificationMenu_PopupItemMenu;
+	popupType: "DROPDOWN";
+};

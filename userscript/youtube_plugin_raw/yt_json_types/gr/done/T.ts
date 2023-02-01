@@ -9,6 +9,10 @@ type T_MutType<T extends string>=T_EnumStr<"ENTITY_MUTATION_TYPE",T>;
 type T_Item<T>={item: T;};
 type T_Menu<T>={menu: T;};
 type T_Page<T>={page: T;};
+type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T;};
+type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
+type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
+type T_OpenPopup_Dialog<T>={popupType: "DIALOG"; popup: T;};
 //#endregion
 //#region Object conversion Templates
 type T_RemovePrefix<T,T2 extends string>={
@@ -16,9 +20,6 @@ type T_RemovePrefix<T,T2 extends string>={
 };
 //#endregion
 //#region TA_
-type TA_OpenPopup_Dropdown<T>={popup: T; popupType: "DROPDOWN";};
-type TA_OpenPopup_Toast<T>={popup: T; popupType: "TOAST";};
-type TA_OpenPopup_TopAlignedDialog<T>=BTA_OpenPopup_TopAligned<"DIALOG",T>;
 //#endregion
 //#region TB_
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
@@ -66,10 +67,6 @@ type T_Items_TP<T>={
 	trackingParams: string;
 };
 type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
-type TAD_OpenPopup_Dialog<T>={
-	popup: T;
-	popupType: "DIALOG";
-};
 type TD_ContinuationItem_CE<T>={
 	trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
 	continuationEndpoint: T;
@@ -205,33 +202,18 @@ type T_MapEntry<T,U>={key: T; value: U;};
 type T_SettingsPageStr<T extends string>=`SP${T}`;
 type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
 type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
-type R_Omit_Compact_Player={
+type D_Omit_Compact_Player={
 	title: G_Text;
 	trackingParams: string;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
-type T_Omit_Compact_Player<T extends R_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
-type R_Omit_Compact_Video=R_Omit_Compact_Player&{
+type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
+type D_Omit_Compact_Video=D_Omit_Compact_Player&{
 	videoId: string;
 	shortViewCountText: G_Text;
 	publishedTimeText: G_Text;
 };
-type T_Omit_Compact_Video<T extends R_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
-type R_Omit_Menu_Video={
-	thumbnail: R_Thumbnail;
-	longBylineText: G_Text;
-	viewCountText: G_Text;
-	navigationEndpoint: E_Watch;
-	shortBylineText: G_Text;
-	menu: R_Menu;
-};
-type R_Omit_Menu_Radio={
-	navigationEndpoint: E_Watch;
-	menu: R_Menu;
-};
-type R_Omit_Menu_Video_Ex={
-	ownerBadges: RMD_Badge[];
-};
+type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
 type T_Playlist<T>={
 	playlist: T;
 };
@@ -284,16 +266,3 @@ type TR_SectionListItem_3_Empty=TR_SectionListItem_3<{},{},{}>;
 type T_DC_Content<T>={trackingParams: string; contents: T[];};
 type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
 type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
-
-
-type Signal_GetNotificationsMenu={
-	signal: "GET_NOTIFICATIONS_MENU";
-	actions: G_Action_GetNotificationsMenu[];
-};
-type G_AllSignalTypes=
-	|Signal_GetNotificationsMenu
-	|G_ClientSignal
-	|G_AllSignalServiceEndpoint['signalServiceEndpoint']
-	;
-;
-type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];
