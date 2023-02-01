@@ -46,6 +46,9 @@ type DC_Continuation={
 }|{
 	token: string;
 	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
+}|{
+	token: string;
+	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
 };
 type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 type DC_Executor=Record<"commands",AC_Executor[]>;

@@ -2303,7 +2303,12 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_Continuation";
 		switch(x.request) {
 			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
+				if("command" in x) {
+					return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);
+				}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": return this.g(this.DC_Continuation_Omit(cf,x));
 		}
