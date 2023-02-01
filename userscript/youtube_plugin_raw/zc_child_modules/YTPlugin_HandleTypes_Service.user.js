@@ -39,6 +39,7 @@ function init_module() {
 	//#region exports
 	export_((exports) => {
 		exports.HandleTypes=HandleTypes;
+		exports.as_any=as_any;
 	});
 	//#endregion
 	//#region Start main
