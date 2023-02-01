@@ -470,6 +470,7 @@ class CodegenService extends BaseService {
 		if(typeof cf==="number") {
 			ret=`\ntype ArrayType_${cf}=${tc}\n`;
 		} else {
+			cf=cf.replaceAll(".","$d$");
 			ret=`\ntype ${cf}=${tc}\n`;
 		}
 		return ret;
