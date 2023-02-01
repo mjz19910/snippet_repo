@@ -1813,6 +1813,13 @@ class HandleTypes extends HandleTypesEval {
 		for(let k of ka) {
 			switch(k) {
 				default: debugger; break;
+				case "trackingParams": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+				} break;
 				case "command": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
@@ -1866,13 +1873,6 @@ class HandleTypes extends HandleTypesEval {
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
 					let {isDisabled,size,style,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
-				} break;
-				case "trackingParams": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
 				} break;
 			}
 		}
