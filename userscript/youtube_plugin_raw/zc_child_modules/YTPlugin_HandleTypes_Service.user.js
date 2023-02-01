@@ -2821,27 +2821,28 @@ class HandleTypes extends HandleTypesEval {
 			this.t(videoId,this.videoId);
 			return;
 		}
-		if("inputType" in x) {
-			debugger;
-			const {inputType}=this.s(cf,x);
-			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
-			return;
-		}
 		if("sequenceParams" in x) {
 			debugger;
-			const {sequenceProvider,sequenceParams}=this.s(cf,x);
-			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			const {sequenceParams}=this.s(cf,x);
 			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
 			return;
 		}
 		if("thumbnail" in x) {
 			debugger;
+			const {thumbnail}=this.s(cf,x);
+			this.R_Thumbnail(thumbnail);
 			return;
 		}
-		const {playerParams,overlay,params,...y}=this.s(cf,x); this.g(y);
-		this.params(cf,"reel.player_params",playerParams);
-		this.R_ReelPlayerOverlay(overlay);
-		this.params(cf,"reel.params",params);
+		if("inputType" in x) {
+			const {playerParams,overlay,params,sequenceProvider,inputType,...y}=this.s(cf,x); this.g(y);
+			this.params(cf,"reel.player_params",playerParams);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			return;
+		}
+		this.g(x);
 	}
 	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {

@@ -48,7 +48,19 @@ type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serial
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
 type DE_PlaylistEditor={playlistId: D_PlaylistId;};
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
-type DE_ReelWatch={videoId: string;}|{thumbnail: R_Thumbnail;}|{playerParams: string; overlay: R_ReelPlayerOverlay; params: string;}|{sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC"; sequenceParams: string;}|{inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";};
+type DE_ReelWatch=
+	|{
+		playerParams: "8AEBuAQP";
+		overlay: R_ReelPlayerOverlay;
+		params: "CA8%3D";
+		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
+		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
+	}
+	|{videoId: string;}
+	|{thumbnail: R_Thumbnail;}
+	|{sequenceParams: string;}
+	;
+;
 type DE_Search={query: string;};
 type DE_ShareEntityService={serializedShareEntity: string; commands: TA_OpenPopup<Popup_ShareEntityService>[];};
 type DE_ShowEngagementPanel={panelIdentifier: "engagement-panel-searchable-transcript";};
