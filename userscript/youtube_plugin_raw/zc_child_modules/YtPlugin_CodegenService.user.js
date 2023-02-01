@@ -26,11 +26,12 @@ export_(exports => {
 	exports.__is_module_flag__=true;
 });
 class JsonReplacerState {
-	/** @constructor @public @arg {string} gen_name @arg {string[]} keys */
-	constructor(gen_name,keys) {
+	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
+	constructor(gen_name,keys,is_root) {
 		this.object_count=0;
 		this.gen_name=gen_name;
 		this.key_keep_arr=keys;
+		this.is_root=is_root;
 		this.k1="";
 		/** @api @public @type {unknown[]} */
 		this.object_store=[];
@@ -212,7 +213,7 @@ class CodegenService extends BaseService {
 	typedef_cache=[];
 	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,ret_val) {
-		let new_typedef=this.#_codegen_typedef(cf,x);
+		let new_typedef=this.codegen_typedef_impl(cf,x,true);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
 			if(!this.typedef_cache.includes(new_typedef)) {
@@ -282,7 +283,7 @@ class CodegenService extends BaseService {
 	get_typedef_part(x) {
 		let gn=this.get_name_from_keys(x);
 		if(!gn) return null;
-		let gr=this.#_codegen_typedef(gn,x);
+		let gr=this.codegen_typedef_impl(gn,x);
 		if(!gr) return null;
 		let gr_f=this.filter_typedef_part_gen(gr);
 		let sr=split_string_once(gr_f,"=")[1];
@@ -301,7 +302,7 @@ class CodegenService extends BaseService {
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
-		if(k1==="") return x;
+		if(state.is_root&&k1==="") return x;
 		let g=() => this.json_auto_replace(x);
 		const {gen_name: r,key_keep_arr}=state;
 		if(x instanceof Array) {
@@ -435,8 +436,8 @@ class CodegenService extends BaseService {
 		if(state.object_count<3) return x;
 		return {};
 	}
-	/** @no_mod @arg {string} cf @arg {object} x */
-	#_codegen_typedef(cf,x) {
+	/** @private @arg {string} cf @arg {object} x */
+	codegen_typedef_impl(cf,x,is_root=false) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @private @type {{[x: number|string]:{}}} */
@@ -447,7 +448,7 @@ class CodegenService extends BaseService {
 			keys=keys.concat(Object.keys(x.response));
 		}
 		/** @private @type {JsonReplacerState} */
-		let state=new JsonReplacerState(cf,keys);
+		let state=new JsonReplacerState(cf,keys,is_root);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
