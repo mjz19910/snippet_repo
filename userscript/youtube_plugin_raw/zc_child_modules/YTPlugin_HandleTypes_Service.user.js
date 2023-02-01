@@ -451,10 +451,10 @@ class HandleTypes extends HandleTypesEval {
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);
-		const is_not_in_set=!ty_arr.includes(iconType);
-		if(is_not_in_set) {console.log(`[missing_icon.${cf1}]`,iconType);}
+		const is_missing_iconType=!ty_arr.includes(iconType);
+		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
 		this.save_string("[IconType]",iconType);
-		return is_not_in_set;
+		return is_missing_iconType;
 	}
 	/** @private @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
@@ -4835,7 +4835,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,this.D_GuideEntry_IconType);
+		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType);
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType,this.D_GuideEntry_MissingIconType);
 		{
 			let x=navigationEndpoint;
@@ -4893,7 +4893,7 @@ class HandleTypes extends HandleTypesEval {
 			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf1,x); this.g(y);
 			this.D_Accessibility(accessibility);
 			this.G_Text(formattedTitle);
-			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,this.D_GuideEntry_IconType);
+			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType);
 			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType,this.D_GuideEntry_MissingIconType);
 			let [a,b]=this.T_SE_Signal(`${cf1}.SE_Signal`,serviceEndpoint);
 			this.M_SendPost(a);
