@@ -1336,19 +1336,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.DE_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_Empty_WCM("DC_GetTranscript",a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.DE_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("DC_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.DE_Empty_WCM("DE_WatchPlaylist",a); this.DE_WatchPlaylist(b);}
+	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_Empty_WCM("DE_WatchPlaylist",a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {E_PlaylistEditor} x */
-	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.DE_Empty_WCM("DC_PlaylistEditor",a);}
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.DE_PlaylistEditor(b); this.M_Empty_WCM("DC_PlaylistEditor",a);}
 	/** @private @arg {E_SignalNavigation} x */
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.DE_SignalNavigation(b); this.M_VE83769(a);}
 	/** @private @arg {E_ShareEntityService} x */
@@ -1669,7 +1669,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
-	DE_Empty_WCM(cf,x) {
+	M_Empty_WCM(cf,x) {
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CompactLink} x */
@@ -4890,9 +4890,14 @@ class HandleTypes extends HandleTypesEval {
 		const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure*/
 		this.D_Accessibility(accessibility);
 		this.G_Text(formattedTitle);
-		this.ceq(icon.iconType,"HELP");
+		{
+			let x=icon.iconType;
+			switch(x) {
+				default: this.codegen_case(`${cf}.icon`,x); break;
+			}
+		}
 		let [cm,se_des]=this.T_SE_Signal(`${cf}.SE_Signal`,serviceEndpoint);
-		this.g(cm.webCommandMetadata);
+		this.M_Empty_WCM(`${cf}.SE_Signal.web_meta`,cm);
 		this.g(se_des);
 		this.trackingParams(cf,trackingParams);
 	}
