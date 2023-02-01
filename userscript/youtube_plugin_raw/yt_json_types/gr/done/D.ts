@@ -438,7 +438,7 @@ type D_AccountLinkButton={
 	adInfoRenderer: RL$ActionCompanionAdInfo;
 	adVideoId: string;
 	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
-	adLayoutLoggingData: D_AdLayoutLogging;
+	adLayoutLoggingData: D_AdLayoutLoggingData;
 	associatedCompositePlayerBytesLayoutId?: `${string}-0000-${string}-${string}-${string}`;
 }; type D_AlertWithButton={
 	type: "INFO";
@@ -903,4 +903,26 @@ type D_SubFeedOption={
 	trackingParams: string;
 };
 type D_BrowseEndpointContextMusicConfig={pageType: T_EnumStr<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;};
-
+type D_AdSlot={
+	adSlotMetadata: DMD_AdSlot;
+	fulfillmentContent: {
+		fulfilledLayout: R_PageTopAdLayout;
+	}|R_FulfillmentLayout;
+	enablePacfLoggingWeb: boolean;
+};
+type D_AdLayoutLoggingData={serializedAdServingDataEntry: string;};
+type D_AdLayoutMetadata={
+	layoutId: string;
+	layoutType: "LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED";
+	adLayoutLoggingData: D_AdLayoutLoggingData;
+};
+type D_PageTopAdLayout={
+	adLayoutMetadata: D_AdLayoutMetadata;
+	renderingContent: R_VideoMastheadAdV3;
+};
+type D_TextRun={
+	text: string;
+	navigationEndpoint?: G_TextRun_Endpoint;
+	loggingDirectives?: D_LoggingDirectives;
+	bold?: boolean;
+};

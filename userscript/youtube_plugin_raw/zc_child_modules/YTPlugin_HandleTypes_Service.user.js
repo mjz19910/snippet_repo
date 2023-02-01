@@ -5757,7 +5757,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 	}
-	/** @private @arg {D_AdLayoutLogging} x */
+	/** @private @arg {D_AdLayoutLoggingData} x */
 	D_AdLayoutLogging(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"AdServingDataEntry",x));}
 	/** @private @arg {D_PrefetchHintConfig} x */
 	D_PrefetchHintConfig(x) {

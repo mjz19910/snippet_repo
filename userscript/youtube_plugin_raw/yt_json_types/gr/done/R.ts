@@ -11,4 +11,5 @@ type R_GuideEntry={guideEntryRenderer: D_GuideEntry;}; type R_PlayerOverlay={pla
 type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D_ProfileColumnStatsEntry;};
 type R_ProfileColumnStats={profileColumnStatsRenderer: D_ProfileColumnStats;};
 type R_ReelPlayerOverlay={reelPlayerOverlayRenderer: D_ReelPlayerOverlay;};
+type R_PageTopAdLayout={pageTopAdLayoutRenderer: D_PageTopAdLayout;};
 //#endregion
