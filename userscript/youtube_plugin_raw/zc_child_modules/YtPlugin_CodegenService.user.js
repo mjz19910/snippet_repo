@@ -301,6 +301,7 @@ class CodegenService extends BaseService {
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
+		if(k1==="") return x;
 		let g=() => this.json_auto_replace(x);
 		const {gen_name: r,key_keep_arr}=state;
 		if(x instanceof Array) {
@@ -390,7 +391,6 @@ class CodegenService extends BaseService {
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
-		if(k1==="") return x;
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		{debugger;}
 		return null;
