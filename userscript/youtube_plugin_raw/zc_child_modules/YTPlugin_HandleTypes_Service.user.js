@@ -1760,7 +1760,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
-	expected_button_iconTypes=[
+	Button_iconType=[
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
 		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
 		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND",
@@ -1785,7 +1785,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t;
 	}
 	/** @type {string[]} */
-	missing_expected_button_iconTypes=[];
+	Button_missing_iconType=[];
 	/** @private @private @arg {any} z @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
 	D_Button_Omit_TP(cf,x,dc=true,z=null) {if(dc) {const {trackingParams,...y}=this.s(cf,x); z=y;} else {const {trackingParams,...y}=x; this.trackingParams(cf,trackingParams); z=y;} return z;}
 	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
@@ -1843,24 +1843,26 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.codegen_typedef_all(cf,x);
 	}
+	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {"D_Button_OnIcon"|"D_GuideEntry_WithNavEP"} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
+	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
+		expected_arr.push(icon.iconType);
+		missing_arr.push(icon.iconType);
+		let arr_items=JSON.stringify(missing_arr,null,"\t");
+		console.group("-- [D_Button.codegen] --");
+		try {
+			console.log("-- [D_Button.icon] --",arr_items);
+			this.codegen_typedef_all(cf,x);
+		} finally {
+			console.groupEnd();
+		}
+	}
 	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_OnIcon(x) {
 		const cf="D_Button_OnIcon";
 		let ka=this.get_keys_of(x);
 		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
-		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
-		if(missing) {
-			this.missing_expected_button_iconTypes.push(icon.iconType);
-			this.expected_button_iconTypes.push(icon.iconType);
-			let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
-			console.group("-- [D_Button.codegen] --");
-			try {
-				console.log("-- [D_Button.icon] --",arr_items);
-				this.codegen_typedef_all(cf,x);
-			} finally {
-				console.groupEnd();
-			}
-		}
+		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
+		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 		for(let k of ka) {
 			switch(k) {
 				case "serviceEndpoint": {
@@ -4795,18 +4797,21 @@ class HandleTypes extends HandleTypesEval {
 		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);
 		if(liveBroadcasting!==false) debugger;
 	}
-	/** @type {Extract<Exclude<Extract<D_GuideEntry,{navigationEndpoint:any}>,{isPrimary:any}>,{icon:any}>['icon']['iconType'][]} */
-	D_GuideEntry_IconTypes=[
+	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
+	D_GuideEntry_IconType=[
 		"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
 		"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
 		"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
 		"ADD_CIRCLE",
 	];
-	/** @arg {"D_GuideEntry"} cf @arg {Extract<Exclude<D_GuideEntry,{entryData:any}>,{navigationEndpoint:any}>} x */
-	D_GuideEntry_2(cf,x) {
-		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf,x);
+	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
+	D_GuideEntry_MissingIconType=[];
+	/** @arg {"D_GuideEntry"} cf1 @arg {Extract<Exclude<D_GuideEntry,{entryData:any}>,{navigationEndpoint:any}>} x */
+	D_GuideEntry_WithNavEP(cf1,x) {
+		const cf2="D_GuideEntry_WithNavEP";
+		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf1,x);
 		if("isPrimary" in x) {
-			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+			const {navigationEndpoint,icon,isPrimary,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.GE_Browse(navigationEndpoint);
 			switch(icon.iconType) {
@@ -4817,7 +4822,7 @@ class HandleTypes extends HandleTypesEval {
 			if(isPrimary!==true) debugger;
 			return;
 		}
-		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
+		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 		x: {
 			let x=navigationEndpoint;
 			if("browseEndpoint" in x) {
@@ -4830,10 +4835,8 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,[]);
-		if(is_not_in_set) {
-			this.codegen_typedef_all(cf,x);
-		}
+		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,this.D_GuideEntry_IconType);
+		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType,this.D_GuideEntry_MissingIconType);
 		{
 			let x=navigationEndpoint;
 			if("urlEndpoint" in x) return this.E_Url(x);
@@ -4864,7 +4867,7 @@ class HandleTypes extends HandleTypesEval {
 			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
 		}
-		if("navigationEndpoint" in x) return this.D_GuideEntry_2(cf,x);
+		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf,x);
 		if("isPrimary" in x) {
 			const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 			if(icon.iconType!=="TAB_SHORTS") debugger;
