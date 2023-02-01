@@ -2,11 +2,6 @@ import {Prelude} from "./out_support.js"; export {Prelude};
 import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:accessibility";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:accessibilityData";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:serviceEndpoint";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:serviceEndpoint:text";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibility";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibilityData";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:command";}
