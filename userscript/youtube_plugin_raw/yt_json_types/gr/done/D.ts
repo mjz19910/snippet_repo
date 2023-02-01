@@ -996,3 +996,78 @@ type D_NotificationMenu_Popup={
 	popup: D_NotificationMenu_PopupItemMenu;
 	popupType: "DROPDOWN";
 };
+type D_Channel_MD={
+	title: string;
+	description: string;
+	rssUrl: string;
+	externalId: `UC${string}`;
+	keywords: string;
+	ownerUrls: [`http://www.youtube.com/@${string}`];
+	avatar: D_Thumbnail;
+	channelUrl: string;
+	isFamilySafe: true;
+	availableCountryCodes: string[];
+	androidDeepLink: string;
+	androidAppindexingLink: string;
+	iosAppindexingLink: string;
+	vanityChannelUrl: `http://www.youtube.com/@${string}`;
+};
+type D_Chapter={
+	title: G_Text;
+	timeRangeStartMillis: 0;
+	onActiveCommand: A_SetActivePanelItem;
+	thumbnail: D_Thumbnail;
+};
+type D_CommentsEntryPointTeaser={
+	teaserAvatar: D_Thumbnail&{
+		accessibility: D_Accessibility;
+	};
+	teaserContent: G_Text;
+	trackingParams: string;
+};
+type D_GridVideo={
+	badges: {}[];
+	channelThumbnail: D_Thumbnail;
+	menu: R_Menu;
+	navigationEndpoint: {};
+	shortBylineText: G_Text;
+	shortViewCountText: G_Text;
+	thumbnail: D_Thumbnail;
+	thumbnailOverlay: G_ThumbnailOverlayItem[];
+	title: G_Text;
+	trackingParams: string;
+	videoId: string;
+	viewCountText: G_Text;
+};
+type D_GuideEntry_PresentationNewContent={
+	navigationEndpoint: GE_Browse;
+	thumbnail: D_Thumbnail;
+	badges: D_LiveBroadcastingBadge;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+	entryData: R_GuideEntryData;
+	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
+};
+type D_GuideEntry_PresentationNone={
+	navigationEndpoint: GE_Browse;
+	thumbnail: D_Thumbnail;
+	badges: D_LiveBroadcastingBadge;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: D_Accessibility;
+	entryData: R_GuideEntryData;
+	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
+};
+type D_LiveChatTextMessage={
+	message: G_Text;
+	authorName: G_Text;
+	authorPhoto: D_Thumbnail;
+	contextMenuEndpoint: {};
+	id: string;
+	authorBadges?: R_LiveChatAuthorBadge[];
+	timestampUsec: `${number}`;
+	authorExternalChannelId: `UC${string}`;
+	contextMenuAccessibility: D_Accessibility;
+	timestampText: G_Text;
+};
