@@ -1721,13 +1721,13 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return y;
 	}
-	/** @private @template {D_Button_EX_1_Command} T @arg {CF_D_Button} cf @arg {T} x */
-	D_Button_Omit_Command(cf,x) {
-		let {command,trackingParams,...y}=this.s(cf,x);
+	/** @private @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
+	D_Button_Omit_TP(cf,x) {
+		let {trackingParams,...y}=this.s(cf,x);
 		this.trackingParams(cf,trackingParams);
-		// if(isDisabled!==false) debugger;
-		// this.t(command,this.GC_Button);
-		return y;
+		/** @type {any} */
+		let z=y;
+		return z;
 	}
 	/** @arg {"D_Button"|"D_Button:WithCommand:text"} cf1 @arg {D_Button_Ex_1_Omit_Size} x */
 	D_Button_Scope_1(cf1,x) {
@@ -1827,47 +1827,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @private @arg {"D_Button"} cf1 @arg {D_Button_EX_1_Command} x */
-	D_Button_WithCommand(cf1,x) {
-		/** @type {`${cf1}:WithCommand`} */
-		const cf2=`${cf1}:WithCommand`;
-		if("text" in x) {
-			/** @type {`${cf2}:text`} */
-			const cf3=`${cf2}:text`;
-			const {isDisabled,text,...y1}=this.D_Button_Omit_Command(`${cf1}.With.command.targetId`,x); y1;
-			if(isDisabled!==false) debugger;
-			this.G_Text(text);
-			this.D_Button_Scope_1(cf3,y1);
-			return;
-		}
-		if("targetId" in x) {
-			/** @type {`${cf2}:targetId`} */
-			const cf3=`${cf2}:targetId`;
-			let {targetId,isDisabled,icon,accessibilityData,style,size,...y}=this.D_Button_Omit_Command(`${cf1}.With.command.targetId`,x); this.g(y);
-			switch(targetId) {
-				case "clip-info-button": break;
-				default: this.codegen_case(`${cf3}.case`,targetId); this.do_codegen(cf3,x); break;
-			}
-			if(isDisabled!==false) debugger;
-			if(style!=="STYLE_DEFAULT") debugger;
-			if(size!=="SIZE_DEFAULT") debugger;
-			return;
-		}
-		if("command" in x) {
-			/** @type {`${cf2}:command`} */
-			const cf3=`${cf2}:command`;
-			let r=this.D_Button_Omit_Command(`${cf3}.omit`,x);
-			let ka=this.get_keys_of(r);
-			for(let k of ka) {
-				switch(k) {
-					default: this.generate_case(cf3,k); this.do_codegen(cf3,x); break;
-					case "": break;
-				}
-			}
-			return;
-		}
-		this.g(x);
-	}
 	/** @private @template {Extract<D_Button,{isDisabled:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "style"|"size"|"trackingParams"|"isDisabled">:never} */
 	D_Button_Omit_IsDisabled(cf,x) {
 		let {isDisabled,...y}=this.D_Button_Omit_FromStyle(cf,x);
@@ -1895,6 +1854,9 @@ class HandleTypes extends HandleTypesEval {
 			group_entry[1].push(x);
 		}
 		group_arr.push([k,[x]]);
+	}
+	static {
+		this.prototype.D_Button_WithStyle;
 	}
 	/** @private @arg {"D_Button"} cf1 @arg {D_Button_EX_1_Style} x */
 	D_Button_WithStyle(cf1,x) {
@@ -2003,14 +1965,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {"D_Button"} cf @arg {Exclude<Exclude<D_Button,{icon:any;}>,{style:any;}>} x */
-	D_Button_2_Only(cf,x) {
-		const {trackingParams,command,...y}=x; this.g(y);
-		this.trackingParams(cf,trackingParams);
-		let [x1,x2]=this.T_SE_Signal(`${cf}.SE_Signal`,command);
-		this.G_ClientSignal(x2);
-		this.M_SendPost(x1);
-	}
 	/** @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @private @arg {string} cf @arg {{}} x */
@@ -2034,29 +1988,106 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		if("icon" in x) {
-			const {icon}=x;
-			let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
-			if(missing) {
-				let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
-				if(missing_ex===false) return;
-				this.missing_expected_button_iconTypes.push(icon.iconType);
-				let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
-				console.group("-- [D_Button.codegen] --");
-				x: try {
-					console.log("-- [D_Button.icon] --",arr_items);
-					this.codegen_log_all(cf,x);
-				} finally {
-					console.groupEnd();
+		let ka=this.get_keys_of(x);
+		for(let k of ka) {
+			switch(k) {
+				default: debugger; break;
+				case "icon": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					this.codegen_log_all(cf1,x);
+					const {icon}=x;
+					let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.expected_button_iconTypes);
+					if(missing) {
+						let missing_ex=this.T_Icon_AnyOf("D_Icon_Button",icon,this.missing_expected_button_iconTypes);
+						if(missing_ex===false) return;
+						this.missing_expected_button_iconTypes.push(icon.iconType);
+						let arr_items=JSON.stringify(this.missing_expected_button_iconTypes,null,"\t");
+						console.group("-- [D_Button.codegen] --");
+						try {
+							console.log("-- [D_Button.icon] --",arr_items);
+							this.codegen_log_all(cf,x);
+						} finally {
+							console.groupEnd();
+						}
+					}
+				} break;
+				case "style": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "size": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "text": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					const {text,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					this.G_Text(text);
+				} break;
+				case "command": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {command,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					this.GC_Button(command);
+				} break;
+				case "isDisabled": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "accessibility": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "trackingParams": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "accessibilityData": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "serviceEndpoint": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "tooltip": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
+				} break;
+				case "targetId": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					const {targetId,...y}=x; y;
+					switch(targetId) {
+						case "clip-info-button": break;
+						default: this.codegen_case(`${cf1}.case`,targetId); this.do_codegen(cf1,x); break;
+					}
+					this.codegen_log_all(cf1,x);
 				}
 			}
 		}
-		if(!("icon" in x||"style" in x)) return this.D_Button_2_Only(cf,x);
-		if("text" in x) return this.D_Button_WithText_Omit1(cf,x);
-		if("command" in x) return this.D_Button_WithCommand(cf,x);
-		if("style" in x) return this.D_Button_WithStyle(cf,x);
-		this.g(x);
-		debugger;
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {

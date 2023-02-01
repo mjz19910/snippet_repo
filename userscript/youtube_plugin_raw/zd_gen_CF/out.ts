@@ -9,9 +9,19 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:serviceEndpoint:text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:WithStyle:text";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithCommand:targetId.case";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibility";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibilityData";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:command";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:isDisabled";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:serviceEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:size";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:style";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:text";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:tooltip";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithStyle:accessibility";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:WithStyle:accessibilityData";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button:targetId.case";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
@@ -694,7 +704,6 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}
 		|{n: Prelude.CF_T_Items; t: Types.CF_T_Items_; v: "D_ProfileColumn";}
 		|{n: Prelude.CF_T_Items_TP; t: Types.CF_T_Items_TP_; v: "R_CompactLink_Items";}
-		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_Button.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_Button_SE.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_GuideEntry.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.U_UnseenCount.T_SE_Signal";}
