@@ -986,7 +986,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PlaylistAddToOption} x */
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {CD_TimedContinuation} x */
-	RD_TimedContinuation(x) {this.H_("RD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
+	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("AU_SubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
@@ -2608,7 +2608,7 @@ class HandleTypes extends HandleTypesEval {
 	RSU_M(x) {
 		const cf="RSU_M";
 		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);
-		this.RD_TimedContinuation(continuation);
+		this.CD_TimedContinuation(continuation);
 		this.z(actions,x => {
 			if("updateViewershipAction" in x) return this.UA_Viewership(x);
 			if("updateToggleButtonTextAction" in x) return this.UA_ToggleButtonText(x);

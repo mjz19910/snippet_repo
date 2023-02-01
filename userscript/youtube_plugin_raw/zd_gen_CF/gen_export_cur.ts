@@ -1,3 +1,3 @@
-export {Prelude} from "./out.js";
-export {Types} from "./out.js";
-export {Gen} from "./out.js";
+export {Prelude} from "./tmp.js";
+export {Types} from "./tmp.js";
+export {Gen} from "./tmp.js";
