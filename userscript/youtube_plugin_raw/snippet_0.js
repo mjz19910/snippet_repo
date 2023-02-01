@@ -434,28 +434,6 @@ export class Snippet_0_tmp {
 	}
 }
 class ND extends Snippet_0_tmp {
-	/** @private @arg {GE_Browse} x */
-	E_Browse(x) {x;}
-	/** @private @arg {D_Thumbnail} x */
-	D_Thumbnail(x) {x;}
-	/** @template {D_VideoOwner} T @arg {T} x */
-	VideoOwner$Omit(x) {
-		const cf="VideoOwner$Omit"; cf;
-		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(title);
-		this.t(subscriptionButton,this.SubscriptionButton);
-		this.E_Browse(navigationEndpoint);
-		this.t(subscriberCountText,this.G_Text);
-		trackingParams;
-		return y;
-	}
-	/** @private @arg {D_SubscriptionButton} x */
-	SubscriptionButton(x) {
-		const {type,subscribed,...y}=x; this.g(y); // ! #destructure
-		if(type!=="FREE") debugger;
-		this.t(subscribed,a => this.primitive_of(a,"boolean"));
-	}
 	/** @private @arg {string} x */
 	primitive_of_string(x) {
 		this.primitive_of(x,"string");
@@ -657,14 +635,6 @@ class ND extends Snippet_0_tmp {
 	}
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {x; debugger;}
-	/** @protected @template {D_Omit_Menu_Video&D_Omit_Compact_Video} U @arg {U} x */
-	Omit_Menu_Video(x) {
-		const {thumbnail,longBylineText,viewCountText,shortBylineText,menu,...y}=this.sd(x);
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(longBylineText);
-		this.z([shortBylineText,viewCountText],x => this.G_Text(x));
-		return y;
-	}
 	/** @arg {C_Continuation} x */
 	C_Continuation(x) {x;}
 	/** @arg {R_Notification} x */
