@@ -1,1 +1,0 @@
-type R_RichSection={richSectionRenderer: Record<"content",G_RichSection>;};

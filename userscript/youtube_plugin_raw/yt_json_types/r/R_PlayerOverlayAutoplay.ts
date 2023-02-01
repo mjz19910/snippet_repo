@@ -1,1 +1,0 @@
-type R_PlayerOverlayAutoplay={playerOverlayAutoplayRenderer: D_PlayerOverlayAutoplay;};

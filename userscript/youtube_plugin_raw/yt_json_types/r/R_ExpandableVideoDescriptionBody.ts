@@ -1,1 +1,0 @@
-type R_ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D_ExpandableVideoDescriptionBody;};

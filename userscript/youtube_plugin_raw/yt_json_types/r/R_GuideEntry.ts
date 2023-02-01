@@ -1,1 +1,0 @@
-type R_GuideEntry={guideEntryRenderer: D_GuideEntry;};

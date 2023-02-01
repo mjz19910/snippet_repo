@@ -330,3 +330,68 @@ type D_NotificationTopbarButton={
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };
+type D_RichSection={content:G_RichSection;};
+type D_RichShelf={icon: T_Icon<"YOUTUBE_SHORTS_BRAND_24">;title: G_Text;};
+type D_InlineSurvey={
+	dismissalEndpoint: {};
+	title: G_Text;
+	subtitle: G_Text;
+	inlineContent: R_CompactVideo;
+	response: R_ExpandableSurveyResponse;
+	trackingParams: string;
+	dismissalText: G_Text;
+	impressionEndpoints: {}[];
+};
+type D_SourcePivotHeader={
+	headerInformation: R_ProfilePageHeaderInformationViewModel;
+	buttonRow: R_ProfilePageHeaderButtonRowViewModel;
+	trackingParams: string;
+};
+type D_CompactVideo={
+	videoId: string;
+	thumbnail: R_Thumbnail;
+	title: G_Text;
+	longBylineText: G_Text;
+	publishedTimeText: G_Text;
+	viewCountText: G_Text;
+	lengthText: G_Text;
+	navigationEndpoint: E_Watch;
+	shortBylineText: G_Text;
+	channelThumbnail: R_Thumbnail;
+	ownerBadges: RMD_Badge[];
+	trackingParams: string;
+	shortViewCountText: G_Text;
+	menu: R_Menu;
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
+	accessibility: D_Accessibility;
+	richThumbnail?: R_MovingThumbnail;
+	badges?: RMD_Badge[];
+}|{
+	videoId: string;
+	thumbnail: R_Thumbnail;
+	title: G_Text;
+	longBylineText: G_Text;
+	viewCountText: G_Text;
+	navigationEndpoint: E_Watch;
+	shortBylineText: G_Text;
+	badges: RMD_Badge[];
+	channelThumbnail: R_Thumbnail;
+	ownerBadges: RMD_Badge[];
+	trackingParams: string;
+	shortViewCountText: G_Text;
+	menu: R_Menu;
+	thumbnailOverlays: R_ThumbnailOverlayToggleButton[];
+	accessibility: D_Accessibility;
+	richThumbnail: R_MovingThumbnail;
+};
+type D_ExpandableSurveyResponse={
+	options: R_RatingSurvey;
+	submitButton: R_Button;
+	trackingParams: string;
+};
+type D_ProfileColumnStatsEntry={label: G_Text; value: G_Text;};
+type D_ProfileColumnStats={items: R_ProfileColumnStatsEntry[];};
+type D_GuideDownloadsEntry={
+	alwaysShow: false;
+	entryRenderer: R_GuideEntry;
+};

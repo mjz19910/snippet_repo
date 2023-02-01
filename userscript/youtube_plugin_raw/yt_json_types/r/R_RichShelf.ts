@@ -1,1 +1,0 @@
-type R_RichShelf={richShelfRenderer: D_RichShelf;};

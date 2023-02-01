@@ -1,1 +1,0 @@
-type R_ExpandableSurvey={expandableSurveyResponseRenderer: DR_ExpandableSurvey;};

@@ -1963,9 +1963,11 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RichGridContent"; this.k(cf,x);
 		if("richItemRenderer" in x) return this.R_RichItem(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("richSectionRenderer" in x) return this.R_RichSection(x);
 		this.codegen_log_all(cf,x);
-		x;
 	}
+	/** @arg {R_RichSection} x */
+	R_RichSection(x) {x;}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);

@@ -1,1 +1,0 @@
-type R_SourcePivotHeader={sourcePivotHeaderRenderer: D_SourcePivotHeader;};

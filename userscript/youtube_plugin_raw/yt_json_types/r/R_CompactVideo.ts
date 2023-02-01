@@ -1,1 +1,0 @@
-type R_CompactVideo={compactVideoRenderer: D_CompactVideo;};
