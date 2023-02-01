@@ -4750,17 +4750,22 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {"D_GuideEntry"} cf @arg {D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
+	/** @arg {Extract<D_GuideEntry,{targetId:any;}>["targetId"]} x */
+	D_GuideEntry_TargetId(x) {
+		const cf="D_GuideEntry_TargetId";
+		switch(x) {
+			default: this.codegen_case(cf,x); break;
+			case "downloads-guide-item":
+			case "library-guide-item":
+		}
+	}
+	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
 	D_GuideEntry_WithTargetId(cf,x) {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
 		this.GE_Browse(navigationEndpoint);
 		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
-		switch(targetId) {
-			default: console.log(`case "${x}": break;`); debugger; break;
-			case "downloads-guide-item":
-			case "library-guide-item": break;
-		}
+		this.D_GuideEntry_TargetId(targetId);
 		if(isPrimary!==true) debugger;
 	}
 	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
