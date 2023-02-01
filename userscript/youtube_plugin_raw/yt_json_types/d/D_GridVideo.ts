@@ -1,11 +1,11 @@
 type D_GridVideo={
 	badges: {}[];
-	channelThumbnail: R_Thumbnail;
+	channelThumbnail: D_Thumbnail;
 	menu: R_Menu;
 	navigationEndpoint: {};
 	shortBylineText: G_Text;
 	shortViewCountText: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	thumbnailOverlay: G_ThumbnailOverlayItem[];
 	title: G_Text;
 	trackingParams: string;

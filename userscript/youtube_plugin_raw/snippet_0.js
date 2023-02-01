@@ -436,7 +436,7 @@ export class Snippet_0_tmp {
 class ND extends Snippet_0_tmp {
 	/** @private @arg {GE_Browse} x */
 	E_Browse(x) {x;}
-	/** @private @arg {R_Thumbnail} x */
+	/** @private @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {x;}
 	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {

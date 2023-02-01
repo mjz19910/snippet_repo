@@ -57,7 +57,7 @@ type DE_ReelWatch=
 		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
 	}
 	|{videoId: string;}
-	|{thumbnail: R_Thumbnail;}
+	|{thumbnail: D_Thumbnail;}
 	|{sequenceParams: string;}
 	;
 ;

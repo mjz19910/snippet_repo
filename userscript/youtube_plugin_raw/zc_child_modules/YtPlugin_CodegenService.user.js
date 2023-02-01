@@ -60,8 +60,8 @@ class CodegenService extends BaseService {
 		return null;
 	}
 	#R_ThumbnailStr() {
-		/** @private @type {R_Thumbnail} */
-		return "R_Thumbnail";
+		/** @private @type {D_Thumbnail} */
+		return "D_Thumbnail";
 	}
 	/** @no_mod @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#codegen_renderer_body(req_names,x,keys,t_name) {

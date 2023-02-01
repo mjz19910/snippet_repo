@@ -1,6 +1,6 @@
 type D_GuideEntry_PresentationNewContent={
 	navigationEndpoint: GE_Browse;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
 	trackingParams: string;
 	formattedTitle: G_Text;

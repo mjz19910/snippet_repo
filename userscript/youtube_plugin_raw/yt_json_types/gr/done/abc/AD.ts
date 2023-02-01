@@ -21,7 +21,7 @@ type AD_ReelDismissal={onDismissalCompletionRenderer: RA_NotificationAction; tra
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};
 type AD_AccountItem={
 	accountName: G_Text;
-	accountPhoto: R_Thumbnail;
+	accountPhoto: D_Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;

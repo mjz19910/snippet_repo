@@ -1,7 +1,7 @@
 type D_ReelItem={
 	videoId: D_VideoIdTagStr;
 	headline: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	viewCountText: G_Text;
 	navigationEndpoint: E_ReelWatch;
 	menu: R_Menu;

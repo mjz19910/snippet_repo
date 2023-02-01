@@ -3,7 +3,7 @@ type D_ReelPlayerHeader={
 	timestampText: G_Text;
 	channelNavigationEndpoint: GE_Browse;
 	channelTitleText: G_Text;
-	channelThumbnail: R_Thumbnail;
+	channelThumbnail: D_Thumbnail;
 	trackingParams: string;
 	accessibility: D_Accessibility;
 };

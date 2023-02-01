@@ -6,6 +6,6 @@ type D_SettingsSwitch={
 	disableServiceEndpoint: {};
 	id: "SETTINGS_OPTIONS_ID_TYPE_PUSH_NOTIFICATIONS_ENABLED";
 	text: G_Text;
-	thumbnail?: R_Thumbnail;
+	thumbnail?: D_Thumbnail;
 	trackingParams: string;
 };

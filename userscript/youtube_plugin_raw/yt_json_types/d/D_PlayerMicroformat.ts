@@ -1,5 +1,5 @@
 type D_PlayerMicroformat={
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	embed: D_MicroformatEmbed;
 	title: G_Text;
 	description?: G_Text;

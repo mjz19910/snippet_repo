@@ -2,7 +2,7 @@ type D_Microformat={
 	urlCanonical: string;
 	title: string;
 	description: string;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	siteName: string;
 	appName: string;
 	androidPackage: string;

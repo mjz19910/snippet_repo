@@ -173,6 +173,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab_R_MusicQueue";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayToggleButton";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailsList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ToggleButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ToggleMenuServiceItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopbarLogo";}
@@ -214,7 +215,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Subscribe";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Watch";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_ThumbnailsList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_Generic";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_2_CommentsEntryPoint";}
@@ -454,6 +454,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_WhatToWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TemplateUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TextInputFormField";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Thumbnail";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayEndorsement";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayHoverText";}
@@ -463,6 +464,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayToggleButton_ToggledPrefix";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailsList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TimestampWithNanos";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ToggleButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ToggleMenuServiceItem";}
@@ -592,14 +594,11 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Success";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_BrowseFeed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ChannelPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_EngagementPanelTargetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Thumbnail";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ThumbnailsList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_Generic";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_Client_Popup";}

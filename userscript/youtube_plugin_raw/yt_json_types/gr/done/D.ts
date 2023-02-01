@@ -280,7 +280,7 @@ type D_RadioShareUrl=
 ;
 type D_CompactRadio={
 	playlistId: `RD${string}`|`RDGM${string}`;
-	thumbnail: R_Thumbnail&R_SampledThumbnailColor;
+	thumbnail: D_Thumbnail&R_SampledThumbnailColor;
 	title: G_Text;
 	navigationEndpoint: E_Watch;
 	videoCountText: G_Text;
@@ -312,7 +312,7 @@ type D_SuperVodBuyFlowContent={
 };
 type D_PdgCommentPreview={
 	title: G_Text;
-	authorThumbnail: R_Thumbnail;
+	authorThumbnail: D_Thumbnail;
 	authorText: G_Text;
 	commentOptionRenderers: R_PdgCommentOption[];
 	defaultCommentText: G_Text;
@@ -361,7 +361,7 @@ type D_SourcePivotHeader={
 };
 type D_CompactVideo={
 	videoId: string;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	longBylineText: G_Text;
 	publishedTimeText: G_Text;
@@ -369,7 +369,7 @@ type D_CompactVideo={
 	lengthText: G_Text;
 	navigationEndpoint: E_Watch;
 	shortBylineText: G_Text;
-	channelThumbnail: R_Thumbnail;
+	channelThumbnail: D_Thumbnail;
 	ownerBadges: RMD_Badge[];
 	trackingParams: string;
 	shortViewCountText: G_Text;
@@ -380,14 +380,14 @@ type D_CompactVideo={
 	badges?: RMD_Badge[];
 }|{
 	videoId: string;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	longBylineText: G_Text;
 	viewCountText: G_Text;
 	navigationEndpoint: E_Watch;
 	shortBylineText: G_Text;
 	badges: RMD_Badge[];
-	channelThumbnail: R_Thumbnail;
+	channelThumbnail: D_Thumbnail;
 	ownerBadges: RMD_Badge[];
 	trackingParams: string;
 	shortViewCountText: G_Text;
@@ -432,8 +432,8 @@ type D_ActionCompanionAd={
 	headline: D_TemplatedText;
 	description: D_TemplatedText;
 	actionButton: R_Button;
-	iconImage: R_ThumbnailsList;
-	bannerImage: R_ThumbnailsList;
+	iconImage: D_ThumbnailsList;
+	bannerImage: D_ThumbnailsList;
 	navigationEndpoint: {};
 	trackingParams: string;
 	adInfoRenderer: RL$ActionCompanionAdInfo;
@@ -451,14 +451,14 @@ type D_C4TabbedHeader={
 	channelId: `UC${string}`;
 	title: string;
 	navigationEndpoint: GE_Browse;
-	avatar: R_Thumbnail;
-	banner: R_Thumbnail;
+	avatar: D_Thumbnail;
+	banner: D_Thumbnail;
 	badges?: RMD_Badge[];
 	headerLinks: R_ChannelHeaderLinks;
 	subscribeButton: R_SubscribeButton;
 	subscriberCountText: G_Text;
-	tvBanner: R_Thumbnail;
-	mobileBanner: R_Thumbnail;
+	tvBanner: D_Thumbnail;
+	mobileBanner: D_Thumbnail;
 	trackingParams: string;
 	sponsorButton?: R_Button;
 	channelHandleText: G_Text;
@@ -482,7 +482,7 @@ type D_ChipCloud={
 };
 type D_ClipCreation={
 	trackingParams: string;
-	userAvatar: R_Thumbnail;
+	userAvatar: D_Thumbnail;
 	titleInput: R_ClipCreationTextInput;
 	scrubber: R_ClipCreationScrubber;
 	saveButton: R_Button;
@@ -495,7 +495,7 @@ type D_ClipCreation={
 };
 type D_Comment={
 	authorText: G_Text;
-	authorThumbnail: R_Thumbnail;
+	authorThumbnail: D_Thumbnail;
 	authorEndpoint: {};
 	contentText: G_Text;
 	publishedTimeText: G_Text;
@@ -504,7 +504,7 @@ type D_Comment={
 	commentId: string;
 	actionButtons: R_CommentActionButtons;
 	authorIsChannelOwner: boolean;
-	currentUserReplyThumbnail: R_Thumbnail;
+	currentUserReplyThumbnail: D_Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
 	voteCount: G_Text;
@@ -515,7 +515,7 @@ type D_Comment={
 type D_CommentSimplebox={
 	submitButton: R_Button;
 	cancelButton: R_Button;
-	authorThumbnail: R_Thumbnail;
+	authorThumbnail: D_Thumbnail;
 	placeholderText: G_Text;
 	trackingParams: string;
 	avatarSize: "SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT";
@@ -564,7 +564,7 @@ type D_DesktopTopbar={
 type D_DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: G_Text;
-	image: R_ThumbnailsList;
+	image: D_ThumbnailsList;
 	bodyText: G_Text;
 	secondaryText: G_Text;
 	badge: DMD_Badge;
@@ -587,7 +587,7 @@ type D_EngagementPanelTitleHeader={
 type D_FeaturedChannel={
 	startTimeMs: `${number}`;
 	endTimeMs: `${number}`;
-	watermark: R_Thumbnail;
+	watermark: D_Thumbnail;
 	trackingParams: string;
 	navigationEndpoint: GE_Browse;
 	channelName: string;
@@ -608,19 +608,19 @@ type D_FusionSearchbox={
 	clearButton: R_Button;
 };
 type D_ChannelOptions={
-	avatar: R_Thumbnail;
+	avatar: D_Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: G_Text[];
 	avatarAccessibility: D_Accessibility;
 };
 type D_ChannelThumbnailWithLink={
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	navigationEndpoint: GE_Browse;
 	accessibility: D_Accessibility;
 	title: string;
 }|{
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	navigationEndpoint: GE_Browse;
 	accessibility: D_Accessibility;
 };
@@ -740,7 +740,7 @@ type D_CompactLink={
 };
 type D_CompactPlaylist={
 	playlistId: `PL${string}`;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	shortBylineText: G_Text;
 	videoCountText: G_Text;
@@ -748,7 +748,7 @@ type D_CompactPlaylist={
 	publishedTimeText?: G_Text;
 	videoCountShortText: G_Text;
 	trackingParams: string;
-	sidebarThumbnails: R_Thumbnail[];
+	sidebarThumbnails: D_Thumbnail[];
 	thumbnailText: G_Text;
 	ownerBadges?: RMD_Badge[];
 	menu: R_Menu;
@@ -777,7 +777,7 @@ type D_AutoplaySetItem={
 type D_EndScreenPlaylist={
 	playlistId: `RD${string}`;
 	title: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	videoCount?: `${number}`;
 	longBylineText: G_Text;
 	videoCountText: G_Text;
@@ -786,7 +786,7 @@ type D_EndScreenPlaylist={
 };
 type D_EndScreenVideo={
 	videoId: string;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	shortBylineText: G_Text;
 	lengthText?: G_Text;
@@ -798,7 +798,7 @@ type D_EndScreenVideo={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
 type D_HeroPlaylistThumbnail={
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	maxRatio: 0.5625;
 	trackingParams: string;
 	onTap: E_Watch;
@@ -807,7 +807,7 @@ type D_HeroPlaylistThumbnail={
 type D_MacroMarkersListItem={
 	title: G_Text;
 	timeDescription: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	onTap: E_Watch;
 	trackingParams: string;
 	shareButton: R_Button;
@@ -822,15 +822,15 @@ type D_MacroMarkersListItem={
 }|{
 	title: G_Text;
 	timeDescription: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	onTap: E_Watch;
 	trackingParams: string;
 	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
 };
 type D_Notification={
-	thumbnail: R_Thumbnail;
-	videoThumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
+	videoThumbnail: D_Thumbnail;
 	shortMessage: G_Text;
 	sentTimeText: G_Text;
 	navigationEndpoint: E_Watch;
@@ -843,7 +843,7 @@ type D_Notification={
 type D_PlaylistPanelVideo={
 	title: G_Text;
 	longBylineText: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	lengthText: G_Text;
 	indexText: G_Text;
 	selected: true;
@@ -881,7 +881,7 @@ type D_PlaylistSidebarPrimaryInfo={
 type D_Radio={
 	playlistId: `RD${string}`;
 	title: G_Text;
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	videoCountText: G_Text;
 	navigationEndpoint: E_Watch;
 	trackingParams: string;
@@ -896,7 +896,7 @@ type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch;
 type D_WebPrefetch={navigationEndpoints: E_Watch[];};
 type D_Video={
 	videoId: /**/string;
-	thumbnail: /**/R_Thumbnail;
+	thumbnail: /**/D_Thumbnail;
 	title: /**/G_Text;
 	descriptionSnippet?: G_Text;
 	longBylineText: /**/G_Text;
@@ -977,7 +977,7 @@ type D_PlaylistId=
 	;
 ;
 type D_Omit_Menu_Video={
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	longBylineText: G_Text;
 	viewCountText: G_Text;
 	navigationEndpoint: E_Watch;

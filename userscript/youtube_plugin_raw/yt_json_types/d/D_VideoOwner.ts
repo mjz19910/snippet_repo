@@ -1,5 +1,5 @@
 type D_VideoOwner={
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: GE_Browse;
@@ -9,7 +9,7 @@ type D_VideoOwner={
 	membershipButton?: R_Button;
 };
 type TD_VideoOwner={
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: GE_Browse;
@@ -17,7 +17,7 @@ type TD_VideoOwner={
 	trackingParams: string;
 	membershipButton: R_Button;
 }|{
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: GE_Browse;
@@ -26,7 +26,7 @@ type TD_VideoOwner={
 	badges: RMD_Badge[];
 	membershipButton: R_Button;
 }|{
-	thumbnail: R_Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: G_Text;
 	subscriptionButton: D_SubscriptionButton;
 	navigationEndpoint: GE_Browse;
