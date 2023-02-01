@@ -12,4 +12,7 @@ type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D_ProfileColumn
 type R_ProfileColumnStats={profileColumnStatsRenderer: D_ProfileColumnStats;};
 type R_ReelPlayerOverlay={reelPlayerOverlayRenderer: D_ReelPlayerOverlay;};
 type R_PageTopAdLayout={pageTopAdLayoutRenderer: D_PageTopAdLayout;};
+type R_FulfilledLayout={fulfilledLayout: R_FulfilledLayoutContent|R_FulfillmentLayoutContent;};
+type R_FulfilledLayoutContent=R_PageTopAdLayout;
+type R_FulfillmentLayoutContent=R_InFeedAdLayout;
 //#endregion

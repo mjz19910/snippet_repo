@@ -812,6 +812,7 @@ class HandleTypes extends HandleTypesEval {
 			let k=this.get_keys_of(x);
 			switch(k[0]) {case "inFeedAdLayoutRenderer": case "pageTopAdLayoutRenderer": }
 			if("inFeedAdLayoutRenderer" in x) return this.R_InFeedAdLayout(x);
+			if("pageTopAdLayoutRenderer" in x) return this.R_PageTopAdLayout(x);
 		});
 	}
 	/** @private @arg {R_InFeedAdLayout} x */
@@ -7423,10 +7424,21 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R_PlaylistPanel} x */
-	R_PlaylistPanel(x) {
-		const cf="R_PlaylistPanel"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
-	}
+	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
+	/** @arg {R_RatingSurveyOption} x */
+	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
+	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
+	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
+	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
+	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
+	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
+	/** @arg {R_ExpandableSurveyResponse} x */
+	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
+	/** @arg {R_RatingSurvey} x */
+	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
+	/** @arg {R_PageTopAdLayout} x */
+	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem";
@@ -7578,18 +7590,27 @@ class HandleTypes extends HandleTypesEval {
 		if(onStateIcon.iconType!=="STAR") debugger;
 		this.C_FollowUp(followUpCommand);
 	}
-	/** @arg {R_RatingSurveyOption} x */
-	R_RatingSurveyOption(x) {this.H_("R_RatingSurveyOption","ratingSurveyOptionRenderer",x,this.D_RatingSurveyOption);}
-	/** @arg {R_ProfilePageHeaderThumbnailViewModel} x */
-	R_ProfilePageHeaderThumbnailViewModel(x) {this.H_("R_ProfilePageHeaderThumbnailViewModel","profilePageHeaderThumbnailViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderMetadataViewModel} x */
-	R_ProfilePageHeaderMetadataViewModel(x) {this.H_("R_ProfilePageHeaderMetadataViewModel","profilePageHeaderMetadataViewModel",x,this.g);}
-	/** @arg {R_ProfilePageHeaderButtonRowViewModel} x */
-	R_ProfilePageHeaderButtonRowViewModel(x) {this.H_("R_ProfilePageHeaderButtonRowViewModel","profilePageHeaderButtonRowViewModel",x,this.g);}
-	/** @arg {R_ExpandableSurveyResponse} x */
-	R_ExpandableSurveyResponse(x) {this.H_("R_ExpandableSurveyResponse","expandableSurveyResponseRenderer",x,this.D_ExpandableSurveyResponse);}
-	/** @arg {R_RatingSurvey} x */
-	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
+	/** @arg {D_PageTopAdLayout} x */
+	D_PageTopAdLayout(x) {x;}
+	/** @arg {G_PlaylistPanel_Item} x */
+	G_PlaylistPanel_Item(x) {
+		const cf="G_PlaylistPanel_Item"
+		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
+		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
+		this.codegen_typedef_all(cf,x);
+	}
+	/** @arg {D_PlaylistPanel} x */
+	D_PlaylistPanel(x) {
+		const cf="D_PlaylistPanel";
+		const {title,contents,currentIndex,playlistId,ownerName,isInfinite,continuations,shortBylineText,longBylineText,trackingParams,titleText,isEditable,previewDescription,numItemsToShow,...y}=this.s(cf,x); this.g(y);
+		if(title!=="YouTube Mix") debugger;
+		this.z(contents,this.G_PlaylistPanel_Item);
+		this.t(currentIndex,this.a_primitive_str);
+		this.playlistId(playlistId);
+		y;
+	}
+	/** @arg {R_AutomixPreviewVideo} x */
+	R_AutomixPreviewVideo(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

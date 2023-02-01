@@ -1,6 +1,6 @@
 type D_PlaylistPanel={
 	title: "YouTube Mix";
-	contents: G_PlaylistPanel$contents[];
+	contents: G_PlaylistPanel_Item[];
 	currentIndex?: number;
 	playlistId: `RD${string}`;
 	ownerName?: G_Text;

@@ -1,1 +1,1 @@
-type G_PlaylistPanel$contents=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
+type G_PlaylistPanel_Item=R_AutomixPreviewVideo|R_PlaylistPanelVideo;
