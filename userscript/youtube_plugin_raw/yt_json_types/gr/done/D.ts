@@ -903,11 +903,10 @@ type D_SubFeedOption={
 	trackingParams: string;
 };
 type D_BrowseEndpointContextMusicConfig={pageType: T_EnumStr<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;};
+type R_FulfilledLayout={fulfilledLayout: R_PageTopAdLayout;}|{fulfilledLayout: R_InFeedAdLayout;};
 type D_AdSlot={
 	adSlotMetadata: DMD_AdSlot;
-	fulfillmentContent: {
-		fulfilledLayout: R_PageTopAdLayout;
-	}|R_FulfillmentLayout;
+	fulfillmentContent: R_FulfilledLayout;
 	enablePacfLoggingWeb: boolean;
 };
 type D_AdLayoutLoggingData={serializedAdServingDataEntry: string;};

@@ -1,1 +1,0 @@
-type R_FulfillmentLayout={fulfilledLayout: R_InFeedAdLayout;};

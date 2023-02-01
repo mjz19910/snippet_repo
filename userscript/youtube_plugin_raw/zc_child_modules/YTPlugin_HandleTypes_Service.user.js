@@ -806,8 +806,14 @@ class HandleTypes extends HandleTypesEval {
 	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
-	/** @private @arg {R_FulfillmentLayout} x */
-	R_FulfillmentLayout(x) {this.H_("R_FulfillmentLayout","fulfilledLayout",x,this.R_InFeedAdLayout);}
+	/** @private @arg {R_FulfilledLayout} x */
+	R_FulfillmentLayout(x) {
+		this.H_("R_FulfillmentLayout","fulfilledLayout",x,x => {
+			let k=this.get_keys_of(x);
+			switch(k[0]) {case "inFeedAdLayoutRenderer": case "pageTopAdLayoutRenderer": }
+			if("inFeedAdLayoutRenderer" in x) return this.R_InFeedAdLayout(x);
+		});
+	}
 	/** @private @arg {R_InFeedAdLayout} x */
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {R_DisplayAd} x */
