@@ -511,6 +511,12 @@ class CodegenService extends BaseService {
 		}
 		if(type_name.endsWith("Endpoint")) {
 			let real_val=split_string_once_last(type_name,"Endpoint")[0];
+			if(real_val==="Browse") {
+				console.log(type_name);
+				debugger;
+				/** @type {GE_Browse} */
+				return "GE_Browse";
+			}
 			return `E_${real_val}`;
 		}
 		if(type_name.endsWith("Renderer")) {

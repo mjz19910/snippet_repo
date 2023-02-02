@@ -144,10 +144,16 @@ class UrlParseHelper {
 }
 const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
-ECatcherService.known_experiments.push(...[
-	[24455878],
-	[24281897,24448383,24458839],
-].flat());
+ECatcherService.known_experiments.push(...(() => {
+	/** @type {[number,number[]][]} */
+	const arr=[
+		[1,[24455878]],
+		[2,[24281897,24448383,24458839]],
+		[3,[24441239,24451434]],
+		[4,[24458634]],
+	];
+	return arr.map(e => e[1]);
+})().flat());
 /** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
 function as_any(e,x=e) {return x;}
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
@@ -1763,10 +1769,10 @@ class HandleTypes extends HandleTypesEval {
 	Button_iconType=[
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
 		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
-		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND",
+		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND","SETTINGS",
 	];
 	expected_button_iconTypes_ex=[
-		"SETTINGS","DELETE","NOTIFICATIONS_ACTIVE",
+		"DELETE","NOTIFICATIONS_ACTIVE",
 	];
 	/** @protected @arg {"D_Button:WithCommand:targetId.case"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
@@ -4803,7 +4809,7 @@ class HandleTypes extends HandleTypesEval {
 			"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
 			"ADD_CIRCLE",
 		],
-		WithIcon:[
+		WithIcon: [
 			"HELP","FEEDBACK",
 		]
 	};
