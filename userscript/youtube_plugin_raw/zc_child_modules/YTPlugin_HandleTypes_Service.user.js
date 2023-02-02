@@ -358,6 +358,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
+			case "get_transcript.params": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[].f1.f1[]": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[].f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -399,7 +400,7 @@ class HandleTypes extends HandleTypesEval {
 			case "create_playlist.params": case "browse$param": case "D_Browse.param":
 				switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 			case "get_report_form.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "reel.params":
-			case "get_transcript.params": case "get_report_form.f18": case "get_report_form.f28.f1.f1.f1": case "get_report_form.f28.f1.f1": case "get_report_form.f28": case "subscribe.params.f2":
+			case "get_report_form.f18": case "get_report_form.f28.f1.f1.f1": case "get_report_form.f28.f1.f1": case "get_report_form.f28": case "subscribe.params.f2":
 			case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f16.f4": case "transcript_target_id.param": case "watch.player_params.f40.f1":
