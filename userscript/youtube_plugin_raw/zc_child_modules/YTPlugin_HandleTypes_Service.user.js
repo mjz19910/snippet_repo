@@ -3379,10 +3379,14 @@ class HandleTypes extends HandleTypesEval {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
+	/** @private @template T @arg {string} cf @arg {T} x */
+	rl(cf,x) {
+		return x;
+	}
 	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */
 	D_Video_Handle(cf,x) {
 		let u=this.D_Video_Omit(cf,x);
-		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=this.s(cf,u); this.g(y);/*//#destructure_done*/
+		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=this.rl(cf,u); this.g(y);/*//#destructure_done*/
 		this.t(descriptionSnippet,this.G_Text);
 		this.t(publishedTimeText,this.G_Text);
 		this.t(lengthText,this.G_Text);
