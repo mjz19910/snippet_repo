@@ -30,6 +30,8 @@ export namespace Gen {
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
+		|{n: Prelude.CF_D_GuideEntry; t: Types.CF_D_GuideEntry_; v: "D_GuideEntry";}
+		|{n: Prelude.CF_D_GuideEntry; t: Types.CF_D_GuideEntry_; v: "D_GuideEntry_WithPrimary";}
 		|{n: Prelude.CF_D_Link; t: Types.CF_D_Link_; v: "D_CompactLink";}
 		|{n: Prelude.CF_D_Link; t: Types.CF_D_Link_; v: "D_CompactLink.Styled";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_CompactRadio";}
