@@ -64,7 +64,6 @@ class TypedefGenerator extends ServiceMethods {
 		const cf="R_ConfirmDialog"; cf; this.k(cf,x);
 		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
 		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
-		debugger;
 		return null;
 	}
 }
@@ -366,7 +365,6 @@ class HandleTypes extends HandleTypesEval {
 		switch(path) {
 			default: {
 				grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
-				debugger;
 				/** @private @type {P_ParamParse} */
 				return;
 			}
@@ -442,7 +440,6 @@ class HandleTypes extends HandleTypesEval {
 						}
 						if(!is_in_range(map_entry_key,11)) {
 							new_ns();
-							debugger;
 							return;
 						}
 					}
@@ -512,7 +509,6 @@ class HandleTypes extends HandleTypesEval {
 				const idx=2;
 				if(parts.length!==1) {parts==="";}
 				u(idx);
-				debugger;
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
@@ -606,7 +602,6 @@ class HandleTypes extends HandleTypesEval {
 			if(this.is_eq_keys(u4,this.exact_arr("v","list","start_radio"))) break x;
 			if(this.is_eq_keys(u4,this.exact_arr("v","list","index"))) break x;
 			u4==="";
-			debugger;
 		}
 		this.parser.parse_url(root,x);
 		return u3;
@@ -939,7 +934,6 @@ class HandleTypes extends HandleTypesEval {
 						case "shorts": break;
 					}
 				} else {
-					debugger;
 				}
 			} break;
 			case "reporthistory": {
@@ -990,7 +984,6 @@ class HandleTypes extends HandleTypesEval {
 				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
 				let url_type=this.parser.get_url_type(path_parts);
 				if(!url_type) {
-					debugger;
 					return;
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
@@ -999,7 +992,6 @@ class HandleTypes extends HandleTypesEval {
 				const l1="-- [GeneratedWebCommandMetadata] --";
 				const r2="return this.GeneratedWebCommandMetadata(x);";
 				console.log(`\n${l1}\n\n${typedef_str}\n---\n\n\tG_${url_type_ex},\n---\n\n\tcase "${cx}": ${r2}`);
-				debugger;
 			} break;
 			case "/youtubei/v1/backstage/create_post": return this.GM_WC_Base(x);
 			case "/youtubei/v1/like/removelike": return this.GM_WC_Base(x);
@@ -1097,7 +1089,6 @@ class HandleTypes extends HandleTypesEval {
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		x: {
 			if(url==="/") break x;
-			debugger;
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==3854) debugger;
@@ -1705,7 +1696,6 @@ class HandleTypes extends HandleTypesEval {
 		let [r]=this.z(actions,x => {
 			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-			debugger;
 		});
 		this.z(r,a => a);
 		this.z(playlistEditResults,this.G_PlaylistEditResult);
@@ -1749,7 +1739,6 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof x!=="string") {debugger; return;}
 				this._previousCsn(x);
 			});
-			debugger;
 			return;
 		}
 		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
@@ -1905,7 +1894,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_GetNotificationMenu"; this.k(cf,x);
 		const {ctoken,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.params(cf,"GetNotificationMenu.ctoken",ctoken);
-		debugger;
 	}
 	/** @private @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {
@@ -1979,7 +1967,6 @@ class HandleTypes extends HandleTypesEval {
 			const {browseId: a,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 			return this.GU_E_BrowseId(ve_name,a);
 		}
-		debugger;
 	}
 	/** @private @arg {string} ve_name @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	GU_E_BrowseId(ve_name,x) {
@@ -2105,7 +2092,6 @@ class HandleTypes extends HandleTypesEval {
 			if(jk==="responseContext,trackingParams,onResponseReceivedActions") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar") break x;
 			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
-			debugger;
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.RC_ResponseContext(responseContext);
@@ -2948,7 +2934,6 @@ class HandleTypes extends HandleTypesEval {
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_RepeatChapter(x);
 		this.codegen_typedef_all(cf,x);
-		debugger;
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
@@ -3098,7 +3083,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-			debugger;
 			return null;
 		});
 		this.trackingParams(cf,trackingParams);
@@ -3130,7 +3114,6 @@ class HandleTypes extends HandleTypesEval {
 			if(x.type==="subscription.unsubscribe") break x;
 			if(x.type==="updated_metadata") break x;
 			if(x.type==="get_transcript") break x;
-			debugger;
 		}
 		switch(x.type) {
 			case "account.account_menu": return this.RS_AccountMenu(x.data);
@@ -3254,7 +3237,6 @@ class HandleTypes extends HandleTypesEval {
 		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
 		if("watch" in x) {
 			if("hack" in x.watch&&x.watch.hack===true) return;
-			debugger;
 		}
 		this.codegen_typedef_all(cf,x);
 	}
@@ -3354,7 +3336,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(refinements,this.a_primitive_str);
 		this.z(onResponseReceivedCommands,x => {
 			if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-			debugger;
 		});
 		this.targetId(cf,targetId);
 	}
@@ -3419,7 +3400,6 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
 			return;
 		}
-		debugger;
 	}
 	/** @private @arg {`UC${string}`} x */
 	D_ChannelId(x) {
@@ -3518,7 +3498,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.tz(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-			debugger;
 			return null;
 		});
 	}
@@ -3528,7 +3507,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-			debugger;
 			return null;
 		});
 	}
@@ -3538,7 +3516,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.tz(actions,(x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-			debugger;
 			return null;
 		}));
 	}
@@ -3704,7 +3681,6 @@ class HandleTypes extends HandleTypesEval {
 		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.z(navigationEndpoints,x => {
 			if("watchEndpoint" in x) {return this.E_Watch(x);}
-			debugger;
 		});
 	}
 	/** @private @arg {RCA_RelevantStateTags} x */
@@ -3745,7 +3721,6 @@ class HandleTypes extends HandleTypesEval {
 				this.G_Text(c);
 				continue;
 			}
-			debugger;
 		}
 	}
 	/** @private @arg {C_ScrollToEngagementPanel} x */
@@ -3904,7 +3879,6 @@ class HandleTypes extends HandleTypesEval {
 			this.codegen_typedef_all(cf,x);
 			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
 			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
-			debugger;
 		}
 		switch(x.listType) {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
@@ -4088,7 +4062,6 @@ class HandleTypes extends HandleTypesEval {
 			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
 			return;
 		}
-		debugger;
 	}
 	/** @private @arg {D_WatchNextEndScreen} x */
 	D_WatchNextEndScreen(x) {
@@ -4458,7 +4431,6 @@ class HandleTypes extends HandleTypesEval {
 							console.log("D_VssLoggingContext_serializedContextData_fieldId",r[1]);
 							let playlist_id=this._decoder.decode(r[2]);
 							console.log("serializedContextData_decode",playlist_id);
-							debugger;
 							break;
 						case 3: {
 							let playlist_id=this._decoder.decode(r[2]);
@@ -4532,7 +4504,6 @@ class HandleTypes extends HandleTypesEval {
 				}
 				default: debugger; break;
 			}
-			debugger;
 		}
 		this.codegen_str(cf,x);
 	}
@@ -4649,7 +4620,6 @@ class HandleTypes extends HandleTypesEval {
 				return wt;
 			}
 		}
-		debugger;
 		throw new Error();
 	}
 	/** @private @arg {GU_VE83769_Url_Internal|GU_YoutubeUrlRedirect|GU_VE83769_Url_External} x */
@@ -4984,7 +4954,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.tz(actions,(x => {
 			if("updateNotificationsUnseenCountAction" in x) return this.UA_NotificationsUnseenCount(x);
-			debugger;
 		}));
 		if(unseenCount!==void 0) this._primitive_of(unseenCount,"number");
 	}
@@ -5334,7 +5303,6 @@ class HandleTypes extends HandleTypesEval {
 					if(ll!==s2) debugger;
 					console.log("[RichGrid.targetId]",x.targetId);
 					console.log("[target_id_parse]",s1,s2);
-					debugger;
 				}
 				return;
 			}
@@ -5385,7 +5353,6 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
 		if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		debugger;
 	}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
@@ -5425,7 +5392,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {return this.UA_EngagementPanel(a);}
-			debugger;
 		});
 		this.trackingParams(cf,trackingParams);
 	}
@@ -5468,7 +5434,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_GuideEntry(expanderItem);
 		this.z(expandableItems,x => {
 			if("guideEntryRenderer" in x) return this.G_GuideSectionItem(x);
-			debugger;
 		});
 		this.R_GuideEntry(collapserItem);
 	}
@@ -5599,7 +5564,6 @@ class HandleTypes extends HandleTypesEval {
 				this.E_Url(x);
 				break x;
 			}
-			debugger;
 		}
 		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType.WithNavEP);
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
@@ -5607,7 +5571,6 @@ class HandleTypes extends HandleTypesEval {
 			let x=navigationEndpoint;
 			if("urlEndpoint" in x) return this.E_Url(x);
 			if("browseEndpoint" in x) return this.GE_Browse(x);;
-			debugger;
 		}
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
@@ -5629,7 +5592,6 @@ class HandleTypes extends HandleTypesEval {
 				break x;
 			}
 			x==="";
-			debugger;
 		}
 	}
 	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry} x */
@@ -6224,7 +6186,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
 		this.codegen_typedef_all(`${cf}.commandMetadata`,x);
-		debugger;
 	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
@@ -6560,7 +6521,6 @@ class HandleTypes extends HandleTypesEval {
 		if(countdownUiRelativeSecondsPrefetchCondition!==-3) debugger;
 		this.t(playbackRelativeSecondsPrefetchCondition,x => {
 			x;
-			debugger;
 		});
 	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
@@ -6829,7 +6789,6 @@ class HandleTypes extends HandleTypesEval {
 					let {list,...y}=this.s(cf,s); this.g(y);/*//#destructure_done*/
 					let w=list;
 					if(this.str_starts_with(w,"PL")) return this.playlistId(w);
-					debugger;
 				}
 				return;
 			}
@@ -7125,11 +7084,9 @@ class HandleTypes extends HandleTypesEval {
 		this.RC_ResponseContext(responseContext);
 		this.z(actions,x => {
 			x;
-			debugger;
 		});
 		this.trackingParams(cf,trackingParams);
 		this.A_FrameworkUpdates(frameworkUpdates);
-		debugger;
 	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
@@ -7144,7 +7101,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_EntityBatchUpdate(frameworkUpdates);
 		this.D_ChannelId(channelId);
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
-		debugger;
 	}
 	/** @type {string[]} */
 	logged_strings=[];
@@ -7189,7 +7145,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(selected);
 		this.t(expandedText,this.a_primitive_str);
 		this.t(content,this.R_SectionList);
-		debugger;
 	}
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {
@@ -7233,7 +7188,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(clearButton);
 		this.G_Text(placeholderText);
 		this.trackingParams(cf,trackingParams);
-		debugger;
 	}
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
@@ -7256,7 +7210,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(voteStatus,"INDIFFERENT");
 		this.trackingParams(cf,trackingParams);
 		this.D_LoggingDirectives(loggingDirectives);
-		debugger;
 	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
@@ -7287,7 +7240,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(ownerText);
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
-		debugger;
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
@@ -7313,7 +7265,6 @@ class HandleTypes extends HandleTypesEval {
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.a_primitive_bool(hasPersistentPlaylistPanel);
 		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
-		debugger;
 	}
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {
@@ -7321,7 +7272,6 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,addToGuideSectionAction,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AD_AddToGuideSection(addToGuideSectionAction);
-		debugger;
 	}
 	/** @private @arg {AD_AddToGuideSection} x */
 	AD_AddToGuideSection(x) {
@@ -7410,7 +7360,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(contents,this.R_MacroMarkersListItem);
 		this.G_Text(syncButtonLabel);
 		this.trackingParams(cf,trackingParams);
-		debugger;
 	}
 	/** @private @arg {D_EngagementPanelTitleHeader} x */
 	D_EngagementPanelTitleHeader(x) {
@@ -7429,7 +7378,6 @@ class HandleTypes extends HandleTypesEval {
 		if("menuRenderer" in x) return this.R_Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
 		this.codegen_typedef_all(cf,x);
-		debugger;
 	}
 	/** @private @arg {D_Hint} x */
 	D_Hint(x) {
@@ -7490,7 +7438,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TranscriptFooter(footer);
 		this.trackingParams(cf,trackingParams);
 		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
-		debugger;
 	}
 	/** @private @arg {D_TranscriptSegmentList} x */
 	D_TranscriptSegmentList(x) {
@@ -7637,14 +7584,12 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Like(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.a_primitive_bool(isToggled);
-		debugger;
 	}
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {
 		let eid=split_string_once(x,"/");
 		this.D_ChannelId(eid[0]);
 		console.log(eid[1]);
-		debugger;
 	}
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
@@ -7757,7 +7702,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(this.str_starts_with_rx("/@",ur.pathname),true);
 		this.a_primitive_str(channelUrl);
 		this.a_primitive_str(vanityChannelUrl);
-		debugger;
 	}
 	/** @private @arg {D_Playlist_MD} x */
 	D_Playlist_MD(x) {
@@ -7766,7 +7710,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(title);
 		this.a_primitive_str(iosAppindexingLink);
 		this.a_primitive_str(androidAppindexingLink);
-		debugger;
 	}
 	/** @private @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {
@@ -7775,7 +7718,6 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="INFO") debugger;
 		this.G_Text(text);
 		this.R_Button(dismissButton);
-		debugger;
 	}
 	/** @private @arg {D_ChannelSwitcherPage} x */
 	D_ChannelSwitcherPage(x) {
@@ -7942,7 +7884,6 @@ class HandleTypes extends HandleTypesEval {
 		this.g(header);
 		this.trackingParams(cf,trackingParams);
 		this.ceq(itemSize,"COLLECTION_STYLE_ITEM_SIZE_MEDIUM");
-		debugger;
 	}
 	/** @private @arg {D_MusicShelf} x */
 	D_MusicShelf(x) {
@@ -7955,7 +7896,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_MusicShelfDivider(shelfDivider);
 		this.ceq(autoReloadWhenEmpty,true);
 		this.R_Button(bottomButton);
-		debugger;
 	}
 	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(cf,path,x) {
@@ -7999,7 +7939,6 @@ class HandleTypes extends HandleTypesEval {
 		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
 		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
 		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
-		debugger;
 	}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
@@ -8145,7 +8084,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Dropdown(privacyInput);
 		this.R_Button(createAction);
 		this.E_CreatePlaylistService(serviceEndpoint);
-		debugger;
 	}
 	/** @private @arg {D_TextInputFormField} x */
 	D_TextInputFormField(x) {
@@ -8182,7 +8120,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_PlaylistEdit(addToPlaylistServiceEndpoint);
 		this.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-		debugger;
 	}
 	/** @private @arg {DUA_SubscribeButton} x */
 	DUA_SubscribeButton(x) {
@@ -8258,7 +8195,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_RichListHeader(header);
 		this.ceq(style.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION");
 		this.ceq(centerItems,false);
-		debugger;
 	}
 	/** @private @arg {D_RichListHeader} x */
 	D_RichListHeader(x) {
@@ -8357,11 +8293,9 @@ class HandleTypes extends HandleTypesEval {
 		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
 		if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
 		if("itemSectionRenderer" in x) {
-			debugger;
 			return;
 		}
 		x;
-		debugger;
 	}
 	/** @private @arg {D_PrimaryLinkItem} x */
 	D_PrimaryLinkItem(x) {
@@ -8536,7 +8470,6 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_is_search(sp)) {
 			let [pp,qs]=split_string_once(sp,"?");
 			pp; qs;
-			debugger;
 		} else {
 			let pp=sp;
 			let p_arr=this.split_str(pp,"/");
