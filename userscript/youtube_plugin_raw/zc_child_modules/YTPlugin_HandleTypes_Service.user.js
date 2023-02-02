@@ -360,6 +360,7 @@ class HandleTypes extends HandleTypesEval {
 			console.group(ns);
 			f();
 			console.groupEnd();
+			{debugger;}
 		};
 		/** @private @type {P_LogItems} */
 		switch(path) {
