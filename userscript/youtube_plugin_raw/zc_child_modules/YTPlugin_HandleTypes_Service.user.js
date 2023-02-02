@@ -522,7 +522,11 @@ class HandleTypes extends HandleTypesEval {
 			case "watch":
 			case "ypc_get_offers":
 			case "ypc_get_offline_upsell":
-			case "YpcGetCart": {
+			case "YpcGetCart":
+			case "browse$param":
+			case "record_notification_interactions":
+			case "transcript_target_id":
+			case "watch": {
 				switch(parts[1]) {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
@@ -534,12 +538,13 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f13": case "f14": case "f15": case "f18":
 					case "f25": case "f26": case "f27": case "f28": case "f29":
+					case "f84": case "f93":
 				}
 				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
 					case "f1": case "f1[]": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f12": case "f13": case "f16": case "f19":
+					case "f10": case "f11": case "f12": case "f13": case "f14": case "f16": case "f19":
 					case "f24": case "f25": case "f27": case "f30": case "f33": case "f39": case "f40":
 					case "f56": case "f71": case "f84":
 				}
@@ -567,84 +572,6 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length!==7) {debugger; break;}
 				switch(map_entry_value) {default: debugger;}
 			} return;
-			case "browse$param": {
-				switch(parts[1]) {
-					default: {const idx=2; u(idx); debugger; parts[1]==="";} return;
-					case "f84": case "f93":
-				}
-				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[2]) {
-					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "f1": case "f3": case "f5":
-				}
-				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
-				debugger; return;
-			}
-			case "record_notification_interactions": {
-				switch(parts[1]) {
-					default: {const idx=2; u(idx); debugger; parts[1]==="";} return;
-					case "f2": case "f5":
-				}
-				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[2]) {
-					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "f1": case "f14":
-				}
-				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[3]) {
-					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
-					case "f1": case "f2":
-				}
-				if(parts.length===4) {switch(map_entry_value) {default: debugger; return;}}
-				if(parts.length!==5) {debugger; return;}
-				switch(map_entry_value) {default: debugger; return;}
-			}
-			case "transcript_target_id": {
-				switch(parts[1]) {
-					default: {const idx=2; u(idx); debugger; parts[2]==="";} return;
-					case "param": break;
-				}
-				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[2]) {
-					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "f1": case "f2": case "f3":
-				}
-				if(parts.length!==3) {debugger; return;}
-				switch(map_entry_value) {default: debugger; return;}
-			}
-			case "watch": {
-				switch(parts[1]) {
-					default: {const idx=2; u(idx); debugger; parts[2]==="";} return;
-					case "params": case "player_params": break;
-				}
-				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[2]) {
-					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "f2": case "f3": case "f7": case "f8": case "f9": case "f12": case "f13": case "f24": case "f25": case "f27": case "f33": case "f39": case "f40": case "f56":
-				}
-				if(parts.length===3) {
-					if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-					if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-					switch(map_entry_value) {default: debugger; return;}
-				}
-				switch(parts[3]) {
-					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
-					case "f1": case "f2": case "f3": case "f4": case "f5":
-				}
-				if(parts.length===4) {
-					if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-					if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-					switch(map_entry_value) {default: debugger; return;}
-				}
-				switch(parts[4]) {
-					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f2": case "f3":
-				}
-				if(parts.length!==5) debugger;
-				if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-				if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-				switch(map_entry_value) {default: debugger; return;}
-			}
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 	}
