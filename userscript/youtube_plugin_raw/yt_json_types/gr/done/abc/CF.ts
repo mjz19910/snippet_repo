@@ -59,9 +59,9 @@ type CF_M_s=
 	;
 ;
 type CF_L_TP_Params=
-	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
 	|`T_Items_TP:${CF_T_Items_TP}`
 	|CF_Common
+	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
 	;
 ;
 type CF_T_Signal=
