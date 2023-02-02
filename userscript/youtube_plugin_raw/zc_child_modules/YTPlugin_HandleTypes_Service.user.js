@@ -7636,8 +7636,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
-	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {const cf="G_CommentsSection"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="D_ExpandableTab"; this.k(cf,x);
@@ -7716,12 +7714,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_LoggingDirectives(loggingDirectives);
 		debugger;
 	}
-	/** @private @arg {D_CommentActionButtons} x */
-	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.gs(cf,x);}
-	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {const cf="D_LiveChat"; this.gs(cf,x); debugger;}
-	/** @private @arg {D_ReportFormModal} x */
-	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader"; this.k(cf,x);
@@ -8010,16 +8002,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(popoutMessage,this.R_Message);
 		this.t(viewerName,this.a_primitive_str);
 	}
-	/** @private @arg {D_Message} x */
-	D_Message(x) {const cf="D_Message"; this.gs(cf,x);}
-	/** @private @arg {D_LiveChatParticipantsList} x */
-	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.gs(cf,x);}
-	/** @private @arg {D_LiveChatTicker} x */
-	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.gs(cf,x);}
-	/** @private @arg {D_LiveChatItemList} x */
-	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.gs(cf,x);}
-	/** @private @arg {D_LiveChatHeader} x */
-	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChatEmoji} x */
 	D_LiveChatEmoji(x) {
 		const cf="D_LiveChatEmoji"; this.k(cf,x);
@@ -8487,8 +8469,6 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
 		debugger;
 	}
-	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.gs(cf,x);}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement"; this.k(cf,x);
@@ -8992,9 +8972,29 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AutomixPreviewVideo} x */
 	D_AutomixPreviewVideo(x) {x;}
 	/** @private @arg {D_MusicResponsiveListItem} x */
-	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.gs(cf,x);}
+	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_MusicShelfDivider} x */
-	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.gs(cf,x);}
+	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.gs(cf,x); debugger;}
+	/** @private @arg {G_CommentsSection} x */
+	G_CommentsSection(x) {const cf="G_CommentsSection"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_Message} x */
+	D_Message(x) {const cf="D_Message"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_LiveChatParticipantsList} x */
+	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_LiveChatTicker} x */
+	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_LiveChatItemList} x */
+	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_LiveChatHeader} x */
+	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
+	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_CommentActionButtons} x */
+	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_LiveChat} x */
+	D_LiveChat(x) {const cf="D_LiveChat"; this.gs(cf,x); debugger;}
+	/** @private @arg {D_ReportFormModal} x */
+	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.gs(cf,x); debugger;}
 	/** @private @arg {RSB_EditPlaylist["playlistEditResults"][number]} x */
 	G_PlaylistEditResult(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
