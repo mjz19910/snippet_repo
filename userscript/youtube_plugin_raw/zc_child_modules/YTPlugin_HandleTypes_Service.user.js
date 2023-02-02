@@ -2796,6 +2796,82 @@ class HandleTypes extends HandleTypesEval {
 			this.codegen_typedef_all(cf,x);
 		} finally {console.groupEnd();}
 	}
+	static {
+		let ka=[""];
+		for(let k of ka) {
+			switch(k) {}
+		}
+	}
+	/** @private @arg {Extract<D_Button,{targetId:any;}>} x */
+	D_Button_With_TargetId(x) {
+		const cf="D_Button_With_TargetId";
+		const {size,style,accessibilityData,isDisabled,targetId,...y}=this.D_Button_Omit_TP(cf,x,false); y;
+		let ka=this.get_keys_of(y);
+		/** @typedef {keyof (typeof y)} T_has_keys_left */
+		/** @type {T_has_keys_left} */
+		let u;
+		function u1() {u==="";}
+		u1;
+		for(let k of ka) {
+			switch(k) {
+				case "text": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {size,style,accessibilityData,isDisabled,targetId,text,...y}=this.D_Button_Omit_TP(cf1,x);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
+				case "serviceEndpoint": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {size,style,accessibilityData,isDisabled,targetId,text,serviceEndpoint,...y}=this.D_Button_Omit_TP(cf1,x);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
+				case "icon": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {icon,size,style,accessibilityData,isDisabled,targetId,command,...y}=this.D_Button_Omit_TP(cf1,x);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
+				case "tooltip": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {icon,size,style,accessibilityData,isDisabled,targetId,text,tooltip,command,...y}=this.D_Button_Omit_TP(cf1,x);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
+				case "command": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {icon,size,style,accessibilityData,isDisabled,targetId,command,...y}=this.D_Button_Omit_TP(cf1,x);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
+			}
+		}
+	}
 	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_OnIcon(x) {
 		const cf="D_Button_OnIcon";
@@ -2836,32 +2912,11 @@ class HandleTypes extends HandleTypesEval {
 	D_Button(x) {
 		const cf="D_Button";
 		if("icon" in x) return this.D_Button_OnIcon(x);
+		if("targetId" in x) return this.D_Button_With_TargetId(x);
 		let ka=this.get_keys_of(x);
 		for(let k of ka) {
 			switch(k) {
 				default: k===""; debugger; break;
-				case "serviceEndpoint": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {style,size,targetId,isDisabled,text,serviceEndpoint,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); this.g(y);
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "targetId": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {style,size,targetId,isDisabled,text,serviceEndpoint,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); this.g(y);
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
 				case "trackingParams": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
@@ -2956,7 +3011,7 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {isDisabled,size,style,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					let {isDisabled,size,style,accessibilityData,accessibility,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -4835,7 +4890,7 @@ class HandleTypes extends HandleTypesEval {
 					let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
 					let redir_parts=split_string_once(atob(redir_token),"|");
 					if(redir_parts.length===1) {debugger; return;}
-					let [p1,p2]=redir_parts.map(x=>base64_url_dec.decodeByteArray(x));
+					let [p1,p2]=redir_parts.map(x => base64_url_dec.decodeByteArray(x));
 					if(!p1||!p2) return;
 					for(let i=0;i<2;i++) {
 						this.save_next_byte("url.redir_token[0].data",p1,i);

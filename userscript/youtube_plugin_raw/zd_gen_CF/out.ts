@@ -7,16 +7,20 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:command";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:isDisabled";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:navigationEndpoint";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:size";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:style";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId:command";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId:icon";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId:serviceEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId:text";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId:tooltip";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "DE_SignalNavigation.signal";}
@@ -100,7 +104,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "GU_YoutubeUrlRedirect";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "G_DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
