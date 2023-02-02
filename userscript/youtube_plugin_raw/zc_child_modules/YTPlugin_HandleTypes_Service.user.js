@@ -1328,9 +1328,17 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
-	GE_Browse(x) {let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x); this.GE_Browse_WCM(x2); this.G_DE_Browse_VE(x4); this.g(x5);}
+	GE_Browse(x) {
+		let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x);
+		let ve_name=this.GE_Browse_WCM(x2);
+		this.G_DE_Browse_VE(ve_name,x4);
+		this.g(x5);
+	}
 	/** @private @arg {GE_Browse_WCM} x */
-	GE_Browse_WCM(x) {const cf="M_VE_Browse",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y); this.GM_VE_WC_Browse(a);}
+	GE_Browse_WCM(x) {
+		const cf="M_VE_Browse",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);
+		return this.GM_VE_WC_Browse(a);
+	}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {const [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);}
 	/** @private @arg {E_Upload} x */
@@ -1474,35 +1482,35 @@ class HandleTypes extends HandleTypesEval {
 		this.params(cf,"GetNotificationMenu.ctoken",ctoken);
 		debugger;
 	}
-	/** @private @arg {G_DE_Browse_VE} x */
-	G_DE_Browse_VE(x) {
+	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
+	G_DE_Browse_VE(ve_name,x) {
 		const cf="G_DE_Browse_VE";
 		if("params" in x) {
 			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);
-			this.GU_E_BrowseId(a);
+			this.GU_E_BrowseId(ve_name,a);
 			this.params(cf,"D_Browse.param",c);
 			this.g(y);
 			return;
 		}
 		if("canonicalBaseUrl" in x) {
 			const {browseId: a,canonicalBaseUrl: b,...y}=this.s(cf,x); this.g(y);
-			this.GU_E_BrowseId(a);
+			this.GU_E_BrowseId(ve_name,a);
 			return this._decode_channel_url(b);
 		}
 		const {browseId: a,...y}=this.s(cf,x); this.g(y);
-		this.GU_E_BrowseId(a);
+		this.GU_E_BrowseId(ve_name,a);
 		this.g(y);
 	}
-	/** @private @arg {GE_Browse['browseEndpoint']['browseId']} x */
-	GU_E_BrowseId(x) {
+	/** @private @arg {string} ve_name @arg {GE_Browse['browseEndpoint']['browseId']} x */
+	GU_E_BrowseId(ve_name,x) {
 		if(this.str_starts_with_rx("UC",x)) return this.D_ChannelId(x);
 		if(this.str_starts_with_rx("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
-			case "FEguide_builder": case "FEstorefront": break;
-			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
+			case "FEguide_builder": case "FEstorefront": case "FEhashtag": break;
+			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history": 
 			case "SPaccount_overview": break;
-			default: x===""; console.log(`-- [E_Browse_ParseBrowseId] --\n\n\ncase "${x}":`); break;
+			default: x===""; console.log(`-- [E_Browse_ParseBrowseId.${ve_name}] --\n\n\ncase "${x}":`); break;
 		};
 	}
 	/** @private @arg {GM_Subscribe} x */
@@ -1519,7 +1527,7 @@ class HandleTypes extends HandleTypesEval {
 			case "/youtubei/v1/like/like": return this.GM_like_like(x);
 		}
 	}
-	/** @private @arg {GM_VE_WC_Browse} x */
+	/** @private @arg {GM_VE_WC_Browse} x @returns {`VE${GM_VE_WC_Browse["rootVe"]}`} */
 	GM_VE_WC_Browse(x) {
 		switch(x.rootVe) {
 			case 3611: this.GM_VE3611_WC(x); break;
@@ -1533,6 +1541,7 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; debugger; break;
 		}
 		this.GM_WC(x);
+		return `VE${x.rootVe}`;
 	}
 	/** @private @arg {GM_VE42352_WC['url']} x */
 	_decode_browse_url(x) {
@@ -3946,9 +3955,19 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.GM_VE83769_UrlType(sp.href);
 	}
+	/** @private @arg {D_YoutubeUrl} x */
+	D_YoutubeUrl(x) {
+		x;
+	}
 	/** @private @arg {DU_Url} x */
 	DE_Url(x) {
 		const cf="DE_Url";
+		if(!("target" in x)) {
+			const {url,nofollow,...y}=this.s(cf,x); this.g(y);
+			this.D_YoutubeUrl(url);
+			if(nofollow!==true) debugger;
+			return;
+		}
 		if("nofollow" in x) {
 			const {url,target,nofollow,...y}=this.s(cf,x); this.g(y);
 			this.GM_E_Url_TargetUrlType(url);

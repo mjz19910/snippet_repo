@@ -1,6 +1,6 @@
 type GU_VE5754_Id=`VL${"LL"|"WL"|`PL${string}`}`;
 type GU_VE6827_Id_1="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
-type GU_VE6827_Id_Params="FEtrending"|"FEstorefront";
+type GU_VE6827_Id_Params="FEtrending"|"FEstorefront"|"FEhashtag";
 type GU_VE6827_Id=GU_VE6827_Id_1|GU_VE6827_Id_Params;
 type GU_VE23462_Url="/account"|"/account_notifications";
 type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";

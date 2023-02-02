@@ -1192,3 +1192,4 @@ type D_FeedNudge={
 	style: "FEED_NUDGE_STYLE_CHIP";
 	contents: R_ChipCloudChip[];
 };
+type D_YoutubeUrl=DU_InternalUrl["url"];
