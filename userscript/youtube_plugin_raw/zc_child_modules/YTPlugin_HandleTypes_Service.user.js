@@ -4456,13 +4456,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);}
-	/** @private @arg {[TD_ItemSection_3_I_1[],"comment-item-section","comments-section"]} x */
+	/** @private @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
 	ItemSection_3_CommentItemSection(x) {
 		if(x[1]!=="comment-item-section") debugger;
 		if(x[2]!=="comments-section") debugger;
 		this.z(x[0],this.TD_ItemSection_3_I_1);
 	}
-	/** @private @arg {TD_ItemSection_3_I_1} x */
+	/** @private @arg {R_ContinuationItem} x */
 	TD_ItemSection_3_I_1(x) {
 		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);

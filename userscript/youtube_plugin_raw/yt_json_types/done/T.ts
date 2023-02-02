@@ -29,6 +29,16 @@ type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
 type TB_ContinuationItemMap={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
 //#endregion
+//#region TD_
+type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
+type TD_GuideEntry_EntryData<T_IconType extends string>=TD_GuideEntry_Simple<T_IconType>&{entryData: R_GuideEntryData;};
+type TD_GuideEntry_Primary<T_IconType extends string>=TD_GuideEntry_Simple<T_IconType>&{isPrimary: true;};
+type TD_GuideEntry_Simple<T_IconType extends string>={navigationEndpoint: GE_Browse; icon: T_Icon<T_IconType>; trackingParams: string; formattedTitle: G_Text; accessibility: D_Accessibility;};
+type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>=TD_GuideEntry_Primary<T_IconType>&{targetId: Tid;};
+type TD_ItemSection_2<T_ContentType,T_sectionIdentifier>={trackingParams: string; contents: T_ContentType[]; sectionIdentifier: T_sectionIdentifier;};
+type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={targetId: T_targetId;}&TD_ItemSection_2<T_ContentType,T_sectionIdentifier>;
+type TD_Label<T>={label: T;};
+//#endregion
 //#region TE_
 type TE_Endpoint_2<EP_Key extends string,T_Data>={clickTrackingParams: string;}&{[I in EP_Key]: T_Data};
 type TE_Endpoint_3_Helper<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in EP_Key]: T_Data};
@@ -65,58 +75,21 @@ type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["
 type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
 type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
-type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
-type TD_GuideEntry_EntryData<T extends string>={
-	navigationEndpoint: GE_Browse;
-	icon: T_Icon<T>;
-	trackingParams: string;
-	formattedTitle: G_Text;
-	accessibility: D_Accessibility;
-	entryData: R_GuideEntryData;
-};
-type TD_GuideEntry_NotPrimary<T extends string>={
-	navigationEndpoint: GE_Browse;
-	icon: T_Icon<T>;
-	trackingParams: string;
-	formattedTitle: G_Text;
-	accessibility: D_Accessibility;
-};
-type TD_GuideEntry_Primary<T_IconType extends string>={
-	navigationEndpoint: GE_Browse;
-	icon: T_Icon<T_IconType>;
-	trackingParams: string;
-	formattedTitle: G_Text;
-	accessibility: D_Accessibility;
-	isPrimary: true;
-};
-type TD_GuideEntry_Simple<T extends string>={
-	navigationEndpoint: GE_Browse;
-	icon: T_Icon<T>;
-	trackingParams: string;
-	formattedTitle: G_Text;
-	accessibility: D_Accessibility;
-};
-type TD_GuideEntry_Tid_Primary<T_IconType extends string,Tid>={
-	navigationEndpoint: GE_Browse;
-	icon: T_Icon<T_IconType>;
-	trackingParams: string;
-	formattedTitle: G_Text;
-	accessibility: D_Accessibility;
-	targetId: Tid;
-	isPrimary: true;
-};
-type TD_ItemSection_2<T_ContentType,T_sectionIdentifier>=Record<"contents",T_ContentType[]>&{
-	trackingParams: string;
-	sectionIdentifier: T_sectionIdentifier;
-};
-type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>=Record<"contents",T_ContentType[]>&{
-	trackingParams: string;
-	sectionIdentifier: T_sectionIdentifier;
-	targetId: T_targetId;
-};
-type TD_ItemSection_3_I_1=R_ContinuationItem;
-type TD_Label<T>={label: T;};
+//#region TR_
+type TR_SectionListItem_3_Empty=TR_SectionListItem_3<{},{},{}>;
 type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
+type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
+type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
+type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
+type TR_SectionListItem_3<T_ContentType,B,C>=
+	|R_ContinuationItem
+	|TR_ItemSection_3<T_ContentType,B,C>
+	|R_MusicCarouselShelf
+	|R_MusicShelf
+	;
+;
+type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
+//#endregion
 type TG_SecondaryResultsItem_3<A,B,C>=[
 	R_RelatedChipCloud,
 	TR_ItemSection_3<A,B,C>
@@ -131,17 +104,6 @@ type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
 };
-type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
-type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
-type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
-type TR_SectionListItem_3<T_ContentType,B,C>=
-	|R_ContinuationItem
-	|TR_ItemSection_3<T_ContentType,B,C>
-	|R_MusicCarouselShelf
-	|R_MusicShelf
-	;
-;
-type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
 type T_Actions<T>={actions: T[];};
 type T_AnyObjectOrEmpty<T extends {}>={}|T;
 type T_Autoplay<T>={autoplay: T;};
@@ -237,7 +199,6 @@ type T_WCM_={
 	sendPost?: boolean;
 	rootVe?: D_RootVisualElementType;
 };
-type TR_SectionListItem_3_Empty=TR_SectionListItem_3<{},{},{}>;
 type T_DC_Content<T>={trackingParams: string; contents: T[];};
 type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
 type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};

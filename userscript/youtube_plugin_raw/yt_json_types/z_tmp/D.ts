@@ -1125,8 +1125,8 @@ type D_GuideEntry_ShortsTab={
 };
 type D_GuideEntry_Subscriptions=TD_GuideEntry_Primary<"SUBSCRIPTIONS">;
 type D_GuideEntry_VideoLibrary=TD_GuideEntry_Tid_Primary<"VIDEO_LIBRARY_WHITE","library-guide-item">;
-type D_GuideEntry_WatchHistory=TD_GuideEntry_NotPrimary<"WATCH_HISTORY">;
-type D_GuideEntry_WatchLater=TD_GuideEntry_NotPrimary<"WATCH_LATER">;
+type D_GuideEntry_WatchHistory=TD_GuideEntry_Simple<"WATCH_HISTORY">;
+type D_GuideEntry_WatchLater=TD_GuideEntry_Simple<"WATCH_LATER">;
 type D_GuideEntry_WhatToWatch=TD_GuideEntry_Primary<"WHAT_TO_WATCH">;
 type D_GuideEntry=
 	|never
