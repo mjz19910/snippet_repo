@@ -162,7 +162,7 @@ ECatcherService.known_experiments.push(...(() => {
 	];
 	return arr.map(e => e[1]);
 })().flat());
-/** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
+/** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
 class HandleTypes extends HandleTypesEval {
 	//#region Params parse
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
@@ -1119,7 +1119,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!generate_typedef.value) throw new Error();
 		return generate_typedef.value;
 	}
-	/** @this {HandleTypes<LoadAllServices,ServiceOptions>} @arg {ResolverT<Cls_T,Cls_U>} x */
+	/** @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		generate_typedef.value=new TypedefGenerator(x);
