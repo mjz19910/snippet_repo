@@ -1909,8 +1909,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
 	GM_WC_Ex(x) {
 		switch(x.rootVe) {
-			case 3854: return this.GM_VE3854_WC(x);
 			case 3611: return this.GM_VE3611_WC(x);
+			case 3854: return this.GM_VE3854_WC(x);
 			case 5754: return this.GM_VE5754_WC(x);
 			case 6827: return this.GM_VE6827_WC(x);
 			case 11487: return this.GM_VE11487_WC(x);
@@ -1919,6 +1919,26 @@ class HandleTypes extends HandleTypesEval {
 			case 96368: return this.GM_VE96368_WC_browse(x);
 			default: x===0; debugger; break;
 		}
+	}
+	/** @private @arg {GM_VE3611_WC} x */
+	GM_VE3611_WC(x) {
+		const cf="GM_VE3611_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		this._decode_channel_url("VE3611",url);
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		if(rootVe!==3611) debugger;
+	}
+	/** @private @arg {GM_VE3854_WC} x */
+	GM_VE3854_WC(x) {
+		const cf="GM_VE3854_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		x: {
+			if(url==="/") break x;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==3854) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_VE5754_WC} x */
 	GM_VE5754_WC(x) {
@@ -1953,44 +1973,6 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==23462) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @private @arg {GM_VE96368_WC_browse} x */
-	GM_VE96368_WC_browse(x) {
-		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(url!=="/feed/subscriptions") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==96368) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_VE3854_WC} x */
-	GM_VE3854_WC(x) {
-		const cf="GM_VE3854_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		x: {
-			if(url==="/") break x;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==3854) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_VE42352_WC} x */
-	GM_VE42352_WC(x) {
-		const cf="GM_VE42352_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this._decode_browse_url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==42352) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_VE3611_WC} x */
-	GM_VE3611_WC(x) {
-		const cf="GM_VE3611_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this._decode_channel_url("VE3611",url);
-		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		if(rootVe!==3611) debugger;
-	}
 	/** @private @arg {GM_VE37414_WC} x */
 	GM_VE37414_WC(x) {
 		const cf="GM_VE37414_WC"; this.k(cf,x);
@@ -2005,6 +1987,24 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 		if(rootVe!==37414) debugger;
+	}
+	/** @private @arg {GM_VE42352_WC} x */
+	GM_VE42352_WC(x) {
+		const cf="GM_VE42352_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		this._decode_browse_url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==42352) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @private @arg {GM_VE96368_WC_browse} x */
+	GM_VE96368_WC_browse(x) {
+		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(url!=="/feed/subscriptions") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==96368) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_Subscribe} x */
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
