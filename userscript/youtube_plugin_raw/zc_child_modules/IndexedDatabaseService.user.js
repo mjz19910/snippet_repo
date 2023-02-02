@@ -28,6 +28,7 @@ function h_detect_firefox() {
 const is_firefox=h_detect_firefox();
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
+const as=bs.as_;
 class DatabaseArguments {
 	/** @constructor @public @arg {string} name @arg {number} version */
 	constructor(name,version) {
@@ -264,8 +265,39 @@ class IndexedDatabaseService extends BaseService {
 			this.committed_data.push(data);
 		};
 	}
+	/** @template T @arg {IDBRequest<T>} db_request @returns {Promise<{result:T;event:Event}>} */
+	await_success(db_request) {
+		return new Promise(function(accept,reject) {
+			db_request.onsuccess=function(event) {
+				accept({result: db_request.result,event});
+			};
+			db_request.onerror=function(event) {
+				reject(event);
+			};
+		});
+	}
+	database_store_index_shape={
+		video_id: {v:""},
+		hashtag: {hashtag:""},
+	}
+	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
+	objectStore(tx,key) {
+		let rq=tx.objectStore(key);
+		return as(rq);
+	}
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {TypedIDBObjectStore<T>} obj_store */
+	async transfer_store(key,obj_store) {
+		const index_key=this.get_index_key(key);
+		/** @private @type {IDBRequest<T[]>} */
+		let get_all_video_id_req=obj_store.getAll();
+		let {result: video_id_result}=await this.await_success(get_all_video_id_req);
+		for(let x of video_id_result) {
+			if(!(index_key in x)) throw new Error("Invalid transfer_store result");
+			obj_store.put(x);
+		}
+	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
-	onUpgradeNeeded(request,event) {
+	async onUpgradeNeeded(request,event) {
 		if(event.oldVersion===0) {
 			this.createLatestDatabaseVersion(request,[]);
 			return;
@@ -282,15 +314,40 @@ class IndexedDatabaseService extends BaseService {
 			let get_all_request=video_id_store.getAll();
 			get_all_request.onsuccess=() => {
 				db.deleteObjectStore("video_id");
-				this.createLatestDatabaseVersion(request,get_all_request.result);
+				const store_video_id=db.createObjectStore("video_id",{keyPath: this.get_index_key("video_id")});
+				let data_source=get_all_request.result;
+				for(let x of data_source) {
+					if("v" in x) {
+						store_video_id.put(x);
+					} else {
+						throw new Error("Invalid data source");
+					}
+				}
 			};
 		}
+		if(event.oldVersion<3) {
+			if(!request.transaction) throw new Error("No transaction");
+			let tx=request.transaction;
+			const video_id_store=this.objectStore(tx,"video_id");
+			const hashtag_store=this.objectStore(tx,"hashtag");
+			this.transfer_store("video_id",video_id_store);
+			this.transfer_store("hashtag",hashtag_store);
+		}
 	}
-	/** @private @arg {IDBOpenDBRequest} request @arg {{v:string}[]} data_source */
+	/** @private @arg {IDBOpenDBRequest} request @arg {({v:string}|{hashtag:string})[]} data_source */
 	createLatestDatabaseVersion(request,data_source) {
 		const db=request.result;
-		const store=db.createObjectStore("video_id",{keyPath: "v"});
-		for(let x of data_source) store.put(x);
+		const store_video_id=db.createObjectStore("video_id",{keyPath: this.get_index_key("video_id")});
+		const store_hashtag=db.createObjectStore("hashtag",{keyPath: this.get_index_key("hashtag")});
+		for(let x of data_source) {
+			if("v" in x) {
+				store_video_id.put(x);
+			} else if("hashtag" in x) {
+				store_hashtag.put(x);
+			} else {
+				throw new Error("Invalid data source");
+			}
+		}
 	}
 	/** @private @arg {Event} event */
 	onError(event) {
