@@ -2,7 +2,7 @@ BACKUP_DATE=$(date '+%F_%H/%M')
 PROJ_DIR="$PWD"
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF"
 TMP_DIR="/dev/shm/snippet_repo_tmp"
-function after_clone_git_repo {
+function after_tmp_git_repo {
 		git apply "../snippet_repo.diff"
 }
 function make_tmp_git_repo {
@@ -12,13 +12,13 @@ function make_tmp_git_repo {
 		pushd "$TMP_DIR"
 		git reset --hard -q
 		git pull -q
-		after_clone_git_repo
+		after_tmp_git_repo
 		popd
 	else
 		echo not in git repo at $TMP_DIR
 		git clone "$PROJ_DIR" snippet_repo_tmp -q
 		pushd "$TMP_DIR"
-		after_clone_git_repo
+		after_tmp_git_repo
 		popd
 	fi
 	popd
