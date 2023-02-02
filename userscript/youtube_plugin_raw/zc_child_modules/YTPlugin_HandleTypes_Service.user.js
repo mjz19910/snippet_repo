@@ -3354,10 +3354,18 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x.listType) {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
-				const {openMiniplayer,videoId,listType,onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);
+				if("openListPanel" in x) {
+					const {openMiniplayer,videoId,listType,onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);
+					this.E_CreatePlaylistService(onCreateListCommand);
+					if(openListPanel!==true) debugger;
+					if(openMiniplayer!==false) debugger;
+					this.a_primitive_bool(openMiniplayer);
+					this.videoId(videoId);
+					this.z(videoIds,this.videoId);
+					return;
+				}
+				const {openMiniplayer,videoId,listType,onCreateListCommand,videoIds,...y}=this.s(cf,x); this.g(y);
 				this.E_CreatePlaylistService(onCreateListCommand);
-				if(openListPanel!==void 0) debugger;
-				this.t(openListPanel,this.a_primitive_bool);
 				this.a_primitive_bool(openMiniplayer);
 				this.videoId(videoId);
 				this.z(videoIds,this.videoId);

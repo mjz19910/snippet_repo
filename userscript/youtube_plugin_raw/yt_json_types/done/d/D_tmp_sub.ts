@@ -10,14 +10,23 @@ type DA_ReplayChatItem={
 	actions: A_AddChatItem[];
 	videoOffsetTimeMsec: `${number}`;
 };
-type DC_AddToPlaylist={
-	listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
-	onCreateListCommand: E_CreatePlaylistService;
-	openListPanel?: boolean;
-	openMiniplayer: boolean;
-	videoId: string;
-	videoIds: string[];
-};
+type D_VideoId=string;
+type DC_AddToPlaylist=
+	|{
+		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
+		onCreateListCommand: E_CreatePlaylistService;
+		openMiniplayer: boolean;
+		videoId: D_VideoId;
+		videoIds: D_VideoId[];
+	}
+	|{
+		openMiniplayer: false;
+		openListPanel: true;
+		videoId: D_VideoId;
+		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
+		onCreateListCommand: E_CreatePlaylistService;
+		videoIds: D_VideoId[];
+	};
 type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
