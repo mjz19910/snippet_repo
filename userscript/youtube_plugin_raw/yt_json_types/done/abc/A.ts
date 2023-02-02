@@ -33,6 +33,11 @@ type A_FrameworkUpdates={
 	entityBatchUpdate: DC_EntityBatchUpdate;
 	elementUpdate?: R_ElementUpdate;
 };
+type DC_EngagementPanelHeaderShowNavigationButton={
+	targetId: "engagement-panel-macro-markers-description-chapters";
+	navigationButton: R_Button;
+};
+
 //#endregion
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,
@@ -40,7 +45,8 @@ type AC_Executor=[
 	C_ScrollToEngagementPanel,
 	C_Loop,
 	C_UpdateToggleButtonState,
-	TA_OpenPopup_Empty
+	TA_OpenPopup_Empty,
+	C_EngagementPanelHeaderShowNavigationButton,
 ][number];
 type A_ResponseReceived=
 	|C_AdsControlFlowOpportunityReceived
