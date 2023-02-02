@@ -5017,18 +5017,28 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.R_LikeButton(likeButton);
+		if("likeButton" in x) {
+			const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+			this.R_LikeButton(likeButton);
+			this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
+			this.R_Menu(menu);
+			this.R_Button(nextItemButton);
+			this.R_Button(prevItemButton);
+			this.R_SubscribeButton(subscribeButtonRenderer);
+			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+			this.R_Button(viewCommentsButton);
+			this.trackingParams(cf,trackingParams);
+			this.R_Button(shareButton);
+			this.R_PivotButton(pivotButton);
+			return;
+		}
+		const {reelPlayerHeaderSupportedRenderers,nextItemButton,prevItemButton,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
 		this.R_Menu(menu);
 		this.R_Button(nextItemButton);
 		this.R_Button(prevItemButton);
-		this.R_SubscribeButton(subscribeButtonRenderer);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.R_Button(viewCommentsButton);
 		this.trackingParams(cf,trackingParams);
-		this.R_Button(shareButton);
-		this.R_PivotButton(pivotButton);
 	}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
