@@ -492,29 +492,12 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 				}
 			} break;
-			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry":
-			case "create_playlist": case "createBackstagePost":
-			case "D_Browse": case "entity_key":
-			case "feedback":
-			case "get_report_form": case "get_transcript": case "GetNotificationMenu":
-			case "like":
-			case "next_radio": case "next":
-			case "playlist_edit":
-			case "reel": case "reload":
-			case "service$create_playlist": case "slot_ad_serving_data_entry":
-			case "subscribe": case "subscriptionState":
-			case "TimedContinuation": case "tracking": case "transcriptTrackSelection":
-			case "UndoFeedback":
-			case "watch_page_url":
-			case "watch_playlist":
-			case "watch":
-			case "ypc_get_offers":
-			case "ypc_get_offline_upsell":
-			case "YpcGetCart":
-			case "browse$param":
-			case "record_notification_interactions":
-			case "transcript_target_id":
-			case "watch": {
+			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
+			case "D_Browse": case "entity_key": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
+			case "next_radio": case "next": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
+			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
+			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
+			case "record_notification_interactions": case "transcript_target_id": case "watch": {
 				switch(parts[1]) {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
