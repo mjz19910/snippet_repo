@@ -4847,7 +4847,8 @@ class HandleTypes extends HandleTypesEval {
 					let redir_parts=split_string_once(atob(redir_token),"|");
 					if(redir_parts.length===1) {debugger;return;}
 					let [p1,p2]=redir_parts;
-					this.params(cf,"url.redir_token[0]",p1);
+					this.save_next_char("url.redir_token[0].data",p1[0]);
+					// this.params(cf,"url.redir_token[0]",p1);
 					this.params(cf,"url.redir_token[1]",p2);
 					console.log("[E_Url.TargetUrl.search_params.redir_token[0]]",p1);
 					console.log("[E_Url.TargetUrl.search_params.redir_token[1]]",p2);
@@ -7053,11 +7054,14 @@ class HandleTypes extends HandleTypesEval {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
 	}
-	/** @private @arg {string} user_key @arg {string} x */
-	save_next_char(user_key,x) {
+	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
+	save_next_char(user_key,x,idx=0) {
 		let f=x;
-		let k=`${user_key}.data[0]["${f}"]`;
-		this.save_string(`${user_key}.data[0]`,f);
+		/** @type {`${user_key}.data[${typeof idx}]`} */
+		let rk=`${user_key}.data[${idx}]`;
+		/** @type {`${typeof rk}[${f}]`} */
+		let k=`${rk}[${JSON.stringify(f)}]`;
+		this.save_string(rk,f);
 		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
 		if(!s_url_data) return this.save_number(k,1);
 		let wd=s_url_data[1];
