@@ -4847,8 +4847,9 @@ class HandleTypes extends HandleTypesEval {
 					let redir_parts=split_string_once(atob(redir_token),"|");
 					if(redir_parts.length===1) {debugger;return;}
 					let [p1,p2]=redir_parts;
-					this.save_next_char("url.redir_token[0].data",p1[0]);
-					// this.params(cf,"url.redir_token[0]",p1);
+					for(let i=0;i<2;i++) {
+						this.save_next_char("url.redir_token[0].data",p1,i);
+					}
 					this.params(cf,"url.redir_token[1]",p2);
 					console.log("[E_Url.TargetUrl.search_params.redir_token[0]]",p1);
 					console.log("[E_Url.TargetUrl.search_params.redir_token[1]]",p2);
@@ -7056,7 +7057,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {
-		let f=x;
+		let f=x[idx];
 		/** @type {`${user_key}.data[${typeof idx}]`} */
 		let rk=`${user_key}.data[${idx}]`;
 		/** @type {`${typeof rk}[${f}]`} */
