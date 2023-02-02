@@ -1,6 +1,13 @@
 //#region DE_VE
 type DE_VE<T>={browseId: T;};
-type DE_VE3611_Browse={browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`;};
+type DE_VE3611_Browse={
+	browseId: `UC${string}`;
+	canonicalBaseUrl: `/@${string}`;
+}|{
+	browseId: `UC${string}`;
+	params: string;
+	canonicalBaseUrl: `/@${string}`;
+};
 type DE_VE3854_Browse=DE_VE<"FEwhat_to_watch">;
 type DE_VE5754_Browse=DE_VE<GU_VE5754_Id>;
 type DE_VE6827_NoParams=DE_VE<GU_VE6827_Id_1>;
