@@ -17,6 +17,7 @@ type P_PathRootStr=
 	|"like.dislikeParams"
 	|"like.likeParams"
 	|"like.removeLikeParams"
+	|"next_radio.continuation"
 	|"next.continuation"
 	|"next.queue_context_params"
 	|"playlist_edit.params"

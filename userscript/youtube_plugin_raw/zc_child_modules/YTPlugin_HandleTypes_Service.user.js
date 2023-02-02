@@ -429,6 +429,19 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "next_radio": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "continuation": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
 			case "ypc_get_offline_upsell": {
 				const idx=2;
 				if(parts.length!==1) {parts==="";}
@@ -1972,9 +1985,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {CD_Reload} x */
-	CD_Reload(x) {this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));}
+	CD_Reload(x) {
+		this.y("CD_Reload","reloadContinuationData",x,
+			x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));
+	}
 	/** @private @arg {CD_NextRadio} x */
-	CD_NextRadio(x) {this.y("CD_NextRadio","nextRadioContinuationData",x,x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));}
+	CD_NextRadio(x) {
+		this.y("CD_NextRadio","nextRadioContinuationData",x,
+			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
+	}
 	/** @private @arg {UA_SubscribeButton} x */
 	UA_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
 	/** @private @arg {UA_ChannelSwitcherPage} x */
@@ -8962,8 +8981,27 @@ class HandleTypes extends HandleTypesEval {
 		let [h,sp]=split_string_once(s1,"/");
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
-			let [pp,query_search]=split_string_once(sp,"?");
+			let [pp,qs]=split_string_once(sp,"?");
+			pp; qs;
 			debugger;
+		} else {
+			let pp=sp;
+			let p_arr=this.split_str(pp,"/");
+			switch(p_arr.length) {
+				default: this.codegen_str(cf,x); return;
+				case 3: break;
+			}
+			let [p_0,p_1,...arr_2]=p_arr;
+			switch(p_0) {
+				default: this.codegen_str(cf,x); return;
+				case "channel": break;
+			}
+			if(!this.str_starts_with(p_1,"UC")) {this.codegen_str(cf,x); return;}
+			switch(arr_2[0]) {
+				default: this.codegen_str(cf,x); return;
+				case "join": break;
+			}
+			return;
 		}
 		this.codegen_str(cf,x);
 	}
@@ -9005,6 +9043,14 @@ class HandleTypes extends HandleTypesEval {
 	R_BrowseFeed(x) {const cf="R_BrowseFeed"; this.codegen_typedef_all(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_TranscriptSegment} x */
 	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {D_PdgCommentChip} x */
+	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {D_InfoRow} x */
+	D_InfoRow(x) {const cf="D_InfoRow"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {D_PrivacyDropdownItem} x */
+	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {D_PromotedSparklesWeb} x */
+	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

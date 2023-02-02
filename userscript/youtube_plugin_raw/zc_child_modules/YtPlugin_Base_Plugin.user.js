@@ -2901,8 +2901,8 @@ class HandleRendererContentItemArray extends BaseService {
 		}
 		let t=rich_shelf.title;
 		if("runs" in t) {if(t.runs[0].text==="Breaking news") return false;}
-		console.log("rich shelf",rich_shelf);
-		debugger;
+		// console.log("rich shelf",rich_shelf);
+		// debugger;
 		return true;
 	}
 	/** @api @public @template {R_BrowseFeed[]|G_WatchNext[]|G_CommentsSection[]|G_SectionItem[]} T @arg {T} arr @returns {T} */
