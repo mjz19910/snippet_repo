@@ -297,11 +297,11 @@ class HandleTypes extends HandleTypesEval {
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let saved_map_keys=map_keys.slice();
 		let callback=this.on_player_params_callback.bind(this);
-		let map_entry_key=map_entry_key_path.at(-1);
-		if(!map_entry_key) {debugger; return;}
 		switch(map_entry_key_path.length) {
 			case 1: {
-				this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				let map_entry_key=map_entry_key_path.at(-1);
+				if(!map_entry_key) {debugger; return;}
+				this.parse_param_next(root,path,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 		}
