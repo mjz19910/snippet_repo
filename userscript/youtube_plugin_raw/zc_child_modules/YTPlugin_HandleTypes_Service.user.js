@@ -7623,7 +7623,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		debugger;
 	}
-	/** @private @arg {DAU_SubscribeButton} x */
+	/** @private @arg {DUA_SubscribeButton} x */
 	DAU_SubscribeButton(x) {
 		const cf="DAU_SubscribeButton";
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);

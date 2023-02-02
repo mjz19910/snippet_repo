@@ -1,4 +1,4 @@
-type DAU_SubscribeButton={
+type DUA_SubscribeButton={
 	subscribed: true;
 	channelId: `UC${string}`;
 };

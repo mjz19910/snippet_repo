@@ -21,15 +21,7 @@ type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
-type AU_ChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};
-type UA_DateText={updateDateTextAction: D_DateText;};
-type UA_Description={updateDescriptionAction: DUA_Description;};
-type AU_EngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};
-type AU_NotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
-type AU_SubscribeButton={updateSubscribeButtonAction: DAU_SubscribeButton;};
-type UA_Title={updateTitleAction: D_Title;};
-type UA_ToggleButtonText={updateToggleButtonTextAction: D_ToggleButtonText;};
-type UA_Viewership={updateViewershipAction: D_ViewCount;};
+type A_AccountItem={accountItem: AD_AccountItem;};
 //#endregion
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,
@@ -39,3 +31,28 @@ type AC_Executor=[
 	C_UpdateToggleButtonState,
 	TA_OpenPopup_Empty
 ][number];
+type A_ActionAddVideo={
+	addedVideoId: string;
+	action: "ACTION_ADD_VIDEO";
+};
+type A_ActionSetPlaylistVideoOrder={
+	action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";
+};
+type A_BrowserMediaSession={browserMediaSession: R_BrowserMediaSession;}&T_Actions<R_LikeButton>;
+type A_ExternalChannelId={
+	externalChannelId: `UC${string}`;
+};
+type A_FrameworkUpdates={
+	entityBatchUpdate: D_EntityBatchUpdate;
+	elementUpdate?: R_ElementUpdate;
+};
+type D_LoggingDirectives={
+	trackingParams: string;
+	visibility: TM_Visibility;
+	enableDisplayloggerExperiment?: boolean;
+	gestures?: D_LoggingDirectives_Gestures;
+};
+type A_ResponseReceived=
+	|C_AdsControlFlowOpportunityReceived
+	|C_ReloadContinuationItems;
+type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;
