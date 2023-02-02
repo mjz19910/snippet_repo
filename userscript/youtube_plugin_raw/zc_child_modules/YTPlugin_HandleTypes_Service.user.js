@@ -8203,7 +8203,12 @@ class HandleTypes extends HandleTypesEval {
 		this.z(cards,this.R_MacroMarkersListItem);
 		this.trackingParams(cf,trackingParams);
 		this.R_RichListHeader(header);
-		this.ceq(style.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION");
+		x: {
+			let x1=style;
+			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
+			if("type" in x1) {this.ceq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
+			this.ceq(x1,null);
+		}
 		this.ceq(centerItems,false);
 	}
 	/** @private @arg {D_RichListHeader} x */
