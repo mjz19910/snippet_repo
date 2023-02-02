@@ -511,7 +511,10 @@ class HandleTypes extends HandleTypesEval {
 					case "f25": case "f26": case "f27": case "f28": case "f29":
 					case "f84": case "f93":
 				}
-				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				if(parts.length===2) {
+					if(map_entry_value instanceof Map) return;
+					switch(map_entry_value) {default: debugger; return;}
+				}
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
 					case "f1": case "f1[]": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
@@ -519,7 +522,10 @@ class HandleTypes extends HandleTypesEval {
 					case "f24": case "f25": case "f27": case "f30": case "f33": case "f39": case "f40":
 					case "f56": case "f71": case "f84":
 				}
-				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
+				if(parts.length===3) {
+					if(map_entry_value instanceof Map) return;
+					switch(map_entry_value) {default: debugger; return;}
+				}
 				switch(parts[3]) {
 					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
