@@ -3591,7 +3591,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "updated_metadata": return {
 				type: target[0],
-				/** @private @type {RSU_M} */
+				/** @private @type {RS_UpdateMetadata} */
 				data: as(x),
 			};
 		}

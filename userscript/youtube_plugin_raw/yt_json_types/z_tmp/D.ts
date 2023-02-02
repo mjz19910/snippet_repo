@@ -439,7 +439,7 @@ type D_ActionCompanionAd={
 	bannerImage: D_ThumbnailsList;
 	navigationEndpoint: {};
 	trackingParams: string;
-	adInfoRenderer: RL_ActionCompanionAdInfo;
+	adInfoRenderer: R_AdHoverTextButton;
 	adVideoId: string;
 	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: D_AdLayoutLoggingData;
@@ -1209,7 +1209,7 @@ type D_AdHoverTextButton={
 	trackingParams: string;
 };
 type D_AdLayout={serializedAdServingDataEntry: string;};
-type D_AdPlacement={config: R_AdPlacementConfig; renderer: AdPlacementRendererItem;};
+type D_AdPlacement={config: R_AdPlacementConfig; renderer: G_AdPlacementRendererItem;};
 type D_AdPlacementConfig={
 	kind: DE_AdPlacementKind;
 	adTimeOffset?: D$AdTimeOffset;

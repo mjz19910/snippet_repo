@@ -163,27 +163,13 @@ type RSM_ChannelPreference={
 	trackingParams: string;
 	frameworkUpdates: R_EntityBatchUpdate;
 };
-type RSU_M={
-	responseContext: RC_ResponseContext;
-	continuation: CD_TimedContinuation;
-	actions: UMA_Item[];
-};
-type RS_Search_1={
-	responseContext: RC_ResponseContext;
-	contents?: R_TabbedSearchResults;
-	continuationContents?: RC_MusicShelf;
-	trackingParams: string;
-	header?: R_MusicHeader;
-};
-type RS_SearchApi=RS_Search_1|RS_Search;
-type AdPlacementRendererItem=[
+type G_AdPlacementRendererItem=[
 	R_AdBreakService,
 	R_ClientForecastingAd,
 	R_InstreamVideoAd,
 	R_LinearAdSequence,
 ][number];
 type GR_MP_MenuNotificationSection_Item=R_Notification|R_ContinuationItem;
-type RL_ActionCompanionAdInfo=R_AdHoverTextButton;
 type D_EmojiPicker={};
 type D_LiveChatHeader={};
 type D_LiveChatItemList={};

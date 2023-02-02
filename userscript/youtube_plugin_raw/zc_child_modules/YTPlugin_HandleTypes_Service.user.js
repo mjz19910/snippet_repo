@@ -3719,7 +3719,7 @@ class HandleTypes extends HandleTypesEval {
 		if(ren_dec) {return ren_dec;}
 		return this.codegen.get_auto_type_name(x);
 	}
-	/** @private @arg {RSU_M} x */
+	/** @private @arg {RS_UpdateMetadata} x */
 	RSU_M(x) {
 		const cf="RSU_M";
 		const {responseContext: {},continuation,actions}=this.s(cf,x);/* this.g(y);//#destructure*/

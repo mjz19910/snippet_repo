@@ -31,4 +31,4 @@ type WD_search={type: "search"; data: RS_Search;};
 type WD_share_get_share_panel={type: "share.get_share_panel"; data: RSG_SharePanel;};
 type WD_subscription_subscribe={type: "subscription.subscribe"; data: RS_Subscribe;};
 type WD_subscription_unsubscribe={type: "subscription.unsubscribe"; data: RS_Unsubscribe;};
-type WD_update_metadata={type: "updated_metadata"; data: RSU_M;};
+type WD_update_metadata={type: "updated_metadata"; data: RS_UpdateMetadata;};

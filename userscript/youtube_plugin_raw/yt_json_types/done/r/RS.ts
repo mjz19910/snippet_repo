@@ -178,6 +178,19 @@ type RS_Unsubscribe={
 	trackingParams: string;
 	frameworkUpdates: A_FrameworkUpdates;
 };
+type RS_Search_1={
+	responseContext: RC_ResponseContext;
+	contents?: R_TabbedSearchResults;
+	continuationContents?: RC_MusicShelf;
+	trackingParams: string;
+	header?: R_MusicHeader;
+};
+type RS_SearchApi=RS_Search_1|RS_Search;
+type RS_UpdateMetadata={
+	responseContext: RC_ResponseContext;
+	continuation: CD_TimedContinuation;
+	actions: UMA_Item[];
+};
 //#endregion
 //#region Response page
 
