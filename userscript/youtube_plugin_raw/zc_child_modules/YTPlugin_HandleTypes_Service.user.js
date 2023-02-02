@@ -6190,7 +6190,7 @@ class HandleTypes extends HandleTypesEval {
 		if("loopCommand" in x) return this.C_Loop(x);
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
-		if("engagementPanelHeaderShowNavigationButtonCommand" in x) {debugger; return this.z([x],a => a);}
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */
@@ -8551,6 +8551,8 @@ class HandleTypes extends HandleTypesEval {
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
+	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

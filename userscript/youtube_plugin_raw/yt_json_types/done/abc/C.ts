@@ -8,19 +8,9 @@ type C_Continuation=
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Empty_WCM>
 	;
 ;
-type DC_Continuation_ReelWatchSeq={
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
-};
-type DC_Continuation_Browse={
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
-	command: C_ShowReloadUi;
-};
-type DC_Continuation_WatchNext={
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
-};
+type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
+type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command: C_ShowReloadUi;};
+type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string;};
 type C_CommandExecutor=TE_Endpoint_2<"commandExecutorCommand",DC_CommandExecutor>;
 type C_EngagementPanelHeaderShowNavigationButton=TE_Endpoint_2<"engagementPanelHeaderShowNavigationButtonCommand",DC_EngagementPanelHeaderShowNavigationButton>;
 type C_EntityUpdate=TE_Endpoint_2<"entityUpdateCommand",DC_EntityBatchUpdate>;
