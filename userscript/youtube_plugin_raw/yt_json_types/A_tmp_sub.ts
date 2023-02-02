@@ -20,7 +20,6 @@ type D_LoggingDirectives={
 	enableDisplayloggerExperiment?: boolean;
 	gestures?: D_LoggingDirectives_Gestures;
 };
-type D_LoggingDirectives_Gestures=T_Types<4>;
 type A_ResponseReceived=
 	|C_AdsControlFlowOpportunityReceived
 	|C_ReloadContinuationItems;

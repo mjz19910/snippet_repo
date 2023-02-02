@@ -97,3 +97,4 @@ type DT_MenuFlexibleItem={
 };
 type DUA_Description={description: G_Text;};
 type D_RelatedChipCloud={content: R_ChipCloud;};
+type D_LoggingDirectives_Gestures=T_Types<4>;
