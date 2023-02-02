@@ -1845,12 +1845,13 @@ type RE_D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${GV_Dig_sn_nx}.googl
 type D_VE6827_PageLocation="history"|
 	"library";
 type D_VE6827_PageUrl=
-	|`/reporthistory`
-	|`/feed/trending?${string}`
+	|"/feed/guide_builder"
 	|`/feed/history`
 	|`/feed/library`
 	|`/feed/storefront?${string}`
-	|"/feed/guide_builder"
+	|`/feed/trending?${string}`
+	|`/hashtag/${string}`
+	|`/reporthistory`
 	;
 ;
 type FRRes=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;

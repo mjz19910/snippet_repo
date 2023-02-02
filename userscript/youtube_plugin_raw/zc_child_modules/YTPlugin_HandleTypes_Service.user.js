@@ -39,7 +39,6 @@ function init_module() {
 	//#region exports
 	export_((exports) => {
 		exports.HandleTypes=HandleTypes;
-		exports.as_any=as_any;
 	});
 	//#endregion
 	//#region Start main
@@ -50,6 +49,7 @@ function init_module() {
 //#region module imports
 const ServiceMethods=bs.ServiceMethods;
 const ServiceResolver=bs.ServiceResolver;
+const as_any=bs.as_any;
 const CodegenService=required(store["mod$CodegenService"]?.CodegenService);
 class FakeUseHandleEval {
 	static {
@@ -154,8 +154,6 @@ ECatcherService.known_experiments.push(...(() => {
 	];
 	return arr.map(e => e[1]);
 })().flat());
-/** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
-function as_any(e,x=e) {return x;}
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
@@ -185,11 +183,19 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.parse_url(root,x);
 		return u3;
 	}
+	get indexed_db() {
+		if(!this.is_normal_service(this)) throw new Error();
+		return this.x.get("indexed_db");
+	}
+	/** @protected @arg {{v:string}} x */
+	put_video_args(x) {
+		this.indexed_db.put("video_id",x);
+	}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
 		this._primitive_of(x,"string");
-		this.x.get("indexed_db").put({v: x});
+		this.put_video_args({v: x});
 	}
 	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
 	params(root,path,x) {
@@ -505,6 +511,10 @@ class HandleTypes extends HandleTypesEval {
 		let [f,...p]=split_string(x,"/"); if(f!=="") debugger;
 		switch(p[0]) {
 			default: p[0]===""; debugger; break;
+			case "hashtag": {
+				let [,ht,...u]=p; this.indexed_db.put("hashtag",{hashtag: ht});
+				if(u.length!==0) debugger;
+			} break;
 			case "reporthistory": {
 				let [,...u]=p;
 				if(u.length!==0) debugger;
@@ -3262,7 +3272,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.listType) {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
 				const {openMiniplayer,videoId,listType,onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);
-				this.SE_CreatePlaylist(onCreateListCommand);
+				this.E_CreatePlaylistService(onCreateListCommand);
 				if(openListPanel!==void 0) debugger;
 				this.t(openListPanel,this.a_primitive_bool);
 				this.a_primitive_bool(openMiniplayer);
@@ -3271,16 +3281,18 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
+	/** @private @arg {E_NotificationOptOut} x */
+	E_NotificationOptOut(x) {x;}
 	/** @private @arg {E_CreatePlaylistService} x */
-	SE_CreatePlaylist(x) {
-		const cf="ES_CreatePlaylist"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x);
-		this.DS_CreatePlaylist(b);
-		{
-			let x=u.webCommandMetadata;
-			const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
-			if(sendPost!==true) debugger;
-			if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
-		}
+	E_CreatePlaylistService(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(u);}
+	/** @private @arg {M_CreatePlaylist} x */
+	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
+	/** @private @arg {GM_CreatePlaylist} x */
+	GM_CreatePlaylist(x) {
+		const cf="GM_CreatePlaylist";
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
 	}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
@@ -3541,6 +3553,7 @@ class HandleTypes extends HandleTypesEval {
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("recordNotificationInteractionsEndpoint" in x) return this.E_RecordNotificationInteractions(x);
+		if("notificationOptOutEndpoint" in x) return this.E_NotificationOptOut(x);
 		x==="";
 		this.codegen_typedef_all(cf,x);
 	}
@@ -3567,29 +3580,42 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
 	RD_MenuServiceItem_Omit(cf,x) {
-		const {text,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
+		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
-		switch(icon.iconType) {
-			default: this.new_service_icon("RD_MenuServiceItem",icon.iconType); break;
-			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
-		}
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
 		this.t(res,this.RD_MenuServiceItem_ServiceInfo);
 		this.trackingParams(cf,trackingParams);
 		return y;
+	}
+	/** @private @arg {Extract<RD_MenuServiceItem,{icon:any}>["icon"]} x */
+	RD_MenuServiceItem_Icon(x) {
+		let u=x;
+		switch(x.iconType) {
+			default: this.new_service_icon("RD_MenuServiceItem",u.iconType); break;
+			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
+			case "VISIBILITY_OFF":
+		}
 	}
 	/** @type {RD_MenuServiceIconType_1} */
 	/** @private @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem(x) {
 		const cf="RD_MenuServiceItem";
 		if("loggingDirectives" in x) {
+			if("icon" in x) {
+				const u=this.RD_MenuServiceItem_Omit(cf,x);
+				const {icon,loggingDirectives,...y}=u; this.g(y);
+				this.RD_MenuServiceItem_Icon(icon);
+				this.D_LoggingDirectives(loggingDirectives);
+				return;
+			}
 			const u=this.RD_MenuServiceItem_Omit(cf,x);
 			const {loggingDirectives,...y}=u; this.g(y);
 			this.D_LoggingDirectives(loggingDirectives);
 			return;
 		}
-		const u=this.RD_MenuServiceItem_Omit(cf,x);
-		const {hasSeparator,isDisabled,...y}=u; this.g(y);
+		const {...u}=this.RD_MenuServiceItem_Omit(cf,x);
+		const {icon,hasSeparator,isDisabled,...y}=u; this.g(y);
+		this.RD_MenuServiceItem_Icon(icon);
 		this.t(hasSeparator,x => this.ceq(x,true));
 		this.t(isDisabled,x => this.ceq(x,false));
 	}
@@ -7371,7 +7397,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_TextInputFormField(nameInput);
 		this.R_Dropdown(privacyInput);
 		this.R_Button(createAction);
-		this.SE_CreatePlaylist(serviceEndpoint);
+		this.E_CreatePlaylistService(serviceEndpoint);
 		debugger;
 	}
 	/** @private @arg {D_TextInputFormField} x */

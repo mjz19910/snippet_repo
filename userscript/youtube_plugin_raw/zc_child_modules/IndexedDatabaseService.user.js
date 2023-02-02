@@ -27,6 +27,7 @@ function h_detect_firefox() {
 }
 const is_firefox=h_detect_firefox();
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
+const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
 class DatabaseArguments {
 	/** @constructor @public @arg {string} name @arg {number} version */
 	constructor(name,version) {
@@ -45,62 +46,95 @@ class IndexedDatabaseService extends BaseService {
 	database_open=false;
 	/** @private @type {Map<string,number>} */
 	index=new Map;
-	/** @private @type {{v: string}[]} */
-	arr=[];
-	/** @private @type {{v: string}[]} */
+	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,Map<string,number>]})} */
+	store_cache_index={
+		video_id: ["video_id",new Map],
+		hashtag: ["hashtag",new Map],
+	};
+	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,DatabaseStoreTypes[R][]]})} */
+	store_cache={
+		video_id: ["video_id",[]],
+		hashtag: ["hashtag",[]],
+	};
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	get_data_cache(key) {
+		return this.store_cache[key][1];
+	}
+	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
-	/** @api @public @template {{v: string}} T @arg {T} obj */
-	put(obj) {
+	/** @api @public @template {DatabaseStoreDescription["name"]} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {T} obj */
+	put(key,obj) {
 		if(!obj) {debugger; return;}
-		if(!this.database_open) this.requestOpen();
-		if(this.arr.length!==this.arr.reduce((r) => r+1,0)) {
+		if(!this.database_open) this.requestOpen({name: key});
+		let d_cache=this.get_data_cache(key);
+		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {
 			debugger;
 		}
-		this.push_waiting_obj(obj);
-		if(this.arr.length!==this.arr.reduce((r) => r+1,0)) {
+		this.push_waiting_obj(key,obj);
+		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {
 			debugger;
 		}
 	}
-	/** @private @template {{v: string}} T @arg {T} obj */
-	push_waiting_obj(obj) {
-		if(!obj) {debugger; return;}
-		let idx=this.index.get(obj.v);
-		if(idx!=null) {
-			this.arr[idx]=obj;
-			return;
+	/** @private @arg {K} key @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T} obj */
+	push_waiting_obj(key,obj) {
+		let d_cache=this.get_data_cache(key);
+		let c_index=this.store_cache_index[key][1];
+		const index_key=this.get_index_key(key);
+		let idx;
+		switch(index_key) {
+			case "hashtag": {
+				if(!(index_key in obj)) break;
+				idx=c_index.get(obj[index_key]);
+				if(idx!==void 0) {
+					d_cache[idx]=obj;
+					return;
+				}
+				idx=d_cache.push(obj)-1;
+				c_index.set(obj[index_key],idx);
+			}; break;
+			case "v": {
+				if(!(index_key in obj)) break;
+				idx=c_index.get(obj[index_key]);
+				if(idx!==void 0) {
+					d_cache[idx]=obj;
+					return;
+				}
+				idx=d_cache.push(obj)-1;
+				c_index.set(obj[index_key],idx);
+			}; break;
 		}
-		idx=this.arr.push(obj)-1;
-		this.index.set(obj.v,idx);
 	}
-	requestOpen() {
+	/** @arg {DatabaseStoreDescription} store_desc */
+	requestOpen(store_desc) {
 		if(this.database_opening||this.database_open) return;
 		this.database_opening=true;
-		this.open();
+		this.open(store_desc);
 	}
-	open() {
+	/** @arg {DatabaseStoreDescription} store_desc */
+	open(store_desc) {
 		const {name,version}=this.db_args;
 		const request=indexedDB.open(name,version);
-		this.onOpenRequest(request);
+		this.onOpenRequest(request,store_desc);
 	}
-	/** @private @arg {IDBOpenDBRequest} request */
-	onOpenRequest(request) {
-		request.onsuccess=event => this.onSuccess(request,event);
+	/** @private @arg {IDBOpenDBRequest} request @arg {DatabaseStoreDescription} store_desc */
+	onOpenRequest(request,store_desc) {
+		request.onsuccess=event => this.onSuccess(request,event,store_desc);
 		request.onerror=event => this.onError(event);
 		request.onupgradeneeded=event => this.onUpgradeNeeded(request,event);
 	}
 	log_all_events=false;
 	close_db_on_transaction_complete=false;
-	/** @private @arg {IDBOpenDBRequest} request @arg {Event} event */
-	onSuccess(request,event) {
+	/** @private @arg {IDBOpenDBRequest} request @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
+	onSuccess(request,event,store_desc) {
 		if(this.log_all_events) console.log("OpenDBRequest success",event);
-		this.onDatabaseReady(request.result);
+		this.onDatabaseReady(request.result,store_desc);
 	}
-	/** @private @arg {IDBDatabase} db */
-	onDatabaseReady(db) {
+	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
+	onDatabaseReady(db,store_desc) {
 		this.database_opening=false;
 		this.database_open=true;
 		this.onDatabaseResult(db);
-		this.start_transaction(db);
+		this.start_transaction(db,store_desc);
 	}
 	/** @private @arg {IDBDatabase} db */
 	onDatabaseResult(db) {
@@ -115,24 +149,27 @@ class IndexedDatabaseService extends BaseService {
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
-	/** @private @arg {IDBDatabase} db */
-	start_transaction(db) {
+	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
+	start_transaction(db,store_desc) {
+		let cur_name=store_desc.name;
 		const transaction=db.transaction("video_id","readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
-		transaction.oncomplete=event => this.onTransactionComplete(db,event);
-		if(this.arr.length>0) this.consume_data(transaction);
+		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
+		if(this.get_data_cache(cur_name).length>0) this.consume_data(transaction,store_desc);
 	}
-	/** @private @arg {IDBDatabase} db @arg {Event} event */
-	onTransactionComplete(db,event) {
+	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
+	onTransactionComplete(db,event,store_desc) {
+		let cur_name=store_desc.name;
+		let dc=this.get_data_cache(cur_name);
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
-		for(let i=this.arr.length-1;i>=0;i--) {
-			if(!this.committed_data.includes(this.arr[i])) continue;
-			this.arr.splice(i,1);
+		for(let i=dc.length-1;i>=0;i--) {
+			if(!this.committed_data.includes(dc[i])) continue;
+			dc.splice(i,1);
 		}
-		if(this.arr.length>0) {
+		if(dc.length>0) {
 			console.log("transaction done, but not all data was committed");
-			console.log("[new_data_after_tx_complete]",this.arr);
+			console.log("[new_data_after_tx_complete]",dc);
 		} else {
 			this.committed_data.length=0;
 			this.index.clear();
@@ -140,16 +177,73 @@ class IndexedDatabaseService extends BaseService {
 		this.database_open=false;
 		db.close();
 	}
-	/** @private @arg {IDBTransaction} transaction */
-	consume_data(transaction) {
-		const store_name="video_id";
-		const store=transaction.objectStore(store_name);
-		this.consume_data_with_store(store_name,store);
+	/** @private @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
+	consume_data(transaction,store_desc={name: "video_id"}) {
+		const obj_store=transaction.objectStore(store_desc.name);
+		this.consume_data_with_store(store_desc,obj_store);
 	}
-	/** @private @arg {"video_id"} store_name @arg {IDBObjectStore} store */
-	consume_data_with_store(store_name,store) {
-		const cursor_req=store.openCursor();
-		/** @private @type {{v: string}[]} */
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	get_index_key(key) {
+		switch(key) {
+			case "hashtag": return "hashtag";
+			case "video_id": return "v";
+		}
+		throw new Error();
+	}
+	/** @private @arg {IDBObjectStore} obj_store @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T[]} database_data @arg {K} key */
+	on_cursor_complete(obj_store,database_data,key) {
+		const index_key=this.get_index_key(key);
+		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
+		let database_map=new Map;
+		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
+		let new_data_map=new Map;
+		database_data.forEach(e => {
+			if("hashtag" in e&&index_key==="hashtag") {database_map.set(e[index_key],e);}
+			if("v" in e&&index_key==="v") {database_map.set(e[index_key],e);}
+		});
+		if(is_firefox) {
+			console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,key,database_data.length);
+		} else {
+			console.log("database [%s:%s] has %o items",this.db_args.name,key,database_data.length);
+		}
+		for(let data of this.get_data_cache(key)) {
+			if(!data) {debugger; continue;}
+			let content;
+			switch(index_key) {
+				case "v": index_key in data&&(content=data[index_key]); break;
+				case "hashtag": index_key in data&&(content=data[index_key]); break;
+			}
+			if(content) {
+				if(database_map.has(content)) {
+					this.committed_data.push(data);
+					let ok=this.get_keys_of(data);
+					let in_db=database_map.get(content);
+					if(!in_db) continue;
+					let ok_db=this.get_keys_of(in_db);
+					if(this.eq_keys(ok,ok_db)) continue;
+					console.log("[database_needs_obj_merge]");
+					console.log("[obj_merge_new]",data);
+					console.log("[obj_merge_cur]",in_db);
+					debugger;
+				} else if(new_data_map.has(content)) {
+					this.committed_data.push(data);
+					continue;
+				} else {
+					new_data_map.set(content,data);
+				}
+			} else {
+				debugger;
+			}
+		}
+		[...new_data_map.values()].forEach(e => {
+			this.add_data_to_store(obj_store,e);
+		});
+	}
+	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store @arg {DatabaseStoreDescription} store_desc */
+	consume_data_with_store(store_desc,obj_store) {
+		const key=store_desc.name;
+		const cursor_req=obj_store.openCursor();
+		/** @private @type {T[]} */
 		let database_data=[];
 		cursor_req.onsuccess=() => {
 			const cursor=cursor_req.result;
@@ -157,43 +251,11 @@ class IndexedDatabaseService extends BaseService {
 				database_data.push(cursor.value);
 				cursor.continue();
 			} else {
-				/** @private @type {Map<string,{v:string}>} */
-				let database_map=new Map;
-				/** @private @type {Map<string,{v:string}>} */
-				let new_data_map=new Map;
-				database_data.forEach(e => database_map.set(e.v,e));
-				if(is_firefox) {
-					console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,store_name,database_data.length);
-				} else {
-					console.log("database [%s:%s] has %o items",this.db_args.name,store_name,database_data.length);
-				}
-				for(let data of this.arr) {
-					if(!data) {debugger; continue;}
-					if(database_map.has(data.v)) {
-						this.committed_data.push(data);
-						let ok=this.get_keys_of(data);
-						let in_db=database_map.get(data.v);
-						if(!in_db) continue;
-						let ok_db=this.get_keys_of(in_db);
-						if(this.eq_keys(ok,ok_db)) continue;
-						console.log("[database_needs_obj_merge]");
-						console.log("[obj_merge_new]",data);
-						console.log("[obj_merge_cur]",in_db);
-						debugger;
-					} else if(new_data_map.has(data.v)) {
-						this.committed_data.push(data);
-						continue;
-					} else {
-						new_data_map.set(data.v,data);
-					}
-				}
-				[...new_data_map.values()].forEach(e => {
-					this.add_data_to_store(store,e);
-				});
+				this.on_cursor_complete(obj_store,database_data,key);
 			}
 		};
 	}
-	/** @private @arg {IDBObjectStore} store @arg {{v:string}} data */
+	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	add_data_to_store(store,data) {
 		const request=store.add(data);
 		request.onerror=event => console.log("IDBRequest: error",event);

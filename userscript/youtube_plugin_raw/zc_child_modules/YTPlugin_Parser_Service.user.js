@@ -225,11 +225,11 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {string} x */
 	parse_video_id(x) {
-		this.x.get("indexed_db").put({v: x});
+		this.x.get("indexed_db").put("video_id",{v: x});
 	}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
-		this.x.get("indexed_db").put({v: x[1]});
+		this.x.get("indexed_db").put("video_id",{v: x[1]});
 	}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
@@ -1549,7 +1549,7 @@ class ParserService extends BaseService {
 		const cf="parse_ve_6827_url";
 		/** @private @type {T_SplitOnce<D_VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
-		let su1=split_string(su,"/");
+		let su1=split_string_once(su,"/");
 		if(su1.length===1) {
 			let [pt0]=su1;
 			this.save_string(`[ve_6827.part[0]]`,`${pt0}`);
@@ -1558,15 +1558,20 @@ class ParserService extends BaseService {
 				default: debugger; return;
 			}
 		}
-		let [pt]=split_string_once(su1[1],"?");
-		this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
-		switch(pt) {
-			case "trending": break;
-			case "library": break;
-			case "history": break;
-			case "storefront": break;
-			case "guide_builder": break;
-			default: debugger; break;
+		switch(su1[0]) {
+			case "feed": {
+				let [pt]=split_string_once(su1[1],"?");
+				this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
+				switch(pt) {
+					case "trending": break;
+					case "library": break;
+					case "history": break;
+					case "storefront": break;
+					case "guide_builder": break;
+					default: debugger; break;
+				}
+			} break;
+			case "hashtag": break;
 		}
 	}
 	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */

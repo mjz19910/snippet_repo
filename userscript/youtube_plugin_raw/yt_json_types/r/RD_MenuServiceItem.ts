@@ -8,6 +8,12 @@ type RD_MenuServiceItem=
 }
 |{
 	text: G_Text;
+	serviceEndpoint: E_NotificationOptOut;
+	trackingParams: string;
+	loggingDirectives: D_LoggingDirectives;
+}
+|{
+	text: G_Text;
 	icon: T_Icon<RD_MenuServiceIconType_1>;
 	serviceEndpoint: G_SE_MenuService;
 	trackingParams: string;

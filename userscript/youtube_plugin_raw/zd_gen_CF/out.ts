@@ -496,7 +496,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPrefetch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebSearchboxConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "EA_ChangeEngagementPanelVisibility";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ES_CreatePlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ES_ShareEntity";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "EY_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeDislike";}
@@ -506,6 +505,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AddToPlaylistService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreateBackstagePost";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreatePlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_Feedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_FlagGetForm";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_GetNotificationMenu";}
@@ -677,10 +677,10 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_UpdateToggleButtonState";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_ShowEngagementPanel";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_YpcGetOfflineUpsell";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "ES_CreatePlaylist";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_AddToPlaylistService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Browse";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreateBackstagePost";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreatePlaylistService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetNotificationMenu";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetReportForm";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetTranscript";}
@@ -730,6 +730,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreatePlaylist";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_EditPlaylist";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Feedback";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_FlagGetForm";}

@@ -63,8 +63,11 @@ if(log_imports) console.log("Load PluginBase");
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {return x;}
+/** @private @template U @template T @arg {U} e @arg {any} [x] @returns {T} */
+function as_any(e,x=e) {return x;}
 export_(exports => {
 	exports.as_=as;
+	exports.as_any=as_any;
 });
 //#endregion
 //#region helper
