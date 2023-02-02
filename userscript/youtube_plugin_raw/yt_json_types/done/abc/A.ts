@@ -22,15 +22,6 @@ type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPane
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
 type A_AccountItem={accountItem: AD_AccountItem;};
-//#endregion
-type AC_Executor=[
-	A_ChangeEngagementPanelVisibility,
-	A_HideEngagementPanelScrim,
-	C_ScrollToEngagementPanel,
-	C_Loop,
-	C_UpdateToggleButtonState,
-	TA_OpenPopup_Empty
-][number];
 type A_ActionAddVideo={
 	addedVideoId: string;
 	action: "ACTION_ADD_VIDEO";
@@ -46,12 +37,15 @@ type A_FrameworkUpdates={
 	entityBatchUpdate: D_EntityBatchUpdate;
 	elementUpdate?: R_ElementUpdate;
 };
-type D_LoggingDirectives={
-	trackingParams: string;
-	visibility: TM_Visibility;
-	enableDisplayloggerExperiment?: boolean;
-	gestures?: D_LoggingDirectives_Gestures;
-};
+//#endregion
+type AC_Executor=[
+	A_ChangeEngagementPanelVisibility,
+	A_HideEngagementPanelScrim,
+	C_ScrollToEngagementPanel,
+	C_Loop,
+	C_UpdateToggleButtonState,
+	TA_OpenPopup_Empty
+][number];
 type A_ResponseReceived=
 	|C_AdsControlFlowOpportunityReceived
 	|C_ReloadContinuationItems;
