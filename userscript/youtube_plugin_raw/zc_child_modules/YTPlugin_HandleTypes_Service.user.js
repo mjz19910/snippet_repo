@@ -322,8 +322,8 @@ class HandleTypes extends HandleTypesEval {
 					case "watch.player_params": break;
 				}
 				switch(map_entry_key) {
-					default: debugger; return;
-					case 8: break;
+					default: map_entry_key===0; debugger; return;
+					case 8: case 9: case 12: case 25: case 40:
 				}
 				this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
