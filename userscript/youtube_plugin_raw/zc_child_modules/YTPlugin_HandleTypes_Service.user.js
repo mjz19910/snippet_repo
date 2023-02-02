@@ -360,12 +360,12 @@ class HandleTypes extends HandleTypesEval {
 			console.group(ns);
 			f();
 			console.groupEnd();
-			{debugger;}
 		};
 		/** @private @type {P_LogItems} */
 		switch(path) {
 			default: {
 				grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
+				{debugger;}
 				/** @private @type {P_ParamParse} */
 				return;
 			}
