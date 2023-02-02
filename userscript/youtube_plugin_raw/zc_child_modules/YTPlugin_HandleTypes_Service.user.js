@@ -259,15 +259,27 @@ class HandleTypes extends HandleTypesEval {
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		switch(path) {
 			default: debugger; return;
-			case "watch.player_params": break;
+			case "watch.player_params":
+			case "watch.player_params.f40": case "watch.player_params.f40.f1":
 		}
+		/** @type {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} */
+		let t_pt=as(map_entry_key_path);
 		if(root!=="DE_VE3832_Watch") {debugger; return;}
-		switch(map_entry_key_path.length) {
+		switch(t_pt.length) {
 			default: debugger; return;
 			case 1: {
+				switch(t_pt[0]) {
+					default: debugger; return;
+					case 8: case 9: case 12: case 25: case 40: {
+						const rk=this.exact_arr(t_pt[0]);
+						this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+					} break;
+				}
+			} break;
+			case 2: {
 				switch(map_entry_key_path[0]) {
 					default: debugger; return;
-					case 8: case 12: {
+					case 40: {
 						const rk=this.exact_arr(map_entry_key_path[0]);
 						this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
 					} break;
@@ -280,7 +292,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/**
 	 * @template {"DE_VE3832_Watch"} T
-	 * @arg {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]|[8]} map_entry_key_path
+	 * @arg {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} map_entry_key_path
 	 * @arg {V_ParamMapValue[]} map_entry_values @arg {ARG_PathFor_PlayerParams} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let saved_map_keys=map_keys.slice();
