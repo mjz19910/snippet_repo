@@ -50,7 +50,7 @@ const generate_typedef={value: null};
 /** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class TypedefGenerator extends ServiceMethods {
 	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	k=(cf,x) => this.save_keys(cf,x);
 	/** @arg {Popup_ConfirmDialog|Popup_DismissibleDialog} x */
 	popup_dialog(x) {
 		const cf="popup_dialog"; cf; this.k(cf,x);
@@ -450,8 +450,8 @@ class HandleTypes extends HandleTypesEval {
 	parse_key_index=1;
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
-		if(typeof entry==="number") return this.save_number(`[${path}]`,entry);
-		if(typeof entry==="string") return this.save_string(`[${path}]`,entry);
+		if(typeof entry==="number") return this.save_number(path,entry);
+		if(typeof entry==="string") return this.save_string(path,entry);
 		if(entry instanceof Map) return;
 		if(this.is_bigint(entry)) return this.handle_bigint(path,entry);
 		switch(entry) {default: debugger; return;}
@@ -757,7 +757,7 @@ class HandleTypes extends HandleTypesEval {
 		return x;
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	k=(cf,x) => this.save_keys(cf,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
@@ -6181,7 +6181,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="buttonState_buttonId"; this.k(cf,x);
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",x);
 		let ret=this.codegen.codegen_typedef("buttonState_buttonId",{button_id: x},true);
-		if(ret) {this.save_string(`[${cf}]`,ret);}
+		if(ret) {this.save_string(cf,ret);}
 	}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
