@@ -3366,7 +3366,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
 	D_ThumbnailOverlay_NavEP(x) {
-		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x); 
+		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		let k=this.get_keys_of(x);
 		k.pop()==="";
@@ -5124,7 +5124,27 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 	}
-	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x */
+	/** @template {{}} T @arg {T} x */
+	get_omit_gen(x) {
+		return new (class Gen1 {
+			/** @arg {T} x */
+			constructor(x) {
+				this.x=x;
+			}
+			/** @arg {T} x */
+			set(x) {
+				this.x=x;
+			}
+			/** @returns {T} */
+			get() {
+				return this.x;
+			}
+		})(x);
+	}
+	/**
+	 * @private
+	 * @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x
+	 * @returns {T_OmitKey<T,Exclude<keyof T,Omit_y>>} */
 	D_CompactVideo_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {richThumbnail,accessibility,channelThumbnail,badges,viewCountText,shortViewCountText,...y}=u;
@@ -5132,19 +5152,34 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibility);
 		this.D_Thumbnail(channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
-		return y;
+		let og=this.get_omit_gen(y);
+		const r1=og.get();
+		this.assert_is_omit_key(x,r1,r1);
+		r1;
+		/** @typedef {keyof typeof y} Omit_y */
+		return as_any(r1);
 	}
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
 		const cf="D_CompactVideo";
+		if("ownerBadges" in x&&"publishedTimeText" in x) {
+			let {publishedTimeText,lengthText,ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
+			this.G_Text(publishedTimeText);
+			this.G_Text(lengthText);
+			this.z(ownerBadges,this.RMD_Badge);
+			return;
+		}
+		if("ownerBadges" in x) {
+			let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x);
+			this.z(ownerBadges,this.RMD_Badge);
+			return;
+		}
 		if("publishedTimeText" in x) {
 			let {publishedTimeText,lengthText,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
 			this.G_Text(publishedTimeText);
 			this.G_Text(lengthText);
 			return;
 		}
-		let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
-		this.z(ownerBadges,this.RMD_Badge);
 	}
 	/** @type {Map<string,[string,string[]][]>} */
 	strings_map=new Map;
