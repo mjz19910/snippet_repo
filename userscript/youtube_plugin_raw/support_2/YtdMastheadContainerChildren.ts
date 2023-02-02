@@ -1,3 +1,1 @@
-abstract class YtdMastheadContainerChildren {
-	abstract center?: Element;
-}
+abstract class YtdMastheadContainerChildren {abstract center?: Element;}

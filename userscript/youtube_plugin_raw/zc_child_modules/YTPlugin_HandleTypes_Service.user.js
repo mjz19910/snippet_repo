@@ -54,9 +54,7 @@ FakeUseHandleEval;
 //#region HandleTypesEval
 /** @arg {TemplateStringsArray} x */
 function raw_template(x) {
-	if(x.raw.length>1) {
-		debugger;
-	}
+	if(x.raw.length>1) {debugger;}
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
 const handle_types_eval_code=raw_template`
@@ -124,9 +122,7 @@ eval(handle_types_eval_code);
 /** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
 class UrlParseHelper {
 	/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
-	constructor(x) {
-		this.x=x;
-	}
+	constructor(x) {this.x=x;}
 	/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
 	get_with_pathname(cx,pname) {return ServiceMethods.is_url_with_pathname(cx,pname);}
 }
@@ -909,9 +905,7 @@ class HandleTypes extends HandleTypesEval {
 	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
-	static {
-		this.prototype.R_Hint;
-	}
+	static {this.prototype.R_Hint;}
 	/** @private @arg {R_Hint} x */
 	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
 	/** @private @arg {R_VideoViewCount} x */
@@ -1195,9 +1189,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.is_normal_service(this)) {
 			this.x.get("yt_plugin").add_function({
 				name: "data",
-				data: {
-					R_Watch: x,
-				},
+				data: {R_Watch: x,},
 			});
 		}
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);
@@ -1249,9 +1241,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
-	make_bind([func,a1,a2,a3,a4]) {
-		return [func,a1,a2,a3,a4];
-	}
+	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	/** @private */
 	log_url=false;
 	/** @private @arg {"RS_Page_Browse"} cf @template {RS_Page_Browse} T @arg {T} x */
@@ -1706,9 +1696,7 @@ class HandleTypes extends HandleTypesEval {
 			return this.R_SuperVodBuyFlowContent(x);
 		});
 		this.trackingParams(cf,trackingParams);
-		if("getSurveyCommand" in onCloseCommand) {this.C_GetSurvey(onCloseCommand);} else {
-			debugger;
-		}
+		if("getSurveyCommand" in onCloseCommand) {this.C_GetSurvey(onCloseCommand);} else {debugger;}
 	}
 	/** @private @arg {D_PlaylistSidebar} x */
 	D_PlaylistSidebar(x) {
@@ -1819,9 +1807,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log("\n%s",all_types);
 		console.groupEnd();
 	}
-	static {
-		this.prototype.D_Button_SE;
-	}
+	static {this.prototype.D_Button_SE;}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
 		const cf="D_Button_SE"; this.k(cf,x);
@@ -1848,9 +1834,7 @@ class HandleTypes extends HandleTypesEval {
 		try {
 			console.log("-- [D_Button.icon] --",arr_items);
 			this.codegen_typedef_all(cf,x);
-		} finally {
-			console.groupEnd();
-		}
+		} finally {console.groupEnd();}
 	}
 	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_OnIcon(x) {
@@ -2069,9 +2053,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		if("selected" in x) {
-			return;
-		}
+		if("selected" in x) {return;}
 		/** @type {`${cf}_${"R_MusicQueue"}`} */
 		const new_cf=`${cf}_${"R_MusicQueue"}`;
 		{
@@ -2554,9 +2536,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);
 		let pu=this.TA_OpenPopup("TA_OpenPopup:R_PdgBuyFlow",command);
-		if("pdgBuyFlowRenderer" in pu) {
-			this.R_PdgBuyFlow(pu);
-		}
+		if("pdgBuyFlowRenderer" in pu) {this.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
 		this.trackingParams(cf,trackingParams);
 		this.A_FrameworkUpdates(frameworkUpdates);
@@ -2593,9 +2573,7 @@ class HandleTypes extends HandleTypesEval {
 	D_NotchesItem(x) {
 		const cf="NotchesItem";
 		const {linearGradientCssStyle,knobColorArgb,purchaseCommand,tierValue,...y}=this.s(cf,x); this.g(y);
-		if(linearGradientCssStyle) {
-			debugger;
-		}
+		if(linearGradientCssStyle) {debugger;}
 		if(knobColorArgb!==4280191205) debugger;
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
@@ -2617,16 +2595,11 @@ class HandleTypes extends HandleTypesEval {
 	D_GetSurvey(x) {
 		const cf="D_GetSurvey";
 		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);
-		if("paidDigitalGoods" in a) {
-			debugger;
-		}
+		if("paidDigitalGoods" in a) {debugger;}
 		this.save_string("GetSurvey.action",action);
 		switch(action) {
 			default: debugger; break;
-			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {
-
-			} break;
-		}
+			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;}
 		this.D_GetSurvey_Endpoint(a);
 	}
 	/** @private @arg {DC_GetSurvey['endpoint']} x */
@@ -2644,18 +2617,14 @@ class HandleTypes extends HandleTypesEval {
 	make_codegen_group(cf,x,collapsed=true) {
 		let u_name=this.get_codegen_name(x);
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
-		if(collapsed) {console.groupCollapsed(...gca);} else {
-			console.group(...gca);
-		}
+		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
 		this.codegen.codegen_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
 	_decode_WCM(x) {
-		if("rootVe" in x) {
-			return `M_VE${x.rootVe}`;
-		}
+		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
 		return null;
 	}
 	renderer_decode_map=new Map([
@@ -2688,9 +2657,7 @@ class HandleTypes extends HandleTypesEval {
 		if(typeof kk==="number") return null;
 		let dec=this.uppercase_first(kk);
 		let ren_dec=this.renderer_decode_map.get(dec);
-		if(ren_dec) {
-			return ren_dec;
-		}
+		if(ren_dec) {return ren_dec;}
 		return this.codegen.get_auto_type_name(x);
 	}
 	/** @private @arg {RSU_M} x */
@@ -3096,9 +3063,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_WebPrefetch";
 		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);
 		this.z(navigationEndpoints,x => {
-			if("watchEndpoint" in x) {
-				return this.E_Watch(x);
-			}
+			if("watchEndpoint" in x) {return this.E_Watch(x);}
 			debugger;
 		});
 	}
@@ -3236,9 +3201,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
-	T_EP_In(x,k) {
-		return x[k];
-	}
+	T_EP_In(x,k) {return x[k];}
 	/** @private @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {
 		const cf="C_ReloadContinuationItems";
@@ -3356,9 +3319,7 @@ class HandleTypes extends HandleTypesEval {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.G_AppendContinuationItems(appendContinuationItemsAction);
-		} else {
-			debugger;
-		}
+		} else {debugger;}
 	}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	G_AppendContinuationItems(x) {
@@ -3843,9 +3804,7 @@ class HandleTypes extends HandleTypesEval {
 						} break;
 					}
 				}
-			} else {
-				console.log(r);
-			}
+			} else {console.log(r);}
 		}
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
@@ -3872,13 +3831,9 @@ class HandleTypes extends HandleTypesEval {
 		return a;
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
-	str_is_uri(x) {
-		return x.includes(":");
-	}
+	str_is_uri(x) {return x.includes(":");}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
-	str_is_search(x) {
-		return x.includes("?");
-	}
+	str_is_search(x) {return x.includes("?");}
 	/** @private @arg {GU_YoutubeUrlRedirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect";
@@ -3912,9 +3867,7 @@ class HandleTypes extends HandleTypesEval {
 		if(x[0]!=="studio.youtube.com") {debugger; return;}
 		if(x.length===1) return;
 		switch(x.length) {
-			case 2: {
-				if(x[1]!=="") debugger;
-			} break;
+			case 2: {if(x[1]!=="") debugger;} break;
 			case 3: {if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;}} break;
 			case 4: {
 				if(x[1]!=="channel") {debugger; return;}
@@ -3952,15 +3905,11 @@ class HandleTypes extends HandleTypesEval {
 			return this.GU_YoutubeUrlRedirect(arg_x);
 		}
 		let sp=this.parse_with_url_parse(x);
-		if(this.str_starts_with_rx("https://",sp.href)) {
-			return;
-		}
+		if(this.str_starts_with_rx("https://",sp.href)) {return;}
 		this.GM_VE83769_UrlType(sp.href);
 	}
 	/** @private @arg {D_YoutubeUrl} x */
-	D_YoutubeUrl(x) {
-		x;
-	}
+	D_YoutubeUrl(x) {x;}
 	/** @private @arg {DU_Url} x */
 	DE_Url(x) {
 		const cf="DE_Url";
@@ -4056,9 +4005,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
 	}
 	/** @template {number} T @arg {T} x @returns {`${T}`} */
-	num_to_string(x) {
-		return `${x}`;
-	}
+	num_to_string(x) {return `${x}`;}
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
@@ -4627,9 +4574,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
 		this.z([shortMessage,sentTimeText],this.G_Text);
-		if(navigationEndpoint.watchEndpoint) {this.E_Watch(navigationEndpoint);} else {
-			debugger;
-		}
+		if(navigationEndpoint.watchEndpoint) {this.E_Watch(navigationEndpoint);} else {debugger;}
 		this._primitive_of(read,"boolean");
 		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
 		this.R_Menu(contextualMenu);
@@ -4720,9 +4665,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SectionList_BrowseFeed_Subscriptions";
 		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);
 		this.z(contents,x => {
-			if("itemSectionRenderer" in x) {
-				return;
-			}
+			if("itemSectionRenderer" in x) {return;}
 			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
 			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
@@ -4769,13 +4712,7 @@ class HandleTypes extends HandleTypesEval {
 	GE_Continuation(x) {
 		const cf="GE_Continuation"; this.g_k(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
-		if("continuationCommand" in x) {
-			this.C_Continuation(x);
-		} else if("getTranscriptEndpoint" in x) {
-			this.E_GetTranscript(x);
-		} else {
-			debugger;
-		}
+		if("continuationCommand" in x) {this.C_Continuation(x);} else if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);} else {debugger;}
 	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
@@ -5423,9 +5360,7 @@ class HandleTypes extends HandleTypesEval {
 				if("key" in x) {
 					const {key,...y}=this.s(cf,x); this.g(y);
 					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
-				} else {
-					debugger;
-				}
+				} else {debugger;}
 			} break;
 		}
 	}
@@ -6570,9 +6505,7 @@ class HandleTypes extends HandleTypesEval {
 	parse_number_template(x) {
 		/** @type {T} */
 		let num=as(parseInt(x,10));
-		if(Number.isNaN(num)) {
-			debugger;
-		}
+		if(Number.isNaN(num)) {debugger;}
 		return num;
 	}
 	/** @private @arg {D_EndScreenPlaylist} x */
@@ -7367,9 +7300,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(publishedTimeText);
 		x: {
 			let x=navigationEndpoint;
-			if("watchEndpoint" in x) {
-				this.E_Watch(x); break x;
-			}
+			if("watchEndpoint" in x) {this.E_Watch(x); break x;}
 			if(!x.reelWatchEndpoint) debugger;
 		}
 	}
@@ -8020,9 +7951,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
-	is_bigint(x) {
-		return x[0]==="bigint";
-	}
+	is_bigint(x) {return x[0]==="bigint";}
 	parse_key_index=1;
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {

@@ -10,18 +10,14 @@ export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box
 	static wrap<T extends ()=>void>(v:T): FunctionBox {
 		return new FunctionBox(function() {
 			let ret=v();
-			if(ret === void 0) {
-				return new VoidBox;
-			}
+			if(ret === void 0) {return new VoidBox;}
 			throw new Error("bad return");
 		});
 	}
 	static wrap_1<T extends (x: Box)=>void>(v:T): FunctionBox  {
 		return new FunctionBox(function(x: Box) {
 			let ret=v(x);
-			if(ret === void 0) {
-				return new VoidBox;
-			}
+			if(ret === void 0) {return new VoidBox;}
 			return ret;
 		});
 	}

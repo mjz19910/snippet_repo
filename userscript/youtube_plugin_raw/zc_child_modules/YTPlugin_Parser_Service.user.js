@@ -58,9 +58,7 @@ class ParserService extends BaseService {
 		}
 		if(this.str_starts_with_r(x,"PL")) {
 			let pl=x.slice(2);
-			switch(pl.length) {
-				case 32: return;
-			}
+			switch(pl.length) {case 32: return;}
 			console.log("[parse_playlist]",pl.length,pl);
 			return;
 		}
@@ -85,9 +83,7 @@ class ParserService extends BaseService {
 		return ac;
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} u @returns {x is `${string}${U}${string}`|`${U}${string}`|`${string}${U}`} */
-	str_has_sep(x,u) {
-		return x.includes(u);
-	}
+	str_has_sep(x,u) {return x.includes(u);}
 	/** @console_api @public @arg {G_MimeTypeFormat} x */
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
@@ -177,16 +173,12 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["channel",...any]>} x */
 	parse_channel_url(x) {
-		if(this.str_starts_with_at_1(x,"UC")) {
-			return;
-		}
+		if(this.str_starts_with_at_1(x,"UC")) {return;}
 		console.log("[parse_channel_url]",x);
 	}
 	/** @unused_api @protected @arg {`UC${string}`} x */
 	parse_channel_id(x) {
-		if(this.str_starts_with_r(x,"UC")) {
-			return;
-		}
+		if(this.str_starts_with_r(x,"UC")) {return;}
 		{debugger;}
 	}
 	/** @private @arg {NS_DP_Parse.ParseUrlStr_1} x */
@@ -214,9 +206,7 @@ class ParserService extends BaseService {
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
 		let [,a]=x;
-		if(this.str_is_search(a)) {
-			return;
-		}
+		if(this.str_is_search(a)) {return;}
 		switch(a) {case "history": return;}
 		switch(a) {case "library": return;}
 		switch(a) {case "subscriptions": return;}
@@ -226,9 +216,7 @@ class ParserService extends BaseService {
 		}
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
-	str_is_search(x) {
-		return x.includes("?");
-	}
+	str_is_search(x) {return x.includes("?");}
 	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
 	parse_guide_entry_id(x) {
 		/** @private @type {G_UrlInfoItem[]} */
@@ -261,16 +249,10 @@ class ParserService extends BaseService {
 							// url_info[playlist] "RDCM" still needs a valid `UC${string}` channel id
 							url_info_arr.push({_tag: "playlist",type: "RDCM",id: v.slice(4)});
 						} else {url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});}
-					} else if(this.str_starts_with_rx(v,"PL")) {url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});} else {
-						debugger;
-					}
+					} else if(this.str_starts_with_rx(v,"PL")) {url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});} else {debugger;}
 				} break;
 				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
-				case "pp": {
-					this.on_player_params(root,"watch_page_url.pp",res[1],x => {
-						x;
-					});
-				} break;
+				case "pp": {this.on_player_params(root,"watch_page_url.pp",res[1],x => {x;});} break;
 				case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
 				case "index": {
 					if(this.cache_playlist_index.includes(res[1])) break;
@@ -289,9 +271,7 @@ class ParserService extends BaseService {
 		{debugger;}
 		let res_e=this._decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
-		if(res_e.find(e => e[0]==="error")) {
-			return null;
-		}
+		if(res_e.find(e => e[0]==="error")) {return null;}
 		return this.make_param_map(res_e);
 	}
 	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} param_map @arg {T_ParseCallbackFunction<T>} callback */
@@ -463,11 +443,7 @@ class ParserService extends BaseService {
 			return e;
 		};
 		let xx=mapper(map_entry_value);
-		if(xx instanceof Array) {
-			return xx.map(mapper);
-		} else {
-			return xx;
-		}
+		if(xx instanceof Array) {return xx.map(mapper);} else {return xx;}
 	}
 	/** @unused_api @protected @arg {string[]} x */
 	report$params(x) {this.save_string("[report.params.path]",x.join("$"));}
@@ -602,12 +578,8 @@ class ParserService extends BaseService {
 	parse_url(root,x) {
 		if(this.str_starts_with_rx("https://",x)) {return this.parse_full_url(root,x);}
 		if(this.str_starts_with_rx("http://",x)) {return this.parse_full_url(root,x);}
-		if(this.str_starts_with_rx("android-app://",x)) {
-			return;
-		}
-		if(this.str_starts_with_rx("ios-app://",x)) {
-			return;
-		}
+		if(this.str_starts_with_rx("android-app://",x)) {return;}
+		if(this.str_starts_with_rx("ios-app://",x)) {return;}
 		if(x==="/") return;
 		let up=split_string_once(x,"/");
 		if(up[0]!=="") {
@@ -690,9 +662,7 @@ class ParserService extends BaseService {
 		/** @private @template T @arg {T} x @arg {T} y @returns {[T,T]} */
 		function assert_equal_type(x,y) {return [x,y];}
 		assert_equal_type(x,{});
-		switch(x) {
-			default: debugger; return;
-		}
+		switch(x) {default: debugger; return;}
 	}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,[`account${string}`]>[0]} x */
 	parse_account_url(x) {

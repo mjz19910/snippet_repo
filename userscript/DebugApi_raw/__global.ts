@@ -48,16 +48,12 @@ declare global {
 declare global {type CM<T>={tag: "cast_tag",data: T;};}
 
 //@@iterator for NodeListOf
-declare global {
-	interface NodeListOf<TNode extends Node> extends NodeList {[Symbol.iterator](): IterableIterator<TNode>;}
-}
+declare global {interface NodeListOf<TNode extends Node> extends NodeList {[Symbol.iterator](): IterableIterator<TNode>;}}
 
 // inject_api global
 declare global {
 	type SavedArrayItemType<T>=[string, T];
-	interface Window {
-		inject_api?: InjectApi;
-	}
+	interface Window {inject_api?: InjectApi;}
 }
 
 function test_inject_api() {
@@ -98,9 +94,7 @@ declare global {
 			result: {
 				type: "hidden-var";
 				var: string;
-			}|{
-				type: "no-var";
-			};
+			}|{type: "no-var";};
 			return: any;
 		};
 	};
@@ -180,16 +174,12 @@ declare global {
 		client_id_path: [number,number,null][];
 		data: MessageType|null,
 	};
-	type ConnectionConnected={
-		type: "connected";
-	};
+	type ConnectionConnected={type: "connected";};
 	type ConnectionWillDisconnect={
 		type: "will_disconnect";
 		can_reconnect: boolean;
 	};
-	type ConnectionDisconnected={
-		type: "disconnected";
-	};
+	type ConnectionDisconnected={type: "disconnected";};
 	type ConnectionSide="client"|"server";
 	type ConnectionSideMsg={
 		type: "side",
@@ -198,9 +188,7 @@ declare global {
 	interface BlockEnd {}
 }
 
-declare global {
-	interface Node {__id_holder?: {value: number;};}
-}
+declare global {interface Node {__id_holder?: {value: number;};}}
 
 declare global {type EventListenersT=EventListenerOrEventListenerObject|((v: MessageEvent<any>) => void);}
 

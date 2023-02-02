@@ -9,13 +9,9 @@ export class ServiceResolver<T,U> {
 		this.params=params;
 	}
 	/** @arg {T} services */
-	add_services(services: T) {
-		this.services=services;
-	}
+	add_services(services: T) {this.services=services;}
 	/** @arg {U} params */
-	set_params(params: U) {
-		this.params=params;
-	}
+	set_params(params: U) {this.params=params;}
 	/** @arg {keyof U} key */
 	get_param(key: keyof U) {
 		if(!this.params)

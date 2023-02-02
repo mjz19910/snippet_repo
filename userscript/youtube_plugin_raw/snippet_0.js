@@ -38,13 +38,9 @@ try {
 	localStorage.setItem("test","test_value");
 	let r=localStorage.getItem("test");
 	if(r!=="test_value") no_storage_access=true;
-} catch {
-	no_storage_access=true;
-}
+} catch {no_storage_access=true;}
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function as(e,x=e) {
-	return x;
-}
+function as(e,x=e) {return x;}
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {T_SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {
@@ -94,9 +90,7 @@ export class Snippet_0_tmp {
 	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
 	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
-	primitive_of(x,y) {
-		if(typeof x!==y) debugger;
-	}
+	primitive_of(x,y) {if(typeof x!==y) debugger;}
 	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @arg {string} x */
@@ -142,13 +136,9 @@ export class Snippet_0_tmp {
 		return v[1]??null;
 	}
 	/** @arg {string} key @arg {string|string[]} x */
-	save_string(key,x) {
-		key; x;
-	}
+	save_string(key,x) {key; x;}
 	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_typedef(x,r=null) {
-		x; r;
-	}
+	generate_typedef(x,r=null) {x; r;}
 	/** @public @template {[string,null,string]} T @template {`${T[0]}-${string}-${T[2]}`} U @arg {T} ns_arr @arg {U} s */
 	save_enum_path(ns_arr,s) {
 		// ["", "-artists-row-state-id"]
@@ -163,9 +153,7 @@ export class Snippet_0_tmp {
 	/** @public @arg {unknown} x @arg {string|null} r */
 	generate_renderer(x,r) {throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);}
 	/** @public @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-	as(e,x=e) {
-		return x;
-	}
+	as(e,x=e) {return x;}
 	/** @private @template {{}} T @arg {T_AnyObjectOrEmpty<T>} x @returns {x is T} */
 	maybe_has_value(x) {return Object.keys(x).length>0;}
 	/** @protected @template {{}} T @arg {T_AnyObjectOrEmpty<T>} x @arg {(x:T)=>void} f */
@@ -192,13 +180,7 @@ export class Snippet_0_tmp {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
 			let u=f.call(this,a,i);
-			if(u!==void 0) {
-				c.push(u);
-			} else if(u===void 0) {
-				v.push(u);
-			} else {
-				throw new Error();
-			}
+			if(u!==void 0) {c.push(u);} else if(u===void 0) {v.push(u);} else {throw new Error();}
 		}
 		return [c,v];
 	}
@@ -213,9 +195,7 @@ export class Snippet_0_tmp {
 		this.z(a,f);
 	}
 	/** @protected @template {{}} T @arg {{contents:T}} x @arg {(this:this,x:T)=>void} f */
-	w3(x,f) {
-		f.call(this,x.contents);
-	}
+	w3(x,f) {f.call(this,x.contents);}
 	/** @arg {{}} x */
 	log_new_typedef(x) {
 		let td,rn;
@@ -272,9 +252,7 @@ export class Snippet_0_tmp {
 		return q[1];
 	}
 	/** @public @template {{}} T @arg {{commands:T[]}} x @arg {(x:T)=>void} f */
-	CommandsTemplate(x,f) {
-		this.z(x.commands,f);
-	}
+	CommandsTemplate(x,f) {this.z(x.commands,f);}
 	/** @public @arg {string} x */
 	decode_url_b64_proto_obj(x) {
 		x=x.replaceAll("_","/").replaceAll("-","+");
@@ -371,9 +349,7 @@ export class Snippet_0_tmp {
 	//#endregion
 	/** @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
-		if(!obj) {
-			debugger;
-		}
+		if(!obj) {debugger;}
 		let rq=Object.keys(obj);
 		/** @private @type {any} */
 		let ra=rq;
@@ -387,9 +363,7 @@ export class Snippet_0_tmp {
 		return r;
 	}
 	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
-	H$R_(x,f) {
-		f.call(this,this.w(x));
-	}
+	H$R_(x,f) {f.call(this,this.w(x));}
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
 	/** @protected @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">} x */
@@ -410,9 +384,7 @@ export class Snippet_0_tmp {
 		f.call(this,[contents,sectionIdentifier,targetId]);
 		trackingParams;
 		let k=this.get_keys_of(contents);
-		switch(k[0]) {
-			default: debugger; break;
-		}
+		switch(k[0]) {default: debugger; break;}
 	}
 }
 class ND extends Snippet_0_tmp {
@@ -434,11 +406,7 @@ class ND extends Snippet_0_tmp {
 				ret.push(k);
 			}
 		}
-		if(!ret.length) {
-			for(let k of x) {
-				ret.push(k);
-			}
-		}
+		if(!ret.length) {for(let k of x) {ret.push(k);}}
 		return ret;
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
@@ -464,16 +432,12 @@ class ND extends Snippet_0_tmp {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(label);
 		this.z(entries,x => {
-			if("privacyDropdownItemRenderer" in x) {
-				return;
-			}
+			if("privacyDropdownItemRenderer" in x) {return;}
 			this.do_codegen("Dropdown",x);
 		});
 	}
 	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
-	H_(x,f) {
-		f.call(this,this.w(x));
-	}
+	H_(x,f) {f.call(this,this.w(x));}
 	/** @protected @arg {D_AlertWithButton} x */
 	D_AlertWithButton(x) {
 		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
@@ -486,13 +450,9 @@ class ND extends Snippet_0_tmp {
 	/** @protected @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
 	/** @protected @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
-	ItemsTemplate(x,f) {
-		this.z(this.w(x),f);
-	}
+	ItemsTemplate(x,f) {this.z(this.w(x),f);}
 	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
-	ContentsArrayTemplate(x,f) {
-		this.z(this.w(x),f);
-	}
+	ContentsArrayTemplate(x,f) {this.z(this.w(x),f);}
 	/** @protected @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
 	CommandsTemplate$Omit(x,f) {
 		const {commands,...y}=x;
@@ -556,13 +516,9 @@ class ND extends Snippet_0_tmp {
 		return [tog,untoggled,other];
 	}
 	/** @protected @template T @arg {T_Item<T>} x @arg {(x:T)=>void} f */
-	ItemTemplate(x,f) {
-		return f.call(this,x.item);
-	}
+	ItemTemplate(x,f) {return f.call(this,x.item);}
 	/** @protected @template K,V @arg {T_MapEntry<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
-	MapTemplate(x,f) {
-		f.call(this,x.value,x.key);
-	}
+	MapTemplate(x,f) {f.call(this,x.value,x.key);}
 	/** @protected @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
 		if(!x) return;
@@ -592,9 +548,7 @@ class ND extends Snippet_0_tmp {
 		return y;
 	}
 	/** @template {{}} T @arg {T} x */
-	sd(x) {
-		return x;
-	}
+	sd(x) {return x;}
 	/** @api @public @arg {string} str */
 	_decode_b64_url_proto_obj(str) {
 		let buffer=base64_url_dec.decodeByteArray(str);

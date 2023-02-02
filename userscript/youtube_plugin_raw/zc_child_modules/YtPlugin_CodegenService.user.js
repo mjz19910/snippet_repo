@@ -137,11 +137,7 @@ class CodegenService extends BaseService {
 		}
 	}
 	/** @no_mod @arg {string} x */
-	#codegen_padding(x) {
-		return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
-			return "\t".repeat(g);
-		});
-	}
+	#codegen_padding(x) {return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {return "\t".repeat(g);});}
 	/** @no_mod @arg {unknown} x @arg {string|null} r_name */
 	#codegen_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
@@ -220,9 +216,7 @@ class CodegenService extends BaseService {
 		if(k1==="apiUrl") return o;
 		if(k1==="targetId") return o;
 		if(k1==="panelIdentifier") return o;
-		if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
-			return o;
-		}
+		if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {return o;}
 		if(o.startsWith("https://")) return o;
 		if(o.startsWith("http://")) return o;
 		if(o.length>max_str_len) {
@@ -230,11 +224,7 @@ class CodegenService extends BaseService {
 			return "TYPE::string";
 		}
 		let u_ty_count=[...new Set(o.split("").sort())].join("").length;
-		if(o.includes("%")) {
-			if(u_ty_count>13) {
-				return "TYPE::string";
-			}
-		}
+		if(o.includes("%")) {if(u_ty_count>13) {return "TYPE::string";}}
 		if(k1=="trackingParams") return "TYPE::string";
 		if(k1=="clickTrackingParams") return "TYPE::string";
 		if(k1=="playlistId") {
@@ -265,9 +255,7 @@ class CodegenService extends BaseService {
 			if(cur==="") return prev+cur;
 			if(cur==="}") return prev+";"+cur;
 			if(cur==="]") return prev+";"+cur;
-			if(prev.match(/[\w">]$/)) {
-				return prev+"; "+cur;
-			}
+			if(prev.match(/[\w">]$/)) {return prev+"; "+cur;}
 			return prev+cur;
 		},"");
 	}
@@ -280,9 +268,7 @@ class CodegenService extends BaseService {
 		let gr_f=this.filter_typedef_part_gen(gr);
 		let sr=split_string_once(gr_f,"=")[1];
 		if(!sr) return null;
-		if(sr.endsWith(";")) {
-			sr=sr.slice(0,-1);
-		}
+		if(sr.endsWith(";")) {sr=sr.slice(0,-1);}
 		return sr;
 	}
 	/** @arg {{}} x @returns {T_SE_Signal<{},{}>} */
@@ -438,9 +424,7 @@ class CodegenService extends BaseService {
 		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(cf,keys,is_root);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,state),"\t");
-		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
-			return g+":";
-		});
+		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
 		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
@@ -473,9 +457,7 @@ class CodegenService extends BaseService {
 	/** @api @public @param {{[U in string]:unknown}} x @returns {string} */
 	get_auto_type_name(x) {
 		let type_name=this.json_auto_replace_1(x);
-		if(type_name==="MetadataBadgeRenderer") {
-			return "RMD_Badge";
-		}
+		if(type_name==="MetadataBadgeRenderer") {return "RMD_Badge";}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
 			if(!x.openPopupAction) break x;
 			let sr=this.get_typedef_part(x.openPopupAction);
@@ -547,9 +529,7 @@ class CodegenService extends BaseService {
 				if(!popup.multiPageMenuRenderer) debugger;
 				let mp=popup.multiPageMenuRenderer;
 				let k=this.get_keys_of(mp);
-				if(!this.eq_keys(k,["trackingParams","style","showLoadingSpinner"])) {
-					debugger;
-				}
+				if(!this.eq_keys(k,["trackingParams","style","showLoadingSpinner"])) {debugger;}
 				return "Signal_GetNotificationsMenu";
 			}
 			default:
@@ -916,9 +896,7 @@ class CodegenService extends BaseService {
 			};
 			return o;
 		};
-		let depth_state={
-			ld: 0,
-		};
+		let depth_state={ld: 0,};
 		let da=make_depth_arr(x);
 		/** @private @type {string[]} */
 		let r1=da.reduce((a,c) => {
@@ -964,9 +942,7 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {string[]} res @arg {string} k1 @arg {string} x */
 	generate_code_for_string(res,k1,x) {
-		if(k1==="playlistId") {
-			if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);}
-		}
+		if(k1==="playlistId") {if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);}}
 		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`); return;}
 		let x2=x;
 		let ret_arr=res;
@@ -993,12 +969,8 @@ class Generate {
 	/** @private @type {string[]} */
 	str_arr=[];
 	/** @constructor @public @arg {CodegenService<T,U>} parent */
-	constructor(parent) {
-		this.parent=parent;
-	}
-	get x() {
-		return this.parent;
-	}
+	constructor(parent) {this.parent=parent;}
+	get x() {return this.parent;}
 	/** @api @public @arg {string} cf @arg {{}} x */
 	generate_typedef_and_depth(cf,x) {
 		let gen=this.x.codegen_typedef(cf,x,true);

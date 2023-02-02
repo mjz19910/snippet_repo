@@ -3,9 +3,7 @@ import {no_storage_access} from "../snippet_0";
 export class KnownDataSaver {
 	/** @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
-		if(!obj) {
-			debugger;
-		}
+		if(!obj) {debugger;}
 		let rq=Object.keys(obj);
 		/** @private @type {any} */
 		let ra=rq;
@@ -67,9 +65,7 @@ export class KnownDataSaver {
 		return ret;
 	}
 	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
-	#parse_data(str) {
-		return JSON.parse(str);
-	}
+	#parse_data(str) {return JSON.parse(str);}
 	#store_data() {
 		let data=this.pull_data();
 		for(let v=0;v<data.seen_numbers.length;v++) {
@@ -103,9 +99,7 @@ export class KnownDataSaver {
 			seen_booleans: this.#seen_booleans,
 		};
 	}
-	get_debug_data() {
-		return {strings_key_index_map: this.#strings_key_index_map,};
-	}
+	get_debug_data() {return {strings_key_index_map: this.#strings_key_index_map,};}
 	/** @arg {string} seen_data */
 	#save_local_storage(seen_data) {
 		if(no_storage_access) {
@@ -185,9 +179,7 @@ export class KnownDataSaver {
 			p=[k,cur=["one",[]]];
 			let nk=this.#seen_strings.push(p)-1;
 			this.#strings_key_index_map[k]=nk;
-		} else {
-			cur=p[1];
-		}
+		} else {cur=p[1];}
 		if(x instanceof Array) {
 			let target=p[1];
 			if(target[0]==="one") {
@@ -284,9 +276,7 @@ export class KnownDataSaver {
 			cur=["one",[]];
 			p=[k,cur];
 			this.#seen_numbers.push(p);
-		} else {
-			cur=p[1];
-		}
+		} else {cur=p[1];}
 		if(x instanceof Array) {
 			let target=p[1];
 			if(target[0]==="one") {
@@ -330,14 +320,10 @@ export class KnownDataSaver {
 		}
 		let [,kc]=krc;
 		if(bool) {
-			if(!kc.t) {
-				console.log(key,bool);
-			}
+			if(!kc.t) {console.log(key,bool);}
 			kc.t=true;
 		} else {
-			if(!kc.f) {
-				console.log(key,bool);
-			}
+			if(!kc.f) {console.log(key,bool);}
 			kc.f=true;
 		}
 		this.#new_booleans.push([key,kc]);

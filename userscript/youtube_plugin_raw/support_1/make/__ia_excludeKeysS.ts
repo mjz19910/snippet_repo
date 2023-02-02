@@ -4,9 +4,7 @@ function __ia_excludeKeysS<T extends string,U extends {},C extends T_Split<T,","
 	for(;i<ex_keys.length;i++) {
 		{
 			key=ex_keys[i];
-			let {
-				[key]: _,...rest_
-			}=obj as {[x: string]: any;};
+			let {[key]: _,...rest_}=obj as {[x: string]: any;};
 			rest=rest_;
 		};
 		obj=rest;

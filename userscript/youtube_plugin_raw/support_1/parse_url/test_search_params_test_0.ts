@@ -17,9 +17,7 @@ async function test_search_params_test_0() {
 	if(url_rs) {
 		const rt: ru=url_rs;
 		rt;
-	} else {
-		console.log(ux);
-	}
+	} else {console.log(ux);}
 	type decay_t=Decay<typeof ux>;
 	let res_d: {sqp: any; rs: any;}=ux;
 	let res: decay_t=res_d;

@@ -9,11 +9,7 @@ export class MyReader {
 		this.last_pos=0;
 	}
 	/** @arg {number} [size] */
-	try_read_any(size) {
-		try {			return this.read_any(size);} catch {
-			return null;
-		}
-	}
+	try_read_any(size) {try {			return this.read_any(size);} catch {return null;}}
 	/** @arg {number} [size] */
 	reset_and_read_any(size) {
 		this.pos=0;
@@ -23,9 +19,7 @@ export class MyReader {
 	/** @private @arg {number} [size] */
 	read_any(size) {
 		this.failed=false;
-		if(!size) {
-			this.cur_len=this.len;
-		} else {			this.cur_len=this.pos+size;}
+		if(!size) {this.cur_len=this.len;} else {			this.cur_len=this.pos+size;}
 		/** @type {D_DataArrType} */
 		let data=[];
 		let loop_count=0;
@@ -36,9 +30,7 @@ export class MyReader {
 			let fieldId=cur_byte>>>3;
 			let first_num=this.skipTypeEx(fieldId,wireType);
 			data.push([fieldId,wireType,first_num]);
-			if(this.failed) {
-				break;
-			}
+			if(this.failed) {break;}
 			if(log_slow&&loop_count>128) {
 				console.log("taking a long time to read protobuf data");
 				log_slow=false;
@@ -50,9 +42,7 @@ export class MyReader {
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
 			let [_fieldId,_type,decoded_data]=cur;
-			for(let item of decoded_data) {
-				res_arr.push(item);
-			}
+			for(let item of decoded_data) {res_arr.push(item);}
 		}
 		return res_arr;
 	}
@@ -68,11 +58,7 @@ export class MyReader {
 	revert_to(pos,f) {
 		let prev_pos=this.pos;
 		this.pos=pos;
-		try {
-			return f();
-		} finally {
-			this.pos=prev_pos;
-		}
+		try {return f();} finally {this.pos=prev_pos;}
 	}
 	/** @private @arg {number} [length] */
 	skip(length) {
@@ -257,9 +243,7 @@ export class MyReader {
 					return [false,null,this.pos];
 				});
 				let num32=null;
-				x: try {
-					num32=this.uint32();
-				} catch {
+				x: try {num32=this.uint32();} catch {
 					if(revert_res[0]) break x;
 					this.failed=true;
 					first_num.push(["error",fieldId]);
@@ -306,9 +290,7 @@ export class MyReader {
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
 				/** @private @type {D_DecTypeNum} */
-				try {
-					this.skip(size);
-				} catch {
+				try {this.skip(size);} catch {
 					console.log("skip failed at",this.pos,fieldId);
 					first_num.push(["error",fieldId]);
 					this.failed=true;

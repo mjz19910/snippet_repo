@@ -67,9 +67,7 @@ type G_SettingsOptionItem=
 	R_SettingsCheckbox|
 	R_SettingsRadioOption|
 	R_CopyLink;
-type G_ShelfItem={
-	gridRenderer: R_Grid;
-};
+type G_ShelfItem={gridRenderer: R_Grid;};
 type G_ShortsSurfaceIdentifier_ValidTag=
 	|"engagement-panel-structured-description"
 	|"shorts-comments-panel"

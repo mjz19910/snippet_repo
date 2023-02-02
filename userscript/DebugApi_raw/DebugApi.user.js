@@ -97,27 +97,17 @@ class HashMap {
 	/** @type {Map<K,V>|null} */
 	m_data=null;
 	is_empty() {
-		if(this.m_data===null) {
-			return true;
-		}
-		if(this.m_data.size===0) {
-			return true;
-		}
+		if(this.m_data===null) {return true;}
+		if(this.m_data.size===0) {return true;}
 		return false;
 	}
 	/** @arg {K} key @arg {V} value */
 	set(key,value) {
-		if(!this.m_data) {
-			this.m_data=new Map;
-		}
+		if(!this.m_data) {this.m_data=new Map;}
 		this.m_data.set(key,value);
 		return this;
 	}
-	clear() {
-		if(this.m_data) {
-			this.m_data.clear();
-		}
-	}
+	clear() {if(this.m_data) {this.m_data.clear();}}
 	/** @arg {K} key */
 	get(key) {
 		if(!this.m_data) return;
@@ -125,9 +115,7 @@ class HashMap {
 	}
 	/** @arg {K} key */
 	has(key) {
-		if(!this.m_data) {
-			return false;
-		}
+		if(!this.m_data) {return false;}
 		return this.m_data.has(key);
 	}
 	/** @arg {(this: this,arg1: K,arg2: V) => "Break"|"Continue"} callback */
@@ -136,11 +124,7 @@ class HashMap {
 		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
 		if(!this.m_data)
 			return;
-		for(let x of this.m_data.entries()) {
-			if(callback.apply(this,x)==="Break") {
-				break;
-			}
-		}
+		for(let x of this.m_data.entries()) {if(callback.apply(this,x)==="Break") {break;}}
 	}
 }
 
@@ -273,9 +257,7 @@ class ECMA262Base {
 	}
 	_str="";
 	get str() {
-		if(!this.B) {
-			return this._str;
-		}
+		if(!this.B) {return this._str;}
 		return this.B.str;
 	}
 	set str(value) {
@@ -288,9 +270,7 @@ class ECMA262Base {
 	_len=0;
 	/** @returns {number} */
 	get len() {
-		if(!this.B) {
-			return this._len;
-		}
+		if(!this.B) {return this._len;}
 		return this.B.len;
 	}
 	set len(value) {
@@ -309,9 +289,7 @@ class ECMA262Base {
 	/** @arg {ecma_root|null} base */
 	constructor(base) {
 		this.B=base;
-		if(base) {
-			this._C=base;
-		}
+		if(base) {this._C=base;}
 	}
 }
 
@@ -390,13 +368,9 @@ class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	Comment(str,index) {
 		let ml_len=this.MultiLineComment(str,index);
-		if(ml_len[2]>0) {
-			return ml_len;
-		}
+		if(ml_len[2]>0) {return ml_len;}
 		let sl_len=this.SingleLineComment(str,index);
-		if(sl_len[2]>0) {
-			return sl_len;
-		}
+		if(sl_len[2]>0) {return sl_len;}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
@@ -410,9 +384,7 @@ class Comments extends ECMA262Base {
 			off+=2;
 			if(str.slice(index+off,index+off+2)==="*/") {return [true,"MultiLineComment",4];}
 			let [valid,,com_len]=this.MultiLineCommentChars(str,index+off);
-			if(!valid) {
-				return [false,null,0];
-			}
+			if(!valid) {return [false,null,0];}
 			if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {return [true,"MultiLineComment",off+com_len+2];}
 		}
 		return [false,null,0];
@@ -450,9 +422,7 @@ class Comments extends ECMA262Base {
 			}
 		}
 		this.dep--;
-		if(start_len===0) {
-			return [false,null,0];
-		}
+		if(start_len===0) {return [false,null,0];}
 		return [true,"MultiLineCommentChars",start_len];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
@@ -483,9 +453,7 @@ class Comments extends ECMA262Base {
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	MultiLineNotForwardSlashOrAsteriskChar(str,index) {
-		if(str[index]==="*"||str[index]==="/") {
-			return [false,null,0];
-		}
+		if(str[index]==="*"||str[index]==="/") {return [false,null,0];}
 		return [true,"MultiLineNotForwardSlashOrAsteriskChar",1];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
@@ -499,15 +467,11 @@ class Comments extends ECMA262Base {
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	SingleLineCommentChars(str,index) {
-		if(index>=str.length) {
-			return [false,null,0];
-		}
+		if(index>=str.length) {return [false,null,0];}
 		let s_index=index;
 		while(str[s_index]!=="\n") {
 			s_index++;
-			if(s_index>str.length) {
-				break;
-			}
+			if(s_index>str.length) {break;}
 		}
 		return [true,"SingleLineCommentChars",s_index-index];
 	}
@@ -565,9 +529,7 @@ class Tokens extends ECMA262Base {
 			len=cur[2];
 			item=cur;
 		}
-		if(item===null||!item[0]) {
-			return [false,null,0];
-		}
+		if(item===null||!item[0]) {return [false,null,0];}
 		return [true,item[1],len];
 	}
 }
@@ -586,9 +548,7 @@ class NamesAndKeywords extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	IdentifierName(str,index) {
 		let res=this.IdentifierStart(str,index);
-		if(!res[0]) {
-			return [false,null,0];
-		}
+		if(!res[0]) {return [false,null,0];}
 		let [,,id_start_len]=res;
 		NamesAndKeywords.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 		let id_continue_match=NamesAndKeywords.IdentifierName_not_start_regex.exec(str);
@@ -602,9 +562,7 @@ class NamesAndKeywords extends ECMA262Base {
 	static id_start_regex=/[a-zA-Z$_]/;
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	IdentifierStart(str,index) {
-		if(index>=str.length) {
-			return [false,null,0];
-		}
+		if(index>=str.length) {return [false,null,0];}
 		if(str[index]==="\\") {
 			let res=this.C.string_literals.UnicodeEscapeSequence(index+1);
 			if(res[0]) return [true,"IdentifierStart",res[2]+1];
@@ -631,9 +589,7 @@ class NamesAndKeywords extends ECMA262Base {
 
 class PunctuatorsData extends ECMA262Base {
 	/** @arg {ecma_root} parent */
-	constructor(parent) {
-		super(parent);
-	}
+	constructor(parent) {super(parent);}
 	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> &|^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
 	DivPunctuatorArray="/ /=".split(" ");
 }
@@ -665,9 +621,7 @@ class Punctuators extends PunctuatorsData {
 	OptionalChainingPunctuator(str,index) {
 		if(str.slice(index,index+2)==="?.") {
 			let [,,num_len]=this.C.numeric_literals.DecimalDigit(str,index+2);
-			if(num_len>0) {
-				return [false,null,0];
-			}
+			if(num_len>0) {return [false,null,0];}
 			return [true,"OptionalChainingPunctuator",2];
 		}
 		return [false,null,0];
@@ -722,13 +676,9 @@ class Punctuators extends PunctuatorsData {
 	DivPunctuator(str,index) {
 		let char_len=0;
 		// `/`
-		if(str.startsWith("/",index)) {
-			char_len=1;
-		}
+		if(str.startsWith("/",index)) {char_len=1;}
 		// `/=`
-		if(str.startsWith("/=",index)) {
-			char_len=2;
-		}
+		if(str.startsWith("/=",index)) {char_len=2;}
 		if(char_len>0) {return [true,"DivPunctuator",char_len];}
 		return [false,null,0];
 	}
@@ -820,9 +770,7 @@ class NumericLiterals extends ECMA262Base {
 		}
 		x: {
 			let res=this.NonZeroDigit(str,index);
-			if(!res[0]) {
-				break x;
-			}
+			if(!res[0]) {break x;}
 			let len=1;
 			res=this.DecimalDigits(str,index+len);
 			len+=res[2];
@@ -834,14 +782,10 @@ class NumericLiterals extends ECMA262Base {
 		}
 		x: {
 			let res=this.NonZeroDigit(str,index);
-			if(!res[0]) {
-				break x;
-			}
+			if(!res[0]) {break x;}
 			let len=1;
 			res=this.NumericLiteralSeparator(index+len);
-			if(!res[0]) {
-				break x;
-			}
+			if(!res[0]) {break x;}
 			len+=res[2];
 			res=this.DecimalDigits(str,index+len);
 			len+=res[2];
@@ -878,9 +822,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-BigIntLiteralSuffix
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	BigIntLiteralSuffix(str,index) {
-		if(str[index]==="n") {
-			return [true,"",1];
-		}
+		if(str[index]==="n") {return [true,"",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-DecimalLiteral
@@ -902,16 +844,12 @@ class NumericLiterals extends ECMA262Base {
 	DecimalIntegerLiteral(str,index) {
 		let max_len=0;
 		// 0
-		if(str[index]==="0") {
-			max_len=1;
-		}
+		if(str[index]==="0") {max_len=1;}
 		let len=0;
 		{
 			// NonZeroDigit
 			let [,,tmp]=this.NonZeroDigit(str,index);
-			if(tmp>len) {
-				len=tmp;
-			}
+			if(tmp>len) {len=tmp;}
 		}
 		if(len>max_len) max_len=len;
 		len=0;
@@ -922,9 +860,7 @@ class NumericLiterals extends ECMA262Base {
 			if(res>0) {
 				tmp_len+=res;
 				[,,res]=this.NumericLiteralSeparator(index+tmp_len);
-				if(res>0) {
-					tmp_len+=res;
-				}
+				if(res>0) {tmp_len+=res;}
 				let prev_sep_flag=this.C.flags.sep;
 				this.C.flags.sep=true;
 				[,,res]=this.DecimalDigits(str,index+tmp_len);
@@ -934,9 +870,7 @@ class NumericLiterals extends ECMA262Base {
 			len+=tmp_len;
 		}
 		if(len>max_len) max_len=len;
-		if(max_len===0) {
-			return [false,null,0];
-		}
+		if(max_len===0) {return [false,null,0];}
 		return [true,"DecimalIntegerLiteral",max_len];
 	}
 	// https://tc39.es/ecma262/#prod-DecimalDigits
@@ -1048,17 +982,9 @@ class NumericLiterals extends ECMA262Base {
 			let res_peek_digit=this.BinaryDigit(this.C.index);
 			let res_sep=this.NumericLiteralSeparator(this.C.index);
 			let res_sep_peek=this.BinaryDigit(this.C.index+1);
-			if(res_peek_digit[0]) {
-				res=res_peek_digit;
-			} else if(res_sep[0]&&res_sep_peek[0]) {
-				res=res_sep;
-			} else {
-				break;
-			}
+			if(res_peek_digit[0]) {res=res_peek_digit;} else if(res_sep[0]&&res_sep_peek[0]) {res=res_sep;} else {break;}
 		}
-		if(!res[0]&&this.len==0) {
-			return [false,null,0];
-		}
+		if(!res[0]&&this.len==0) {return [false,null,0];}
 		if(this.len>0) return [true,"BinaryDigits",this.len];
 		return [false,null,0];
 	}
@@ -1069,15 +995,9 @@ class NumericLiterals extends ECMA262Base {
 		while(res[0]) {
 			this.len++;
 			let res_peek_digit=this.BinaryDigit(i+this.len);
-			if(res_peek_digit[0]) {
-				res=res_peek_digit;
-			} else {
-				break;
-			}
+			if(res_peek_digit[0]) {res=res_peek_digit;} else {break;}
 		}
-		if(!res[0]&&this.len==0) {
-			return [false,null,0];
-		}
+		if(!res[0]&&this.len==0) {return [false,null,0];}
 		if(this.len>0) return [true,"BinaryDigits",this.len];
 		return [false,null,0];
 	}
@@ -1147,17 +1067,9 @@ class NumericLiterals extends ECMA262Base {
 				this.len++;
 				let res_digit=this.HexDigit(i+this.len);
 				let num_sep=this.NumericLiteralSeparator(i+this.len);
-				if(num_sep[0]) {
-					res=num_sep;
-				} else if(res_digit[0]) {
-					res=res_digit;
-				} else {
-					break;
-				}
+				if(num_sep[0]) {res=num_sep;} else if(res_digit[0]) {res=res_digit;} else {break;}
 			}
-			if(!res[0]&&this.len==0) {
-				return [false,null,0];
-			}
+			if(!res[0]&&this.len==0) {return [false,null,0];}
 			if(this.len>0) return [true,"HexDigits",this.len];
 			return [false,null,0];
 		}
@@ -1166,15 +1078,9 @@ class NumericLiterals extends ECMA262Base {
 		while(res[0]) {
 			this.len++;
 			let res_digit=this.HexDigit(i+this.len);
-			if(res_digit[0]) {
-				res=res_digit;
-			} else {
-				break;
-			}
+			if(res_digit[0]) {res=res_digit;} else {break;}
 		}
-		if(!res[0]&&this.len==0) {
-			return [false,null,0];
-		}
+		if(!res[0]&&this.len==0) {return [false,null,0];}
 		if(this.len>0) return [true,"HexDigits",this.len];
 		return [false,null,0];
 	}
@@ -1227,16 +1133,10 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	DoubleStringCharacter(str,index) {
 		x: {
-			if(str[index]==="\"") {
-				return [false,null,0];
-			}
-			if(str[index]==="\\") {
-				break x;
-			}
+			if(str[index]==="\"") {return [false,null,0];}
+			if(str[index]==="\\") {break x;}
 			let len=this.C.line_terminators.LineTerminator(str,index);
-			if(len!==null) {
-				break x;
-			}
+			if(len!==null) {break x;}
 			return [true,"DoubleStringCharacter",1];
 		}
 		if(str[index]==="\u{2028}") {return [true,"DoubleStringCharacter",1];}
@@ -1261,25 +1161,17 @@ class StringLiterals extends ECMA262Base {
 			}
 			break;
 		}
-		if(!off) {
-			return [false,null,0];
-		}
+		if(!off) {return [false,null,0];}
 		return [true,"SingleStringCharacters",off];
 	}
 	// https://tc39.es/ecma262/#prod-SingleStringCharacter
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	SingleStringCharacter(str,index) {
 		x: {
-			if(str[index]==="'") {
-				return [false,null,0];
-			}
-			if(str[index]==="\\") {
-				break x;
-			}
+			if(str[index]==="'") {return [false,null,0];}
+			if(str[index]==="\\") {break x;}
 			let len=this.C.line_terminators.LineTerminator(str,index);
-			if(len!==null) {
-				break x;
-			}
+			if(len!==null) {break x;}
 			return [true,"SingleStringCharacter",1];
 		}
 		if(str[index]==="\u{2028}") {return [true,"SingleStringCharacter",1];}
@@ -1305,48 +1197,32 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	EscapeSequence(str,index) {
 		let len=this.CharacterEscapeSequence(str,index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		x: {
 			if(str[index]==="0") {
 				let peek=this.C.numeric_literals.DecimalDigit(str,index);
-				if(peek[2]>0) {
-					break x;
-				}
+				if(peek[2]>0) {break x;}
 				// \0 null escape found
 				return [true,"EscapeSequence",1];
 			}
 		}
 		len=this.LegacyOctalEscapeSequence(str,index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		len=this.NonOctalDecimalEscapeSequence(str,index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		len=this.HexEscapeSequence(str,index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		len=this.UnicodeEscapeSequence(index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-CharacterEscapeSequence
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	CharacterEscapeSequence(str,index) {
 		let len=this.SingleEscapeCharacter(str,index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		len=this.NonEscapeCharacter(str,index);
-		if(len[2]>0) {
-			return len;
-		}
+		if(len[2]>0) {return len;}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-SingleEscapeCharacter
@@ -1360,12 +1236,8 @@ class StringLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NonEscapeCharacter(str,index) {
-		if(this.EscapeCharacter(str,index)) {
-			return [false,null,0];
-		}
-		if(this.C.line_terminators.LineTerminator(str,index)) {
-			return [false,null,0];
-		}
+		if(this.EscapeCharacter(str,index)) {return [false,null,0];}
+		if(this.C.line_terminators.LineTerminator(str,index)) {return [false,null,0];}
 		return [true,"NonEscapeCharacter",1];
 	}
 	// https://tc39.es/ecma262/#prod-
@@ -1374,76 +1246,50 @@ class StringLiterals extends ECMA262Base {
 		let len0=this.SingleEscapeCharacter(str,index);
 		let len1=this.C.numeric_literals.DecimalDigit(str,index);
 		let act=0;
-		if(len0>len1) {
-			act=1;
-		}
+		if(len0>len1) {act=1;}
 		if(str[index]==="x") {return [true,"EscapeCharacter",1];}
 		if(len0[2]>len1[2]) {return [true,"EscapeCharacter",len0[2]];}
 		if(len1[2]>len0[2]) {return [true,"EscapeCharacter",len1[2]];}
-		if(act===1) {
-			throw new Error("TODO");
-		}
+		if(act===1) {throw new Error("TODO");}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	LegacyOctalEscapeSequence(str,index) {
 		x: {
-			if(str[index]!=="0") {
-				break x;
-			}
+			if(str[index]!=="0") {break x;}
 			if(str[index+1]==="8"||str[index+1]==="9") {return [true,"LegacyOctalEscapeSequence",1];}
 		}
 		x: {
 			let len=this.NonZeroOctalDigit(str,index);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			let n_len=this.C.numeric_literals.OctalDigit(str,index+1);
-			if(n_len[2]>0) {
-				break x;
-			}
+			if(n_len[2]>0) {break x;}
 			return [true,"LegacyOctalEscapeSequence",1];
 		}
 		x: {
 			let len=this.ZeroToThree(str,index);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			len=this.C.numeric_literals.OctalDigit(str,index+1);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			len=this.C.numeric_literals.OctalDigit(str,index+2);
-			if(len[0]) {
-				break x;
-			}
+			if(len[0]) {break x;}
 			return [true,"LegacyOctalEscapeSequence",2];
 		}
 		x: {
 			let len=this.FourToSeven(str,index);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			len=this.C.numeric_literals.OctalDigit(str,index+1);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			return [true,"LegacyOctalEscapeSequence",2];
 		}
 		x: {
 			let len=this.ZeroToThree(str,index);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			len=this.C.numeric_literals.OctalDigit(str,index+1);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			len=this.C.numeric_literals.OctalDigit(str,index+2);
-			if(!len[0]) {
-				break x;
-			}
+			if(!len[0]) {break x;}
 			return [true,"LegacyOctalEscapeSequence",3];
 		}
 		return [false,null,0];
@@ -1451,9 +1297,7 @@ class StringLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NonZeroOctalDigit(str,index) {
-		if(str[index]==="0") {
-			return [false,null,0];
-		}
+		if(str[index]==="0") {return [false,null,0];}
 		let len=this.C.numeric_literals.OctalDigit(str,index);
 		if(len[2]>0) {return [true,"NonZeroOctalDigit",1];}
 		return [false,null,0];
@@ -1485,13 +1329,9 @@ class StringLiterals extends ECMA262Base {
 	HexEscapeSequence(str,index) {
 		if(str[index]==="x") {
 			let len=this.C.numeric_literals.HexDigit(index+1);
-			if(!len) {
-				return [false,null,0];
-			}
+			if(!len) {return [false,null,0];}
 			len=this.C.numeric_literals.HexDigit(index+2);
-			if(!len) {
-				return [false,null,0];
-			}
+			if(!len) {return [false,null,0];}
 			return [true,"HexEscapeSequence",3];
 		}
 		return [false,null,0];
@@ -1500,9 +1340,7 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	UnicodeEscapeSequence(index) {
 		let off=0;
-		if(this.str[index]==="u") {
-			off++;
-		}
+		if(this.str[index]==="u") {off++;}
 		let len0=this.Hex4Digits(index+off);
 		if(len0[2]>0) {return [true,"UnicodeEscapeSequence",len0[2]+1];}
 		if(this.str[index+off]==="{}"[0]) {
@@ -1522,21 +1360,13 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	Hex4Digits(index) {
 		let len=this.C.numeric_literals.HexDigit(index);
-		if(!len) {
-			return [false,null,0];
-		}
+		if(!len) {return [false,null,0];}
 		len=this.C.numeric_literals.HexDigit(index);
-		if(!len) {
-			return [false,null,0];
-		}
+		if(!len) {return [false,null,0];}
 		len=this.C.numeric_literals.HexDigit(index);
-		if(!len) {
-			return [false,null,0];
-		}
+		if(!len) {return [false,null,0];}
 		len=this.C.numeric_literals.HexDigit(index);
-		if(!len) {
-			return [false,null,0];
-		}
+		if(!len) {return [false,null,0];}
 		return [true,"Hex4Digits",4];
 	}
 }
@@ -1548,14 +1378,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	Template(str,index) {
 		// NoSubstitutionTemplate
 		let ret=this.NoSubstitutionTemplate(str,index);
-		if(ret[0]) {
-			return ret;
-		}
+		if(ret[0]) {return ret;}
 		// TemplateHead
 		ret=this.TemplateHead(str,index);
-		if(ret[0]) {
-			return ret;
-		}
+		if(ret[0]) {return ret;}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NoSubstitutionTemplate
@@ -1563,11 +1389,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	NoSubstitutionTemplate(str,index) {
 		let cur_index=index;
 		//` TemplateCharacters opt `
-		if(str[cur_index]==="`") {
-			cur_index++;
-		} else {
-			return [false,null,0];
-		}
+		if(str[cur_index]==="`") {cur_index++;} else {return [false,null,0];}
 		let opt=this.TemplateCharacters(str,cur_index);
 		if(!opt[0]) return [false,null,0];
 		return [true,"NoSubstitutionTemplate",cur_index-index+opt[2]];
@@ -1581,9 +1403,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			cur_index++;
 			let res=this.TemplateCharacters(str,cur_index);
 			if(res[0]===false) throw res[1];
-			if(res[2]>0) {
-				cur_index+=res[2];
-			}
+			if(res[2]>0) {cur_index+=res[2];}
 			if(str[cur_index]==="$"&&str[cur_index+1]==="{") {return [true,"TemplateHead",cur_index+2];}
 		}
 		return [false,null,0];
@@ -1642,16 +1462,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	TemplateCharacters(str,index) {
 		let len=0;
 		let tmp=this.TemplateCharacter(str,index);
-		if(tmp[0]) {
-			len+=tmp[2];
-		}
+		if(tmp[0]) {len+=tmp[2];}
 		while(tmp[2]>0&&index<str.length) {
 			tmp=this.TemplateCharacter(str,index+len);
-			if(tmp[0]) {
-				len+=tmp[2];
-			} else {
-				break;
-			}
+			if(tmp[0]) {len+=tmp[2];} else {break;}
 		}
 		return [true,"TemplateCharacters",len];
 	}
@@ -1665,22 +1479,16 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		if(str[index]==="\\") {
 			let not_esc=this.NotEscapeSequence(str,index);
-			if(not_esc[2]>0) {
-				return [false,null,0];
-			}
+			if(not_esc[2]>0) {return [false,null,0];}
 		}
 		let res=this.C.string_literals.LineContinuation(str,index);
 		if(res[0]) {return [true,"TemplateCharacter",res[2]];}
 		res=this.C.line_terminators.LineTerminatorSequence(str,index);
 		if(res[0]) {return [true,"TemplateCharacter",res[2]];}
 		/* SourceCharacter but not one of ` or \ or $ or LineTerminator */
-		if(str[index]==="`"||str[index]==="\\"||str[index]==="$") {
-			return [false,null,0];
-		}
+		if(str[index]==="`"||str[index]==="\\"||str[index]==="$") {return [false,null,0];}
 		res=this.C.line_terminators.LineTerminator(str,index);
-		if(res[0]) {
-			return [false,null,0];
-		}
+		if(res[0]) {return [false,null,0];}
 		// TODO: SourceCharacter is too complex for js
 		//		 It requires handling all of unicode
 		return [true,"TemplateCharacter",1];
@@ -1722,9 +1530,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 				if(!lookahead[0]) {return [true,"NotEscapeSequence",1];}
 			}
 		}
-		if(str[index]!=="u") {
-			return [false,null,0];
-		}
+		if(str[index]!=="u") {return [false,null,0];}
 		let res_1,res_2,res_3;
 		let len=1;
 		let lookahead_res_1=this.C.numeric_literals.HexDigit(index+len);
@@ -1741,9 +1547,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		res_3=this.C.numeric_literals.HexDigit(index+len+2);
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+3);
 		if(res_1[0]&&res_2[0]&&res_3[0]&&!lookahead_res_1[0]) {return [true,"NotEscapeSequence",4];}
-		if(str[index+len]!=="{}"[1]) {
-			return [false,null,0];
-		}
+		if(str[index+len]!=="{}"[1]) {return [false,null,0];}
 		len++;
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len);
 		if(!lookahead_res_1[0]) {return [true,"NotEscapeSequence",len];}
@@ -1761,9 +1565,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	NotCodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
 		let res=this.C.numeric_literals.HexDigits({sep: false},index);
-		if(!res[0]) {
-			return [false,null,0];
-		}
+		if(!res[0]) {return [false,null,0];}
 		let mv_raw=str.slice(index,index+res[2]);
 		// but only if MV of HexDigits ≤ 0x10FFFF
 		let MV=parseInt(mv_raw,16);
@@ -1775,9 +1577,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	CodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
 		let res=this.C.numeric_literals.HexDigits({sep: false},index);
-		if(!res[0]) {
-			return [false,null,0];
-		}
+		if(!res[0]) {return [false,null,0];}
 		let mv_raw=str.slice(index,index+res[2]);
 		// but only if MV of HexDigits ≤ 0x10FFFF
 		let MV=parseInt(mv_raw,16);
@@ -1793,19 +1593,11 @@ class RegularExpressionLiterals extends ECMA262Base {
 	RegularExpressionLiteral(str,index) {
 		let len=0;
 		// / RegularExpressionBody / RegularExpressionFlags
-		if(str[index]==="/") {
-			len++;
-		} else {
-			return [false,null,0];
-		}
+		if(str[index]==="/") {len++;} else {return [false,null,0];}
 		let res=this.RegularExpressionBody(str,index);
 		if(!res[0]) return [false,null,0];
 		len+=res[2];
-		if(str[index+len]==="/") {
-			len++;
-		} else {
-			return [false,null,0];
-		}
+		if(str[index+len]==="/") {len++;} else {return [false,null,0];}
 		res=this.RegularExpressionFlags(str,index);
 		return [false,null,0];
 	}
@@ -1831,9 +1623,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 	RegularExpressionChar(str,index) {
 		// RegularExpressionNonTerminator but not one of \ or / or [
 		x: {
-			if(str[index]==="\\"&&str[index]==="/"||str[index]==="[]"[0]) {
-				break x;
-			}
+			if(str[index]==="\\"&&str[index]==="/"||str[index]==="[]"[0]) {break x;}
 			let res=this.RegularExpressionNonTerminator(str,index);
 			if(res[0])
 				return [true,"RegularExpressionChar",res[2]];
@@ -1853,9 +1643,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 	RegularExpressionFirstChar(str,index) {
 		// RegularExpressionNonTerminator but not one of * or \ or / or [
 		x: {
-			if(str[index]==="*"||str[index]==="\\"&&str[index]==="/"||str[index]==="[]"[0]) {
-				break x;
-			}
+			if(str[index]==="*"||str[index]==="\\"&&str[index]==="/"||str[index]==="[]"[0]) {break x;}
 			let res=this.RegularExpressionNonTerminator(str,index);
 			if(res[0])
 				return [true,"RegularExpressionFirstChar",res[2]];
@@ -1918,9 +1706,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 		while(is_class_chars[0]) {
 			len++;
 			is_class_chars=this.RegularExpressionClassChar(str,index+len);
-			if(!is_class_chars[0]) {
-				break;
-			}
+			if(!is_class_chars[0]) {break;}
 		}
 		return [true,"RegularExpressionClassChars",len];
 	}
@@ -1928,9 +1714,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	RegularExpressionClassChar(str,index) {
 		// RegularExpressionNonTerminator but not one of ] or \
-		if(str[index]==="[]"[1]||str[index]==="\\") {
-			return [false,null,0];
-		}
+		if(str[index]==="[]"[1]||str[index]==="\\") {return [false,null,0];}
 		let res=this.RegularExpressionNonTerminator(str,index);
 		if(res[0])
 			return [true,"RegularExpressionClassChar",res[2]];
@@ -2023,9 +1807,7 @@ class ecma_root {
 		this.ParseCommonElements(this,out_state);
 		this.ParseDivPunctuator(this,out_state);
 		this.ParseRightBracePunctuator(this,out_state);
-		if(!out_state.item) {
-			return [false,null,0];
-		}
+		if(!out_state.item) {return [false,null,0];}
 		return [true,out_state.item,out_state.length];
 	}
 	/** @returns {JsLexerReturnType} */
@@ -2042,9 +1824,7 @@ class ecma_root {
 		this.ParseCommonElements(this,out_state);
 		this.ParseRightBracePunctuator(this,out_state);
 		this.ParseRegularExpressionLiteral(this,out_state);
-		if(!out_state.item) {
-			return [false,null,0];
-		}
+		if(!out_state.item) {return [false,null,0];}
 		return [true,out_state.item,out_state.length];
 	}
 	/** @returns {JsLexerReturnType} */
@@ -2061,9 +1841,7 @@ class ecma_root {
 		this.ParseCommonElements(this,out_state);
 		this.ParseRegularExpressionLiteral(this,out_state);
 		this.ParseTemplateSubstitutionTail(this,out_state);
-		if(!out_state.item) {
-			return [false,null,0];
-		}
+		if(!out_state.item) {return [false,null,0];}
 		return [true,out_state.item,out_state.length];
 	}
 	/** @returns {JsLexerReturnType} */
@@ -2080,9 +1858,7 @@ class ecma_root {
 		this.ParseCommonElements(this,out_state);
 		this.ParseDivPunctuator(this,out_state);
 		this.ParseTemplateSubstitutionTail(this,out_state);
-		if(!out_state.item) {
-			return [false,null,0];
-		}
+		if(!out_state.item) {return [false,null,0];}
 		return [true,out_state.item,out_state.length];
 	}
 	/** @arg {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
@@ -2127,9 +1903,7 @@ class ecma_root {
 		this.str=this.source_code;
 		this.flags={
 			sep: false,
-			is_sep() {
-				return this.sep;
-			}
+			is_sep() {return this.sep;}
 		};
 		this.white_space=new JSWhiteSpace(this);
 		this.line_terminators=new JSLineTerminators(this);
@@ -2151,12 +1925,8 @@ class ecma_root {
 	}
 }
 class js_token_generator {
-	get index() {
-		return this.root.index;
-	}
-	set index(value) {
-		this.root.index=value;
-	}
+	get index() {return this.root.index;}
+	set index(value) {this.root.index=value;}
 	static EOF_TOKEN=Symbol();
 	/** @type {ecma_root} */
 	root;
@@ -2167,9 +1937,7 @@ class js_token_generator {
 // #region parse_javascript_str
 /** @arg {string} code_str */
 function parse_javascript_str(code_str) {
-	if("code" in window&&typeof window.code==="string") {
-		code_str=window.code;
-	}
+	if("code" in window&&typeof window.code==="string") {code_str=window.code;}
 	// code_str="function x(){}";
 	// code_str="(function(){return function x(){}})()";
 	let token_gen=new js_token_generator(code_str);
@@ -2182,13 +1950,9 @@ function parse_javascript_str(code_str) {
 			break;
 		}
 		let res_description=token_gen.root.describe_token(res_item);
-		if(res_description[0]==="WhiteSpace") {
-			i-=1;
-		}
+		if(res_description[0]==="WhiteSpace") {i-=1;}
 		if(!res_item[0]) {
-			if(res_item[1]===js_token_generator.EOF_TOKEN) {
-				console.log("EOF");
-			}
+			if(res_item[1]===js_token_generator.EOF_TOKEN) {console.log("EOF");}
 			break;
 		}
 		console.log(res_description);
@@ -2370,9 +2134,7 @@ class ReversePrototypeChain {
 			let cache_key=this.get_cache_key(prototype);
 			if(!this.destination[cache_key]) {this.cache_prototype(cache_key,prototype);}
 			let values=this.destination[cache_key].child.values;
-			if(values.includes(x)) {
-				continue;
-			}
+			if(values.includes(x)) {continue;}
 			values.push(x);
 		}
 	}
@@ -2423,9 +2185,7 @@ function overwrite_addEventListener(obj) {
 						rq.push(new WeakRef(e));
 					} break;
 					case "string": {
-						if(e.length<128) {
-							rq.push(e);
-						} else {rq.push(JSON.stringify(e.slice(0,128-15))+"...(truncated)");}
+						if(e.length<128) {rq.push(e);} else {rq.push(JSON.stringify(e.slice(0,128-15))+"...(truncated)");}
 					} break;
 					case "bigint":
 					case "boolean":
@@ -2438,9 +2198,7 @@ function overwrite_addEventListener(obj) {
 			x: if(argArray[0]==="message") {
 				let handler=argArray[1];
 				if(handler===null) break x;
-				if(t.elevated_event_handlers.includes(handler)) {
-					break x;
-				}
+				if(t.elevated_event_handlers.includes(handler)) {break x;}
 				argArray[1]=do_message_handler_overwrite(handler);
 			}
 			return Reflect.apply(target,callback,argArray);
@@ -2584,12 +2342,8 @@ class AddEventListenerExtension {
 			return;
 		}
 		let is_react_element=false;
-		if("__reactContainer$" in val) {
-			is_react_element=true;
-		}
-		if("__reactFiber$" in val) {
-			is_react_element=true;
-		}
+		if("__reactContainer$" in val) {is_react_element=true;}
+		if("__reactFiber$" in val) {is_react_element=true;}
 		if(is_react_element) {
 			console.log("react_element",val);
 			this.convert_to_id_key(real_value,key,val,"react");
@@ -2644,13 +2398,9 @@ class AddEventListenerExtension {
 	generate_node_id(val) {
 		if(val.__id_holder) {	return val.__id_holder.value;}
 		let list=this.node_list.deref();
-		if(!list) {
-			list=[];
-		}
+		if(!list) {list=[];}
 		let ids=this.node_list_ids.deref();
-		if(!ids) {
-			ids=[];
-		}
+		if(!ids) {ids=[];}
 		list.push(new WeakRef(val));
 		let node_id=this.node_id_max++;
 		let id_holder={value: node_id};
@@ -2718,9 +2468,7 @@ class IterExtensions {
 					iter.value=func(iter.value);
 					return iter;
 				},
-				[Symbol.iterator]() {
-					return this;
-				}
+				[Symbol.iterator]() {return this;}
 			};
 		};
 	}
@@ -2916,9 +2664,7 @@ inject_api.CompressRepeated=CompressRepeated;
 /** @template T */
 class W {
 	/** @arg {T} val */
-	constructor(val) {
-		this.val=val;
-	}
+	constructor(val) {this.val=val;}
 }
 z.add_function(W);
 
@@ -3223,21 +2969,15 @@ class DataFetcher {
 		/** @typedef {ReadableStreamReadResult<Uint8Array>} ReadRes */
 		/** @typedef {{type:"init"}|{type:"done"|"read"|"wait_start"|"wait_result"}|{type:"read_result",value:ReadRes}} Res */
 		/** @type {(Promise<Res>|Res)[]} */
-		let pa=[{
-			type: "init"
-		}];
+		let pa=[{type: "init"}];
 		for(;pa.length>0;) {
-			if(state.aborted) {
-				break;
-			}
+			if(state.aborted) {break;}
 			let iter=await Promise.race(pa);
 			await remove_awaited(pa,iter);
 			if(iter.type==="read_result") {
 				let inner=iter.value;
 				if(inner.done) {
-					pa.push({
-						type: "done"
-					});
+					pa.push({type: "done"});
 					continue;
 				}
 				let value=inner.value;
@@ -3245,33 +2985,15 @@ class DataFetcher {
 					type: "read_value",
 					value,
 				};
-				pa.push({
-					type: "read"
-				});
-			} else if(iter.type==="wait_result") {
-				pa.push({
-					type: "wait_start"
-				});
-			} else if(iter.type==="wait_start") {
-				pa.push(new Promise(function(a) {
-					state.timeout_id=setTimeout(a,30,{
-						type: "wait_result"
-					});
-				}));
+				pa.push({type: "read"});
+			} else if(iter.type==="wait_result") {pa.push({type: "wait_start"});} else if(iter.type==="wait_start") {
+				pa.push(new Promise(function(a) {state.timeout_id=setTimeout(a,30,{type: "wait_result"});}));
 			} else if(iter.type==="read") {
 				pa.push(state.reader.read().then(e => ({
 					type: "read_result",
 					value: e
 				})));
-			} else if(iter.type==="init") {
-				pa.push({
-					type: "wait_start"
-				},{
-					type: "read"
-				});
-			} else if(iter.type==="done") {
-				break;
-			} else {
+			} else if(iter.type==="init") {pa.push({type: "wait_start"},{type: "read"});} else if(iter.type==="done") {break;} else {
 				console.log("unexpected",iter);
 				throw new Error("Unexpected tag type");
 			}
@@ -3285,9 +3007,7 @@ class DataFetcher {
 		let idx=0;
 		for(;;) {
 			var cur=await wasm_return.next();
-			if(cur.done) {
-				break;
-			}
+			if(cur.done) {break;}
 			let result=cur.value;
 			let inner=result.value;
 			req=new Uint8Array(idx+inner.length);
@@ -3416,9 +3136,7 @@ class CompressionStatsCalculator {
 	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
 	/** @arg {number} index */
 	add_hit(index) {
-		if(!this.hit_counts[index]) {
-			this.hit_counts[index]=1;
-		} else this.hit_counts[index]++;
+		if(!this.hit_counts[index]) {this.hit_counts[index]=1;} else this.hit_counts[index]++;
 	}
 	/** @arg {string} key */
 	add_item(key) {
@@ -3430,18 +3148,12 @@ class CompressionStatsCalculator {
 		this.cache.length=0;
 		this.hit_counts.length=0;
 	}
-	map_values() {
-		return this.hit_counts;
-	}
-	map_keys() {
-		return this.cache;
-	}
+	map_values() {return this.hit_counts;}
+	map_keys() {return this.cache;}
 	/** @arg {string[]} arr @arg {number} win_size */
 	calc_compression_stats(arr,win_size) {
 		this.reset();
-		for(let i=0;i<arr.length;i++) {
-			if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}
-		}
+		for(let i=0;i<arr.length;i++) {if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}}
 		let keys=this.map_keys();
 		let values=this.map_values();
 		return to_tuple_arr(keys,values);
@@ -3462,9 +3174,7 @@ class CompressionStatsCalculator {
 		return ret;
 	}
 	test() {
-		let obj={
-			arr: [],
-		};
+		let obj={arr: [],};
 		let rep_val=0.03/(100*4*1);
 		let res=this.replace_range(obj.arr,rep_val,max_id);
 		console.log("compressed",res);
@@ -3494,9 +3204,7 @@ function next_chunk(arr,start) {
 	let last;
 	let c_len;
 	for(let i=start;i<start+30;i++) {
-		if(s_arr) {
-			last=s_arr[0][1];
-		}
+		if(s_arr) {last=s_arr[0][1];}
 		s_arr=sorted_comp_stats(arr,i);
 		if(!last)
 			continue;
@@ -3526,9 +3234,7 @@ function sorted_comp_stats(this_,obj) {
 		let t=types[0];
 		if(!t) return;
 		let [z,x]=t;
-		if(typeof z==="string"&&typeof x==="number") {
-			ret.push([z,x]);
-		}
+		if(typeof z==="string"&&typeof x==="number") {ret.push([z,x]);}
 		obj.stats=ret;
 		obj.stats.sort((a,b) => b[1]-a[1]);
 	}
@@ -3632,25 +3338,17 @@ class IDValueImpl_0 {
 }
 
 class DoCalc {
-	get_result() {
-		return this.m_return_value;
-	}
+	get_result() {return this.m_return_value;}
 	/** @type {DualR_0|null} */
 	m_return_value=null;
 	run() {
 		this.obj.stats_win=2;
 		calc_cur(this.stats,this.obj);
-		if(!this.obj.stats) {
-			return null;
-		}
-		if(this.obj.stats.length===0) {
-			return null;
-		}
+		if(!this.obj.stats) {return null;}
+		if(this.obj.stats.length===0) {return null;}
 		max_id.value++;
 		this.br_obj=Object.assign({},this.obj);
-		if(!this.br_obj.stats_win) {
-			return null;
-		}
+		if(!this.br_obj.stats_win) {return null;}
 		this.br_obj.stats_win++;
 		calc_cur(this.stats,this.br_obj);
 		this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
@@ -3769,14 +3467,10 @@ class CompressDual {
 
 /** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj @arg {number} max_id */
 function calc_next(stats,obj,max_id) {
-	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
-		return null;
-	}
+	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {return null;}
 	let f_val=obj.stats[0];
 	let rep_val=f_val[1];
-	if(!obj.next) {
-		return null;
-	}
+	if(!obj.next) {return null;}
 	/** @type {IDValueImpl_0} */
 	let next=obj;
 	next.value=[max_id,"=",rep_val];
@@ -3814,9 +3508,7 @@ class Value {
 	/** @type {AnyOrRepeat_0<string>[]} */
 	arr_rep_str=[];
 	/** @arg {number} id */
-	constructor(id) {
-		this.id=id;
-	}
+	constructor(id) {this.id=id;}
 	/** @type {any} */
 	next;
 	/** @type {any} */
@@ -3869,9 +3561,7 @@ function find_matching_value(val,e) {
 		console.log("TODO: find matching string",e,val);
 		return false;
 	} else {
-		if(typeof e==="object"&&e!==null&&"value" in e&&e.value instanceof Array) {
-			return e.value[0]===val;
-		}
+		if(typeof e==="object"&&e!==null&&"value" in e&&e.value instanceof Array) {return e.value[0]===val;}
 		return false;
 	}
 }
@@ -3975,18 +3665,14 @@ class JsonNullBox {
 class JsonValueBox {
 	value;
 	/** @arg {JsonNullBox|JsonArrayBox} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 
 class JsonArrayBox {
 	type="array";
 	value;
 	/** @arg {JsonValueBox[]} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 
 class SafeJsonParser {
@@ -4022,13 +3708,9 @@ function decode_map(value) {
 	if(!id_map)
 		init_decode();
 	let dec=try_decode(value);
-	if(!dec) {
-		do_decode(value);
-	}
+	if(!dec) {do_decode(value);}
 	dec=try_decode(value);
-	if(!dec) {
-		console.log(value);
-	} else {
+	if(!dec) {console.log(value);} else {
 		console.log("handle decode_map",value);
 		throw new Error("1");
 	}
@@ -4044,9 +3726,7 @@ function deep_eq(obj_1,obj_2) {
 		for(let i=0;i<obj_1.length;i++) {
 			let cur=obj_1[i];
 			let cur_other=obj_2[i];
-			if(!deep_eq(cur,cur_other)) {
-				return false;
-			}
+			if(!deep_eq(cur,cur_other)) {return false;}
 		}
 		return true;
 	}
@@ -4077,9 +3757,7 @@ function make_group_from_item(arr_2d,key,value) {
 let g_auto_buy;
 /** @type {{value:string[]}} */
 let src_arr={value: []};
-function compress_init() {
-	dr_map=[];
-}
+function compress_init() {dr_map=[];}
 /** @type {{value:string[][]}} */
 let id_groups={value: []};
 /** @type {{value:number[]}} */
@@ -4100,9 +3778,7 @@ function compress_main(stats) {
 	let arr=disabled_com.try_compress_T(el_ids.value);
 	let obj_start=new IDValueImpl_0(0,null);
 	obj_start.arr_rep=el_ids.value;
-	if(arr[0]===true) {	obj_start.arr_rep_num=arr[1];} else if(arr[0]===false) {
-		obj_start.arr_num=arr[1];
-	}
+	if(arr[0]===true) {	obj_start.arr_rep_num=arr[1];} else if(arr[0]===false) {obj_start.arr_num=arr[1];}
 	for(let i=0,cur=obj_start;i<3000;i++) {
 		let comp_res=run_calc(stats,cur);
 		if(!cur.stats) break;
@@ -4141,9 +3817,7 @@ class HexRandomDataGenerator {
 		this.random_num-=num;
 		return num;
 	}
-	reset_part() {
-		this.cur_part=null;
-	}
+	reset_part() {this.cur_part=null;}
 	/** @arg {number} bit_count */
 	next_part(bit_count) {
 		let cur_num=this.next(bit_count);
@@ -4196,11 +3870,7 @@ class GenericEvent {
 	#default_prevented=false;
 	type="unknown";
 	/** @arg {string} type */
-	constructor(type) {
-		if(type) {
-			this.type=type;
-		}
-	}
+	constructor(type) {if(type) {this.type=type;}}
 	preventDefault() {	this.#default_prevented=true;}
 	get defaultPrevented() {return this.#default_prevented;}
 }
@@ -4323,25 +3993,13 @@ z.add_function(cast_to_record_with_key_and_string_type);
 const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha1}`;
 
 class FlagHandler {
-	is_none() {
-		return this.f===0;
-	}
-	is_syn() {
-		return (this.f&1)==1;
-	}
-	is_ack() {
-		return (this.f&2)==2;
-	}
-	get_flags() {
-		return this.f;
-	}
-	valueOf() {
-		return this.f;
-	}
+	is_none() {return this.f===0;}
+	is_syn() {return (this.f&1)==1;}
+	is_ack() {return (this.f&2)==2;}
+	get_flags() {return this.f;}
+	valueOf() {return this.f;}
 	/** @arg {import("./__global.js").ConnectFlag} flags */
-	constructor(flags) {
-		this.f=flags;
-	}
+	constructor(flags) {this.f=flags;}
 }
 
 /** @typedef {import("./__global.js").ConnectFlag} ConnectFlag */
@@ -4370,9 +4028,7 @@ class TCPMessage {
 	/** @arg {number} client_id @returns {ConnectionMessage} */
 	static make_syn(client_id) {
 		let seq=(Math.random()*ack_win)%ack_win|0;
-		if(testing_tcp) {
-			seq=100;
-		}
+		if(testing_tcp) {seq=100;}
 		return new TCPMessage(tcp_syn,client_id,seq,null,null);
 	}
 	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
@@ -4408,9 +4064,7 @@ class Socket {
 		this.m_port=client_port;
 		this.send_syn(ports);
 	}
-	client_id() {
-		return this.m_client_id;
-	}
+	client_id() {return this.m_client_id;}
 	/** @returns {{ports:[MessagePort],client_port:MessagePort}} */
 	init_syn_data() {
 		let {
@@ -4472,9 +4126,7 @@ class Socket {
 		if(ListenSocket.direct_message) {ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));} else {this.m_port.postMessage(data);}
 	}
 	/** @arg {ConnectionMessage} message */
-	client_connect(message) {
-		if(testing_tcp) {console.log("on_client_connect",message,this.m_event_source);}
-	}
+	client_connect(message) {if(testing_tcp) {console.log("on_client_connect",message,this.m_event_source);}}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(Socket.prototype===this) return;
@@ -4497,9 +4149,7 @@ class Socket {
 		let seq=tcp_message.ack;
 		if(!seq) {
 			seq=(Math.random()*ack_win)%ack_win|0;
-			if(testing_tcp) {
-				seq=300;
-			}
+			if(testing_tcp) {seq=300;}
 		}
 		this.push_tcp_message({
 			type: "tcp",
@@ -4533,9 +4183,7 @@ class Socket {
 			case "side":
 		}
 	}
-	client_start_connect() {
-		if(!this.m_port) {throw new Error("No remote port to communicate with");}
-	}
+	client_start_connect() {if(!this.m_port) {throw new Error("No remote port to communicate with");}}
 	/** @arg {ConnectionMessage} message */
 	client_disconnect(message) {
 		if(testing_tcp) {console.log("on_client_disconnect",message);}
@@ -4558,16 +4206,12 @@ class OriginState {
 		if(this.m_opener) {
 			flags.does_proxy_to_opener=true;
 			return this.m_opener;
-		} else if(this.m_top) {
-			return this.m_top;
-		} else {throw new Error("Invalid state, not top and window.top is null");}
+		} else if(this.m_top) {return this.m_top;} else {throw new Error("Invalid state, not top and window.top is null");}
 	}
 }
 inject_api.OriginState=OriginState;
 
-class ConnectionFlags {
-	does_proxy_to_opener=false;
-}
+class ConnectionFlags {does_proxy_to_opener=false;}
 
 class ListenSocket {
 	static direct_message=false;
@@ -4598,18 +4242,10 @@ class ListenSocket {
 		this.m_port.addEventListener("message",this);
 		this.m_port.start();
 	}
-	get side() {
-		return this.m_side;
-	}
-	get client_id() {
-		return this.m_client_id;
-	}
-	get event_source() {
-		return this.m_event_source;
-	}
-	get is_connected() {
-		return this.m_is_connected;
-	}
+	get side() {return this.m_side;}
+	get client_id() {return this.m_client_id;}
+	get event_source() {return this.m_event_source;}
+	get is_connected() {return this.m_is_connected;}
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if(testing_tcp) {
@@ -4643,9 +4279,7 @@ class ListenSocket {
 		if(this.m_log_downstream) {console.log("downstream_event",info.data,info.flags,info.client_id);}
 	}
 	disconnected() {
-		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
-			type: "disconnected",
-		},1,1));
+		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{type: "disconnected",},1,1));
 	}
 	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
@@ -4690,9 +4324,7 @@ class ListenSocket {
 	send_ack(tcp_message,flags) {
 		let {seq: ack,ack: seq}=tcp_message;
 		seq=(Math.random()*ack_win)%ack_win|0;
-		if(testing_tcp) {
-			seq=300;
-		}
+		if(testing_tcp) {seq=300;}
 		ack+=1;
 		this.push_tcp_message({
 			type: "tcp",
@@ -4812,12 +4444,8 @@ class CrossOriginConnection {
 	/** @arg {Event} event */
 	handleEvent(event) {
 		switch(event.type) {
-			case "message": {
-				if(event instanceof MessageEvent) {	this.on_message_event(event);} else {console.log("Event type is \"message\" and not an instance of MessageEvent",event);}
-			} break;
-			case "beforeunload": {
-				for(let connection of this.m_connections) {connection.will_disconnect(false);}
-			} break;
+			case "message": {if(event instanceof MessageEvent) {	this.on_message_event(event);} else {console.log("Event type is \"message\" and not an instance of MessageEvent",event);}} break;
+			case "beforeunload": {for(let connection of this.m_connections) {connection.will_disconnect(false);}} break;
 			case "unload": {
 				for(let connection of this.m_connections) {				connection.disconnected();}
 				this.m_connections.length=0;
@@ -4852,9 +4480,7 @@ class DebugApi {
 	static m_the=null;
 	/** @returns {DebugApi} */
 	static the() {
-		if(!this.m_the) {
-			this.m_the=new this;
-		}
+		if(!this.m_the) {this.m_the=new this;}
 		return this.m_the;
 	}
 	/** @arg {string} key @returns {boolean} */
@@ -4862,13 +4488,9 @@ class DebugApi {
 	/** @arg {string} key @returns {any} */
 	getData(key) {return this.data_store.get(key);}
 	/** @arg {"__k"} key @returns {dbg_get_ty} */
-	get_k(key) {
-		return this.getData(key);
-	}
+	get_k(key) {return this.getData(key);}
 	/** @returns {I_debug} */
-	get_d() {
-		return this.getData("d");
-	}
+	get_d() {return this.getData("d");}
 	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: EventListenerInternal[]}} */
 	get_getEventListeners(key) {return this.data_store.get(key);}
 	/** @arg {string} key @arg {any} value @returns {this} */
@@ -4888,14 +4510,8 @@ class DebugApi {
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
 		/** @arg {Constructor} func @arg {any} f_this @arg {any[]} c_args */
-		function do_activate(func,f_this,c_args) {
-			try {return Reflect.apply(func,f_this,c_args);} catch {}
-		}
-		let activate=do_activate.bind(null,func,{},[{
-			get target() {
-				throw new Error("1");
-			}
-		}]);
+		function do_activate(func,f_this,c_args) {try {return Reflect.apply(func,f_this,c_args);} catch {}}
+		let activate=do_activate.bind(null,func,{},[{get target() {throw new Error("1");}}]);
 		return this.debuggerGetVar_a({
 			type: "class-breakpoint",
 			name,
@@ -4930,13 +4546,9 @@ class DebugApi {
 					type: "var",
 					data: [__v,eval(__v)]
 				};
-			} catch {
-				return {type: "no-var"};
-			}
+			} catch {return {type: "no-var"};}
 		});
-		if(window.inject_api?.DebugApi) {
-			if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");}
-		} else {console.log("missing window.inject_api");}
+		if(window.inject_api?.DebugApi) {if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");}} else {console.log("missing window.inject_api");}
 		0;
 	}
 	/** @returns {boolean} */
@@ -4958,14 +4570,8 @@ class DebugApi {
 	debuggerGetVarArray_a(breakpoint_arguments) {
 		let function_value=breakpoint_arguments.target;
 		let var_match=breakpoint_arguments.name;
-		if(!this.hasData("d")||!this.getData("u")) {
-			return {			type: "invalid-state-error"};
-		}
-		if(typeof function_value!="function") {
-			return {
-				type: "argument-error"
-			};
-		}
+		if(!this.hasData("d")||!this.getData("u")) {return {			type: "invalid-state-error"};}
+		if(typeof function_value!="function") {return {type: "argument-error"};}
 		let ma=var_match.matchAll(/.-.|./g);
 		let sr=[];
 		let qs=[...ma].map(e => e[0]);
@@ -4977,9 +4583,7 @@ class DebugApi {
 			let fs=j.split("-");
 			let sa=fs[0].charCodeAt(0);
 			let se=fs[1].charCodeAt(0);
-			for(let i=sa;i<=se;i++) {
-				sr.push(i);
-			}
+			for(let i=sa;i<=se;i++) {sr.push(i);}
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e));
 		this.current_function_value=function_value;
@@ -5060,9 +4664,7 @@ class DebugApi {
 		class DebugInfoValue {
 			valid=false;
 			/** @arg {string} __v @returns {{type: "hidden-var",var: string}|{type: "var",data: [string,any]}|{type: "no-var", data: null}|null} */
-			get(__v) {
-				return null;
-			}
+			get(__v) {return null;}
 		}
 		let tmp_value=new DebugInfoValue;
 		this.setData(tmp_key,tmp_value);

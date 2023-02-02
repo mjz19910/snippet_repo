@@ -21,9 +21,7 @@ export class FunctionConstructorBox extends BoxTemplate<"constructor_box",Functi
 		this.box_maker=box_maker;
 	}
 	verify_arguments(...boxes: Box[]) {
-		if(boxes.length===0) {
-			return true;
-		}
+		if(boxes.length===0) {return true;}
 		return boxes.every(e=>e.type==="string");
 	}
 }

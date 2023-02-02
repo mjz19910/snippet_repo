@@ -1,3 +1,1 @@
-type YtdShadyChildrenOfYtdApp={
-	masthead: YtdMasthead;
-};
+type YtdShadyChildrenOfYtdApp={masthead: YtdMasthead;};

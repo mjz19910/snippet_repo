@@ -1,3 +1,1 @@
-type UnwrapKvStore<T extends KVStore[]>={
-	[U in keyof T]: {[V in T[U]["key"]]: T[U]["value"];};
-};
+type UnwrapKvStore<T extends KVStore[]>={[U in keyof T]: {[V in T[U]["key"]]: T[U]["value"];};};

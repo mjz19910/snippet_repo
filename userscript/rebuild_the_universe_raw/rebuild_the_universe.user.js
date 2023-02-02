@@ -27,9 +27,7 @@ function fetch_all_images() {
 			let f=await fetch(e);
 			let t=await f.text();
 			return t.length;
-		} catch(e) {
-			return e;
-		}
+		} catch(e) {return e;}
 	}));
 }
 fetch_all_images;
@@ -67,9 +65,7 @@ function append_console_message(level,format_str,...args) {
 	if(!logger_updated) update_logger_vars();
 	let level_str=human_log_level(level);
 	if(level_str!=="unknown") {format_str="[%s] "+format_str;} else {format_str="[%o:%s] "+format_str;}
-	if(level>=LOG_LEVEL_ERROR_IMPL) {
-		if(LogErrorAsConsoleError) {console.error(format_str,level_str,...args);} else {console.info(format_str,level_str,...args);}
-	} else if(level===LOG_LEVEL_WARN_IMPL) {console.warn(format_str,level_str,...args);} else if(level===LOG_LEVEL_NOTICE_IMPL) {console.log(format_str,level_str,...args);} else if(level_str==="unknown") {console.info(format_str,level,level_str,...args);} else {console.info(format_str,level_str,...args);}
+	if(level>=LOG_LEVEL_ERROR_IMPL) {if(LogErrorAsConsoleError) {console.error(format_str,level_str,...args);} else {console.info(format_str,level_str,...args);}} else if(level===LOG_LEVEL_WARN_IMPL) {console.warn(format_str,level_str,...args);} else if(level===LOG_LEVEL_NOTICE_IMPL) {console.log(format_str,level_str,...args);} else if(level_str==="unknown") {console.info(format_str,level,level_str,...args);} else {console.info(format_str,level_str,...args);}
 	logger_updated=false;
 }
 /** @arg {number} level */
@@ -96,9 +92,7 @@ function update_logger_vars() {
 	if(sessionStorage["LogErrorAsConsoleError"]) {LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==="true";}
 	if(sessionStorage["LoggingLevel"]) {local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);}
 }
-function trigger_debug_breakpoint() {
-	debugger;
-}
+function trigger_debug_breakpoint() {debugger;}
 class CSSStyleSheetConstructorBoxImpl {
 	/** @type {"constructor_box"} */
 	type="constructor_box";
@@ -110,18 +104,14 @@ class CSSStyleSheetConstructorBoxImpl {
 	constructor_type="CSSStyleSheet";
 	/** @arg {"function"|"object"} to_match */
 	as_type(to_match) {
-		if(typeof this.value===to_match) {
-			return this;
-		}
+		if(typeof this.value===to_match) {return this;}
 		return null;
 	}
 	/** @arg {StackVMImpl} _vm @arg {string} key */
 	on_get(_vm,key) {console.log("get","CSSStyleSheetConstructorBox",key);}
 	factory() {return new CSSStyleSheetBoxImpl(new this.value);}
 	/** @arg {typeof CSSStyleSheet} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 /** @typedef {import("./ns.js").CSSStyleSheetBox} CSSStyleSheetBox_CJS */
 /** @implements {CSSStyleSheetBox_CJS} */
@@ -140,9 +130,7 @@ class CSSStyleSheetBoxImpl {
 	/** @type {CSSStyleSheet} */
 	value;
 	/** @arg {CSSStyleSheet} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 /** @typedef {import("./ns.js").StackVMBox} StackVMBox_CJS */
 /** @implements {StackVMBox_CJS} */
@@ -153,17 +141,13 @@ class StackVMBoxImpl {
 	box_type="StackVM";
 	/** @arg {string} to_match */
 	as_type(to_match) {
-		if(typeof this.value===to_match) {
-			return this;
-		}
+		if(typeof this.value===to_match) {return this;}
 		return null;
 	}
 	/** @type {StackVMImpl} */
 	value;
 	/** @arg {StackVMImpl} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 /** @typedef {import("./ns.js").WindowBox} WindowBox_CJS */
 /** @implements {WindowBox_CJS} */
@@ -176,17 +160,13 @@ class WindowBoxImpl {
 	inner_type="Window";
 	/** @arg {string} to_match */
 	as_type(to_match) {
-		if(typeof this.value===to_match) {
-			return this;
-		}
+		if(typeof this.value===to_match) {return this;}
 		return null;
 	}
 	/** @type {Window} */
 	value;
 	/** @arg {Window} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 /** @typedef {import("./ns.js").ObjectBox} ObjectBox_CJS */
 /** @implements {ObjectBox_CJS} */
@@ -199,17 +179,13 @@ class ObjectBoxImpl {
 	extension="null";
 	/** @arg {string} to_match */
 	as_type(to_match) {
-		if(typeof this.value===to_match) {
-			return this;
-		}
+		if(typeof this.value===to_match) {return this;}
 		return null;
 	}
 	/** @type {{}} */
 	value;
 	/** @arg {{}} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 
 /** @template T */
@@ -241,13 +217,9 @@ class PromiseBoxImpl {
 	/** @type {any} */
 	await_type;
 	/** @arg {any} _to_match */
-	as_type(_to_match) {
-		return this;
-	}
+	as_type(_to_match) {return this;}
 	/** @arg {Promise<Box_CJS>} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 class InstructionCallImpl extends InstructionImplBase {
 	/** @type {"call"} */
@@ -281,9 +253,7 @@ class InstructionCallImpl extends InstructionImplBase {
 		}
 		if(object_box.type==="custom_box") {
 			const {type,value,box_type,...rest}=object_box;
-			if(box_type==="StackVM") {
-				return value;
-			}
+			if(box_type==="StackVM") {return value;}
 			console.log("unbox custom_box",{type,box_type},rest);
 			throw new Error("1");
 		}
@@ -296,11 +266,7 @@ class InstructionCallImpl extends InstructionImplBase {
 		let arr=[];
 		for(let i=0;i<arg_arr.length;i++) {
 			let cur=arg_arr[i];
-			if(typeof cur==="string") {
-				arr.push(cur);
-			} else if(typeof cur==="function") {
-				arr.push(cur);
-			} else if(typeof cur==="object") {
+			if(typeof cur==="string") {arr.push(cur);} else if(typeof cur==="function") {arr.push(cur);} else if(typeof cur==="object") {
 				let cur_value=this.unbox_obj(cur);
 				arr.push(cur_value);
 			} else {
@@ -319,9 +285,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
 		if(!fn_obj) {throw new Error("Unreachable (type of value is not \"function\")");}
-		if(fn_obj.type==="function_box") {
-			if(fn_obj.return_type==="Box") {return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);}
-		} else if(fn_obj.type=="constructor_box") {throw new Error("Unexpected constructor");}
+		if(fn_obj.type==="function_box") {if(fn_obj.return_type==="Box") {return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);}} else if(fn_obj.type=="constructor_box") {throw new Error("Unexpected constructor");}
 		else {throw new Error("Unreachable (type of value is never)");}
 	}
 	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Promise<Box_CJS>} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
@@ -428,12 +392,8 @@ class InstructionCastImpl extends InstructionImplBase {
 			console.warn("unk box",obj);
 			throw new Error("1");
 		}
-		if(typeof obj!=="object"&&typeof obj!=="function") {
-			throw new Error("1");
-		}
-		if(obj===null) {
-			throw new Error("1");
-		}
+		if(typeof obj!=="object"&&typeof obj!=="function") {throw new Error("1");}
+		if(obj===null) {throw new Error("1");}
 		console.warn("unk obj boxed into temporary_box<object_index>",obj);
 	}
 	/** @arg {string} cast_type @arg {StackVMImpl} vm */
@@ -479,9 +439,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		/** @type {[string, ...any[]]} */
 		let instruction_modify=instruction_1;
 		let value=null;
-		if(vm instanceof StackVMImpl) {
-			value=vm.stack.pop();
-		} else {
+		if(vm instanceof StackVMImpl) {value=vm.stack.pop();} else {
 			console.info("TODO if instanceof StackVM is not enough");
 			throw new Error("Unreachable");
 		}
@@ -498,15 +456,11 @@ class NumberBoxImpl {
 	type="number";
 	/** @returns {this|null} @arg {string} target */
 	as_type(target) {
-		if(typeof this.value===target) {
-			return this;
-		}
+		if(typeof this.value===target) {return this;}
 		return null;
 	}
 	/** @arg {number} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 class InstructionVMPushIPImpl extends InstructionImplBase {
 	/** @type {"vm_push_ip"} */
@@ -523,9 +477,7 @@ class InstructionPushImpl extends InstructionImplBase {
 	/** @type {"push"} */
 	type="push";
 	/** @arg {StackVMImpl} vm @arg {this["type"]} _ @arg {import("./ns.js").Box[]} args */
-	run(vm,_,...args) {
-		vm.stack.push(...args);
-	}
+	run(vm,_,...args) {vm.stack.push(...args);}
 }
 class InstructionDupImpl extends InstructionImplBase {
 	/** @type {"dup"} */
@@ -588,18 +540,14 @@ class InstructionHaltImpl extends InstructionImplBase {
 	/** @type {"halt"} */
 	type="halt";
 	/** @arg {StackVMImpl} vm */
-	run(vm) {
-		vm.halt();
-	}
+	run(vm) {vm.halt();}
 }
 class InstructionReturnImpl extends InstructionImplBase {
 	/** @type {"return"} */
 	type="return";
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
-		if(vm.stack.length>0) {
-			vm.return_value=vm.pop();
-		} else {throw new Error("Stack underflow on return");}
+		if(vm.stack.length>0) {vm.return_value=vm.pop();} else {throw new Error("Stack underflow on return");}
 	}
 }
 class InstructionBreakpointImpl extends InstructionImplBase {
@@ -665,9 +613,7 @@ class InstructionDropImpl extends InstructionImplBase {
 	/** @type {"drop"} */
 	type="drop";
 	/** @arg {StackVMImpl} vm */
-	run(vm) {
-		vm.stack.pop();
-	}
+	run(vm) {vm.stack.pop();}
 }
 class InstructionVMReturnImpl extends InstructionImplBase {
 	/** @type {"vm_return"} */
@@ -706,9 +652,7 @@ class InstructionVMCallImpl extends InstructionImplBase {
 		console.log("vm vm_call",jump_target,"stk",vm.base_ptr,prev_base,vm.stack.slice());
 	}
 }
-class VMFlags {
-	equal=false;
-}
+class VMFlags {equal=false;}
 class InstructionNopImpl extends InstructionImplBase {
 	/** @type {"nop"} */
 	type="nop";
@@ -718,12 +662,8 @@ class InstructionBlockTraceImpl extends InstructionImplBase {
 	/** @type {"vm_block_trace"} */
 	type="vm_block_trace";
 	/** @arg {StackVMImpl} _vm */
-	run(_vm) {
-	}
-}
-class UnimplementedInstruction extends InstructionImplBase {
-	run() {throw new Error("Unimplemented instruction");}
-}
+	run(_vm) {}}
+class UnimplementedInstruction extends InstructionImplBase {run() {throw new Error("Unimplemented instruction");}}
 const instruction_table={
 	append: new InstructionAppendImpl,
 	breakpoint: new InstructionBreakpointImpl,
@@ -785,9 +725,7 @@ const instruction_descriptor_arr=[
 class StackVmBaseImpl {
 	/** @arg {number} offset @arg {import("./ns.js").Box} value @arg {[string,...any[]]} lex_instruction */
 	update_instruction(offset,value,lex_instruction) {
-		if(offset==0) {
-			if(value.type==="string") {lex_instruction[offset]=value.value;} else {			throw new Error("Invalid");}
-		} else if(offset>0) {lex_instruction[offset]=value;} else {throw new Error("Unreachable");}
+		if(offset==0) {if(value.type==="string") {lex_instruction[offset]=value.value;} else {			throw new Error("Invalid");}} else if(offset>0) {lex_instruction[offset]=value;} else {throw new Error("Unreachable");}
 		return lex_instruction;
 	}
 }
@@ -828,9 +766,7 @@ class StackVMImpl {
 		return value;
 	}
 	/** @arg {import("./ns.js").Box} value */
-	push(value) {
-		this.stack.push(value);
-	}
+	push(value) {this.stack.push(value);}
 	/** @arg {number} distance */
 	peek_at(distance) {return this.stack.at(-1-distance);}
 	/** @arg {number} operand_number_of_arguments */
@@ -853,9 +789,7 @@ class StackVMImpl {
 	}
 	/** @arg {number} value */
 	is_in_instructions(value) {return value>=0&&value<this.instructions.length;}
-	halt() {
-		this.running=false;
-	}
+	halt() {this.running=false;}
 	/** @arg {InstructionType_CJS} instruction */
 	execute_instruction(instruction) {
 		switch(instruction[0]) {
@@ -952,15 +886,11 @@ class StringBoxImpl {
 	type="string";
 	/** @arg {string} target */
 	as_type(target) {
-		if(target==="string") {
-			return this;
-		}
+		if(target==="string") {return this;}
 		return null;
 	}
 	/** @arg {string} string */
-	constructor(string) {
-		this.value=string;
-	}
+	constructor(string) {this.value=string;}
 }
 class StackVMParserImplR {
 	static match_regex=/(.+?)(;|$)/gm;
@@ -1086,9 +1016,7 @@ class StackVMParserImplR {
 			default: throw new Error("Verify: Unexpected opcode, opcode was `"+instruction[0]+"`");
 		}
 		if(num_to_parse>0) throw new Error("Typechecking failure, data left when processing raw instruction stream");
-		if(ret!==null) {
-			return ret;
-		}
+		if(ret!==null) {return ret;}
 		throw new Error("Unreachable");
 	}
 	/** @arg {string[][]} raw_instructions @return {InstructionType_CJS[]} */
@@ -1138,9 +1066,7 @@ class DocumentWriteListImpl {
 		if(this.attached_document&&this.document_write_proxy) {
 			console.assert(this.attached_document.write===this.document_write_proxy);
 			if(this.attached_document.write!==this.document_write_proxy) {
-				if(should_try_to_destroy) {
-					return false;
-				}
+				if(should_try_to_destroy) {return false;}
 				throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 			}
 			let doc_1=this.attached_document;
@@ -1156,42 +1082,26 @@ class DocumentWriteListImpl {
 			return false;
 		}
 		if(this.document_write_proxy) {this.document_write_proxy=null;}
-		if(this.document_write) {
-			this.document_write=null;
-		}
+		if(this.document_write) {this.document_write=null;}
 		if(this.attached_document) {		this.attached_document=null;}
-		if(should_try_to_destroy) {
-			return true;
-		}
+		if(should_try_to_destroy) {return true;}
 		return false;
 	}
 }
 class UniqueIdGeneratorImplR {
-	constructor() {
-		this.m_current=-1;
-	}
+	constructor() {this.m_current=-1;}
 	/** @arg {number} current_value */
 	set_current(current_value) {	this.m_current=current_value;}
-	current() {
-		return this.m_current;
-	}
-	next() {
-		return this.m_current++;
-	}
+	current() {return this.m_current;}
+	next() {return this.m_current++;}
 }
 UniqueIdGeneratorImplR;
 class NamedIdGenerator {
-	constructor() {
-		this.state_map=new Map;
-	}
+	constructor() {this.state_map=new Map;}
 	/** @arg {string} name */
 	current_named(name) {
 		let val=this.state_map.get(name);
-		if(val) {
-			return val;
-		} else {
-			return 0;
-		}
+		if(val) {return val;} else {return 0;}
 	}
 	/** @arg {string} name */
 	next_named(name) {
@@ -1221,16 +1131,10 @@ class CompressionStatsCalculatorImpl {
 		/** @type {string[]} */
 		this.cache=[];
 	}
-	map_values() {
-		return this.hit_counts;
-	}
-	map_keys() {
-		return this.cache;
-	}
+	map_values() {return this.hit_counts;}
+	map_keys() {return this.cache;}
 	/** @arg {number} index */
-	add_hit(index) {
-		if(!this.map_values()[index]) {			this.map_values()[index]=1;} else this.map_values()[index]++;
-	}
+	add_hit(index) {if(!this.map_values()[index]) {			this.map_values()[index]=1;} else this.map_values()[index]++;}
 	/** @arg {string} key */
 	add_item(key) {
 		let index=this.map_keys().indexOf(key);
@@ -1244,9 +1148,7 @@ class CompressionStatsCalculatorImpl {
 	/** @arg {any[]} arr @arg {number} win_size */
 	calc_compression_stats(arr,win_size) {
 		this.reset();
-		for(let i=0;i<arr.length;i++) {
-			if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}
-		}
+		for(let i=0;i<arr.length;i++) {if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}}
 		return to_tuple_arr(this.map_keys(),this.map_values()).filter((e) => e[1]!==void 0);
 	}
 	/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} win_size */
@@ -1390,9 +1292,7 @@ class MulCompressionImpl extends BaseCompressionImpl {
 		for(let i=0;i<4;i++) {
 			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
 			let ls=this.compression_stats[i];
-			if(ls.length>0) {
-				continue;
-			}
+			if(ls.length>0) {continue;}
 			break;
 		}
 		[success,res]=this.try_compress(arr);
@@ -1463,25 +1363,15 @@ class PromiseTimeoutTarget {
 }
 class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 	/** @override */
-	wait() {
-		return super.wait();
-	}
+	wait() {return super.wait();}
 }
 class BaseNodeImpl {
-	constructor() {
-		this.m_parent=null;
-	}
+	constructor() {this.m_parent=null;}
 	/** @arg {any} parent */
-	set_parent(parent) {
-		this.m_parent=parent;
-	}
-	run() {
-		// do nothing
-	}
+	set_parent(parent) {this.m_parent=parent;}
+	run() {// do nothing}
 	remove() {if(this.m_parent) this.m_parent.remove_child(this);}
-	destroy() {
-		this.remove();
-	}
+	destroy() {this.remove();}
 }
 class TimeoutIdNode extends BaseNodeImpl {
 	/** @arg {number} id */
@@ -1513,9 +1403,7 @@ class IntervalTargetFn {
 		this.m_callback=callback;
 		this.timeout=timeout;
 	}
-	fire() {
-		this.m_callback();
-	}
+	fire() {this.m_callback();}
 }
 class TimeoutNode extends BaseNodeImpl {
 	constructor(timeout=0) {
@@ -1524,13 +1412,9 @@ class TimeoutNode extends BaseNodeImpl {
 		this.m_id=null;
 		this.m_target=null;
 	}
-	timeout() {
-		return this.m_timeout;
-	}
+	timeout() {return this.m_timeout;}
 	/** @arg {any} target */
-	set_target(target) {
-		this.m_target=target;
-	}
+	set_target(target) {this.m_target=target;}
 	set() {this.m_id=setTimeout(this.run.bind(this),this.m_timeout);}
 	/** @arg {{}|null} target */
 	start(target) {
@@ -1558,9 +1442,7 @@ class IntervalNode extends BaseNodeImpl {
 	set() {this.id=setInterval(this.run.bind(this),this.m_timeout);}
 	/** @arg {{}|null} target */
 	start(target=null) {
-		if(target) {
-			this.m_target=target;
-		} else {this.m_target=new IntervalTargetFn(this.m_target_fn,this.m_timeout);}
+		if(target) {this.m_target=target;} else {this.m_target=new IntervalTargetFn(this.m_target_fn,this.m_timeout);}
 		this.set();
 	}
 	/** @override */
@@ -1705,9 +1587,7 @@ class AverageRatio {
 		this.value=(this.value*(avg_window-1)+value)/avg_window;
 	}
 	/** @arg {number} size */
-	set_history_size(size) {
-		this.history_size=size;
-	}
+	set_history_size(size) {this.history_size=size;}
 	get_average() {
 		if(this.value===null) return 0;
 		return this.value;
@@ -1737,9 +1617,7 @@ class AverageRatioRoot {
 	/** @arg {AverageRatio} value_obj */
 	next(value_obj) {
 		let idx=this.values.indexOf(value_obj);
-		if(idx<this.values.length) {
-			return this.values[idx+1];
-		}
+		if(idx<this.values.length) {return this.values[idx+1];}
 		return null;
 	}
 	/** @arg {number} value */
@@ -1771,13 +1649,9 @@ function labeled_sym(name) {
 }
 class DataLoaderImplR {
 	/** @arg {string} value */
-	static int_parser(value) {
-		return parseInt(value,10);
-	}
+	static int_parser(value) {return parseInt(value,10);}
 	/** @arg {Storage} storage */
-	constructor(storage) {
-		this.storage=storage;
-	}
+	constructor(storage) {this.storage=storage;}
 	/** @arg {string} key */
 	getItem(key) {return this.storage.getItem(key);}
 	/** @arg {string} key @returns {[true,string[]]|[false,null]} */
@@ -1793,9 +1667,7 @@ class DataLoaderImplR {
 		return [true,this.parse_int_arr(storage_data)];
 	}
 	/** @arg {string} string */
-	default_split(string) {
-		return string.split(",");
-	}
+	default_split(string) {return string.split(",");}
 	/** @arg {string} data */
 	parse_int_arr(data) {return this.default_split(data).map(DataLoaderImplR.int_parser);}
 }
@@ -1806,9 +1678,7 @@ class VoidBoxImpl {
 	type="void";
 	value=void 0;
 	extension=null;
-	as_type() {
-		return null;
-	}
+	as_type() {return null;}
 }
 class AutoBuyStateImplR {
 	/** @arg {AsyncNodeRootImplR} root */
@@ -1837,11 +1707,7 @@ class AutoBuyStateImplR {
 		}
 		this.val=window.totalAtome/window.atomepersecond;
 		let rep_val=this.val/(100*4*window.prestige);
-		if(Number.isFinite(rep_val)) {
-			for(let i=0;i<8;i++) {			this.arr.push(rep_val*.75);}
-		} else {
-			rep_val=0.75;
-		}
+		if(Number.isFinite(rep_val)) {for(let i=0;i<8;i++) {			this.arr.push(rep_val*.75);}} else {rep_val=0.75;}
 		this.ratio_types=["10sec","1min","5min","30min","3hour"];
 		let ratio_duration=[10*1000,60*1000,5*60*1000,30*60*1000,3*60*60*1000];
 		let ratio_counts=[80,6,5,6,6];
@@ -1877,9 +1743,7 @@ class AutoBuyStateImplR {
 		if(!Number.isFinite(value)) {console.assert(false,"value is not finite");}
 		this.arr.unshift(value);
 		this.avg.push(value);
-		while(this.arr.length>this.arr_max_len) {
-			this.arr.pop();
-		}
+		while(this.arr.length>this.arr_max_len) {this.arr.pop();}
 		let new_ratio=this.calc_ratio();
 		if(!Number.isFinite(new_ratio)) {console.assert(false,"ratio result is not finite");}
 		this.last_ratio=this.ratio;
@@ -1893,9 +1757,7 @@ class AutoBuyStateImplR {
 				// do_update=true;
 				log_if_impl_r(LOG_LEVEL_INFO_IMPL,"ratio cycle lcc=%o",this.locked_cycle_count);
 			}
-		} else {
-			do_update=true;
-		}
+		} else {do_update=true;}
 		if(!do_update) return;
 		this.total_mul=1;
 		this.total_cycle_count_change=0;
@@ -1981,9 +1843,7 @@ class AutoBuyStateImplR {
 			this.update_not_ready();
 			return;
 		}
-		if(this.val<1e-16) {
-			this.val=1e-16;
-		}
+		if(this.val<1e-16) {this.val=1e-16;}
 		this.val*=AutoBuyMulModifierFactor;
 		this.append_value(this.val);
 		this.update_ratio_mode();
@@ -2009,9 +1869,7 @@ class AutoBuyStateImplR {
 			while(hist_data[0]==="@") {	hist_data=hist_data.slice(1);}
 			data_arr=hist_data.split("|");
 			data_arr.push(json_hist);
-		} else {
-			data_arr=[json_hist];
-		}
+		} else {data_arr=[json_hist];}
 		sessionStorage["history"]=`${json_tag}@${data_arr.join("|")}`;
 		let time_played_data=sessionStorage["time_played_hist"];
 		/** @type {(string|null)[]} */
@@ -2025,9 +1883,7 @@ class AutoBuyStateImplR {
 	}
 	reset() {
 		this.ratio*=0.75;
-		for(var i=0;i<this.arr.length;i++) {
-			this.arr[i]*=0.75;
-		}
+		for(var i=0;i<this.arr.length;i++) {this.arr[i]*=0.75;}
 	}
 }
 class AsyncAutoBuy {
@@ -2058,9 +1914,7 @@ class AsyncAutoBuy {
 			if(this.parent.do_special()) {
 				await this.next_timeout_async(this.parent.timeout_ms,"^");
 				continue;
-			} else {
-				in_special=false;
-			}
+			} else {in_special=false;}
 		}
 		await this.next_timeout_async(this.parent.timeout_ms,"#");
 		window.bonusAll();
@@ -2105,9 +1959,7 @@ class AsyncAutoBuy {
 				await this.faster_timeout_async();
 			}
 			this.main_running=false;
-		} finally {
-			this.main_running=false;
-		}
+		} finally {this.main_running=false;}
 		if(this.main_running) {
 			console.log("no finally");
 			this.main_running=false;
@@ -2168,11 +2020,7 @@ class AutoBuyImplR {
 		/** @type {string[]} */
 		this.debug_arr=[];
 		this.flags=new Set();
-		try {
-			this.check_for_symbols();
-		} catch(e) {
-			console.log(e);
-		}
+		try {this.check_for_symbols();} catch(e) {console.log(e);}
 		let timeout_arr_load=this.local_data_loader.load_int_arr("auto_buy_timeout_str");
 		if(timeout_arr_load[0]) {this.timeout_arr=timeout_arr_load[1];} else {
 			this.timeout_arr=[30];
@@ -2186,11 +2034,7 @@ class AutoBuyImplR {
 	}
 	/** @arg {number} log_level @arg {string} format_str @arg {string[]} args */
 	test_log(log_level,format_str,...args) {
-		if(args.length>0) {
-			args.unshift("test:");
-		} else {
-			args.unshift("test");
-		}
+		if(args.length>0) {args.unshift("test:");} else {args.unshift("test");}
 		log_if_impl_r(log_level,format_str,...args);
 	}
 	/** @arg {{ [x: string]: any; }} sym_indexed_this @arg {{ sym: any; }} val */
@@ -2348,16 +2192,12 @@ class AutoBuyImplR {
 		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
-			if(Number.isFinite(action_count)) {
-				if(action_count>0) {localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];} else if(forced_action!=="NONE") {localStorage["auto_buy_forced_action"]="NONE,0";}
-			}
+			if(Number.isFinite(action_count)) {if(action_count>0) {localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];} else if(forced_action!=="NONE") {localStorage["auto_buy_forced_action"]="NONE,0";}}
 		}
 	}
 	dom_pre_init() {
 		const css_display_style=`
-		#state_log>div {
-			width:max-content;
-		}
+		#state_log>div {width:max-content;}
 		#state_log {
 			top:0px;
 			width:30px;
@@ -2372,9 +2212,7 @@ class AutoBuyImplR {
 			let ele=document.createElement(tag_name);
 			ele.id=id;
 			obj.dom_map.set(id,ele);
-			if(content!==void 0) {
-				ele.innerHTML=content;
-			}
+			if(content!==void 0) {ele.innerHTML=content;}
 			parent.append(ele);
 			return ele;
 		}
@@ -2385,9 +2223,7 @@ class AutoBuyImplR {
 		create_element(this,state_log,"div","ratio",0..toFixed(2)+"%");
 		create_element(this,state_log,"div","ratio_change",0..toExponential(3));
 		let sheet=new CSSStyleSheet;
-		sheet.replace(css_display_style).then(e => {
-			this.adopt_styles(e);
-		});
+		sheet.replace(css_display_style).then(e => {this.adopt_styles(e);});
 	}
 	/** @arg {CSSStyleSheet[]} styles */
 	adopt_styles(...styles) {
@@ -2401,11 +2237,7 @@ class AutoBuyImplR {
 		let history=this.dom_map.get("history");
 		if(history&&typeof history=="object") history.addEventListener("click",new EventHandlerDispatch(this,"history_element_click_handler"));
 		let ratio=this.dom_map.get("ratio");
-		if(ratio&&typeof ratio=="object") {
-			ratio.addEventListener("click",function() {
-				t.state.reset();
-			});
-		}
+		if(ratio&&typeof ratio=="object") {ratio.addEventListener("click",function() {t.state.reset();});}
 		let state_log=this.dom_map.get("state_log");
 		if(state_log instanceof HTMLElement) state_log.style.fontSize=font_size_px+"px";
 		window.addEventListener("unload",function() {
@@ -2442,14 +2274,8 @@ class AutoBuyImplR {
 	/** @arg {string|number} value @arg {string} pad_char @arg {number} char_num */
 	do_zero_pad(value,pad_char,char_num) {
 		let string;
-		if(typeof value==="number") {
-			string=value.toString();
-		} else {
-			string=value;
-		}
-		while(string.length<char_num) {
-			string=pad_char+string;
-		}
+		if(typeof value==="number") {string=value.toString();} else {string=value;}
+		while(string.length<char_num) {string=pad_char+string;}
 		return string;
 	}
 	/** @arg {number} timeout_milli @arg {number} milli_acc */
@@ -2458,12 +2284,8 @@ class AutoBuyImplR {
 		let time_arr=[];
 		let float_milliseconds=timeout_milli%1000;
 		let milli_len=4+milli_acc;
-		if(milli_acc===0) {
-			milli_len=3+milli_acc;
-		}
-		if(number_stringify_debug) {
-			debugger;
-		}
+		if(milli_acc===0) {milli_len=3+milli_acc;}
+		if(number_stringify_debug) {debugger;}
 		time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc),"0",milli_len);
 		timeout_milli-=float_milliseconds;
 		timeout_milli/=1000;
@@ -2503,9 +2325,7 @@ class AutoBuyImplR {
 		time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
 		let float_milliseconds=(float_seconds-int_seconds)*1000;
 		let float_milli_from_prev=float_milliseconds-1000;
-		if(float_milliseconds>100&&float_milliseconds<900) {
-			this.has_real_time=true;
-		}
+		if(float_milliseconds>100&&float_milliseconds<900) {this.has_real_time=true;}
 		x: if(this.has_real_time) {}
 		else if(float_milliseconds<3e-9&&float_milliseconds>-3e-9) {}
 		else if(float_milli_from_prev<3e-9&&float_milli_from_prev>-3e-9) {}
@@ -2527,9 +2347,7 @@ class AutoBuyImplR {
 					console.log("sec+ min+ hour+");
 				} else {					console.log("sec+ min+");}
 				time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
-			} else {
-				console.log("sec+");
-			}
+			} else {console.log("sec+");}
 			time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
 		}
 		time_arr[3]=this.do_zero_pad(int_milliseconds,"0",3);
@@ -2702,11 +2520,7 @@ class AutoBuyImplR {
 		this.with_async.main_running=false;
 	}
 	set_auto_buy_timeout() {
-		if(this.timeout_ms) {
-			this.timeout_ms*=0.9;
-		} else {
-			this.timeout_ms=2;
-		}
+		if(this.timeout_ms) {this.timeout_ms*=0.9;} else {this.timeout_ms=2;}
 		this.start_main_async(true);
 	}
 	timeout_avg() {
@@ -2717,12 +2531,8 @@ class AutoBuyImplR {
 		for(var i=0;i<this.timeout_arr.length;i++) {
 			let cur=this.timeout_arr[i];
 			total+=cur;
-			if(cur>max) {
-				max=cur;
-			}
-			if(cur<min) {
-				min=cur;
-			}
+			if(cur>max) {max=cur;}
+			if(cur<min) {min=cur;}
 		};
 		const avg=total/this.timeout_arr.length;
 		log_if_impl_r(LOG_LEVEL_DEBUG_IMPL,"timeout_avg",avg);
@@ -2766,9 +2576,7 @@ class AutoBuyImplR {
 		});
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL,"calc_timeout_ms sorted_diff index",zero_idx,"diff is",this.round(diff*diff_want_mul)/diff_want_mul);
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL,"calc_timeout_ms l_diff %o %o\n%o",ez_log.slice(0,8),ez_log.slice(-8),ez_log.slice(zs,zero_idx+z_loss+8));
-		if(val<=1) {
-			debugger;
-		}
+		if(val<=1) {debugger;}
 		return this.round(val);
 	}
 	is_epoch_over() {
@@ -2819,9 +2627,7 @@ class AutoBuyImplR {
 	}
 	/** @arg {number} change */
 	update_timeout_inc(change) {
-		if(window.__testing__) {
-			return;
-		}
+		if(window.__testing__) {return;}
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let value=this.round(this.timeout_ms+change);
 		log_if_impl_r(LOG_LEVEL_INFO_IMPL,"update_timeout_inc_tag inc",this.timeout_ms,value-this.timeout_ms);
@@ -2829,9 +2635,7 @@ class AutoBuyImplR {
 	}
 	/** @arg {number} change */
 	update_timeout_dec(change) {
-		if(window.__testing__) {
-			return;
-		}
+		if(window.__testing__) {return;}
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let value=this.round(this.timeout_ms-change);
 		if(value<25) value=25;
@@ -2857,9 +2661,7 @@ class AutoBuyImplR {
 		this.update_timeout_inc(change*iter_term+1);
 	}
 	/** @arg {string} msg @arg {Error} err */
-	next_timeout_async_err_log(msg,err) {
-		console.log(msg,err);
-	}
+	next_timeout_async_err_log(msg,err) {console.log(msg,err);}
 	/** @arg {number|undefined} timeout @arg {string} char */
 	[labeled_sym("next_timeout_async")](timeout,char) {
 		console.log("next_timeout_async",char,timeout);
@@ -2918,9 +2720,7 @@ class AutoBuyImplR {
 		return false;
 	}
 	do_game_reset() {
-		if(!this.timeout_ms) {
-			this.timeout_ms=300;
-		}
+		if(!this.timeout_ms) {this.timeout_ms=300;}
 		// this.game_reset_step_1
 		this.next_timeout(this.game_reset_finish,this.round(this.timeout_ms/3),"1R");
 		this.on_repeat_r();
@@ -2964,11 +2764,7 @@ class AutoBuyImplR {
 	on_repeat_r() {this.next_timeout(this.on_repeat_r,1*1000,"r");}
 }
 /** @arg {number} delay */
-function wait(delay) {
-	return new Promise(function(a) {
-		setTimeout(a,delay);
-	});
-}
+function wait(delay) {return new Promise(function(a) {setTimeout(a,delay);});}
 /** @arg {number} id */
 async function tonext_async(id) {
 	var next=Find_ToNext(id);
@@ -3029,9 +2825,7 @@ async function do_auto_unit_promote() {
 			await wait(0);
 			mainCalc(res);
 		}
-	} else {
-		tonext(res);
-	}
+	} else {tonext(res);}
 }
 const auto_buy_obj=new AutoBuyImplR;
 /** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
@@ -3159,9 +2953,7 @@ function proxy_jquery() {
 function set_jq_proxy(value) {
 	let s_value=value;
 	Object.defineProperty(window,"$",{
-		get() {
-			return s_value;
-		},
+		get() {return s_value;},
 		set(value) {
 			s_value=value;
 			got_jquery(value);
@@ -3199,18 +2991,12 @@ function on_game_data_set() {
 }
 
 function wait_for_game_data() {
-	if(window._SM_Data) {
-		on_game_data_set();
-	} else {setTimeout(wait_for_game_data,0);}
+	if(window._SM_Data) {on_game_data_set();} else {setTimeout(wait_for_game_data,0);}
 }
 
 function action_1() {
 	log_if_impl_r(LOG_LEVEL_INFO_IMPL,"start wait");
-	if(window._SM_Data) {
-		on_game_data_set();
-	} else {
-		wait_for_game_data();
-	}
+	if(window._SM_Data) {on_game_data_set();} else {wait_for_game_data();}
 	do_dom_filter();
 }
 
@@ -3232,9 +3018,7 @@ function dom_add_elm_filter(elm) {
 
 function enable_jquery_proxy_if_needed() {
 	let enable_proxy=true;
-	if(enable_proxy) {
-		proxy_jquery();
-	}
+	if(enable_proxy) {proxy_jquery();}
 }
 
 /** @arg {(value: any) => void} promise_accept */
@@ -3250,15 +3034,9 @@ function popstate_event_handler(e) {
 	console.log("popstate",e.state,location.href);
 	if(e.state===null) {
 		let non_proto_url=page_url_no_protocol();
-		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
-			history.go(-1);
-		} else if(non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {
-			history.go(-1);
-		}
+		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {history.go(-1);} else if(non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {history.go(-1);}
 	}
-	if(e.state) {
-	} else {
-	}
+	if(e.state) {} else {}
 }
 
 function reset_global_event_handlers() {window.onpopstate=popstate_event_handler;}
@@ -3291,9 +3069,7 @@ class DetachedMutationObserver extends BaseMutationObserver {
 		this.observer=mutationObserver;
 	}
 	/** @type {(_mutations: MutationRecord[], observer: MutationObserver)=>void} */
-	callback(_mutations,observer) {
-		observer.disconnect();
-	}
+	callback(_mutations,observer) {observer.disconnect();}
 }
 
 class LoadMutationObserver extends BaseMutationObserver {
@@ -3331,9 +3107,7 @@ function insert_before_enabled(node,child) {
 	return true;
 }
 function main() {
-	if(location.pathname.match("test")) {
-		return;
-	}
+	if(location.pathname.match("test")) {return;}
 	reset_global_event_handlers();
 	enable_jquery_proxy_if_needed();
 	document.addEventListener("onContentLoaded",do_dom_filter);
@@ -3360,9 +3134,7 @@ function main() {
 	window.setTimeout=any_nop;
 	window.setInterval=any_nop;
 	/** @arg {any[]} v */
-	function no_aev(...v) {
-		console.log("aev",v);
-	}
+	function no_aev(...v) {console.log("aev",v);}
 	let orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
 	async function do_fetch_load() {
@@ -3381,19 +3153,13 @@ function main() {
 		let loc_url=location.origin+location.pathname;
 		let prev_state=history.state;
 		let next_gen=0;
-		if(prev_state&&prev_state.gen) {
-			next_gen=prev_state.gen+1;
-		}
-		let hist_state={
-			gen: next_gen
-		};
+		if(prev_state&&prev_state.gen) {next_gen=prev_state.gen+1;}
+		let hist_state={gen: next_gen};
 		let skip=true;
 		x: {
 			if(skip) break x;
 			await new Promise(function(a) {
-				if(localStorage["justReset"]==="true") {
-					return a(null);
-				}
+				if(localStorage["justReset"]==="true") {return a(null);}
 				window.g_do_load=do_load_fire_promise.bind(null,a);
 				document.writeln(`<head></head><body><a href onclick="g_do_load()">load with fetch</a></body>`);
 				reset_global_event_handlers();
@@ -3508,9 +3274,7 @@ function main() {
 		action_1();
 		document.close();
 		reset_global_event_handlers();
-		window.onunload=function() {
-			console.info("unload");
-		};
+		window.onunload=function() {console.info("unload");};
 		window.onbeforeunload=function() {
 			console.info("before unload");
 			if(history.state?.gen!==void 0&&history.state.prev===void 0) {
@@ -3523,9 +3287,7 @@ function main() {
 		window.setTimeout=real_st;
 		window.setInterval=real_si;
 		EventTarget.prototype.addEventListener=orig_aev;
-		document.addEventListener("DOMContentLoaded",function() {
-			setTimeout(action_1,300);
-		});
+		document.addEventListener("DOMContentLoaded",function() {setTimeout(action_1,300);});
 	}
 	function do_page_replace() {
 		mut_observers.push(new DetachedMutationObserver(document));
@@ -3536,17 +3298,7 @@ function main() {
 	}
 	let page_url=location.href;
 	let non_proto_url=page_url_no_protocol();
-	if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
-		do_page_replace();
-	} else if(non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {
-		do_page_replace();
-	} else if(page_url=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=mjz_version") {
-		do_page_replace();
-	} else if(non_proto_url=="//rebuildtheuniverse.com/?type=real") {
-		on_dom_load();
-	} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {
-		on_dom_load();
-	} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=inject") {
+	if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {do_page_replace();} else if(non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {do_page_replace();} else if(page_url=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=mjz_version") {do_page_replace();} else if(non_proto_url=="//rebuildtheuniverse.com/?type=real") {on_dom_load();} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {on_dom_load();} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=inject") {
 		document.stop=function() {};
 		on_dom_load();
 		document_write_list.destroy();
@@ -3569,13 +3321,9 @@ function init() {
 init();
 log_if_impl_r(LOG_LEVEL_TRACE_IMPL,"userscript main");
 main();
-setInterval(function() {
-	console.clear();
-},15*60*1000);
+setInterval(function() {console.clear();},15*60*1000);
 
-function get_exports() {
-	return exports;
-}
+function get_exports() {return exports;}
 
 if(typeof exports==="object") {
 	let exports=get_exports();

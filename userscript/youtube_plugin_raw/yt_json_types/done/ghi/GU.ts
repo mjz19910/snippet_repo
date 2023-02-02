@@ -10,9 +10,7 @@ type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
 type UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type GU_YoutubeUrlRedirect_Info={
 	url:`https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`,
-	encoded_params: {
-		q: ST_EncodedURIComponent;
-	};
+	encoded_params: {q: ST_EncodedURIComponent;};
 };
 type GU_YoutubeUrlRedirect=`https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`;
 type GU_VE83769_Url_Internal="/upload";

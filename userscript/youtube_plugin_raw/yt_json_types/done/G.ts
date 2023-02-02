@@ -190,9 +190,7 @@ type G_CodecTypeStr=[
 type G_CommandMetadata={
 	webCommandMetadata: GM_WC;
 	resolveUrlCommandMetadata: MC_ResolveUrl;
-}|{
-	webCommandMetadata: GM_WC;
-};
+}|{webCommandMetadata: GM_WC;};
 type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
 type G_EngagementPanelSectionListItem=[
 	R_AdsEngagementPanelContent,
@@ -203,9 +201,7 @@ type G_EngagementPanelSectionListItem=[
 	TR_SectionList_3<{},"comment-item-section","engagement-panel-comments-section">,
 	R_StructuredDescriptionContent,
 ][number];
-type G_ExtraUrlParamItem={
-	key: "inline";
-};
+type G_ExtraUrlParamItem={key: "inline";};
 type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;
 type G_FormatQuality=[
 	"hd2160","hd1440","hd1080","hd720",
@@ -276,11 +272,7 @@ type G_ClientSignal_Item=[
 	OP_ClientSignal,
 ][number];
 type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;
-type G_Text=({
-	runs: D_TextRun[];
-}|{
-	simpleText: string;
-})&G_Text_Base;
+type G_Text=({runs: D_TextRun[];}|{simpleText: string;})&G_Text_Base;
 type G_Text_Base={accessibility?: D_Accessibility;};
 type G_SE_MenuService=
 	|A_ChangeEngagementPanelVisibility

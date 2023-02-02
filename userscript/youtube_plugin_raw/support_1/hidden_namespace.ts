@@ -11,7 +11,5 @@ namespace hidden_namespace {
 	type cc=T_Split<"g2U2-i13970","">;
 	export type c2=T_Split<"AAAAAAAAAAA","">;
 	export type UU=cc["length"];
-	export const vv: {videoId: T_VideoIdStr<"g2U2-i13970">;}={
-		videoId: "g2U2-i13970"
-	};
+	export const vv: {videoId: T_VideoIdStr<"g2U2-i13970">;}={videoId: "g2U2-i13970"};
 }

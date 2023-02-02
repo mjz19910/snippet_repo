@@ -38,13 +38,9 @@ function set_jq_proxy_overwrite() {
 	let e_win=window;
 	/** @type {{}|null|undefined} */
 	let val=void 0;
-	if("$" in e_win) {
-		val=e_win.$;
-	}
+	if("$" in e_win) {val=e_win.$;}
 	Object.defineProperty(window,"$",{
-		get() {
-			return val;
-		},
+		get() {return val;},
 		/** @arg {{}|null|undefined} value */
 		set(value) {
 			val=value;
@@ -87,22 +83,12 @@ function do_local_mirror_write() {
 function main() {
 	console.log("re action 0");
 	let non_proto_url=page_url_no_protocol();
-	if(history.state&&history.state.real_page) {
-		do_real_page_action();
-	} else if(localStorage["justReset"]) {
-		do_just_reset();
-	} else if(history.state&&history.state.prev) {
-		do_just_reset();
-	} else if(non_proto_url=="//rebuildtheuniverse/?type=real") {
+	if(history.state&&history.state.real_page) {do_real_page_action();} else if(localStorage["justReset"]) {do_just_reset();} else if(history.state&&history.state.prev) {do_just_reset();} else if(non_proto_url=="//rebuildtheuniverse/?type=real") {
 		history.pushState({real_page: true},'',non_proto_url);
 		do_real_page_action();
 	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {
 		history.pushState({real_page: true},'',non_proto_url);
 		do_real_page_action();
-	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {
-		do_local_mirror_write();
-	} else {
-		do_local_mirror_write();
-	}
+	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {do_local_mirror_write();} else {do_local_mirror_write();}
 }
 main();

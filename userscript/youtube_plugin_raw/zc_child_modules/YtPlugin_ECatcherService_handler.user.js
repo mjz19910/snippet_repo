@@ -101,9 +101,7 @@ class ECatcherService extends BaseService {
 		if(prev_client.name!==this.data.client.name) {console.log({name: prev_client.name},{name: this.data.client.name});}
 	}
 	/** @private @arg {NonNullable<this["data"]["client"]>} client */
-	update_client(client) {
-		this.data.client=client;
-	}
+	update_client(client) {this.data.client=client;}
 }
 export_(exports => {
 	exports.ECatcherService=ECatcherService;

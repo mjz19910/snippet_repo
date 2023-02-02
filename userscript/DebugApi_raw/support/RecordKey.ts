@@ -1,3 +1,1 @@
-interface RecordKey<T> extends Constructor {
-	key: T;
-}
+interface RecordKey<T> extends Constructor {key: T;}

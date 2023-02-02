@@ -10,24 +10,12 @@ declare global {
 }
 
 // g_mut_observers
-declare global {
-	interface Window {
-		g_mut_observers: any[];
-	}
-}
+declare global {interface Window {g_mut_observers: any[];}}
 
-declare global {
-	interface Window {
-		mute(): void;
-	}
-}
+declare global {interface Window {mute(): void;}}
 
 // AutoBuyImplR
-declare global {
-	interface Window {
-		g_auto_buy: AutoBuyImplR;
-	}
-}
+declare global {interface Window {g_auto_buy: AutoBuyImplR;}}
 
 interface GoogleAdList {
 	op: any;
@@ -48,15 +36,11 @@ declare global {
 declare global {
 	function constelOff(): void;
 
-	interface Window {
-		constelOff(): void;
-	}
+	interface Window {constelOff(): void;}
 }
 
 // MulCompression
-declare global {
-	interface Window {MulCompression: typeof MulCompression;}
-}
+declare global {interface Window {MulCompression: typeof MulCompression;}}
 
 // AutoBuyState
 declare global {
@@ -88,11 +72,7 @@ declare global {
 }
 
 // on_timers_moved
-declare global {
-	interface Window {
-		_SM_Data: unknown;
-	}
-}
+declare global {interface Window {_SM_Data: unknown;}}
 
 // AutoBuy
 declare global {

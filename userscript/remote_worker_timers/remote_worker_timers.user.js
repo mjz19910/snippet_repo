@@ -22,11 +22,7 @@
 	const LOG_LEVEL_DEBUG=6;
 	const local_logging_level=LOG_LEVEL_WARN;
 	/** @arg {number} level @arg {string[]} args */
-	function l_log_if(level,...args) {
-		if(level<=local_logging_level) {
-			console.log(...args);
-		}
-	}
+	function l_log_if(level,...args) {if(level<=local_logging_level) {console.log(...args);}}
 	l_log_if(LOG_LEVEL_CRIT,"Critical: test");
 	l_log_if(LOG_LEVEL_ERROR,"Error: test");
 	l_log_if(LOG_LEVEL_NOTICE,"Notice: test");
@@ -95,9 +91,7 @@
 			reject(error);
 			this.close();
 		}
-		closed() {
-			return this.m_closed;
-		}
+		closed() {return this.m_closed;}
 		close() {
 			this.m_closed=true;
 			this.m_accept=null;
@@ -244,17 +238,11 @@
 	}
 	let g_timer_api=new TimerApi;
 	class UniqueIdGenerator {
-		constructor() {
-			this.m_current=-1;
-		}
+		constructor() {this.m_current=-1;}
 		/** @arg {number} current_value */
 		set_current(current_value) {	this.m_current=current_value;}
-		current() {
-			return this.m_current;
-		}
-		next() {
-			return this.m_current++;
-		}
+		current() {return this.m_current;}
+		next() {return this.m_current++;}
 	}
 	class VerifyError extends Error {
 		/** @arg {string|undefined} message */
@@ -271,13 +259,9 @@
 		}
 	}
 	/** @arg {boolean} assert_result @arg {string} assert_message */
-	function VERIFY(assert_result,assert_message) {
-		if(!assert_result) {throw new VerifyError(assert_message);}
-	}
+	function VERIFY(assert_result,assert_message) {if(!assert_result) {throw new VerifyError(assert_message);}}
 	/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
-	function assert_non_null(value) {
-		if(value===null) {throw new AssertionError("Assertion failure: value was null");}
-	}
+	function assert_non_null(value) {if(value===null) {throw new AssertionError("Assertion failure: value was null");}}
 	class Timer {
 		/** @arg {UniqueIdGenerator} id_generator @arg {TimerApi} api_info */
 		constructor(id_generator,api_info) {
@@ -316,9 +300,7 @@
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) throw new Error("No state for id");
 			let active_state=this.activate_state(state);
-			try {
-				if(active_state.active) {active_state.target_fn.apply(null,state.target_args);}
-			} finally {
+			try {if(active_state.active) {active_state.target_fn.apply(null,state.target_args);}} finally {
 				if(tag===TIMER_SINGLE) {
 					state.active=false;
 					this.clear(tag,remote_id);
@@ -347,9 +329,7 @@
 		set(tag,target_fn,timeout,target_args) {
 			let remote_id=this.id_generator.next();
 			let is_repeating=false;
-			if(tag===TIMER_REPEATING) {
-				is_repeating=true;
-			}
+			if(tag===TIMER_REPEATING) {is_repeating=true;}
 			if(timeout<0) timeout=0;
 			let state=new TimerState(remote_id,tag,is_repeating,target_fn,target_args,timeout);
 			this.store_state_by_remote_id(remote_id,state);
@@ -672,12 +652,8 @@
 			this.worker=new Worker(this.worker_url);
 		}
 		init() {
-			if(!this.worker) {
-				return;
-			}
-			if(this.connected||this.valid) {
-				this.destroy();
-			}
+			if(!this.worker) {return;}
+			if(this.connected||this.valid) {this.destroy();}
 			this.connected=false;
 			this.worker.onmessage=function onmessage(e) {
 				let worker_state=WorkerState.get_global_state();
@@ -709,9 +685,7 @@
 				case TimeoutClearSingle: break;
 				case TimeoutClearRepeating: break;
 				// case TimeoutClearAny: break;
-				case WorkerDestroyType: {
-					worker_state.destroy();
-				} break;
+				case WorkerDestroyType: {worker_state.destroy();} break;
 				case ReplyToWorkerState: {worker_state.dispatch_message(msg);} break;
 				case ReplyToLocalTimer: {worker_state.dispatch_message(msg);} break;
 				case ReplyFromWorker: {worker_state.dispatch_message(msg);} break;
@@ -743,9 +717,7 @@
 					this.connected=true;
 					break;
 				}
-				case g_timer_api.worker_set_types: {
-					this.typedPostMessage({type: g_timer_api.worker.ready});
-				} break;
+				case g_timer_api.worker_set_types: {this.typedPostMessage({type: g_timer_api.worker.ready});} break;
 			}
 		}
 		/** @template {{}|{for_worker_state: boolean}} T @arg {T} msg @returns {msg is {for_worker_state: boolean}} */
@@ -754,18 +726,10 @@
 		dispatch_message(msg) {
 			if(this.is_message_for(msg)) {
 				switch(msg.type) {
-					case WorkerReadyReply: {
-						this.on_result(msg);
-					} break;
-					case ReplySetSingle: {
-						this.on_result(msg);
-					} break;
-					case ReplyToWorkerState: {
-						this.on_result(msg);
-					} break;
-					case g_timer_api.worker_set_types: {
-						this.on_result(msg);
-					} break;
+					case WorkerReadyReply: {this.on_result(msg);} break;
+					case ReplySetSingle: {this.on_result(msg);} break;
+					case ReplyToWorkerState: {this.on_result(msg);} break;
+					case g_timer_api.worker_set_types: {this.on_result(msg);} break;
 					default: return;
 				}
 				return;
@@ -793,9 +757,7 @@
 		/** @arg {WorkerState} worker_state_value */
 		static equals_global_state(worker_state_value) {return this.get_global_state()===worker_state_value;}
 		/** @arg {WorkerState} worker_state_value */
-		static maybe_delete_old_global_state_value(worker_state_value) {
-			if(this.has_old_global_state_value(worker_state_value)) {this.delete_old_global_state();}
-		}
+		static maybe_delete_old_global_state_value(worker_state_value) {if(this.has_old_global_state_value(worker_state_value)) {this.delete_old_global_state();}}
 		static maybe_delete_old_global_state() {
 			if(this.has_global_state()) {
 				this.delete_old_global_state();
@@ -846,9 +808,7 @@
 		}
 	}
 	/** @arg {typeof WorkerStateMessageV} msg */
-	function typedPostMessage(msg) {
-		postMessage(msg);
-	}
+	function typedPostMessage(msg) {postMessage(msg);}
 	/** @arg {(arg0: null) => void} executor_accept @arg {(arg0: Error) => void} executor_reject */
 	function set_timeout_on_remote_worker_executor(executor_accept,executor_reject) {
 		let failed=false;
@@ -868,9 +828,7 @@
 				VERIFY(verify_obj.TimeoutSetTypes===TimeoutSetTypes,"TimerWorkerSetTypes constant matches");
 				return;
 			});
-			if(failed) {
-				return;
-			}
+			if(failed) {return;}
 		} catch(e) {
 			console.log(e);
 			executor_reject(new Error("worker_code_function caused an error"));
@@ -937,9 +895,7 @@
 			let any_window=window;
 			/** @type {keyof typeof obj} */
 			let key;
-			for(key in obj) {
-				any_window[key]=obj[key];
-			}
+			for(key in obj) {any_window[key]=obj[key];}
 			return obj;
 		}
 		window.g_remote_timer_api=connect_local_to_remote_timer_api({
@@ -987,9 +943,7 @@
 		}
 		assert_non_nullable_object;
 		/** @template T @arg {T} value @returns {{[U in keyof T]: T[U]}} */
-		function decay_to_object(value) {
-			return value;
-		}
+		function decay_to_object(value) {return value;}
 		decay_to_object;
 		/** @arg {MessageEvent<typeof WorkerStateMessageV>} e */
 		function message_without_types_handler(e) {
@@ -1086,9 +1040,7 @@
 				this.unique_script_id=1;
 			}
 			/** @arg {RemoteTimer} timer */
-			set_timer(timer) {
-				this.m_timer=timer;
-			}
+			set_timer(timer) {this.m_timer=timer;}
 			/** @arg {1|2} tag @arg {number} remote_id @arg {number|undefined} timeout */
 			set(tag,remote_id,timeout) {
 				if(!this.m_timer) throw 1;
@@ -1102,9 +1054,7 @@
 		}
 		function nop_fn() {};
 		/** @arg {RemoteTimer} timer @arg {number} remote_id */
-		function fire_timer(timer,remote_id) {
-			timer.fire(remote_id);
-		}
+		function fire_timer(timer,remote_id) {timer.fire(remote_id);}
 		const g_timer_api=new RemoteTimerApi;
 		class RemoteTimerState {
 			/** @arg {1|2} type */
@@ -1169,9 +1119,7 @@
 			}
 			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
 			/** @arg {1|2} tag */
-			verify_tag(tag) {
-				if(!this.validate_tag(tag)) {throw new Error("tag verification failed in RemoteTimer");}
-			}
+			verify_tag(tag) {if(!this.validate_tag(tag)) {throw new Error("tag verification failed in RemoteTimer");}}
 			/** @arg {RemoteTimerState} state @arg {any} remote_id */
 			verify_state(state,remote_id) {
 				if(!this.validate_state(state)) {
@@ -1195,9 +1143,7 @@
 			validate_state(state) {return this.validate_tag(state.type);}
 			/** @arg {any} remote_id */
 			clear(remote_id) {
-				if(!this.m_remote_id_to_state_map.has(remote_id)) {
-					return null;
-				}
+				if(!this.m_remote_id_to_state_map.has(remote_id)) {return null;}
 				let state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!state) throw new Error("Unreachable");
 				this.verify_state(state,remote_id);

@@ -62,13 +62,9 @@ class IndexedDatabaseService extends BaseService {
 		if(!obj) {debugger; return;}
 		if(!this.database_open) this.requestOpen({name: key});
 		let d_cache=this.get_data_cache(key);
-		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {
-			debugger;
-		}
+		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {debugger;}
 		this.push_waiting_obj(key,obj);
-		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {
-			debugger;
-		}
+		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {debugger;}
 	}
 	/** @private @arg {K} key @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T} obj */
 	push_waiting_obj(key,obj) {
@@ -221,9 +217,7 @@ class IndexedDatabaseService extends BaseService {
 					this.committed_data.push(data);
 					continue;
 				} else {new_data_map.set(content,data);}
-			} else {
-				debugger;
-			}
+			} else {debugger;}
 		}
 		[...new_data_map.values()].forEach(e => {this.add_data_to_store(obj_store,e);});
 	}
@@ -254,9 +248,7 @@ class IndexedDatabaseService extends BaseService {
 	await_success(db_request) {
 		return new Promise(function(accept,reject) {
 			db_request.onsuccess=function(event) {accept({result: db_request.result,event});};
-			db_request.onerror=function(event) {
-				reject(event);
-			};
+			db_request.onerror=function(event) {reject(event);};
 		});
 	}
 	database_store_index_shape={

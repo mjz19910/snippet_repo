@@ -17,9 +17,7 @@ const __module_name__="mod$YoutubePluginBase";
 /** @arg {keyof PluginStore} module_name @template {{}} T @arg {(x:T)=>void} fn @arg {{global:boolean}} flags @arg {T} exports */
 function do_export(fn,flags,exports,module_name) {
 	/** @typedef {typeof exports} ExportsT */
-	if(typeof exports==="object") {
-		fn(exports);
-	} else {
+	if(typeof exports==="object") {fn(exports);} else {
 		/** @type {ExportsT} */
 		let exports;
 		if(flags.global) {
@@ -44,12 +42,8 @@ function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
-export_(exports => {
-	exports.required=required;
-},{global: true});
-export_(exports => {
-	exports.do_export=do_export;
-});
+export_(exports => {exports.required=required;},{global: true});
+export_(exports => {exports.do_export=do_export;});
 const log_imports=false;
 export_(exports => {exports.__yt_plugin_log_imports__=log_imports;},{global: true});
 if(log_imports) console.log("Load PluginBase");
@@ -111,23 +105,17 @@ let active_blob_set=new Set;
 let saved_data=as({});
 //#endregion
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>x is X} */
-function assume_is_instanceof(_value,_constructor_type) {
-	return true;
-}
+function assume_is_instanceof(_value,_constructor_type) {return true;}
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X} */
 function as_instanceof(value,_constructor_type) {
-	if(assume_is_instanceof(value,_constructor_type)) {
-		return value;
-	}
+	if(assume_is_instanceof(value,_constructor_type)) {return value;}
 	throw new Error("Failed to cast");
 }
 /** @private @template {{length:number;[x:number]:T[number]}} T */
 class Iterator {
 	i=0;
 	/** @constructor @public @arg {T} x */
-	constructor(x) {
-		this.x=x;
-	}
+	constructor(x) {this.x=x;}
 	next() {
 		if(this.i<this.x.length) {
 			let res={
@@ -142,14 +130,10 @@ class Iterator {
 			done: true
 		};
 	}
-	[Symbol.iterator]() {
-		return this;
-	}
+	[Symbol.iterator]() {return this;}
 }
 /** @private @template {{length:number;[x:number]:T[number]}} T @arg {T} x */
-function make_iterator(x) {
-	return new Iterator(x);
-}
+function make_iterator(x) {return new Iterator(x);}
 //#endregion
 //#region ui_plugin & on_${element}
 class CustomEventTarget {
@@ -190,9 +174,7 @@ class DomObserver extends CustomEventTarget {
 			if(!list) return;
 			if(list.every(e => !e.active)) {this.port_to_resolvers_map.set(port,[]);}
 			for(let x of list) {				if(x.active) x.resolver();}
-			if(list[0].active===false) {
-				list.shift();
-			}
+			if(list[0].active===false) {list.shift();}
 		};
 	}
 	/** @api @public @arg {MessagePort} port @arg {number} cur_count */
@@ -226,9 +208,7 @@ function do_find_video() {
 	let list=box_map.get("video-list");
 	/** @private @type {boolean} */
 	let first_run;
-	if(list) {
-		first_run=false;
-	} else {
+	if(list) {first_run=false;} else {
 		first_run=true;
 		list=new HTMLVideoElementArrayBox([]);
 		box_map.set("video-list",list);
@@ -270,13 +250,9 @@ function on_ytd_app(element) {
 		if(!target_element) throw new Error("Missing ytd-page-manager when we have ytd-app");
 		on_ytd_page_manager(target_element);
 		// might have a new video element from page type change
-		setTimeout(function() {
-			do_find_video();
-		},80);
+		setTimeout(function() {do_find_video();},80);
 		let real_event=YTNavigateFinishEvent.cast(event);
-		for(let handler of on_yt_navigate_finish) {
-			handler(real_event);
-		}
+		for(let handler of on_yt_navigate_finish) {handler(real_event);}
 	});
 	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
 	if(document.visibilityState==="visible") {
@@ -306,9 +282,7 @@ function on_ytd_app(element) {
 	});
 }
 /** @private @arg {CustomEventType} event */
-function _plugin_init(event) {
-	async_plugin_init(event).then(() => {},(e) => {	console.log("async error",e);});
-}
+function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {	console.log("async error",e);});}
 /** @private @type {Element|null} */
 let main_page_app=null;
 /** @private @arg {CustomEventType} event */
@@ -367,9 +341,7 @@ async function async_plugin_init(event) {
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			{
 				let found=iterate_ytd_app();
-				if(found) {
-					found_element_count++;
-				}
+				if(found) {found_element_count++;}
 			}
 			x: {
 				if(ytcp_app) break x;
@@ -415,11 +387,7 @@ async function async_plugin_init(event) {
 				if(!ytd_page_manager) break x;
 				if(!ytd_page_manager.getCurrentPage()) break x;
 				/** @private @template T @arg {T|undefined} x @arg {(e:T)=>void} w */
-				function using(x,w) {
-					if(x) {
-						w(x);
-					}
-				}
+				function using(x,w) {if(x) {w(x);}}
 				if(!ytd_page_manager.getCurrentPage()?.__has_theater_handler_plugin) {
 					ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 					using(ytd_page_manager.getCurrentPage(),e => e.__has_theater_handler_plugin=true);
@@ -614,21 +582,11 @@ class VolumeRange {
 	}
 }
 /** @private @arg {string|URL} url */
-function to_url(url) {
-	if(url instanceof URL) {
-		return url;
-	} else {
-		return new URL(url);
-	}
-}
+function to_url(url) {if(url instanceof URL) {return url;} else {return new URL(url);}}
 /** @private @arg {Error} rejection @returns {Promise<Response>} */
 function fetch_rejection_handler(rejection) {
-	if(rejection instanceof DOMException) {
-		throw rejection;
-	}
-	if(rejection instanceof TypeError) {
-		throw rejection;
-	}
+	if(rejection instanceof DOMException) {throw rejection;}
+	if(rejection instanceof TypeError) {throw rejection;}
 	console.log("fetch_rejection_handler");
 	console.log("\t",rejection);
 	throw rejection;
@@ -658,9 +616,7 @@ class PropertyHandler {
 			this.override_value.value=proxy_override;
 		} else {
 			let t=this;
-			let proxy_override=new Proxy(value,{
-				apply(...arr) {return t.on_target_apply_callback(arr);}
-			});
+			let proxy_override=new Proxy(value,{apply(...arr) {return t.on_target_apply_callback(arr);}});
 			this.proxy_map.set(value,proxy_override);
 			this.override_value.value=proxy_override;
 		}
@@ -800,17 +756,11 @@ class MyReader {
 		this.last_pos=0;
 	}
 	/** @api @public @arg {number} [size] */
-	try_read_any(size) {
-		try {			return this.read_any(size);} catch {
-			return null;
-		}
-	}
+	try_read_any(size) {try {			return this.read_any(size);} catch {return null;}}
 	/** @private @arg {number} [size] */
 	reset_and_read_any(size) {	return this.read_any(size,0);}
 	/** @private */
-	_use() {
-		this.reset_and_read_any(0);
-	}
+	_use() {this.reset_and_read_any(0);}
 	static {
 		let test_instance=new this(new Uint8Array(0));
 		test_instance._use();
@@ -823,9 +773,7 @@ class MyReader {
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
-		if(size===void 0) {
-			this.cur_len=this.len;
-		} else {			this.cur_len=this.pos+size;}
+		if(size===void 0) {this.cur_len=this.len;} else {			this.cur_len=this.pos+size;}
 		this.failed=false;
 		try {		return this.read_any_impl();} finally {
 			this.pos=prev_pos;
@@ -851,9 +799,7 @@ class MyReader {
 			let fieldId=cur_byte>>>3;
 			let first_num=this.skipTypeEx(fieldId,wireType);
 			data.push([fieldId,wireType,first_num]);
-			if(this.failed) {
-				break;
-			}
+			if(this.failed) {break;}
 			if(log_slow&&loop_count>128) {
 				console.log("taking a long time to read protobuf data");
 				log_slow=false;
@@ -865,9 +811,7 @@ class MyReader {
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
 			let [_fieldId,_type,decoded_data]=cur;
-			for(let item of decoded_data) {
-				res_arr.push(item);
-			}
+			for(let item of decoded_data) {res_arr.push(item);}
 		}
 		return res_arr;
 	}
@@ -875,11 +819,7 @@ class MyReader {
 	revert_to(pos,f) {
 		let prev_pos=this.pos;
 		this.pos=pos;
-		try {
-			return f();
-		} finally {
-			this.pos=prev_pos;
-		}
+		try {return f();} finally {this.pos=prev_pos;}
 	}
 	/** @private @arg {number} [length] */
 	skip(length) {
@@ -928,9 +868,7 @@ class MyReader {
 			return num_ret;
 		}
 		/** @private @arg {number} e @arg {number} n @returns {[index:number,num:number]} */
-		function into_entries(e,n) {
-			return [n,e];
-		}
+		function into_entries(e,n) {return [n,e];}
 		let varint_entries=varint_arr.map(into_entries);
 		/** @private @type {number|null} */
 		let res=0;
@@ -1061,9 +999,7 @@ class MyReader {
 					return [false,null,this.pos];
 				});
 				let num32=null;
-				x: try {
-					num32=this.uint32();
-				} catch {
+				x: try {num32=this.uint32();} catch {
 					if(revert_res[0]) break x;
 					this.failed=true;
 					first_num.push(["error",fieldId]);
@@ -1110,9 +1046,7 @@ class MyReader {
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
 				/** @private @type {D_DecTypeNum} */
-				try {
-					this.skip(size);
-				} catch {
+				try {this.skip(size);} catch {
 					console.log("skip failed at",this.pos,fieldId);
 					first_num.push(["error",fieldId]);
 					this.failed=true;
@@ -1154,9 +1088,7 @@ let blob_create_args_arr=[];
 /** @private @type {any[]} */
 let mk_tree_arr=[];
 function act_found_create_yt_player(/** @private @type {{ data: { type: string; data: [any, any, any]; }; }} */ event) {
-	function plr_raw_replace_embed() {
-		return;
-	}
+	function plr_raw_replace_embed() {return;}
 	let plr_raw_replace_debug=true;
 	function plr_raw_replace(/** @private @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 		let raw_plr_rsp=player_config.args.raw_player_response;
@@ -1217,23 +1149,13 @@ class OnWindowProperty {
 function walk_key_path(cc,ms,obj,mc) {
 	let fs;
 	let mt=ms.match(cc.value_tr);
-	if(mt!==null) {
-		fs=mt[0];
-	} else {
-		return mc;
-	}
+	if(mt!==null) {fs=mt[0];} else {return mc;}
 	let f2=ms.slice(fs.length+1);
 	let dx=f2.indexOf(".");
 	let pq;
-	if(dx>-1) {
-		pq=f2.slice(0,dx);
-	} else {
-		pq=f2;
-	}
+	if(dx>-1) {pq=f2.slice(0,dx);} else {pq=f2;}
 	if(pq.length>0) {
-		if((cc.value_tr+"."+pq)==mc) {
-			return cc.value_tr+"."+pq;
-		}
+		if((cc.value_tr+"."+pq)==mc) {return cc.value_tr+"."+pq;}
 		new MKState({},obj,pq,`${cc.value_tr}.${pq}`,cc.noisy_flag).run();
 		return cc.value_tr+"."+pq;
 	}
@@ -1245,17 +1167,13 @@ function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args) {
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
 	win_watch.dispatchEvent({type: "new_window_object",data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}});
-	if(!act_cb_obj.fired&&cc.function_value) {ret=cc.function_value.apply(val,args);} else {
-		ret=act_cb_obj.ret;
-	}
+	if(!act_cb_obj.fired&&cc.function_value) {ret=cc.function_value.apply(val,args);} else {ret=act_cb_obj.ret;}
 	return ret;
 }
 /** @private @arg {MKState} cc */
 function on_mk_function_property(cc) {
 	/** @this {{}} */
-	function with_this(/** @private @type {any} */ ...args) {
-		new_pv_fn(this,cc,...args);
-	}
+	function with_this(/** @private @type {any} */ ...args) {new_pv_fn(this,cc,...args);}
 	cc.value=with_this;
 	ud_func.add(cc.value);
 }
@@ -1274,9 +1192,7 @@ class MKState {
 		this.property_path=property_path;
 		this.noisy=noisy;
 	}
-	run() {
-		return mk_run(this);
-	}
+	run() {return mk_run(this);}
 	value={};
 	value_tr="";
 	/** @api @public @type {Function|null} */
@@ -1303,23 +1219,15 @@ function on_mk_new_property(cc,obj) {
 /** @private @arg {MKState} cc @arg {{}} obj */
 function on_mk_property_set(cc,obj) {
 	if(ud_func.has(obj)) cc.value=obj;
-	if(as_instanceof(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
-		on_mk_new_property(cc,obj);
-	} else {
-		cc.value=obj;
-	}
+	if(as_instanceof(obj,WithGhostSymbol)[ghost_symbol]===undefined) {on_mk_new_property(cc,obj);} else {cc.value=obj;}
 }
 /** @private @arg {MKState} cc */
 function mk_run(cc) {
-	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {
-		return cc;
-	}
+	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {return cc;}
 	Object.defineProperty(cc.target,cc.property_key,{
 		configurable: true,
 		enumerable: true,
-		get() {
-			return cc.value;
-		},
+		get() {return cc.value;},
 		set(val) {			on_mk_property_set(cc,val);}
 	});
 	if(locked_set.has(cc.target)) {locked_set.get(cc.target).names.push(cc.property_key);} else {locked_set.set(cc.target,{names: [cc.property_key]});}
@@ -1352,24 +1260,16 @@ function on_ytd_watch_flexy(element) {
 	element_map.set(element_id,element);
 	ytd_watch_flexy=element;
 	window.ytd_watch_flexy=element;
-	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {
-		for(let handler of on_yt_navigate) {
-			handler(event);
-		}
-	});
+	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {for(let handler of on_yt_navigate) {handler(event);}});
 }
 /** @private @type {string[]} */
 let page_type_changes=[];
 function is_watch_page_active() {
-	if(!ytd_page_manager?.getCurrentPage()) {
-		return false;
-	}
+	if(!ytd_page_manager?.getCurrentPage()) {return false;}
 	return ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()==="ytd-watch-flexy";
 }
 /** @private @arg {Node} value */
-function as_node(value) {
-	return value;
-}
+function as_node(value) {return value;}
 /** @private @type {Map<string, HTMLElement>} */
 let element_map=new Map;
 /** @private @type {Map<string, HTMLVideoElementArrayBox>} */
@@ -1400,9 +1300,7 @@ class HTMLVideoElementArrayBox {
 	/** @readonly */
 	type="HTMLVideoElementArrayBox";
 	/** @constructor @public @arg {HTMLVideoElement[]} value */
-	constructor(value) {
-		this.value=value;
-	}
+	constructor(value) {this.value=value;}
 }
 class YTNavigateFinishEvent {
 	/** @api @public @arg {Event} value @return {YTNavigateFinishEvent} */
@@ -1557,9 +1455,7 @@ function _close_div_scope() {
 		ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
 	}
 	function yt_watch_page_loaded_handler() {
-		if(!is_watch_page_active()) {
-			return;
-		}
+		if(!is_watch_page_active()) {return;}
 		if(ytd_page_manager===null) {
 			console.log("no ytd-page-manager");
 			return;
@@ -1611,9 +1507,7 @@ function _close_div_scope() {
 		ytd_page_manager.addEventListener("yt-page-type-changed",function() {
 			if(!ytd_player) return;
 			if(!ytd_page_manager) return;
-			setTimeout(function() {
-				do_find_video();
-			},80);
+			setTimeout(function() {do_find_video();},80);
 			if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
 				ytd_player.is_watch_page_active=false;
 				plugin_overlay_element&&plugin_overlay_element.remove();
@@ -1638,9 +1532,7 @@ function _close_div_scope() {
 				cache.left_offset+=cur_element.offsetLeft;
 				/** @private @type {Element|null} */
 				let next_element=cur_element.offsetParent;
-				if(next_element instanceof HTMLElement) {					cur_element=next_element;} else {
-					break;
-				}
+				if(next_element instanceof HTMLElement) {					cur_element=next_element;} else {break;}
 			}
 			return cache;
 		}
@@ -1688,9 +1580,7 @@ function _close_div_scope() {
 }
 let no_storage_access=false;
 let title_save;
-try {title_save=localStorage.getItem("title_save_data");} catch {
-	no_storage_access=true;
-}
+try {title_save=localStorage.getItem("title_save_data");} catch {no_storage_access=true;}
 if(!title_save) {
 	title_save="{\"value\":false}";
 	if(!no_storage_access) {localStorage.setItem("title_save_data",title_save);}
@@ -1710,14 +1600,8 @@ let volume_plugin_style_source=`
 		width: calc(var(--w) / 2);
 		z-index: 1;
 	}
-	@media screen and (max-width: 1260px) {
-		#rh_css {
-			display: none;
-		}
-	}
-	#i_r_css {
-		outline: none;
-	}
+	@media screen and (max-width: 1260px) {#rh_css {display: none;}}
+	#i_r_css {outline: none;}
 	@media screen and (prefers-color-scheme: light) {
 		#i_r_css {
 			--bg-range-color: #ff000040;
@@ -1801,13 +1685,9 @@ class AudioGainController {
 		]);
 	}
 	/** @api @public @arg {Event} event */
-	onKeyDown(event) {
-		this.last_event=event;
-	}
+	onKeyDown(event) {this.last_event=event;}
 	/** @private @arg {AudioNode[]} node_chain */
-	init_node_chain(node_chain) {
-		for(let i=0;i<node_chain.length-1;i++) {node_chain[i].connect(node_chain[i+1]);}
-	}
+	init_node_chain(node_chain) {for(let i=0;i<node_chain.length-1;i++) {node_chain[i].connect(node_chain[i+1]);}}
 	/** @private @arg {DynamicsCompressorNode} node */
 	initCompressor(node) {
 		node.knee.value=27;
@@ -1875,9 +1755,7 @@ class ServiceResolver {
 		this.params=params;
 	}
 	/** @private @arg {U} params */
-	set_params(params) {
-		this.params=params;
-	}
+	set_params(params) {this.params=params;}
 	/** @api @public @arg {keyof U} key */
 	get_param(key) {
 		if(!this.params) throw new Error("No service params");
@@ -1930,9 +1808,7 @@ function yt_plugin_base_main() {
 
 	// init section
 	const service_resolver=new ServiceResolver(services,new ServiceFlags);
-	export_((exports) => {
-		exports.services=services;
-	});
+	export_((exports) => {exports.services=services;});
 	resolver_value.value=service_resolver;
 	_close_div_scope();
 	on_yt_navigate_finish.push(log_page_type_change);
@@ -2059,11 +1935,7 @@ class ApiBase {
 				ret.push(k);
 			}
 		}
-		if(!ret.length) {
-			for(let k of x) {
-				ret.push(k);
-			}
-		}
+		if(!ret.length) {for(let k of x) {ret.push(k);}}
 		return ret;
 	}
 	/** @protected @arg {unknown} x */
@@ -2079,9 +1951,7 @@ class ApiBase {
 		return null;
 	}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
-	_primitive_of(x,y) {
-		if(typeof x!==y) debugger;
-	}
+	_primitive_of(x,y) {if(typeof x!==y) debugger;}
 	/** @arg {number} x */
 	a_primitive_num(x) {this._primitive_of(x,"number");}
 	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
@@ -2112,9 +1982,7 @@ class ApiBase {
 	keyof_search_params(t) {
 		let tmp=this.parse_url_search_params(t);
 		let ret=[];
-		for(let k in tmp) {
-			ret.push(k);
-		}
+		for(let k in tmp) {ret.push(k);}
 		/** @type {any} */
 		let as_any=ret;
 		/** @type {TP_KeyofSearchParams<T>} */
@@ -2123,9 +1991,7 @@ class ApiBase {
 	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
-		if(!obj) {
-			debugger;
-		}
+		if(!obj) {debugger;}
 		let rq=Object.keys(obj);
 		/** @private @type {any} */
 		let ra=rq;
@@ -2143,9 +2009,7 @@ class BitmapResult {
 	}
 } class StoreData {
 	/** @arg {Partial<ReturnType<StoreData['destructure']>>} src */
-	constructor(src) {
-		this.update(src);
-	}
+	constructor(src) {this.update(src);}
 	/** @arg {[string,StoreData['seen_strings'][number][1][1][number]][]} new_data */
 	get_string_store(new_data) {
 		const {strings_key_index_map: index,seen_strings: data}=this;
@@ -2156,9 +2020,7 @@ class BitmapResult {
 		const {seen_keys_index: index,seen_keys: data}=this;
 		return {index,data,new_data};
 	}
-	get_seen_booleans() {
-		return this.seen_booleans;
-	}
+	get_seen_booleans() {return this.seen_booleans;}
 	get_seen_root_visual_elements() {return this.seen_root_visual_elements;}
 	/** @api @protected @type {[string,{t:boolean;f:boolean}][]} */
 	seen_booleans=[];
@@ -2174,9 +2036,7 @@ class BitmapResult {
 	seen_strings=[];
 	/** @api @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
 	seen_numbers=[];
-	get_seen_numbers() {
-		return this.seen_numbers;
-	}
+	get_seen_numbers() {return this.seen_numbers;}
 	/** @api @public @arg {Partial<ReturnType<StoreData['destructure']>>} other */
 	update(other) {
 		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=other;
@@ -2261,9 +2121,7 @@ class KnownDataSaver extends ApiBase {
 		}
 	}
 	#data_store=new StoreData({});
-	get_data_store() {
-		return this.#data_store;
-	}
+	get_data_store() {return this.#data_store;}
 	/** @no_mod @arg {string} seen_data */
 	#save_local_storage(seen_data) {
 		if(no_storage_access) {
@@ -2448,9 +2306,7 @@ class KnownDataSaver extends ApiBase {
 		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
 		let zz=map_arr.at(-1)??0;
 		let ta=new Array(zz+1).fill(0);
-		src.forEach(e => {
-			ta[e]=1;
-		});
+		src.forEach(e => {ta[e]=1;});
 		let bs=ta.join("");
 		return new BitmapResult(map_arr,bs);
 	}
@@ -2461,21 +2317,13 @@ class KnownDataSaver extends ApiBase {
 		let ta=new Array(zz+1).fill(fill_value);
 		/** @private @type {0|1} */
 		let replace_value;
-		if(fill_value===0) {
-			replace_value=1;
-		} else {
-			replace_value=0;
-		}
-		src.forEach(e => {
-			ta[e]=replace_value;
-		});
+		if(fill_value===0) {replace_value=1;} else {replace_value=0;}
+		src.forEach(e => {ta[e]=replace_value;});
 		let bs=ta.join("");
 		return new BitmapResult(map_arr,bs);
 	}
 	bitmap_console_todo_1() {
-		let yt_plugin={
-			ds: this,
-		};
+		let yt_plugin={ds: this,};
 		let gg=yt_plugin.ds.get_data_store().get_seen_numbers().find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]==="many") return;
@@ -2547,9 +2395,7 @@ class KnownDataSaver extends ApiBase {
 			cur=["one",[]];
 			p=[k,cur];
 			seen_numbers.push(p);
-		} else {
-			cur=p[1];
-		}
+		} else {cur=p[1];}
 		if(x instanceof Array) {
 			let target=p[1];
 			if(target[0]==="one") {
@@ -2592,14 +2438,10 @@ class KnownDataSaver extends ApiBase {
 		}
 		let [,kc]=krc;
 		if(bool) {
-			if(!kc.t) {
-				console.log(key,bool);
-			}
+			if(!kc.t) {console.log(key,bool);}
 			kc.t=true;
 		} else {
-			if(!kc.f) {
-				console.log(key,bool);
-			}
+			if(!kc.f) {console.log(key,bool);}
 			kc.f=true;
 		}
 		this.#new_booleans.push([key,kc]);
@@ -2672,16 +2514,12 @@ class BaseService extends BaseServicePrivate {
 	/** @arg {ServiceMethods<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
 	is_normal_service(x) {return x.service_type==="normal";}
 	/** @returns {"unknown"|"normal"} */
-	get service_type() {
-		return "unknown";
-	}
+	get service_type() {return "unknown";}
 	/** @protected @arg {string} x */
 	create_param_map(x) {
 		let res_e=this._decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
-		if(res_e.find(e => e[0]==="error")) {
-			return null;
-		}
+		if(res_e.find(e => e[0]==="error")) {return null;}
 		return this.make_param_map(res_e);
 	}
 	/** @protected @arg {D_DecTypeNum[]} res_e */
@@ -2693,9 +2531,7 @@ class BaseService extends BaseServicePrivate {
 			if(ret_map.has(key)) {
 				let v=ret_map.get(key);
 				v?.push(value);
-			} else {
-				ret_map.set(key,[value]);
-			}
+			} else {ret_map.set(key,[value]);}
 		};
 		for(let param of res_e) {
 			switch(param[0]) {
@@ -2769,9 +2605,7 @@ class BaseService extends BaseServicePrivate {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
 	/** @protected */
-	get TODO_true() {
-		return true;
-	}
+	get TODO_true() {return true;}
 	/** @protected @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
 		/** @private @type {"_"|"-"} */
@@ -2780,9 +2614,7 @@ class BaseService extends BaseServicePrivate {
 		if(s.includes("-")) {
 			sep="-";
 			ns_name="ELEMENT";
-		} else {
-			sep="_";
-		}
+		} else {sep="_";}
 		let no_ns=split_string_once(s,ns);
 		if(!no_ns[1]) throw new Error();
 		let nn=split_string_once(no_ns[1],sep);
@@ -2839,13 +2671,7 @@ class BaseService extends BaseServicePrivate {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
 			let u=f.call(this,a,i);
-			if(u!==void 0) {
-				c.push(u);
-			} else if(u===void 0) {
-				v.push(u);
-			} else {
-				throw new Error();
-			}
+			if(u!==void 0) {c.push(u);} else if(u===void 0) {v.push(u);} else {throw new Error();}
 		}
 		return [c,v];
 	}
@@ -2959,9 +2785,7 @@ class YtHandlers extends BaseService {
 		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
 			if(typeof req=="string") {				return {url: to_url(req)};}
-			if(req instanceof URL) {
-				return {url: req};
-			}
+			if(req instanceof URL) {return {url: req};}
 			return {url: to_url(req.url)};
 		}
 		let parsed_url=convert_to_url(request).url;
@@ -2972,9 +2796,7 @@ class YtHandlers extends BaseService {
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
-			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {return split_string_once(ss1,"youtubei/v1/")[1];} else {
-				return ss1;
-			}
+			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {return split_string_once(ss1,"youtubei/v1/")[1];} else {return ss1;}
 		};
 		let ss2=get_ss2();
 		if(!url_type) {
@@ -2986,9 +2808,7 @@ class YtHandlers extends BaseService {
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
 		let res=ht.decode_input(url_type,data);
-		if(res) {
-			ht.run(response,res);
-		} else {console.log("failed to decode_input");}
+		if(res) {ht.run(response,res);} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
@@ -3005,9 +2825,7 @@ class YtHandlers extends BaseService {
 	on_initial_data(apply_args) {
 		/** @private @type {YTNavigateFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
-		if(!("page" in ret)) {
-			return ret;
-		}
+		if(!("page" in ret)) {return ret;}
 		if(!ret.response) {
 			console.log("[unhandled_return_value]",ret);
 			debugger;
@@ -3026,9 +2844,7 @@ class YtHandlers extends BaseService {
 			return ret;
 		}
 		/** @private @template {U[]} T @template U @arg {T} a @arg {U} t */
-		function includes(a,t) {
-			return a.includes(t);
-		}
+		function includes(a,t) {return a.includes(t);}
 		if(!includes(this.known_page_types,page_type)) {
 			console.log("unknown page type",page_type);
 			debugger;
@@ -3080,9 +2896,7 @@ class HandleRendererContentItemArray extends BaseService {
 		}
 		let rich_shelf=content.richShelfRenderer;
 		if(rich_shelf.icon) {
-			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
-				return false;
-			}
+			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {return false;}
 			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
 			return true;
 		}
@@ -3118,17 +2932,13 @@ class HandleRendererContentItemArray extends BaseService {
 class YtObjectVisitor {
 	/** @handler @public @arg {ApiIterateState} state @arg {AD_AppendContinuationItems} action */
 	appendContinuationItemsAction(state,action) {
-		if(!action.continuationItems) {
-			debugger;
-		}
+		if(!action.continuationItems) {debugger;}
 		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
 		if(filtered.length>0) {action.continuationItems=filtered;}
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
 	reloadContinuationItemsCommand({t: state},command) {
-		if(!command.continuationItems) {
-			debugger;
-		}
+		if(!command.continuationItems) {debugger;}
 		let filtered=state.handlers.renderer_content_item_array.replace_array(command.continuationItems);
 		if(filtered.length>0) {command.continuationItems=filtered;}
 	}
@@ -3170,18 +2980,12 @@ class IterateApiResultBase extends BaseService {
 		/** @private @type {Map<string,keyof YtObjectVisitor>} */
 		this.keys_map=new Map;
 		let keys=this.get_keys_of_ex(obj_visitor);
-		for(let i of keys) {
-			this.keys_map.set(i,i);
-		}
+		for(let i of keys) {this.keys_map.set(i,i);}
 	}
 	/** @api @public @arg {ApiIterateState} state @arg {{}} data */
 	default_iter(state,data) {
-		if(data===void 0) {
-			return;
-		}
-		if(typeof data==="string") {
-			return;
-		}
+		if(data===void 0) {return;}
+		if(typeof data==="string") {return;}
 		let {t,path}=state;
 		if(data instanceof Array) {
 			for(let [key,value] of data.entries()) {this.default_iter({t,path: `${path}[${key}]`},value);}
@@ -3231,9 +3035,7 @@ class CsiService extends BaseService {
 		if(section) {
 			let section_id=section[0].toLowerCase();
 			this.save_string("[section_id]",section_id);
-		} else {
-			debugger;
-		}
+		} else {debugger;}
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */
 	parse_rid_param(param) {
@@ -3268,9 +3070,7 @@ class CsiService extends BaseService {
 			/** @private @type {"1"|null} */
 			yt_ad: null,
 		};
-		for(let x of this.rid_keys) {
-			this.rid[x]=void 0;
-		}
+		for(let x of this.rid_keys) {this.rid[x]=void 0;}
 	}
 	/** @private @arg {D_BrowseEndpointPages} value */
 	verify_param_yt_fn(value) {
@@ -3473,11 +3273,7 @@ class ModifyEnv extends BaseService {
 				}
 			});
 			let ret;
-			try {
-				if(onfulfilled) {ret=onfulfilled(response_text);} else {
-					ret=response_text;
-				}
-			} catch(err) {
+			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;}} catch(err) {
 				if(on_rejected) return on_rejected(err);
 				throw err;
 			} finally {
@@ -3509,12 +3305,8 @@ class ModifyEnv extends BaseService {
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 				}
 				get redirected() {			return response.redirected;}
-				get ok() {
-					return response.ok;
-				}
-				get status() {
-					return response.status;
-				}
+				get ok() {return response.ok;}
+				get status() {return response.status;}
 			}
 			let fake_res=new R_Fake;
 			/** @private @type {any} */
@@ -3526,9 +3318,7 @@ class ModifyEnv extends BaseService {
 				get(_obj,key,_proxy) {
 					/** @private @type {string} */
 					let ks=as(key);
-					if(ks==="then") {
-						return void 0;
-					}
+					if(ks==="then") {return void 0;}
 					switch(key) {
 						case "text": case "redirected": case "ok": case "status": return fake_res[key];
 						case "body": return response.body;
@@ -3579,9 +3369,7 @@ class ModifyEnv extends BaseService {
 		fetch_inject.__proxy_target__=original_fetch;
 		let navigator_sendBeacon=navigator.sendBeacon;
 		navigator.sendBeacon=function(...args) {
-			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
-				return true;
-			}
+			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {return true;}
 			console.log("send_beacon",args[0]);
 			return navigator_sendBeacon.call(this,...args);
 		};
@@ -3604,9 +3392,7 @@ class YtPlugin extends BaseService {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
-	get_data_saver() {
-		return this.ds;
-	}
+	get_data_saver() {return this.ds;}
 }
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
@@ -3628,9 +3414,7 @@ function sizeof_js(obj) {
 	let cache=sizeof_cache.get(obj);
 	if(cache!==void 0) return cache;
 	count++;
-	if(count>1024) {
-		throw new Error("Too big");
-	}
+	if(count>1024) {throw new Error("Too big");}
 	let size=0;
 	x: {
 		if(typeof obj=="string") {
@@ -3652,16 +3436,12 @@ function sizeof_js(obj) {
 		if(typeof obj!=="object") {debugger; return 1;}
 		if(obj===null) return 1;
 		let ent;
-		try {
-			ent=Object.entries(obj);
-		} catch(e) {
+		try {ent=Object.entries(obj);} catch(e) {
 			console.log("failed_to_get_entries",e,obj);
 			size=1;
 			break x;
 		}
-		for(let x of ent) {
-			size+=sizeof_js(x[1]);
-		}
+		for(let x of ent) {size+=sizeof_js(x[1]);}
 	}
 	sizeof_cache.set(obj,size);
 	return size;
@@ -3691,9 +3471,7 @@ class ServiceMethods extends ServiceData {
 		return [true,x.popup];
 	}
 	/** @override @returns {"unknown"|"normal"} */
-	get service_type() {
-		return "normal";
-	}
+	get service_type() {return "normal";}
 	/** @public @template {string} PN @template {string} HR @template {string} HS @template {string} Pr_C @template {string} PRS @template {UrlParseRes<HR,HS,Pr_C,PRS,string>} T @arg {T} x @arg {PN} pathname @template {T extends infer E extends T?E["pathname"] extends PN?E:never:never} R @returns {x is R} */
 	static is_url_with_pathname(x,pathname) {
 		/** @arg {R} x */
@@ -3999,9 +3777,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @protected @arg {true} x */
-	expect_true(x) {
-		if(x!==true) debugger;
-	}
+	expect_true(x) {if(x!==true) debugger;}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @protected @arg {[D_VE3832_PreconnectUrl]} x */
@@ -4077,9 +3853,7 @@ class ServiceMethods extends ServiceData {
 				let x=[]; x;
 			}
 		}
-		switch(ss) {
-			default: debugger;
-		}
+		switch(ss) {default: debugger;}
 	}
 	/** @protected @arg {D_BrowseIdStr} x */
 	browseId(x) {this.parser.parse_browse_id(x);}
@@ -4104,9 +3878,7 @@ export_((exports) => {
 	exports.make_iterator=make_iterator;
 	exports.yt_plugin_base_main=yt_plugin_base_main;
 });
-export_(exports => {
-	exports.ApiBase=ApiBase;
-});
+export_(exports => {exports.ApiBase=ApiBase;});
 export_(exports => {exports.BaseServicePrivate=BaseServicePrivate;});
 export_(exports => {
 	exports.ServiceMethods=ServiceMethods;

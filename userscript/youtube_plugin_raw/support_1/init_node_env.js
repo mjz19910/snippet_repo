@@ -12,25 +12,15 @@ navigator=na;
 		/** @type {{ [x: string]: any; }} */
 		index_arr=[];
 		/** @arg {string} str */
-		getItem(str) {
-			return this.map.get(str);
-		}
-		get length() {
-			return this.map.size;
-		}
+		getItem(str) {return this.map.get(str);}
+		get length() {return this.map.size;}
 		/** @arg {any} key @arg {any} value */
-		setItem(key,value) {
-			this.map.set(key,value);
-		}
+		setItem(key,value) {this.map.set(key,value);}
 		/** @arg {any} key */
-		removeItem(key) {
-			this.map.delete(key);
-		}
+		removeItem(key) {this.map.delete(key);}
 		/** @arg {string|number} index */
 		key(index) {	return this.index_arr[index];};
-		clear() {
-			this.map.clear();
-		}
+		clear() {this.map.clear();}
 	}
 	window.localStorage=new Storage;
 }
@@ -48,18 +38,12 @@ navigator=na;
 			element._setup(tagName);
 			return element;
 		}
-		getElementsByTagNameNS() {
-			return [];
-		}
+		getElementsByTagNameNS() {return [];}
 	}
 	class Element {
-		get style() {
-			return {};
-		}
+		get style() {return {};}
 		/** @arg {string} tn */
-		_setup(tn) {
-			this.tagName=tn;
-		}
+		_setup(tn) {this.tagName=tn;}
 		/** @type {any[]} */
 		children=[];
 		/** @arg {any} other_ele */
@@ -73,9 +57,7 @@ navigator=na;
 		_state=null;
 		/** @type {({}|null)[]} */
 		history_list=[];
-		get state() {
-			return this._state;
-		}
+		get state() {return this._state;}
 		/** @arg {{}|null} state */
 		pushState(state) {
 			this.history_list.push(this._state);
@@ -151,9 +133,7 @@ let r_window=window; r_window;
 		}
 	}
 	class AudioContext {
-		createGain() {
-			return new Gain(this);
-		}
+		createGain() {return new Gain(this);}
 		createDynamicsCompressor() {return new DynamicsCompressorNode(this);}
 	}
 	window.AudioContext=AudioContext;
@@ -176,9 +156,7 @@ function destroy_env(message_channel) {
 /** @arg {number} exit_status */
 async function do_node_exit(exit_status) {
 	/** @arg {string} x */
-	function dyn_import(x) {
-		return import(x);
-	}
+	function dyn_import(x) {return import(x);}
 	let do_node_exit=false;
 	if(do_node_exit) {
 		/** @type {{exit:(v:number)=>void}} */

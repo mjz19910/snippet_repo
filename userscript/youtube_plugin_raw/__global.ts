@@ -1,10 +1,6 @@
 import {HandleTypesEval_} from "./handle_types_eval.js";
 declare global {
-	interface Window {
-		Polymer: {
-			Class?: <T>(x: {}) => T;
-		};
-	}
+	interface Window {Polymer: {Class?: <T>(x: {}) => T;};}
 }
 type Base$ImpType=typeof import("./zc_child_modules/YtPlugin_Base_Plugin.user.js");
 declare global {

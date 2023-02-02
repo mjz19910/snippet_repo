@@ -133,9 +133,7 @@ type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_Pa
 type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
 type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
 type UC=TP_ParseUrlItems<"x=3&r=12">;
-type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {
-	[V in U]: C;
-}:T;
+type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: C;}:T;
 type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
@@ -151,13 +149,9 @@ type TR_SectionListItem_3<T_ContentType,B,C>=
 	;
 ;
 type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
-type T_Actions<T>={
-	actions: T[];
-};
+type T_Actions<T>={actions: T[];};
 type T_AnyObjectOrEmpty<T extends {}>={}|T;
-type T_Autoplay<T>={
-	autoplay: T;
-};
+type T_Autoplay<T>={autoplay: T;};
 type T_BaseUrl<T extends string>={baseUrl: T;};
 type T_Command$<T>={
 	command: T;
@@ -182,9 +176,7 @@ type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T
 type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
 type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
 type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
-type T_ExtractKeyValue<T,U extends string>=T extends {
-	[C in U]: any;
-}? T:never;
+type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
 type T_FeedEntry<T extends string>=`FE${T}`;
 type T_GetTypeof<T>=
 	T extends undefined? "undefined":
@@ -214,21 +206,15 @@ type D_Omit_Compact_Video=D_Omit_Compact_Player&{
 	publishedTimeText: G_Text;
 };
 type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
-type T_Playlist<T>={
-	playlist: T;
-};
+type T_Playlist<T>={playlist: T;};
 type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
-type T_Results<T>={
-	results: T;
-};
+type T_Results<T>={results: T;};
 type T_ResultsArray<T>={
 	results: T[];
 	trackingParams: string;
 };
 type T_RidFormat<T extends string>=`${T}_rid`;
-type T_SecondaryResults<T>={
-	secondaryResults: T;
-};
+type T_SecondaryResults<T>={secondaryResults: T;};
 type T_ShortsSurfaceIdentifier<T>={
 	surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
 	tag: T;
@@ -241,9 +227,7 @@ type T_SplitIntoGroups<S extends string,D extends string>=
 	[S];
 type T_SplitOnce<S extends string,D extends string>=string extends S?
 	[string]|[string,string]:S extends ''? []:S extends `${infer T}${D}${infer U}`? [T,U]:[S];
-type T_StyleType<T>={
-	styleType: T;
-};
+type T_StyleType<T>={styleType: T;};
 type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
 type T_Text<T>={text: T;};
 type T_TextRuns<T>={runs: T;};

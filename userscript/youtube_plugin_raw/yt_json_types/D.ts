@@ -184,9 +184,7 @@ type D_PlaylistAddButton_Clip={
 	isDisabled: false;
 	text: G_Text;
 	icon: T_Icon<"PLAYLIST_ADD">;
-	accessibility: {
-		label: "Save to";
-	};
+	accessibility: {label: "Save to";};
 	tooltip: "Clip";
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
@@ -1799,9 +1797,7 @@ type D_Heatmap={
 	maxHeightDp: 40;
 	minHeightDp: 4;
 	showHideAnimationDurationMillis: 200;
-	heatMarkers: {
-		heatMarkerRenderer: {};
-	}[];
+	heatMarkers: {heatMarkerRenderer: {};}[];
 	heatMarkersDecorations: {timedMarkerDecorationRenderer: {};}[];
 };
 type D_HideEnclosingContainer={hideEnclosingContainer: true;};
