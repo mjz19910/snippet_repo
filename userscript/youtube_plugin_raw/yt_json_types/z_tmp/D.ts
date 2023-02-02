@@ -106,7 +106,6 @@ type DCE_Button={
 	targetId: D_Button_TargetId;
 };
 type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
-
 type D_ClipInfoButton={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
@@ -120,7 +119,6 @@ type D_ClipInfoButton={
 		popupType: "DIALOG";
 	}>;
 };
-
 type D_ShareButton={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
@@ -154,7 +152,6 @@ type D_CreateClipButton={
 	targetId: "create-clip-button-action-bar";
 	command: A_ChangeEngagementPanelVisibility;
 };
-
 type D_SuggestiveButton={
 	style: "STYLE_SUGGESTIVE";
 	size: "SIZE_DEFAULT";
@@ -163,7 +160,6 @@ type D_SuggestiveButton={
 	trackingParams: string;
 	command: C_Continuation;
 };
-
 type D_PlaylistAddButton_Save={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
@@ -176,7 +172,6 @@ type D_PlaylistAddButton_Save={
 	accessibilityData: D_Accessibility;
 	command: E_AddToPlaylistService;
 };
-
 type D_PlaylistAddButton_Clip={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
@@ -189,7 +184,6 @@ type D_PlaylistAddButton_Clip={
 	accessibilityData: D_Accessibility;
 	command: E_AddToPlaylistService;
 };
-
 type D_ButtonCancelAutoplay={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
@@ -213,7 +207,6 @@ type D_Button_ClipInfoButton={
 		popupType: "DIALOG";
 	}>;
 };
-
 type D_Button_2=
 	|D_ClipInfoButton
 	|D_ButtonCancelAutoplay
@@ -225,12 +218,10 @@ type D_Button_2=
 	|D_Button_ClipInfoButton
 	;
 ;
-
 type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
 type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
 type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=T_Btn extends infer T? (T extends infer Y? Omit<Y,U>:never) extends infer Z? {[U in keyof Z]: Z[U]}:never:never;
 type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
-
 type D_Button_EX_1_Style=Extract<Exclude<D_Button,D_Button_EX_1_Command>,{style: any;}>;
 type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
 type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
@@ -239,7 +230,6 @@ type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
 type D_Button_ER_1_Rest=Exclude<D_Button,D_Button_NP_1_SrvEp>;
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
-
 type D_SubscriptionNotificationToggleButton={
 	states: [
 		{
@@ -726,7 +716,6 @@ type D_ChipCloudChip=
 		targetId: "feed_filter_chip_bar_second_chip";
 	};
 type EG_CompactLink$1=E_Upload|E_SignalNavigation;
-
 type D_CompactLink={
 	icon: T_Icon<"PERSON_ADD">;
 	title: G_Text;
@@ -1858,13 +1847,11 @@ type D_ImpressionCommand={
 	loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/adview?${string}`>[];
 	pingingEndpoint: B_Hack;
 };
-
 type D_ClickLocationTarget={
 	location: "PROMOTED_SPARKLES_CLICK_LOCATION_AD_BADGE";
 	code: 31;
 	behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
 };
-
 type D_PromotedSparklesWeb={
 	thumbnail: D_Thumbnail;
 	icon: T_Icon<"EXTERNAL_LINK">;
@@ -1878,7 +1865,6 @@ type D_PromotedSparklesWeb={
 	trackingParams: string;
 	clickLocationTargets: D_ClickLocationTarget[];
 };
-
 type D_InFeedAdLayout={adLayoutMetadata: M_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
 type D_LinearAdSequence={adLayoutMetadata: M_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};
 type D_AdSlotAndLayoutItem={adLayoutMetadata: MMD_AdLayout_TopImage[]; adSlotMetadata: DMD_AdSlot;};
@@ -2829,7 +2815,6 @@ type C_CommandExecutor={
 };
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
-
 type D_ToggleButton=
 	|{
 		style: T_StyleType<"STYLE_TEXT">;
@@ -2895,7 +2880,6 @@ type D_TopbarMenuButton_MenuItem={
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 };
 type R_TopbarMenu=TR_MultiPageMenu<D_TopbarMenuButton_MenuItem>;
-
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
 	menuRenderer: R_TopbarMenu;
