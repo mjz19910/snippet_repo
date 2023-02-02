@@ -7872,7 +7872,7 @@ class HandleTypes extends HandleTypesEval {
 			return [e[0],ei];
 		}));
 	}
-	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
+	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
 	make_parse_key(root,path,map,mk,callback) {
 		/** @private @arg {number[]} ta */
 		let parse_key=(ta) => {
@@ -7882,8 +7882,8 @@ class HandleTypes extends HandleTypesEval {
 		};
 		return parse_key;
 	}
-	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
-	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
+	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
+	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_any_param(root,path,map_entry_key_path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -7901,7 +7901,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @private @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {V_ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
+	/** @private @arg {P_ParamParse} path @arg {number[]} map_keys @arg {V_ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
 	get_parse_fns(path,map_keys,map_entry_value,map_entry_key=null) {
 		let parts=split_string(path,".");
 		/** @private @arg {number} idx */
@@ -7954,7 +7954,7 @@ class HandleTypes extends HandleTypesEval {
 		f();
 		console.groupEnd();
 	}
-	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
+	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		if(path!=="watch.player_params") {debugger; return;}
 		if(root!=="DE_VE3832_Watch") {debugger; return;}
@@ -7965,7 +7965,7 @@ class HandleTypes extends HandleTypesEval {
 	/** 
 	 * @template {"DE_VE3832_Watch"} T 
 	 * @arg {[8]} map_entry_key_path 
-	 * @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
+	 * @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		map_keys;
 		let saved_map_keys=map_keys.slice();
@@ -7980,14 +7980,14 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @template {"DE_VE3832_Watch"} T @template {P_ParamParse_XX} U @arg {on_player_params_callback_ty_len1<T,U>} x */
+	/** @template {"DE_VE3832_Watch"} T @template {P_ParamParse} U @arg {on_player_params_callback_ty_len1<T,U>} x */
 	on_player_params_callback_ty_len1(...x) {
 		switch(x[0]) {
 			case "DE_VE3832_Watch": break;
 			default: debugger; break;
 		}
 	}
-	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root @returns {void} */
+	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {void} */
 	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let callback=this.on_endpoint_params_callback.bind(this);
 		let map_entry_key=map_entry_key_path.at(-1); map_entry_values;
@@ -8005,10 +8005,9 @@ class HandleTypes extends HandleTypesEval {
 			default: {
 				grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 				debugger;
-				/** @private @type {P_ParamParse_XX} */
+				/** @private @type {P_ParamParse} */
 				return;
 			}
-
 			case "get_report_form.f28":switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -8073,7 +8072,7 @@ class HandleTypes extends HandleTypesEval {
 				return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 		}
 	}
-	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapValue[]} tva */
+	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {
 		let off=1;
 		for(let val of tva) {
@@ -8102,7 +8101,7 @@ class HandleTypes extends HandleTypesEval {
 		return x[0]==="bigint";
 	}
 	parse_key_index=1;
-	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapValue[]} tva */
+	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
 		if(tva.length!==1) return;

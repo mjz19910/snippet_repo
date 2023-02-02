@@ -4315,7 +4315,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with_rx(x.targetId,w);
 	}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
 	playerParams(root,path,x,callback) {
 		this.parser.on_player_params(root,path,x,callback);
 	}

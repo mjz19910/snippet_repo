@@ -75,7 +75,7 @@ class ParserService {
 	get_url_type(x) {x; throw 1;}
 	/** @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {root; x;}
-	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse} path @arg {string} x */
 	on_endpoint_params(root,path,x) {if(x===void 0) {debugger; return;} root; x; path;}
 }
 class CodegenService {
@@ -89,7 +89,7 @@ class CodegenService {
 export class Snippet_0_tmp {
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse_XX} path @arg {string} x */
+	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
