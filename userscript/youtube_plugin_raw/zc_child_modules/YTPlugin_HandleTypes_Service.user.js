@@ -223,14 +223,14 @@ class HandleTypes extends HandleTypesEval {
 				}
 			}
 			let res_case="";
-			if(idx<parts.length) res_case=`case "${parts[idx]}": u(idx); debugger; break;`;
+			if(idx<parts.length) res_case=` case "${parts[idx]}": u(idx); debugger; break;`;
 			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
 			console.log(`
 			-- [${parts.join(".")},${idx}] --\n\n
 			case "${parts[idx-1]}": {
 				const idx=${idx+1};
 				if(parts.length===${idx}) {\n${case_part}${value_part}\n${pad}\t}
-				switch(parts[${idx}]) {default: u(idx); debugger; parts[${idx}]===""; break; ${res_case}}
+				switch(parts[${idx}]) {default: u(idx); debugger; parts[${idx}]===""; break;${res_case}}
 			} break;`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
@@ -510,15 +510,19 @@ class HandleTypes extends HandleTypesEval {
 			case "notification": {
 				const idx=2;
 				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "record_interactions": case "opt_out": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
+					default: u(idx); debugger; parts[1]===""; return;
+					case "record_interactions": case "opt_out":
 				}
+				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[2]) {
+					default: {const idx=3; u(idx); debugger; parts[2]==="";} break;
+					case "f2": case "f3": case "f4": case "f7":
+				}
+				if(parts.length===3) {
+					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
 			} break;
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
 			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
