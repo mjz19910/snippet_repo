@@ -77,7 +77,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ShowReloadUi";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "EA_ChangeEngagementPanelVisibility";}
-		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "ES_ShareEntity";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RSG_SharePanel_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
@@ -90,10 +89,12 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_MutationItem";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
@@ -103,7 +104,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_YpcGetCart";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}
@@ -294,6 +294,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Feedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_GetNotificationMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_MutationItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_PersistenceOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_ShareEntityService";}
@@ -538,12 +539,10 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPrefetch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebSearchboxConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "EA_ChangeEngagementPanelVisibility";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ES_ShareEntity";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "EY_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_NotificationOptOut";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AddToPlaylistService";}
@@ -681,6 +680,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_CanShare";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistByline";}
@@ -691,7 +691,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ToggleButtonIdData";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_YpcGetCart";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateText";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateTextData";}
@@ -702,6 +701,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Viewership";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_ViewershipData";}
 		|{n: Prelude.CF_M_zy; t: Types.CF_M_zy_; v: "D_ChannelHeaderLinks";}
+		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "DE_ShareEntityService";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "G_Action_GetNotificationsMenu";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "RSG_NotificationMenu_Action";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup:R_PdgBuyFlow";}

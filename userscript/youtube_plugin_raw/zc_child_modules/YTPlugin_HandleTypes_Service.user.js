@@ -2320,7 +2320,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Upload} x */
 	E_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
-	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.D_YpcGetCart(b);}
+	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {E_ReelWatch} x */
@@ -2365,6 +2365,10 @@ class HandleTypes extends HandleTypesEval {
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @protected @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
+	/** @private @arg {E_CreatePlaylistService} x */
+	E_CreatePlaylistService(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(u);}
+	/** @private @arg {E_NotificationOptOut} x */
+	E_NotificationOptOut(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.DE_NotificationOptOut(b); this.M_Empty_WCM(u);}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
@@ -2375,8 +2379,6 @@ class HandleTypes extends HandleTypesEval {
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
-	/** @private @arg {M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414_WC);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {M_FlagGetForm} x */
@@ -2391,19 +2393,70 @@ class HandleTypes extends HandleTypesEval {
 	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832_Watch_WC);}
 	/** @private @arg {M_VE4724} x */
 	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724_WC);}
+	/** @private @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414_WC);}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
-	/** @protected @arg {DE_YpcGetOfflineUpsell} x */
+	/** @private @arg {DC_Params} a */
+	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
+	/** @private @arg {DE_ShareEntityService} x */
+	DE_ShareEntityService(x) {
+		const cf="DE_ShareEntityService";
+		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
+		let [u1,y1]=this.z(b,x => this.TA_OpenPopup(cf,x));
+		this.z(u1,this.Popup_ShareEntityService);
+	}
+	/** @private @arg {Popup_ShareEntityService} x */
+	Popup_ShareEntityService(x) {x;}
+	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,(x,cf) => this.params(cf,"ypc_get_offline_upsell",x));}
-	/** @protected @arg {DE_GetReportForm} x */
+	/** @private @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
-	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
+	/** @private @arg {DE_NotificationOptOut} x */
+	DE_NotificationOptOut(x) {
+		const cf="DE_NotificationOptOut";
+		const {optOutText: a,serializedOptOut: b,serializedRecordInteractionsRequest: c,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(a);
+		this.params(cf,"notification.opt_out",b);
+		this.params(cf,"notification.record_interactions",c);
+	}
+	/** @private @arg {DE_SignalNavigation} x */
+	DE_SignalNavigation(x) {
+		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x); this.k(cf,x);
+		switch(a) {
+			default: this.codegen_case(`${cf}.signal`,a); break;
+			case "CHANNEL_SWITCHER":
+			case "LIVE_CONTROL_ROOM":
+		}
+	}
+	/** @private @arg {DE_UndoFeedback} x */
+	DE_UndoFeedback(x) {
+		const cf="DE_UndoFeedback"; this.k(cf,x);
+		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		this.parse_undo_token(undoToken);
+		this.z(actions,this.A_UndoFeedback);
+	}
+	/** @private @arg {DE_GetNotificationMenu} x */
+	DE_GetNotificationMenu(x) {
+		const cf="DE_GetNotificationMenu"; this.k(cf,x);
+		const {ctoken,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		this.params(cf,"GetNotificationMenu.ctoken",ctoken);
+		debugger;
+	}
+	/** @private @arg {DE_SuperThanksSelectedTier} x */
+	DE_SuperThanksSelectedTier(x) {
+		const cf="DE_SuperThanksSelectedTier";
+		const {index,key,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		console.log("super_thanks_selected_tier.index",index);
+		console.log("super_thanks_selected_tier.key",key);
+	}
+	/** @private @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @protected @arg {GM_EditPlaylist} x */
+	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {
 		const cf="GM_EditPlaylist"; this.k(cf,x);
 		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
@@ -2429,26 +2482,8 @@ class HandleTypes extends HandleTypesEval {
 		let val=obj[key];
 		this.codegen_case(cf,val,code);
 	}
-	/** @private @arg {DE_SignalNavigation} x */
-	DE_SignalNavigation(x) {
-		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x); this.k(cf,x);
-		switch(a) {
-			default: this.codegen_case(`${cf}.signal`,a); break;
-			case "CHANNEL_SWITCHER":
-			case "LIVE_CONTROL_ROOM":
-		}
-	}
 	/** @private @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
-	/** @private @arg {DC_Params} a */
-	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
-	/** @private @arg {DE_UndoFeedback} x */
-	DE_UndoFeedback(x) {
-		const cf="DE_UndoFeedback"; this.k(cf,x);
-		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.parse_undo_token(undoToken);
-		this.z(actions,this.A_UndoFeedback);
-	}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
 		let token_bin=bs.base64_url_dec.decodeByteArray(x);
@@ -2457,13 +2492,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
-	/** @private @arg {DE_GetNotificationMenu} x */
-	DE_GetNotificationMenu(x) {
-		const cf="DE_GetNotificationMenu"; this.k(cf,x);
-		const {ctoken,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.params(cf,"GetNotificationMenu.ctoken",ctoken);
-		debugger;
-	}
 	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
 	G_DE_Browse_VE(ve_name,x) {
 		const cf="G_DE_Browse_VE";
@@ -2845,7 +2873,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint"; this.k(cf,x);
-		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.codegen_typedef_all(cf,x);
@@ -3670,13 +3698,6 @@ class HandleTypes extends HandleTypesEval {
 		console.log("defaultPriceTier",defaultPriceTier);
 		this.DE_SuperThanksSelectedTier(superThanksSelectedTierEntity);
 	}
-	/** @private @arg {DE_SuperThanksSelectedTier} x */
-	DE_SuperThanksSelectedTier(x) {
-		const cf="DE_SuperThanksSelectedTier";
-		const {index,key,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		console.log("super_thanks_selected_tier.index",index);
-		console.log("super_thanks_selected_tier.key",key);
-	}
 	/** @private @arg {D_PdgColorSlider} x */
 	D_PdgColorSlider(x) {
 		const cf="D_PdgColorSlider"; this.k(cf,x);
@@ -3703,8 +3724,8 @@ class HandleTypes extends HandleTypesEval {
 		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {DE_YpcGetCart} x */
-	D_YpcGetCart(x) {
-		const cf="D_YpcGetCart"; this.k(cf,x);
+	DE_YpcGetCart(x) {
+		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
 	}
@@ -4399,8 +4420,6 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {E_CreatePlaylistService} x */
-	E_CreatePlaylistService(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(u);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {GM_CreatePlaylist} x */
@@ -4661,7 +4680,7 @@ class HandleTypes extends HandleTypesEval {
 		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("recordNotificationInteractionsEndpoint" in x) return this.E_RecordNotificationInteractions(x);
@@ -6632,15 +6651,6 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {E_ShareEntityService} x */
-	ES_ShareEntity(x) {
-		const cf="ES_ShareEntity"; this.k(cf,x);
-		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/share/get_share_panel") debugger;
-		this.GM_WC(commandMetadata.webCommandMetadata);
-		this.D_ShareEntityService(shareEntityServiceEndpoint);
 	}
 	/** @private @arg {D_ShareEntityService} x */
 	D_ShareEntityService(x) {
@@ -9005,10 +9015,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_NotificationOptOut"; this.gs(cf,x); debugger;}
-	/** @private @arg {DE_ShareEntityService} x */
-	DE_ShareEntityService(x) {const cf="DE_ShareEntityService"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_VideoMastheadAdV3} x */
 	D_VideoMastheadAdV3(x) {const cf="D_VideoMastheadAdV3"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_AutomixPreviewVideo} x */
