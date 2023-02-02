@@ -28,7 +28,6 @@ type D_Button_With_TargetId=
 
 type D_Button=
 	|never
-	|D_Button_With_TargetId
 	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
@@ -137,8 +136,9 @@ type D_Button=
 	}
 	|{
 		trackingParams: string;
-		command: T_SE_Signal<{webCommandMetadata: {sendPost: true;};},G_ClientSignal>;
+		command: T_SE_Signal<M_SendPost,G_ClientSignal>;
 	}
+	|D_Button_With_TargetId
 	;
 ;
 
