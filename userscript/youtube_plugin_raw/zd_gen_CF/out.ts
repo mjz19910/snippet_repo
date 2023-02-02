@@ -756,6 +756,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithIcon:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithNavEP:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}
+		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_T_Items; t: Types.CF_T_Items_; v: "D_ProfileColumn";}
 		|{n: Prelude.CF_T_Items_TP; t: Types.CF_T_Items_TP_; v: "R_CompactLink_Items";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_GuideEntry_WithIcon.SE_Signal";}
@@ -790,6 +791,7 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_Button_OnIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
+		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
 		;
 }

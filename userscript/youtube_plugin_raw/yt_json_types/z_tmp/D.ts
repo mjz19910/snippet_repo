@@ -2752,9 +2752,13 @@ type Percent=[
 	10|100,
 ][number];
 type tz<T extends (any[]|undefined)>=NonNullable<T>[number];
+type D_ThumbnailOverlaySidePanel_iconTypes=[
+	"PLAY_ALL",
+	"PLAYLISTS",
+];
 type D_ThumbnailOverlaySidePanel={
 	text: G_Text;
-	icon: T_Icon<"PLAY_ALL">;
+	icon: T_Icon<D_ThumbnailOverlaySidePanel_iconTypes[number]>;
 };
 type D_ThumbnailOverlayTimeStatus=D_ThumbnailOverlayTimeStatus_1|D_ThumbnailOverlayTimeStatus_2|D_ThumbnailOverlayTimeStatus_3;
 type D_ThumbnailOverlayTimeStatus_1={

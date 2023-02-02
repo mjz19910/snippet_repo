@@ -54,6 +54,11 @@ function raw_template(x) {
 	if(x.raw.length>1) {debugger;}
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
+/** @template T @arg {T} v */
+function bind_map(v) {
+	/** @template U @arg {U} e @returns {[T,U]} */
+	return (e) => [v,e];
+}; bind_map;
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
@@ -8463,12 +8468,34 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(text);
 		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
+	make_icon_types_map=() => {
+		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
+		let r=[
+			"PLAY_ALL","PLAYLISTS",
+		];
+		const mi={
+			known: r,
+			/** @type {string[]} */
+			unknown: []
+		};
+		const k="D_ThumbnailOverlaySidePanel";
+		/** @type {Map<typeof k,typeof mi>} */
+		let mp=new Map([
+			[k,mi]
+		]);
+		return mp;
+	};
+	icon_types_map=this.make_icon_types_map();
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
 	D_ThumbnailOverlaySidePanel(x) {
 		const cf="D_ThumbnailOverlaySidePanel";
 		const {text,icon}=this.s(cf,x);/* this.g(y);//#destructure*/
 		this.G_Text(text);
-		if(icon.iconType!=="PLAY_ALL") debugger;
+		let store=this.icon_types_map.get(cf);
+		if(!store) return;
+		const {known,unknown}=store;
+		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
+		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
 	}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
 	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon("D_Icon_Mix",x,"MIX"));}
