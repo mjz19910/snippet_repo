@@ -543,8 +543,8 @@ class HandleTypes extends HandleTypesEval {
 								return;
 							}
 							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {
@@ -561,7 +561,7 @@ class HandleTypes extends HandleTypesEval {
 										const idx=5;
 										if(parts.length===4) {
 											if(map_entry_value instanceof Map) return;
-											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+											if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(parts[4]) {
@@ -577,7 +577,7 @@ class HandleTypes extends HandleTypesEval {
 													case "f1": {
 														const idx=7;
 														if(parts.length===6) {
-															if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+															if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
 															switch(map_entry_value) {default: debugger; return;}
 														}
 														switch(parts[6]) {
@@ -603,7 +603,7 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": {
 						const idx=3;
 						if(parts.length===2) {
-							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
@@ -663,7 +663,7 @@ class HandleTypes extends HandleTypesEval {
 							case "f1": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {
@@ -684,7 +684,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=3;
 						if(parts.length===2) {
 							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {
@@ -698,7 +698,7 @@ class HandleTypes extends HandleTypesEval {
 										if(parts[2]==="f3") return;
 										parts;
 									}
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -724,7 +724,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=3;
 						if(parts.length===2) {
 							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {
@@ -767,8 +767,8 @@ class HandleTypes extends HandleTypesEval {
 								const idx=4;
 								if(parts.length===3) {
 									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
 									debugger;
 								}
@@ -804,8 +804,8 @@ class HandleTypes extends HandleTypesEval {
 							case "f5": {
 								const idx=3;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: u(idx-1); debugger; return;}
 								}
 								switch(parts[2]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -834,8 +834,8 @@ class HandleTypes extends HandleTypesEval {
 									if(parts[2]==="f8") return;
 									if(parts[2]==="f9") return;
 									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
@@ -848,7 +848,7 @@ class HandleTypes extends HandleTypesEval {
 										if(parts.length===4) {
 											if(map_entry_value instanceof Map) return;
 											if(calc_skip()) return;
-											if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+											if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(parts[4]) {
@@ -856,7 +856,7 @@ class HandleTypes extends HandleTypesEval {
 											case "f1": case "f2": case "f3": {
 												const idx=6;
 												if(parts.length===5) {
-													if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+													if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 													switch(map_entry_value) {default: u(idx-1); debugger; return;}
 												}
 												switch(parts[5]) {default: u(idx); debugger; parts[5]===""; break;}
@@ -892,7 +892,7 @@ class HandleTypes extends HandleTypesEval {
 							case "f5": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -910,8 +910,8 @@ class HandleTypes extends HandleTypesEval {
 							case "f3": case "f1": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -928,7 +928,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=3;
 						if(parts.length===2) {
 							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {
@@ -937,7 +937,7 @@ class HandleTypes extends HandleTypesEval {
 								const idx=4;
 								if(parts.length===3) {
 									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {
@@ -946,7 +946,7 @@ class HandleTypes extends HandleTypesEval {
 										const idx=5;
 										if(parts.length===4) {
 											if(map_entry_value instanceof Map) return;
-											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+											if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(parts[4]) {
@@ -954,7 +954,7 @@ class HandleTypes extends HandleTypesEval {
 											case "f1": case "f2": {
 												const idx=6;
 												if(parts.length===5) {
-													if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+													if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 													switch(map_entry_value) {default: debugger; return;}
 												}
 												switch(parts[5]) {default: u(idx); debugger; parts[5]===""; break;}
@@ -993,8 +993,8 @@ class HandleTypes extends HandleTypesEval {
 							case "f2": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
-									if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
+									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -1034,7 +1034,7 @@ class HandleTypes extends HandleTypesEval {
 								if(parts.length===3) {
 									if(parts[2]==="f1") return;
 									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {
@@ -1058,8 +1058,8 @@ class HandleTypes extends HandleTypesEval {
 											// [like.likeParams.f6.f2]
 											if(parts[2]=="f6"&&parts[3]=="f2") return;
 											console.log(`[parse_bin.${root}] [%s] [type:%s] [%o]`,path,typeof map_entry_value,map_entry_value);
-											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-											if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+											if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+											if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(parts[4]) {default: u(idx); debugger; parts[4]===""; break;}
@@ -1100,7 +1100,7 @@ class HandleTypes extends HandleTypesEval {
 							default: u(idx); debugger; parts[2]===""; break; case "f30": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -1108,7 +1108,7 @@ class HandleTypes extends HandleTypesEval {
 							case "f71": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -1123,7 +1123,7 @@ class HandleTypes extends HandleTypesEval {
 							case "f1": {
 								const idx=4;
 								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
@@ -1138,8 +1138,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_number(`[${path}]`,x[1]);
-		this.save_string(`[${path}]`,`${x[2]}n`);
+		this.save_number(path,x[1]);
+		this.save_string(path,`${x[2]}n`);
 	}
 	get generate_typedef() {
 		if(!generate_typedef.value) throw new Error();
