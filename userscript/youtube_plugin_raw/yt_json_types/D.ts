@@ -714,7 +714,7 @@ type D_ChipCloudChip=
 		trackingParams: string;
 		targetId: "feed_filter_chip_bar_second_chip";
 	};
-	type EG_CompactLink$1=E_Upload|E_SignalNavigation;
+type EG_CompactLink$1=E_Upload|E_SignalNavigation;
 
 type D_CompactLink={
 	icon: T_Icon<"PERSON_ADD">;
@@ -1164,7 +1164,7 @@ type D_GuideEntry=
 ;
 type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{
 	entryData: any;
-}>
+}>;
 type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{
 	navigationEndpoint: any;
 }>;
@@ -1178,7 +1178,7 @@ type D_GuideEntry_IconType_Obj={
 	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
 	WithIcon: T_GetIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
-type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1:1}|"";
+type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1: 1;}|"";
 //#endregion
 type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|`PL${string}`;};
 // COMPLETED: #13
@@ -1878,31 +1878,33 @@ type D_HotkeyDialogSectionOption={
 	hotkeyAccessibilityLabel: D_Accessibility;
 };
 type D_ImpressionCap={impressionCap: "1";};
-type R_PromotedSparklesWeb={
-	promotedSparklesWebRenderer: {
-		thumbnail: D_Thumbnail;
-		icon: T_Icon<"EXTERNAL_LINK">;
-		title: G_Text;
-		description: G_Text;
-		websiteText: G_Text;
-		actionButton: R_Button;
-		navigationEndpoint: E_Url;
-		impressionCommands: {
-			clickTrackingParams: string;
-			loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/adview?${string}`>[];
-			pingingEndpoint: B_Hack;
-		}[];
-		menu: R_Menu;
-		trackingParams: string;
-		clickLocationTargets: {
-			location: "PROMOTED_SPARKLES_CLICK_LOCATION_AD_BADGE";
-			code: 31;
-			behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
-		}[];
-	};
-}
+type D_ImpressionCommand={
+	clickTrackingParams: string;
+	loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/adview?${string}`>[];
+	pingingEndpoint: B_Hack;
+};
+
+type D_ClickLocationTarget={
+	location: "PROMOTED_SPARKLES_CLICK_LOCATION_AD_BADGE";
+	code: 31;
+	behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
+};
+
+type D_PromotedSparklesWeb={
+	thumbnail: D_Thumbnail;
+	icon: T_Icon<"EXTERNAL_LINK">;
+	title: G_Text;
+	description: G_Text;
+	websiteText: G_Text;
+	actionButton: R_Button;
+	navigationEndpoint: E_Url;
+	impressionCommands: D_ImpressionCommand[];
+	menu: R_Menu;
+	trackingParams: string;
+	clickLocationTargets: D_ClickLocationTarget[];
+};
+
 type D_InFeedAdLayout={adLayoutMetadata: M_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
-type R_DisplayAd={displayAdRenderer: D_DisplayAd;};
 type D_LinearAdSequence={adLayoutMetadata: M_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};
 type D_AdSlotAndLayoutItem={adLayoutMetadata: MMD_AdLayout_TopImage[]; adSlotMetadata: DMD_AdSlot;};
 type MG_AdLayout=M_AdLayout_PlayerBytes|MMD_AdLayout_TopImage;
@@ -3253,3 +3255,6 @@ type D_YtConfig={
 	rootVisualElementType: D_VisualElementType;
 };
 //#endregion
+type D_ParamObjType={
+	[x: number]: number|string|D_ParamObjType;
+};

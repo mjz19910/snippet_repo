@@ -270,3 +270,11 @@ type TR_SectionListItem_3_Empty=TR_SectionListItem_3<{},{},{}>;
 type T_DC_Content<T>={trackingParams: string; contents: T[];};
 type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
 type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
+
+type T_ParseCallbackFunction<T extends CF_L_Params>=(
+	x: V_ParamMapValue[],
+	idx: number[],
+	path: P_ParamParse,
+	map_keys: number[],
+	root: T,
+) => void;

@@ -4259,17 +4259,17 @@ class HandleTypes extends HandleTypesEval {
 		this.R_FulfillmentLayout(fulfillmentContent);
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {D_InFeedAdLayout} x */
-	D_InFeedAdLayout(x) {
-		const cf="D_InFeedAdLayout";
-		const {adLayoutMetadata: a,renderingContent: b,...y}=this.s(cf,x); this.g(y);
-		this.MG_AdLayout(a);
-		if("displayAdRenderer" in b) {
-			this.R_DisplayAd(b);
-		} else {
-			debugger;
-		}
+	/** @private @arg {D_InFeedAdLayout["renderingContent"]} x */
+	D_InFeedAdLayout_Content(x) {
+		const cf="D_InFeedAdLayout_Content"; this.k(cf,x);
+		if("promotedSparklesWebRenderer" in x) return this.R_PromotedSparklesWeb(x);
+		if("displayAdRenderer" in x) return this.R_DisplayAd(x);
+		this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {R_PromotedSparklesWeb} x */
+	R_PromotedSparklesWeb(x) {x;}
+	/** @private @arg {D_InFeedAdLayout} x */
+	D_InFeedAdLayout(x) {const {adLayoutMetadata: a,renderingContent: b,...y}=this.s("D_InFeedAdLayout",x); this.g(y); this.MG_AdLayout(a); this.D_InFeedAdLayout_Content(b);}
 	/** @private @arg {D_DisplayAd} x */
 	D_DisplayAd(x) {
 		const cf="D_DisplayAd";
@@ -7998,7 +7998,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @template {"DE_VE3832_Watch"} T @template {P_ParamParse} U @arg {on_player_params_callback_ty_len1<T,U>} x */
+	/** @template {"DE_VE3832_Watch"} T @template {P_ParamParse} U @arg {ARG_on_player_params_callback_ty_len1<T,U>} x */
 	on_player_params_callback_ty_len1(...x) {
 		switch(x[0]) {
 			case "DE_VE3832_Watch": break;

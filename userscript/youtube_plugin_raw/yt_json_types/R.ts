@@ -23,4 +23,6 @@ type R_FulfilledLayoutContent=R_PageTopAdLayout;
 type R_FulfillmentLayoutContent=R_InFeedAdLayout;
 type R_RichMetadataRow={richMetadataRowRenderer: D_RichMetadataRow;};
 type R_RichMetadata={richMetadataRenderer: D_RichMetadata;};
+type R_PromotedSparklesWeb={promotedSparklesWebRenderer: D_PromotedSparklesWeb;};
+type R_DisplayAd={displayAdRenderer: D_DisplayAd;};
 //#endregion
