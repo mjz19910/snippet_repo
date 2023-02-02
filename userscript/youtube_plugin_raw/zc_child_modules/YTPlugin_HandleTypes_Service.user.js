@@ -213,7 +213,7 @@ class HandleTypes extends HandleTypesEval {
 		let gen_next_part=(idx) => {
 			let pad="\t\t\t";
 			if(idx>parts.length) return;
-			let eq_len_arr=[`${pad}\tswitch(map_entry_value) {default: debugger; return;}`];
+			let eq_len_arr=[`switch(map_entry_value) {default: debugger; return;}`];
 			if(parts.length===idx) {
 				if(map_entry_value instanceof Map) eq_len_arr.push(`if(map_entry_value instanceof Map) return;`);
 				switch(typeof map_entry_value) {
