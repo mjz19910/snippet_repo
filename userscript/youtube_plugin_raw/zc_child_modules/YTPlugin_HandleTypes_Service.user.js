@@ -4344,14 +4344,21 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(successResponseText);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
+	D_MenuNavigationItem_Endpoint(x) {
+		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+	}
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
 		const cf="D_MenuNavigationItem"; this.k(cf,x);
-		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_later*/
 		this.trackingParams(cf,trackingParams);
 		this.G_Text(text);
 		if(icon.iconType!=="INFO") debugger;
-		this.TA_OpenPopup("TA_OpenPopup_Empty",navigationEndpoint);
+		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
+		if("accessibility" in y) return this.y(cf,"accessibility",y,this.D_Accessibility);
+		this.g(y);
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -8589,6 +8596,8 @@ class HandleTypes extends HandleTypesEval {
 	D_DarkColorPalette(x) {const cf="D_DarkColorPalette"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {E_UserFeedback} x */
+	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
