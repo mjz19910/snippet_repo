@@ -4850,9 +4850,9 @@ class HandleTypes extends HandleTypesEval {
 					for(let i=0;i<2;i++) {
 						this.save_next_char("url.redir_token[0].data",p1,i);
 					}
-					this.params(cf,"url.redir_token[1]",p2);
-					console.log("[E_Url.TargetUrl.search_params.redir_token[0]]",p1);
-					console.log("[E_Url.TargetUrl.search_params.redir_token[1]]",p2);
+					for(let i=0;i<2;i++) {
+						this.save_next_char("url.redir_token[1].data",p2,i);
+					}
 					return;
 				}
 				default: debugger; break;
