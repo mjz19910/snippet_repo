@@ -1833,28 +1833,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.s(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
-	/** @private @arg {GM_VE23462_WC} x */
-	GM_VE23462_WC(x) {
-		const cf="GM_VE23462_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		switch(url) {
-			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
-			case "/account": break;
-			case "/account_notifications": break;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(rootVe!==23462) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_VE96368_WC_browse} x */
-	GM_VE96368_WC_browse(x) {
-		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(url!=="/feed/subscriptions") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==96368) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
 	GM_WC_ApiUrl(x) {
 		let cx=x.apiUrl;
@@ -1913,6 +1891,28 @@ class HandleTypes extends HandleTypesEval {
 			case 37414: return this.GM_VE37414_WC(x);
 			case 83769: return this.GM_VE83769_WC(x);
 		}
+	}
+	/** @private @arg {GM_VE23462_WC} x */
+	GM_VE23462_WC(x) {
+		const cf="GM_VE23462_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		switch(url) {
+			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
+			case "/account": break;
+			case "/account_notifications": break;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		if(rootVe!==23462) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @private @arg {GM_VE96368_WC_browse} x */
+	GM_VE96368_WC_browse(x) {
+		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(url!=="/feed/subscriptions") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==96368) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
 	GM_WC_Ex(x) {
