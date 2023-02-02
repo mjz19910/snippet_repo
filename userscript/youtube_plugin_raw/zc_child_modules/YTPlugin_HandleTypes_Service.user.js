@@ -1833,6 +1833,20 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.s(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
+	/** @private @arg {GM_WC} x */
+	GM_WC(x) {
+		const cf="GM_WC"; this.k(cf,x);
+		if("rootVe" in x&&!("apiUrl" in x)) return this.GM_WC_RootVe(x);
+		if("apiUrl" in x&&!("rootVe" in x)) return this.GM_WC_ApiUrl(x);
+		if("rootVe" in x&&"apiUrl" in x) return this.GM_WC_Ex(x);
+		if("sendPost" in x) {
+			const {sendPost,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+			if(sendPost!==true) debugger;
+			return;
+		}
+		x===0;
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
 	GM_WC_ApiUrl(x) {
 		let cx=x.apiUrl;
@@ -1947,20 +1961,6 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==96368) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_WC} x */
-	GM_WC(x) {
-		const cf="GM_WC"; this.k(cf,x);
-		if("rootVe" in x&&!("apiUrl" in x)) return this.GM_WC_RootVe(x);
-		if("apiUrl" in x&&!("rootVe" in x)) return this.GM_WC_ApiUrl(x);
-		if("rootVe" in x&&"apiUrl" in x) return this.GM_WC_Ex(x);
-		if("sendPost" in x) {
-			const {sendPost,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-			if(sendPost!==true) debugger;
-			return;
-		}
-		x===0;
-		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {GM_VE3854_WC} x */
 	GM_VE3854_WC(x) {
