@@ -8026,6 +8026,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
+			case "get_report_form.f28.f1[].f1":switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -8178,6 +8179,7 @@ class HandleTypes extends HandleTypesEval {
 									case "f3": {
 										const idx=5;
 										if(parts.length===4) {
+											if(map_entry_value instanceof Map) return;
 											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 											switch(map_entry_value) {default: debugger; return;}
 										}
