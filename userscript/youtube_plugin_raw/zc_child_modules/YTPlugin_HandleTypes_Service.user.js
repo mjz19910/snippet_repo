@@ -358,7 +358,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
-			case "transcriptTrackSelection.serializedParams":switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "transcriptTrackSelection.serializedParams": switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_transcript.params": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[].f1.f1[]": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[].f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -503,7 +503,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 			} break;
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
-			case "D_Browse": case "entity_key": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
+			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
 			case "next_radio": case "next": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
 			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
 			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
@@ -5944,7 +5944,7 @@ class HandleTypes extends HandleTypesEval {
 			case "offlineabilityEntity": {
 				const cf="D_EY_Offlineability";
 				const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,px); this.g(y);
-				console.log(`${cf}.key`,key);
+				this.params(`${cf}.key`,"entity.key",key);
 				console.log(`${cf}.command`,command);
 				switch(addToOfflineButtonState) {
 					default: debugger; break;
@@ -5959,13 +5959,13 @@ class HandleTypes extends HandleTypesEval {
 				const cf="DS_EY_Subscription";
 				const {key,subscribed,...y}=this.s(cf,px); this.g(y);
 				this.params(cf,"subscriptionState.key",key);
-				// console.log(`${cf}.key`,key);
+				// this.params(`${cf}.key`,"entity.key",key);
 				if(subscribed!==true) debugger;
 			} break;
 			case "playlistLoopStateEntity": {
 				const cf="DS_EY_PlaylistLoop";
 				const {key,state,...y}=this.s(cf,px); this.g(y);
-				console.log(`${cf}.key`,key);
+				this.params(`${cf}.key`,"entity.key",key);
 				switch(state) {
 					default: debugger; break;
 					case "PLAYLIST_LOOP_STATE_NONE":
@@ -5974,20 +5974,20 @@ class HandleTypes extends HandleTypesEval {
 			case "transcriptTrackSelectionEntity": {
 				const cf="DS_EY_TranscriptTrackSelection";
 				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,px); this.g(y);
-				console.log(`${cf}.key`,key);
+				this.params(`${cf}.key`,"entity.key",key);
 				if(selectedTrackIndex!==0) debugger;
 				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
 			} break;
 			case "transcriptSearchBoxStateEntity": {
 				const cf="DS_EY_TranscriptSearchBox";
 				const {key,isHidden,...y}=this.s(cf,px); this.g(y);
-				console.log(`${cf}.key`,key);
+				this.params(`${cf}.key`,"entity.key",key);
 				if(isHidden!==false) debugger;
 			} break;
 			case "macroMarkersListEntity": {
 				const cf="EY_MacroMarkersList";
 				const {key,...y}=this.s(cf,px); this.g(y);
-				console.log(`${cf}.key`,key);
+				this.params(`${cf}.key`,"entity.key",key);
 			} break;
 			case "unknown": {
 				let pk=pr[1];

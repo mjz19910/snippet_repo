@@ -96,14 +96,19 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_PlaylistLoop.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_Subscription";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptSearchBox.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_AdLayoutLogging";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_CommentSimplebox";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_EY_Offlineability.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}

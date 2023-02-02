@@ -9,6 +9,7 @@ type P_PathRootStr=
 	|"D_Browse.param"
 	|"entity_key.normal"
 	|"entity_key.subscribed"
+	|"entity.key"
 	|"feedback.feedbackToken"
 	|"get_report_form"
 	|"get_report_form"
