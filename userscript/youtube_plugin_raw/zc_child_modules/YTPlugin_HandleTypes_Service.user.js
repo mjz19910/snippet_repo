@@ -443,7 +443,7 @@ class HandleTypes extends HandleTypesEval {
 			off++;
 		}
 	}
-	/** @protected @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
+	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
 	is_bigint(x) {return x[0]==="bigint";}
 	parse_key_index=1;
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
@@ -529,6 +529,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===3) {
 					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 					if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+					if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
 					if(map_entry_value instanceof Map) return;
 					switch(map_entry_value) {default: debugger; return;}
 				}
