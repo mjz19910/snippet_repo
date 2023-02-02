@@ -1947,21 +1947,27 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
 	G_DE_Browse_VE(ve_name,x) {
 		const cf="G_DE_Browse_VE";
+		if("params" in x&&"canonicalBaseUrl" in x) {
+			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+			this.params(cf,"D_Browse.param",c);
+			this._decode_channel_url(ve_name,d);
+			return this.GU_E_BrowseId(ve_name,a);
+		}
 		if("params" in x) {
 			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-			this.GU_E_BrowseId(ve_name,a);
 			this.params(cf,"D_Browse.param",c);
-			// this.g(y);
-			return;
+			return this.GU_E_BrowseId(ve_name,a);
 		}
 		if("canonicalBaseUrl" in x) {
-			const {browseId: a,canonicalBaseUrl: b,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-			this.GU_E_BrowseId(ve_name,a);
-			return this._decode_channel_url(ve_name,b);
+			const {browseId: a,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+			this._decode_channel_url(ve_name,d);
+			return this.GU_E_BrowseId(ve_name,a);
 		}
-		const {browseId: a,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.GU_E_BrowseId(ve_name,a);
-		// this.g(y);
+		if("browseId" in x) {
+			const {browseId: a,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+			return this.GU_E_BrowseId(ve_name,a);
+		}
+		debugger;
 	}
 	/** @private @arg {string} ve_name @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	GU_E_BrowseId(ve_name,x) {
