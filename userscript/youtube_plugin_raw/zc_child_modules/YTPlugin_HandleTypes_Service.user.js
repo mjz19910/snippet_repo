@@ -236,9 +236,9 @@ class HandleTypes extends HandleTypesEval {
 		let k=as(map_entry_key_path);
 		this.on_player_params_callback_ty(map_entry_values,k,path,map_keys,root);
 	}
-	/** 
-	 * @template {"DE_VE3832_Watch"} T 
-	 * @arg {[8]} map_entry_key_path 
+	/**
+	 * @template {"DE_VE3832_Watch"} T
+	 * @arg {[8]} map_entry_key_path
 	 * @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let saved_map_keys=map_keys.slice();
