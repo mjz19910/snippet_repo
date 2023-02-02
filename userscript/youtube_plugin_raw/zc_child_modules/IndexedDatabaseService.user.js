@@ -75,23 +75,26 @@ class IndexedDatabaseService extends BaseService {
 		switch(index_key) {
 			case "hashtag": {
 				if(!(index_key in obj)) break;
-				idx=c_index.get(obj[index_key]);
+				let index_val=obj[index_key];
+				idx=c_index.get(index_val);
 				if(idx!==void 0) {
 					d_cache[idx]=obj;
 					return;
 				}
 				idx=d_cache.push(obj)-1;
-				c_index.set(obj[index_key],idx);
+				c_index.set(index_val,idx);
 			}; break;
 			case "v": {
 				if(!(index_key in obj)) break;
-				idx=c_index.get(obj[index_key]);
+				let index_val=obj[index_key];
+				if(!index_val) {debugger; throw new Error("Invalid index key");}
+				idx=c_index.get(index_val);
 				if(idx!==void 0) {
 					d_cache[idx]=obj;
 					return;
 				}
 				idx=d_cache.push(obj)-1;
-				c_index.set(obj[index_key],idx);
+				c_index.set(index_val,idx);
 			}; break;
 		}
 	}
@@ -201,7 +204,7 @@ class IndexedDatabaseService extends BaseService {
 				case "v": index_key in data&&(content=data[index_key]); break;
 				case "hashtag": index_key in data&&(content=data[index_key]); break;
 			}
-			if(content) {
+			if(content!==void 0) {
 				if(database_map.has(content)) {
 					this.committed_data.push(data);
 					let ok=this.get_keys_of(data);

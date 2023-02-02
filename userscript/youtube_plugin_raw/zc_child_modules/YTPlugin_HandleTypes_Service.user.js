@@ -2023,11 +2023,14 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE37414_WC(x) {
 		const cf="GM_VE37414_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		let up=split_string_once(url,"/");
-		let [p1,p2]=up; if(p1!=="") debugger;
-		let u2=split_string_once(p2,"/");
-		let [p3,p4]=u2; if(p3!=="shorts") debugger;
-		this.videoId(p4);
+		x: {
+			if(url==="/shorts/") break x;
+			let up=split_string_once(url,"/");
+			let [p1,p2]=up; if(p1!=="") debugger;
+			let u2=split_string_once(p2,"/");
+			let [p3,p4]=u2; if(p3!=="shorts") debugger;
+			this.videoId(p4);
+		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 		if(rootVe!==37414) debugger;
 	}
