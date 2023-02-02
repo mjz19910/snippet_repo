@@ -3640,12 +3640,18 @@ class HandleTypes extends HandleTypesEval {
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/feedback") debugger;
 	}
+	/** @private @arg {string} x */
+	DE_Feedback_onToken(x) {
+		let fb_dec=base64_url_dec.decodeByteArray(x);
+		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
+	}
+	/** @private @template {DE_Feedback} T @arg {"DE_Feedback"} cf @arg {keyof T} k @arg {T} x @arg {(x:string)=>void} f @returns {Omit<T,"feedbackToken">} */
+	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return y;}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
-		const cf="DE_Feedback";
-		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
-		let fb_dec=base64_url_dec.decodeByteArray(feedbackToken);
-		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
+		const cf="DE_Feedback",u=this.T_OmitKey(cf,"feedbackToken",x,this.DE_Feedback_onToken);
+		if(!("uiActions" in u)) return this.g(u);
+		const {uiActions,actions,...y}=u; this.g(y);
 		this.D_HideEnclosingContainer(uiActions);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
