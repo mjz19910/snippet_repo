@@ -88,7 +88,7 @@ type GD_EngagementPanelMenu={
 	trackingParams: string;
 };
 type GD_Icon=NonNullable<[
-	T_Icon<D$AnyIconStr>,
+	T_Icon<D_AnyIconStr>,
 	Extract<D_Button,{icon: any;}>['icon'],
 	D_InfoRow['expandIcon'],
 	D_TopicLink['callToActionIcon'],

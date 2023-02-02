@@ -715,7 +715,7 @@ type D_ChipCloudChip=
 		trackingParams: string;
 		targetId: "feed_filter_chip_bar_second_chip";
 	};
-type EG_CompactLink$1=E_Upload|E_SignalNavigation;
+type EG_CompactLink_1=E_Upload|E_SignalNavigation;
 type D_CompactLink={
 	icon: T_Icon<"PERSON_ADD">;
 	title: G_Text;
@@ -804,30 +804,47 @@ type D_HeroPlaylistThumbnail={
 	onTap: E_Watch;
 	thumbnailOverlays: G_ThumbnailOverlayItem;
 };
-type D_MacroMarkersListItem={
-	title: G_Text;
-	timeDescription: G_Text;
-	thumbnail: D_Thumbnail;
-	onTap: E_Watch;
-	trackingParams: string;
-	shareButton: R_Button;
-	repeatButton: R_ToggleButton;
-	macroMarkerRepeatStateEntityKey: string;
-	endRepeatCommand: C_Executor;
-	playerStateEntityKey: string;
-	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-	lightColorPalette: D_LightColorPalette;
-	darkColorPalette: D$DarkColorPalette;
-	timeDescriptionA11yLabel: `${number} seconds`;
-}|{
-	title: G_Text;
-	timeDescription: G_Text;
-	thumbnail: D_Thumbnail;
-	onTap: E_Watch;
-	trackingParams: string;
-	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
-	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-};
+type D_MacroMarkersListItem=
+	|never
+	|{
+		title: G_Text;
+		timeDescription: G_Text;
+		thumbnail: D_Thumbnail;
+		onTap: E_Watch;
+		trackingParams: string;
+		shareButton: R_Button;
+		repeatButton: R_ToggleButton;
+		macroMarkerRepeatStateEntityKey: string;
+		endRepeatCommand: C_CommandExecutor;
+		playerStateEntityKey: string;
+		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
+		timeDescriptionA11yLabel: "0 seconds";
+	}
+	|{
+		title: G_Text;
+		timeDescription: G_Text;
+		thumbnail: D_Thumbnail;
+		onTap: E_Watch;
+		trackingParams: string;
+		shareButton: R_Button;
+		repeatButton: R_ToggleButton;
+		macroMarkerRepeatStateEntityKey: string;
+		endRepeatCommand: C_Executor;
+		playerStateEntityKey: string;
+		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
+		lightColorPalette: D_LightColorPalette;
+		darkColorPalette: D_DarkColorPalette;
+		timeDescriptionA11yLabel: `${number} seconds`;
+	}
+	|{
+		title: G_Text;
+		timeDescription: G_Text;
+		thumbnail: D_Thumbnail;
+		onTap: E_Watch;
+		trackingParams: string;
+		layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
+		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
+	};
 type D_Notification={
 	thumbnail: D_Thumbnail;
 	videoThumbnail: D_Thumbnail;
@@ -1212,10 +1229,10 @@ type D_AdLayout={serializedAdServingDataEntry: string;};
 type D_AdPlacement={config: R_AdPlacementConfig; renderer: G_AdPlacementRendererItem;};
 type D_AdPlacementConfig={
 	kind: DE_AdPlacementKind;
-	adTimeOffset?: D$AdTimeOffset;
+	adTimeOffset?: D_AdTimeOffset;
 	hideCueRangeMarker: true;
 };
-type D$AdTimeOffset={
+type D_AdTimeOffset={
 	offsetStartMilliseconds: `${number}`;
 	offsetEndMilliseconds: "-1";
 };
@@ -1239,7 +1256,7 @@ type D_AdaptiveFormatItem={
 	highReplication?: true,
 	audioQuality?: "AUDIO_QUALITY_MEDIUM";
 	approxDurationMs: `${number}`;
-	audioSampleRate?: `${D$AudioSampleRate}`;
+	audioSampleRate?: `${D_AudioSampleRate}`;
 	audioChannels?: 2;
 	loudnessDb?: number;
 	signatureCipher?: `s=${string}&sp=${"sig"}&url=${string}`;
@@ -1252,13 +1269,13 @@ type QualArr=[
 type make_qual_for_fps<T extends 50|60>=[`2160p${T}`,`1440p${T}`,`1080p${T}`,`720p${T}`,];
 type QualityLabel=QualArr[number];
 type D_AddToPlaylist={playlists: R_PlaylistAddToOption[];}&T_Actions<R_AddToPlaylistCreate>;
-type D$AnimationConfig={
+type D_AnimationConfig={
 	minImageUpdateIntervalMs: 10000|5000;
 	crossfadeDurationMs: 5000;
 	crossfadeStartOffset: 1;
 	maxFrameRate: 30;
 };
-type D$AnyIconStr=[
+type D_AnyIconStr=[
 	"DELETE",
 	"EXPAND_MORE",
 	"MIX",
@@ -1348,7 +1365,7 @@ type D_AttBgChallenge={
 	program: string;
 	globalName: "trayride";
 };
-type D$AudioSampleRate=[
+type D_AudioSampleRate=[
 	44100,48000
 ][number];
 type AudioTrackItem={captionTrackIndices: number[];};
@@ -1399,8 +1416,8 @@ type D_BrowseIdStr=
 	|`MP${"TRt"|"REb"|"LYt"}_${string}`;
 type D_Browse_Id<T>={browseId: T;};
 type AD_BrowserMediaSession={};
-type D$ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
-type D$ButtonStyleType=[
+type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
+type D_ButtonStyleType=[
 	"STYLE_ALERT_INFO",
 	"STYLE_BLUE_TEXT_WITH_INVERSE_THEME",
 	"STYLE_BLUE_TEXT",
@@ -1434,7 +1451,7 @@ type D_Button_TargetId=
 ;
 type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
-type D$CanonicalBaseUrl={canonicalBaseUrl: string;};
+type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type CaptionTrackItem={
 	baseUrl: string;
 	name: G_Text;
@@ -1595,7 +1612,7 @@ type D_CustomEmoji={
 	image: D_EmojiImage;
 	isCustomEmoji: boolean;
 };
-type D$DarkColorPalette={
+type D_DarkColorPalette={
 	section1Color: 4281871903;
 	section2Color: 4280819991;
 	section3Color: 4279833614;
@@ -1997,17 +2014,17 @@ type D_MenuNavigationItem={
 	navigationEndpoint: TA_OpenPopup_Empty;
 	trackingParams: string;
 };
-type D$MenuServiceIcon=Extract<[
+type D_MenuServiceIcon=Extract<[
 	{icon: T_Icon<"FLAG">;},
 	{}
 ][number],{icon: any;}>;
-type D$MenuServiceIconTypeStr=[
+type D_MenuServiceIconTypeStr=[
 	"SUBTITLES",
 	"PLAYLIST_ADD",
 	"VISIBILITY_OFF",
 	"SHARE",
 	"ALIGN_LEFT"
-][number]|"WATCH_LATER"|"NOT_INTERESTED"|"LIBRARY_ADD"|"LIBRARY_REMOVE"|(D$MenuServiceIcon['icon']['iconType']);
+][number]|"WATCH_LATER"|"NOT_INTERESTED"|"LIBRARY_ADD"|"LIBRARY_REMOVE"|(D_MenuServiceIcon['icon']['iconType']);
 type D_MenuServiceItem<T_EI>={
 	text: G_Text;
 	serviceEndpoint: T_EI;

@@ -8221,8 +8221,49 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem"; this.k(cf,x);
-		const {title,timeDescription,...y}=this.s(cf,x);
-		console.log(`[${cf}.next_key]`,this.get_keys_of(y)[0]);
+		if("lightColorPalette" in x) {
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey,endRepeatCommand,playerStateEntityKey,
+				carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+			this.G_Text(title);
+			this.G_Text(timeDescription);
+			this.D_Thumbnail(thumbnail);
+			this.E_Watch(onTap);
+			this.trackingParams(cf,trackingParams);
+			this.R_Button(shareButton);
+			this.R_ToggleButton(repeatButton);
+			console.log(`${cf}:macroMarkerRepeatStateEntityKey`,macroMarkerRepeatStateEntityKey);
+			this.C_Executor(endRepeatCommand);
+			console.log(`${cf}:playerStateEntityKey`,playerStateEntityKey);
+			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+			this.D_LightColorPalette(lightColorPalette);
+			this.D_DarkColorPalette(darkColorPalette);
+			this.a_primitive_str(timeDescriptionA11yLabel);
+			return;
+		}
+		if("playerStateEntityKey" in x) {
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey,endRepeatCommand,playerStateEntityKey,carouselType,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+			this.G_Text(title);
+			this.G_Text(timeDescription);
+			this.D_Thumbnail(thumbnail);
+			this.E_Watch(onTap);
+			this.trackingParams(cf,trackingParams);
+			this.R_Button(shareButton);
+			this.R_ToggleButton(repeatButton);
+			console.log(`${cf}:macroMarkerRepeatStateEntityKey`,macroMarkerRepeatStateEntityKey);
+			this.C_CommandExecutor(endRepeatCommand);
+			console.log(`${cf}:playerStateEntityKey`,playerStateEntityKey);
+			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+			this.a_primitive_str(timeDescriptionA11yLabel);
+			return;
+		}
+		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.G_Text(timeDescription);
+		this.D_Thumbnail(thumbnail);
+		this.E_Watch(onTap);
+		this.trackingParams(cf,trackingParams);
+		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
+		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
 	}
 	/** @private @arg {D_ExpandableVideoDescriptionBody} x */
 	D_ExpandableVideoDescriptionBody(x) {
@@ -8510,6 +8551,10 @@ class HandleTypes extends HandleTypesEval {
 	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {D_LightColorPalette} x */
+	D_LightColorPalette(x) {const cf="D_LightColorPalette"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {D_DarkColorPalette} x */
+	D_DarkColorPalette(x) {const cf="D_DarkColorPalette"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
