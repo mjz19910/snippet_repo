@@ -213,7 +213,8 @@ class HandleTypes extends HandleTypesEval {
 		let gen_next_part=(idx) => {
 			let pad="\t\t\t";
 			if(idx>parts.length) return;
-			let eq_len_arr=[`switch(map_entry_value) {default: debugger; return;}`];
+			/** @type {string[]} */
+			let eq_len_arr=[];
 			if(parts.length===idx) {
 				if(map_entry_value instanceof Map) eq_len_arr.push(`if(map_entry_value instanceof Map) return;`);
 				switch(typeof map_entry_value) {
@@ -221,20 +222,23 @@ class HandleTypes extends HandleTypesEval {
 					case "string": eq_len_arr.push(`if(typeof map_entry_value==="string") return this.save_string(\`[$\{path}]\`,map_entry_value);`); break;
 				}
 			}
+			eq_len_arr.push("switch(map_entry_value) {default: debugger; return;}");
 			let res_case=[`default: {const idx=${idx+1}; u(idx); debugger; parts[${idx}]==="";} break;`];
 			if(idx<parts.length) {
 				res_case.push(`case "${parts[idx]}": u(idx); debugger; break;`);
 			}
 			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
 			/** @arg {string[]} arr */
-			let gen_for_part_case=(arr) => {
+			let gen_for_part_case=(arr,gen_if_case=false) => {
 				if(arr.length===1) return arr[0];
-				return `\n${pad}\t${arr.join(`\n${pad}\t`)}\n${pad}`;
+				let ret=`\n${pad}\t${arr.join(`\n${pad}\t`)}\n${pad}`;
+				if(!gen_if_case) return ret;
+				return `{${ret}}`;
 			};
 			console.log(`
 			-- [${parts.join(".")},${idx}] --\n\n
 			case "${parts[idx-1]}":
-			if(parts.length===${idx}) {${gen_for_part_case(eq_len_arr)}}
+			if(parts.length===${idx}) ${gen_for_part_case(eq_len_arr,true)}
 			switch(parts[${idx}]) {${gen_for_part_case(res_case)}}`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
@@ -524,6 +528,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				if(parts.length===3) {
 					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+					if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
 					switch(map_entry_value) {default: debugger; return;}
 				}
 				switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
