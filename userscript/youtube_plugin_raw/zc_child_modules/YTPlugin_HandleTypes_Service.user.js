@@ -443,7 +443,7 @@ class HandleTypes extends HandleTypesEval {
 			off++;
 		}
 	}
-	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
+	/** @protected @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
 	is_bigint(x) {return x[0]==="bigint";}
 	parse_key_index=1;
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
@@ -532,6 +532,21 @@ class HandleTypes extends HandleTypesEval {
 					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
 					case "f1": case "f2": case "f3": case "f4": case "f5":
 					case "f12": case "f13":
+				}
+				if(parts.length===4) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[4]) {
+					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
+					case "f1": case "f1[]": case "f2": case "f3":
+				}
+				if(parts.length===5) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[5]) {
+					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
+					case "f1":
+				}
+				if(parts.length===6) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[6]) {
+					default: {const idx=7; u(idx); debugger; parts[6]==="";} return;
+					case "f1":
 				}
 			} break;
 			case "browse$param": {
