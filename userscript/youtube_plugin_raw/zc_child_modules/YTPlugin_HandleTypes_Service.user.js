@@ -452,7 +452,7 @@ class HandleTypes extends HandleTypesEval {
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
-	/** @arg {CF_T_Icon} cf1 @private @template {string} T @template {string} U @arg {T_Icon<T>} x @arg {U extends T?U:never} w */
+	/** @arg {CF_T_Icon} cf1 @private @template {string} T @arg {T_Icon<T>} x @arg {T} w */
 	T_Icon(cf1,x,w) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);
@@ -7235,11 +7235,42 @@ class HandleTypes extends HandleTypesEval {
 		this.t(showMoreCommand,this.C_Executor);
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
+	/** @private @arg {R_RichMetadata["richMetadataRenderer"]} x */
+	D_RichMetadata(x) {
+		const cf="D_RichMetadata";
+		const {style,thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+		if(style!=="RICH_METADATA_RENDERER_STYLE_BOX_ART") debugger;
+		this.D_Thumbnail(thumbnail);
+		this.G_Text(title);
+		this.G_Text(subtitle);
+		this.G_Text(callToAction);
+		this.T_Icon(cf,callToActionIcon,"CHEVRON_RIGHT");
+		if(!endpoint.browseEndpoint) debugger;
+		this.GE_Browse(endpoint);
+	}
+	/** @private @arg {R_RichMetadata} x */
+	R_RichMetadata(x) {
+		if(!x.richMetadataRenderer) debugger;
+		this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);
+	}
+	/** @private @arg {R_RichMetadataRow["richMetadataRowRenderer"]} x */
+	D_RichMetadataRow(x) {
+		const cf="D_RichMetadataRow";
+		if(!x.contents) debugger;
+		if(!x.trackingParams) debugger;
+		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.z(contents,this.R_RichMetadata)
+	}
+	/** @private @arg {R_RichMetadataRow} x */
+	R_RichMetadataRow(x) {
+		if(!x.richMetadataRowRenderer) debugger;
+		this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);
+	}
 	/** @private @arg {DMD_RowContainer} x */
 	DMD_RowContainer(x) {
 		const cf="DMD_RowContainer";
 		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.tz(rows,this.g);
+		this.tz(rows,this.R_RichMetadataRow);
 		this.save_number(`[${cf}.coll_item_count]`,collapsedItemCount);
 		this.trackingParams(cf,trackingParams);
 	}

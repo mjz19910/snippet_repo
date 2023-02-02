@@ -433,6 +433,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichGrid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichListHeader";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadata";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadataRow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RunAttestation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SearchBox";}
@@ -720,6 +722,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_WatchLater";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_YoutubeLogo";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithIcon:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithNavEP:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}
