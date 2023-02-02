@@ -549,11 +549,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AddToPlaylistService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreatePlaylist";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_Feedback";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_RecordInteractions";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_SendPost";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
@@ -568,8 +563,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE96368_WC_browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_WC_Base";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_YpcGetCart";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Action_GetNotificationsMenu_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_CommentsSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_DC_SectionList";}
@@ -666,6 +659,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "UA_ToggleButtonTextData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "U_NotificationsUnseenCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_SendPost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEnclosing";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "B_HrefUrl";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_NextRadio";}

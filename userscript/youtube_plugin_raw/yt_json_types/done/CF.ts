@@ -83,6 +83,7 @@ type CF_M_w=
 	|`T_Items_TP:${CF_T_Items_TP}`
 	|"Other:D_ImpressionCap"
 	|`T_Signal:${CF_T_Signal}`
+	|"GM_SendPost"
 	;
 ;
 type CF_T_GM=CF_T_GM_gen|"CF_GM_WC_2"|"a";
