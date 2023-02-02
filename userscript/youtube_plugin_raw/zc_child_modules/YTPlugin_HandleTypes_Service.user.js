@@ -492,30 +492,18 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 				}
 			} break;
-			case "aadc_guidelines_state_entity_key":
-			case "AdServingDataEntry":
-			case "create_playlist":
-			case "createBackstagePost":
-			case "D_Browse":
-			case "entity_key":
+			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry":
+			case "create_playlist": case "createBackstagePost":
+			case "D_Browse": case "entity_key":
 			case "feedback":
-			case "get_report_form":
-			case "get_transcript":
-			case "GetNotificationMenu":
+			case "get_report_form": case "get_transcript": case "GetNotificationMenu":
 			case "like":
-			case "next_radio":
-			case "next":
-			case "next":
+			case "next_radio": case "next":
 			case "playlist_edit":
-			case "reel":
-			case "reload":
-			case "service$create_playlist":
-			case "slot_ad_serving_data_entry":
-			case "subscribe":
-			case "subscriptionState":
-			case "TimedContinuation":
-			case "tracking":
-			case "transcriptTrackSelection":
+			case "reel": case "reload":
+			case "service$create_playlist": case "slot_ad_serving_data_entry":
+			case "subscribe": case "subscriptionState":
+			case "TimedContinuation": case "tracking": case "transcriptTrackSelection":
 			case "UndoFeedback":
 			case "watch_page_url":
 			case "watch_playlist":
