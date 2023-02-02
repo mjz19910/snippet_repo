@@ -404,7 +404,7 @@ class CodegenService extends BaseService {
 		/** @private @type {A_FrameworkUpdates} */
 		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
 		/** @private @type {D_LoggingDirectives} */
-		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
+		if(k1==="loggingDirectives") return "TYPE::D_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
 		if(o===null||o===void 0) return o;
