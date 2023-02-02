@@ -35,7 +35,6 @@ type P_PathRootStr=
 	|"transcript_target_id.param"
 	|"transcriptTrackSelection.serializedParams"
 	|"UndoFeedback.undoToken"
-	|`url.redir_token[${T_NumRange<0,1>}]`
 	|"watch_page_url.pp"
 	|"watch_playlist.params"
 	|"watch.params"

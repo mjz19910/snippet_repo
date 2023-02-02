@@ -402,19 +402,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "url": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "redir_token[0]": case "redir_token[1]": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
 			case "ypc_get_offline_upsell": {
 				const idx=2;
 				if(parts.length!==1) {parts==="";}
@@ -4845,13 +4832,14 @@ class HandleTypes extends HandleTypesEval {
 					}
 					let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
 					let redir_parts=split_string_once(atob(redir_token),"|");
-					if(redir_parts.length===1) {debugger;return;}
-					let [p1,p2]=redir_parts;
+					if(redir_parts.length===1) {debugger; return;}
+					let [p1,p2]=redir_parts.map(x=>base64_url_dec.decodeByteArray(x));
+					if(!p1||!p2) return;
 					for(let i=0;i<2;i++) {
-						this.save_next_char("url.redir_token[0].data",p1,i);
+						this.save_next_byte("url.redir_token[0].data",p1,i);
 					}
 					for(let i=0;i<2;i++) {
-						this.save_next_char("url.redir_token[1].data",p2,i);
+						this.save_next_byte("url.redir_token[1].data",p2,i);
 					}
 					return;
 				}
@@ -7054,6 +7042,23 @@ class HandleTypes extends HandleTypesEval {
 	D_CompactRadio_NavE(x) {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
+	}
+	/** @private @arg {string} key @arg {Uint8Array} data @arg {number} [idx] */
+	save_next_byte(key,data,idx=0) {
+		let f=data[idx];
+		/** @type {`${typeof key}.data[${typeof idx}]`} */
+		let rk=`${key}.data[${idx}]`;
+		/** @type {`${typeof rk}[${typeof f}]`} */
+		let k=`${rk}[${f}]`;
+		this.save_number(rk,f);
+		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
+		if(!s_url_data) return this.save_number(k,1);
+		let wd=s_url_data[1];
+		if(wd[0]!=="one") {debugger; return;}
+		let [,di]=wd;
+		if(!di.length) return this.save_number(k,1);
+		di[0]++;
+		this.save_number(k,di[0],true);
 	}
 	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {

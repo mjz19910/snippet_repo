@@ -2382,8 +2382,8 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @no_mod @type {[string,number|number[]][]} */
 	#new_numbers=[];
-	/** @api @public @arg {`[${string}]`} key @arg {number|number[]} x */
-	save_number(key,x) {
+	/** @api @public @arg {`[${string}]`} key @arg {number|number[]} x @arg {boolean} [force_update] */
+	save_number(key,x,force_update) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(key);
 		let seen_numbers=this.get_data_store().get_seen_numbers();
@@ -2422,7 +2422,7 @@ class KnownDataSaver extends ApiBase {
 				}
 			}
 		}
-		if(was_known) return;
+		if(was_known&&!force_update) return;
 		this.#new_numbers.push([k,x]);
 		this.#onDataChange();
 		console.log("store_num [%s]",k,x);
@@ -2495,10 +2495,9 @@ class BaseServicePrivate extends ApiBase {
 		let y=as(x);
 		return this.ds.unwrap_brackets(y);
 	}
-	/** @protected @arg {string} k @arg {number|number[]} x */
-	save_number(k,x) {
-		if(k[0]==="[") k=this.trim_brackets(k);
-		this.ds.save_number(`[${k}]`,x);
+	/** @protected @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
+	save_number(k,x,force_update=false) {
+		this.ds.save_number(`[${k}]`,x,force_update);
 	}
 	//#endregion
 	#x;
