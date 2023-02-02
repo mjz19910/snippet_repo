@@ -50,7 +50,7 @@ const generate_typedef={value: null};
 /** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class TypedefGenerator extends ServiceMethods {
 	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(cf,x);
+	k=(cf,x) => this.save_keys(`[${cf}]`,x);
 	/** @arg {Popup_ConfirmDialog|Popup_DismissibleDialog} x */
 	popup_dialog(x) {
 		const cf="popup_dialog"; cf; this.k(cf,x);
@@ -757,7 +757,7 @@ class HandleTypes extends HandleTypesEval {
 		return x;
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(cf,x);
+	k=(cf,x) => this.save_keys(`[${cf}]`,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
