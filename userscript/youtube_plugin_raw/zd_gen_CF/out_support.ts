@@ -13,6 +13,7 @@ export namespace Prelude {
 		|"CF_D_Playlist_Omit"
 		|"CF_D_STR"
 		|"CF_D_Video_Handle"
+		|"CF_DC_Generic_CTP"
 		|"CF_GE_ResponseReceived"
 		|"CF_L_CTP_Params"
 		|"CF_L_Params"
@@ -58,6 +59,7 @@ export namespace Prelude {
 	export type CF_D_Playlist_Omit="CF_D_Playlist_Omit";
 	export type CF_D_STR="CF_D_STR";
 	export type CF_D_Video_Handle="CF_D_Video_Handle";
+	export type CF_DC_Generic_CTP="CF_DC_Generic_CTP";
 	export type CF_GE_ResponseReceived="CF_GE_ResponseReceived";
 	export type CF_L_CTP_Params="CF_L_CTP_Params";
 	export type CF_L_Params="CF_L_Params";
@@ -107,6 +109,7 @@ export namespace Types {
 	export type CF_D_Playlist_Omit_=CF_D_Playlist_Omit;
 	export type CF_D_STR_=CF_D_STR;
 	export type CF_D_Video_Handle_=CF_D_Video_Handle;
+	export type CF_DC_Generic_CTP_=CF_DC_Generic_CTP;
 	export type CF_GE_ResponseReceived_=CF_GE_ResponseReceived;
 	export type CF_L_CTP_Params_=CF_L_CTP_Params;
 	export type CF_L_Params_=CF_L_Params;

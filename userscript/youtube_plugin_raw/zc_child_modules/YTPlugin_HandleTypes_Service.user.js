@@ -1961,8 +1961,20 @@ class HandleTypes extends HandleTypesEval {
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
+	/** @private @arg {R_VideoDescriptionMusicSection} x */
+	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection","videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
+	/** @private @arg {R_VideoDescriptionHeader} x */
+	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader","videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
+	/** @private @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
+	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
+	/** @private @arg {CD_Reload} x */
+	CD_Reload(x) {this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));}
+	/** @private @arg {CD_NextRadio} x */
+	CD_NextRadio(x) {this.y("CD_NextRadio","nextRadioContinuationData",x,x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));}
 	/** @private @arg {UA_SubscribeButton} x */
 	UA_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
 	/** @private @arg {UA_ChannelSwitcherPage} x */
@@ -1975,20 +1987,8 @@ class HandleTypes extends HandleTypesEval {
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.D_RefreshPlaylist(a);}
-	/** @arg {C_Innertube['innertubeCommand']} x */
-	G_Innertube(x) {
-		const cf="G_Innertube"; this.k(cf,x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
-		this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {R_VideoDescriptionMusicSection} x */
-	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection","videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
-	/** @private @arg {R_VideoDescriptionHeader} x */
-	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader","videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
-	/** @private @arg {R_HorizontalCardList} x */
-	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
-	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
-	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @arg {E_YpcGetOfflineUpsell} x */
+	G_Innertube(x) {this.E_YpcGetOfflineUpsell(x);}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
@@ -2111,8 +2111,20 @@ class HandleTypes extends HandleTypesEval {
 	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.D_AutomixPreviewVideo);}
 	/** @arg {R_VideoMastheadAdV3} x */
 	R_VideoMastheadAdV3(x) {this.H_("R_VideoMastheadAdV3","videoMastheadAdV3Renderer",x,this.D_VideoMastheadAdV3);}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {this.codegen_typedef_all("R_BrowseFeed",x);}
+	/** @private @arg {R_RichMetadata} x */
+	R_RichMetadata(x) {this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);}
+	/** @private @arg {R_RichMetadataRow} x */
+	R_RichMetadataRow(x) {this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);}
+	/** @private @arg {R_TranscriptSegment} x */
+	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
+	/** @private @arg {R_PdgCommentChip} x */
+	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
+	/** @private @arg {R_InfoRow} x */
+	R_InfoRow(x) {this.H_("R_InfoRow","infoRowRenderer",x,this.D_InfoRow);}
+	/** @private @arg {R_PrivacyDropdownItem} x */
+	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	/** @private @arg {R_PromotedSparklesWeb} x */
+	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection"; this.k(cf,x);
@@ -5312,7 +5324,7 @@ class HandleTypes extends HandleTypesEval {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=this.s(cf,y); this.g(u);/*//#destructure_done*/ break;
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
 				const {layoutType: {},adLayoutLoggingData,...u}=this.s(cf,y); this.g(u);/*//#destructure_done*/
-				this.D_AdLayoutLogging(adLayoutLoggingData);
+				this.D_AdLayoutLoggingData(adLayoutLoggingData);
 			}
 		}
 	}
@@ -6931,7 +6943,7 @@ class HandleTypes extends HandleTypesEval {
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.a_primitive_str(layoutType);
 		this.a_primitive_str(layoutId);
-		this.D_AdLayoutLogging(adLayoutLoggingData);
+		this.D_AdLayoutLoggingData(adLayoutLoggingData);
 	}
 	/** @private @arg {D_HotkeyDialog} x */
 	D_HotkeyDialog(x) {
@@ -7001,7 +7013,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {D_AdLayoutLoggingData} x */
-	D_AdLayoutLogging(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"AdServingDataEntry",x));}
+	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"AdServingDataEntry",x));}
 	/** @private @arg {D_PrefetchHintConfig} x */
 	D_PrefetchHintConfig(x) {
 		const cf="D_PrefetchHintConfig"; this.k(cf,x);
@@ -8313,7 +8325,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(showMoreCommand,this.C_Executor);
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}
-	/** @private @arg {R_RichMetadata["richMetadataRenderer"]} x */
+	/** @private @arg {D_RichMetadata} x */
 	D_RichMetadata(x) {
 		const cf="D_RichMetadata"; this.k(cf,x);
 		switch(x.style) {
@@ -8343,12 +8355,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {R_RichMetadata} x */
-	R_RichMetadata(x) {
-		if(!x.richMetadataRenderer) debugger;
-		this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);
-	}
-	/** @private @arg {R_RichMetadataRow["richMetadataRowRenderer"]} x */
+	/** @private @arg {D_RichMetadataRow} x */
 	D_RichMetadataRow(x) {
 		const cf="D_RichMetadataRow"; this.k(cf,x);
 		if(!x.contents) debugger;
@@ -8356,11 +8363,6 @@ class HandleTypes extends HandleTypesEval {
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.z(contents,this.R_RichMetadata);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {R_RichMetadataRow} x */
-	R_RichMetadataRow(x) {
-		if(!x.richMetadataRowRenderer) debugger;
-		this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);
 	}
 	/** @private @arg {DMD_RowContainer} x */
 	DMD_RowContainer(x) {
@@ -8429,8 +8431,6 @@ class HandleTypes extends HandleTypesEval {
 		this.params(cf,path,continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
-	/** @private @arg {CD_Reload} x */
-	CD_Reload(x) {this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo"; this.k(cf,x);
@@ -8945,32 +8945,36 @@ class HandleTypes extends HandleTypesEval {
 		this.t(previewDescription,this.g);
 		this.t(numItemsToShow,x => {if(x!==25) debugger;});
 	}
-	/** @private @arg {CD_NextRadio} x */
-	CD_NextRadio(x) {x;}
-	/** @private @arg {R_TranscriptSegment} x */
-	R_TranscriptSegment(x) {x;}
 	/** @arg {D_AdLayoutMetadata} x */
-	D_AdLayoutMetadata(x) {x;}
-	/** @private @arg {R_PdgCommentChip} x */
-	R_PdgCommentChip(x) {x;}
-	/** @private @arg {R_InfoRow} x */
-	R_InfoRow(x) {x;}
-	/** @private @arg {R_PrivacyDropdownItem} x */
-	R_PrivacyDropdownItem(x) {x;}
+	D_AdLayoutMetadata(x) {
+		const cf="D_AdLayoutMetadata"; this.k(cf,x);
+		const {layoutId,layoutType,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);
+		layoutId;
+		if(layoutType!=="LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED") debugger;
+		this.D_AdLayoutLoggingData(adLayoutLoggingData);
+	}
 	/** @private @arg {DC_ResetChannelUnreadCount} x */
-	DC_ResetChannelUnreadCount(x) {x;}
-	/** @private @arg {R_PromotedSparklesWeb} x */
-	R_PromotedSparklesWeb(x) {x;}
+	DC_ResetChannelUnreadCount(x) {const cf="DC_ResetChannelUnreadCount"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_YoutubeUrl} x */
-	D_YoutubeUrl(x) {x;}
+	D_YoutubeUrl(x) {
+		const cf="D_YoutubeUrl";
+		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
+		let [h,sp]=split_string_once(s1,"/");
+		if(h!=="www.youtube.com") debugger;
+		if(this.str_is_search(sp)) {
+			let [pp,query_search]=split_string_once(sp,"?");
+			debugger;
+		}
+		this.codegen_str(cf,x);
+	}
 	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {x;}
+	E_NotificationOptOut(x) {const cf="E_NotificationOptOut"; this.gs(cf,x); debugger;}
 	/** @private @arg {DE_ShareEntityService} x */
-	DE_ShareEntityService(x) {x;}
+	DE_ShareEntityService(x) {const cf="DE_ShareEntityService"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_VideoMastheadAdV3} x */
-	D_VideoMastheadAdV3(x) {x;}
+	D_VideoMastheadAdV3(x) {const cf="D_VideoMastheadAdV3"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_AutomixPreviewVideo} x */
-	D_AutomixPreviewVideo(x) {x;}
+	D_AutomixPreviewVideo(x) {const cf="D_AutomixPreviewVideo"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_MusicResponsiveListItem} x */
 	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_MusicShelfDivider} x */
@@ -8996,7 +9000,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ReportFormModal} x */
 	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.gs(cf,x); debugger;}
 	/** @private @arg {RSB_EditPlaylist["playlistEditResults"][number]} x */
-	G_PlaylistEditResult(x) {x;}
+	G_PlaylistEditResult(x) {const cf="G_PlaylistEditResult"; this.gs(cf,x); debugger;}
+	/** @private @arg {R_BrowseFeed} x */
+	R_BrowseFeed(x) {const cf="R_BrowseFeed"; this.codegen_typedef_all(cf,x); this.gs(cf,x);}
+	/** @private @arg {D_TranscriptSegment} x */
+	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
