@@ -9,10 +9,17 @@ type GU_VE83769_Url=GU_VE83769_Url_Internal|GU_YoutubeUrlRedirect|GU_VE83769_Url
 type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
 type UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type GU_YoutubeUrlRedirect_Info={
-	url:`https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`,
+	url: `https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`,
 	encoded_params: {q: ST_EncodedURIComponent;};
 };
-type GU_YoutubeUrlRedirect=`https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`;
+type GU_YoutubeUrlRedirect_Event=
+	|"video_description"
+	|"product_shelf"
+	;
+type GU_YoutubeUrlRedirect=
+	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}&v=${string}`
+	;
+;
 type GU_VE83769_Url_Internal="/upload";
 type D_StrOnlyLen<T extends number,U extends string>=T_Split<U,"">['length'] extends T? U:never;
 type GU_VE83769_Url_External=

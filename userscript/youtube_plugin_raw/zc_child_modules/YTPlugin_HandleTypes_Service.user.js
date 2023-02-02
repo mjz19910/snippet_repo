@@ -4704,9 +4704,15 @@ class HandleTypes extends HandleTypesEval {
 				case "redirect": {
 					let parsed_search=this.parse_url_search_params(query_search);
 					switch(parsed_search.event) {
-						default: debugger; break;
+						default: {
+							const cf="GU_YoutubeUrlRedirect.event";
+							this.codegen_case_key(cf,parsed_search,"event");
+						} break;
 						case "video_description": break;
+						case "product_shelf": break;
 					}
+					let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
+					this.params(cf,"url.redir_token",redir_token);
 					console.log("[E_Url.TargetUrl.search_params]",query_search);
 					return;
 				}
