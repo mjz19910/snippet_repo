@@ -65,7 +65,6 @@ type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["
 type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
 type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
-type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
 type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
 type TD_GuideEntry_EntryData<T extends string>={
 	navigationEndpoint: GE_Browse;
@@ -117,6 +116,7 @@ type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>=Record<"cont
 };
 type TD_ItemSection_3_I_1=R_ContinuationItem;
 type TD_Label<T>={label: T;};
+type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
 type TG_SecondaryResultsItem_3<A,B,C>=[
 	R_RelatedChipCloud,
 	TR_ItemSection_3<A,B,C>
@@ -126,7 +126,6 @@ type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;
 type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
 type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
 type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
-type UC=TP_ParseUrlItems<"x=3&r=12">;
 type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: C;}:T;
 type TRS_Actions={
 	responseContext: RC_ResponseContext;
