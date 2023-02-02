@@ -1896,6 +1896,32 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return;
 	}
+	/** @private @arg {GM_Like} x */
+	GM_Like(x) {
+		const cf="GM_Like"; this.g_k(cf,x); this.k(cf,x);
+		switch(x.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
+			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
+			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
+		}
+	}
+	/** @private @arg {GM_VE_WC_Browse} x @returns {`VE${GM_VE_WC_Browse["rootVe"]}`} */
+	GM_VE_WC_Browse(x) {
+		switch(x.rootVe) {
+			case 3611: this.GM_VE3611_WC(x); break;
+			case 3854: this.GM_VE3854_WC(x); break;
+			case 5754: this.GM_VE5754_WC(x); break;
+			case 6827: this.GM_VE6827_WC(x); break;
+			case 11487: this.GM_VE11487_WC(x); break;
+			case 23462: this.GM_VE23462_WC(x); break;
+			case 42352: this.GM_VE42352_WC(x); break;
+			case 96368: this.GM_VE96368_WC_browse(x); break;
+			default: x===""; debugger; break;
+		}
+		this.GM_WC(x);
+		return `VE${x.rootVe}`;
+	}
 	/** @private @arg {Exclude<Extract<GM_WC,{rootVe:any}>,{apiUrl:any}>} x */
 	GM_WC_RootVe(x) {
 		let cx=x.rootVe;
@@ -1946,6 +1972,14 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @private @arg {GM_VE4724_WC} x */
+	GM_VE4724_WC(x) {
+		const cf="GM_VE4724_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		if(rootVe!==4724) debugger;
 	}
 	/** @private @arg {GM_VE5754_WC} x */
 	GM_VE5754_WC(x) {
@@ -2037,57 +2071,40 @@ class HandleTypes extends HandleTypesEval {
 	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
 	/** @private @arg {GM_GetNotificationMenu} x */
 	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
-	/** @private @arg {GM_Like} x */
-	GM_Like(x) {
-		const cf="GM_Like"; this.g_k(cf,x); this.k(cf,x);
-		switch(x.apiUrl) {
-			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
-			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
-			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
-		}
-	}
-	/** @private @arg {GM_VE_WC_Browse} x @returns {`VE${GM_VE_WC_Browse["rootVe"]}`} */
-	GM_VE_WC_Browse(x) {
-		switch(x.rootVe) {
-			case 3611: this.GM_VE3611_WC(x); break;
-			case 3854: this.GM_VE3854_WC(x); break;
-			case 5754: this.GM_VE5754_WC(x); break;
-			case 6827: this.GM_VE6827_WC(x); break;
-			case 11487: this.GM_VE11487_WC(x); break;
-			case 23462: this.GM_VE23462_WC(x); break;
-			case 42352: this.GM_VE42352_WC(x); break;
-			case 96368: this.GM_VE96368_WC_browse(x); break;
-			default: x===""; debugger; break;
-		}
-		this.GM_WC(x);
-		return `VE${x.rootVe}`;
-	}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
 	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {
-		const cf="GM_YpcGetCart"; this.k(cf,x);
-		const {apiUrl,sendPost,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
-		if(sendPost!==true) debugger;
-	}
+	GM_YpcGetCart(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
 	/** @private @arg {GM_CreatePlaylist} x */
-	GM_CreatePlaylist(x) {
-		const cf="GM_CreatePlaylist"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
-	}
+	GM_CreatePlaylist(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
-	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
+	GM_SetSetting(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
-	GM_AddToPlaylistService(x) {
-		const cf="GM_AddToPlaylistService"; this.k(cf,x);
-		const {apiUrl,sendPost,...y1}=this.s(cf,x); this.g(y1);
-		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
-		if(sendPost!==true) debugger;
+	GM_AddToPlaylistService(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
+	/** @private @arg {GM_VE3832_Watch_WC} x */
+	GM_VE3832_Watch_WC(x) {
+		const cf="GM_VE3832_Watch_WC"; this.k(cf,x);
+		const {rootVe,url,webPageType,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(rootVe!==3832) debugger;
+		if(!this.str_starts_with_rx("/watch",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
+	/** @private @arg {GM_VE83769_WC} x */
+	GM_VE83769_WC(x) {
+		const cf="GM_VE83769_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		this.GM_VE83769_UrlType(url);
+		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
+		if(rootVe!==83769) debugger;
+	}
+	/** @private @arg {GM_Browse} x */
+	GM_browse(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/browse"));}
+	/** @private @arg {GM_RecordInteractions} x */
+	GM_RecordInteractions(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
+	/** @private @arg {GM_Feedback} x */
+	GM_Feedback(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
+	/** @private @arg {GM_SendPost} x */
+	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @private @arg {string} ve_name @arg {GM_VE3611_WC['url']|GM_VE5754_WC["url"]} x */
 	_decode_channel_url(ve_name,x) {
 		ve_name;
@@ -4282,13 +4299,6 @@ class HandleTypes extends HandleTypesEval {
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {GM_Feedback} x */
-	GM_Feedback(x) {
-		const cf="GM_Feedback"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/feedback") debugger;
-	}
 	/** @private @arg {string} x */
 	DE_Feedback_onToken(x) {
 		let fb_dec=base64_url_dec.decodeByteArray(x);
@@ -4412,14 +4422,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(a2,this.R_WatchEndpointMusicConfig);
 		if(nofollow!==void 0) this._primitive_of(nofollow,"boolean");
 		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
-	}
-	/** @private @arg {GM_VE3832_Watch_WC} x */
-	GM_VE3832_Watch_WC(x) {
-		const cf="GM_VE3832_Watch_WC"; this.k(cf,x);
-		const {rootVe,url,webPageType,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(rootVe!==3832) debugger;
-		if(!this.str_starts_with_rx("/watch",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
 	/** @private */
 	_decoder=new TextDecoder();
@@ -4585,14 +4587,6 @@ class HandleTypes extends HandleTypesEval {
 		const {url,target,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.GM_E_Url_TargetUrlType(url);
 		if(target!=="TARGET_NEW_WINDOW") debugger;
-	}
-	/** @private @arg {GM_VE83769_WC} x */
-	GM_VE83769_WC(x) {
-		const cf="GM_VE83769_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.GM_VE83769_UrlType(url);
-		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		if(rootVe!==83769) debugger;
 	}
 	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
@@ -5254,13 +5248,6 @@ class HandleTypes extends HandleTypesEval {
 		this.assert_is_omit_key(x,y,u);
 		return u;
 	}
-	/** @private @arg {GM_Browse} x */
-	GM_browse(x) {
-		const cf="GM_browse"; this.k(cf,x);
-		const {apiUrl,sendPost,...b}=this.s(cf,x); this.g(b);
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		if(sendPost!==true) debugger;
-	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification"; this.k(cf,x);
@@ -5273,13 +5260,6 @@ class HandleTypes extends HandleTypesEval {
 		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
-	}
-	/** @private @arg {GM_RecordInteractions} a */
-	GM_RecordInteractions(a) {
-		const cf="GM_RecordInteractions";
-		const {apiUrl,sendPost,...u}=this.s(cf,a); this.g(u);
-		if(apiUrl!=="/youtubei/v1/notification/record_interactions") debugger;
-		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
@@ -5821,14 +5801,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.str_starts_with_rx(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @private @arg {GM_VE4724_WC} x */
-	GM_VE4724_WC(x) {
-		const cf="GM_VE4724_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
-	}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {
 		const cf="G_BrowseHeader"; this.k(cf,x);
@@ -6158,12 +6130,6 @@ class HandleTypes extends HandleTypesEval {
 	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
 	/** @private @arg {M_GetNotificationMenu} x */
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
-	/** @private @arg {GM_SendPost} x */
-	GM_SendPost(x) {
-		const cf="GM_SendPost"; this.k(cf,x);
-		const {sendPost: a,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(a!==true) debugger;
-	}
 	/** @private @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button"; this.k(cf,x);
