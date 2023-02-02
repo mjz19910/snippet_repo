@@ -3508,21 +3508,8 @@ class HandleTypes extends HandleTypesEval {
 	D_ReelWatch(x) {
 		const cf="D_ReelWatch"; this.k(cf,x);
 		if("videoId" in x) {
-			debugger;
-			const {videoId}=this.s(cf,x);
+			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 			this.t(videoId,this.videoId);
-			return;
-		}
-		if("sequenceParams" in x) {
-			debugger;
-			const {sequenceParams}=this.s(cf,x);
-			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
-			return;
-		}
-		if("thumbnail" in x) {
-			debugger;
-			const {thumbnail}=this.s(cf,x);
-			this.D_Thumbnail(thumbnail);
 			return;
 		}
 		if("inputType" in x) {

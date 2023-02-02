@@ -25,9 +25,15 @@ type DE_ReelWatch=
 		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
 		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
 	}
-	|{videoId: string;}
-	|{thumbnail: D_Thumbnail;}
-	|{sequenceParams: string;}
+	|{
+		videoId: string;
+		playerParams: "8AEByANQuAQr";
+		thumbnail: D_Thumbnail;
+		overlay: R_ReelPlayerOverlay;
+		params: "CCkwAg%3D%3D";
+		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
+		sequenceParams: string;
+	}
 	;
 ;
 type DE_Search={query: string;};
