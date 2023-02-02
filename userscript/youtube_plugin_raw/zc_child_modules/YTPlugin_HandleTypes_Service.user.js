@@ -279,9 +279,12 @@ class HandleTypes extends HandleTypesEval {
 			case 2: {
 				switch(map_entry_key_path[0]) {
 					default: debugger; return;
-					case 40: {
-						const rk=this.exact_arr(map_entry_key_path[0]);
-						this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+					case 40: switch(map_entry_key_path[1]) {
+						case 1: {
+							let [k1,k2]=map_entry_key_path;
+							const rk=this.exact_arr(k1,k2);
+							this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+						}
 					} break;
 				}
 			} break;
@@ -297,11 +300,18 @@ class HandleTypes extends HandleTypesEval {
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let saved_map_keys=map_keys.slice();
 		let callback=this.on_player_params_callback.bind(this);
+		let map_entry_key=map_entry_key_path.at(-1);
+		if(!map_entry_key) {debugger; return;}
 		switch(map_entry_key_path.length) {
 			case 1: {
-				let map_entry_key=map_entry_key_path.at(-1);
+				let map_entry_key=map_entry_key_path[0];
 				if(!map_entry_key) {debugger; return;}
-				this.parse_param_next(root,path,map_entry_key_path,map_entry_values,callback);
+				switch(path) {
+					default: debugger; return;
+					case "watch.player_params":
+					case "watch.player_params.f40":
+				}
+				this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 		}
