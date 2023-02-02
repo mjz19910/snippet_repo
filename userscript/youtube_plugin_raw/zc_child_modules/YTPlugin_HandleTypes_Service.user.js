@@ -1018,9 +1018,18 @@ class HandleTypes extends HandleTypesEval {
 				}
 			} break;
 			case "transcript_target_id": {
-				const idx=2;
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "param": u(idx); debugger; break;}
-			} break;
+				switch(parts[1]) {
+					default: {const idx=2; u(idx); debugger; parts[2]==="";} return;
+					case "param": break;
+				}
+				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[2]) {
+					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					case "f1": case "f2": case "f3":
+				}
+				if(parts.length!==3) {debugger; return;}
+				switch(map_entry_value) {default: debugger; return;}
+			}
 			case "watch": {
 				switch(parts[1]) {
 					default: {const idx=2; u(idx); debugger; parts[2]==="";} return;
@@ -1029,7 +1038,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "f2": case "f3": case "f7": case "f8": case "f9": case "f12": case "f13": case "f24": case "f25": case "f27": case "f33": case "f39": case "f40": case "f56": break;
+					case "f2": case "f3": case "f7": case "f8": case "f9": case "f12": case "f13": case "f24": case "f25": case "f27": case "f33": case "f39": case "f40": case "f56":
 				}
 				if(parts.length===3) {
 					if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
