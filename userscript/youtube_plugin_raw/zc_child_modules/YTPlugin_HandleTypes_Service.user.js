@@ -3966,7 +3966,41 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_External} x */
+	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
+	make_str_tag(x,tag) {
+		/** @template T */
+		class UrlEncodedTag extends String {
+			/** @arg {string} str @arg {T} tag */
+			constructor(str,tag) {
+				super(str);
+				this._tag=tag;
+			}
+		}
+		let tagged_obj=new UrlEncodedTag(x,tag);
+		return as(tagged_obj);
+	}
+	/** @template {keyof UrlInfoMap} K @arg {K} k @arg {UrlInfoMap[K]["url"]} x @returns {UrlInfoMap[K]} */
+	getInfoForUrl(x,k) {
+		switch(k) {
+			case "https://www.youtube.com/redirect": {
+				let parsed_url=this.parse_with_url_parse(x);
+				if("_tag" in parsed_url) throw new Error();
+				let parsed_params=this.parse_url_search_params(parsed_url.search);
+				if(!("q" in parsed_params)) {debugger; throw new Error();}
+				/** @type {GU_VE83769_Url_Redirect_Info} */
+				let wt={
+					url: x,
+					encoded_params: {
+						q: this.make_str_tag(parsed_params.q,"EncodedURIComponent"),
+					}
+				};
+				return wt;
+			}
+		}
+		debugger;
+		throw new Error();
+	}
+	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_Redirect|GU_VE83769_Url_External} x */
 	GM_VE83769_UrlType(x) {
 		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
