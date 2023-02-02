@@ -5,7 +5,6 @@ type GRC_ServiceTrackingParams=[
 	RC_GoogleHelp_SPs,
 	RC_GuidedHelp_SPs,
 ][number];
-type V_ParamMapValue=number|string|['bigint',number[],bigint]|['group',D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]|V_ParamMapType;
 type G_ResponseActions=
 	TA_OpenPopup_Empty|
 	AU_NotificationsUnseenCount|
