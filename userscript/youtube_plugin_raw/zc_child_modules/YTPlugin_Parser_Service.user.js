@@ -18,6 +18,7 @@ const bs=required(store["mod$YoutubePluginBase"]);
 const as=bs.as_;
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
+const MyReader=bs.MyReader;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
