@@ -7791,7 +7791,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(accessibilityTitle);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
-		if(!this.str_starts_with(price,"CA_")) debugger;
+		if(!this.str_starts_with(price,"CA$")) debugger;
 		if(!onClickCommand.urlEndpoint) debugger;
 		this.E_Url(onClickCommand);
 		this.D_LoggingDirectives(loggingDirectives);
