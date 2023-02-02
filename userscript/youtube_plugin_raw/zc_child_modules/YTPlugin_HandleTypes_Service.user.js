@@ -214,7 +214,7 @@ class HandleTypes extends HandleTypesEval {
 			let pad="\t\t\t";
 			if(idx>parts.length) return;
 			let case_part="";
-			let value_part=`${pad}\t\tswitch(map_entry_value) {default: debugger; return;}`;
+			let value_part=`${pad}\tswitch(map_entry_value) {default: debugger; return;}`;
 			if(parts.length===idx) {
 				if(map_entry_value instanceof Map) case_part=`${pad}\t\tif(map_entry_value instanceof Map) return;\n`;
 				switch(typeof map_entry_value) {
@@ -222,16 +222,19 @@ class HandleTypes extends HandleTypesEval {
 					case "string": case_part=`${pad}\t\tif(typeof map_entry_value==="string") return this.save_string(\`[$\{path}]\`,map_entry_value);\n`; break;
 				}
 			}
-			let res_case="";
-			if(idx<parts.length) res_case=` case "${parts[idx]}": u(idx); debugger; break;`;
+			let res_case=[`default: {const idx=${idx+1}; u(idx); debugger; parts[${idx}]==="";} break;`];
+			if(idx<parts.length) {
+				res_case.push(`case "${parts[idx]}": u(idx); debugger; break;`);
+			}
 			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
 			console.log(`
 			-- [${parts.join(".")},${idx}] --\n\n
-			case "${parts[idx-1]}": {
-				const idx=${idx+1};
-				if(parts.length===${idx}) {\n${case_part}${value_part}\n${pad}\t}
-				switch(parts[${idx}]) {default: u(idx); debugger; parts[${idx}]===""; break;${res_case}}
-			} break;`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+			case "${parts[idx-1]}":
+			if(parts.length===${idx}) {\n${case_part}${value_part}\n${pad}}
+			switch(parts[${idx}]) {${(()=>{
+				if(res_case.length===1) return res_case[0];
+				return `\n${pad}\t${res_case.join(`${pad}\t`)}\n${pad}`;
+			})()}}`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
 			/** @private @type {P_LogItems} */
