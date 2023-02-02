@@ -2903,7 +2903,6 @@ class HandleTypes extends HandleTypesEval {
 						case "clip-info-button":
 						case "create-clip-button-action-bar":
 					}
-					this.codegen_typedef_all(cf1,x);
 				}
 			}
 		}
