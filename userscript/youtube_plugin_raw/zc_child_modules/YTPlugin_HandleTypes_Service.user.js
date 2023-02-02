@@ -534,28 +534,24 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
 					case "f12": case "f13":
 				}
-				if(parts.length===4) {
-					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
-					if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-					switch(map_entry_value) {default: debugger; return;}
-				}
+				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
 					case "f1": case "f1[]": case "f2": case "f3":
 				}
-				if(parts.length===5) {switch(map_entry_value) {default: debugger; return;}}
+				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1":
 				}
-				if(parts.length===6) {switch(map_entry_value) {default: debugger; return;}}
+				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
 					default: {const idx=7; u(idx); debugger; parts[6]==="";} return;
 					case "f4":
 				}
 				if(parts.length!==7) {debugger; break;}
-				switch(map_entry_value) {default: debugger;}
-			} return;
+				return this.handle_map_value(path,map_entry_value);
+			}
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 	}
