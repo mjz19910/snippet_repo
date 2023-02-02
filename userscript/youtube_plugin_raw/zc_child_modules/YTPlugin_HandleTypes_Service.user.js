@@ -8026,7 +8026,8 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
-			case "get_report_form.f28.f1[].f1":switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.f28.f1[].f1.f1[]": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.f28.f1[].f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -8165,8 +8166,7 @@ class HandleTypes extends HandleTypesEval {
 						}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
-							case "f1[]":
-							case "f1": {
+							case "f1[]": case "f1": {
 								const idx=4;
 								if(parts.length===3) {
 									if(map_entry_value instanceof Map) return;
@@ -8174,9 +8174,7 @@ class HandleTypes extends HandleTypesEval {
 								}
 								switch(parts[3]) {
 									default: u(idx); debugger; parts[3]===""; break;
-									case "f1":
-									case "f2":
-									case "f3": {
+									case "f1": case "f2": case "f3": {
 										const idx=5;
 										if(parts.length===4) {
 											if(map_entry_value instanceof Map) return;
@@ -8185,8 +8183,17 @@ class HandleTypes extends HandleTypesEval {
 										}
 										switch(parts[4]) {
 											default: u(idx); debugger; parts[4]===""; break;
-											case "f1": u(idx); debugger; break;
-											case "f1[]": u(idx); debugger; break;
+											case "f1": case "f1[]": {
+												const idx=6;
+												if(parts.length===5) {
+													if(map_entry_value instanceof Map) return;
+													switch(map_entry_value) {default: debugger; return;}
+												}
+												switch(parts[5]) {
+													default: u(idx); debugger; parts[5]===""; break;
+													case "f1": u(idx); debugger; break;
+												}
+											} break;
 										}
 									} break;
 								}
