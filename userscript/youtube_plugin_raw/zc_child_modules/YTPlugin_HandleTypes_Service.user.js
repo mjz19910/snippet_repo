@@ -2823,8 +2823,9 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`;
 					const {targetId,accessibilityData,command,size,style,icon,isDisabled,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					switch(targetId) {
-						case "clip-info-button": break;
 						default: this.codegen_case(`${cf1}.case`,targetId); this.codegen_typedef_all(cf1,x); break;
+						case "clip-info-button":
+						case "create-clip-button-action-bar":
 					}
 					this.codegen_typedef_all(cf1,x);
 				}
