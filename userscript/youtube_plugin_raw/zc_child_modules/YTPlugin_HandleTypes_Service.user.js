@@ -4424,14 +4424,20 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ShowReloadUi(a);
 	}
+	/** @type {D_UiTargetId[]} */
+	reload_ui_target_id_arr=[];
+	/** @arg {D_UiTargetId} x */
+	D_UiTargetId(x) {
+		switch(x) {
+			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
+			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
+		}
+	}
 	/** @private @arg {DC_ShowReloadUi} x */
 	DC_ShowReloadUi(x) {
 		const cf="DC_ShowReloadUi"; this.k(cf,x);
 		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
-		switch(targetId) {
-			default: debugger; break;
-			case "browse-feedFEwhat_to_watch": case "watch-next-feed":
-		}
+		this.D_UiTargetId(targetId);
 	}
 	/** @private @arg {C_Executor} x */
 	C_Executor(x) {
