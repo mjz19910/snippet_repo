@@ -6725,16 +6725,9 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {`${typeof key}.data[${typeof idx}]`} */
 		let rk=`${key}.data[${idx}]`;
 		/** @type {`${typeof rk}[${typeof f}]`} */
-		let k=`${rk}[${f}]`;
+		let k=`${rk}=${f}`;
 		this.save_number(rk,f);
-		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
-		if(!s_url_data) return this.save_number(k,1);
-		let wd=s_url_data[1];
-		if(wd[0]!=="one") {debugger; return;}
-		let [,di]=wd;
-		if(!di.length) return this.save_number(k,1);
-		di[0]++;
-		this.save_number(k,di[0],true);
+		this.save_number(k,1);
 	}
 	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {
