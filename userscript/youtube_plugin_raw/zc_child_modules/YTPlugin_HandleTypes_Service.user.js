@@ -257,8 +257,19 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
-		if(path!=="watch.player_params") {debugger; return;}
 		if(root!=="DE_VE3832_Watch") {debugger; return;}
+		switch(map_entry_key_path.length) {
+			default: debugger; return;
+			case 1: {
+				switch(map_entry_key_path[0]) {
+					default: debugger; return;
+					case 8: {
+						const rk=this.exact_arr(map_entry_key_path[0]);
+						this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+					} break;
+				}
+			} break;
+		}
 		/** @type {[8]} */
 		let k=as(map_entry_key_path);
 		this.on_player_params_callback_ty(map_entry_values,k,path,map_keys,root);
