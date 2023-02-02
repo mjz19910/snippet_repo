@@ -376,8 +376,7 @@ class CodegenService extends BaseService {
 			if(xt.popup&&xt.popupType) {
 				/** @type {Popup_ConfirmDialog} */
 				let xr={popup: xt.popup,popupType: xt.popupType};
-				let ht=this.x.get("handle_types");
-				return ht.generate_typedef.popup_dialog(ht,xr);
+				return this.x.get("handle_types").generate_typedef.popup_dialog(xr);
 			}
 		}
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);

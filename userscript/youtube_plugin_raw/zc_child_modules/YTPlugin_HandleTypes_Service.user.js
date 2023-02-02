@@ -8555,25 +8555,39 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
 	get generate_typedef() {
-		return generate_typedef;
+		if(!generate_typedef.value) throw new Error();
+		return generate_typedef.value;
+	}
+	/** @this {HandleTypes<LoadAllServices,ServiceOptions>} @arg {ResolverT<Cls_T,Cls_U>} x */
+	constructor(x) {
+		super(x);
+		generate_typedef.value=new TypedefGenerator(this);
 	}
 	//#endregion
 }
 class TypedefGenerator {
-	/** @arg {HandleTypes<LoadAllServices, ServiceOptions>} h @arg {Popup_ConfirmDialog} x */
-	popup_dialog(h,x) {
-		let x1=h.unpack_popup_dialog(x);
+	/** @arg {HandleTypes<LoadAllServices, ServiceOptions>} h */
+	constructor(h) {
+		this.h=h;
+	}
+	/** @arg {Popup_ConfirmDialog} x */
+	popup_dialog(x) {
+		const cf="popup_dialog"; cf;
+		let x1=this.h.unpack_popup_dialog(x);
 		if(!x1[0]) {debugger; return null;}
 		let dialog=x1[1];
-		if(dialog.confirmDialogRenderer) {
-			return "TYPE::Popup_ConfirmDialog";
-		} else {
-			debugger;
-		}
+		return this.popup_dialog_1(dialog);
+	}
+	/** @arg {R_ConfirmDialog} x */
+	popup_dialog_1(x) {
+		const cf="R_ConfirmDialog"; cf;
+		if(x.confirmDialogRenderer) return "TYPE::Popup_ConfirmDialog";
+		debugger;
 		return null;
 	}
 }
-const generate_typedef=new TypedefGenerator;
+/** @type {{value:TypedefGenerator|null}} */
+const generate_typedef={value: null};
 //#endregion
 init_module();
 //#endregion
