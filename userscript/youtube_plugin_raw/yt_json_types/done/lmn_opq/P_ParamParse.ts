@@ -9,6 +9,8 @@ type P_LogItems=[
 	"[parse_value.gen_ns] [notification.opt_out.f3]",
 	"[parse_value.gen_ns] [notification.opt_out.f4]",
 	"[parse_value.gen_ns] [notification.opt_out.f7]",
+	"[parse_value.gen_ns] [notification.record_interactions.f2]",
+	"[parse_value.gen_ns] [notification.record_interactions.f5]",
 ];
 type P_ParamParse=
 	|P_PathRootStr

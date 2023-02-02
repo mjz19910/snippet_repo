@@ -369,6 +369,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
+			case "notification.record_interactions": switch(map_entry_key) {
+				case 2: case 5:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "notification.opt_out": switch(map_entry_key) {
 				case 2: case 3: case 4: case 7:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -515,27 +520,9 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "notification": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; return;
-					case "record_interactions": case "opt_out":
-				}
-				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[2]) {
-					default: {const idx=3; u(idx); debugger; parts[2]==="";} break;
-					case "f2": case "f3": case "f4": case "f7":
-				}
-				if(parts.length===3) {
-					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
-					if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-					switch(map_entry_value) {default: debugger; return;}
-				}
-				switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
-			} break;
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
 			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
-			case "next_radio": case "next": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
+			case "next_radio": case "next": case "notification": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
 			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
 			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
 			case "record_notification_interactions": case "transcript_target_id": case "watch": {
@@ -547,7 +534,7 @@ class HandleTypes extends HandleTypesEval {
 					} return;
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
-					case "removeLikeParams": case "sequence_params": case "pp":
+					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f13": case "f14": case "f15": case "f18":
 					case "f25": case "f26": case "f27": case "f28": case "f29":
