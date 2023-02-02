@@ -72,8 +72,10 @@ type G_ShelfItem={
 	gridRenderer: R_Grid;
 };
 type G_ShortsSurfaceIdentifier_ValidTag=
-|"engagement-panel-structured-description"
-|"shorts-comments-panel";
+	|"engagement-panel-structured-description"
+	|"shorts-comments-panel"
+	;
+;
 type G_StructuredDescriptionContentItem=[
 	R_ExpandableVideoDescriptionBody,
 	R_HorizontalCardList,
@@ -102,10 +104,10 @@ type G_ThumbnailOverlayItem=
 ;
 type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
 type G_UrlInfoItem=D_UrlInfoPlaylist|D_UrlInfoVideo|{
-	_tag:"video-referral";
-	id: string; 
+	_tag: "video-referral";
+	id: string;
 }|{
-	_tag:"play-next";
+	_tag: "play-next";
 	value: string;
 };
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
