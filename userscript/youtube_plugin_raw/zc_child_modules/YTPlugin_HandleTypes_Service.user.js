@@ -525,7 +525,10 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
 					case "f12": case "f13":
 				}
-				if(parts.length===4) {switch(map_entry_value) {default: debugger; return;}}
+				if(parts.length===4) {
+					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+					switch(map_entry_value) {default: debugger; return;}
+				}
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
 					case "f1": case "f1[]": case "f2": case "f3":
