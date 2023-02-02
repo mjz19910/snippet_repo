@@ -1,1 +1,0 @@
-type R_SimpleMenuHeader={simpleMenuHeaderRenderer: D_SimpleMenuHeader;};

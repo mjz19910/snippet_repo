@@ -1,1 +1,0 @@
-type R_MovingThumbnail={movingThumbnailRenderer: D_MovingThumbnail;};

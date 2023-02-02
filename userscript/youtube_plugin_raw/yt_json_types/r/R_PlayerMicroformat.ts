@@ -1,1 +1,0 @@
-type R_PlayerMicroformat={playerMicroformatRenderer: D_PlayerMicroformat;};

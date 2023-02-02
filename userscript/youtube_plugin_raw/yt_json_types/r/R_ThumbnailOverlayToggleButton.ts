@@ -1,1 +1,0 @@
-type R_ThumbnailOverlayToggleButton={thumbnailOverlayToggleButtonRenderer: D_ThumbnailOverlayToggleButton;};

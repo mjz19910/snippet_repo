@@ -1,1 +1,0 @@
-type R_WatchNextTabbedResults={watchNextTabbedResultsRenderer: D_WatchNextTabbedResults;};

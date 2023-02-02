@@ -1,1 +1,0 @@
-type R_ProductListItem={productListItemRenderer: D_ProductListItem;};

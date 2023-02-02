@@ -1,1 +1,0 @@
-type R_PdgCommentOption={pdgCommentOptionRenderer: D_PdgCommentOption;};

@@ -1,1 +1,0 @@
-type R_AdHoverTextButton={adHoverTextButtonRenderer: D_AdHoverTextButton;};

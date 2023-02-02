@@ -1,1 +1,0 @@
-type R_Card={cardRenderer: D_Card;};

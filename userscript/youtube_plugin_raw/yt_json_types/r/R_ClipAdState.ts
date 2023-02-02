@@ -1,1 +1,0 @@
-type R_ClipAdState={clipAdStateRenderer: D_ClipAdState;};

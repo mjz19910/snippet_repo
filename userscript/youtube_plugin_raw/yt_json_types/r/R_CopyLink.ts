@@ -1,1 +1,0 @@
-type R_CopyLink={copyLinkRenderer: D_CopyLink;};

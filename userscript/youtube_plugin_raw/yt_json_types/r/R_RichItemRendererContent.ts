@@ -1,1 +1,0 @@
-type RichItemRendererContent=G_RichItemContent;

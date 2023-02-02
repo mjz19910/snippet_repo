@@ -1,1 +1,0 @@
-type R_ChannelSwitcherPage={channelSwitcherPageRenderer: D_ChannelSwitcherPage;};

@@ -1,1 +1,0 @@
-type R_TranscriptSegment={transcriptSegmentRenderer: D_TranscriptSegment;};

@@ -1,1 +1,0 @@
-type R_StructuredDescriptionContent={structuredDescriptionContentRenderer: D_StructuredDescriptionContent;};

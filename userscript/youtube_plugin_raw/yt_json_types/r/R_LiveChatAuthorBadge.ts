@@ -1,1 +1,0 @@
-type R_LiveChatAuthorBadge={liveChatAuthorBadgeRenderer: D_LiveChatAuthorBadge;};

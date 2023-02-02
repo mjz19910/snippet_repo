@@ -1,1 +1,0 @@
-type R_MerchandiseItem={merchandiseItemRenderer: D_MerchandiseItem;};

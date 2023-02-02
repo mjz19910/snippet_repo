@@ -1,1 +1,0 @@
-type R_CardCollection={cardCollectionRenderer: D_CardCollection;};

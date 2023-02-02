@@ -1,1 +1,0 @@
-type R_PdgBuyFlow={pdgBuyFlowRenderer: D_PdgBuyFlow;};

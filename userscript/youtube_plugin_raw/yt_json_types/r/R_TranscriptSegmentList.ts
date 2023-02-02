@@ -1,1 +1,0 @@
-type R_TranscriptSegmentList={transcriptSegmentListRenderer: D_TranscriptSegmentList;};

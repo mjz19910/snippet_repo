@@ -1,1 +1,0 @@
-type R_PdgColorSlider={pdgColorSliderRenderer: D_PdgColorSlider;};

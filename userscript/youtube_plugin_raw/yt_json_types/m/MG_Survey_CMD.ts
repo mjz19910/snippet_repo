@@ -1,1 +1,0 @@
-type MG_Survey_CMD={webCommandMetadata: GM_GetSurvey;};

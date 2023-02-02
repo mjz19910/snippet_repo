@@ -1,1 +1,0 @@
-type R_UnifiedSharePanel={unifiedSharePanelRenderer: D_UnifiedSharePanel;};

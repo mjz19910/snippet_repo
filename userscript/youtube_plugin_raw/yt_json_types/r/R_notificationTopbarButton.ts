@@ -1,1 +1,0 @@
-type R_NotificationTopbarButton={notificationTopbarButtonRenderer: D_NotificationTopbarButton;};

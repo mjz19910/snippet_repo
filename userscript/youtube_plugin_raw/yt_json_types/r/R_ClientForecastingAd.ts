@@ -1,1 +1,0 @@
-type R_ClientForecastingAd={clientForecastingAdRenderer: D_ClientForecastingAd;};

@@ -1,1 +1,0 @@
-type R_Menu={menuRenderer: D_Menu;};

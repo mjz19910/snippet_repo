@@ -1,1 +1,0 @@
-type R_SearchResultsTab={tabRenderer: D_SearchResultsTab;};

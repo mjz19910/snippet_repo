@@ -1,1 +1,0 @@
-type R_ActionCompanionAd={actionCompanionAdRenderer: D_ActionCompanionAd;};

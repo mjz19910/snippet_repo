@@ -1,1 +1,0 @@
-type R_DescriptionChaptersItem=T_MapEntry<"DESCRIPTION_CHAPTERS",R_DescriptionChapters>;

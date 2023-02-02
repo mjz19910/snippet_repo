@@ -1,1 +1,0 @@
-type R_ChipCloudChip={chipCloudChipRenderer: D_ChipCloudChip;};

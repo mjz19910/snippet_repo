@@ -1,1 +1,0 @@
-type R_ClipSection={clipSectionRenderer: D_ClipSection;};

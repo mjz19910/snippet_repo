@@ -1,1 +1,0 @@
-type R_SubscribeButton={subscribeButtonRenderer: D_SubscribeButton;};

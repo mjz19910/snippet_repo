@@ -1,1 +1,0 @@
-type R_PlayerAttestation={playerAttestationRenderer: D_PlayerAttestation;};

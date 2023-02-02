@@ -1,1 +1,0 @@
-type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;

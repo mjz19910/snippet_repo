@@ -1,1 +1,0 @@
-type R_SettingsCheckbox={settingsCheckboxRenderer: D_SettingsCheckbox;};

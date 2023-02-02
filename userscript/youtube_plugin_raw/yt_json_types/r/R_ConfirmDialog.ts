@@ -1,1 +1,0 @@
-type R_ConfirmDialog={confirmDialogRenderer: D_ConfirmDialog;};

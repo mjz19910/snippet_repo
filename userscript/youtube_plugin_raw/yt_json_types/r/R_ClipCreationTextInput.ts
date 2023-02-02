@@ -1,1 +1,0 @@
-type R_ClipCreationTextInput={clipCreationTextInputRenderer: D_ClipCreationTextInput;};

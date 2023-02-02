@@ -1,1 +1,0 @@
-type R_SettingsSwitch={settingsSwitchRenderer: D_SettingsSwitch;};

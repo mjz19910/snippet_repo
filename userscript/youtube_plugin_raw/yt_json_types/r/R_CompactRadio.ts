@@ -1,1 +1,0 @@
-type R_CompactRadio={compactRadioRenderer: D_CompactRadio;};

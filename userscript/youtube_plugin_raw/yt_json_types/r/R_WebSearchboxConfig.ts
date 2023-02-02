@@ -1,1 +1,0 @@
-type R_WebSearchboxConfig={webSearchboxConfig: D_WebSearchboxConfig;};

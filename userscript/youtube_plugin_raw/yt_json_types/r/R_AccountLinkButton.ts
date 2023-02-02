@@ -1,1 +1,0 @@
-type R_AccountLinkButton={accountLinkButtonRenderer: D_AccountLinkButton;};

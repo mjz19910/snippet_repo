@@ -27,7 +27,8 @@ type UA_Description={updateDescriptionAction: DUA_Description;};
 type AU_EngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};
 type AU_NotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
 type AU_SubscribeButton={updateSubscribeButtonAction: DAU_SubscribeButton;};
-type UA_Title={updateTitleAction: D_Title;};type UA_ToggleButtonText={updateToggleButtonTextAction: D_ToggleButtonText;};
+type UA_Title={updateTitleAction: D_Title;};
+type UA_ToggleButtonText={updateToggleButtonTextAction: D_ToggleButtonText;};
 type UA_Viewership={updateViewershipAction: D_ViewCount;};
 //#endregion
 type AC_Executor=[

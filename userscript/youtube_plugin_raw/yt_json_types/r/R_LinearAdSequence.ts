@@ -1,1 +1,0 @@
-type R_LinearAdSequence={linearAdSequenceRenderer: D_LinearAdSequence;};

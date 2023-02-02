@@ -1,1 +1,0 @@
-type SP_GFeedbackServiceParam=SP_GFeedbackServiceRouteParam;

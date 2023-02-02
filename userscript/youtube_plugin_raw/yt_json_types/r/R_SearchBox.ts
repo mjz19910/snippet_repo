@@ -1,1 +1,0 @@
-type R_SearchBox={searchBoxRenderer: D_SearchBox;};

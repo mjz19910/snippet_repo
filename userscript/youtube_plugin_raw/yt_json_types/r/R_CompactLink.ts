@@ -1,1 +1,0 @@
-type R_CompactLink={compactLinkRenderer: D_CompactLink;};

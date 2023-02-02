@@ -1,1 +1,0 @@
-type R_PageIntroduction={pageIntroductionRenderer: D_PageIntroduction;};

@@ -1,1 +1,0 @@
-type R_PlaylistSidebarPrimaryInfo={playlistSidebarPrimaryInfoRenderer: D_PlaylistSidebarPrimaryInfo;};

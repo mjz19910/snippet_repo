@@ -1,1 +1,0 @@
-type R_TwoColumnBrowseResults={twoColumnBrowseResultsRenderer: D_TwoColumnBrowseResults;};

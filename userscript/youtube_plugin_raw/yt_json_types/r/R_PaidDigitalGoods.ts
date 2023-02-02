@@ -1,1 +1,0 @@
-type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};

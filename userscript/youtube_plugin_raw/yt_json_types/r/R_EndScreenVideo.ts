@@ -1,1 +1,0 @@
-type R_EndScreenVideo={endScreenVideoRenderer: D_EndScreenVideo;};

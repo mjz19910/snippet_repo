@@ -1,1 +1,0 @@
-type R_ThumbnailOverlayHoverText={thumbnailOverlayHoverTextRenderer: D_ThumbnailOverlayHoverText;};

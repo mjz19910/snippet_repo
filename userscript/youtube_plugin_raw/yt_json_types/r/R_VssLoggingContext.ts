@@ -1,1 +1,0 @@
-type R_VssLoggingContext={vssLoggingContext: D_VssLoggingContext;};

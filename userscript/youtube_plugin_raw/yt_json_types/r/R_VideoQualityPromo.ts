@@ -1,1 +1,0 @@
-type R_VideoQualityPromo={videoQualityPromoRenderer: D_VideoQualityPromo;};

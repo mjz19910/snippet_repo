@@ -1,1 +1,0 @@
-type R_ToggleButton={toggleButtonRenderer: D_ToggleButton;};

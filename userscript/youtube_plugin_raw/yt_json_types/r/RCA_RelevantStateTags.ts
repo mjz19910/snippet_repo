@@ -1,1 +1,0 @@
-type RCA_RelevantStateTags={relevantStateTags: B_StateTag[];};

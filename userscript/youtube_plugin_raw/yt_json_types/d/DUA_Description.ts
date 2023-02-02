@@ -1,1 +1,0 @@
-type DUA_Description={description: G_Text;};

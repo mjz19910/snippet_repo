@@ -1,6 +1,0 @@
-type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",[
-	"SWITCHER",
-	"CREATION",
-	"NOTIFICATIONS",
-	"ACCOUNT"
-][number]>;

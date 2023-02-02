@@ -1,1 +1,0 @@
-type R_ThumbnailOverlayTimeStatus={thumbnailOverlayTimeStatusRenderer: D_ThumbnailOverlayTimeStatus;};

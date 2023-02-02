@@ -1,1 +1,0 @@
-type R_VideoOwner={videoOwnerRenderer: D_VideoOwner;};

@@ -1,1 +1,0 @@
-type R_Dropdown={dropdownRenderer: D_Dropdown_Privacy;};

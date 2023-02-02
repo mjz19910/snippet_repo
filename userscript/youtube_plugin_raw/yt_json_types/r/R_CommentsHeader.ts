@@ -1,1 +1,0 @@
-type R_CommentsHeader={commentsHeaderRenderer: D_CommentsHeader;};

@@ -1,1 +1,0 @@
-type D_ThumbnailsList={thumbnail: D_Thumbnail;trackingParams?: string;};

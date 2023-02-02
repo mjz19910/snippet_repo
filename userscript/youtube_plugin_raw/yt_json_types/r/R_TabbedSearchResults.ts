@@ -1,1 +1,0 @@
-type R_TabbedSearchResults={tabbedSearchResultsRenderer: D_TabbedSearchResults;};

@@ -1,1 +1,0 @@
-type R_Page={trackingParams: string; contents: R_TwoColumnBrowseResults[];};

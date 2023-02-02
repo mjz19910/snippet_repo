@@ -1,1 +1,0 @@
-type R_Transcript={transcriptRenderer: D_Transcript;};

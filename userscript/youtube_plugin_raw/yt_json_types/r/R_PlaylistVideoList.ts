@@ -1,1 +1,0 @@
-type R_PlaylistVideoList={playlistVideoListRenderer: D_PlaylistVideoList;};

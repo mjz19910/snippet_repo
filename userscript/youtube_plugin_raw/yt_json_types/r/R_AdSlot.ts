@@ -1,1 +1,0 @@
-type R_AdSlot={adSlotRenderer: D_AdSlot;};

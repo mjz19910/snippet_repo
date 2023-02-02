@@ -1,1 +1,0 @@
-type R_PdgCommentChip={pdgCommentChipRenderer: D_PdgCommentChip;};

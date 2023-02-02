@@ -1,1 +1,0 @@
-type R_MacroMarkersList={macroMarkersListRenderer: D_MacroMarkersList;};

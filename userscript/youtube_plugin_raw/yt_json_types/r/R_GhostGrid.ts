@@ -1,1 +1,0 @@
-type R_GhostGrid={ghostGridRenderer: D_GhostGrid;};

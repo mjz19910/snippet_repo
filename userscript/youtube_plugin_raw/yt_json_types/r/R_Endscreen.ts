@@ -1,1 +1,0 @@
-type R_Endscreen={endscreenRenderer: D_Endscreen;};

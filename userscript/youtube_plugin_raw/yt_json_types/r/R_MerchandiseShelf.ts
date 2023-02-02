@@ -1,1 +1,0 @@
-type R_MerchandiseShelf={merchandiseShelfRenderer: D_MerchandiseShelf;};

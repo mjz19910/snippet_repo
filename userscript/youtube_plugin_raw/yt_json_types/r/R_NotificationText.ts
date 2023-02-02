@@ -1,1 +1,0 @@
-type R_NotificationText={notificationTextRenderer: D_NotificationText;};

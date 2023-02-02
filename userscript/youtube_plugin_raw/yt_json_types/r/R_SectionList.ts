@@ -1,1 +1,0 @@
-type R_SectionList={sectionListRenderer: G_DC_SectionList;};

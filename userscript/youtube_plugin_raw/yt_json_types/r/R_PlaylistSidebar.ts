@@ -1,1 +1,0 @@
-type R_PlaylistSidebar={playlistSidebarRenderer: D_PlaylistSidebar;};

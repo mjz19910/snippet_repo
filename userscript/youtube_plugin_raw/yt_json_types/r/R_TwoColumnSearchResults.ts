@@ -1,1 +1,0 @@
-type R_TwoColumnSearchResults={twoColumnSearchResultsRenderer: D_TwoColumnSearchResults;};

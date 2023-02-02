@@ -1,1 +1,0 @@
-type R_ReportFormModal={reportFormModalRenderer: D_ReportFormModal;};

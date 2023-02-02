@@ -1,1 +1,0 @@
-type R_ItemSectionHeader={itemSectionHeaderRenderer: D_ItemSectionHeader;};

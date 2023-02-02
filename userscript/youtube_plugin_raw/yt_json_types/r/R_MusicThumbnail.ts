@@ -1,1 +1,0 @@
-type R_MusicThumbnail={musicThumbnailRenderer: D_MusicThumbnail;};

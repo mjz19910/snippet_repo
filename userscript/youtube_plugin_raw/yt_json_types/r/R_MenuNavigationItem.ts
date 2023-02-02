@@ -1,1 +1,0 @@
-type R_MenuNavigationItem={menuNavigationItemRenderer: D_MenuNavigationItem;};

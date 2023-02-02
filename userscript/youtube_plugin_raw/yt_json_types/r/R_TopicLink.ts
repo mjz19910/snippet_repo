@@ -1,1 +1,0 @@
-type R_TopicLink={topicLinkRenderer: D_TopicLink;};

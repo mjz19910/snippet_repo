@@ -1,1 +1,0 @@
-type B_Hack={hack: true;};

@@ -1,1 +1,0 @@
-type R_SettingsRadioOption={settingsRadioOptionRenderer: D_SettingsRadioOption;};

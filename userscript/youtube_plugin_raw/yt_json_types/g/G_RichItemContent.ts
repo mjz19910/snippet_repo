@@ -1,1 +1,0 @@
-type G_RichItemContent=R_AdSlot|R_Video|R_Radio|R_FeedNudge;

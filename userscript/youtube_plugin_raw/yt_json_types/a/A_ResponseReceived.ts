@@ -1,3 +1,0 @@
-type A_ResponseReceived=
-	|C_AdsControlFlowOpportunityReceived
-	|C_ReloadContinuationItems;

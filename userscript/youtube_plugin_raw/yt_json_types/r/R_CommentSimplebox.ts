@@ -1,1 +1,0 @@
-type R_CommentSimplebox={commentSimpleboxRenderer: D_CommentSimplebox;};

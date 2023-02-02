@@ -1,1 +1,0 @@
-type R_VideoDescriptionMusicSection={videoDescriptionMusicSectionRenderer: D_VideoDescriptionMusicSection;};

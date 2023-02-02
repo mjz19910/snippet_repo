@@ -1,1 +1,0 @@
-type R_SubscriptionNotificationToggleButton={subscriptionNotificationToggleButtonRenderer: D_SubscriptionNotificationToggleButton;};

@@ -1,1 +1,0 @@
-type R_AdPlacementConfig={adPlacementConfig: D_AdPlacementConfig;};

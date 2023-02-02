@@ -1,1 +1,0 @@
-type R_AccountSectionList={accountSectionListRenderer: Record<"contents",R_AccountItemSection[]>;};

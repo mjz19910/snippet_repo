@@ -1,1 +1,0 @@
-type R_AutomixPreviewVideo={automixPreviewVideoRenderer: D_AutomixPreviewVideo;};

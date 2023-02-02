@@ -1,1 +1,0 @@
-type R_FeedFilterChipBar={feedFilterChipBarRenderer: D_FeedFilterChipBar;};

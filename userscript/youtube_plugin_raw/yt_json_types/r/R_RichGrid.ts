@@ -1,1 +1,0 @@
-type R_RichGrid={richGridRenderer: D_RichGrid;};

@@ -1,1 +1,0 @@
-type R_BrowserMediaSession={browserMediaSessionRenderer: AD_BrowserMediaSession;};

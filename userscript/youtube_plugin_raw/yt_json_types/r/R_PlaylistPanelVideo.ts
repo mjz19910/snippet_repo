@@ -1,1 +1,0 @@
-type R_PlaylistPanelVideo={playlistPanelVideoRenderer: D_PlaylistPanelVideo;};

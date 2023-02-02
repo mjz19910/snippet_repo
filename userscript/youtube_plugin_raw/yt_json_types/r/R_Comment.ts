@@ -1,1 +1,0 @@
-type R_Comment={commentRenderer: D_Comment;};

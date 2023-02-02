@@ -1,1 +1,0 @@
-type R_InfoCardIcon={infoCardIconRenderer: D_Tracking;};

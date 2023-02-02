@@ -1,1 +1,0 @@
-type G_WatchNext=R_CompactVideo|R_ContinuationItem;

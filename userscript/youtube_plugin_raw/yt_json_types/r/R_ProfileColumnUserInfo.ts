@@ -1,1 +1,0 @@
-type R_ProfileColumnUserInfo={profileColumnUserInfoRenderer: D_ProfileColumnUserInfo;};

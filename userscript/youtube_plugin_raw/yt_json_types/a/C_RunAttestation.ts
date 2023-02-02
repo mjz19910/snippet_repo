@@ -1,1 +1,0 @@
-type C_RunAttestation={runAttestationCommand: D_RunAttestation;};

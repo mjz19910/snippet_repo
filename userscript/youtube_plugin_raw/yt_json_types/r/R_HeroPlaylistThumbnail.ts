@@ -1,1 +1,0 @@
-type R_HeroPlaylistThumbnail={heroPlaylistThumbnailRenderer: D_HeroPlaylistThumbnail;};

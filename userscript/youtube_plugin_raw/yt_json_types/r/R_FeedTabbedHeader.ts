@@ -1,1 +1,0 @@
-type R_FeedTabbedHeader={feedTabbedHeaderRenderer: D_FeedTabbedHeader;};

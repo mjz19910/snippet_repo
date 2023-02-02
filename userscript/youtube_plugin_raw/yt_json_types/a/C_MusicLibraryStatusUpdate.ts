@@ -1,1 +1,0 @@
-type C_MusicLibraryStatusUpdate={musicLibraryStatusUpdateCommand: CD_MusicLibraryStatusUpdate;};

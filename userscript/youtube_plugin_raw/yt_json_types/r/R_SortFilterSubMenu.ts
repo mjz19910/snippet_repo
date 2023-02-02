@@ -1,1 +1,0 @@
-type R_SortFilterSubMenu={sortFilterSubMenuRenderer: D_SortFilterSubMenu;};

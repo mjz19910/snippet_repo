@@ -1,1 +1,0 @@
-type R_HotkeyDialogSection={hotkeyDialogSectionRenderer: D_HotkeyDialogSection;};

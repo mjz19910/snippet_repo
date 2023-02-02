@@ -1,1 +1,0 @@
-type RG_Result=R_Tab|R_ExpandableTab;

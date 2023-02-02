@@ -1,1 +1,0 @@
-type B_HrefUrl={hrefUrl: D_UrlFormat;};

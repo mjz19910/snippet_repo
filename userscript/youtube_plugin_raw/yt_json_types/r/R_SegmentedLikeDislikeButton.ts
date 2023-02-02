@@ -1,1 +1,0 @@
-type R_SegmentedLikeDislikeButton={segmentedLikeDislikeButtonRenderer: D_SegmentedLikeDislikeButton;};

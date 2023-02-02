@@ -1,1 +1,0 @@
-type P_known_like_param=`${LP_LogItems_Str}.${P_known_like_param_paths}`;

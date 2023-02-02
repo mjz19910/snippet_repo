@@ -1,1 +1,0 @@
-type R_BrowseEndpointContextMusicConfig={browseEndpointContextMusicConfig: D_BrowseEndpointContextMusicConfig;};

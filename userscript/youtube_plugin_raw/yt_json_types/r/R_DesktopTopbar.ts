@@ -1,1 +1,0 @@
-type R_DesktopTopbar={desktopTopbarRenderer: D_DesktopTopbar;};

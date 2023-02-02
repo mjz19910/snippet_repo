@@ -1,1 +1,0 @@
-type R_GridVideo={gridVideoRenderer: D_GridVideo;};

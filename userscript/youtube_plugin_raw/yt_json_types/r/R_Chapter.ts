@@ -1,1 +1,0 @@
-type R_Chapter={chapterRenderer: D_Chapter;};
