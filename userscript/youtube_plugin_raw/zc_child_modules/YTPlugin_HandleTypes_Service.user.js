@@ -7870,18 +7870,27 @@ class HandleTypes extends HandleTypesEval {
 			return [e[0],ei];
 		}));
 	}
+	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
+	make_parse_key(root,path,map,mk,callback) {
+		/** @private @arg {number[]} ta */
+		let parse_key=(ta) => {
+			let t_at=ta.at(-1);
+			if(t_at===void 0) return;
+			this.parser.parse_value(root,path,map,mk,ta,map.get(t_at),callback);
+		};
+		return parse_key;
+	}
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	/** @private @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_any_param(root,path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
-		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parser.parse_value(root,path,map,mk,ta,map.get(ta),callback);
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
 		let mk_max=Math.max(...mk,-1);
 		for(let i=1;i<mk_max+1;i++) {
 			if(!mk.includes(i)) continue;
-			parse_key(i);
+			parse_key([i]);
 		}
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
@@ -7940,25 +7949,26 @@ class HandleTypes extends HandleTypesEval {
 		f();
 		console.groupEnd();
 	}
-	/** @template {CF_L_Params} T @arg {number} map_entry_key @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
-	on_player_params_callback(map_entry_values,map_entry_key,path,map_keys,root) {
+	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
+	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		if(path!=="watch.player_params") {debugger; return;}
-		/** @type {8} */
-		let k=as(map_entry_key);
-		this.on_player_params_callback_ty(map_entry_values,[k],path,map_keys,root);
+		/** @type {[8]} */
+		let k=as(map_entry_key_path);
+		this.on_player_params_callback_ty(map_entry_values,k,path,map_keys,root);
 	}
 	/** 
 	 * @template {CF_L_Params} T 
-	 * @arg {[8]} map_entry_key 
+	 * @arg {[8]} map_entry_key_path 
 	 * @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
-	on_player_params_callback_ty(map_entry_values,map_entry_key,path,map_keys,root) {
+	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		map_keys;
+		let saved_map_keys=map_keys.slice();
 		let callback=this.on_player_params_callback.bind(this);
 		if(path!=="watch.player_params") {debugger; return;}
-		switch(map_entry_key.length) {
+		switch(map_entry_key_path.length) {
 			case 1: {
-				this.parse_param_next(root,`${path}.f${map_entry_key[0]}`,map_entry_values,callback);
-				this.on_player_params_callback_ty_len1(root,path,map_entry_key,map_entry_values,map_keys);
+				this.parse_param_next(root,`${path}.f${map_entry_key_path[0]}`,map_entry_values,callback);
+				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 		}
 	}
@@ -7968,10 +7978,11 @@ class HandleTypes extends HandleTypesEval {
 		x;
 		debugger;
 	}
-	/** @template {CF_L_Params} T @arg {number} map_entry_key @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root @returns {void} */
-	on_endpoint_params_callback(map_entry_values,map_entry_key,path,map_keys,root) {
+	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root @returns {void} */
+	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let callback=this.on_endpoint_params_callback.bind(this);
-		map_entry_key; map_entry_values;
+		let map_entry_key=map_entry_key_path.at(-1); map_entry_values;
+		if(!map_entry_key) return;
 		let saved_map_keys=map_keys.slice();
 		let {new_path,new_ns}=this.get_parse_fns(path,saved_map_keys,map_entry_values[0],map_entry_key);
 		/** @private @arg {string} ns @arg {()=>void} f */

@@ -471,13 +471,14 @@ class ParserService extends BaseService {
 		if(idx>-1) mk.splice(idx,1);
 	}
 	/** @private @type {P_LogItems} */
-	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
-	parse_value(root,path,map,map_keys,map_entry_key,map_entry_values,callback) {
-		if(map_entry_values!==void 0) {
-			map.delete(map_entry_key);
-			let cx=map_keys.indexOf(map_entry_key);
+	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
+	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
+		let last_key=map_entry_key_path.at(-1);
+		if(map_entry_values!==void 0&&last_key) {
+			map.delete(last_key);
+			let cx=map_keys.indexOf(last_key);
 			if(cx>-1) map_keys.splice(cx,1);
-			callback(map_entry_values,map_entry_key,path,map_keys,root);
+			callback(map_entry_values,map_entry_key_path,path,map_keys,root);
 		}
 	}
 	/** @unused_api @protected @arg {V_ParamMapValue} map_entry_value */
@@ -512,18 +513,27 @@ class ParserService extends BaseService {
 		this.save_number(`[${path}]`,x[1]);
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
+	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
+	make_parse_key(root,path,map,mk,callback) {
+		/** @private @arg {number[]} ta */
+		let parse_key=(ta) => {
+			let t_at=ta.at(-1);
+			if(t_at===void 0) return;
+			this.parse_value(root,path,map,mk,ta,map.get(t_at),callback);
+		}
+		return parse_key
+	}
 	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_player_param(root,path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
-		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),callback);
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
 		for(let i=1;i<72;i++) {
 			if(!mk.includes(i)) continue;
-			parse_key(i);
+			parse_key([i]);
 		}
-		parse_key(72);
+		parse_key([72]);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
@@ -533,14 +543,13 @@ class ParserService extends BaseService {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
-		/** @private @arg {number} ta */
-		let parse_key=(ta) => this.parse_value(root,path,map,mk,ta,map.get(ta),callback);
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
 		for(let i=1;i<40;i++) {
 			if(!mk.includes(i)) continue;
-			parse_key(i);
+			parse_key([i]);
 		}
 		// endpoint.create_playlist.params
-		this.parse_value(root,path,map,mk,77,map.get(77),map_entry_value => {
+		this.parse_value(root,path,map,mk,[77],map.get(77),map_entry_value => {
 			if(map_entry_value.length===1&&typeof map_entry_value[0]==="string") {
 				let bt=this.decode_browse_id(map_entry_value[0]);
 				if(!bt) {debugger; return;}
@@ -550,7 +559,7 @@ class ParserService extends BaseService {
 		});
 		for(let i=1;i<300;i++) {
 			if(!mk.includes(i)) continue;
-			parse_key(i);
+			parse_key([i]);
 		}
 		if(this.eq_keys(mk,[])) return;
 		let param_obj=this.to_param_obj(map);
