@@ -2612,10 +2612,6 @@ type D_SettingsSwitch={
 	thumbnail?: D_Thumbnail;
 	trackingParams: string;
 };
-type D_ShareEntityService={
-	serializedShareEntity: string;
-	commands: TA_OpenPopup_Empty[];
-};
 type D_Shelf=Record<"content",G_ShelfItem>&{
 	title: {};
 	trackingParams: string;

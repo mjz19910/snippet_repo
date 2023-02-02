@@ -429,6 +429,19 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "notification": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "record_interactions": case "opt_out": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
 			case "next_radio": {
 				const idx=2;
 				switch(parts[1]) {
@@ -6652,13 +6665,6 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {D_ShareEntityService} x */
-	D_ShareEntityService(x) {
-		const cf="D_ShareEntityService"; this.k(cf,x);
-		const {serializedShareEntity,commands,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		this.a_primitive_str(serializedShareEntity);
-		this.z(commands,x => this.TA_OpenPopup("TA_OpenPopup_Empty",x));
 	}
 	/** @private @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
