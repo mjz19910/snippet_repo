@@ -2854,7 +2854,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
 		this.D_Accessibility(accessibilityData);
 		this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
-		// this.D_Accessibility(toggledAccessibilityData);
 		return y;
 	}
 	/** @private @arg {D_ToggleButton} x */
