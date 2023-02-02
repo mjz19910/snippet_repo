@@ -2509,21 +2509,9 @@ class HandleTypes extends HandleTypesEval {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 		switch(icon.iconType) {
-			case "SETTINGS":
-			case "EXPAND":
-			case "DISMISSAL":
-			case "NOTIFICATIONS_NONE":
-			case "NOTIFICATIONS_OFF":
-			case "NOTIFICATIONS_ACTIVE":
-			case "MICROPHONE_ON":
-			case "CHEVRON_RIGHT":
-			case "CHEVRON_LEFT":
-			case "REMOVE":
-			case "CLOSE":
-			case "INFO":
-			case "SHARE":
-			case "CONTENT_CUT":
-			case "PLAYLIST_ADD":
+			case "SETTINGS": case "EXPAND": case "DISMISSAL": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF":
+			case "NOTIFICATIONS_ACTIVE": case "MICROPHONE_ON": case "CHEVRON_RIGHT": case "CHEVRON_LEFT":
+			case "REMOVE": case "CLOSE": case "INFO": case "SHARE": case "CONTENT_CUT": case "PLAYLIST_ADD":
 		}
 		for(let k of ka) {
 			switch(k) {
