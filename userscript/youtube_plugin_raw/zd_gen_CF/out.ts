@@ -7,8 +7,10 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:command";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:isDisabled";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:navigationEndpoint";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:size";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:style";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon";}

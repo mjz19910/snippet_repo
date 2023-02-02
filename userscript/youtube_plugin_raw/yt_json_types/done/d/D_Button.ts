@@ -3,6 +3,16 @@
 type D_Button=
 	|never
 	|{
+		style: "STYLE_SUGGESTIVE";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		serviceEndpoint: E_YpcGetOffers;
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Join this channel">;
+		targetId: "sponsorships-button";
+	}
+	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;

@@ -1928,13 +1928,39 @@ class HandleTypes extends HandleTypesEval {
 		let ka=this.get_keys_of(x);
 		for(let k of ka) {
 			switch(k) {
-				default: debugger; break;
+				default: k===""; debugger; break;
+				case "serviceEndpoint": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {style,size,targetId,isDisabled,text,serviceEndpoint,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); this.g(y);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
+				case "targetId": {
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`;
+					let {style,size,targetId,isDisabled,text,serviceEndpoint,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); this.g(y);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
+				} break;
 				case "trackingParams": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
 					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "command": {
 					if(!(k in x)) return;
@@ -1943,12 +1969,21 @@ class HandleTypes extends HandleTypesEval {
 					let {command,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					this.GC_Button(command);
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "style": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
 					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "size": {
 					if(!(k in x)) return;
@@ -1956,6 +1991,10 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`;
 					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "isDisabled": {
 					if(!(k in x)) return;
@@ -1963,6 +2002,10 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`;
 					let {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "text": {
 					if(!(k in x)) return;
@@ -1970,12 +2013,22 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`;
 					const {text,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					this.G_Text(text);
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "navigationEndpoint": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
 					const {isDisabled,size,style,navigationEndpoint,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "accessibility": {
 					if(!(k in x)) return;
@@ -1983,12 +2036,21 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`;
 					let {isDisabled,size,style,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 				case "accessibilityData": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {isDisabled,size,style,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					let {isDisabled,size,style,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					/** @typedef {keyof (typeof y)} T_has_keys_left */
+					/** @type {T_has_keys_left} */
+					let u;
+					function u1() {u==="";}
+					u1;
 				} break;
 			}
 		}
