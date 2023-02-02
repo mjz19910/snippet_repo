@@ -492,531 +492,80 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 				}
 			} break;
-			case "next_radio": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "continuation": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "ypc_get_offline_upsell": {
-				const idx=2;
-				if(parts.length!==1) {parts==="";}
-				u(idx);
-				debugger;
-			} break;
-			case "subscriptionState": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "key": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "UndoFeedback": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "undoToken": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "reload": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "continuation": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "transcriptTrackSelection": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "serializedParams": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "feedback": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "feedbackToken": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "get_report_form": {
-				const idx=2;
-				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "f2": case "f8":
-					case "f11": case "f14": case "f15": case "f18":
-					case "f25": case "f26": case "f27": case "f28":
-					case "f29": {
-						const idx=3;
-						if(parts.length===2) {
-							if(parts[1]==="f2") {
-								if(typeof map_entry_value==="string") return this.parser.parse_video_id(map_entry_value);
-								debugger;
-								return;
-							}
-							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f1[]": case "f1": {
-								const idx=4;
-								if(parts.length===3) {
-									if(map_entry_value instanceof Map) return;
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {
-									default: u(idx); debugger; parts[3]===""; break;
-									case "f1": case "f2": case "f3": {
-										const idx=5;
-										if(parts.length===4) {
-											if(map_entry_value instanceof Map) return;
-											if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-											switch(map_entry_value) {default: debugger; return;}
-										}
-										switch(parts[4]) {
-											default: u(idx); debugger; parts[4]===""; break;
-											case "f1": case "f1[]": {
-												const idx=6;
-												if(parts.length===5) {
-													if(map_entry_value instanceof Map) return;
-													switch(map_entry_value) {default: debugger; return;}
-												}
-												switch(parts[5]) {
-													default: u(idx); debugger; parts[5]===""; break;
-													case "f1": {
-														const idx=7;
-														if(parts.length===6) {
-															if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-															switch(map_entry_value) {default: debugger; return;}
-														}
-														switch(parts[6]) {
-															default: u(idx); debugger; parts[6]===""; break;
-															case "f4": u(idx); debugger; break;
-														}
-													} break;
-												}
-											} break;
-										}
-									} break;
-								}
-							} break;
-						}
-					} break;
-				}
-			} break;
-			case "service$create_playlist": {
-				const idx=2;
-				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "f1": {
-						const idx=3;
-						if(parts.length===2) {
-							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "next": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "queue_context_params": case "continuation": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "aadc_guidelines_state_entity_key": {
-				const idx=2;
-				if(parts.length!==1) {parts==="";}
-				u(idx);
-				debugger;
-			} break;
-			case "TimedContinuation": {
-				const idx=2;
-				if(parts.length!==1) {parts==="";}
-				u(idx);
-				debugger;
-			} break;
-			case "D_Browse": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "param": {
-						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
-					} break;
-				}
-			} break;
-			case "GetNotificationMenu": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "ctoken": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f1": {
-								const idx=4;
-								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {
-									default: u(idx); debugger; parts[2]==="f1"; break;
-									case "f1": u(idx); debugger; break;
-								}
-							} break;
-						}
-					} break;
-				}
-			} break;
-			case "slot_ad_serving_data_entry": {
-				const idx=2;
-				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "f1": case "f3": case "f4": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f1": case "f2": case "f3": case "f6": case "f11": {
-								const idx=4;
-								if(parts.length===3) {
-									if(parts[1]==="f1") {
-										if(parts[2]==="f1") return;
-										if(parts[2]==="f2") return;
-										if(parts[2]==="f3") return;
-										parts;
-									}
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
-							} break;
-						}
-					} break;
-				}
-			} break;
-			case "YpcGetCart": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					// [YpcGetCart.transactionParams]
-					case "transactionParams": u(idx); debugger; break;
-				}
-			} break;
-			case "AdServingDataEntry": {
-				const idx=2;
-				if(parts.length===1) switch(map_entry_value) {default: debugger; return;}
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13": case "f14": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f1":
-							case "f2":
-							case "f3":
-							case "f6":
-							case "f11": {
-								const idx=4;
-								if(parts.length===3) return;
-								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
-							} break;
-						}
-					} break;
-				}
-			} break;
-			// [watch.player_params]
-			case "watch": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					// [watch.player_params.f12]
-					case "params":
-					case "player_params": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							/** @private @type {P_LogItems} */
-							// [watch.player_params.f12]
-							// [watch.player_params.f25]
-							case "f2": case "f3": case "f7": case "f8": case "f9":
-							case "f12": case "f13": case "f24": case "f27": case "f25":
-							case "f39":
-							case "f33": case "f40": case "f56": {
-								const idx=4;
-								if(parts.length===3) {
-									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
-									debugger;
-								}
-								switch(parts[3]) {
-									default: u(idx); debugger; parts[3]===""; break;
-									case "f5": case "f1": case "f2": case "f4":
-									case "f3": {
-										const idx=5;
-										if(parts.length===4) return;
-										switch(parts[4]) {
-											case "f2":
-											case "f3": break;
-											default: u(idx); debugger; parts[4]===""; break;
-										}
-									} break;
-								}
-							} break;
-						}
-					} break;
-				}
-			} break;
-			case "entity_key": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; break;
-					case "normal": case "subscribed": {
-						const idx=3;
-						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f2":
-							case "f4":
-							case "f5": {
-								const idx=3;
-								if(parts.length===3) {
-									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									switch(map_entry_value) {default: u(idx-1); debugger; return;}
-								}
-								switch(parts[2]) {default: u(idx); debugger; parts[3]===""; break;}
-							} break;
-						}
-					} break;
-				}
-			} break;
+			case "next_radio":
+			case "ypc_get_offline_upsell":
+			case "subscriptionState":
+			case "UndoFeedback":
+			case "reload":
+			case "transcriptTrackSelection":
+			case "feedback":
+			case "get_report_form":
+			case "service$create_playlist":
+			case "next":
+			case "aadc_guidelines_state_entity_key":
+			case "TimedContinuation":
+			case "D_Browse":
+			case "GetNotificationMenu":
+			case "slot_ad_serving_data_entry":
+			case "YpcGetCart":
+			case "AdServingDataEntry":
+			case "watch":
+			case "entity_key":
 			case "tracking": {
-				const idx=2;
 				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "parentTrackingParams":
-					// [tracking.trackingParams]
-					case "trackingParams": {
-						const idx=3;
-						/** @private @type {P_LogItems} */
-						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							// [tracking.trackingParams.f4]
-							case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-							case "f10": case "f11": case "f16": case "f19": {
-								const idx=4;
-								if(parts.length===3) {
-									if(parts[2]==="f8") return;
-									if(parts[2]==="f9") return;
-									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {
-									default: u(idx); debugger; parts[3]===""; break;
-									case "f2": case "f3": case "f4": case "f12": case "f13":
-									// [tracking.trackingParams.f4.f1]
-									case "f1": {
-										const idx=5;
-										if(parts.length===4) {
-											if(map_entry_value instanceof Map) return;
-											if(calc_skip()) return;
-											if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-											switch(map_entry_value) {default: debugger; return;}
-										}
-										switch(parts[4]) {
-											default: u(idx); debugger; parts[4]===""; break;
-											case "f1": case "f2": case "f3": {
-												const idx=6;
-												if(parts.length===5) {
-													if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-													switch(map_entry_value) {default: u(idx-1); debugger; return;}
-												}
-												switch(parts[5]) {default: u(idx); debugger; parts[5]===""; break;}
-											} break;
-										}
-										function calc_skip() {
-											if(parts[2]==="f4") {
-												if(parts[3]=="f1") return true;
-												if(parts[3]=="f2") return true;
-												if(parts[3]=="f3") return true;
-											}
-											return false;
-										}
-									} break;
-								}
-							} break;
-						}
-					} break;
+					default: {const idx=2; u(idx); debugger; parts[1]==="";} return;
+					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
+					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+					case "f10": case "f11": case "f13": case "f14": case "f15": case "f18":
+					case "f25": case "f26": case "f27": case "f28": case "f29":
+				}
+				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[2]) {
+					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					case "f1": case "f1[]": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+					case "f10": case "f11": case "f12": case "f13": case "f16": case "f19":
+					case "f24": case "f25": case "f27": case "f33": case "f39": case "f40": case "f56":
+				}
+				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[3]) {
+					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
+					case "f1": case "f2": case "f3": case "f4": case "f5":
+					case "f12": case "f13":
 				}
 			} break;
 			case "browse$param": {
-				const idx=2;
 				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "f84": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f5": {
-								const idx=4;
-								if(parts.length===3) {
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
-							} break;
-						}
-					} break;
-					case "f93": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f3": case "f1": {
-								const idx=4;
-								if(parts.length===3) {
-									if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
-							} break;
-						}
-					} break;
+					default: {const idx=2; u(idx); debugger; parts[1]==="";} return;
+					case "f84": case "f93":
 				}
-			} break;
+				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[2]) {
+					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					case "f1": case "f3": case "f5":
+				}
+				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
+				debugger; return;
+			}
 			case "record_notification_interactions": {
-				const idx=2;
 				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "f2": case "f5": {
-						const idx=3;
-						if(parts.length===2) {
-							if(map_entry_value instanceof Map) return;
-							if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-							switch(map_entry_value) {default: debugger; return;}
-						}
-						switch(parts[2]) {
-							default: u(idx); debugger; parts[2]===""; break;
-							case "f1": case "f14": {
-								const idx=4;
-								if(parts.length===3) {
-									if(map_entry_value instanceof Map) return;
-									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-									switch(map_entry_value) {default: debugger; return;}
-								}
-								switch(parts[3]) {
-									default: u(idx); debugger; parts[3]===""; break;
-									case "f1": case "f2": {
-										const idx=5;
-										if(parts.length===4) {
-											if(map_entry_value instanceof Map) return;
-											if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
-											switch(map_entry_value) {default: debugger; return;}
-										}
-										switch(parts[4]) {
-											default: u(idx); debugger; parts[4]===""; break;
-											case "f1": case "f2": {
-												const idx=6;
-												if(parts.length===5) {
-													if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
-													switch(map_entry_value) {default: debugger; return;}
-												}
-												switch(parts[5]) {default: u(idx); debugger; parts[5]===""; break;}
-											} break;
-										}
-									} break;
-								}
-							} break;
-						}
-					} break;
+					default: {const idx=2; u(idx); debugger; parts[1]==="";} return;
+					case "f2": case "f5":
 				}
-			} break;
+				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[2]) {
+					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					case "f1": case "f14":
+				}
+				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[3]) {
+					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
+					case "f1": case "f2":
+				}
+				if(parts.length===4) {switch(map_entry_value) {default: debugger; return;}}
+				if(parts.length!==5) {debugger; return;}
+				switch(map_entry_value) {default: debugger; return;}
+			}
 			case "transcript_target_id": {
 				switch(parts[1]) {
 					default: {const idx=2; u(idx); debugger; parts[2]==="";} return;
