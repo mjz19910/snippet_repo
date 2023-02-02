@@ -5170,7 +5170,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("ownerBadges" in x) {
-			let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x);
+			let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
 			this.z(ownerBadges,this.RMD_Badge);
 			return;
 		}
