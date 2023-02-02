@@ -101,7 +101,6 @@ type D_TranscriptSearchPanel={
 	trackingParams: string;
 	targetId: "engagement-panel-searchable-transcript-search-panel";
 };
-type D_UiTargetId="browse-feedFEwhat_to_watch"|"watch-next-feed";
 type DCE_Button={
 	command: GC_Button;
 	targetId: D_Button_TargetId;

@@ -4272,9 +4272,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ShowReloadUi} x */
 	C_ShowReloadUi(x) {
 		const cf="C_ShowReloadUi";
-		const {clickTrackingParams,showReloadUiCommand: {targetId,...y1},...y2}=this.s(cf,x);
-		this.z([y1,y2],this.g);
+		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ShowReloadUi(a);
+	}
+	/** @private @arg {DC_ShowReloadUi} x */
+	DC_ShowReloadUi(x) {
+		const cf="DC_ShowReloadUi";
+		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
 		switch(targetId) {
 			default: debugger; break;
 			case "browse-feedFEwhat_to_watch": case "watch-next-feed":
