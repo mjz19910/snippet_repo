@@ -26,12 +26,10 @@ class LoadAllServices {
 	start_message_channel_loop() {bs.start_message_channel_loop(this.handle_types);}
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
-		/** @template T_ServiceFlags @extends {HandleTypes<LoadAllServices,T_ServiceFlags>}  */
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
 			run(detail) {this.YTNavigateFinishDetail.call(this.x.get("handle_types"),detail);}
 		}
-		/** @template T_ServiceFlags @extends {HandleTypes<LoadAllServices,T_ServiceFlags>}  */
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
 			run(response,x) {this.ResponseTypes.call(this.x.get("handle_types"),response,x);}

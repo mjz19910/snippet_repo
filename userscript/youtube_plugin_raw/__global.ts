@@ -59,5 +59,4 @@ namespace EX {
 	export var ModifyEnv: Base$ImpType["ModifyEnv"];
 	// youtube_plugin_HandleTypes
 	export var __youtube_plugin_base_loaded__: Base$ImpType["__youtube_plugin_base_loaded__"];
-	export type HandleTypes<T,U>=import("./zc_child_modules/YTPlugin_HandleTypes_Service.user.js").HandleTypes<T,U>;
 }
