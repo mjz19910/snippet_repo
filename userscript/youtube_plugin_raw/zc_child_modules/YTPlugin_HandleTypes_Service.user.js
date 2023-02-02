@@ -5942,7 +5942,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.a_primitive_str(a);
 	}
-	/** @private @arg {D_EntityBatchUpdate} x */
+	/** @private @arg {DC_EntityBatchUpdate} x */
 	D_EntityBatchUpdate(x) {
 		const cf="D_EntityBatchUpdate"; this.k(cf,x);
 		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/

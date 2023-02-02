@@ -1690,7 +1690,7 @@ type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 ][number]>|
 	"comment-item-section"|
 	string&{_tag: "string";};
-type D_EntityBatchUpdate={
+type DC_EntityBatchUpdate={
 	mutations: DE_MutationItem[];
 	timestamp: D_TimestampWithNanos;
 };
@@ -2821,11 +2821,9 @@ type D_TimestampWithNanos={
 	nanos: number;
 };
 type D_Title={title: G_Text;};
-type DC_CommandExecutor={commands: (C_UpdateToggleButtonState|E_Like)[];};
-type C_CommandExecutor={
-	clickTrackingParams: string;
-	commandExecutorCommand: DC_CommandExecutor;
-};
+type DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|E_Like;
+
+type DC_CommandExecutor={commands: (DC_CommandExecutor_CommandItem)[];};
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 type D_ToggleButton=

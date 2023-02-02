@@ -30,7 +30,7 @@ type A_ActionSetPlaylistVideoOrder={action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";};
 type A_BrowserMediaSession={browserMediaSession: R_BrowserMediaSession;}&T_Actions<R_LikeButton>;
 type A_ExternalChannelId={externalChannelId: `UC${string}`;};
 type A_FrameworkUpdates={
-	entityBatchUpdate: D_EntityBatchUpdate;
+	entityBatchUpdate: DC_EntityBatchUpdate;
 	elementUpdate?: R_ElementUpdate;
 };
 //#endregion
