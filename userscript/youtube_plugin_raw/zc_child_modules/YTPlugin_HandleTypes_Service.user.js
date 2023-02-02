@@ -267,7 +267,7 @@ class HandleTypes extends HandleTypesEval {
 			case 1: {
 				switch(map_entry_key_path[0]) {
 					default: debugger; return;
-					case 8: {
+					case 8: case 12: {
 						const rk=this.exact_arr(map_entry_key_path[0]);
 						this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
 					} break;
