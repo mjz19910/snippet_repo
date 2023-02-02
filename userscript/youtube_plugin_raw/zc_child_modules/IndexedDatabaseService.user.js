@@ -285,69 +285,48 @@ class IndexedDatabaseService extends BaseService {
 		let rq=tx.objectStore(key);
 		return as(rq);
 	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {TypedIDBObjectStore<T>} obj_store */
-	async transfer_store(key,obj_store) {
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {TypedIDBObjectStore<T>} src_obj_store @arg {IDBDatabase} db */
+	async transfer_store(key,src_obj_store,db) {
 		const index_key=this.get_index_key(key);
 		/** @private @type {IDBRequest<T[]>} */
-		let get_all_video_id_req=obj_store.getAll();
+		let get_all_video_id_req=src_obj_store.getAll();
 		let {result: video_id_result}=await this.await_success(get_all_video_id_req);
+		const dst_obj_store=db.createObjectStore(key,{keyPath: this.get_index_key(key)});
 		for(let x of video_id_result) {
 			if(!(index_key in x)) throw new Error("Invalid transfer_store result");
-			obj_store.put(x);
+			dst_obj_store.put(x);
 		}
 	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
-	async onUpgradeNeeded(request,event) {
+	onUpgradeNeeded(request,event) {
 		if(event.oldVersion===0) {
-			this.createLatestDatabaseVersion(request,[]);
-			return;
+			return this.createLatestDatabaseVersion(request);
 		}
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
 		const db=request.result;
 		if(event.oldVersion<1) {
 			db.createObjectStore("video_id",{autoIncrement: true});
 		}
+		if(!request.transaction) throw new Error("No transaction");
+		let tx=request.transaction;
 		if(event.oldVersion<2) {
-			if(!request.transaction) throw new Error("No transaction");
-			const video_id_store=request.transaction.objectStore("video_id");
-			/** @private @type {IDBRequest<{v:string}[]>} */
-			let get_all_request=video_id_store.getAll();
-			get_all_request.onsuccess=() => {
-				db.deleteObjectStore("video_id");
-				const store_video_id=db.createObjectStore("video_id",{keyPath: this.get_index_key("video_id")});
-				let data_source=get_all_request.result;
-				for(let x of data_source) {
-					if("v" in x) {
-						store_video_id.put(x);
-					} else {
-						throw new Error("Invalid data source");
-					}
-				}
-			};
+			const video_id_store=this.objectStore(tx,"video_id");
+			this.transfer_store("video_id",video_id_store,db);
 		}
 		if(event.oldVersion<3) {
-			if(!request.transaction) throw new Error("No transaction");
-			let tx=request.transaction;
 			const video_id_store=this.objectStore(tx,"video_id");
 			const hashtag_store=this.objectStore(tx,"hashtag");
-			this.transfer_store("video_id",video_id_store);
-			this.transfer_store("hashtag",hashtag_store);
+			video_id_store.createIndex("video_id","v",{unique:true});
+			hashtag_store.createIndex("hashtag","hashtag",{unique:true});
+			this.transfer_store("video_id",video_id_store,db);
+			this.transfer_store("hashtag",hashtag_store,db);
 		}
 	}
-	/** @private @arg {IDBOpenDBRequest} request @arg {({v:string}|{hashtag:string})[]} data_source */
-	createLatestDatabaseVersion(request,data_source) {
+	/** @private @arg {IDBOpenDBRequest} request */
+	createLatestDatabaseVersion(request) {
 		const db=request.result;
-		const store_video_id=db.createObjectStore("video_id",{keyPath: this.get_index_key("video_id")});
-		const store_hashtag=db.createObjectStore("hashtag",{keyPath: this.get_index_key("hashtag")});
-		for(let x of data_source) {
-			if("v" in x) {
-				store_video_id.put(x);
-			} else if("hashtag" in x) {
-				store_hashtag.put(x);
-			} else {
-				throw new Error("Invalid data source");
-			}
-		}
+		db.createObjectStore("video_id",{keyPath: this.get_index_key("video_id")});
+		db.createObjectStore("hashtag",{keyPath: this.get_index_key("hashtag")});
 	}
 	/** @private @arg {Event} event */
 	onError(event) {
