@@ -3866,7 +3866,7 @@ class HandleTypes extends HandleTypesEval {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @private @arg {D_EX_YoutubeUrl} x */
+	/** @private @arg {GU_YoutubeUrlRedirect} x */
 	D_YoutubeUrl(x) {
 		const cf="D_YoutubeUrl";
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
@@ -3930,7 +3930,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DU_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
 	GM_E_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
-		if(this.str_starts_with_rx(rp,x)) return this.D_YoutubeUrl(x);
+		if(this.str_starts_with_rx(rp,x)) {
+			/** @type {GU_YoutubeUrlRedirect} */
+			let arg_x=as(x);
+			return this.D_YoutubeUrl(arg_x);
+		}
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {
 			return;
@@ -3987,7 +3991,7 @@ class HandleTypes extends HandleTypesEval {
 				if("_tag" in parsed_url) throw new Error();
 				let parsed_params=this.parse_url_search_params(parsed_url.search);
 				if(!("q" in parsed_params)) {debugger; throw new Error();}
-				/** @type {GU_VE83769_Url_Redirect_Info} */
+				/** @type {GU_YoutubeUrlRedirect_Info} */
 				let wt={
 					url: x,
 					encoded_params: {
@@ -4000,11 +4004,7 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 		throw new Error();
 	}
-	/** @arg {GU_VE83769_Url_Redirect} x */
-	D_YoutubeUrl(x) {
-		x;
-	}
-	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_Redirect|GU_VE83769_Url_External} x */
+	/** @private @arg {GU_VE83769_Url_Internal|GU_YoutubeUrlRedirect|GU_VE83769_Url_External} x */
 	GM_VE83769_UrlType(x) {
 		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
@@ -4019,7 +4019,7 @@ class HandleTypes extends HandleTypesEval {
 			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
 			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
-			case "www.youtube.com": {} break;
+			case "www.youtube.com": return this.D_YoutubeUrl(up.href);
 			default: debugger; break;
 		}
 		const hn_yt_studio="https://studio.youtube.com";
