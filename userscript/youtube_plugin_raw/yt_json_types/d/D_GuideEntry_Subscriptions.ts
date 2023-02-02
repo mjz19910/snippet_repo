@@ -1,1 +1,0 @@
-type D_GuideEntry_Subscriptions=TD_GuideEntry_Primary<"SUBSCRIPTIONS">;
