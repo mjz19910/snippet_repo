@@ -47,6 +47,28 @@ const CodegenService=required(store["mod$CodegenService"]?.CodegenService); Code
 //#region Constants
 /** @type {{value:TypedefGenerator|null}} */
 const generate_typedef={value: null};
+class TypedefGenerator {
+	/** @arg {HandleTypes<LoadAllServices, ServiceOptions>} h */
+	constructor(h) {
+		this.h=h;
+	}
+	/** @arg {Popup_ConfirmDialog|Popup_DismissibleDialog} x */
+	popup_dialog(x) {
+		const cf="popup_dialog"; cf;
+		let x1=this.h.unpack_popup_dialog(x);
+		if(!x1[0]) {debugger; return null;}
+		let dialog=x1[1];
+		return this.popup_dialog_1(dialog);
+	}
+	/** @arg {R_ConfirmDialog|R_FancyDismissibleDialog} x */
+	popup_dialog_1(x) {
+		const cf="R_ConfirmDialog"; cf;
+		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
+		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
+		debugger;
+		return null;
+	}
+}
 //#endregion
 //#region HandleTypesEval
 /** @arg {TemplateStringsArray} x */
@@ -3308,7 +3330,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ToggleButton(x) {
 		let u=this.D_ToggleButton_Omit(x);
 		if("defaultText" in u) {
-			const {defaultText,toggledText}=u;/* this.g(y);//#destructure*/
+			const {defaultText,toggledText,...y}=u; this.g(y);/*//#destructure_done*/
 			this.G_Text(defaultText);
 			this.G_Text(toggledText);
 		}
@@ -8417,7 +8439,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoOwner} x */
 	D_VideoOwner(x) {
 		const cf="D_VideoOwner";
-		let u=this.D_VideoOwner_Omit(cf,x); const {badges}=this.s(`${cf}:1`,u);/* this.g(y);//#destructure*/
+		let u=this.D_VideoOwner_Omit(cf,x); const {badges,...y}=this.s(`${cf}:1`,u); this.g(y);/*//#destructure_done*/
 		this.tz(badges,this.RMD_Badge);
 	}
 	/** @private @arg {D_MusicCarouselShelf} x */
@@ -8442,16 +8464,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(autoReloadWhenEmpty,true);
 		this.R_Button(bottomButton);
 		debugger;
-	}
-	/** @private @arg {D_MusicResponsiveListItem} x */
-	D_MusicResponsiveListItem(x) {
-		const cf="D_MusicResponsiveListItem";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
-	/** @private @arg {D_MusicShelfDivider} x */
-	D_MusicShelfDivider(x) {
-		const cf="D_MusicShelfDivider";
-		const {...y}=this.s(cf,x); this.g(y);
 	}
 	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(cf,path,x) {
@@ -9006,33 +9018,21 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoMastheadAdV3(x) {x;}
 	/** @private @arg {D_AutomixPreviewVideo} x */
 	D_AutomixPreviewVideo(x) {x;}
+	/** @private @arg {D_MusicResponsiveListItem} x */
+	D_MusicResponsiveListItem(x) {
+		const cf="D_MusicResponsiveListItem";
+		const {...y}=this.s(cf,x); this.g(y);
+	}
+	/** @private @arg {D_MusicShelfDivider} x */
+	D_MusicShelfDivider(x) {
+		const cf="D_MusicShelfDivider";
+		const {...y}=this.s(cf,x); this.g(y);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;/*!*/}
 	//#endregion
-}
-class TypedefGenerator {
-	/** @arg {HandleTypes<LoadAllServices, ServiceOptions>} h */
-	constructor(h) {
-		this.h=h;
-	}
-	/** @arg {Popup_ConfirmDialog|Popup_DismissibleDialog} x */
-	popup_dialog(x) {
-		const cf="popup_dialog"; cf;
-		let x1=this.h.unpack_popup_dialog(x);
-		if(!x1[0]) {debugger; return null;}
-		let dialog=x1[1];
-		return this.popup_dialog_1(dialog);
-	}
-	/** @arg {R_ConfirmDialog|R_FancyDismissibleDialog} x */
-	popup_dialog_1(x) {
-		const cf="R_ConfirmDialog"; cf;
-		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
-		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
-		debugger;
-		return null;
-	}
 }
 //#endregion
 init_module();
