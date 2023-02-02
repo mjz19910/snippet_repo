@@ -5127,12 +5127,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x */
 	D_CompactVideo_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
-		let {richThumbnail,accessibility,channelThumbnail,badges,ownerBadges,viewCountText,shortViewCountText,...y}=u;
+		let {richThumbnail,accessibility,channelThumbnail,badges,viewCountText,shortViewCountText,...y}=u;
 		this.t(richThumbnail,this.D_VideoLike_richThumbnail);
 		this.D_Accessibility(accessibility);
 		this.D_Thumbnail(channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
-		this.tz(ownerBadges,this.RMD_Badge);
 		return y;
 	}
 	/** @private @arg {D_CompactVideo} x */
@@ -5144,7 +5143,8 @@ class HandleTypes extends HandleTypesEval {
 			this.G_Text(lengthText);
 			return;
 		}
-		let y=this.D_CompactVideo_Omit(cf,x); this.g(y);
+		let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
+		this.z(ownerBadges,this.RMD_Badge);
 	}
 	/** @type {Map<string,[string,string[]][]>} */
 	strings_map=new Map;
