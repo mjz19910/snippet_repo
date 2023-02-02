@@ -1023,12 +1023,10 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "watch": {
 				const idx=2;
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "params": case "player_params": u(idx); debugger; break;}
-			} break;
-			case "get_report_form": {
-				const idx=2;
-				// case "f11": u(idx); debugger; break;
-				switch(parts[1]) {default: u(idx); debugger; /*parts[1]==="";*/ break;}
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "params": case "player_params": u(idx); debugger; break;
+				}
 			} break;
 			case "createBackstagePost": {
 				const idx=2;
@@ -1039,8 +1037,7 @@ class HandleTypes extends HandleTypesEval {
 						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
-							case "f1":
-							case "f2": {
+							case "f1": case "f2": {
 								const idx=4;
 								if(parts.length===3) {
 									if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
@@ -1055,20 +1052,59 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "subscribe": {
 				const idx=2;
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "params": u(idx); debugger; break;}
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {
+							default: u(idx); debugger; parts[2]===""; break;
+							case "f2": case "f3": case "f4": u(idx); debugger; break;
+						}
+					} break;
+				}
 			} break;
 			case "ypc_get_offers": {
 				const idx=2;
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "params": u(idx); debugger; break;}
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break; case "f1": case "f3": case "f5": u(idx); debugger; break;}
+					} break;
+				}
 			} break;
 			case "create_playlist": {
 				const idx=2;
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "params": u(idx); debugger; break;}
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break; case "f84": u(idx); debugger; break;}
+					} break;
+				}
 			} break;
 			case "get_transcript": {
 				const idx=2;
 				/** @private @type {P_LogItems} */
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "params": u(idx); debugger; break;}
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break; case "f1": case "f6": u(idx); debugger; break;}
+					} break;
+				}
 			} break;
 			case "like": {
 				const idx=2;
