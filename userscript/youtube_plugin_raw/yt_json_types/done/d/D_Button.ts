@@ -1,7 +1,6 @@
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 
-type D_Button=
-	|never
+type D_Button_With_TargetId=
 	|{
 		style: "STYLE_SUGGESTIVE";
 		size: "SIZE_DEFAULT";
@@ -12,6 +11,24 @@ type D_Button=
 		accessibilityData: TD_Accessibility<"Join this channel">;
 		targetId: "sponsorships-button";
 	}
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		icon: T_Icon<"CONTENT_CUT">;
+		tooltip: "Clip";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Clip">;
+		targetId: "create-clip-button-action-bar";
+		command: A_ChangeEngagementPanelVisibility;
+	}
+	;
+;
+
+type D_Button=
+	|never
+	|D_Button_With_TargetId
 	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
@@ -121,18 +138,6 @@ type D_Button=
 	|{
 		trackingParams: string;
 		command: T_SE_Signal<{webCommandMetadata: {sendPost: true;};},G_ClientSignal>;
-	}
-	|{
-		style: "STYLE_DEFAULT";
-		size: "SIZE_DEFAULT";
-		isDisabled: false;
-		text: G_Text;
-		icon: T_Icon<"CONTENT_CUT">;
-		tooltip: "Clip";
-		trackingParams: string;
-		accessibilityData: TD_Accessibility<"Clip">;
-		targetId: "create-clip-button-action-bar";
-		command: A_ChangeEngagementPanelVisibility;
 	}
 	;
 ;
