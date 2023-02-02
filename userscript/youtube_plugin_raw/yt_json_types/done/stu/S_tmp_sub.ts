@@ -29,9 +29,9 @@ type SP_GoogleHelpServiceObj={
 };
 type RC_GuidedHelp_SPs={
 	service: "GUIDED_HELP";
-	params: RC_To_SPs<GuidedHelpState>;
+	params: RC_To_SPs<RC_GuidedHelpState>;
 };
-type GuidedHelpState={
+type RC_GuidedHelpState={
 	logged_in: "0"|"1";
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
 };

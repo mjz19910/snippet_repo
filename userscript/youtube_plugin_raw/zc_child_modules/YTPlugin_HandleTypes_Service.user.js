@@ -1012,10 +1012,10 @@ class HandleTypes extends HandleTypesEval {
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.H_("AU_SubscribeButton","updateSubscribeButtonAction",x,this.DAU_SubscribeButton);}
-	/** @private @arg {AU_ChannelSwitcherPage} x */
-	AU_ChannelSwitcherPage(x) {this.H_("AU_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	/** @private @arg {UA_SubscribeButton} x */
+	UA_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
+	/** @private @arg {UA_ChannelSwitcherPage} x */
+	UA_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {C_RunAttestation} x */
@@ -4402,13 +4402,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_GetUnseenCount";
 		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);
 		this.tz(actions,(x => {
-			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
+			if("updateNotificationsUnseenCountAction" in x) return this.UA_NotificationsUnseenCount(x);
 			debugger;
 		}));
 		if(unseenCount!==void 0) this._primitive_of(unseenCount,"number");
 	}
-	/** @private @arg {AU_NotificationsUnseenCount} x */
-	AU_NotificationsUnseenCount(x) {
+	/** @private @arg {UA_NotificationsUnseenCount} x */
+	UA_NotificationsUnseenCount(x) {
 		const cf="UA_NotificationsUnseenCount";
 		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=this.s(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -4440,7 +4440,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_AccountsList";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(selectText);
-		this.z(actions,this.AU_ChannelSwitcherPage);
+		this.z(actions,this.UA_ChannelSwitcherPage);
 	}
 	/** @private @arg {RS_WatchReelItem} x */
 	RSW_ReelItem(x) {
@@ -5388,7 +5388,7 @@ class HandleTypes extends HandleTypesEval {
 		const {isProcessed,...y}=this.s(cf,x); this.g(y);
 		this._primitive_of(isProcessed,"boolean");
 	}
-	/** @private @arg {AU_EngagementPanel} x */
+	/** @private @arg {UA_EngagementPanel} x */
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel";
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
@@ -6068,7 +6068,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
-		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
+		if("updateSubscribeButtonAction" in x) return this.UA_SubscribeButton(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
@@ -7624,8 +7624,8 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {DUA_SubscribeButton} x */
-	DAU_SubscribeButton(x) {
-		const cf="DAU_SubscribeButton";
+	DUA_SubscribeButton(x) {
+		const cf="DUA_SubscribeButton";
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);

@@ -16,7 +16,7 @@ type RS_AccountMenu={
 };
 type RS_AccountsList={
 	responseContext: RC_ResponseContext;
-	actions: AU_ChannelSwitcherPage[];
+	actions: UA_ChannelSwitcherPage[];
 	selectText: G_Text;
 };
 type RS_AttGet={
@@ -174,7 +174,7 @@ type RS_Success={
 };
 type RS_Unsubscribe={
 	responseContext: RC_ResponseContext;
-	actions: (A_RemoveFromGuideSection|TA_OpenPopup_Empty|AU_SubscribeButton)[];
+	actions: (A_RemoveFromGuideSection|TA_OpenPopup_Empty|UA_SubscribeButton)[];
 	trackingParams: string;
 	frameworkUpdates: A_FrameworkUpdates;
 };

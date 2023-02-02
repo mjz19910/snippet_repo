@@ -7,7 +7,7 @@ type GRC_ServiceTrackingParams=[
 ][number];
 type G_ResponseActions=
 	TA_OpenPopup_Empty|
-	AU_NotificationsUnseenCount|
+	UA_NotificationsUnseenCount|
 	A_RemoveFromGuideSection|
 	A_AddToGuideSection|
 	never;

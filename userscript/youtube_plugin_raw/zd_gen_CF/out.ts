@@ -46,10 +46,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
-		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_ChannelId";}
-		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_RadioShareUrl";}
-		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeKidsUrl";}
-		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "GU_YoutubeUrlRedirect";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Accessibility";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Owner";}
@@ -253,7 +249,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ShowReloadUi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CacheMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CommentRepliesItem";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DAU_SubscribeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DB_SI_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AddToPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AdsControlFlowOpportunityReceived";}
@@ -289,6 +284,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptSearchBox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptTrackSelection";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DUA_SubscribeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AddToPlaylist";}
