@@ -498,6 +498,10 @@ class HandleTypes extends HandleTypesEval {
 			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
 			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
 			case "record_notification_interactions": case "transcript_target_id": case "watch": {
+				if(parts.length===1) {
+					if(map_entry_value instanceof Map) return;
+					switch(map_entry_value) {default: debugger; return;}
+				}
 				switch(parts[1]) {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
