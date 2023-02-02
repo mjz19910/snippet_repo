@@ -119,7 +119,7 @@ type RSG_AddToPlaylist={
 };
 type RSG_GetUnseenCount={
 	responseContext: RC_ResponseContext;
-	actions?: [AU_NotificationsUnseenCount];
+	actions?: [UA_NotificationsUnseenCount];
 	unseenCount?: number;
 };
 type RSG_NotificationMenu_Action=TA_OpenPopup<D_NotificationMenu_Popup>;
@@ -150,7 +150,7 @@ type RSG_Survey={
 };
 type RSG_Transcript={
 	responseContext: RC_ResponseContext;
-	actions: AU_EngagementPanel[];
+	actions: UA_EngagementPanel[];
 	trackingParams: string;
 };
 type RSL_Dislike=RRC_ResponseContext&T_Actions<TA_OpenPopup_Empty>;
