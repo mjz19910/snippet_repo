@@ -21,6 +21,22 @@ const as=bs.as_;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
+class ParentWalker {
+	/** @arg {JsonReplacerState} store @arg {unknown} obj */
+	constructor(store,obj) {
+		this.store=store;
+		this.obj=obj;
+	}
+	get() {
+		return this.obj;
+	}
+	get_parent() {
+		let parent_info=this.store.parent_map.get(this.obj);
+		if(!parent_info) return null;
+		let [index]=parent_info;
+		return new ParentWalker(this.store,this.store.object_store[index]);
+	}
+}
 class JsonReplacerState {
 	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
 	constructor(gen_name,keys,is_root) {
@@ -33,6 +49,10 @@ class JsonReplacerState {
 		this.object_store=[];
 		/** @api @public @type {Map<unknown,[number,string]>} */
 		this.parent_map=new Map;
+	}
+	/** @arg {unknown} x */
+	get_parent_walker(x) {
+		return new ParentWalker(this,x);
 	}
 }
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
@@ -972,28 +992,6 @@ class CodegenService extends BaseService {
 		ret_arr.push(`if(${k1}!=="${x2}") debugger;`); x;
 	}
 }
-
-/** @template T,U */
-class Generate {
-	/** @private @type {Map<string,string>[]} */
-	out_arr=[];
-	/** @private @type {string[]} */
-	str_arr=[];
-	/** @constructor @public @arg {CodegenService<T,U>} parent */
-	constructor(parent) {this.parent=parent;}
-	get x() {return this.parent;}
-	/** @api @public @arg {string} cf @arg {{}} x */
-	generate_typedef_and_depth(cf,x) {
-		let gen=this.x.codegen_typedef(cf,x,true);
-		if(!gen) return;
-		this.str_arr.push(gen);
-		let gd=this.x.generate_depth(gen);
-		if(!gd) return;
-		this.out_arr.push(gd);
-	}
-}
-
 export_(exports => {
 	exports.CodegenService=CodegenService;
-	exports.Generate=Generate;
 });

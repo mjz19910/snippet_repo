@@ -3409,12 +3409,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
-		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Accessibility",x);}
-		if("owner" in x) return this.D_Video_Handle("D_Video_Owner",x);
+		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_WithAccessibility",x);}
+		if("owner" in x) return this.D_Video_Handle("D_Video_WithOwner",x);
 		if("videoId" in x) {
-			if("topStandaloneBadge" in x) {return this.D_Video_Handle("D_Video_videoId_3",x);}
-			if("descriptionSnippet" in x) {return this.D_Video_Handle("D_Video_videoId_2",x);}
-			return this.D_Video_Handle("D_Video_videoId",x);
+			if("topStandaloneBadge" in x) {return this.D_Video_Handle("D_Video_With_VideoId_TopStandaloneBadge",x);}
+			if("descriptionSnippet" in x) {return this.D_Video_Handle("D_Video_With_VideoId_DescriptionSnippet",x);}
+			return this.D_Video_Handle("D_Video_With_VideoId",x);
 		}
 		console.log("video.other",this.get_keys_of(x).join());
 		this.D_Video_Handle("D_Video_Other",x);
