@@ -70,3 +70,21 @@ $1D_$3(x) {const cf="D_$3"; this.cfl(cf,x);}
 ```result
 this.y(cf,"$1",x,x=>{$2x$3})
 ```
+# add or remove this.k(cf,x)
+## search to add
+```regexp
+\b(\w+\(x\) \{
+\s+(const cf=(?!.+this.k).+?;))$
+```
+## replace
+```js
+$1 this.k(cf,x);
+```
+## search to remove
+```regexp
+ this\.k\(cf,x\);(
+.+this\.s\()
+```
+```js
+$1
+```
