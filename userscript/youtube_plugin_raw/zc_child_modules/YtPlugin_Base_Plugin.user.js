@@ -2511,7 +2511,7 @@ class BaseService extends BaseServicePrivate {
 		let r=x.split(s);
 		return as(r);
 	}
-	/** @arg {ServiceMethods<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
+	/** @arg {BaseService<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
 	is_normal_service(x) {return x.service_type==="normal";}
 	/** @returns {"unknown"|"normal"} */
 	get service_type() {return "unknown";}
