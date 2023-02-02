@@ -524,9 +524,13 @@ class HandleTypes extends HandleTypesEval {
 			case "ypc_get_offline_upsell":
 			case "YpcGetCart": {
 				switch(parts[1]) {
-					default: {const idx=2; u(idx); debugger; parts[1]==="";} return;
+					default: {
+						const idx=2; u(idx); debugger; switch(parts[1]) {
+						} parts[1]==="";
+					} return;
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
-					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams":
+					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
+					case "removeLikeParams": case "sequence_params": case "pp":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f13": case "f14": case "f15": case "f18":
 					case "f25": case "f26": case "f27": case "f28": case "f29":
@@ -536,12 +540,13 @@ class HandleTypes extends HandleTypesEval {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
 					case "f1": case "f1[]": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f16": case "f19":
-					case "f24": case "f25": case "f27": case "f33": case "f39": case "f40": case "f56":
+					case "f24": case "f25": case "f27": case "f30": case "f33": case "f39": case "f40":
+					case "f56": case "f71": case "f84":
 				}
 				if(parts.length===3) {switch(map_entry_value) {default: debugger; return;}}
 				switch(parts[3]) {
 					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
-					case "f1": case "f2": case "f3": case "f4": case "f5":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
 					case "f12": case "f13":
 				}
 				if(parts.length===4) {switch(map_entry_value) {default: debugger; return;}}
