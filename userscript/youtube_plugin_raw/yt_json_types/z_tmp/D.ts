@@ -3282,10 +3282,19 @@ type D_Button_With_TargetId=
 ;
 //#endregion
 type D_ThumbnailsList={thumbnail: D_Thumbnail; trackingParams?: string;};
-
 type D_Thumbnail={
 	thumbnails: D_ThumbnailItem[];
 	accessibility?: D_Accessibility;
 	isOriginalAspectRatio?: true;
 	sampledThumbnailColor?: D_ThumbnailColor;
+};
+type D_Omit_Compact_Player={
+	title: G_Text;
+	trackingParams: string;
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
+};
+type D_Omit_Compact_Video=D_Omit_Compact_Player&{
+	videoId: string;
+	shortViewCountText: G_Text;
+	publishedTimeText: G_Text;
 };

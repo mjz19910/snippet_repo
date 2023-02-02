@@ -15,6 +15,97 @@ type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;
 type T_OpenPopup_Dialog<T>={popupType: "DIALOG"; popup: T;};
 type T_Items<T>={items: T[];};
 type T_Items_TP<T>={trackingParams: string; items: T[];};
+type T_Actions<T>={actions: T[];};
+type T_AnyObjectOrEmpty<T extends {}>={}|T;
+type T_Autoplay<T>={autoplay: T;};
+type T_BaseUrl<T extends string>={baseUrl: T;};
+type T_Command$<T>={
+	command: T;
+	trackingParams: string;
+};
+type T_DialogPopup<T=R_ConfirmDialog>={
+	popup: T;
+	popupType: "DIALOG";
+};
+type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog>={
+	popup: T;
+	popupType: "DIALOG";
+	beReused: false;
+};
+type T_DropdownPopup_ReuseFlag<T>={
+	popup: T;
+	popupType: "DROPDOWN";
+	beReused: true;
+};
+type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
+type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
+type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
+type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
+type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
+type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
+type T_FeedEntry<T extends string>=`FE${T}`;
+type T_GetTypeof<T>=
+	T extends undefined? "undefined":
+	T extends number? "number":
+	T extends string? "string":
+	T extends boolean? "boolean":
+	T extends {}? "object":
+	never;
+type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
+type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
+type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
+type T_Icon<T extends string>={iconType: T;};
+type T_IsColorHelper<T,U>=U extends `0x${infer I}`? T_Split<I,""> extends infer G extends T_Split<I,"">? G['length'] extends 6|8? T_EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;
+type T_MapEntry<T,U>={key: T; value: U;};
+type T_SettingsPageStr<T extends string>=`SP${T}`;
+type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
+type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
+type T_Playlist<T>={playlist: T;};
+type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
+type T_Results<T>={results: T;};
+type T_ResultsArray<T>={
+	results: T[];
+	trackingParams: string;
+};
+type T_RidFormat<T extends string>=`${T}_rid`;
+type T_SecondaryResults<T>={secondaryResults: T;};
+type T_ShortsSurfaceIdentifier<T>={
+	surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
+	tag: T;
+};
+type T_Signal<T>=Record<"signal",T>;
+type T_SplitIntoGroups<S extends string,D extends string>=
+	string extends S? string[]:
+	S extends ''? []:
+	S extends `${infer T}${infer X extends D}${infer U}`? [`${T}${X}`,...T_SplitIntoGroups<U,D>]:
+	[S];
+type T_SplitOnce<S extends string,D extends string>=string extends S?
+	[string]|[string,string]:S extends ''? []:S extends `${infer T}${D}${infer U}`? [T,U]:[S];
+type T_StyleType<T>={styleType: T;};
+type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
+type T_Text<T>={text: T;};
+type T_TextRuns<T>={runs: T;};
+type T_TrackingParamsAsString<T,V extends string>=V extends "trackingParams"? string:T;
+type T_Types<T extends number>={types: `${T}`;};
+type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
+type T_UrlWrappedValue<T extends string>={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;};
+type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
+type T_VideoListStr<T extends string>=`VL${T}`;
+type T_WCM_={
+	url?: string;
+	webPageType?: YtPageTypeEnum;
+	apiUrl?: string;
+	sendPost?: boolean;
+	rootVe?: D_RootVisualElementType;
+};
+type T_ParseCallbackFunction<T extends CF_L_Params>=(
+	x: V_ParamMapValue[],
+	idx: number[],
+	path: P_ParamParse,
+	map_keys: number[],
+	root: T,
+) => void;
+type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
 //#endregion
 //#region Types that modify other types
 type T_OmitKey<T,K extends keyof T>=T extends infer U? Omit<U,K>:never;
@@ -104,110 +195,9 @@ type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
 };
-type T_Actions<T>={actions: T[];};
-type T_AnyObjectOrEmpty<T extends {}>={}|T;
-type T_Autoplay<T>={autoplay: T;};
-type T_BaseUrl<T extends string>={baseUrl: T;};
-type T_Command$<T>={
-	command: T;
-	trackingParams: string;
-};
-type T_DialogPopup<T=R_ConfirmDialog>={
-	popup: T;
-	popupType: "DIALOG";
-};
-type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog>={
-	popup: T;
-	popupType: "DIALOG";
-	beReused: false;
-};
-type T_DropdownPopup_ReuseFlag<T>={
-	popup: T;
-	popupType: "DROPDOWN";
-	beReused: true;
-};
-type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
-type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
-type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
-type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
-type T_EnumStr<T extends string,U extends string>=`${T}_${U}`;
-type T_ExtractKeyValue<T,U extends string>=T extends {[C in U]: any;}? T:never;
-type T_FeedEntry<T extends string>=`FE${T}`;
-type T_GetTypeof<T>=
-	T extends undefined? "undefined":
-	T extends number? "number":
-	T extends string? "string":
-	T extends boolean? "boolean":
-	T extends {}? "object":
-	never;
-type T_HexByte<T extends string>=string extends T? "00":T extends `${infer U}${infer V}`? `${T_HexNibble<U>}${T_HexNibble<V>}`:never;
-type HexLen<T extends string,L extends number>=T_Split<T,"">["length"] extends L? T:T_Split<T,"">["length"];
-type T_HexNibble<T extends string>=string extends T? "0":T extends G_HexNibbleStr? T:never;
-type T_Icon<T extends string>={iconType: T;};
-type T_IsColorHelper<T,U>=U extends `0x${infer I}`? T_Split<I,""> extends infer G extends T_Split<I,"">? G['length'] extends 6|8? T_EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;
-type T_MapEntry<T,U>={key: T; value: U;};
-type T_SettingsPageStr<T extends string>=`SP${T}`;
-type T_MapValidHex<T extends string[]>=T_HexByte<T[number]> extends never? never:T;
-type T_VerifyHex<T extends string>=T extends `0x${infer U}`? T_MapValidHex<T_SplitIntoGroups<U,string>>["length"] extends 8? T:never:never;
-type D_Omit_Compact_Player={
-	title: G_Text;
-	trackingParams: string;
-	thumbnailOverlays: G_ThumbnailOverlayItem[];
-};
-type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
-type D_Omit_Compact_Video=D_Omit_Compact_Player&{
-	videoId: string;
-	shortViewCountText: G_Text;
-	publishedTimeText: G_Text;
-};
-type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
-type T_Playlist<T>={playlist: T;};
-type T_Replace<T extends string,S extends string,R extends string>=T extends `${S}${infer N}`? `${R}${T_Replace<N,S,R>}`:T extends `${infer B}${S}${infer N}`? `${B}${R}${T_Replace<N,S,R>}`:T;
-type T_Results<T>={results: T;};
-type T_ResultsArray<T>={
-	results: T[];
-	trackingParams: string;
-};
-type T_RidFormat<T extends string>=`${T}_rid`;
-type T_SecondaryResults<T>={secondaryResults: T;};
-type T_ShortsSurfaceIdentifier<T>={
-	surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
-	tag: T;
-};
-type T_Signal<T>=Record<"signal",T>;
-type T_SplitIntoGroups<S extends string,D extends string>=
-	string extends S? string[]:
-	S extends ''? []:
-	S extends `${infer T}${infer X extends D}${infer U}`? [`${T}${X}`,...T_SplitIntoGroups<U,D>]:
-	[S];
-type T_SplitOnce<S extends string,D extends string>=string extends S?
-	[string]|[string,string]:S extends ''? []:S extends `${infer T}${D}${infer U}`? [T,U]:[S];
-type T_StyleType<T>={styleType: T;};
-type T_TargetIdStr<T extends string,U extends string>=`${T}-${U}`;
-type T_Text<T>={text: T;};
-type T_TextRuns<T>={runs: T;};
-type T_TrackingParamsAsString<T,V extends string>=V extends "trackingParams"? string:T;
-type T_Types<T extends number>={types: `${T}`;};
-type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
-type T_UrlWrappedValue<T extends string>={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;};
-type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
-type T_VideoListStr<T extends string>=`VL${T}`;
-type T_WCM_={
-	url?: string;
-	webPageType?: YtPageTypeEnum;
-	apiUrl?: string;
-	sendPost?: boolean;
-	rootVe?: D_RootVisualElementType;
-};
+
 type T_DC_Content<T>={trackingParams: string; contents: T[];};
 type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
 type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
-
-type T_ParseCallbackFunction<T extends CF_L_Params>=(
-	x: V_ParamMapValue[],
-	idx: number[],
-	path: P_ParamParse,
-	map_keys: number[],
-	root: T,
-) => void;
-type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
+type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
+type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
