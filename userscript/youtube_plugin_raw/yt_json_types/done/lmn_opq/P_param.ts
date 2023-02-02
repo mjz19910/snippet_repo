@@ -106,14 +106,14 @@ type P_param_known_1=
 	|"get_transcript.params.f1"
 	|"get_transcript.params.f6"
 	|"GetNotificationMenu.ctoken.f1"
-	|"record_notification_interactions.f2.f1"
-	|"record_notification_interactions.f2.f14.f1.f1"
-	|"record_notification_interactions.f2.f14.f1.f2"
-	|"record_notification_interactions.f2.f14.f1"
-	|"record_notification_interactions.f2.f14.f2"
-	|"record_notification_interactions.f2.f14"
-	|"record_notification_interactions.f2"
-	|"record_notification_interactions.f5"
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f1`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f1.f1`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f1.f2`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f1`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f2`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f2`
+	|`${"record_notification_interactions"|"notification.record_interactions"}.f5`
 	|"reel.params.f1"
 	|"reel.player_params.f30"
 	|"reel.player_params.f71"

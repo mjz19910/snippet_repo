@@ -552,7 +552,7 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[3]) {
 					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
-					case "f12": case "f13":
+					case "f12": case "f13": case "f14":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
@@ -562,7 +562,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
-					case "f1":
+					case "f1": case "f2":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
