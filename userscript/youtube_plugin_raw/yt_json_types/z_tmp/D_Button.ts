@@ -1,6 +1,30 @@
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
+type C_GetPdgBuyFlow={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: {
+			sendPost: true;
+			apiUrl: "/youtubei/v1/pdg/get_pdg_buy_flow";
+		};
+	};
+	getPdgBuyFlowCommand: {
+		params: string;
+	};
+};
 type D_Button=
 	|never
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		serviceEndpoint: C_GetPdgBuyFlow;
+		icon: T_Icon<"MONEY_HEART">;
+		tooltip: "Show support with Super Thanks";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Thanks">;
+		targetId: "watch-supervod-button";
+	}
 	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";

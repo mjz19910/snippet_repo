@@ -2269,7 +2269,8 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
 			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
 			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
-			case "search-feed": case "search-page": case "sponsorships-button": case "watch-next-feed":
+			case "search-feed": case "search-page": case "sponsorships-button":
+			case "watch-next-feed": case "watch-supervod-button":
 			case "browse-video-menu-button":
 			case "create-clip-button-action-bar": break;
 			default: x===""; this.codegen_case(cf,x); break;
@@ -2295,8 +2296,9 @@ class HandleTypes extends HandleTypesEval {
 		switch(x) {
 			default: this.codegen_case("D_Button_TargetId",x); break;
 			case "clip-info-button":
-			// case "sponsorships-button":
 			case "create-clip-button-action-bar":
+			case "sponsorships-button":
+			case "watch-supervod-button":
 		}
 		this.targetId(cf,x);
 		this.t;
@@ -2411,7 +2413,7 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {icon,size,style,accessibilityData,isDisabled,targetId,command,...y}=this.D_Button_Omit_TP(cf1,x);
+					let {icon,size,style,accessibilityData,isDisabled,targetId,...y}=this.D_Button_Omit_TP(cf1,x);
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -2422,7 +2424,7 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					let {icon,size,style,accessibilityData,isDisabled,targetId,text,tooltip,command,...y}=this.D_Button_Omit_TP(cf1,x);
+					let {icon,size,style,accessibilityData,isDisabled,targetId,text,tooltip,...y}=this.D_Button_Omit_TP(cf1,x);
 					/** @typedef {keyof (typeof y)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -2485,7 +2487,7 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`;
-					const {targetId,accessibilityData,command,size,style,icon,isDisabled,...y}=this.D_Button_Omit_TP(cf1,x); y;
+					const {targetId,accessibilityData,size,style,icon,isDisabled,...y}=this.D_Button_Omit_TP(cf1,x); y;
 					switch(targetId) {
 						default: this.codegen_case(`${cf1}.case`,targetId); this.codegen_typedef_all(cf1,x); break;
 						case "clip-info-button":

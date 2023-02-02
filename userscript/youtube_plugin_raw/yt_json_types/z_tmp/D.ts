@@ -77,6 +77,7 @@ type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_TargetIdStr=[
+	Extract<D_Button,{targetId:any}>["targetId"],
 	AD_AppendContinuationItems['targetId'],
 	TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId'],
 	"comments-section",
