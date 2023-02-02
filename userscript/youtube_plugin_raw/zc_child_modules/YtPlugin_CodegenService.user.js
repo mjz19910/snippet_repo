@@ -17,7 +17,7 @@ if(__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
-const as=required(bs.as_);
+const as=bs.as_;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {
 	bs.do_export(fn,flags,exports,__module_name__);
@@ -582,8 +582,10 @@ class CodegenService extends BaseService {
 		{debugger;}
 		return x;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
-	get_json_replace_type_len_1(state,r,b,keys) {
+	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{}} x @arg {string[]} keys */
+	get_json_replace_type_len_1(state,r,x,keys) {
+		/** @type {{[U in string]:unknown}} */
+		let b=x;
 		x: if(b.accessibilityData) {
 			/** @type {{accessibilityData?:Partial<D_Label>}} */
 			let xu=b;
@@ -901,6 +903,16 @@ class CodegenService extends BaseService {
 		if(b.button_id) return `TYPE::ButtonId<"${b.button_id}">`;
 		/** @private @type {D_Label} */
 		if(b.label) return "TYPE::D_Label";
+		if(b.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string") {
+			let gen_url=x.baseUrl;
+			if(gen_url.startsWith("https://")) {
+				let pt=split_string_once(gen_url,"?");
+				if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
+				return `TYPE::T_BaseUrl<\`${pt[0]}>\${string}\``;
+
+			}
+			return `TYPE::T_BaseUrl<${b.baseUrl}>`;
+		}
 		let g_res=g();
 		let k_str=keys.join();
 		if(!this.logged_replace_keys.includes(k_str)) {

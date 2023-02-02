@@ -8191,7 +8191,17 @@ class HandleTypes extends HandleTypesEval {
 												}
 												switch(parts[5]) {
 													default: u(idx); debugger; parts[5]===""; break;
-													case "f1": u(idx); debugger; break;
+													case "f1": {
+														const idx=7;
+														if(parts.length===6) {
+															if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+															switch(map_entry_value) {default: debugger; return;}
+														}
+														switch(parts[6]) {
+															default: u(idx); debugger; parts[6]===""; break;
+															case "f4": u(idx); debugger; break;
+														}
+													} break;
 												}
 											} break;
 										}

@@ -1878,7 +1878,30 @@ type D_HotkeyDialogSectionOption={
 	hotkeyAccessibilityLabel: D_Accessibility;
 };
 type D_ImpressionCap={impressionCap: "1";};
-type D_InFeedAdLayout={adLayoutMetadata: M_AdLayout_PlayerBytes; renderingContent: R_DisplayAd;};
+type R_PromotedSparklesWeb={
+	promotedSparklesWebRenderer: {
+		thumbnail: D_Thumbnail;
+		icon: T_Icon<"EXTERNAL_LINK">;
+		title: G_Text;
+		description: G_Text;
+		websiteText: G_Text;
+		actionButton: R_Button;
+		navigationEndpoint: E_Url;
+		impressionCommands: {
+			clickTrackingParams: string;
+			loggingUrls: T_BaseUrl<`https://www.youtube.com/pagead/adview?${string}`>[];
+			pingingEndpoint: B_Hack;
+		}[];
+		menu: R_Menu;
+		trackingParams: string;
+		clickLocationTargets: {
+			location: "PROMOTED_SPARKLES_CLICK_LOCATION_AD_BADGE";
+			code: 31;
+			behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
+		}[];
+	};
+}
+type D_InFeedAdLayout={adLayoutMetadata: M_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
 type R_DisplayAd={displayAdRenderer: D_DisplayAd;};
 type D_LinearAdSequence={adLayoutMetadata: M_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};
 type D_AdSlotAndLayoutItem={adLayoutMetadata: MMD_AdLayout_TopImage[]; adSlotMetadata: DMD_AdSlot;};
