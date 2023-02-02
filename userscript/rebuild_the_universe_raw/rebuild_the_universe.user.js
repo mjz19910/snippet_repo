@@ -1369,7 +1369,7 @@ class BaseNodeImpl {
 	constructor() {this.m_parent=null;}
 	/** @arg {any} parent */
 	set_parent(parent) {this.m_parent=parent;}
-	run() {// do nothing}
+	run() {/* do nothing*/}
 	remove() {if(this.m_parent) this.m_parent.remove_child(this);}
 	destroy() {this.remove();}
 }
