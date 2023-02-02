@@ -569,7 +569,7 @@ class ParserService extends BaseService {
 						/** @private @type {P_ParamParse_XX} */
 						return;
 					}
-					case "record_notification_interactions.f2":switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
+					case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "get_report_form": switch(map_entry_key) {
 						case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29:
@@ -1061,7 +1061,54 @@ class ParserService extends BaseService {
 			} break;
 			case "record_notification_interactions": {
 				const idx=2;
-				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "f2": case "f5": u(idx); debugger; break;}
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "f2": case "f5": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {
+							default: u(idx); debugger; parts[2]===""; break;
+							case "f1": {
+								const idx=4;
+								if(parts.length===3) {
+									if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+									switch(map_entry_value) {default: debugger; return;}
+								}
+								switch(parts[3]) {default: u(idx); debugger; parts[3]===""; break;}
+							} break;
+							case "f14": {
+								const idx=4;
+								if(parts.length===3) {
+									switch(map_entry_value) {default: debugger; return;}
+								}
+								switch(parts[3]) {
+									default: u(idx); debugger; parts[3]===""; break;
+									case "f2": u(idx); debugger; break;
+									case "f1": {
+										const idx=5;
+										if(parts.length===4) {
+											switch(map_entry_value) {default: debugger; return;}
+										}
+										switch(parts[4]) {
+											default: u(idx); debugger; parts[4]===""; break;
+											case "f2": u(idx); debugger; break;
+											case "f1": {
+												const idx=6;
+												if(parts.length===5) {
+													if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+													switch(map_entry_value) {default: debugger; return;}
+												}
+												switch(parts[5]) {default: u(idx); debugger; parts[5]===""; break;}
+											} break;
+										}
+									} break;
+								}
+							} break;
+						}
+					} break;
+				}
 			} break;
 			case "transcript_target_id": {
 				const idx=2;
