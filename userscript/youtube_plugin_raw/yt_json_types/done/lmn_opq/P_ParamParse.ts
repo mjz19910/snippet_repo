@@ -5,6 +5,10 @@ type P_LogItems=[
 	"[parse_value.gen_ns] [D_Browse.param.f110.f1]",
 	"[parse_value.gen_ns] [D_Browse.param.f110.f1.f19]",
 	"[parse_value.gen_ns] [D_Browse.param.f110.f1.f20]",
+	"[parse_value.gen_ns] [notification.opt_out.f2]",
+	"[parse_value.gen_ns] [notification.opt_out.f3]",
+	"[parse_value.gen_ns] [notification.opt_out.f4]",
+	"[parse_value.gen_ns] [notification.opt_out.f7]",
 ];
 type P_ParamParse=
 	|P_PathRootStr

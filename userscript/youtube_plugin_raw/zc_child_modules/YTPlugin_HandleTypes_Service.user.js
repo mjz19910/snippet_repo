@@ -238,7 +238,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log("[parse_value.new_path_gen]",path);
 			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n\n\tcase "${path}": switch(map_entry_key) {\n${map_keys.map(e => `case ${e}:`).join(" ")}\n\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\tdefault: new_ns(); debugger; return;\n}\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+			console.log(`\n\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: new_ns(); debugger; return;\n\t}\n`);
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
@@ -304,7 +304,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
 	fmt_arr(x) {
-		return as(x.map(v=>`${v}`).join(".f"));
+		return as(x.map(v => `${v}`).join(".f"));
 	}
 	/**
 	 * @template {"DE_VE3832_Watch"} T
@@ -360,6 +360,11 @@ class HandleTypes extends HandleTypesEval {
 				debugger;
 				/** @private @type {P_ParamParse} */
 				return;
+			}
+			case "notification.opt_out": switch(map_entry_key) {
+				case 2: case 3: case 4: case 7:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
 			}
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {
 				case 19: case 20:
