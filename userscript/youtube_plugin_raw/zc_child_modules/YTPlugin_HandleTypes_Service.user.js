@@ -1433,7 +1433,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
-	T_Signal(cf,x) {return this.w(cf,"signal",x);}
+	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @arg {DC_Params} a */
 	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
 	/** @private @arg {DE_UndoFeedback} x */
@@ -6681,7 +6681,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ImpressionCap} x */
 	D_ImpressionCap(x) {
 		const cf="D_ImpressionCap";
-		if(this.w(cf,"impressionCap",x)!=="1") debugger;
+		if(this.w(`Other:${cf}`,"impressionCap",x)!=="1") debugger;
 	}
 	/** @private @arg {D_VideoViewCount} x */
 	D_VideoViewCount(x) {

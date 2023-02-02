@@ -39,7 +39,7 @@ type CF_L_Params=
 ;
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
 type CF_T_GM_gen=T_ExtractImport<"CF_T_GM">;
-type CF_Common=
+type CF_WithParams=
 	|CF_D_Button
 	|CF_D_ChipCloudChip_Omit
 	|CF_D_GuideEntry
@@ -49,18 +49,18 @@ type CF_Common=
 ;
 type CF_M_s=
 	|`${CF_parse_identifier}.identifier`
-	|CF_Common
 	|CF_D_CustomEmoji
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
 	|CF_T_GM
 	|CF_T_SE_Signal
+	|CF_WithParams
 	|T_ExtractImport<"CF_M_s">
 	;
 ;
 type CF_L_TP_Params=
 	|`T_Items_TP:${CF_T_Items_TP}`
-	|CF_Common
+	|CF_WithParams
 	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
 	;
 ;
@@ -80,8 +80,8 @@ type CF_M_w=
 	|`T_Items:${CF_T_Items}`
 	|`T_Commands:${CF_T_Commands}`
 	|`T_Items_TP:${CF_T_Items_TP}`
-	|"D_ImpressionCap"
-	|CF_T_Signal
+	|"Other:D_ImpressionCap"
+	|`T_Signal:${CF_T_Signal}`
 	;
 ;
 type CF_T_GM=CF_T_GM_gen|"CF_GM_WC_2"|"a";
