@@ -2826,6 +2826,13 @@ class HandleTypes extends HandleTypesEval {
 		console.log("video.other",this.get_keys_of(x).join());
 		this.D_Video_Handle("D_Video_Other",x);
 	}
+	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
+	D_Button_DefServiceEP(x) {
+		const cf="D_Button_DefServiceEP";
+		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
+		if("repeatChapterCommand"in x) return this.C_RepeatChapter(x);
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton_Omit(x) {
 		const cf="D_ToggleButton"; this.k(cf,x);
@@ -2834,8 +2841,7 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
 		this.save_string("[D_ToggleButton.defaultIcon.type]",defaultIcon.iconType);
-		if(!defaultServiceEndpoint.commandExecutorCommand) debugger;
-		this.C_CommandExecutor(defaultServiceEndpoint);
+		this.D_Button_DefServiceEP(defaultServiceEndpoint);
 		// this.C_RepeatChapter(defaultServiceEndpoint);
 		// this.C_Executor(toggledServiceEndpoint);
 		this.E_Like(toggledServiceEndpoint);

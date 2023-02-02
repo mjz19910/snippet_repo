@@ -2829,6 +2829,19 @@ type C_CommandExecutor={
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 type D_ToggleButton=
+	|never
+	|{
+		style: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
+		isToggled: false;
+		isDisabled: false;
+		defaultIcon: T_Icon<"LOOP">;
+		defaultServiceEndpoint: C_RepeatChapter;
+		toggledServiceEndpoint: C_CommandExecutor;
+		trackingParams: string;
+		toggledStyle: T_StyleType<"STYLE_BLUE_TEXT">;
+		accessibilityData: TD_Accessibility<"Repeat chapter is off">;
+		toggledAccessibilityData: TD_Accessibility<"Repeat chapter is on">;
+	}
 	|{
 		style: T_StyleType<"STYLE_TEXT">;
 		isToggled: false;
