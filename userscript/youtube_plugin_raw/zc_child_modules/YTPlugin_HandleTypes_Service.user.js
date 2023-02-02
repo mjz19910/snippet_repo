@@ -2828,21 +2828,21 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
 	D_Button_DefServiceEP(x) {
-		const cf="D_Button_DefServiceEP";
+		const cf="D_Button_DefServiceEP"; this.k(cf,x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("repeatChapterCommand"in x) return this.C_RepeatChapter(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
 	D_Button_ToggledServiceEP(x) {
-		const cf="D_ToggleButton";
+		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton_Omit(x) {
-		const cf="D_ToggleButton"; this.k(cf,x);
+		const cf="D_ToggleButton";
 		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,...y}=this.s(cf,x);
 		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
