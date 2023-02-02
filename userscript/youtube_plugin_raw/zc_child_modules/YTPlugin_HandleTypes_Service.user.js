@@ -2021,7 +2021,11 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE37414_WC(x) {
 		const cf="GM_VE37414_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(url!=="/shorts/") debugger;
+		let up=split_string_once(url,"/");
+		let [p1,p2]=up; if(p1!=="") debugger;
+		let u2=split_string_once(p2,"/");
+		let [p3,p4]=u2; if(p3!=="shorts") debugger;
+		this.videoId(p4);
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 		if(rootVe!==37414) debugger;
 	}
@@ -8222,8 +8226,7 @@ class HandleTypes extends HandleTypesEval {
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem"; this.k(cf,x);
 		if("lightColorPalette" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey,endRepeatCommand,playerStateEntityKey,
-				carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey,endRepeatCommand,playerStateEntityKey,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
 			this.G_Text(title);
 			this.G_Text(timeDescription);
 			this.D_Thumbnail(thumbnail);
