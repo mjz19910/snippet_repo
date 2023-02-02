@@ -7885,7 +7885,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse_XX} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_any_param(root,path,map_entry_key_path,map,callback) {
-		if(map_entry_key_path.length!==1) debugger;
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
@@ -7955,15 +7954,16 @@ class HandleTypes extends HandleTypesEval {
 		f();
 		console.groupEnd();
 	}
-	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
+	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		if(path!=="watch.player_params") {debugger; return;}
+		if(root!=="DE_VE3832_Watch") {debugger; return;}
 		/** @type {[8]} */
 		let k=as(map_entry_key_path);
 		this.on_player_params_callback_ty(map_entry_values,k,path,map_keys,root);
 	}
 	/** 
-	 * @template {CF_L_Params} T 
+	 * @template {"DE_VE3832_Watch"} T 
 	 * @arg {[8]} map_entry_key_path 
 	 * @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
@@ -7980,11 +7980,12 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** 
-	 * @template {CF_L_Params} T @template {P_ParamParse_XX} U @arg {on_player_params_callback_ty_len1<T,U>} x */
+	/** @template {"DE_VE3832_Watch"} T @template {P_ParamParse_XX} U @arg {on_player_params_callback_ty_len1<T,U>} x */
 	on_player_params_callback_ty_len1(...x) {
-		x;
-		debugger;
+		switch(x[0]) {
+			case "DE_VE3832_Watch": break;
+			default: debugger; break;
+		}
 	}
 	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse_XX} path @arg {number[]} map_keys @arg {T} root @returns {void} */
 	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
