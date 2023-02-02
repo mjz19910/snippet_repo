@@ -1831,6 +1831,13 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId.${ve_name}] --\n\n\ncase "${x}":`); break;
 		};
 	}
+	/** @private @arg {GM_VE42352_WC['url']} x */
+	_decode_browse_url(x) {
+		switch(x) {
+			case "/feed/downloads": break;
+			default: debugger; break;
+		}
+	}
 	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.s(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
 	/** @private @arg {GM_WC} x */
@@ -2055,13 +2062,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.GM_WC(x);
 		return `VE${x.rootVe}`;
-	}
-	/** @private @arg {GM_VE42352_WC['url']} x */
-	_decode_browse_url(x) {
-		switch(x) {
-			case "/feed/downloads": break;
-			default: debugger; break;
-		}
 	}
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
