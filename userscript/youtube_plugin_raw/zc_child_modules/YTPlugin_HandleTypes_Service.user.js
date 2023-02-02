@@ -2341,7 +2341,7 @@ class HandleTypes extends HandleTypesEval {
 		"",
 		"DELETE",
 	];
-	/** @protected @arg {"D_Button:WithCommand:targetId.case"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
+	/** @protected @arg {"D_Button_With_TargetId"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
 		///** @type {string} */
 		//let ux=x;
@@ -8542,6 +8542,7 @@ class HandleTypes extends HandleTypesEval {
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
 	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {const cf="C_GetPdgBuyFlow"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}

@@ -5,9 +5,6 @@ type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 //#endregion
 //#region ContinuationData
 type DC_ResetChannelUnreadCount={};
-type DC_LoadMarkers={entityKeys: string[];};
-type DC_ShowReloadUi={targetId: D_UiTargetId;};
-type DC_Loop={loop: false;};
 type DC_RepeatChapter={
 	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT";
 	startTimeMs: "0";
@@ -28,10 +25,6 @@ type DC_AdsControlFlowOpportunityReceived={
 	adSlotAndLayoutMetadata?: D_AdSlotAndLayoutItem[];
 	isInitialLoad: boolean;
 	enablePacfLoggingWeb: boolean;
-};
-type DC_ChangeKeyedMarkersVisibility={
-	isVisible: true;
-	key: "HEATSEEKER";
 };
 type DC_Continuation_Shape={
 	token: string;
@@ -63,9 +56,6 @@ type DC_Continuation=
 	;
 ;
 type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
-type DC_Executor=Record<"commands",AC_Executor[]>;
-type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
-type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
 // type GDC_GetSurvey_Endpoint=D_PaidDigitalGoods|D_Survey_Watch;
 type DC_GetSurvey={
 	endpoint: D_Survey_Watch;
@@ -76,7 +66,6 @@ type DC_GetSurvey={
 };
 // TODO: #14 Need type of DC_RefreshPlaylist
 type DC_RefreshPlaylist={};
-type DC_Generic={continuation: string;};
 type DC_Invalidation={
 	invalidationId: D_InvalidationId;
 	timeoutMs: 10000;
@@ -97,25 +86,26 @@ type DC_LiveChat={
 	clientMessages?: D_ClientMessages;
 	viewerName?: string;
 };
+type DC_AddToPlaylist=
+	|{
+		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
+		onCreateListCommand: E_CreatePlaylistService;
+		openMiniplayer: boolean;
+		videoId: D_VideoId;
+		videoIds: D_VideoId[];
+	}
+	|{
+		openMiniplayer: false;
+		openListPanel: true;
+		videoId: D_VideoId;
+		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
+		onCreateListCommand: E_CreatePlaylistService;
+		videoIds: D_VideoId[];
+	}
+	;
+;
 // TODO: #15 Need type of DC_MusicShelf
 type DC_MusicShelf={};
-type DC_LiveChatReplay={
-	timeUntilLastMessageMsec: number;
-	continuation: string;
-};
 // TODO #4
 type DC_PlaylistPanel={};
-type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section","engagement-panel-comments-section">>;
-type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
-type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
-type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
-type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
-type DC_Timed={
-	timeoutMs: 60000;
-	continuation: string;
-};
-type DC_UpdateToggleButtonState={
-	toggled: false;
-	buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION";
-};
 //#endregion

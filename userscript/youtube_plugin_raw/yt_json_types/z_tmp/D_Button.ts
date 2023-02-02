@@ -1,16 +1,4 @@
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
-type C_GetPdgBuyFlow={
-	clickTrackingParams: string;
-	commandMetadata: {
-		webCommandMetadata: {
-			sendPost: true;
-			apiUrl: "/youtubei/v1/pdg/get_pdg_buy_flow";
-		};
-	};
-	getPdgBuyFlowCommand: {
-		params: string;
-	};
-};
 type D_Button=
 	|never
 	|{

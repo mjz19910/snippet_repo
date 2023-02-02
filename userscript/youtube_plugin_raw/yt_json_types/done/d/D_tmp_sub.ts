@@ -11,22 +11,6 @@ type DA_ReplayChatItem={
 	videoOffsetTimeMsec: `${number}`;
 };
 type D_VideoId=string;
-type DC_AddToPlaylist=
-	|{
-		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
-		onCreateListCommand: E_CreatePlaylistService;
-		openMiniplayer: boolean;
-		videoId: D_VideoId;
-		videoIds: D_VideoId[];
-	}
-	|{
-		openMiniplayer: false;
-		openListPanel: true;
-		videoId: D_VideoId;
-		listType: "PLAYLIST_EDIT_LIST_TYPE_QUEUE";
-		onCreateListCommand: E_CreatePlaylistService;
-		videoIds: D_VideoId[];
-	};
 type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
@@ -37,7 +21,8 @@ type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",[
 	"CREATION",
 	"NOTIFICATIONS",
 	"ACCOUNT"
-][number]>;// TODO #7 Get type of DMC_ResolveUrl
+][number]>;
+// TODO #7 Get type of DMC_ResolveUrl
 type DMC_ResolveUrl={};
 type DMD_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;

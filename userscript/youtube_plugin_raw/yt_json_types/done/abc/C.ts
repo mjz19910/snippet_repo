@@ -1,6 +1,7 @@
 //#region Commands
 type C_AddToPlaylist=TE_Endpoint_2<"addToPlaylistCommand",DC_AddToPlaylist>;
 type C_AdsControlFlowOpportunityReceived=TE_Endpoint_2<"adsControlFlowOpportunityReceivedCommand",DC_AdsControlFlowOpportunityReceived>;
+type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
 type C_ChangeKeyedMarkersVisibility=TE_Endpoint_2<"changeKeyedMarkersVisibilityCommand",DC_ChangeKeyedMarkersVisibility>;
 type C_Continuation=
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_WatchNext,M_Next>
@@ -8,9 +9,6 @@ type C_Continuation=
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Empty_WCM>
 	;
 ;
-type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
-type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command: C_ShowReloadUi;};
-type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string;};
 type C_CommandExecutor=TE_Endpoint_2<"commandExecutorCommand",DC_CommandExecutor>;
 type C_EngagementPanelHeaderShowNavigationButton=TE_Endpoint_2<"engagementPanelHeaderShowNavigationButtonCommand",DC_EngagementPanelHeaderShowNavigationButton>;
 type C_EntityUpdate=TE_Endpoint_2<"entityUpdateCommand",DC_EntityBatchUpdate>;
@@ -27,4 +25,28 @@ type C_ResetChannelUnreadCount=TE_Endpoint_2<"resetChannelUnreadCountCommand",DC
 type C_ScrollToEngagementPanel=TE_Endpoint_2<"scrollToEngagementPanelCommand",DC_ScrollToEngagementPanel>;
 type C_ShowReloadUi=TE_Endpoint_2<"showReloadUiCommand",DC_ShowReloadUi>;
 type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC_UpdateToggleButtonState>;
+// [DC_,GM_,M_,C_]
+type DC_GetPdgBuyFlow=DC_Params;
+type GM_GetPdgBuyFlow=T_GM_PostApi_WithApiUrl<"/youtubei/v1/pdg/get_pdg_buy_flow">;
+type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
+type C_GetPdgBuyFlow=TE_Endpoint_3<"getPdgBuyFlowCommand",DC_GetPdgBuyFlow,M_GetPdgBuyFlow>;
 //#endregion
+type DC_Generic={continuation: string;};
+type DC_Executor=Record<"commands",AC_Executor[]>;
+type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
+type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
+type DC_LoadMarkers={entityKeys: string[];};
+type DC_ShowReloadUi={targetId: D_UiTargetId;};
+type DC_Loop={loop: false;};
+type DC_LiveChatReplay={continuation: string; timeUntilLastMessageMsec: number;};
+type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section","engagement-panel-comments-section">>;
+type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
+type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
+type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_Timed={continuation: string; timeoutMs: 60000;};
+type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
+
+type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
+type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command: C_ShowReloadUi;};
+type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string;};
