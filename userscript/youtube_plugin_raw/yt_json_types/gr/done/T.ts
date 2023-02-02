@@ -14,6 +14,9 @@ type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
 type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
 type T_OpenPopup_Dialog<T>={popupType: "DIALOG"; popup: T;};
 //#endregion
+//#region Types that modify other types
+type T_OmitKey<T,K extends keyof T>=T extends infer U?Omit<U,K>:never;
+//#endregion
 //#region Object conversion Templates
 type T_RemovePrefix<T,T2 extends string>={
 	[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];

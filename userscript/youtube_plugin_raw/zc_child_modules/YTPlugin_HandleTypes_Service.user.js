@@ -3645,8 +3645,8 @@ class HandleTypes extends HandleTypesEval {
 		let fb_dec=base64_url_dec.decodeByteArray(x);
 		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
 	}
-	/** @private @template {DE_Feedback} T @arg {"DE_Feedback"} cf @arg {keyof T} k @arg {T} x @arg {(x:string)=>void} f @returns {Omit<T,"feedbackToken">} */
-	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return y;}
+	/** @private @template {{[U in K]:any}} T @template {keyof T} K @arg {"DE_Feedback"} cf @arg {K} k @arg {T} x @arg {(x:T[K])=>void} f @returns {T_OmitKey<T,K>} */
+	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return as_any(y);}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback",u=this.T_OmitKey(cf,"feedbackToken",x,this.DE_Feedback_onToken);
