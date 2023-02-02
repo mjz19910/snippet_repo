@@ -3364,6 +3364,13 @@ class HandleTypes extends HandleTypesEval {
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		return y;
 	}
+	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
+	D_ThumbnailOverlay_NavEP(x) {
+		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x); 
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		let k=this.get_keys_of(x);
+		k.pop()==="";
+	}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
@@ -3371,7 +3378,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(menu);
 		this.G_Text(title);
 		this.videoId(videoId);
-		this.E_Watch(navigationEndpoint);
+		this.D_ThumbnailOverlay_NavEP(navigationEndpoint);
 		this.D_Thumbnail(thumbnail);
 		this.G_Text(longBylineText);
 		this.G_Text(shortBylineText);
