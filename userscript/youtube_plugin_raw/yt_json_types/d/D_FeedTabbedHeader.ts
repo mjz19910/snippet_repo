@@ -1,1 +1,0 @@
-type D_FeedTabbedHeader={title: G_Text;};

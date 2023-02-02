@@ -1,1 +1,0 @@
-type D_AnySaved={[U in D_SD_UrlTypes]?: GD_SD_Item;};

@@ -1,1 +1,0 @@
-type D_LiveBroadcastingBadge={liveBroadcasting: boolean;};

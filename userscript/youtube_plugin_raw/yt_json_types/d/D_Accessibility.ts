@@ -1,1 +1,0 @@
-type D_Accessibility={accessibilityData: D_Label;};

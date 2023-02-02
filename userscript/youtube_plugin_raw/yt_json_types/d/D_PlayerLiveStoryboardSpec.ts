@@ -1,1 +1,0 @@
-type D_PlayerLiveStoryboardSpec={spec: string;};

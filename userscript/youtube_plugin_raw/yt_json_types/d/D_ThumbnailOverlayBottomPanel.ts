@@ -1,1 +1,0 @@
-type D_ThumbnailOverlayBottomPanel={icon: T_Icon<"MIX">;};

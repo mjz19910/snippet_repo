@@ -1,1 +1,0 @@
-type D_ThumbnailOverlayToggleButton=D_ThumbnailOverlayToggleButton_1|D_ThumbnailOverlayToggleButton_2;

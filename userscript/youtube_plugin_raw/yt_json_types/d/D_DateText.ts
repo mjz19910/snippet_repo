@@ -1,1 +1,0 @@
-type D_DateText={dateText: G_Text;};

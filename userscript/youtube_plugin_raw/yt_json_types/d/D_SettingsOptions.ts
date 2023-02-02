@@ -1,1 +1,0 @@
-type D_SettingsOptions={options: G_SettingsOptionItem[];title: G_Text;};

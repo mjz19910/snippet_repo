@@ -1,1 +1,0 @@
-type D_TwoColumnSearchResults={primaryContents: R_SectionList;};

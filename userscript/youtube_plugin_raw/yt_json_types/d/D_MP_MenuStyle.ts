@@ -1,1 +1,0 @@
-type D_MP_MenuStyle={style: DE_MP_MenuStyle;};

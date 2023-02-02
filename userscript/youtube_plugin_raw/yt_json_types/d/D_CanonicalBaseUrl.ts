@@ -1,1 +1,0 @@
-type D$CanonicalBaseUrl={canonicalBaseUrl: string;};

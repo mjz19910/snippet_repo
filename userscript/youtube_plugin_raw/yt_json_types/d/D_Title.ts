@@ -1,1 +1,0 @@
-type D_Title={title: G_Text;};

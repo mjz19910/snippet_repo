@@ -1,1 +1,0 @@
-type D_ViewCount={viewCount: R_VideoViewCount;};

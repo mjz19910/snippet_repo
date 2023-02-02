@@ -1,1 +1,0 @@
-type ChanLoc=`channel.${ChanTabStr|""}`;

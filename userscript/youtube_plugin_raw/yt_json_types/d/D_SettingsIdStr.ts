@@ -1,1 +1,0 @@
-type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;

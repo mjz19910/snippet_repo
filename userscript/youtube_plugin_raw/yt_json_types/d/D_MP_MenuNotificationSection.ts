@@ -1,1 +1,0 @@
-type D_MP_MenuNotificationSection={trackingParams: string;items: GR_MP_MenuNotificationSection_Item[];};

@@ -1,1 +1,0 @@
-type D_LoggingUrl={baseUrl: string;};

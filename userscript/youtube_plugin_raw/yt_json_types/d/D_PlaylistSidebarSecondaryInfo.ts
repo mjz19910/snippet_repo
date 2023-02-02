@@ -1,1 +1,0 @@
-type D_PlaylistSidebarSecondaryInfo={videoOwner: R_VideoOwner;};

@@ -1,1 +1,0 @@
-type D_MP_Menu_Sections_Items=D_MP_Menu_Section[keyof D_MP_Menu_Section];

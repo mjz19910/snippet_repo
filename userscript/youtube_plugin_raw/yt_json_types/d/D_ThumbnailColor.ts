@@ -1,1 +1,0 @@
-type D_ThumbnailColor=D_Color;

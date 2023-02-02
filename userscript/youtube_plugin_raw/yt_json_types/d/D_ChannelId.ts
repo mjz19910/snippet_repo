@@ -1,1 +1,0 @@
-type ChannelId=`UC${string}`;
