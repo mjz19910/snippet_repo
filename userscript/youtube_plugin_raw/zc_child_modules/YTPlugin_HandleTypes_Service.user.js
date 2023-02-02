@@ -8561,6 +8561,7 @@ class HandleTypes extends HandleTypesEval {
 	D_LightColorPalette(x) {const cf="D_LightColorPalette"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(x) {const cf="D_DarkColorPalette"; this.codegen_typedef_all(cf,x);}
+	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
