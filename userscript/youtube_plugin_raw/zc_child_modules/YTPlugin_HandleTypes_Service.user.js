@@ -51,6 +51,10 @@ class FakeUseHandleEval {
 }
 FakeUseHandleEval;
 //#endregion
+//#region Constants
+/** @type {{value:TypedefGenerator|null}} */
+const generate_typedef={value: null};
+//#endregion
 //#region HandleTypesEval
 /** @arg {TemplateStringsArray} x */
 function raw_template(x) {
@@ -8586,8 +8590,6 @@ class TypedefGenerator {
 		return null;
 	}
 }
-/** @type {{value:TypedefGenerator|null}} */
-const generate_typedef={value: null};
 //#endregion
 init_module();
 //#endregion
