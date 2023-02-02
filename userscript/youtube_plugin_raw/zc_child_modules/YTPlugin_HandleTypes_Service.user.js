@@ -1139,7 +1139,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection";
-		const {content: a,trackingParams: b,fullBleed,...y}=x; this.g(y);
+		const {content: a,trackingParams: b,fullBleed}=this.s(cf,x);/* this.g(y);//#destructure*/
 		this.G_RichSection(a);
 		this.trackingParams(cf,b);
 		if(fullBleed!==false) debugger;
@@ -1392,12 +1392,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
 		const {sendPost,apiUrl}=this.s(cf,x);/* this.g(y);//#destructure*/
+		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
 	/** @protected @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		if(x.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		const cf="GM_EditPlaylist";
+		const {sendPost,apiUrl}=this.s(cf,x);/* this.g(y);//#destructure*/
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
 		this.GM_WC(x);
 	}
 	/** @private @arg {GM_GetSharePanel} x */
@@ -1777,7 +1780,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @type {string[]} */
 	Button_missing_iconType=[];
 	/** @private @private @arg {any} z @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
-	D_Button_Omit_TP(cf,x,dc=true,z=null) {if(dc) {const {trackingParams,...y}=this.s(cf,x); z=y;} else {const {trackingParams,...y}=x; this.trackingParams(cf,trackingParams); z=y;} return z;}
+	D_Button_Omit_TP(cf,x,dc=true,z=null) {if(dc) {const {trackingParams,...y}=this.s(cf,x); z=y;} else {const {trackingParams,...y}=this.s(cf,x);/*@omit*/ this.trackingParams(cf,trackingParams); z=y;} return z;}
 	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x) {
 		let k=`${cf}:${k_arg}`;
@@ -5519,6 +5522,8 @@ class HandleTypes extends HandleTypesEval {
 	GM_CreateBackstagePost(x) {
 		const cf="GM_CreateBackstagePost";
 		const {sendPost,apiUrl}=this.s(cf,x);/* this.g(y);//#destructure*/
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/backstage/create_post") debugger;
 	}
 	/** @private @arg {DC_Executor} x */
 	DC_Executor(x) {this.T_Commands("DC_Executor",x,this.AC_Executor);}
@@ -6230,7 +6235,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
-		const {trackingParams,...y}=x;
+		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
 		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
 		return this.w_priv("items",y);
 	}
@@ -6618,6 +6623,11 @@ class HandleTypes extends HandleTypesEval {
 	D_HeroPlaylistThumbnail(x) {
 		const cf="D_HeroPlaylistThumbnail";
 		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays}=this.s(cf,x);/* this.g(y);//#destructure*/
+		thumbnail;
+		maxRatio;
+		trackingParams;
+		onTap;
+		thumbnailOverlays;
 	}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
@@ -6641,6 +6651,7 @@ class HandleTypes extends HandleTypesEval {
 	AD_AddToGuideSection(x) {
 		const cf="AD_AddToGuideSection";
 		const {handlerData,items}=this.s(cf,x);/* this.g(y);//#destructure*/
+		handlerData,items;
 	}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
@@ -6692,11 +6703,13 @@ class HandleTypes extends HandleTypesEval {
 	D_ClipCreationTextInput(x) {
 		const cf="D_ClipCreationTextInput";
 		const {placeholderText,maxCharacterLimit}=this.s(cf,x);/* this.g(y);//#destructure*/
+		placeholderText,maxCharacterLimit;
 	}
 	/** @private @arg {D_ClipAdState} x */
 	D_ClipAdState(x) {
 		const cf="D_ClipAdState";
 		const {title,body}=this.s(cf,x);/* this.g(y);//#destructure*/
+		title,body;
 	}
 	/** @private @arg {D_ClipCreationScrubber} x */
 	D_ClipCreationScrubber(x) {
@@ -6801,6 +6814,7 @@ class HandleTypes extends HandleTypesEval {
 	D_TranscriptSegmentList(x) {
 		const cf="D_TranscriptSegmentList";
 		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled}=this.s(cf,x);/* this.g(y);//#destructure*/
+		initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled;
 	}
 	static {/*remove_this_static*/this.prototype.C_RepeatChapter;}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
@@ -6939,6 +6953,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ActionSetPlaylistVideoOrder(x) {
 		const cf="D_ActionSetPlaylistVideoOrder";
 		const {title,selected,continuation,serviceEndpoint,accessibility,trackingParams}=this.s(cf,x);/* this.g(y);//#destructure*/
+		title,selected,continuation,serviceEndpoint,accessibility,trackingParams;
 	}
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
@@ -7343,16 +7358,22 @@ class HandleTypes extends HandleTypesEval {
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement";
 		const {text,trackingParams}=this.s(cf,x);/* this.g(y);//#destructure*/
+		text;
+		trackingParams;
 	}
 	/** @private @arg {D_ThumbnailOverlayHoverText} x */
 	D_ThumbnailOverlayHoverText(x) {
 		const cf="D_ThumbnailOverlayHoverText";
 		const {text,icon}=this.s(cf,x);/* this.g(y);//#destructure*/
+		text;
+		icon;
 	}
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
 	D_ThumbnailOverlaySidePanel(x) {
 		const cf="D_ThumbnailOverlaySidePanel";
 		const {text,icon}=this.s(cf,x);/* this.g(y);//#destructure*/
+		text;
+		icon;
 	}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
 	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon("D_Icon_Mix",x,"MIX"));}
@@ -7451,11 +7472,19 @@ class HandleTypes extends HandleTypesEval {
 	D_TextInputFormField(x) {
 		const cf="D_TextInputFormField";
 		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required}=this.s(cf,x);/* this.g(y);//#destructure*/
+		label;
+		maxCharacterLimit;
+		placeholderText;
+		validValueRegexp;
+		invalidValueErrorMessage;
+		required;
 	}
 	/** @private @arg {D_Dropdown_Privacy} x */
 	D_Dropdown(x) {
 		const cf="D_Dropdown";
 		const {entries,label}=this.s(cf,x);/* this.g(y);//#destructure*/
+		entries;
+		label;
 	}
 	/** @private @arg {D_PlaylistAddToOption} x */
 	D_PlaylistAddToOption(x) {
@@ -7536,6 +7565,9 @@ class HandleTypes extends HandleTypesEval {
 	D_Factoid(x) {
 		const cf="D_Factoid";
 		const {value,label,accessibilityText}=this.s(cf,x);/* this.g(y);//#destructure*/
+		value;
+		label;
+		accessibilityText;
 	}
 	/** @private @arg {D_HorizontalCardList} x */
 	D_HorizontalCardList(x) {
@@ -7584,6 +7616,8 @@ class HandleTypes extends HandleTypesEval {
 	D_PdgCommentOption(x) {
 		const cf="D_PdgCommentOption";
 		const {commentText,chipRenderer}=this.s(cf,x);/* this.g(y);//#destructure*/
+		commentText;
+		chipRenderer;
 	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
@@ -7592,6 +7626,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_SectionList_SearchFeed";
 		const {trackingParams,targetId,contents}=this.s(cf,x);/* this.g(y);//#destructure*/
 		this.trackingParams(cf,trackingParams);
+		targetId;
+		contents;
 	}
 	/** @private @arg {D_PrimaryLinkItem} x */
 	D_PrimaryLinkItem(x) {

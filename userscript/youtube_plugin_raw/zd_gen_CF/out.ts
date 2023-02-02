@@ -439,6 +439,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichListHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadataRow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RunAttestation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SearchBox";}
@@ -516,6 +517,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AddToPlaylistService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreateBackstagePost";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreatePlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_EditPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_Feedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_FlagGetForm";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_GetNotificationMenu";}
