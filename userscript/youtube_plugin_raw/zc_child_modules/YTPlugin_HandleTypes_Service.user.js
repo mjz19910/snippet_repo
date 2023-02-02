@@ -382,6 +382,19 @@ class HandleTypes extends HandleTypesEval {
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "_level_2": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "_level_1": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
 			case "url": {
 				const idx=2;
 				switch(parts[1]) {
