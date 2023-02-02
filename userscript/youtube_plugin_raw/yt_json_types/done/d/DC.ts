@@ -22,7 +22,8 @@ type DC_ReloadContinuationItems={
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 	targetId: "comments-section";
 	continuationItems: R_CommentsHeader[];
-}; type DC_AdsControlFlowOpportunityReceived={
+};
+type DC_AdsControlFlowOpportunityReceived={
 	opportunityType: DE_OpportunityType;
 	adSlotAndLayoutMetadata?: D_AdSlotAndLayoutItem[];
 	isInitialLoad: boolean;

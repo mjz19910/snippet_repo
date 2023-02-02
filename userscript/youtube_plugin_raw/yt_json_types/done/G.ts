@@ -178,7 +178,8 @@ type G_ChatItem=[
 	R_LiveChatTextMessage,
 	R_LiveChatPlaceholderItem,
 	R_LiveChatViewerEngagementMessage,
-][number]; type G_CodecType=[
+][number];
+type G_CodecType=[
 	G_CodecTypeStr,
 	T_SplitOnce<G_GenericCodecType,".">[0]
 ][number];
