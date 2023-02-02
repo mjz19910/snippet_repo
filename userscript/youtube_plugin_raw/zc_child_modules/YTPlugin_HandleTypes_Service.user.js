@@ -1892,6 +1892,20 @@ class HandleTypes extends HandleTypesEval {
 			case 83769: return this.GM_VE83769_WC(x);
 		}
 	}
+	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
+	GM_WC_Ex(x) {
+		switch(x.rootVe) {
+			case 3854: return this.GM_VE3854_WC(x);
+			case 3611: return this.GM_VE3611_WC(x);
+			case 5754: return this.GM_VE5754_WC(x);
+			case 6827: return this.GM_VE6827_WC(x);
+			case 11487: return this.GM_VE11487_WC(x);
+			case 23462: return this.GM_VE23462_WC(x);
+			case 42352: return this.GM_VE42352_WC(x);
+			case 96368: return this.GM_VE96368_WC_browse(x);
+			default: x===0; debugger; break;
+		}
+	}
 	/** @private @arg {GM_VE23462_WC} x */
 	GM_VE23462_WC(x) {
 		const cf="GM_VE23462_WC"; this.k(cf,x);
@@ -1913,20 +1927,6 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==96368) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
-	GM_WC_Ex(x) {
-		switch(x.rootVe) {
-			case 3854: return this.GM_VE3854_WC(x);
-			case 3611: return this.GM_VE3611_WC(x);
-			case 5754: return this.GM_VE5754_WC(x);
-			case 6827: return this.GM_VE6827_WC(x);
-			case 11487: return this.GM_VE11487_WC(x);
-			case 23462: return this.GM_VE23462_WC(x);
-			case 42352: return this.GM_VE42352_WC(x);
-			case 96368: return this.GM_VE96368_WC_browse(x);
-			default: x===0; debugger; break;
-		}
 	}
 	/** @private @arg {GM_VE11487_WC} x */
 	GM_VE11487_WC(x) {
