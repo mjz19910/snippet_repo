@@ -529,8 +529,8 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===3) {
 					if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 					if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
-					if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
 					if(map_entry_value instanceof Map) return;
+					if(this.is_bigint(map_entry_value)) return this.handle_bigint(path,map_entry_value);
 					switch(map_entry_value) {default: debugger; return;}
 				}
 				switch(parts[3]) {
