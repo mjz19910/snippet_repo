@@ -2460,7 +2460,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		/** @private @arg {{type:string}} x */
 		let g=x => {return this.save_string("[need_api_type]",x.type);};
-		switch(x.type) {	case "_Generic": return g(x);}
+		switch(x.type) {case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
 		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
@@ -2599,7 +2599,8 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string("GetSurvey.action",action);
 		switch(action) {
 			default: debugger; break;
-			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;}
+			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
+		}
 		this.D_GetSurvey_Endpoint(a);
 	}
 	/** @private @arg {DC_GetSurvey['endpoint']} x */
@@ -3800,7 +3801,7 @@ class HandleTypes extends HandleTypesEval {
 							break;
 						case 3: {
 							let playlist_id=this._decoder.decode(r[2]);
-							if(this.str_starts_with_rx("RD",playlist_id)) {	this.playlistId(playlist_id);} else if(this.str_starts_with_rx("PL",playlist_id)) {	this.playlistId(playlist_id);} else {console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);}
+							if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id);} else if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id);} else {console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);}
 						} break;
 					}
 				}
@@ -3868,7 +3869,7 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length===1) return;
 		switch(x.length) {
 			case 2: {if(x[1]!=="") debugger;} break;
-			case 3: {if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;}} break;
+			case 3: {if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;} } break;
 			case 4: {
 				if(x[1]!=="channel") {debugger; return;}
 				if(x[2]==="UC") {
@@ -4472,6 +4473,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.z(x2,this.R_ConfirmDialog);
 	}
+	generate_typedef=new TypedefGenerator;
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
 		const cf="D_ConfirmDialog";
@@ -5189,7 +5191,7 @@ class HandleTypes extends HandleTypesEval {
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		this.codegen_typedef_all(cf,x);
 	}
-	static {	this.prototype.MC_ResolveUrl;}
+	static {this.prototype.MC_ResolveUrl;}
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
 		const cf="MC_ResolveUrl";
@@ -8554,6 +8556,21 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
 	//#endregion
+}
+class TypedefGenerator {
+	/** @arg {HandleTypes<LoadAllServices, ServiceOptions>} h @arg {Popup_ConfirmDialog} x */
+	popup_dialog(h,x) {
+		x;
+		let x1=h.unpack_popup_dialog(x);
+		if(!x1[0]) {debugger; return null;}
+		let dialog=x1[1];
+		if(dialog.confirmDialogRenderer) {
+			return "TYPE::Popup_ConfirmDialog";
+		} else {
+			debugger;
+		}
+		return null;
+	}
 }
 //#endregion
 init_module();

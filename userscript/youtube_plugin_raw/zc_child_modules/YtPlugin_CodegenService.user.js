@@ -224,7 +224,7 @@ class CodegenService extends BaseService {
 			return "TYPE::string";
 		}
 		let u_ty_count=[...new Set(o.split("").sort())].join("").length;
-		if(o.includes("%")) {if(u_ty_count>13) {return "TYPE::string";}}
+		if(o.includes("%")) {if(u_ty_count>13) {return "TYPE::string";} }
 		if(k1=="trackingParams") return "TYPE::string";
 		if(k1=="clickTrackingParams") return "TYPE::string";
 		if(k1=="playlistId") {
@@ -363,31 +363,22 @@ class CodegenService extends BaseService {
 		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
 			let pi=state.parent_map.get(x);
 			if(!pi) break x;
-			if(pi[1]==="owner") {	return "TYPE::D_Video_Owner";}
+			if(pi[1]==="owner") {return "TYPE::D_Video_Owner";}
 			console.log(pi);
 			debugger;
 		}
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
-		if(x.popup&&x.popupType) {
+		{
 			/** @type {Partial<Popup_ConfirmDialog>} */
 			let xt=x;
 			if(xt.popup&&xt.popupType) {
 				/** @type {Popup_ConfirmDialog} */
-				let xr={popup:xt.popup,popupType:xt.popupType};
-				if(!this.is_normal_service(this)) throw new Error("Not a normal service instance");
-				let up=this.x.get("handle_types").unpack_popup_dialog(xr);
-				if(up[0]) {
-					let dialog=up[1];
-					if(dialog.confirmDialogRenderer) {
-						return "TYPE::Popup_ConfirmDialog";
-					} else {
-						debugger;
-					}
-				}
+				let xr={popup: xt.popup,popupType: xt.popupType};
+				let ht=this.x.get("handle_types");
+				return ht.generate_typedef.popup_dialog(ht,xr);
 			}
-			debugger;
 		}
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		{debugger;}
@@ -963,7 +954,7 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {string[]} res @arg {string} k1 @arg {string} x */
 	generate_code_for_string(res,k1,x) {
-		if(k1==="playlistId") {if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);}}
+		if(k1==="playlistId") {if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);} }
 		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`); return;}
 		let x2=x;
 		let ret_arr=res;
