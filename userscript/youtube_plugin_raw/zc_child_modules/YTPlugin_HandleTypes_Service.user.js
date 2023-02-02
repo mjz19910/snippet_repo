@@ -238,7 +238,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log("[parse_value.new_path_gen]",path);
 			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n\n\tcase "${path}": switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+			console.log(`\n\n\tcase "${path}": switch(map_entry_key) {\n${map_keys.map(e => `case ${e}:`).join(" ")}\n\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\tdefault: new_ns(); debugger; return;\n}\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
@@ -277,21 +277,34 @@ class HandleTypes extends HandleTypesEval {
 				}
 			} break;
 			case 2: {
-				switch(map_entry_key_path[0]) {
+				switch(t_pt[0]) {
 					default: debugger; return;
-					case 40: switch(map_entry_key_path[1]) {
+					case 40: switch(t_pt[1]) {
 						case 1: {
-							let [k1,k2]=map_entry_key_path;
+							let [k1,k2]=t_pt;
 							const rk=this.exact_arr(k1,k2);
 							this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
 						}
 					} break;
 				}
 			} break;
+			case 3: {
+				switch(t_pt[0]) {
+					default: debugger; return;
+					case 40:
+				}
+				if(t_pt[1]!==1) debugger;
+				switch(t_pt[2]) {
+					default: debugger; return;
+					case 2: case 3:
+				}
+				this.on_player_params_callback_ty(map_entry_values,t_pt,path,map_keys,root);
+			}
 		}
-		/** @type {[8]} */
-		let k=as(map_entry_key_path);
-		this.on_player_params_callback_ty(map_entry_values,k,path,map_keys,root);
+	}
+	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
+	fmt_arr(x) {
+		return as(x.map(v=>`${v}`).join(".f"));
 	}
 	/**
 	 * @template {"DE_VE3832_Watch"} T
@@ -303,29 +316,19 @@ class HandleTypes extends HandleTypesEval {
 		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) {debugger; return;}
 		switch(map_entry_key_path.length) {
-			case 2: switch(path) {
-				case "watch.player_params.f40": {
-					switch(map_entry_key_path[1]) {
-						default: debugger; return;
-						case 1: break;
-					}
-					let map_entry_key=map_entry_key_path[1];
-					this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-					this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
-				} return;
+			case 3: {
+				let v_arr=this.fmt_arr(map_entry_key_path);
+				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
+				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
+			} break;
+			case 2: {
+				let v_arr=this.fmt_arr(map_entry_key_path);
+				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
+				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 			case 1: {
-				let map_entry_key=map_entry_key_path[0];
-				if(!map_entry_key) {debugger; return;}
-				switch(path) {
-					default: debugger; return;
-					case "watch.player_params": break;
-				}
-				switch(map_entry_key) {
-					default: map_entry_key===0; debugger; return;
-					case 8: case 9: case 12: case 25: case 40:
-				}
-				this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				let v_arr=this.fmt_arr(map_entry_key_path);
+				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 		}
@@ -357,6 +360,10 @@ class HandleTypes extends HandleTypesEval {
 				debugger;
 				/** @private @type {P_ParamParse} */
 				return;
+			}
+			case "D_Browse.param.f110.f1": switch(map_entry_key) {
+				case 19: case 20:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;
 			}
 			case "D_Browse.param.f110": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param": switch(map_entry_key) {case 84: case 93: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -545,7 +552,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f1[]": case "f2": case "f3":
+					case "f1": case "f1[]": case "f2": case "f3": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
@@ -1871,7 +1878,9 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_NotificationOptOut";
 		const {optOutText: a,serializedOptOut: b,serializedRecordInteractionsRequest: c,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(a);
-		this.params(cf,"notification.opt_out",b);
+		let un_b=atob(b);
+		let no_uri_b=decodeURIComponent(un_b);
+		this.params(cf,"notification.opt_out",no_uri_b);
 		this.params(cf,"notification.record_interactions",c);
 	}
 	/** @private @arg {DE_SignalNavigation} x */
