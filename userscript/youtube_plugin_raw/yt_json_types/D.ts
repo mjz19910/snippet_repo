@@ -2807,24 +2807,41 @@ type C_CommandExecutor={
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 
-type D_ToggleButton={
-	style: T_StyleType<"STYLE_TEXT">;
-	isToggled: false;
-	isDisabled: false;
-	defaultIcon: T_Icon<"LIKE"|"DISLIKE"|"LOOP">;
-	defaultText: G_Text;
-	defaultServiceEndpoint: C_CommandExecutor;
-	toggledText: G_Text;
-	toggledServiceEndpoint: E_Like;
-	accessibility: D_Label;
-	trackingParams: string;
-	defaultTooltip: string;
-	toggledTooltip: string;
-	toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
-	accessibilityData: D_Accessibility;
-	toggleButtonSupportedData: D_ToggleButtonIdData;
-	targetId: "watch-like"|"watch-dislike";
-};
+type D_ToggleButton=
+	|{
+		style: T_StyleType<"STYLE_TEXT">;
+		isToggled: false;
+		isDisabled: false;
+		defaultIcon: T_Icon<"DISLIKE">;
+		defaultServiceEndpoint: C_CommandExecutor;
+		toggledServiceEndpoint: E_Like;
+		accessibility: TD_Label<"Dislike this video">;
+		trackingParams: string;
+		defaultTooltip: "I dislike this";
+		toggledTooltip: "I dislike this";
+		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
+		accessibilityData: TD_Accessibility<"Dislike this video">;
+		toggleButtonSupportedData: D_ToggleButtonIdData;
+		targetId: "watch-dislike";
+	}
+	|{
+		style: T_StyleType<"STYLE_TEXT">;
+		isToggled: false;
+		isDisabled: false;
+		defaultIcon: T_Icon<"LIKE"|"DISLIKE"|"LOOP">;
+		defaultText: G_Text;
+		defaultServiceEndpoint: C_CommandExecutor;
+		toggledText: G_Text;
+		toggledServiceEndpoint: E_Like;
+		accessibility: D_Label;
+		trackingParams: string;
+		defaultTooltip: string;
+		toggledTooltip: string;
+		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
+		accessibilityData: D_Accessibility;
+		toggleButtonSupportedData: D_ToggleButtonIdData;
+		targetId: "watch-like"|"watch-dislike";
+	};
 type D_ToggleButtonText={
 	defaultText: G_Text;
 	toggledText: G_Text;

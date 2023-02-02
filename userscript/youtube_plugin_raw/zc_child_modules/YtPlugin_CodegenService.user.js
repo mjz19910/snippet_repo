@@ -498,7 +498,7 @@ class CodegenService extends BaseService {
 			let real_val=split_string_once_last(type_name,"Renderer")[0];
 			return `R_${real_val}`;
 		}
-		return type_name;
+		return `D_${type_name}`;
 	}
 	/** @param {{[U in string]:unknown}} x */
 	json_auto_replace(x) {
