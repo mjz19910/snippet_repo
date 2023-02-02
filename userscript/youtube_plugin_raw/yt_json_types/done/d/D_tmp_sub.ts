@@ -84,34 +84,30 @@ type D_Playlist_MD={
 	androidAppindexingLink: string;
 	iosAppindexingLink: string;
 };
-type R_RichMetadata={
-	richMetadataRenderer:
-	|{
-		style: "RICH_METADATA_RENDERER_STYLE_BOX_ART";
-		thumbnail: D_Thumbnail;
-		title: G_Text;
-		subtitle: G_Text;
-		callToAction: G_Text;
-		callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
-		endpoint: GE_Browse;
-		trackingParams: string;
-	}
-	|{
-		style: "RICH_METADATA_RENDERER_STYLE_TOPIC";
-		thumbnail: D_Thumbnail;
-		title: G_Text;
-		callToAction: G_Text;
-		callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
-		endpoint: GE_Browse;
-		trackingParams: string;
-	};
+type D_RichMetadata={
+	style: "RICH_METADATA_RENDERER_STYLE_BOX_ART";
+	thumbnail: D_Thumbnail;
+	title: G_Text;
+	subtitle: G_Text;
+	callToAction: G_Text;
+	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
+	endpoint: GE_Browse;
+	trackingParams: string;
+}|{
+	style: "RICH_METADATA_RENDERER_STYLE_TOPIC";
+	thumbnail: D_Thumbnail;
+	title: G_Text;
+	callToAction: G_Text;
+	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
+	endpoint: GE_Browse;
+	trackingParams: string;
 };
-type R_RichMetadataRow={
-	richMetadataRowRenderer: {
-		contents: R_RichMetadata[];
-		trackingParams: string;
-	};
+
+type D_RichMetadataRow={
+	contents: R_RichMetadata[];
+	trackingParams: string;
 };
+
 type DMD_RowContainer={
 	rows?: R_RichMetadataRow[];
 	collapsedItemCount: number;

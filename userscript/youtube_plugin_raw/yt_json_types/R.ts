@@ -15,4 +15,6 @@ type R_PageTopAdLayout={pageTopAdLayoutRenderer: D_PageTopAdLayout;};
 type R_FulfilledLayout={fulfilledLayout: R_FulfilledLayoutContent|R_FulfillmentLayoutContent;};
 type R_FulfilledLayoutContent=R_PageTopAdLayout;
 type R_FulfillmentLayoutContent=R_InFeedAdLayout;
+type R_RichMetadataRow={richMetadataRowRenderer: D_RichMetadataRow;};
+type R_RichMetadata={richMetadataRenderer: D_RichMetadata;};
 //#endregion
