@@ -439,7 +439,7 @@ type D_ActionCompanionAd={
 	bannerImage: D_ThumbnailsList;
 	navigationEndpoint: {};
 	trackingParams: string;
-	adInfoRenderer: RL$ActionCompanionAdInfo;
+	adInfoRenderer: RL_ActionCompanionAdInfo;
 	adVideoId: string;
 	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: D_AdLayoutLoggingData;
@@ -2483,7 +2483,7 @@ type D_ResourceStatusInResponseCheck={
 type D_ResponsePageUrlList=[
 	`/${G_SettingsEndpointPages}`
 ];
-type Todo_D_RichGrid=Record<"contents",R_RendererContentItem[]>&{masthead: R_VideoMastheadAdV3;};
+type Todo_D_RichGrid=Record<"contents",G_RendererContentItem[]>&{masthead: R_VideoMastheadAdV3;};
 type D_RichGrid={
 	contents: G_RichGridContent[];
 	trackingParams: string;
@@ -2879,7 +2879,6 @@ type D_TopbarMenuButton_MenuItem={
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 };
-type R_TopbarMenu=TR_MultiPageMenu<D_TopbarMenuButton_MenuItem>;
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
 	menuRenderer: R_TopbarMenu;
@@ -3251,3 +3250,11 @@ type D_Button_With_TargetId=
 	;
 ;
 //#endregion
+type D_ThumbnailsList={thumbnail: D_Thumbnail; trackingParams?: string;};
+
+type D_Thumbnail={
+	thumbnails: D_ThumbnailItem[];
+	accessibility?: D_Accessibility;
+	isOriginalAspectRatio?: true;
+	sampledThumbnailColor?: D_ThumbnailColor;
+};
