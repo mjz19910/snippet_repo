@@ -7937,7 +7937,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log("[parse_value.new_path_gen]",path);
 			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n\n\tcase "${path}":switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_value); default: new_ns(); debugger; return;}\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+			console.log(`\n\n\tcase "${path}":switch(map_entry_key) {${map_keys.map(e => `case ${e}:`).join(" ")} return this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}\n`.split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
@@ -8008,6 +8008,8 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse_XX} */
 				return;
 			}
+
+			case "get_report_form.f28":switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form": switch(map_entry_key) {
