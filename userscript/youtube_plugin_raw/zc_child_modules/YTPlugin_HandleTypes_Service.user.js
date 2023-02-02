@@ -4473,7 +4473,6 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.z(x2,this.R_ConfirmDialog);
 	}
-	generate_typedef=new TypedefGenerator;
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
 		const cf="D_ConfirmDialog";
@@ -8555,6 +8554,9 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`[${path}]`,x[1]);
 		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
+	get generate_typedef() {
+		return generate_typedef;
+	}
 	//#endregion
 }
 class TypedefGenerator {
@@ -8571,6 +8573,7 @@ class TypedefGenerator {
 		return null;
 	}
 }
+const generate_typedef=new TypedefGenerator;
 //#endregion
 init_module();
 //#endregion
