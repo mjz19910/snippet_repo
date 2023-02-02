@@ -1181,3 +1181,14 @@ type D_GuideEntry_IconType_Obj={
 type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1:1}|"";
 //#endregion
 type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|`PL${string}`;};
+// TODO: #13 Get type for D_FeedNudge
+type D_FeedNudge={
+	lightIconImage: D_Thumbnail;
+	title: G_Text;
+	subtitle: G_Text;
+	dismissButton: R_Button;
+	impressionEndpoint: E_Feedback;
+	trackingParams: string;
+	style: "FEED_NUDGE_STYLE_CHIP";
+	contents: R_ChipCloudChip[];
+};

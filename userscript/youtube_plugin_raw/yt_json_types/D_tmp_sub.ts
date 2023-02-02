@@ -540,8 +540,7 @@ type D_Factoid={
 	value: G_Text;
 	label: G_Text;
 	accessibilityText: string;
-};// TODO: #13 Get type for D_FeedNudge
-type D_FeedNudge={};
+};
 type D_FeedTabbedHeader={title: G_Text;};
 type D_FeedbackResponseItem=D_FeedbackResponseProcessedStatus;
 type D_FeedbackResponseProcessedStatus={isProcessed: true;};
