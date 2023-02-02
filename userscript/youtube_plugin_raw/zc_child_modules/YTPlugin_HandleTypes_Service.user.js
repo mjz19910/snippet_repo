@@ -406,7 +406,7 @@ class HandleTypes extends HandleTypesEval {
 				const idx=2;
 				switch(parts[1]) {
 					default: u(idx); debugger; parts[1]===""; break;
-					case "redir_token": {
+					case "redir_token[0]": case "redir_token[1]": {
 						const idx=3;
 						if(parts.length===2) {
 							switch(map_entry_value) {default: debugger; return;}
