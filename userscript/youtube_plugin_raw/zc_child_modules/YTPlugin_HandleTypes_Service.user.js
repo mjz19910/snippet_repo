@@ -2394,6 +2394,7 @@ class HandleTypes extends HandleTypesEval {
 		console.group(`-- [${cf}.gen_result] --`);
 		console.log("\n%s",all_types);
 		console.groupEnd();
+		{debugger;}
 	}
 	static {this.prototype.D_Button_SE;}
 	/** @private @arg {D_Button_SE} x */
