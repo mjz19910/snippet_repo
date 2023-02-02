@@ -20,6 +20,8 @@ type P_PathRootStr=
 	|"next_radio.continuation"
 	|"next.continuation"
 	|"next.queue_context_params"
+	|"notification.opt_out"
+	|"notification.record_interactions"
 	|"playlist_edit.params"
 	|"record_notification_interactions"
 	|"reel.params"

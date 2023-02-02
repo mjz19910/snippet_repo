@@ -2368,7 +2368,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(u);}
 	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.DE_NotificationOptOut(b); this.M_Empty_WCM(u);}
+	E_NotificationOptOut(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,u);}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
@@ -2404,6 +2404,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_ShareEntityService";
 		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
 		let [u1,y1]=this.z(b,x => this.TA_OpenPopup(cf,x));
+		this.z(y1,x => {if(x!==void 0) debugger;});
 		this.z(u1,this.Popup_ShareEntityService);
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
