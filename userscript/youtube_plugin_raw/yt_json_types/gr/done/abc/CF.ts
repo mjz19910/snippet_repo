@@ -40,11 +40,11 @@ type CF_L_Params=
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
 type CF_T_GM_gen=T_ExtractImport<"CF_T_GM">;
 type CF_Common=
-	|CF_D_GuideEntry
-	|CF_D_ChipCloudChip_Omit
-	|CF_D_Menu_Omit
-	|CF_D_Link
 	|CF_D_Button
+	|CF_D_ChipCloudChip_Omit
+	|CF_D_GuideEntry
+	|CF_D_Link
+	|CF_D_Menu_Omit
 	;
 ;
 type CF_M_s=
