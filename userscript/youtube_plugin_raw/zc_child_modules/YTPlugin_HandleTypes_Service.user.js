@@ -1447,6 +1447,11 @@ class HandleTypes extends HandleTypesEval {
 		if(code) return console.log(`-- [js_gen_code:user_code:${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
 		console.log(`-- [js_gen_code:no_code:${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
 	}
+	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
+	codegen_case_key(cf,obj,key,code) {
+		let val=obj[key];
+		this.codegen_case(cf,val,code);
+	}
 	/** @private @arg {DE_SignalNavigation} x */
 	DE_SignalNavigation(x) {
 		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x);
@@ -1508,7 +1513,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
 			case "FEguide_builder": case "FEstorefront": case "FEhashtag": break;
-			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history": 
+			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
 			case "SPaccount_overview": break;
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId.${ve_name}] --\n\n\ncase "${x}":`); break;
 		};
@@ -7238,15 +7243,28 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_RichMetadata["richMetadataRenderer"]} x */
 	D_RichMetadata(x) {
 		const cf="D_RichMetadata";
-		const {style,thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
-		if(style!=="RICH_METADATA_RENDERER_STYLE_BOX_ART") debugger;
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(title);
-		this.G_Text(subtitle);
-		this.G_Text(callToAction);
-		this.T_Icon(cf,callToActionIcon,"CHEVRON_RIGHT");
-		if(!endpoint.browseEndpoint) debugger;
-		this.GE_Browse(endpoint);
+		switch(x.style) {
+			default: this.codegen_case_key(cf,x,"style","break"); break;
+			case "RICH_METADATA_RENDERER_STYLE_BOX_ART": {
+				const {style,thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+				this.D_Thumbnail(thumbnail);
+				this.G_Text(title);
+				this.G_Text(subtitle);
+				this.G_Text(callToAction);
+				this.T_Icon(cf,callToActionIcon,"CHEVRON_RIGHT");
+				if(!endpoint.browseEndpoint) debugger;
+				this.GE_Browse(endpoint);
+			} break;
+			case "RICH_METADATA_RENDERER_STYLE_TOPIC": {
+				const {style,thumbnail,title,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);
+				this.D_Thumbnail(thumbnail);
+				this.G_Text(title);
+				this.G_Text(callToAction);
+				this.T_Icon(cf,callToActionIcon,"CHEVRON_RIGHT");
+				if(!endpoint.browseEndpoint) debugger;
+				this.GE_Browse(endpoint);
+			} break;
+		}
 	}
 	/** @private @arg {R_RichMetadata} x */
 	R_RichMetadata(x) {
@@ -7259,7 +7277,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!x.contents) debugger;
 		if(!x.trackingParams) debugger;
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.z(contents,this.R_RichMetadata)
+		this.z(contents,this.R_RichMetadata);
 	}
 	/** @private @arg {R_RichMetadataRow} x */
 	R_RichMetadataRow(x) {
