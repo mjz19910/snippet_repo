@@ -5034,7 +5034,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {reelPlayerHeaderSupportedRenderers,nextItemButton,prevItemButton,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
-		this.R_Menu(menu);
 		this.R_Button(nextItemButton);
 		this.R_Button(prevItemButton);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
