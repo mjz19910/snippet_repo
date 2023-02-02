@@ -128,10 +128,11 @@ const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 ECatcherService.known_experiments.push(...(() => {
 	/** @type {[number,number[]][]} */
 	const arr=[
-		[1,[24455878]],
 		[2,[24281897,24448383,24458839]],
 		[3,[24441239,24451434]],
+		[1,[24455878]],
 		[4,[24458634]],
+		[5,[24450366]],
 	];
 	return arr.map(e => e[1]);
 })().flat());
