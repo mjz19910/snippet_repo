@@ -4844,8 +4844,13 @@ class HandleTypes extends HandleTypesEval {
 						case "product_shelf": break;
 					}
 					let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
-					this.params(cf,"url.redir_token",redir_token);
-					console.log("[E_Url.TargetUrl.search_params]",query_search);
+					let redir_parts=split_string_once(atob(redir_token),"|");
+					if(redir_parts.length===1) {debugger;return;}
+					let [p1,p2]=redir_parts;
+					this.params(cf,"url.redir_token[0]",p1);
+					this.params(cf,"url.redir_token[1]",p2);
+					console.log("[E_Url.TargetUrl.search_params.redir_token[0]]",p1);
+					console.log("[E_Url.TargetUrl.search_params.redir_token[1]]",p2);
 					return;
 				}
 				default: debugger; break;

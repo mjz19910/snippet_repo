@@ -10,8 +10,9 @@ namespace NS_DD_CompactVideoTest {
 	export type T2=Extract<D_CompactVideo,{lengthText: any;}>[U2];
 	type S3=`${SM1},badges,${CT},${ED1}`;
 	export type T3=Extract<D_CompactVideo,{lengthText: any; badges: any;}>[T_Split<S3>[number]];
-}namespace NS_NumRange {
-	export type NextMakeNum_3<U extends any[],T>=[any,...U]['length'] extends T? [any,any,...U]['length']:NextMakeNum_3<[any,...U],T>;
+}
+namespace NS_NumRange {
+	export type NextMakeNum_3<U extends any[],T>=T extends 0? 1:[any,...U]['length'] extends T? [any,any,...U]['length']:NextMakeNum_3<[any,...U],T>;
 	type NumRange_1<T,E>=T extends E? T:NextMakeNum_3<[],T> extends E? E:T|NextMakeNum_3<[],T>|NumRange_1<NextMakeNum_3<[],T>,E>;
 	export type NumRange<T,E>=T extends E? T:T|NextMakeNum_3<[],T>|NumRange_1<NextMakeNum_3<[],T>,E>;
 	type NextMakeNum_2<T>=T extends `${infer C extends number}`? `-${NS_NumRange.NextMakeNum_3<[],C>}` extends `${infer V extends number}`? V:never:never;
@@ -30,7 +31,7 @@ namespace NS_DD_CompactVideoTest {
 		`${MR2}`,
 		`${MR2d}`,
 	];
-}namespace NS_UnionToPartial {
+} namespace NS_UnionToPartial {
 	type ExtractValueFromUnion<T,U extends keyof T>=Extract<T,Record<U,any>>[U];
 	type ExtractUnionCommon<T>={[U in T_DistributedKeyof<T>]: ExtractValueFromUnion<T,U>;};
 	type UnionGetPartialPart<T>=Partial<Omit<ExtractUnionCommon<T>,keyof T>>;
