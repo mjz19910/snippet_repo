@@ -303,13 +303,27 @@ class HandleTypes extends HandleTypesEval {
 		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) {debugger; return;}
 		switch(map_entry_key_path.length) {
+			case 2: switch(path) {
+				case "watch.player_params.f40": {
+					switch(map_entry_key_path[1]) {
+						default: debugger; return;
+						case 1: break;
+					}
+					let map_entry_key=map_entry_key_path[1];
+					this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+					this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
+				} return;
+			} break;
 			case 1: {
 				let map_entry_key=map_entry_key_path[0];
 				if(!map_entry_key) {debugger; return;}
 				switch(path) {
 					default: debugger; return;
-					case "watch.player_params":
-					case "watch.player_params.f40":
+					case "watch.player_params": break;
+				}
+				switch(map_entry_key) {
+					default: debugger; return;
+					case 8: break;
 				}
 				this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
@@ -3379,8 +3393,8 @@ class HandleTypes extends HandleTypesEval {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
-	/** @private @template T @arg {string} cf @arg {T} x */
-	rl(cf,x) {
+	/** @private @template T @arg {string} _cf @arg {T} x */
+	rl(_cf,x) {
 		return x;
 	}
 	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */

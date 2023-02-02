@@ -59,7 +59,7 @@ const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const split_string_once=required(store.mod$YoutubePluginBase).split_string_once;
 /** @template {string} T @template {string} D @arg {T} s @arg {D} d */
 function split_string_once_last(s,d) {return bs.split_string_once_last(s,d,null);}
-/** @template T_LoadAllServices,T_ServiceFlags @extends {BaseService<LoadAllServices,NonNullable<LoadAllServices["handle_types"]["x"]["params"]>>} */
+/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}
@@ -956,13 +956,6 @@ class CodegenService extends BaseService {
 			return ss;
 		});
 		return new Map(typedef_members);
-	}
-	/** @unused_api @protected @arg {{}} x @arg {string} r */
-	use_generated_members(r,x) {
-		/** @type {Generate<T_LoadAllServices,T_ServiceFlags>} */
-		let td=new Generate(this);
-		td.generate_typedef_and_depth(r,x);
-		return td;
 	}
 	/** @api @public @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
 	codegen_renderer(x,r,w) {
