@@ -108,6 +108,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DE_VE3832_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DMD_Badge";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DMD_RowContainer";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
@@ -125,6 +126,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EndScreenPlaylist";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EngagementPanelTitleHeader";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ExpandableSurveyResponse";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_FeaturedChannel";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_FeedFilterChipBar";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_FeedNudge";}
@@ -132,16 +134,19 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_GuideEntry";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_GuideSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_GuideSubscriptionsSection";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HeroPlaylistThumbnail";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Hint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HorizontalCardList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HotkeyDialog";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LikeButton.rest";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LoggingDirectives";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MacroMarkersList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Menu";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MenuNavigationItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MenuServiceItem";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MerchandiseItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MerchandiseShelf";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MusicCarouselShelf";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MusicShelf";}
@@ -158,6 +163,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistAddToOption";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistHeader";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistPanel";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistPanelVideo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistSidebar";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistVideoThumbnail";}
@@ -168,10 +174,14 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichGrid";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichListHeader";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichMetadataRow";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichMetadata_BoxArt";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichMetadata_Topic";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichShelf";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SearchBox";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SectionList_BrowseFeed_Subscriptions";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SegmentedLikeDislikeButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SortFilterSubMenu";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SourcePivotHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SubFeedOption";}
@@ -181,6 +191,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SuperVodBuyFlowContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab_R_MusicQueue";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayEndorsement";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayToggleButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailsList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ToggleButton";}
@@ -188,6 +199,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopbarLogo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopbarMenuButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopbarMenuButton_MenuItem";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopicLink";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Transcript";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TranscriptSearchPanel";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoOwner";}
@@ -437,8 +449,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichGrid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichListHeader";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadataRow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadata_BoxArt";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichMetadata_Topic";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RunAttestation";}
@@ -728,7 +741,8 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_WatchLater";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_YoutubeLogo";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_Topic";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithIcon:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithNavEP:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}
@@ -737,6 +751,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_GuideEntry_WithIcon.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.U_UnseenCount.T_SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_NotificationTopbarButton.menuRequest.T_SE_Signal";}
+		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_TopbarMenuButton.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "E_SE_Signal_Button";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "GC_Button.SE_Signal";}
