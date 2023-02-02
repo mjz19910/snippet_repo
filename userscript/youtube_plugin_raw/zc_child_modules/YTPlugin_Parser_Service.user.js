@@ -1066,6 +1066,7 @@ class ParserService extends BaseService {
 					case "f2": case "f5": {
 						const idx=3;
 						if(parts.length===2) {
+							if(map_entry_value instanceof Map) return;
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {
@@ -1081,19 +1082,35 @@ class ParserService extends BaseService {
 							case "f14": {
 								const idx=4;
 								if(parts.length===3) {
+									if(map_entry_value instanceof Map) return;
 									switch(map_entry_value) {default: debugger; return;}
 								}
 								switch(parts[3]) {
 									default: u(idx); debugger; parts[3]===""; break;
-									case "f2": u(idx); debugger; break;
+									case "f2": {
+										const idx=5;
+										if(parts.length===4) {
+											if(typeof map_entry_value==="string") return this.save_string(`[${path}]`,map_entry_value);
+											switch(map_entry_value) {default: debugger; return;}
+										}
+										switch(parts[4]) {default: u(idx); debugger; parts[4]===""; break; }
+									} break;
 									case "f1": {
 										const idx=5;
 										if(parts.length===4) {
+											if(map_entry_value instanceof Map) return;
 											switch(map_entry_value) {default: debugger; return;}
 										}
 										switch(parts[4]) {
 											default: u(idx); debugger; parts[4]===""; break;
-											case "f2": u(idx); debugger; break;
+											case "f2": {
+												const idx=6;
+												if(parts.length===5) {
+													if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
+													switch(map_entry_value) {default: debugger; return;}
+												}
+												switch(parts[5]) {default: u(idx); debugger; parts[5]===""; break; }
+											} break;
 											case "f1": {
 												const idx=6;
 												if(parts.length===5) {
