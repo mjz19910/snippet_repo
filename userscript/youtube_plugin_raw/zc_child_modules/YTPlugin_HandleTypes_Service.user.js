@@ -3510,6 +3510,13 @@ class HandleTypes extends HandleTypesEval {
 		if("videoId" in x) {
 			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 			this.t(videoId,this.videoId);
+			this.params(cf,"reel.player_params",playerParams);
+			this.D_Thumbnail(thumbnail);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.params(cf,"reel.sequence_params",sequenceParams);
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
 			return;
 		}
 		if("inputType" in x) {
