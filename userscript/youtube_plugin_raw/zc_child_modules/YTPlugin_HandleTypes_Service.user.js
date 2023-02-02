@@ -224,9 +224,9 @@ class HandleTypes extends HandleTypesEval {
 			}
 			let res_case="";
 			if(idx<parts.length) res_case=`case "${parts[idx]}": u(idx); debugger; break;`;
-			console.log(`"[parse_value.L_gen_next_part] [${path}]",`);
+			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
 			console.log(`
-			-- [${parts.join(".")},${idx}] --\n
+			-- [${parts.join(".")},${idx}] --\n\n
 			case "${parts[idx-1]}": {
 				const idx=${idx+1};
 				if(parts.length===${idx}) {\n${case_part}${value_part}\n${pad}\t}
@@ -1067,6 +1067,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "get_transcript": {
 				const idx=2;
+				/** @private @type {P_LogItems} */
 				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "params": u(idx); debugger; break;}
 			} break;
 			case "like": {
