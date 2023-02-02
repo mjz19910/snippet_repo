@@ -1269,7 +1269,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
-		const cf="G_Text";
+		const cf="G_Text"; this.k(cf,x);
 		/** @type {T_UnionToPartial<G_Text>} */
 		let x1=x;
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x1); this.g(y);/*//#destructure_done*/
@@ -1279,7 +1279,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_TextRun_Endpoint} x */
 	G_TextRun_Endpoint(x) {
-		const cf="G_TextRun_Endpoint";
+		const cf="G_TextRun_Endpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
@@ -1980,7 +1980,7 @@ class HandleTypes extends HandleTypesEval {
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.D_RefreshPlaylist(a);}
 	/** @arg {C_Innertube['innertubeCommand']} x */
 	G_Innertube(x) {
-		const cf="G_Innertube";
+		const cf="G_Innertube"; this.k(cf,x);
 		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
 		this.codegen_typedef_all(cf,x);
 	}
@@ -2126,7 +2126,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
-		const cf="G_RichSection";
+		const cf="G_RichSection"; this.k(cf,x);
 		if("richShelfRenderer" in x) return this.R_RichShelf(x);
 		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
 		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
@@ -2619,14 +2619,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
-		const cf="G_Browse_MD";
+		const cf="G_Browse_MD"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
-		const cf="G_BrowseSidebar";
+		const cf="G_BrowseSidebar"; this.k(cf,x);
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
 		this.codegen_typedef_all(cf,x);
@@ -2703,7 +2703,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x) {
-		const cf="G_PlaylistSidebarItem";
+		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		this.codegen_typedef_all(cf,x);
@@ -3084,7 +3084,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RG_Result} x */
 	RG_Result(x) {
-		const cf="RG_Result";
+		const cf="RG_Result"; this.k(cf,x);
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
 		this.codegen_typedef_all(cf,x);
@@ -3184,7 +3184,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_RichItemContent} x */
 	G_RichItemContent(x) {
-		const cf="G_RichItemContent";
+		const cf="G_RichItemContent"; this.k(cf,x);
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
@@ -4065,7 +4065,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
-		const cf="RSG_NotificationMenu_Action";
+		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
 		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
 		this.codegen_typedef_all(cf,x);
 		return null;
@@ -4106,7 +4106,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_NextContents} x */
 	G_NextContents(x) {
-		const cf="G_NextContents";
+		const cf="G_NextContents"; this.k(cf,x);
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
 		this.codegen_typedef_all(cf,x);
@@ -4417,7 +4417,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	G_AppendContinuationItems(x) {
-		const cf="G_AppendContinuationItems"; this.targetId(cf,x.targetId);
+		const cf="G_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
@@ -4547,7 +4547,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
 	G_WatchNextEndScreenItem(x) {
-		const cf="G_WatchNextEndScreenItem";
+		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		this.codegen_typedef_all(cf,x);
@@ -4611,7 +4611,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
-		const cf="G_MenuItem"; this.g_k(cf,x);
+		const cf="G_MenuItem"; this.g_k(cf,x); this.k(cf,x);
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
@@ -5307,7 +5307,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
-		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x);
+		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x); this.k(cf,x);
 		let ba_id=base64_dec.decodeByteArray(layoutId);
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
 		this.D_AdLayout_TypeStr(y.layoutType);
@@ -5360,7 +5360,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
-		const cf="G_WatchResultItem_ItemSection";
+		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
 		let u=this.TR_ItemSection_3(x); if(!u) return;
@@ -5376,7 +5376,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_ContentsItem} x */
 	G_WatchResult_ContentsItem(x) {
-		const cf="G_WatchResult_ContentsItem";
+		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
 		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
@@ -5385,7 +5385,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_AnyResultItem} x */
 	G_Watch_AnyResultItem(x) {
-		const cf="G_SecondaryContentsItem";
+		const cf="G_SecondaryContentsItem"; this.k(cf,x);
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
 		this.codegen_typedef_all(cf,x);
@@ -5399,7 +5399,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_SecondaryResults} x */
 	G_Watch_SecondaryResults(x) {
-		const cf="G_Watch_SecondaryResults";
+		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
 		this.codegen_typedef_all(cf,x);
@@ -5591,7 +5591,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x) {
-		const cf="G_EngagementPanelSectionShowCommands";
+		const cf="G_EngagementPanelSectionShowCommands"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
@@ -5747,7 +5747,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_DC_SectionList} x */
 	G_DC_SectionList(x) {
-		const cf="G_DC_SectionList";
+		const cf="G_DC_SectionList"; this.k(cf,x);
 		if("targetId" in x) {
 			if(this.str_starts_with_rx(x.targetId,"browse-feed")) {
 				let ss=split_string(x.targetId,"browse-feed");
@@ -5889,7 +5889,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
-		const cf="G_GuideSectionItem";
+		const cf="G_GuideSectionItem"; this.k(cf,x);
 		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
 		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
@@ -6288,7 +6288,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_BrowseHeader} x */
 	G_BrowseHeader(x) {
-		const cf="G_BrowseHeader";
+		const cf="G_BrowseHeader"; this.k(cf,x);
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
@@ -6320,7 +6320,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_BrowseContents} x */
 	G_BrowseContents(x) {
-		const cf="G_BrowseContents";
+		const cf="G_BrowseContents"; this.k(cf,x);
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		this.codegen_typedef_all(cf,x);
@@ -6514,7 +6514,7 @@ class HandleTypes extends HandleTypesEval {
 	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
 	 */
 	G_EY_Entity(x) {
-		const cf="G_EY_Entity";
+		const cf="G_EY_Entity"; this.k(cf,x);
 		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
 		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
 		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
@@ -6541,7 +6541,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_TopbarButtonItem} x */
 	G_TopbarButtonItem(x) {
-		const cf="G_TopbarButtonItem";
+		const cf="G_TopbarButtonItem"; this.k(cf,x);
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
 		this.codegen_typedef_all(cf,x);
@@ -6593,14 +6593,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
-		const cf="G_SecondaryContents";
+		const cf="G_SecondaryContents"; this.k(cf,x);
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
-		const cf="G_WatchNext";
+		const cf="G_WatchNext"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		this.codegen_typedef_all(cf,x);
@@ -7079,7 +7079,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem";
+		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
 		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
@@ -7161,7 +7161,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
-		const cf="G_Watch_SecondaryResults_G_SectionItem";
+		const cf="G_Watch_SecondaryResults_G_SectionItem"; this.k(cf,x);
 		if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
@@ -7324,7 +7324,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
 	/** @private @arg {G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x) {
-		const cf="G_ProfileColumnItem";
+		const cf="G_ProfileColumnItem"; this.k(cf,x);
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		this.codegen_typedef_all(cf,x); x===0;
@@ -7363,7 +7363,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_BrowseFeedContent} x */
 	G_BrowseFeedContent(x) {
-		const cf="G_BrowseFeedContent";
+		const cf="G_BrowseFeedContent"; this.k(cf,x);
 		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
@@ -7892,7 +7892,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_EngagementPanelMenu} x */
 	G_EngagementPanelMenu(x) {
-		const cf="G_EngagementPanelMenu";
+		const cf="G_EngagementPanelMenu"; this.k(cf,x);
 		if("menuRenderer" in x) return this.R_Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
 		this.codegen_typedef_all(cf,x);
@@ -8033,7 +8033,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ClientMessages(x) {this.k("D_ClientMessages",x); this.z(Object.values(x),this.G_Text);}
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
-		const cf="G_LiveChatContinuationItem";
+		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
 		if("invalidationContinuationData" in x) return;
 		if("liveChatReplayContinuationData" in x) return;
 		if("playerSeekContinuationData" in x) return;
@@ -8046,7 +8046,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
-		const cf="G_LiveChatContinuationActions";
+		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
@@ -8264,7 +8264,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
-		const cf="G_ChannelSwitcherContent";
+		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) this.A_AccountItem(x);
 		this.codegen_typedef_all(cf,x);
@@ -8474,7 +8474,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {G_ThumbnailOverlayItem} x */
 	G_ThumbnailOverlayItem(x) {
-		const cf="G_ThumbnailOverlayItem";
+		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
 		// TODO: #11 Handle thumbnailOverlay Renderers
 		// Actually iterate over these renderers
 		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
@@ -8816,7 +8816,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PrimaryLinkItem} x */
 	D_PrimaryLinkItem(x) {
-		const cf="D_PrimaryLinkItem"; this.k(cf,x);
+		const cf="D_PrimaryLinkItem";
 		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.E_Url(navigationEndpoint);
 		this.D_Thumbnail(icon);
