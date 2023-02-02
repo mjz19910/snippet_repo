@@ -140,6 +140,6 @@ type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|"CF_TE_Endpoin
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|"CF_T_Endpoint"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
 type CF_T_WCM=T_ExtractImport<"CF_T_WCM">|"CF_T_WCM"|"a";
-type CF_DC_Generic_CTP="D_CD_Reload"|"a";
+type CF_DC_Generic_CTP=T_ExtractImport<"CF_DC_Generic_CTP">|"CF_DC_Generic_CTP"|"a";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen"|"a";
 type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|"CF_onMissingIcon"|"a";
