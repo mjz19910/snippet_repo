@@ -1178,6 +1178,6 @@ type D_GuideEntry_IconType_Obj={
 	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
 	WithIcon: T_GetIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
-type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">;
+type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1:1}|"";
 //#endregion
 type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|`PL${string}`;};

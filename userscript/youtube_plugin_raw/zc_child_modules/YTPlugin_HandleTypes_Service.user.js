@@ -4740,7 +4740,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.t(formattedTitle,this.G_Text);
 	}
-	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {"D_GuideEntry"} cf @arg {T} x */
+	/** @private @template {Extract<D_GuideEntry,{accessibility:any}>} T @arg {CF_D_GuideEntry} cf @arg {T} x */
 	D_GuideEntry_Omit(cf,x) {
 		const {accessibility,formattedTitle,trackingParams,...y}=this.s(cf,x);
 		this.D_Accessibility(accessibility);

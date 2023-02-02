@@ -7,7 +7,7 @@ function make_tmp_git_repo {
 	if git -C "$TMP_DIR" rev-parse 2>/dev/null; then
 		pushd "$TMP_DIR"
 		git reset --hard -q
-		git pull -q "$PROJ_DIR"
+		git pull -q
 		popd
 	else
 		echo not in git repo at $TMP_DIR
