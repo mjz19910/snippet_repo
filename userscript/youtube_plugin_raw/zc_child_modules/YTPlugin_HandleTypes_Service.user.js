@@ -6648,12 +6648,19 @@ class HandleTypes extends HandleTypesEval {
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.z(contents,this.R_ProductListItem);
 		this.trackingParams(cf,trackingParams);
-		debugger;
 	}
 	/** @private @arg {D_ProductListItem} x */
 	D_ProductListItem(x) {
 		const cf="D_ProductListItem";
 		const {thumbnail,accessibilityTitle,title,trackingParams,price,onClickCommand,loggingDirectives,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(thumbnail);
+		this.a_primitive_str(accessibilityTitle);
+		this.G_Text(title);
+		this.trackingParams(cf,trackingParams);
+		if(!this.str_starts_with(price,"CA_")) debugger;
+		if(!onClickCommand.urlEndpoint) debugger;
+		this.E_Url(onClickCommand);
+		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
@@ -8576,7 +8583,7 @@ class TypedefGenerator {
 	constructor(h) {
 		this.h=h;
 	}
-	/** @arg {Popup_ConfirmDialog} x */
+	/** @arg {Popup_ConfirmDialog|Popup_DismissibleDialog} x */
 	popup_dialog(x) {
 		const cf="popup_dialog"; cf;
 		let x1=this.h.unpack_popup_dialog(x);
@@ -8584,10 +8591,11 @@ class TypedefGenerator {
 		let dialog=x1[1];
 		return this.popup_dialog_1(dialog);
 	}
-	/** @arg {R_ConfirmDialog} x */
+	/** @arg {R_ConfirmDialog|R_FancyDismissibleDialog} x */
 	popup_dialog_1(x) {
 		const cf="R_ConfirmDialog"; cf;
-		if(x.confirmDialogRenderer) return "TYPE::Popup_ConfirmDialog";
+		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
+		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
 		debugger;
 		return null;
 	}
