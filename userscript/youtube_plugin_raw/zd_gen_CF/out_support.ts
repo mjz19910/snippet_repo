@@ -1,17 +1,17 @@
 type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
-		|"CF_D_GuideEntry"
-		|"CF_onMissingIcon"
 		//#region
 		|"CF_D_Button"
 		|"CF_D_CaseGen"
 		|"CF_D_ChipCloudChip_Omit"
 		|"CF_D_CustomEmoji"
+		|"CF_D_GuideEntry"
 		|"CF_D_Link"
 		|"CF_D_Menu_Omit"
 		|"CF_D_Params"
 		|"CF_D_Playlist_Omit"
+		|"CF_D_STR"
 		|"CF_D_Video_Handle"
 		|"CF_GE_ResponseReceived"
 		|"CF_L_CTP_Params"
@@ -22,6 +22,7 @@ export namespace Prelude {
 		|"CF_M_y"
 		|"CF_M_zy"
 		|"CF_MG_s"
+		|"CF_onMissingIcon"
 		|"CF_parse_identifier"
 		|"CF_T_Commands"
 		|"CF_T_Endpoint"
@@ -43,18 +44,19 @@ export namespace Prelude {
 		//#endregion
 		;
 	;
-	// |"CF_D_GuideEntry"
-	export type CF_D_GuideEntry="CF_D_GuideEntry";
-	export type CF_onMissingIcon="CF_onMissingIcon";
+	// |"CF_D_STR"
+	export type CF_NEW_STR="CF_NEW_STR";
 	//#region
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_CaseGen="CF_D_CaseGen";
 	export type CF_D_ChipCloudChip_Omit="CF_D_ChipCloudChip_Omit";
 	export type CF_D_CustomEmoji="CF_D_CustomEmoji";
+	export type CF_D_GuideEntry="CF_D_GuideEntry";
 	export type CF_D_Link="CF_D_Link";
 	export type CF_D_Menu_Omit="CF_D_Menu_Omit";
 	export type CF_D_Params="CF_D_Params";
 	export type CF_D_Playlist_Omit="CF_D_Playlist_Omit";
+	export type CF_D_STR="CF_D_STR";
 	export type CF_D_Video_Handle="CF_D_Video_Handle";
 	export type CF_GE_ResponseReceived="CF_GE_ResponseReceived";
 	export type CF_L_CTP_Params="CF_L_CTP_Params";
@@ -65,6 +67,7 @@ export namespace Prelude {
 	export type CF_M_y="CF_M_y";
 	export type CF_M_zy="CF_M_zy";
 	export type CF_MG_s="CF_MG_s";
+	export type CF_onMissingIcon="CF_onMissingIcon";
 	export type CF_parse_identifier="CF_parse_identifier";
 	export type CF_T_Commands="CF_T_Commands";
 	export type CF_T_Endpoint="CF_T_Endpoint";
@@ -86,21 +89,23 @@ export namespace Prelude {
 	//#endregion
 }
 export namespace TypesTemplate {
+	export type CF_NEW_STR="CF_NEW_STR";
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 }
 export namespace Types {
-	// |"CF_D_GuideEntry"
-	export type CF_D_GuideEntry_=CF_D_GuideEntry;
-	export type CF_onMissingIcon_=CF_onMissingIcon;
+	// |"CF_D_STR"
+	export type CF_NEW_GEN_=CF_NEW_GEN;
 	//#region
 	export type CF_D_Button_=CF_D_Button;
 	export type CF_D_CaseGen_=CF_D_CaseGen;
 	export type CF_D_ChipCloudChip_Omit_=CF_D_ChipCloudChip_Omit;
 	export type CF_D_CustomEmoji_=CF_D_CustomEmoji;
+	export type CF_D_GuideEntry_=CF_D_GuideEntry;
 	export type CF_D_Link_=CF_D_Link;
 	export type CF_D_Menu_Omit_=CF_D_Menu_Omit;
 	export type CF_D_Params_=CF_D_Params;
 	export type CF_D_Playlist_Omit_=CF_D_Playlist_Omit;
+	export type CF_D_STR_=CF_D_STR;
 	export type CF_D_Video_Handle_=CF_D_Video_Handle;
 	export type CF_GE_ResponseReceived_=CF_GE_ResponseReceived;
 	export type CF_L_CTP_Params_=CF_L_CTP_Params;
@@ -110,6 +115,7 @@ export namespace Types {
 	export type CF_M_VE_=CF_M_VE;
 	export type CF_M_y_=CF_M_y;
 	export type CF_M_zy_=CF_M_zy;
+	export type CF_onMissingIcon_=CF_onMissingIcon;
 	export type CF_parse_identifier_=CF_parse_identifier;
 	export type CF_T_Commands_=CF_T_Commands;
 	export type CF_T_Endpoint_=CF_T_Endpoint;

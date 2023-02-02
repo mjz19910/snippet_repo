@@ -606,7 +606,7 @@ class HandleTypes extends HandleTypesEval {
 			default: {
 				x===0;
 				/** @private @arg {GM_WC} x */
-				this.codegen_str(`G_VE${cx}`,x);
+				this.codegen_str(`G_VE${x}`,x);
 				console.log(`\n\tG_VE${cx},`);
 				this.codegen_case("GM_WC_RootVe",x,"return this.GeneratedWebCommandMetadata(x);");
 			} break;
@@ -2770,7 +2770,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
 	}
-	/** @arg {D_STR_CF} cf @arg {string} x */
+	/** @arg {CF_D_STR} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {
 			console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);
@@ -3867,16 +3867,21 @@ class HandleTypes extends HandleTypesEval {
 		return x.includes("?");
 	}
 	/** @private @arg {GU_YoutubeUrlRedirect} x */
-	D_YoutubeUrl(x) {
-		const cf="D_YoutubeUrl";
+	GU_YoutubeUrlRedirect(x) {
+		const cf="GU_YoutubeUrlRedirect";
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
 		let [h,sp]=split_string_once(s1,"/");
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
-			let [pp,qp]=split_string_once(sp,"?");
+			let [pp,query_search]=split_string_once(sp,"?");
 			switch(pp) {
 				case "redirect": {
-					console.log("[E_Url.TargetUrl.search_params]",qp);
+					let parsed_search=this.parse_url_search_params(query_search);
+					switch(parsed_search.event) {
+						default: debugger; break;
+						case "video_description": break;
+					}
+					console.log("[E_Url.TargetUrl.search_params]",query_search);
 					return;
 				}
 				default: debugger; break;
@@ -3933,7 +3938,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx(rp,x)) {
 			/** @type {GU_YoutubeUrlRedirect} */
 			let arg_x=as(x);
-			return this.D_YoutubeUrl(arg_x);
+			return this.GU_YoutubeUrlRedirect(arg_x);
 		}
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {
@@ -4019,7 +4024,7 @@ class HandleTypes extends HandleTypesEval {
 			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
 			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
-			case "www.youtube.com": return this.D_YoutubeUrl(up.href);
+			case "www.youtube.com": return this.GU_YoutubeUrlRedirect(up.href);
 			default: debugger; break;
 		}
 		const hn_yt_studio="https://studio.youtube.com";
