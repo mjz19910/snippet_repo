@@ -46,6 +46,10 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_D_Playlist_Omit; t: Types.CF_D_Playlist_Omit_; v: "D_CompactPlaylist";}
+		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_ChannelId";}
+		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_RadioShareUrl";}
+		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeKidsUrl";}
+		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "GU_YoutubeUrlRedirect";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Accessibility";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Owner";}
