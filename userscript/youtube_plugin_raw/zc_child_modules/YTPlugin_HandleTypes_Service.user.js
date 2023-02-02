@@ -1906,6 +1906,26 @@ class HandleTypes extends HandleTypesEval {
 			default: x===0; debugger; break;
 		}
 	}
+	/** @private @arg {GM_VE5754_WC} x */
+	GM_VE5754_WC(x) {
+		const cf="GM_VE5754_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		let [f,url_playlist_id]=split_string_once(url,"/playlist?list=");
+		if(f!=="") debugger;
+		this.parser.parse_playlist_id(url_playlist_id);
+		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
+		if(rootVe!==5754) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @private @arg {GM_VE11487_WC} x */
+	GM_VE11487_WC(x) {
+		const cf="GM_VE11487_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(url!=="/premium") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==11487) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
 	/** @private @arg {GM_VE23462_WC} x */
 	GM_VE23462_WC(x) {
 		const cf="GM_VE23462_WC"; this.k(cf,x);
@@ -1926,26 +1946,6 @@ class HandleTypes extends HandleTypesEval {
 		if(url!=="/feed/subscriptions") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==96368) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_VE11487_WC} x */
-	GM_VE11487_WC(x) {
-		const cf="GM_VE11487_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(url!=="/premium") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==11487) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {GM_VE5754_WC} x */
-	GM_VE5754_WC(x) {
-		const cf="GM_VE5754_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		let [f,url_playlist_id]=split_string_once(url,"/playlist?list=");
-		if(f!=="") debugger;
-		this.parser.parse_playlist_id(url_playlist_id);
-		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
-		if(rootVe!==5754) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {GM_WC} x */
