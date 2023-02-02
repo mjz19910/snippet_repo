@@ -378,7 +378,7 @@ class HandleTypes extends HandleTypesEval {
 			case "like.likeParams": case "like.dislikeParams": switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1":
 			case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel.player_params": switch(map_entry_key) {case 30: case 71: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "reel.player_params": switch(map_entry_key) {case 30: case 57: case 71: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "slot_ad_serving_data_entry": switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -532,7 +532,7 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": case "f1[]": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f16": case "f19":
 					case "f24": case "f25": case "f27": case "f30": case "f33": case "f39": case "f40":
-					case "f56": case "f71": case "f84":
+					case "f56": case "f57": case "f71": case "f84":
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
@@ -2911,6 +2911,8 @@ class HandleTypes extends HandleTypesEval {
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		if("commandExecutorCommand" in x) return this.C_RepeatChapter(x);
 		this.codegen_typedef_all(cf,x);
 		debugger;
 	}

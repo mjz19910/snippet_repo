@@ -18,7 +18,24 @@ type P_param_known_like_paths=[
 	"f6",
 	"f7"
 ][number];
-type P_param_known=|P_param_known_1;
+type P_param_known=
+	|P_param_known_1
+	|"get_transcript.params.f1"
+	|"get_transcript.params.f2"
+	|"get_transcript.params.f3"
+	|"get_transcript.params.f5"
+	|"get_transcript.params.f6"
+	|"get_transcript.params.f7"
+	|"get_transcript.params.f8"
+	|"transcriptTrackSelection.serializedParams.f1"
+	|"transcriptTrackSelection.serializedParams.f2"
+	|"transcriptTrackSelection.serializedParams.f3"
+	|"transcriptTrackSelection.serializedParams.f6"
+	|"transcriptTrackSelection.serializedParams.f7"
+	|"transcriptTrackSelection.serializedParams.f8"
+	|"reel.player_params.f57"
+	;
+;
 type P_param_known_service=
 	|"service$create_playlist.f1"
 	|"service$create_playlist"

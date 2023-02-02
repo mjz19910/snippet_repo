@@ -2821,7 +2821,7 @@ type D_TimestampWithNanos={
 	nanos: number;
 };
 type D_Title={title: G_Text;};
-type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|E_Like;
+type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|C_RepeatChapter|E_Like;
 type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
