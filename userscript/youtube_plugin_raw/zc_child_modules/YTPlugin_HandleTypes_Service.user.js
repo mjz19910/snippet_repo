@@ -4495,10 +4495,10 @@ class HandleTypes extends HandleTypesEval {
 					if(redir_parts.length===1) {debugger; return;}
 					let [p1,p2]=redir_parts.map(x => base64_url_dec.decodeByteArray(x));
 					if(!p1||!p2) return;
-					for(let i=0;i<2;i++) {
+					for(let i=0;i<3;i++) {
 						this.save_next_byte("url.redir_token[0].data",p1,i);
 					}
-					for(let i=0;i<2;i++) {
+					for(let i=0;i<3;i++) {
 						this.save_next_byte("url.redir_token[1].data",p2,i);
 					}
 					return;
@@ -6724,7 +6724,7 @@ class HandleTypes extends HandleTypesEval {
 		let f=data[idx];
 		/** @type {`${typeof key}.data[${typeof idx}]`} */
 		let rk=`${key}.data[${idx}]`;
-		/** @type {`${typeof rk}[${typeof f}]`} */
+		/** @type {`${typeof rk}=${typeof f}`} */
 		let k=`${rk}=${f}`;
 		this.save_number(rk,f);
 		this.save_number(k,1);
