@@ -1197,7 +1197,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {CF_TD_ItemSection_3} cf1 @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
 	TD_ItemSection_3(cf1,x) {
 		const cf2="TD_ItemSection_3";
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*//#destructure_done*/
 		this.trackingParams(cf2,trackingParams);
 		if(contents.length>0) {
 			let cu=contents[0];
@@ -1272,7 +1272,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Text";
 		/** @type {T_UnionToPartial<G_Text>} */
 		let x1=x;
-		const {runs,simpleText,accessibility,...y}=this.s(cf,x1); this.g(y);
+		const {runs,simpleText,accessibility,...y}=this.s(cf,x1); this.g(y);/*//#destructure_done*/
 		this.t(simpleText,this.a_primitive_str);
 		this.tz(runs,x => this.D_TextRun(x,this.G_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
@@ -1413,14 +1413,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {CF_T_Icon} cf1 @private @template {string} T @arg {T_Icon<T>} x @arg {T} w */
 	T_Icon(cf1,x,w) {
 		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);
+		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*//#destructure_done*/
 		if(iconType!==w) debugger;
 		this.save_string(`[${cf1}.IconType]`,iconType);
 	}
 	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);
+		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*//#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
 		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
 		this.save_string("[IconType]",iconType);
@@ -1429,7 +1429,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*//#destructure_done*/
 		this.clickTrackingParams(`${cf1}.tracking`,clickTrackingParams);
 		return a;
 	}
@@ -2221,7 +2221,7 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		});
 		this.z(r,a => a);
-		this.z(playlistEditResults,this.g);
+		this.z(playlistEditResults,this.G_PlaylistEditResult);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
@@ -2269,7 +2269,7 @@ class HandleTypes extends HandleTypesEval {
 	// in this case, inferred (E_Page is a index accessed type)
 	/** @private @arg {E_Page} x */
 	E_Page(x) {
-		const cf="E_Page";
+		const cf="E_Page"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		this.codegen_typedef_all(cf,x);
@@ -2596,15 +2596,24 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Microformat} x */
 	D_Microformat(x) {
 		const cf="D_Microformat";
-		let {url,ios,twitter,other,...y}=this.unwrap_microformat(x); this.g(y);
+		const {url,ios,twitter,other,...y}=this.unwrap_microformat(x); this.g(y);
 		{
+			const {title,description,thumbnail,siteName,appName,androidPackage,ogType,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=other; this.g(y);
+			this.z([title,description,siteName,appName,androidPackage,ogType,schemaDotOrgType],this.a_primitive_str);
+			this.D_Thumbnail(thumbnail);
+			if(noindex!==false) debugger;
+			if(unlisted!==false) debugger;
+			this.tz(tags,this.a_primitive_str);
+			this.t(familySafe,x => {if(x!==true) debugger;});
+			this.tz(availableCountries,this.a_primitive_str);
+			this.z(linkAlternates,this.B_HrefUrl);
 		}
 		{
-			let {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);
+			const {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);
 			this.z([appArguments,appStoreId],this.a_primitive_str);
 		}
 		{
-			let {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=this.s(`${cf}.url`,url); this.g(y);
+			const {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=this.s(`${cf}.url`,url); this.g(y);
 			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
 		}
 	}
@@ -6852,12 +6861,12 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("uniqueId" in x1) {
-			const {uniqueId: b,...y}=x1; this.g(y);
+			const {uniqueId: b,...y}=x1; this.g(y);/*//#destructure_done*/
 			if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
 			return;
 		}
 		if("targetId" in x1) {
-			const {targetId: a,...y}=x1; this.g(y);
+			const {targetId: a,...y}=x1; this.g(y);/*//#destructure_done*/
 			if(a!=="feed_filter_chip_bar_second_chip") debugger;
 			return;
 		}
@@ -7631,11 +7640,7 @@ class HandleTypes extends HandleTypesEval {
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
 	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {
-		const cf="G_CommentsSection";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
-	}
+	G_CommentsSection(x) {const cf="G_CommentsSection"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="D_ExpandableTab";
@@ -7715,22 +7720,11 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {D_CommentActionButtons} x */
-	D_CommentActionButtons(x) {
-		const cf="D_CommentActionButtons";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {
-		const cf="D_LiveChat";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
-	}
+	D_LiveChat(x) {const cf="D_LiveChat"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_ReportFormModal} x */
-	D_ReportFormModal(x) {
-		const cf="D_ReportFormModal";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
-	}
+	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.gs(cf,x); debugger;}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
@@ -8020,30 +8014,15 @@ class HandleTypes extends HandleTypesEval {
 		this.t(viewerName,this.a_primitive_str);
 	}
 	/** @private @arg {D_Message} x */
-	D_Message(x) {
-		const cf="D_Message";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_Message(x) {const cf="D_Message"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChatParticipantsList} x */
-	D_LiveChatParticipantsList(x) {
-		const cf="D_LiveChatParticipantsList";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChatTicker} x */
-	D_LiveChatTicker(x) {
-		const cf="D_LiveChatTicker";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChatItemList} x */
-	D_LiveChatItemList(x) {
-		const cf="D_LiveChatItemList";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChatHeader} x */
-	D_LiveChatHeader(x) {
-		const cf="D_LiveChatHeader";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.gs(cf,x);}
 	/** @private @arg {D_LiveChatEmoji} x */
 	D_LiveChatEmoji(x) {
 		const cf="D_LiveChatEmoji";
@@ -8512,10 +8491,7 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {
-		const cf="D_ThumbnailOverlayInlineUnplayable";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.gs(cf,x);}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement";
@@ -9019,15 +8995,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AutomixPreviewVideo} x */
 	D_AutomixPreviewVideo(x) {x;}
 	/** @private @arg {D_MusicResponsiveListItem} x */
-	D_MusicResponsiveListItem(x) {
-		const cf="D_MusicResponsiveListItem";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.gs(cf,x);}
 	/** @private @arg {D_MusicShelfDivider} x */
-	D_MusicShelfDivider(x) {
-		const cf="D_MusicShelfDivider";
-		const {...y}=this.s(cf,x); this.g(y);
-	}
+	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.gs(cf,x);}
+	/** @private @arg {RSB_EditPlaylist["playlistEditResults"][number]} x */
+	G_PlaylistEditResult(x) {x;}
+	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
+	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
