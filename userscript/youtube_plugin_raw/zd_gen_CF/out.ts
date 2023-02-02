@@ -283,6 +283,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ReloadContinuationItems";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_SectionList_SearchFeed";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ShowReloadUi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Timed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_UpdateToggleButtonState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_AddToPlaylistService";}
