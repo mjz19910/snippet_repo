@@ -909,7 +909,6 @@ class CodegenService extends BaseService {
 				let pt=split_string_once(gen_url,"?");
 				if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
 				return `TYPE::T_BaseUrl<\`${pt[0]}>\${string}\``;
-
 			}
 			return `TYPE::T_BaseUrl<${b.baseUrl}>`;
 		}
