@@ -1,8 +1,8 @@
 type P_param_category=P_LogItems extends []? never:P_LogItems[number] extends `[${string}] [${infer U}]`? U:never;
-type P_param_missing=Exclude<P_param_category,P_known_param>;
+type P_param_missing=Exclude<P_param_category,P_param_known>;
 type P_param=Extract<P_param_category,`${string}.params.${string}`>;
-type P_known_like_param=`${LP_LogItems_Str}.${P_known_like_param_paths}`;
-type P_known_like_param_paths=[
+type P_param_known_like=`${LP_LogItems_Str}.${P_param_known_like_paths}`;
+type P_param_known_like_paths=[
 	"f1.f1",
 	"f1",
 	"f2",
@@ -18,14 +18,14 @@ type P_known_like_param_paths=[
 	"f6",
 	"f7"
 ][number];
-type P_known_param=|P_known_param_1;
-type P_known_service_param=
+type P_param_known=|P_param_known_1;
+type P_param_known_service=
 	|"service$create_playlist.f1"
 	|"service$create_playlist"
 	;
 ;
-type P_other_known_param=P_known_service_param|P_tracking_param|P_known_like_param;
-type P_tracking_param<T extends string="tracking">=[
+type P_param_other_known=P_param_known_service|P_param_tracking|P_param_known_like;
+type P_param_tracking<T extends string="tracking">=[
 	`${T}.parentTrackingParams`,
 	`${T}.trackingParams.f1`,
 	`${T}.trackingParams.f19.f1`,
@@ -43,7 +43,7 @@ type P_tracking_param<T extends string="tracking">=[
 	`${T}.trackingParams.f9`,
 	`${T}.trackingParams`
 ][number];
-type P_known_param_1=
+type P_param_known_1=
 	|"AdServingDataEntry.f4"
 	|"AdServingDataEntry.f5"
 	|"AdServingDataEntry.f6"
