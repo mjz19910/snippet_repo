@@ -450,7 +450,11 @@ class HandleTypes extends HandleTypesEval {
 	parse_key_index=1;
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
-		if(typeof entry==="number") return this.save_number(path,entry);
+		if(path==="tracking.trackingParams.f8") return;
+		if(typeof entry==="number") {
+			if(entry>(65536*4)) return;
+			return this.save_number(path,entry);
+		}
 		if(typeof entry==="string") return this.save_string(path,entry);
 		if(entry instanceof Map) return;
 		if(this.is_bigint(entry)) return this.handle_bigint(path,entry);
