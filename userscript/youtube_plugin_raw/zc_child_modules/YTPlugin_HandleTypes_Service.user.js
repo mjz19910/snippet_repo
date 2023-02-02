@@ -8207,7 +8207,7 @@ class HandleTypes extends HandleTypesEval {
 			let x1=style;
 			if("styleType" in x1) {this.ceq(x1.styleType,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
 			if("type" in x1) {this.ceq(x1.type,"HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION"); break x;}
-			this.ceq(x1,null);
+			this.ceq(x1+"1",x1+"");
 		}
 		this.ceq(centerItems,false);
 	}
