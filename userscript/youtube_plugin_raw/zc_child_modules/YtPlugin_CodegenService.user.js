@@ -277,6 +277,8 @@ class CodegenService extends BaseService {
 	as$TR_MP_Menu=x => as(x);
 	/** @arg {{}} x @returns {T_Signal<string>} */
 	as$T_Signal=x => as(x);
+	/** @override @returns {"unknown"|"normal"} */
+	get service_type() {return "normal";}
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
