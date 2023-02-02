@@ -2905,16 +2905,17 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
 	}
-	/** @private @arg {DC_CommandExecutor} x */
-	DC_CommandExecutor(x) {
-		this.T_Commands("DC_CommandExecutor",x,x => {
-			const cf="DC_CommandExecutor.command";
-			if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
-			if("likeEndpoint" in x) return this.E_Like(x);
-			this.codegen_typedef_all(cf,x);
-			debugger;
-		});
+	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
+	G_DC_CommandExecutor_CommandItem(x) {
+		const cf="DC_CommandExecutor.command";
+		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
+		this.codegen_typedef_all(cf,x);
+		debugger;
 	}
+	/** @private @arg {DC_CommandExecutor} x */
+	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
@@ -8560,6 +8561,7 @@ class HandleTypes extends HandleTypesEval {
 	D_LightColorPalette(x) {const cf="D_LightColorPalette"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(x) {const cf="D_DarkColorPalette"; this.codegen_typedef_all(cf,x);}
+	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
