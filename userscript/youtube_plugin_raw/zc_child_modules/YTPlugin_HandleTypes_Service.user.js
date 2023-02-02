@@ -2500,6 +2500,16 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in y)) return;
 					let {text,serviceEndpoint,...y1}=y; y1;
 					this.G_Text(text);
+					x: {
+						let x=serviceEndpoint;
+						if("ypcGetOffersEndpoint" in x) {
+							this.E_YpcGetOffers(x); break x;
+						}
+						if("getPdgBuyFlowCommand" in x) {
+							this.C_GetPdgBuyFlow(x); break x;
+						}
+						debugger;
+					}
 					/** @typedef {keyof (typeof y1)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -2513,6 +2523,10 @@ class HandleTypes extends HandleTypesEval {
 					}
 					if(!(k in y)) return;
 					let {icon,...y1}=y; y1;
+					switch(icon.iconType) {
+						default: debugger; break;
+						case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
+					}
 					/** @typedef {keyof (typeof y1)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -2527,6 +2541,10 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in y)) return;
 					let {text,icon,tooltip,...y1}=y;
 					this.G_Text(text);
+					switch(icon.iconType) {
+						default: debugger; break;
+						case "MONEY_HEART": case "CONTENT_CUT":
+					}
 					/** @typedef {keyof (typeof y1)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -2542,6 +2560,10 @@ class HandleTypes extends HandleTypesEval {
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; cf1;
 					let {icon,command,...y1}=y;
+					switch(icon.iconType) {
+						default: debugger; break;
+						case "CONTENT_CUT": case "INFO":
+					}
 					/** @typedef {keyof (typeof y1)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
 					let u;
@@ -2562,6 +2584,7 @@ class HandleTypes extends HandleTypesEval {
 			case "SETTINGS": case "EXPAND": case "DISMISSAL": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF":
 			case "NOTIFICATIONS_ACTIVE": case "MICROPHONE_ON": case "CHEVRON_RIGHT": case "CHEVRON_LEFT":
 			case "REMOVE": case "CLOSE": case "INFO": case "SHARE": case "CONTENT_CUT": case "PLAYLIST_ADD":
+			case "MONEY_HEART":
 		}
 		for(let k of ka) {
 			switch(k) {
