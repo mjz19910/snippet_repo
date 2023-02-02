@@ -3038,7 +3038,7 @@ class BaseService extends BaseServicePrivate {
 		if(x===void 0) return;
 		this.z_cf(cf,x,f);
 	}
-	/** @private @arg {string} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:string,x:U,i:number)=>void} f  */
+	/** @protected @arg {string} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:string,x:U,i:number)=>void} f  */
 	z_cf(cf,x,f) {
 		if(x===void 0) {debugger; return;}
 		if(!x.entries) debugger;

@@ -3293,10 +3293,14 @@ class HandleTypes extends HandleTypesEval {
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			let [a,gc]=this.T_SE_Signal(`${cf}.SE_Signal`,x);
+			/** @type {`${cf}.SE_Signal`} */
+			const cf1=`${cf}.SE_Signal`;
+			let [a,gc]=this.T_SE_Signal(cf1,x);
 			if(!this.eq_keys(this.get_keys_of(a),["webCommandMetadata"])) debugger;
 			this.M_SendPost(a);
-			this.G_ClientSignal(gc);
+			/** @type {`${cf1}.data`} */
+			const cf2=`${cf1}.data`;
+			this.G_ClientSignal(cf2,gc);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.C_AdsControlFlowOpportunityReceived(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
@@ -3557,7 +3561,7 @@ class HandleTypes extends HandleTypesEval {
 	RD_MenuServiceItem_ServiceInfo(x) {
 		const cf="RD_MenuServiceItem_ServiceInfo"; this.k(cf,x);
 		switch(x[0]) {
-			case "Signal": return this.G_ClientSignal(x[1]);
+			case "Signal": return this.G_ClientSignal(cf,x[1]);
 			default: debugger; break;
 		}
 	}
@@ -4917,9 +4921,13 @@ class HandleTypes extends HandleTypesEval {
 			this.G_Text(formattedTitle);
 			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType.WithIcon);
 			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithIcon,this.D_GuideEntry_MissingIconType);
-			let [a,b]=this.T_SE_Signal(`${cf1}.SE_Signal`,serviceEndpoint);
+			/** @type {`${cf2}.SE_Signal`} */
+			const cf3=`${cf2}.SE_Signal`;
+			let [a,b]=this.T_SE_Signal(cf3,serviceEndpoint);
 			this.M_SendPost(a);
-			this.G_ClientSignal(b);
+			/** @type {`${cf2}.SE_Signal`} */
+			const cf4=`${cf3}.data`;
+			this.G_ClientSignal(cf4,b);
 			this.trackingParams(cf1,trackingParams);
 			return;
 		}
