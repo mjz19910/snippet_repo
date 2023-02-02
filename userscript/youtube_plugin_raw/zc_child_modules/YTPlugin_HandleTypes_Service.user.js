@@ -2833,38 +2833,42 @@ class HandleTypes extends HandleTypesEval {
 		if("repeatChapterCommand"in x) return this.C_RepeatChapter(x);
 		this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
+	D_Button_ToggledServiceEP(x) {
+		const cf="D_ToggleButton";
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton_Omit(x) {
 		const cf="D_ToggleButton"; this.k(cf,x);
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.s(cf,x);
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,...y}=this.s(cf,x);
 		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
 		this.save_string("[D_ToggleButton.defaultIcon.type]",defaultIcon.iconType);
 		this.D_Button_DefServiceEP(defaultServiceEndpoint);
-		// this.C_RepeatChapter(defaultServiceEndpoint);
-		// this.C_Executor(toggledServiceEndpoint);
-		this.E_Like(toggledServiceEndpoint);
-		this.D_Label(accessibility);
+		this.D_Button_ToggledServiceEP(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.a_primitive_str(defaultTooltip);
-		this.a_primitive_str(toggledTooltip);
 		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
 		this.D_Accessibility(accessibilityData);
 		this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
 		// this.D_Accessibility(toggledAccessibilityData);
-		this.D_ToggleButtonIdData(toggleButtonSupportedData);
-		if(targetId===void 0) {debugger; return y;}
-		this.save_string("[D_ToggleButton.targetId]",targetId);
 		return y;
 	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		let u=this.D_ToggleButton_Omit(x);
 		if("defaultText" in u) {
-			const {defaultText,toggledText,...y}=u; this.g(y);/*//#destructure_done*/
+			const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*//#destructure_done*/
 			this.G_Text(defaultText);
 			this.G_Text(toggledText);
+			this.D_Label(accessibility);
+			this.a_primitive_str(defaultTooltip);
+			this.a_primitive_str(toggledTooltip);
+			this.save_string("[D_ToggleButton.targetId]",targetId);
+			this.D_ToggleButtonIdData(toggleButtonSupportedData);
 		}
 	}
 	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
