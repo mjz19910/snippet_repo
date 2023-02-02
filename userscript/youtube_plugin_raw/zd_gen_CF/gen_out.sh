@@ -40,7 +40,7 @@ function restore {
 	mv "$TMP_DIR/tmp.ts" "tmp.ts"
 	mv "tmp.ts" "out.ts"
 	cp "out_empty.ts" "tmp.ts"
-	mv "errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
+	mv "$TMP_DIR/errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
 	popd
 	cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 }
