@@ -39,6 +39,7 @@ type CF_L_Params=
 ;
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
 type CF_T_GM_gen=T_ExtractImport<"CF_T_GM">;
+type CF_Common=|CF_D_GuideEntry
 type CF_M_s=
 	|`${CF_parse_identifier}.identifier`
 	|CF_D_Button
@@ -50,7 +51,18 @@ type CF_M_s=
 	|CF_GE_ResponseReceived
 	|CF_T_GM
 	|CF_T_SE_Signal
+	|CF_Common
 	|T_ExtractImport<"CF_M_s">
+	;
+;
+type CF_L_TP_Params=
+	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
+	|`T_Items_TP:${CF_T_Items_TP}`
+	|CF_D_Link
+	|CF_D_Button
+	|CF_D_Menu_Omit
+	|CF_D_ChipCloudChip_Omit
+	|CF_Common
 	;
 ;
 type CF_T_Signal=
@@ -74,16 +86,6 @@ type CF_M_w=
 	;
 ;
 type CF_T_GM=CF_T_GM_gen|"CF_GM_WC_2"|"a";
-type CF_L_TP_Params=
-	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
-	|`T_Items_TP:${CF_T_Items_TP}`
-	|CF_D_Link
-	|CF_D_Button
-	|CF_D_Menu_Omit
-	|CF_D_ChipCloudChip_Omit
-	|CF_D_GuideEntry
-	;
-;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
 type CF_D_Params=T_ExtractImport<"CF_D_Params">|"DC_GetTranscript_Params"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
