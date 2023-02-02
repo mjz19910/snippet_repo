@@ -122,7 +122,7 @@ type D_Button=
 		icon: T_Icon<"CLOSE">;
 		trackingParams: string;
 		accessibilityData: TD_Accessibility<"Close">;
-		command: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>;
+		command: TA_OpenPopup<Popup_ConfirmDialog>;
 	}
 	|D_Button_2
 	|{
@@ -132,7 +132,7 @@ type D_Button=
 		icon: T_Icon<"CLOSE">;
 		trackingParams: string;
 		accessibilityData: TD_Accessibility<"Close">;
-		command: TA_OpenPopup<{popup: R_ConfirmDialog; popupType: "DIALOG";}>;
+		command: TA_OpenPopup<Popup_ConfirmDialog>;
 	}
 	|{
 		trackingParams: string;
