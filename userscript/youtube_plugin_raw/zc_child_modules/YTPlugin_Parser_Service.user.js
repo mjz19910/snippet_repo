@@ -1067,6 +1067,7 @@ class ParserService extends BaseService {
 						const idx=3;
 						if(parts.length===2) {
 							if(map_entry_value instanceof Map) return;
+							if(typeof map_entry_value==="number") return this.save_number(`[${path}]`,map_entry_value);
 							switch(map_entry_value) {default: debugger; return;}
 						}
 						switch(parts[2]) {
