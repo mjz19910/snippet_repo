@@ -4000,6 +4000,10 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 		throw new Error();
 	}
+	/** @arg {GU_VE83769_Url_Redirect} x */
+	D_YoutubeUrl(x) {
+		x;
+	}
 	/** @private @arg {GU_VE83769_Url_Internal|GU_VE83769_Url_Redirect|GU_VE83769_Url_External} x */
 	GM_VE83769_UrlType(x) {
 		if(this.str_starts_with_rx("/",x)) {
@@ -4015,6 +4019,7 @@ class HandleTypes extends HandleTypesEval {
 			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
 			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
+			case "www.youtube.com": {} break;
 			default: debugger; break;
 		}
 		const hn_yt_studio="https://studio.youtube.com";
