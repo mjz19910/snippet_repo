@@ -81,6 +81,7 @@ type CF_L_TP_Params=
 	|CF_D_Button
 	|CF_D_Menu_Omit
 	|CF_D_ChipCloudChip_Omit
+	|CF_D_GuideEntry
 	;
 ;
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|"CF_D_CustomEmoji"|"a";
