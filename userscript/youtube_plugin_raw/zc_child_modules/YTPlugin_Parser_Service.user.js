@@ -572,7 +572,7 @@ class ParserService extends BaseService {
 					case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value); default: new_ns(); debugger; return;}
 					case "get_report_form": switch(map_entry_key) {
-						case 2: case 8: case 11: case 14: case 15: case 18: case 27: case 29:
+						case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29:
 							return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_value);
 						default: new_ns(); debugger; return;
 					}
@@ -723,7 +723,7 @@ class ParserService extends BaseService {
 					default: u(idx); debugger; parts[1]===""; break;
 					case "f2": case "f8":
 					case "f11": case "f14": case "f15": case "f18":
-					case "f27":
+					case "f25": case "f26": case "f27": case "f28":
 					case "f29": {
 						const idx=3;
 						if(parts.length===2) {
