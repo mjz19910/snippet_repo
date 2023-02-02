@@ -1707,12 +1707,14 @@ class HandleTypes extends HandleTypesEval {
 	RS_Page_Browse(x) {
 		const cf="RS_Page_Browse"; this.k(cf,x);
 		if("rootVe" in x) {
-			const {rootVe,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-			this.t(rootVe,x => {
-				if(typeof x!=="number") {debugger; return;}
-				this.save_number(`${cf}.rootVe`,x);
-			});
-			debugger;
+			switch(x.rootVe) {
+				case 3854: {
+					const {rootVe,expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+					this.t(expirationTime,x => this._primitive_of(x,"number"));
+					this.save_number(`${cf}.rootVe`,rootVe);
+				} break;
+				default: debugger; break;
+			}
 			return;
 		}
 		if("expirationTime" in x) {

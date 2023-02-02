@@ -235,6 +235,13 @@ type RS_Page_Browse={
 	response: RS_Browse;
 	url: "/";
 	expirationTime: number;
+}|{
+	rootVe: 3854;
+	url: "/";
+	endpoint: GE_Browse;
+	page: "browse";
+	response: RS_Browse;
+	expirationTime: number;
 };
 type RS_Page_Channel={
 	page: "channel";
