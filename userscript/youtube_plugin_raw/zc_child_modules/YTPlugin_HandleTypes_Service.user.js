@@ -382,12 +382,90 @@ class HandleTypes extends HandleTypesEval {
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "ypc_get_offline_upsell":
-			case "subscriptionState":
-			case "UndoFeedback":
-			case "reload":
-			case "transcriptTrackSelection":
-			case "feedback": u(idx); debugger; break;
+			case "url": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "redir_token": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
+			case "ypc_get_offline_upsell": {
+				const idx=2;
+				if(parts.length!==1) {parts==="";}
+				u(idx);
+				debugger;
+			} break;
+			case "subscriptionState": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "key": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
+			case "UndoFeedback": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "undoToken": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
+			case "reload": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "continuation": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
+			case "transcriptTrackSelection": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "serializedParams": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
+			case "feedback": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "feedbackToken": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
 			case "get_report_form": {
 				const idx=2;
 				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
@@ -472,10 +550,44 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 				}
 			} break;
-			case "next": u(idx); debugger; break;
-			case "aadc_guidelines_state_entity_key": u(idx); debugger; break;
-			case "TimedContinuation": u(idx); debugger; break;
-			case "D_Browse": u(idx); debugger; break;
+			case "next": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "queue_context_params": case "continuation": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
+			case "aadc_guidelines_state_entity_key": {
+				const idx=2;
+				if(parts.length!==1) {parts==="";}
+				u(idx);
+				debugger;
+			} break;
+			case "TimedContinuation": {
+				const idx=2;
+				if(parts.length!==1) {parts==="";}
+				u(idx);
+				debugger;
+			} break;
+			case "D_Browse": {
+				const idx=2;
+				switch(parts[1]) {
+					default: u(idx); debugger; parts[1]===""; break;
+					case "param": {
+						const idx=3;
+						if(parts.length===2) {
+							switch(map_entry_value) {default: debugger; return;}
+						}
+						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+					} break;
+				}
+			} break;
 			case "GetNotificationMenu": {
 				const idx=2;
 				switch(parts[1]) {
