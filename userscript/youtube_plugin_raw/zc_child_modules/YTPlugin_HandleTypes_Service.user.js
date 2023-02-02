@@ -8565,7 +8565,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @this {HandleTypes<LoadAllServices,ServiceOptions>} @arg {ResolverT<Cls_T,Cls_U>} x */
 	constructor(x) {
 		super(x);
-		generate_typedef.value=new TypedefGenerator(this);
+		Promise.resolve().then(() => {
+			generate_typedef.value=new TypedefGenerator(this);
+		});
 	}
 	//#endregion
 }
