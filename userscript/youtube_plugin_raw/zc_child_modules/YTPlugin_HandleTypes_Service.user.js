@@ -3574,8 +3574,7 @@ class HandleTypes extends HandleTypesEval {
 			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
 		}
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
-		this.t(res,x => {
-		});
+		this.t(res,this.RD_MenuServiceItem_ServiceInfo);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
@@ -4925,7 +4924,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf3=`${cf2}.SE_Signal`;
 			let [a,b]=this.T_SE_Signal(cf3,serviceEndpoint);
 			this.M_SendPost(a);
-			/** @type {`${cf2}.SE_Signal`} */
+			/** @type {`${cf3}.data`} */
 			const cf4=`${cf3}.data`;
 			this.G_ClientSignal(cf4,b);
 			this.trackingParams(cf1,trackingParams);

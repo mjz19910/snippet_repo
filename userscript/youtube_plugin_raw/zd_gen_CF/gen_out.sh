@@ -3,7 +3,7 @@ PROJ_DIR="$PWD"
 DEST_DIR="userscript/youtube_plugin_raw/zd_gen_CF"
 TMP_DIR="/dev/shm/snippet_repo_tmp"
 function after_clone_git_repo {
-		git -C "$TMP_DIR" apply "snippet_repo.diff"
+		git apply "../snippet_repo.diff"
 }
 function make_tmp_git_repo {
 	pushd /dev/shm
