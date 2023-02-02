@@ -26,7 +26,7 @@ type GM_WC_PostApi=[
 	GM_GetTranscript,
 	GM_GetNotificationMenu,
 	GM_Dislike,
-	GM_Like_1,
+	GM_LikeLike,
 	GM_RemoveLike,
 	GM_Next,
 	GM_GetUnseenNotificationCount,

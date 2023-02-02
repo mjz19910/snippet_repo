@@ -24,6 +24,7 @@ type M_Feedback=TM_Gen<GM_Feedback>;
 type M_FlagGetForm=TM_Gen<GM_FlagGetForm>;
 type M_GetNotificationMenu=TM_Gen<GM_GetNotificationMenu>;
 type M_GetSharePanel=TM_Gen<GM_GetSharePanel>;
+type M_GetTranscript=TM_Gen<GM_GetTranscript>;
 type M_GetUnseenNotificationCount=TM_Gen<GM_GetUnseenNotificationCount>;
 type M_Like=TM_Gen<GM_Like>;
 type M_Next=TM_Gen<GM_Next>;

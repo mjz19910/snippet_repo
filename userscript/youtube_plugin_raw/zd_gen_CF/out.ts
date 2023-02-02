@@ -549,19 +549,11 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_AddToPlaylistService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreateBackstagePost";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_CreatePlaylist";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_EditPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_Feedback";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_FlagGetForm";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_GetNotificationMenu";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_GetUnseenNotificationCount";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_Next";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_RecordInteractions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_SendPost";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_Subscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
@@ -578,9 +570,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_WC_Base";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_YpcGetCart";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_browse";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_like_dislike";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_like_like";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_like_removelike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Action_GetNotificationsMenu_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_CommentsSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_DC_SectionList";}
@@ -757,7 +746,19 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_Opt_3; t: Types.CF_TE_Endpoint_Opt_3_; v: "C_Continuation";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_Executor";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AccountMenu";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateBackstagePost";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Dislike";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_EditPlaylist";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_FlagGetForm";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetNotificationMenu";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetSharePanel";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetTranscript";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetUnseenNotificationCount";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_LikeLike";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Next";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RemoveLike";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Subscribe";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
@@ -794,6 +795,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_FlagGetForm";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetNotificationMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetSharePanel";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetTranscript";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Like";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Next";}

@@ -132,7 +132,7 @@ type GV_SubDomain=[
 	`rr${number}---${"sn-nx"}${string}`
 ][number];
 
-type GM_Like=GM_Like_1|GM_Dislike|GM_RemoveLike;
+type GM_Like=GM_LikeLike|GM_Dislike|GM_RemoveLike;
 type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
 
 type RSB_EditPlaylist={

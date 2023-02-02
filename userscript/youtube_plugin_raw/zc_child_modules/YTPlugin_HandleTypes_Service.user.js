@@ -1787,7 +1787,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_Empty_WCM("M_GetTranscript",a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("M_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
 	/** @private @arg {E_Search} x */
@@ -1820,6 +1820,8 @@ class HandleTypes extends HandleTypesEval {
 	E_CreatePlaylistService(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(u);}
 	/** @private @arg {E_NotificationOptOut} x */
 	E_NotificationOptOut(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,u);}
+	/** @protected @arg {M_GetTranscript} x */
+	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @protected @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
@@ -1909,16 +1911,6 @@ class HandleTypes extends HandleTypesEval {
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @private @arg {GM_EditPlaylist} x */
-	GM_EditPlaylist(x) {
-		const cf="GM_EditPlaylist"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		this.GM_WC(x);
-	}
-	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;
 	/** @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
@@ -1982,17 +1974,37 @@ class HandleTypes extends HandleTypesEval {
 		};
 	}
 	/** @private @arg {GM_Subscribe} x */
-	GM_Subscribe(x) {const {sendPost: a,apiUrl: b,...y}=this.s("GM_Subscribe",x); this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/subscription/subscribe");}
+	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @private @arg {GM_FlagGetForm} x */
-	GM_FlagGetForm(x) {const {sendPost: a,apiUrl: b,...y}=this.s("GM_FlagGetForm",x); this.g(y); this.ceq(a,this.true_()); this.ceq(b,"/youtubei/v1/flag/get_form");}
+	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
+	/** @protected @arg {GM_GetTranscript} x */
+	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
+	/** @private @arg {GM_EditPlaylist} x */
+	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
+	/** @private @arg {GM_GetSharePanel} x */
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
+	/** @private @arg {GM_CreateBackstagePost} x */
+	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
+	/** @private @arg {GM_RemoveLike} x */
+	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
+	/** @private @arg {GM_Dislike} x */
+	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.ceq(x,"/youtubei/v1/like/dislike"));}
+	/** @private @arg {GM_LikeLike} x */
+	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.ceq(x,"/youtubei/v1/like/like"));}
+	/** @private @arg {GM_AccountMenu} x */
+	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
+	/** @private @arg {GM_GetUnseenNotificationCount} x */
+	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
+	/** @private @arg {GM_GetNotificationMenu} x */
+	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
 		const cf="GM_Like"; this.g_k(cf,x); this.k(cf,x);
 		switch(x.apiUrl) {
 			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_like_removelike(x);
-			case "/youtubei/v1/like/dislike": return this.GM_like_dislike(x);
-			case "/youtubei/v1/like/like": return this.GM_like_like(x);
+			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
+			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
+			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
 		}
 	}
 	/** @private @arg {GM_VE_WC_Browse} x @returns {`VE${GM_VE_WC_Browse["rootVe"]}`} */
@@ -2050,6 +2062,31 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 		if(rootVe!==37414) debugger;
+	}
+	/** @private @arg {GM_Next} x */
+	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
+	/** @private @arg {GM_YpcGetCart} x */
+	GM_YpcGetCart(x) {
+		const cf="GM_YpcGetCart"; this.k(cf,x);
+		const {apiUrl,sendPost,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @private @arg {GM_CreatePlaylist} x */
+	GM_CreatePlaylist(x) {
+		const cf="GM_CreatePlaylist"; this.k(cf,x);
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
+	}
+	/** @private @arg {GM_SetSetting} x */
+	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
+	/** @protected @arg {GM_AddToPlaylistService} x */
+	GM_AddToPlaylistService(x) {
+		const cf="GM_AddToPlaylistService"; this.k(cf,x);
+		const {apiUrl,sendPost,...y1}=this.s(cf,x); this.g(y1);
+		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
+		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {string} ve_name @arg {GM_VE3611_WC['url']|GM_VE5754_WC["url"]} x */
 	_decode_channel_url(ve_name,x) {
@@ -3016,13 +3053,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {M_Next} x */
 	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
-	/** @private @arg {GM_Next} x */
-	GM_Next(x) {
-		const cf="GM_Next"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/next") debugger;
-	}
 	/** @private @arg {DC_Continuation} x */
 	DC_Continuation(x) {
 		if("continuationCommand" in x) debugger;
@@ -3208,13 +3238,6 @@ class HandleTypes extends HandleTypesEval {
 		if(knobColorArgb!==4280191205) debugger;
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
-	}
-	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {
-		const cf="GM_YpcGetCart"; this.k(cf,x);
-		const {apiUrl,sendPost,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(apiUrl!=="/youtubei/v1/ypc/get_cart") debugger;
-		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {DE_YpcGetCart} x */
 	DE_YpcGetCart(x) {
@@ -3905,13 +3928,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
-	/** @private @arg {GM_CreatePlaylist} x */
-	GM_CreatePlaylist(x) {
-		const cf="GM_CreatePlaylist"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/playlist/create") debugger;
-	}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist"; this.k(cf,x);
@@ -4053,8 +4069,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.save_boolean("[autoplay.switch.enabled]",enabled);
 	}
-	/** @private @arg {GM_SetSetting} x */
-	GM_SetSetting({sendPost,apiUrl,...y}) {if(apiUrl!=="/youtubei/v1/account/set_setting") debugger; this.g(y);}
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
 	T_DE_SettingItem_AutonavForDesktop(x) {
 		if("boolValue" in x) {
@@ -4234,13 +4248,6 @@ class HandleTypes extends HandleTypesEval {
 			this.ceq(isDisabled,false);
 			return;
 		}
-	}
-	/** @protected @arg {GM_AddToPlaylistService} x */
-	GM_AddToPlaylistService(x) {
-		const cf="GM_AddToPlaylistService"; this.k(cf,x);
-		const {apiUrl,sendPost,...y1}=this.s(cf,x); this.g(y1);
-		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
-		if(sendPost!==true) debugger;
 	}
 	/** @protected @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
@@ -6173,13 +6180,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
-	/** @private @arg {GM_CreateBackstagePost} x */
-	GM_CreateBackstagePost(x) {
-		const cf="GM_CreateBackstagePost"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/backstage/create_post") debugger;
-	}
 	/** @private @arg {DC_Executor} x */
 	DC_Executor(x) {this.T_Commands("DC_Executor",x,this.AC_Executor);}
 	/** @private @arg {AC_Executor} x */
@@ -6637,27 +6637,6 @@ class HandleTypes extends HandleTypesEval {
 			this.z(serviceEndpoints,this.E_Like);
 		}
 	}
-	/** @private @arg {GM_RemoveLike} x */
-	GM_like_removelike(x) {
-		const cf="GM_like_removelike"; this.k(cf,x);
-		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(a!=="/youtubei/v1/like/removelike") debugger;
-		if(b!==true) debugger;
-	}
-	/** @private @arg {GM_Dislike} x */
-	GM_like_dislike(x) {
-		const cf="GM_like_dislike"; this.k(cf,x);
-		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(a!=="/youtubei/v1/like/dislike") debugger;
-		if(b!==true) debugger;
-	}
-	/** @private @arg {GM_Like_1} x */
-	GM_like_like(x) {
-		const cf="GM_like_like"; this.k(cf,x);
-		const {apiUrl: a,sendPost: b,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(a!=="/youtubei/v1/like/like") debugger;
-		if(b!==true) debugger;
-	}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		const cf="D_LikeApi"; this.k(cf,x);
@@ -6932,13 +6911,6 @@ class HandleTypes extends HandleTypesEval {
 		this.M_AccountMenu(res[0]);
 		this.S_GetAccountMenu(res[1]);
 	}
-	/** @private @arg {GM_AccountMenu} x */
-	GM_AccountMenu(x) {
-		const cf="GM_AccountMenu"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
-	}
 	/** @private @arg {D_NotificationTopbarButton} x */
 	D_NotificationTopbarButton(x) {
 		const cf="D_NotificationTopbarButton"; this.k(cf,x);
@@ -6957,12 +6929,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(notificationCount);
 		this.ceq(handlerDatas.length,1);
 		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
-	}
-	/** @private @arg {GM_GetUnseenNotificationCount} x */
-	GM_GetUnseenNotificationCount(x) {
-		const {sendPost,apiUrl,...y}=this.s("GM_GetUnseenNotificationCount",x); this.g(y);
-		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
-		if(sendPost!==true) debugger;
 	}
 	/** @private @arg {Signal_GetNotificationsMenu} x */
 	Signal_GetNotificationsMenu(x) {
@@ -6991,13 +6957,6 @@ class HandleTypes extends HandleTypesEval {
 		if(popupType!=="DROPDOWN") debugger;
 		if(beReused!==true) debugger;
 		return a;
-	}
-	/** @private @arg {GM_GetNotificationMenu} x */
-	GM_GetNotificationMenu(x) {
-		const cf="GM_GetNotificationMenu"; this.k(cf,x);
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
 	}
 	/** @private @arg {A_SendFeedback} x */
 	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
