@@ -2987,7 +2987,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Radio(x) {
 		const cf="D_Radio";
 		let {...y}=this.Omit_Menu_Radio(cf,x);
-		const {videos,...z}=y; this.g(z);
+		const {videos}=this.s(cf,y);/* this.g(z);//#destructure*/
 		this.z(videos,this.R_ChildVideo);
 	}
 	/** @private @arg {D_ChildVideo} x */
@@ -3047,7 +3047,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */
 	D_Video_Handle(cf,x) {
 		let u=this.D_Video_Omit(cf,x);
-		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons,...y}=u; this.g(y);
+		const {descriptionSnippet,publishedTimeText,lengthText,viewCountText,ownerBadges,badges,upcomingEventData,shortViewCountText,isWatched,topStandaloneBadge,richThumbnail,inlinePlaybackEndpoint,owner,buttons}=this.s(cf,u);/* this.g(y);//#destructure*/
 		this.t(descriptionSnippet,this.G_Text);
 		this.t(publishedTimeText,this.G_Text);
 		this.t(lengthText,this.G_Text);
@@ -3081,15 +3081,13 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Video_Handle("D_Video_Other",x);
 	}
 	/** @private @arg {D_ToggleButton} x */
-	D_ToggleButton(x) {
+	D_ToggleButton_Omit(x) {
 		const cf="D_ToggleButton";
-		const {style,isDisabled,isToggled,defaultIcon,defaultText,defaultServiceEndpoint,toggledText,toggledServiceEndpoint,accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId}=this.s(cf,x);/* this.g(y);//#destructure*/
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,accessibility,trackingParams,defaultTooltip,toggledTooltip,toggledStyle,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.s(cf,x);
 		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
 		this.save_string("[D_ToggleButton.defaultIcon.type]",defaultIcon.iconType);
-		this.G_Text(defaultText);
-		this.G_Text(toggledText);
 		if(!defaultServiceEndpoint.commandExecutorCommand) debugger;
 		this.C_CommandExecutor(defaultServiceEndpoint);
 		// this.C_RepeatChapter(defaultServiceEndpoint);
@@ -3104,8 +3102,18 @@ class HandleTypes extends HandleTypesEval {
 		this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
 		// this.D_Accessibility(toggledAccessibilityData);
 		this.D_ToggleButtonIdData(toggleButtonSupportedData);
-		if(targetId===void 0) {debugger; return;}
+		if(targetId===void 0) {debugger; return y;}
 		this.save_string("[D_ToggleButton.targetId]",targetId);
+		return y;
+	}
+	/** @private @arg {D_ToggleButton} x */
+	D_ToggleButton(x) {
+		let u=this.D_ToggleButton_Omit(x);
+		if("defaultText" in u) {
+			const {defaultText,toggledText}=u;/* this.g(y);//#destructure*/
+			this.G_Text(defaultText);
+			this.G_Text(toggledText);
+		}
 	}
 	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
@@ -4234,7 +4242,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(addToMenu);
 		this.R_PlayerOverlayVideoDetails(videoDetails);
 		if("decoratedPlayerBarRenderer" in y) {
-			const {decoratedPlayerBarRenderer,...y1}=y; this.g(y1);
+			const {decoratedPlayerBarRenderer}=this.s(cf,y);/* this.g(y1);//#destructure*/
 			return this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
 		}
 		this.g(y);
@@ -4252,7 +4260,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_DecoratedPlayerBar";
 		const {playerBar,...y}=this.s(cf,x);
 		if("playerBarActionButton" in y) {
-			const {playerBarActionButton,...y1}=y; this.g(y1);
+			const {playerBarActionButton,}=this.s(cf,y);/* this.g(y1);//#destructure*/
 			return this.R_Button(playerBarActionButton);
 		}
 		this.g(y);
@@ -4438,18 +4446,18 @@ class HandleTypes extends HandleTypesEval {
 		if("loggingDirectives" in x) {
 			if("icon" in x) {
 				const u=this.RD_MenuServiceItem_Omit(cf,x);
-				const {icon,loggingDirectives,...y}=u; this.g(y);
+				const {icon,loggingDirectives,}=this.s(cf,u);/* this.g(y);//#destructure*/
 				this.RD_MenuServiceItem_Icon(icon);
 				this.D_LoggingDirectives(loggingDirectives);
 				return;
 			}
 			const u=this.RD_MenuServiceItem_Omit(cf,x);
-			const {loggingDirectives,...y}=u; this.g(y);
+			const {loggingDirectives,}=this.s(cf,u);/* this.g(y);//#destructure*/
 			this.D_LoggingDirectives(loggingDirectives);
 			return;
 		}
 		const {...u}=this.RD_MenuServiceItem_Omit(cf,x);
-		const {icon,hasSeparator,isDisabled,...y}=u; this.g(y);
+		const {icon,hasSeparator,isDisabled,}=this.s(cf,u);/* this.g(y);//#destructure*/
 		this.RD_MenuServiceItem_Icon(icon);
 		this.t(hasSeparator,x => this.ceq(x,true));
 		this.t(isDisabled,x => this.ceq(x,false));
@@ -4512,7 +4520,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_Feedback(x) {
 		const cf="DE_Feedback",u=this.T_OmitKey(cf,"feedbackToken",x,this.DE_Feedback_onToken);
 		if(!("uiActions" in u)) return this.g(u);
-		const {uiActions,actions,...y}=u; this.g(y);
+		const {uiActions,actions,}=this.s(cf,u);/* this.g(y);//#destructure*/
 		this.D_HideEnclosingContainer(uiActions);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
@@ -5011,9 +5019,9 @@ class HandleTypes extends HandleTypesEval {
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
 		this.D_AdLayout_TypeStr(y.layoutType);
 		switch(y.layoutType) {
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=y; this.g(u); break;
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {}}=this.s(cf,y);/* this.g(u);//#destructure*/ break;
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
-				const {layoutType: {},adLayoutLoggingData,...u}=y; this.g(u);
+				const {layoutType: {},adLayoutLoggingData}=this.s(cf,y);/* this.g(u);//#destructure*/
 				this.D_AdLayoutLogging(adLayoutLoggingData);
 			}
 		}
@@ -5046,7 +5054,7 @@ class HandleTypes extends HandleTypesEval {
 	DMD_AdSlot(x) {
 		const cf="DMD_AdSlot",u=this.DMD_AdSlot_Omit(cf,x);
 		if("adSlotLoggingData" in u) {
-			const {adSlotLoggingData,...y}=u; this.g(y);
+			const {adSlotLoggingData}=this.s(cf,u);/* this.g(y);//#destructure*/
 			return this.D_SerializedSlotAdServingDataEntry(adSlotLoggingData);
 		}
 		this.g(u);
@@ -5532,12 +5540,12 @@ class HandleTypes extends HandleTypesEval {
 		this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.GE_Continuation(continuationEndpoint);
 		if("button" in y) {
-			const {button,...a}=y; this.g(a);
+			const {button}=this.s(cf,y);/* this.g(a);//#destructure*/
 			this.R_Button(button);
 			return;
 		}
 		if("ghostCards" in y) {
-			const {ghostCards,...a}=y; this.g(a);
+			const {ghostCards}=this.s(cf,y);/* this.g(a);//#destructure*/
 			this.R_GhostGrid(ghostCards);
 			return;
 		}
@@ -5784,7 +5792,7 @@ class HandleTypes extends HandleTypesEval {
 				return this.R_GuideEntryData(entryData);
 			}
 			const {...u}=this.D_GuideEntry_Omit(cf1,x);
-			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=u; this.g(y);
+			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle}=this.s(cf2,u);/* this.g(y);//#destructure*/
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
 			this.GE_Browse(navigationEndpoint);
@@ -5909,7 +5917,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Playlist(response);
 		this.a_primitive_str(url);
 		if("rootVe" in y) {
-			const {rootVe,...u}=y; this.g(u);
+			const {rootVe}=this.s(cf,y);/* this.g(u);//#destructure*/
 			switch(rootVe) {
 				default: debugger; break;
 				case 5754: break;
@@ -6542,7 +6550,7 @@ class HandleTypes extends HandleTypesEval {
 		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
 		if("isSelected" in x) {
 			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {isSelected: a,...y}=d; this.g(y);
+			const {isSelected: a}=this.s(cf,d);/* this.g(y);//#destructure*/
 			if(a!==true) debugger;
 			return;
 		}
@@ -6658,7 +6666,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(label);
 		this.a_primitive_str(hotkey);
 		if("hotkeyAccessibilityLabel" in y) {
-			const {hotkeyAccessibilityLabel,...y1}=y; this.g(y1);
+			const {hotkeyAccessibilityLabel}=this.s(cf,y);/* this.g(y1);//#destructure*/
 			return this.D_Accessibility(hotkeyAccessibilityLabel);
 		}
 		this.g(y);
@@ -6925,7 +6933,7 @@ class HandleTypes extends HandleTypesEval {
 			if(obj.get_with_pathname(up,"/watch")) {
 				let {...s}=this.parse_url_search_params(up.search);
 				if("v" in s) {
-					let {v,playnext,list,...y}=s; this.g(y);
+					let {v,playnext,list}=this.s(cf,s);/* this.g(y);//#destructure*/
 					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
 					let gw=() => ({k: 1,a: v});
 					let w=gw();
@@ -6964,7 +6972,7 @@ class HandleTypes extends HandleTypesEval {
 			if(obj.get_with_pathname(up,"/playlist")) {
 				let {...s}=this.parse_url_search_params(up.search);
 				if("list" in s) {
-					let {list,...y}=s; this.g(y);
+					let {list}=this.s(cf,s);/* this.g(y);//#destructure*/
 					let w=list;
 					if(this.str_starts_with(w,"PL")) return this.playlistId(w);
 					debugger;
@@ -7093,14 +7101,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_TopbarMenuButton";
 		let u=this.D_TopbarMenuButton_Omit(cf,x);
 		if("menuRenderer" in u) {
-			const {icon,menuRenderer,style,...y}=u; this.g(y);
+			const {icon,menuRenderer,style}=this.s(cf,u);/* this.g(y);//#destructure*/
 			if(icon.iconType!=="VIDEO_CALL") debugger;
 			let uv=this.TR_MultiPageMenu("R_TopbarMenu",menuRenderer);
 			this.D_TopbarMenuButton_MenuItem(uv);
 			if(style!=="STYLE_DEFAULT") debugger;
 			return;
 		}
-		const {avatar,menuRequest,...y}=u; this.g(y);
+		const {avatar,menuRequest}=this.s(cf,u);/* this.g(y);//#destructure*/
 		this.D_Thumbnail(avatar);
 		let res=this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest);
 		this.M_AccountMenu(res[0]);
@@ -8003,7 +8011,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Thumbnail(thumbnail);
 		this.a_primitive_str(description);
 		this.a_primitive_str(title);
-		if(!this.str_starts_with(price,"CA_")) debugger;
+		if(!this.str_starts_with(price,"CA$")) debugger;
 		this.a_primitive_str(vendorName);
 		this.trackingParams(cf,trackingParams);
 		this.a_primitive_str(buttonText);
@@ -8125,7 +8133,11 @@ class HandleTypes extends HandleTypesEval {
 		this.t(subscribed,this.a_primitive_bool);
 	}
 	/** @private @arg {D_VideoOwner} x */
-	D_VideoOwner(x) {let u=this.D_VideoOwner_Omit("D_VideoOwner",x); const {badges,...y}=u; this.g(y);}
+	D_VideoOwner(x) {
+		const cf="D_VideoOwner";
+		let u=this.D_VideoOwner_Omit(cf,x); const {badges}=this.s(`${cf}:1`,u);/* this.g(y);//#destructure*/
+		this.tz(badges,this.RMD_Badge);
+	}
 	/** @private @arg {D_MusicCarouselShelf} x */
 	D_MusicCarouselShelf(x) {
 		const cf="D_MusicCarouselShelf";
@@ -8313,7 +8325,7 @@ class HandleTypes extends HandleTypesEval {
 			case "SHORTS":
 		}
 		if("icon" in y) {
-			const {icon,...u}=y; this.g(u);
+			const {icon}=this.s(cf,y);/* this.g(u);//#destructure*/
 			switch(icon.iconType) {
 				default: debugger; break;
 				case "LIVE":

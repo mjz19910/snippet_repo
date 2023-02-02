@@ -365,6 +365,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideEntry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideEntryBadges";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideEntryData";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideSubscriptionsSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HeroPlaylistThumbnail";}
@@ -441,6 +442,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfileColumnStatsEntry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfileColumnUserInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ProfilePageHeaderInformation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Radio";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RadioShareUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelWatch";}
@@ -506,6 +509,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoDescriptionHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoDescriptionMusicSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner:1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPrimaryInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoSecondaryInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoViewCount";}

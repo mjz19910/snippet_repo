@@ -1063,7 +1063,7 @@ type D_MerchandiseItem={
 	title: string;
 	description: string;
 	thumbnail: D_Thumbnail;
-	price: `CA_${string}`;
+	price: `CA$${string}`;
 	vendorName: string;
 	trackingParams: string;
 	buttonText: string;
