@@ -1022,11 +1022,37 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[1]) {default: u(idx); debugger; parts[1]===""; break; case "param": u(idx); debugger; break;}
 			} break;
 			case "watch": {
-				const idx=2;
 				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "params": case "player_params": u(idx); debugger; break;
+					default: {const idx=2; u(idx); debugger; parts[2]==="";} return;
+					case "params": case "player_params": break;
 				}
+				if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
+				switch(parts[2]) {
+					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					case "f2": case "f3": case "f7": case "f8": case "f9": case "f12": case "f13": case "f24": case "f25": case "f27": case "f33": case "f39": case "f40": case "f56": break;
+				}
+				if(parts.length===3) {
+					if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
+					if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(parts[3]) {
+					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
+					case "f1": case "f2": case "f3": case "f4": case "f5":
+				}
+				if(parts.length===4) {
+					if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
+					if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+					switch(map_entry_value) {default: debugger; return;}
+				}
+				switch(parts[4]) {
+					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
+					case "f2": case "f3":
+				}
+				if(parts.length!==5) debugger;
+				if(typeof map_entry_value==="number") return this.save_number(path,map_entry_value);
+				if(typeof map_entry_value==="string") return this.save_string(path,map_entry_value);
+				switch(map_entry_value) {default: debugger; return;}
 			} break;
 			case "createBackstagePost": {
 				const idx=2;
