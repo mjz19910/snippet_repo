@@ -25,9 +25,5 @@ namespace NS_MakeJoin {
 		use_all_types;
 	}
 }
-namespace NS_Outer {
-	export type Join<T extends string[],U extends string=",">=NS_Outer_2.Join1<T,U>;
-}
-namespace NS_Outer_2 {
-	export type Join1<T extends string[],U extends string=",">=Join<T,U>;
-}
+namespace NS_Outer {export type Join<T extends string[],U extends string=",">=NS_Outer_2.Join1<T,U>;}
+namespace NS_Outer_2 {export type Join1<T extends string[],U extends string=",">=Join<T,U>;}

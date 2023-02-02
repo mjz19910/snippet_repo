@@ -248,9 +248,7 @@
 			this.m_current=-1;
 		}
 		/** @arg {number} current_value */
-		set_current(current_value) {
-			this.m_current=current_value;
-		}
+		set_current(current_value) {	this.m_current=current_value;}
 		current() {
 			return this.m_current;
 		}
@@ -274,15 +272,11 @@
 	}
 	/** @arg {boolean} assert_result @arg {string} assert_message */
 	function VERIFY(assert_result,assert_message) {
-		if(!assert_result) {
-			throw new VerifyError(assert_message);
-		}
+		if(!assert_result) {throw new VerifyError(assert_message);}
 	}
 	/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
 	function assert_non_null(value) {
-		if(value===null) {
-			throw new AssertionError("Assertion failure: value was null");
-		}
+		if(value===null) {throw new AssertionError("Assertion failure: value was null");}
 	}
 	class Timer {
 		/** @arg {UniqueIdGenerator} id_generator @arg {TimerApi} api_info */
@@ -303,9 +297,7 @@
 			this.add_one_name(names.repeating);
 		}
 		/** @arg {keyof Window} key */
-		add_one_name(key) {
-			this.m_api_map.set(key,window[key]);
-		}
+		add_one_name(key) {this.m_api_map.set(key,window[key]);}
 		/** @arg {TimerApi["set_names"]} set @arg {TimerApi["clear_names"]} clear */
 		set_api_names(set,clear) {
 			this.set_map_names(set);
@@ -315,13 +307,9 @@
 			this.id_generator.set_current(this.base_id);
 		}
 		/** @arg {WorkerState} worker_state_value */
-		set_worker_state(worker_state_value) {
-			this.worker_state=worker_state_value;
-		}
+		set_worker_state(worker_state_value) {this.worker_state=worker_state_value;}
 		/** @returns {asserts this is {worker_state: NonNullable<Timer["worker_state"]>}} */
-		assert_valid_worker() {
-			assert_non_null(this.worker_state);
-		}
+		assert_valid_worker() {assert_non_null(this.worker_state);}
 		/** @arg {TimerTag} tag @arg {number} remote_id */
 		fire(tag,remote_id) {
 			this.assert_valid_worker();
@@ -329,9 +317,7 @@
 			if(!state) throw new Error("No state for id");
 			let active_state=this.activate_state(state);
 			try {
-				if(active_state.active) {
-					active_state.target_fn.apply(null,state.target_args);
-				}
+				if(active_state.active) {active_state.target_fn.apply(null,state.target_args);}
 			} finally {
 				if(tag===TIMER_SINGLE) {
 					state.active=false;
@@ -391,24 +377,14 @@
 			});
 		}
 		/** @arg {number} remote_id */
-		is_state_stored_by_remote_id(remote_id) {
-			return this.m_remote_id_to_state_map.has(remote_id);
-		}
+		is_state_stored_by_remote_id(remote_id) {return this.m_remote_id_to_state_map.has(remote_id);}
 		/** @arg {number} remote_id */
-		get_state_by_remote_id(remote_id) {
-			return this.m_remote_id_to_state_map.get(remote_id);
-		}
+		get_state_by_remote_id(remote_id) {return this.m_remote_id_to_state_map.get(remote_id);}
 		/** @arg {number} remote_id @arg {TimerState} state */
-		store_state_by_remote_id(remote_id,state) {
-			this.m_remote_id_to_state_map.set(remote_id,state);
-		}
+		store_state_by_remote_id(remote_id,state) {this.m_remote_id_to_state_map.set(remote_id,state);}
 		/** @arg {number} remote_id */
-		delete_state_by_remote_id(remote_id) {
-			this.m_remote_id_to_state_map.delete(remote_id);
-		}
-		remote_id_to_state_entries() {
-			return this.m_remote_id_to_state_map.entries();
-		}
+		delete_state_by_remote_id(remote_id) {this.m_remote_id_to_state_map.delete(remote_id);}
+		remote_id_to_state_entries() {return this.m_remote_id_to_state_map.entries();}
 		/** @arg {ReplyToLocalTimerMsg|TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 		on_result(msg) {
 			console.log(msg);
@@ -423,9 +399,7 @@
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
-				case ReplyToLocalTimer: {
-					console.assert(false,"on_result timer_result_msg needs a handler for ReplyMessage2");
-				} break;
+				case ReplyToLocalTimer: {console.assert(false,"on_result timer_result_msg needs a handler for ReplyMessage2");} break;
 				default:
 					console.assert(false,"on_result timer_result_msg needs a handler for",msg);
 			}
@@ -435,9 +409,7 @@
 			switch(msg.type) {
 				case g_timer_api.reply.clear.single: break;
 				case g_timer_api.reply.clear.repeating: break;
-				default: {
-					console.log("reply for",msg);
-				} break;
+				default: {	console.log("reply for",msg);} break;
 			}
 		}
 		/** @arg {1|2} tag @arg {number} remote_id */
@@ -445,9 +417,7 @@
 			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) return;
-			if(state.active) {
-				return this.clear(tag,remote_id);
-			}
+			if(state.active) {return this.clear(tag,remote_id);}
 			// we have to trust the user, go ahead and send the message anyway
 			if(tag===TIMER_SINGLE) {
 				this.worker_state.typedPostMessage({
@@ -730,12 +700,8 @@
 			let msg=e.data;
 			let worker_state=this;
 			switch(msg.type) {
-				case TimeoutFireSingle: {
-					worker_state.timer.fire(TIMER_SINGLE,msg.value);
-				} break;
-				case TimeoutFireRepeating: {
-					worker_state.timer.fire(TIMER_REPEATING,msg.value);
-				} break;
+				case TimeoutFireSingle: {worker_state.timer.fire(TIMER_SINGLE,msg.value);} break;
+				case TimeoutFireRepeating: {worker_state.timer.fire(TIMER_REPEATING,msg.value);} break;
 				case WorkerUpdateMessageHandler: break;
 				case TimeoutMessageReady: this.on_result(msg); break;
 				case TimeoutSetSingle: break;
@@ -746,15 +712,9 @@
 				case WorkerDestroyType: {
 					worker_state.destroy();
 				} break;
-				case ReplyToWorkerState: {
-					worker_state.dispatch_message(msg);
-				} break;
-				case ReplyToLocalTimer: {
-					worker_state.dispatch_message(msg);
-				} break;
-				case ReplyFromWorker: {
-					worker_state.dispatch_message(msg);
-				} break;
+				case ReplyToWorkerState: {worker_state.dispatch_message(msg);} break;
+				case ReplyToLocalTimer: {worker_state.dispatch_message(msg);} break;
+				case ReplyFromWorker: {worker_state.dispatch_message(msg);} break;
 				case ReplyToWorker: break;
 				case TimeoutSingleReply: break;
 				case TimeoutRepeatingReply: break;
@@ -768,9 +728,7 @@
 			}
 		}
 		/** @arg {any} handle */
-		set_executor_handle(handle) {
-			this.executor_handle=handle;
-		}
+		set_executor_handle(handle) {		this.executor_handle=handle;}
 		/** @arg {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|TimerWorkerSetTypesMsg} msg */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -786,16 +744,12 @@
 					break;
 				}
 				case g_timer_api.worker_set_types: {
-					this.typedPostMessage({
-						type: g_timer_api.worker.ready
-					});
+					this.typedPostMessage({type: g_timer_api.worker.ready});
 				} break;
 			}
 		}
 		/** @template {{}|{for_worker_state: boolean}} T @arg {T} msg @returns {msg is {for_worker_state: boolean}} */
-		is_message_for(msg) {
-			return "for_worker_state" in msg&&msg.for_worker_state;
-		}
+		is_message_for(msg) {return "for_worker_state" in msg&&msg.for_worker_state;}
 		/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg */
 		dispatch_message(msg) {
 			if(this.is_message_for(msg)) {
@@ -817,27 +771,13 @@
 				return;
 			}
 			switch(msg.type) {
-				case TimeoutClearSingle: {
-					this.timer.on_result(msg);
-				} return;
-				case TimeoutClearRepeating: {
-					this.timer.on_result(msg);
-				} return;
-				case ReplySetRepeating: {
-					this.timer.on_reply(msg);
-				} return;
-				case g_timer_api.reply.clear.single: {
-					this.timer.on_reply(msg);
-				} return;
-				case g_timer_api.reply.clear.repeating: {
-					this.timer.on_reply(msg);
-				} return;
-				case ReplyToLocalTimer: {
-					this.timer.on_result(msg);
-				} return;
-				case ReplyFromWorker: {
-					console.assert(false,"unhandled reply from worker",msg);
-				} return;
+				case TimeoutClearSingle: {				this.timer.on_result(msg);} return;
+				case TimeoutClearRepeating: {				this.timer.on_result(msg);} return;
+				case ReplySetRepeating: {					this.timer.on_reply(msg);} return;
+				case g_timer_api.reply.clear.single: {					this.timer.on_reply(msg);} return;
+				case g_timer_api.reply.clear.repeating: {					this.timer.on_reply(msg);} return;
+				case ReplyToLocalTimer: {				this.timer.on_result(msg);} return;
+				case ReplyFromWorker: {console.assert(false,"unhandled reply from worker",msg);} return;
 				default: {
 					console.assert(false,"unhandled result",msg);
 					/** @type {never} */
@@ -847,22 +787,14 @@
 			}
 		}
 		/** @arg {typeof WorkerStateMessageV} msg */
-		typedPostMessage(msg) {
-			return this.worker?.postMessage(msg);
-		}
+		typedPostMessage(msg) {return this.worker?.postMessage(msg);}
 		/** @arg {WorkerState} worker_state_value */
-		static has_old_global_state_value(worker_state_value) {
-			return this.has_global_state()&&!this.equals_global_state(worker_state_value);
-		}
+		static has_old_global_state_value(worker_state_value) {return this.has_global_state()&&!this.equals_global_state(worker_state_value);}
 		/** @arg {WorkerState} worker_state_value */
-		static equals_global_state(worker_state_value) {
-			return this.get_global_state()===worker_state_value;
-		}
+		static equals_global_state(worker_state_value) {return this.get_global_state()===worker_state_value;}
 		/** @arg {WorkerState} worker_state_value */
 		static maybe_delete_old_global_state_value(worker_state_value) {
-			if(this.has_old_global_state_value(worker_state_value)) {
-				this.delete_old_global_state();
-			}
+			if(this.has_old_global_state_value(worker_state_value)) {this.delete_old_global_state();}
 		}
 		static maybe_delete_old_global_state() {
 			if(this.has_global_state()) {
@@ -878,9 +810,7 @@
 		}
 		/** @readonly */
 		static global_state_key="g_worker_state";
-		static has_global_state() {
-			return window.hasOwnProperty(this.global_state_key);
-		}
+		static has_global_state() {return window.hasOwnProperty(this.global_state_key);}
 		/** @returns {WorkerState} */
 		static get_global_state() {
 			/** @type {any} */
@@ -909,9 +839,7 @@
 			this.worker=null;
 			URL.revokeObjectURL(this.worker_url);
 			this.worker_url=null;
-			if(this.executor_handle!==null&&!this.executor_handle.closed()) {
-				this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
-			}
+			if(this.executor_handle!==null&&!this.executor_handle.closed()) {this.executor_handle.reject(new Error("Worker destroyed before it was connected"));}
 			this.connected=false;
 			this.timer.destroy();
 			this.valid=false;
@@ -974,9 +902,7 @@
 				l_log_if(LOG_LEVEL_WARN,"lost worker_state in timer");
 				return clearTimeout_global(id);
 			}
-			if(id) {
-				worker_state.timer.clear(TIMER_SINGLE,id);
-			}
+			if(id) {worker_state.timer.clear(TIMER_SINGLE,id);}
 		}
 		const setInterval_global=setInterval;
 		/** @arg {TimerHandler} handler @arg {any[]} target_args */
@@ -1073,11 +999,7 @@
 				case g_timer_api.worker_set_types: {
 					let value=msg.worker_types;
 					let v_async=value.async;
-					if(v_async===WorkerAsyncMessage) {
-						g_timer_api.on_set_types(value);
-					} else {
-						throw new Error("Invalid timer_api_types");
-					}
+					if(v_async===WorkerAsyncMessage) {g_timer_api.on_set_types(value);} else {throw new Error("Invalid timer_api_types");}
 					if(!g_timer_api.reply) throw new Error("Failed to set timer_api.types");
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
@@ -1085,9 +1007,7 @@
 						args: [msg.type],
 					});
 				} break;
-				default: {
-					cached_messages.push({data: msg});
-				} break;
+				default: {cached_messages.push({data: msg});} break;
 			}
 		}
 		/** @arg {MessageEvent<typeof WorkerStateMessageV>} e */
@@ -1124,17 +1044,11 @@
 						args: [msg.type,local_id,msg.remote_id,msg.timeout],
 					});
 				} break;
-				case g_timer_api.worker.clear.single: {
-					remote_worker_state.clear(msg);
-				} break;
-				case g_timer_api.worker.clear.repeating: {
-					remote_worker_state.clear(msg);
-				} break;
+				case g_timer_api.worker.clear.single: {remote_worker_state.clear(msg);} break;
+				case g_timer_api.worker.clear.repeating: {remote_worker_state.clear(msg);} break;
 				case g_timer_api.worker.reply.fire.single: break;
 				case g_timer_api.worker.reply.fire.repeating: break;
-				default: {
-					console.assert(false,"RemoteWorker: Unhandled message",msg);
-				} break;
+				default: {console.assert(false,"RemoteWorker: Unhandled message",msg);} break;
 			}
 		}
 		class RemoteTimerApi {
@@ -1161,9 +1075,7 @@
 				this.reply=types.reply;
 				this.fire=types.fire;
 				this.worker=types.worker;
-				for(let i=0;i<cached_messages.length;i++) {
-					message_with_types_handler(cached_messages[i]);
-				}
+				for(let i=0;i<cached_messages.length;i++) {message_with_types_handler(cached_messages[i]);}
 				onmessage=message_with_types_handler;
 			}
 		}
@@ -1258,9 +1170,7 @@
 			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
 			/** @arg {1|2} tag */
 			verify_tag(tag) {
-				if(!this.validate_tag(tag)) {
-					throw new Error("tag verification failed in RemoteTimer");
-				}
+				if(!this.validate_tag(tag)) {throw new Error("tag verification failed in RemoteTimer");}
 			}
 			/** @arg {RemoteTimerState} state @arg {any} remote_id */
 			verify_state(state,remote_id) {
@@ -1282,9 +1192,7 @@
 				return true;
 			}
 			/** @arg {{ type: 1|2; }} state */
-			validate_state(state) {
-				return this.validate_tag(state.type);
-			}
+			validate_state(state) {return this.validate_tag(state.type);}
 			/** @arg {any} remote_id */
 			clear(remote_id) {
 				if(!this.m_remote_id_to_state_map.has(remote_id)) {
@@ -1293,12 +1201,8 @@
 				let state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!state) throw new Error("Unreachable");
 				this.verify_state(state,remote_id);
-				if(state.type===TIMER_SINGLE) {
-					globalThis[g_timer_api.clear_names.single](state.local_id);
-				}
-				if(state.type===TIMER_REPEATING) {
-					globalThis[g_timer_api.clear_names.repeating](state.local_id);
-				}
+				if(state.type===TIMER_SINGLE) {globalThis[g_timer_api.clear_names.single](state.local_id);}
+				if(state.type===TIMER_REPEATING) {globalThis[g_timer_api.clear_names.repeating](state.local_id);}
 				state.active=false;
 				this.m_remote_id_to_state_map.delete(remote_id);
 				return state.local_id;
@@ -1339,9 +1243,7 @@
 		remote_worker_state.set_timer(new RemoteTimer);
 		onmessage=message_without_types_handler;
 	}
-	function on_remote_worker_active() {
-		console.log("setTimeout activation moved to Worker thread successfully");
-	}
+	function on_remote_worker_active() {console.log("setTimeout activation moved to Worker thread successfully");}
 	let move_timers_to_worker=new Promise(set_timeout_on_remote_worker_executor);
 	move_timers_to_worker.then(on_remote_worker_active);
 })();

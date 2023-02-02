@@ -106,9 +106,7 @@ type DCE_Button={
 	command: GC_Button;
 	targetId: D_Button_TargetId;
 };
-type TD_Accessibility<T>={
-	accessibilityData: TD_Label<T>;
-};
+type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
 
 type D_ClipInfoButton={
 	style: "STYLE_DEFAULT";
@@ -136,9 +134,7 @@ type D_ShareButton={
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 };
-type D_Button_TODO={
-	navigationEndpoint: GE_Button_navigation;
-}|{
+type D_Button_TODO={navigationEndpoint: GE_Button_navigation;}|{
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	text: G_Text;
@@ -543,9 +539,7 @@ type D_CopyLink={
 	trackingParams: string;
 	style: "COPY_LINK_RENDERER_STYLE_SETTINGS";
 };
-type D_DecoratedPlayerBar={
-	playerBar: R_MultiMarkersPlayerBar;
-}|{
+type D_DecoratedPlayerBar={playerBar: R_MultiMarkersPlayerBar;}|{
 	playerBar: R_MultiMarkersPlayerBar;
 	playerBarActionButton: R_Button;
 };
@@ -988,9 +982,7 @@ type D_Omit_Menu_Radio={
 	navigationEndpoint: E_Watch;
 	menu: R_Menu;
 };
-type D_Omit_Menu_Video_Ex={
-	ownerBadges: RMD_Badge[];
-};
+type D_Omit_Menu_Video_Ex={ownerBadges: RMD_Badge[];};
 type D_NotificationMenu_PopupItemMenu=TR_MultiPageMenu<D_NotificationMenu_PopupItem>;
 type D_NotificationMenu_Popup={
 	popup: D_NotificationMenu_PopupItemMenu;
@@ -1019,9 +1011,7 @@ type D_Chapter={
 	thumbnail: D_Thumbnail;
 };
 type D_CommentsEntryPointTeaser={
-	teaserAvatar: D_Thumbnail&{
-		accessibility: D_Accessibility;
-	};
+	teaserAvatar: D_Thumbnail&{accessibility: D_Accessibility;};
 	teaserContent: G_Text;
 	trackingParams: string;
 };
@@ -1162,18 +1152,10 @@ type D_GuideEntry=
 	|TD_GuideEntry_Simple<"YOUTUBE_ROUND">
 	;
 ;
-type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{
-	entryData: any;
-}>;
-type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{
-	navigationEndpoint: any;
-}>;
-type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{
-	isPrimary: any;
-}>;
-type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{
-	serviceEndpoint: any;
-}>;
+type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
+type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
+type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
+type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
 type D_GuideEntry_IconType_Obj={
 	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
 	WithIcon: T_GetIconType<D_GuideEntry_With_ServiceEndpoint>[];
@@ -1263,9 +1245,7 @@ type QualArr=[
 ];
 type make_qual_for_fps<T extends 50|60>=[`2160p${T}`,`1440p${T}`,`1080p${T}`,`720p${T}`,];
 type QualityLabel=QualArr[number];
-type D_AddToPlaylist={
-	playlists: R_PlaylistAddToOption[];
-}&T_Actions<R_AddToPlaylistCreate>;
+type D_AddToPlaylist={playlists: R_PlaylistAddToOption[];}&T_Actions<R_AddToPlaylistCreate>;
 type D$AnimationConfig={
 	minImageUpdateIntervalMs: 10000|5000;
 	crossfadeDurationMs: 5000;
@@ -1365,9 +1345,7 @@ type D_AttBgChallenge={
 type D$AudioSampleRate=[
 	44100,48000
 ][number];
-type AudioTrackItem={
-	captionTrackIndices: number[];
-};
+type AudioTrackItem={captionTrackIndices: number[];};
 type D_AutomixPreviewVideo={};
 type D_AutoplaySwitchButton={
 	onEnabledCommand: T_Setting_AutoNavForDesktop<true>;
@@ -1406,9 +1384,7 @@ type D_BrowseEndpointPages=[
 	"what_to_watch",
 ][number]
 	;
-type D_BrowseFeedActions={
-	contents: G_BrowseFeedContent[];
-};
+type D_BrowseFeedActions={contents: G_BrowseFeedContent[];};
 type D_BrowseIdStr=
 	|`FE${D_BrowseEndpointPages}`
 	|`VL${`${"LL"|"WL"|`PL${string}`}`}`
@@ -1459,9 +1435,7 @@ type CaptionTrackItem={
 	vssId: "a.en";
 };
 type D_Card={};
-type D_CarouselLockup={
-	infoRows: R_InfoRow[];
-};
+type D_CarouselLockup={infoRows: R_InfoRow[];};
 type ChanLoc=`channel.${ChanTabStr|""}`;
 type ChanTabStr=[
 	"about",
@@ -1474,9 +1448,7 @@ type ChanTabStr=[
 	"streams",
 	"videos",
 ][number];
-type D_ChannelHeaderLinks={
-	primaryLinks: D_PrimaryLinkItem[];
-};
+type D_ChannelHeaderLinks={primaryLinks: D_PrimaryLinkItem[];};
 type ChannelId=`UC${string}`;
 type ChannelIdStr<T extends string>=`UC${T}`;
 type D_ChannelPageGrid=
@@ -1546,9 +1518,7 @@ type D_ClipCreationTextInput={
 	placeholderText: G_Text;
 	maxCharacterLimit: 140;
 };
-type D_ClipSection={
-	contents: R_ClipCreation[];
-};
+type D_ClipSection={contents: R_ClipCreation[];};
 type D_Color={red: number; green: number; blue: number;};
 type ColorSourceVars={
 	colorSourceSizeMultiplier: 1.4;
@@ -1591,9 +1561,7 @@ type D_CommentsHeaderContent={
 		R_CommentsHeader
 	];
 };
-type D_CommonConfig={
-	url: `https://rr5---sn-nx57ynsd.googlevideo.com/initplayback?${string}`;
-};
+type D_CommonConfig={url: `https://rr5---sn-nx57ynsd.googlevideo.com/initplayback?${string}`;};
 type D_CompactLinkStyle=[
 	`${"COMPACT_LINK_STYLE_TYPE"}_${[
 		"SETTINGS_SIDEBAR",
@@ -1754,9 +1722,7 @@ type D_FormatItem={
 };
 type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<MP_AccountMenu>; popupType: "DROPDOWN"; beReused: true;};
 type D_GhostGrid={rows: number;};
-type D_GoogleLoginExternalUrl={
-	url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";
-}["url"];
+type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
 //cspell:ignore ynlk ynsd ynse ynsk ynsl ynss ynsz
 type D_GoogleVideo_sn_nx_dig_src=[
 	"rr1.sn-nx57ynlk.googlevideo.com. 1755 IN A      74.125.5.166",
@@ -1779,9 +1745,7 @@ type D_GradientColorConfig=[
 		darkThemeColor: TP_Color<0x99000000,"0x99000000">;
 		startLocation: 0;
 	},
-	{
-		darkThemeColor: TP_Color<0x7f000000,"0x7f000000">;
-	},
+	{darkThemeColor: TP_Color<0x7f000000,"0x7f000000">;},
 	{
 		darkThemeColor: TP_Color<0xff000000,"0xff000000">;
 		startLocation: 1;
@@ -1792,9 +1756,7 @@ type D_GradientColorConfigEnd={
 	startLocation: 1;
 };
 type D_GradientColorConfigItem=D_GradientColorConfigStart|D_GradientColorConfigMid|D_GradientColorConfigEnd;
-type D_GradientColorConfigMid={
-	darkThemeColor: TP_Color<0x7f000000,"0x7f000000">;
-};
+type D_GradientColorConfigMid={darkThemeColor: TP_Color<0x7f000000,"0x7f000000">;};
 type D_GradientColorConfigStart={
 	darkThemeColor: TP_Color<0x99000000,"0x99000000">;
 	startLocation: 0;
@@ -1840,9 +1802,7 @@ type D_Heatmap={
 	heatMarkers: {
 		heatMarkerRenderer: {};
 	}[];
-	heatMarkersDecorations: {
-		timedMarkerDecorationRenderer: {};
-	}[];
+	heatMarkersDecorations: {timedMarkerDecorationRenderer: {};}[];
 };
 type D_HideEnclosingContainer={hideEnclosingContainer: true;};
 type D_Hint={
@@ -1955,11 +1915,7 @@ type D_LightColorPalette={
 	secondaryTitleColor: 4285554760;
 	section4Color: 4293650141;
 };
-type D_LikeApi={
-	videoId: string;
-}|{
-	playlistId: D_PlaylistId;
-};
+type D_LikeApi={videoId: string;}|{playlistId: D_PlaylistId;};
 type D_LikeButton={
 	target: D_LikeApi;
 	likeStatus: "INDIFFERENT";
@@ -2526,9 +2482,7 @@ type D_ResourceStatusInResponseCheck={
 type D_ResponsePageUrlList=[
 	`/${G_SettingsEndpointPages}`
 ];
-type Todo_D_RichGrid=Record<"contents",R_RendererContentItem[]>&{
-	masthead: R_VideoMastheadAdV3;
-};
+type Todo_D_RichGrid=Record<"contents",R_RendererContentItem[]>&{masthead: R_VideoMastheadAdV3;};
 type D_RichGrid={
 	contents: G_RichGridContent[];
 	trackingParams: string;
@@ -2611,9 +2565,7 @@ type D_SegmentedLikeDislikeButton={
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 };
-type D_SerializedSlotAdServingDataEntry={
-	serializedSlotAdServingDataEntry: string;
-};
+type D_SerializedSlotAdServingDataEntry={serializedSlotAdServingDataEntry: string;};
 type D_SetSetting={
 	settingItemId: `${number}`;
 	boolValue?: boolean;
@@ -2681,9 +2633,7 @@ type D_SortFilterSubMenu={
 	tooltip?: string;
 	trackingParams: string;
 };
-type D_StreamSelectionConfig={
-	maxBitrate: `${number};`;
-};
+type D_StreamSelectionConfig={maxBitrate: `${number};`;};
 type D_StructuredDescriptionContent={items: G_StructuredDescriptionContentItem[];};
 type D_SubFeedSelector={
 	title: G_Text;
@@ -2761,9 +2711,7 @@ type D_Tab={
 	content: R_MusicQueue;
 	trackingParams: string;
 };
-type D_TabbedSearchResults={
-	tabs: R_SearchResultsTab[];
-};
+type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
 type D_TemplateUpdate={
 	identifier: `${string}|${string}`;
 	serializedTemplateConfig: string;
@@ -2855,9 +2803,7 @@ type D_TimestampWithNanos={
 	nanos: number;
 };
 type D_Title={title: G_Text;};
-type DC_CommandExecutor={
-	commands: (C_UpdateToggleButtonState|E_Like)[];
-};
+type DC_CommandExecutor={commands: (C_UpdateToggleButtonState|E_Like)[];};
 type C_CommandExecutor={
 	clickTrackingParams: string;
 	commandExecutorCommand: DC_CommandExecutor;
@@ -2937,9 +2883,7 @@ type D_TopicLink={
 	trackingParams: string;
 };
 type D_Tracking={trackingParams: string;};
-type D_Transcript=Record<"content",R_TranscriptSearchPanel>&{
-	trackingParams: string;
-};
+type D_Transcript=Record<"content",R_TranscriptSearchPanel>&{trackingParams: string;};
 type D_TranscriptFooter={languageMenu: R_SortFilterSubMenu;};
 type D_TranscriptSegment={
 	startMs: `${number}`;
@@ -3222,9 +3166,7 @@ type D_WatchNextEndScreen={
 	title: G_Text;
 	trackingParams: string;
 };
-type D_WatchNextTabbedResults={
-	tabs: R_Tab[];
-};
+type D_WatchNextTabbedResults={tabs: R_Tab[];};
 type D_WatchPageUrl=
 	|`/watch?v=${string}&list=RD${string}&index=${number}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1`
@@ -3255,9 +3197,7 @@ type D_YtConfig={
 	rootVisualElementType: D_VisualElementType;
 };
 //#endregion
-type D_ParamObjType={
-	[x: number]: number|string|D_ParamObjType;
-};
+type D_ParamObjType={[x: number]: number|string|D_ParamObjType;};
 type D_LoggingDirectives={
 	trackingParams: string;
 	visibility: TM_Visibility;

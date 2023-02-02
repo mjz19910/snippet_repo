@@ -84,9 +84,7 @@ type G_StructuredDescriptionContentItem=[
 
 type D_ThumbnailOverlayInlineUnplayable={};
 
-type R_ThumbnailOverlayInlineUnplayable={
-	thumbnailOverlayInlineUnplayableRenderer: D_ThumbnailOverlayInlineUnplayable;
-};
+type R_ThumbnailOverlayInlineUnplayable={thumbnailOverlayInlineUnplayableRenderer: D_ThumbnailOverlayInlineUnplayable;};
 
 type G_ThumbnailOverlayItem=
 	|R_ThumbnailOverlayBottomPanel

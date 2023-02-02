@@ -24,9 +24,7 @@ async function test_search_params_test_0() {
 	let res_d: {sqp: any; rs: any;}=ux;
 	let res: decay_t=res_d;
 	console.log(new URL(str));
-	if('path' in vv) {
-		console.log('vv path',vv.path,new URL(str));
-	}
+	if('path' in vv) {console.log('vv path',vv.path,new URL(str));}
 	console.log(vv.pathname,res);
 	return res_d;
 }

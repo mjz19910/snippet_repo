@@ -18,9 +18,7 @@ type T_OpenPopup_Dialog<T>={popupType: "DIALOG"; popup: T;};
 type T_OmitKey<T,K extends keyof T>=T extends infer U?Omit<U,K>:never;
 //#endregion
 //#region Object conversion Templates
-type T_RemovePrefix<T,T2 extends string>={
-	[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];
-};
+type T_RemovePrefix<T,T2 extends string>={[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];};
 //#endregion
 //#region TA_
 //#endregion
@@ -142,9 +140,7 @@ type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
 };
-type TR_ContinuationItem_CE<T>={
-	continuationItemRenderer: TD_ContinuationItem_CE<T>;
-};
+type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
 type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
 type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
 type TR_SectionListItem_3<T_ContentType,B,C>=
@@ -254,9 +250,7 @@ type T_TextRuns<T>={runs: T;};
 type T_TrackingParamsAsString<T,V extends string>=V extends "trackingParams"? string:T;
 type T_Types<T extends number>={types: `${T}`;};
 type T_UnionToPartial<T>=NS_UnionToPartial.UnionToPartial<T>;
-type T_UrlWrappedValue<T extends string>={
-	privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;
-};
+type T_UrlWrappedValue<T extends string>={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: T;};
 type T_VideoIdStr<T>=T extends string? T_Split<T,"">["length"] extends 11? T:never:never;
 type T_VideoListStr<T extends string>=`VL${T}`;
 type T_WCM_={

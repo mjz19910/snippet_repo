@@ -1,3 +1,1 @@
-abstract class YtdMasthead {
-	abstract $: YtdMastheadWithContainer;
-}
+abstract class YtdMasthead {abstract $: YtdMastheadWithContainer;}

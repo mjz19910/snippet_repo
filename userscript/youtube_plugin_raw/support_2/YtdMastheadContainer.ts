@@ -1,3 +1,1 @@
-abstract class YtdMastheadContainer {
-	abstract children: YtdMastheadContainerChildren;
-}
+abstract class YtdMastheadContainer {abstract children: YtdMastheadContainerChildren;}

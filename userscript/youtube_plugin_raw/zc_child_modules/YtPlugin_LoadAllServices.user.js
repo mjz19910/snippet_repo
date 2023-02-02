@@ -15,44 +15,30 @@ const __module_name__="mod$LoadAllServices";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
-	bs.do_export(fn,flags,exports,__module_name__);
-}
-export_(exports => {
-	exports.__is_module_flag__=true;
-});
+function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 
 if(__yt_plugin_log_imports__) console.log("Load LoadAllServices Plugin");
 const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 class LoadAllServices {
 	/** @template T @typedef {NonNullable<T>} N */
 	/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
-	start_message_channel_loop() {
-		bs.start_message_channel_loop(this.handle_types);
-	}
+	start_message_channel_loop() {bs.start_message_channel_loop(this.handle_types);}
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
 		/** @template T_ServiceFlags @extends {HandleTypes<LoadAllServices,T_ServiceFlags>}  */
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
-			run(detail) {
-				this.YTNavigateFinishDetail.call(this.x.get("handle_types"),detail);
-			}
+			run(detail) {this.YTNavigateFinishDetail.call(this.x.get("handle_types"),detail);}
 		}
 		/** @template T_ServiceFlags @extends {HandleTypes<LoadAllServices,T_ServiceFlags>}  */
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
-			run(response,x) {
-				this.ResponseTypes.call(this.x.get("handle_types"),response,x);
-			}
+			run(response,x) {this.ResponseTypes.call(this.x.get("handle_types"),response,x);}
 			/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
-			decode_input(url_type,x) {
-				return this.get_res_data(url_type,x);
-			}
+			decode_input(url_type,x) {return this.get_res_data(url_type,x);}
 			/** @public @arg {D_ApiUrlFormat} url */
-			decode_url(url) {
-				return this.use_template_url(url);
-			}
+			decode_url(url) {return this.use_template_url(url);}
 		}
 		this.ht_caller=new HT_Caller(x);
 		this.response_types_handler=new RT_Caller(x);

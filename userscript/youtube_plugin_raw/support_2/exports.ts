@@ -1,9 +1,7 @@
 import {ApiBase} from "../zc_child_modules/YtPlugin_Base_Plugin.user.js";
 
 export class ApiBaseExported extends ApiBase {
-	override parse_url_search_params<T extends string>(x: T) {
-		return super.parse_url_search_params(x);
-	}
+	override parse_url_search_params<T extends string>(x: T) {return super.parse_url_search_params(x);}
 	get_url_params<T extends string,U extends keyof TP_ParseUrlSearchParams<T>>(t: T,u: U) {
 		let rq=this.parse_url_search_params(t);
 		if(u in rq) return rq[u];

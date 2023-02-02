@@ -281,9 +281,7 @@ type G_Text=({
 }|{
 	simpleText: string;
 })&G_Text_Base;
-type G_Text_Base={
-	accessibility?: D_Accessibility;
-};
+type G_Text_Base={accessibility?: D_Accessibility;};
 type G_SE_MenuService=
 	|A_ChangeEngagementPanelVisibility
 	|E_AddToPlaylistService

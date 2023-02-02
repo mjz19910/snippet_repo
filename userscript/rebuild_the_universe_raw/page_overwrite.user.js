@@ -61,9 +61,7 @@ function do_real_page_action() {
 	set_jq_proxy_overwrite();
 	console.log("done");
 }
-function page_url_no_protocol() {
-	return location.href.slice(location.protocol.length);
-}
+function page_url_no_protocol() {return location.href.slice(location.protocol.length);}
 function do_just_reset() {
 	location.href="//rebuildtheuniverse.com/?type=mjz_version";
 	document.write("");

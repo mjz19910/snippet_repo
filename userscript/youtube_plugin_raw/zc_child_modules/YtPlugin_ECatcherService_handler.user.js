@@ -15,12 +15,8 @@ const __module_name__="mod$ECatcherService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
-	bs.do_export(fn,flags,exports,__module_name__);
-}
-export_(exports => {
-	exports.__is_module_flag__=true;
-});
+function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 const base_store=required(store.mod$YoutubePluginBase);
 const is_firefox=base_store.is_firefox;
 const BaseService=base_store.BaseService;
@@ -70,11 +66,7 @@ class ECatcherService extends BaseService {
 				return;
 			}
 			let fexp_log_val;
-			if(new_expected.length>1) {
-				fexp_log_val=new_expected;
-			} else {
-				fexp_log_val=new_expected[0];
-			}
+			if(new_expected.length>1) {				fexp_log_val=new_expected;} else {	fexp_log_val=new_expected[0];}
 			if(fexp_log_val instanceof Array) {
 				this.log_new_experiments(fexp_log_val);
 				return;
@@ -106,9 +98,7 @@ class ECatcherService extends BaseService {
 		this.data.client={...this.data.client,...new_client};
 		let client=this.data.client;
 		this.iterate_fexp(client.fexp);
-		if(prev_client.name!==this.data.client.name) {
-			console.log({name: prev_client.name},{name: this.data.client.name});
-		}
+		if(prev_client.name!==this.data.client.name) {console.log({name: prev_client.name},{name: this.data.client.name});}
 	}
 	/** @private @arg {NonNullable<this["data"]["client"]>} client */
 	update_client(client) {

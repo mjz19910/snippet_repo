@@ -14,9 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 //#region module setup
 const __module_name__="mod$HandleTypes";
-if(!window.__youtube_plugin_base_loaded__) {
-	throw new Error("Failed to load base plugin");
-}
+if(!window.__youtube_plugin_base_loaded__) {throw new Error("Failed to load base plugin");}
 if(__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
@@ -27,19 +25,13 @@ const split_string_once_last=bs.split_string_once_last;
 const base64_dec=bs.base64_dec;
 const base64_url_dec=bs.base64_url_dec;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
-	bs.do_export(fn,flags,exports,__module_name__);
-}
-export_(exports => {
-	exports.__is_module_flag__=true;
-});
+function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 //#endregion
 //#region module init
 function init_module() {
 	//#region exports
-	export_((exports) => {
-		exports.HandleTypes=HandleTypes;
-	});
+	export_((exports) => {exports.HandleTypes=HandleTypes;});
 	//#endregion
 	//#region Start main
 	console=typeof window==="undefined"? console:(() => window.console)();
@@ -104,9 +96,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
-	codegen_renderer(cf,x,w) {
-		this.codegen.codegen_renderer(x,cf,w);
-	}
+	codegen_renderer(cf,x,w) {this.codegen.codegen_renderer(x,cf,w);}
 	static {
 		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
 		/** @type {{value:ServiceResolver<CG_ServiceResolver,{}>|null}} */
@@ -138,9 +128,7 @@ class UrlParseHelper {
 		this.x=x;
 	}
 	/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
-	get_with_pathname(cx,pname) {
-		return ServiceMethods.is_url_with_pathname(cx,pname);
-	}
+	get_with_pathname(cx,pname) {return ServiceMethods.is_url_with_pathname(cx,pname);}
 }
 const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
@@ -157,9 +145,7 @@ ECatcherService.known_experiments.push(...(() => {
 /** @template Cls_T,Cls_U @extends {HandleTypesEval<Cls_T,Cls_U>}  */
 class HandleTypes extends HandleTypesEval {
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
-	is_eq_keys(src,target) {
-		return this.eq_keys(src,target);
-	}
+	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @protected @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
@@ -188,9 +174,7 @@ class HandleTypes extends HandleTypesEval {
 		return this.x.get("indexed_db");
 	}
 	/** @protected @arg {{v:string}} x */
-	put_video_args(x) {
-		this.indexed_db.put("video_id",x);
-	}
+	put_video_args(x) {this.indexed_db.put("video_id",x);}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
@@ -204,21 +188,13 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
 	}
 	/** @protected @arg {D_PlaylistId} x */
-	playlistId(x) {
-		this.parser.parse_playlist_id(x);
-	}
+	playlistId(x) {this.parser.parse_playlist_id(x);}
 	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {
-		this.params(cf,"tracking.trackingParams",x);
-	}
+	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {
-		this.params(cf,"tracking.trackingParams",x);
-	}
+	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @arg {boolean} x */
-	a_primitive_bool(x) {
-		if(typeof x!=="boolean") debugger;
-	}
+	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
 	//#region templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD_(cf,k,x) {
@@ -295,9 +271,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="T_Types";
 		const {types,...y}=this.s(cf,x); this.g(y);
 		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
-		function parse_number(x,_v) {
-			return as(Number.parseInt(x,10));
-		}
+		function parse_number(x,_v) {return as(Number.parseInt(x,10));}
 		return parse_number(types,_x);
 	}
 	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(this:this,x:T)=>void} f */
@@ -363,9 +337,7 @@ class HandleTypes extends HandleTypesEval {
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
-	static {
-		this.prototype.minimal_handler_member_2({});
-	}
+	static {this.prototype.minimal_handler_member_2({});}
 	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(this:this,x:T[K])=>U)=>U} */
 	// H_=super.H_;
 	//#endregion
@@ -1701,15 +1673,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
-	M_Empty_WCM(cf,x) {
-		this.codegen_typedef_all(cf,x);
-	}
+	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink";
-		if("style" in x) {
-			return this.D_CompactLink_Styled(`${cf}.Styled`,x);
-		}
+		if("style" in x) {return this.D_CompactLink_Styled(`${cf}.Styled`,x);}
 		if("icon" in x) {
 			let u=this.D_Link_Omit(cf,x);
 			const {icon,...y}=this.s(`${cf}.icon`,u); this.g(y);
@@ -1738,9 +1706,7 @@ class HandleTypes extends HandleTypesEval {
 			return this.R_SuperVodBuyFlowContent(x);
 		});
 		this.trackingParams(cf,trackingParams);
-		if("getSurveyCommand" in onCloseCommand) {
-			this.C_GetSurvey(onCloseCommand);
-		} else {
+		if("getSurveyCommand" in onCloseCommand) {this.C_GetSurvey(onCloseCommand);} else {
 			debugger;
 		}
 	}
@@ -1864,9 +1830,7 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		this.codegen_typedef_all(cf,x); x==="";
 	}
-	static {
-		this.prototype.Button_navigationEndpoint;
-	}
+	static {this.prototype.Button_navigationEndpoint;}
 	/** @private @arg {GE_Button_navigation} x */
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint";
@@ -2287,12 +2251,8 @@ class HandleTypes extends HandleTypesEval {
 		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_Accessibility",x);}
 		if("owner" in x) return this.D_Video_Handle("D_Video_Owner",x);
 		if("videoId" in x) {
-			if("topStandaloneBadge" in x) {
-				return this.D_Video_Handle("D_Video_videoId_3",x);
-			}
-			if("descriptionSnippet" in x) {
-				return this.D_Video_Handle("D_Video_videoId_2",x);
-			}
+			if("topStandaloneBadge" in x) {return this.D_Video_Handle("D_Video_videoId_3",x);}
+			if("descriptionSnippet" in x) {return this.D_Video_Handle("D_Video_videoId_2",x);}
 			return this.D_Video_Handle("D_Video_videoId",x);
 		}
 		console.log("video.other",this.get_keys_of(x).join());
@@ -2329,9 +2289,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
 		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
-		function is_m_next(x) {
-			return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";
-		}
+		function is_m_next(x) {return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";}
 		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
 		x: {
 			if(!a) break x;
@@ -2450,16 +2408,12 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				if("command" in x) {
-					return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);
-				}
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
 				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				if("command" in x) {
-					return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);
-				}
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
 				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
 		}
@@ -2523,12 +2477,8 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		/** @private @arg {{type:string}} x */
-		let g=x => {
-			return this.save_string("[need_api_type]",x.type);
-		};
-		switch(x.type) {
-			case "_Generic": return g(x);
-		}
+		let g=x => {return this.save_string("[need_api_type]",x.type);};
+		switch(x.type) {	case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
 		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
@@ -2694,9 +2644,7 @@ class HandleTypes extends HandleTypesEval {
 	make_codegen_group(cf,x,collapsed=true) {
 		let u_name=this.get_codegen_name(x);
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
-		if(collapsed) {
-			console.groupCollapsed(...gca);
-		} else {
+		if(collapsed) {console.groupCollapsed(...gca);} else {
 			console.group(...gca);
 		}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
@@ -2724,9 +2672,7 @@ class HandleTypes extends HandleTypesEval {
 		let x=x2;
 		if(typeof x.type==='string') {
 			return x.type.split(".").map(x => {
-				if(x.includes("_")) {
-					return x.split("_").map(x => this.uppercase_first(x)).join("");
-				}
+				if(x.includes("_")) {return x.split("_").map(x => this.uppercase_first(x)).join("");}
 				return this.uppercase_first(x);
 			}).join("$");
 		}
@@ -2771,9 +2717,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {UA_Title} x */
 	UA_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
 	/** @private @arg {UA_DateText} x */
-	UA_DateText(x) {
-		this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));
-	}
+	UA_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
 	/** @private @arg {UA_ToggleButtonText} x */
 	UA_ToggleButtonText(x) {
 		this.y("UA_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
@@ -2820,9 +2764,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[RS_Player.next_key]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
-	static {
-		(new this({value: null})).R_PlayerAnnotationsExpanded;
-	}
+	static {(new this({value: null})).R_PlayerAnnotationsExpanded;}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x) {
 		const cf="D_PlayerAnnotationsExpanded";
@@ -2855,9 +2797,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {CF_D_STR} cf @arg {string} x */
 	codegen_str(cf,x) {
-		if(x.startsWith("UC")) {
-			console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);
-		}
+		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
 		if(x.startsWith("https://")) {
 			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
 			return;
@@ -3404,9 +3344,7 @@ class HandleTypes extends HandleTypesEval {
 			/** @type {`${cf1}.data`} */
 			const cf2=`${cf1}.data`;
 			this.G_ClientSignal(cf2,gc);
-		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
-			this.C_AdsControlFlowOpportunityReceived(x);
-		} else if("changeKeyedMarkersVisibilityCommand" in x) {
+		} else if("adsControlFlowOpportunityReceivedCommand" in x) {this.C_AdsControlFlowOpportunityReceived(x);} else if("changeKeyedMarkersVisibilityCommand" in x) {
 			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.s(cf,x); this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
@@ -3414,9 +3352,7 @@ class HandleTypes extends HandleTypesEval {
 			const {clickTrackingParams,loadMarkersCommand,...y}=this.s(cf,x); this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.DC_LoadMarkers(loadMarkersCommand);
-		} else if("reloadContinuationItemsCommand" in x) {
-			this.C_ReloadContinuationItems(x);
-		} else if("appendContinuationItemsAction" in x) {
+		} else if("reloadContinuationItemsCommand" in x) {this.C_ReloadContinuationItems(x);} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.G_AppendContinuationItems(appendContinuationItemsAction);
@@ -3450,9 +3386,7 @@ class HandleTypes extends HandleTypesEval {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
 				this.save_string("[Body.targetId]",targetId);
-				this.z(continuationItems,a => {
-					this.save_keys("[continuationItem]",a);
-				});
+				this.z(continuationItems,a => {this.save_keys("[continuationItem]",a);});
 			} break;
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
@@ -3480,9 +3414,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerOverlay} x */
 	D_PlayerOverlay(x) {
 		const cf="D_PlayerOverlay";
-		if("browserMediaSession" in x) {
-			return this.A_BrowserMediaSession(x);
-		}
+		if("browserMediaSession" in x) {return this.A_BrowserMediaSession(x);}
 		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.s(cf,x);
 		this.R_WatchNextEndScreen(endScreen);
 		this.R_PlayerOverlayAutoplay(autoplay);
@@ -3897,9 +3829,7 @@ class HandleTypes extends HandleTypesEval {
 			let [r]=b_res;
 			if(r[0]==="child"&&r[1]===3) {
 				let playlist_id=this._decoder.decode(r[2]);
-				if(this.str_starts_with_rx("RD",playlist_id)) {
-					this.playlistId(as(playlist_id));
-				} else {
+				if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
 					switch(r[1]) {
 						default:
 							console.log("D_VssLoggingContext_serializedContextData_fieldId",r[1]);
@@ -3909,13 +3839,7 @@ class HandleTypes extends HandleTypesEval {
 							break;
 						case 3: {
 							let playlist_id=this._decoder.decode(r[2]);
-							if(this.str_starts_with_rx("RD",playlist_id)) {
-								this.playlistId(playlist_id);
-							} else if(this.str_starts_with_rx("PL",playlist_id)) {
-								this.playlistId(playlist_id);
-							} else {
-								console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);
-							}
+							if(this.str_starts_with_rx("RD",playlist_id)) {	this.playlistId(playlist_id);} else if(this.str_starts_with_rx("PL",playlist_id)) {	this.playlistId(playlist_id);} else {console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id);}
 						} break;
 					}
 				}
@@ -3925,9 +3849,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
-	is_ItemSectionRendererTemplate(x) {
-		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
-	}
+	is_ItemSectionRendererTemplate(x) {return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);}
 	/** @private @arg {[TD_ItemSection_3_I_1[],"comment-item-section","comments-section"]} x */
 	ItemSection_3_CommentItemSection(x) {
 		if(x[1]!=="comment-item-section") debugger;
@@ -3993,9 +3915,7 @@ class HandleTypes extends HandleTypesEval {
 			case 2: {
 				if(x[1]!=="") debugger;
 			} break;
-			case 3: {
-				if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;}
-			} break;
+			case 3: {if(!this.str_starts_with_rx("UC",x[2])) {debugger; return;}} break;
 			case 4: {
 				if(x[1]!=="channel") {debugger; return;}
 				if(x[2]==="UC") {
@@ -4100,9 +4020,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @type {GU_YoutubeUrlRedirect_Info} */
 				let wt={
 					url: x,
-					encoded_params: {
-						q: this.make_str_tag(parsed_params.q,"EncodedURIComponent"),
-					}
+					encoded_params: {q: this.make_str_tag(parsed_params.q,"EncodedURIComponent"),}
 				};
 				return wt;
 			}
@@ -4709,15 +4627,11 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
 		this.z([shortMessage,sentTimeText],this.G_Text);
-		if(navigationEndpoint.watchEndpoint) {
-			this.E_Watch(navigationEndpoint);
-		} else {
+		if(navigationEndpoint.watchEndpoint) {this.E_Watch(navigationEndpoint);} else {
 			debugger;
 		}
 		this._primitive_of(read,"boolean");
-		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {
-			this.E_RecordNotificationInteractions(recordClickEndpoint);
-		}
+		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
@@ -4868,9 +4782,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_Transcript";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.z(actions,a => {
-			if("updateEngagementPanelAction" in a) {
-				return this.UA_EngagementPanel(a);
-			}
+			if("updateEngagementPanelAction" in a) {return this.UA_EngagementPanel(a);}
 			debugger;
 		});
 		this.trackingParams(cf,trackingParams);
@@ -5340,9 +5252,7 @@ class HandleTypes extends HandleTypesEval {
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		this.codegen_typedef_all(cf,x);
 	}
-	static {
-		this.prototype.MC_ResolveUrl;
-	}
+	static {	this.prototype.MC_ResolveUrl;}
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
 		const cf="MC_ResolveUrl";
@@ -5601,9 +5511,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.R_DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
-		else {
-			this.z(engagementPanels,this.R_EngagementPanelSectionList);
-		}
+		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
 	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
@@ -5717,9 +5625,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="buttonState_buttonId";
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",x);
 		let ret=this.codegen.codegen_typedef("buttonState_buttonId",{button_id: x},true);
-		if(ret) {
-			this.save_string(`[${cf}]`,ret);
-		}
+		if(ret) {this.save_string(`[${cf}]`,ret);}
 	}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
@@ -6241,9 +6147,7 @@ class HandleTypes extends HandleTypesEval {
 					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
 					let gw=() => ({k: 1,a: v});
 					let w=gw();
-					if(this.str_starts_with_rx(w.a,"RD")) {
-						w.k=2; w.k==2&&this.playlistId(w.a);
-					} else {
+					if(this.str_starts_with_rx(w.a,"RD")) {w.k=2; w.k==2&&this.playlistId(w.a);} else {
 						this.save_next_char("share_url.v",w.a[0]);
 						this.videoId(w.a);
 					}
@@ -6266,9 +6170,7 @@ class HandleTypes extends HandleTypesEval {
 							let [,q]=split_string_once(w,"PL");
 							this.save_next_char("share_url.list.PL",q[0]);
 							this.playlistId(w);
-						} else {
-							this.save_next_char("share_url.list.other",w[0]);
-						}
+						} else {this.save_next_char("share_url.list.other",w[0]);}
 					}
 					return;
 				}
@@ -7892,9 +7794,7 @@ class HandleTypes extends HandleTypesEval {
 	to_param_obj(x) {
 		return Object.fromEntries([...x.entries()].map(e => {
 			let ei=e[1];
-			if(ei instanceof Map) {
-				return [e[0],this.to_param_obj(ei)];
-			}
+			if(ei instanceof Map) {return [e[0],this.to_param_obj(ei)];}
 			return [e[0],ei];
 		}));
 	}
@@ -8107,20 +8007,14 @@ class HandleTypes extends HandleTypesEval {
 		for(let val of tva) {
 			let g1=() => {
 				console.log(`
-				case ${JSON.stringify(path)}: /*tva*/{
-					this.parse_param_next(root,\`\${path}[]\`,map_entry_key_path,[val],callback);
-				}; return;`);
+				case ${JSON.stringify(path)}: /*tva*/{this.parse_param_next(root,\`\${path}[]\`,map_entry_key_path,[val],callback);}; return;`);
 				console.log(`\n\n\t"[parse_value.gen_ns_g1] [${path}[]]",`);
 				console.log("path offset",off);
 			};
 			switch(path) {
 				default: g1(); debugger; return;
-				case "get_report_form.f28.f1": /*tva*/{
-					this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);
-				}; return;
-				case "get_report_form.f28.f1[].f1.f1": /*tva*/{
-					this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);
-				}; return;
+				case "get_report_form.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
+				case "get_report_form.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
 			}
 			off++;
 		}
@@ -8151,9 +8045,7 @@ class HandleTypes extends HandleTypesEval {
 			case "feedback": u(idx); debugger; break;
 			case "get_report_form": {
 				const idx=2;
-				if(parts.length===1) {
-					switch(map_entry_value) {default: debugger; return;}
-				}
+				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
 				switch(parts[1]) {
 					default: u(idx); debugger; parts[1]===""; break;
 					case "f2": case "f8":
@@ -8222,9 +8114,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "service$create_playlist": {
 				const idx=2;
-				if(parts.length===1) {
-					switch(map_entry_value) {default: debugger; return;}
-				}
+				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
 				switch(parts[1]) {
 					default: u(idx); debugger; parts[1]===""; break;
 					case "f1": {
@@ -8270,9 +8160,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "slot_ad_serving_data_entry": {
 				const idx=2;
-				if(parts.length===1) {
-					switch(map_entry_value) {default: debugger; return;}
-				}
+				if(parts.length===1) {switch(map_entry_value) {default: debugger; return;}}
 				switch(parts[1]) {
 					default: u(idx); debugger; parts[1]===""; break;
 					case "f1": case "f3": case "f4": {
@@ -8391,9 +8279,7 @@ class HandleTypes extends HandleTypesEval {
 					default: u(idx); debugger; break;
 					case "normal": case "subscribed": {
 						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
+						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
 							case "f2":
@@ -8420,9 +8306,7 @@ class HandleTypes extends HandleTypesEval {
 					case "trackingParams": {
 						const idx=3;
 						/** @private @type {P_LogItems} */
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
+						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
 							// [tracking.trackingParams.f4]
@@ -8577,9 +8461,7 @@ class HandleTypes extends HandleTypesEval {
 			case "get_report_form": {
 				const idx=2;
 				// case "f11": u(idx); debugger; break;
-				switch(parts[1]) {
-					default: u(idx); debugger; /*parts[1]==="";*/ break;
-				}
+				switch(parts[1]) {default: u(idx); debugger; /*parts[1]==="";*/ break;}
 			} break;
 			case "createBackstagePost": {
 				const idx=2;
@@ -8587,9 +8469,7 @@ class HandleTypes extends HandleTypesEval {
 					default: u(idx); debugger; parts[1]===""; break;
 					case "params": {
 						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
+						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
 							case "f1":
@@ -8628,9 +8508,7 @@ class HandleTypes extends HandleTypesEval {
 					default: u(idx); debugger; parts[1]===""; break;
 					case "dislikeParams": case "removeLikeParams": case "likeParams": {
 						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
+						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
 							case "f1": case "f2": case "f3": case "f4": case "f5": case "f6":
@@ -8700,9 +8578,7 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[1]) {
 					default: u(idx); debugger; parts[1]===""; break; case "player_params": {
 						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
+						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break; case "f30": {
 								const idx=4;
@@ -8724,9 +8600,7 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 					case "params": {
 						const idx=3;
-						if(parts.length===2) {
-							switch(map_entry_value) {default: debugger; return;}
-						}
+						if(parts.length===2) {switch(map_entry_value) {default: debugger; return;}}
 						switch(parts[2]) {
 							default: u(idx); debugger; parts[2]===""; break;
 							case "f1": {

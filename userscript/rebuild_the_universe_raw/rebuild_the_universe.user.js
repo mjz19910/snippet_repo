@@ -34,14 +34,10 @@ function fetch_all_images() {
 }
 fetch_all_images;
 
-function fetch_all_images_full() {
-	return window.arrayNames.map(e => e.indexOf("cat")>-1? "cats-eye-nebula":e).map(e => "imagesFull/"+e.replace(/\s+/g,"-")+".jpg").map(e => fetch(e));
-}
+function fetch_all_images_full() {return window.arrayNames.map(e => e.indexOf("cat")>-1? "cats-eye-nebula":e).map(e => "imagesFull/"+e.replace(/\s+/g,"-")+".jpg").map(e => fetch(e));}
 fetch_all_images_full;
 
-function fetch_all_specs() {
-	return window.allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
-}
+function fetch_all_specs() {return window.allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));}
 fetch_all_specs;
 
 // tampermonkey is overwriting the console...
@@ -70,26 +66,10 @@ let logger_updated=false;
 function append_console_message(level,format_str,...args) {
 	if(!logger_updated) update_logger_vars();
 	let level_str=human_log_level(level);
-	if(level_str!=="unknown") {
-		format_str="[%s] "+format_str;
-	} else {
-		format_str="[%o:%s] "+format_str;
-	}
+	if(level_str!=="unknown") {format_str="[%s] "+format_str;} else {format_str="[%o:%s] "+format_str;}
 	if(level>=LOG_LEVEL_ERROR_IMPL) {
-		if(LogErrorAsConsoleError) {
-			console.error(format_str,level_str,...args);
-		} else {
-			console.info(format_str,level_str,...args);
-		}
-	} else if(level===LOG_LEVEL_WARN_IMPL) {
-		console.warn(format_str,level_str,...args);
-	} else if(level===LOG_LEVEL_NOTICE_IMPL) {
-		console.log(format_str,level_str,...args);
-	} else if(level_str==="unknown") {
-		console.info(format_str,level,level_str,...args);
-	} else {
-		console.info(format_str,level_str,...args);
-	}
+		if(LogErrorAsConsoleError) {console.error(format_str,level_str,...args);} else {console.info(format_str,level_str,...args);}
+	} else if(level===LOG_LEVEL_WARN_IMPL) {console.warn(format_str,level_str,...args);} else if(level===LOG_LEVEL_NOTICE_IMPL) {console.log(format_str,level_str,...args);} else if(level_str==="unknown") {console.info(format_str,level,level_str,...args);} else {console.info(format_str,level_str,...args);}
 	logger_updated=false;
 }
 /** @arg {number} level */
@@ -113,12 +93,8 @@ function log_if_impl_r(level,format_str,...args) {
 }
 function update_logger_vars() {
 	logger_updated=true;
-	if(sessionStorage["LogErrorAsConsoleError"]) {
-		LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==="true";
-	}
-	if(sessionStorage["LoggingLevel"]) {
-		local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);
-	}
+	if(sessionStorage["LogErrorAsConsoleError"]) {LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==="true";}
+	if(sessionStorage["LoggingLevel"]) {local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);}
 }
 function trigger_debug_breakpoint() {
 	debugger;
@@ -140,12 +116,8 @@ class CSSStyleSheetConstructorBoxImpl {
 		return null;
 	}
 	/** @arg {StackVMImpl} _vm @arg {string} key */
-	on_get(_vm,key) {
-		console.log("get","CSSStyleSheetConstructorBox",key);
-	}
-	factory() {
-		return new CSSStyleSheetBoxImpl(new this.value);
-	}
+	on_get(_vm,key) {console.log("get","CSSStyleSheetConstructorBox",key);}
+	factory() {return new CSSStyleSheetBoxImpl(new this.value);}
 	/** @arg {typeof CSSStyleSheet} value */
 	constructor(value) {
 		this.value=value;
@@ -256,9 +228,7 @@ class NewableFunctionBoxImpl {
 		this.class_value=class_value;
 	}
 	/** @arg {StackVMImpl} _vm @arg {string} key */
-	on_get(_vm,key) {
-		console.log("get","newable function",this.factory_value,this.class_value,key);
-	}
+	on_get(_vm,key) {console.log("get","newable function",this.factory_value,this.class_value,key);}
 }
 
 class InstructionImplBase {}
@@ -301,16 +271,12 @@ class InstructionCallImpl extends InstructionImplBase {
 		const {type,...left_to_unbox}=object_box;
 		if(object_box.type==="object_box") {
 			const {type,value,...rest}=object_box;
-			if(Object.keys(rest).length>0) {
-				console.log("other enumerable on box",rest);
-			}
+			if(Object.keys(rest).length>0) {console.log("other enumerable on box",rest);}
 			return value;
 		}
 		if(object_box.type==="instance_box") {
 			const {type,value,instance_type,...rest}=object_box;
-			if(Object.keys(rest).length>0) {
-				console.log("other enumerable on box",rest);
-			}
+			if(Object.keys(rest).length>0) {console.log("other enumerable on box",rest);}
 			return value;
 		}
 		if(object_box.type==="custom_box") {
@@ -352,19 +318,11 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
-		if(!fn_obj) {
-			throw new Error("Unreachable (type of value is not \"function\")");
-		}
+		if(!fn_obj) {throw new Error("Unreachable (type of value is not \"function\")");}
 		if(fn_obj.type==="function_box") {
-			if(fn_obj.return_type==="Box") {
-				return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);
-			}
-		} else if(fn_obj.type=="constructor_box") {
-			throw new Error("Unexpected constructor");
-		}
-		else {
-			throw new Error("Unreachable (type of value is never)");
-		}
+			if(fn_obj.return_type==="Box") {return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);}
+		} else if(fn_obj.type=="constructor_box") {throw new Error("Unexpected constructor");}
+		else {throw new Error("Unreachable (type of value is never)");}
 	}
 	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Promise<Box_CJS>} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn_to_promise(vm,fn_value,target_this,arg_arr) {
@@ -375,16 +333,10 @@ class InstructionCallImpl extends InstructionImplBase {
 	/** @arg {number} number_of_arguments @arg {StackVMImpl} vm */
 	run(vm,number_of_arguments) {
 		if(typeof number_of_arguments!="number") throw new Error("Invalid");
-		if(number_of_arguments<=1) {
-			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
-		}
+		if(number_of_arguments<=1) {throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");}
 		let [target_this,value_box,...arg_arr]=vm.pop_arg_count(number_of_arguments);
-		if(typeof target_this!=="object") {
-			throw new Error("Need to box into js objects to use as this object");
-		}
-		if(this.debug) {
-			console.log("VM: call",target_this,"fn box",value_box,arg_arr);
-		}
+		if(typeof target_this!=="object") {throw new Error("Need to box into js objects to use as this object");}
+		if(this.debug) {console.log("VM: call",target_this,"fn box",value_box,arg_arr);}
 		if(value_box===void 0) {
 			console.info("VM Error: Processing call instruction",number_of_arguments,target_this,value_box,arg_arr);
 			throw new Error("Tried to call undefined");
@@ -396,11 +348,7 @@ class InstructionCallImpl extends InstructionImplBase {
 		if(typeof value_box==="function") {
 			if(this.debug) console.log("function is not boxed",value_box);
 			return this.handle_as_fn(vm,value_box,target_this,arg_arr);
-		} else if(value_box===null) {
-			throw new Error("Invalid");
-		} else if(typeof value_box==="object"&&value_box.type==="void") {
-			throw new Error("Attempt to call a void value");
-		} else {
+		} else if(value_box===null) {			throw new Error("Invalid");} else if(typeof value_box==="object"&&value_box.type==="void") {throw new Error("Attempt to call a void value");} else {
 			if("value" in value_box) {
 				console.log("VM: call error value_box not handled",typeof value_box,value_box,value_box.value);
 				this.handle_as_obj(vm,value_box,target_this,arg_arr);
@@ -467,9 +415,7 @@ class InstructionCastImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} obj @arg {"object_index"} cast_source */
 	cast_to_type(vm,obj,cast_source) {
-		if(obj?.type==="custom_box"&&obj.box_type==="StackVM") {
-			return this.push_custom_box(vm,cast_source,obj);
-		}
+		if(obj?.type==="custom_box"&&obj.box_type==="StackVM") {return this.push_custom_box(vm,cast_source,obj);}
 		if(obj?.type==="object_box") {
 			if(cast_source==="object_index") {
 				console.log(obj);
@@ -494,9 +440,7 @@ class InstructionCastImpl extends InstructionImplBase {
 	run(vm,cast_type) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
-		if(this.debug) {
-			console.log("VM: cast",cast_type,obj);
-		}
+		if(this.debug) {console.log("VM: cast",cast_type,obj);}
 		if(typeof obj!="object") throw new Error("Invalid");
 		switch(cast_type) {
 			case "object_index": break;
@@ -511,12 +455,8 @@ class InstructionJeImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm @arg {number} target */
 	run(vm,target) {
 		if(typeof target!="number") throw new Error("Invalid");
-		if(vm.is_in_instructions(target)) {
-			throw new Error("RangeError: Jump target is out of instructions range");
-		}
-		if(vm.flags.equal) {
-			vm.instruction_pointer=target;
-		}
+		if(vm.is_in_instructions(target)) {throw new Error("RangeError: Jump target is out of instructions range");}
+		if(vm.flags.equal) {vm.instruction_pointer=target;}
 	}
 }
 class InstructionJmpImpl extends InstructionImplBase {
@@ -524,9 +464,7 @@ class InstructionJmpImpl extends InstructionImplBase {
 	type="jmp";
 	/** @arg {number} target @arg {StackVMImpl} vm */
 	run(vm,target) {
-		if(vm.is_in_instructions(target)) {
-			throw new Error("RangeError: Jump target is out of instructions range");
-		}
+		if(vm.is_in_instructions(target)) {throw new Error("RangeError: Jump target is out of instructions range");}
 		vm.instruction_pointer=target;
 	}
 }
@@ -536,9 +474,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 	/** @arg {[number,number]} instruction @arg {StackVMImpl} vm */
 	run(vm,...instruction) {
 		let [target,offset]=instruction;
-		if(vm.is_in_instructions(target)) {
-			throw new Error("RangeError: Destination is out of instructions range");
-		}
+		if(vm.is_in_instructions(target)) {throw new Error("RangeError: Destination is out of instructions range");}
 		let instruction_1=vm.instructions[target];
 		/** @type {[string, ...any[]]} */
 		let instruction_modify=instruction_1;
@@ -577,11 +513,7 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 	type="vm_push_ip";
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
-		if(!vm.hasOwnProperty("push")) {
-			throw new Error("push_pc requires a stack");
-		} else if(vm instanceof StackVMImpl) {
-			vm.stack.push(new NumberBoxImpl(vm.instruction_pointer));
-		} else {
+		if(!vm.hasOwnProperty("push")) {throw new Error("push_pc requires a stack");} else if(vm instanceof StackVMImpl) {vm.stack.push(new NumberBoxImpl(vm.instruction_pointer));} else {
 			console.info("TODO: add instanceof check to push_pc");
 			throw new Error("Property missing or invalid");
 		}
@@ -635,9 +567,7 @@ class InstructionGetImpl extends InstructionImplBase {
 			case "constructor_box": {
 				switch(value_box.instance_type) {
 					case "CSSStyleSheet": new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key); break;
-					case "unknown": {
-						new NewableFunctionBoxImpl(...value_box.get_construct_arguments());
-					} break;
+					case "unknown": {new NewableFunctionBoxImpl(...value_box.get_construct_arguments());} break;
 				}
 			} break;
 			default: console.log("on_get no handler",value_box.type);
@@ -669,9 +599,7 @@ class InstructionReturnImpl extends InstructionImplBase {
 	run(vm) {
 		if(vm.stack.length>0) {
 			vm.return_value=vm.pop();
-		} else {
-			throw new Error("Stack underflow on return");
-		}
+		} else {throw new Error("Stack underflow on return");}
 	}
 }
 class InstructionBreakpointImpl extends InstructionImplBase {
@@ -687,17 +615,13 @@ class InstructionPushVMObjImpl extends InstructionImplBase {
 	/** @type {"vm_push_self"} */
 	type="vm_push_self";
 	/** @arg {StackVMImpl} vm */
-	run(vm) {
-		vm.stack.push(new StackVMBoxImpl(vm));
-	}
+	run(vm) {vm.stack.push(new StackVMBoxImpl(vm));}
 }
 class InstructionPushWindowObjectImpl extends InstructionImplBase {
 	/** @type {"push_window_object"} */
 	type="push_window_object";
 	/** @arg {StackVMImpl} vm */
-	run(vm) {
-		vm.stack.push(new WindowBoxImpl(window));
-	}
+	run(vm) {vm.stack.push(new WindowBoxImpl(window));}
 }
 class InstructionPeekImpl extends InstructionImplBase {
 	/** @type {"peek"} */
@@ -716,13 +640,9 @@ class InstructionAppendImpl extends InstructionImplBase {
 	type="append";
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
-		if(vm.stack.length<=0) {
-			throw new Error("stack underflow");
-		}
+		if(vm.stack.length<=0) {throw new Error("stack underflow");}
 		let target=vm.stack.pop();
-		if(vm.stack.length<=0) {
-			throw new Error("stack underflow");
-		}
+		if(vm.stack.length<=0) {throw new Error("stack underflow");}
 		let append_obj=vm.stack.pop();
 		if(typeof append_obj!="object") throw new Error("Element to append not object");
 		if(typeof target!="object") {
@@ -739,9 +659,7 @@ class InstructionAppendImpl extends InstructionImplBase {
 class InstructionPushArgsImpl extends InstructionImplBase {
 	/** @type {"vm_push_args"} */
 	type="vm_push_args";
-	run() {
-		throw new Error("Instruction not supported");
-	}
+	run() {throw new Error("Instruction not supported");}
 }
 class InstructionDropImpl extends InstructionImplBase {
 	/** @type {"drop"} */
@@ -804,9 +722,7 @@ class InstructionBlockTraceImpl extends InstructionImplBase {
 	}
 }
 class UnimplementedInstruction extends InstructionImplBase {
-	run() {
-		throw new Error("Unimplemented instruction");
-	}
+	run() {throw new Error("Unimplemented instruction");}
 }
 const instruction_table={
 	append: new InstructionAppendImpl,
@@ -870,16 +786,8 @@ class StackVmBaseImpl {
 	/** @arg {number} offset @arg {import("./ns.js").Box} value @arg {[string,...any[]]} lex_instruction */
 	update_instruction(offset,value,lex_instruction) {
 		if(offset==0) {
-			if(value.type==="string") {
-				lex_instruction[offset]=value.value;
-			} else {
-				throw new Error("Invalid");
-			}
-		} else if(offset>0) {
-			lex_instruction[offset]=value;
-		} else {
-			throw new Error("Unreachable");
-		}
+			if(value.type==="string") {lex_instruction[offset]=value.value;} else {			throw new Error("Invalid");}
+		} else if(offset>0) {lex_instruction[offset]=value;} else {throw new Error("Unreachable");}
 		return lex_instruction;
 	}
 }
@@ -924,17 +832,13 @@ class StackVMImpl {
 		this.stack.push(value);
 	}
 	/** @arg {number} distance */
-	peek_at(distance) {
-		return this.stack.at(-1-distance);
-	}
+	peek_at(distance) {return this.stack.at(-1-distance);}
 	/** @arg {number} operand_number_of_arguments */
 	pop_arg_count(operand_number_of_arguments) {
 		let arguments_arr=[];
 		let arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
-			if(this.stack.length<=0) {
-				throw new Error("stack underflow in pop_arg_count");
-			}
+			if(this.stack.length<=0) {throw new Error("stack underflow in pop_arg_count");}
 			arguments_arr.unshift(this.pop());
 		}
 		return arguments_arr;
@@ -948,9 +852,7 @@ class StackVMImpl {
 		this.stack.length=0;
 	}
 	/** @arg {number} value */
-	is_in_instructions(value) {
-		return value>=0&&value<this.instructions.length;
-	}
+	is_in_instructions(value) {return value>=0&&value<this.instructions.length;}
 	halt() {
 		this.running=false;
 	}
@@ -1003,9 +905,7 @@ class StackVMImpl {
 			if(!this.running) break;
 			if(this.jump_instruction_pointer===null) this.instruction_pointer++;
 			else {
-				if(this.is_in_instructions(this.jump_instruction_pointer)) {
-					this.instruction_pointer=this.jump_instruction_pointer;
-				} else {
+				if(this.is_in_instructions(this.jump_instruction_pointer)) {this.instruction_pointer=this.jump_instruction_pointer;} else {
 					console.error("seg fault, jump target out of range");
 					throw new Error("Segmentation fault");
 				}
@@ -1029,9 +929,7 @@ class EventHandlerVMDispatchImplR extends StackVMImpl {
 		try {
 			super(instructions);
 			this.target_obj=target_obj;
-		} catch(e) {
-			console.log("EventHandlerVMDispatch constructor error",e);
-		}
+		} catch(e) {console.log("EventHandlerVMDispatch constructor error",e);}
 	}
 	/** @override @arg {Box_CJS[]} args_arr */
 	run(...args_arr) {
@@ -1123,9 +1021,7 @@ class StackVMParserImplR {
 			let diff_len=sub_str.length-trimmed_str.length;
 			if(trimmed_str.startsWith("//")) {
 				let com_end=trimmed_str.indexOf("\n");
-				if(com_end>-1) {
-					this.match_regex.lastIndex=saved_last+diff_len+trimmed_str.indexOf("\n");
-				}
+				if(com_end>-1) {this.match_regex.lastIndex=saved_last+diff_len+trimmed_str.indexOf("\n");}
 			}
 			parts=this.match_regex.exec(string);
 			if(!parts) break;
@@ -1199,9 +1095,7 @@ class StackVMParserImplR {
 	static verify_raw_instructions(raw_instructions) {
 		/** @type{InstructionType_CJS[]}*/
 		const instructions=[];
-		for(let i=0;i<raw_instructions.length;i++) {
-			instructions.push(this.verify_instruction(raw_instructions[i]));
-		}
+		for(let i=0;i<raw_instructions.length;i++) {instructions.push(this.verify_instruction(raw_instructions[i]));}
 		return instructions;
 	}
 }
@@ -1227,18 +1121,14 @@ class DocumentWriteListImpl {
 	attach_proxy(document) {
 		if(this.attached) {
 			let was_destroyed=this.destroy(true);
-			if(!was_destroyed) {
-				throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
-			}
+			if(!was_destroyed) {throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");}
 		}
 		this.attached_document=document;
 		this.document_write=document.write;
 		let proxy_handler={
 			other: this,
 			/** @arg {(...text: string[]) => void} target @arg {Document} thisArg @arg {string[]} argArray */
-			apply(target,thisArg,argArray) {
-				this.other.write(target,thisArg,argArray);
-			}
+			apply(target,thisArg,argArray) {this.other.write(target,thisArg,argArray);}
 		};
 		this.document_write_proxy=new Proxy(document.write,proxy_handler);
 		document.write=this.document_write_proxy;
@@ -1265,15 +1155,11 @@ class DocumentWriteListImpl {
 			}
 			return false;
 		}
-		if(this.document_write_proxy) {
-			this.document_write_proxy=null;
-		}
+		if(this.document_write_proxy) {this.document_write_proxy=null;}
 		if(this.document_write) {
 			this.document_write=null;
 		}
-		if(this.attached_document) {
-			this.attached_document=null;
-		}
+		if(this.attached_document) {		this.attached_document=null;}
 		if(should_try_to_destroy) {
 			return true;
 		}
@@ -1285,9 +1171,7 @@ class UniqueIdGeneratorImplR {
 		this.m_current=-1;
 	}
 	/** @arg {number} current_value */
-	set_current(current_value) {
-		this.m_current=current_value;
-	}
+	set_current(current_value) {	this.m_current=current_value;}
 	current() {
 		return this.m_current;
 	}
@@ -1328,9 +1212,7 @@ class EventHandlerDispatch {
 		this.target_name=target_name;
 	}
 	/** @arg {any} event */
-	handleEvent(event) {
-		this.target_obj[this.target_name](event);
-	}
+	handleEvent(event) {this.target_obj[this.target_name](event);}
 }
 class CompressionStatsCalculatorImpl {
 	constructor() {
@@ -1347,9 +1229,7 @@ class CompressionStatsCalculatorImpl {
 	}
 	/** @arg {number} index */
 	add_hit(index) {
-		if(!this.map_values()[index]) {
-			this.map_values()[index]=1;
-		} else this.map_values()[index]++;
+		if(!this.map_values()[index]) {			this.map_values()[index]=1;} else this.map_values()[index]++;
 	}
 	/** @arg {string} key */
 	add_item(key) {
@@ -1365,44 +1245,30 @@ class CompressionStatsCalculatorImpl {
 	calc_compression_stats(arr,win_size) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
-			if(i+win_size<arr.length) {
-				this.add_item(arr.slice(i,i+win_size).join(","));
-			}
+			if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}
 		}
 		return to_tuple_arr(this.map_keys(),this.map_values()).filter((e) => e[1]!==void 0);
 	}
 	/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} win_size */
-	calc_for_stats_window_size(stats_arr,arr,win_size) {
-		stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size);
-	}
+	calc_for_stats_window_size(stats_arr,arr,win_size) {stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size);}
 	/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {
-		stats_arr[index]=this.calc_compression_stats(arr,index+1);
-	}
+	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
 }
 /** @implements {BaseCompression} */
 class BaseCompressionImpl {
 	/** @arg {CompressDual} arg0 @returns {DualR_0} */
-	compress_result_state_dual(arg0) {
-		return this.compress_result_dual(arg0.arr,arg0.ret);
-	}
+	compress_result_state_dual(arg0) {return this.compress_result_dual(arg0.arr,arg0.ret);}
 	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string,number>[]} dst @returns {DualR_0} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {
-		return dst.length<src.length;
-	}
+	did_compress(src,dst) {	return dst.length<src.length;}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
-	did_decompress(src,dst) {
-		return dst.length>src.length;
-	}
+	did_decompress(src,dst) {	return dst.length>src.length;}
 	/** @template T,U @arg {CompressStateBase<T, U>} state */
-	compress_result_state(state) {
-		return this.compress_result(state.arr,state.ret);
-	}
+	compress_result_state(state) {return this.compress_result(state.arr,state.ret);}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
@@ -1542,9 +1408,7 @@ class TimeoutTarget {
 		this.m_obj=obj;
 		this.m_callback=callback;
 	}
-	fire() {
-		this.m_callback.call(this.m_obj);
-	}
+	fire() {this.m_callback.call(this.m_obj);}
 }
 class IntervalTarget {
 	/** @arg {any} obj @arg {any} callback */
@@ -1553,9 +1417,7 @@ class IntervalTarget {
 		this.m_obj=obj;
 		this.m_callback=callback;
 	}
-	fire() {
-		this.m_callback.call(this.m_obj);
-	}
+	fire() {this.m_callback.call(this.m_obj);}
 }
 class PromiseTimeoutTarget {
 	constructor() {
@@ -1596,12 +1458,8 @@ class PromiseTimeoutTarget {
 		this.m_callback=null;
 		this.m_active=false;
 	}
-	fire() {
-		if(this.m_callback) this.m_callback();
-	}
-	destroy() {
-		if(this.m_active) this.on_error(new Error("Destroyed"));
-	}
+	fire() {if(this.m_callback) this.m_callback();}
+	destroy() {if(this.m_active) this.on_error(new Error("Destroyed"));}
 }
 class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 	/** @override */
@@ -1620,9 +1478,7 @@ class BaseNodeImpl {
 	run() {
 		// do nothing
 	}
-	remove() {
-		if(this.m_parent) this.m_parent.remove_child(this);
-	}
+	remove() {if(this.m_parent) this.m_parent.remove_child(this);}
 	destroy() {
 		this.remove();
 	}
@@ -1675,9 +1531,7 @@ class TimeoutNode extends BaseNodeImpl {
 	set_target(target) {
 		this.m_target=target;
 	}
-	set() {
-		this.m_id=setTimeout(this.run.bind(this),this.m_timeout);
-	}
+	set() {this.m_id=setTimeout(this.run.bind(this),this.m_timeout);}
 	/** @arg {{}|null} target */
 	start(target) {
 		if(!target) throw new Error("No target");
@@ -1691,9 +1545,7 @@ class TimeoutNode extends BaseNodeImpl {
 		this.remove();
 	}
 	/** @override */
-	destroy() {
-		if(this.m_id!==null) clearTimeout(this.m_id);
-	}
+	destroy() {if(this.m_id!==null) clearTimeout(this.m_id);}
 }
 class IntervalNode extends BaseNodeImpl {
 	/** @arg {CallableFunction} target_fn */
@@ -1703,22 +1555,16 @@ class IntervalNode extends BaseNodeImpl {
 		this.m_timeout=timeout;
 		this.id=null;
 	}
-	set() {
-		this.id=setInterval(this.run.bind(this),this.m_timeout);
-	}
+	set() {this.id=setInterval(this.run.bind(this),this.m_timeout);}
 	/** @arg {{}|null} target */
 	start(target=null) {
 		if(target) {
 			this.m_target=target;
-		} else {
-			this.m_target=new IntervalTargetFn(this.m_target_fn,this.m_timeout);
-		}
+		} else {this.m_target=new IntervalTargetFn(this.m_target_fn,this.m_timeout);}
 		this.set();
 	}
 	/** @override */
-	destroy() {
-		if(this.id!==null) clearInterval(this.id);
-	}
+	destroy() {if(this.id!==null) clearInterval(this.id);}
 }
 class AsyncTimeoutNode extends TimeoutNode {
 	/** @arg {{wait():Promise<any>;destroy():void}} target */
@@ -1776,13 +1622,9 @@ class AsyncNodeRootImplR {
 		}
 	}
 	/** @arg {number} timeout_id */
-	append_raw_timeout(timeout_id) {
-		this.append_child(new TimeoutIdNode(timeout_id));
-	}
+	append_raw_timeout(timeout_id) {this.append_child(new TimeoutIdNode(timeout_id));}
 	/** @arg {ReturnType<typeof setInterval>} timeout_id */
-	append_raw_interval(timeout_id) {
-		this.append_child(new IntervalIdNode(timeout_id));
-	}
+	append_raw_interval(timeout_id) {this.append_child(new IntervalIdNode(timeout_id));}
 	/** @arg {BaseNodeImpl} record */
 	append_child(record) {
 		record.remove();
@@ -1937,9 +1779,7 @@ class DataLoaderImplR {
 		this.storage=storage;
 	}
 	/** @arg {string} key */
-	getItem(key) {
-		return this.storage.getItem(key);
-	}
+	getItem(key) {return this.storage.getItem(key);}
 	/** @arg {string} key @returns {[true,string[]]|[false,null]} */
 	load_str_arr(key) {
 		let data=this.getItem(key);
@@ -1957,9 +1797,7 @@ class DataLoaderImplR {
 		return string.split(",");
 	}
 	/** @arg {string} data */
-	parse_int_arr(data) {
-		return this.default_split(data).map(DataLoaderImplR.int_parser);
-	}
+	parse_int_arr(data) {return this.default_split(data).map(DataLoaderImplR.int_parser);}
 }
 /** @typedef {import("./ns.js").VoidBox} VoidBox_CJS */
 /** @implements {VoidBox_CJS} */
@@ -2000,9 +1838,7 @@ class AutoBuyStateImplR {
 		this.val=window.totalAtome/window.atomepersecond;
 		let rep_val=this.val/(100*4*window.prestige);
 		if(Number.isFinite(rep_val)) {
-			for(let i=0;i<8;i++) {
-				this.arr.push(rep_val*.75);
-			}
+			for(let i=0;i<8;i++) {			this.arr.push(rep_val*.75);}
 		} else {
 			rep_val=0.75;
 		}
@@ -2028,9 +1864,7 @@ class AutoBuyStateImplR {
 			state.avg.set_ratio(state.ratio_types[i],obj);
 		}
 		let now_start=performance.now();
-		for(let i=0;i<5;i++) {
-			create_ratio(this,i,now_start);
-		}
+		for(let i=0;i<5;i++) {create_ratio(this,i,now_start);}
 		this.prev_atomepersecond=window.atomepersecond;
 		this.is_init_complete=true;
 	}
@@ -2040,18 +1874,14 @@ class AutoBuyStateImplR {
 	}
 	/** @arg {number} value */
 	append_value(value) {
-		if(!Number.isFinite(value)) {
-			console.assert(false,"value is not finite");
-		}
+		if(!Number.isFinite(value)) {console.assert(false,"value is not finite");}
 		this.arr.unshift(value);
 		this.avg.push(value);
 		while(this.arr.length>this.arr_max_len) {
 			this.arr.pop();
 		}
 		let new_ratio=this.calc_ratio();
-		if(!Number.isFinite(new_ratio)) {
-			console.assert(false,"ratio result is not finite");
-		}
+		if(!Number.isFinite(new_ratio)) {console.assert(false,"ratio result is not finite");}
 		this.last_ratio=this.ratio;
 		this.ratio=new_ratio;
 	}
@@ -2071,12 +1901,8 @@ class AutoBuyStateImplR {
 		this.total_cycle_count_change=0;
 		let did_update=this.rep_update_ratio_mode(true);
 		/*let should_notify=did_update;
-			while(did_update){
-				did_update=this.rep_update_ratio_mode(false);
-			}*/
-		if(did_update) {
-			this.log_on_update_ratio_mode_notify();
-		}
+			while(did_update){did_update=this.rep_update_ratio_mode(false);}*/
+		if(did_update) {this.log_on_update_ratio_mode_notify();}
 	}
 	/** @arg {boolean} do_lock */
 	rep_update_ratio_mode(do_lock) {
@@ -2101,17 +1927,11 @@ class AutoBuyStateImplR {
 	}
 	/** @arg {boolean} do_lock @arg {number} dir_num @arg {number} lock_for */
 	on_ratio_change(do_lock,dir_num,lock_for) {
-		if(do_lock) {
-			this.do_ratio_lock(do_lock,dir_num,lock_for);
-		} else {
-			this.do_ratio_lock(do_lock,dir_num,lock_for);
-		}
+		if(do_lock) {this.do_ratio_lock(do_lock,dir_num,lock_for);} else {this.do_ratio_lock(do_lock,dir_num,lock_for);}
 		this.on_cycle_count_change(lock_for);
 	}
 	/** @arg {number} lock_for */
-	on_cycle_count_change(lock_for) {
-		this.total_cycle_count_change+=lock_for;
-	}
+	on_cycle_count_change(lock_for) {this.total_cycle_count_change+=lock_for;}
 	/** @arg {boolean} _do_lock @arg {number} mode_change_direction @arg {number} num_of_cycles */
 	do_ratio_lock(_do_lock,mode_change_direction,num_of_cycles) {
 		this.ratio_mode+=mode_change_direction;
@@ -2138,11 +1958,7 @@ class AutoBuyStateImplR {
 		let real_val=this.avg.get_average(near_avg);
 		let [num,exponent]=this.calc_near_val(real_val);
 		if(real_val<0.9) return;
-		if(exponent<2&&exponent>-3) {
-			log_if_impl_r(LOG_LEVEL_ERROR_IMPL,"update_ratio_mode_tag -exp avg:%s=%o lcc=%o",near_avg,(~~(real_val*100000))/100000,this.locked_cycle_count);
-		} else {
-			log_if_impl_r(LOG_LEVEL_ERROR_IMPL,"update_ratio_mode_tag +exp avg:%s=(%o,%o) lcc=%o",near_avg,(~~(num*10000))/10000,exponent,this.locked_cycle_count);
-		}
+		if(exponent<2&&exponent>-3) {log_if_impl_r(LOG_LEVEL_ERROR_IMPL,"update_ratio_mode_tag -exp avg:%s=%o lcc=%o",near_avg,(~~(real_val*100000))/100000,this.locked_cycle_count);} else {log_if_impl_r(LOG_LEVEL_ERROR_IMPL,"update_ratio_mode_tag +exp avg:%s=(%o,%o) lcc=%o",near_avg,(~~(num*10000))/10000,exponent,this.locked_cycle_count);}
 	}
 	update_not_ready() {
 		let node=new TimeoutNode(80);
@@ -2190,9 +2006,7 @@ class AutoBuyStateImplR {
 		let data_arr;
 		xx: if(prev_hist&&prev_hist.startsWith(json_tag)) {
 			let hist_data=prev_hist.slice(json_tag.length);
-			while(hist_data[0]==="@") {
-				hist_data=hist_data.slice(1);
-			}
+			while(hist_data[0]==="@") {	hist_data=hist_data.slice(1);}
 			data_arr=hist_data.split("|");
 			data_arr.push(json_hist);
 		} else {
@@ -2204,13 +2018,9 @@ class AutoBuyStateImplR {
 		let time_played_arr=data_arr.map(() => null);
 		if(time_played_data) {
 			let stored_arr=JSON.parse(time_played_data);
-			for(let i=0;i<stored_arr.length;i++) {
-				time_played_arr[i]=stored_arr[i];
-			}
+			for(let i=0;i<stored_arr.length;i++) {time_played_arr[i]=stored_arr[i];}
 			time_played_arr[data_arr.length-1]=time_played_str;
-		} else {
-			time_played_arr=[time_played_str];
-		}
+		} else {time_played_arr=[time_played_str];}
 		sessionStorage["time_played_hist"]=JSON.stringify(time_played_arr);
 	}
 	reset() {
@@ -2274,29 +2084,21 @@ class AsyncAutoBuy {
 		const log_tm=false;
 		log_ic;
 		log_tm;
-		if(this.main_running) {
-			throw new Error("Already running");
-		}
+		if(this.main_running) {throw new Error("Already running");}
 		this.main_running=true;
 		try {
 			run_loop: while(this.main_running) {
 				for(this.parent.iter_count=0;;) {
 					// 30
 					this.unit_upgradeable_trigger=30;
-					if(this.parent.timeout_ms&&this.parent.timeout_ms>3*60*1000) {
-						this.unit_upgradeable_trigger=8;
-					}
+					if(this.parent.timeout_ms&&this.parent.timeout_ms>3*60*1000) {this.unit_upgradeable_trigger=8;}
 					if(this.parent.unit_upgradable_count>this.unit_upgradeable_trigger) {
 						this.parent.unit_upgradable_count=0;
 						await this.rare_faster_async();
 					}
 					let [quit,loss_rate]=await this.maybe_async_reset();
 					if(quit) break run_loop;
-					if(loss_rate==0) {
-						await this.faster_timeout_async();
-					} else {
-						await this.slower_timeout_async();
-					}
+					if(loss_rate==0) {await this.faster_timeout_async();} else {await this.slower_timeout_async();}
 					if(loss_rate>0.08) continue;
 					if(this.parent.pre_total==window.totalAtome) break;
 				}
@@ -2358,11 +2160,7 @@ class AutoBuyImplR {
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
 		let history_loaded=this.local_data_loader.load_str_arr("auto_buy_history_str");
-		if(history_loaded[0]) {
-			this.state_history_arr=history_loaded[1];
-		} else {
-			this.state_history_arr=["S"];
-		}
+		if(history_loaded[0]) {this.state_history_arr=history_loaded[1];} else {	this.state_history_arr=["S"];}
 		this.epoch_start_time=Date.now();
 		this.original_map=new Map;
 		/** @type {Map<string, (Node|string)>} */
@@ -2376,9 +2174,7 @@ class AutoBuyImplR {
 			console.log(e);
 		}
 		let timeout_arr_load=this.local_data_loader.load_int_arr("auto_buy_timeout_str");
-		if(timeout_arr_load[0]) {
-			this.timeout_arr=timeout_arr_load[1];
-		} else {
+		if(timeout_arr_load[0]) {this.timeout_arr=timeout_arr_load[1];} else {
 			this.timeout_arr=[30];
 			this.timeout_arr.length=16;
 			let data_len=1;
@@ -2424,18 +2220,12 @@ class AutoBuyImplR {
 		this.background_audio=audio_element;
 		this.background_audio.onloadeddata=null;
 		this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
-		this.async_pre_init().then(() => {
-			log_if_impl_r(LOG_LEVEL_INFO_IMPL,"pre_init done");
-		}); this.dom_pre_init();
+		this.async_pre_init().then(() => {log_if_impl_r(LOG_LEVEL_INFO_IMPL,"pre_init done");}); this.dom_pre_init();
 	}
 	async async_pre_init() {
 		if(!this.background_audio) throw new Error("1");
 		if(!(this.background_audio instanceof HTMLAudioElement)) throw new Error("1");
-		x: try {
-			return await this.background_audio.play();
-		} catch(e) {
-			log_if_impl_r(LOG_LEVEL_INFO_IMPL,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
-		}
+		x: try {return await this.background_audio.play();} catch(e) {log_if_impl_r(LOG_LEVEL_INFO_IMPL,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");}
 		let raw_instructions=`
 			// [none]
 			vm_push_self;
@@ -2522,19 +2312,13 @@ class AutoBuyImplR {
 				log_if_impl_r(LOG_LEVEL_ERROR_IMPL,"play success");
 			},
 			/** @arg {any} err */
-			function(err) {
-				log_if_impl_r(LOG_LEVEL_ERROR_IMPL,err);
-			}
+			function(err) {log_if_impl_r(LOG_LEVEL_ERROR_IMPL,err);}
 		]);
 		try {
 			let t=this;
 			let handler_new={
 				handleEvent() {
-					this.run().then(() => {
-						log_if_impl_r(LOG_LEVEL_INFO_IMPL,"play success");
-					},function(err) {
-						log_if_impl_r(LOG_LEVEL_ERROR_IMPL,err);
-					});
+					this.run().then(() => {log_if_impl_r(LOG_LEVEL_INFO_IMPL,"play success");},function(err) {log_if_impl_r(LOG_LEVEL_ERROR_IMPL,err);});
 					window.removeEventListener("click",this);
 				},
 				async run() {
@@ -2546,9 +2330,7 @@ class AutoBuyImplR {
 			return;
 			let handler=new EventHandlerVMDispatchImplR(instructions,this);
 			window.addEventListener("click",handler);
-		} catch(e) {
-			console.log("error when setting up EventHandlerVMDispatch",e);
-		}
+		} catch(e) {console.log("error when setting up EventHandlerVMDispatch",e);}
 	}
 	save_state_history_arr() {
 		if(this.skip_save) return;
@@ -2567,11 +2349,7 @@ class AutoBuyImplR {
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
 			if(Number.isFinite(action_count)) {
-				if(action_count>0) {
-					localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];
-				} else if(forced_action!=="NONE") {
-					localStorage["auto_buy_forced_action"]="NONE,0";
-				}
+				if(action_count>0) {localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];} else if(forced_action!=="NONE") {localStorage["auto_buy_forced_action"]="NONE,0";}
 			}
 		}
 	}
@@ -2638,9 +2416,7 @@ class AutoBuyImplR {
 	global_init() {
 		/** @type {any} */
 		let this_any=this;
-		if(window.g_auto_buy&&window.g_auto_buy!==this_any) {
-			window.g_auto_buy.destroy();
-		}
+		if(window.g_auto_buy&&window.g_auto_buy!==this_any) {		window.g_auto_buy.destroy();}
 		window.g_auto_buy=this_any;
 	}
 	destroy() {
@@ -2749,9 +2525,7 @@ class AutoBuyImplR {
 					int_hours++;
 					time_arr[0]=this.do_zero_pad(int_hours,"0",2);
 					console.log("sec+ min+ hour+");
-				} else {
-					console.log("sec+ min+");
-				}
+				} else {					console.log("sec+ min+");}
 				time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
 			} else {
 				console.log("sec+");
@@ -2810,9 +2584,7 @@ class AutoBuyImplR {
 		}
 		this.set_update_timeout();
 	}
-	set_update_timeout() {
-		this.next_timeout(this.update,125,"update",true);
-	}
+	set_update_timeout() {this.next_timeout(this.update,125,"update",true);}
 	update() {
 		this.state.update();
 		// spell:words timeplayed
@@ -2824,9 +2596,7 @@ class AutoBuyImplR {
 	}
 	update_async() {
 	}
-	init() {
-		this.next_timeout(this.init_impl,200,"init",true);
-	}
+	init() {this.next_timeout(this.init_impl,200,"init",true);}
 	set_secondinterval() {
 		let disabled=false;
 		if(disabled) return;
@@ -2847,9 +2617,7 @@ class AutoBuyImplR {
 			window.timeplayed+=real_rate;
 		},66);
 		window.secondinterval=interval_id;
-		this.root_node.append_child(new IntervalIdNodeRef(interval_id,function() {
-			window.secondinterval=void 0;
-		}));
+		this.root_node.append_child(new IntervalIdNodeRef(interval_id,function() {	window.secondinterval=void 0;}));
 	}
 	set_timeplayed_update_interval() {
 		this.root_node.append_raw_interval(setInterval(function() {
@@ -2901,9 +2669,7 @@ class AutoBuyImplR {
 		this.original_map.set("lightreset",window.lightreset);
 		window.lightreset=lightreset_inject;
 		window.specialclick=specialclick_inject;
-		if(window.secondinterval) {
-			this.replace_timeplayed_timer();
-		}
+		if(window.secondinterval) {this.replace_timeplayed_timer();}
 	}
 	state_history_clear_for_reset() {
 		this.state_history_arr=["R"];
@@ -3020,18 +2786,10 @@ class AutoBuyImplR {
 		this.timeout_ms=this.calc_timeout_ms();
 		this.start_main_async();
 	}
-	do_fast_unit_step_change() {
-		this.do_timeout_dec([1.006],40);
-	}
-	do_fast_unit_change() {
-		this.do_timeout_dec([1.006],40);
-	}
-	timeout_dec() {
-		this.do_timeout_dec([1.005],30);
-	}
-	timeout_inc(pow2=1.004) {
-		this.do_timeout_inc([1.004,pow2],70);
-	}
+	do_fast_unit_step_change() {this.do_timeout_dec([1.006],40);}
+	do_fast_unit_change() {this.do_timeout_dec([1.006],40);}
+	timeout_dec() {this.do_timeout_dec([1.005],30);}
+	timeout_inc(pow2=1.004) {this.do_timeout_inc([1.004,pow2],70);}
 	unit_upgradable_count=0;
 	async unit_promote_start() {
 		this.timeout_ms=this.calc_timeout_ms();
@@ -3039,9 +2797,7 @@ class AutoBuyImplR {
 		await do_auto_unit_promote();
 		let money_diff=this.pre_total-window.totalAtome;
 		let loss_rate=money_diff/this.pre_total;
-		if(this.pre_total!=window.totalAtome) {
-			this.unit_upgradable_count++;
-		}
+		if(this.pre_total!=window.totalAtome) {	this.unit_upgradable_count++;}
 		if(this.pre_total!=window.totalAtome&&this.debug) {
 			let log_args=[];
 			let percent_change=(loss_rate*100).toFixed(5);
@@ -3122,12 +2878,8 @@ class AutoBuyImplR {
 		this.state_history_append(char,silent);
 	}
 	/** @arg {{done:boolean;cost:number}} special_buyable */
-	is_special_done(special_buyable) {
-		return !special_buyable.done&&special_buyable.cost<window.totalAtome;
-	}
-	next_special() {
-		return window.allspec.findIndex(this.is_special_done);
-	}
+	is_special_done(special_buyable) {return !special_buyable.done&&special_buyable.cost<window.totalAtome;}
+	next_special() {return window.allspec.findIndex(this.is_special_done);}
 	do_special() {
 		let ret=false;
 		for(let index=this.next_special();;index=this.next_special()) {
@@ -3192,11 +2944,7 @@ class AutoBuyImplR {
 	game_reset_finish() {
 		this.update_hours_played();
 		let str=this.dom_map.get("time_played_str");
-		if(typeof str=="string") {
-			this.dispatch_on_game_reset_finish(str);
-		} else {
-			this.dispatch_on_game_reset_finish("0.000");
-		}
+		if(typeof str=="string") {this.dispatch_on_game_reset_finish(str);} else {this.dispatch_on_game_reset_finish("0.000");}
 	}
 	/** @arg {string} time_played */
 	dispatch_on_game_reset_finish(time_played) {
@@ -3210,16 +2958,10 @@ class AutoBuyImplR {
 		let real_val=calcPres()*100;
 		let [_real,num,exponent]=this.state.calc_near_val(real_val);
 		let near_val=(~~(num*prestige_acc))/prestige_acc;
-		if(exponent<=-2||exponent>=2) {
-			console.info("p_calc_1:expected prestige (%o,%o)%%",near_val,exponent);
-		} else {
-			console.info("p_calc_2:expected prestige %o%%",(~~(real_val*prestige_acc))/prestige_acc);
-		}
+		if(exponent<=-2||exponent>=2) {console.info("p_calc_1:expected prestige (%o,%o)%%",near_val,exponent);} else {console.info("p_calc_2:expected prestige %o%%",(~~(real_val*prestige_acc))/prestige_acc);}
 		window.lightreset();
 	}
-	on_repeat_r() {
-		this.next_timeout(this.on_repeat_r,1*1000,"r");
-	}
+	on_repeat_r() {this.next_timeout(this.on_repeat_r,1*1000,"r");}
 }
 /** @arg {number} delay */
 function wait(delay) {
@@ -3318,9 +3060,7 @@ function array_sample_end(arr,rem_target_len) {
 	return arr;
 }
 /** @arg {any[]} arr */
-function char_len_of(arr) {
-	return arr.reduce((a,b) => a+b.length,0)+arr.length;
-}
+function char_len_of(arr) {return arr.reduce((a,b) => a+b.length,0)+arr.length;}
 function lightreset_inject() {
 	window.g_auto_buy.state_history_clear_for_reset();
 	window.g_auto_buy.skip_save=true;
@@ -3448,9 +3188,7 @@ function remove_html_nodes(node) {
 	if(node.src.indexOf("ads")>-1||node.src.indexOf("track")>-1) return node.remove();
 }
 
-function do_dom_filter() {
-	Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);
-}
+function do_dom_filter() {Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);}
 
 function on_game_data_set() {
 	log_if_impl_r(LOG_LEVEL_INFO_IMPL,"game data init");
@@ -3463,9 +3201,7 @@ function on_game_data_set() {
 function wait_for_game_data() {
 	if(window._SM_Data) {
 		on_game_data_set();
-	} else {
-		setTimeout(wait_for_game_data,0);
-	}
+	} else {setTimeout(wait_for_game_data,0);}
 }
 
 function action_1() {
@@ -3503,15 +3239,11 @@ function enable_jquery_proxy_if_needed() {
 
 /** @arg {(value: any) => void} promise_accept */
 function do_load_fire_promise(promise_accept) {
-	if(document.firstChild) {
-		document.firstChild.remove();
-	}
+	if(document.firstChild) {	document.firstChild.remove();}
 	promise_accept(null);
 }
 
-function page_url_no_protocol() {
-	return location.href.slice(location.protocol.length);
-}
+function page_url_no_protocol() {return location.href.slice(location.protocol.length);}
 
 /** @arg {PopStateEvent} e */
 function popstate_event_handler(e) {
@@ -3529,9 +3261,7 @@ function popstate_event_handler(e) {
 	}
 }
 
-function reset_global_event_handlers() {
-	window.onpopstate=popstate_event_handler;
-}
+function reset_global_event_handlers() {window.onpopstate=popstate_event_handler;}
 
 class BaseMutationObserver {
 	constructor() {
@@ -3610,9 +3340,7 @@ function main() {
 	Node.prototype.insertBefore=new Proxy(Node.prototype.insertBefore,{
 		/** @arg {[Node, Node]} parameters */
 		apply(target,thisValue,parameters) {
-			if(insert_before_enabled(...parameters)) {
-				return Reflect.apply(target,thisValue,parameters);
-			}
+			if(insert_before_enabled(...parameters)) {return Reflect.apply(target,thisValue,parameters);}
 			return null;
 		}
 	});
@@ -3750,16 +3478,12 @@ function main() {
 						debugger;
 						continue;
 					}
-					if(cur_node instanceof HTMLScriptElement) {
-						added_scripts.push(cur_node);
-					}
+					if(cur_node instanceof HTMLScriptElement) {	added_scripts.push(cur_node);}
 				}
 				let remove_node_list=mut_rec.removedNodes;
 				for(let j=0;j<remove_node_list.length;j++) {
 					let cur_node=remove_node_list[j];
-					if(cur_node instanceof HTMLScriptElement) {
-						removed_scripts.push(cur_node);
-					}
+					if(cur_node instanceof HTMLScriptElement) {removed_scripts.push(cur_node);}
 				}
 			}
 			if(document.body) log_data_vec.push("b",document.body.children.length);
@@ -3836,9 +3560,7 @@ function main() {
 		window.setInterval=real_si;
 		EventTarget.prototype.addEventListener=orig_aev;
 		document_write_list.destroy();
-	} else {
-		console.log("handle location pathname",location.pathname);
-	}
+	} else {console.log("handle location pathname",location.pathname);}
 }
 function init() {
 	update_logger_vars();

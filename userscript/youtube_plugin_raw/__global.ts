@@ -15,9 +15,7 @@ declare global {
 		entries(): IterableIterator<[string,string]>;
 	}
 	class HandleTypesEval<T,U> extends HandleTypesEval_<T,U> {}
-	interface Window {
-		__plugin_modules__?: Partial<PluginStore>;
-	}
+	interface Window {__plugin_modules__?: Partial<PluginStore>;}
 	var Type_Ex_NS: typeof EX;
 	var __youtube_plugin_base_loaded__: typeof EX.__youtube_plugin_base_loaded__;
 	var required: Base$ImpType["required"];

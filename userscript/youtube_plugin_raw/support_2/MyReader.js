@@ -10,9 +10,7 @@ export class MyReader {
 	}
 	/** @arg {number} [size] */
 	try_read_any(size) {
-		try {
-			return this.read_any(size);
-		} catch {
+		try {			return this.read_any(size);} catch {
 			return null;
 		}
 	}
@@ -27,9 +25,7 @@ export class MyReader {
 		this.failed=false;
 		if(!size) {
 			this.cur_len=this.len;
-		} else {
-			this.cur_len=this.pos+size;
-		}
+		} else {			this.cur_len=this.pos+size;}
 		/** @type {D_DataArrType} */
 		let data=[];
 		let loop_count=0;
@@ -47,9 +43,7 @@ export class MyReader {
 				console.log("taking a long time to read protobuf data");
 				log_slow=false;
 			}
-			if(!log_slow&&loop_count%4096==0) {
-				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
-			}
+			if(!log_slow&&loop_count%4096==0) {console.log("taking a very long time to read protobuf data",loop_count/4096|0);}
 		}
 		/** @type {D_DecTypeNum[]} */
 		let res_arr=[];
@@ -231,9 +225,7 @@ export class MyReader {
 		return this.readFixed64();
 	}
 	/** @private @arg {number} writeLength */
-	indexOutOfRange(writeLength) {
-		return RangeError("index out of range: "+this.pos+" + "+writeLength+" > "+this.len);
-	}
+	indexOutOfRange(writeLength) {return RangeError("index out of range: "+this.pos+" + "+writeLength+" > "+this.len);}
 	fixed32() {
 		/* istanbul ignore if */
 		if(this.pos+4>this.len)
@@ -285,12 +277,8 @@ export class MyReader {
 					if(num64[1]!==BigInt(num32)) {
 						first_num.push(["data64",fieldId,...num64]);
 						this.pos=new_pos;
-					} else {
-						first_num.push(["data32",fieldId,num32]);
-					}
-				} else {
-					first_num.push(["data32",fieldId,num32]);
-				}
+					} else {first_num.push(["data32",fieldId,num32]);}
+				} else {first_num.push(["data32",fieldId,num32]);}
 				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
 				break;
 			case 1:
@@ -332,9 +320,7 @@ export class MyReader {
 					}
 					if(sub_buffer.length===0&&res.length!==0) debugger;
 					first_num.push(["child",fieldId,sub_buffer,res]);
-				} else {
-					first_num.push(["child",fieldId,sub_buffer,null]);
-				}
+				} else {first_num.push(["child",fieldId,sub_buffer,null]);}
 			} break;
 			case 3: {
 				let res;

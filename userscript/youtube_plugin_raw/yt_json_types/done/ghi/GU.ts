@@ -7,9 +7,7 @@ type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE37414_Url="/shorts/";
 type GU_VE83769_Url=GU_VE83769_Url_Internal|GU_YoutubeUrlRedirect|GU_VE83769_Url_External;
 type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
-type UrlInfoMap={
-	["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;
-};
+type UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type GU_YoutubeUrlRedirect_Info={
 	url:`https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`,
 	encoded_params: {

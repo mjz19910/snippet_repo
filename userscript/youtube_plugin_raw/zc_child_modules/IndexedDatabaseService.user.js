@@ -15,12 +15,8 @@ const __module_name__="mod$IndexedDatabaseService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
-	bs.do_export(fn,flags,exports,__module_name__);
-}
-export_(exports => {
-	exports.__is_module_flag__=true;
-});
+function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 function h_detect_firefox() {
 	let ua=navigator.userAgent;
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
@@ -56,13 +52,9 @@ class IndexedDatabaseService extends BaseService {
 		hashtag: ["hashtag",[]],
 	};
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
-	get_data_cache(key) {
-		return this.store_cache[key][1];
-	}
+	get_data_cache(key) {return this.store_cache[key][1];}
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
-	get_data_index_cache(key) {
-		return this.store_cache_index[key][1];
-	}
+	get_data_index_cache(key) {return this.store_cache_index[key][1];}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
 	/** @api @public @template {DatabaseStoreDescription["name"]} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {T} obj */
@@ -205,11 +197,7 @@ class IndexedDatabaseService extends BaseService {
 			if("hashtag" in e&&index_key==="hashtag") {database_map.set(e[index_key],e);}
 			if("v" in e&&index_key==="v") {database_map.set(e[index_key],e);}
 		});
-		if(is_firefox) {
-			console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,key,database_data.length);
-		} else {
-			console.log("database [%s:%s] has %o items",this.db_args.name,key,database_data.length);
-		}
+		if(is_firefox) {console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,key,database_data.length);} else {console.log("database [%s:%s] has %o items",this.db_args.name,key,database_data.length);}
 		for(let data of this.get_data_cache(key)) {
 			if(!data) {debugger; continue;}
 			let content;
@@ -232,16 +220,12 @@ class IndexedDatabaseService extends BaseService {
 				} else if(new_data_map.has(content)) {
 					this.committed_data.push(data);
 					continue;
-				} else {
-					new_data_map.set(content,data);
-				}
+				} else {new_data_map.set(content,data);}
 			} else {
 				debugger;
 			}
 		}
-		[...new_data_map.values()].forEach(e => {
-			this.add_data_to_store(obj_store,e);
-		});
+		[...new_data_map.values()].forEach(e => {this.add_data_to_store(obj_store,e);});
 	}
 	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store @arg {DatabaseStoreDescription} store_desc */
 	consume_data_with_store(store_desc,obj_store) {
@@ -254,9 +238,7 @@ class IndexedDatabaseService extends BaseService {
 			if(cursor) {
 				database_data.push(cursor.value);
 				cursor.continue();
-			} else {
-				this.on_cursor_complete(obj_store,database_data,key);
-			}
+			} else {this.on_cursor_complete(obj_store,database_data,key);}
 		};
 	}
 	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
@@ -271,9 +253,7 @@ class IndexedDatabaseService extends BaseService {
 	/** @template T @arg {IDBRequest<T>} db_request @returns {Promise<{result:T;event:Event}>} */
 	await_success(db_request) {
 		return new Promise(function(accept,reject) {
-			db_request.onsuccess=function(event) {
-				accept({result: db_request.result,event});
-			};
+			db_request.onsuccess=function(event) {accept({result: db_request.result,event});};
 			db_request.onerror=function(event) {
 				reject(event);
 			};
@@ -312,14 +292,10 @@ class IndexedDatabaseService extends BaseService {
 	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
-		if(event.oldVersion===0) {
-			return this.createLatestDatabaseVersion(request);
-		}
+		if(event.oldVersion===0) {return this.createLatestDatabaseVersion(request);}
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
 		const db=request.result;
-		if(event.oldVersion<1) {
-			db.createObjectStore("video_id",{autoIncrement: true});
-		}
+		if(event.oldVersion<1) {db.createObjectStore("video_id",{autoIncrement: true});}
 		if(!request.transaction) throw new Error("No transaction");
 		let tx=request.transaction;
 		if(event.oldVersion<2) {
@@ -339,9 +315,7 @@ class IndexedDatabaseService extends BaseService {
 		this.create_store("hashtag",db,{unique: true});
 	}
 	/** @private @arg {Event} event */
-	onError(event) {
-		console.log("idb error",event);
-	}
+	onError(event) {console.log("idb error",event);}
 }
 export_(exports => {
 	exports.__module_loaded__=true;

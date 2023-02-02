@@ -90,21 +90,15 @@ export class Snippet_0_tmp {
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse} path @arg {string} x */
-	params(root,path,x) {
-		this.parser.on_endpoint_params(root,path,x);
-	}
+	params(root,path,x) {this.parser.on_endpoint_params(root,path,x);}
 	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {
-		this.params(cf,"tracking.trackingParams",x);
-	}
+	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
 	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {
-		this.params(cf,"tracking.trackingParams",x);
-	}
+	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @arg {string} x */
 	decode_url_b64(x) {
 		x=x.replaceAll("_","/").replaceAll("-","+");
@@ -167,17 +161,13 @@ export class Snippet_0_tmp {
 		this.save_string(`ELEMENT::${ns_arr[0]}::@::${ns_arr[2]}`,n3);
 	}
 	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_renderer(x,r) {
-		throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);
-	}
+	generate_renderer(x,r) {throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);}
 	/** @public @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 	as(e,x=e) {
 		return x;
 	}
 	/** @private @template {{}} T @arg {T_AnyObjectOrEmpty<T>} x @returns {x is T} */
-	maybe_has_value(x) {
-		return Object.keys(x).length>0;
-	}
+	maybe_has_value(x) {return Object.keys(x).length>0;}
 	/** @protected @template {{}} T @arg {T_AnyObjectOrEmpty<T>} x @arg {(x:T)=>void} f */
 	maybe(x,f) {
 		if(!this.maybe_has_value(x)) return;
@@ -314,9 +304,7 @@ export class Snippet_0_tmp {
 		return ok_e;
 	}
 	/** @template {string} C @template {string} U @template {T_Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {T_Split<C,","> extends U[]?C:never} arg1 */
-	has_keys(ok_3,arg1) {
-		return this.eq_keys(ok_3,arg1.split(","));
-	}
+	has_keys(ok_3,arg1) {return this.eq_keys(ok_3,arg1.split(","));}
 	/** @private @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
 	eq_keys(src,target) {
 		if(src.length!==target.length) return false;
@@ -330,9 +318,7 @@ export class Snippet_0_tmp {
 	parser=new ParserService;
 	codegen=new CodegenService;
 	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
-	codegen_new_typedef(x,gen_name,ret_val) {
-		return this.codegen.codegen_new_typedef(x,gen_name,ret_val);
-	}
+	codegen_new_typedef(x,gen_name,ret_val) {return this.codegen.codegen_new_typedef(x,gen_name,ret_val);}
 	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
@@ -407,13 +393,9 @@ export class Snippet_0_tmp {
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
 	/** @protected @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListRendererTemplate(x) {
-		this.SectionListDataTemplate(this.w(x));
-	}
+	SectionListRendererTemplate(x) {this.SectionListDataTemplate(this.w(x));}
 	/** @private @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">['sectionListRenderer']} x */
-	SectionListDataTemplate(x) {
-		this.SectionListItemTemplate(this.w(x));
-	}
+	SectionListDataTemplate(x) {this.SectionListItemTemplate(this.w(x));}
 	/** @private @template {{}} T @arg {TR_ItemSection_3<T,"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
@@ -435,13 +417,9 @@ export class Snippet_0_tmp {
 }
 class ND extends Snippet_0_tmp {
 	/** @private @arg {string} x */
-	primitive_of_string(x) {
-		this.primitive_of(x,"string");
-	}
+	primitive_of_string(x) {this.primitive_of(x,"string");}
 	/** @protected @arg {string} x */
-	uppercase_first(x) {
-		return x[0].toUpperCase()+x.slice(1);
-	}
+	uppercase_first(x) {return x[0].toUpperCase()+x.slice(1);}
 	/** @template T @arg {T[]} x */
 	filter_keys(x) {
 		let ret=[];
@@ -467,9 +445,7 @@ class ND extends Snippet_0_tmp {
 	get_codegen_name(x) {
 		if(typeof x.type==='string') {
 			return x.type.split(".").map(e => {
-				if(e.includes("_")) {
-					return e.split("_").map(e => this.uppercase_first(e)).join("");
-				}
+				if(e.includes("_")) {return e.split("_").map(e => this.uppercase_first(e)).join("");}
 				return this.uppercase_first(e);
 			}).join("$");
 		}
@@ -540,9 +516,7 @@ class ND extends Snippet_0_tmp {
 		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
 	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
-	str_starts_with(needle,str) {
-		return str.startsWith(needle);
-	}
+	str_starts_with(needle,str) {return str.startsWith(needle);}
 	/** @private @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
 	/** @private @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
 	/** @protected @template {{}} U @arg {U} x @returns {[RemoveToggled<U>,RemoveUnToggled<U>,Omit<U,`toggled${string}`|`untoggled${string}`>]} */

@@ -55,9 +55,7 @@ declare global {
 
 // MulCompression
 declare global {
-	interface Window {
-		MulCompression: typeof MulCompression;
-	}
+	interface Window {MulCompression: typeof MulCompression;}
 }
 
 // AutoBuyState

@@ -38,14 +38,10 @@ function do_export(fn,flags,exports,module_name) {
 	}
 }
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
-	do_export(fn,flags,exports,__module_name__);
-}
+function export_(fn,flags={global: false}) {do_export(fn,flags,exports,__module_name__);}
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
-	if(x===void 0) {
-		throw new Error("missing required");
-	}
+	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
 export_(exports => {
@@ -55,9 +51,7 @@ export_(exports => {
 	exports.do_export=do_export;
 });
 const log_imports=false;
-export_(exports => {
-	exports.__yt_plugin_log_imports__=log_imports;
-},{global: true});
+export_(exports => {exports.__yt_plugin_log_imports__=log_imports;},{global: true});
 if(log_imports) console.log("Load PluginBase");
 //#endregion
 //#region basic
@@ -162,9 +156,7 @@ class CustomEventTarget {
 	/** @private @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
 	/** @api @public @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
-	addEventListener(type,handler) {
-		(this._events[type]??=[]).push(handler);
-	}
+	addEventListener(type,handler) {(this._events[type]??=[]).push(handler);}
 	/** @api @public @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
 	removeEventListener(type,handler) {
 		let event_arr=this._events[type];
@@ -196,12 +188,8 @@ class DomObserver extends CustomEventTarget {
 		if(this.wait_ports.has(port)) {
 			let list=this.port_to_resolvers_map.get(port);
 			if(!list) return;
-			if(list.every(e => !e.active)) {
-				this.port_to_resolvers_map.set(port,[]);
-			}
-			for(let x of list) {
-				if(x.active) x.resolver();
-			}
+			if(list.every(e => !e.active)) {this.port_to_resolvers_map.set(port,[]);}
+			for(let x of list) {				if(x.active) x.resolver();}
 			if(list[0].active===false) {
 				list.shift();
 			}
@@ -217,11 +205,7 @@ class DomObserver extends CustomEventTarget {
 				accept(null);
 			};
 			let state={active: true,resolver};
-			if(this.port_to_resolvers_map.has(port)) {
-				if(this.port_to_resolvers_map.has(port)) this.port_to_resolvers_map.get(port)?.push(state);
-			} else {
-				this.port_to_resolvers_map.set(port,[state]);
-			}
+			if(this.port_to_resolvers_map.has(port)) {if(this.port_to_resolvers_map.has(port)) this.port_to_resolvers_map.get(port)?.push(state);} else {this.port_to_resolvers_map.set(port,[state]);}
 		});
 	}
 	trace=false;
@@ -255,9 +239,7 @@ function do_find_video() {
 	if(first_run) {
 		found_element_count++;
 		if(async_plugin_init.__debug) console.log("found video elements");
-	} else {
-		if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
-	}
+	} else {if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);}
 }
 /** @private @arg {HTMLElement} element */
 function on_ytcp_app(element) {
@@ -303,9 +285,7 @@ function on_ytd_app(element) {
 			fire_on_visibility_change_restart_video_playback();
 			do_restart_video_playback=false;
 		}
-	} else {
-		ytd_app.app_is_visible=false;
-	}
+	} else {	ytd_app.app_is_visible=false;}
 	ytd_app.ytp_click_cint=setInterval(() => {
 		if(!is_watch_page_active()||!ytd_app) return;
 		if(!ytd_app.app_is_visible) {
@@ -322,16 +302,12 @@ function on_ytd_app(element) {
 				fire_on_visibility_change_restart_video_playback();
 				do_restart_video_playback=false;
 			}
-		} else {
-			ytd_app.app_is_visible=false;
-		}
+		} else {	ytd_app.app_is_visible=false;}
 	});
 }
 /** @private @arg {CustomEventType} event */
 function _plugin_init(event) {
-	async_plugin_init(event).then(() => {},(e) => {
-		console.log("async error",e);
-	});
+	async_plugin_init(event).then(() => {},(e) => {	console.log("async error",e);});
 }
 /** @private @type {Element|null} */
 let main_page_app=null;
@@ -345,9 +321,7 @@ async function async_plugin_init(event) {
 	let iter_count=0;
 	try {
 		while(true) {
-			if(iter_count!==0) {
-				await new Promise((soon) => setTimeout(soon,40));
-			}
+			if(iter_count!==0) {await new Promise((soon) => setTimeout(soon,40));}
 			iter_count++;
 			VolumeRange.create_if_needed();
 			cur_count++;
@@ -367,9 +341,7 @@ async function async_plugin_init(event) {
 					if(e_tn=="SCRIPT") return false;
 					if(e_tn=="IFRAME") return false;
 					if(e_tn=="NOSCRIPT") return false;
-					if(e_tn==="LINK"&&e instanceof HTMLLinkElement) {
-						if(e.rel==="stylesheet") return false;
-					}
+					if(e_tn==="LINK"&&e instanceof HTMLLinkElement) {if(e.rel==="stylesheet") return false;}
 					if(e_tn=="IRON-ICONSET-SVG") return false;
 					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e.id==="home-page-skeleton") return false;
@@ -386,9 +358,7 @@ async function async_plugin_init(event) {
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
-				if(interesting_body_elements.length===1) {
-					main_page_app=interesting_body_elements[0];
-				} else {
+				if(interesting_body_elements.length===1) {main_page_app=interesting_body_elements[0];} else {
 					console.log(interesting_body_elements);
 					debugger;
 				}
@@ -456,9 +426,7 @@ async function async_plugin_init(event) {
 				}
 				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
 				if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
-					if(iter_count>100) {
-						console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);
-					}
+					if(iter_count>100) {console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);}
 					/** @private @type {Promise<void>} */
 					let promise=new Promise((accept,reject) => {
 						if(!ytd_page_manager) return reject(new Error("missing data"));
@@ -498,15 +466,11 @@ async function async_plugin_init(event) {
 			if(ytd_page_manager===null) continue;
 			if(!ytd_page_manager.getCurrentPage()) continue;
 			console.log("[iter_count]",iter_count);
-			if(iter_count>max_find_iter) {
-				alert("found plugin reqs in iters="+iter_count);
-			}
+			if(iter_count>max_find_iter) {alert("found plugin reqs in iters="+iter_count);}
 			obj.dispatchEvent({...event,type: "plugin-activate"});
 			break;
 		}
-	} catch(e) {
-		console.log("had error in async init",e);
-	}
+	} catch(e) {console.log("had error in async init",e);}
 }
 //#endregion
 //#region dom_observer & yt_plugin_event
@@ -555,9 +519,7 @@ class VolumeRange {
 			document.head.append(volume_plugin_style_element);
 			let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 			let container_dom_parent=player_masthead.$.container.children.center;
-			if(!container_dom_parent) {
-				throw new Error("Missing masthead container center");
-			}
+			if(!container_dom_parent) {throw new Error("Missing masthead container center");}
 			volume_range.attach_to_element(container_dom_parent);
 			ytd_app.volume_range=volume_range;
 		}
@@ -575,9 +537,7 @@ class VolumeRange {
 		this.updateRangeElement(gain);
 		this.gain_controller.setGain(gain);
 	}
-	getGain() {
-		return this.gain_controller.getGain();
-	}
+	getGain() {return this.gain_controller.getGain();}
 	calculateGain() {
 		if(!this.use_cache) return 1;
 		let c_gain=this.getGain();
@@ -685,9 +645,7 @@ class PropertyHandler {
 		this.on_target_apply_callback=on_target_apply_callback;
 		PropertyHandler.instances.push(this);
 	}
-	get() {
-		return this.override_value.value;
-	}
+	get() {return this.override_value.value;}
 	/** @api @public @arg {any} value */
 	set(value) {
 		if(value===void 0||value===null) {
@@ -701,9 +659,7 @@ class PropertyHandler {
 		} else {
 			let t=this;
 			let proxy_override=new Proxy(value,{
-				apply(...arr) {
-					return t.on_target_apply_callback(arr);
-				}
+				apply(...arr) {return t.on_target_apply_callback(arr);}
 			});
 			this.proxy_map.set(value,proxy_override);
 			this.override_value.value=proxy_override;
@@ -713,12 +669,8 @@ class PropertyHandler {
 /** @private @arg {{}} object @arg {PropertyKey} property @arg {PropertyHandler} property_handler */
 function override_prop(object,property,property_handler) {
 	Object.defineProperty(object,property,{
-		get() {
-			return property_handler.get();
-		},
-		set(value) {
-			return property_handler.set(value);
-		}
+		get() {return property_handler.get();},
+		set(value) {return property_handler.set(value);}
 	});
 }
 override_prop(window,"getInitialCommand",new PropertyHandler((/** @private @type {[any,any,any]} */args) => Reflect.apply(...args)));
@@ -740,9 +692,7 @@ class R_HandleRichGrid_Base {
 	/** @readonly */
 	entry="richGridRenderer";
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
-	constructor(x) {
-		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
-	}
+	constructor(x) {this.rendererContentItemArray=new HandleRendererContentItemArray(x);}
 	/** @handler @public @arg {string} path @arg {Todo_D_RichGrid} renderer */
 	richGridRenderer(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
@@ -758,9 +708,7 @@ class R_HandleRichGrid_Base {
 		if(renderer.contents) {
 			if(this.enable_logging) console.log("on_contents",path);
 			let filtered=this.rendererContentItemArray.replace_array(renderer.contents);
-			if(filtered.length>0) {
-				renderer.contents=filtered;
-			}
+			if(filtered.length>0) {			renderer.contents=filtered;}
 		}
 	}
 }
@@ -841,9 +789,7 @@ class LongBits {
 	}
 }
 /** @private @arg {MyReader} reader @arg {number} [writeLength] */
-function indexOutOfRange(reader,writeLength) {
-	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
-}
+function indexOutOfRange(reader,writeLength) {return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);}
 class MyReader {
 	noisy_log_level=false;
 	/** @constructor @public @arg {Uint8Array} buf  */
@@ -855,16 +801,12 @@ class MyReader {
 	}
 	/** @api @public @arg {number} [size] */
 	try_read_any(size) {
-		try {
-			return this.read_any(size);
-		} catch {
+		try {			return this.read_any(size);} catch {
 			return null;
 		}
 	}
 	/** @private @arg {number} [size] */
-	reset_and_read_any(size) {
-		return this.read_any(size,0);
-	}
+	reset_and_read_any(size) {	return this.read_any(size,0);}
 	/** @private */
 	_use() {
 		this.reset_and_read_any(0);
@@ -883,13 +825,9 @@ class MyReader {
 		if(pos!==void 0) this.pos=pos;
 		if(size===void 0) {
 			this.cur_len=this.len;
-		} else {
-			this.cur_len=this.pos+size;
-		}
+		} else {			this.cur_len=this.pos+size;}
 		this.failed=false;
-		try {
-			return this.read_any_impl();
-		} finally {
+		try {		return this.read_any_impl();} finally {
 			this.pos=prev_pos;
 			this.cur_len=prev_len;
 			this.failed=was_failed;
@@ -920,9 +858,7 @@ class MyReader {
 				console.log("taking a long time to read protobuf data");
 				log_slow=false;
 			}
-			if(!log_slow&&loop_count%4096==0) {
-				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
-			}
+			if(!log_slow&&loop_count%4096==0) {console.log("taking a very long time to read protobuf data",loop_count/4096|0);}
 		}
 		/** @private @type {D_DecTypeNum[]} */
 		let res_arr=[];
@@ -961,19 +897,13 @@ class MyReader {
 					throw indexOutOfRange(this);
 			} while(this.buf[this.pos++]&128);
 		}
-		if(length!==void 0) {
-			if(this.noisy_log_level) console.log("asked to skip %o bytes",this.pos-start_pos);
-		} else {
-			if(this.noisy_log_level) console.log("asked to skip %o bytes of VarInt",this.pos-start_pos);
-		}
+		if(length!==void 0) {if(this.noisy_log_level) console.log("asked to skip %o bytes",this.pos-start_pos);} else {if(this.noisy_log_level) console.log("asked to skip %o bytes of VarInt",this.pos-start_pos);}
 	}
 	uint32() {
 		this.last_pos=this.pos;
 		let ret=this.do_uint32_read();
 		let diff=this.pos-this.last_pos;
-		if(diff!==1) {
-			if(this.noisy_log_level) console.log("at %o uint32 consumed %o bytes",this.last_pos,diff);
-		}
+		if(diff!==1) {if(this.noisy_log_level) console.log("at %o uint32 consumed %o bytes",this.last_pos,diff);}
 		if(ret===null) throw new Error("Failed to read uint32");
 		return ret;
 	}
@@ -1095,9 +1025,7 @@ class MyReader {
 		return this.readFixed64();
 	}
 	/** @private @arg {number} writeLength */
-	indexOutOfRange(writeLength) {
-		return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
-	}
+	indexOutOfRange(writeLength) {return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);}
 	fixed32() {
 		/* istanbul ignore if */
 		if(this.pos+4>this.len)
@@ -1153,12 +1081,8 @@ class MyReader {
 					if(num64[1]!==BigInt(num32)) {
 						first_num.push(["data64",fieldId,...num64]);
 						this.pos=new_pos;
-					} else {
-						first_num.push(["data32",fieldId,num32]);
-					}
-				} else {
-					first_num.push(["data32",fieldId,num32]);
-				}
+					} else {first_num.push(["data32",fieldId,num32]);}
+				} else {first_num.push(["data32",fieldId,num32]);}
 				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
 				break;
 			case 1:
@@ -1200,9 +1124,7 @@ class MyReader {
 					}
 					if(sub_buffer.length===0&&res.length!==0) debugger;
 					first_num.push(["child",fieldId,sub_buffer,res]);
-				} else {
-					first_num.push(["child",fieldId,sub_buffer,null]);
-				}
+				} else {first_num.push(["child",fieldId,sub_buffer,null]);}
 			} break;
 			case 3: {
 				let res;
@@ -1256,9 +1178,7 @@ function act_found_create_yt_player(/** @private @type {{ data: { type: string; 
 	if(static_config.isEmbed) {
 		void player_config;
 		plr_raw_replace_embed();
-	} else {
-		plr_raw_replace(player_config);
-	}
+	} else {plr_raw_replace(player_config);}
 }
 let locked_set=new WeakMap();
 let ud_func=new WeakSet();
@@ -1291,9 +1211,7 @@ class OnWindowProperty {
 		}
 	}
 	/** @api @public @arg {string} ev_name @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn */
-	addEventListener(ev_name,fn) {
-		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
-	}
+	addEventListener(ev_name,fn) {(this._events[ev_name]??=[]).push({disposed: false,handler: fn});}
 }
 /** @private @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
 function walk_key_path(cc,ms,obj,mc) {
@@ -1327,9 +1245,7 @@ function new_pv_fn(val,cc, /** @private @type {any[]} */ ...args) {
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
 	win_watch.dispatchEvent({type: "new_window_object",data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}});
-	if(!act_cb_obj.fired&&cc.function_value) {
-		ret=cc.function_value.apply(val,args);
-	} else {
+	if(!act_cb_obj.fired&&cc.function_value) {ret=cc.function_value.apply(val,args);} else {
 		ret=act_cb_obj.ret;
 	}
 	return ret;
@@ -1404,15 +1320,9 @@ function mk_run(cc) {
 		get() {
 			return cc.value;
 		},
-		set(val) {
-			on_mk_property_set(cc,val);
-		}
+		set(val) {			on_mk_property_set(cc,val);}
 	});
-	if(locked_set.has(cc.target)) {
-		locked_set.get(cc.target).names.push(cc.property_key);
-	} else {
-		locked_set.set(cc.target,{names: [cc.property_key]});
-	}
+	if(locked_set.has(cc.target)) {locked_set.get(cc.target).names.push(cc.property_key);} else {locked_set.set(cc.target,{names: [cc.property_key]});}
 	return cc;
 }
 let yta_str="yt.player.Application";
@@ -1582,14 +1492,10 @@ function on_port_message(event) {
 
 let message_channel=new MessageChannel();
 
-function fire_observer_event() {
-	dom_observer.notify_with_port(message_channel.port1);
-}
+function fire_observer_event() {dom_observer.notify_with_port(message_channel.port1);}
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
-	if(x===void 0) {
-		throw new Error("missing required");
-	}
+	if(x===void 0) {throw new Error("missing required");}
 	return x;
 }
 /** @private @arg {AsyncPluginEventDetail["handle_types"]} handle_types */
@@ -1605,15 +1511,11 @@ function start_message_channel_loop(handle_types) {
 	}
 }
 /** @private @arg {Document|Element} node @arg {string} child_node_tag_name */
-function get_html_elements(node,child_node_tag_name) {
-	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
-}
+function get_html_elements(node,child_node_tag_name) {return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);}
 /** @private @type {((event:{})=>void)[]} */
 var on_yt_navigate=[];
 async function wait_for_yt_player() {
-	if(!ytd_player) {
-		throw new Error("No ytd_player to await");
-	}
+	if(!ytd_player) {throw new Error("No ytd_player to await");}
 	await ytd_player.playerResolver_.promise;
 }
 function _close_div_scope() {
@@ -1643,11 +1545,7 @@ function _close_div_scope() {
 	function title_text_overlay_update() {
 		if(title_text_overlay_enabled) {
 			overlay_hide_ui_input.style.color="";
-			if(title_on) {
-				overlay_content_div.style.display="";
-			} else {
-				overlay_content_div.style.display="none";
-			}
+			if(title_on) {overlay_content_div.style.display="";} else {overlay_content_div.style.display="none";}
 		} else {
 			overlay_hide_ui_input.style.color="#888";
 			overlay_content_div.style.display="none";
@@ -1720,9 +1618,7 @@ function _close_div_scope() {
 				ytd_player.is_watch_page_active=false;
 				plugin_overlay_element&&plugin_overlay_element.remove();
 				return;
-			} else {
-				ytd_player.is_watch_page_active=true;
-			}
+			} else {ytd_player.is_watch_page_active=true;}
 			requestAnimationFrame(page_changed_next_frame);
 		});
 	}
@@ -1742,9 +1638,7 @@ function _close_div_scope() {
 				cache.left_offset+=cur_element.offsetLeft;
 				/** @private @type {Element|null} */
 				let next_element=cur_element.offsetParent;
-				if(next_element instanceof HTMLElement) {
-					cur_element=next_element;
-				} else {
+				if(next_element instanceof HTMLElement) {					cur_element=next_element;} else {
 					break;
 				}
 			}
@@ -1794,26 +1688,18 @@ function _close_div_scope() {
 }
 let no_storage_access=false;
 let title_save;
-try {
-	title_save=localStorage.getItem("title_save_data");
-} catch {
+try {title_save=localStorage.getItem("title_save_data");} catch {
 	no_storage_access=true;
 }
 if(!title_save) {
 	title_save="{\"value\":false}";
-	if(!no_storage_access) {
-		localStorage.setItem("title_save_data",title_save);
-	}
+	if(!no_storage_access) {localStorage.setItem("title_save_data",title_save);}
 }
 let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
 /** @private @type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}} */
-function is_yt_fullscreen_change_action(detail) {
-	return detail.actionName==="yt-fullscreen-change-action";
-}
-function update_ui_plugin() {
-	if(is_yt_debug_enabled) console.log("update_ui_plugin");
-}
+function is_yt_fullscreen_change_action(detail) {return detail.actionName==="yt-fullscreen-change-action";}
+function update_ui_plugin() {if(is_yt_debug_enabled) console.log("update_ui_plugin");}
 let volume_plugin_style_source=`
 	#rh_css {
 		--w: calc(100% - 16px - 264px - 728px - 225px);
@@ -1920,9 +1806,7 @@ class AudioGainController {
 	}
 	/** @private @arg {AudioNode[]} node_chain */
 	init_node_chain(node_chain) {
-		for(let i=0;i<node_chain.length-1;i++) {
-			node_chain[i].connect(node_chain[i+1]);
-		}
+		for(let i=0;i<node_chain.length-1;i++) {node_chain[i].connect(node_chain[i+1]);}
 	}
 	/** @private @arg {DynamicsCompressorNode} node */
 	initCompressor(node) {
@@ -1934,12 +1818,8 @@ class AudioGainController {
 		return node;
 	}
 	/** @api @public @arg {number} gain */
-	setGain(gain) {
-		this.gain_node.gain.value=gain;
-	}
-	getGain() {
-		return this.gain_node.gain.value;
-	}
+	setGain(gain) {this.gain_node.gain.value=gain;}
+	getGain() {return this.gain_node.gain.value;}
 	/** @api @public @arg {HTMLMediaElement[]} media_node_list */
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
@@ -2033,9 +1913,7 @@ class ServiceResolver {
 //#region main
 function yt_plugin_base_main() {
 	const LoadAllServices=required(store["mod$LoadAllServices"]).LoadAllServices;
-	setTimeout(() => {
-		window.yt_plugin?.get_data_saver().num_bitmap_console();
-	},4000);
+	setTimeout(() => {window.yt_plugin?.get_data_saver().num_bitmap_console();},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ResolverT<LoadAllServices,ServiceOptions>} */
 	const resolver_value={value: null};
@@ -2067,9 +1945,7 @@ function yt_plugin_base_main() {
 	// wait for plugin requirements
 	services.start_message_channel_loop();
 	/** @private @arg {[()=>RS_Page_Browse, object, []]} apply_args */
-	function do_proxy_call_getInitialData(apply_args) {
-		return yt_handlers.on_initial_data(apply_args);
-	}
+	function do_proxy_call_getInitialData(apply_args) {return yt_handlers.on_initial_data(apply_args);}
 	let current_page_type="";
 	/** @private @arg {YTNavigateFinishEvent} event */
 	function log_page_type_change(event) {
@@ -2077,11 +1953,7 @@ function yt_plugin_base_main() {
 		if(!detail) return;
 		if(!ytd_page_manager) {
 			const target_element=get_html_elements(document,"ytd-page-manager")[0];
-			if(!target_element) {
-				throw new Error("Missing ytd_page_manager");
-			} else {
-				on_ytd_page_manager(target_element);
-			}
+			if(!target_element) {throw new Error("Missing ytd_page_manager");} else {on_ytd_page_manager(target_element);}
 		}
 		if(!ytd_page_manager) throw new Error("Invalid state");
 		yt_handlers.on_page_type_changed(detail);
@@ -2172,9 +2044,7 @@ class ApiBase {
 	exact_arr(...a) {return a;}
 	xa=this.exact_arr;
 	/** @protected @arg {string} x */
-	uppercase_first(x) {
-		return x[0].toUpperCase()+x.slice(1);
-	}
+	uppercase_first(x) {return x[0].toUpperCase()+x.slice(1);}
 	/** @protected @template T @arg {T[]} x */
 	filter_keys(x) {
 		let ret=[];
@@ -2213,9 +2083,7 @@ class ApiBase {
 		if(typeof x!==y) debugger;
 	}
 	/** @arg {number} x */
-	a_primitive_num(x) {
-		this._primitive_of(x,"number");
-	}
+	a_primitive_num(x) {this._primitive_of(x,"number");}
 	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
 		/** @private @type {Partial<B>} */
@@ -2291,9 +2159,7 @@ class BitmapResult {
 	get_seen_booleans() {
 		return this.seen_booleans;
 	}
-	get_seen_root_visual_elements() {
-		return this.seen_root_visual_elements;
-	}
+	get_seen_root_visual_elements() {return this.seen_root_visual_elements;}
 	/** @api @protected @type {[string,{t:boolean;f:boolean}][]} */
 	seen_booleans=[];
 	/** @api @protected @type {number[]} */
@@ -2427,14 +2293,10 @@ class KnownDataSaver extends ApiBase {
 			this.#store_data();
 		});
 	}
-	#get_string_store() {
-		return this.#data_store.get_string_store(this.#new_strings);
-	}
+	#get_string_store() {return this.#data_store.get_string_store(this.#new_strings);}
 	/** @no_mod @type {[string,string|string[]][]} */
 	#new_keys=[];
-	#get_keys_store() {
-		return this.#data_store.get_keys_store(this.#new_keys);
-	}
+	#get_keys_store() {return this.#data_store.get_keys_store(this.#new_keys);}
 	/** @private @arg {string} key @arg {StoreDescription<string>} store */
 	get_seen_string_item_store(key,store) {
 		const {index,data}=store;
@@ -2450,11 +2312,7 @@ class KnownDataSaver extends ApiBase {
 	/** @private @arg {string|string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} data_item */
 	save_to_data_item(x,data_item) {
 		let target=data_item[1];
-		if(x instanceof Array) {
-			return this.add_many_to_data_item(x,data_item);
-		} else {
-			return this.add_one_to_data_arr(x,target);
-		}
+		if(x instanceof Array) {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
 	}
 	/** @private @arg {string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} item */
 	add_many_to_data_item(x,item) {
@@ -2470,9 +2328,7 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @private @arg {string} x @arg {["one", string[]] | ["many", string[][]]} target */
 	add_one_to_data_arr(x,target) {
-		if(target[0]==="one") {
-			if(!target[1].includes(x)) return target[1].push(x);
-		} else if(target[0]==="many") {
+		if(target[0]==="one") {if(!target[1].includes(x)) return target[1].push(x);} else if(target[0]==="many") {
 			let res=target[1].find(([e,...r]) => !r.length&&e===x);
 			if(!res) return target[1].push([x]);
 		}
@@ -2657,9 +2513,7 @@ class KnownDataSaver extends ApiBase {
 			return mu;
 		}
 		/** @private @arg {string[]} s */
-		function swap_mask(s) {
-			return s.map(e => e==="0"? "1":"0").join("");
-		}
+		function swap_mask(s) {return s.map(e => e==="0"? "1":"0").join("");}
 		let mu=unset_bits(bm);
 		new Map(mm);
 		yt_plugin.ds.rle_enc(mu.join(""));
@@ -2671,9 +2525,7 @@ class KnownDataSaver extends ApiBase {
 		let rle_x=yt_plugin.ds.rle_enc(mx);
 		console.log(rle_x.split("!"));
 	}
-	console_code_2() {
-		"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);
-	}
+	console_code_2() {"0:0!1:1".split("!").map(e => e.split(":").map(e => parseInt(e,10))).map((e,i) => [...e,i]).sort(([,a],[,b]) => a-b).map(([a,b,i]) => `${b}$${i}$${a}`);}
 	/** @private @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
 		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
@@ -2792,13 +2644,9 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value.get("codegen");
 	}
 	/** @protected @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {
-		this.ds.save_string(`[${k}]`,x);
-	}
+	save_string(k,x) {this.ds.save_string(`[${k}]`,x);}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean(k,x) {
-		this.ds.save_boolean(`[${k}]`,x);
-	}
+	save_boolean(k,x) {this.ds.save_boolean(`[${k}]`,x);}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
@@ -2822,9 +2670,7 @@ class BaseService extends BaseServicePrivate {
 		return as(r);
 	}
 	/** @arg {ServiceMethods<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
-	is_normal_service(x) {
-		return x.service_type==="normal";
-	}
+	is_normal_service(x) {return x.service_type==="normal";}
 	/** @returns {"unknown"|"normal"} */
 	get service_type() {
 		return "unknown";
@@ -2906,9 +2752,7 @@ class BaseService extends BaseServicePrivate {
 		return reader.try_read_any();
 	}
 	/** @private */
-	_use() {
-		this._decode_b64_proto_obj(btoa("\0"));
-	}
+	_use() {this._decode_b64_proto_obj(btoa("\0"));}
 	static {
 		let y=new this({value: new ServiceResolver({},{})});
 		y._use();
@@ -2921,13 +2765,9 @@ class BaseService extends BaseServicePrivate {
 		return reader.try_read_any();
 	}
 	/** @protected @template {string} T @template {string} U @arg {T} str @arg {U} ends_str @returns {x is Extract<T,`${string}${U}`>} */
-	str_ends_with(str,ends_str) {
-		return str.endsWith(ends_str);
-	}
+	str_ends_with(str,ends_str) {return str.endsWith(ends_str);}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
-	str_starts_with_rx(needle,str) {
-		return str.startsWith(needle);
-	}
+	str_starts_with_rx(needle,str) {return str.startsWith(needle);}
 	/** @protected */
 	get TODO_true() {
 		return true;
@@ -2960,9 +2800,7 @@ class BaseService extends BaseServicePrivate {
 		if(sep!=="") {
 			let sd=this.drop_separator(n1[1],sep);
 			this.save_string(`[${ns_name}::${enum_base}]`,sd);
-		} else {
-			this.save_string(`[${ns_name}::${enum_base}]`,n2);
-		}
+		} else {this.save_string(`[${ns_name}::${enum_base}]`,n2);}
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
@@ -3065,9 +2903,7 @@ class BaseService extends BaseServicePrivate {
 		return false;
 	}
 	/** @protected @type {KnownDataSaver['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
-	save_keys(k,x) {
-		return this.ds.save_keys(k,x);
-	}
+	save_keys(k,x) {return this.ds.save_keys(k,x);}
 }
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class YtHandlers extends BaseService {
@@ -3122,9 +2958,7 @@ class YtHandlers extends BaseService {
 	on_handle_api(request,response,data) {
 		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
-			if(typeof req=="string") {
-				return {url: to_url(req)};
-			}
+			if(typeof req=="string") {				return {url: to_url(req)};}
 			if(req instanceof URL) {
 				return {url: req};
 			}
@@ -3138,9 +2972,7 @@ class YtHandlers extends BaseService {
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
-			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {
-				return split_string_once(ss1,"youtubei/v1/")[1];
-			} else {
+			if(this.str_starts_with_rx("youtubei/v1/",ss1)) {return split_string_once(ss1,"youtubei/v1/")[1];} else {
 				return ss1;
 			}
 		};
@@ -3156,9 +2988,7 @@ class YtHandlers extends BaseService {
 		let res=ht.decode_input(url_type,data);
 		if(res) {
 			ht.run(response,res);
-		} else {
-			console.log("failed to decode_input");
-		}
+		} else {console.log("failed to decode_input");}
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SD_Item} data */
@@ -3257,9 +3087,7 @@ class HandleRendererContentItemArray extends BaseService {
 			return true;
 		}
 		let t=rich_shelf.title;
-		if("runs" in t) {
-			if(t.runs[0].text==="Breaking news") return false;
-		}
+		if("runs" in t) {if(t.runs[0].text==="Breaking news") return false;}
 		console.log("rich shelf",rich_shelf);
 		debugger;
 		return true;
@@ -3268,9 +3096,7 @@ class HandleRendererContentItemArray extends BaseService {
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			let keys=this.get_keys_of(content_item);
-			if("richItemRenderer" in content_item) {
-				return this.filter_for_rich_item_renderer(content_item);
-			}
+			if("richItemRenderer" in content_item) {return this.filter_for_rich_item_renderer(content_item);}
 			if("commentThreadRenderer" in content_item) return true;
 			if("commentsHeaderRenderer" in content_item) return true;
 			if("continuationItemRenderer" in content_item) return true;
@@ -3296,9 +3122,7 @@ class YtObjectVisitor {
 			debugger;
 		}
 		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
-		if(filtered.length>0) {
-			action.continuationItems=filtered;
-		}
+		if(filtered.length>0) {action.continuationItems=filtered;}
 	}
 	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
 	reloadContinuationItemsCommand({t: state},command) {
@@ -3306,9 +3130,7 @@ class YtObjectVisitor {
 			debugger;
 		}
 		let filtered=state.handlers.renderer_content_item_array.replace_array(command.continuationItems);
-		if(filtered.length>0) {
-			command.continuationItems=filtered;
-		}
+		if(filtered.length>0) {command.continuationItems=filtered;}
 	}
 	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
@@ -3362,9 +3184,7 @@ class IterateApiResultBase extends BaseService {
 		}
 		let {t,path}=state;
 		if(data instanceof Array) {
-			for(let [key,value] of data.entries()) {
-				this.default_iter({t,path: `${path}[${key}]`},value);
-			}
+			for(let [key,value] of data.entries()) {this.default_iter({t,path: `${path}[${key}]`},value);}
 			return;
 		}
 		for(let key in data) {
@@ -3490,9 +3310,7 @@ class GFeedbackService extends BaseService {
 		/** @private @type {SP_GFeedbackServiceRouteParam["value"]|null} */
 		route: null,
 	};
-	get handle_types() {
-		return this.x.get("handle_types");
-	}
+	get handle_types() {return this.x.get("handle_types");}
 	/** @private @type {string[]} */
 	seen_e_param=[];
 	has_new_e_param=false;
@@ -3544,9 +3362,7 @@ class GFeedbackService extends BaseService {
 				} break;
 				case "num_shelves": break;
 				case "premium_membership": if(param.value!=="non_member") debugger; general_service_state.premium_membership=param.value; break;
-				case "route": {
-					this.parse_route_param(param);
-				} break;
+				case "route": {this.parse_route_param(param);} break;
 				default: console.log("[param_key]",param); debugger;
 			}
 			this.maybe_new_e();
@@ -3595,24 +3411,14 @@ class GuidedHelpService extends BaseService {
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class TrackingServices extends BaseService {
 	/** @private @arg {RC_Csi_SPs} service */
-	on_csi_service(service) {
-		this.x.get("csi_service").on_params(service.params);
-	}
+	on_csi_service(service) {this.x.get("csi_service").on_params(service.params);}
 	/** @private @arg {RC_ECatcher_SPs} service */
-	on_e_catcher_service(service) {
-		this.x.get("e_catcher_service").on_params(service.params);
-	}
+	on_e_catcher_service(service) {this.x.get("e_catcher_service").on_params(service.params);}
 	/** @private @arg {RC_GFeedback_SPs} service */
-	on_g_feedback_service(service) {
-		this.x.get("g_feedback_service").on_params(service.params);
-	}
+	on_g_feedback_service(service) {this.x.get("g_feedback_service").on_params(service.params);}
 	/** @private @arg {RC_GuidedHelp_SPs} service */
-	on_guided_help_service(service) {
-		this.x.get("guided_help_service").on_params(service.params);
-	}
-	get handle_types() {
-		return this.x.get("handle_types");
-	}
+	on_guided_help_service(service) {this.x.get("guided_help_service").on_params(service.params);}
+	get handle_types() {return this.x.get("handle_types");}
 	/** @private @arg {RC_GoogleHelp_SPs} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
@@ -3643,9 +3449,7 @@ class ModifyEnv extends BaseService {
 		let yt_handlers=this.x.get("yt_handlers");
 		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_RS_AllResponses} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
-			try {
-				yt_handlers.on_handle_api(request,response,response_obj);
-			} catch(e) {
+			try {yt_handlers.on_handle_api(request,response,response_obj);} catch(e) {
 				console.log("plugin error");
 				console.log(e);
 			}
@@ -3659,14 +3463,10 @@ class ModifyEnv extends BaseService {
 				apply: function(...proxy_args) {
 					if(is_yt_debug_enabled) console.log("JSON.parse()");
 					let obj;
-					try {
-						obj=Reflect.apply(...proxy_args);
-					} catch(e) {
+					try {obj=Reflect.apply(...proxy_args);} catch(e) {
 						console.log("target error",e);
 						throw e;
-					} finally {
-						JSON.parse=original_json_parse;
-					}
+					} finally {JSON.parse=original_json_parse;}
 					if(is_yt_debug_enabled) console.log("request.url");
 					fetch_filter_text_then_data_url(request,state.response,obj);
 					return obj;
@@ -3674,9 +3474,7 @@ class ModifyEnv extends BaseService {
 			});
 			let ret;
 			try {
-				if(onfulfilled) {
-					ret=onfulfilled(response_text);
-				} else {
+				if(onfulfilled) {ret=onfulfilled(response_text);} else {
 					ret=response_text;
 				}
 			} catch(err) {
@@ -3696,16 +3494,10 @@ class ModifyEnv extends BaseService {
 		function handle_fetch_response_2({input},state,result) {
 			return {
 				/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
-				then(onfulfilled,onrejected) {
-					return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));
-				},
+				then(onfulfilled,onrejected) {return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));},
 				/** @private @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
-				catch(onrejected) {
-					return result.result.catch(onrejected);
-				},
-				finally(onfinally) {
-					return result.result.finally(onfinally);
-				},
+				catch(onrejected) {return result.result.catch(onrejected);},
+				finally(onfinally) {return result.result.finally(onfinally);},
 				[Symbol.toStringTag]: "Promise",
 			};
 		}
@@ -3716,9 +3508,7 @@ class ModifyEnv extends BaseService {
 					if(is_yt_debug_enabled) console.log("response.text()");
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 				}
-				get redirected() {
-					return response.redirected;
-				}
+				get redirected() {			return response.redirected;}
 				get ok() {
 					return response.ok;
 				}
@@ -3758,9 +3548,7 @@ class ModifyEnv extends BaseService {
 				if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
 				console.log("[fetch_request_init_data]",user_request,request_init);
 			}
-			if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
-				return original_fetch(user_request,request_init);
-			}
+			if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {return original_fetch(user_request,request_init);}
 			let ret=original_fetch(user_request,request_init);
 			let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 			return ret_1;
@@ -3770,9 +3558,7 @@ class ModifyEnv extends BaseService {
 			/** @private @arg {typeof URL["createObjectURL"]} target @arg {typeof URL} thisArg @arg {[Blob|MediaSource]} args */
 			apply(target,thisArg,args) {
 				let [url_source,...rest]=args;
-				if(rest.length>0) {
-					t.leftover_args.push([target,thisArg,url_source,...rest]);
-				}
+				if(rest.length>0) {t.leftover_args.push([target,thisArg,url_source,...rest]);}
 				blob_create_args_arr.push(url_source);
 				let ret=Reflect.apply(target,thisArg,args);
 				created_blobs.set(ret,url_source);
@@ -3936,9 +3722,7 @@ class ServiceMethods extends ServiceData {
 			case "share": res=this.convert_share(target,x); break;
 			case "pdg": res=this.convert_pdg(target,x); break;
 		}
-		switch(target.length) {
-			case 1: res=this.convert_length_1(target,x); break;
-		}
+		switch(target.length) {case 1: res=this.convert_length_1(target,x); break;}
 		if(res) return res;
 		console.log("[log_get_res_data]",target,x);
 		{debugger;}
@@ -4219,9 +4003,7 @@ class ServiceMethods extends ServiceData {
 		if(x!==true) debugger;
 	}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
-	str_starts_with(str,needle) {
-		return this.str_starts_with_rx(needle,str);
-	}
+	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @protected @arg {[D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
@@ -4300,29 +4082,17 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @protected @arg {D_BrowseIdStr} x */
-	browseId(x) {
-		this.parser.parse_browse_id(x);
-	}
+	browseId(x) {this.parser.parse_browse_id(x);}
 	/** @protected @arg {`/@${string}`} x */
-	canonicalBaseUrl(x) {
-		if(!this.str_starts_with(x,"/@")) debugger;
-	}
+	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */
-	_previousCsn(x) {
-		console.log(base64_dec.decode_str(x));
-	}
+	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
-	starts_with_targetId(x,w) {
-		return this.str_starts_with_rx(x.targetId,w);
-	}
+	starts_with_targetId(x,w) {return this.str_starts_with_rx(x.targetId,w);}
 	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(root,path,x,callback) {
-		this.parser.on_player_params(root,path,x,callback);
-	}
+	playerParams(root,path,x,callback) {this.parser.on_player_params(root,path,x,callback);}
 	/** @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
-	rootVe(x) {
-		this.on_root_visual_element(x);
-	}
+	rootVe(x) {this.on_root_visual_element(x);}
 }
 //#endregion
 //#region exports
@@ -4337,9 +4107,7 @@ export_((exports) => {
 export_(exports => {
 	exports.ApiBase=ApiBase;
 });
-export_(exports => {
-	exports.BaseServicePrivate=BaseServicePrivate;
-});
+export_(exports => {exports.BaseServicePrivate=BaseServicePrivate;});
 export_(exports => {
 	exports.ServiceMethods=ServiceMethods;
 	exports.BaseService=BaseService;
@@ -4351,19 +4119,13 @@ export_(exports => {
 	exports.TrackingServices=TrackingServices;
 	exports.YtHandlers=YtHandlers;
 });
-export_(exports => {
-	exports.start_message_channel_loop=start_message_channel_loop;
-});
+export_(exports => {exports.start_message_channel_loop=start_message_channel_loop;});
 export_(exports => {
 	exports.MyReader=MyReader;
 	exports.split_string=split_string;
 });
-export_(exports => {
-	exports.base64_url_dec=base64_url_dec;
-});
-export_(exports => {
-	exports.is_firefox=is_firefox;
-});
+export_(exports => {exports.base64_url_dec=base64_url_dec;});
+export_(exports => {exports.is_firefox=is_firefox;});
 //#endregion
 //#region global exports
 export_((exports) => {

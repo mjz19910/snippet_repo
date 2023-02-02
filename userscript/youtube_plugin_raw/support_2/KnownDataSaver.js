@@ -104,9 +104,7 @@ export class KnownDataSaver {
 		};
 	}
 	get_debug_data() {
-		return {
-			strings_key_index_map: this.#strings_key_index_map,
-		};
+		return {strings_key_index_map: this.#strings_key_index_map,};
 	}
 	/** @arg {string} seen_data */
 	#save_local_storage(seen_data) {
@@ -123,18 +121,10 @@ export class KnownDataSaver {
 	}
 	/** @arg {Partial<ReturnType<KnownDataSaver["pull_data"]>>} x */
 	#push_data_to_parent(x) {
-		if(x.seen_root_visual_elements) {
-			this.#seen_root_visual_elements=x.seen_root_visual_elements;
-		}
-		if(x.seen_strings) {
-			this.#seen_strings=x.seen_strings;
-		}
-		if(x.seen_booleans) {
-			this.#seen_booleans=x.seen_booleans;
-		}
-		if(x.seen_numbers) {
-			this.#seen_numbers=x.seen_numbers;
-		}
+		if(x.seen_root_visual_elements) {this.#seen_root_visual_elements=x.seen_root_visual_elements;}
+		if(x.seen_strings) {this.#seen_strings=x.seen_strings;}
+		if(x.seen_booleans) {this.#seen_booleans=x.seen_booleans;}
+		if(x.seen_numbers) {this.#seen_numbers=x.seen_numbers;}
 	}
 	/** @type {string|null} */
 	#seen_data_json_str=null;

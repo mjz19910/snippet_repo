@@ -19,12 +19,8 @@ const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 const as=bs.as_;
 /** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn,flags={global: false}) {
-	bs.do_export(fn,flags,exports,__module_name__);
-}
-export_(exports => {
-	exports.__is_module_flag__=true;
-});
+function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+export_(exports => {exports.__is_module_flag__=true;});
 class JsonReplacerState {
 	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
 	constructor(gen_name,keys,is_root) {
@@ -42,15 +38,11 @@ class JsonReplacerState {
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const split_string_once=required(store.mod$YoutubePluginBase).split_string_once;
 /** @template {string} T @template {string} D @arg {T} s @arg {D} d */
-function split_string_once_last(s,d) {
-	return bs.split_string_once_last(s,d,null);
-}
+function split_string_once_last(s,d) {return bs.split_string_once_last(s,d,null);}
 /** @template T_LoadAllServices,T_ServiceFlags @extends {BaseService<T_LoadAllServices,T_ServiceFlags>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
-	#is_Thumbnail(x2) {
-		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
-	}
+	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}
 	/** @private @arg {{}} x2 @arg {string} k */
 	generate_code_for_entry(x2,k) {
 		let kk=this.get_name_from_keys(x2);
@@ -383,9 +375,7 @@ class CodegenService extends BaseService {
 		x: if(x.thumbnail&&x.navigationEndpoint&&x.accessibility) {
 			let pi=state.parent_map.get(x);
 			if(!pi) break x;
-			if(pi[1]==="owner") {
-				return "TYPE::D_Video_Owner";
-			}
+			if(pi[1]==="owner") {	return "TYPE::D_Video_Owner";}
 			console.log(pi);
 			debugger;
 		}
@@ -444,9 +434,7 @@ class CodegenService extends BaseService {
 		let xa=as(x);
 		let o2=xa[k];
 		let keys=Object.keys(x).concat(Object.keys(o2));
-		if("response" in x&&typeof x.response==='object'&&x.response!==null) {
-			keys=keys.concat(Object.keys(x.response));
-		}
+		if("response" in x&&typeof x.response==='object'&&x.response!==null) {keys=keys.concat(Object.keys(x.response));}
 		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(cf,keys,is_root);
 		let tc=JSON.stringify(x,this.typedef_json_replacer.bind(this,state),"\t");
@@ -462,15 +450,11 @@ class CodegenService extends BaseService {
 			return `${vi}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(":ARRAY_TAG","[]");
-		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
-			return x.replaceAll("\\\"","\"");
-		});
+		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {return x.replaceAll("\\\"","\"");});
 		tc=tc.replaceAll(/,$/gm,"");
 		tc=tc.replaceAll(/[^[{;,]$/gm,a => `${a};`);
 		let ret;
-		if(typeof cf==="number") {
-			ret=`\ntype ArrayType_${cf}=${tc}\n`;
-		} else {
+		if(typeof cf==="number") {ret=`\ntype ArrayType_${cf}=${tc}\n`;} else {
 			cf=cf.replaceAll(".","$d$");
 			ret=`\ntype ${cf}=${tc}\n`;
 		}
@@ -483,9 +467,7 @@ class CodegenService extends BaseService {
 			let kk=this.get_name_from_keys(x);
 			if(kk) return this.uppercase_first(kk);
 		}
-		if(o_keys.length>0) {
-			return this.uppercase_first(o_keys[0]);
-		}
+		if(o_keys.length>0) {return this.uppercase_first(o_keys[0]);}
 		return "{}";
 	}
 	/** @api @public @param {{[U in string]:unknown}} x @returns {string} */
@@ -552,9 +534,7 @@ class CodegenService extends BaseService {
 				return "G_ClientSignal";
 			}
 			case "GET_NOTIFICATIONS_MENU": {
-				if(!(u.actions instanceof Array)) {
-					console.log("[no_actions_arr] %o",u);
-				}
+				if(!(u.actions instanceof Array)) {console.log("[no_actions_arr] %o",u);}
 				if(u.actions.length!==1) debugger;
 				let action=u.actions[0];
 				if(!action.openPopupAction) debugger;
@@ -574,9 +554,7 @@ class CodegenService extends BaseService {
 			}
 			default:
 		}
-		if(this.eq_keys(this.get_keys_of(u),["signal"])) {
-			return `T_Signal<"${u.signal}">`;
-		}
+		if(this.eq_keys(this.get_keys_of(u),["signal"])) {return `T_Signal<"${u.signal}">`;}
 		const {signal,...y}=u;
 		console.log("[need to decode signal] [%s]",signal,y);
 		{debugger;}
@@ -882,9 +860,7 @@ class CodegenService extends BaseService {
 			let hr=g();
 			if(this.str_ends_with(hr,"Command")) {
 				let sq=split_string_once(hr,"Command");
-				if(sq[1]==="") {
-					return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;
-				}
+				if(sq[1]==="") {return `TYPE::C_${split_string_once(sq[0],"TYPE::")[1]}`;}
 				console.log(sq);
 				debugger;
 			}
@@ -989,9 +965,7 @@ class CodegenService extends BaseService {
 	/** @private @arg {string[]} res @arg {string} k1 @arg {string} x */
 	generate_code_for_string(res,k1,x) {
 		if(k1==="playlistId") {
-			if(x.startsWith("RD")) {
-				res.push(`this.str_starts_with("RD",${k1},"string");`);
-			}
+			if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);}
 		}
 		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`); return;}
 		let x2=x;

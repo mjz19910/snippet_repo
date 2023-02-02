@@ -322,71 +322,29 @@ class JSWhiteSpace extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-WhiteSpace
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	WhiteSpace(str,index) {
-		if(str[index]===" ") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\t") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u000b") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u000c") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\uFEFF") {
-			return [true,"WhiteSpace",1];
-		}
+		if(str[index]===" ") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\t") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u000b") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u000c") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\uFEFF") {	return [true,"WhiteSpace",1];}
 		// Unicode Space_Separator general category
 		// NBSP
-		if(str[index]==="\u00a0") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u1680") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2000") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2001") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2002") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2003") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2004") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2005") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2006") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2007") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2008") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u2009") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u200a") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u202f") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u205f") {
-			return [true,"WhiteSpace",1];
-		}
-		if(str[index]==="\u3000") {
-			return [true,"WhiteSpace",1];
-		}
+		if(str[index]==="\u00a0") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u1680") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2000") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2001") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2002") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2003") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2004") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2005") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2006") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2007") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2008") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u2009") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u200a") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u202f") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u205f") {	return [true,"WhiteSpace",1];}
+		if(str[index]==="\u3000") {	return [true,"WhiteSpace",1];}
 		return [false,null,0];
 	}
 }
@@ -407,9 +365,7 @@ class JSLineTerminators extends ECMA262Base {
 		//<PS>
 		if(str[index]==="\u{2029}")
 			len=1;
-		if(len>0) {
-			return [true,"LineTerminator",1];
-		}
+		if(len>0) {return [true,"LineTerminator",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-LineTerminatorSequence
@@ -452,16 +408,12 @@ class Comments extends ECMA262Base {
 		let off=0;
 		if(str.slice(index,index+2)==="/*") {
 			off+=2;
-			if(str.slice(index+off,index+off+2)==="*/") {
-				return [true,"MultiLineComment",4];
-			}
+			if(str.slice(index+off,index+off+2)==="*/") {return [true,"MultiLineComment",4];}
 			let [valid,,com_len]=this.MultiLineCommentChars(str,index+off);
 			if(!valid) {
 				return [false,null,0];
 			}
-			if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
-				return [true,"MultiLineComment",off+com_len+2];
-			}
+			if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {return [true,"MultiLineComment",off+com_len+2];}
 		}
 		return [false,null,0];
 	}
@@ -469,9 +421,7 @@ class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	MultiLineCommentChars(str,index) {
 		let start_len=0;
-		if(this.dep>64) {
-			throw Error("stack overflow");
-		}
+		if(this.dep>64) {throw Error("stack overflow");}
 		this.dep++;
 		let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len);
 		if(ml_na[2]>0) {
@@ -521,18 +471,14 @@ class Comments extends ECMA262Base {
 				index_offset++;
 				let offset_2=this.PostAsteriskCommentChars(str,index+index_offset);
 				if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed");
-				if(offset_2[0]) {
-					return [true,"PostAsteriskCommentChars",offset_2[2]+index_offset];
-				}
+				if(offset_2[0]) {return [true,"PostAsteriskCommentChars",offset_2[2]+index_offset];}
 			}
 		}
 		return [true,"PostAsteriskCommentChars",index_offset];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	MultiLineNotAsteriskChar(str,index) {
-		if(str[index]!=="*") {
-			return [true,"MultiLineNotAsteriskChar",1];
-		}
+		if(str[index]!=="*") {return [true,"MultiLineNotAsteriskChar",1];}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
@@ -646,16 +592,10 @@ class NamesAndKeywords extends ECMA262Base {
 		let [,,id_start_len]=res;
 		NamesAndKeywords.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 		let id_continue_match=NamesAndKeywords.IdentifierName_not_start_regex.exec(str);
-		if(!id_continue_match||id_continue_match.index!=(index+1)) {
-			return [true,"IdentifierName",id_start_len];
-		}
+		if(!id_continue_match||id_continue_match.index!=(index+1)) {return [true,"IdentifierName",id_start_len];}
 		let id_continue_len=0;
-		if(id_continue_match.index==index+id_start_len) {
-			id_continue_len=id_continue_match[0].length;
-		}
-		if(id_continue_len>0) {
-			return [true,"IdentifierName",id_start_len+id_continue_len];
-		}
+		if(id_continue_match.index==index+id_start_len) {id_continue_len=id_continue_match[0].length;}
+		if(id_continue_len>0) {return [true,"IdentifierName",id_start_len+id_continue_len];}
 		return [false,null,0];
 	}
 	static id_continue_regex=/[a-zA-Z$_0-9]/;
@@ -669,30 +609,22 @@ class NamesAndKeywords extends ECMA262Base {
 			let res=this.C.string_literals.UnicodeEscapeSequence(index+1);
 			if(res[0]) return [true,"IdentifierStart",res[2]+1];
 		}
-		if(str[index].match(NamesAndKeywords.id_start_regex)) {
-			return [true,"IdentifierStart",1];
-		}
+		if(str[index].match(NamesAndKeywords.id_start_regex)) {return [true,"IdentifierStart",1];}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	IdentifierPart(str,index) {
-		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
-			return [true,"IdentifierPart",1];
-		}
+		if(str[index].match(NamesAndKeywords.id_continue_regex)) {return [true,"IdentifierPart",1];}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	IdentifierStartChar(str,index) {
-		if(str[index].match(NamesAndKeywords.id_start_regex)) {
-			return [true,"IdentifierStartChar",1];
-		}
+		if(str[index].match(NamesAndKeywords.id_start_regex)) {return [true,"IdentifierStartChar",1];}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	IdentifierPartChar(str,index) {
-		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
-			return [true,"IdentifierPart",1];
-		}
+		if(str[index].match(NamesAndKeywords.id_continue_regex)) {return [true,"IdentifierPart",1];}
 		return [false,null,0];
 	}
 }
@@ -744,9 +676,7 @@ class Punctuators extends PunctuatorsData {
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	OtherPunctuator(str,index) {
 		// >>>= is the only OtherPunctuator production of length 4
-		if(str.startsWith(">>>=",index)) {
-			return [true,"OtherPunctuator",4];
-		}
+		if(str.startsWith(">>>=",index)) {return [true,"OtherPunctuator",4];}
 		/** @type {string|null} */
 		let result=null;
 		s_three_char_tokens.iterate(function(key) {
@@ -784,9 +714,7 @@ class Punctuators extends PunctuatorsData {
 			}
 			return "Continue";
 		});
-		if(result) {
-			return [true,"OtherPunctuator",1];
-		}
+		if(result) {return [true,"OtherPunctuator",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-DivPunctuator
@@ -801,17 +729,13 @@ class Punctuators extends PunctuatorsData {
 		if(str.startsWith("/=",index)) {
 			char_len=2;
 		}
-		if(char_len>0) {
-			return [true,"DivPunctuator",char_len];
-		}
+		if(char_len>0) {return [true,"DivPunctuator",char_len];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-RightBracePunctuator
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	RightBracePunctuator(str,index) {
-		if(str[index]==="{}"[1]) {
-			return [true,"RightBracePunctuator",1];
-		}
+		if(str[index]==="{}"[1]) {return [true,"RightBracePunctuator",1];}
 		return [false,null,0];
 	}
 }
@@ -839,9 +763,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-NumericLiteralSeparator
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	NumericLiteralSeparator(index) {
-		if(this.str[index]==="_") {
-			return [true,"NumericLiteralSeparator",1];
-		}
+		if(this.str[index]==="_") {return [true,"NumericLiteralSeparator",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NumericLiteral
@@ -970,9 +892,7 @@ class NumericLiterals extends ECMA262Base {
 			let cur=this.DecimalIntegerLiteral(str,index+len);
 			len+=cur[2];
 		}
-		if(len>0&&str[index+len]===".") {
-			console.error("handle numbers like 0.0");
-		};
+		if(len>0&&str[index+len]===".") {console.error("handle numbers like 0.0");};
 		if(len>max_len) max_len=len;
 		len=0;
 		return [true,"DecimalLiteral",max_len];
@@ -1063,17 +983,13 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-DecimalDigit
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	DecimalDigit(str,index) {
-		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
-			return [true,"DecimalDigit",1];
-		}
+		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {return [true,"DecimalDigit",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NonZeroDigit
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NonZeroDigit(str,index) {
-		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
-			return [true,"NonZeroDigit",1];
-		}
+		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {return [true,"NonZeroDigit",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-ExponentPart
@@ -1086,9 +1002,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-ExponentIndicator
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	ExponentIndicator(str,index) {
-		if(str[index]==="e"||str[index]==="E") {
-			return [true,"ExponentIndicator",1];
-		}
+		if(str[index]==="e"||str[index]==="E") {return [true,"ExponentIndicator",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-SignedInteger
@@ -1170,9 +1084,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-BinaryDigit
 	/** @arg {number} i @returns {JsLexerReturnType} */
 	BinaryDigit(i) {
-		if(this.str[i]==="0"||this.str[i]==="1") {
-			return [true,"BinaryDigit",1];
-		}
+		if(this.str[i]==="0"||this.str[i]==="1") {return [true,"BinaryDigit",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
@@ -1201,9 +1113,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-OctalDigit
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	OctalDigit(str,index) {
-		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="7".charCodeAt(0)) {
-			return [true,"OctalDigit",1];
-		}
+		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="7".charCodeAt(0)) {	return [true,"OctalDigit",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NonOctalDigit
@@ -1272,15 +1182,9 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} index @returns {JsLexerReturnType} */
 	HexDigit(index) {
 		let str=this.str;
-		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="9".charCodeAt(0)) {
-			return [true,"HexDigit",1];
-		}
-		if(str.charCodeAt(index)>="a".charCodeAt(0)&&str.charCodeAt(index)<="f".charCodeAt(0)) {
-			return [true,"HexDigit",1];
-		}
-		if(str.charCodeAt(index)>="A".charCodeAt(0)&&str.charCodeAt(index)<="F".charCodeAt(0)) {
-			return [true,"HexDigit",1];
-		}
+		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="9".charCodeAt(0)) {			return [true,"HexDigit",1];}
+		if(str.charCodeAt(index)>="a".charCodeAt(0)&&str.charCodeAt(index)<="f".charCodeAt(0)) {			return [true,"HexDigit",1];}
+		if(str.charCodeAt(index)>="A".charCodeAt(0)&&str.charCodeAt(index)<="F".charCodeAt(0)) {			return [true,"HexDigit",1];}
 		return [false,null,0];
 	}
 }
@@ -1292,23 +1196,15 @@ class StringLiterals extends ECMA262Base {
 	StringLiteral(str,index) {
 		let cur=str[index];
 		if(cur==="\"") {
-			if(str[index+1]==="\"") {
-				return [true,"StringLiteral",2];
-			}
+			if(str[index+1]==="\"") {return [true,"StringLiteral",2];}
 			let [,,double_string_chars_len]=this.DoubleStringCharacters(str,index+1);
-			if(str[index+double_string_chars_len+1]==="\"") {
-				return [true,"StringLiteral",double_string_chars_len+2];
-			}
+			if(str[index+double_string_chars_len+1]==="\"") {return [true,"StringLiteral",double_string_chars_len+2];}
 			return [false,null,0];
 		}
 		if(cur==="'") {
-			if(str[index+1]==="'") {
-				return [true,"StringLiteral",2];
-			}
+			if(str[index+1]==="'") {return [true,"StringLiteral",2];}
 			let [,,single_string_chars_len]=this.SingleStringCharacters(str,index+1);
-			if(str[index+single_string_chars_len+1]==="'") {
-				return [true,"StringLiteral",single_string_chars_len+2];
-			}
+			if(str[index+single_string_chars_len+1]==="'") {return [true,"StringLiteral",single_string_chars_len+2];}
 			return [false,null,0];
 		}
 		return [false,null,0];
@@ -1343,20 +1239,14 @@ class StringLiterals extends ECMA262Base {
 			}
 			return [true,"DoubleStringCharacter",1];
 		}
-		if(str[index]==="\u{2028}") {
-			return [true,"DoubleStringCharacter",1];
-		}
-		if(str[index]==="\u{2029}") {
-			return [true,"DoubleStringCharacter",1];
-		}
+		if(str[index]==="\u{2028}") {return [true,"DoubleStringCharacter",1];}
+		if(str[index]==="\u{2029}") {return [true,"DoubleStringCharacter",1];}
 		if(str[index]==="\\") {
 			let [,,esc_len]=this.EscapeSequence(str,index);
 			return [true,"DoubleStringCharacter",esc_len+1];
 		}
 		let [,,lc_len]=this.LineContinuation(str,index);
-		if(lc_len>0) {
-			return [true,"DoubleStringCharacter",lc_len];
-		}
+		if(lc_len>0) {return [true,"DoubleStringCharacter",lc_len];}
 		return [true,"DoubleStringCharacter",1];
 	}
 	// https://tc39.es/ecma262/#prod-SingleStringCharacters
@@ -1392,20 +1282,14 @@ class StringLiterals extends ECMA262Base {
 			}
 			return [true,"SingleStringCharacter",1];
 		}
-		if(str[index]==="\u{2028}") {
-			return [true,"SingleStringCharacter",1];
-		}
-		if(str[index]==="\u{2029}") {
-			return [true,"SingleStringCharacter",1];
-		}
+		if(str[index]==="\u{2028}") {return [true,"SingleStringCharacter",1];}
+		if(str[index]==="\u{2029}") {return [true,"SingleStringCharacter",1];}
 		if(str[index]==="\\") {
 			let esc_len=this.EscapeSequence(str,index);
 			return [true,"SingleStringCharacter",esc_len[2]+1];
 		}
 		let [,,lc_len]=this.LineContinuation(str,index);
-		if(lc_len>0) {
-			return [true,"SingleStringCharacter",lc_len];
-		}
+		if(lc_len>0) {return [true,"SingleStringCharacter",lc_len];}
 		return [true,"SingleStringCharacter",1];
 	}
 	// https://tc39.es/ecma262/#prod-LineContinuation
@@ -1413,9 +1297,7 @@ class StringLiterals extends ECMA262Base {
 	LineContinuation(str,index) {
 		if(str[index]==="\\") {
 			let [,,lt_len]=this.C.line_terminators.LineTerminatorSequence(str,index+1);
-			if(lt_len>0) {
-				return [true,"LineContinuation",lt_len+1];
-			}
+			if(lt_len>0) {return [true,"LineContinuation",lt_len+1];}
 		}
 		return [false,null,0];
 	}
@@ -1472,9 +1354,7 @@ class StringLiterals extends ECMA262Base {
 	SingleEscapeCharacter(str,index) {
 		let val=["'","\"","\\","b","f","n","r","t","v"];
 		let cur=str[index];
-		if(val.includes(cur)) {
-			return [true,"SingleEscapeCharacter",1];
-		}
+		if(val.includes(cur)) {return [true,"SingleEscapeCharacter",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-
@@ -1497,15 +1377,9 @@ class StringLiterals extends ECMA262Base {
 		if(len0>len1) {
 			act=1;
 		}
-		if(str[index]==="x") {
-			return [true,"EscapeCharacter",1];
-		}
-		if(len0[2]>len1[2]) {
-			return [true,"EscapeCharacter",len0[2]];
-		}
-		if(len1[2]>len0[2]) {
-			return [true,"EscapeCharacter",len1[2]];
-		}
+		if(str[index]==="x") {return [true,"EscapeCharacter",1];}
+		if(len0[2]>len1[2]) {return [true,"EscapeCharacter",len0[2]];}
+		if(len1[2]>len0[2]) {return [true,"EscapeCharacter",len1[2]];}
 		if(act===1) {
 			throw new Error("TODO");
 		}
@@ -1518,9 +1392,7 @@ class StringLiterals extends ECMA262Base {
 			if(str[index]!=="0") {
 				break x;
 			}
-			if(str[index+1]==="8"||str[index+1]==="9") {
-				return [true,"LegacyOctalEscapeSequence",1];
-			}
+			if(str[index+1]==="8"||str[index+1]==="9") {return [true,"LegacyOctalEscapeSequence",1];}
 		}
 		x: {
 			let len=this.NonZeroOctalDigit(str,index);
@@ -1583,9 +1455,7 @@ class StringLiterals extends ECMA262Base {
 			return [false,null,0];
 		}
 		let len=this.C.numeric_literals.OctalDigit(str,index);
-		if(len[2]>0) {
-			return [true,"NonZeroOctalDigit",1];
-		}
+		if(len[2]>0) {return [true,"NonZeroOctalDigit",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-
@@ -1593,9 +1463,7 @@ class StringLiterals extends ECMA262Base {
 	ZeroToThree(str,index) {
 		let cur=str[index];
 		let chk="0123";
-		if(chk.includes(cur)) {
-			return [true,"ZeroToThree",1];
-		}
+		if(chk.includes(cur)) {return [true,"ZeroToThree",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-
@@ -1603,17 +1471,13 @@ class StringLiterals extends ECMA262Base {
 	FourToSeven(str,index) {
 		let cur=str[index];
 		let chk="4567";
-		if(chk.includes(cur)) {
-			return [true,"FourToSeven",1];
-		}
+		if(chk.includes(cur)) {return [true,"FourToSeven",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	NonOctalDecimalEscapeSequence(str,index) {
-		if(str[index]==="8"||str[index]==="9") {
-			return [true,"NonOctalDecimalEscapeSequence",1];
-		}
+		if(str[index]==="8"||str[index]==="9") {return [true,"NonOctalDecimalEscapeSequence",1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-HexEscapeSequence
@@ -1640,9 +1504,7 @@ class StringLiterals extends ECMA262Base {
 			off++;
 		}
 		let len0=this.Hex4Digits(index+off);
-		if(len0[2]>0) {
-			return [true,"UnicodeEscapeSequence",len0[2]+1];
-		}
+		if(len0[2]>0) {return [true,"UnicodeEscapeSequence",len0[2]+1];}
 		if(this.str[index+off]==="{}"[0]) {
 			off++;
 			let len=this.C.template_literal_lexical_components.CodePoint(this.str,index+off);
@@ -1722,9 +1584,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			if(res[2]>0) {
 				cur_index+=res[2];
 			}
-			if(str[cur_index]==="$"&&str[cur_index+1]==="{") {
-				return [true,"TemplateHead",cur_index+2];
-			}
+			if(str[cur_index]==="$"&&str[cur_index+1]==="{") {return [true,"TemplateHead",cur_index+2];}
 		}
 		return [false,null,0];
 	}
@@ -1733,14 +1593,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	TemplateSubstitutionTail(str,index) {
 		// TemplateMiddle
 		let res=this.TemplateMiddle(str,index);
-		if(res[0]) {
-			return [true,"TemplateSubstitutionTail",res[2]];
-		}
+		if(res[0]) {return [true,"TemplateSubstitutionTail",res[2]];}
 		// TemplateTail
 		res=this.TemplateTail(str,index);
-		if(res[0]) {
-			return [true,"TemplateSubstitutionTail",res[2]];
-		}
+		if(res[0]) {return [true,"TemplateSubstitutionTail",res[2]];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateMiddle
@@ -1750,15 +1606,11 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		// } TemplateCharacters_opt ${
 		if(str[index]==="{}"[1]) {
 			len++;
-			if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
-				return [true,"TemplateMiddle",len+2];
-			}
+			if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {return [true,"TemplateMiddle",len+2];}
 			let res=this.TemplateCharacters(str,index);
 			if(res[0]) {
 				len+=res[2];
-				if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
-					return [true,"TemplateMiddle",len+2];
-				}
+				if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {return [true,"TemplateMiddle",len+2];}
 			}
 		}
 		return [false,null,0];
@@ -1806,14 +1658,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-TemplateCharacter
 	/** @arg {string} str @arg {number} index @returns {JsLexerReturnType} */
 	TemplateCharacter(str,index) {
-		if(str[index]==="$"&&str[index+1]!=="{") {
-			return [true,"TemplateCharacter",1];
-		}
+		if(str[index]==="$"&&str[index+1]!=="{") {return [true,"TemplateCharacter",1];}
 		if(str[index]==="\\") {
 			let escape_res=this.TemplateEscapeSequence(str,index);
-			if(escape_res[0]) {
-				return [true,"TemplateCharacter",escape_res[2]];
-			}
+			if(escape_res[0]) {return [true,"TemplateCharacter",escape_res[2]];}
 		}
 		if(str[index]==="\\") {
 			let not_esc=this.NotEscapeSequence(str,index);
@@ -1822,13 +1670,9 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			}
 		}
 		let res=this.C.string_literals.LineContinuation(str,index);
-		if(res[0]) {
-			return [true,"TemplateCharacter",res[2]];
-		}
+		if(res[0]) {return [true,"TemplateCharacter",res[2]];}
 		res=this.C.line_terminators.LineTerminatorSequence(str,index);
-		if(res[0]) {
-			return [true,"TemplateCharacter",res[2]];
-		}
+		if(res[0]) {return [true,"TemplateCharacter",res[2]];}
 		/* SourceCharacter but not one of ` or \ or $ or LineTerminator */
 		if(str[index]==="`"||str[index]==="\\"||str[index]==="$") {
 			return [false,null,0];
@@ -1847,16 +1691,12 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		let len=0;
 		/* CharacterEscapeSequence */
 		let tmp=this.C.string_literals.CharacterEscapeSequence(str,index);
-		if(tmp[0]) {
-			return [true,"TemplateEscapeSequence",tmp[2]];
-		}
+		if(tmp[0]) {return [true,"TemplateEscapeSequence",tmp[2]];}
 		/* 0 [lookahead ∉ DecimalDigit]*/
 		if(str[index]==="0") {
 			len++;
 			let la=this.C.numeric_literals.DecimalDigit(str,index);
-			if(!la[0]) {
-				return [true,"TemplateEscapeSequence",len];
-			}
+			if(!la[0]) {return [true,"TemplateEscapeSequence",len];}
 		}
 		len=0;
 		let res=this.C.string_literals.HexEscapeSequence(str,index);
@@ -1870,24 +1710,16 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	NotEscapeSequence(str,index) {
 		if(str[index]==="0") {
 			let res=this.C.numeric_literals.DecimalDigit(str,index+1);
-			if(res[0]) {
-				return [true,"NotEscapeSequence",res[2]+1];
-			}
+			if(res[0]) {return [true,"NotEscapeSequence",res[2]+1];}
 		} else {
 			let res=this.C.numeric_literals.DecimalDigit(str,index);
-			if(res[0]) {
-				return [true,"NotEscapeSequence",res[2]];
-			}
+			if(res[0]) {return [true,"NotEscapeSequence",res[2]];}
 		}
 		if(str[index]==="x") {
 			let lookahead=this.C.numeric_literals.HexDigit(index+1);
-			if(!lookahead[0]) {
-				return [true,"NotEscapeSequence",1];
-			} else {
+			if(!lookahead[0]) {return [true,"NotEscapeSequence",1];} else {
 				lookahead=this.C.numeric_literals.HexDigit(index+1);
-				if(!lookahead[0]) {
-					return [true,"NotEscapeSequence",1];
-				}
+				if(!lookahead[0]) {return [true,"NotEscapeSequence",1];}
 			}
 		}
 		if(str[index]!=="u") {
@@ -1896,48 +1728,32 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		let res_1,res_2,res_3;
 		let len=1;
 		let lookahead_res_1=this.C.numeric_literals.HexDigit(index+len);
-		if(!lookahead_res_1[0]&&str[index+1]!=="{}"[0]) {
-			return [true,"NotEscapeSequence",1];
-		}
+		if(!lookahead_res_1[0]&&str[index+1]!=="{}"[0]) {return [true,"NotEscapeSequence",1];}
 		res_1=this.C.numeric_literals.HexDigit(index+len);
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+1);
-		if(res_1[0]&&!lookahead_res_1[0]) {
-			return [true,"NotEscapeSequence",2];
-		}
+		if(res_1[0]&&!lookahead_res_1[0]) {return [true,"NotEscapeSequence",2];}
 		res_1=this.C.numeric_literals.HexDigit(index+len);
 		res_2=this.C.numeric_literals.HexDigit(index+len+1);
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+3);
-		if(res_1[0]&&res_2[0]&&!lookahead_res_1[0]) {
-			return [true,"NotEscapeSequence",3];
-		}
+		if(res_1[0]&&res_2[0]&&!lookahead_res_1[0]) {return [true,"NotEscapeSequence",3];}
 		res_1=this.C.numeric_literals.HexDigit(index+len);
 		res_2=this.C.numeric_literals.HexDigit(index+len+1);
 		res_3=this.C.numeric_literals.HexDigit(index+len+2);
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+3);
-		if(res_1[0]&&res_2[0]&&res_3[0]&&!lookahead_res_1[0]) {
-			return [true,"NotEscapeSequence",4];
-		}
+		if(res_1[0]&&res_2[0]&&res_3[0]&&!lookahead_res_1[0]) {return [true,"NotEscapeSequence",4];}
 		if(str[index+len]!=="{}"[1]) {
 			return [false,null,0];
 		}
 		len++;
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len);
-		if(!lookahead_res_1[0]) {
-			return [true,"NotEscapeSequence",len];
-		}
+		if(!lookahead_res_1[0]) {return [true,"NotEscapeSequence",len];}
 		res_1=this.NotCodePoint(str,index+len);
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+1);
-		if(res_1[0]&&!lookahead_res_1[0]) {
-			return [true,"NotEscapeSequence",len];
-		}
+		if(res_1[0]&&!lookahead_res_1[0]) {return [true,"NotEscapeSequence",len];}
 		res_1=this.CodePoint(str,index+len);
 		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+1);
-		if(res_1[0]&&!lookahead_res_1[0]) {
-			return [true,"NotEscapeSequence",len+1];
-		}
-		if(lookahead_res_1[0]&&str[index+len+1]!=="{}"[1]) {
-			return [true,"NotEscapeSequence",len+1];
-		}
+		if(res_1[0]&&!lookahead_res_1[0]) {return [true,"NotEscapeSequence",len+1];}
+		if(lookahead_res_1[0]&&str[index+len+1]!=="{}"[1]) {return [true,"NotEscapeSequence",len+1];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NotCodePoint
@@ -1951,9 +1767,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		let mv_raw=str.slice(index,index+res[2]);
 		// but only if MV of HexDigits ≤ 0x10FFFF
 		let MV=parseInt(mv_raw,16);
-		if(MV>0x10FFFF) {
-			return [true,"NotCodePoint",res[2]];
-		}
+		if(MV>0x10FFFF) {return [true,"NotCodePoint",res[2]];}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-CodePoint
@@ -1967,9 +1781,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		let mv_raw=str.slice(index,index+res[2]);
 		// but only if MV of HexDigits ≤ 0x10FFFF
 		let MV=parseInt(mv_raw,16);
-		if(MV<=0x10FFFF) {
-			return [true,"CodePoint",res[2]];
-		}
+		if(MV<=0x10FFFF) {return [true,"CodePoint",res[2]];}
 		return [false,null,0];
 	}
 }
@@ -2282,22 +2094,16 @@ class ecma_root {
 	/** @arg {JsLexerReturnType} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
 	as_next_token(cur) {
 		if(cur[1]!==null) {
-			if(cur[2]===0) {
-				return [cur[0],cur[1],cur[2],this.index];
-			}
+			if(cur[2]===0) {return [cur[0],cur[1],cur[2],this.index];}
 			this.index+=cur[2];
 			return [cur[0],cur[1],cur[2],this.index];
 		}
-		if(this.index>(this.str.length-1)) {
-			return [false,js_token_generator.EOF_TOKEN,0,this.index];
-		}
+		if(this.index>(this.str.length-1)) {return [false,js_token_generator.EOF_TOKEN,0,this.index];}
 		return null;
 	}
 	/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
 	next_token() {
-		if(this.index>(this.str.length-1)) {
-			return [false,js_token_generator.EOF_TOKEN,0,this.index];
-		}
+		if(this.index>(this.str.length-1)) {return [false,js_token_generator.EOF_TOKEN,0,this.index];}
 		/** @type {[true,string,number,number]} */
 		let ret;
 		let cur=this.InputElementDiv();
@@ -2355,9 +2161,7 @@ class js_token_generator {
 	/** @type {ecma_root} */
 	root;
 	/** @arg {string} str */
-	constructor(str) {
-		this.root=new ecma_root(str,0);
-	}
+	constructor(str) {this.root=new ecma_root(str,0);}
 }
 // #endregion
 // #region parse_javascript_str
@@ -2404,16 +2208,12 @@ var console={...window.console};
 console.log=console.log.bind(window.console);
 // #endregion
 
-class LoggingEventTarget {
-	dispatchEvent=console.log.bind(console);
-}
+class LoggingEventTarget {dispatchEvent=console.log.bind(console);}
 inject_api.LoggingEventTarget=LoggingEventTarget;
 
 class ApiProxyManager {
 	/** @arg {LoggingEventTarget} event_handler */
-	constructor(event_handler) {
-		this.event_handler=event_handler;
-	}
+	constructor(event_handler) {this.event_handler=event_handler;}
 	/** @template {(...x:any[])=>any} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
 	create_proxy_for_function(message_to_send,function_value) {
 		let t=this.event_handler;
@@ -2449,9 +2249,7 @@ class ReversePrototypeChain {
 	/** @arg {{}} base @arg {{}[]} targets */
 	constructor(base,targets) {
 		this.window_list=[];
-		for(let i=0;i<window.length;i++) {
-			this.window_list.push(window[i]);
-		}
+		for(let i=0;i<window.length;i++) {this.window_list.push(window[i]);}
 		this.base=base;
 		this.targets=targets;
 		/** @type {{}[]} */
@@ -2470,49 +2268,27 @@ class ReversePrototypeChain {
 				continue;
 			this.window_list.push(window[i]);
 		}
-		for(let target of this.targets) {
-			this.process_target(target);
-		}
-		if(top===window) {
-			if(api_debug_enabled) console.log(this.destination);
-		}
+		for(let target of this.targets) {		this.process_target(target);}
+		if(top===window) {if(api_debug_enabled) console.log(this.destination);}
 	}
 	/** @arg {{}|null} value */
 	get_cache_key(value) {
-		if(!this.object_cache.includes(value)) {
-			this.object_cache.push(value);
-		}
+		if(!this.object_cache.includes(value)) {this.object_cache.push(value);}
 		let object_index=this.object_cache.indexOf(value);
-		if(!value) {
-			return `a_null::${object_index}`;
-		}
-		if(value instanceof Window&&this.window_list.includes(value)) {
-			return "window_id::"+this.window_list.indexOf(value);
-		}
+		if(!value) {return `a_null::${object_index}`;}
+		if(value instanceof Window&&this.window_list.includes(value)) {return "window_id::"+this.window_list.indexOf(value);}
 		if(value===inject_api)
 			return `self::inject_api:${object_index}`;
 		let key;
-		if(Symbol.toStringTag in value) {
-			key=value[Symbol.toStringTag];
-		}
+		if(Symbol.toStringTag in value) {key=value[Symbol.toStringTag];}
 		if(value.hasOwnProperty("constructor")) {
 			let constructor_name=value.constructor.name;
-			if(key) {
-				return `constructor_key::${constructor_name}:${key}:${object_index}`;
-			} else {
-				return `constructor_key::${constructor_name}:${object_index}`;
-			}
-		} else if(key) {
-			return `to_string_tag::${key}:${object_index}`;
-		}
-		try {
-			if(value.hasOwnProperty("constructor")) {
-			}
+			if(key) {return `constructor_key::${constructor_name}:${key}:${object_index}`;} else {return `constructor_key::${constructor_name}:${object_index}`;}
+		} else if(key) {return `to_string_tag::${key}:${object_index}`;}
+		try {if(value.hasOwnProperty("constructor")) {}
 		} catch {}
 		let index=this.object_cache.indexOf(value);
-		if(index<0) {
-			index=this.object_cache.push(value)-1;
-		}
+		if(index<0) {index=this.object_cache.push(value)-1;}
 		return "cache_id::"+index;
 	}
 	/** @arg {string} cache_key @arg {{}|null} prototype */
@@ -2556,9 +2332,7 @@ class ReversePrototypeChain {
 			return;
 		let sub_key=this.get_cache_key(value);
 		let dest_value=this.destination[sub_key];
-		if(dest_value) {
-			prototypes.push(dest_value);
-		} else {
+		if(dest_value) {		prototypes.push(dest_value);} else {
 			/** @type {destination_index_type} */
 			let sub_value={
 				__proto__: null,
@@ -2594,9 +2368,7 @@ class ReversePrototypeChain {
 		for(let x of this.values) {
 			let prototype=Object.getPrototypeOf(x);
 			let cache_key=this.get_cache_key(prototype);
-			if(!this.destination[cache_key]) {
-				this.cache_prototype(cache_key,prototype);
-			}
+			if(!this.destination[cache_key]) {this.cache_prototype(cache_key,prototype);}
 			let values=this.destination[cache_key].child.values;
 			if(values.includes(x)) {
 				continue;
@@ -2653,9 +2425,7 @@ function overwrite_addEventListener(obj) {
 					case "string": {
 						if(e.length<128) {
 							rq.push(e);
-						} else {
-							rq.push(JSON.stringify(e.slice(0,128-15))+"...(truncated)");
-						}
+						} else {rq.push(JSON.stringify(e.slice(0,128-15))+"...(truncated)");}
 					} break;
 					case "bigint":
 					case "boolean":
@@ -2695,9 +2465,7 @@ function do_message_handler_overwrite(handler) {
 	/** @this {{}} */
 	return function(/** @type {Event} */ event) {
 		if(typeof handler==="object") {
-			if(handler===null) {
-				throw new Error("invalid handler");
-			}
+			if(handler===null) {throw new Error("invalid handler");}
 			handler.handleEvent(event);
 			return;
 		}
@@ -2716,9 +2484,7 @@ function do_message_handler_overwrite(handler) {
 }
 
 class ProxyTargetMap {
-	constructor() {
-		inject_api.proxyTargetMap=this;
-	}
+	constructor() {inject_api.proxyTargetMap=this;}
 	weak_map=new WeakMap();
 }
 inject_api.ProxyTargetMap=ProxyTargetMap;
@@ -2773,13 +2539,9 @@ class AddEventListenerExtension {
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
 	}
-	get_target_prototype() {
-		return this.target_prototype;
-	}
+	get_target_prototype() {	return this.target_prototype;}
 	/** @arg {EventListenersT} handler */
-	elevate_handler(handler) {
-		this.elevated_event_handlers.push(handler);
-	}
+	elevate_handler(handler) {this.elevated_event_handlers.push(handler);}
 	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
@@ -2871,24 +2633,16 @@ class AddEventListenerExtension {
 		this.convert_to_namespaced_string(real_value,val,key,this.add_object_id(val));
 	}
 	/** @private @template {CallableFunction} T @arg {unknown[]} real_value @arg {number} key @arg {T} val */
-	args_iter_on_function(real_value,key,val) {
-		this.convert_to_id_key(real_value,key,val,"function");
-	}
+	args_iter_on_function(real_value,key,val) {this.convert_to_id_key(real_value,key,val,"function");}
 	/** @private @arg {[any, any, any[]]} list */
 	add_to_call_list(list) {
 		if(!api_debug_enabled) return;
 		if(this.failed_obj) return;
-		try {
-			this.add_to_call_list_impl(list);
-		} catch(e) {
-			console.log("err in add to call list",e);
-		}
+		try {this.add_to_call_list_impl(list);} catch(e) {console.log("err in add to call list",e);}
 	}
 	/** @private @arg {Node} val */
 	generate_node_id(val) {
-		if(val.__id_holder) {
-			return val.__id_holder.value;
-		}
+		if(val.__id_holder) {	return val.__id_holder.value;}
 		let list=this.node_list.deref();
 		if(!list) {
 			list=[];
@@ -2916,9 +2670,7 @@ class AddEventListenerExtension {
 					let original_function=args[1];
 					if(!t.elevated_event_handlers.includes(original_function)) {
 						/** @arg {[evt: Event]} args */
-						args[1]=function(...args) {
-							t.eventFireInterceptor(original_function,this,args);
-						};
+						args[1]=function(...args) {t.eventFireInterceptor(original_function,this,args);};
 					}
 					return t.original_prototype.addEventListener.call(this,...args);
 				}; break;
@@ -2946,19 +2698,13 @@ class AddEventListenerExtension {
 				}
 			}
 		}
-		if(typeof arg_function==="function") {
-			return arg_function.apply(arg_this,args);
-		} else {
-			return arg_function.handleEvent(...args);
-		}
+		if(typeof arg_function==="function") {return arg_function.apply(arg_this,args);} else {return arg_function.handleEvent(...args);}
 	}
 }
 AddEventListenerExtension.attach_to_api();
 
 class IterExtensions {
-	static attach_to_api() {
-		inject_api.IterExtensions=this;
-	}
+	static attach_to_api() {inject_api.IterExtensions=this;}
 	static init() {
 		let map=new Map;
 		let val_iter=map.values();
@@ -2992,11 +2738,7 @@ function getPlaybackRateMap(include_uninteresting) {
 	for(let i=0;i<=100;i++) {
 		if(!include_uninteresting&&i===100) continue;
 		let elem=document.querySelectorAll(sel(i.toString()));
-		if(elem.length==1) {
-			progress_map.set("some:"+i,[...elem]);
-		} else if(elem.length>0) {
-			progress_map.set("some:"+i,[...elem]);
-		}
+		if(elem.length==1) {progress_map.set("some:"+i,[...elem]);} else if(elem.length>0) {progress_map.set("some:"+i,[...elem]);}
 	}; return progress_map;
 };
 inject_api.getPlaybackRateMap=getPlaybackRateMap;
@@ -3011,12 +2753,8 @@ class CreateObjURLCache {
 	static expired=[];
 	/** @type {Map<string, [(Blob|MediaSource)[], string, boolean]>} */
 	static cache=new Map;
-	static enable() {
-		this.update_scope(this.getScope());
-	}
-	static disable() {
-		this.update_scope(this.originalScope);
-	}
+	static enable() {this.update_scope(this.getScope());}
+	static disable() {this.update_scope(this.originalScope);}
 	/** @arg {CreateObjURLCache.originalScope} scope */
 	static update_scope(scope) {
 		URL.createObjectURL=scope.createObjectURL;
@@ -3038,9 +2776,7 @@ class CreateObjURLCache {
 			let key=args[0];
 			let cache_value=CreateObjURLCache.cache.get(key);
 			CreateObjURLCache.cache.delete(key);
-			if(cache_value) {
-				CreateObjURLCache.expired.push(cache_value);
-			}
+			if(cache_value) {CreateObjURLCache.expired.push(cache_value);}
 			let ret=base.revokeObjectURL(...args);
 			return ret;
 		}
@@ -3057,9 +2793,7 @@ class RepeatImpl_0 {
 	static map_num=new Map;
 	/** @arg {string} value @arg {number} times */
 	static get(value,times) {
-		if(!this.map.has(value)) {
-			this.map.set(value,new Map);
-		}
+		if(!this.map.has(value)) {		this.map.set(value,new Map);}
 		let tm_map=this.map.get(value);
 		if(!tm_map)
 			throw new Error("no-reach");
@@ -3076,9 +2810,7 @@ class RepeatImpl_0 {
 	}
 	/** @arg {number} value @arg {number} times */
 	static get_num(value,times) {
-		if(!this.map_num.has(value)) {
-			this.map_num.set(value,new Map);
-		}
+		if(!this.map_num.has(value)) {this.map_num.set(value,new Map);}
 		let tm_map=this.map_num.get(value);
 		if(!tm_map)
 			throw new Error("no-reach");
@@ -3102,21 +2834,15 @@ class RepeatImpl_0 {
 		this.value=value;
 		this.times=times;
 	}
-	toString() {
-		return this.value+"x"+this.times;
-	}
+	toString() {return this.value+"x"+this.times;}
 }
 
 inject_api.Repeat=RepeatImpl_0;
 class CompressRepeated {
 	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
-	did_compress(src,dst) {
-		return dst.length<src.length;
-	}
+	did_compress(src,dst) {	return dst.length<src.length;}
 	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
-	did_decompress(src,dst) {
-		return dst.length>src.length;
-	}
+	did_decompress(src,dst) {	return dst.length>src.length;}
 	/** @arg {string[]} src @arg {(string|RepeatImpl_0<string>)[]} dst @returns {[boolean, (string|RepeatImpl_0<string>)[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
@@ -3213,34 +2939,24 @@ inject_api.to_tuple_arr=to_tuple_arr;
 
 /** @arg {any[]} arr @arg {number} index @arg {number} value */
 function range_matches(arr,value,index) {
-	for(let i=index;i<arr.length;i++) {
-		if(arr[i]!==value) return false;
-	}
+	for(let i=index;i<arr.length;i++) {if(arr[i]!==value) return false;}
 	return true;
 }
 
 class BaseCompression {
 	/** @arg {CompressDual} arg0 @returns {DualR_0} */
-	compress_result_state_dual(arg0) {
-		return this.compress_result_dual(arg0.arr,arg0.ret);
-	}
+	compress_result_state_dual(arg0) {return this.compress_result_dual(arg0.arr,arg0.ret);}
 	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string, number>[]} dst @returns {DualR_0} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {
-		return dst.length<src.length;
-	}
+	did_compress(src,dst) {	return dst.length<src.length;}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
-	did_decompress(src,dst) {
-		return dst.length>src.length;
-	}
+	did_decompress(src,dst) {	return dst.length>src.length;}
 	/** @template T,U @arg {CompressStateBase<T, U>} state */
-	compress_result_state(state) {
-		return this.compress_result(state.arr,state.ret);
-	}
+	compress_result_state(state) {return this.compress_result(state.arr,state.ret);}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
@@ -3401,9 +3117,7 @@ let function_as_string_vec=[];
 inject_api.function_as_string_vec=function_as_string_vec
 
 function resolve_function_constructor() {
-	if(globalThis.Node===void 0) {
-		throw new Error("Javascript Runtime without DOM not supported (node js)");
-	}
+	if(globalThis.Node===void 0) {throw new Error("Javascript Runtime without DOM not supported (node js)");}
 	if(!cached_iframe) {
 		let iframe_element=document.createElement("iframe");
 		document.head.append(iframe_element);
@@ -3455,9 +3169,7 @@ class VoidCallback {
 		this.m_callback=callback;
 		this.m_params=params;
 	}
-	execute() {
-		this.m_callback(...this.m_params);
-	}
+	execute() {this.m_callback(...this.m_params);}
 }
 
 let wasm_header=null;
@@ -3676,9 +3388,7 @@ function run_modules_plugin() {
 	function function_prototype_call_inject(thisArg,...argArray) {
 		if(!inject_api.function_as_string_vec) throw 1;
 		let ret=bound_apply_call(this,[thisArg,...argArray]);
-		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			inject_api.function_as_string_vec.push(this.toString());
-		}
+		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {inject_api.function_as_string_vec.push(this.toString());}
 		return ret;
 	};
 	/** @this {()=>void} @arg {any} tv @arg {any} r */
@@ -3686,9 +3396,7 @@ function run_modules_plugin() {
 		if(!inject_api.function_as_string_vec) throw 1;
 		if(r===void 0||r===null) r=[];
 		let ret=bound_apply_call(this,[tv,...r]);
-		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			inject_api.function_as_string_vec.push(this.toString());
-		}
+		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {inject_api.function_as_string_vec.push(this.toString());}
 		return ret;
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
@@ -3705,9 +3413,7 @@ class CompressionStatsCalculator {
 		this.compressor=new MulCompression;
 	}
 	/** @arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {
-		stats_arr[index]=this.calc_compression_stats(arr,index+1);
-	}
+	calc_for_stats_index(stats_arr,arr,index) {stats_arr[index]=this.calc_compression_stats(arr,index+1);}
 	/** @arg {number} index */
 	add_hit(index) {
 		if(!this.hit_counts[index]) {
@@ -3717,9 +3423,7 @@ class CompressionStatsCalculator {
 	/** @arg {string} key */
 	add_item(key) {
 		let index=this.cache.indexOf(key);
-		if(index==-1) {
-			index=this.cache.push(key)-1;
-		}
+		if(index==-1) {	index=this.cache.push(key)-1;}
 		this.add_hit(index);
 	}
 	reset() {
@@ -3736,9 +3440,7 @@ class CompressionStatsCalculator {
 	calc_compression_stats(arr,win_size) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
-			if(i+win_size<arr.length) {
-				this.add_item(arr.slice(i,i+win_size).join(","));
-			}
+			if(i+win_size<arr.length) {this.add_item(arr.slice(i,i+win_size).join(","));}
 		}
 		let keys=this.map_keys();
 		let values=this.map_values();
@@ -3778,9 +3480,7 @@ let stats_calculator_info={
 inject_api.range_matches=range_matches;
 let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @arg {[unknown, number][]} stats */
-function log_stats(stats) {
-	console.log(...stats.sort((a,b) => b[1]-a[1]));
-}
+function log_stats(stats) {console.log(...stats.sort((a,b) => b[1]-a[1]));}
 z.add_function(log_stats);
 /** @arg {string[]} arr @arg {number} calc_win */
 function sorted_comp_stats(arr,calc_win) {
@@ -3815,9 +3515,7 @@ z.add_function(next_chunk);
 /** @type {{value:string[]}} */
 let ids={value: []};
 /** @arg {string} value */
-function get_ids(value) {
-	return ids.value.indexOf(value);
-}
+function get_ids(value) {return ids.value.indexOf(value);}
 
 /** @arg {CompressionStatsCalculator} this_ @arg {IDValueImpl_0} obj */
 function sorted_comp_stats(this_,obj) {
@@ -4098,11 +3796,7 @@ function calc_next(stats,obj,max_id) {
 	let com=new CompressDual(next.arr_dual);
 	/** @type {DualR_0} */
 	let compress_result=com.try_compress_dual();
-	if(!compress_result[0]) {
-		next.arr_dual=compress_result[1];
-	} else {
-		next.arr_dual_compressed=compress_result[1];
-	}
+	if(!compress_result[0]) {next.arr_dual=compress_result[1];} else {next.arr_dual_compressed=compress_result[1];}
 	return compress_result;
 }
 
@@ -4183,9 +3877,7 @@ function find_matching_value(val,e) {
 }
 
 /** @arg {string|number} val */
-function key_not_found(val) {
-	console.log("not found",val);
-}
+function key_not_found(val) {	console.log("not found",val);}
 
 /** @type {number[]} */
 let id_map_one=[];
@@ -4230,9 +3922,7 @@ let ids_dec_rep=[];
 /** @arg {string|number|RepeatImpl_0<number>} e @returns {["dr_map_num", any]|["id_map_num",any]|["dr_map_rep", any]|["ids_dec_rep",any]|["ids_dec_num",any]|null} */
 function try_decode(e,deep=true) {
 	if(typeof e==="number") {
-		if(dr_map_num[e]) {
-			return ["dr_map_num",dr_map_num[e]];
-		}
+		if(dr_map_num[e]) {return ["dr_map_num",dr_map_num[e]];}
 		if(id_map_num[e]) {
 			/** @type {(string|number)[]} */
 			let res=id_map_num[e];
@@ -4246,14 +3936,10 @@ function try_decode(e,deep=true) {
 			dr_map_num[e]=dec_res;
 			return ["dr_map_num",dec_res];
 		}
-		if(ids_dec_num[e]) {
-			return ["ids_dec_num",ids_dec_num[e]];
-		}
+		if(ids_dec_num[e]) {return ["ids_dec_num",ids_dec_num[e]];}
 	}
 	if(e instanceof RepeatImpl_0) {
-		if(dr_map[e.value]) {
-			return ["dr_map_rep",dr_map[e.value]];
-		}
+		if(dr_map[e.value]) {return ["dr_map_rep",dr_map[e.value]];}
 		if(id_map_rep[e.value]) {
 			/** @type {(string|number)[]} */
 			let res=id_map_rep[e.value];
@@ -4266,9 +3952,7 @@ function try_decode(e,deep=true) {
 			dr_map_rep[e.value]=ret;
 			return ["dr_map_rep",ret];
 		}
-		if(ids_dec_rep[e.value]) {
-			return ["ids_dec_rep",new RepeatImpl_0(ids_dec_rep[e.value],e.times)];
-		}
+		if(ids_dec_rep[e.value]) {return ["ids_dec_rep",new RepeatImpl_0(ids_dec_rep[e.value],e.times)];}
 	}
 	return null;
 }
@@ -4314,9 +3998,7 @@ class SafeJsonParser {
 	}
 	/** @arg {unknown} obj */
 	convert(obj) {
-		if(obj===null) {
-			return new JsonValueBox(new JsonNullBox);
-		}
+		if(obj===null) {return new JsonValueBox(new JsonNullBox);}
 		if(obj instanceof Array) {
 			/** @type {JsonValueBox[]} */
 			let new_arr=[];
@@ -4374,9 +4056,7 @@ function deep_eq(obj_1,obj_2) {
 			return true;
 		return false;
 	}
-	if(obj_1 instanceof Map&&obj_2 instanceof Map) {
-		return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
-	}
+	if(obj_1 instanceof Map&&obj_2 instanceof Map) {return deep_eq([...obj_1.entries()],[...obj_2.entries()]);}
 	throw new Error("Fixme");
 }
 z.add_function(deep_eq);
@@ -4407,40 +4087,30 @@ let el_ids={value: []};
 /** @arg {CompressionStatsCalculator} stats */
 function compress_main(stats) {
 	compress_init();
-	if(g_auto_buy) {
-		src_arr.value=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
-	} else {
+	if(g_auto_buy) {src_arr.value=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];} else {
 		console.log("TODO: use event_log (can't find it)");
 		return;
 	}
 	ids.value=[...new Set(src_arr.value)];
 	id_groups.value=[];
-	for(let value of src_arr.value) {
-		make_group_from_item(id_groups.value,ids.value.indexOf(value),value);
-	}
+	for(let value of src_arr.value) {make_group_from_item(id_groups.value,ids.value.indexOf(value),value);}
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
 	let disabled_com=new DisabledMulCompression;
 	let arr=disabled_com.try_compress_T(el_ids.value);
 	let obj_start=new IDValueImpl_0(0,null);
 	obj_start.arr_rep=el_ids.value;
-	if(arr[0]===true) {
-		obj_start.arr_rep_num=arr[1];
-	} else if(arr[0]===false) {
+	if(arr[0]===true) {	obj_start.arr_rep_num=arr[1];} else if(arr[0]===false) {
 		obj_start.arr_num=arr[1];
 	}
 	for(let i=0,cur=obj_start;i<3000;i++) {
 		let comp_res=run_calc(stats,cur);
 		if(!cur.stats) break;
-		if(cur.log_val&&comp_res===null) {
-			console.log("id:"+cur.id,"[",...cur.log_val,"]",cur.stats_win);
-		}
+		if(cur.log_val&&comp_res===null) {console.log("id:"+cur.id,"[",...cur.log_val,"]",cur.stats_win);}
 		if(cur.stats.length===0) break;
 		if(cur.stats[0][1]===1) break;
 		if(!cur.next) break;
-		if(!(cur.next instanceof IDValueImpl_0)) {
-			throw new Error("Don't know how to use this type (cur.next is not IDValue_0)");
-		}
+		if(!(cur.next instanceof IDValueImpl_0)) {throw new Error("Don't know how to use this type (cur.next is not IDValue_0)");}
 		cur=cur.next;
 	}
 	g_obj_arr.value=flat_obj(obj_start);
@@ -4531,12 +4201,8 @@ class GenericEvent {
 			this.type=type;
 		}
 	}
-	preventDefault() {
-		this.#default_prevented=true;
-	}
-	get defaultPrevented() {
-		return this.#default_prevented;
-	}
+	preventDefault() {	this.#default_prevented=true;}
+	get defaultPrevented() {return this.#default_prevented;}
 }
 inject_api.GenericEvent=GenericEvent;
 
@@ -4581,9 +4247,7 @@ function is_record_with_T(x,k) {
 
 //#region cast_monad
 /** @template T @arg {T} x @returns {CM<T>} */
-function new_cast_monad(x) {
-	return {tag: "cast_tag",data: x};
-}
+function new_cast_monad(x) {return {tag: "cast_tag",data: x};}
 
 /** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
 function cast_to_object(x) {
@@ -4712,9 +4376,7 @@ class TCPMessage {
 		return new TCPMessage(tcp_syn,client_id,seq,null,null);
 	}
 	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
-	static make_message(client_id,data,seq,ack) {
-		return new TCPMessage(0,client_id,seq,ack,data);
-	}
+	static make_message(client_id,data,seq,ack) {return new TCPMessage(0,client_id,seq,ack,data);}
 }
 
 let testing_tcp=false;
@@ -4741,9 +4403,7 @@ class Socket {
 		this.m_client_id=client_id;
 		this.m_remote_target=remote_target;
 		this.m_event_source=remote_target;
-		if(this.m_remote_target===window) {
-			throw new Error("Sending messages to self is means i have a bad time");
-		}
+		if(this.m_remote_target===window) {throw new Error("Sending messages to self is means i have a bad time");}
 		let {ports,client_port}=this.init_syn_data();
 		this.m_port=client_port;
 		this.send_syn(ports);
@@ -4779,9 +4439,7 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} data @arg {[MessagePort]} ports */
 	send_init_request(data,ports) {
-		if(this.m_debug) {
-			console.log("post request ConnectOverPostMessage");
-		}
+		if(this.m_debug) {console.log("post request ConnectOverPostMessage");}
 		if(testing_tcp) {
 			console.groupCollapsed("-tx-C-> Socket<"+data.seq+","+data.ack+">");
 			console.log("Socket ->");
@@ -4811,17 +4469,11 @@ class Socket {
 			console.groupEnd();
 			console.log("<?-");
 		}
-		if(ListenSocket.direct_message) {
-			ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
-		} else {
-			this.m_port.postMessage(data);
-		}
+		if(ListenSocket.direct_message) {ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));} else {this.m_port.postMessage(data);}
 	}
 	/** @arg {ConnectionMessage} message */
 	client_connect(message) {
-		if(testing_tcp) {
-			console.log("on_client_connect",message,this.m_event_source);
-		}
+		if(testing_tcp) {console.log("on_client_connect",message,this.m_event_source);}
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
@@ -4861,24 +4513,14 @@ class Socket {
 	/** @arg {ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
 		let f=new FlagHandler(tcp_message.flags);
-		if(this.m_local_log) {
-			console.log("local",tcp_message);
-		}
-		if(f.is_syn()&&f.is_ack()) {
-			this.send_ack(tcp_message,0);
-		}
-		if(tcp_message.flags==0) {
-			this.send_ack(tcp_message,0);
-		}
+		if(this.m_local_log) {console.log("local",tcp_message);}
+		if(f.is_syn()&&f.is_ack()) {	this.send_ack(tcp_message,0);}
+		if(tcp_message.flags==0) {	this.send_ack(tcp_message,0);}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
-		if(testing_tcp) {
-			console.log("Socket.handle_tcp_data(message.data())");
-		}
+		if(testing_tcp) {console.log("Socket.handle_tcp_data(message.data())");}
 		switch(tcp_data.type) {
-			case "connected": {
-				this.client_connect(tcp_message);
-			} break;
+			case "connected": {this.client_connect(tcp_message);} break;
 			case "will_disconnect": {
 				this.m_can_reconnect=tcp_data.can_reconnect;
 				this.m_disconnect_start=performance.now();
@@ -4892,15 +4534,11 @@ class Socket {
 		}
 	}
 	client_start_connect() {
-		if(!this.m_port) {
-			throw new Error("No remote port to communicate with");
-		}
+		if(!this.m_port) {throw new Error("No remote port to communicate with");}
 	}
 	/** @arg {ConnectionMessage} message */
 	client_disconnect(message) {
-		if(testing_tcp) {
-			console.log("on_client_disconnect",message);
-		}
+		if(testing_tcp) {console.log("on_client_disconnect",message);}
 		this.m_connected=false;
 		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_port.removeEventListener("message",this);
@@ -4922,9 +4560,7 @@ class OriginState {
 			return this.m_opener;
 		} else if(this.m_top) {
 			return this.m_top;
-		} else {
-			throw new Error("Invalid state, not top and window.top is null");
-		}
+		} else {throw new Error("Invalid state, not top and window.top is null");}
 	}
 }
 inject_api.OriginState=OriginState;
@@ -4984,19 +4620,13 @@ class ListenSocket {
 			console.groupEnd();
 			console.log("<?-");
 		}
-		if(Socket.direct_message) {
-			Socket.prototype.handleEvent(new MessageEvent("message",{data}));
-		} else {
-			this.m_port.postMessage(data);
-		}
+		if(Socket.direct_message) {Socket.prototype.handleEvent(new MessageEvent("message",{data}));} else {this.m_port.postMessage(data);}
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	downstream_connect(tcp_message) {
 		let {seq,ack}=tcp_message;
 		if(!ack) throw new Error("Invalid message");
-		if(testing_tcp) {
-			console.log("on_server_connect",this.m_client_id,this.m_event_source);
-		}
+		if(testing_tcp) {console.log("on_server_connect",this.m_client_id,this.m_event_source);}
 		this.push_tcp_message(TCPMessage.make_message(
 			this.m_client_id,{type: "connected"},
 			seq,ack,
@@ -5010,9 +4640,7 @@ class ListenSocket {
 			inject_api.remote_origin.push_tcp_message(info);
 			return;
 		}
-		if(this.m_log_downstream) {
-			console.log("downstream_event",info.data,info.flags,info.client_id);
-		}
+		if(this.m_log_downstream) {console.log("downstream_event",info.data,info.flags,info.client_id);}
 	}
 	disconnected() {
 		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
@@ -5083,24 +4711,16 @@ class ListenSocket {
 			// seq=number & ack=null;
 			this.send_ack(tcp_message,tcp_syn);
 		}
-		if(f.is_none()&&!f.is_syn()) {
-			this.send_ack(tcp_message,0);
-		}
-		if(f.is_none()&&seq==null) {
-			console.log("bad tcp",tcp_message);
-		}
+		if(f.is_none()&&!f.is_syn()) {	this.send_ack(tcp_message,0);}
+		if(f.is_none()&&seq==null) {console.log("bad tcp",tcp_message);}
 		if(f.is_ack()&&this.m_is_connecting) {
 			this.m_is_connecting=false;
 			this.m_connected=true;
 			this.downstream_connect(tcp_message);
 		}
-		if(f.is_ack()&&this.m_is_connecting&&seq==null) {
-			console.log("bad tcp",tcp_message);
-		}
+		if(f.is_ack()&&this.m_is_connecting&&seq==null) {console.log("bad tcp",tcp_message);}
 		let downstream_data=tcp_message.data;
-		if(downstream_data) {
-			this.downstream_handle_event(tcp_message);
-		}
+		if(downstream_data) {this.downstream_handle_event(tcp_message);}
 	}
 }
 
@@ -5151,9 +4771,7 @@ class CrossOriginConnection {
 		if(!event_0.source) throw new Error("No event source");
 		let event_source=event_0.source;
 		let handler=new ListenSocket(this.m_flags,connection_port,client_id,event_source);
-		let prev_connection_index=this.m_connections.findIndex(e => {
-			return e.event_source===event_source;
-		});
+		let prev_connection_index=this.m_connections.findIndex(e => {return e.event_source===event_source;});
 		if(testing_tcp) {
 			console.groupCollapsed("-rx-C!-> CrossOriginConnection<"+event_0.data.data.seq+","+event_0.data.data.ack+">");
 			console.log("CrossOriginConnection ->");
@@ -5164,9 +4782,7 @@ class CrossOriginConnection {
 			console.log("<?-");
 		}
 		handler.handle_tcp_data(event_0.data.data);
-		if(prev_connection_index>-1) {
-			this.m_connections.splice(prev_connection_index,1);
-		}
+		if(prev_connection_index>-1) {this.m_connections.splice(prev_connection_index,1);}
 		this.m_connections.push(handler);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
@@ -5190,30 +4806,20 @@ class CrossOriginConnection {
 	}
 	/** @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
-		if(!this.m_local_handler) {
-			throw new Error("send tcp message to non-existent connection");
-		}
+		if(!this.m_local_handler) {throw new Error("send tcp message to non-existent connection");}
 		this.m_local_handler.push_tcp_message(message);
 	}
 	/** @arg {Event} event */
 	handleEvent(event) {
 		switch(event.type) {
 			case "message": {
-				if(event instanceof MessageEvent) {
-					this.on_message_event(event);
-				} else {
-					console.log("Event type is \"message\" and not an instance of MessageEvent",event);
-				}
+				if(event instanceof MessageEvent) {	this.on_message_event(event);} else {console.log("Event type is \"message\" and not an instance of MessageEvent",event);}
 			} break;
 			case "beforeunload": {
-				for(let connection of this.m_connections) {
-					connection.will_disconnect(false);
-				}
+				for(let connection of this.m_connections) {connection.will_disconnect(false);}
 			} break;
 			case "unload": {
-				for(let connection of this.m_connections) {
-					connection.disconnected();
-				}
+				for(let connection of this.m_connections) {				connection.disconnected();}
 				this.m_connections.length=0;
 			} break;
 		}
@@ -5252,13 +4858,9 @@ class DebugApi {
 		return this.m_the;
 	}
 	/** @arg {string} key @returns {boolean} */
-	hasData(key) {
-		return this.data_store.has(key);
-	}
+	hasData(key) {return this.data_store.has(key);}
 	/** @arg {string} key @returns {any} */
-	getData(key) {
-		return this.data_store.get(key);
-	}
+	getData(key) {return this.data_store.get(key);}
 	/** @arg {"__k"} key @returns {dbg_get_ty} */
 	get_k(key) {
 		return this.getData(key);
@@ -5268,18 +4870,14 @@ class DebugApi {
 		return this.getData("d");
 	}
 	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: EventListenerInternal[]}} */
-	get_getEventListeners(key) {
-		return this.data_store.get(key);
-	}
+	get_getEventListeners(key) {return this.data_store.get(key);}
 	/** @arg {string} key @arg {any} value @returns {this} */
 	setData(key,value) {
 		this.data_store.set(key,value);
 		return this;
 	}
 	/** @arg {string} key @returns {boolean} */
-	deleteData(key) {
-		return this.data_store.delete(key);
-	}
+	deleteData(key) {return this.data_store.delete(key);}
 	/** @arg {any} element @returns {{[x: string]: EventListenerInternal[]}} */
 	getEventListeners(element) {
 		if(!this.hasData("getEventListeners"))
@@ -5291,9 +4889,7 @@ class DebugApi {
 		this.attach(debug,undebug,null);
 		/** @arg {Constructor} func @arg {any} f_this @arg {any[]} c_args */
 		function do_activate(func,f_this,c_args) {
-			try {
-				return Reflect.apply(func,f_this,c_args);
-			} catch {}
+			try {return Reflect.apply(func,f_this,c_args);} catch {}
 		}
 		let activate=do_activate.bind(null,func,{},[{
 			get target() {
@@ -5322,19 +4918,13 @@ class DebugApi {
 		return this;
 	}
 	/** @arg {new (...arg0: any[]) => any} class_value @arg {any[]} arg_vec @returns {boolean} */
-	activateClass(class_value,arg_vec) {
-		return new class_value(...arg_vec);
-	}
+	activateClass(class_value,arg_vec) {return new class_value(...arg_vec);}
 	/** @arg {any} function_value @arg {any} target_obj @arg {any} arg_vec @returns {boolean} */
-	activateApply(function_value,target_obj,arg_vec) {
-		return Reflect.apply(function_value,target_obj,arg_vec);
-	}
+	activateApply(function_value,target_obj,arg_vec) {return Reflect.apply(function_value,target_obj,arg_vec);}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
 		window.inject_api?.DebugApi&&(window.inject_api.DebugApi.the().get_k("__k").get=(/** @type {string} */ __v) => {
-			if(__v==="__v") {
-				return {type: "eval-hidden-var"};
-			}
+			if(__v==="__v") {return {type: "eval-hidden-var"};}
 			try {
 				return {
 					type: "var",
@@ -5345,12 +4935,8 @@ class DebugApi {
 			}
 		});
 		if(window.inject_api?.DebugApi) {
-			if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {
-				console.log("failed to clear breakpoint");
-			}
-		} else {
-			console.log("missing window.inject_api");
-		}
+			if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {console.log("failed to clear breakpoint");}
+		} else {console.log("missing window.inject_api");}
 		0;
 	}
 	/** @returns {boolean} */
@@ -5365,11 +4951,7 @@ class DebugApi {
 	/** @argument {Function} function_value @returns {string} */
 	stringifyFunction(function_value) {
 		let function_code=function_value.toString();
-		if(function_code.includes("{}"[0])) {
-			function_code=function_code.slice(function_code.indexOf("{}"[0]));
-		} else {
-			console.log(function_code);
-		}
+		if(function_code.includes("{}"[0])) {function_code=function_code.slice(function_code.indexOf("{}"[0]));} else {			console.log(function_code);}
 		return function_code;
 	}
 	/** @arg {IDebugBreakpointArgs} breakpoint_arguments @returns {dbg_result} */
@@ -5377,9 +4959,7 @@ class DebugApi {
 		let function_value=breakpoint_arguments.target;
 		let var_match=breakpoint_arguments.name;
 		if(!this.hasData("d")||!this.getData("u")) {
-			return {
-				type: "invalid-state-error"
-			};
+			return {			type: "invalid-state-error"};
 		}
 		if(typeof function_value!="function") {
 			return {
@@ -5491,18 +5071,12 @@ class DebugApi {
 		debug(this.current_function_value,`${dbg_str_func}`);
 		// ---- Activate ----
 		let activate_return=null;
-		if(breakpoint_arguments.type==="class-breakpoint") {
-			activate_return=breakpoint_arguments.activate(breakpoint_arguments.target,breakpoint_arguments.activate_args);
-		} else if(breakpoint_arguments.type==="function-breakpoint") {
-			activate_return=breakpoint_arguments.activate(breakpoint_arguments.target,...breakpoint_arguments.activate_args);
-		} else {
+		if(breakpoint_arguments.type==="class-breakpoint") {activate_return=breakpoint_arguments.activate(breakpoint_arguments.target,breakpoint_arguments.activate_args);} else if(breakpoint_arguments.type==="function-breakpoint") {activate_return=breakpoint_arguments.activate(breakpoint_arguments.target,...breakpoint_arguments.activate_args);} else {
 			this.getData("u")(this.current_function_value);
 			return {type: "argument-error"};
 		}
 		let breakpoint_result=null;
-		if(tmp_value.get) {
-			breakpoint_result=tmp_value.get(breakpoint_arguments.name);
-		}
+		if(tmp_value.get) {breakpoint_result=tmp_value.get(breakpoint_arguments.name);}
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type==="var") {
 			return {
@@ -5537,9 +5111,7 @@ class DebugApi {
 	}
 	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_vec @arg {string} var_name @returns {dbg_result} */
 	debuggerGetVar(function_value,activate_vec,var_name) {
-		if(typeof function_value!="function") {
-			return {type: "argument-error"};
-		}
+		if(typeof function_value!="function") {return {type: "argument-error"};}
 		let ret=this.debuggerGetVar_a({
 			type: "function-breakpoint",
 			target: function_value,

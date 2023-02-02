@@ -33,13 +33,9 @@ declare global {
 		undebug?: I_undebug|undefined;
 	}
 
-	interface I_debug {
-		(fn: DebuggableFunctions,code: string): void;
-	}
+	interface I_debug {(fn: DebuggableFunctions,code: string): void;}
 
-	interface I_undebug {
-		(fn: (...x: any[]) => any): void;
-	}
+	interface I_undebug {(fn: (...x: any[]) => any): void;}
 }
 
 declare global {
@@ -49,15 +45,11 @@ declare global {
 	}>>|null;
 }
 
-declare global {
-	type CM<T>={tag: "cast_tag",data: T;};
-}
+declare global {type CM<T>={tag: "cast_tag",data: T;};}
 
 //@@iterator for NodeListOf
 declare global {
-	interface NodeListOf<TNode extends Node> extends NodeList {
-		[Symbol.iterator](): IterableIterator<TNode>;
-	}
+	interface NodeListOf<TNode extends Node> extends NodeList {[Symbol.iterator](): IterableIterator<TNode>;}
 }
 
 // inject_api global
@@ -83,22 +75,14 @@ declare global {
 	};
 }
 
-declare global {
-	type AnyOrRepeat_0<T>=T|Repeat_0<T>;
-}
+declare global {type AnyOrRepeat_0<T>=T|Repeat_0<T>;}
 
-declare global {
-	type AnyOrRepeat2_0<T,U>=["T",AnyOrRepeat_0<T>]|["U",AnyOrRepeat_0<U>];
-}
+declare global {type AnyOrRepeat2_0<T,U>=["T",AnyOrRepeat_0<T>]|["U",AnyOrRepeat_0<U>];}
 
 // AltPair
-declare global {
-	type AltPair<T,U>=["T",T]|["U",U];
-}
+declare global {type AltPair<T,U>=["T",T]|["U",U];}
 
-declare global {
-	type DualR_0=[true,AnyOrRepeat2_0<string,number>[]]|[false,AltPair<string,number>[]];
-}
+declare global {type DualR_0=[true,AnyOrRepeat2_0<string,number>[]]|[false,AltPair<string,number>[]];}
 
 declare global {
 	type dbg_arg_error={type: "argument-error";};
@@ -147,9 +131,7 @@ declare global {
 		type: "var";
 		data: any[];
 	};
-	interface dbg_get_ty {
-		get?: (__v: string) => dbg_eval_hidden|dbg_no_var|dbg_var;
-	}
+	interface dbg_get_ty {get?: (__v: string) => dbg_eval_hidden|dbg_no_var|dbg_var;}
 }
 
 declare global {
@@ -217,14 +199,10 @@ declare global {
 }
 
 declare global {
-	interface Node {
-		__id_holder?: {value: number;};
-	}
+	interface Node {__id_holder?: {value: number;};}
 }
 
-declare global {
-	type EventListenersT=EventListenerOrEventListenerObject|((v: MessageEvent<any>) => void);
-}
+declare global {type EventListenersT=EventListenerOrEventListenerObject|((v: MessageEvent<any>) => void);}
 
 declare global {
 	type ReportInfo<T>={
@@ -236,9 +214,7 @@ declare global {
 
 declare global {
 	type arg_list_item_type=WeakRef<{}>|bigint|boolean|string|number|symbol;
-	interface Function {
-		__arg_list_for_add_event_listeners: arg_list_item_type[][];
-	}
+	interface Function {__arg_list_for_add_event_listeners: arg_list_item_type[][];}
 }
 
 export {type DebugApiH_Type as DebugApiH_Type};

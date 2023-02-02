@@ -1,8 +1,6 @@
 import {ServiceMethods} from "./zc_child_modules/YtPlugin_Base_Plugin.user";
 /** @returns {never} */
-function n() {
-	throw new Error("Make never type");
-}
+function n() {throw new Error("Make never type");}
 n;
 /** @template T,U @extends {ServiceMethods<T,U>} */
 export class HandleTypesEval_ extends ServiceMethods {

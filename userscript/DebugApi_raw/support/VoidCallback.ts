@@ -3,7 +3,5 @@ export class VoidCallback<U extends any[],C> {
 	constructor(callback: (...args: U) => C) {
 		this.m_callback=callback;
 	}
-	execute(...args: U) {
-		return this.m_callback(...args);
-	}
+	execute(...args: U) {return this.m_callback(...args);}
 }

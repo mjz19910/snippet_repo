@@ -1,4 +1,2 @@
 
-export interface IAddEventListenerExtension {
-	elevate_handler(x: any): void;
-}
+export interface IAddEventListenerExtension {elevate_handler(x: any): void;}

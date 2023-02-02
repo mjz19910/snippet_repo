@@ -10,9 +10,7 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 	readonly instance_type="CSSStyleSheet";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
-	on_get(_vm: StackVMImpl,key: string) {
-		console.log("get","CSSStyleSheetConstructorBox",key);
-	}
+	on_get(_vm: StackVMImpl,key: string) {console.log("get","CSSStyleSheetConstructorBox",key);}
 	factory(...arr: Box[]) {
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {

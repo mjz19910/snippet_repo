@@ -17,9 +17,7 @@ type RC_CsiVarMap={
 	yt_fn: D_BrowseEndpointPages;
 	[x: T_RidFormat<string>]: `0x${string}`;
 };
-type RC_CsiVarTypes={
-	cver: Extract<DRC_Csi_SPs[number],{key: "cver";}>['value'];
-};
+type RC_CsiVarTypes={cver: Extract<DRC_Csi_SPs[number],{key: "cver";}>['value'];};
 type RC_Csi_SPs={
 	service: "CSI",
 	params: DRC_Csi_SPs;
@@ -32,9 +30,7 @@ type RC_ECatcherClientVersion={
 	key: "client.version";
 	value: RC_SomeVer<RC_CsiVarTypes['cver']>;
 };
-type RC_ECatcherServiceType={
-	["client.fexp"]: `${number}`|`${number},${number}`|`${number},${number},${string}`;
-};
+type RC_ECatcherServiceType={["client.fexp"]: `${number}`|`${number},${number}`|`${number},${number},${string}`;};
 type RC_ECatcher_SPs={
 	service: "ECATCHER";
 	params: RC_To_SPs<RC_ECatcherServiceType>|RC_ECatcherClientName[]|RC_ECatcherClientVersion[];
@@ -59,9 +55,7 @@ type RC_ResponseContext_1={
 	webResponseContextExtensionData: RC_WR_ContextExtension;
 };
 type RC_SomeVer<T extends string>=T extends `${infer V0}.${infer V1}.${string}.${string}`? `${V0}.${V1}`:T;
-type RC_To_SPs<T>={
-	[U in keyof T]: {key: U; value: T[U];};
-}[keyof T][];
+type RC_To_SPs<T>={[U in keyof T]: {key: U; value: T[U];};}[keyof T][];
 type RC_WR_ContextExtension={
 	hasDecorated?: boolean;
 	ytConfigData?: D_YtConfig;
@@ -268,9 +262,7 @@ type R_Dropdown={dropdownRenderer: D_Dropdown_Privacy;};
 type R_ElementUpdate={updates: D_ElementUpdate[];};
 type D_EmojiPicker={};
 
-type R_EmojiPicker={
-	emojiPickerRenderer: D_EmojiPicker;
-};
+type R_EmojiPicker={emojiPickerRenderer: D_EmojiPicker;};
 type R_EndScreenPlaylist={endScreenPlaylistRenderer: D_EndScreenPlaylist;};
 type R_EndScreenVideo={endScreenVideoRenderer: D_EndScreenVideo;};
 type R_Endscreen={endscreenRenderer: D_Endscreen;};
@@ -288,9 +280,7 @@ type R_General=R_SettingsSidebar;
 type R_GhostGrid={ghostGridRenderer: D_GhostGrid;};
 type R_Grid=T_Items<R_GridVideo>;
 type R_GridVideo={gridVideoRenderer: D_GridVideo;};
-type R_GuideEntryData={
-	guideEntryData: D_GuideEntryData;
-};
+type R_GuideEntryData={guideEntryData: D_GuideEntryData;};
 type R_GuideSection={guideSectionRenderer: D_GuideSection;};
 type R_GuideSubscriptionsSection={guideSubscriptionsSectionRenderer: D_GuideSubscriptionsSection;};
 type R_HeatSeekerItem=T_MapEntry<"HEATSEEKER",D_HeatSeekerItemData>;
@@ -312,31 +302,21 @@ type R_LinearAdSequence={linearAdSequenceRenderer: D_LinearAdSequence;};
 type R_LiveChatAuthorBadge={liveChatAuthorBadgeRenderer: D_LiveChatAuthorBadge;};
 type D_LiveChatHeader={};
 
-type R_LiveChatHeader={
-	liveChatHeaderRenderer: D_LiveChatHeader;
-};
+type R_LiveChatHeader={liveChatHeaderRenderer: D_LiveChatHeader;};
 type D_LiveChatItemList={};
 
-type R_LiveChatItemList={
-	liveChatItemListRenderer: D_LiveChatItemList;
-};
+type R_LiveChatItemList={liveChatItemListRenderer: D_LiveChatItemList;};
 type D_LiveChatMessageInput={};
 
-type R_LiveChatMessageInput={
-	liveChatMessageInputRenderer: D_LiveChatMessageInput;
-};
+type R_LiveChatMessageInput={liveChatMessageInputRenderer: D_LiveChatMessageInput;};
 type D_LiveChatParticipantsList={};
 
-type R_LiveChatParticipantsList={
-	liveChatParticipantsListRenderer: D_LiveChatParticipantsList;
-};
+type R_LiveChatParticipantsList={liveChatParticipantsListRenderer: D_LiveChatParticipantsList;};
 type R_LiveChatPlaceholderItem={liveChatPlaceholderItemRenderer: D_LiveChatPlaceholderItem;};
 type R_LiveChatTextMessage={liveChatTextMessageRenderer: D_LiveChatTextMessage;};
 type D_LiveChatTicker={};
 
-type R_LiveChatTicker={
-	liveChatTickerRenderer: D_LiveChatTicker;
-};
+type R_LiveChatTicker={liveChatTickerRenderer: D_LiveChatTicker;};
 type R_LiveChatViewerEngagementMessage={liveChatViewerEngagementMessageRenderer: D_LiveChatViewerEngagementMessage;};
 type R_MP_MenuNotificationSection={multiPageMenuNotificationSectionRenderer: D_MP_MenuNotificationSection;};
 type GR_MP_MenuNotificationSection_Item=R_Notification|R_ContinuationItem;
@@ -345,32 +325,24 @@ type R_MacroMarkersListItem={macroMarkersListItemRenderer: D_MacroMarkersListIte
 type R_Menu={menuRenderer: D_Menu;};
 type R_MenuFlexibleItem={menuFlexibleItemRenderer: DT_MenuFlexibleItem;};
 type R_MenuNavigationItem={menuNavigationItemRenderer: D_MenuNavigationItem;};
-type R_MenuServiceItem={
-	menuServiceItemRenderer: RD_MenuServiceItem;
-};
+type R_MenuServiceItem={menuServiceItemRenderer: RD_MenuServiceItem;};
 type R_MerchandiseItem={merchandiseItemRenderer: D_MerchandiseItem;};
 type R_MerchandiseShelf={merchandiseShelfRenderer: D_MerchandiseShelf;};
 type D_Message={};
 
-type R_Message={
-	messageRenderer: D_Message;
-};
+type R_Message={messageRenderer: D_Message;};
 type R_Microformat={microformatDataRenderer: D_Microformat;};
 type R_Miniplayer={miniplayerRenderer: D_Miniplayer;};
 type R_MovingThumbnail={movingThumbnailRenderer: D_MovingThumbnail;};
 type R_MultiMarkersPlayerBar={multiMarkersPlayerBarRenderer: D_MultiMarkersPlayerBar;};
 type R_MusicCarouselShelf={musicCarouselShelfRenderer: D_MusicCarouselShelf;};
-type R_MusicHeader={
-	musicHeaderRenderer: {};
-};
+type R_MusicHeader={musicHeaderRenderer: {};};
 type R_MusicQueue={musicQueueRenderer: D_MusicQueue;};
 type R_MusicResponsiveListItem={musicResponsiveListItemRenderer: D_MusicResponsiveListItem;};
 type R_MusicShelf={musicShelfRenderer: D_MusicShelf;};
 type D_MusicShelfDivider={};
 
-type R_MusicShelfDivider={
-	musicShelfDividerRenderer: D_MusicShelfDivider;
-};
+type R_MusicShelfDivider={musicShelfDividerRenderer: D_MusicShelfDivider;};
 type R_MusicThumbnail={musicThumbnailRenderer: D_MusicThumbnail;};
 type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
 type R_Notification={notificationRenderer: D_Notification;};
@@ -447,13 +419,9 @@ type R_SegmentedLikeDislikeButton={segmentedLikeDislikeButtonRenderer: D_Segment
 type R_SettingsCheckbox={settingsCheckboxRenderer: D_SettingsCheckbox;};
 type R_SettingsOption={settingsOptionsRenderer: D_SettingsOptions;};
 type R_SettingsRadioOption={settingsRadioOptionRenderer: D_SettingsRadioOption;};
-type R_SettingsSidebar={
-	settingsSidebarRenderer: D_SettingsSidebar;
-};
+type R_SettingsSidebar={settingsSidebarRenderer: D_SettingsSidebar;};
 type R_SettingsSwitch={settingsSwitchRenderer: D_SettingsSwitch;};
-type R_Shelf={
-	shelfRenderer: D_Shelf;
-};
+type R_Shelf={shelfRenderer: D_Shelf;};
 type R_SimpleMenuHeader={simpleMenuHeaderRenderer: D_SimpleMenuHeader;};
 type R_SingleColumnMusicWatchNextResults={singleColumnMusicWatchNextResultsRenderer: R_Tabbed;};
 type R_SortFilterSubMenu={sortFilterSubMenuRenderer: D_SortFilterSubMenu;};
@@ -463,9 +431,7 @@ type R_SubFeedSelector={subFeedSelectorRenderer: D_SubFeedSelector;};
 type R_SubscribeButton={subscribeButtonRenderer: D_SubscribeButton;};
 type R_SubscriptionNotificationToggleButton={subscriptionNotificationToggleButtonRenderer: D_SubscriptionNotificationToggleButton;};
 type R_SuperVodBuyFlowContent={superVodBuyFlowContentRenderer: D_SuperVodBuyFlowContent;};
-type R_Tab={
-	tabRenderer: D_Tab;
-};
+type R_Tab={tabRenderer: D_Tab;};
 type R_Tabbed={tabbedRenderer: R_WatchNextTabbedResults;};
 type R_TabbedSearchResults={tabbedSearchResultsRenderer: D_TabbedSearchResults;};
 type R_TemplateUpdate={templateUpdate: D_TemplateUpdate;};
@@ -473,9 +439,7 @@ type R_TextInputFormField={textInputFormFieldRenderer: D_TextInputFormField;};
 type D_Thumbnail={
 	thumbnails: D_ThumbnailItem[];
 	accessibility?: D_Accessibility;
-	isOriginalAspectRatio?: true;
-	sampledThumbnailColor?: D_ThumbnailColor;
-};
+	isOriginalAspectRatio?: true;sampledThumbnailColor?: D_ThumbnailColor;};
 type R_ThumbnailOverlayBottomPanel={thumbnailOverlayBottomPanelRenderer: D_ThumbnailOverlayBottomPanel;};
 type R_ThumbnailOverlayEndorsement={thumbnailOverlayEndorsementRenderer: D_ThumbnailOverlayEndorsement;};
 type R_ThumbnailOverlayHoverText={thumbnailOverlayHoverTextRenderer: D_ThumbnailOverlayHoverText;};

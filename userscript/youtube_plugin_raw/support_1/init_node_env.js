@@ -27,9 +27,7 @@ navigator=na;
 			this.map.delete(key);
 		}
 		/** @arg {string|number} index */
-		key(index) {
-			return this.index_arr[index];
-		};
+		key(index) {	return this.index_arr[index];};
 		clear() {
 			this.map.clear();
 		}
@@ -65,9 +63,7 @@ navigator=na;
 		/** @type {any[]} */
 		children=[];
 		/** @arg {any} other_ele */
-		append(other_ele) {
-			this.children.push(other_ele);
-		}
+		append(other_ele) {this.children.push(other_ele);}
 	}
 	window.document=new Document;
 	class HTMLDivElement extends HTMLElement {}
@@ -105,9 +101,7 @@ let r_window=window; r_window;
 		destinations=[];
 		//  connect(destinationNode: AudioNode, output?: number, input?: number): AudioNode;
 		/** @arg {AudioNode} destinationNode @arg {number} [output] @arg {number} [input] */
-		connect(destinationNode,output,input) {
-			this.destinations.push([destinationNode,output,input]);
-		}
+		connect(destinationNode,output,input) {this.destinations.push([destinationNode,output,input]);}
 	}
 	class DynamicsCompressorParameters {
 		knee={};
@@ -160,9 +154,7 @@ let r_window=window; r_window;
 		createGain() {
 			return new Gain(this);
 		}
-		createDynamicsCompressor() {
-			return new DynamicsCompressorNode(this);
-		}
+		createDynamicsCompressor() {return new DynamicsCompressorNode(this);}
 	}
 	window.AudioContext=AudioContext;
 }
