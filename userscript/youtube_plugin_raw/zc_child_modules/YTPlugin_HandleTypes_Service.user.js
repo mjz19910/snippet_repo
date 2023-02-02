@@ -6441,8 +6441,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {
 		const cf="D_FeedNudge";
-		const {...y}=this.s(cf,x); this.g(y);
-		debugger;
+		const {lightIconImage,title,subtitle,dismissButton,impressionEndpoint,trackingParams,style,contents,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(lightIconImage);
+		this.G_Text(title);
+		this.G_Text(subtitle);
+		this.R_Button(dismissButton);
+		this.E_Feedback(impressionEndpoint);
+		this.trackingParams(cf,trackingParams);
+		if(style!=="FEED_NUDGE_STYLE_CHIP") debugger;
+		this.z(contents,this.R_ChipCloudChip);
 	}
 	/** @template {number} T @arg {`${T}`} x */
 	parse_number_template(x) {
