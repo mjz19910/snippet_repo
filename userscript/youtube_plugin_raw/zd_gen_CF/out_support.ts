@@ -1,6 +1,7 @@
 type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
+		|"CF_D_GuideEntry"
 		|"CF_onMissingIcon"
 		//#region
 		|"CF_D_Button"
@@ -42,7 +43,8 @@ export namespace Prelude {
 		//#endregion
 		;
 	;
-	// |"CF_onMissingIcon"
+	// |"CF_D_GuideEntry"
+	export type CF_D_GuideEntry="CF_D_GuideEntry";
 	export type CF_onMissingIcon="CF_onMissingIcon";
 	//#region
 	export type CF_D_Button="CF_D_Button";
@@ -87,10 +89,8 @@ export namespace TypesTemplate {
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 }
 export namespace Types {
-	/*
-	// |"CF_onMissingIcon"
-	export type CF_onMissingIcon="CF_onMissingIcon";"
-	*/
+	// |"CF_D_GuideEntry"
+	export type CF_D_GuideEntry_=CF_D_GuideEntry;
 	export type CF_onMissingIcon_=CF_onMissingIcon;
 	//#region
 	export type CF_D_Button_=CF_D_Button;

@@ -4795,16 +4795,21 @@ class HandleTypes extends HandleTypesEval {
 		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);
 		if(liveBroadcasting!==false) debugger;
 	}
-	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
-	D_GuideEntry_IconType=[
-		"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
-		"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
-		"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
-		"ADD_CIRCLE","HELP",
-	];
+	/** @type {D_GuideEntry_IconType_Obj} */
+	D_GuideEntry_IconType={
+		WithNavEP: [
+			"MY_VIDEOS","TRENDING","WATCH_HISTORY","WATCH_LATER","CLAPPERBOARD","MUSIC","LIVE",
+			"GAMING_LOGO","COURSE","TROPHY","NEWS","YOUTUBE_ROUND","FASHION_LOGO","FLAG",
+			"CREATOR_STUDIO_RED_LOGO","YOUTUBE_MUSIC","YOUTUBE_KIDS_ROUND","UNPLUGGED_LOGO","SETTINGS",
+			"ADD_CIRCLE",
+		],
+		WithIcon:[
+			"HELP","FEEDBACK",
+		]
+	};
 	/** @type {Extract<D_GuideEntry,{icon:any}>['icon']['iconType'][]} */
 	D_GuideEntry_MissingIconType=[];
-	/** @arg {"D_GuideEntry"} cf1 @arg {Extract<Exclude<D_GuideEntry,{entryData:any}>,{navigationEndpoint:any}>} x */
+	/** @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithNavEP} x */
 	D_GuideEntry_WithNavEP(cf1,x) {
 		const cf2="D_GuideEntry_WithNavEP";
 		if("targetId" in x) return this.D_GuideEntry_WithTargetId(cf1,x);
@@ -4833,12 +4838,34 @@ class HandleTypes extends HandleTypesEval {
 			}
 			debugger;
 		}
-		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType);
-		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType,this.D_GuideEntry_MissingIconType);
+		let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithNavEP:icon",icon,this.D_GuideEntry_IconType.WithNavEP);
+		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
 			let x=navigationEndpoint;
 			if("urlEndpoint" in x) return this.E_Url(x);
 			if("browseEndpoint" in x) return this.GE_Browse(x);;
+			debugger;
+		}
+	}
+	/** @private @arg {"D_GuideEntry"} cf1 @arg {D_GuideEntry_WithPrimary} x */
+	D_GuideEntry_WithPrimary(cf1,x) {
+		/** @type {`${cf1}_WithPrimary`} */
+		const cf2=`${cf1}_WithPrimary`;
+		const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf2,x); this.g(y);
+		if(icon.iconType!=="TAB_SHORTS") debugger;
+		if(isPrimary!==true) debugger;
+		x: {
+			let x=serviceEndpoint;
+			if("reelWatchEndpoint" in x) {
+				this.E_ReelWatch(x);
+				break x;
+			}
+			if("signalServiceEndpoint" in x) {
+				x.clickTrackingParams;
+				x.commandMetadata;
+				break x;
+			}
+			x==="";
 			debugger;
 		}
 	}
@@ -4867,32 +4894,13 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
-		if("isPrimary" in x) {
-			const {icon,isPrimary,serviceEndpoint,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
-			if(icon.iconType!=="TAB_SHORTS") debugger;
-			if(isPrimary!==true) debugger;
-			x: {
-				let x=serviceEndpoint;
-				if("reelWatchEndpoint" in x) {
-					this.E_ReelWatch(x);
-					break x;
-				}
-				if("signalServiceEndpoint" in x) {
-					x.clickTrackingParams;
-					x.commandMetadata;
-					break x;
-				}
-				x==="";
-				debugger;
-			}
-			return;
-		}
+		if("isPrimary" in x) return this.D_GuideEntry_WithPrimary(cf1,x);
 		if("serviceEndpoint" in x) {
 			const {accessibility,formattedTitle,icon,serviceEndpoint,trackingParams,...y}=this.s(cf1,x); this.g(y);
 			this.D_Accessibility(accessibility);
 			this.G_Text(formattedTitle);
-			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType);
-			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType,this.D_GuideEntry_MissingIconType);
+			let is_not_in_set=this.T_Icon_AnyOf("D_GuideEntry_WithIcon:icon",icon,this.D_GuideEntry_IconType.WithIcon);
+			if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithIcon,this.D_GuideEntry_MissingIconType);
 			let [a,b]=this.T_SE_Signal(`${cf1}.SE_Signal`,serviceEndpoint);
 			this.M_SendPost(a);
 			this.G_ClientSignal(b);
