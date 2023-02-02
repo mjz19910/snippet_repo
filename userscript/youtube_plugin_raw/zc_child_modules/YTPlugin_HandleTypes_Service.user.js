@@ -2709,10 +2709,11 @@ class HandleTypes extends HandleTypesEval {
 	Button_iconType=[
 		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
 		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
-		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND","SETTINGS",
+		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND","SETTINGS","NOTIFICATIONS_ACTIVE",
 	];
 	expected_button_iconTypes_ex=[
-		"DELETE","NOTIFICATIONS_ACTIVE",
+		"",
+		"DELETE",
 	];
 	/** @protected @arg {"D_Button:WithCommand:targetId.case"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
@@ -2879,6 +2880,23 @@ class HandleTypes extends HandleTypesEval {
 		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
+		switch(icon.iconType) {
+			case "SETTINGS":
+			case "EXPAND":
+			case "DISMISSAL":
+			case "NOTIFICATIONS_NONE":
+			case "NOTIFICATIONS_OFF":
+			case "NOTIFICATIONS_ACTIVE":
+			case "MICROPHONE_ON":
+			case "CHEVRON_RIGHT":
+			case "CHEVRON_LEFT":
+			case "REMOVE":
+			case "CLOSE":
+			case "INFO":
+			case "SHARE":
+			case "CONTENT_CUT":
+			case "PLAYLIST_ADD":
+		}
 		for(let k of ka) {
 			switch(k) {
 				case "serviceEndpoint": {
