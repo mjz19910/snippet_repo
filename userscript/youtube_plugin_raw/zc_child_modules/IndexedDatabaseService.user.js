@@ -45,8 +45,6 @@ class IndexedDatabaseService extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @private @type {Map<string,number>} */
-	index=new Map;
 	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,Map<string,number>]})} */
 	store_cache_index={
 		video_id: ["video_id",new Map],
@@ -60,6 +58,10 @@ class IndexedDatabaseService extends BaseService {
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
 	get_data_cache(key) {
 		return this.store_cache[key][1];
+	}
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	get_data_index_cache(key) {
+		return this.store_cache_index[key][1];
 	}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
@@ -173,7 +175,8 @@ class IndexedDatabaseService extends BaseService {
 			console.log("[new_data_after_tx_complete]",dc);
 		} else {
 			this.committed_data.length=0;
-			this.index.clear();
+			let index=this.get_data_index_cache(cur_name);
+			index.clear();
 		}
 		this.database_open=false;
 		db.close();
