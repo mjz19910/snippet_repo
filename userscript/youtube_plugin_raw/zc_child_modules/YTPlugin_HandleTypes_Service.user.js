@@ -6739,11 +6739,11 @@ class HandleTypes extends HandleTypesEval {
 		this.playlistId(x);
 		switch(x) {case "LL": case "WL": return; default: }
 		// cspell:ignore RDCMUC
-		if(this.str_starts_with_rx("RDCMUC",x)) return this.save_next_char("share_url.list.RDCMUC",split_string_once(x,"RDCMUC")[1]);
-		if(this.str_starts_with_rx("RDMM",x)) return this.save_next_char("share_url.list.RDMM",split_string_once(x,"RDMM")[1]);
-		if(this.str_starts_with_rx("RD",x)) return this.save_next_char("share_url.list.RD",split_string_once(x,"RD")[1]);
-		if(this.str_starts_with_rx(x,"PL")) return this.save_next_char("share_url.list.PL",split_string_once(x,"PL")[1]);
-		this.save_next_char("share_url.list.other",x[0]);
+		if(this.str_starts_with_rx("RDCMUC",x)) return this.save_next_char("playlist_id.RDCMUC",split_string_once(x,"RDCMUC")[1]);
+		if(this.str_starts_with_rx("RDMM",x)) return this.save_next_char("playlist_id.RDMM",split_string_once(x,"RDMM")[1]);
+		if(this.str_starts_with_rx("RD",x)) return this.save_next_char("playlist_id.RD",split_string_once(x,"RD")[1]);
+		if(this.str_starts_with_rx("PL",x)) return this.save_next_char("playlist_id.PL",split_string_once(x,"PL")[1]);
+		this.save_next_char("playlist_id.other",x[0]);
 		console.log("[new_parse_playlist_id]",x);
 		{debugger;}
 	}
