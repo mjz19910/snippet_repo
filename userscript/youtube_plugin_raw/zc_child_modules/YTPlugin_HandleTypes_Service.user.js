@@ -8509,7 +8509,7 @@ class HandleTypes extends HandleTypesEval {
 		if(tooltip!=="Add to queue") debugger;
 		let [wc,s]=this.T_SE_Signal(cf,serviceEndpoint);
 		const cf1="D_ToggleButton_ServiceEP.data";
-		this.M_Empty_WCM("D_ToggleButton_ServiceEP.meta",wc);
+		this.M_SendPost(wc);
 		this.G_ClientSignal(cf1,s);
 	}
 	/**
