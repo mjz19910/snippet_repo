@@ -8560,7 +8560,6 @@ class HandleTypes extends HandleTypesEval {
 class TypedefGenerator {
 	/** @arg {HandleTypes<LoadAllServices, ServiceOptions>} h @arg {Popup_ConfirmDialog} x */
 	popup_dialog(h,x) {
-		x;
 		let x1=h.unpack_popup_dialog(x);
 		if(!x1[0]) {debugger; return null;}
 		let dialog=x1[1];
