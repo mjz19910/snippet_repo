@@ -2469,21 +2469,25 @@ class HandleTypes extends HandleTypesEval {
 					let u,u1=() => {u==="";}; u1;
 					if(!("serviceEndpoint" in y1)) {
 						if(!("serviceEndpoint" in x)) {
-							/** @type {`${typeof cf}:${typeof k}`} */
-							const cf1=`${cf}:${k}`; this.k(cf1,x);
+							/** @type {`${typeof cf}:${typeof k}:!serviceEndpoint`} */
+							const cf1=`${cf}:${k}:!serviceEndpoint`; this.k(cf1,x);
 						}
-						y1.icon;
+						const {icon,tooltip,command,...y2}=y1; this.g(y2);
+						this.A_ChangeEngagementPanelVisibility(command);
 						return;
 					}
 					if("icon" in y1) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}:icon`; this.k(cf,x);
+						/** @type {`${typeof cf}:${typeof k}:icon`} */
+						const cf1=`${cf}:${k}:icon`; this.k(cf1,x);
 						const {serviceEndpoint,icon,tooltip,...y2}=y1; this.g(y2);
+						this.C_GetPdgBuyFlow(serviceEndpoint);
 						return;
 					}
 					if("serviceEndpoint" in y1) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}:serviceEndpoint`; this.k(cf,x);
+						/** @type {`${typeof cf}:${typeof k}:serviceEndpoint`} */
+						const cf1=`${cf}:${k}:serviceEndpoint`; this.k(cf1,x);
+						const {serviceEndpoint,...y2}=y1; this.g(y2);
+						this.E_YpcGetOffers(serviceEndpoint);
 						return;
 					}
 					y1==="";
@@ -8515,6 +8519,7 @@ class HandleTypes extends HandleTypesEval {
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
 	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x);}
+	C_GetPdgBuyFlow(x) {const cf="C_GetPdgBuyFlow"; this.codegen_typedef_all(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
