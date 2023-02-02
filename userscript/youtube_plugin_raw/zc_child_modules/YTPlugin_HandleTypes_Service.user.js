@@ -2456,7 +2456,12 @@ class HandleTypes extends HandleTypesEval {
 				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
+				if("command" in x) {
+					return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);
+				}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
 		}
 	}
 	/** @private @arg {D_Color} x */
@@ -4656,7 +4661,16 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);
 		this.z(feedbackResponses,this.D_FeedbackResponseProcessedStatus);
 	}
-	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x */
+	/** @arg {O2} tx @template {{}} T @template {{}} O2 @arg {O2} o2 @template {T_DistributedKeyof<T>} K @arg {T} x @arg {{}} o2 @returns {asserts tx is T_OmitKey<T,Exclude<K,T_DistributedKeyof<O2>>>} */
+	assert_is_omit_key(x,o2,tx) {
+		/** @typedef {[K,O2]} T_IN_ARGS */
+		/** @type {T_IN_ARGS} */
+		let u; tx;
+		function u1() {u;}
+		u1;
+		x; o2;
+	}
+	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.s(cf,x);
 		this.a_primitive_str(token);
@@ -4667,7 +4681,11 @@ class HandleTypes extends HandleTypesEval {
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE":
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT":
 		};
-		return y;
+		/** @returns {T_OmitKey<T,"token"|"request">|Omit<T, "token" | "request">} */
+		function gu() {return y;}
+		let u=gu();
+		this.assert_is_omit_key(x,y,u);
+		return u;
 	}
 	/** @private @arg {GM_Browse} x */
 	GM_browse(x) {
@@ -8008,7 +8026,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
-			case "get_report_form.f28.f1[]":switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.f28": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}

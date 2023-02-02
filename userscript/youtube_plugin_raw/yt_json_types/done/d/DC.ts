@@ -34,23 +34,34 @@ type DC_ChangeKeyedMarkersVisibility={
 	key: "HEATSEEKER";
 };
 type DC_Continuation_Shape={
-	token:string;
+	token: string;
 	request: DC_Continuation["request"];
-}
-type DC_Continuation={
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
-}|{
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
-	command: C_ShowReloadUi;
-}|{
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
-}|{
-	token: string;
-	request: "CONTINUATION_REQUEST_TYPE_BROWSE";
 };
+type DC_Continuation=
+	|{
+		token: string;
+		request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
+		command: C_ShowReloadUi;
+	}
+	|{
+		token: string;
+		request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
+	}
+	|{
+		token: string;
+		request: "CONTINUATION_REQUEST_TYPE_BROWSE";
+		command: C_ShowReloadUi;
+	}
+	|{
+		token: string;
+		request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
+	}
+	|{
+		token: string;
+		request: "CONTINUATION_REQUEST_TYPE_BROWSE";
+	}
+	;
+;
 type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 type DC_Executor=Record<"commands",AC_Executor[]>;
 type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
