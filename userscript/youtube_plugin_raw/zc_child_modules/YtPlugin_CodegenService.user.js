@@ -415,6 +415,7 @@ class CodegenService extends BaseService {
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
 		if(k1==="impressionCommands") return "TYPE::ImpressionCommand[]";
+		if(k1==="clickLocationTargets") return "TYPE::ClickLocationTarget[]";
 		if(o===null||o===void 0) return o;
 		if(typeof o==="bigint") return o;
 		if(typeof o==="boolean") return o;
