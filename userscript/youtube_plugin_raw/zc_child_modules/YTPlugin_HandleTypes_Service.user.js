@@ -1362,7 +1362,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
 	/** @private @arg {T_SE_Signal<M_SendPost, G_ClientSignal>} x */
-	E_SE_Signal_Button(x) {let [a,b]=this.T_SE_Signal("E_SE_Signal_Button",x); this.M_SendPost(a); this.G_ClientSignal(b);}
+	E_SE_Signal_Button(x) {const cf="E_SE_Signal_Button",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @protected @arg {E_PlaylistEdit} x */
@@ -3134,7 +3134,7 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(`T_SE_Signal:${cf}`,clickTrackingParams);
 		return [commandMetadata,signalServiceEndpoint];
 	}
-	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:U)=>void} f @returns {Omit<T,"signal">} */
+	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:T["signal"])=>void} f @returns {Omit<T,"signal">} */
 	Signal_Omit(x,f) {
 		const cf="Signal_Omit";
 		const {signal,...y}=this.s(cf,x); f(signal);
@@ -3164,22 +3164,26 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
-	/** @private @arg {G_ClientSignal} x */
-	G_ClientSignal(x) {
-		const cf="G_ClientSignal";
+	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
+	G_SignalActionItem(cf1,x) {
+		/** @type {`G_SignalActionItem:${cf1}`} */
+		const cf2=`G_SignalActionItem:${cf1}`; this.k(cf2,x);
+		/** @type {G_ClientSignal_Item} */
+		if("openPopupAction" in x) return this.S_Client_Popup(x);
+		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
+		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
+		if("signalAction" in x) return this.A_Signal(x);
+		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
+		this.codegen_typedef_all(cf2,x);
+	}
+	/** @private @arg {string} cf1 @arg {G_ClientSignal} x */
+	G_ClientSignal(cf1,x) {
+		const cf2="G_ClientSignal";
 		let {actions,...y}=this.Signal_Omit(x,x => {
-			this.save_string(`[${cf}.signal]`,x);
+			this.save_string(`[${cf2}.${cf1}.signal]`,x);
 			if(x!=="CLIENT_SIGNAL") debugger;
 		}); this.g(y);
-		this.z(actions,x => {
-			/** @type {G_ClientSignal_Item} */
-			if("openPopupAction" in x) return this.S_Client_Popup(x);
-			if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
-			if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
-			if("signalAction" in x) return this.A_Signal(x);
-			if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
-			debugger;
-		});
+		this.z_cf(cf1,actions,this.G_SignalActionItem);
 	}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
@@ -3514,29 +3518,25 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_typedef_all("MenuItems",x);
 		this.G_Text(x);
 	}
-	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["signalServiceEndpoint",T]} */
+	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
 	TE_SignalService_I_0(x) {
 		const cf="TE_SignalService_I_0";
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.M_SendPost(commandMetadata);
-		return ["signalServiceEndpoint",signalServiceEndpoint];
+		return ["Signal",signalServiceEndpoint];
 	}
-	/** @private @arg {G_SE_MenuService} x */
+	/** @private @arg {RD_MenuServiceItem["serviceEndpoint"]} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		const cf="RD_MenuServiceItem_serviceEndpoint";
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		if("signalServiceEndpoint" in x) {
-			x;
-			return this.TE_SignalService_I_0(x);
-		}
+		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
 		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		if("shareEntityServiceEndpoint" in x) return this.ES_ShareEntity(x);
 		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("" in x) return;
-		this.codegen_typedef_all(cf,x);
+		if("recordNotificationInteractionsEndpoint" in x) return this.E_RecordNotificationInteractions(x);
 		x==="";
 		this.codegen_typedef_all(cf,x);
 	}
@@ -3553,7 +3553,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	service_menu_icons=[];
-	/** @private @arg {"RD_MenuServiceItem"} cf @arg {RD_MenuServiceItem} x */
+	/** @arg {["Signal",Extract<RD_MenuServiceItem["serviceEndpoint"],{signalServiceEndpoint:any}>["signalServiceEndpoint"]]} x */
+	RD_MenuServiceItem_ServiceInfo(x) {
+		const cf="RD_MenuServiceItem_ServiceInfo"; this.k(cf,x);
+		switch(x[0]) {
+			case "Signal": return this.G_ClientSignal(x[1]);
+			default: debugger; break;
+		}
+	}
+	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
 	RD_MenuServiceItem_Omit(cf,x) {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
 		this.G_Text(text);
@@ -3562,11 +3570,7 @@ class HandleTypes extends HandleTypesEval {
 			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
 		}
 		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
-		this.t(res,u => {
-			switch(u[0]) {
-				case "signalServiceEndpoint": return this.G_ClientSignal(u[1]);
-				default: debugger; break;
-			}
+		this.t(res,x => {
 		});
 		this.trackingParams(cf,trackingParams);
 		return y;
@@ -3575,6 +3579,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem(x) {
 		const cf="RD_MenuServiceItem";
+		if("loggingDirectives" in x) {
+			const u=this.RD_MenuServiceItem_Omit(cf,x);
+			const {loggingDirectives,...y}=u; this.g(y);
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
 		const u=this.RD_MenuServiceItem_Omit(cf,x);
 		const {hasSeparator,isDisabled,...y}=u; this.g(y);
 		this.t(hasSeparator,x => this.ceq(x,true));
