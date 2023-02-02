@@ -3061,9 +3061,11 @@ type D_VE6827_PageUrl=
 	|`/feed/storefront?${string}`
 	|`/feed/trending?${string}`
 	|`/hashtag/${string}`
+	|"/hashtag/shorts/shorts"
 	|`/reporthistory`
 	;
 ;
+type D_VE6827_PageUrl_parts=["feed",`trending?${string}`]|["feed",`storefront?${string}`]|["reporthistory"]|["feed","trending"|"history"|"library"|"storefront"|"guide_builder"]|["hashtag",string]|["hashtag","shorts","shorts"];
 type FRRes=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_VideoCategory=[
 	"Science & Technology",

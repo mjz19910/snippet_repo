@@ -914,12 +914,23 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_VE6827_PageUrl} x */
 	D_VE6827_PageUrl(x) {
-		let [f,...p]=split_string(x,"/"); if(f!=="") debugger;
+		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;
+		/** @type {D_VE6827_PageUrl_parts} */
+		let p=as_any(pf);
 		switch(p[0]) {
 			default: p[0]===""; debugger; break;
 			case "hashtag": {
-				let [,ht,...u]=p; this.indexed_db.put("hashtag",{hashtag: ht});
-				if(u.length!==0) debugger;
+				let [,ht,...u]=p;
+				if(u.length===0) {
+					this.indexed_db.put("hashtag",{hashtag: ht});
+				} else if(u.length===1) {
+					switch(u[0]) {
+						default: u[0]===""; debugger; break;
+						case "shorts": break;
+					}
+				} else {
+					debugger;
+				}
 			} break;
 			case "reporthistory": {
 				let [,...u]=p;
