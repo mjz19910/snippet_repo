@@ -912,6 +912,7 @@ class CodegenService extends BaseService {
 			}
 			return `TYPE::T_BaseUrl<${b.baseUrl}>`;
 		}
+		if(b.hack&&b.hack===true) return "TYPE::B_Hack";
 		let g_res=g();
 		let k_str=keys.join();
 		if(!this.logged_replace_keys.includes(k_str)) {
