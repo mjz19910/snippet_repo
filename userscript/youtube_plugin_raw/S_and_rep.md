@@ -40,10 +40,10 @@ this.t($1,this.$2)
 # find words followed by ;
 ## search
 ```regexp
-		(\w+);
+^(\s\s)((?!return|debugger|break)\w+);
 ```
-```regexp
-^\s\s((?!return|debugger|break)\w+);
+## replace
+```js
 ```
 # item
 ```regexp
