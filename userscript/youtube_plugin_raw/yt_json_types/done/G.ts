@@ -292,3 +292,8 @@ type G_AllSignalTypes=
 	;
 ;
 type G_AllSignalServiceEndpoint=D_NotificationTopbarButton['updateUnseenCountEndpoint'];
+type G_AdditionalDataItem=
+	|T_UserFeedbackEndpointProductSpecificValueData<"lockup","player">
+	|T_UserFeedbackEndpointProductSpecificValueData<"video_id",string>
+	;
+;

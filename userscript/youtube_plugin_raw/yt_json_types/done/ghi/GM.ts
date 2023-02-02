@@ -45,7 +45,6 @@ type GM_VE11487_WC={
 	apiUrl: "/youtubei/v1/browse";
 };
 //#endregion
-type GM_PostApiLike={sendPost: true; apiUrl: string;};
 //#region WebCommandMetadata like GM_PostApiLike ie, GM_ApiUrl
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
 type GM_AccountMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/account_menu">;
@@ -74,3 +73,5 @@ type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
 //#endregion
 type GM_SendPost={sendPost: true;};
 //#endregion
+type GM_PostApiLike={sendPost: true; apiUrl: string;};
+type GM_UserFeedback={ignoreNavigation: true;};

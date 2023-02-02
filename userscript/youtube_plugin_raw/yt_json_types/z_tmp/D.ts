@@ -1181,7 +1181,7 @@ type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavE
 type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
 type D_GuideEntry_IconType_Obj={
 	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
-	WithIcon: T_GetIconType<D_GuideEntry_With_ServiceEndpoint>[];
+	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1: 1;}|"";
 //#endregion
@@ -2013,6 +2013,12 @@ type D_MenuNavigationItem={
 	icon: T_Icon<"INFO">;
 	navigationEndpoint: TA_OpenPopup_Empty;
 	trackingParams: string;
+}|{
+	text: G_Text;
+	icon: T_Icon<"FEEDBACK">;
+	navigationEndpoint: E_UserFeedback;
+	trackingParams: string;
+	accessibility: TD_Accessibility<"Send feedback">;
 };
 type D_MenuServiceIcon=Extract<[
 	{icon: T_Icon<"FLAG">;},

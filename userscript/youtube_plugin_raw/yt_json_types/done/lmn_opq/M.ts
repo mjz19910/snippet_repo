@@ -31,5 +31,6 @@ type M_RecordInteractions=TM_Gen<GM_RecordInteractions>;
 type M_SendPost=TM_Gen<GM_SendPost>;
 type M_SetSetting=TM_Gen<GM_SetSetting>;
 type M_Subscribe=TM_Gen<GM_Subscribe>;
+type M_UserFeedback=TM_Gen<GM_UserFeedback>;
 type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
 //#endregion

@@ -32,5 +32,7 @@ type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_Em
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_Empty_WCM>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
+type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",DE_UserFeedback,M_UserFeedback>;
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
+type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};

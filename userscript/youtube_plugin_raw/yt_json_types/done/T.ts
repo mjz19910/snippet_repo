@@ -13,14 +13,17 @@ type T_OpenPopup_Dropdown<T>={popupType: "DROPDOWN"; popup: T;};
 type T_OpenPopup_Toast<T>={popupType: "TOAST"; popup: T;};
 type T_OpenPopup_TopAlignedDialog<T>={popupType: "TOP_ALIGNED_DIALOG"; popup: T;};
 type T_OpenPopup_Dialog<T>={popupType: "DIALOG"; popup: T;};
+type T_Items<T>={items: T[];};
+type T_Items_TP<T>={trackingParams: string; items: T[];};
 //#endregion
 //#region Types that modify other types
-type T_OmitKey<T,K extends keyof T>=T extends infer U?Omit<U,K>:never;
+type T_OmitKey<T,K extends keyof T>=T extends infer U? Omit<U,K>:never;
 //#endregion
 //#region Object conversion Templates
 type T_RemovePrefix<T,T2 extends string>={[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];};
 //#endregion
-//#region TA_
+//#region TA
+type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
 //#endregion
 //#region TB_
 type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": R_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
@@ -56,23 +59,14 @@ type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'
 	;
 ;
 type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=T_ExtractImport_<T>;
-type T_GetIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
+type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
 //#endregion
 //#region Check if the passed in type meets certain conditions
 type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
 type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
-type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
-type T_Items<T>={items: T[];};
-type T_Items_TP<T>={
-	items: T[];
-	trackingParams: string;
-};
 type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
-type TD_ContinuationItem_CE<T>={
-	trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN";
-	continuationEndpoint: T;
-};
+type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
 type TD_GuideEntry_EntryData<T extends string>={
 	navigationEndpoint: GE_Browse;
 	icon: T_Icon<T>;
@@ -256,3 +250,4 @@ type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	map_keys: number[],
 	root: T,
 ) => void;
+type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
