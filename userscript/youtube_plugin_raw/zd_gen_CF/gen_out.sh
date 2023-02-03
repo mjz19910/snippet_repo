@@ -57,7 +57,7 @@ function gen_find_type_is_not {
 }
 function generate_ts {
 	# |{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
-	perl -p gen.pm
+	perl gen.pm
 }
 setup
 tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
