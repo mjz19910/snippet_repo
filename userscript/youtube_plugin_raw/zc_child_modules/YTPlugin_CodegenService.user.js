@@ -213,7 +213,7 @@ class CodegenService extends BaseService {
 				debugger;
 				let self_code=`
 				d1!/** @private @arg {${t_name}} x */
-				d1!${t_name}(x) {this.H_("${t_name}","${keys[0]}",x,this.D_${name});}`;
+				d1!${t_name}(x) {this.H_("${t_name}","${keys[0]}",x,this.D_${name});}\n`;
 				req_names.push(`D_${name}`);
 				return this.#codegen_renderer_finalize(req_names,self_code,keys,x,t_name);
 			}
