@@ -341,5 +341,3 @@ type RS_VE37414_Shorts={
 	rootVe: 37414;
 };
 //#endregion
-type E_Page=YTNavigateFinishDetail['endpoint'];
-type CF_D_STR=T_ExtractImport<"CF_D_STR">|"a"|"";

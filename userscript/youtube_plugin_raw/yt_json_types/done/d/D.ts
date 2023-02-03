@@ -3301,3 +3301,4 @@ type D_DescriptionChapters={
 	trackingParams: string;
 	onChapterRepeat: TA_OpenPopup_Empty;
 };
+type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};

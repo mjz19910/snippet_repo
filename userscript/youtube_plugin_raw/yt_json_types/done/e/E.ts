@@ -35,4 +35,4 @@ type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGet
 type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",DE_UserFeedback,M_UserFeedback>;
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
-type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
+type E_Page=YTNavigateFinishDetail['endpoint'];
