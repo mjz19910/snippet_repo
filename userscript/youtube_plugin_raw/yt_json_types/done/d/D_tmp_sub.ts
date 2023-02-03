@@ -2,14 +2,6 @@ type DUA_SubscribeButton={
 	subscribed: true;
 	channelId: `UC${string}`;
 };
-type DA_AddChatItem={
-	item: G_ChatItem;
-	clientId?: string;
-};
-type DA_ReplayChatItem={
-	actions: A_AddChatItem[];
-	videoOffsetTimeMsec: `${number}`;
-};
 // cSpell:ignoreRegExp /r\d---sn-.+?"/
 type D_VideoId=string;
 type D_Probe_Domain=[

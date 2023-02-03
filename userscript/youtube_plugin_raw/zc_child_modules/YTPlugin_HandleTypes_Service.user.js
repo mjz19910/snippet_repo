@@ -8894,9 +8894,9 @@ class HandleTypes extends HandleTypesEval {
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {DA_ReplayChatItem} x */
+	/** @private @arg {AD_ReplayChatItem} x */
 	AD_ReplayChatItem(x) {x;}
-	/** @private @arg {DA_AddChatItem} x */
+	/** @private @arg {AD_AddChatItem} x */
 	DA_AddChatItem(x) {x;}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {

@@ -140,7 +140,8 @@ type TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={targetId: T
 type TD_Label<T>={label: T;};
 //#endregion
 //#region TE_
-type TE_Endpoint_2<EP_Key extends string,T_Data>={clickTrackingParams: string;}&{[I in EP_Key]: T_Data};
+type TE_Endpoint_1<EP_Key extends string,T_Data>={[I in EP_Key]: T_Data};
+type TE_Endpoint_2<EP_Key extends string,T_Data>={clickTrackingParams: string;}&TE_Endpoint_1<EP_Key,T_Data>;
 type TE_Endpoint_3_Helper<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta;}&{[K in EP_Key]: T_Data};
 type TE_Endpoint_3<EP_Key extends `${string}${D_EndpointLikeEndings}`,T_Data,T_Meta>={[K in keyof TE_Endpoint_3_Helper<EP_Key,T_Data,T_Meta>]: TE_Endpoint_3_Helper<EP_Key,T_Data,T_Meta>[K]};
 type TE_Endpoint_Opt_1<T_Meta>={clickTrackingParams: string; commandMetadata: T_Meta|undefined;};
@@ -171,7 +172,7 @@ type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'
 type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=T_ExtractImport_<T>;
 type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
 type T_NumArrStr<T extends string>=T extends `${infer U extends number},${infer A extends number},${infer X}`? [U,A,...T_NumArrStr<X>]:T extends `${infer U extends number},${infer X}`? [U,...T_NumArrStr<X>]:T extends `${infer U extends number}`? [U]:never;
-type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''?T extends `${number},${number},${infer X}`?T_NumArrStrVerify<T,X>:C extends ''? `${T}`:`${T},${C}`:C extends `${number},${number},${infer X}`?T_NumArrStrVerify<T,X>:T;
+type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''? T extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:C extends ''? `${T}`:`${T},${C}`:C extends `${number},${number},${infer X}`? T_NumArrStrVerify<T,X>:T;
 type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
 //#endregion
 //#region Check if the passed in type meets certain conditions

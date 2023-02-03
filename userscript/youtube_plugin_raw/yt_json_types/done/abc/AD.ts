@@ -1,4 +1,5 @@
 //#region Action data
+type AD_AddChatItem={item: G_ChatItem; clientId?: string;};
 type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: D_Enum_GuideAction;};
 type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 type AD_ChangeEngagementPanelVisibility={targetId: D_EngagementPanelTargetId; visibility: D_EngagementPanelVisibility;};
@@ -8,6 +9,7 @@ type AD_HideEngagementPanelTargetId={engagementPanelTargetId: "engagement-panel-
 type AD_RemoveFromGuideSection={handlerData: "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"; guideEntryId: T_MixPlaylistStr;};
 type AD_ReplaceEnclosing_Item=R_NotificationText|RA_ReelDismissal|R_NotificationMultiAction;
 type AD_ReplaceEnclosing=T_Item<AD_ReplaceEnclosing_Item>;
+type AD_ReplayChatItem={actions: A_AddChatItem[]; videoOffsetTimeMsec: `${number}`;};
 type AD_SendFeedback={bucket: "Kevlar";};
 type AD_SetActivePanelItem={};
 type AD_ShowEngagementPanelScrim={engagementPanelTargetId: "engagement-panel-clip-create"; onClickCommands: TA_OpenPopup<Popup_ConfirmDialog>[];};
