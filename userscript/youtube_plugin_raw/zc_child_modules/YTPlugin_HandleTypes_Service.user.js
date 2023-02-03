@@ -4329,6 +4329,7 @@ class HandleTypes extends HandleTypesEval {
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
 		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
+		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	static {

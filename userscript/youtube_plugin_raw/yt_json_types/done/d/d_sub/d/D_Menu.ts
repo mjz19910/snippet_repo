@@ -1,5 +1,10 @@
-type D_Menu_Button=R_PlaylistLoopButton|R_Button|R_SegmentedLikeDislikeButton;
-
+type D_Menu_Button=
+	|R_PlaylistLoopButton
+	|R_Button
+	|R_ToggleButton
+	|R_SegmentedLikeDislikeButton
+	;
+;
 type D_Menu_old={
 	items?: G_MenuItem[];
 	trackingParams: string;
