@@ -639,7 +639,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
-		this._primitive_of(x,"string");
+		this.a_primitive_str(x);
 		this.put_video_args({v: x});
 	}
 	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
@@ -3212,7 +3212,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
-		this._primitive_of(navigationDoneMs,"number");
+		this.a_primitive_num(navigationDoneMs);
 	}
 	/** @private @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
@@ -3804,7 +3804,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
 		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
-		if(maxAgeSeconds!==void 0) this._primitive_of(maxAgeSeconds,"number");
+		if(maxAgeSeconds!==void 0) this.a_primitive_num(maxAgeSeconds);
 		this.t(stateTags,this.RCA_RelevantStateTags);
 	}
 	/** @private @arg {RC_ConsistencyTokenJar} x */
@@ -4563,22 +4563,31 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
-		const cf="DE_VE3832_Watch"; this.k(cf,x);
-		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.videoId(videoId);
-		this.t(playlistId,this.playlistId);
-		if(index!==void 0) this._primitive_of(index,"number");
-		this.t(playlistSetVideoId,this.a_primitive_str);
-		if(params!==void 0) this.params(cf,"watch.params",params);
-		if(startTimeSeconds!==void 0) this._primitive_of(startTimeSeconds,"number");
-		if(continuePlayback!==void 0&&!continuePlayback) debugger;
-		this.t(loggingContext,this.R_VssLoggingContext);
-		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
-		this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
-		this.t(playerParams,a => this.playerParams(cf,"watch.player_params",a,this.on_player_params_callback.bind(this)));
-		this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
-		if(nofollow!==void 0) this._primitive_of(nofollow,"boolean");
-		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
+		// const cf="DE_VE3832_Watch";
+		if("playlistId" in x) {
+			const cf="DE_VE3832_PlaylistId";
+			const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.playlistId(playlistId);
+			this.a_primitive_num(index);
+			this.t(playlistSetVideoId,this.a_primitive_str);
+			if(params!==void 0) this.params(cf,"watch.params",params);
+			if(startTimeSeconds!==void 0) this.a_primitive_num(startTimeSeconds);
+			if(continuePlayback!==void 0&&!continuePlayback) debugger;
+			this.t(loggingContext,this.R_VssLoggingContext);
+			this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
+			this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
+			this.t(playerParams,a => this.playerParams("DE_VE3832_Watch","watch.player_params",a,this.on_player_params_callback.bind(this)));
+			this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
+			if(nofollow!==void 0) this._primitive_of(nofollow,"boolean");
+			this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
+			return;
+		} else {
+			const cf="DE_VE3832_VideoId";
+			const {videoId,...x1}=x;
+			this.s("DE_VE3832_VideoId.1",{videoId});
+			this.videoId(videoId);
+			const {...y}=this.s(cf,x1); this.g(y);
+		}
 	}
 	/** @private */
 	_decoder=new TextDecoder();
@@ -5116,7 +5125,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(actions,(x => {
 			if("updateNotificationsUnseenCountAction" in x) return this.UA_NotificationsUnseenCount(x);
 		}));
-		if(unseenCount!==void 0) this._primitive_of(unseenCount,"number");
+		if(unseenCount!==void 0) this.a_primitive_num(unseenCount);
 	}
 	/** @private @arg {UA_NotificationsUnseenCount} x */
 	UA_NotificationsUnseenCount(x) {
@@ -5130,8 +5139,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="U_NotificationsUnseenCount"; this.k(cf,x);
 		const {handlerData,unseenCount,timeoutMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(handlerData);
-		this._primitive_of(unseenCount,"number");
-		this._primitive_of(timeoutMs,"number");
+		this.a_primitive_num(unseenCount);
+		this.a_primitive_num(timeoutMs);
 	}
 	/** @private @arg {REG_DatasyncIds} x */
 	REG_DatasyncIds(x) {
@@ -5856,7 +5865,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(contents,this.R_PlaylistPanelVideo);
 		this.a_primitive_str(title);
 		this.a_primitive_str(playlistId);
-		this._primitive_of(currentIndex,"number");
+		this.a_primitive_num(currentIndex);
 		this.parser.parse_url(cf,playlistShareUrl);
 		this.R_Menu(menu);
 		if(localCurrentIndex!==25&&localCurrentIndex!==0) debugger;
@@ -6108,7 +6117,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_TimestampWithNanos"; this.k(cf,x);
 		const {seconds,nanos,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(seconds);
-		this._primitive_of(nanos,"number");
+		this.a_primitive_num(nanos);
 	}
 	/** @private @arg {DE_MutationItem} x */
 	DE_MutationItem(x) {
@@ -6567,7 +6576,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_WatchPlaylist"; this.k(cf,x);
 		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.parser.parse_playlist_id(playlistId);
-		this._primitive_of(index,"number");
+		this.a_primitive_num(index);
 		this.params(cf,"watch_playlist.params",params);
 	}
 	/** @private @arg {MMD_AdLayout_TopImage} x */
@@ -7052,7 +7061,7 @@ class HandleTypes extends HandleTypesEval {
 		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
-		this._primitive_of(tooltip,"string");
+		this.a_primitive_str(tooltip);
 		let [m2,s2]=this.T_SE_Signal(`${cf}.U_UnseenCount.T_SE_Signal`,updateUnseenCountEndpoint);
 		this.M_GetUnseenNotificationCount(m2);
 		this.ceq(s2.signal,"GET_UNSEEN_NOTIFICATION_COUNT");
@@ -8018,7 +8027,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(showLessText);
 		this.R_VideoOwner(owner);
 		this.ceq(defaultExpanded,false);
-		this._primitive_of(descriptionCollapsedLines,"number");
+		this.a_primitive_num(descriptionCollapsedLines);
 		this.t(showMoreCommand,this.C_Executor);
 		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
 	}

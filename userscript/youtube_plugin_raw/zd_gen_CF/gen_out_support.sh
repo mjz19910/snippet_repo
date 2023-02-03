@@ -23,6 +23,7 @@ function generate_ts_init_cwd {
 	cp "out_empty.ts" "out.ts"
 	cp "gen_export_tmp.ts" "gen_export_cur.ts"
 	mv "tmp.ts" "tmp.ts.bak"
+	cp "out_empty.ts" "tmp.ts"
 }
 function generate_ts_backup_output {
 	pushd "$DEST_DIR"
@@ -38,19 +39,14 @@ function generate_ts_setup {
 }
 function generate_ts_restore {
 	cp "gen_export_out.ts" "gen_export_cur.ts"
-	if [[ -f "tmp.ts" ]]; then
-		mv "tmp.ts" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/tmp.ts.bak"
-		cp "out_empty.ts" "tmp.ts"
-		mv "$TMP_DIR/tmp.ts" "tmp.ts"
-		mv "tmp.ts" "out.ts"
-		cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
-	else
-	fi
-	if [[ -f "$TMP_DIR/errors.out" ]]; then
-		mv "$TMP_DIR/errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
-	fi
-	mv "tmp.ts.bak" "tmp.ts"
+	mv "tmp.ts" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/tmp.ts.bak"
+	cp "out_empty.ts" "tmp.ts"
+	mv "$TMP_DIR/tmp.ts" "tmp.ts"
+	mv "tmp.ts" "out.ts"
+	cp "out_empty.ts" "tmp.ts"
+	mv "$TMP_DIR/errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
 	popd
+	cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 }
 function generate_ts_filter_errors {
 	grep -Po "$(cat grep.args)" "$@"
