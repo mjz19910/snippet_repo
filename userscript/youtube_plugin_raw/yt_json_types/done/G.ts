@@ -155,7 +155,7 @@ type G_Actions=
 	|A_GetMultiPageMenu
 	|A_RemoveFromGuideSection
 	|UA_ChannelSwitcherPage
-	|A_UpdateNotificationsUnseenCount
+	|UA_NotificationsUnseenCount
 	|UA_SubscribeButton
 	|C_RefreshPlaylist
 	|C_RunAttestation
@@ -309,7 +309,7 @@ type GRC_ServiceTrackingParams=[
 ][number];
 type G_ResponseActions=
 	TA_OpenPopup_Empty|
-	A_UpdateNotificationsUnseenCount|
+	UA_NotificationsUnseenCount|
 	A_RemoveFromGuideSection|
 	A_AddToGuideSection|
 	never;

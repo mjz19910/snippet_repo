@@ -992,7 +992,7 @@ class HandleTypes extends HandleTypesEval {
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
-	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
+	/** @private @arg {UA_NotificationsUnseenCount} x */
 	A_UpdateNotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateNotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
@@ -8533,7 +8533,7 @@ class HandleTypes extends HandleTypesEval {
 		this.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {DUA_SubscribeButton} x */
+	/** @private @arg {AD_SubscribeButton} x */
 	DUA_SubscribeButton(x) {
 		const cf="DUA_SubscribeButton"; this.k(cf,x);
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

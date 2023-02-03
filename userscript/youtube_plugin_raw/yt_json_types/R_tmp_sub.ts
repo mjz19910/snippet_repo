@@ -51,7 +51,7 @@ type RSG_AddToPlaylist={
 };
 type RSG_GetUnseenCount={
 	responseContext: RC_ResponseContext;
-	actions?: [A_UpdateNotificationsUnseenCount];
+	actions?: [UA_NotificationsUnseenCount];
 	unseenCount?: number;
 };
 type RSG_NotificationMenu_Action=TA_OpenPopup<D_NotificationMenu_Popup>;

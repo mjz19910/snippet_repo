@@ -1767,7 +1767,7 @@ type D_DarkColorPalette_1={
 };
 type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
 type D_DataArrType=[number,number,D_DecTypeNum[]][];
-type D_DateText={dateText: G_Text;};
+type AD_DateText={dateText: G_Text;};
 type D_DecTypeNum=
 	["data32",number,number]|
 	["data_fixed32",number,number]|
@@ -2945,13 +2945,13 @@ type D_TimestampWithNanos={
 	seconds: `${number}`;
 	nanos: number;
 };
-type D_Title={title: G_Text;};
+type AD_Title={title: G_Text;};
 type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|C_RepeatChapter|E_Like;
 type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 type T_SizeType<T>={sizeType: T;};
-type D_ToggleButtonText={
+type AD_ToggleButtonText={
 	defaultText: G_Text;
 	toggledText: G_Text;
 	buttonId: "TOGGLE_BUTTON_ID_TYPE_LIKE";
@@ -3165,7 +3165,7 @@ type D_Video_Owner={
 	accessibility: D_Accessibility;
 	title: string;
 };
-type D_ViewCount={viewCount: R_VideoViewCount;};
+type AD_ViewCount={viewCount: R_VideoViewCount;};
 type D_VisualElementType=keyof B_VEMap;
 type D_VoiceSearchDialog={
 	placeholderHeader: G_Text;

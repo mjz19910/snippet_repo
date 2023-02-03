@@ -1,4 +1,4 @@
-type DUA_SubscribeButton={
+type AD_SubscribeButton={
 	subscribed: true;
 	channelId: `UC${string}`;
 };
@@ -113,6 +113,6 @@ type DT_MenuFlexibleItem={
 	menuItem: R_MenuServiceItem;
 	topLevelButton: R_Button;
 };
-type DUA_Description={description: G_Text;};
+type AD_Description={description: G_Text;};
 type D_RelatedChipCloud={content: R_ChipCloud;};
 type D_LoggingDirectives_Gestures=T_Types<4>;
