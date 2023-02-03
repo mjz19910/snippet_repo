@@ -6,6 +6,19 @@ function n() {throw new Error("Make never type");}
 n;
 /** @template CLS_T,CLS_U @extends {ServiceMethods<CLS_T,CLS_U>} */
 export class HandleTypesEval_ extends ServiceMethods {
+	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
+	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
+	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
+	w_priv(k,x) {
+		if(!(k in x)) {debugger; return null;}
+		return x[k];
+	}
+	/** @protected @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
+	T_Items_TP(cf,x) {
+		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
+		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
+		return this.w_priv("items",y);
+	}
 	/** @protected @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @protected @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
