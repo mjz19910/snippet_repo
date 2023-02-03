@@ -1759,7 +1759,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const [a,b,y]=this.TE_Endpoint_3("E_NotificationOptOut","notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
+	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @protected @arg {M_GetTranscript} x */
