@@ -8915,8 +8915,7 @@ class HandleTypes extends HandleTypesEval {
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
 		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,...y}=this.s(cf,x); this.g(y);
-		let expires_num=this.parse_number_template(expiresInSeconds);
-		console.log("[player.streamingData.expiresInSeconds]",expires_num);
+		this.parse_number_template(expiresInSeconds);
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.z(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
