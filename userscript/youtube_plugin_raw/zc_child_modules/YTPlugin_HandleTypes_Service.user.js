@@ -7662,7 +7662,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
-		this.G_Text(indexText);
 		this.videoId(videoId);
 		this.a_primitive_str(playlistSetVideoId);
 		switch(darkColorPalette.primaryTitleColor) {default: debugger; break; case 4294964965: case 4294961637: }

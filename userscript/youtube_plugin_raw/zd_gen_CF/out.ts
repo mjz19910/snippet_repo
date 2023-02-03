@@ -75,7 +75,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_EngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "UA_NotificationsUnseenCount";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_GetTranscript_Params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
@@ -663,6 +662,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_MenuNavigationItem";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistByline";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_PlaylistPanelVideo";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle_Content";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RelatedChipCloud";}
