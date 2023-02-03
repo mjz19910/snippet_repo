@@ -15,6 +15,7 @@ type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
 	formats: D_FormatItem[];
+	probeUrl?: string;
 };
 type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",[
 	"SWITCHER",
