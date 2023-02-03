@@ -14,7 +14,6 @@ type AD_SendFeedback={bucket: "Kevlar";};
 type AD_SetActivePanelItem={};
 type AD_ShowEngagementPanelScrim={engagementPanelTargetId: "engagement-panel-clip-create"; onClickCommands: TA_OpenPopup<Popup_ConfirmDialog>[];};
 type AD_Signal={signal: DU_SignalStr;};
-type AD_UndoFeedback=B_Hack;
 type AD_UpdateChannelSwitcherPage=T_Page<R_ChannelSwitcherPage>;
 type AD_UpdateEngagementPanel={targetId: "engagement-panel-searchable-transcript"; content: R_Transcript;};
 type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"; unseenCount: number; timeoutMs: number;};

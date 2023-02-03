@@ -989,7 +989,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_AddChatItem} x */
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
 	/** @private @arg {A_UndoFeedback} x */
-	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
+	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
 	A_UpdateNotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateNotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_ReplayChatItem} x */
@@ -1808,8 +1808,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(y1,x => {if(x!==void 0) debugger;});
 		this.z(u1,this.Popup_ShareEntityService);
 	}
-	/** @private @arg {Popup_ShareEntityService} x */
-	Popup_ShareEntityService(x) {x; debugger;}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
 	/** @private @arg {DE_GetReportForm} x */
@@ -8745,12 +8743,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Thumbnail(icon);
 		this.G_Text(title);
 	}
-	/** @private @arg {AD_UndoFeedback} x */
-	AD_UndoFeedback(x) {
-		const cf="AD_UndoFeedback"; this.k(cf,x);
-		if("hack" in x) return this.B_Hack(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem"; this.k(cf,x);
@@ -9037,7 +9029,7 @@ class HandleTypes extends HandleTypesEval {
 	D_AdPlacement(x) {x;}
 	/** @private @arg {G_AdditionalDataItem} x */
 	G_AdditionalDataItem(x) {
-		let d=this.w("","userFeedbackEndpointProductSpecificValueData",x);
+		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
 		switch(d.key) {
 			default: debugger; break;
 			case "lockup": {
@@ -9048,6 +9040,8 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
+	/** @private @arg {Popup_ShareEntityService} x */
+	Popup_ShareEntityService(x) {x; debugger;}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
