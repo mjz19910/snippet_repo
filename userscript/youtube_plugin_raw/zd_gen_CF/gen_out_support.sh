@@ -43,7 +43,6 @@ function generate_ts_restore {
 		cp "out_empty.ts" "tmp.ts"
 		mv "$TMP_DIR/tmp.ts" "tmp.ts"
 		mv "tmp.ts" "out.ts"
-		cp "out_empty.ts" "tmp.ts"
 		cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 	else
 	fi
