@@ -45,7 +45,7 @@ type D_PlaylistContent={
 	titleText: G_Text;
 	isEditable: true;
 	menu: R_Menu;
-	localCurrentIndex: 0|25;
+	localCurrentIndex: 0|1|25;
 	playlistButtons: R_Menu;
 	isCourse: false;
 	nextVideoLabel: G_Text;
