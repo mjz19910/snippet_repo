@@ -4585,12 +4585,9 @@ class HandleTypes extends HandleTypesEval {
 			this.g(x);
 			return;
 		}
-		if("watchEndpointSupportedPrefetchConfig" in x) {
-			return;
-		}
-		if("playlistId" in x) {
-			return;
-		}
+		if("watchEndpointSupportedPrefetchConfig" in x) return;
+		if("watchEndpointSupportedOnesieConfig" in x) return;
+		if("playlistId" in x) return;
 		if("videoId" in x) {
 			const cf="DE_VE3832:videoId";
 			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
