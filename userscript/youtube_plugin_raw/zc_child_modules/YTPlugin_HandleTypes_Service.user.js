@@ -7665,14 +7665,14 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(indexText);
 		this.videoId(videoId);
 		this.a_primitive_str(playlistSetVideoId);
-		this.ceq(darkColorPalette.primaryTitleColor,4294961637);
-		this.ceq(darkColorPalette.secondaryTitleColor,4291602851);
-		this.ceq(darkColorPalette.section2Color,4063436571);
-		this.ceq(darkColorPalette.section4Color,4061728525);
-		this.ceq(lightColorPalette.primaryTitleColor,4279833104);
-		this.ceq(lightColorPalette.secondaryTitleColor,4286207567);
-		this.ceq(lightColorPalette.section2Color,4076401393);
-		this.ceq(lightColorPalette.section4Color,4075544541);
+		switch(darkColorPalette.primaryTitleColor) {default: debugger; break; case 4294964965: case 4294961637: }
+		switch(darkColorPalette.secondaryTitleColor) {default: debugger; break; case 4291608227: case 4291602851: }
+		switch(darkColorPalette.section2Color) {default: debugger; break; case 4063436571: case 4062716698: }
+		switch(darkColorPalette.section4Color) {default: debugger; break; case 4060875528: case 4061728525: }
+		switch(lightColorPalette.primaryTitleColor) {default: debugger; break; case 4279834128: case 4279833104: }
+		switch(lightColorPalette.secondaryTitleColor) {default: debugger; break; case 4285555272: case 4286207567: }
+		switch(lightColorPalette.section2Color) {default: debugger; break; case 4076401393: case 4076402417: }
+		switch(lightColorPalette.section4Color) {default: debugger; break; case 4075546589: case 4075544541: }
 		this.G_Text(longBylineText);
 		this.G_Text(shortBylineText);
 		this.ceq(selected,true);
