@@ -16,6 +16,7 @@ const __module_name__="mod$CodegenService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 const as=bs.as_;
+const split_string=bs.split_string;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
@@ -156,6 +157,38 @@ class CodegenService extends BaseService {
 	}
 	/** @no_mod @arg {string} x */
 	#codegen_padding(x) {return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {return "\t".repeat(g);});}
+	/** @arg {string[]} keys @arg {string} e @arg {object} x @arg {string} name */
+	#codegen_required_renderer_names(keys,x,name,e) {
+		let kk=keys.map(x => this.uppercase_first(x)).find(v => v===e);
+		if(!kk) {debugger; return "";}
+		/** @private @type {{}} */
+		let ucx=x;
+		/** @private @type {{[x:string]:unknown}} */
+		let x1=ucx;
+		let val_2=x1[kk];
+		if(typeof val_2!=="object") return "";
+		if(val_2===null) return "";
+		let keys_2=Object.keys(val_2);
+		/** @private @type {string[]} */
+		let next_req=[];
+		let body_2=this.#codegen_renderer_body(next_req,x,keys_2,name);
+		let tmp0=`
+		d1!/** @private @arg {${e}} x */
+		d1!${e}(x) {
+			${body_2}
+		d1!}
+		`;
+		console.log("more req",next_req);
+		return tmp0;
+	}
+	/** @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x @arg {string} t_name */
+	#codegen_renderer_finalize(req_names,code,keys,x,t_name) {
+		let required_names_code_arr=req_names.map(this.#codegen_required_renderer_names.bind(this,keys,x,t_name));
+		let all_code=required_names_code_arr.join("")+code;
+		let trimmed_code=all_code.split("\n").map(e => e.trim()).filter(e => e).join("\n");
+		let code_with_padding=this.#codegen_padding(trimmed_code);
+		return `\n${code_with_padding}`;
+	}
 	/** @no_mod @arg {unknown} x @arg {string|null} r_name */
 	#codegen_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
@@ -168,40 +201,32 @@ class CodegenService extends BaseService {
 		console.log("gen renderer for",x);
 		let t_name=this.uppercase_first(k);
 		let keys=Object.keys(x);
+		if(keys.length===1) {
+			if(keys[0].endsWith("Renderer")) {
+				let np_arr=split_string(t_name,"$");
+				let np_arr_2=split_string_once(np_arr[np_arr.length-1],"R_");
+				if(np_arr_2.length===1) {debugger; return null;}
+				if(np_arr_2[0]!=="") debugger;
+				let name=np_arr_2[1];
+				// /** @private @arg {$1} x */
+				// $1(x) {this.H_("$1","$2",x,this.$3);}
+				debugger;
+				let self_code=`
+				d1!/** @private @arg {${t_name}} x */
+				d1!${t_name}(x) {this.H_("${t_name}","${keys[0]}",x,this.D_${name});}`;
+				req_names.push(`D_${name}`);
+				return this.#codegen_renderer_finalize(req_names,self_code,keys,x,t_name);
+			}
+			return;
+		}
 		let body=this.#codegen_renderer_body(req_names,x,keys,t_name);
-		let tmp_1=`
+		let self_code=`
 		d1!/** @private @arg {${t_name}} x */
 		d1!${t_name}(x) {
 			d2!${body}
 		d1!}
 		`;
-		let ex_names=req_names.map(e => {
-			let kk=keys.map(x => this.uppercase_first(x)).find(v => v===e);
-			if(!kk) {debugger; return "";}
-			/** @private @type {{}} */
-			let ucx=x;
-			/** @private @type {{[x:string]:unknown}} */
-			let x1=ucx;
-			let val_2=x1[kk];
-			if(typeof val_2!=="object") return "";
-			if(val_2===null) return "";
-			let keys_2=Object.keys(val_2);
-			/** @private @type {string[]} */
-			let next_req=[];
-			let body_2=this.#codegen_renderer_body(next_req,x,keys_2,t_name);
-			let tmp0=`
-			d1!/** @private @arg {${e}} x */
-			d1!${e}(x) {
-				${body_2}
-			d1!}
-			`;
-			console.log("more req",next_req);
-			return tmp0;
-		});
-		tmp_1=ex_names.join("")+tmp_1;
-		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
-		let tmp3=this.#codegen_padding(tmp2);
-		return `\n${tmp3}`;
+		return this.#codegen_renderer_finalize(req_names,self_code,keys,x,t_name);
 	}
 	/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
