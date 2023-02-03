@@ -2270,7 +2270,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
-	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x);}
+	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink"; this.k(cf,x);
@@ -4210,13 +4210,23 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
-	/** @private @arg {string} cf @arg {{}} x */
+	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
 		let name=this.get_codegen_name(x);
 		if(!name) return;
 		this.codegen.codegen_renderer(x,`${cf}$${name}`);
 		debugger;
 	}
+	/** @private @arg {D_PlaylistLoopButtonState} x */
+	D_PlaylistLoopButtonState(x) {
+		const cf="D_PlaylistLoopButtonState";
+		this.save_keys(`[${cf}]`,x);
+		const {state,button,...y}=this.s(cf,x); this.g(y);
+		if(state!=="PLAYLIST_LOOP_STATE_NONE") debugger;
+		this.R_Button(button);
+	}
+	/** @private @arg {R_PlaylistLoopButtonState} x @generated {R_PlaylistLoopButtonState} */
+	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
 	/** @private @arg {D_PlaylistLoopButton} x */
 	D_PlaylistLoopButton(x) {
 		const cf="D_PlaylistLoopButton";
@@ -4224,7 +4234,7 @@ class HandleTypes extends HandleTypesEval {
 		const {states,currentState,playlistLoopStateEntityKey,...y}=this.s(cf,x); this.g(y);
 		this.z(states,this.R_PlaylistLoopButtonState);
 		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
-		this.primitive_of(playlistLoopStateEntityKey,"string");
+		this.a_primitive_str(playlistLoopStateEntityKey);
 	}
 	/** @private @arg {R_PlaylistLoopButton} x @generated {D_Menu_Button$R_PlaylistLoopButton} */
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
@@ -4243,7 +4253,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="D_Menu_Button";
 			if("buttonRenderer" in x) return this.R_Button(x);
 			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-			if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(cf,x);
+			if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
 			this.codegen_typedef_all(cf,x);
 		});
 	}
@@ -8506,7 +8516,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_AdLayoutLoggingData(adLayoutLoggingData);
 	}
 	/** @private @arg {DC_ResetChannelUnreadCount} x */
-	DC_ResetChannelUnreadCount(x) {const cf="DC_ResetChannelUnreadCount"; this.gs(cf,x); debugger;}
+	DC_ResetChannelUnreadCount(x) {const cf="DC_ResetChannelUnreadCount"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_YoutubeUrl} x */
 	D_YoutubeUrl(x) {
 		const cf="D_YoutubeUrl";
@@ -8538,47 +8548,47 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_str(cf,x);
 	}
 	/** @private @arg {D_VideoMastheadAdV3} x */
-	D_VideoMastheadAdV3(x) {const cf="D_VideoMastheadAdV3"; this.gs(cf,x); debugger;}
+	D_VideoMastheadAdV3(x) {const cf="D_VideoMastheadAdV3"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_AutomixPreviewVideo} x */
-	D_AutomixPreviewVideo(x) {const cf="D_AutomixPreviewVideo"; this.gs(cf,x); debugger;}
+	D_AutomixPreviewVideo(x) {const cf="D_AutomixPreviewVideo"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_MusicResponsiveListItem} x */
-	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.gs(cf,x); debugger;}
+	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_MusicShelfDivider} x */
-	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.gs(cf,x); debugger;}
+	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {const cf="G_CommentsSection"; this.gs(cf,x); debugger;}
+	G_CommentsSection(x) {const cf="G_CommentsSection"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_Message} x */
-	D_Message(x) {const cf="D_Message"; this.gs(cf,x); debugger;}
+	D_Message(x) {const cf="D_Message"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_LiveChatParticipantsList} x */
-	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.gs(cf,x); debugger;}
+	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_LiveChatTicker} x */
-	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.gs(cf,x); debugger;}
+	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_LiveChatItemList} x */
-	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.gs(cf,x); debugger;}
+	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_LiveChatHeader} x */
-	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.gs(cf,x); debugger;}
+	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.gs(cf,x); debugger;}
+	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_CommentActionButtons} x */
-	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.gs(cf,x); debugger;}
+	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {const cf="D_LiveChat"; this.gs(cf,x); debugger;}
+	D_LiveChat(x) {const cf="D_LiveChat"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_ReportFormModal} x */
-	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.gs(cf,x); debugger;}
+	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {RSB_EditPlaylist["playlistEditResults"][number]} x */
-	G_PlaylistEditResult(x) {const cf="G_PlaylistEditResult"; this.gs(cf,x); debugger;}
+	G_PlaylistEditResult(x) {const cf="G_PlaylistEditResult"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {const cf="R_BrowseFeed"; this.codegen_typedef_all(cf,x); this.gs(cf,x);}
+	R_BrowseFeed(x) {const cf="R_BrowseFeed"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_TranscriptSegment} x */
-	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x);}
+	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PdgCommentChip} x */
-	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x);}
+	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_InfoRow} x */
-	D_InfoRow(x) {const cf="D_InfoRow"; this.codegen_typedef_all(cf,x);}
+	D_InfoRow(x) {const cf="D_InfoRow"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x);}
+	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
-	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x);}
+	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {string} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
 		const cf="D_LightColorPalette";
@@ -8622,13 +8632,13 @@ class HandleTypes extends HandleTypesEval {
 		{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
 	}
 	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
+	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {E_UserFeedback} x */
-	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x);}
+	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x);}
+	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {C_GetPdgBuyFlow} x */
-	C_GetPdgBuyFlow(x) {const cf="C_GetPdgBuyFlow"; this.codegen_typedef_all(cf,x);}
+	C_GetPdgBuyFlow(x) {const cf="C_GetPdgBuyFlow"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

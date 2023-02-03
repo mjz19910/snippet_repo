@@ -83,7 +83,7 @@ class CodegenService extends BaseService {
 		let ret_arr=[];
 		ret_arr.push(`const cf="${t_name}";`);
 		ret_arr.push("this.save_keys(`[${cf}]`,x)");
-		ret_arr.push(`const {${keys.join()},...y}=this.sd(cf,x); this.g(y);`);
+		ret_arr.push(`const {${keys.join()},...y}=this.s(cf,x); this.g(y);`);
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
