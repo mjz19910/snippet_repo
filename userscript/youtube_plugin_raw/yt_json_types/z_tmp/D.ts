@@ -8,6 +8,12 @@ type D_AddToOfflineButtonState=T_EnumStr<
 		"ENABLED"
 	][number]
 >;
+type D_UiTargetId=
+	|"engagement-panel-comments-section"
+	|"browse-feedFEwhat_to_watch"
+	|"watch-next-feed"
+	;
+;
 //#endregion
 //#region Entity data, ie `D_EY_${string}`
 type D_EY_Offlineability={
@@ -1225,7 +1231,6 @@ type D_ActionSetPlaylistVideoOrder={
 	accessibility?: D_Accessibility;
 	trackingParams: string;
 };
-type D_AdActionInterstitial={};
 type D_AdBreakService={
 	prefetchMilliseconds: "10000";
 	getAdBreakUrl: string;
@@ -1379,7 +1384,6 @@ type D_AudioSampleRate=[
 	44100,48000
 ][number];
 type AudioTrackItem={captionTrackIndices: number[];};
-type D_AutomixPreviewVideo={};
 type D_AutoplaySwitchButton={
 	onEnabledCommand: T_Setting_AutoNavForDesktop<true>;
 	onDisabledCommand: T_Setting_AutoNavForDesktop<false>;
@@ -1425,7 +1429,6 @@ type D_BrowseIdStr=
 	|`SP${D_Settings_Id}`
 	|`MP${"TRt"|"REb"|"LYt"}_${string}`;
 type D_Browse_Id<T>={browseId: T;};
-type AD_BrowserMediaSession={};
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
 type D_ButtonStyleType=[
 	"STYLE_ALERT_INFO",
@@ -1467,7 +1470,6 @@ type CaptionTrackItem={
 	name: G_Text;
 	vssId: "a.en";
 };
-type D_Card={};
 type D_CarouselLockup={infoRows: R_InfoRow[];};
 type ChanLoc=`channel.${ChanTabStr|""}`;
 type ChanTabStr=[
@@ -1560,7 +1562,6 @@ type ColorSourceVars={
 	colorSourceWidthMultiplier: 1.5;
 	colorSourceHeightMultiplier: 2;
 };
-type D_CommentActionButtons={};
 type D_CommentThread={
 	comment: R_Comment;
 	trackingParams: string;
@@ -2101,14 +2102,11 @@ type D_MicroformatEmbed={
 	height: 360;
 	flashSecureUrl: `https://www.youtube.com/v/${string}?version=3&autohide=1`;
 };
-// TODO #3
-type D_Miniplayer={};
 type D_ModifiedSetItem={
 	autoplayVideo: E_WatchPlaylist;
 	nextButtonVideo: E_WatchPlaylist;
 	previousButtonVideo?: E_WatchPlaylist;
 };
-type D_ModifyChannelPreference={};
 type D_MovingThumbnail={
 	movingThumbnailDetails?: D_Thumbnail|D_MovingThumbnail_Thumbnails;
 	enableHoveredLogging: true;
@@ -2137,7 +2135,6 @@ type D_MusicCarouselShelf=Record<"contents",{}[]>&{
 	itemSize: "COLLECTION_STYLE_ITEM_SIZE_MEDIUM";
 };
 type D_MusicQueue=Partial<Record<"content",R_PlaylistPanel>>&B_Hack;
-type D_MusicResponsiveListItem={};
 type D_MusicShelf=Record<"contents",R_MusicResponsiveListItem[]>&{
 	title: G_Text;
 	trackingParams: string;
@@ -2503,8 +2500,6 @@ type D_ReflowOptions={
 	minimumRowsOfVideosAtStart: 2;
 	minimumRowsOfVideosBetweenSections: 1;
 };
-// TODO #1
-type D_ReportFormModal={};
 type D_ResState={
 	active: boolean;
 	resolver: () => void;
@@ -3079,18 +3074,38 @@ type D_VE6827_PageUrl=
 	;
 ;
 type D_VE6827_PageUrl_parts=["feed",`trending?${string}`]|["feed",`storefront?${string}`]|["reporthistory"]|["feed","trending"|"history"|"library"|"storefront"|"guide_builder"]|["hashtag",string]|["hashtag","shorts","shorts"];
-type FRRes=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
-type D_VideoCategory=[
-	"Science & Technology",
-	"Film & Animation",
-	"Autos & Vehicles",
-	"People & Blogs",
-	"Howto & Style",
-	"Entertainment",
-	"Gaming",
-	"Comedy",
-	"Music",
-][number];
+type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
+type D_VideoCategory=
+	|"Science & Technology"
+	|"Film & Animation"
+	|"Autos & Vehicles"
+	|"People & Blogs"
+	|"Howto & Style"
+	|"Entertainment"
+	|"Gaming"
+	|"Comedy"
+	|"Music"
+	;
+;
+type D_WatchPageUrl=
+	|`/watch?v=${string}&list=RD${string}&index=${number}`
+	|`/watch?v=${string}&list=RD${string}&start_radio=1`
+	|`/watch?v=${string}&pp=${string}`
+	|`/watch?v=${string}&t=${number}s`
+	|`/watch?v=${string}`
+	;
+;
+type D_WatchPlaylistUrlFormat=
+	|`list=${D_PlaylistId}`
+	|`list=${D_PlaylistId}&index=${number}`
+	|`list=${YtInfinitePlaylistFormat}&start_radio=${1|0}`
+	;
+;
+type D_WatchUrlStr=
+	|`v=${string}`
+	|`v=${string}&${G_YtWatchUrl}`
+	;
+;
 type D_VideoDescriptionHeader={
 	title: G_Text;
 	channel: G_Text;
@@ -3114,8 +3129,6 @@ type D_VideoDetails={
 	title: string;
 };
 type D_VideoIdTagStr=string&{_tag: "YtVideoId";};
-// TODO #5
-type D_VideoMastheadAdV3={};
 type D_VideoOwner={
 	thumbnail: D_Thumbnail;
 	title: G_Text;
@@ -3224,23 +3237,6 @@ type D_WatchNextEndScreen={
 	trackingParams: string;
 };
 type D_WatchNextTabbedResults={tabs: R_Tab[];};
-type D_WatchPageUrl=
-	|`/watch?v=${string}&list=RD${string}&index=${number}`
-	|`/watch?v=${string}&list=RD${string}&start_radio=1`
-	|`/watch?v=${string}&pp=${string}`
-	|`/watch?v=${string}&t=${number}s`
-	|`/watch?v=${string}`
-	;
-;
-type D_WatchPlaylistUrlFormat=[
-	`list=${D_PlaylistId}`,
-	`list=${D_PlaylistId}&index=${number}`,
-	`list=${YtInfinitePlaylistFormat}&start_radio=${1|0}`
-][number];
-type D_WatchUrlStr=[
-	`v=${string}`,
-	`v=${string}&${G_YtWatchUrl}`
-][number];
 type D_WebSearchboxConfig={
 	requestLanguage: "en";
 	requestDomain: "ca";
@@ -3275,6 +3271,7 @@ type D_Button_With_TargetId=
 	}
 	;
 ;
+type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 //#endregion
 type D_ThumbnailsList={thumbnail: D_Thumbnail; trackingParams?: string;};
 type D_Thumbnail={
@@ -3292,4 +3289,37 @@ type D_Omit_Compact_Video=D_Omit_Compact_Player&{
 	videoId: string;
 	shortViewCountText: G_Text;
 	publishedTimeText: G_Text;
+};
+// TODO #1
+type D_ReportFormModal={};
+// TODO #3
+type D_Miniplayer={};
+// TODO #5
+type D_VideoMastheadAdV3={};
+
+type D_AdActionInterstitial={};
+type D_AutomixPreviewVideo={};
+type D_Card={};
+type D_CommentActionButtons={};
+type D_EmojiPicker={};
+type D_LiveChatHeader={};
+type D_LiveChatItemList={};
+type D_LiveChatMessageInput={};
+type D_LiveChatParticipantsList={};
+type D_LiveChatTicker={};
+type D_Message={};
+type D_ModifyChannelPreference={};
+type D_MusicResponsiveListItem={};
+type D_MusicShelfDivider={};
+type D_PaidDigitalGoods={paidDigitalGoods: B_Hack;};
+type D_ThumbnailOverlayInlineUnplayable={};
+type D_AudioConfig={
+	loudnessDb: number;
+	perceptualLoudnessDb: number;
+	enablePerFormatLoudness: boolean;
+};
+type D_DescriptionChapters={
+	chapters: R_Chapter[];
+	trackingParams: string;
+	onChapterRepeat: TA_OpenPopup_Empty;
 };

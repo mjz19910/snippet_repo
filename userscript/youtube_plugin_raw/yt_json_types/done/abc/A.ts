@@ -33,11 +33,13 @@ type A_FrameworkUpdates={
 	entityBatchUpdate: DC_EntityBatchUpdate;
 	elementUpdate?: R_ElementUpdate;
 };
-type DC_EngagementPanelHeaderShowNavigationButton={
-	targetId: "engagement-panel-macro-markers-description-chapters";
-	navigationButton: R_Button;
-};
-
+type A_ResponseReceived=
+	|C_AdsControlFlowOpportunityReceived
+	|C_ReloadContinuationItems;
+type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;
+//#endregion
+//#region AD_
+type AD_BrowserMediaSession={};
 //#endregion
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,
@@ -48,7 +50,3 @@ type AC_Executor=[
 	TA_OpenPopup_Empty,
 	C_EngagementPanelHeaderShowNavigationButton,
 ][number];
-type A_ResponseReceived=
-	|C_AdsControlFlowOpportunityReceived
-	|C_ReloadContinuationItems;
-type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;

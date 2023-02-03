@@ -97,6 +97,7 @@ type GD_Icon=NonNullable<[
 ][number]>;
 // TODO #6
 type GD_SD_Item={};
+type G_CommentsSection={};
 type GE_Button_navigation=E_ShareEntityService|E_Watch|GE_Browse;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 type GM_Base={
@@ -384,7 +385,6 @@ type G_StructuredDescriptionContentItem=[
 	R_VideoDescriptionMusicSection,
 ][number];
 
-type D_ThumbnailOverlayInlineUnplayable={};
 
 type R_ThumbnailOverlayInlineUnplayable={thumbnailOverlayInlineUnplayableRenderer: D_ThumbnailOverlayInlineUnplayable;};
 
@@ -411,3 +411,21 @@ type G_YtWatchUrl=[
 	D_WatchPlaylistUrlFormat,
 ][number];
 type G_PlaylistSidebarItem=R_PlaylistSidebarPrimaryInfo|R_PlaylistSidebarSecondaryInfo;
+type G_AdPlacementRendererItem=[
+	R_AdBreakService,
+	R_ClientForecastingAd,
+	R_InstreamVideoAd,
+	R_LinearAdSequence,
+][number];
+type GR_MP_MenuNotificationSection_Item=R_Notification|R_ContinuationItem;
+type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;
+type G_RendererContentItem=
+	|R_RichItem
+	|R_RichSection
+	|R_CommentsHeader
+	|R_CommentThread
+	|R_ContinuationItem
+	|R_CompactVideo
+	|R_CompactPlaylist
+	;
+;

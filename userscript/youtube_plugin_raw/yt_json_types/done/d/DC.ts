@@ -55,8 +55,11 @@ type DC_Continuation=
 	}
 	;
 ;
-type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
-// type GDC_GetSurvey_Endpoint=D_PaidDigitalGoods|D_Survey_Watch;
+//#region DC_
+type DC_EngagementPanelHeaderShowNavigationButton={
+	targetId: "engagement-panel-macro-markers-description-chapters";
+	navigationButton: R_Button;
+};
 type DC_GetSurvey={
 	endpoint: D_Survey_Watch;
 	action: "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
@@ -104,8 +107,8 @@ type DC_AddToPlaylist=
 	}
 	;
 ;
-// TODO: #15 Need type of DC_MusicShelf
-type DC_MusicShelf={};
 // TODO #4
 type DC_PlaylistPanel={};
+// TODO: #15 Need type of DC_MusicShelf
+type DC_MusicShelf={};
 //#endregion
