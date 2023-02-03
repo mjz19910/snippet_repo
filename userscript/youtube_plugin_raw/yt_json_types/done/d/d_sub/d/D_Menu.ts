@@ -14,4 +14,10 @@ type D_Menu={
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Action menu">;
 	targetId: "watch-related-menu-button";
+}|{
+	items: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons: R_SegmentedLikeDislikeButton[];
+	accessibility: TD_Accessibility<"More actions">;
+	flexibleItems: R_MenuFlexibleItem[];
 };
