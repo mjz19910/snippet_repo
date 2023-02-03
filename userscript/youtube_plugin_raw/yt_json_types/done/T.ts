@@ -113,6 +113,15 @@ type T_OmitKey<T,K extends keyof T>=T extends infer U? Omit<U,K>:never;
 //#region Object conversion Templates
 type T_RemovePrefix<T,T2 extends string>={[U in keyof T as `${string&U extends `${T2}${infer U1}${infer I1}`? `${Lowercase<U1>}${I1}`:never}`]: T[U];};
 //#endregion
+//#region T_DC_
+type T_DC_Content<T>={trackingParams: string; contents: T[];};
+type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
+type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
+//#endregion
+//#region T_Omit_
+type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
+type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
+//#endregion
 //#region TA
 type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
 //#endregion
@@ -161,6 +170,9 @@ type T_ExtractImport_<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'
 ;
 type T_ExtractImport<T extends (GenNs_AllNames|CF_Generated_NS.CF_Generated['n'])>=T_ExtractImport_<T>;
 type T_ExtractIconType<T extends {icon: T_Icon<U>;},U extends string=T["icon"]["iconType"]>=U;
+type T_NumArrStr<T extends string>=T extends `${infer U extends number},${infer A extends number},${infer X}`? [U,A,...T_NumArrStr<X>]:T extends `${infer U extends number},${infer X}`? [U,...T_NumArrStr<X>]:T extends `${infer U extends number}`? [U]:never;
+type T_NumArrStrVerify<T extends string,C extends string="">=C extends ''?T extends `${number},${number},${infer X}`?T_NumArrStrVerify<T,X>:C extends ''? `${T}`:`${T},${C}`:C extends `${number},${number},${infer X}`?T_NumArrStrVerify<T,X>:T;
+type T_NumRange<T,U>=NS_NumRange.NumRange<T,U>;
 //#endregion
 //#region Check if the passed in type meets certain conditions
 type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
@@ -180,6 +192,8 @@ type TR_SectionListItem_3<T_ContentType,B,C>=
 	;
 ;
 type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
+type TR_MultiPageMenu_Empty=TR_MultiPageMenu<{}>;
+type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
 //#endregion
 type TG_SecondaryResultsItem_3<A,B,C>=[
 	R_RelatedChipCloud,
@@ -195,9 +209,3 @@ type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];
 };
-
-type T_DC_Content<T>={trackingParams: string; contents: T[];};
-type T_DC_Content_2<T extends string,U>={trackingParams: string; targetId: T; contents: U[];};
-type T_DC_Content_3<SectionId_T extends string,TargetId_T extends string,T_Content>={contents: T_Content[]; trackingParams: string; sectionIdentifier: SectionId_T; targetId: TargetId_T;};
-type T_Omit_Compact_Player<T extends D_Omit_Compact_Player>=Omit<T,"title"|"trackingParams"|"thumbnailOverlays">;
-type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Player<T>,"videoId"|"shortViewCountText"|"publishedTimeText">;
