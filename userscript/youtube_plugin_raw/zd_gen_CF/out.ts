@@ -700,6 +700,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AU_NotificationsUnseenCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddChatItem";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddToGuideSection";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_ChangeEngagementPanelVisibility";}
@@ -710,7 +711,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_ShowEngagementPanelScrim";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_Signal";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_UndoFeedback";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_UpdateNotificationsUnseenCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_AddToPlaylist";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_CommandExecutor";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_EngagementPanelHeaderShowNavigationButton";}

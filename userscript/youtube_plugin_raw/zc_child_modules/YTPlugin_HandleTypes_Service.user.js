@@ -992,8 +992,8 @@ class HandleTypes extends HandleTypesEval {
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
-	/** @private @arg {UA_NotificationsUnseenCount} x */
-	A_UpdateNotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateNotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
+	/** @private @arg {AU_NotificationsUnseenCount} x */
+	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
@@ -1345,9 +1345,9 @@ class HandleTypes extends HandleTypesEval {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
 			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
 	}
-	/** @private @arg {UA_SubscribeButton} x */
+	/** @private @arg {AU_SubscribeButton} x */
 	UA_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
-	/** @private @arg {UA_ChannelSwitcherPage} x */
+	/** @private @arg {AU_ChannelSwitcherPage} x */
 	UA_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
@@ -3624,18 +3624,18 @@ class HandleTypes extends HandleTypesEval {
 			console.log(x);
 		});
 	}
-	/** @private @arg {UA_Description} x */
+	/** @private @arg {AU_Description} x */
 	UA_Description(x) {
 		this.y("UA_Description","updateDescriptionAction",x,x => {
 			this.save_keys(`[UA_DescriptionData]`,x);
 			this.G_Text(x.description);
 		});
 	}
-	/** @private @arg {UA_Title} x */
+	/** @private @arg {AU_Title} x */
 	UA_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
-	/** @private @arg {UA_DateText} x */
+	/** @private @arg {AU_DateText} x */
 	UA_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
-	/** @private @arg {UA_ToggleButtonText} x */
+	/** @private @arg {AU_ToggleButtonText} x */
 	UA_ToggleButtonText(x) {
 		this.y("UA_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
 			const cf="UA_ToggleButtonTextData";
@@ -3645,7 +3645,7 @@ class HandleTypes extends HandleTypesEval {
 			this.G_Text(toggledText);
 		});
 	}
-	/** @private @arg {UA_Viewership} x */
+	/** @private @arg {AU_Viewership} x */
 	UA_Viewership(x) {this.y("UA_Viewership","updateViewershipAction",x,x => this.y("UA_ViewershipData","viewCount",x,this.R_VideoViewCount));}
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
@@ -5344,7 +5344,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_GetUnseenCount"; this.k(cf,x);
 		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,(x => {
-			if("updateNotificationsUnseenCountAction" in x) return this.A_UpdateNotificationsUnseenCount(x);
+			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
 		}));
 		if(unseenCount!==void 0) this.a_primitive_num(unseenCount);
 	}
@@ -6260,7 +6260,7 @@ class HandleTypes extends HandleTypesEval {
 		const {isProcessed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this._primitive_of(isProcessed,"boolean");
 	}
-	/** @private @arg {UA_EngagementPanel} x */
+	/** @private @arg {AU_EngagementPanel} x */
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel"; this.k(cf,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
