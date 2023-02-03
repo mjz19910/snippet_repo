@@ -175,6 +175,21 @@ type D_VE6827_PageLocation=
 ;
 type D_ApiPathFormat=`/${Join<url_pathname_parts,"/">}`;
 type D_ApiStatsAdsStr=`ver=${string}ns=${string}event=${string}device=${string}content_v=${string}el=${string}ei=${string}devicever=${string}bti=${string}break_type=${string}conn=${string}cpn=${string}lact=${string}m_pos=${string}mt=${string}p_h=${string}p_w=${string}rwt=${string}sdkv=${string}slot_pos=${string}vis=${string}vol=${string}wt=${string}sli=${string}slfs=${string}loginael=${string}`;
+type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;
+type D_ChanLoc=`channel.${ChanTabStr|""}`;
+type D_ChannelId=`UC${string}`;
+type T_ChannelIdStr<T extends string>=`UC${T}`;
+type D_UUIDString=`${string}-0000-2${string}-a${string}-${string}`;
+type D_PlaylistUrlParams=`list=${D_PlaylistId}`;
+type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
+type D_RadioPlaylistStr<T extends string>=`RD${T}`;
+type D_SD_UrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;
+type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
+type D_YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
+type D_ResultsPageUrl=`/results?search_query=${string}`;
+type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
+type D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${string}.googlevideo.com/generate_204`;
+type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
@@ -1495,7 +1510,6 @@ type D_ApiPathFormat_2=[
 	"youtubei/v1/flag/get_form",
 	"youtubei/v1/backstage/create_post",
 ][number];
-type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;
 type D_AttBgChallenge={
 	interpreterUrl?: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
 	interpreterHash: string;
@@ -1580,7 +1594,6 @@ type CaptionTrackItem={
 	vssId: "a.en";
 };
 type D_CarouselLockup={infoRows: R_InfoRow[];};
-type ChanLoc=`channel.${ChanTabStr|""}`;
 type ChanTabStr=[
 	"about",
 	"channels",
@@ -1593,8 +1606,6 @@ type ChanTabStr=[
 	"videos",
 ][number];
 type D_ChannelHeaderLinks={primaryLinks: D_PrimaryLinkItem[];};
-type ChannelId=`UC${string}`;
-type ChannelIdStr<T extends string>=`UC${T}`;
 type ChannelSubUrl=ChanTabStr;
 type ChannelSubUrlFormat=ChannelSubUrl|`search?query=${string}`;
 type D_ChannelSwitcherHeader={
@@ -2354,9 +2365,8 @@ type PlayerAdParams={
 type D_PlayerAnnotationsExpanded={
 	featuredChannel: D_FeaturedChannel;
 	allowSwipeDismiss: boolean;
-	annotationId: UUIDString;
+	annotationId: D_UUIDString;
 };
-type UUIDString=`${string}-0000-2${string}-a${string}-${string}`;
 type D_PlayerAttestation={
 	challenge: string;
 	botguardData: D_Botguard;
@@ -2381,7 +2391,7 @@ type D_PlayerMicroformat={
 	description?: G_Text;
 	lengthSeconds: `${number}`;
 	ownerProfileUrl: `http://www.youtube.com/channel/UC${string}`;
-	externalChannelId: ChannelId;
+	externalChannelId: D_ChannelId;
 	isFamilySafe: boolean;
 	availableCountries: string[];
 	isUnlisted: boolean;
@@ -2476,8 +2486,6 @@ type D_PlaylistSidebar={
 	trackingParams: string;
 };
 type D_PlaylistSidebarSecondaryInfo={videoOwner: R_VideoOwner;};
-type D_PlaylistUrlParams=`list=${D_PlaylistId}`;
-type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_PlaylistVideoList={
 	playlistId: "WL";
 	sortFilterMenu: R_SortFilterSubMenu;
@@ -2538,7 +2546,6 @@ type D_RadioButtonSurveyOption={
 	enumName: T_Split<"ANSWER_VWT_INLINE_REGRET_WATCHING,ANSWER_VWT_INLINE_DONT_REGRET_WATCHING,ANSWER_VWT_INLINE_DONT_REGRET_WATCHING,ANSWER_VWT_INLINE_REGRET_WATCHING">[number];
 	trackingParams: string;
 };
-type D_RadioPlaylistStr<T extends string>=`RD${T}`;
 type D_Range={
 	start: `${number}`;
 	end: `${number}`;
@@ -2646,7 +2653,6 @@ type D_RunAttestation={
 	ids: A_ExternalChannelId[];
 	engagementType: "ENGAGEMENT_TYPE_SUBSCRIBE";
 };
-type D_SD_UrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;
 type D_Saved={
 	any_data?: D_AnySaved;
 	ad_layout_data?: D_AdLayout;
@@ -2700,7 +2706,6 @@ type D_SettingsCheckbox={
 	disableServiceEndpoint: {};
 	disabled: boolean;
 };
-type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_SettingsOptions={options: G_SettingsOptionItem[]; title: G_Text;};
 type D_SettingsRadioOption={
 	id: "SETTINGS_OPTIONS_ID_TYPE_AV1_SD"|"SETTINGS_OPTIONS_ID_TYPE_AV1_ALWAYS";
@@ -2748,7 +2753,6 @@ type D_SubFeedSelector={
 	options: R_SubFeedOption[];
 	trackingParams: string;
 };
-type D_ChannelId=`UC${string}`;
 type D_SubscribeButton_Base={
 	type: "FREE";
 	channelId: D_ChannelId;
@@ -3074,19 +3078,13 @@ type D_UrlAndElapsedMediaTime={
 	baseUrl: string;
 	elapsedMediaTimeSeconds: number;
 };
-type YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
-type YTExternalUrl=T_SplitOnce<T_SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
-type ResultsPageUrl=`/results?search_query=${string}`;
-type PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
+type YTExternalUrl=T_SplitOnce<T_SplitOnce<D_YTExternalEncUrl,"]">[1]," ">[1];
 type D_UrlInfoPlaylist={_tag: "playlist"; type: D_UrlInfoItemType; id: string;};
 type D_UrlInfoVideo={_tag: "video"; id: string;};
 type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
 type D_UrlPlayNext={_tag: "play-next"; value: string;};
 type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
-type D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${string}.googlevideo.com/generate_204`;
-type RE_D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${GV_Dig_sn_nx}.googlevideo.com/generate_204`;
 type D_VE6827_PageUrl_parts=["feed",`trending?${string}`]|["feed",`storefront?${string}`]|["reporthistory"]|["feed","trending"|"history"|"library"|"storefront"|"guide_builder"]|["hashtag",string]|["hashtag","shorts","shorts"];
-type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_VideoDescriptionHeader={
 	title: G_Text;
 	channel: G_Text;

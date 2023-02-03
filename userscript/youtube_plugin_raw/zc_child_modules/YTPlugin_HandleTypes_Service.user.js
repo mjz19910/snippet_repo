@@ -3474,7 +3474,7 @@ class HandleTypes extends HandleTypesEval {
 		this.parse_uuid(annotationId);
 		this.a_primitive_bool(allowSwipeDismiss);
 	}
-	/** @private @arg {UUIDString} x */
+	/** @private @arg {D_UUIDString} x */
 	parse_uuid(x) {
 		let uuid_parts=split_string(x,"-");
 		let [_up0,up1,up2,up3,_up4]=uuid_parts;

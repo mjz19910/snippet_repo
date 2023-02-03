@@ -8,7 +8,7 @@ type SP_GFeedbackServiceParamList=SP_GFeedbackServiceParam[];
 type SP_GFeedbackServiceParamsType=SP_GFeedbackServiceParamList|RC_To_SPs<SP_GFeedbackVarMap>;
 type SP_GFeedbackServiceRouteParam={
 	key: "route";
-	value: ChanLoc;
+	value: D_ChanLoc;
 };
 type SP_GFeedbackVarMap={
 	browse_id_prefix: "";

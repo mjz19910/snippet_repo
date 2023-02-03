@@ -6,4 +6,4 @@ type DoSearchExtract<T extends string>=
 	:never;
 namespace UU_Old$1 {export type UU=DoSearchExtract<WatchUrlFormat>;}
 type ParseUrlWithSearchIn=DoSearchExtract<WatchUrlFormat>;
-type ParseUrlWithSearchIn_2=DoSearchExtract<PlaylistUrlFormat>;
+type ParseUrlWithSearchIn_2=DoSearchExtract<D_PlaylistUrlFormat>;

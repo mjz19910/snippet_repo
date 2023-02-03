@@ -736,7 +736,7 @@ class ParserService extends BaseService {
 		if(this.str_starts_with_r(x,"clip")) {return this.save_enum("clip",x);}
 		this.save_string("[target_id]",x);
 	}
-	/** @api @public @arg {T_SplitOnce<ChanLoc,".">} x */
+	/** @api @public @arg {T_SplitOnce<D_ChanLoc,".">} x */
 	parse_channel_section(x) {
 		switch(x[1]) {
 			case "": break;
