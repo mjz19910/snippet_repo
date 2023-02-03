@@ -367,7 +367,7 @@ class HandleTypes extends HandleTypesEval {
 				grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 				{debugger;}
 				/** @private @type {P_ParamParse} */
-				return;
+				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
 			case "reel.sequence_params": switch(map_entry_key) {
 				case 1: case 5:
