@@ -4569,17 +4569,17 @@ class HandleTypes extends HandleTypesEval {
 			const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.playlistId(playlistId);
 			this.a_primitive_num(index);
-			this.t(playlistSetVideoId,this.a_primitive_str);
-			if(params!==void 0) this.params(cf,"watch.params",params);
-			if(startTimeSeconds!==void 0) this.a_primitive_num(startTimeSeconds);
-			if(continuePlayback!==void 0&&!continuePlayback) debugger;
-			this.t(loggingContext,this.R_VssLoggingContext);
-			this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
-			this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
-			this.t(playerParams,a => this.playerParams("DE_VE3832_Watch","watch.player_params",a,this.on_player_params_callback.bind(this)));
-			this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
-			if(nofollow!==void 0) this._primitive_of(nofollow,"boolean");
-			this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
+			this.a_primitive_str(playlistSetVideoId);
+			this.params(cf,"watch.params",params);
+			this.a_primitive_num(startTimeSeconds);
+			if(continuePlayback!==false) debugger;
+			this.R_VssLoggingContext(loggingContext);
+			this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
+			this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+			this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+			this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
+			this._primitive_of(nofollow,"boolean");
+			(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
 			return;
 		} else {
 			const cf="DE_VE3832_VideoId";
