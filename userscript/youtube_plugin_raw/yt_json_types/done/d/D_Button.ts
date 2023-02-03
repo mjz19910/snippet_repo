@@ -5,6 +5,18 @@ type D_Button=
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
+		text: G_Text;
+		icon: T_Icon<"PLAYLIST_ADD">;
+		accessibility: TD_Label<"Save to">;
+		tooltip: "Save";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Save to playlist">;
+		command: E_AddToPlaylistService;
+	}
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
 		icon: T_Icon<"LOOP_ONE_ACTIVE">;
 		tooltip: "Turn off loop";
 		trackingParams: string;
