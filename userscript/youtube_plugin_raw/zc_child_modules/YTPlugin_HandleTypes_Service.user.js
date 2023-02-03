@@ -767,6 +767,8 @@ class HandleTypes extends HandleTypesEval {
 	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
 	//#endregion
 	//#region helpers
+	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
+	gs(cf,x) {this.g(this.s(cf,x));}
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
@@ -1093,7 +1095,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.DC_PlaylistPanel);}
+	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.g);}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {R_CommentsHeader} x */
@@ -1354,7 +1356,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {C_Innertube} x */
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
 	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.D_RefreshPlaylist(a);}
+	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @arg {E_YpcGetOfflineUpsell} x */
 	G_Innertube(x) {this.E_YpcGetOfflineUpsell(x);}
 	/** @private @arg {D_TwoColumnSearchResults} x */
@@ -1396,9 +1398,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_LiveChatHeader} x */
 	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatMessageInput} x */
-	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.D_LiveChatMessageInput);}
+	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
 	/** @private @arg {R_EmojiPicker} x */
-	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.D_EmojiPicker);}
+	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.g);}
 	/** @private @arg {R_ChannelHeaderLinks} x */
 	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
@@ -7811,14 +7813,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
 		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
-		if("invalidationContinuationData" in x) return;
-		if("liveChatReplayContinuationData" in x) return;
-		if("playerSeekContinuationData" in x) return;
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {D_LiveChatMessageInput} x */
-	D_LiveChatMessageInput(x) {
-		const cf="D_LiveChatMessageInput"; this.k(cf,x);
+		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
+		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
+		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
@@ -7826,11 +7823,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
 		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {DC_PlaylistPanel} x */
-	DC_PlaylistPanel(x) {
-		const cf="DC_PlaylistPanel"; this.k(cf,x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentSimplebox} x */
@@ -7846,11 +7838,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_EmojiPicker(emojiPicker);
 		this.trackingParams(cf,trackingParams);
 		this.R_Button(emojiButton);
-	}
-	/** @private @arg {D_EmojiPicker} x */
-	D_EmojiPicker(x) {
-		const cf="D_EmojiPicker"; this.k(cf,x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
@@ -8278,11 +8265,6 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(rows,this.R_RichMetadataRow);
 		this.save_number(`[${cf}.coll_item_count]`,collapsedItemCount);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {DC_RefreshPlaylist} x */
-	D_RefreshPlaylist(x) {
-		const cf="D_RefreshPlaylist"; this.k(cf,x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
@@ -8767,10 +8749,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_ExpandableSurveyResponse(response);
 		this.trackingParams(cf,trackingParams);
 		this.G_Text(dismissalText);
-		this.z(impressionEndpoints,x => {
-			const cf="D_InlineSurvey_impressionEndpoints";
-			this.codegen_typedef_all(cf,x);
-		});
+		this.z(impressionEndpoints,this.g);
 	}
 	/** @arg {D_RichShelf} x */
 	D_RichShelf(x) {
@@ -9042,8 +9021,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {x; debugger;}
-	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
-	gs(cf,x) {this.g(this.s(cf,x));}
+	/** @private @arg {CD_PlayerSeek} x */
+	CD_PlayerSeek(x) {x;}
+	/** @private @arg {CD_LiveChatReplay} x */
+	CD_LiveChatReplay(x) {x;}
+	/** @private @arg {CD_Invalidation} x */
+	CD_Invalidation(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
