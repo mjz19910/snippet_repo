@@ -15,7 +15,9 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:serviceEndpoint";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:targetId";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:accessibility";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:isDisabled";}
+		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:targetId";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}

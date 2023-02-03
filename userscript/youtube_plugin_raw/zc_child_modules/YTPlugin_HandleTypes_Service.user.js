@@ -2633,13 +2633,81 @@ class HandleTypes extends HandleTypesEval {
 				} break;
 				case "tooltip": {
 					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {icon: a,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
-					switch(a.iconType) {
-						default: debugger; break;
-						case "LOOP": case "MONEY_HEART": case "SETTINGS": case "EXPAND": case "DISMISSAL": case "MICROPHONE_ON": case "SHARE": case "CONTENT_CUT": case "PLAYLIST_ADD":
+					/** @type {`${cf}:${k}`} */
+					const cf1=`${cf}:${k}`;
+					x: {
+						const k2="targetId";
+						if(!(k2 in x)) break x;
+						/** @type {`${cf1}:${k2}`} */
+						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						let {icon: a,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						switch(a.iconType) {
+							default: debugger; break;
+							case "MONEY_HEART": case "CONTENT_CUT":
+						}
+						return;
 					}
+					x: {
+						const k2="command";
+						if(!(k2 in x)) break x;
+						/** @type {`${cf1}:${k2}`} */
+						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						switch(a.iconType) {
+							default: debugger; break;
+							case "LOOP": case "PLAYLIST_ADD":
+						}
+						return;
+					}
+					x: {
+						const k2="text";
+						if(!(k2 in x)) break x;
+						/** @type {`${cf1}:${k2}`} */
+						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						switch(a.iconType) {
+							default: debugger; break;
+							case "SHARE":
+						}
+						return;
+					}
+					x: {
+						const k2="serviceEndpoint";
+						if(!(k2 in x)) break x;
+						/** @type {`${cf1}:${k2}`} */
+						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						switch(a.iconType) {
+							default: debugger; break;
+							case "DISMISSAL": case "MICROPHONE_ON":
+						}
+						return;
+					}
+					x: {
+						const k2="isDisabled";
+						if(!(k2 in x)) break x;
+						/** @type {`${cf1}:${k2}`} */
+						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						switch(a.iconType) {
+							default: debugger; break;
+							case "SETTINGS":
+						}
+						return;
+					}
+					x: {
+						const k2="accessibility";
+						if(!(k2 in x)) break x;
+						/** @type {`${cf1}:${k2}`} */
+						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						let {icon: a,tooltip,accessibility,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						switch(a.iconType) {
+							default: debugger; break;
+							case "EXPAND":
+						}
+						return;
+					}
+					this.k(cf1,x); this.g(x);
 				} break;
 				case "targetId": {
 					if(!(k in x)) return;
