@@ -2582,18 +2582,14 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {CF_D_Button} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
+	/** @protected @arg {CF_D_Button} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_Icon(cf,icon,x) {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
-	/** @private @private @arg {any} z @template {Extract<D_Button,{icon:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"icon,size,style">[number]|"trackingParams">:never} */
+	/** @private @private @arg {any} z @template {Extract<D_Button,{icon:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"size,style">[number]|"trackingParams">:never} */
 	D_Button_WithIcon_Omit(cf,x,z=null) {
-		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x); z=y;
-		switch(cf) {
-			default: debugger; break;
-			case "D_Button_OnIcon:serviceEndpoint": this.D_Button_Icon(cf,icon,x); break;
-		}
+		const {size,style,...y}=this.D_Button_Omit_TP(cf,x); z=y;
 		switch(size) {
 			default: debugger; break;
 			case "SIZE_DEFAULT":
@@ -2614,19 +2610,31 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {serviceEndpoint,accessibilityData,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
+					let {icon: a,serviceEndpoint,accessibilityData,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
+					switch(a.iconType) {
+						default: debugger; break;
+						case "MONEY_HEART": case "DISMISSAL": case "MICROPHONE_ON": case "SHARE":
+					}
 				} break;
 				case "tooltip": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
+					let {icon: a,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
+					switch(a.iconType) {
+						default: debugger; break;
+						case "LOOP": case "MONEY_HEART": case "SETTINGS": case "EXPAND": case "DISMISSAL": case "MICROPHONE_ON": case "SHARE": case "CONTENT_CUT": case "PLAYLIST_ADD":
+					}
 				} break;
 				case "targetId": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {isDisabled,accessibilityData,targetId,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
+					let {icon: a,isDisabled,accessibilityData,targetId,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
+					switch(a.iconType) {
+						default: debugger; break;
+						case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
+					}
 				} break;
 			}
 		}
@@ -4216,7 +4224,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_PlaylistLoopButtonState";
 		this.save_keys(`[${cf}]`,x);
 		const {state,button,...y}=this.s(cf,x); this.g(y);
-		if(state!=="PLAYLIST_LOOP_STATE_NONE") debugger;
+		this.save_enum("PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
 	}
 	/** @private @arg {R_PlaylistLoopButtonState} x @generated {R_PlaylistLoopButtonState} */
@@ -8590,19 +8598,19 @@ class HandleTypes extends HandleTypesEval {
 		let log_color=(k,x) => console.log(`-- [${cf1}:${cf}:${k}] --\n\n case 0x${x.toString(16)}:`);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
-			{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
-			{const x=s1_c; switch(x) {default: log_color("s1_c",x); break;}}
-			{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
-			{const x=s3_c; switch(x) {default: log_color("s3_c",x); break;}}
-			{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
+			{const x=p_tc; switch(x) {default: log_color("p_tc",x); debugger; break;}}
+			{const x=s_tc; switch(x) {default: log_color("s_tc",x); debugger; break;}}
+			{const x=s1_c; switch(x) {default: log_color("s1_c",x); debugger; break;}}
+			{const x=s2_c; switch(x) {default: log_color("s2_c",x); debugger; break;}}
+			{const x=s3_c; switch(x) {default: log_color("s3_c",x); debugger; break;}}
+			{const x=s4_c; switch(x) {default: log_color("s4_c",x); debugger; break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
-		{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
-		{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
-		{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
+		{const x=p_tc; switch(x) {default: log_color("p_tc",x); debugger; break;}}
+		{const x=s_tc; switch(x) {default: log_color("s_tc",x); debugger; break;}}
+		{const x=s2_c; switch(x) {default: log_color("s2_c",x); debugger; break;}}
+		{const x=s4_c; switch(x) {default: log_color("s4_c",x); debugger; break;}}
 	}
 	/** @private @arg {string} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
@@ -8611,19 +8619,39 @@ class HandleTypes extends HandleTypesEval {
 		let log_color=(k,x) => console.log(`-- [${cf1}:${cf}:${k}] --\n\n case 0x${x.toString(16)}:`);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
-			{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
-			{const x=s1_c; switch(x) {default: log_color("s1_c",x); break;}}
-			{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
-			{const x=s3_c; switch(x) {default: log_color("s3_c",x); break;}}
-			{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
+			{const x=p_tc; switch(x) {default: log_color("p_tc",x); debugger; break;}}
+			{const x=s_tc; switch(x) {default: log_color("s_tc",x); debugger; break;}}
+			{const x=s1_c; switch(x) {default: log_color("s1_c",x); debugger; break;}}
+			{const x=s2_c; switch(x) {default: log_color("s2_c",x); debugger; break;}}
+			{const x=s3_c; switch(x) {default: log_color("s3_c",x); debugger; break;}}
+			{const x=s4_c; switch(x) {default: log_color("s4_c",x); debugger; break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
-		{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
-		{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
-		{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
+		{
+			const x=p_tc; switch(x) {
+				default: log_color("p_tc",x); debugger; break;
+				case 0xfffff6e5: case 0xfffff0e5:
+			}
+		}
+		{
+			const x=s_tc; switch(x) {
+				default: log_color("s_tc",x); debugger; break;
+				case 0xffccbea3: case 0xffccb4a3:
+			}
+		}
+		{
+			const x=s2_c; switch(x) {
+				default: log_color("s2_c",x); debugger; break;
+				case 0xf228231a: case 0xf2331d0e:
+			}
+		}
+		{
+			const x=s4_c; switch(x) {
+				default: log_color("s4_c",x); debugger; break;
+				case 0xf20c0b08: case 0xf2190e07:
+			}
+		}
 	}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
