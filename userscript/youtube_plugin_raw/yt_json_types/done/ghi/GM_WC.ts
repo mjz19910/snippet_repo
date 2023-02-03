@@ -1,7 +1,7 @@
 //#region GM_WC
 type GM_WC_VE=[
 	GM_VE3611_WC,
-	GM_VE3832_Watch_WC,
+	GM_VE3832_Watch,
 	GM_VE3854_WC,
 	GM_VE4724_WC,
 	GM_VE5754_WC,

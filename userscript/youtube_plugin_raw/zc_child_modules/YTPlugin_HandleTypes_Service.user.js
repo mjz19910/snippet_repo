@@ -1727,7 +1727,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @protected @arg {M_VE3832_WatchPlaylist} x */
-	M_VE3832_WatchPlaylist(x) {x;}
+	M_VE3832_WatchPlaylist(x) {this.T_WCM("M_VE3832_WatchPlaylist",x,this.GM_VE3832_WatchPlaylist);}
 	/** @private @arg {M_VE3832_Watch} x */
 	M_VE3832_Watch(x) {this.T_WCM("M_VE3832_Watch",x,this.GM_VE3832_Watch);}
 	/** @private @arg {M_VE4724} x */
@@ -2109,13 +2109,24 @@ class HandleTypes extends HandleTypesEval {
 	GM_SetSetting(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
-	/** @private @arg {GM_VE3832_Watch_WC} x */
-	GM_VE3832_Watch(x) {
-		const cf="GM_VE3832_Watch_WC"; this.k(cf,x);
-		const {rootVe,url,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	/** @private @arg {string} cf @arg {T} x @template {GM_VE3832_WatchPlaylist|GM_VE3832_Watch} T */
+	GM_VE3832(cf,x) {
+		const {rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
-		if(!this.str_starts_with_rx("/watch",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+		return y;
+	}
+	/** @private @arg {GM_VE3832_WatchPlaylist} x */
+	GM_VE3832_WatchPlaylist(x) {
+		const cf="GM_VE3832_WatchPlaylist";
+		const {url,...y}=this.GM_VE3832(cf,x); this.g(y);/*#destructure_done*/
+		if(!this.str_starts_with_rx("/watch",url)) debugger;
+	}
+	/** @private @arg {GM_VE3832_Watch} x */
+	GM_VE3832_Watch(x) {
+		const cf="GM_VE3832_Watch";
+		const {url,...y}=this.GM_VE3832(cf,x); this.g(y);/*#destructure_done*/
+		if(!this.str_starts_with_rx("/watch",url)) debugger;
 	}
 	/** @private @arg {GM_VE83769_WC} x */
 	GM_VE83769(x) {

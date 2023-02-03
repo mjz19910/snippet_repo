@@ -573,7 +573,7 @@ class ParserService extends BaseService {
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
-	/** @unused_api @protected @arg {GM_VE3832_Watch_WC['url']} x */
+	/** @unused_api @protected @arg {GM_VE3832_Watch['url']} x */
 	parse_url_VE3832(x) {if(!this.str_starts_with_rx("/watch?",x)) debugger;}
 	/** @api @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {
