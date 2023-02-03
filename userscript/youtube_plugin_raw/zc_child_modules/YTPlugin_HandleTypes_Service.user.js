@@ -8966,7 +8966,10 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[player.streamingData.expiresInSeconds]",expires_num);
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.z(formats,this.D_FormatItem);
-		this.t(probeUrl,x => this.parser.parse_url(cf,x));
+		this.t(probeUrl,x => {
+			debugger;
+			this.parser.parse_url(cf,as(x));
+		});
 	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {x;}
