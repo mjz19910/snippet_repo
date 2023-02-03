@@ -2652,6 +2652,7 @@ class HandleTypes extends HandleTypesEval {
 						if(!(k2 in x)) break x;
 						/** @type {`${cf1}:${k2}`} */
 						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
+						this.codegen_typedef_all(cf2,x);
 						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
 						switch(a.iconType) {
 							default: debugger; break;

@@ -5,6 +5,26 @@ type D_Button=
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
+		icon: T_Icon<"LOOP_ONE_ACTIVE">;
+		tooltip: "Turn off loop";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Turn off loop">;
+		command: C_CommandExecutor;
+	}
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		icon: T_Icon<"LOOP_ACTIVE">;
+		tooltip: "Loop video";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Loop video">;
+		command: C_CommandExecutor;
+	}
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
 		icon: T_Icon<"LOOP">;
 		tooltip: "Loop playlist";
 		trackingParams: string;
