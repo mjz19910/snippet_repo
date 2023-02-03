@@ -457,8 +457,8 @@ class CodegenService extends BaseService {
 		state.k1=k1;
 		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
-		/** @private @type {A_FrameworkUpdates} */
-		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
+		/** @private @type {R_FrameworkUpdates} */
+		if(k1==="frameworkUpdates") return "TYPE::R_FrameworkUpdates";
 		/** @private @type {D_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::D_LoggingDirectives";
 		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";

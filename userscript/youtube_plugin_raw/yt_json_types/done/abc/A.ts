@@ -27,9 +27,9 @@ type A_ActionAddVideo={
 	action: "ACTION_ADD_VIDEO";
 };
 type A_ActionSetPlaylistVideoOrder={action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";};
-type A_BrowserMediaSession={browserMediaSession: R_BrowserMediaSession;}&T_Actions<R_LikeButton>;
-type A_ExternalChannelId={externalChannelId: `UC${string}`;};
-type A_FrameworkUpdates={
+type D_BrowserMediaSession={browserMediaSession: R_BrowserMediaSessionRenderer;}&T_Actions<R_LikeButton>;
+type D_ExternalChannelId={externalChannelId: `UC${string}`;};
+type R_FrameworkUpdates={
 	entityBatchUpdate: DC_EntityBatchUpdate;
 	elementUpdate?: R_ElementUpdate;
 };
@@ -39,7 +39,7 @@ type GA_ResponseReceived=
 type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;
 //#endregion
 //#region AD_
-type AD_BrowserMediaSession={};
+type D_BrowserMediaSessionRenderer={};
 //#endregion
 type AC_Executor=[
 	A_ChangeEngagementPanelVisibility,

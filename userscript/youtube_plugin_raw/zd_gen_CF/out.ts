@@ -262,6 +262,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AccountItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ChangeEngagementPanelVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_HideEngagementPanelTargetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ShowEngagementPanelScrim";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Signal";}
@@ -269,8 +270,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_BrowseFeed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_BrowserMediaSession";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CommentsSectionContinuation";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_ExternalChannelId";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_FrameworkUpdates";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_AdsControlFlowOpportunityReceived";}
@@ -372,6 +371,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableSurveyResponse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableTab";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableVideoDescriptionBody";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExternalChannelId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Factoid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeaturedChannel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeedFilterChipBar";}
@@ -629,7 +629,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ChannelPage";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_EngagementPanelTargetId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_FrameworkUpdates";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
@@ -701,6 +701,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddChatItem";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_ChangeEngagementPanelVisibility";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_HideEnclosing";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_HideEngagementPanelScrim";}

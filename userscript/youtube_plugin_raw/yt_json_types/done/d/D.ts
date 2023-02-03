@@ -2429,7 +2429,7 @@ type D_PlayerOverlay={
 	addToMenu: R_Menu;
 	videoDetails: R_PlayerOverlayVideoDetails;
 	autonavToggle: R_AutoplaySwitchButton;
-}|A_BrowserMediaSession|{
+}|D_BrowserMediaSession|{
 	endScreen: R_WatchNextEndScreen;
 	autoplay: R_PlayerOverlayAutoplay;
 	shareButton: R_Button;
@@ -2671,7 +2671,7 @@ type D_RootVisualElementType=[
 	96368,
 ][number];
 type D_RunAttestation={
-	ids: A_ExternalChannelId[];
+	ids: D_ExternalChannelId[];
 	engagementType: "ENGAGEMENT_TYPE_SUBSCRIBE";
 };
 type D_Saved={

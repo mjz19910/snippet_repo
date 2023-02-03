@@ -1079,8 +1079,8 @@ class HandleTypes extends HandleTypesEval {
 	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay","playerOverlayAutoplayRenderer",x,this.D_PlayerOverlayAutoplay);}
 	/** @private @arg {R_WatchNextEndScreen} x */
 	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
-	/** @private @arg {R_BrowserMediaSession} x */
-	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.AD_BrowserMediaSession);}
+	/** @private @arg {R_BrowserMediaSessionRenderer} x */
+	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
 	/** @private @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {R_MenuFlexibleItem} x */
@@ -1532,7 +1532,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 		this.R_DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R_CinematicContainer);
-		this.A_FrameworkUpdates(frameworkUpdates);
+		this.R_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
@@ -1549,13 +1549,33 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(a11ySkipNavigationButton);
 		this.R_Button(voiceSearchButton);
 	}
-	/** @private @arg {A_FrameworkUpdates} x */
-	A_FrameworkUpdates(x) {
-		const cf="A_FrameworkUpdates"; this.k(cf,x);
+	/** @private @arg {R_FrameworkUpdates} x */
+	R_FrameworkUpdates(x) {
+		const cf="R_FrameworkUpdates"; this.k(cf,x);
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
+	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
+	/** @private @arg {A_HideEnclosing} x */
+	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
+	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
+	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
+	/** @private @arg {A_HideEngagementPanelScrim} x */
+	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
+	/** @private @arg {A_SendFeedback} x */
+	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
+	/** @private @arg {A_AddToGuideSection} x */
+	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
+	/** @private @arg {A_AddChatItem} x */
+	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
+	/** @private @arg {A_UndoFeedback} x */
+	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
 	/** @private @arg {RSB_EditPlaylist} x */
 	RSB_EditPlaylist(x) {
 		const cf="RSB_EditPlaylist"; this.k(cf,x);
@@ -1804,8 +1824,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!token_bin) {debugger; return;}
 		this.save_number("undo_token[0]",token_bin[0]);
 	}
-	/** @private @arg {A_UndoFeedback} x */
-	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
 	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
 	G_DE_Browse_VE(ve_name,x) {
 		const cf="G_DE_Browse_VE";
@@ -3421,7 +3439,7 @@ class HandleTypes extends HandleTypesEval {
 		if("pdgBuyFlowRenderer" in pu) {this.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
 		this.trackingParams(cf,trackingParams);
-		this.A_FrameworkUpdates(frameworkUpdates);
+		this.R_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {D_SuperVodBuyFlowContent} x */
 	D_SuperVodBuyFlowContent(x) {
@@ -3858,7 +3876,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(engagementPanels,this.R_EngagementPanelSectionList);
 		this.t(topbar,this.R_DesktopTopbar);
 		this.tz(pageVisualEffects,this.R_CinematicContainer);
-		this.t(frameworkUpdates,this.A_FrameworkUpdates);
+		this.t(frameworkUpdates,this.R_FrameworkUpdates);
 		this.t(videoReporting,this.R_ReportFormModal);
 		this.t(queueContextParams,a => this.params(cf,"next.queue_context_params",a));
 		this.t(continuationContents,this.RC_PlaylistPanel);
@@ -4037,8 +4055,6 @@ class HandleTypes extends HandleTypesEval {
 		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @private @arg {A_Signal} x */
-	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
 	/** @private @arg {AD_Signal} x */
 	AD_Signal(x) {
 		const cf="AD_Signal"; this.k(cf,x);
@@ -4222,7 +4238,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerOverlay} x */
 	D_PlayerOverlay(x) {
 		const cf="D_PlayerOverlay"; this.k(cf,x);
-		if("browserMediaSession" in x) return this.A_BrowserMediaSession(x);
+		if("browserMediaSession" in x) return this.D_BrowserMediaSession(x);
 		const {endScreen,shareButton,addToMenu,videoDetails,...y}=this.s(cf,x);
 		this.R_WatchNextEndScreen(endScreen);
 		this.R_Button(shareButton);
@@ -4321,9 +4337,9 @@ class HandleTypes extends HandleTypesEval {
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {A_BrowserMediaSession} x */
-	A_BrowserMediaSession(x) {
-		const cf="A_BrowserMediaSession"; this.k(cf,x);
+	/** @private @arg {D_BrowserMediaSession} x */
+	D_BrowserMediaSession(x) {
+		const cf="D_BrowserMediaSession"; this.k(cf,x);
 		const {actions,browserMediaSession,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,(x => {
 			if(!x.likeButtonRenderer) debugger;
@@ -5470,18 +5486,6 @@ class HandleTypes extends HandleTypesEval {
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
-	/** @private @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
-	/** @private @arg {A_HideEnclosing} x */
-	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
-	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
-	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
-	/** @private @arg {A_HideEngagementPanelScrim} x */
-	A_HideEngagementPanelScrim(x) {
-		let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
@@ -6881,7 +6885,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,this.RS_Subscribe_ActionItem);
 		this.g(newNotificationButton);
 		this.trackingParams(cf,trackingParams);
-		this.A_FrameworkUpdates(frameworkUpdates);
+		this.R_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
@@ -7246,8 +7250,6 @@ class HandleTypes extends HandleTypesEval {
 		if(beReused!==true) debugger;
 		return a;
 	}
-	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
 	/** @private @arg {AD_SendFeedback} x */
 	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
@@ -7338,7 +7340,7 @@ class HandleTypes extends HandleTypesEval {
 			x;
 		});
 		this.trackingParams(cf,trackingParams);
-		this.A_FrameworkUpdates(frameworkUpdates);
+		this.R_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
@@ -7518,13 +7520,10 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(hasPersistentPlaylistPanel);
 		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
 	}
-	/** @private @arg {A_AddToGuideSection} x */
-	A_AddToGuideSection(x) {
-		const cf="A_AddToGuideSection"; this.k(cf,x);
-		const {clickTrackingParams,addToGuideSectionAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AD_AddToGuideSection(addToGuideSectionAction);
-	}
+	/** @private @arg {A_ReplayChatItem} x */
+	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.DA_ReplayChatItem);}
+	/** @private @arg {A_AccountItem} x */
+	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {AD_AddToGuideSection} x */
 	AD_AddToGuideSection(x) {
 		const cf="AD_AddToGuideSection"; this.k(cf,x);
@@ -7820,11 +7819,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(serviceEndpoint,this.C_Continuation);
 		this.t(accessibility,this.D_Accessibility);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {AD_BrowserMediaSession} x */
-	AD_BrowserMediaSession(x) {
-		const cf="AD_BrowserMediaSession"; this.k(cf,x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
@@ -8515,12 +8509,12 @@ class HandleTypes extends HandleTypesEval {
 	D_RunAttestation(x) {
 		const cf="D_RunAttestation"; this.k(cf,x);
 		const {ids,engagementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(ids,this.A_ExternalChannelId);
+		this.z(ids,this.D_ExternalChannelId);
 		if(engagementType!=="ENGAGEMENT_TYPE_SUBSCRIBE") debugger;
 	}
-	/** @private @arg {A_ExternalChannelId} x */
-	A_ExternalChannelId(x) {
-		const cf="A_ExternalChannelId"; this.k(cf,x);
+	/** @private @arg {D_ExternalChannelId} x */
+	D_ExternalChannelId(x) {
+		const cf="D_ExternalChannelId"; this.k(cf,x);
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ChannelId(externalChannelId);
 	}
@@ -8699,8 +8693,6 @@ class HandleTypes extends HandleTypesEval {
 		if("hack" in x) return this.B_Hack(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {A_AccountItem} x */
-	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {AD_AccountItem} x */
 	AD_AccountItem(x) {
 		const cf="AD_AccountItem"; this.k(cf,x);
@@ -8911,10 +8903,10 @@ class HandleTypes extends HandleTypesEval {
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {A_ReplayChatItem} x */
-	A_ReplayChatItem(x) {const cf="A_ReplayChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {A_AddChatItem} x */
-	A_AddChatItem(x) {const cf="A_AddChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {DA_ReplayChatItem} x */
+	DA_ReplayChatItem(x) {x;}
+	/** @private @arg {DA_AddChatItem} x */
+	DA_AddChatItem(x) {x;}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
