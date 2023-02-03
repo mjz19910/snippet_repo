@@ -759,7 +759,7 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	D_TextRun(x,f_run) {
@@ -1492,7 +1492,7 @@ class HandleTypes extends HandleTypesEval {
 		if("richShelfRenderer" in x) return this.R_RichShelf(x);
 		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
 		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
@@ -1634,7 +1634,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_Page"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
@@ -1879,7 +1879,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		x===0;
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
 	GM_WC_ApiUrl(x) {
@@ -2248,14 +2248,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Browse_MD"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar"; this.k(cf,x);
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
@@ -2270,7 +2270,7 @@ class HandleTypes extends HandleTypesEval {
 		if("uploadEndpoint" in x) return this.E_Upload(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
 	D_CompactLink_Styled(cf,x) {
@@ -2332,7 +2332,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -2440,7 +2440,7 @@ class HandleTypes extends HandleTypesEval {
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		this.codegen_typedef_all(cf,x); x==="";
+		x===""; this.codegen_typedef_all(cf,x); x==="";
 	}
 	static {this.prototype.Button_navigationEndpoint;}
 	/** @private @arg {GE_Button_navigation} x */
@@ -2449,7 +2449,7 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
 	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
@@ -2848,7 +2848,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RG_Result"; this.k(cf,x);
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
@@ -2906,7 +2906,7 @@ class HandleTypes extends HandleTypesEval {
 		if("richItemRenderer" in x) return this.R_RichItem(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
@@ -2950,13 +2950,13 @@ class HandleTypes extends HandleTypesEval {
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
 		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
@@ -3015,7 +3015,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_MP_MenuNotificationSection_Item"; this.k(cf,x);
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
@@ -3203,7 +3203,7 @@ class HandleTypes extends HandleTypesEval {
 		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("commandExecutorCommand" in x) return this.C_RepeatChapter(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
@@ -3273,13 +3273,13 @@ class HandleTypes extends HandleTypesEval {
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
 		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {M_Next} x */
 	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
@@ -3338,7 +3338,7 @@ class HandleTypes extends HandleTypesEval {
 			default: break;
 		}
 		console.log("pt",x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
@@ -3494,7 +3494,7 @@ class HandleTypes extends HandleTypesEval {
 		if("watch" in x) {
 			if("hack" in x.watch&&x.watch.hack===true) return;
 		}
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
@@ -3739,7 +3739,7 @@ class HandleTypes extends HandleTypesEval {
 			this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 			return;
 		}
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
@@ -3819,7 +3819,7 @@ class HandleTypes extends HandleTypesEval {
 	D_NotificationMenu_Popup_SectionItem(x) {
 		const cf="D_NotificationMenu_Popup_SectionItem"; this.k(cf,x);
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 		return null;
 	}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
@@ -3849,7 +3849,7 @@ class HandleTypes extends HandleTypesEval {
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
 		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 		return null;
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
@@ -3891,7 +3891,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_NextContents"; this.k(cf,x);
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 		x===0;
 	}
 	/** @private @arg {RC_MainAppWebResponseContext} x */
@@ -4014,7 +4014,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
@@ -4323,7 +4323,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
 		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_BrowserMediaSession} x */
 	A_BrowserMediaSession(x) {
@@ -4372,7 +4372,7 @@ class HandleTypes extends HandleTypesEval {
 		if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
 		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
 		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	static {
 		this.prototype.D_Menu_Button;
@@ -4479,7 +4479,7 @@ class HandleTypes extends HandleTypesEval {
 		if("recordNotificationInteractionsEndpoint" in x) return this.E_RecordNotificationInteractions(x);
 		if("notificationOptOutEndpoint" in x) return this.E_NotificationOptOut(x);
 		x==="";
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf */
 	codegen_all_service_menu_icons(cf) {
@@ -4765,7 +4765,7 @@ class HandleTypes extends HandleTypesEval {
 	TD_ItemSection_3_I_1(x) {
 		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
@@ -5119,7 +5119,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_InFeedAdLayout_Content"; this.k(cf,x);
 		if("promotedSparklesWebRenderer" in x) return this.R_PromotedSparklesWeb(x);
 		if("displayAdRenderer" in x) return this.R_DisplayAd(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {const {adLayoutMetadata: a,renderingContent: b,...y}=this.s("D_InFeedAdLayout",x); this.g(y); this.MG_AdLayout(a); this.D_InFeedAdLayout_Content(b);}
@@ -5215,14 +5215,14 @@ class HandleTypes extends HandleTypesEval {
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_Watch_AnyResultItem} x */
 	G_Watch_AnyResultItem(x) {
 		const cf="G_SecondaryContentsItem"; this.k(cf,x);
 		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
 		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 		return null;
 	}
 	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
@@ -5236,7 +5236,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
 		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -5356,7 +5356,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -5437,8 +5437,8 @@ class HandleTypes extends HandleTypesEval {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		this.codegen_typedef_all(cf,x); x==="";
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x); x==="";
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {
@@ -5721,8 +5721,8 @@ class HandleTypes extends HandleTypesEval {
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		this.codegen_typedef_all(cf,x); x==="";
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x); x==="";
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
@@ -5965,7 +5965,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		this.codegen_typedef_all(cf,x); x==="";
+		x===""; this.codegen_typedef_all(cf,x); x==="";
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
@@ -6105,7 +6105,7 @@ class HandleTypes extends HandleTypesEval {
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
@@ -6136,14 +6136,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_BrowseContents"; this.k(cf,x);
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_ResponseReceived} x */
 	A_ResponseReceived(x) {
 		const cf="A_ResponseReceived"; this.k(cf,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	static {this.prototype.MC_ResolveUrl;}
 	/** @private @arg {MC_ResolveUrl} x */
@@ -6223,7 +6223,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ElementUpdate"; this.k(cf,x);
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
@@ -6342,7 +6342,7 @@ class HandleTypes extends HandleTypesEval {
 		let [cn,...cr]=kl;
 		if(cr.length!==0) debugger;
 		if(!cn) return null;
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 		this.codegen_typedef_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
 		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
 	}
@@ -6357,7 +6357,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_TopbarButtonItem"; this.k(cf,x);
 		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
 		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -6409,14 +6409,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_SecondaryContents"; this.k(cf,x);
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_WatchNext} x */
 	G_WatchNext(x) {
 		const cf="G_WatchNext"; this.k(cf,x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
@@ -6440,7 +6440,7 @@ class HandleTypes extends HandleTypesEval {
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
@@ -6457,7 +6457,7 @@ class HandleTypes extends HandleTypesEval {
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
@@ -6666,7 +6666,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ChipCloudChip_navigationEndpoint"; this.k(cf,x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
@@ -6855,7 +6855,7 @@ class HandleTypes extends HandleTypesEval {
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.UA_SubscribeButton(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
@@ -6873,7 +6873,7 @@ class HandleTypes extends HandleTypesEval {
 		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
 	D_LikeButton_Like(x) {
@@ -6925,7 +6925,7 @@ class HandleTypes extends HandleTypesEval {
 				return this[cn](a);
 			}
 		}
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
@@ -6936,7 +6936,7 @@ class HandleTypes extends HandleTypesEval {
 		if("adSlotRenderer" in x) return this.R_AdSlot(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 		this.G_Text(x);
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
@@ -7082,8 +7082,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ProfileColumnItem"; this.k(cf,x);
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		this.codegen_typedef_all(cf,x); x===0;
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x); x===0;
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
@@ -7123,8 +7123,8 @@ class HandleTypes extends HandleTypesEval {
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		this.codegen_typedef_all(cf,x); x===0;
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x); x===0;
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
@@ -7237,7 +7237,7 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint"; this.k(cf,x);
 		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointHeader} x */
 	D_CommentsEntryPointHeader(x) {
@@ -7254,7 +7254,7 @@ class HandleTypes extends HandleTypesEval {
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer"; this.k(cf,x);
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
 	D_CommentsEntryPointTeaser(x) {
@@ -7612,7 +7612,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_EngagementPanelMenu"; this.k(cf,x);
 		if("menuRenderer" in x) return this.R_Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_Hint} x */
 	D_Hint(x) {
@@ -7742,22 +7742,22 @@ class HandleTypes extends HandleTypesEval {
 		if("invalidationContinuationData" in x) return;
 		if("liveChatReplayContinuationData" in x) return;
 		if("playerSeekContinuationData" in x) return;
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_LiveChatMessageInput} x */
 	D_LiveChatMessageInput(x) {
 		const cf="D_LiveChatMessageInput"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
 	DC_PlaylistPanel(x) {
 		const cf="DC_PlaylistPanel"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
@@ -7776,7 +7776,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
@@ -7805,7 +7805,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_BrowserMediaSession} x */
 	AD_BrowserMediaSession(x) {
 		const cf="AD_BrowserMediaSession"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
@@ -8096,7 +8096,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) this.A_AccountItem(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
@@ -8213,7 +8213,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_RefreshPlaylist} x */
 	D_RefreshPlaylist(x) {
 		const cf="D_RefreshPlaylist"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
@@ -8678,7 +8678,7 @@ class HandleTypes extends HandleTypesEval {
 	AD_UndoFeedback(x) {
 		const cf="AD_UndoFeedback"; this.k(cf,x);
 		if("hack" in x) return this.B_Hack(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
@@ -8799,7 +8799,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
 		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {D_PlaylistPanel} x */
 	D_PlaylistPanel(x) {
