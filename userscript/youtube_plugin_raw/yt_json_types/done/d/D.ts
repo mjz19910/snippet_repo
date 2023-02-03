@@ -16,6 +16,33 @@ type D_UiTargetId=
 ;
 //#endregion
 //#region String data
+type D_TargetIdStr_NoFrom=
+	|"comments-section"
+	|"search-feed"
+	|"clip-info-button"
+	|"sponsorships-button"
+	;
+;
+type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
+type D_TargetIdStr=
+	|A_WatchNextContinuation['targetId']
+	|AD_AppendContinuationItems['targetId']
+	|AD_UpdateEngagementPanel['targetId']
+	|D_Button_TargetId
+	|D_ChipCloudChip_tid['targetId']
+	|D_EngagementPanelSectionTargetId
+	|D_Menu_TargetId
+	|D_TargetIdStr_NoFrom
+	|D_TargetIdStr_Template
+	|D_TranscriptSearchPanel['targetId']
+	|DC_ScrollToEngagementPanel['targetId']
+	|D_Button_targetId
+	|D_Button_TargetId
+	|G_SI_DB_EngagementPanel['targetId']
+	|RS_Search['targetId']
+	|TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId']
+	;
+;
 type D_PlaylistId=
 	|`RD${string}`
 	|`RDMM${string}`
@@ -265,26 +292,6 @@ type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
 	veType: 124975;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 };
-type D_TargetIdStr=[
-	Extract<D_Button,{targetId: any;}>["targetId"],
-	AD_AppendContinuationItems['targetId'],
-	TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId'],
-	"comments-section",
-	"search-feed",
-	D_EngagementPanelSectionTargetId,
-	DC_ScrollToEngagementPanel['targetId'],
-	RS_Search['targetId'],
-	D_TranscriptSearchPanel['targetId'],
-	AD_UpdateEngagementPanel['targetId'],
-	A_WatchNextContinuation['targetId'],
-	D_ChipCloudChip_tid['targetId'],
-	`shopping_panel_for_entry_point_${"5"|"22"}`,
-	"clip-info-button",
-	"sponsorships-button",
-	D_Menu_TargetId,
-	G_SI_DB_EngagementPanel['targetId'],
-	D_Button_TargetId
-][number];
 type D_TranscriptSearchPanel={
 	body: R_TranscriptSegmentList;
 	footer: R_TranscriptFooter;
@@ -318,15 +325,6 @@ type D_ShareButton={
 	serviceEndpoint: E_ShareEntityService;
 	icon: T_Icon<"SHARE">;
 	tooltip: "Share";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-};
-type D_Button_TODO={navigationEndpoint: GE_Button_navigation;}|{
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	text: G_Text;
-	icon: Exclude<D_Icon_Button,T_Icon<"CONTENT_CUT">>;
-	tooltip: string;
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
 };
@@ -408,16 +406,8 @@ type D_Button_2=
 	|D_Button_ClipInfoButton
 	;
 ;
-type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
-type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
-type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=T_Btn extends infer T? (T extends infer Y? Omit<Y,U>:never) extends infer Z? {[U in keyof Z]: Z[U]}:never:never;
-type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
-type D_Button_EX_1_Style=Extract<Exclude<D_Button,D_Button_EX_1_Command>,{style: any;}>;
-type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
 type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
-type D_Button_EX_1_SrvEp=Extract<Exclude<D_Button,D_Button_NP_1_Style>,{serviceEndpoint: any;}>;
 type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
-type D_Button_ER_1_Rest=Exclude<D_Button,D_Button_NP_1_SrvEp>;
 type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 type D_SubscriptionNotificationToggleButton={
@@ -1409,14 +1399,6 @@ type D_GuideEntry=
 	|TD_GuideEntry_Simple<"YOUTUBE_ROUND">
 	;
 ;
-type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
-type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
-type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
-type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
-type D_GuideEntry_IconType_Obj={
-	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
-	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
-};
 type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1: 1;}|"";
 //#endregion
 type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|`PL${string}`;};
@@ -2180,10 +2162,7 @@ type D_MenuNavigationItem={
 	trackingParams: string;
 	accessibility: TD_Accessibility<"Send feedback">;
 };
-type D_MenuServiceIcon=Extract<[
-	{icon: T_Icon<"FLAG">;},
-	{}
-][number],{icon: any;}>;
+type D_MenuServiceIcon={icon: T_Icon<"FLAG">;};
 type D_MenuServiceIconTypeStr=[
 	"SUBTITLES",
 	"PLAYLIST_ADD",
@@ -2324,11 +2303,6 @@ type D_NotificationText={
 	successResponseText: G_Text;
 	trackingParams: string;
 };
-type DC_Continuation_Omit_Return<T,y extends Omit<T,"token"|"request">=Omit<T,"token"|"request">>=
-	|["BROWSE",y]
-	|["REEL_WATCH_SEQUENCE",y]
-	|["WATCH_NEXT",y]
-	|[null,y];
 type D_OptionAv1Options={
 	id: "SETTINGS_OPTIONS_ID_TYPE_AV1_OPTIONS";
 	options: G_SettingsOptionItem[];
@@ -3349,3 +3323,38 @@ type D_DescriptionChapters={
 	onChapterRepeat: TA_OpenPopup_Empty;
 };
 type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
+//#region DoExtract & DoOmit
+type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
+type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=
+	T_Btn extends infer T?
+	T_OmitKey<T,U> extends infer Z?
+	{
+		[U in keyof Z]: Z[U]
+	}
+	:never
+	:never;
+type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
+type DC_Continuation_Omit_Return<T>=
+	Omit<T,"token"|"request"> extends infer y?
+	|["BROWSE",y]
+	|["REEL_WATCH_SEQUENCE",y]
+	|["WATCH_NEXT",y]
+	|[null,y]:
+	never;
+//#endregion
+//#region Extract & Exclude from data
+type D_Button_EX_1_Style=Extract<Exclude<D_Button,D_Button_EX_1_Command>,{style: any;}>;
+type D_Button_EX_1_SrvEp=Extract<Exclude<D_Button,D_Button_NP_1_Style>,{serviceEndpoint: any;}>;
+type D_Button_ER_1_Rest=Exclude<D_Button,D_Button_NP_1_SrvEp>;
+type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
+type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
+type D_Button_targetId=Extract<D_Button,{targetId: any;}>["targetId"];
+type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
+type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
+type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
+type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
+type D_GuideEntry_IconType_Obj={
+	WithNavEP: Extract<D_GuideEntry_WithNavEP,{icon: any;}>['icon']['iconType'][];
+	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
+};
+//#endregion

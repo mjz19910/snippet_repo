@@ -2347,10 +2347,10 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
 			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
 			case "search-feed": case "search-page": case "sponsorships-button":
-			case "watch-next-feed": case "watch-supervod-button":
+			case "watch-next-feed": case "watch-supervod-button": case "watch-related-menu-button":
 			case "browse-video-menu-button":
 			case "create-clip-button-action-bar": break;
-			default: x===""; this.codegen_case(cf,x); break;
+			default: x===""; this.codegen_case(`D_TargetIdStr:${cf}`,x); break;
 		}
 	}
 	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
@@ -4243,13 +4243,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu"; this.k(cf,x);
-		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {trackingParams,accessibility,items,targetId,flexibleItems,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_MenuItem);
 		/** @private @type {D_Menu_TargetId} */
 		this.t(targetId,a => this.targetId(cf,a));
-		this.t(loggingDirectives,this.D_LoggingDirectives);
+		// this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.tz(flexibleItems,this.R_MenuFlexibleItem);
 		this.tz(topLevelButtons,x => {
 			const cf="D_Menu_Button";
