@@ -3086,7 +3086,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Button_ToggledServiceEP(x) {
 		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
 		if("likeEndpoint" in x) return this.E_Like(x);
-		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
+		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
