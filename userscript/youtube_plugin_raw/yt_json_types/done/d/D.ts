@@ -1049,7 +1049,6 @@ type D_Notification={
 	trackingParams: string;
 	notificationId: `${number}`;
 };
-type D_DarkColorPalette_All=D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
 type D_DarkColorPalette_2={
 	section2Color: 4063436571;
 	primaryTitleColor: 4294961637;

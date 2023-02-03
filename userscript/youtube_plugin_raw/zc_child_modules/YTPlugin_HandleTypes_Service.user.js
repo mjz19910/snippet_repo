@@ -8558,13 +8558,24 @@ class HandleTypes extends HandleTypesEval {
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_LightColorPalette} x */
 	D_LightColorPalette(x) {
+		const cf="D_LightColorPalette";
+		if("section1Color" in x) {
+			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
+			{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s1_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s3_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			return;
+		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
 		{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
 		{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
 		{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
 	}
-	/** @private @arg {D_DarkColorPalette|D_DarkColorPalette_All} x */
+	/** @private @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(x) {
 		const cf="D_DarkColorPalette";
 		if("section1Color" in x) {
