@@ -160,7 +160,9 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MacroMarkersList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MacroMarkersListItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Menu:flexibleItems";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Menu:items";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Menu:targetId";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Menu:topLevelButtons";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MenuNavigationItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MenuServiceItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MerchandiseItem";}
@@ -415,10 +417,11 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersListItem";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu:flexibleItems";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu:items";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu:loggingDirectives";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu:targetId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu:topLevelButtons";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuFlexibleItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuNavigationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuServiceItem";}
