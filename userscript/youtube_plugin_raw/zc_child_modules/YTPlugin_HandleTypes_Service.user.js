@@ -4217,6 +4217,17 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen.codegen_renderer(x,`${cf}$${name}`);
 		debugger;
 	}
+	/** @private @arg {D_PlaylistLoopButton} x */
+	D_PlaylistLoopButton(x) {
+		const cf="D_PlaylistLoopButton";
+		this.save_keys(`[${cf}]`,x);
+		const {states,currentState,playlistLoopStateEntityKey,...y}=this.s(cf,x); this.g(y);
+		this.z(states,this.R_PlaylistLoopButtonState);
+		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
+		this.primitive_of(playlistLoopStateEntityKey,"string");
+	}
+	/** @private @arg {R_PlaylistLoopButton} x @generated {D_Menu_Button$R_PlaylistLoopButton} */
+	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu"; this.k(cf,x);
@@ -4232,7 +4243,7 @@ class HandleTypes extends HandleTypesEval {
 			const cf="D_Menu_Button";
 			if("buttonRenderer" in x) return this.R_Button(x);
 			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-			if("playlistLoopButtonRenderer" in x) return this.GEN(cf,x);
+			if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(cf,x);
 			this.codegen_typedef_all(cf,x);
 		});
 	}

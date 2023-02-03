@@ -1,1 +1,1 @@
-type R_PlaylistLoopButton={playlistLoopButtonRenderer: PlaylistLoopButton;};
+type R_PlaylistLoopButton={playlistLoopButtonRenderer: D_PlaylistLoopButton;};

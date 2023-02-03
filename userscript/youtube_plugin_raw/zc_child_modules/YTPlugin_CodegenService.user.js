@@ -194,7 +194,7 @@ class CodegenService extends BaseService {
 		let tmp0=`
 		d1!/** @private @arg {${kn}} x */
 		d1!${kn}(x) {
-			${body_2}
+			d2!${body_2}
 		d1!}
 		`;
 		if(next_req.length>0) {
@@ -1014,23 +1014,20 @@ class CodegenService extends BaseService {
 	}
 	/** @private @arg {string[]} res @arg {string} k1 @arg {string} x */
 	generate_code_for_string(res,k1,x) {
+		function gen_str() {
+			res.push(`this.a_primitive_str(${k1});`);
+		}
 		if(k1==="playlistId") {if(x.startsWith("RD")) {res.push(`this.str_starts_with("RD",${k1},"string");`);} }
-		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`); return;}
+		if(k1=="videoId") return gen_str();
 		let x2=x;
 		let ret_arr=res;
-		if(x2.startsWith("https:")) {
-			ret_arr.push(`this.primitive_of(${k1},"string");`);
-			return;
-		}
+		if(x2.startsWith("https:")) return gen_str();
 		let u_count=[...new Set(x2.split("").sort())].join("").length;
 		if(x2.includes("%")) {
-			if(u_count>13) {
-				ret_arr.push(`this.primitive_of(${k1},"string");`);
-				return;
-			}
+			if(u_count>13) return gen_str();
 		}
 		console.log("[unique_chars_count]",k1,[...new Set(x2.split("").sort())].join("").length);
-		ret_arr.push(`if(${k1}!=="${x2}") debugger;`); x;
+		ret_arr.push(`if(${k1}!=="${x2}") debugger;`);
 	}
 }
 export_(exports => {

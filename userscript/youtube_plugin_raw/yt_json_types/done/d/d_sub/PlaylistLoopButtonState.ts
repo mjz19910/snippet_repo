@@ -1,1 +1,0 @@
-type PlaylistLoopButtonState={state: "PLAYLIST_LOOP_STATE_NONE"; button: R_Button;};
