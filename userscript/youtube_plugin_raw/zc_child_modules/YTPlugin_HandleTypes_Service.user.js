@@ -4255,23 +4255,31 @@ class HandleTypes extends HandleTypesEval {
 		this.prototype.D_Menu_Button;
 	}
 	/** @private @arg {D_Menu} x */
-	D_Menu(x) {
-		const cf="D_Menu"; this.k(cf,x);
-		const {trackingParams,accessibility,items,targetId,...y}=this.s(cf,x);/*#destructure_later*/
+	D_Menu_Omit(x) {
+		const cf="D_Menu";
+		const {trackingParams,accessibility,items,...y}=this.s(cf,x);/*#destructure_later*/
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
-		this.tz(items,this.G_MenuItem);
-		/** @private @type {D_Menu_TargetId} */
-		this.t(targetId,a => this.targetId(cf,a));
+		this.z(items,this.G_MenuItem);
+		return y;
+	}
+	/** @private @arg {D_Menu} x1 */
+	D_Menu(x1) {
+		const cf="D_Menu";
+		let x=this.D_Menu_Omit(x1);/*#destructure_later*/
+		if("targetId" in x) {
+			const {targetId,...y}=x; this.g(y);/*#destructure_done*/
+			/** @private @type {D_Menu_TargetId} */
+			this.t(targetId,a => this.targetId(cf,a));
+			return;
+		}
+		const {topLevelButtons,flexibleItems,...y}=x;/*#destructure_later*/
 		// this.t(loggingDirectives,this.D_LoggingDirectives);
-		if("flexibleItems" in y) {
+		this.z(flexibleItems,this.R_MenuFlexibleItem);
+		this.z(topLevelButtons,this.D_Menu_Button);
+		if("loggingDirectives" in y) {
 			debugger;
 		}
-		if("topLevelButtons" in y) {
-			debugger;
-		}
-		// this.tz(flexibleItems,this.R_MenuFlexibleItem);
-		// this.tz(topLevelButtons,this.D_Menu_Button);
 		this.g(y);
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
