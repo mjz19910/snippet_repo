@@ -1,4 +1,5 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [entity_key.normal.f2.f1]",
 	"[parse_value.gen_ns] [playability_status.context_params.f2.f1]",
 ];
 type P_ParamParse=

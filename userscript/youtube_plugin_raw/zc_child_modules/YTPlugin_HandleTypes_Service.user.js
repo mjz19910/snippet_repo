@@ -371,6 +371,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "entity_key.normal.f2": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "playability_status.context_params.f2": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "playability_status.context_params": switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "watch_playlist.params.f27": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -6279,6 +6284,27 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(seconds);
 		this.a_primitive_num(nanos);
 	}
+	/** @private @arg {D_EY_Offlineability} x */
+	D_EY_Offlineability(x) {
+		const cf="D_EY_Offlineability";
+		if("command" in x) {
+			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);
+			this.params(`${cf}.key`,"entity.key",key);
+			console.log(`${cf}.command`,command);
+			switch(addToOfflineButtonState) {
+				default: debugger; break;
+				case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
+				case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED":
+			}
+			if(contentCheckOk!==false) debugger;
+			if(racyCheckOk!==false) debugger;
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		const {key,addToOfflineButtonState,...y}=this.s(cf,x); this.g(y);
+		if(addToOfflineButtonState!=="ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN") debugger;
+		this.params(`${cf}.key`,"entity.key",key);
+	}
 	/** @private @arg {DE_MutationItem} x */
 	DE_MutationItem(x) {
 		const cf="DE_MutationItem"; this.k(cf,x);
@@ -6290,20 +6316,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!pr) return;
 		const [pi,px]=pr;
 		switch(pi) {
-			case "offlineabilityEntity": {
-				const cf="D_EY_Offlineability";
-				const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				console.log(`${cf}.command`,command);
-				switch(addToOfflineButtonState) {
-					default: debugger; break;
-					case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
-					case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED":
-				}
-				if(contentCheckOk!==false) debugger;
-				if(racyCheckOk!==false) debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
+			case "offlineabilityEntity": this.D_EY_Offlineability(px); break;
 			case "subscriptionStateEntity": {
 				const cf="DS_EY_Subscription";
 				const {key,subscribed,...y}=this.s(cf,px); this.g(y);
@@ -8986,7 +8999,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,...y}=this.s(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,...y}=this.s(cf,x);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
@@ -9000,9 +9013,17 @@ class HandleTypes extends HandleTypesEval {
 		this.t(attestation,this.R_PlayerAttestation);
 		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
 		this.t(captions,this.R_PlayerCaptionsTracklist);
+		this.tz(adPlacements,x => {
+			if("adPlacementRenderer" in x) return this.R_AdPlacement(x);
+			let ka=this.get_keys_of(x);
+			if(ka.length!==0) debugger;
+		});
+		this.R_FrameworkUpdates(frameworkUpdates);
 		console.log("[RS_Player.next_key] [%s]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
+	/** @private @arg {R_AdPlacement} x */
+	R_AdPlacement(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

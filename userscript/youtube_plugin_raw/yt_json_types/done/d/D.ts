@@ -227,6 +227,9 @@ type D_EY_Offlineability={
 	contentCheckOk: false;
 	racyCheckOk: false;
 	loggingDirectives: D_LoggingDirectives;
+}|{
+	key: string;
+	addToOfflineButtonState: "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN";
 };
 //#endregion
 type D_AddToPlaylistCreate={
