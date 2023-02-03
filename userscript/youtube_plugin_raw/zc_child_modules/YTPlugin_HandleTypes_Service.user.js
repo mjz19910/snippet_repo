@@ -7658,6 +7658,7 @@ class HandleTypes extends HandleTypesEval {
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
 		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
+		this.codegen_typedef_all(`${cf}:omit`,y);
 		this.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.G_Text(title);
