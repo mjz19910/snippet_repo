@@ -171,7 +171,7 @@ type G_BrowseSidebar=
 	|R_PlaylistSidebar
 	;
 ;
-type G_ChannelSwitcherContent=R_Button|R_AccountItem;
+type G_ChannelSwitcherContent=R_Button|A_AccountItem;
 type G_ChatItem=[
 	R_LiveChatTextMessage,
 	R_LiveChatPlaceholderItem,

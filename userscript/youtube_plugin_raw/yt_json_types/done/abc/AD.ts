@@ -19,7 +19,7 @@ type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE
 //#endregion
 type AD_ReelDismissal={onDismissalCompletionRenderer: RA_NotificationAction; trackingParams: string;};
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};
-type D_AccountItem={
+type AD_AccountItem={
 	accountName: G_Text;
 	accountPhoto: D_Thumbnail;
 	isSelected: boolean;

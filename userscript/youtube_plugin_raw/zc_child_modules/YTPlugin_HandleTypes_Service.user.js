@@ -989,8 +989,8 @@ class HandleTypes extends HandleTypesEval {
 	A_UpdateNotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateNotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
-	/** @private @arg {R_AccountItem} x */
-	R_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.D_AccountItem);}
+	/** @private @arg {A_AccountItem} x */
+	R_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -8684,9 +8684,9 @@ class HandleTypes extends HandleTypesEval {
 		if("hack" in x) return this.B_Hack(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_AccountItem} x */
-	D_AccountItem(x) {
-		const cf="D_AccountItem"; this.k(cf,x);
+	/** @private @arg {AD_AccountItem} x */
+	AD_AccountItem(x) {
+		const cf="AD_AccountItem"; this.k(cf,x);
 		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(accountName);
 		this.D_Thumbnail(accountPhoto);

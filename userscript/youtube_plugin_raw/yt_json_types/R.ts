@@ -1,5 +1,6 @@
 //#region Renderer
 type R_AboutThisAd={aboutThisAdRenderer: D_AboutThisAd;};
+type D_AccountItem={};
 type R_AccountItem={accountItemRenderer: D_AccountItem;};
 type R_AccountItemSection={accountItemSectionRenderer: D_AccountItemSection;};
 type R_AccountLinkButton={accountLinkButtonRenderer: D_AccountLinkButton;};
