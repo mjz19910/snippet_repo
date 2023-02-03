@@ -1049,33 +1049,61 @@ type D_Notification={
 	trackingParams: string;
 	notificationId: `${number}`;
 };
-type D_PlaylistPanelVideo={
-	title: G_Text;
-	longBylineText: G_Text;
-	thumbnail: D_Thumbnail;
-	lengthText: G_Text;
-	indexText: G_Text;
-	selected: true;
-	navigationEndpoint: E_Watch;
-	videoId: string;
-	shortBylineText: G_Text;
-	trackingParams: string;
-	menu: R_Menu;
-	thumbnailOverlays: G_ThumbnailOverlayItem[];
-	playlistSetVideoId: "56B44F6D10557CC6"|string;
-	lightColorPalette: {
-		section2Color: 4076401393;
-		primaryTitleColor: 4279833104;
-		secondaryTitleColor: 4286207567;
-		section4Color: 4075544541;
+type D_PlaylistPanelVideo=
+	|{
+		title: G_Text;
+		longBylineText: G_Text;
+		thumbnail: D_Thumbnail;
+		lengthText: G_Text;
+		indexText: G_Text;
+		selected: true;
+		navigationEndpoint: E_Watch;
+		videoId: string;
+		shortBylineText: G_Text;
+		trackingParams: string;
+		menu: R_Menu;
+		thumbnailOverlays: R_ThumbnailOverlayResumePlayback[];
+		playlistSetVideoId: string;
+		lightColorPalette: {
+			section2Color: 4076402417;
+			primaryTitleColor: 4279834128;
+			secondaryTitleColor: 4285555272;
+			section4Color: 4075546589;
+		};
+		darkColorPalette: {
+			section2Color: 4062716698;
+			primaryTitleColor: 4294964965;
+			secondaryTitleColor: 4291608227;
+			section4Color: 4060875528;
+		};
+	}
+	|{
+		title: G_Text;
+		longBylineText: G_Text;
+		thumbnail: D_Thumbnail;
+		lengthText: G_Text;
+		indexText: G_Text;
+		selected: true;
+		navigationEndpoint: E_Watch;
+		videoId: string;
+		shortBylineText: G_Text;
+		trackingParams: string;
+		menu: R_Menu;
+		thumbnailOverlays: G_ThumbnailOverlayItem[];
+		playlistSetVideoId: "56B44F6D10557CC6"|string;
+		lightColorPalette: {
+			section2Color: 4076401393;
+			primaryTitleColor: 4279833104;
+			secondaryTitleColor: 4286207567;
+			section4Color: 4075544541;
+		};
+		darkColorPalette: {
+			section2Color: 4063436571;
+			primaryTitleColor: 4294961637;
+			secondaryTitleColor: 4291602851;
+			section4Color: 4061728525;
+		};
 	};
-	darkColorPalette: {
-		section2Color: 4063436571;
-		primaryTitleColor: 4294961637;
-		secondaryTitleColor: 4291602851;
-		section4Color: 4061728525;
-	};
-};
 type D_PlaylistSidebarPrimaryInfo={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	title: G_Text;
