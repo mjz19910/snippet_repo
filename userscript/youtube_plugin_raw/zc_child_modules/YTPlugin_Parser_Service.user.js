@@ -460,8 +460,8 @@ class ParserService extends BaseService {
 			let t_at=map_entry_key_path.at(-1);
 			if(t_at===void 0) return;
 			this.parse_value(root,path,map,mk,map_entry_key_path,map.get(t_at),callback);
-		}
-		return parse_key
+		};
+		return parse_key;
 	}
 	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_player_param(root,path,map,callback) {
@@ -539,7 +539,8 @@ class ParserService extends BaseService {
 		let host_starts_with=(x,v) => {return this.str_starts_with_rx(x.host,v);};
 		if(host_starts_with(r,"yt")) {
 			let c=split_string(r.pathname,"=");
-			let v=split_string(c[1],"-");
+			let qr=c[1];
+			let v=split_string(qr,"-");
 			let h=split_string(r.host,".");
 			if(this.TODO_true) return;
 			console.log("yt_ggpht_url",h[0],c[0],v);
@@ -558,14 +559,18 @@ class ParserService extends BaseService {
 			case "m.youtube.com": return;
 			default:
 		}
+		// cSpell:ignoreRegExp /r\d---sn-.+?"/
 		let s_host=split_string_once(r.host,".");
 		switch(s_host[1]) {
 			case "googlevideo.com": {
-				let x0=split_string_once(s_host[0],"---");
-				let x1=split_string_once(x0[0],"rr");
-				if(this.TODO_true) return;
-				/** @private @type {GV_SubDomain} */
-				console.log("google video sub domain",`rr${x1[1]}`);
+				switch(s_host[0]) {
+					default: debugger; break;
+					case "r1---sn-p5qlsny6": break;
+					case "r5---sn-nx57ynsd": break;
+				}
+				switch(r.pathname) {
+					case "/initplayback": r;break;
+				}
 			} return;
 			default:
 		}

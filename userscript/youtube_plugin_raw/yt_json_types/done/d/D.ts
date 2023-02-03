@@ -1735,7 +1735,7 @@ type D_CommentsHeaderContent={
 		R_CommentsHeader
 	];
 };
-type D_CommonConfig={url: `https://rr5---sn-nx57ynsd.googlevideo.com/initplayback?${string}`;};
+type D_CommonConfig={url: `https://r5---sn-nx57ynsd.googlevideo.com/initplayback?${string}`;};
 type D_CompactLinkStyle=[
 	`${"COMPACT_LINK_STYLE_TYPE"}_${[
 		"SETTINGS_SIDEBAR",
