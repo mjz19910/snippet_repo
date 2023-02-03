@@ -3103,7 +3103,7 @@ class HandleTypes extends HandleTypesEval {
 		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x); z=y;
 		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
-		this.ceq(isToggled,false);
+		this.a_primitive_bool(isToggled);
 		this.save_string("[D_ToggleButton.defaultIcon.type]",defaultIcon.iconType);
 		this.D_Button_DefServiceEP(defaultServiceEndpoint);
 		this.D_Button_ToggledServiceEP(toggledServiceEndpoint);

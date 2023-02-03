@@ -2,7 +2,7 @@ type D_ToggleButton=
 	|never
 	|{
 		style: T_StyleType<"STYLE_TEXT">;
-		isToggled: false;
+		isToggled: boolean;
 		isDisabled: false;
 		defaultIcon: T_Icon<"LIKE">;
 		defaultText: G_Text;
