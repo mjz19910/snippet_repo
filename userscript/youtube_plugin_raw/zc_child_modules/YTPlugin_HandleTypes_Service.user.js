@@ -4741,6 +4741,7 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpointSupportedPrefetchConfig" in x) return;
 		if("watchEndpointSupportedOnesieConfig" in x) return;
 		if("playlistId" in x) return;
+		if("params" in x) return;
 		if("videoId" in x) {
 			const cf="DE_VE3832:videoId";
 			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -8853,7 +8854,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_AdLayoutMetadata} x */
 	D_AdLayoutMetadata(x) {
-		const cf="D_AdLayoutMetadata"; this.k(cf,x);
+		const cf="D_AdLayoutMetadata";
 		const {layoutId,layoutType,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);
 		layoutId;
 		if(layoutType!=="LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED") debugger;
@@ -8928,7 +8929,22 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PdgCommentChip} x */
 	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_InfoRow} x */
-	D_InfoRow(x) {const cf="D_InfoRow"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	D_InfoRow(x) {
+		const cf="D_InfoRow";
+		const {title,defaultMetadata,expandedMetadata,expandIcon,trackingParams,infoRowExpandStatusKey,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.t(defaultMetadata,this.G_Text);
+		this.t(expandedMetadata,this.G_Text);
+		this.t(expandIcon,x => {if(x.iconType!=="EXPAND") debugger;});
+		this.trackingParams(cf,trackingParams);
+		this.t(infoRowExpandStatusKey,x => {
+			switch(x) {
+				default: debugger; break;
+				case "structured-description-music-section-artists-row-state-id":
+				case "structured-description-music-section-licenses-row-state-id":
+			}
+		});
+	}
 	/** @private @arg {D_PrivacyDropdownItem} x */
 	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */

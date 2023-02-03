@@ -152,6 +152,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Hint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HorizontalCardList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HotkeyDialog";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InfoRow";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LikeButton.rest";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LoggingDirectives";}
@@ -397,6 +398,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSectionOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InfoRow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}

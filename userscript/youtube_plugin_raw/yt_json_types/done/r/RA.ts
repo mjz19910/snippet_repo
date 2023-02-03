@@ -4,6 +4,11 @@ type DE_VE3832_Watch=
 	|{videoId: string;}
 	|{
 		videoId: string;
+		params: string;
+		playerParams: string;
+	}
+	|{
+		videoId: string;
 		nofollow: true;
 		watchEndpointSupportedOnesieConfig: R_Html5PlaybackOnesieConfig;
 	}
