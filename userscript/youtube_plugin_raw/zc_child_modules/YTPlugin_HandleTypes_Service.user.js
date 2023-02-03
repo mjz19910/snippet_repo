@@ -963,6 +963,34 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#endregion
 	//#region general done
+	/** @private @arg {A_GetMultiPageMenu} x */
+	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
+	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
+	/** @private @arg {A_HideEnclosing} x */
+	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
+	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
+	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
+	/** @private @arg {A_HideEngagementPanelScrim} x */
+	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
+	/** @private @arg {A_SendFeedback} x */
+	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
+	/** @private @arg {A_AddToGuideSection} x */
+	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
+	/** @private @arg {A_AddChatItem} x */
+	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
+	/** @private @arg {A_UndoFeedback} x */
+	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
+	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
+	A_UpdateNotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("A_UpdateNotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
+	/** @private @arg {A_ReplayChatItem} x */
+	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
+	/** @private @arg {R_AccountItem} x */
+	R_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.D_AccountItem);}
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -1121,8 +1149,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
-	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
 	/** @private @arg {R_ReelPlayerHeader} x */
@@ -1556,26 +1582,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
-	/** @private @arg {A_Signal} x */
-	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
-	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
-	/** @private @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
-	/** @private @arg {A_HideEnclosing} x */
-	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
-	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
-	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
-	/** @private @arg {A_HideEngagementPanelScrim} x */
-	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
-	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
-	/** @private @arg {A_AddToGuideSection} x */
-	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
-	/** @private @arg {A_AddChatItem} x */
-	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
-	/** @private @arg {A_UndoFeedback} x */
-	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.AD_UndoFeedback(a);}
 	/** @private @arg {RSB_EditPlaylist} x */
 	RSB_EditPlaylist(x) {
 		const cf="RSB_EditPlaylist"; this.k(cf,x);
@@ -4341,10 +4347,7 @@ class HandleTypes extends HandleTypesEval {
 	D_BrowserMediaSession(x) {
 		const cf="D_BrowserMediaSession"; this.k(cf,x);
 		const {actions,browserMediaSession,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,(x => {
-			if(!x.likeButtonRenderer) debugger;
-			this.R_LikeButton(x);
-		}));
+		this.z(actions,this.R_LikeButton);
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
 	/** @private @arg {string} x */
@@ -5295,24 +5298,30 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_GetUnseenCount"; this.k(cf,x);
 		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(actions,(x => {
-			if("updateNotificationsUnseenCountAction" in x) return this.UA_NotificationsUnseenCount(x);
+			if("updateNotificationsUnseenCountAction" in x) return this.A_UpdateNotificationsUnseenCount(x);
 		}));
 		if(unseenCount!==void 0) this.a_primitive_num(unseenCount);
 	}
-	/** @private @arg {UA_NotificationsUnseenCount} x */
-	UA_NotificationsUnseenCount(x) {
-		const cf="UA_NotificationsUnseenCount"; this.k(cf,x);
-		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.U_NotificationsUnseenCount(updateNotificationsUnseenCountAction);
-	}
 	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
-	U_NotificationsUnseenCount(x) {
-		const cf="U_NotificationsUnseenCount"; this.k(cf,x);
+	AD_UpdateNotificationsUnseenCount(x) {
+		const cf="AD_UpdateNotificationsUnseenCount"; this.k(cf,x);
 		const {handlerData,unseenCount,timeoutMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(handlerData);
 		this.a_primitive_num(unseenCount);
 		this.a_primitive_num(timeoutMs);
+	}
+	/** @private @arg {AD_ShowEngagementPanelScrim} x */
+	AD_ShowEngagementPanelScrim(x) {
+		const cf="AD_ShowEngagementPanelScrim"; this.k(cf,x);
+		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
+		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
+		let [x1]=this.z(n,this.unpack_popup_dialog);
+		let [x2]=this.z(x1,x => {
+			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
+			return x[1];
+		});
+		this.z(x2,this.R_ConfirmDialog);
 	}
 	/** @private @arg {REG_DatasyncIds} x */
 	REG_DatasyncIds(x) {
@@ -5486,19 +5495,6 @@ class HandleTypes extends HandleTypesEval {
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {AD_ShowEngagementPanelScrim} x */
-	AD_ShowEngagementPanelScrim(x) {
-		const cf="AD_ShowEngagementPanelScrim"; this.k(cf,x);
-		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
-		let [x1]=this.z(n,this.unpack_popup_dialog);
-		let [x2]=this.z(x1,x => {
-			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
-			return x[1];
-		});
-		this.z(x2,this.R_ConfirmDialog);
 	}
 	/** @private @arg {D_ConfirmDialog} x */
 	D_ConfirmDialog(x) {
@@ -6184,7 +6180,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_AdsControlFlowOpportunityReceived"; this.k(cf,x);
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
-		this.tz(adSlotAndLayoutMetadata,(this.DMD_AdSlotAndLayoutItem));
+		this.tz(adSlotAndLayoutMetadata,(this.D_AdSlotAndLayoutItem));
 		this._primitive_of(isInitialLoad,"boolean");
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
@@ -6222,7 +6218,7 @@ class HandleTypes extends HandleTypesEval {
 	UA_EngagementPanel(x) {
 		const cf="UA_EngagementPanel"; this.k(cf,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_UpdateEngagementPanel(updateEngagementPanelAction);
+		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {D_AttBgChallenge} x */
@@ -6493,15 +6489,28 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @arg {C_FollowUp} x */
-	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
 	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_EntityBatchUpdate(a);}
 	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	C_EngagementPanelHeaderShowNavigationButton(x) {
+		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
+		this.DC_EngagementPanelHeaderShowNavigationButton(a);
+	}
 	/** @private @arg {C_GetPdgBuyFlow} x */
-	C_GetPdgBuyFlow(x) {let [a,y]=this.TE_Endpoint_2("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.DC_GetPdgBuyFlow(a);}
+	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {DC_RepeatChapter} x */
+	DC_RepeatChapter(x) {x;}
+	/** @private @arg {DC_AddFollowUpSurvey} x */
+	DC_AddFollowUpSurvey(x) {x;}
+	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
+	DC_EngagementPanelHeaderShowNavigationButton(x) {x;}
+	/** @private @arg {M_GetPdgBuyFlow} x */
+	M_GetPdgBuyFlow(x) {x;}
+	/** @private @arg {DC_EntityBatchUpdate} x */
+	DC_EntityBatchUpdate(x) {x;}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
 	/** @private @arg {DC_GetPdgBuyFlow} x */
@@ -6510,23 +6519,16 @@ class HandleTypes extends HandleTypesEval {
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(a);
-		this.buttonState_buttonId(b);
-	}
-	/** @private @arg {DC_UpdateToggleButtonState['buttonId']} x */
-	buttonState_buttonId(x) {
-		const cf="buttonState_buttonId"; this.k(cf,x);
-		this.save_enum("TOGGLE_BUTTON_ID_TYPE",x);
-		let ret=this.codegen.codegen_typedef("buttonState_buttonId",{button_id: x},true);
-		if(ret) {this.save_string(cf,ret);}
+		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
 	}
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
-	AD_HideEngagementPanelTargetId(x) {
-		const cf="AD_HideEngagementPanelTargetId"; this.k(cf,x);
-		const {engagementPanelTargetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(engagementPanelTargetId) {
-			default: debugger; break;
-			case "engagement-panel-clip-create": break;
-		}
+	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	/** @private @arg {AD_UpdateEngagementPanel} x */
+	AD_UpdateEngagementPanel(x) {
+		const cf="AD_UpdateEngagementPanel"; this.k(cf,x);
+		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_Transcript(content);
+		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {D_TopbarLogo} x */
 	D_TopbarLogo(x) {
@@ -6539,8 +6541,8 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(overrideEntityKey);
 	}
 	/** @private @arg {D_AdSlotAndLayoutItem} x */
-	DMD_AdSlotAndLayoutItem(x) {
-		const cf="DMD_AdSlotAndLayoutItem"; this.k(cf,x);
+	D_AdSlotAndLayoutItem(x) {
+		const cf="D_AdSlotAndLayoutItem"; this.k(cf,x);
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(adLayoutMetadata,this.MMD_AdLayout_TopImage);
 		this.DMD_AdSlot(adSlotMetadata);
@@ -6574,13 +6576,6 @@ class HandleTypes extends HandleTypesEval {
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED": break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
-	}
-	/** @private @arg {AD_UpdateEngagementPanel} x */
-	D_UpdateEngagementPanel(x) {
-		const cf="D_UpdateEngagementPanel"; this.k(cf,x);
-		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_Transcript(content);
-		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
@@ -7520,10 +7515,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(hasPersistentPlaylistPanel);
 		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
 	}
-	/** @private @arg {A_ReplayChatItem} x */
-	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.DA_ReplayChatItem);}
-	/** @private @arg {A_AccountItem} x */
-	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {AD_AddToGuideSection} x */
 	AD_AddToGuideSection(x) {
 		const cf="AD_AddToGuideSection"; this.k(cf,x);
@@ -8108,7 +8099,7 @@ class HandleTypes extends HandleTypesEval {
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
 		if("buttonRenderer" in x) return this.R_Button(x);
-		if("accountItem" in x) return this.A_AccountItem(x);
+		if("accountItem" in x) return this.R_AccountItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
@@ -8693,9 +8684,9 @@ class HandleTypes extends HandleTypesEval {
 		if("hack" in x) return this.B_Hack(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {AD_AccountItem} x */
-	AD_AccountItem(x) {
-		const cf="AD_AccountItem"; this.k(cf,x);
+	/** @private @arg {D_AccountItem} x */
+	D_AccountItem(x) {
+		const cf="D_AccountItem"; this.k(cf,x);
 		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(accountName);
 		this.D_Thumbnail(accountPhoto);
@@ -8904,7 +8895,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {DA_ReplayChatItem} x */
-	DA_ReplayChatItem(x) {x;}
+	AD_ReplayChatItem(x) {x;}
 	/** @private @arg {DA_AddChatItem} x */
 	DA_AddChatItem(x) {x;}
 	/** @private @arg {DD_Streaming} x */

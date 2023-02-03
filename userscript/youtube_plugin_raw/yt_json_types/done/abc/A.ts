@@ -21,7 +21,7 @@ type A_SetActivePanelItem={clickTrackingParams: string; setActivePanelItemAction
 type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPanelScrimAction: AD_ShowEngagementPanelScrim;};
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
-type A_AccountItem={accountItem: AD_AccountItem;};
+type R_AccountItem={accountItem: D_AccountItem;};
 type A_ActionAddVideo={
 	addedVideoId: string;
 	action: "ACTION_ADD_VIDEO";

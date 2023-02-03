@@ -141,7 +141,7 @@ type RSB_EditPlaylist={
 	trackingParams: string;
 };
 type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
-type G_AccountItemSection=A_AccountItem|R_CompactLink;
+type G_AccountItemSection=R_AccountItem|R_CompactLink;
 type G_AccountPageSettingsSections=[
 	"advanced",
 	"billing",
@@ -155,7 +155,7 @@ type G_Actions=
 	|A_GetMultiPageMenu
 	|A_RemoveFromGuideSection
 	|UA_ChannelSwitcherPage
-	|UA_NotificationsUnseenCount
+	|A_UpdateNotificationsUnseenCount
 	|UA_SubscribeButton
 	|C_RefreshPlaylist
 	|C_RunAttestation
@@ -171,7 +171,7 @@ type G_BrowseSidebar=
 	|R_PlaylistSidebar
 	;
 ;
-type G_ChannelSwitcherContent=R_Button|A_AccountItem;
+type G_ChannelSwitcherContent=R_Button|R_AccountItem;
 type G_ChatItem=[
 	R_LiveChatTextMessage,
 	R_LiveChatPlaceholderItem,
@@ -309,7 +309,7 @@ type GRC_ServiceTrackingParams=[
 ][number];
 type G_ResponseActions=
 	TA_OpenPopup_Empty|
-	UA_NotificationsUnseenCount|
+	A_UpdateNotificationsUnseenCount|
 	A_RemoveFromGuideSection|
 	A_AddToGuideSection|
 	never;
