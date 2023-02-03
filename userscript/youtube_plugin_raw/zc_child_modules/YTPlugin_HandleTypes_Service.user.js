@@ -8607,10 +8607,30 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: log_color("p_tc",x); debugger; break;}}
-		{const x=s_tc; switch(x) {default: log_color("s_tc",x); debugger; break;}}
-		{const x=s2_c; switch(x) {default: log_color("s2_c",x); debugger; break;}}
-		{const x=s4_c; switch(x) {default: log_color("s4_c",x); debugger; break;}}
+		{
+			const x=p_tc; switch(x) {
+				default: log_color("p_tc",x); debugger; break;
+				case 0xff191610:
+			}
+		}
+		{
+			const x=s_tc; switch(x) {
+				default: log_color("s_tc",x); debugger; break;
+				case 0xff706248:
+			}
+		}
+		{
+			const x=s2_c; switch(x) {
+				default: log_color("s2_c",x); debugger; break;
+				case 0xf2f8f6f1:
+			}
+		}
+		{
+			const x=s4_c; switch(x) {
+				default: log_color("s4_c",x); debugger; break;
+				case 0xf2ebe7dd:
+			}
+		}
 	}
 	/** @private @arg {string} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
