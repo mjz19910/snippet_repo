@@ -1067,8 +1067,8 @@ type D_DarkColorPalette_4={
 	section2Color: 4062716698;
 	section4Color: 4060875528;
 }|{
-	primaryTitleColor: 0xffa3bccc;
-	secondaryTitleColor: 0xf2112633;
+	primaryTitleColor: 0xffe5f5ff;
+	secondaryTitleColor: 0xffa3bccc;
 	section2Color: 0xf2112633;
 	section4Color: 0xf2081319;
 };
