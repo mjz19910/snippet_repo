@@ -24,8 +24,8 @@ type D_ToggleButton=
 		isToggled: false;
 		isDisabled: false;
 		defaultIcon: T_Icon<"SHUFFLE">;
-		defaultServiceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
-		toggledServiceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+		defaultServiceEndpoint: E_SE_Signal_Button;
+		toggledServiceEndpoint: E_SE_Signal_Button;
 		accessibility: TD_Label<"Shuffle playlist">;
 		trackingParams: string;
 		defaultTooltip: "Shuffle playlist";

@@ -399,7 +399,7 @@ type D_Button_2=
 ;
 type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
 type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
-type D_Button_SE=T_SE_Signal<M_SendPost,G_ClientSignal>|E_YpcGetOffers|E_ShareEntityService;
+type D_Button_SE=E_SE_Signal_Button|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 type D_SubscriptionNotificationToggleButton={
 	states: [
@@ -1320,7 +1320,7 @@ type D_GuideEntry_HelpService={
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
-	serviceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+	serviceEndpoint: E_SE_Signal_Button;
 };
 type D_GuideEntry_MyVideosTab={
 	navigationEndpoint: E_Url;
@@ -1350,7 +1350,7 @@ type D_GuideEntry=
 		trackingParams: string;
 		formattedTitle: G_Text;
 		accessibility: TD_Accessibility<"Send feedback">;
-		serviceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+		serviceEndpoint: E_SE_Signal_Button;
 	}
 	|{
 		icon: T_Icon<"EXPAND">;
@@ -2921,7 +2921,7 @@ type D_ThumbnailOverlayToggleButton_2={
 	toggledIcon: T_Icon<"PLAYLIST_ADD_CHECK">;
 	untoggledTooltip: "Add to queue";
 	toggledTooltip: "Added";
-	untoggledServiceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+	untoggledServiceEndpoint: E_SE_Signal_Button;
 	untoggledAccessibility: D_Accessibility;
 	toggledAccessibility: D_Accessibility;
 	trackingParams: string;
