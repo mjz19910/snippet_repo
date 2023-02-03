@@ -7165,7 +7165,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_ProfileColumnItem"; this.k(cf,x);
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef_all(cf,x); x===0;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
