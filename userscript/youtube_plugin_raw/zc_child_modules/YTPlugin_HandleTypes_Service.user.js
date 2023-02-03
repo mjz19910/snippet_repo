@@ -1493,6 +1493,8 @@ class HandleTypes extends HandleTypesEval {
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
+	/** @private @arg {R_PlaylistLoopButtonState} x @generated {R_PlaylistLoopButtonState} */
+	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection"; this.k(cf,x);
@@ -1546,13 +1548,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RS_Watch} x */
 	RS_Watch(x) {
-		const cf="RS_Watch"; this.k(cf,x);
-		if(this.is_normal_service(this)) {
-			this.x.get("yt_plugin").add_function({
-				name: "data",
-				data: {R_Watch: x,},
-			});
-		}
+		const cf="RS_Watch";
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_ResponseContext(responseContext);
 		this.R_TwoColumnWatchNextResults(contents);
@@ -1563,11 +1559,11 @@ class HandleTypes extends HandleTypesEval {
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 		this.R_DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R_CinematicContainer);
-		this.R_FrameworkUpdates(frameworkUpdates);
+		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
-		const cf="D_DesktopTopbar"; this.k(cf,x);
+		const cf="D_DesktopTopbar";
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TopbarLogo(logo);
 		this.R_FusionSearchbox(searchbox);
@@ -1580,9 +1576,9 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(a11ySkipNavigationButton);
 		this.R_Button(voiceSearchButton);
 	}
-	/** @private @arg {R_FrameworkUpdates} x */
-	R_FrameworkUpdates(x) {
-		const cf="R_FrameworkUpdates"; this.k(cf,x);
+	/** @private @arg {D_FrameworkUpdates} x */
+	D_FrameworkUpdates(x) {
+		const cf="D_FrameworkUpdates"; this.k(cf,x);
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
@@ -3450,7 +3446,7 @@ class HandleTypes extends HandleTypesEval {
 		if("pdgBuyFlowRenderer" in pu) {this.R_PdgBuyFlow(pu);}
 		pu.pdgBuyFlowRenderer;
 		this.trackingParams(cf,trackingParams);
-		this.R_FrameworkUpdates(frameworkUpdates);
+		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {D_SuperVodBuyFlowContent} x */
 	D_SuperVodBuyFlowContent(x) {
@@ -3887,7 +3883,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(engagementPanels,this.R_EngagementPanelSectionList);
 		this.t(topbar,this.R_DesktopTopbar);
 		this.tz(pageVisualEffects,this.R_CinematicContainer);
-		this.t(frameworkUpdates,this.R_FrameworkUpdates);
+		this.t(frameworkUpdates,this.D_FrameworkUpdates);
 		this.t(videoReporting,this.R_ReportFormModal);
 		this.t(queueContextParams,a => this.params(cf,"next.queue_context_params",a));
 		this.t(continuationContents,this.RC_PlaylistPanel);
@@ -4372,8 +4368,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_enum("PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
 	}
-	/** @private @arg {R_PlaylistLoopButtonState} x @generated {R_PlaylistLoopButtonState} */
-	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
 	/** @private @arg {D_PlaylistLoopButton} x */
 	D_PlaylistLoopButton(x) {
 		const cf="D_PlaylistLoopButton";
@@ -4387,6 +4381,20 @@ class HandleTypes extends HandleTypesEval {
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
 	/** @private @arg {R_Miniplayer} x */
 	R_Miniplayer(x) {this.H_("R_Miniplayer","miniplayerRenderer",x,this.D_Miniplayer);}
+	/** @private @arg {R_DesktopWatchAds} x */
+	R_DesktopWatchAds(x) {x;}
+	/** @private @arg {R_PlayerCaptionsTracklist} x */
+	R_PlayerCaptionsTracklist(x) {x;}
+	/** @private @arg {R_VideoQualityPromo} x */
+	R_VideoQualityPromo(x) {x;}
+	/** @private @arg {R_PlayerAttestation} x */
+	R_PlayerAttestation(x) {x;}
+	/** @private @arg {R_CardCollection} x */
+	R_CardCollection(x) {x;}
+	/** @private @arg {R_PlayerMicroformat} x */
+	R_PlayerMicroformat(x) {x;}
+	/** @private @arg {R_AdPlacement} x */
+	R_AdPlacement(x) {x;}
 	/** @private @arg {D_Menu_Button} x */
 	D_Menu_Button(x) {
 		const cf="D_Menu_Button";
@@ -4807,13 +4815,7 @@ class HandleTypes extends HandleTypesEval {
 	ItemSection_3_CommentItemSection(x) {
 		if(x[1]!=="comment-item-section") debugger;
 		if(x[2]!=="comments-section") debugger;
-		this.z(x[0],this.TD_ItemSection_3_I_1);
-	}
-	/** @private @arg {R_ContinuationItem} x */
-	TD_ItemSection_3_I_1(x) {
-		const cf="TR_ItemSection_3_I_1"; this.k(cf,x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		this.z(x[0],this.R_ContinuationItem);
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
@@ -6906,7 +6908,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,this.RS_Subscribe_ActionItem);
 		this.g(newNotificationButton);
 		this.trackingParams(cf,trackingParams);
-		this.R_FrameworkUpdates(frameworkUpdates);
+		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {G_StructuredDescriptionContentItem} x */
 	G_StructuredDescriptionContentItem(x) {
@@ -7361,7 +7363,7 @@ class HandleTypes extends HandleTypesEval {
 			x;
 		});
 		this.trackingParams(cf,trackingParams);
-		this.R_FrameworkUpdates(frameworkUpdates);
+		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
@@ -8976,8 +8978,6 @@ class HandleTypes extends HandleTypesEval {
 		const {playbackMode,...y}=this.s(cf,x); this.g(y);
 		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
 	}
-	/** @private @arg {R_DesktopWatchAds} x */
-	R_DesktopWatchAds(x) {x;}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {x;}
 	/** @private @arg {D_PlayerConfig} x */
@@ -8986,16 +8986,6 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoDetails(x) {x;}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {x;}
-	/** @private @arg {R_PlayerCaptionsTracklist} x */
-	R_PlayerCaptionsTracklist(x) {x;}
-	/** @private @arg {R_VideoQualityPromo} x */
-	R_VideoQualityPromo(x) {x;}
-	/** @private @arg {R_PlayerAttestation} x */
-	R_PlayerAttestation(x) {x;}
-	/** @private @arg {R_CardCollection} x */
-	R_CardCollection(x) {x;}
-	/** @private @arg {R_PlayerMicroformat} x */
-	R_PlayerMicroformat(x) {x;}
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
@@ -9018,15 +9008,12 @@ class HandleTypes extends HandleTypesEval {
 			let ka=this.get_keys_of(x);
 			if(ka.length!==0) debugger;
 		});
-		this.R_FrameworkUpdates(frameworkUpdates);
+		this.D_FrameworkUpdates(frameworkUpdates);
 		let ka=this.get_keys_of(y);
 		if(ka.length>0) {
 			console.log("[done.RS_Player.next_key] [%s]",ka[0]);
 		}
-		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
-	/** @private @arg {R_AdPlacement} x */
-	R_AdPlacement(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

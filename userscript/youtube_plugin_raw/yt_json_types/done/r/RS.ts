@@ -72,7 +72,7 @@ type RS_Watch={
 	engagementPanels: R_EngagementPanelSectionList[];
 	topbar: R_DesktopTopbar;
 	pageVisualEffects: R_CinematicContainer[];
-	frameworkUpdates: R_FrameworkUpdates;
+	frameworkUpdates: D_FrameworkUpdates;
 };
 type RS_Guide={
 	responseContext: RC_ResponseContext;
@@ -92,7 +92,7 @@ type RS_Next={
 	engagementPanels?: R_EngagementPanelSectionList[];
 	topbar?: R_DesktopTopbar;
 	pageVisualEffects?: R_CinematicContainer[];
-	frameworkUpdates?: R_FrameworkUpdates;
+	frameworkUpdates?: D_FrameworkUpdates;
 };
 type RS_Player={
 	responseContext: RC_ResponseContext;
@@ -111,7 +111,7 @@ type RS_Player={
 	attestation?: R_PlayerAttestation;
 	videoQualityPromoSupportedRenderers?: R_VideoQualityPromo;
 	adPlacements?: T_AnyObjectOrEmpty<R_AdPlacement>[];
-	frameworkUpdates: R_FrameworkUpdates;
+	frameworkUpdates: D_FrameworkUpdates;
 	endscreen?: R_Endscreen;
 	paidContentOverlay?: {};
 	annotations?: R_PlayerAnnotationsExpanded[];
@@ -166,7 +166,7 @@ type RS_Subscribe={
 	actions: G_RS_Subscribe_Action[];
 	newNotificationButton: {};
 	trackingParams: string;
-	frameworkUpdates: R_FrameworkUpdates;
+	frameworkUpdates: D_FrameworkUpdates;
 };
 type RS_Success={
 	responseContext: RC_ResponseContext;
@@ -176,7 +176,7 @@ type RS_Unsubscribe={
 	responseContext: RC_ResponseContext;
 	actions: (A_RemoveFromGuideSection|TA_OpenPopup_Empty|UA_SubscribeButton)[];
 	trackingParams: string;
-	frameworkUpdates: R_FrameworkUpdates;
+	frameworkUpdates: D_FrameworkUpdates;
 };
 type RS_Search_1={
 	responseContext: RC_ResponseContext;
