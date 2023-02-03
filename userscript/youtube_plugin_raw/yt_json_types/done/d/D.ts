@@ -1050,39 +1050,44 @@ type D_Notification={
 	notificationId: `${number}`;
 };
 type D_DarkColorPalette_2={
-	section2Color: 4063436571;
 	primaryTitleColor: 4294961637;
 	secondaryTitleColor: 4291602851;
+	section2Color: 4063436571;
 	section4Color: 4061728525;
 };
 type D_DarkColorPalette_3={
-	section2Color: 4063436046;
 	primaryTitleColor: 4294963429;
 	secondaryTitleColor: 4291605667;
+	section2Color: 4063436046;
 	section4Color: 4061728263;
 };
 type D_DarkColorPalette_4={
-	section2Color: 4062716698;
 	primaryTitleColor: 4294964965;
 	secondaryTitleColor: 4291608227;
+	section2Color: 4062716698;
 	section4Color: 4060875528;
+}|{
+	primaryTitleColor: 0xffa3bccc;
+	secondaryTitleColor: 0xf2112633;
+	section2Color: 0xf2112633;
+	section4Color: 0xf2081319;
 };
 type D_LightColorPalette_2={
-	section2Color: 4076401393;
 	primaryTitleColor: 4279833104;
 	secondaryTitleColor: 4286207567;
+	section2Color: 4076401393;
 	section4Color: 4075544541;
 };
 type D_LightColorPalette_3={
-	section2Color: 4076401905;
 	primaryTitleColor: 4279833616;
 	secondaryTitleColor: 4285881676;
+	section2Color: 4076401905;
 	section4Color: 4075545565;
 };
 type D_LightColorPalette_4={
-	section2Color: 4076402417;
 	primaryTitleColor: 4279834128;
 	secondaryTitleColor: 4285555272;
+	section2Color: 4076402417;
 	section4Color: 4075546589;
 };
 type D_PlaylistPanelVideo_Base={
@@ -1760,11 +1765,11 @@ type D_CustomEmoji={
 	isCustomEmoji: boolean;
 };
 type D_DarkColorPalette_1={
+	primaryTitleColor: 4294964453;
+	secondaryTitleColor: 4291607459;
 	section1Color: 4281871903;
 	section2Color: 4280819991;
 	section3Color: 4279833614;
-	primaryTitleColor: 4294964453;
-	secondaryTitleColor: 4291607459;
 	section4Color: 4278979079;
 };
 type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
