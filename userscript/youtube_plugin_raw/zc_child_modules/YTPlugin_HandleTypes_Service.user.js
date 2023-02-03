@@ -6029,7 +6029,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(currentIndex);
 		this.parser.parse_url(cf,playlistShareUrl);
 		this.R_Menu(menu);
-		if(localCurrentIndex!==25&&localCurrentIndex!==1&&localCurrentIndex!==0) debugger;
+		this.save_number("Playlist.localCurrentIndex",localCurrentIndex);
 		this.R_Menu(playlistButtons);
 		this._primitive_of(isInfinite,"boolean");
 		this._primitive_of(isEditable,"boolean");
