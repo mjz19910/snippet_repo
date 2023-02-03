@@ -9015,7 +9015,7 @@ class HandleTypes extends HandleTypesEval {
 		const {status,playableInEmbed,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
 		if(status!=="OK") debugger;
 		if(playableInEmbed!==true) debugger;
-		this.R_Button(offlineability);
+		this.t(offlineability,this.R_Button);
 		this.R_Miniplayer(miniplayer);
 		this.params(cf,"playability_status.context_params",contextParams);
 	}

@@ -2354,7 +2354,7 @@ type D_PivotButton={
 type D_PlayabilityStatus={
 	status: "OK";
 	playableInEmbed: true;
-	offlineability: R_Button;
+	offlineability?: R_Button;
 	miniplayer: R_Miniplayer;
 	contextParams: string;
 };
