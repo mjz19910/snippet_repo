@@ -3621,7 +3621,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,...y}=this.s(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,...y}=this.s(cf,x);
+		this.D_PlayabilityStatus(playabilityStatus);
+		this.t(streamingData,this.DD_Streaming);
 		console.log("[RS_Player.next_key]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
@@ -8965,7 +8967,7 @@ class HandleTypes extends HandleTypesEval {
 	D_LiveChat(x) {const cf="D_LiveChat"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_ReportFormModal} x */
 	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {RSB_EditPlaylist["playlistEditResults"][number]} x */
+	/** @private @arg {G_PlaylistEditResult} x */
 	G_PlaylistEditResult(x) {const cf="G_PlaylistEditResult"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {R_BrowseFeed} x */
 	R_BrowseFeed(x) {const cf="R_BrowseFeed"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
@@ -8989,6 +8991,10 @@ class HandleTypes extends HandleTypesEval {
 	A_ReplayChatItem(x) {const cf="A_ReplayChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {A_AddChatItem} x */
 	A_AddChatItem(x) {const cf="A_AddChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {DD_Streaming} x */
+	DD_Streaming(x) {
+		const cf="DD_Streaming";
+	}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

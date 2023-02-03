@@ -95,9 +95,6 @@ type GD_Icon=NonNullable<[
 	T_Icon<"LIBRARY_REMOVE">,
 	D_ThumbnailOverlayHoverText['icon']
 ][number]>;
-// TODO #6
-type GD_SD_Item={};
-type G_CommentsSection={};
 type GE_Button_navigation=E_ShareEntityService|E_Watch|GE_Browse;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 type GM_Base={
@@ -135,12 +132,11 @@ type GV_SubDomain=[
 
 type GM_Like=GM_LikeLike|GM_Dislike|GM_RemoveLike;
 type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
-
 type RSB_EditPlaylist={
 	responseContext: RC_ResponseContext;
 	actions: GA_EditPlaylist[];
 	status: "STATUS_SUCCEEDED";
-	playlistEditResults: {}[];
+	playlistEditResults: G_PlaylistEditResult[];
 	trackingParams: string;
 };
 type G_CardList_StyleType="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION";
