@@ -176,11 +176,12 @@ type D_VE6827_PageLocation=
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
-type ChannelSwitcherUrlFormat="/channel_switcher";
+type D_ChannelSwitcherUrlFormat="/channel_switcher";
 type D_ConnectionWhitelistItem="WIFI";
 type D_CountryCode="CA";
 type D_KnownGet="NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS,NOTIFICATION_RECOMMENDATION_WEB_CONTROL,NOTIFICATION_COMMENT_WEB_CONTROL,NOTIFICATION_COMMENT_REPLY_OTHER_WEB_CONTROL,NOTIFICATION_USER_MENTION_WEB_CONTROL,NOTIFICATION_RETUBING_WEB_CONTROL,EMAIL_KIDS_NEWSLETTER,EMAIL_BLOCK_ALL,EMAIL_MARKETING_NEWSLETTER,EMAIL_PAID_NEWSLETTER,EMAIL_CREATOR_NEWSLETTER";
 type D_Menu_TargetId="browse-video-menu-button";
+type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 //#endregion
 //#region Entity data, ie `D_EY_${string}`
 type D_EY_Offlineability={
@@ -3279,7 +3280,6 @@ type D_Button_With_TargetId=
 	}
 	;
 ;
-type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 //#endregion
 type D_ThumbnailsList={thumbnail: D_Thumbnail; trackingParams?: string;};
 type D_Thumbnail={
