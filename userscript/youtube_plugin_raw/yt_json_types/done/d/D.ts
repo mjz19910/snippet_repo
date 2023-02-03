@@ -2147,15 +2147,6 @@ type D_MacroMarkersList={
 	syncButtonLabel: G_Text;
 	trackingParams: string;
 };
-type D_Menu={
-	items?: G_MenuItem[];
-	trackingParams: string;
-	topLevelButtons?: (R_Button|R_SegmentedLikeDislikeButton)[];
-	accessibility?: D_Accessibility;
-	targetId?: D_Menu_TargetId;
-	loggingDirectives?: D_LoggingDirectives;
-	flexibleItems?: R_MenuFlexibleItem[];
-};
 type D_VideoLike_richThumbnail=R_MovingThumbnail;
 type D_MenuNavigationItem={
 	text: G_Text;
