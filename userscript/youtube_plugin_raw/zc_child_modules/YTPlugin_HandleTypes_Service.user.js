@@ -8976,8 +8976,10 @@ class HandleTypes extends HandleTypesEval {
 		switch(s_host[1]) {
 			case "googlevideo.com": {
 				switch(s_host[0]) {
+					/** @type {D_Probe_Domain} */
 					default: debugger; break;
 					case "r1---sn-p5qlsny6": break;
+					case "r2---sn-hp57knds": break;
 					case "r5---sn-nx57ynsd": break;
 				}
 				switch(x.pathname) {

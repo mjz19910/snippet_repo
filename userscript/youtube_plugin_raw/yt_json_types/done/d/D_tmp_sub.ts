@@ -10,9 +10,13 @@ type DA_ReplayChatItem={
 	actions: A_AddChatItem[];
 	videoOffsetTimeMsec: `${number}`;
 };
-// cSpell:ignoreRegExp /r1---sn-.+?googlevideo.com\/videogoodput/
+// cSpell:ignoreRegExp /r\d---sn-.+?"/
 type D_VideoId=string;
-type D_Youtube_Streaming_ProbeUrl=`https://r1---sn-p5qlsny6.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${string}&ip=${string}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${string}&key=${string}`;
+type D_Probe_Domain=[
+	"r2---sn-hp57knds",
+	"r1---sn-p5qlsny6",
+];
+type D_Youtube_Streaming_ProbeUrl=`https://${D_Probe_Domain[number]}.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${string}&ip=${string}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${string}&key=${string}`;
 
 type DD_Streaming={
 	expiresInSeconds: `${number}`;
