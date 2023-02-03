@@ -10,6 +10,9 @@ type P_LogItems=[
 	"[parse_value.gen_ns] [notification.opt_out.f4]",
 	"[parse_value.gen_ns] [notification.opt_out.f7]",
 	"[parse_value.gen_ns] [reel.params.f6]",
+	"[parse_value.gen_ns] [reel.sequence_params.f1]",
+	"[parse_value.gen_ns] [reel.sequence_params.f5]",
+	"[parse_value.gen_ns] [D_Browse.param.f110.f1.f20.f1]",
 ];
 type P_ParamParse=
 	|P_PathRootStr

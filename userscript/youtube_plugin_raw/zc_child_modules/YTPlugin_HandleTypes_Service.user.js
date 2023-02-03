@@ -369,6 +369,16 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return;
 			}
+			case "reel.sequence_params": switch(map_entry_key) {
+				case 1: case 5:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "D_Browse.param.f110.f1.f20": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "reel.params": switch(map_entry_key) {case 1: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "notification.opt_out": switch(map_entry_key) {
 				case 2: case 3: case 4: case 7:
