@@ -38,13 +38,13 @@ function generate_ts_setup {
 	generate_ts_init_cwd
 }
 function generate_ts_restore {
-	cp "gen_export_out.ts" "gen_export_cur.ts"
 	mv "tmp.ts" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/tmp.ts.bak"
+	mv "$TMP_DIR/errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
+	cp "gen_export_out.ts" "gen_export_cur.ts"
 	cp "out_empty.ts" "tmp.ts"
 	mv "$TMP_DIR/tmp.ts" "tmp.ts"
 	mv "tmp.ts" "out.ts"
 	cp "out_empty.ts" "tmp.ts"
-	mv "$TMP_DIR/errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
 	popd
 	cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 }
