@@ -15,6 +15,173 @@ type D_UiTargetId=
 	;
 ;
 //#endregion
+//#region String data
+type D_PlaylistId=
+	|`RD${string}`
+	|`RDMM${string}`
+	|`RDGM${string}`
+	|`PL${string}`
+	|"WL"
+	|"LL"
+	;
+;
+type D_RadioShareUrl=
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`
+	|`https://www.youtube.com/playlist?list=PL${string}`
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=PL${string}`
+	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`
+	;
+;
+type D_BrowseIdStr=
+	|`FE${D_BrowseEndpointPages}`
+	|`VL${`${"LL"|"WL"|`PL${string}`}`}`
+	|`UC${string}`
+	|`SP${D_Settings_Id}`
+	|`MP${"TRt"|"REb"|"LYt"}_${string}`
+	;
+;
+type D_UrlFormat=
+	|"/"
+	|"/channel_switcher"
+	|"/upload"
+	|"android-app://com.google.android.youtube/http/youtube.com/premium"
+	|`/@${string}`
+	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
+	|`/${D_ApiPathFormat_1}`
+	|`/account${""|`_${G_AccountPageSettingsSections}`}`
+	|`/api/stats/ads?${string}`
+	|`/channel/UC${string}`
+	|`/channel/UC${string}`
+	|`/feed/${D_BrowseEndpointPages}`
+	|`/feed/trending?${string}`
+	|`/gaming`
+	|`/playlist?${string}`
+	|`/premium`
+	|`/reporthistory`
+	|`/results?${string}`
+	|`/shorts/${string}`
+	|`/watch?${string}`
+	|`http://www.youtube.com/watch?${string}`
+	|`https://support.google.com/youtube/answer/${number}`
+	|`https://www.youtube.com/watch?${string}`
+	|D_ExternalUrlFormat
+	|D_VE6827_PageUrl
+	|YTExternalUrl
+	;
+;
+type WatchUrlFormat=
+	|D_WatchPageUrl
+	|`/watch?${D_WatchUrlStr}`
+	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
+	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
+	|`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`
+	;
+;
+type D_UrlFormatStr_2=
+	|"/channel_switcher"
+	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
+	|`/account${""|`_${G_AccountPageSettingsSections}`}`
+	|`/channel/UC${string}`
+	|`/feed/${D_BrowseEndpointPages}`
+	|`/feed/trending?bp=${string}`
+	|`/playlist?${D_PlaylistUrlParams}`
+	|`/results?search_query=${string}`
+	|`/shorts/${string}`
+	|`/watch?${D_WatchUrlStr}`
+	;
+;
+type D_VE6827_PageUrl=
+	|"/feed/guide_builder"
+	|`/feed/history`
+	|`/feed/library`
+	|`/feed/storefront?${string}`
+	|`/feed/trending?${string}`
+	|`/hashtag/${string}`
+	|"/hashtag/shorts/shorts"
+	|`/reporthistory`
+	;
+;
+type D_WatchPageUrl=
+	|`/watch?v=${string}&list=RD${string}&index=${number}`
+	|`/watch?v=${string}&list=RD${string}&start_radio=1`
+	|`/watch?v=${string}&pp=${string}`
+	|`/watch?v=${string}&t=${number}s`
+	|`/watch?v=${string}`
+	;
+;
+type D_WatchPlaylistUrlFormat=
+	|`list=${D_PlaylistId}`
+	|`list=${D_PlaylistId}&index=${number}`
+	|`list=${YtInfinitePlaylistFormat}&start_radio=${1|0}`
+	;
+;
+type D_WatchUrlStr=
+	|`v=${string}`
+	|`v=${string}&${G_YtWatchUrl}`
+	;
+;
+type D_Button_TargetId=
+	|"clip-info-button"
+	|"create-clip-button-action-bar"
+	|"sponsorships-button"
+	;
+;
+type D_ChannelPageGrid=
+	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
+	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"
+	;
+;
+type D_ContextTypeStr=
+	|"channel_creator"
+	|"yt_web_remix_unlimited"
+	|"yt_web_search"
+	|"yt_web_unknown_form_factor_kevlar_w2w"
+	|"yt_web_unlimited"
+	;
+;
+type D_Settings_Id=
+	|"account"
+	|"account_advanced"
+	|"account_overview"
+	|"report_history"
+	|"unlimited"
+	|"account_downloads"
+	;
+;
+type D_UrlInfoItemType=
+	|"PL"
+	|"RD"
+	|"RDGM"
+	|"RDMM"
+	|"RDCM"
+	;
+;
+type D_VideoCategory=
+	|"Science & Technology"
+	|"Film & Animation"
+	|"Autos & Vehicles"
+	|"People & Blogs"
+	|"Howto & Style"
+	|"Entertainment"
+	|"Gaming"
+	|"Comedy"
+	|"Music"
+	;
+;
+type D_VE6827_PageLocation=
+	|"history"
+	|"library"
+	;
+;
+type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
+type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
+type ChannelSwitcherUrlFormat="/channel_switcher";
+type D_ConnectionWhitelistItem="WIFI";
+type D_CountryCode="CA";
+type D_KnownGet="NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS,NOTIFICATION_RECOMMENDATION_WEB_CONTROL,NOTIFICATION_COMMENT_WEB_CONTROL,NOTIFICATION_COMMENT_REPLY_OTHER_WEB_CONTROL,NOTIFICATION_USER_MENTION_WEB_CONTROL,NOTIFICATION_RETUBING_WEB_CONTROL,EMAIL_KIDS_NEWSLETTER,EMAIL_BLOCK_ALL,EMAIL_MARKETING_NEWSLETTER,EMAIL_PAID_NEWSLETTER,EMAIL_CREATOR_NEWSLETTER";
+type D_Menu_TargetId="browse-video-menu-button";
+//#endregion
 //#region Entity data, ie `D_EY_${string}`
 type D_EY_Offlineability={
 	key: string;
@@ -80,8 +247,6 @@ type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
 	veType: 124975;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 };
-type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
-type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_TargetIdStr=[
 	Extract<D_Button,{targetId: any;}>["targetId"],
 	AD_AppendContinuationItems['targetId'],
@@ -261,13 +426,6 @@ type D_SubscriptionNotificationToggleButton={
 	targetId: "notification-bell";
 	secondaryIcon: T_Icon<"EXPAND_MORE">;
 };
-type D_RadioShareUrl=
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RDCMUC${string}`
-	|`https://www.youtube.com/playlist?list=PL${string}`
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=PL${string}`
-	|`https://www.youtube.com/watch?v=${string}&playnext=1&list=RD${string}`
-	;
-;
 type D_CompactRadio={
 	playlistId: `RD${string}`|`RDGM${string}`;
 	thumbnail: D_Thumbnail&R_SampledThumbnailColor;
@@ -1000,15 +1158,6 @@ type D_PlaylistPanel={
 	previewDescription?: {};
 	numItemsToShow?: 25;
 };
-type D_PlaylistId=
-	|`RD${string}`
-	|`RDMM${string}`
-	|`RDGM${string}`
-	|`PL${string}`
-	|"WL"
-	|"LL"
-	;
-;
 type D_Omit_Menu_Video={
 	thumbnail: D_Thumbnail;
 	longBylineText: G_Text;
@@ -1422,14 +1571,7 @@ type D_BrowseEndpointPages=[
 ][number]
 	;
 type D_BrowseFeedActions={contents: G_BrowseFeedContent[];};
-type D_BrowseIdStr=
-	|`FE${D_BrowseEndpointPages}`
-	|`VL${`${"LL"|"WL"|`PL${string}`}`}`
-	|`UC${string}`
-	|`SP${D_Settings_Id}`
-	|`MP${"TRt"|"REb"|"LYt"}_${string}`;
 type D_Browse_Id<T>={browseId: T;};
-type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
 type D_ButtonStyleType=[
 	"STYLE_ALERT_INFO",
 	"STYLE_BLUE_TEXT_WITH_INVERSE_THEME",
@@ -1456,12 +1598,6 @@ type D_ButtonStyleType=[
 	"STYLE_VISIBLY_DISABLED",
 	"STYLE_WHITE_WITH_BORDER",
 ][number];
-type D_Button_TargetId=
-	|"clip-info-button"
-	|"create-clip-button-action-bar"
-	|"sponsorships-button"
-	;
-;
 type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
@@ -1486,11 +1622,6 @@ type ChanTabStr=[
 type D_ChannelHeaderLinks={primaryLinks: D_PrimaryLinkItem[];};
 type ChannelId=`UC${string}`;
 type ChannelIdStr<T extends string>=`UC${T}`;
-type D_ChannelPageGrid=
-	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
-	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"
-	;
-;
 type ChannelSubUrl=ChanTabStr;
 type ChannelSubUrlFormat=ChannelSubUrl|`search?query=${string}`;
 type D_ChannelSwitcherHeader={
@@ -1501,7 +1632,6 @@ type D_ChannelSwitcherPage=Record<"contents",G_ChannelSwitcherContent[]>&{
 	header: R_ChannelSwitcherHeader;
 	targetId: "ceq";
 };
-type ChannelSwitcherUrlFormat="/channel_switcher";
 type ChannelUrlFormat=[
 	`/@${string}`,
 ][number];
@@ -1603,15 +1733,6 @@ type D_CompactLinkStyle=[
 	][number]}`,
 	"COMPACT_LINK_STYLE_TYPE_CREATION_MENU",
 ][number];
-type D_ConnectionWhitelistItem="WIFI";
-type D_ContextTypeStr=
-	|"channel_creator"
-	|"yt_web_remix_unlimited"
-	|"yt_web_search"
-	|"yt_web_unknown_form_factor_kevlar_w2w"
-	|"yt_web_unlimited"
-	;
-type D_CountryCode="CA";
 type DS_CreatePlaylist={
 	params?: string;
 	videoIds: string[];
@@ -1933,7 +2054,6 @@ type D_ItemSectionHeader={
 	title: G_Text;
 	subtitle: G_Text;
 };
-type D_KnownGet="NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS,NOTIFICATION_RECOMMENDATION_WEB_CONTROL,NOTIFICATION_COMMENT_WEB_CONTROL,NOTIFICATION_COMMENT_REPLY_OTHER_WEB_CONTROL,NOTIFICATION_USER_MENTION_WEB_CONTROL,NOTIFICATION_RETUBING_WEB_CONTROL,EMAIL_KIDS_NEWSLETTER,EMAIL_BLOCK_ALL,EMAIL_MARKETING_NEWSLETTER,EMAIL_PAID_NEWSLETTER,EMAIL_CREATOR_NEWSLETTER";
 type D_Label={label: string;};
 type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
 type D_LightColorPalette={
@@ -2060,7 +2180,6 @@ type D_MenuServiceItem_Separated<T extends string,T_EI>={
 	trackingParams: string;
 	hasSeparator: true;
 };
-type D_Menu_TargetId="browse-video-menu-button";
 type D_MerchandiseShelf={
 	title: string;
 	items: R_MerchandiseItem[];
@@ -2608,15 +2727,6 @@ type D_SettingsCheckbox={
 	disableServiceEndpoint: {};
 	disabled: boolean;
 };
-type D_Settings_Id=
-	|"account"
-	|"account_advanced"
-	|"account_overview"
-	|"report_history"
-	|"unlimited"
-	|"account_downloads"
-	;
-;
 type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_SettingsOptions={options: G_SettingsOptionItem[]; title: G_Text;};
 type D_SettingsRadioOption={
@@ -2991,68 +3101,10 @@ type D_UrlAndElapsedMediaTime={
 	baseUrl: string;
 	elapsedMediaTimeSeconds: number;
 };
-type D_UrlFormat=
-	|"/"
-	|"/channel_switcher"
-	|"/upload"
-	|"android-app://com.google.android.youtube/http/youtube.com/premium"
-	|`/@${string}`
-	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
-	|`/${D_ApiPathFormat_1}`
-	|`/account${""|`_${G_AccountPageSettingsSections}`}`
-	|`/api/stats/ads?${string}`
-	|`/channel/UC${string}`
-	|`/channel/UC${string}`
-	|`/feed/${D_BrowseEndpointPages}`
-	|`/feed/trending?${string}`
-	|`/gaming`
-	|`/playlist?${string}`
-	|`/premium`
-	|`/reporthistory`
-	|`/results?${string}`
-	|`/shorts/${string}`
-	|`/watch?${string}`
-	|`http://www.youtube.com/watch?${string}`
-	|`https://support.google.com/youtube/answer/${number}`
-	|`https://www.youtube.com/watch?${string}`
-	|D_ExternalUrlFormat
-	|D_VE6827_PageUrl
-	|YTExternalUrl
-	;
-;
 type YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type YTExternalUrl=T_SplitOnce<T_SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
-type WatchUrlFormat=
-	|D_WatchPageUrl
-	|`/watch?${D_WatchUrlStr}`
-	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
-	|`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`
-	;
-;
 type ResultsPageUrl=`/results?search_query=${string}`;
 type PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
-type D_UrlFormatStr_2=
-	|"/channel_switcher"
-	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
-	|`/account${""|`_${G_AccountPageSettingsSections}`}`
-	|`/channel/UC${string}`
-	|`/feed/${D_BrowseEndpointPages}`
-	|`/feed/trending?bp=${string}`
-	|`/playlist?${D_PlaylistUrlParams}`
-	|`/results?search_query=${string}`
-	|`/shorts/${string}`
-	|`/watch?${D_WatchUrlStr}`
-	;
-;
-type D_UrlInfoItemType=
-	|"PL"
-	|"RD"
-	|"RDGM"
-	|"RDMM"
-	|"RDCM"
-	;
-;
 type D_UrlInfoPlaylist={_tag: "playlist"; type: D_UrlInfoItemType; id: string;};
 type D_UrlInfoVideo={_tag: "video"; id: string;};
 type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
@@ -3060,52 +3112,8 @@ type D_UrlPlayNext={_tag: "play-next"; value: string;};
 type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
 type D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${string}.googlevideo.com/generate_204`;
 type RE_D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${GV_Dig_sn_nx}.googlevideo.com/generate_204`;
-type D_VE6827_PageLocation="history"|
-	"library";
-type D_VE6827_PageUrl=
-	|"/feed/guide_builder"
-	|`/feed/history`
-	|`/feed/library`
-	|`/feed/storefront?${string}`
-	|`/feed/trending?${string}`
-	|`/hashtag/${string}`
-	|"/hashtag/shorts/shorts"
-	|`/reporthistory`
-	;
-;
 type D_VE6827_PageUrl_parts=["feed",`trending?${string}`]|["feed",`storefront?${string}`]|["reporthistory"]|["feed","trending"|"history"|"library"|"storefront"|"guide_builder"]|["hashtag",string]|["hashtag","shorts","shorts"];
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
-type D_VideoCategory=
-	|"Science & Technology"
-	|"Film & Animation"
-	|"Autos & Vehicles"
-	|"People & Blogs"
-	|"Howto & Style"
-	|"Entertainment"
-	|"Gaming"
-	|"Comedy"
-	|"Music"
-	;
-;
-type D_WatchPageUrl=
-	|`/watch?v=${string}&list=RD${string}&index=${number}`
-	|`/watch?v=${string}&list=RD${string}&start_radio=1`
-	|`/watch?v=${string}&pp=${string}`
-	|`/watch?v=${string}&t=${number}s`
-	|`/watch?v=${string}`
-	;
-;
-type D_WatchPlaylistUrlFormat=
-	|`list=${D_PlaylistId}`
-	|`list=${D_PlaylistId}&index=${number}`
-	|`list=${YtInfinitePlaylistFormat}&start_radio=${1|0}`
-	;
-;
-type D_WatchUrlStr=
-	|`v=${string}`
-	|`v=${string}&${G_YtWatchUrl}`
-	;
-;
 type D_VideoDescriptionHeader={
 	title: G_Text;
 	channel: G_Text;
