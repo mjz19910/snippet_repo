@@ -53,7 +53,7 @@ function restore {
 	cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 }
 function gen_find_type_is_not {
-	grep -Po "(?<=of type )'\".+?\"'(?= is not).+ of type '(?!\")\w+'." "$@"
+	grep -Po "$(cat grep.args)" "$@"
 }
 function generate_ts {
 	# |{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
