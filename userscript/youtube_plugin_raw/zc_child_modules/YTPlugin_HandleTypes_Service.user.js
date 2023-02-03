@@ -2363,7 +2363,7 @@ class HandleTypes extends HandleTypesEval {
 		"",
 		"DELETE",
 	];
-	/** @protected @arg {"D_Button_With_TargetId"} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
+	/** @protected @arg {CF_D_Button} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
 	D_Button_TargetId(cf,x) {
 		///** @type {string} */
 		//let ux=x;
@@ -2453,10 +2453,9 @@ class HandleTypes extends HandleTypesEval {
 			switch(k) {}
 		}
 	}
-	/** @private @arg {Extract<D_Button,{targetId:any;}>} x */
-	D_Button_With_TargetId(x) {
-		const cf="D_Button_With_TargetId"; this.k(cf,x);
-		const {size,style,accessibilityData,isDisabled,targetId,...y}=this.D_Button_Omit_TP(cf,x,false); y;
+	/** @private @private @arg {any} z @template {Extract<D_Button,{targetId:any}>} T @arg {CF_D_Button} cf @arg {T} x1 @returns {T extends infer V?Omit<V, T_Split<"size,style,accessibilityData,isDisabled,targetId">[number]|"trackingParams">:never} */
+	D_Button_With_TargetId_Omit(cf,x1,z=null) {
+		const {size,style,accessibilityData,isDisabled,targetId,...y}=this.D_Button_Omit_TP(cf,x1); z=y;
 		switch(size) {
 			default: debugger; break;
 			case "SIZE_DEFAULT":
@@ -2469,22 +2468,20 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibilityData);
 		if(isDisabled!==false) debugger;
 		this.D_Button_TargetId(cf,targetId);
-		let ka=this.get_keys_of(y);
-		/** @typedef {keyof (typeof y)} T_has_keys_left */
-		/** @type {T_has_keys_left} */
-		let u;
-		function u1() {u==="";}
-		u1;
+		return z;
+	}
+	/** @private @arg {Extract<D_Button,{targetId:any;}>} x */
+	D_Button_With_TargetId(x) {
+		const cf="D_Button_With_TargetId"; this.k(cf,x);
+		let ka=this.get_keys_of(x);
 		for(let k of ka) {
 			switch(k) {
 				default: debugger; break;
 				case "text": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {text,...y1}=y; y1;
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					let {text,...y1}=this.D_Button_With_TargetId_Omit(cf,x); y1;
 					this.G_Text(text);
 					/** @typedef {keyof (typeof y1)} T_has_keys_left */
 					/** @type {T_has_keys_left} */
@@ -2515,12 +2512,10 @@ class HandleTypes extends HandleTypesEval {
 					y1==="";
 				} break;
 				case "serviceEndpoint": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {text,serviceEndpoint,...y1}=y; y1;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					if(!(k in x)) return;
+					let {text,serviceEndpoint,...y1}=this.D_Button_With_TargetId_Omit(cf,x); y1;
 					this.G_Text(text);
 					x: {
 						let x=serviceEndpoint;
@@ -2539,12 +2534,10 @@ class HandleTypes extends HandleTypesEval {
 					u1;
 				} break;
 				case "icon": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {icon,...y1}=y; y1;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					if(!(k in x)) return;
+					let {icon,...y1}=this.D_Button_With_TargetId_Omit(cf,x); y1;
 					switch(icon.iconType) {
 						default: debugger; break;
 						case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
@@ -2556,12 +2549,10 @@ class HandleTypes extends HandleTypesEval {
 					u1;
 				} break;
 				case "tooltip": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {text,icon,tooltip,...y1}=y;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					if(!(k in x)) return;
+					let {text,icon,tooltip,...y1}=this.D_Button_With_TargetId_Omit(cf,x);
 					this.G_Text(text);
 					switch(icon.iconType) {
 						default: debugger; break;
@@ -2574,14 +2565,10 @@ class HandleTypes extends HandleTypesEval {
 					u1;
 				} break;
 				case "command": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
+					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; cf1;
-					let {icon,command,...y1}=y;
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					let {icon,command,...y1}=this.D_Button_With_TargetId_Omit(cf,x);
 					switch(icon.iconType) {
 						default: debugger; break;
 						case "CONTENT_CUT": case "INFO":
@@ -2595,44 +2582,51 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
+	/** @private @arg {CF_onMissingIcon|"CF_D_Button"} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
+	D_Button_Icon(cf,icon,x) {
+		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
+		if(missing) this.onMissingIcon(as(cf),icon,x,this.Button_iconType,this.Button_missing_iconType);
+	}
+	/** @private @private @arg {any} z @template {Extract<D_Button,{icon:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"icon,size,style">[number]|"trackingParams">:never} */
+	D_Button_WithIcon_Omit(cf,x,z=null) {
+		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x); z=y;
+		switch(cf) {
+			default: debugger; break;
+			case "CF_D_Button": this.D_Button_Icon(cf,icon,x); break;
+		}
+		switch(size) {
+			default: debugger; break;
+			case "SIZE_DEFAULT":
+		}
+		switch(style) {
+			default: debugger; break;
+			case "STYLE_DEFAULT":
+		}
+		return z;
+	}
 	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_OnIcon(x) {
 		const cf="D_Button_OnIcon"; this.k(cf,x);
 		let ka=this.get_keys_of(x);
-		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x,false); y;
-		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
-		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
-		switch(icon.iconType) {
-			case "SETTINGS": case "EXPAND": case "DISMISSAL": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF":
-			case "NOTIFICATIONS_ACTIVE": case "MICROPHONE_ON": case "CHEVRON_RIGHT": case "CHEVRON_LEFT":
-			case "REMOVE": case "CLOSE": case "INFO": case "SHARE": case "CONTENT_CUT": case "PLAYLIST_ADD":
-			case "MONEY_HEART": case "LOOP":
-		}
 		for(let k of ka) {
 			switch(k) {
 				case "serviceEndpoint": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {isDisabled,serviceEndpoint,accessibilityData,tooltip,...y1}=y; y1;
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					let {serviceEndpoint,accessibilityData,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf,x); y1;
 				} break;
 				case "tooltip": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {tooltip,...y1}=y; y1;
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					let {tooltip,...y1}=this.D_Button_WithIcon_Omit(cf,x); y1;
 				} break;
 				case "targetId": {
-					if(k in x) {
-						/** @type {`${typeof cf}:${typeof k}`} */
-						const cf1=`${cf}:${k}`; this.k(cf1,x);
-					}
-					if(!(k in y)) return;
-					let {isDisabled,accessibilityData,targetId,...y1}=y; y1;
+					if(!(k in x)) return;
+					/** @type {`${typeof cf}:${typeof k}`} */
+					const cf1=`${cf}:${k}`; this.k(cf1,x);
+					let {isDisabled,accessibilityData,targetId,...y1}=this.D_Button_WithIcon_Omit(cf,x); y1;
 				} break;
 			}
 		}
