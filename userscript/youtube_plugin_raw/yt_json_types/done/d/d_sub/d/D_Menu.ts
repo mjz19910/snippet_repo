@@ -1,7 +1,9 @@
+type D_Menu_Button=R_PlaylistLoopButton|R_Button|R_SegmentedLikeDislikeButton;
+
 type D_Menu_old={
 	items?: G_MenuItem[];
 	trackingParams: string;
-	topLevelButtons?: (R_PlaylistLoopButton|R_Button|R_SegmentedLikeDislikeButton)[];
+	topLevelButtons?: (D_Menu_Button)[];
 	accessibility?: D_Accessibility;
 	targetId?: "browse-video-menu-button";
 	loggingDirectives?: D_LoggingDirectives;

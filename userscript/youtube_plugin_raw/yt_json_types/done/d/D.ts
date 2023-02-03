@@ -22,9 +22,9 @@ type D_Button_TargetId=Extract<D_Button,{targetId: any;}>["targetId"];
 type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId:any}>["targetId"];
 type D_TargetIdStr=
 	|"browse-video-menu-button"
-	|"clip-info-button"
-	|"comments-section"
-	|"sponsorships-button"
+	|D_ClipInfoButton["targetId"]
+	|DC_ReloadContinuationItems["targetId"]
+	|D_Button_With_TargetId["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']

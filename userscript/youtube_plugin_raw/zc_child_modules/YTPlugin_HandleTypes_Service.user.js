@@ -4240,24 +4240,36 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_PlaylistLoopButton} x @generated {D_Menu_Button$R_PlaylistLoopButton} */
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
+	/** @private @arg {D_Menu_Button} x */
+	D_Menu_Button(x) {
+		const cf="D_Menu_Button";
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
+		this.codegen_typedef_all(cf,x);
+	}
+	static {
+		this.prototype.D_Menu_Button;
+	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu"; this.k(cf,x);
-		const {trackingParams,accessibility,items,targetId,flexibleItems,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {trackingParams,accessibility,items,targetId,...y}=this.s(cf,x);/*#destructure_later*/
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_MenuItem);
 		/** @private @type {D_Menu_TargetId} */
 		this.t(targetId,a => this.targetId(cf,a));
 		// this.t(loggingDirectives,this.D_LoggingDirectives);
-		this.tz(flexibleItems,this.R_MenuFlexibleItem);
-		this.tz(topLevelButtons,x => {
-			const cf="D_Menu_Button";
-			if("buttonRenderer" in x) return this.R_Button(x);
-			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-			if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
-			this.codegen_typedef_all(cf,x);
-		});
+		if("flexibleItems" in y) {
+			debugger;
+		}
+		if("topLevelButtons" in y) {
+			debugger;
+		}
+		// this.tz(flexibleItems,this.R_MenuFlexibleItem);
+		// this.tz(topLevelButtons,this.D_Menu_Button);
+		this.g(y);
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
