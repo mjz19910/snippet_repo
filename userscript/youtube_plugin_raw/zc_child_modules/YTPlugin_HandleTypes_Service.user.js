@@ -266,7 +266,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
-		switch(path) {
+		switch(path)/*player_params*/ {
 			default: debugger; return;
 			case "watch.player_params":
 			case "watch.player_params.f40": case "watch.player_params.f40.f1":
@@ -363,12 +363,17 @@ class HandleTypes extends HandleTypesEval {
 			console.groupEnd();
 		};
 		/** @private @type {P_LogItems} */
-		switch(path) {
+		switch(path)/*endpoint*/ {
 			default: {
 				grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 				{debugger;}
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
+			}
+			case "watch_playlist.params": switch(map_entry_key) {
+				case 2: case 3: case 7: case 12: case 13: case 27:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
 			}
 			case "reel.sequence_params.f5": switch(map_entry_key) {
 				case 3:
@@ -475,7 +480,7 @@ class HandleTypes extends HandleTypesEval {
 				console.log(`\n\n\t"[parse_value.gen_ns_g1] [${path}[]]",`);
 				console.log("path offset",off);
 			};
-			switch(path) {
+			switch(path)/*parse_param_next_arr*/ {
 				default: g1(); debugger; return;
 				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
 				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
