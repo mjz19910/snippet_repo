@@ -199,7 +199,8 @@ class CodegenService extends BaseService {
 		d1!}
 		`;
 		if(next_req.length>0) {
-			console.log("more req",next_req);
+			console.log("[renderer_gen_more_req]",next_req);
+			debugger;
 		}
 		return tmp0;
 	}
