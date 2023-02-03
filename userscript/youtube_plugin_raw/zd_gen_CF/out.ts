@@ -13,7 +13,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:style";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:text";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon";}
 		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}
@@ -797,7 +796,9 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE83769";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetCart";}
 		|{n: Prelude.CF_T_WCM_Unpack; t: Types.CF_T_WCM_Unpack_; v: "MG_Survey_CMD";}
-		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_Button_OnIcon";}
+		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_Button_OnIcon:serviceEndpoint";}
+		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_Button_OnIcon:targetId";}
+		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_Button_OnIcon:tooltip";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}

@@ -2582,17 +2582,17 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {CF_onMissingIcon} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
+	/** @private @arg {Extract<CF_onMissingIcon,CF_D_Button>} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_Icon(cf,icon,x) {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
-	/** @private @private @arg {any} z @template {Extract<D_Button,{icon:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"icon,size,style">[number]|"trackingParams">:never} */
-	D_Button_WithIcon_Omit(cf1,x,z=null) {
+	/** @private @private @arg {any} z @template {Extract<D_Button,{icon:any}>} T @arg {Extract<CF_D_Button,CF_onMissingIcon>} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"icon,size,style">[number]|"trackingParams">:never} */
+	D_Button_WithIcon_Omit(cf,x,z=null) {
 		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x); z=y;
 		switch(cf) {
 			default: debugger; break;
-			case "D_Button_OnIcon": this.D_Button_Icon(cf,icon,x); break;
+			case "D_ThumbnailOverlaySidePanel": this.D_Button_Icon(cf,icon,x); break;
 		}
 		switch(size) {
 			default: debugger; break;
