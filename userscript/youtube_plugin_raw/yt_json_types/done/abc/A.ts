@@ -33,7 +33,7 @@ type A_FrameworkUpdates={
 	entityBatchUpdate: DC_EntityBatchUpdate;
 	elementUpdate?: R_ElementUpdate;
 };
-type A_ResponseReceived=
+type GA_ResponseReceived=
 	|C_AdsControlFlowOpportunityReceived
 	|C_ReloadContinuationItems;
 type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;

@@ -38,7 +38,7 @@ type RS_Browse={
 	frameworkUpdates?: R_EntityBatchUpdate;
 	maxAgeStoreSeconds?: number;
 	background?: R_MusicThumbnail;
-	onResponseReceivedActions?: A_ResponseReceived[];
+	onResponseReceivedActions?: GA_ResponseReceived[];
 	sidebar?: G_BrowseSidebar;
 	observedStateTags?: B_StateTag[];
 	cacheMetadata?: D_Cache_MD;

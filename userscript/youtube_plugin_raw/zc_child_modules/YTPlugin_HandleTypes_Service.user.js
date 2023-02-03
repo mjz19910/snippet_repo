@@ -1198,9 +1198,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {R_LiveChat} x */
-	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.D_LiveChat);}
+	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.g);}
 	/** @private @arg {R_ReportFormModal} x */
-	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.D_ReportFormModal);}
+	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
 	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig","watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
 	/** @private @arg {R_PlaylistHeader} x */
@@ -1333,7 +1333,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {R_CommentActionButtons} x */
-	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
+	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.g);}
 	/** @private @arg {R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {R_PlaylistByline} x */
@@ -1355,15 +1355,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PlaylistVideoThumbnail} x */
 	R_PlaylistVideoThumbnail(x) {this.H_("R_PlaylistVideoThumbnail","playlistVideoThumbnailRenderer",x,this.D_PlaylistVideoThumbnail);}
 	/** @private @arg {R_Message} x */
-	R_Message(x) {this.H_("R_Message","messageRenderer",x,this.D_Message);}
+	R_Message(x) {this.H_("R_Message","messageRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatParticipantsList} x */
-	R_LiveChatParticipantsList(x) {this.H_("R_LiveChatParticipantsList","liveChatParticipantsListRenderer",x,this.D_LiveChatParticipantsList);}
+	R_LiveChatParticipantsList(x) {this.H_("R_LiveChatParticipantsList","liveChatParticipantsListRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatTicker} x */
-	R_LiveChatTicker(x) {this.H_("R_LiveChatTicker","liveChatTickerRenderer",x,this.D_LiveChatTicker);}
+	R_LiveChatTicker(x) {this.H_("R_LiveChatTicker","liveChatTickerRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatItemList} x */
-	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.D_LiveChatItemList);}
+	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatHeader} x */
-	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.D_LiveChatHeader);}
+	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.D_LiveChatMessageInput);}
 	/** @private @arg {R_EmojiPicker} x */
@@ -1379,11 +1379,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {R_MusicResponsiveListItem} x */
-	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.D_MusicResponsiveListItem);}
+	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.g);}
 	/** @private @arg {R_MusicShelfDivider} x */
-	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.D_MusicShelfDivider);}
+	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.g);}
 	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
+	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.g);}
 	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
 	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {R_ThumbnailOverlayHoverText} x */
@@ -1445,9 +1445,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {R_PageTopAdLayout} x */
 	R_PageTopAdLayout(x) {this.H_("R_PageTopAdLayout","pageTopAdLayoutRenderer",x,this.D_PageTopAdLayout);}
 	/** @arg {R_AutomixPreviewVideo} x */
-	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.D_AutomixPreviewVideo);}
+	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.g);}
 	/** @arg {R_VideoMastheadAdV3} x */
-	R_VideoMastheadAdV3(x) {this.H_("R_VideoMastheadAdV3","videoMastheadAdV3Renderer",x,this.D_VideoMastheadAdV3);}
+	R_VideoMastheadAdV3(x) {this.H_("R_VideoMastheadAdV3","videoMastheadAdV3Renderer",x,this.g);}
 	/** @private @arg {R_RichMetadata} x */
 	R_RichMetadata(x) {this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);}
 	/** @private @arg {R_RichMetadataRow} x */
@@ -1566,7 +1566,7 @@ class HandleTypes extends HandleTypesEval {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		});
 		this.z(r,a => a);
-		this.z(playlistEditResults,this.G_PlaylistEditResult);
+		this.z(playlistEditResults,this.g);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
@@ -2174,7 +2174,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RC_ResponseContext(responseContext);
 		this.t(header,this.G_BrowseHeader);
 		this.trackingParams(cf,trackingParams);
-		this.tz(onResponseReceivedActions,this.A_ResponseReceived);
+		this.tz(onResponseReceivedActions,this.GA_ResponseReceived);
 		this.t(contents,this.G_BrowseContents);
 		this.t(topbar,this.R_DesktopTopbar);
 		this.t(frameworkUpdates,this.R_EntityBatchUpdate);
@@ -4619,8 +4619,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_HideEnclosingContainer(uiActions);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
-	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
@@ -5466,12 +5464,24 @@ class HandleTypes extends HandleTypesEval {
 		x===""; this.codegen_typedef_all(cf,x); x==="";
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {GA_ResponseReceived} x */
+	GA_ResponseReceived(x) {
+		const cf="GA_ResponseReceived"; this.k(cf,x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
-	A_ShowEngagementPanelScrim(x) {
-		const cf="A_ShowEngagementPanelScrim"; this.k(cf,x);
-		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AD_ShowEngagementPanelScrim(showEngagementPanelScrimAction);
+	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
+	/** @private @arg {A_HideEnclosing} x */
+	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
+	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
+	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
+	/** @private @arg {A_HideEngagementPanelScrim} x */
+	A_HideEngagementPanelScrim(x) {
+		let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
@@ -5591,13 +5601,6 @@ class HandleTypes extends HandleTypesEval {
 		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
-	}
-	/** @private @arg {A_HideEnclosing} x */
-	A_HideEnclosing(x) {
-		const cf="A_HideEnclosing"; this.k(cf,x);
-		const {clickTrackingParams,hideEnclosingAction: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AD_HideEnclosing(a);
 	}
 	/** @private @arg {G_DC_SectionList} x */
 	G_DC_SectionList(x) {
@@ -6164,13 +6167,6 @@ class HandleTypes extends HandleTypesEval {
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {A_ResponseReceived} x */
-	A_ResponseReceived(x) {
-		const cf="A_ResponseReceived"; this.k(cf,x);
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	static {this.prototype.MC_ResolveUrl;}
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
@@ -6204,13 +6200,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_LoggingDirectives_Gestures"; this.g_k(cf,x); this.k(cf,x);
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
-	}
-	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
-	A_ChangeEngagementPanelVisibility(x) {
-		const cf="EA_ChangeEngagementPanelVisibility"; this.k(cf,x);
-		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AD_ChangeEngagementPanelVisibility(changeEngagementPanelVisibilityAction);
 	}
 	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,R_Comment>} x */
 	CommentRepliesItem(x) {
@@ -6403,14 +6392,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="A_CommentsSectionContinuation";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.G_CommentsSection);
+		this.z(continuationItems,this.g);
 	}
 	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
 	A_BrowseFeed(x) {
 		const cf="A_BrowseFeed"; this.k(cf,x);
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.R_BrowseFeed);
+		this.z(continuationItems,this.g);
 	}
 	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
 	A_WatchNext(x) {
@@ -6500,9 +6489,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x);}
+	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @arg {C_FollowUp} x */
-	C_FollowUp(x) {this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x);}
+	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	/** @private @arg {C_EntityUpdate} x */
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
+	C_EngagementPanelHeaderShowNavigationButton(x) {let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	/** @private @arg {C_GetPdgBuyFlow} x */
+	C_GetPdgBuyFlow(x) {let [a,y]=this.TE_Endpoint_2("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.DC_GetPdgBuyFlow(a);}
+	/** @private @arg {DC_Loop} x */
+	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
+	/** @private @arg {DC_GetPdgBuyFlow} x */
+	DC_GetPdgBuyFlow(x) {x;}
 	/** @private @arg {DC_UpdateToggleButtonState} x */
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -6516,18 +6515,9 @@ class HandleTypes extends HandleTypesEval {
 		let ret=this.codegen.codegen_typedef("buttonState_buttonId",{button_id: x},true);
 		if(ret) {this.save_string(cf,ret);}
 	}
-	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
-	/** @private @arg {A_HideEngagementPanelScrim} x */
-	A_HideEngagementPanelScrim(x) {
-		const cf="A_HideEngagementPanelScrim"; this.k(cf,x);
-		const {clickTrackingParams,hideEngagementPanelScrimAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.R_EngagementPanelTargetId(hideEngagementPanelScrimAction);
-	}
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
-	R_EngagementPanelTargetId(x) {
-		const cf="R_EngagementPanelTargetId"; this.k(cf,x);
+	AD_HideEngagementPanelTargetId(x) {
+		const cf="AD_HideEngagementPanelTargetId"; this.k(cf,x);
 		const {engagementPanelTargetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(engagementPanelTargetId) {
 			default: debugger; break;
@@ -8906,38 +8896,11 @@ class HandleTypes extends HandleTypesEval {
 			}
 		});
 	}
-	/** @private @arg {D_VideoMastheadAdV3} x */
-	D_VideoMastheadAdV3(x) {const cf="D_VideoMastheadAdV3"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_AutomixPreviewVideo} x */
-	D_AutomixPreviewVideo(x) {const cf="D_AutomixPreviewVideo"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_MusicResponsiveListItem} x */
-	D_MusicResponsiveListItem(x) {const cf="D_MusicResponsiveListItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_MusicShelfDivider} x */
-	D_MusicShelfDivider(x) {const cf="D_MusicShelfDivider"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {G_CommentsSection} x */
-	G_CommentsSection(x) {const cf="G_CommentsSection"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_Message} x */
-	D_Message(x) {const cf="D_Message"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_LiveChatParticipantsList} x */
-	D_LiveChatParticipantsList(x) {const cf="D_LiveChatParticipantsList"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_LiveChatTicker} x */
-	D_LiveChatTicker(x) {const cf="D_LiveChatTicker"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_LiveChatItemList} x */
-	D_LiveChatItemList(x) {const cf="D_LiveChatItemList"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_LiveChatHeader} x */
-	D_LiveChatHeader(x) {const cf="D_LiveChatHeader"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {const cf="D_ThumbnailOverlayInlineUnplayable"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_CommentActionButtons} x */
-	D_CommentActionButtons(x) {const cf="D_CommentActionButtons"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {const cf="D_LiveChat"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {D_ReportFormModal} x */
-	D_ReportFormModal(x) {const cf="D_ReportFormModal"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {G_PlaylistEditResult} x */
-	G_PlaylistEditResult(x) {const cf="G_PlaylistEditResult"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {const cf="R_BrowseFeed"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
+	/** @arg {VideoGoodPutShape} x */
+	VideoGoodPutShape(x) {
+		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
+		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
+	}
 	/** @private @arg {D_TranscriptSegment} x */
 	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PdgCommentChip} x */
@@ -8946,14 +8909,8 @@ class HandleTypes extends HandleTypesEval {
 	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {C_GetPdgBuyFlow} x */
-	C_GetPdgBuyFlow(x) {const cf="C_GetPdgBuyFlow"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {const cf="A_ReplayChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {A_AddChatItem} x */
@@ -9024,7 +8981,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,...y}=this.s(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,...y}=this.s(cf,x);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
@@ -9035,18 +8992,19 @@ class HandleTypes extends HandleTypesEval {
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
 		this.trackingParams(cf,trackingParams);
+		this.t(attestation,this.R_PlayerAttestation);
+		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
 		console.log("[RS_Player.next_key] [%s]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
+	/** @private @arg {R_VideoQualityPromo} x */
+	R_VideoQualityPromo(x) {x;}
+	/** @private @arg {R_PlayerAttestation} x */
+	R_PlayerAttestation(x) {x;}
 	/** @private @arg {R_CardCollection} x */
 	R_CardCollection(x) {x;}
 	/** @private @arg {R_PlayerMicroformat} x */
 	R_PlayerMicroformat(x) {x;}
-	/** @arg {VideoGoodPutShape} x */
-	VideoGoodPutShape(x) {
-		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
-		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
-	}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
