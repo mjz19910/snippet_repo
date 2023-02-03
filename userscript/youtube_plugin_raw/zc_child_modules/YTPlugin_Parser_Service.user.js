@@ -559,24 +559,7 @@ class ParserService extends BaseService {
 			case "m.youtube.com": return;
 			default:
 		}
-		// cSpell:ignoreRegExp /r\d---sn-.+?"/
-		let s_host=split_string_once(r.host,".");
-		switch(s_host[1]) {
-			case "googlevideo.com": {
-				switch(s_host[0]) {
-					default: debugger; break;
-					case "r1---sn-p5qlsny6": break;
-					case "r5---sn-nx57ynsd": break;
-				}
-				switch(r.pathname) {
-					case "/initplayback": r;break;
-				}
-			} return;
-			default:
-		}
-		/** @private @type {D_UrlFormat|D_ExternalUrlFormat} */
-		console.log("[parse_url_external_1]",x);
-		{debugger;}
+		this.x.get("handle_types").on_google_video_url(r);
 	}
 	/** @unused_api @protected @arg {GM_VE3832_Watch['url']} x */
 	parse_url_VE3832(x) {if(!this.str_starts_with_rx("/watch?",x)) debugger;}

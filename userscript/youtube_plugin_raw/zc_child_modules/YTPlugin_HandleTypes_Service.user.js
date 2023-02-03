@@ -8966,10 +8966,33 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[player.streamingData.expiresInSeconds]",expires_num);
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.z(formats,this.D_FormatItem);
-		this.t(probeUrl,x => {
-			debugger;
-			this.parser.parse_url(cf,x);
-		});
+		this.t(probeUrl,x => this.parser.parse_url(cf,x));
+	}
+	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
+	on_google_video_url(x) {
+		// cSpell:ignoreRegExp /r\d---sn-.+?"/
+		// cspell:ignore videogoodput
+		let s_host=split_string_once(x.host,".");
+		switch(s_host[1]) {
+			case "googlevideo.com": {
+				switch(s_host[0]) {
+					default: debugger; break;
+					case "r1---sn-p5qlsny6": break;
+					case "r5---sn-nx57ynsd": break;
+				}
+				switch(x.pathname) {
+					case "/initplayback": break;
+					case "/videogoodput": {
+						let pp=this.parse_url_search_params(x.search);
+						this.VideoGoodPutShape(pp);
+					} break;
+				}
+			} return;
+			default:
+		}
+		/** @private @type {D_UrlFormat|D_ExternalUrlFormat} */
+		console.log("[parse_url_external_1]",x);
+		{debugger;}
 	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {x;}
@@ -9019,6 +9042,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_PlayerMicroformat} x */
 	R_PlayerMicroformat(x) {x;}
+	/** @arg {VideoGoodPutShape} x */
+	VideoGoodPutShape(x) {
+		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
+		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
+	}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
