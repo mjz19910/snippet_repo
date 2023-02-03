@@ -84,7 +84,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832:playlistSetVideoId";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832:playlistSetVideoId:params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
@@ -300,9 +300,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_SuperThanksSelectedTier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_UndoFeedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Url";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:playlistSetVideoId";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832_VideoId";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832_VideoId.1";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:playlistSetVideoId:params";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:videoId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlotAndLayoutItem";}

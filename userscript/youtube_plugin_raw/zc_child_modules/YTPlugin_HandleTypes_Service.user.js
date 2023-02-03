@@ -4563,10 +4563,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		// const cf="DE_VE3832_Watch";
-		if("playlistSetVideoId" in x) {
-			const cf="DE_VE3832:playlistSetVideoId";
+		if("playlistSetVideoId" in x&&"params" in x) {
+			const cf="DE_VE3832:playlistSetVideoId:params";
 			const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.playlistId(playlistId);
 			this.a_primitive_num(index);
 			this.a_primitive_str(playlistSetVideoId);
 			this.params(cf,"watch.params",params);
@@ -4581,19 +4580,14 @@ class HandleTypes extends HandleTypesEval {
 			(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
 			return;
 		}
-		if("playlistId" in x) {
-			const cf="DE_VE3832_PlaylistId"; cf;
-			const {videoId,playlistId,index,loggingContext,...y}=x; this.g(y);
-			this.playlistId(playlistId);
-			this.a_primitive_num(index);
-			return;
-		} else {
-			const cf="DE_VE3832_VideoId";
-			const {videoId,...x1}=x;
-			this.s("DE_VE3832_VideoId.1",{videoId});
+		if("videoId" in x) {
+			const cf="DE_VE3832:videoId";
+			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.videoId(videoId);
-			const {...y}=this.s(cf,x1); this.g(y);
+			return;
 		}
+		x==="";
+		this.g(x);
 	}
 	/** @private */
 	_decoder=new TextDecoder();
