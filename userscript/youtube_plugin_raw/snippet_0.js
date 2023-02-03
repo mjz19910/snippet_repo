@@ -1,7 +1,7 @@
 import {Base64Binary} from "./support_1/Base64Binary";
 import {KnownDataSaver} from "./support_2/KnownDataSaver";
 import {MyReader} from "./support_2/MyReader";
-import {split_string} from "./zc_child_modules/YtPlugin_Base_Plugin.user";
+import {split_string} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
 `
 const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 this.z(actions,a => {

@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	IndexedDb Database Service
+// @name	YTPlugin IndexedDb Service
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.1
 // @description	try to take over the world!

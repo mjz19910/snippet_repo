@@ -3,7 +3,7 @@ namespace Url2_long_vars_obj {
 	const str=url2;
 	const vv=create_from_parse_partial(str);
 	export async function do_test_async() {
-		const ApiBase=(await import("../../zc_child_modules/YtPlugin_Base_Plugin.user.js")).ApiBase;
+		const ApiBase=(await import("../../zc_child_modules/YTPlugin_Base_Plugin.user.js")).ApiBase;
 		class ApiUser extends ApiBase {
 			run_test() {
 				const url_parsed=this.parse_url_search_params(vv.search);
