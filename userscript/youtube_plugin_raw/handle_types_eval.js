@@ -4,6 +4,14 @@ function n() {throw new Error("Make never type");}
 n;
 /** @template T,U @extends {ServiceMethods<T,U>} */
 export class HandleTypesEval_ extends ServiceMethods {
+	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {void} */
+	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
+		map_entry_values; map_entry_key_path; path; map_keys; root;
+	}
+	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
+	parse_param_next(root,path,map_entry_key_path,tva,callback) {
+		root; path; map_entry_key_path; tva; callback;
+	}
 	/** @protected @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {x;}
 	/** @protected @arg {D_YtConfig} x */

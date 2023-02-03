@@ -6,7 +6,7 @@ type DE_VE3832_Watch=
 		videoId: string;
 		playlistId: `RD${string}`;
 		index: 2;
-		loggingContext: D_VssLoggingContext;
+		loggingContext: R_VssLoggingContext;
 	}
 	|{
 		videoId: string;
