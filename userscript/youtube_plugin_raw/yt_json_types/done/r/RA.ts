@@ -5,6 +5,15 @@ type DE_VE3832_Watch=
 	|{
 		videoId: string;
 		playlistId: `RD${string}`;
+		index: 1;
+		params: string;
+		playerParams: string;
+		loggingContext: D_VssLoggingContext;
+		watchEndpointSupportedPrefetchConfig: D_PrefetchHintConfig;
+	}
+	|{
+		videoId: string;
+		playlistId: `RD${string}`;
 		index: 2;
 		loggingContext: R_VssLoggingContext;
 	}
