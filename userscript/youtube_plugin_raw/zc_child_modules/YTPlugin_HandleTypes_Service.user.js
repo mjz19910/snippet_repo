@@ -4210,6 +4210,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
+	/** @private @arg {string} cf @arg {{}} x */
+	GEN(cf,x) {
+		let name=this.get_codegen_name(x);
+		if(!name) return;
+		this.codegen.codegen_renderer(x,`${cf}$${name}`);
+		debugger;
+	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu"; this.k(cf,x);
@@ -4225,6 +4232,8 @@ class HandleTypes extends HandleTypesEval {
 			const cf="D_Menu_Button";
 			if("buttonRenderer" in x) return this.R_Button(x);
 			if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+			if("playlistLoopButtonRenderer" in x) return this.GEN(cf,x);
+			x.playlistLoopButtonRenderer;
 			this.codegen_typedef_all(cf,x);
 		});
 	}
