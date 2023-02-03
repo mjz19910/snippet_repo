@@ -4258,7 +4258,6 @@ class HandleTypes extends HandleTypesEval {
 		if("browserMediaSession" in x) return this.A_BrowserMediaSession(x);
 		const {endScreen,shareButton,addToMenu,videoDetails,...y}=this.s(cf,x);
 		this.R_WatchNextEndScreen(endScreen);
-		// this.R_PlayerOverlayAutoplay(autoplay);
 		this.R_Button(shareButton);
 		this.R_Menu(addToMenu);
 		this.R_PlayerOverlayVideoDetails(videoDetails);
@@ -4291,8 +4290,6 @@ class HandleTypes extends HandleTypesEval {
 			const {decoratedPlayerBarRenderer,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
 			this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
 			return;
-		}
-		{
 		}
 		this.g(y);
 	}
