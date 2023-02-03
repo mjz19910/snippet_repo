@@ -1346,7 +1346,7 @@ class HandleTypes extends HandleTypesEval {
 			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
 	}
 	/** @private @arg {AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
+	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
 	AU_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
@@ -8534,8 +8534,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {AD_SubscribeButton} x */
-	DUA_SubscribeButton(x) {
-		const cf="DUA_SubscribeButton"; this.k(cf,x);
+	AD_SubscribeButton(x) {
+		const cf="AD_SubscribeButton"; this.k(cf,x);
 		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);
