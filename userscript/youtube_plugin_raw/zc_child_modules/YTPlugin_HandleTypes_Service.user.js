@@ -515,7 +515,7 @@ class HandleTypes extends HandleTypesEval {
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
-			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form.params": case "get_transcript": case "GetNotificationMenu": case "like":
+			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
 			case "next_radio": case "next": case "notification": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
 			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
 			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
@@ -529,41 +529,48 @@ class HandleTypes extends HandleTypesEval {
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f13": case "f14": case "f15": case "f18":
-					case "f25": case "f26": case "f27": case "f28": case "f29":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f9":
+					case "f10": case "f13": case "f14":
 					case "f84": case "f93":
 				}
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "f1": case "f1[]": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f12": case "f13": case "f14": case "f16": case "f19":
-					case "f24": case "f25": case "f27": case "f30": case "f33": case "f39": case "f40":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
+					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
+					case "f30": case "f33": case "f39": case "f40":
 					case "f56": case "f57": case "f71": case "f84": case "f93": case "f110":
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
 					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
+					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
 					case "f12": case "f13": case "f14":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f1[]": case "f2": case "f3": case "f19": case "f20":
+					case "f1": case "f2": case "f3": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
+					case "f1[]":
 					case "f1": case "f2":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
 					default: {const idx=7; u(idx); debugger; parts[6]==="";} return;
+					case "f1":
+				}
+				if(parts.length===7) return this.handle_map_value(path,map_entry_value);
+				switch(parts[7]) {
+					default: {const idx=8; u(idx); debugger; parts[6]==="";} return;
 					case "f4":
 				}
-				if(parts.length!==7) {debugger; break;}
+				if(parts.length!==8) {debugger; break;}
 				return this.handle_map_value(path,map_entry_value);
 			}
 		}
