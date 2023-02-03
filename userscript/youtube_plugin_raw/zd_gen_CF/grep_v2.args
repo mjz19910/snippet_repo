@@ -1,0 +1,1 @@
+(?:(?<=of type )'".+?"'(?= is not).+ of type '(?!\")\w+'.)|(?:(?<=of type )'`.+?`'(?= is not).+ of type '(?!\")\w+'.)
