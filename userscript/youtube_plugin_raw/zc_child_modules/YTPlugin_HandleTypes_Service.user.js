@@ -8968,7 +8968,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(formats,this.D_FormatItem);
 		this.t(probeUrl,x => {
 			debugger;
-			this.parser.parse_url(cf,as(x));
+			this.parser.parse_url(cf,x);
 		});
 	}
 	/** @private @arg {D_AdaptiveFormatItem} x */

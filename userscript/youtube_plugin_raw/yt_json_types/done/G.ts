@@ -126,8 +126,9 @@ type GV_Dig_sn_nx=[
 	`57yn${GV_sub_57yn}`,
 	`5s7n${GV_sub_5s7n}`,
 ][number];
+// cSpell:ignoreRegExp /r1---sn-.+?"/
 type GV_SubDomain=[
-	`rr${number}---${"sn-nx"}${string}`
+	"r1---sn-p5qlsny6",
 ][number];
 
 type GM_Like=GM_LikeLike|GM_Dislike|GM_RemoveLike;

@@ -89,6 +89,7 @@ type D_UrlFormat=
 	|`http://www.youtube.com/watch?${string}`
 	|`https://support.google.com/youtube/answer/${number}`
 	|`https://www.youtube.com/watch?${string}`
+	|D_Youtube_Streaming_ProbeUrl
 	|D_ExternalUrlFormat
 	|D_VE6827_PageUrl
 	|YTExternalUrl
@@ -207,7 +208,7 @@ type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
-type D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${string}.googlevideo.com/generate_204`;
+type D_VE3832_PreconnectUrl=`https://r1---sn-nx57ynlk.googlevideo.com/generate_204`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
@@ -1857,6 +1858,7 @@ type D_ExternalUrlFormat=[
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
 	`https://music.youtube.com${"/"|""}`,
 	`${"https:"}//${GV_SubDomain}.googlevideo.com/initplayback?${string}`,
+	D_CommonConfig["url"],
 	`https://studio.youtube.com${"/"|""}`,
 	`https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273`,
 	`https://www.google.com/get/videoqualityreport/`,

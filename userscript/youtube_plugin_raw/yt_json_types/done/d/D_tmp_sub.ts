@@ -10,12 +10,15 @@ type DA_ReplayChatItem={
 	actions: A_AddChatItem[];
 	videoOffsetTimeMsec: `${number}`;
 };
+// cSpell:ignoreRegExp /r1---sn-.+?googlevideo.com\/videogoodput/
 type D_VideoId=string;
+type D_Youtube_Streaming_ProbeUrl=`https://r1---sn-p5qlsny6.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${string}&ip=${string}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${string}&key=${string}`;
+
 type DD_Streaming={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: D_AdaptiveFormatItem[];
 	formats: D_FormatItem[];
-	probeUrl?: string;
+	probeUrl?: D_Youtube_Streaming_ProbeUrl;
 };
 type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",[
 	"SWITCHER",
