@@ -4421,29 +4421,48 @@ class HandleTypes extends HandleTypesEval {
 			this.targetId(cf1,targetId);
 			return;
 		}
-		if("flexibleItems" in x) {
-			const {items,trackingParams,topLevelButtons,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
+		x: {
+			const k="flexibleItems";
+			if(!(k in x)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`;
+			const {items,trackingParams,topLevelButtons,accessibility,flexibleItems,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
 			this.z(items,this.G_MenuItem);
-			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			this.trackingParams(cf1,trackingParams);
 			this.z(topLevelButtons,this.D_Menu_Button);
+			this.D_Accessibility(accessibility);
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
 			return;
 		}
-		if("loggingDirectives" in x) {
-			const {accessibility,items,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			const k="loggingDirectives";
+			if(!(k in x)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`;
+			const {items,accessibility,loggingDirectives,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
 			this.D_Accessibility(accessibility);
 			this.z(items,this.G_MenuItem);
 			this.D_LoggingDirectives(loggingDirectives);
 			return;
 		}
-		if("items" in x) {
-			const {items,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			const k="items";
+			if(!(k in x)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`;
+			const {items,trackingParams,accessibility,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(cf1,trackingParams);
 			this.z(items,this.G_MenuItem);
 			this.D_Accessibility(accessibility);
 			return;
 		}
-		if("topLevelButtons" in x) {
-			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			const k="topLevelButtons";
+			if(!(k in x)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`;
+			const {trackingParams,topLevelButtons,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(cf1,trackingParams);
 			this.z(topLevelButtons,this.D_Menu_Button);
 			return;
 		}
