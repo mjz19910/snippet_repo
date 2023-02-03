@@ -1690,7 +1690,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
 	/** @private @arg {E_SignalService_SendPost} x */
-	E_SE_Signal_Button(x) {const cf="E_SE_Signal_Button",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
+	E_SignalService_SendPost(x) {const cf="E_SignalService_SendPost",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @protected @arg {E_PlaylistEdit} x */
@@ -2437,7 +2437,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
 		const cf="D_Button_SE"; this.k(cf,x);
-		if("signalServiceEndpoint" in x) return this.E_SE_Signal_Button(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		this.codegen_typedef_all(cf,x); x==="";
@@ -3079,7 +3079,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Button_DefServiceEP"; this.k(cf,x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		if("signalServiceEndpoint" in x) return this.E_SE_Signal_Button(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
@@ -3087,6 +3087,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle">[number]>:never} */
