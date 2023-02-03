@@ -7206,7 +7206,6 @@ class HandleTypes extends HandleTypesEval {
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		x===""; this.codegen_typedef_all(cf,x); x===0;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
