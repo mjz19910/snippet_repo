@@ -164,6 +164,14 @@ ECatcherService.known_experiments.push(...(() => {
 })().flat());
 /** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
 class HandleTypes extends HandleTypesEval {
+	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
+	to_param_obj(x) {
+		return Object.fromEntries([...x.entries()].map(e => {
+			let ei=e[1];
+			if(ei instanceof Map) {return [e[0],this.to_param_obj(ei)];}
+			return [e[0],ei];
+		}));
+	}
 	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
 	make_parse_key(root,path,map,mk,callback) {
 		/** @private @arg {number[]} ta */
