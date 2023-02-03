@@ -8,10 +8,10 @@
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/IndexedDatabaseService.user.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/IndexedDatabaseService.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB_Service.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_IndexedDB_Service.user.js
 // ==/UserScript==
-const __module_name__="mod$IndexedDatabaseService";
+const __module_name__="mod$IndexedDBService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -33,7 +33,7 @@ class DatabaseArguments {
 	}
 }
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
-class IndexedDatabaseService extends BaseService {
+class IndexedDBService extends BaseService {
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x @arg {string} db_name */
 	constructor(x,db_name,version=1) {
 		super(x);
@@ -339,5 +339,5 @@ class IndexedDatabaseService extends BaseService {
 }
 export_(exports => {
 	exports.__module_loaded__=true;
-	exports.IndexedDatabaseService=IndexedDatabaseService;
+	exports.IndexedDBService=IndexedDBService;
 });
