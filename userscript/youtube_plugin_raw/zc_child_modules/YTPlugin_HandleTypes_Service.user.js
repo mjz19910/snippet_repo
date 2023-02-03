@@ -161,6 +161,7 @@ ECatcherService.known_experiments.push(...(() => {
 		[4,[24458634]],
 		[5,[24450366]],
 		[6,[24463911]],
+		[7,[24454001]],
 	];
 	return arr.map(e => e[1]);
 })().flat());
