@@ -541,6 +541,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "playability_status":
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
 			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
 			case "next_radio": case "next": case "notification": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
