@@ -4273,13 +4273,17 @@ class HandleTypes extends HandleTypesEval {
 			this.t(targetId,a => this.targetId(cf,a));
 			return;
 		}
-		const {topLevelButtons,flexibleItems,...y}=x;/*#destructure_later*/
-		// this.t(loggingDirectives,this.D_LoggingDirectives);
-		this.z(flexibleItems,this.R_MenuFlexibleItem);
-		this.z(topLevelButtons,this.D_Menu_Button);
+		if("flexibleItems" in x) {
+			const {topLevelButtons,flexibleItems,...y}=x; this.g(y);/*#destructure_done*/
+			this.z(flexibleItems,this.R_MenuFlexibleItem);
+			this.z(topLevelButtons,this.D_Menu_Button);
+			return;
+		}
+		const y=x;
 		if("loggingDirectives" in y) {
 			debugger;
 		}
+		// this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.g(y);
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */

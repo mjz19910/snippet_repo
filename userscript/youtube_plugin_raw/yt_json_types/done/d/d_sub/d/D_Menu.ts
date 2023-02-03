@@ -9,15 +9,22 @@ type D_Menu_old={
 	loggingDirectives?: D_LoggingDirectives;
 	flexibleItems?: R_MenuFlexibleItem[];
 };
-type D_Menu={
-	items: R_MenuServiceItem[];
-	trackingParams: string;
-	accessibility: TD_Accessibility<"Action menu">;
-	targetId: "watch-related-menu-button";
-}|{
-	items: R_MenuServiceItem[];
-	trackingParams: string;
-	topLevelButtons: R_SegmentedLikeDislikeButton[];
-	accessibility: TD_Accessibility<"More actions">;
-	flexibleItems: R_MenuFlexibleItem[];
-};
+type D_Menu=
+	|{
+		items: R_MenuServiceItem[];
+		trackingParams: string;
+		accessibility: TD_Accessibility<"Action menu">;
+		targetId: "watch-related-menu-button";
+	}
+	|{
+		items: R_MenuServiceItem[];
+		trackingParams: string;
+		topLevelButtons: R_SegmentedLikeDislikeButton[];
+		accessibility: TD_Accessibility<"More actions">;
+		flexibleItems: R_MenuFlexibleItem[];
+	}
+	|{
+		items: R_MenuServiceItem[];
+		trackingParams: string;
+		accessibility: TD_Accessibility<"Action menu">;
+	};
