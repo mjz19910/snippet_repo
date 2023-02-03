@@ -1049,6 +1049,43 @@ type D_Notification={
 	trackingParams: string;
 	notificationId: `${number}`;
 };
+type D_DarkColorPalette_All=D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
+type D_DarkColorPalette_2={
+	section2Color: 4063436571;
+	primaryTitleColor: 4294961637;
+	secondaryTitleColor: 4291602851;
+	section4Color: 4061728525;
+};
+type D_DarkColorPalette_3={
+	section2Color: 4063436046;
+	primaryTitleColor: 4294963429;
+	secondaryTitleColor: 4291605667;
+	section4Color: 4061728263;
+};
+type D_DarkColorPalette_4={
+	section2Color: 4062716698;
+	primaryTitleColor: 4294964965;
+	secondaryTitleColor: 4291608227;
+	section4Color: 4060875528;
+};
+type D_LightColorPalette_2={
+	section2Color: 4076401393;
+	primaryTitleColor: 4279833104;
+	secondaryTitleColor: 4286207567;
+	section4Color: 4075544541;
+};
+type D_LightColorPalette_3={
+	section2Color: 4076401905;
+	primaryTitleColor: 4279833616;
+	secondaryTitleColor: 4285881676;
+	section4Color: 4075545565;
+};
+type D_LightColorPalette_4={
+	section2Color: 4076402417;
+	primaryTitleColor: 4279834128;
+	secondaryTitleColor: 4285555272;
+	section4Color: 4075546589;
+};
 type D_PlaylistPanelVideo=
 	|never
 	|{
@@ -1064,18 +1101,8 @@ type D_PlaylistPanelVideo=
 		menu: R_Menu;
 		thumbnailOverlays: R_ThumbnailOverlayResumePlayback[];
 		playlistSetVideoId: "289F4A46DF0A30D2";
-		lightColorPalette: {
-			section2Color: 4076401905;
-			primaryTitleColor: 4279833616;
-			secondaryTitleColor: 4285881676;
-			section4Color: 4075545565;
-		};
-		darkColorPalette: {
-			section2Color: 4063436046;
-			primaryTitleColor: 4294963429;
-			secondaryTitleColor: 4291605667;
-			section4Color: 4061728263;
-		};
+		lightColorPalette: D_LightColorPalette_3;
+		darkColorPalette: D_DarkColorPalette_3;
 	}
 	|{
 		title: G_Text;
@@ -1091,18 +1118,8 @@ type D_PlaylistPanelVideo=
 		menu: R_Menu;
 		thumbnailOverlays: R_ThumbnailOverlayResumePlayback[];
 		playlistSetVideoId: string;
-		lightColorPalette: {
-			section2Color: 4076402417;
-			primaryTitleColor: 4279834128;
-			secondaryTitleColor: 4285555272;
-			section4Color: 4075546589;
-		};
-		darkColorPalette: {
-			section2Color: 4062716698;
-			primaryTitleColor: 4294964965;
-			secondaryTitleColor: 4291608227;
-			section4Color: 4060875528;
-		};
+		lightColorPalette: D_LightColorPalette_4;
+		darkColorPalette: D_DarkColorPalette_4;
 	}
 	|{
 		title: G_Text;
@@ -1118,18 +1135,8 @@ type D_PlaylistPanelVideo=
 		menu: R_Menu;
 		thumbnailOverlays: G_ThumbnailOverlayItem[];
 		playlistSetVideoId: string;
-		lightColorPalette: {
-			section2Color: 4076401393;
-			primaryTitleColor: 4279833104;
-			secondaryTitleColor: 4286207567;
-			section4Color: 4075544541;
-		};
-		darkColorPalette: {
-			section2Color: 4063436571;
-			primaryTitleColor: 4294961637;
-			secondaryTitleColor: 4291602851;
-			section4Color: 4061728525;
-		};
+		lightColorPalette: D_LightColorPalette_2;
+		darkColorPalette: D_DarkColorPalette_2;
 	};
 type D_PlaylistSidebarPrimaryInfo={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
@@ -1783,7 +1790,7 @@ type D_CustomEmoji={
 	image: D_EmojiImage;
 	isCustomEmoji: boolean;
 };
-type D_DarkColorPalette={
+type D_DarkColorPalette_1={
 	section1Color: 4281871903;
 	section2Color: 4280819991;
 	section3Color: 4279833614;
@@ -1791,6 +1798,7 @@ type D_DarkColorPalette={
 	secondaryTitleColor: 4291607459;
 	section4Color: 4278979079;
 };
+type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
 type D_DataArrType=[number,number,D_DecTypeNum[]][];
 type D_DateText={dateText: G_Text;};
 type D_DecTypeNum=
@@ -2095,7 +2103,7 @@ type D_ItemSectionHeader={
 };
 type D_Label={label: string;};
 type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
-type D_LightColorPalette={
+type D_LightColorPalette_1={
 	section1Color: 4294966779;
 	section2Color: 4294505969;
 	section3Color: 4294110695;
@@ -2103,6 +2111,8 @@ type D_LightColorPalette={
 	secondaryTitleColor: 4285554760;
 	section4Color: 4293650141;
 };
+
+type D_LightColorPalette=D_LightColorPalette_1|D_LightColorPalette_2|D_LightColorPalette_3|D_LightColorPalette_4;
 type D_LikeApi={videoId: string;}|{playlistId: D_PlaylistId;};
 type D_LikeButton={
 	target: D_LikeApi;

@@ -7664,14 +7664,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.videoId(videoId);
 		this.a_primitive_str(playlistSetVideoId);
-		switch(darkColorPalette.primaryTitleColor) {default: debugger; break; case 4294964965: case 4294961637: }
-		switch(darkColorPalette.secondaryTitleColor) {default: debugger; break; case 4291608227: case 4291602851: }
-		switch(darkColorPalette.section2Color) {default: debugger; break; case 4063436571: case 4062716698: }
-		switch(darkColorPalette.section4Color) {default: debugger; break; case 4060875528: case 4061728525: }
-		switch(lightColorPalette.primaryTitleColor) {default: debugger; break; case 4279834128: case 4279833104: }
-		switch(lightColorPalette.secondaryTitleColor) {default: debugger; break; case 4285555272: case 4286207567: }
-		switch(lightColorPalette.section2Color) {default: debugger; break; case 4076401393: case 4076402417: }
-		switch(lightColorPalette.section4Color) {default: debugger; break; case 4075546589: case 4075544541: }
+		this.D_DarkColorPalette(darkColorPalette);
+		this.D_LightColorPalette(lightColorPalette);
 		this.G_Text(longBylineText);
 		this.G_Text(shortBylineText);
 		this.ceq(selected,true);
@@ -8563,9 +8557,32 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_LightColorPalette} x */
-	D_LightColorPalette(x) {const cf="D_LightColorPalette"; this.codegen_typedef_all(cf,x);}
-	/** @private @arg {D_DarkColorPalette} x */
-	D_DarkColorPalette(x) {const cf="D_DarkColorPalette"; this.codegen_typedef_all(cf,x);}
+	D_LightColorPalette(x) {
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
+		{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+	}
+	/** @private @arg {D_DarkColorPalette|D_DarkColorPalette_All} x */
+	D_DarkColorPalette(x) {
+		const cf="D_DarkColorPalette";
+		if("section1Color" in x) {
+			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
+			{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s1_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s3_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			return;
+		}
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
+		{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+	}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {E_UserFeedback} x */
