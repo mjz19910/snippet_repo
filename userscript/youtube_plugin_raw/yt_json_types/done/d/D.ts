@@ -2846,9 +2846,9 @@ type D_Tab={
 };
 type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
 type D_TemplateUpdate={
-	identifier: `${string}|${string}`;
+	identifier: `track_selection_sheet_option.eml|${string}`;
 	serializedTemplateConfig: string;
-	dependencies?: `${string}|${string}`[];
+	dependencies?: [`bottom_sheet_list_option.eml|${string}`];
 };
 type D_TemplatedText={
 	text: string;
