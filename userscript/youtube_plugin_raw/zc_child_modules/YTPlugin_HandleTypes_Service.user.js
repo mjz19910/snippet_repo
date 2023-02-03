@@ -3136,16 +3136,19 @@ class HandleTypes extends HandleTypesEval {
 			if(targetId!=="watch-dislike") debugger;
 			return;
 		}
-		{
-			const x=u;
-			const cf="D_ToggleButton";
-			const {size,accessibility,defaultTooltip,toggledTooltip,...y}=x; this.g(y);/*#destructure_done*/
+		x: {
+			const k="accessibility";
+			if(!(k in x)) break x;
+			/** @type {`${cf}:${k}`} */
+			const cf1=`${cf}:${k}`;
+			const {size,accessibility,defaultTooltip,toggledTooltip,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
 			if(size.sizeType!=="SIZE_DEFAULT") debugger;
 			this.D_Label(accessibility);
 			this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
 			this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
 			return;
 		}
+		debugger;
 	}
 	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
