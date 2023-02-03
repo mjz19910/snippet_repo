@@ -2616,12 +2616,12 @@ class HandleTypes extends HandleTypesEval {
 	D_Button_WithIcon_Omit(cf,x,z=null) {
 		const {size,style,...y}=this.D_Button_Omit_TP(cf,x); z=y;
 		switch(size) {
-			default: debugger; break;
+			default: size===""; debugger; break;
 			case "SIZE_DEFAULT":
 		}
 		switch(style) {
-			default: debugger; break;
-			case "STYLE_DEFAULT":
+			default: style===""; debugger; break;
+			case "STYLE_DEFAULT": case "STYLE_OPACITY": case "STYLE_TEXT":
 		}
 		return z;
 	}
@@ -2698,7 +2698,7 @@ class HandleTypes extends HandleTypesEval {
 						if(!(k2 in x)) break x;
 						/** @type {`${cf1}:${k2}`} */
 						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
+						let {icon: a,tooltip,isDisabled,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
 						switch(a.iconType) {
 							default: debugger; break;
 							case "SETTINGS":

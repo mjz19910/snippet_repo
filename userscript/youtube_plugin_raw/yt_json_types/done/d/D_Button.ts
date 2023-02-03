@@ -2,6 +2,15 @@
 type D_Button=
 	|never
 	|{
+		style: "STYLE_OPACITY";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		icon: T_Icon<"SHARE">;
+		navigationEndpoint: E_ShareEntityService;
+		tooltip: "Share";
+		trackingParams: string;
+	}
+	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
