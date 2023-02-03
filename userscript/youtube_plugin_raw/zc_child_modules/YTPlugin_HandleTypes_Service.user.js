@@ -2109,9 +2109,9 @@ class HandleTypes extends HandleTypesEval {
 	GM_SetSetting(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
-	/** @private @arg {string} cf @arg {T} x @template {GM_VE3832_WatchPlaylist|GM_VE3832_Watch} T */
+	/** @private @arg {"GM_VE3832_WatchPlaylist"|"GM_VE3832_Watch"} cf @arg {T} x @template {GM_VE3832_WatchPlaylist|GM_VE3832_Watch} T */
 	GM_VE3832(cf,x) {
-		const {rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {rootVe,webPageType,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(rootVe!==3832) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		return y;

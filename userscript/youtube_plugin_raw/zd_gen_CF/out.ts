@@ -549,7 +549,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE37414_WC";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3832_Watch_WC";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3832_WatchPlaylist" | "GM_VE3832_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3854_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE42352_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE4724_WC";}
@@ -795,6 +795,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE37414";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_Watch";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_WatchPlaylist";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE4724";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE83769";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetCart";}
