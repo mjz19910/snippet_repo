@@ -1089,6 +1089,16 @@ type D_LightColorPalette_4={
 	secondaryTitleColor: 4285555272;
 	section2Color: 4076402417;
 	section4Color: 4075546589;
+}|{
+	primaryTitleColor: 0xff101619;
+	secondaryTitleColor: 0xff4c6675;
+	section2Color: 0xf2f1f5f8;
+	section4Color: 0xf2dde6eb;
+}|{
+	primaryTitleColor: number;
+	secondaryTitleColor: number;
+	section2Color: number;
+	section4Color: number;
 };
 type D_PlaylistPanelVideo_Base={
 	title: G_Text;
@@ -2078,12 +2088,12 @@ type D_ItemSectionHeader={
 type D_Label={label: string;};
 type D_Letters=T_Split<"abcdefghijklmnopqrstuvwxyz","">[number];
 type D_LightColorPalette_1={
-	section1Color: 4294966779;
-	section2Color: 4294505969;
-	section3Color: 4294110695;
-	primaryTitleColor: 4279833872;
-	secondaryTitleColor: 4285554760;
-	section4Color: 4293650141;
+	primaryTitleColor: 4279833872|number;
+	secondaryTitleColor: 4285554760|number;
+	section1Color: 4294966779|number;
+	section2Color: 4294505969|number;
+	section3Color: 4294110695|number;
+	section4Color: 4293650141|number;
 };
 
 type D_LightColorPalette=D_LightColorPalette_1|D_LightColorPalette_2|D_LightColorPalette_3|D_LightColorPalette_4;
