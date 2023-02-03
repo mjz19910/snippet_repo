@@ -38,7 +38,6 @@ type CF_L_Params=
 	;
 ;
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
-type CF_T_GM_gen=T_ExtractImport<"CF_T_GM">;
 type CF_WithParams=
 	|CF_D_Button
 	|CF_D_ChipCloudChip_Omit
@@ -62,7 +61,7 @@ type CF_M_s=
 type CF_L_TP_Params=
 	|`T_Items_TP:${CF_T_Items_TP}`
 	|CF_WithParams
-	|T_ExtractImport<"CF_L_TP_Params">|"CF_L_TP_Params"|"a"
+	|T_ExtractImport<"CF_L_TP_Params">
 	;
 ;
 type CF_T_Signal=
@@ -87,14 +86,14 @@ type CF_M_w=
 	;
 ;
 type CF_M_y=
-	|T_ExtractImport<"CF_M_y">|"CF_M_y"|"a"
+	|T_ExtractImport<"CF_M_y">
 	|`T_WCM:${CF_T_WCM}`
 	;
 ;
 type CF_T_SE_Signal=
 	|`${CF_GE_ResponseReceived}.SE_Signal`
 	|`${CF_T_SE_Signal_P1}.SE_Signal`
-	|T_ExtractImport<"CF_T_SE_Signal">|"CF_T_SE_Signal"|"a"
+	|T_ExtractImport<"CF_T_SE_Signal">
 	;
 ;
 type CF_L_CTP_Params=
@@ -105,11 +104,11 @@ type CF_L_CTP_Params=
 	|`T_SE_Signal:${CF_T_SE_Signal}`
 	|CF_DC_Generic_CTP
 	|CF_GE_ResponseReceived
-	|T_ExtractImport<"CF_L_CTP_Params">|"CF_L_CTP_Params"|"a"
+	|T_ExtractImport<"CF_L_CTP_Params">
 	;
 ;
 type CF_D_Menu_Omit=
-	|T_ExtractImport<"CF_D_Menu_Omit">|"CF_D_Menu_Omit"|"a"
+	|T_ExtractImport<"CF_D_Menu_Omit">
 	|CF_D_Video_Handle
 	|CF_D_Playlist_Omit
 	;
@@ -127,10 +126,10 @@ type CF_DC_Generic_CTP=T_ExtractImport<"CF_DC_Generic_CTP">|"CF_DC_Generic_CTP"|
 type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">|"CF_GE_ResponseReceived"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
 type CF_M_zy=T_ExtractImport<"CF_M_zy">|"CF_M_zy"|"a";
-type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|"CF_onMissingIcon"|"a";
+type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|CF_D_Button;
 type CF_T_Commands=T_ExtractImport<"CF_T_Commands">|"CF_T_Commands"|"a";
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|"CF_T_Endpoint"|"a";
-type CF_T_GM=CF_T_GM_gen|"CF_GM_WC_2"|"a";
+type CF_T_GM=T_ExtractImport<"CF_T_GM">|"CF_T_GM"|"a";
 type CF_T_Icon=T_ExtractImport<"CF_T_Icon">|"CF_T_Icon"|"a";
 type CF_T_Items_TP=T_ExtractImport<"CF_T_Items_TP">|"CF_T_Items_TP"|"a";
 type CF_T_Items=T_ExtractImport<"CF_T_Items">|"CF_T_Items"|"a";
