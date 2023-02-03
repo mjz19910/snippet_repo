@@ -1508,7 +1508,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_PlayerAttestation} x */
 	R_PlayerAttestation(x) {this.H_("R_Miniplayer","playerAttestationRenderer",x,this.D_PlayerAttestation);}
 	/** @private @arg {R_CardCollection} x */
-	R_CardCollection(x) {this.H_("R_Miniplayer","cardCollectionRenderer",x,this.R_CardCollection);}
+	R_CardCollection(x) {this.H_("R_Miniplayer","cardCollectionRenderer",x,this.D_CardCollection);}
 	/** @private @arg {R_PlayerMicroformat} x */
 	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
 	/** @private @arg {R_AdPlacement} x */
@@ -8940,20 +8940,23 @@ class HandleTypes extends HandleTypesEval {
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
 		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
-	/** @private @arg {D_TranscriptSegment} x */
-	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_PdgCommentChip} x */
-	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_PromotedSparklesWeb} x */
-	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {E_UserFeedback} x */
-	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {AD_ReplayChatItem} x */
-	AD_ReplayChatItem(x) {x;}
-	/** @private @arg {AD_AddChatItem} x */
-	DA_AddChatItem(x) {x;}
+	/** @private @arg {D_PlayabilityStatus} x */
+	D_PlayabilityStatus(x) {
+		const cf="D_PlayabilityStatus";
+		const {status,playableInEmbed,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
+		if(status!=="OK") debugger;
+		if(playableInEmbed!==true) debugger;
+		this.t(offlineability,this.R_Button);
+		this.R_Miniplayer(miniplayer);
+		let ctx=atob(contextParams);
+		this.params(cf,"playability_status.context_params",ctx);
+	}
+	/** @private @arg {D_Miniplayer} x */
+	D_Miniplayer(x) {
+		const cf="D_Miniplayer";
+		const {playbackMode,...y}=this.s(cf,x); this.g(y);
+		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
+	}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
@@ -8985,27 +8988,24 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
+	/** @private @arg {D_TranscriptSegment} x */
+	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {D_PdgCommentChip} x */
+	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {D_PrivacyDropdownItem} x */
+	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {D_PromotedSparklesWeb} x */
+	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {E_UserFeedback} x */
+	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {AD_ReplayChatItem} x */
+	AD_ReplayChatItem(x) {x;}
+	/** @private @arg {AD_AddChatItem} x */
+	DA_AddChatItem(x) {x;}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {x;}
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {x;}
-	/** @private @arg {D_PlayabilityStatus} x */
-	D_PlayabilityStatus(x) {
-		const cf="D_PlayabilityStatus";
-		const {status,playableInEmbed,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-		if(status!=="OK") debugger;
-		if(playableInEmbed!==true) debugger;
-		this.t(offlineability,this.R_Button);
-		this.R_Miniplayer(miniplayer);
-		let ctx=atob(contextParams);
-		this.params(cf,"playability_status.context_params",ctx);
-	}
-	/** @private @arg {D_Miniplayer} x */
-	D_Miniplayer(x) {
-		const cf="D_Miniplayer";
-		const {playbackMode,...y}=this.s(cf,x); this.g(y);
-		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
-	}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {x;}
 	/** @private @arg {D_PlayerConfig} x */
@@ -9016,6 +9016,18 @@ class HandleTypes extends HandleTypesEval {
 	D_PlaybackTracking(x) {x;}
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {x;}
+	/** @private @arg {D_PlayerCaptionsTracklist} x */
+	D_PlayerCaptionsTracklist(x) {x;}
+	/** @private @arg {D_VideoQualityPromo} x */
+	D_VideoQualityPromo(x) {x;}
+	/** @private @arg {D_PlayerAttestation} x */
+	D_PlayerAttestation(x) {x;}
+	/** @private @arg {D_CardCollection} x */
+	D_CardCollection(x) {x;}
+	/** @private @arg {D_PlayerMicroformat} x */
+	D_PlayerMicroformat(x) {x;}
+	/** @private @arg {D_AdPlacement} x */
+	D_AdPlacement(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
