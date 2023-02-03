@@ -554,7 +554,6 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "context_params":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
@@ -9017,10 +9016,15 @@ class HandleTypes extends HandleTypesEval {
 		if(playableInEmbed!==true) debugger;
 		this.t(offlineability,this.R_Button);
 		this.R_Miniplayer(miniplayer);
-		this.params(cf,"playability_status.context_params",contextParams);
+		let ctx=atob(contextParams);
+		this.params(cf,"playability_status.context_params",ctx);
 	}
 	/** @private @arg {D_Miniplayer} x */
-	D_Miniplayer(x) {this.g(x);}
+	D_Miniplayer(x) {
+		const cf="D_Miniplayer";
+		const {playbackMode,...y}=this.s(cf,x); this.g(y);
+		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
+	}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

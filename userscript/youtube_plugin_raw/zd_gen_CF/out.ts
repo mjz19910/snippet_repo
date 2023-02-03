@@ -436,6 +436,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat.ios";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat.url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat_Other";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Miniplayer";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ModifiedSetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MovingThumbnail";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MovingThumbnail_Thumbnails";}

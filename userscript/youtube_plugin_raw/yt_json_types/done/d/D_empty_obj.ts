@@ -1,8 +1,6 @@
 
 // TODO #1
 type D_ReportFormModal={};
-// TODO #3
-type D_Miniplayer={};
 // TODO #5
 type D_VideoMastheadAdV3={};
 
