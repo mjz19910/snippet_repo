@@ -3122,6 +3122,14 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		x: {
+			const k="defaultText";
+			if(!(k in x)) break x;
+			/** @type {`${cf}:${k}`} */
+			const cf1=`${cf}:${k}`;
+			const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			return;
+		}
+		x: {
 			const k="accessibilityData";
 			if(!(k in x)) break x;
 			/** @type {`${cf}:${k}`} */
