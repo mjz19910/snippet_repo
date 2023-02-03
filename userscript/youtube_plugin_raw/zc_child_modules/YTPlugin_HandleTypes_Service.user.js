@@ -1102,6 +1102,9 @@ class HandleTypes extends HandleTypesEval {
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
+	static {
+		this.prototype.R_MenuFlexibleItem;
+	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @private @arg {R_NotificationText} x */
