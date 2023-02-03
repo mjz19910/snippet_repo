@@ -8975,14 +8975,7 @@ class HandleTypes extends HandleTypesEval {
 		let s_host=split_string_once(x.host,".");
 		switch(s_host[1]) {
 			case "googlevideo.com": {
-				switch(s_host[0]) {
-					/** @type {D_Probe_Domain} */
-					default: debugger; break;
-					case "r1---sn-p5qlsny6": break;
-					case "r2---sn-hp57knds": break;
-					case "r4---sn-p5qs7nzr": break;
-					case "r5---sn-nx57ynsd": break;
-				}
+				this.save_string("google_video_host",s_host[0]);
 				switch(x.pathname) {
 					case "/initplayback": break;
 					case "/videogoodput": {
