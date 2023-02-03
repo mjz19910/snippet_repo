@@ -7744,7 +7744,7 @@ class HandleTypes extends HandleTypesEval {
 		let arr=this.lc[k]??=[];
 		if(!arr.includes(x)) {
 			arr.push(x);
-			console.log(`-- [${cf1}:${cf}:${k}] --\n\n ${arr.map(x => `case 0x${x.toString(16)}:`).join(" ")}`);
+			console.log(`-- [${cf1}:${cf}:${k}] --\n\n${arr.map(x => `case 0x${x.toString(16)}:`).join(" ")}`);
 		}
 	};
 	/** @private @arg {string} cf1 @arg {D_LightColorPalette} x */
