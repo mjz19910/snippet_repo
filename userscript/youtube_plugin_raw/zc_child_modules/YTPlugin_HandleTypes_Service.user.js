@@ -9024,7 +9024,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,...y}=this.s(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,...y}=this.s(cf,x);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
@@ -9034,6 +9034,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
+		this.trackingParams(cf,trackingParams);
 		console.log("[RS_Player.next_key] [%s]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
