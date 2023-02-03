@@ -6,7 +6,7 @@ type TA_CreateObjectFromContinuationMap<T>={[E in keyof T]: TA_Continuation<E,T[
 type TA_OpenPopup<T_Action>={clickTrackingParams: string; openPopupAction: T_Action;};
 //#endregion
 //#region Actions 
-type A_AddChatItem={clickTrackingParams: string;addChatItemAction: DA_AddChatItem;};
+type A_AddChatItem={clickTrackingParams: string; addChatItemAction: DA_AddChatItem;};
 type A_AddToGuideSection={clickTrackingParams: string; addToGuideSectionAction: AD_AddToGuideSection;};
 type A_AppendContinuationItems={clickTrackingParams: string; appendContinuationItemsAction: AD_AppendContinuationItems;};
 type A_ChangeEngagementPanelVisibility={clickTrackingParams: string; changeEngagementPanelVisibilityAction: AD_ChangeEngagementPanelVisibility;};
@@ -22,31 +22,6 @@ type A_ShowEngagementPanelScrim={clickTrackingParams: string; showEngagementPane
 type A_Signal={clickTrackingParams: string; signalAction: AD_Signal;};
 type A_UndoFeedback={clickTrackingParams: string; undoFeedbackAction: AD_UndoFeedback;};
 type A_AccountItem={accountItem: AD_AccountItem;};
-type A_ActionAddVideo={
-	addedVideoId: string;
-	action: "ACTION_ADD_VIDEO";
-};
+type A_ActionAddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId: string;};
 type A_ActionSetPlaylistVideoOrder={action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";};
-type D_BrowserMediaSession={browserMediaSession: R_BrowserMediaSessionRenderer;}&T_Actions<R_LikeButton>;
-type D_ExternalChannelId={externalChannelId: `UC${string}`;};
-type R_FrameworkUpdates={
-	entityBatchUpdate: DC_EntityBatchUpdate;
-	elementUpdate?: R_ElementUpdate;
-};
-type GA_ResponseReceived=
-	|C_AdsControlFlowOpportunityReceived
-	|C_ReloadContinuationItems;
 type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;
-//#endregion
-//#region AD_
-type D_BrowserMediaSessionRenderer={};
-//#endregion
-type AC_Executor=[
-	A_ChangeEngagementPanelVisibility,
-	A_HideEngagementPanelScrim,
-	C_ScrollToEngagementPanel,
-	C_Loop,
-	C_UpdateToggleButtonState,
-	TA_OpenPopup_Empty,
-	C_EngagementPanelHeaderShowNavigationButton,
-][number];
