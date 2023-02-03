@@ -2701,7 +2701,7 @@ class HandleTypes extends HandleTypesEval {
 						let {icon: a,tooltip,isDisabled,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
 						switch(a.iconType) {
 							default: debugger; break;
-							case "SETTINGS":
+							case "SETTINGS": case "SHARE":
 						}
 						return;
 					}
