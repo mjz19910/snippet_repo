@@ -7657,7 +7657,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
-		const {thumbnail,thumbnailOverlays,title,trackingParams,indexText,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {thumbnail,thumbnailOverlays,title,trackingParams,videoId,playlistSetVideoId,darkColorPalette,lightColorPalette,longBylineText,shortBylineText,selected,lengthText,menu,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_off*/
 		this.D_Thumbnail(thumbnail);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 		this.G_Text(title);
@@ -7679,6 +7679,8 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(lengthText);
 		this.R_Menu(menu);
 		this.E_Watch(navigationEndpoint);
+		if("indexText" in y) return this.y(cf,"indexText",y,this.G_Text);
+		this.g(y);
 	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
