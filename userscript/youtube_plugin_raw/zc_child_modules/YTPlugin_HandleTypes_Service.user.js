@@ -5359,7 +5359,7 @@ class HandleTypes extends HandleTypesEval {
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE":
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT":
 		};
-		/** @returns {T_OmitKey<T,"token"|"request">|Omit<T, "token" | "request">} */
+		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
 		function gu() {return y;}
 		let u=gu();
 		this.assert_is_omit_key(x,y,u);
