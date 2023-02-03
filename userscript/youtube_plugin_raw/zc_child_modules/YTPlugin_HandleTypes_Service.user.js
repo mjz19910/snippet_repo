@@ -418,7 +418,7 @@ class HandleTypes extends HandleTypesEval {
 			case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel.player_params": switch(map_entry_key) {case 30: case 57: case 71: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "slot_ad_serving_data_entry": switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -6579,13 +6579,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PrefetchHintConfig} x */
 	D_PrefetchHintConfig(x) {
 		const cf="D_PrefetchHintConfig"; this.k(cf,x);
-		const {prefetchPriority,countdownUiRelativeSecondsPrefetchCondition,playbackRelativeSecondsPrefetchCondition,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
+		const {prefetchPriority,...y}=this.s(cf,x); this.g(y);/*//#destructure_done*/
 		this.ceq(prefetchPriority,0);
 		if(prefetchPriority!==0) debugger;
-		if(countdownUiRelativeSecondsPrefetchCondition!==-3) debugger;
-		this.t(playbackRelativeSecondsPrefetchCondition,x => {
-			x;
-		});
+		if("countdownUiRelativeSecondsPrefetchCondition" in y) {
+			const {countdownUiRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*//#destructure_done*/
+			if(a!==-3) debugger;
+			return;
+		}
+		if("playbackRelativeSecondsPrefetchCondition" in y) {
+			const {playbackRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*//#destructure_done*/
+			if(a!==-3) debugger;
+			return;
+		}
 	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {

@@ -2499,7 +2499,9 @@ type D_PlaylistVideoThumbnail={
 type D_PrefetchHintConfig={
 	prefetchPriority: 0;
 	countdownUiRelativeSecondsPrefetchCondition: -3;
-	playbackRelativeSecondsPrefetchCondition?: number;
+}|{
+	prefetchPriority: 0;
+	playbackRelativeSecondsPrefetchCondition: -3;
 };
 type D_PrimaryLinkItem={
 	navigationEndpoint: E_Url;
