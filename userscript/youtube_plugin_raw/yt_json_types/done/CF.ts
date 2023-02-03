@@ -22,10 +22,10 @@ type CF_T_Icon_Any=
 	;
 ;
 type CF_L_params_no_gen=
+	|"D_TemplateUpdate"
 	|"DE_GetReportForm"
 	|"DE_GetTranscript"
 	|"DE_YpcGetOffers.params"
-	|"D_TemplateUpdate"
 	|"DE_YpcGetOfflineUpsell"
 	;
 ;
