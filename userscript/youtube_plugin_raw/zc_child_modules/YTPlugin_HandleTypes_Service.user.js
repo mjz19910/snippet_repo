@@ -8559,44 +8559,44 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
 		const cf="D_LightColorPalette";
-		/** @arg {number} x */
-		let log_color=(x) => console.log(`-- [${cf1}:${cf}] --\n\n case 0x${x.toString(16)}:`);
+		/** @arg {string} k @arg {number} x */
+		let log_color=(k,x) => console.log(`-- [${cf1}:${cf}:${k}] --\n\n case 0x${x.toString(16)}:`);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: log_color(x); break;}}
-			{const x=s_tc; switch(x) {default: log_color(x); break;}}
-			{const x=s1_c; switch(x) {default: log_color(x); break;}}
-			{const x=s2_c; switch(x) {default: log_color(x); break;}}
-			{const x=s3_c; switch(x) {default: log_color(x); break;}}
-			{const x=s4_c; switch(x) {default: log_color(x); break;}}
+			{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
+			{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
+			{const x=s1_c; switch(x) {default: log_color("s1_c",x); break;}}
+			{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
+			{const x=s3_c; switch(x) {default: log_color("s3_c",x); break;}}
+			{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: log_color(x); break;}}
-		{const x=s_tc; switch(x) {default: log_color(x); break;}}
-		{const x=s2_c; switch(x) {default: log_color(x); break;}}
-		{const x=s4_c; switch(x) {default: log_color(x); break;}}
+		{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
+		{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
+		{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
+		{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
 	}
 	/** @private @arg {string} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
 		const cf="D_DarkColorPalette";
-		/** @arg {number} x */
-		let log_color=(x) => console.log(`-- [${cf1}:${cf}] --\n\n case 0x${x.toString(16)}:`);
+		/** @arg {string} k @arg {number} x */
+		let log_color=(k,x) => console.log(`-- [${cf1}:${cf}:${k}] --\n\n case 0x${x.toString(16)}:`);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: log_color(x); break;}}
-			{const x=s_tc; switch(x) {default: log_color(x); break;}}
-			{const x=s1_c; switch(x) {default: log_color(x); break;}}
-			{const x=s2_c; switch(x) {default: log_color(x); break;}}
-			{const x=s3_c; switch(x) {default: log_color(x); break;}}
-			{const x=s4_c; switch(x) {default: log_color(x); break;}}
+			{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
+			{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
+			{const x=s1_c; switch(x) {default: log_color("s1_c",x); break;}}
+			{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
+			{const x=s3_c; switch(x) {default: log_color("s3_c",x); break;}}
+			{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: log_color(x); break;}}
-		{const x=s_tc; switch(x) {default: log_color(x); break;}}
-		{const x=s2_c; switch(x) {default: log_color(x); break;}}
-		{const x=s4_c; switch(x) {default: log_color(x); break;}}
+		{const x=p_tc; switch(x) {default: log_color("p_tc",x); break;}}
+		{const x=s_tc; switch(x) {default: log_color("s_tc",x); break;}}
+		{const x=s2_c; switch(x) {default: log_color("s2_c",x); break;}}
+		{const x=s4_c; switch(x) {default: log_color("s4_c",x); break;}}
 	}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
