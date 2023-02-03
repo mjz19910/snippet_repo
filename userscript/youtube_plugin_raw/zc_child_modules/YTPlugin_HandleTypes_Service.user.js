@@ -4564,7 +4564,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		const cf="DE_VE3832_Watch"; this.k(cf,x);
-		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.videoId(videoId);
 		this.t(playlistId,this.playlistId);
 		if(index!==void 0) this._primitive_of(index,"number");
@@ -4574,9 +4574,9 @@ class HandleTypes extends HandleTypesEval {
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
 		this.t(loggingContext,this.R_VssLoggingContext);
 		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
-		this.t(a1,this.R_PrefetchHintConfig);
+		this.t(watchEndpointSupportedPrefetchConfig,this.R_PrefetchHintConfig);
 		this.t(playerParams,a => this.playerParams(cf,"watch.player_params",a,this.on_player_params_callback.bind(this)));
-		this.t(a2,this.R_WatchEndpointMusicConfig);
+		this.t(watchEndpointMusicSupportedConfigs,this.R_WatchEndpointMusicConfig);
 		if(nofollow!==void 0) this._primitive_of(nofollow,"boolean");
 		this.t(playerExtraUrlParams,([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0));
 	}
