@@ -751,8 +751,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
-	/** @private @template {CF_D_Params} T_CF @arg {T_CF} cf @template U @template {string} T @arg {{params:T;}} x @arg {(this:this,x:T,cf:T_CF)=>U} f */
-	D_Params(cf,x,f) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); return f.call(this,x.params,cf);}
+	/** @private @arg {P_PathRootStr} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
+	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params)}
 	//#endregion
 	//#region helpers
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
@@ -1721,10 +1721,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {x;}
+	/** @private @arg {string} x */
+	DE_YpcGetOfflineUpsell_params(x) {this.params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell",x);}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
-	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,(x,cf) => this.params(cf,"ypc_get_offline_upsell",x));}
+	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,this.DE_YpcGetOfflineUpsell_params);}
 	/** @private @arg {DE_GetReportForm} x */
-	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,(x,cf) => this.params(cf,"get_report_form",x));}
+	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,"get_report_form",(x,cf) => this.params(cf,"get_report_form",x));}
 	/** @private @arg {DE_NotificationOptOut} x */
 	DE_NotificationOptOut(x) {
 		const cf="DE_NotificationOptOut";

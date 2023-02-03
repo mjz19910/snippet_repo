@@ -31,10 +31,10 @@ type CF_L_params_no_gen=
 ;
 type CF_L_Params=
 	|T_ExtractImport<"CF_L_Params">|"CF_L_Params"|"a"
-	|CF_L_CTP_Params
-	|CF_L_TP_Params
-	|CF_L_params_no_gen
 	|`${CF_D_Params}.params`
+	|CF_L_CTP_Params
+	|CF_L_params_no_gen
+	|CF_L_TP_Params
 	;
 ;
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
