@@ -126,20 +126,20 @@ type CF_L_CTP_Params=
 	|T_ExtractImport<"CF_L_CTP_Params">|"CF_L_CTP_Params"|"a"
 	;
 ;
-type CF_D_Link=T_ExtractImport<"CF_D_Link">|"CF_D_Link"|"a";
-type CF_D_Button=T_ExtractImport<"CF_D_Button">|"CF_D_Button"|"a";
-type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">|"CF_GE_ResponseReceived"|"a";
 type CF_D_Menu_Omit=
 	|T_ExtractImport<"CF_D_Menu_Omit">|"CF_D_Menu_Omit"|"a"
 	|CF_D_Video_Handle
 	|CF_D_Playlist_Omit
 	;
 ;
+type CF_D_Button=T_ExtractImport<"CF_D_Button">|"CF_D_Button"|"a";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen"|"a";
 type CF_D_ChipCloudChip_Omit=T_ExtractImport<"CF_D_ChipCloudChip_Omit">|"CF_D_ChipCloudChip_Omit"|"a";
+type CF_D_Link=T_ExtractImport<"CF_D_Link">|"CF_D_Link"|"a";
 type CF_D_Playlist_Omit=T_ExtractImport<"CF_D_Playlist_Omit">|"CF_D_Playlist_Omit"|"a";
 type CF_D_STR=T_ExtractImport<"CF_D_STR">|"a"|"";
 type CF_DC_Generic_CTP=T_ExtractImport<"CF_DC_Generic_CTP">|"CF_DC_Generic_CTP"|"a";
+type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">|"CF_GE_ResponseReceived"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
 type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|"CF_onMissingIcon"|"a";
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|"CF_T_Endpoint"|"a";
