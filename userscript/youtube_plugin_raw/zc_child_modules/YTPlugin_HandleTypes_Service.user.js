@@ -9019,7 +9019,10 @@ class HandleTypes extends HandleTypesEval {
 			if(ka.length!==0) debugger;
 		});
 		this.R_FrameworkUpdates(frameworkUpdates);
-		console.log("[RS_Player.next_key] [%s]",this.get_keys_of(y)[0]);
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log("[RS_Player.next_key] [%s]",ka[0]);
+		}
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
 	/** @private @arg {R_AdPlacement} x */
