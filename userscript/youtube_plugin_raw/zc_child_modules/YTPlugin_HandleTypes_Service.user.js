@@ -31,7 +31,10 @@ export_(exports => {exports.__is_module_flag__=true;});
 //#region module init
 function init_module() {
 	//#region exports
-	export_((exports) => {exports.HandleTypes=HandleTypes;});
+	export_((exports) => {
+		exports.HandleTypes=HandleTypes;
+		exports.TypedefGenerator=TypedefGenerator;
+	});
 	//#endregion
 	//#region Start main
 	console=typeof window==="undefined"? console:(() => window.console)();
@@ -488,17 +491,6 @@ class HandleTypesEval extends ServiceMethods {
 	}
 	//#endregion
 
-
-	//#endregion
-}
-window.HandleTypesEval=HandleTypesEval;
-//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
-`;
-eval(handle_types_eval_code);
-//#endregion
-//#region HandleTypes
-/** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
-class HandleTypes extends HandleTypesEval {
 	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		switch(path) {
@@ -546,9 +538,9 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
+	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:\`\${T[R]}\`},".f">} */
 	fmt_arr(x) {
-		return as(x.map(v => `${v}`).join(".f"));
+		return as(x.map(v => \`\${v}\`).join(".f"));
 	}
 	/**
 	 * @template {"DE_VE3832_Watch"} T
@@ -562,17 +554,17 @@ class HandleTypes extends HandleTypesEval {
 		switch(map_entry_key_path.length) {
 			case 3: {
 				let v_arr=this.fmt_arr(map_entry_key_path);
-				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
+				this.parse_param_next(root,\`watch.player_params.f\${v_arr}\`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 			case 2: {
 				let v_arr=this.fmt_arr(map_entry_key_path);
-				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
+				this.parse_param_next(root,\`watch.player_params.f\${v_arr}\`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 			case 1: {
 				let v_arr=this.fmt_arr(map_entry_key_path);
-				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
+				this.parse_param_next(root,\`watch.player_params.f\${v_arr}\`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 		}
@@ -602,12 +594,23 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
 		this.save_number(path,x[1]);
-		this.save_string(path,`${x[2]}n`);
+		this.save_string(path,\`\${x[2]}n\`);
 	}
 	get generate_typedef() {
 		if(!generate_typedef.value) throw new Error();
 		return generate_typedef.value;
 	}
+
+	//#endregion
+}
+window.HandleTypesEval=HandleTypesEval;
+//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
+`;
+eval(handle_types_eval_code);
+//#endregion
+//#region HandleTypes
+/** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
+class HandleTypes extends HandleTypesEval {
 	/** @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
 	constructor(x) {
 		super(x);

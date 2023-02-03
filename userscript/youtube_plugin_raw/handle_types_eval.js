@@ -1,9 +1,18 @@
 import {ServiceMethods} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
+import {TypedefGenerator} from "./zc_child_modules/YTPlugin_HandleTypes_Service.user";
 /** @returns {never} */
 function n() {throw new Error("Make never type");}
 n;
 /** @template T,U @extends {ServiceMethods<T,U>} */
 export class HandleTypesEval_ extends ServiceMethods {
+	/** @type {TypedefGenerator} */
+	get generate_typedef() {
+		throw new Error();
+	}
+	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
+	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
+		map_entry_values; map_entry_key_path; path; map_keys; root;
+	}
 	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {void} */
 	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		map_entry_values; map_entry_key_path; path; map_keys; root;
