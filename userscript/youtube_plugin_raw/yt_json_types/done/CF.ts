@@ -48,6 +48,7 @@ type CF_WithParams=
 ;
 type CF_M_s=
 	|`${CF_parse_identifier}.identifier`
+	|CF_D_ToggleButton
 	|CF_D_CustomEmoji
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
@@ -60,6 +61,7 @@ type CF_M_s=
 ;
 type CF_L_TP_Params=
 	|`T_Items_TP:${CF_T_Items_TP}`
+	|CF_D_ToggleButton
 	|CF_WithParams
 	|T_ExtractImport<"CF_L_TP_Params">
 	;
@@ -122,6 +124,7 @@ type CF_D_Link=T_ExtractImport<"CF_D_Link">|"CF_D_Link"|"a";
 type CF_D_Params=T_ExtractImport<"CF_D_Params">|"DC_GetTranscript_Params"|"a";
 type CF_D_Playlist_Omit=T_ExtractImport<"CF_D_Playlist_Omit">|"CF_D_Playlist_Omit"|"a";
 type CF_D_STR=T_ExtractImport<"CF_D_STR">|"a"|"";
+type CF_D_ToggleButton=T_ExtractImport<"CF_D_ToggleButton">|"CF_D_ToggleButton"|"a";
 type CF_D_Video_Handle=T_ExtractImport<"CF_D_Video_Handle">|"CF_D_Video_Handle"|"a";
 type CF_DC_Generic_CTP=T_ExtractImport<"CF_DC_Generic_CTP">|"CF_DC_Generic_CTP"|"a";
 type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">|"CF_GE_ResponseReceived"|"a";

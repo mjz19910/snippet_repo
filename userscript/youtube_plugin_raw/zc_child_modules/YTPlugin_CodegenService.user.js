@@ -934,6 +934,7 @@ class CodegenService extends BaseService {
 		/** @private @type {R_GuideEntryData} */
 		if(b.guideEntryData) return "TYPE::R_GuideEntryData";
 		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
+		if(b.sizeType&&typeof b.sizeType==="string") return `TYPE::T_SizeType<"${b.sizeType}">`;
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
 		if(b.button_id) return `TYPE::ButtonId<"${b.button_id}">`;
 		/** @private @type {D_Label} */

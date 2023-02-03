@@ -3088,10 +3088,9 @@ class HandleTypes extends HandleTypesEval {
 		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
 		this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_ToggleButton} x */
-	D_ToggleButton_Omit(x) {
-		const cf="D_ToggleButton";
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,accessibilityData,...y}=this.s(cf,x);
+	/** @private @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x */
+	D_ToggleButton_Omit(cf,x) {
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x);
 		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
@@ -3100,27 +3099,57 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Button_ToggledServiceEP(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
-		this.D_Accessibility(accessibilityData);
-		this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
 		return y;
 	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
-		let u=this.D_ToggleButton_Omit(x);
-		if("defaultText" in u) {
-			const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*#destructure_done*/
-			this.G_Text(defaultText);
-			this.G_Text(toggledText);
+		const cf="D_ToggleButton";
+		// const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,accessibilityData,...y}=u; this.g(y);/*#destructure_done*/
+		// this.G_Text(defaultText);
+		// this.G_Text(toggledText);
+		// this.D_Label(accessibility);
+		// this.a_primitive_str(defaultTooltip);
+		// this.a_primitive_str(toggledTooltip);
+		// this.save_string("[D_ToggleButton.targetId]",targetId);
+		x: {
+			const k="toggledAccessibilityData";
+			if(!(k in x)) break x;
+			/** @type {`${cf}:${k}`} */
+			const cf1=`${cf}:${k}`;
+			const {toggledAccessibilityData,accessibilityData,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			this.D_Accessibility(toggledAccessibilityData);
+			this.D_Accessibility(accessibilityData);
+			return;
+		}
+		x: {
+			const k="accessibilityData";
+			if(!(k in x)) break x;
+			/** @type {`${cf}:${k}`} */
+			const cf1=`${cf}:${k}`;
+			const {accessibilityData,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibilityData);
+			this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
 			this.D_Label(accessibility);
-			this.a_primitive_str(defaultTooltip);
-			this.a_primitive_str(toggledTooltip);
-			this.save_string("[D_ToggleButton.targetId]",targetId);
+			this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
+			this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
 			this.D_ToggleButtonIdData(toggleButtonSupportedData);
+			if(targetId!=="watch-dislike") debugger;
+			return;
+		}
+		{
+			const x=u;
+			const cf="D_ToggleButton";
+			const {size,accessibility,defaultTooltip,toggledTooltip,...y}=x; this.g(y);/*#destructure_done*/
+			if(size.sizeType!=="SIZE_DEFAULT") debugger;
+			this.D_Label(accessibility);
+			this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
+			this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
+			return;
 		}
 	}
 	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
-	/** @private @arg {D_ToggleButtonIdData} x */
+	/** @protected @arg {D_ToggleButtonIdData} x */
 	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
 	/** @private @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}

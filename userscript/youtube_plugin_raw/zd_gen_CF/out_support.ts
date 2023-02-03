@@ -12,6 +12,7 @@ export namespace Prelude {
 		|"CF_D_Params"
 		|"CF_D_Playlist_Omit"
 		|"CF_D_STR"
+		|"CF_D_ToggleButton"
 		|"CF_D_Video_Handle"
 		|"CF_DC_Generic_CTP"
 		|"CF_GE_ResponseReceived"

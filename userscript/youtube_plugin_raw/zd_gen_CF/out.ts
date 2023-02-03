@@ -56,6 +56,8 @@ export namespace Gen {
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeKidsUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "GU_YoutubeUrlRedirect";}
+		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibilityData";}
+		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:toggledAccessibilityData";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_WithAccessibility";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_WithOwner";}
@@ -205,7 +207,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayEndorsement";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayToggleButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailsList";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ToggleButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ToggleMenuServiceItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopbarLogo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_TopbarMenuButton";}
@@ -515,7 +516,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailsList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TimestampWithNanos";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ToggleButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ToggleMenuServiceItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TopbarLogo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TopbarMenuButton";}

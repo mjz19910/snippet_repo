@@ -19,7 +19,7 @@ type D_UiTargetId=
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
 type D_Menu_TargetId=Extract<D_Menu,{targetId: any;}>["targetId"];
 type D_Button_TargetId=Extract<D_Button,{targetId: any;}>["targetId"];
-type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId:any}>["targetId"];
+type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId: any;}>["targetId"];
 type D_TargetIdStr=
 	|"browse-video-menu-button"
 	|D_ClipInfoButton["targetId"]
@@ -2935,8 +2935,23 @@ type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|C
 type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
+type T_SizeType<T>={sizeType: T;};
 type D_ToggleButton=
 	|never
+	|{
+		style: T_StyleType<"STYLE_GREY_TEXT">;
+		size: T_SizeType<"SIZE_DEFAULT">;
+		isToggled: false;
+		isDisabled: false;
+		defaultIcon: T_Icon<"SHUFFLE">;
+		defaultServiceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+		toggledServiceEndpoint: T_SE_Signal<M_SendPost,G_ClientSignal>;
+		accessibility: TD_Label<"Shuffle playlist">;
+		trackingParams: string;
+		defaultTooltip: "Shuffle playlist";
+		toggledTooltip: "Shuffle playlist";
+		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
+	}
 	|{
 		style: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
 		isToggled: false;
@@ -2965,24 +2980,8 @@ type D_ToggleButton=
 		toggleButtonSupportedData: D_ToggleButtonIdData;
 		targetId: "watch-dislike";
 	}
-	|{
-		style: T_StyleType<"STYLE_TEXT">;
-		isToggled: false;
-		isDisabled: false;
-		defaultIcon: T_Icon<"LIKE"|"DISLIKE"|"LOOP">;
-		defaultText: G_Text;
-		defaultServiceEndpoint: C_CommandExecutor;
-		toggledText: G_Text;
-		toggledServiceEndpoint: E_Like;
-		accessibility: D_Label;
-		trackingParams: string;
-		defaultTooltip: string;
-		toggledTooltip: string;
-		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
-		accessibilityData: D_Accessibility;
-		toggleButtonSupportedData: D_ToggleButtonIdData;
-		targetId: "watch-like"|"watch-dislike";
-	};
+	;
+;
 type D_ToggleButtonText={
 	defaultText: G_Text;
 	toggledText: G_Text;
