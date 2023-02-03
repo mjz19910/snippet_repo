@@ -57,9 +57,21 @@ class IndexedDatabaseService extends BaseService {
 	get_data_index_cache(key) {return this.store_cache_index[key][1];}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
+	/** @type {Map<string,string[]>} */
+	cached_data=new Map;
 	/** @api @public @template {DatabaseStoreDescription["name"]} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {T} obj */
 	put(key,obj) {
 		if(!obj) {debugger; return;}
+		const index_key=this.get_index_key(key);
+		switch(index_key) {
+			case "hashtag": {
+				if(!(index_key in obj)) return;
+				let index_val=obj[index_key];
+				let cache=this.cached_data.get(key);
+				if(cache?.includes(index_val)) return;
+			} break;
+			case "v":
+		}
 		if(!this.database_open) this.requestOpen({name: key});
 		let d_cache=this.get_data_cache(key);
 		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {debugger;}
@@ -154,11 +166,24 @@ class IndexedDatabaseService extends BaseService {
 	}
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
-		let cur_name=store_desc.name;
-		let dc=this.get_data_cache(cur_name);
+		const cur_name=store_desc.name;
+		const index_key=this.get_index_key(cur_name);
+		const dc=this.get_data_cache(cur_name);
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
 		for(let i=dc.length-1;i>=0;i--) {
-			if(!this.committed_data.includes(dc[i])) continue;
+			const val=dc[i];
+			/** @type {T_UnionToPartial<typeof val>} */
+			let ac_val=val;
+			if(!this.committed_data.includes(val)) continue;
+			x: {
+				if(!this.cached_data.has(index_key)) this.cached_data.set(index_key,[]);
+				let cache=this.cached_data.get(index_key);
+				if(!cache) throw new Error();
+				let index_val=ac_val[index_key];
+				if(!index_val) break x;
+				if(cache.includes(index_val)) break x;
+				cache.push(index_val);
+			}
 			dc.splice(i,1);
 		}
 		if(dc.length>0) {
