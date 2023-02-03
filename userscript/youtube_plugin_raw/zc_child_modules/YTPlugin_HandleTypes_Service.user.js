@@ -8909,6 +8909,23 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
+	/** @private @arg {D_InfoRow} x */
+	D_InfoRow(x) {
+		const cf="D_InfoRow";
+		const {title,defaultMetadata,expandedMetadata,expandIcon,trackingParams,infoRowExpandStatusKey,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.t(defaultMetadata,this.G_Text);
+		this.t(expandedMetadata,this.G_Text);
+		this.t(expandIcon,x => {if(x.iconType!=="EXPAND") debugger;});
+		this.trackingParams(cf,trackingParams);
+		this.t(infoRowExpandStatusKey,x => {
+			switch(x) {
+				default: debugger; break;
+				case "structured-description-music-section-artists-row-state-id":
+				case "structured-description-music-section-licenses-row-state-id":
+			}
+		});
+	}
 	/** @private @arg {D_VideoMastheadAdV3} x */
 	D_VideoMastheadAdV3(x) {const cf="D_VideoMastheadAdV3"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_AutomixPreviewVideo} x */
@@ -8945,23 +8962,6 @@ class HandleTypes extends HandleTypesEval {
 	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PdgCommentChip} x */
 	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_InfoRow} x */
-	D_InfoRow(x) {
-		const cf="D_InfoRow";
-		const {title,defaultMetadata,expandedMetadata,expandIcon,trackingParams,infoRowExpandStatusKey,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.t(defaultMetadata,this.G_Text);
-		this.t(expandedMetadata,this.G_Text);
-		this.t(expandIcon,x => {if(x.iconType!=="EXPAND") debugger;});
-		this.trackingParams(cf,trackingParams);
-		this.t(infoRowExpandStatusKey,x => {
-			switch(x) {
-				default: debugger; break;
-				case "structured-description-music-section-artists-row-state-id":
-				case "structured-description-music-section-licenses-row-state-id":
-			}
-		});
-	}
 	/** @private @arg {D_PrivacyDropdownItem} x */
 	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
