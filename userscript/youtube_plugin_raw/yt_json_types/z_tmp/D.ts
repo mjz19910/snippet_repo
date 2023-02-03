@@ -173,6 +173,8 @@ type D_VE6827_PageLocation=
 	|"library"
 	;
 ;
+type D_ApiPathFormat=`/${Join<url_pathname_parts,"/">}`;
+type D_ApiStatsAdsStr=`ver=${string}ns=${string}event=${string}device=${string}content_v=${string}el=${string}ei=${string}devicever=${string}bti=${string}break_type=${string}conn=${string}cpn=${string}lact=${string}m_pos=${string}mt=${string}p_h=${string}p_w=${string}rwt=${string}sdkv=${string}slot_pos=${string}vis=${string}vol=${string}wt=${string}sli=${string}slfs=${string}loginael=${string}`;
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
@@ -1462,7 +1464,6 @@ type ApiNotificationLast=[
 	"record_interactions",
 	"modify_channel_preference"
 ][number];
-type D_ApiPathFormat=`/${Join<url_pathname_parts,"/">}`;
 type D_ApiPathFormat_1=[
 	"youtubei/v1/ypc/get_offers",
 	"youtubei/v1/ypc/get_cart",
@@ -1494,35 +1495,6 @@ type D_ApiPathFormat_2=[
 	"youtubei/v1/flag/get_form",
 	"youtubei/v1/backstage/create_post",
 ][number];
-type D_ApiStatsAdsStr=`${never|
-	`ver=${string}`
-	}&${`ns=${string}`
-	}&${`event=${string}`
-	}&${`device=${string}`
-	}&${`content_v=${string}`
-	}&${`el=${string}`
-	}&${`ei=${string}`
-	}&${`devicever=${string}`
-	}&${`bti=${string}`
-	}&${`break_type=${string}`
-	}&${`conn=${string}`
-	}&${`cpn=${string}`
-	}&${`lact=${string}`
-	}&${`m_pos=${string}`
-	}&${`mt=${string}`
-	}&${`p_h=${string}`
-	}&${`p_w=${string}`
-	}&${`rwt=${string}`
-	}&${`sdkv=${string}`
-	}&${`slot_pos=${string}`
-	}&${`vis=${string}`
-	}&${`vol=${string}`
-	}&${`wt=${string}`
-	}&${`sli=${string}`
-	}&${`slfs=${string}`
-	}&loginael=${string}`
-	;
-;
 type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;
 type D_AttBgChallenge={
 	interpreterUrl?: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
