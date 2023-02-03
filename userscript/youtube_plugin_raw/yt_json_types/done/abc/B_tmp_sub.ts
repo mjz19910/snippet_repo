@@ -13,7 +13,7 @@ type B_StateTag={
 };
 type B_TagObj={tag: string;};
 type B_VEMap={
-	3832: {CommandMetadata: M_VE3832;};
+	3832: {CommandMetadata: M_VE3832_Watch;};
 	3611: {CommandMetadata: M_VE3611;};
 	3854: {CommandMetadata: M_VE3854;};
 	4724: {CommandMetadata: M_VE4724;};

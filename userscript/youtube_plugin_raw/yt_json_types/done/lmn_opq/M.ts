@@ -1,6 +1,6 @@
 //#region M_VE\d+
 type M_VE3611=TM_Gen<GM_VE3611_WC>;
-type M_VE3832=TM_Gen<GM_VE3832_Watch_WC>;
+type M_VE3832_Watch=TM_Gen<GM_VE3832_Watch_WC>;
 type M_VE3854=TM_Gen<GM_VE3854_WC>;
 type M_VE4724=TM_Gen<GM_VE4724_WC>;
 type M_VE5754=TM_Gen<GM_VE5754_WC>;
