@@ -264,6 +264,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ShowEngagementPanelScrim";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Signal";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SubscribeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_UpdateEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_UpdateNotificationsUnseenCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AU_EngagementPanel";}
@@ -319,7 +320,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptSearchBox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptTrackSelection";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DUA_SubscribeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdLayoutMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlot";}
