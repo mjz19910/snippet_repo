@@ -16,7 +16,5 @@ function generate_ts_output {
 		echo "\t\t;"
 		echo "}"
 	}
-	echo >"$TMP_DIR/tmp.ts"
-	return
 	generate_ts_restore
 }
