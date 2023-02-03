@@ -6754,10 +6754,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AutoplaySetItem} x */
 	D_AutoplaySetItem(x) {
 		const cf="D_AutoplaySetItem"; this.k(cf,x);
-		const {mode,autoplayVideo,nextButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {mode,autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(mode!=="NORMAL") debugger;
 		this.E_Watch(autoplayVideo);
 		this.t(nextButtonVideo,this.E_Watch);
+		this.t(previousButtonVideo,this.E_Watch);
 	}
 	/** @private @arg {D_ModifiedSetItem} x */
 	D_ModifiedSetItem(x) {
