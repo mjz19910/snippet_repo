@@ -448,6 +448,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PivotButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerAnnotationsExpanded";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay:autoplay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay:autoplay:decoratedPlayerBarRenderer";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay:decoratedPlayerBarRenderer";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlayVideoDetails";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistAddToOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistContent";}

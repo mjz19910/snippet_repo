@@ -370,6 +370,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "watch_playlist.params.f27": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "watch_playlist.params": switch(map_entry_key) {
 				case 2: case 3: case 7: case 12: case 13: case 27:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -4250,22 +4255,44 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerOverlay} x */
 	D_PlayerOverlay(x) {
 		const cf="D_PlayerOverlay"; this.k(cf,x);
-		if("browserMediaSession" in x) {return this.A_BrowserMediaSession(x);}
-		const {endScreen,autoplay,shareButton,addToMenu,autonavToggle,videoDetails,...y}=this.s(cf,x);
+		if("browserMediaSession" in x) return this.A_BrowserMediaSession(x);
+		const {endScreen,shareButton,addToMenu,videoDetails,...y}=this.s(cf,x);
 		this.R_WatchNextEndScreen(endScreen);
-		this.R_PlayerOverlayAutoplay(autoplay);
+		// this.R_PlayerOverlayAutoplay(autoplay);
 		this.R_Button(shareButton);
 		this.R_Menu(addToMenu);
 		this.R_PlayerOverlayVideoDetails(videoDetails);
-		this.t(autonavToggle,this.R_AutoplaySwitchButton);
-		this.R_WatchNextEndScreen(endScreen);
-		// this.t(autoplay,this.R_PlayerOverlayAutoplay);
-		this.R_Button(shareButton);
-		this.R_Menu(addToMenu);
-		this.R_PlayerOverlayVideoDetails(videoDetails);
-		if("decoratedPlayerBarRenderer" in y) {
-			const {decoratedPlayerBarRenderer,...y1}=this.s(cf,y); this.g(y1);/*#destructure_done*/
-			return this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
+		x: {
+			const k="autoplay";
+			if(!(k in y)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`; this.k(cf1,x);
+			y: {
+				const k2="decoratedPlayerBarRenderer";
+				if(!(k2 in y)) break y;
+				/** @type {`${typeof cf1}:${typeof k2}`} */
+				const cf2=`${cf1}:${k2}`; this.k(cf1,x);
+				const {autoplay,autonavToggle,decoratedPlayerBarRenderer,...y1}=this.s(cf2,y); this.g(y1);/*#destructure_done*/
+				this.R_PlayerOverlayAutoplay(autoplay);
+				this.R_AutoplaySwitchButton(autonavToggle);
+				this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
+				return;
+			}
+			const {autoplay,autonavToggle,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
+			this.R_PlayerOverlayAutoplay(autoplay);
+			this.R_AutoplaySwitchButton(autonavToggle);
+			return;
+		}
+		x: {
+			const k="decoratedPlayerBarRenderer";
+			if(!(k in y)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`; this.k(cf1,x);
+			const {decoratedPlayerBarRenderer,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
+			this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
+			return;
+		}
+		{
 		}
 		this.g(y);
 	}

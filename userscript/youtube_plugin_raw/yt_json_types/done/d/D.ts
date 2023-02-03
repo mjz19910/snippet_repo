@@ -2415,6 +2415,12 @@ type D_PlayerMicroformat={
 };
 type D_PlayerOverlay={
 	endScreen: R_WatchNextEndScreen;
+	shareButton: R_Button;
+	addToMenu: R_Menu;
+	videoDetails: R_PlayerOverlayVideoDetails;
+	decoratedPlayerBarRenderer: R_DecoratedPlayerBar;
+}|{
+	endScreen: R_WatchNextEndScreen;
 	autoplay: R_PlayerOverlayAutoplay;
 	shareButton: R_Button;
 	addToMenu: R_Menu;
