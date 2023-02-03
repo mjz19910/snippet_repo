@@ -7668,7 +7668,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_LightColorPalette(cf,lightColorPalette);
 		this.G_Text(longBylineText);
 		this.G_Text(shortBylineText);
-		this.ceq(selected,true);
+		this.a_primitive_bool(selected);
 		this.G_Text(lengthText);
 		this.R_Menu(menu);
 		this.E_Watch(navigationEndpoint);

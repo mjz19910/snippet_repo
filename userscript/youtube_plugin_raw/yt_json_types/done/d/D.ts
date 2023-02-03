@@ -1085,6 +1085,22 @@ type D_LightColorPalette_4={
 	secondaryTitleColor: 4285555272;
 	section4Color: 4075546589;
 };
+type D_PlaylistPanelVideo_Base={
+	title: G_Text;
+	longBylineText: G_Text;
+	thumbnail: D_Thumbnail;
+	lengthText: G_Text;
+	selected: boolean;
+	navigationEndpoint: E_Watch;
+	videoId: string;
+	shortBylineText: G_Text;
+	trackingParams: string;
+	menu: R_Menu;
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
+	playlistSetVideoId: string;
+	lightColorPalette: D_LightColorPalette;
+	darkColorPalette: D_DarkColorPalette;
+};
 type D_PlaylistPanelVideo=
 	|never
 	|{
@@ -1092,14 +1108,14 @@ type D_PlaylistPanelVideo=
 		longBylineText: G_Text;
 		thumbnail: D_Thumbnail;
 		lengthText: G_Text;
-		selected: false;
+		selected: boolean;
 		navigationEndpoint: E_Watch;
 		videoId: string;
 		shortBylineText: G_Text;
 		trackingParams: string;
 		menu: R_Menu;
 		thumbnailOverlays: R_ThumbnailOverlayResumePlayback[];
-		playlistSetVideoId: "289F4A46DF0A30D2";
+		playlistSetVideoId: string;
 		lightColorPalette: D_LightColorPalette_3;
 		darkColorPalette: D_DarkColorPalette_3;
 	}
@@ -1109,7 +1125,7 @@ type D_PlaylistPanelVideo=
 		thumbnail: D_Thumbnail;
 		lengthText: G_Text;
 		indexText: G_Text;
-		selected: true;
+		selected: boolean;
 		navigationEndpoint: E_Watch;
 		videoId: string;
 		shortBylineText: G_Text;
@@ -1126,7 +1142,7 @@ type D_PlaylistPanelVideo=
 		thumbnail: D_Thumbnail;
 		lengthText: G_Text;
 		indexText: G_Text;
-		selected: true;
+		selected: boolean;
 		navigationEndpoint: E_Watch;
 		videoId: string;
 		shortBylineText: G_Text;
