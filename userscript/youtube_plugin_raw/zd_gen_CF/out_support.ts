@@ -65,6 +65,7 @@ export namespace Prelude {
 	export type CF_L_Params="CF_L_Params";
 	export type CF_L_TP_Params="CF_L_TP_Params";
 	export type CF_M_s="CF_M_s";
+	export type CF_M_w="CF_M_w";
 	export type CF_M_VE="CF_M_VE";
 	export type CF_M_y="CF_M_y";
 	export type CF_M_zy="CF_M_zy";
@@ -115,6 +116,7 @@ export namespace Types {
 	export type CF_L_Params_=CF_L_Params;
 	export type CF_L_TP_Params_=CF_L_TP_Params;
 	export type CF_M_s_=CF_M_s;
+	export type CF_M_w_=CF_M_w;
 	export type CF_M_VE_=CF_M_VE;
 	export type CF_M_y_=CF_M_y;
 	export type CF_M_zy_=CF_M_zy;

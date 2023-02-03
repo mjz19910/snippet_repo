@@ -2120,12 +2120,12 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE3832_WatchPlaylist(x) {
 		const cf="GM_VE3832_WatchPlaylist";
 		const {url,...y}=this.GM_VE3832(cf,x); this.g(y);/*#destructure_done*/
-		if(!this.str_starts_with_rx("/watch",url)) debugger;
+		if(!this.str_starts_with_rx("/playlist",url)) debugger;
 	}
 	/** @private @arg {GM_VE3832_Watch} x */
 	GM_VE3832_Watch(x) {
 		const cf="GM_VE3832_Watch";
-		const {url,...y}=this.GM_VE3832(cf,x); this.g(y);/*#destructure_done*/
+		const url=this.w(`${cf}:omit`,"url",this.GM_VE3832(cf,x));
 		if(!this.str_starts_with_rx("/watch",url)) debugger;
 	}
 	/** @private @arg {GM_VE83769_WC} x */
