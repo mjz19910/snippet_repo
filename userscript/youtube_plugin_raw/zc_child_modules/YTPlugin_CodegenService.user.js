@@ -124,6 +124,15 @@ class CodegenService extends BaseService {
 		let no_pad_arr=ret_arr.map(e => e.trim());
 		return no_pad_arr.join("\nd2!");
 	}
+	/** @arg {string} x */
+	get_codegen_name(x) {
+		const k=this.uppercase_first(x);
+		if(k.endsWith("Renderer")) {
+			let ic=this.uppercase_first(split_string_once(k,"Renderer")[0]);
+			return `R_${ic}`;
+		}
+		return `D_${k}`;
+	}
 	/** @no_mod @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
 	#generate_body_default_item(k,out,env_names,def_name) {
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
@@ -157,33 +166,44 @@ class CodegenService extends BaseService {
 	}
 	/** @no_mod @arg {string} x */
 	#codegen_padding(x) {return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {return "\t".repeat(g);});}
-	/** @arg {string[]} keys @arg {string} e @arg {object} x @arg {string} name */
-	#codegen_required_renderer_names(keys,x,name,e) {
-		let kk=keys.map(x => this.uppercase_first(x)).find(v => v===e);
+	/** @arg {string[]} keys @arg {object} x @arg {string} e */
+	#codegen_required_renderer_names(keys,x,e) {
+		let kk=keys.find(v => v===e);
 		if(!kk) {debugger; return "";}
 		/** @private @type {{}} */
 		let ucx=x;
 		/** @private @type {{[x:string]:unknown}} */
 		let x1=ucx;
 		let val_2=x1[kk];
+		let gen_data_name=() => {
+			if(!kk) throw new Error();
+			let kn_pre=this.get_codegen_name(kk);
+			if(this.str_starts_with_rx("R_",kn_pre)) {
+				let np_arr_2=split_string_once(kn_pre,"R_");
+				return `D_${np_arr_2[1]}`;
+			}
+			return kn_pre;
+		};
+		let kn=gen_data_name();
 		if(typeof val_2!=="object") return "";
 		if(val_2===null) return "";
 		let keys_2=Object.keys(val_2);
 		/** @private @type {string[]} */
 		let next_req=[];
-		let body_2=this.#codegen_renderer_body(next_req,x,keys_2,name);
+		debugger;
+		let body_2=this.#codegen_renderer_body(next_req,val_2,keys_2,kn);
 		let tmp0=`
-		d1!/** @private @arg {${e}} x */
-		d1!${e}(x) {
+		d1!/** @private @arg {${kn}} x */
+		d1!${kn}(x) {
 			${body_2}
 		d1!}
 		`;
 		console.log("more req",next_req);
 		return tmp0;
 	}
-	/** @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x @arg {string} t_name */
-	#codegen_renderer_finalize(req_names,code,keys,x,t_name) {
-		let required_names_code_arr=req_names.map(this.#codegen_required_renderer_names.bind(this,keys,x,t_name));
+	/** @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x */
+	#codegen_renderer_finalize(req_names,code,keys,x) {
+		let required_names_code_arr=req_names.map(e => this.#codegen_required_renderer_names(keys,x,e));
 		let all_code=required_names_code_arr.join("")+code;
 		let trimmed_code=all_code.split("\n").map(e => e.trim()).filter(e => e).join("\n");
 		let code_with_padding=this.#codegen_padding(trimmed_code);
@@ -204,18 +224,18 @@ class CodegenService extends BaseService {
 		if(keys.length===1) {
 			if(keys[0].endsWith("Renderer")) {
 				let np_arr=split_string(t_name,"$");
-				let np_arr_2=split_string_once(np_arr[np_arr.length-1],"R_");
+				let tc_name=np_arr[np_arr.length-1];
+				let np_arr_2=split_string_once(tc_name,"R_");
 				if(np_arr_2.length===1) {debugger; return null;}
 				if(np_arr_2[0]!=="") debugger;
 				let name=np_arr_2[1];
 				// /** @private @arg {$1} x */
 				// $1(x) {this.H_("$1","$2",x,this.$3);}
-				debugger;
 				let self_code=`
-				d1!/** @private @arg {${t_name}} x */
-				d1!${t_name}(x) {this.H_("${t_name}","${keys[0]}",x,this.D_${name});}\n`;
-				req_names.push(`D_${name}`);
-				return this.#codegen_renderer_finalize(req_names,self_code,keys,x,t_name);
+				d1!/** @private @arg {${tc_name}} x @generated {${t_name}} */
+				d1!${tc_name}(x) {this.H_("${tc_name}","${keys[0]}",x,this.D_${name});}\n`;
+				req_names.push(keys[0]);
+				return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
 			}
 			return;
 		}
@@ -226,7 +246,7 @@ class CodegenService extends BaseService {
 			d2!${body}
 		d1!}
 		`;
-		return this.#codegen_renderer_finalize(req_names,self_code,keys,x,t_name);
+		return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
 	}
 	/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
