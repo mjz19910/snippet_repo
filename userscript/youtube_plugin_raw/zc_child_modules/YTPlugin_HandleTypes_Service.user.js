@@ -8961,10 +8961,20 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoDetails(x) {x;}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {x;}
+	/** @private @arg {R_PlayerCaptionsTracklist} x */
+	R_PlayerCaptionsTracklist(x) {x;}
+	/** @private @arg {R_VideoQualityPromo} x */
+	R_VideoQualityPromo(x) {x;}
+	/** @private @arg {R_PlayerAttestation} x */
+	R_PlayerAttestation(x) {x;}
+	/** @private @arg {R_CardCollection} x */
+	R_CardCollection(x) {x;}
+	/** @private @arg {R_PlayerMicroformat} x */
+	R_PlayerMicroformat(x) {x;}
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,...y}=this.s(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,...y}=this.s(cf,x);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
@@ -8977,17 +8987,10 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.t(attestation,this.R_PlayerAttestation);
 		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
+		this.t(captions,this.R_PlayerCaptionsTracklist);
 		console.log("[RS_Player.next_key] [%s]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
-	/** @private @arg {R_VideoQualityPromo} x */
-	R_VideoQualityPromo(x) {x;}
-	/** @private @arg {R_PlayerAttestation} x */
-	R_PlayerAttestation(x) {x;}
-	/** @private @arg {R_CardCollection} x */
-	R_CardCollection(x) {x;}
-	/** @private @arg {R_PlayerMicroformat} x */
-	R_PlayerMicroformat(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
