@@ -1757,9 +1757,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_CreatePlaylistService} x */
-	E_CreatePlaylistService(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"createPlaylistServiceEndpoint",x); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(u);}
+	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_CreatePlaylistService"; let [u,b]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,u);}
+	E_NotificationOptOut(x) {const [a,b,y]=this.TE_Endpoint_3("E_NotificationOptOut","notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
+	/** @private @arg {E_UserFeedback} x */
+	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @protected @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @protected @arg {M_EditPlaylist} x */
@@ -6543,7 +6545,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @arg {C_FollowUp} x */
@@ -8886,8 +8888,6 @@ class HandleTypes extends HandleTypesEval {
 		if(layoutType!=="LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED") debugger;
 		this.D_AdLayoutLoggingData(adLayoutLoggingData);
 	}
-	/** @private @arg {DC_ResetChannelUnreadCount} x */
-	DC_ResetChannelUnreadCount(x) {const cf="DC_ResetChannelUnreadCount"; this.codegen_typedef_all(cf,x); this.GEN(cf,x); this.gs(cf,x);}
 	/** @private @arg {D_YoutubeUrl} x */
 	D_YoutubeUrl(x) {
 		const cf="D_YoutubeUrl";
@@ -8996,8 +8996,6 @@ class HandleTypes extends HandleTypesEval {
 	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {E_UserFeedback} x */
-	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {AD_ReplayChatItem} x */
 	AD_ReplayChatItem(x) {x;}
 	/** @private @arg {AD_AddChatItem} x */
@@ -9028,7 +9026,7 @@ class HandleTypes extends HandleTypesEval {
 	D_PlayerMicroformat(x) {x;}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {x;}
-	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
+	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion
 	//#region TODO_minimal_member_fns
