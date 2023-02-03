@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	YtPlugin entry point
+// @name	YTPlugin entry point
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.1
 // @description	try to take over the world!
