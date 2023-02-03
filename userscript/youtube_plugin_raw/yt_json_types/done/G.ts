@@ -191,6 +191,11 @@ type G_CommandMetadata={
 	webCommandMetadata: GM_WC;
 	resolveUrlCommandMetadata: MC_ResolveUrl;
 }|{webCommandMetadata: GM_WC;};
+// COMPLETED: #7
+type MC_ResolveUrl={
+	isVanityUrl?: boolean;
+	parentTrackingParams?: string; 
+};
 type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
 type G_EngagementPanelSectionListItem=[
 	R_AdsEngagementPanelContent,
