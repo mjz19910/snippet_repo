@@ -4563,21 +4563,32 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
 		// const cf="DE_VE3832_Watch";
-		if("playlistSetVideoId" in x&&"params" in x) {
-			const cf="DE_VE3832:playlistSetVideoId:params";
-			const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.a_primitive_num(index);
-			this.a_primitive_str(playlistSetVideoId);
-			this.params(cf,"watch.params",params);
-			this.a_primitive_num(startTimeSeconds);
-			if(continuePlayback!==false) debugger;
-			this.R_VssLoggingContext(loggingContext);
-			this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-			this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-			this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
-			this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
-			this._primitive_of(nofollow,"boolean");
-			(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
+		if("playlistSetVideoId" in x) {
+			if("params" in x) {
+				const cf="DE_VE3832:playlistSetVideoId:params";
+				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.a_primitive_num(index);
+				this.a_primitive_str(playlistSetVideoId);
+				this.params(cf,"watch.params",params);
+				this.a_primitive_num(startTimeSeconds);
+				if(continuePlayback!==false) debugger;
+				this.R_VssLoggingContext(loggingContext);
+				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
+				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
+				this._primitive_of(nofollow,"boolean");
+				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
+				return;
+			}
+			x==="";
+			this.g(x);
+			return;
+		}
+		if("watchEndpointSupportedPrefetchConfig" in x) {
+			return;
+		}
+		if("playlistId" in x) {
 			return;
 		}
 		if("videoId" in x) {
