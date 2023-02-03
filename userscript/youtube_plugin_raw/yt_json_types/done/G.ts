@@ -57,7 +57,7 @@ type GE_ResponseReceived=
 	|C_ChangeKeyedMarkersVisibility
 	|C_LoadMarkers
 	|C_ReloadContinuationItems
-	|E_SE_Signal_Button
+	|E_SignalService_SendPost
 	;
 ;
 type GA_FormatItagArr=[
@@ -72,7 +72,7 @@ type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_Continuation
 	|TA_OpenPopup_Empty
-	|E_SE_Signal_Button
+	|E_SignalService_SendPost
 	|E_CreateBackstagePost
 	|E_Url
 	|C_Executor

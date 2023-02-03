@@ -389,7 +389,10 @@ class CodegenService extends BaseService {
 			let sr=this.get_typedef_part(v.signalServiceEndpoint);
 			if(!sr) break x;
 			let wc=this.get_typedef_part(v.commandMetadata);
-			return `TYPE::T_SE_Signal<${wc},${sr}>`;
+			let sig_type=`T_SE_Signal<${wc},${sr}>`;
+			/** @type {E_SignalService_SendPost} */
+			if(sig_type==="T_SE_Signal<M_SendPost,G_ClientSignal>") sig_type="E_SignalService_SendPost";
+			return `TYPE::${sig_type}`;
 		}
 		x: if(x.multiPageMenuRenderer) {
 			let v=this.as$TR_MP_Menu(x);

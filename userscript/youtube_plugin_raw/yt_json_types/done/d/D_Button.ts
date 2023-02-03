@@ -105,7 +105,7 @@ type D_Button=
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
-		serviceEndpoint: E_SE_Signal_Button;
+		serviceEndpoint: E_SignalService_SendPost;
 		icon: T_Icon<"MICROPHONE_ON">;
 		tooltip: "Search with your voice";
 		trackingParams: string;
@@ -163,7 +163,7 @@ type D_Button=
 	}
 	|{
 		trackingParams: string;
-		command: E_SE_Signal_Button;
+		command: E_SignalService_SendPost;
 	}
 	|D_Button_With_TargetId
 	;

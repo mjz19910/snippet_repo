@@ -399,7 +399,7 @@ type D_Button_2=
 ;
 type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
 type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
-type D_Button_SE=E_SE_Signal_Button|E_YpcGetOffers|E_ShareEntityService;
+type D_Button_SE=E_SignalService_SendPost|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 type D_SubscriptionNotificationToggleButton={
 	states: [
@@ -1320,7 +1320,7 @@ type D_GuideEntry_HelpService={
 	trackingParams: string;
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
-	serviceEndpoint: E_SE_Signal_Button;
+	serviceEndpoint: E_SignalService_SendPost;
 };
 type D_GuideEntry_MyVideosTab={
 	navigationEndpoint: E_Url;
@@ -1350,7 +1350,7 @@ type D_GuideEntry=
 		trackingParams: string;
 		formattedTitle: G_Text;
 		accessibility: TD_Accessibility<"Send feedback">;
-		serviceEndpoint: E_SE_Signal_Button;
+		serviceEndpoint: E_SignalService_SendPost;
 	}
 	|{
 		icon: T_Icon<"EXPAND">;
@@ -2921,7 +2921,7 @@ type D_ThumbnailOverlayToggleButton_2={
 	toggledIcon: T_Icon<"PLAYLIST_ADD_CHECK">;
 	untoggledTooltip: "Add to queue";
 	toggledTooltip: "Added";
-	untoggledServiceEndpoint: E_SE_Signal_Button;
+	untoggledServiceEndpoint: E_SignalService_SendPost;
 	untoggledAccessibility: D_Accessibility;
 	toggledAccessibility: D_Accessibility;
 	trackingParams: string;
