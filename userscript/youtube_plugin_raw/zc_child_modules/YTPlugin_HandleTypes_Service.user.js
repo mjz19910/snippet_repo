@@ -8611,24 +8611,28 @@ class HandleTypes extends HandleTypesEval {
 			const x=p_tc; switch(x) {
 				default: log_color("p_tc",x); debugger; break;
 				case 0xff191610:
+				case 0xff191410:
 			}
 		}
 		{
 			const x=s_tc; switch(x) {
 				default: log_color("s_tc",x); debugger; break;
 				case 0xff706248:
+				case 0xff755d4c:
 			}
 		}
 		{
 			const x=s2_c; switch(x) {
 				default: log_color("s2_c",x); debugger; break;
 				case 0xf2f8f6f1:
+				case 0xf2f8f4f1:
 			}
 		}
 		{
 			const x=s4_c; switch(x) {
 				default: log_color("s4_c",x); debugger; break;
 				case 0xf2ebe7dd:
+				case 0xf2ebe3dd:
 			}
 		}
 	}
