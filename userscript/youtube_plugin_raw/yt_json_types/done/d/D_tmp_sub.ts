@@ -13,8 +13,9 @@ type DA_ReplayChatItem={
 // cSpell:ignoreRegExp /r\d---sn-.+?"/
 type D_VideoId=string;
 type D_Probe_Domain=[
-	"r2---sn-hp57knds",
 	"r1---sn-p5qlsny6",
+	"r2---sn-hp57knds",
+	"r4---sn-p5qs7nzr" 
 ];
 type D_Youtube_Streaming_ProbeUrl=`https://${D_Probe_Domain[number]}.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${string}&ip=${string}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${string}&key=${string}`;
 
