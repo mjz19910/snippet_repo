@@ -253,6 +253,7 @@ class CodegenService extends BaseService {
 			return "TYPE::string";
 		}
 		if(k1=="videoId") {console.log("[video_id_json]",o); return "TYPE::string";}
+		if(k1==="playlistSetVideoId") return "TYPE::string";
 		console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 		return o;
 	}
@@ -405,7 +406,7 @@ class CodegenService extends BaseService {
 	typedef_json_replacer(state,k1,o) {
 		state.k1=k1;
 		/** @private @type {RC_ResponseContext} */
-		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
+		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
 		/** @private @type {A_FrameworkUpdates} */
 		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
 		/** @private @type {D_LoggingDirectives} */

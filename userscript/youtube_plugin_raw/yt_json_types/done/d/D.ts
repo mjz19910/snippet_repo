@@ -1050,6 +1050,33 @@ type D_Notification={
 	notificationId: `${number}`;
 };
 type D_PlaylistPanelVideo=
+	|never
+	|{
+		title: G_Text;
+		longBylineText: G_Text;
+		thumbnail: D_Thumbnail;
+		lengthText: G_Text;
+		selected: false;
+		navigationEndpoint: E_Watch;
+		videoId: string;
+		shortBylineText: G_Text;
+		trackingParams: string;
+		menu: R_Menu;
+		thumbnailOverlays: R_ThumbnailOverlayResumePlayback[];
+		playlistSetVideoId: "289F4A46DF0A30D2";
+		lightColorPalette: {
+			section2Color: 4076401905;
+			primaryTitleColor: 4279833616;
+			secondaryTitleColor: 4285881676;
+			section4Color: 4075545565;
+		};
+		darkColorPalette: {
+			section2Color: 4063436046;
+			primaryTitleColor: 4294963429;
+			secondaryTitleColor: 4291605667;
+			section4Color: 4061728263;
+		};
+	}
 	|{
 		title: G_Text;
 		longBylineText: G_Text;
