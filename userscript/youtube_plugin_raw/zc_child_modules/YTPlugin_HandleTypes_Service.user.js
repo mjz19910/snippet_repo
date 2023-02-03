@@ -1493,8 +1493,26 @@ class HandleTypes extends HandleTypesEval {
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
-	/** @private @arg {R_PlaylistLoopButtonState} x @generated {R_PlaylistLoopButtonState} */
+	/** @private @arg {R_PlaylistLoopButtonState} x */
 	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
+	/** @private @arg {R_PlaylistLoopButton} x */
+	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
+	/** @private @arg {R_Miniplayer} x */
+	R_Miniplayer(x) {this.H_("R_Miniplayer","miniplayerRenderer",x,this.D_Miniplayer);}
+	/** @private @arg {R_DesktopWatchAds} x */
+	R_DesktopWatchAds(x) {this.H_("R_DesktopWatchAds","playerLegacyDesktopWatchAdsRenderer",x,this.D_DesktopWatchAds);}
+	/** @private @arg {R_PlayerCaptionsTracklist} x */
+	R_PlayerCaptionsTracklist(x) {this.H_("R_Miniplayer","playerCaptionsTracklistRenderer",x,this.D_PlayerCaptionsTracklist);}
+	/** @private @arg {R_VideoQualityPromo} x */
+	R_VideoQualityPromo(x) {this.H_("R_Miniplayer","videoQualityPromoRenderer",x,this.D_VideoQualityPromo);}
+	/** @private @arg {R_PlayerAttestation} x */
+	R_PlayerAttestation(x) {this.H_("R_Miniplayer","playerAttestationRenderer",x,this.D_PlayerAttestation);}
+	/** @private @arg {R_CardCollection} x */
+	R_CardCollection(x) {this.H_("R_Miniplayer","cardCollectionRenderer",x,this.R_CardCollection);}
+	/** @private @arg {R_PlayerMicroformat} x */
+	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
+	/** @private @arg {R_AdPlacement} x */
+	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection"; this.k(cf,x);
@@ -1522,6 +1540,34 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; return;
 		}
 		this.RS_Page_Watch(x);
+	}
+	/** @private @arg {RS_Player} x */
+	RS_Player(x) {
+		const cf="RS_Player"; this.k(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,...y}=this.s(cf,x);
+		this.D_PlayabilityStatus(playabilityStatus);
+		this.t(streamingData,this.DD_Streaming);
+		this.tz(playerAds,this.R_DesktopWatchAds);
+		this.t(playbackTracking,this.D_PlaybackTracking);
+		this.t(videoDetails,this.D_VideoDetails);
+		this.t(playerConfig,this.D_PlayerConfig);
+		this.t(storyboards,this.G_PlayerStoryboards);
+		this.t(microformat,this.R_PlayerMicroformat);
+		this.t(cards,this.R_CardCollection);
+		this.trackingParams(cf,trackingParams);
+		this.t(attestation,this.R_PlayerAttestation);
+		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
+		this.t(captions,this.R_PlayerCaptionsTracklist);
+		this.tz(adPlacements,x => {
+			if("adPlacementRenderer" in x) return this.R_AdPlacement(x);
+			let ka=this.get_keys_of(x);
+			if(ka.length!==0) debugger;
+		});
+		this.D_FrameworkUpdates(frameworkUpdates);
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log("[done.RS_Player.next_key] [%s]",ka[0]);
+		}
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
@@ -4377,24 +4423,6 @@ class HandleTypes extends HandleTypesEval {
 		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
 		this.a_primitive_str(playlistLoopStateEntityKey);
 	}
-	/** @private @arg {R_PlaylistLoopButton} x @generated {D_Menu_Button$R_PlaylistLoopButton} */
-	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
-	/** @private @arg {R_Miniplayer} x */
-	R_Miniplayer(x) {this.H_("R_Miniplayer","miniplayerRenderer",x,this.D_Miniplayer);}
-	/** @private @arg {R_DesktopWatchAds} x */
-	R_DesktopWatchAds(x) {x;}
-	/** @private @arg {R_PlayerCaptionsTracklist} x */
-	R_PlayerCaptionsTracklist(x) {x;}
-	/** @private @arg {R_VideoQualityPromo} x */
-	R_VideoQualityPromo(x) {x;}
-	/** @private @arg {R_PlayerAttestation} x */
-	R_PlayerAttestation(x) {x;}
-	/** @private @arg {R_CardCollection} x */
-	R_CardCollection(x) {x;}
-	/** @private @arg {R_PlayerMicroformat} x */
-	R_PlayerMicroformat(x) {x;}
-	/** @private @arg {R_AdPlacement} x */
-	R_AdPlacement(x) {x;}
 	/** @private @arg {D_Menu_Button} x */
 	D_Menu_Button(x) {
 		const cf="D_Menu_Button";
@@ -8986,34 +9014,8 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoDetails(x) {x;}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {x;}
-	/** @private @arg {RS_Player} x */
-	RS_Player(x) {
-		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,...y}=this.s(cf,x);
-		this.D_PlayabilityStatus(playabilityStatus);
-		this.t(streamingData,this.DD_Streaming);
-		this.tz(playerAds,this.R_DesktopWatchAds);
-		this.t(playbackTracking,this.D_PlaybackTracking);
-		this.t(videoDetails,this.D_VideoDetails);
-		this.t(playerConfig,this.D_PlayerConfig);
-		this.t(storyboards,this.G_PlayerStoryboards);
-		this.t(microformat,this.R_PlayerMicroformat);
-		this.t(cards,this.R_CardCollection);
-		this.trackingParams(cf,trackingParams);
-		this.t(attestation,this.R_PlayerAttestation);
-		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
-		this.t(captions,this.R_PlayerCaptionsTracklist);
-		this.tz(adPlacements,x => {
-			if("adPlacementRenderer" in x) return this.R_AdPlacement(x);
-			let ka=this.get_keys_of(x);
-			if(ka.length!==0) debugger;
-		});
-		this.D_FrameworkUpdates(frameworkUpdates);
-		let ka=this.get_keys_of(y);
-		if(ka.length>0) {
-			console.log("[done.RS_Player.next_key] [%s]",ka[0]);
-		}
-	}
+	/** @private @arg {D_DesktopWatchAds} x */
+	D_DesktopWatchAds(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

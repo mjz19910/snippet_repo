@@ -376,6 +376,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeedNudge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeedTabbedHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeedbackResponseProcessedStatus";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FrameworkUpdates";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FusionSearchbox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GetSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GhostGrid";}
@@ -626,7 +627,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ChannelPage";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_FrameworkUpdates";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
