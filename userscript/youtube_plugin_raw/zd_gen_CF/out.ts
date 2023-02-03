@@ -387,6 +387,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSectionOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.dislike";}
