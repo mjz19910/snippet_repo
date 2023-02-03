@@ -1,9 +1,39 @@
-import {ServiceMethods} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
+import {as_ as as,ServiceMethods} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
 /** @returns {never} */
 function n() {throw new Error("Make never type");}
 n;
-/** @template T,U @extends {ServiceMethods<T,U>} */
+/** @template CLS_T,CLS_U @extends {ServiceMethods<CLS_T,CLS_U>} */
 export class HandleTypesEval_ extends ServiceMethods {
+	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	filter_out_keys(keys,to_remove) {
+		to_remove=to_remove.slice();
+		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		let ok_e=[];
+		for(let i=0;i<keys.length;i++) {
+			let rm_idx=to_remove.findIndex(e => e===keys[i]);
+			if(rm_idx>=0) {
+				to_remove.splice(rm_idx,1);
+				continue;
+			}
+			ok_e.push(as(keys[i]));
+		}
+		return ok_e;
+	}
+	/** @protected @arg {string} cf @arg {{}} x */
+	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	w(cf,k,x,excl=[]) {
+		this.k(cf,x);
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length!==1) debugger;
+		let hk=keys[0];
+		if(hk!==k) {debugger; throw new Error();}
+		let r=x[hk];
+		return r;
+	}
+	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
 	/** @protected @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {x;}
 	/** @protected @arg {D_YtConfig} x */

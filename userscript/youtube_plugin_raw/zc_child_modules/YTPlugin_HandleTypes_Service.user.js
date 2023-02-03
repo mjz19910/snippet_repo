@@ -134,6 +134,8 @@ class HandleTypesEval extends ServiceMethods {
 		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
 	//#endregion
+	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:\`\${T_CF}.\${K}\`)=>U} f */
+	y(cf,k,x,f) {return f.call(this,this.w(\`y:\${cf}\`,k,x),\`\${cf}.\${k}\`);}
 }
 window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
@@ -788,7 +790,7 @@ class HandleTypes extends HandleTypesEval {
 		this.k(cf,x);
 		return x;
 	}
-	/** @protected @arg {string} cf @arg {{}} x */
+	/** @override @protected @arg {string} cf @arg {{}} x */
 	k=(cf,x) => this.save_keys(`[${cf}]`,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
@@ -836,7 +838,7 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
-	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	/** @override @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
 		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
@@ -856,7 +858,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!(k in x)) {debugger; return null;}
 		return x[k];
 	}
-	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	/** @override @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(cf,k,x,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
@@ -878,8 +880,6 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
 	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
 	//#endregion
@@ -3491,11 +3491,11 @@ class HandleTypes extends HandleTypesEval {
 	D_GetSurvey_Endpoint(x) {
 		const cf="D_GetSurvey_Endpoint"; this.k(cf,x);
 		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
-		if("watch" in x) {
-			if("hack" in x.watch&&x.watch.hack===true) return;
-		}
+		if("watch" in x) return this.D_Survey_Watch(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {D_Survey_Watch} x */
+	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {
@@ -3848,7 +3848,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
-		if(x.openPopupAction) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
 		x===""; this.codegen_typedef_all(cf,x);
 		return null;
 	}
@@ -5356,7 +5356,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
-		x===""; this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
@@ -7752,6 +7752,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
+		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
+		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_PlaylistPanel} x */
@@ -8095,7 +8097,7 @@ class HandleTypes extends HandleTypesEval {
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
 		if("buttonRenderer" in x) return this.R_Button(x);
-		if("accountItem" in x) this.A_AccountItem(x);
+		if("accountItem" in x) return this.A_AccountItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
@@ -8910,6 +8912,10 @@ class HandleTypes extends HandleTypesEval {
 	C_EngagementPanelHeaderShowNavigationButton(x) {const cf="C_EngagementPanelHeaderShowNavigationButton"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {const cf="C_GetPdgBuyFlow"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {A_ReplayChatItem} x */
+	A_ReplayChatItem(x) {const cf="A_ReplayChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {A_AddChatItem} x */
+	A_AddChatItem(x) {const cf="A_AddChatItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

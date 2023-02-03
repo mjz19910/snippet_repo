@@ -681,6 +681,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ProfilePageHeaderTitle_Content";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_RelatedChipCloud";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_Survey_Watch";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayBottomPanel";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
