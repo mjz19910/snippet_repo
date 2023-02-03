@@ -4407,49 +4407,47 @@ class HandleTypes extends HandleTypesEval {
 		this.prototype.D_Menu_Button;
 	}
 	/** @private @arg {D_Menu} x */
-	D_Menu_Omit(x) {
+	D_Menu(x) {
 		const cf="D_Menu";
-		const {trackingParams,...y}=this.s(cf,x);/*#destructure_later*/
-		this.trackingParams(cf,trackingParams);
-		return y;
-	}
-	/** @private @arg {D_Menu} x1 */
-	D_Menu(x1) {
-		const cf="D_Menu";
-		let x=this.D_Menu_Omit(x1);/*#destructure_later*/
-		if("targetId" in x) {
-			const {targetId,accessibility,items,...y}=x; this.g(y);/*#destructure_done*/
-			this.t(accessibility,this.D_Accessibility);
+		x: {
+			const k="targetId";
+			if(!(k in x)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`;
+			const {items,trackingParams,accessibility,targetId,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
 			this.z(items,this.G_MenuItem);
-			/** @private @type {D_Menu_TargetId} */
-			this.t(targetId,a => this.targetId(cf,a));
+			this.trackingParams(cf1,trackingParams);
+			this.D_Accessibility(accessibility);
+			this.targetId(cf1,targetId);
 			return;
 		}
 		if("flexibleItems" in x) {
-			const {accessibility,items,topLevelButtons,flexibleItems,...y}=x; this.g(y);/*#destructure_done*/
-			this.t(accessibility,this.D_Accessibility);
+			const {items,trackingParams,topLevelButtons,accessibility,flexibleItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
 			this.z(items,this.G_MenuItem);
 			this.z(flexibleItems,this.R_MenuFlexibleItem);
 			this.z(topLevelButtons,this.D_Menu_Button);
 			return;
 		}
-		if("items" in x) {
-			const {accessibility,items,...y}=x; this.g(y);/*#destructure_done*/
-			this.t(accessibility,this.D_Accessibility);
+		if("loggingDirectives" in x) {
+			const {accessibility,items,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.D_Accessibility(accessibility);
 			this.z(items,this.G_MenuItem);
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("items" in x) {
+			const {items,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.z(items,this.G_MenuItem);
+			this.D_Accessibility(accessibility);
 			return;
 		}
 		if("topLevelButtons" in x) {
-			const {topLevelButtons,...y}=x; this.g(y);/*#destructure_done*/
+			const {trackingParams,topLevelButtons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.z(topLevelButtons,this.D_Menu_Button);
 			return;
 		}
-		const y=x;
-		if("loggingDirectives" in x) {
-			debugger;
-		}
-		// this.t(loggingDirectives,this.D_LoggingDirectives);
-		this.g(y);
+		this.g(x);
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {

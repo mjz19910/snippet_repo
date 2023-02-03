@@ -17,6 +17,11 @@ type D_Menu_old={
 type D_Menu=
 	|never
 	|{
+		items: R_MenuServiceItem[];
+		accessibility: TD_Accessibility<"Action menu">;
+		loggingDirectives: D_LoggingDirectives;
+	}
+	|{
 		trackingParams: string;
 		topLevelButtons: R_PlaylistLoopButton[];
 	}
