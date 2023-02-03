@@ -22,6 +22,7 @@ type P_PathRootStr=
 	|"next.queue_context_params"
 	|"notification.opt_out"
 	|"notification.record_interactions"
+	|"playability_status.context_params"
 	|"playlist_edit.params"
 	|"record_notification_interactions"
 	|"reel.params"

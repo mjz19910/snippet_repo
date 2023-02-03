@@ -4397,6 +4397,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_PlaylistLoopButton} x @generated {D_Menu_Button$R_PlaylistLoopButton} */
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
+	/** @private @arg {R_Miniplayer} x */
+	R_Miniplayer(x) {this.H_("R_Miniplayer","miniplayerRenderer",x,this.D_Miniplayer);}
 	/** @private @arg {D_Menu_Button} x */
 	D_Menu_Button(x) {
 		const cf="D_Menu_Button";
@@ -8994,7 +8996,28 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
+		const {expiresInSeconds,adaptiveFormats,formats,...y}=this.s(cf,x); this.g(y);
+		let expires_num=this.parse_number_template(expiresInSeconds);
+		console.log("[player.streamingData.expiresInSeconds]",expires_num);
+		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
+		this.z(formats,this.D_FormatItem);
 	}
+	/** @private @arg {D_AdaptiveFormatItem} x */
+	D_AdaptiveFormatItem(x) {x;}
+	/** @private @arg {D_FormatItem} x */
+	D_FormatItem(x) {x;}
+	/** @private @arg {D_PlayabilityStatus} x */
+	D_PlayabilityStatus(x) {
+		const cf="D_PlayabilityStatus";
+		const {status,playableInEmbed,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
+		if(status!=="OK") debugger;
+		if(playableInEmbed!==false) debugger;
+		this.R_Button(offlineability);
+		this.R_Miniplayer(miniplayer);
+		this.params(cf,"playability_status.context_params",contextParams);
+	}
+	/** @private @arg {D_Miniplayer} x */
+	D_Miniplayer(x) {this.g(x);}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

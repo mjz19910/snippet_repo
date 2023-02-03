@@ -105,6 +105,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_AdLayoutLogging";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_EY_Offlineability.key";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
@@ -301,6 +302,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ShowReloadUi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Timed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_UpdateToggleButtonState";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DD_Streaming";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_AddToPlaylistService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Feedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_GetNotificationMenu";}
@@ -457,6 +459,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgCommentOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgCommentPreview";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PivotButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerAnnotationsExpanded";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay:autoplay";}
