@@ -4446,7 +4446,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		x: {
-			const k="items";
+			const k="accessibility";
 			if(!(k in x)) break x;
 			/** @type {`${typeof cf}:${typeof k}`} */
 			const cf1=`${cf}:${k}`;
@@ -4454,6 +4454,16 @@ class HandleTypes extends HandleTypesEval {
 			this.trackingParams(cf1,trackingParams);
 			this.z(items,this.G_MenuItem);
 			this.D_Accessibility(accessibility);
+			return;
+		}
+		x: {
+			const k="items";
+			if(!(k in x)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`;
+			const {items,trackingParams,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(cf1,trackingParams);
+			this.z(items,this.G_MenuItem);
 			return;
 		}
 		x: {

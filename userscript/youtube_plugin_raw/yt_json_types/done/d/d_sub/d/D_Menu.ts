@@ -18,6 +18,10 @@ type D_Menu=
 	|never
 	|{
 		items: R_MenuServiceItem[];
+		trackingParams: string;
+	}
+	|{
+		items: R_MenuServiceItem[];
 		accessibility: TD_Accessibility<"Action menu">;
 		loggingDirectives: D_LoggingDirectives;
 	}
