@@ -383,18 +383,18 @@ class HandleTypes extends HandleTypesEval {
 			case "D_Browse.param": switch(map_entry_key) {case 84: case 93: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 			case "transcriptTrackSelection.serializedParams": switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_transcript.params": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.f28.f1[].f1.f1[]": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.f28.f1[].f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.f28": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f28.f1[].f1.f1[]": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f28.f1[].f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f28": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "notification.record_interactions.f2": case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "notification.record_interactions": case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form": switch(map_entry_key) {
+			case "get_report_form.params": switch(map_entry_key) {
 				case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "get_report_form.f18.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f18.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "like.removeLikeParams": switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "like.dislikeParams": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -410,9 +410,9 @@ class HandleTypes extends HandleTypesEval {
 			case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f93": case "browse$param.f93":
-			case "get_report_form.f28.f1": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "get_report_form.params.f28.f1": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f84": case "browse$param.f84": switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "entity_key.normal":
 			case "entity_key.subscribed":
@@ -423,8 +423,8 @@ class HandleTypes extends HandleTypesEval {
 				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "create_playlist.params": case "browse$param":
 				switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-			case "get_report_form.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1":
-			case "get_report_form.f18": case "get_report_form.f28.f1.f1.f1": case "get_report_form.f28.f1.f1": case "get_report_form.f28": case "subscribe.params.f2":
+			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1":
+			case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "subscribe.params.f2":
 			case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5":
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f16.f4": case "transcript_target_id.param": case "watch.player_params.f40.f1":
@@ -461,8 +461,8 @@ class HandleTypes extends HandleTypesEval {
 			};
 			switch(path) {
 				default: g1(); debugger; return;
-				case "get_report_form.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
-				case "get_report_form.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
+				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
+				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
 			}
 			off++;
 		}
@@ -515,7 +515,7 @@ class HandleTypes extends HandleTypesEval {
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
-			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
+			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form.params": case "get_transcript": case "GetNotificationMenu": case "like":
 			case "next_radio": case "next": case "notification": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
 			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
 			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
@@ -752,7 +752,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
 	/** @private @arg {P_PathRootStr} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params)}
+	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
 	//#endregion
 	//#region helpers
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
@@ -1648,7 +1648,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DC_GetTranscript_Params(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("M_YpcGetOffers",a); this.D_Params(`D${cf}`,b,(params,cf) => this.params(`${cf}.params`,"ypc_get_offers.params",params));}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("M_YpcGetOffers",a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
@@ -1710,7 +1710,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
 	/** @private @arg {DC_Params} a */
-	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,(x,cf) => this.params(cf,"get_transcript.params",x));}
+	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,"get_transcript.params");}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
@@ -1720,13 +1720,11 @@ class HandleTypes extends HandleTypesEval {
 		this.z(u1,this.Popup_ShareEntityService);
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
-	Popup_ShareEntityService(x) {x;}
-	/** @private @arg {string} x */
-	DE_YpcGetOfflineUpsell_params(x) {this.params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell",x);}
+	Popup_ShareEntityService(x) {x; debugger;}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
-	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,this.DE_YpcGetOfflineUpsell_params);}
+	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
 	/** @private @arg {DE_GetReportForm} x */
-	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,"get_report_form",(x,cf) => this.params(cf,"get_report_form",x));}
+	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,"get_report_form.params");}
 	/** @private @arg {DE_NotificationOptOut} x */
 	DE_NotificationOptOut(x) {
 		const cf="DE_NotificationOptOut";
