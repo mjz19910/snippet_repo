@@ -22,8 +22,6 @@ type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",[
 	"NOTIFICATIONS",
 	"ACCOUNT"
 ][number]>;
-// TODO #7 Get type of DMC_ResolveUrl
-type DMC_ResolveUrl={};
 type DMD_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_IN_FEED";
