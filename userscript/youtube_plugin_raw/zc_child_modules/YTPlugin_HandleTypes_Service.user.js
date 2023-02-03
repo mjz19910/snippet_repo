@@ -491,6 +491,7 @@ class HandleTypesEval extends ServiceMethods {
 	}
 	//#endregion
 
+	//#region player_params_callback
 	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		switch(path) {
@@ -601,6 +602,8 @@ class HandleTypesEval extends ServiceMethods {
 		return generate_typedef.value;
 	}
 	//#endregion
+
+	//#region watch_page_url
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
 	/** @protected @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
@@ -625,6 +628,8 @@ class HandleTypesEval extends ServiceMethods {
 		this.parser.parse_url(root,x);
 		return u3;
 	}
+	//#endregion
+	//#region other moved
 	get indexed_db() {
 		if(!this.is_normal_service(this)) throw new Error();
 		return this.x.get("indexed_db");
@@ -768,7 +773,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(\`T_Commands:\${cf}\`,"commands",x),f);}
 	/** @private @arg {P_PathRootStr} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(\`D_Params:\${cf}\`,x); this.g(y); this.params(\`${cf}.params\`,sec,x.params);}
+	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(\`D_Params:\${cf}\`,x); this.g(y); this.params(\`\${cf}.params\`,sec,x.params);}
 	//#endregion
 	//#region helpers
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
@@ -784,20 +789,18 @@ class HandleTypesEval extends ServiceMethods {
 		return x;
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(\`[${cf}]\`,x);
+	k=(cf,x) => this.save_keys(\`[\${cf}]\`,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
-	unpack_T_WCM(cf,x) {return this.w(\`Unpack:T_WCM:${cf}\`,"webCommandMetadata",x);}
+	unpack_T_WCM(cf,x) {return this.w(\`Unpack:T_WCM:\${cf}\`,"webCommandMetadata",x);}
 	//#endregion
 	//#region static & typedefs
-	/** @typedef {{}} minimal_handler_member */
-	static {this.prototype.minimal_handler_member_2({});}
 	// /** @protected @override @type {<U,K extends T_DistributedKeyof<T>,T extends {}>(cf:string,x:T,f:(this:this,x:T[K])=>U)=>U} */
 	// H_=super.H_;
 	//#endregion
 	//#region member functions
-	/** @typedef {\`${string}${D_EndpointLikeEndings}\`} EPL */
+	/** @typedef {\`\${string}\${D_EndpointLikeEndings}\`} EPL */
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
@@ -805,9 +808,9 @@ class HandleTypesEval extends ServiceMethods {
 	 * */
 	TE_Endpoint_2(cf1,k,x) {
 		const cf2="TE_Endpoint_2";
-		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(\`${cf2}:${cf1}\`,x);
-		/** @type {\`${CF_TE_Endpoint_2}.endpoint\`} */
-		this.clickTrackingParams(\`${cf1}.endpoint\`,clickTrackingParams);
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(\`\${cf2}:\${cf1}\`,x);
+		/** @type {\`\${CF_TE_Endpoint_2}.endpoint\`} */
+		this.clickTrackingParams(\`\${cf1}.endpoint\`,clickTrackingParams);
 		return [endpoint,y];
 	}
 	/**
@@ -819,16 +822,16 @@ class HandleTypesEval extends ServiceMethods {
 	 */
 	TE_Endpoint_3(cf1,k,x) {
 		const cf2="TE_Endpoint_3";
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(\`${cf2}:${cf1}\`,x);
-		/** @type {\`${CF_TE_Endpoint_3}.endpoint\`} */
-		this.clickTrackingParams(\`${cf1}.endpoint\`,clickTrackingParams);
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(\`\${cf2}:\${cf1}\`,x);
+		/** @type {\`\${CF_TE_Endpoint_3}.endpoint\`} */
+		this.clickTrackingParams(\`\${cf1}.endpoint\`,clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
 	/** @private @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
-		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(\`TE_Endpoint_Opt_3:${cf}\`,x);
-		/** @type {\`${CF_TE_Endpoint_Opt_3}.endpoint\`} */
-		this.clickTrackingParams(\`${cf}.endpoint\`,clickTrackingParams);
+		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(\`TE_Endpoint_Opt_3:\${cf}\`,x);
+		/** @type {\`\${CF_TE_Endpoint_Opt_3}.endpoint\`} */
+		this.clickTrackingParams(\`\${cf}.endpoint\`,clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
 	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
@@ -873,7 +876,7 @@ class HandleTypesEval extends ServiceMethods {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:\`${T_CF}.${K}\`)=>U} f */
+	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:\`\${T_CF}.\${K}\`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(\`y:\${cf}\`,k,x),\`\${cf}.\${k}\`);}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
 	zy(cf,k,x,f) {return this.z(this.w(\`zy:\${cf}\`,k,x),f);}
@@ -924,6 +927,15 @@ class HandleTypesEval extends ServiceMethods {
 	TR_MultiPageMenu(cf,x) {return this.w(\`TR_MultiPageMenu:\${cf}\`,"multiPageMenuRenderer",x);}
 	/** @private @arg {CF_T_WCM} cf @template T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f */
 	T_WCM(cf,x,f) {this.y(\`T_WCM:\${cf}\`,"webCommandMetadata",x,f);}
+	/** @private @arg {string} x */
+	a_primitive_str(x) {this._primitive_of(x,"string");}
+	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
+	T_Items_TP(cf,x) {
+		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
+		this.trackingParams(\`T_Items_TP:\${cf}\`,trackingParams);
+		return this.w_priv("items",y);
+	}
+	//#endregion
 
 	//#endregion
 }
@@ -940,6 +952,8 @@ class HandleTypes extends HandleTypesEval {
 		super(x);
 		generate_typedef.value=new TypedefGenerator(x);
 	}
+	/** @typedef {{}} minimal_handler_member */
+	static {this.prototype.minimal_handler_member_2({});}
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
@@ -4235,8 +4249,6 @@ class HandleTypes extends HandleTypesEval {
 		}));
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
-	/** @private @arg {string} x */
-	a_primitive_str(x) {this._primitive_of(x,"string");}
 	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
 		let name=this.get_codegen_name(x);
@@ -7030,12 +7042,6 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(n1,this.R_CompactLink);
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
-	}
-	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
-	T_Items_TP(cf,x) {
-		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
-		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
-		return this.w_priv("items",y);
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
