@@ -112,6 +112,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "G_DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "AD_Notification";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_LiveChat";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_SectionList_SearchFeed";}
@@ -170,7 +171,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MusicThumbnail";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_NextContinuation";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Notification";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_NotificationAction";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_NotificationMenuPopupMenuItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_NotificationMenu_PopupItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_NotificationText";}
@@ -259,8 +259,11 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_3";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "T_Command_TP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AccountItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ChangeEngagementPanelVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Notification";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ReplayChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ShowEngagementPanelScrim";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Signal";}
@@ -433,7 +436,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MusicShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MusicThumbnail";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Notification";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationAction";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationMenuPopupMenuItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationMenu_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationMenu_PopupItem";}

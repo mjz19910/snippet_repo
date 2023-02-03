@@ -989,7 +989,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
 	/** @private @arg {A_AddChatItem} x */
-	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.DA_AddChatItem(a);}
+	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 	/** @private @arg {AU_NotificationsUnseenCount} x */
@@ -1351,6 +1351,27 @@ class HandleTypes extends HandleTypesEval {
 	AU_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
+	/** @private @arg {AD_Signal} x */
+	AD_Signal(x) {
+		const cf="AD_Signal"; this.k(cf,x);
+		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(signal) {
+			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+		}
+	}
+	/** @private @arg {AD_AppendContinuationItems} x */
+	AD_AppendContinuationItems(x) {
+		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
+		this.save_string("[ContinuationItem.targetId]",x.targetId);
+		switch(x.targetId) {
+			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
+			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
+			case "watch-next-feed": this.A_WatchNext(x); break;
+			default: x===0; debugger;
+		}
+	}
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
 	/** @arg {C_Innertube} x */
@@ -4119,15 +4140,6 @@ class HandleTypes extends HandleTypesEval {
 		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @private @arg {AD_Signal} x */
-	AD_Signal(x) {
-		const cf="AD_Signal"; this.k(cf,x);
-		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(signal) {
-			default: debugger; break;
-			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
-		}
-	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
 	/** @private @arg {C_ReloadContinuationItems} x */
@@ -4247,18 +4259,6 @@ class HandleTypes extends HandleTypesEval {
 			this.clickTrackingParams(cf,clickTrackingParams);
 			this.AD_AppendContinuationItems(appendContinuationItemsAction);
 		} else {debugger;}
-	}
-	/** @private @arg {AD_AppendContinuationItems} x */
-	AD_AppendContinuationItems(x) {
-		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
-		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
-		this.save_string("[ContinuationItem.targetId]",x.targetId);
-		switch(x.targetId) {
-			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
-			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
-			case "watch-next-feed": this.A_WatchNext(x); break;
-			default: x===0; debugger;
-		}
 	}
 	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
@@ -8974,9 +8974,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {AD_ReplayChatItem} x */
-	AD_ReplayChatItem(x) {x;}
+	AD_ReplayChatItem(x) {
+		const cf="AD_ReplayChatItem";
+		const {actions,videoOffsetTimeMsec,...y}=this.s(cf,x); this.g(y);
+		this.z(actions,this.A_AddChatItem);
+		this.a_primitive_str(videoOffsetTimeMsec);
+	}
 	/** @private @arg {AD_AddChatItem} x */
-	DA_AddChatItem(x) {x;}
+	AD_AddChatItem(x) {
+		const cf="AD_AddChatItem";
+		const {item,clientId,...y}=this.s(cf,x); this.g(y);
+	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {x;}
 	/** @private @arg {D_FormatItem} x */
