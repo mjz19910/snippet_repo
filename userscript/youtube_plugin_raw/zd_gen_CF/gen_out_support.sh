@@ -22,7 +22,7 @@ function generate_ts_make_tmp_git_repo {
 function generate_ts_init_cwd {
 	cp "out_empty.ts" "out.ts"
 	cp "gen_export_tmp.ts" "gen_export_cur.ts"
-	cp "out_empty.ts" "tmp.ts"
+	mv "tmp.ts" "tmp.ts.bak"
 }
 function generate_ts_backup_output {
 	pushd "$DEST_DIR"
@@ -44,13 +44,14 @@ function generate_ts_restore {
 		mv "$TMP_DIR/tmp.ts" "tmp.ts"
 		mv "tmp.ts" "out.ts"
 		cp "out_empty.ts" "tmp.ts"
+		cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 	else
 	fi
 	if [[ -f "$TMP_DIR/errors.out" ]]; then
 		mv "$TMP_DIR/errors.out" "$PROJ_DIR/$DEST_DIR/bak/"${BACKUP_DATE}"/errors.out"
 	fi
+	mv "tmp.ts.bak" "tmp.ts"
 	popd
-	cp "$TMP_DIR/$DEST_DIR/out.ts" "$DEST_DIR/out.ts"
 }
 function generate_ts_filter_errors {
 	grep -Po "$(cat grep.args)" "$@"
