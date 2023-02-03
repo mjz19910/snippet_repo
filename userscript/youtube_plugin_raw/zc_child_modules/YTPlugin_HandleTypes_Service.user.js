@@ -3088,9 +3088,9 @@ class HandleTypes extends HandleTypesEval {
 		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
 		this.codegen_typedef_all(cf,x);
 	}
-	/** @private @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x */
-	D_ToggleButton_Omit(cf,x) {
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x);
+	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle">[number]>:never} */
+	D_ToggleButton_Omit(cf,x,z=null) {
+		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x); z=y;
 		this.save_string("[D_ToggleButton.style]",style.styleType);
 		this.ceq(isDisabled,false);
 		this.ceq(isToggled,false);
@@ -3099,7 +3099,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Button_ToggledServiceEP(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
-		return y;
+		return z;
 	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
