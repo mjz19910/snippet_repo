@@ -16,15 +16,15 @@ type D_UiTargetId=
 ;
 //#endregion
 //#region String data
-type D_TargetIdStr_NoFrom=
-	|"comments-section"
-	|"search-feed"
-	|"clip-info-button"
-	|"sponsorships-button"
-	;
-;
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
+type D_Menu_TargetId=Extract<D_Menu,{targetId: any;}>["targetId"];
+type D_Button_TargetId=Extract<D_Button,{targetId: any;}>["targetId"];
+type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId:any}>["targetId"];
 type D_TargetIdStr=
+	|"browse-video-menu-button"
+	|"clip-info-button"
+	|"comments-section"
+	|"sponsorships-button"
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']
@@ -32,12 +32,10 @@ type D_TargetIdStr=
 	|D_ChipCloudChip_tid['targetId']
 	|D_EngagementPanelSectionTargetId
 	|D_Menu_TargetId
-	|D_TargetIdStr_NoFrom
 	|D_TargetIdStr_Template
 	|D_TranscriptSearchPanel['targetId']
 	|DC_ScrollToEngagementPanel['targetId']
-	|D_Button_targetId
-	|D_Button_TargetId
+	|DC_SectionList_TargetId
 	|G_SI_DB_EngagementPanel['targetId']
 	|RS_Search['targetId']
 	|TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId']
@@ -147,12 +145,6 @@ type D_WatchUrlStr=
 	|`v=${string}&${G_YtWatchUrl}`
 	;
 ;
-type D_Button_TargetId=
-	|"clip-info-button"
-	|"create-clip-button-action-bar"
-	|"sponsorships-button"
-	;
-;
 type D_ChannelPageGrid=
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"
@@ -224,7 +216,6 @@ type D_ChannelSwitcherUrlFormat="/channel_switcher";
 type D_ConnectionWhitelistItem="WIFI";
 type D_CountryCode="CA";
 type D_KnownGet="NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS,NOTIFICATION_RECOMMENDATION_WEB_CONTROL,NOTIFICATION_COMMENT_WEB_CONTROL,NOTIFICATION_COMMENT_REPLY_OTHER_WEB_CONTROL,NOTIFICATION_USER_MENTION_WEB_CONTROL,NOTIFICATION_RETUBING_WEB_CONTROL,EMAIL_KIDS_NEWSLETTER,EMAIL_BLOCK_ALL,EMAIL_MARKETING_NEWSLETTER,EMAIL_PAID_NEWSLETTER,EMAIL_CREATOR_NEWSLETTER";
-type D_Menu_TargetId="browse-video-menu-button";
 type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 //#endregion
 //#region Entity data, ie `D_EY_${string}`
@@ -3348,7 +3339,6 @@ type D_Button_EX_1_SrvEp=Extract<Exclude<D_Button,D_Button_NP_1_Style>,{serviceE
 type D_Button_ER_1_Rest=Exclude<D_Button,D_Button_NP_1_SrvEp>;
 type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
 type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
-type D_Button_targetId=Extract<D_Button,{targetId: any;}>["targetId"];
 type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
 type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
 type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
