@@ -3,7 +3,7 @@ type GRC_ServiceTrackingParams=[
 	RC_ECatcher_SPs,
 	RC_GFeedback_SPs,
 	RC_GoogleHelp_SPs,
-	RC_GuidedHelp_SPs,
+	SP_GuidedHelp_SPs,
 ][number];
 type G_ResponseActions=
 	TA_OpenPopup_Empty|

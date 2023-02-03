@@ -1,6 +1,11 @@
+//#region S_
+type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU";actions: TA_OpenPopup<D_GetAccountMenu_Popup>[];};
+type S_acv1_codec=`avc1.${string}`;
+//#endregion
+//#region SP_
 type SP_GFeedbackServiceParam=SP_GFeedbackServiceRouteParam;
-type GFeedbackServiceParamList=SP_GFeedbackServiceParam[];
-type SP_GFeedbackServiceParamsType=GFeedbackServiceParamList|RC_To_SPs<SP_GFeedbackVarMap>;
+type SP_GFeedbackServiceParamList=SP_GFeedbackServiceParam[];
+type SP_GFeedbackServiceParamsType=SP_GFeedbackServiceParamList|RC_To_SPs<SP_GFeedbackVarMap>;
 type SP_GFeedbackServiceRouteParam={
 	key: "route";
 	value: ChanLoc;
@@ -27,13 +32,12 @@ type SP_GoogleHelpServiceObj={
 	browse_id: D_BrowseIdStr;
 	browse_id_prefix: "";
 };
-type RC_GuidedHelp_SPs={
+type SP_GuidedHelp_SPs={
 	service: "GUIDED_HELP";
-	params: RC_To_SPs<RC_GuidedHelpState>;
+	params: RC_To_SPs<SP_GuidedHelpState>;
 };
-type RC_GuidedHelpState={
+type SP_GuidedHelpState={
 	logged_in: "0"|"1";
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
 };
-type S_GetAccountMenu={signal: "GET_ACCOUNT_MENU";actions: TA_OpenPopup<D_GetAccountMenu_Popup>[];};
-type S_acv1_codec=`avc1.${string}`;
+//#endregion

@@ -3192,7 +3192,7 @@ class GuidedHelpService extends BaseService {
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @api @public @arg {RC_GuidedHelp_SPs["params"]} params */
+	/** @api @public @arg {SP_GuidedHelp_SPs["params"]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3215,7 +3215,7 @@ class TrackingServices extends BaseService {
 	on_e_catcher_service(service) {this.x.get("e_catcher_service").on_params(service.params);}
 	/** @private @arg {RC_GFeedback_SPs} service */
 	on_g_feedback_service(service) {this.x.get("g_feedback_service").on_params(service.params);}
-	/** @private @arg {RC_GuidedHelp_SPs} service */
+	/** @private @arg {SP_GuidedHelp_SPs} service */
 	on_guided_help_service(service) {this.x.get("guided_help_service").on_params(service.params);}
 	get handle_types() {return this.x.get("handle_types");}
 	/** @private @arg {RC_GoogleHelp_SPs} service */
