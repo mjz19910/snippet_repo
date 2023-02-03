@@ -72,7 +72,7 @@ type CF_T_Signal=
 ;
 type CF_M_w=
 	|T_ExtractImport<"CF_M_w">
-	// |`y:${CF_M_y}`
+	|`y:${CF_M_y}`
 	|`zy:${CF_M_zy}`
 	|`Unpack:T_WCM:${CF_T_WCM_Unpack}`
 	|`TA_Page:${CF_TA_Page}`
