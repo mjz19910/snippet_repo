@@ -77,7 +77,7 @@ type D_EngagementPanelStructuredDescription=Record<"content",{}>&{
 type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_TargetIdStr=[
-	Extract<D_Button,{targetId:any}>["targetId"],
+	Extract<D_Button,{targetId: any;}>["targetId"],
 	AD_AppendContinuationItems['targetId'],
 	TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId'],
 	"comments-section",
@@ -2996,75 +2996,72 @@ type D_UrlAndElapsedMediaTime={
 	baseUrl: string;
 	elapsedMediaTimeSeconds: number;
 };
-type D_UrlFormat=[
-	"android-app://com.google.android.youtube/http/youtube.com/premium",
-	"/",
-	"/channel_switcher",
-	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
-	`/${D_ApiPathFormat_1}`,
-	`/account${""|`_${G_AccountPageSettingsSections}`}`,
-	`/api/stats/ads?${string}`,
-	`/channel/UC${string}`,
-	`/feed/${D_BrowseEndpointPages}`,
-	`/feed/trending?${string}`,
-	`/gaming`,
-	`/playlist?${string}`,
-	`/premium`,
-	`/reporthistory`,
-	`/shorts/${string}`,
-	D_ExternalUrlFormat,
-	D_VE6827_PageUrl,
-	`/@${string}`,
-	"/upload",
-	`/results?${string}`,
-	`/channel/UC${string}`,
-	`/watch?${string}`,
-	`http://www.youtube.com/watch?${string}`,
-	`https://www.youtube.com/watch?${string}`,
-	`https://support.google.com/youtube/answer/${number}`,
-	YTExternalUrl,
-][number];
-type YTExternalEncUrl=[
-	`[parse_url_external_1] https://m.youtube.com/premium`,
-][number];
+type D_UrlFormat=
+	|"/"
+	|"/channel_switcher"
+	|"/upload"
+	|"android-app://com.google.android.youtube/http/youtube.com/premium"
+	|`/@${string}`
+	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
+	|`/${D_ApiPathFormat_1}`
+	|`/account${""|`_${G_AccountPageSettingsSections}`}`
+	|`/api/stats/ads?${string}`
+	|`/channel/UC${string}`
+	|`/channel/UC${string}`
+	|`/feed/${D_BrowseEndpointPages}`
+	|`/feed/trending?${string}`
+	|`/gaming`
+	|`/playlist?${string}`
+	|`/premium`
+	|`/reporthistory`
+	|`/results?${string}`
+	|`/shorts/${string}`
+	|`/watch?${string}`
+	|`http://www.youtube.com/watch?${string}`
+	|`https://support.google.com/youtube/answer/${number}`
+	|`https://www.youtube.com/watch?${string}`
+	|D_ExternalUrlFormat
+	|D_VE6827_PageUrl
+	|YTExternalUrl
+	;
+;
+type YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type YTExternalUrl=T_SplitOnce<T_SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
-type WatchUrlFormat=[
-	D_WatchPageUrl,
-	`/watch?${D_WatchUrlStr}`,
-	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
-	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
-	`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`,
-][number];
+type WatchUrlFormat=
+	|D_WatchPageUrl
+	|`/watch?${D_WatchUrlStr}`
+	|`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`
+	|`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`
+	|`/watch?v=${string}&playnext=1&list=RD${`CM${`UC${string}`}`}`
+	;
+;
 type ResultsPageUrl=`/results?search_query=${string}`;
 type PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
-type D_UrlFormatStr_2=[
-	"/channel_switcher",
-	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
-	`/account${""|`_${G_AccountPageSettingsSections}`}`,
-	`/channel/UC${string}`,
-	`/feed/${D_BrowseEndpointPages}`,
-	`/feed/trending?bp=${string}`,
-	`/playlist?${D_PlaylistUrlParams}`,
-	`/results?search_query=${string}`,
-	`/shorts/${string}`,
-	`/watch?${D_WatchUrlStr}`,
-][number];
-type D_UrlInfoItemType=[
-	"PL",
-	"RD",
-	"RDGM",
-	"RDMM",
-	"RDCM",
-][number];
-type D_UrlInfoPlaylist={
-	_tag: "playlist";
-	type: D_UrlInfoItemType;
-	id: string;
-};
-type D_UrlInfoVideo={
-	_tag: "video";
-	id: string;
-};
+type D_UrlFormatStr_2=
+	|"/channel_switcher"
+	|`/@${string}${""|`/${ChannelSubUrlFormat}`}`
+	|`/account${""|`_${G_AccountPageSettingsSections}`}`
+	|`/channel/UC${string}`
+	|`/feed/${D_BrowseEndpointPages}`
+	|`/feed/trending?bp=${string}`
+	|`/playlist?${D_PlaylistUrlParams}`
+	|`/results?search_query=${string}`
+	|`/shorts/${string}`
+	|`/watch?${D_WatchUrlStr}`
+	;
+;
+type D_UrlInfoItemType=
+	|"PL"
+	|"RD"
+	|"RDGM"
+	|"RDMM"
+	|"RDCM"
+	;
+;
+type D_UrlInfoPlaylist={_tag: "playlist"; type: D_UrlInfoItemType; id: string;};
+type D_UrlInfoVideo={_tag: "video"; id: string;};
+type D_UrlVideoReferral={_tag: "video-referral"; id: string;};
+type D_UrlPlayNext={_tag: "play-next"; value: string;};
 type D_UrlWrappedValue={privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;};
 type D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${string}.googlevideo.com/generate_204`;
 type RE_D_VE3832_PreconnectUrl=`https://rr${number}---sn-nx${GV_Dig_sn_nx}.googlevideo.com/generate_204`;
