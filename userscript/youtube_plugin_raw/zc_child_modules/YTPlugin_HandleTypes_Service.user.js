@@ -4250,7 +4250,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	AD_AppendContinuationItems(x) {
-		const cf="G_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
+		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
