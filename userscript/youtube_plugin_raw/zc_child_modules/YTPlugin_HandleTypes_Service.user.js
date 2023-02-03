@@ -600,22 +600,6 @@ class HandleTypesEval extends ServiceMethods {
 		if(!generate_typedef.value) throw new Error();
 		return generate_typedef.value;
 	}
-
-	//#endregion
-}
-window.HandleTypesEval=HandleTypesEval;
-//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
-`;
-eval(handle_types_eval_code);
-//#endregion
-//#region HandleTypes
-/** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
-class HandleTypes extends HandleTypesEval {
-	/** @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		generate_typedef.value=new TypedefGenerator(x);
-	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
@@ -685,7 +669,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {CF_TD_ItemSection_3} cf1 @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
 	TD_ItemSection_3(cf1,x) {
 		const cf2="TD_ItemSection_3";
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(\`\${cf2}:\${cf1}\`,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(cf2,trackingParams);
 		if(contents.length>0) {
 			let cu=contents[0];
@@ -693,12 +677,12 @@ class HandleTypes extends HandleTypesEval {
 			let k=this.get_keys_of(cu);
 			switch(cf1) {
 				default: debugger; break;
-				case `TD_ItemSection_3<"comment-item-section","comments-section">`: break;
-				case `TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`: break;
-				case `TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`: break;
+				case \`TD_ItemSection_3<"comment-item-section","comments-section">\`: break;
+				case \`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">\`: break;
+				case \`TD_ItemSection_3<"sid-wn-chips","watch-next-feed">\`: break;
 			}
 			switch(k[0]) {
-				default: console.log(`-- [TD_Section_3.${cf1}.Section_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+				default: console.log(\`-- [TD_Section_3.\${cf1}.Section_Info] --\n\n\${k.map(e => \`case "\${e}":\`).join("\n")}\`); break;
 				case "continuationItemRenderer":
 				case "compactVideoRenderer":
 				case "compactRadioRenderer":
@@ -742,7 +726,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Types(x,_x=null) {
 		const cf="T_Types";
 		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		/** @private @template {number} T @template {\`\${T}\`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {return as(Number.parseInt(x,10));}
 		return parse_number(types,_x);
 	}
@@ -754,7 +738,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text"; this.k(cf,x);
@@ -783,9 +766,9 @@ class HandleTypes extends HandleTypesEval {
 		this.t(bold,this.a_primitive_bool);
 	}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
-	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
+	T_Commands(cf,x,f) {this.z(this.w(\`T_Commands:\${cf}\`,"commands",x),f);}
 	/** @private @arg {P_PathRootStr} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
+	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(\`D_Params:\${cf}\`,x); this.g(y); this.params(\`${cf}.params\`,sec,x.params);}
 	//#endregion
 	//#region helpers
 	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
@@ -801,11 +784,11 @@ class HandleTypes extends HandleTypesEval {
 		return x;
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	k=(cf,x) => this.save_keys(\`[${cf}]\`,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
-	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
+	unpack_T_WCM(cf,x) {return this.w(\`Unpack:T_WCM:${cf}\`,"webCommandMetadata",x);}
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
@@ -814,7 +797,7 @@ class HandleTypes extends HandleTypesEval {
 	// H_=super.H_;
 	//#endregion
 	//#region member functions
-	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
+	/** @typedef {\`${string}${D_EndpointLikeEndings}\`} EPL */
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
@@ -822,9 +805,9 @@ class HandleTypes extends HandleTypesEval {
 	 * */
 	TE_Endpoint_2(cf1,k,x) {
 		const cf2="TE_Endpoint_2";
-		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
-		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
-		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(\`${cf2}:${cf1}\`,x);
+		/** @type {\`${CF_TE_Endpoint_2}.endpoint\`} */
+		this.clickTrackingParams(\`${cf1}.endpoint\`,clickTrackingParams);
 		return [endpoint,y];
 	}
 	/**
@@ -836,16 +819,16 @@ class HandleTypes extends HandleTypesEval {
 	 */
 	TE_Endpoint_3(cf1,k,x) {
 		const cf2="TE_Endpoint_3";
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
-		/** @type {`${CF_TE_Endpoint_3}.endpoint`} */
-		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(\`${cf2}:${cf1}\`,x);
+		/** @type {\`${CF_TE_Endpoint_3}.endpoint\`} */
+		this.clickTrackingParams(\`${cf1}.endpoint\`,clickTrackingParams);
 		return [commandMetadata,a,y];
 	}
 	/** @private @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
-		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
-		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
-		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(\`TE_Endpoint_Opt_3:${cf}\`,x);
+		/** @type {\`${CF_TE_Endpoint_Opt_3}.endpoint\`} */
+		this.clickTrackingParams(\`${cf}.endpoint\`,clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
 	/** @private @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
@@ -890,10 +873,10 @@ class HandleTypes extends HandleTypesEval {
 		let r=x[k];
 		return r;
 	}
-	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
+	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:\`${T_CF}.${K}\`)=>U} f */
+	y(cf,k,x,f) {return f.call(this,this.w(\`y:\${cf}\`,k,x),\`\${cf}.\${k}\`);}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
-	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
+	zy(cf,k,x,f) {return this.z(this.w(\`zy:\${cf}\`,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
@@ -901,24 +884,24 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {CF_T_Icon} cf1 @private @template {string} T @arg {T_Icon<T>} x @arg {T} w */
 	T_Icon(cf1,x,w) {
 		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+		const {iconType,...y}=this.s_priv(\`\${cf2}:\${cf1}\`,x); this.g(y);/*#destructure_done*/
 		if(iconType!==w) debugger;
-		this.save_string(`[${cf1}.IconType]`,iconType);
+		this.save_string(\`[\${cf1}.IconType]\`,iconType);
 	}
 	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
+		const {iconType,...y}=this.s_priv(\`\${cf2}:any:\${cf1}\`,x); this.g(y);/*#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
-		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
+		if(is_missing_iconType) {console.log(\`[missing_icon.\${cf1}]\`,iconType);}
 		this.save_string("[IconType]",iconType);
 		return is_missing_iconType;
 	}
 	/** @private @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(`${cf1}.tracking`,clickTrackingParams);
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(\`\${cf2}:\${cf1}\`,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(\`\${cf1}.tracking\`,clickTrackingParams);
 		return a;
 	}
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
@@ -936,12 +919,27 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
-	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
+	TA_Page(cf,x,f) {f.call(this,this.w(\`TA_Page:\${cf}\`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
+	TR_MultiPageMenu(cf,x) {return this.w(\`TR_MultiPageMenu:\${cf}\`,"multiPageMenuRenderer",x);}
 	/** @private @arg {CF_T_WCM} cf @template T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f */
-	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
+	T_WCM(cf,x,f) {this.y(\`T_WCM:\${cf}\`,"webCommandMetadata",x,f);}
+
 	//#endregion
+}
+window.HandleTypesEval=HandleTypesEval;
+//# sourceURL=plugin://extension/youtube_plugin_handle_types.js
+`;
+eval(handle_types_eval_code);
+//#endregion
+//#region HandleTypes
+/** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
+class HandleTypes extends HandleTypesEval {
+	/** @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+		generate_typedef.value=new TypedefGenerator(x);
+	}
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827_WC} x */
 	GM_VE6827_WC(x) {
