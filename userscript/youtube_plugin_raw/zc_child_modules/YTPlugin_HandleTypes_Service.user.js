@@ -2382,7 +2382,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	Button_missing_iconType=[];
-	/** @private @private @arg {any} z @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button|CF_D_Button_WithIcon} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
+	/** @private @private @arg {any} z @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
 	D_Button_Omit_TP(cf,x,dc=true,z=null) {if(dc) {const {trackingParams,...y}=this.s(cf,x); z=y;} else {const {trackingParams,...y}=this.s(cf,x);/*@omit*/ this.trackingParams(cf,trackingParams); z=y;} return z;}
 	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x) {
