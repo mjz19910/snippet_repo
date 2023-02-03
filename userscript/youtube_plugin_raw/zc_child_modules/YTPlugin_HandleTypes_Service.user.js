@@ -7020,7 +7020,6 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
-		this.G_Text(x);
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
 	RG_Watch_ItemSection(x) {
