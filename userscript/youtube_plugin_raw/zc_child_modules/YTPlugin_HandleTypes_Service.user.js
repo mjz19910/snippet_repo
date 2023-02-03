@@ -1346,9 +1346,9 @@ class HandleTypes extends HandleTypesEval {
 			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
 	}
 	/** @private @arg {AU_SubscribeButton} x */
-	UA_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
+	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.DUA_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
-	UA_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	AU_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {C_RunAttestation} x */
@@ -3616,29 +3616,29 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.CD_TimedContinuation(continuation);
 		this.z(actions,x => {
-			if("updateViewershipAction" in x) return this.UA_Viewership(x);
-			if("updateToggleButtonTextAction" in x) return this.UA_ToggleButtonText(x);
-			if("updateDateTextAction" in x) return this.UA_DateText(x);
-			if("updateTitleAction" in x) return this.UA_Title(x);
-			if("updateDescriptionAction" in x) return this.UA_Description(x);
+			if("updateViewershipAction" in x) return this.AU_Viewership(x);
+			if("updateToggleButtonTextAction" in x) return this.AU_ToggleButtonText(x);
+			if("updateDateTextAction" in x) return this.AU_DateText(x);
+			if("updateTitleAction" in x) return this.AU_Title(x);
+			if("updateDescriptionAction" in x) return this.AU_Description(x);
 			console.log(x);
 		});
 	}
 	/** @private @arg {AU_Description} x */
-	UA_Description(x) {
+	AU_Description(x) {
 		this.y("UA_Description","updateDescriptionAction",x,x => {
 			this.save_keys(`[UA_DescriptionData]`,x);
 			this.G_Text(x.description);
 		});
 	}
 	/** @private @arg {AU_Title} x */
-	UA_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
+	AU_Title(x) {this.y("UA_Title","updateTitleAction",x,x => this.y("UA_TitleData","title",x,this.G_Text));}
 	/** @private @arg {AU_DateText} x */
-	UA_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
+	AU_DateText(x) {this.y("UA_DateText","updateDateTextAction",x,x => this.y("UA_DateTextData","dateText",x,this.G_Text));}
 	/** @private @arg {AU_ToggleButtonText} x */
-	UA_ToggleButtonText(x) {
-		this.y("UA_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
-			const cf="UA_ToggleButtonTextData";
+	AU_ToggleButtonText(x) {
+		this.y("AU_ToggleButtonText","updateToggleButtonTextAction",x,x1 => {
+			const cf="AU_ToggleButtonTextData";
 			const {buttonId,defaultText,toggledText,...y}=this.s(cf,x1); this.g(y);
 			if(buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
 			this.G_Text(defaultText);
@@ -3646,7 +3646,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @private @arg {AU_Viewership} x */
-	UA_Viewership(x) {this.y("UA_Viewership","updateViewershipAction",x,x => this.y("UA_ViewershipData","viewCount",x,this.R_VideoViewCount));}
+	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
 	/** @private @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="RS_Search"; this.k(cf,x);
@@ -5387,7 +5387,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_AccountsList"; this.k(cf,x);
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(selectText);
-		this.z(actions,this.UA_ChannelSwitcherPage);
+		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
 	/** @private @arg {RS_WatchReelItem} x */
 	RSW_ReelItem(x) {
@@ -5763,7 +5763,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_Transcript"; this.k(cf,x);
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,a => {
-			if("updateEngagementPanelAction" in a) {return this.UA_EngagementPanel(a);}
+			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
 		this.trackingParams(cf,trackingParams);
 	}
@@ -6261,8 +6261,8 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isProcessed,"boolean");
 	}
 	/** @private @arg {AU_EngagementPanel} x */
-	UA_EngagementPanel(x) {
-		const cf="UA_EngagementPanel"; this.k(cf,x);
+	AU_EngagementPanel(x) {
+		const cf="AU_EngagementPanel"; this.k(cf,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -6937,7 +6937,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
-		if("updateSubscribeButtonAction" in x) return this.UA_SubscribeButton(x);
+		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RS_Subscribe} x */
