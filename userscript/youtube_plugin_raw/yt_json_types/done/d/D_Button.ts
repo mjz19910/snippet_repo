@@ -5,6 +5,16 @@ type D_Button=
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
+		icon: T_Icon<"LOOP">;
+		tooltip: "Loop playlist";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Loop playlist">;
+		command: C_CommandExecutor;
+	}
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
 		text: G_Text;
 		serviceEndpoint: C_GetPdgBuyFlow;
 		icon: T_Icon<"MONEY_HEART">;

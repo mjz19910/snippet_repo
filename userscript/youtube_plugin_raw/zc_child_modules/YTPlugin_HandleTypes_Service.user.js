@@ -2606,7 +2606,7 @@ class HandleTypes extends HandleTypesEval {
 			case "SETTINGS": case "EXPAND": case "DISMISSAL": case "NOTIFICATIONS_NONE": case "NOTIFICATIONS_OFF":
 			case "NOTIFICATIONS_ACTIVE": case "MICROPHONE_ON": case "CHEVRON_RIGHT": case "CHEVRON_LEFT":
 			case "REMOVE": case "CLOSE": case "INFO": case "SHARE": case "CONTENT_CUT": case "PLAYLIST_ADD":
-			case "MONEY_HEART":
+			case "MONEY_HEART": case "LOOP":
 		}
 		for(let k of ka) {
 			switch(k) {
