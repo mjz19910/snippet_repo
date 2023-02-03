@@ -1107,7 +1107,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_DecoratedPlayerBar} x */
 	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar","decoratedPlayerBarRenderer",x,this.D_DecoratedPlayerBar);}
 	/** @private @arg {RA_NotificationAction} x */
-	R_NotificationAction(x) {this.H_("R_NotificationAction","notificationActionRenderer",x,this.D_NotificationAction);}
+	R_NotificationAction(x) {this.H_("R_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {R_AutoplaySwitchButton} x */
 	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton","autoplaySwitchButtonRenderer",x,this.D_AutoplaySwitchButton);}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
@@ -4245,11 +4245,11 @@ class HandleTypes extends HandleTypesEval {
 		} else if("reloadContinuationItemsCommand" in x) {this.C_ReloadContinuationItems(x);} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.clickTrackingParams(cf,clickTrackingParams);
-			this.G_AppendContinuationItems(appendContinuationItemsAction);
+			this.AD_AppendContinuationItems(appendContinuationItemsAction);
 		} else {debugger;}
 	}
 	/** @private @arg {AD_AppendContinuationItems} x */
-	G_AppendContinuationItems(x) {
+	AD_AppendContinuationItems(x) {
 		const cf="G_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
@@ -4341,12 +4341,28 @@ class HandleTypes extends HandleTypesEval {
 		this.g(y);
 	}
 	/** @private @arg {AD_Notification} x */
-	D_NotificationAction(x) {
-		const cf="D_NotificationAction"; this.k(cf,x);
+	AD_Notification(x) {
+		const cf="AD_Notification"; this.k(cf,x);
 		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(responseText);
 		this.t(actionButton,this.R_Button);
 		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {AD_ReplaceEnclosing} x */
+	AD_ReplaceEnclosing(x) {
+		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
+		let k=this.gk(x.item);
+		switch(k[0]) {
+			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
+			case "notificationTextRenderer":
+			case "reelDismissalActionRenderer":
+			case "notificationMultiActionRenderer":
+		}
+	}
+	/** @arg {AD_ReplaceEnclosing_Item} x */
+	AD_ReplaceEnclosing_Item(x) {
+		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x); this.k(cf,x);
+		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
@@ -4689,22 +4705,6 @@ class HandleTypes extends HandleTypesEval {
 		const {uiActions,actions,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 		this.D_HideEnclosingContainer(uiActions);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
-	}
-	/** @private @arg {AD_ReplaceEnclosing} x */
-	AD_ReplaceEnclosing(x) {
-		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.gk(x.item);
-		switch(k[0]) {
-			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
-			case "notificationTextRenderer":
-			case "reelDismissalActionRenderer":
-			case "notificationMultiActionRenderer":
-		}
-	}
-	/** @arg {AD_ReplaceEnclosing_Item} x */
-	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x); this.k(cf,x);
-		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
 	/** @private @arg {D_NotificationText} x */
 	D_NotificationText(x) {
@@ -5355,6 +5355,15 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(handlerData);
 		this.a_primitive_num(unseenCount);
 		this.a_primitive_num(timeoutMs);
+	}
+	/** @private @arg {AD_HideEngagementPanelTargetId} x */
+	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	/** @private @arg {AD_UpdateEngagementPanel} x */
+	AD_UpdateEngagementPanel(x) {
+		const cf="AD_UpdateEngagementPanel"; this.k(cf,x);
+		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_Transcript(content);
+		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @private @arg {AD_ShowEngagementPanelScrim} x */
 	AD_ShowEngagementPanelScrim(x) {
@@ -6588,15 +6597,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(a);
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
 	}
-	/** @private @arg {AD_HideEngagementPanelTargetId} x */
-	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
-	/** @private @arg {AD_UpdateEngagementPanel} x */
-	AD_UpdateEngagementPanel(x) {
-		const cf="AD_UpdateEngagementPanel"; this.k(cf,x);
-		const {content,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_Transcript(content);
-		if(targetId!=="engagement-panel-searchable-transcript") debugger;
-	}
 	/** @private @arg {D_TopbarLogo} x */
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo"; this.k(cf,x);
@@ -6625,6 +6625,8 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
+	/** @private @arg {AD_HideEnclosing} x */
+	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility"; this.k(cf,x);
@@ -7148,8 +7150,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_RelatedChipCloud} x */
 	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
-	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist"; this.k(cf,x);
@@ -7215,6 +7215,25 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
+	/** @private @arg {AD_SendFeedback} x */
+	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
+	/** @private @arg {AD_AddToGuideSection} x */
+	AD_AddToGuideSection(x) {
+		const cf="AD_AddToGuideSection"; this.k(cf,x);
+		const {handlerData,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(handlerData) {
+			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
+			case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS": break;
+		}
+		this.z(items,this.R_GuideEntry);
+	}
+	/** @private @arg {AD_SubscribeButton} x */
+	AD_SubscribeButton(x) {
+		const cf="AD_SubscribeButton"; this.k(cf,x);
+		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(subscribed);
+		this.D_ChannelId(channelId);
+	}
 	/** @private @arg {D_TopbarMenuButton_MenuItem} x */
 	D_TopbarMenuButton_MenuItem(x) {
 		const cf="D_TopbarMenuButton_MenuItem"; this.k(cf,x);
@@ -7309,8 +7328,6 @@ class HandleTypes extends HandleTypesEval {
 		if(beReused!==true) debugger;
 		return a;
 	}
-	/** @private @arg {AD_SendFeedback} x */
-	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
 		const cf="R_CommentItemSection_EntryPoint"; this.k(cf,x);
@@ -7578,16 +7595,6 @@ class HandleTypes extends HandleTypesEval {
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_bool(hasPersistentPlaylistPanel);
 		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
-	}
-	/** @private @arg {AD_AddToGuideSection} x */
-	AD_AddToGuideSection(x) {
-		const cf="AD_AddToGuideSection"; this.k(cf,x);
-		const {handlerData,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(handlerData) {
-			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
-			case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS": break;
-		}
-		this.z(items,this.R_GuideEntry);
 	}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
@@ -8532,13 +8539,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_PlaylistEdit(addToPlaylistServiceEndpoint);
 		this.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {AD_SubscribeButton} x */
-	AD_SubscribeButton(x) {
-		const cf="AD_SubscribeButton"; this.k(cf,x);
-		const {subscribed,channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(subscribed);
-		this.D_ChannelId(channelId);
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {
