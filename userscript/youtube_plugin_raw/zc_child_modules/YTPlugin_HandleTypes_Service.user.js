@@ -2588,7 +2588,7 @@ class HandleTypes extends HandleTypesEval {
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
 	/** @private @private @arg {any} z @template {Extract<D_Button,{icon:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"icon,size,style">[number]|"trackingParams">:never} */
-	D_Button_WithIcon_Omit(cf,x,z=null) {
+	D_Button_WithIcon_Omit(cf1,x,z=null) {
 		const {icon,size,style,...y}=this.D_Button_Omit_TP(cf,x); z=y;
 		switch(cf) {
 			default: debugger; break;
@@ -2614,19 +2614,19 @@ class HandleTypes extends HandleTypesEval {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {serviceEndpoint,accessibilityData,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf,x); y1;
+					let {serviceEndpoint,accessibilityData,tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
 				} break;
 				case "tooltip": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {tooltip,...y1}=this.D_Button_WithIcon_Omit(cf,x); y1;
+					let {tooltip,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
 				} break;
 				case "targetId": {
 					if(!(k in x)) return;
 					/** @type {`${typeof cf}:${typeof k}`} */
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {isDisabled,accessibilityData,targetId,...y1}=this.D_Button_WithIcon_Omit(cf,x); y1;
+					let {isDisabled,accessibilityData,targetId,...y1}=this.D_Button_WithIcon_Omit(cf1,x); y1;
 				} break;
 			}
 		}
