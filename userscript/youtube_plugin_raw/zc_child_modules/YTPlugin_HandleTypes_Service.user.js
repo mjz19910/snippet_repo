@@ -8994,19 +8994,31 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_DesktopWatchAds} x */
 	R_DesktopWatchAds(x) {x;}
+	/** @private @arg {G_PlayerStoryboards} x */
+	G_PlayerStoryboards(x) {x;}
+	/** @private @arg {D_PlayerConfig} x */
+	D_PlayerConfig(x) {x;}
+	/** @private @arg {D_VideoDetails} x */
+	D_VideoDetails(x) {x;}
+	/** @private @arg {D_PlaybackTracking} x */
+	D_PlaybackTracking(x) {x;}
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,...y}=this.s(cf,x);
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,...y}=this.s(cf,x);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
-		console.log("[RS_Player.next_key]",this.get_keys_of(y)[0]);
+		this.t(videoDetails,this.D_VideoDetails);
+		this.t(playerConfig,this.D_PlayerConfig);
+		this.t(storyboards,this.G_PlayerStoryboards);
+		this.t(microformat,this.R_PlayerMicroformat);
+		console.log("[RS_Player.next_key] [%s]",this.get_keys_of(y)[0]);
 		// this.tz(x.annotations,this.R_PlayerAnnotationsExpanded);
 	}
-	/** @private @arg {D_PlaybackTracking} x */
-	D_PlaybackTracking(x) {x;}
+	/** @private @arg {R_PlayerMicroformat} x */
+	R_PlayerMicroformat(x) {x;}
 	/** @private @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

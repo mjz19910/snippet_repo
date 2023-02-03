@@ -104,7 +104,7 @@ type RS_Player={
 	captions?: R_PlayerCaptionsTracklist;
 	videoDetails?: D_VideoDetails;
 	playerConfig?: D_PlayerConfig;
-	storyboards?: R_PlayerStoryboardSpec|R_PlayerLiveStoryboardSpec;
+	storyboards?: G_PlayerStoryboards;
 	microformat?: R_PlayerMicroformat;
 	cards?: R_CardCollection;
 	trackingParams: string;
