@@ -3080,7 +3080,7 @@ class HandleTypes extends HandleTypesEval {
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
 	D_Button_ToggledServiceEP(x) {
@@ -3088,7 +3088,7 @@ class HandleTypes extends HandleTypesEval {
 		if("likeEndpoint" in x) return this.E_Like(x);
 		if("commandExecutorCommand" in x) this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle">[number]>:never} */
 	D_ToggleButton_Omit(cf,x,z=null) {
