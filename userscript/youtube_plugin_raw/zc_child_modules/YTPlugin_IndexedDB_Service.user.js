@@ -51,62 +51,79 @@ class IndexedDBService extends BaseService {
 		video_id: ["video_id",[]],
 		hashtag: ["hashtag",[]],
 	};
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
-	get_data_cache(key) {return this.store_cache[key][1];}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	/** @arg {keyof DatabaseStoreTypes} key */
+	get_data_cache(key) {
+		switch(key) {
+			case "video_id": {const cache=this.store_cache[key][1]; return this.exact_arr(key,cache);}
+			case "hashtag": {const cache=this.store_cache[key][1]; return this.exact_arr(key,cache);}
+		}
+	}
+	/** @arg {keyof DatabaseStoreTypes} key */
 	get_data_index_cache(key) {return this.store_cache_index[key][1];}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
 	/** @type {Map<string,string[]>} */
 	cached_data=new Map;
-	/** @api @public @template {DatabaseStoreDescription["name"]} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {T} obj */
+	/** @arg {DatabaseStoreDescription["name"]} key */
+	check_size(key) {
+		let d_cache=this.get_data_cache(key);
+		switch(d_cache[0]) {
+			case "video_id": if(d_cache[1].length!==d_cache[1].reduce((r) => r+1,0)) {debugger;} break;
+			case "hashtag": if(d_cache[1].length!==d_cache[1].reduce((r) => r+1,0)) {debugger;} break;
+		}
+	}
+	/** @api @public @template {DatabaseStoreDescription["name"]} K @arg {K} key @arg {DatabaseStoreTypes[keyof DatabaseStoreTypes]} obj */
 	put(key,obj) {
 		if(!obj) {debugger; return;}
 		const index_key=this.get_index_key(key);
-		switch(index_key) {
-			case "hashtag": {
-				if(!(index_key in obj)) return;
-				let index_val=obj[index_key];
-				let cache=this.cached_data.get(key);
-				if(cache?.includes(index_val)) return;
-			} break;
-			case "v":
-		}
+		/** @type {T_UnionToPartial<typeof obj>} */
+		let ac_obj=obj;
+		let index_val=ac_obj[index_key];
+		if(index_val==null) return;
+		let cache=this.cached_data.get(key);
+		if(cache?.includes(index_val)) return;
 		if(!this.database_open) this.requestOpen({name: key});
-		let d_cache=this.get_data_cache(key);
-		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {debugger;}
+		this.check_size(key);
 		this.push_waiting_obj(key,obj);
-		if(d_cache.length!==d_cache.reduce((r) => r+1,0)) {debugger;}
+		this.check_size(key);
 	}
-	/** @private @arg {K} key @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T} obj */
+	/** @private @arg {K} key @template {keyof DatabaseStoreTypes} K @arg {DatabaseStoreTypes[keyof DatabaseStoreTypes]} obj */
 	push_waiting_obj(key,obj) {
 		let d_cache=this.get_data_cache(key);
 		let c_index=this.store_cache_index[key][1];
 		const index_key=this.get_index_key(key);
+		/** @type {T_UnionToPartial<typeof obj>} */
+		let ac_obj=obj;
 		let idx;
-		switch(index_key) {
+		switch(d_cache[0]) {
 			case "hashtag": {
-				if(!(index_key in obj)) break;
-				let index_val=obj[index_key];
+				let index_val=ac_obj[index_key];
+				if(index_val===void 0) break;
 				idx=c_index.get(index_val);
-				if(idx!==void 0) {
-					d_cache[idx]=obj;
-					return;
+				if(d_cache[0] in obj) {
+					if(idx!==void 0) {
+						d_cache[1][idx]=obj;
+						return;
+					}
+					idx=d_cache[1].push(obj)-1;
+					c_index.set(index_val,idx);
 				}
-				idx=d_cache.push(obj)-1;
-				c_index.set(index_val,idx);
 			}; break;
-			case "v": {
-				if(!(index_key in obj)) break;
-				let index_val=obj[index_key];
+			case "video_id": {
+				const dc_type=d_cache[0];
+				const index_key=this.get_index_key(dc_type);
+				let index_val=ac_obj[index_key];
+				if(index_val===void 0) break;
 				if(!index_val) {debugger; throw new Error("Invalid index key");}
 				idx=c_index.get(index_val);
-				if(idx!==void 0) {
-					d_cache[idx]=obj;
-					return;
+				if("v" in obj) {
+					if(idx!==void 0) {
+						d_cache[1][idx]=obj;
+						return;
+					}
+					idx=d_cache[1].push(obj)-1;
+					c_index.set(index_val,idx);
 				}
-				idx=d_cache.push(obj)-1;
-				c_index.set(index_val,idx);
 			}; break;
 		}
 	}
@@ -168,7 +185,7 @@ class IndexedDBService extends BaseService {
 	onTransactionComplete(db,event,store_desc) {
 		const cur_name=store_desc.name;
 		const index_key=this.get_index_key(cur_name);
-		const dc=this.get_data_cache(cur_name);
+		const [,dc]=this.get_data_cache(cur_name);
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
 		for(let i=dc.length-1;i>=0;i--) {
 			const val=dc[i];
@@ -202,8 +219,12 @@ class IndexedDBService extends BaseService {
 		const obj_store=transaction.objectStore(store_desc.name);
 		this.consume_data_with_store(store_desc,obj_store);
 	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @returns {K extends "hashtag"?"hashtag":"v"} */
 	get_index_key(key) {
+		return as(this.get_index_key_str(key));
+	}
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	get_index_key_str(key) {
 		switch(key) {
 			case "hashtag": return "hashtag";
 			case "video_id": return "v";
@@ -212,17 +233,17 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @arg {IDBObjectStore} obj_store @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T[]} database_data @arg {K} key */
 	on_cursor_complete(obj_store,database_data,key) {
-		const index_key=this.get_index_key(key);
+		const index_key=this.get_index_key_str(key);
 		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
 		let database_map=new Map;
-		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
+		/** @private @type {Map<string,DatabaseStoreTypes[keyof DatabaseStoreTypes]>} */
 		let new_data_map=new Map;
 		database_data.forEach(e => {
 			if("hashtag" in e&&index_key==="hashtag") {database_map.set(e[index_key],e);}
 			if("v" in e&&index_key==="v") {database_map.set(e[index_key],e);}
 		});
 		if(is_firefox) {console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,key,database_data.length);} else {console.log("database [%s:%s] has %o items",this.db_args.name,key,database_data.length);}
-		for(let data of this.get_data_cache(key)) {
+		for(let data of this.get_data_cache(key)[1]) {
 			if(!data) {debugger; continue;}
 			let content;
 			switch(index_key) {
@@ -244,7 +265,13 @@ class IndexedDBService extends BaseService {
 				} else if(new_data_map.has(content)) {
 					this.committed_data.push(data);
 					continue;
-				} else {new_data_map.set(content,data);}
+				} else {
+					if("v" in data) {
+						new_data_map.set(content,data);
+					} else {
+						new_data_map.set(content,data);	
+					}
+				}
 			} else {debugger;}
 		}
 		[...new_data_map.values()].forEach(e => {this.add_data_to_store(obj_store,e);});
