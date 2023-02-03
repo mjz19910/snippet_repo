@@ -443,6 +443,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistLoopButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistLoopButtonState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistPanelVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlaylistSidebar";}
