@@ -198,7 +198,9 @@ class CodegenService extends BaseService {
 			${body_2}
 		d1!}
 		`;
-		console.log("more req",next_req);
+		if(next_req.length>0) {
+			console.log("more req",next_req);
+		}
 		return tmp0;
 	}
 	/** @arg {string[]} req_names @arg {string} code @arg {string[]} keys @arg {object} x */
