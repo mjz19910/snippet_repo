@@ -1104,6 +1104,7 @@ type D_PlaylistPanelVideo_Base={
 type D_PlaylistPanelVideo=
 	|never
 	|D_PlaylistPanelVideo_Base
+	|(D_PlaylistPanelVideo_Base&{indexText: G_Text;})
 	;
 ;
 type D_PlaylistSidebarPrimaryInfo={
