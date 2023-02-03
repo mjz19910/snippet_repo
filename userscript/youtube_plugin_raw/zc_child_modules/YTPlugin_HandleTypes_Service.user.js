@@ -7664,8 +7664,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.videoId(videoId);
 		this.a_primitive_str(playlistSetVideoId);
-		this.D_DarkColorPalette(darkColorPalette);
-		this.D_LightColorPalette(lightColorPalette);
+		this.D_DarkColorPalette(cf,darkColorPalette);
+		this.D_LightColorPalette(cf,lightColorPalette);
 		this.G_Text(longBylineText);
 		this.G_Text(shortBylineText);
 		this.ceq(selected,true);
@@ -8243,8 +8243,8 @@ class HandleTypes extends HandleTypesEval {
 			this.C_Executor(endRepeatCommand);
 			console.log(`${cf}:playerStateEntityKey`,playerStateEntityKey);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-			this.D_LightColorPalette(lightColorPalette);
-			this.D_DarkColorPalette(darkColorPalette);
+			this.D_LightColorPalette(cf,lightColorPalette);
+			this.D_DarkColorPalette(cf,darkColorPalette);
 			this.a_primitive_str(timeDescriptionA11yLabel);
 			return;
 		}
@@ -8556,43 +8556,47 @@ class HandleTypes extends HandleTypesEval {
 	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x);}
-	/** @private @arg {D_LightColorPalette} x */
-	D_LightColorPalette(x) {
+	/** @private @arg {string} cf1 @arg {D_LightColorPalette} x */
+	D_LightColorPalette(cf1,x) {
 		const cf="D_LightColorPalette";
+		/** @arg {number} x */
+		let log_color=(x) => console.log(`-- [${cf1}:${cf}] --\n\n case 0x${x.toString(16)}:`);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s1_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s3_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=p_tc; switch(x) {default: log_color(x); break;}}
+			{const x=s_tc; switch(x) {default: log_color(x); break;}}
+			{const x=s1_c; switch(x) {default: log_color(x); break;}}
+			{const x=s2_c; switch(x) {default: log_color(x); break;}}
+			{const x=s3_c; switch(x) {default: log_color(x); break;}}
+			{const x=s4_c; switch(x) {default: log_color(x); break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-		{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-		{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-		{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=p_tc; switch(x) {default: log_color(x); break;}}
+		{const x=s_tc; switch(x) {default: log_color(x); break;}}
+		{const x=s2_c; switch(x) {default: log_color(x); break;}}
+		{const x=s4_c; switch(x) {default: log_color(x); break;}}
 	}
-	/** @private @arg {D_DarkColorPalette} x */
-	D_DarkColorPalette(x) {
+	/** @private @arg {string} cf1 @arg {D_DarkColorPalette} x */
+	D_DarkColorPalette(cf1,x) {
 		const cf="D_DarkColorPalette";
+		/** @arg {number} x */
+		let log_color=(x) => console.log(`-- [${cf1}:${cf}] --\n\n case 0x${x.toString(16)}:`);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s1_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s3_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-			{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+			{const x=p_tc; switch(x) {default: log_color(x); break;}}
+			{const x=s_tc; switch(x) {default: log_color(x); break;}}
+			{const x=s1_c; switch(x) {default: log_color(x); break;}}
+			{const x=s2_c; switch(x) {default: log_color(x); break;}}
+			{const x=s3_c; switch(x) {default: log_color(x); break;}}
+			{const x=s4_c; switch(x) {default: log_color(x); break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-		{const x=p_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-		{const x=s_tc; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-		{const x=s2_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
-		{const x=s4_c; switch(x) {default: console.log(`0x${x.toString(16)}`); break;}}
+		{const x=p_tc; switch(x) {default: log_color(x); break;}}
+		{const x=s_tc; switch(x) {default: log_color(x); break;}}
+		{const x=s2_c; switch(x) {default: log_color(x); break;}}
+		{const x=s4_c; switch(x) {default: log_color(x); break;}}
 	}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {const cf="C_EntityUpdate"; this.codegen_typedef_all(cf,x);}
