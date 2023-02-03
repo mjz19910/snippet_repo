@@ -1727,7 +1727,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DC_GetTranscript_Params(b);}
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("M_YpcGetOffers",a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {E_Search} x */
@@ -1750,21 +1750,23 @@ class HandleTypes extends HandleTypesEval {
 	E_SignalService_SendPost(x) {const cf="E_SignalService_SendPost",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
-	/** @protected @arg {E_PlaylistEdit} x */
+	/** @private @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
-	/** @protected @arg {E_Feedback} x */
+	/** @private @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
-	/** @protected @arg {E_YpcGetOfflineUpsell} x */
+	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {E_NotificationOptOut} x */
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
 	/** @private @arg {E_UserFeedback} x */
-	E_UserFeedback(x) {const cf="E_UserFeedback"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @protected @arg {M_GetTranscript} x */
+	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
+	/** @private @arg {M_UserFeedback} x */
+	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
+	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
-	/** @protected @arg {M_EditPlaylist} x */
+	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
@@ -1794,8 +1796,10 @@ class HandleTypes extends HandleTypesEval {
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
-	/** @private @arg {DC_Params} a */
-	DC_GetTranscript_Params(a) {this.D_Params("DC_GetTranscript_Params",a,"get_transcript.params");}
+	/** @private @arg {DE_GetTranscript} a */
+	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
+	/** @private @arg {DE_UserFeedback} x */
+	DE_UserFeedback(x) {this.y("DE_UserFeedback","additionalDatas",x,x => this.z(x,this.G_AdditionalDataItem));}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
@@ -2137,6 +2141,11 @@ class HandleTypes extends HandleTypesEval {
 	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
+	/** @protected @arg {GM_UserFeedback} x */
+	GM_UserFeedback(x) {
+		const v=this.w("GM_UserFeedback","ignoreNavigation",x);
+		if(v!==true) debugger;
+	}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_GetSharePanel} x */
@@ -9026,6 +9035,19 @@ class HandleTypes extends HandleTypesEval {
 	D_PlayerMicroformat(x) {x;}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {x;}
+	/** @private @arg {G_AdditionalDataItem} x */
+	G_AdditionalDataItem(x) {
+		let d=this.w("","userFeedbackEndpointProductSpecificValueData",x);
+		switch(d.key) {
+			default: debugger; break;
+			case "lockup": {
+				if(d.value!=="player") debugger;
+			} break;
+			case "video_id": {
+				this.videoId(d.value);
+			} break;
+		}
+	}
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
 	//#endregion

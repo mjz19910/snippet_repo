@@ -653,6 +653,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "UA_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "UA_ToggleButtonTextData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_VE3832_Watch:omit";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEnclosing";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEngagementPanelTargetId";}
@@ -663,6 +664,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_UserFeedback";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_CanShare";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
@@ -805,6 +807,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SendPost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SetSetting";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_UserFeedback";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE37414";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_Watch";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_WatchPlaylist";}
