@@ -35,3 +35,5 @@ type M_Subscribe=TM_Gen<GM_Subscribe>;
 type M_UserFeedback=TM_Gen<GM_UserFeedback>;
 type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
 //#endregion
+type MG_Survey_CMD={webCommandMetadata: GM_GetSurvey;};
+type MP_AccountMenu={trackingParams: string; style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT"; showLoadingSpinner: true;};
