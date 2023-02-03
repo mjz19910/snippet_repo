@@ -2652,11 +2652,10 @@ class HandleTypes extends HandleTypesEval {
 						if(!(k2 in x)) break x;
 						/** @type {`${cf1}:${k2}`} */
 						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						this.codegen_typedef_all(cf2,x);
 						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
 						switch(a.iconType) {
-							default: debugger; break;
-							case "LOOP": case "PLAYLIST_ADD":
+							default: this.codegen_typedef_all(cf2,x); debugger; break;
+							case "LOOP": case "LOOP_ACTIVE": case "PLAYLIST_ADD": case "LOOP_ONE_ACTIVE":
 						}
 						return;
 					}
