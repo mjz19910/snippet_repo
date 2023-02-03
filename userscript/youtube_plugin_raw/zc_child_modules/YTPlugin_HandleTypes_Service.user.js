@@ -6243,20 +6243,27 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
 		const cf="D_TemplateUpdate"; this.k(cf,x);
-		const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let idp=split_string_once(identifier,"|");
-		if(idp[0]!=="track_selection_sheet_option.eml") debugger;
-		this.save_string("D_TemplateUpdate.identifier.id",idp[0]);
-		this.save_string("D_TemplateUpdate.identifier.hash",idp[1]);
-		this.t(dependencies,dep_arr => {
-			if(dep_arr.length!==1) debugger;
-			const dep=dep_arr[0];
-			let ddp=split_string_once(dep,"|");
-			if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
-			this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
-			this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
-		});
-		this.a_primitive_str(a);
+		if("dependencies" in x) {
+			const {identifier,dependencies,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			let idp=split_string_once(identifier,"|");
+			if(idp[0]!=="track_selection_sheet_option.eml") debugger;
+			this.save_string("D_TemplateUpdate.identifier.id",idp[0]);
+			this.save_string("D_TemplateUpdate.identifier.hash",idp[1]);
+			this.t(dependencies,dep_arr => {
+				if(dep_arr.length!==1) debugger;
+				const dep=dep_arr[0];
+				let ddp=split_string_once(dep,"|");
+				if(ddp[0]!=="bottom_sheet_list_option.eml") debugger;
+				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].id`,idp[0]);
+				this.save_string(`D_TemplateUpdate.${idp[0]}.deps[0].hash`,idp[1]);
+			});
+			this.a_primitive_str(a);
+		} else {
+			const {identifier,serializedTemplateConfig: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			let idp=split_string_once(identifier,"|");
+			if(idp[0]!=="bottom_sheet_list_option.eml") debugger;
+			this.a_primitive_str(a);
+		}
 	}
 	/** @private @arg {DC_EntityBatchUpdate} x */
 	D_EntityBatchUpdate(x) {

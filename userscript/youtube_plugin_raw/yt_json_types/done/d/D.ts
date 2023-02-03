@@ -2848,7 +2848,10 @@ type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
 type D_TemplateUpdate={
 	identifier: `track_selection_sheet_option.eml|${string}`;
 	serializedTemplateConfig: string;
-	dependencies?: [`bottom_sheet_list_option.eml|${string}`];
+	dependencies: [`bottom_sheet_list_option.eml|${string}`];
+}|{
+	identifier: `bottom_sheet_list_option.eml|${string}`;
+	serializedTemplateConfig: string;
 };
 type D_TemplatedText={
 	text: string;
