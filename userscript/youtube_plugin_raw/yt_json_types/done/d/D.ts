@@ -1160,7 +1160,7 @@ type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
 type D_SubFeedOption={
 	name: G_Text;
 	isSelected: boolean;
-	navigationEndpoint: E_Watch;
+	navigationEndpoint: E_Watch|GE_Browse;
 	trackingParams: string;
 };
 type D_BrowseEndpointContextMusicConfig={pageType: T_EnumStr<"MUSIC_PAGE_TYPE","ALBUM"|"ARTIST"|"USER_CHANNEL">;};

@@ -7298,13 +7298,20 @@ class HandleTypes extends HandleTypesEval {
 		this.z(options,this.R_SubFeedOption);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {D_SubFeedOption["navigationEndpoint"]} x */
+	D_SubFeedOption_NavEP(x) {
+		const cf="D_SubFeedOption_NavEP"; this.k(cf,x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_SubFeedOption} x */
 	D_SubFeedOption(x) {
 		const cf="D_SubFeedOption"; this.k(cf,x);
 		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(name);
 		this.a_primitive_bool(isSelected);
-		this.E_Watch(navigationEndpoint);
+		this.D_SubFeedOption_NavEP(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {G_BrowseFeedContent} x */
