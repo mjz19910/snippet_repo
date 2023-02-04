@@ -197,6 +197,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichShelf";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SearchBox";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SectionList_BrowseFeed_History";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SectionList_BrowseFeed_Subscriptions";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SegmentedLikeDislikeButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SortFilterSubMenu";}
@@ -496,6 +497,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichShelf";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RunAttestation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SearchBox";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SectionList_BrowseFeed_History";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SectionList_BrowseFeed_Subscriptions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SegmentedLikeDislikeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SerializedSlotAdServingDataEntry";}

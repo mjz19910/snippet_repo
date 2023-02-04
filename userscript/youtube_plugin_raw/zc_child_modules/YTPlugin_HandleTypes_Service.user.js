@@ -5762,6 +5762,7 @@ class HandleTypes extends HandleTypesEval {
 					};
 					debugger;
 				} return;
+				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
 				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
 				case "search-feed": return this.DC_SectionList_SearchFeed(x);
 			}
@@ -5792,7 +5793,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SectionList_BrowseFeed_Subscriptions"; this.k(cf,x);
 		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,x => {
-			if("itemSectionRenderer" in x) {return;}
+			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
 			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
 			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
@@ -5800,9 +5801,27 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(targetId!=="browse-feedFEsubscriptions") debugger;
 	}
+	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
+	D_SectionList_BrowseFeed_History(x) {
+		const cf="D_SectionList_BrowseFeed_History"; this.k(cf,x);
+		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,x => {
+			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
+			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
+		});
+		this.R_TextHeader(header);
+		this.trackingParams(cf,trackingParams);
+		if(targetId!=="browse-feedFEhistory") debugger;
+	}
+	/** @private @arg {R_TextHeader} x */
+	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader)}
+	/** @private @arg {D_TextHeader} x */
+	D_TextHeader(x) {x;}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
 	TR_SectionListItem_3(x) {
-		const cf="SectionListItem"; this.g_k(cf,x); this.k(cf,x);
+		const cf="SectionListItem"; this.k(cf,x);
 		if("itemSectionRenderer" in x) return this.TR_ItemSection_3(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
