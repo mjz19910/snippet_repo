@@ -19,6 +19,10 @@ type GM_VE83769_WC={
 	url: GU_VE83769_Url;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
+}|{
+	url: `https://myactivity.google.com/activitycontrols/youtube?${string}`;
+	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
+	rootVe: 83769;
 };
 type GM_VE96368_WC_browse={
 	url: "/feed/subscriptions";

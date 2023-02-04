@@ -358,6 +358,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsEntryPointTeaser";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CompactLink.Styled.icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CompactLink.Styled:omit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CompactLink.icon";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ConfirmDialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ContinuationItem";}
