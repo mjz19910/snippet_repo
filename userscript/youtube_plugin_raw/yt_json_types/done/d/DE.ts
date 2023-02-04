@@ -35,4 +35,5 @@ type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
 type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_YpcGetCart={transactionParams: string;};
 type DE_SuperThanksSelectedTier={key: string; index: number;};
+type DE_UndoFeedback={undoToken: string;actions: A_UndoFeedback[];};
 //#endregion

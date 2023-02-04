@@ -2827,10 +2827,6 @@ type D_TwoColumnBrowseResults={
 	secondaryContents?: G_SecondaryContents;
 };
 type D_TwoColumnSearchResults={primaryContents: R_SectionList;};
-type DE_UndoFeedback={
-	undoToken: string;
-	actions: A_UndoFeedback[];
-};
 type D_UnifiedSharePanel={
 	trackingParams: string;
 	showLoadingSpinner: true;
