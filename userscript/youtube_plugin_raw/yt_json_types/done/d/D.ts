@@ -22,7 +22,6 @@ type D_Button_TargetId=Extract<D_Button,{targetId: any;}>["targetId"];
 type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId: any;}>["targetId"];
 type D_TargetIdStr=
 	|"browse-video-menu-button"
-	|D_ClipInfoButton["targetId"]
 	|DC_ReloadContinuationItems["targetId"]
 	|D_Button_With_TargetId["targetId"]
 	|A_WatchNextContinuation['targetId']
@@ -268,111 +267,6 @@ type DCE_Button={
 	targetId: D_Button_TargetId;
 };
 type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
-type D_ClipInfoButton={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	icon: T_Icon<"INFO">;
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	targetId: "clip-info-button";
-	command: TA_OpenPopup<{
-		popup: R_ConfirmDialog;
-		popupType: "DIALOG";
-	}>;
-};
-type D_ShareButton={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	// D_Button_SE
-	serviceEndpoint: E_ShareEntityService;
-	icon: T_Icon<"SHARE">;
-	tooltip: "Share";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-};
-type D_CreateClipButton={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	icon: T_Icon<"CONTENT_CUT">;
-	tooltip: "Clip";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	targetId: "create-clip-button-action-bar";
-	command: A_ChangeEngagementPanelVisibility;
-};
-type D_SuggestiveButton={
-	style: "STYLE_SUGGESTIVE";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	trackingParams: string;
-	command: C_Continuation;
-};
-type D_PlaylistAddButton_Save={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	icon: T_Icon<"PLAYLIST_ADD">;
-	accessibility: {label: "unknown";};
-	tooltip: "Save";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	command: E_AddToPlaylistService;
-};
-type D_PlaylistAddButton_Clip={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	icon: T_Icon<"PLAYLIST_ADD">;
-	accessibility: {label: "Save to";};
-	tooltip: "Clip";
-	trackingParams: string;
-	accessibilityData: D_Accessibility;
-	command: E_AddToPlaylistService;
-};
-type D_ButtonCancelAutoplay={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	text: G_Text;
-	accessibility: TD_Label<"Cancel auto-play for this video">;
-	trackingParams: string;
-	accessibilityData: TD_Accessibility<"Cancel auto-play for this video">;
-	command: C_GetSurvey;
-};
-type D_Button_ClipInfoButton={
-	style: "STYLE_DEFAULT";
-	size: "SIZE_DEFAULT";
-	isDisabled: false;
-	icon: T_Icon<"INFO">;
-	trackingParams: string;
-	accessibilityData: TD_Accessibility<"Learn more">;
-	targetId: "clip-info-button";
-	command: TA_OpenPopup<{
-		popup: R_ConfirmDialog;
-		popupType: "DIALOG";
-	}>;
-};
-type D_Button_2=
-	|D_ClipInfoButton
-	|D_ButtonCancelAutoplay
-	|D_ShareButton
-	|D_CreateClipButton
-	|D_SuggestiveButton
-	|D_PlaylistAddButton_Save
-	|D_PlaylistAddButton_Clip
-	|D_Button_ClipInfoButton
-	;
-;
-type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
-type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 type D_SubscriptionNotificationToggleButton_States=[
 	{
@@ -3209,12 +3103,7 @@ type DC_Continuation_Omit_Return<T>=
 	never;
 //#endregion
 //#region Extract & Exclude from data
-type D_Button_EX_1_Style=Extract<Exclude<D_Button,D_Button_EX_1_Command>,{style: any;}>;
-type D_Button_EX_1_SrvEp=Extract<Exclude<D_Button,D_Button_NP_1_Style>,{serviceEndpoint: any;}>;
-type D_Button_ER_1_Rest=Exclude<D_Button,D_Button_NP_1_SrvEp>;
 type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
-type D_Button_EX_1_Command=Extract<D_Button,{command: any;}>;
-type D_Button_EX_2_Text=Extract<D_Button,{text: any;}>;
 type D_GuideEntry_WithNavEP=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithEntryData>,{navigationEndpoint: any;}>;
 type D_GuideEntry_WithPrimary=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithNavEP>,{isPrimary: any;}>;
 type D_GuideEntry_With_ServiceEndpoint=Extract<Exclude<D_GuideEntry,D_GuideEntry_WithPrimary>,{serviceEndpoint: any;}>;
