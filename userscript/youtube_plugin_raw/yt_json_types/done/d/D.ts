@@ -3112,3 +3112,5 @@ type D_RichMetadataRow={
 	contents: R_RichMetadata[];
 	trackingParams: string;
 };
+type D_RelatedChipCloud={content: R_ChipCloud;};
+type D_LoggingDirectives_Gestures=T_Types<4>;

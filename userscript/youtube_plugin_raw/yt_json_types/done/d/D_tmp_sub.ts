@@ -64,5 +64,3 @@ type DT_MenuFlexibleItem={
 	menuItem: R_MenuServiceItem;
 	topLevelButton: R_Button;
 };
-type D_RelatedChipCloud={content: R_ChipCloud;};
-type D_LoggingDirectives_Gestures=T_Types<4>;
