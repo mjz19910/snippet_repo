@@ -2201,19 +2201,6 @@ type D_PlayerCaptionsTracklist={
 	translationLanguages: D_TranslationLanguage[];
 	defaultAudioTrackIndex: number;
 };
-type E_WebPlayerShareEntityService={
-	clickTrackingParams: string;
-	commandMetadata: {
-		webCommandMetadata: {
-			sendPost: true;
-			apiUrl: "/youtubei/v1/share/get_web_player_share_panel";
-		};
-	};
-	webPlayerShareEntityServiceEndpoint: {
-		serializedShareEntity: string;
-	};
-};
-
 type D_PlayerLiveStoryboardSpec={spec: string;};
 type D_PlayerMicroformat={
 	thumbnail: D_Thumbnail;
@@ -2498,23 +2485,20 @@ type D_Saved={
 	data?: {[x: string]: ({}[])|undefined;};
 };
 type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
+type GM_VE6827_Browse_SearchBox={
+	url: "/feed/history";
+	sendPost: true;
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 6827;
+	apiUrl: "/youtubei/v1/browse";
+};
+type M_VE6827_Browse_SearchBox={webCommandMetadata: GM_VE6827_Browse_SearchBox;};
+type DE_VE6827_Browse_SearchBox={
+	browseId: "FEhistory";
+	query: "";
+};
 type D_SearchBox={
-	endpoint: {
-		clickTrackingParams: string;
-		commandMetadata: {
-			webCommandMetadata: {
-				url: "/feed/history";
-				sendPost: true;
-				webPageType: "WEB_PAGE_TYPE_BROWSE";
-				rootVe: 6827;
-				apiUrl: "/youtubei/v1/browse";
-			};
-		};
-		browseEndpoint: {
-			browseId: "FEhistory";
-			query: "";
-		};
-	};
+	endpoint: E_VE6827_Browse_SearchBox;
 	searchButton: R_Button;
 	clearButton: R_Button;
 	placeholderText: G_Text;

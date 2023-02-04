@@ -1,4 +1,9 @@
 //#region WebCommandMetadata
+//#region WebCommandMetadata Objects
+type GM_PostApiLike={sendPost: true; apiUrl: string;};
+type GM_SendPost={sendPost: true;};
+type GM_UserFeedback={ignoreNavigation: true;};
+//#endregion
 //#region WebCommandMetadata like {rootVe:number;}
 type GM_VE3611_WC={
 	url:
@@ -45,7 +50,7 @@ type GM_VE11487_WC={
 	apiUrl: "/youtubei/v1/browse";
 };
 //#endregion
-//#region WebCommandMetadata like GM_PostApiLike ie, GM_ApiUrl
+//#region WebCommandMetadata with T_GM_PostApi_WithApiUrl
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
 type GM_AccountMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/account_menu">;
 type GM_CreateBackstagePost=T_GM_PostApi_WithApiUrl<"/youtubei/v1/backstage/create_post">;
@@ -70,8 +75,90 @@ type GM_GetSharePanel=T_GM_PostApi_WithApiUrl<"/youtubei/v1/share/get_share_pane
 type GM_Subscribe=T_GM_PostApi_WithApiUrl<"/youtubei/v1/subscription/subscribe">;
 type GM_ypc_get_offers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
 type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
+type GM_GetWebPlayerSharePanel={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/share/get_web_player_share_panel";
+};
 //#endregion
-type GM_SendPost={sendPost: true;};
 //#endregion
-type GM_PostApiLike={sendPost: true; apiUrl: string;};
-type GM_UserFeedback={ignoreNavigation: true;};
+//#region GM_VE
+type GM_VE23462_WC={
+	url: GU_VE23462_Url;
+	webPageType: "WEB_PAGE_TYPE_SETTINGS";
+	rootVe: 23462;
+	apiUrl: "/youtubei/v1/browse";
+};
+type GM_VE37414_WC={
+	url: GU_VE37414_Url;
+	webPageType: "WEB_PAGE_TYPE_SHORTS";
+	rootVe: 37414;
+};
+type GM_VE42352_WC={
+	url: "/feed/downloads";
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 42352;
+	apiUrl: "/youtubei/v1/browse";
+};
+type GM_VE83769_WC={
+	url: GU_VE83769_Url;
+	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
+	rootVe: 83769;
+}|{
+	url: `https://myactivity.google.com/activitycontrols/youtube?${string}`;
+	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
+	rootVe: 83769;
+};
+type GM_VE96368_WC_browse={
+	url: "/feed/subscriptions";
+	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 96368;
+	apiUrl: "/youtubei/v1/browse";
+};
+//#endregion
+//#region GM_WC
+type GM_WC_VE=[
+	GM_VE3611_WC,
+	GM_VE3832_Watch,
+	GM_VE3854_WC,
+	GM_VE4724_WC,
+	GM_VE5754_WC,
+	GM_VE6827_WC,
+	GM_VE11487_WC,
+	GM_VE23462_WC,
+	GM_VE37414_WC,
+	GM_VE42352_WC,
+	GM_VE83769_WC,
+	GM_VE96368_WC_browse,
+][number];
+type GM_WC_PostApi=[
+	GM_SetSetting,
+	GM_AccountMenu,
+	GM_CreateBackstagePost,
+	GM_EditPlaylist,
+	GM_Browse,
+	GM_CreateComment,
+	GM_Feedback,
+	GM_FlagGetForm,
+	GM_GetSurvey,
+	GM_GetTranscript,
+	GM_GetNotificationMenu,
+	GM_Dislike,
+	GM_LikeLike,
+	GM_RemoveLike,
+	GM_Next,
+	GM_GetUnseenNotificationCount,
+	GM_notification_opt_out,
+	GM_RecordInteractions,
+	GM_CreatePlaylist,
+	GM_AddToPlaylistService,
+	GM_SendPost,
+	GM_GetSharePanel,
+	GM_Subscribe,
+	GM_ypc_get_offers,
+	GM_YpcGetCart,
+][number];
+type GM_WC=[
+	GM_WC_VE,
+	GM_WC_PostApi
+][number];
+//#endregion

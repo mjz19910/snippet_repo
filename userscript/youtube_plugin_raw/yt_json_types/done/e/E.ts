@@ -39,6 +39,26 @@ type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_Empty_WCM>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
 type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",DE_UserFeedback,M_UserFeedback>;
+type E_VE6827_Browse_SearchBox={
+	clickTrackingParams: string;
+	commandMetadata: M_VE6827_Browse_SearchBox;
+	browseEndpoint: DE_VE6827_Browse_SearchBox;
+};
+type E_Unsubscribe={
+	clickTrackingParams: string;
+	commandMetadata: M_Unsubscribe;
+	unsubscribeEndpoint: DE_Unsubscribe;
+};
+
+type M_GetWebPlayerSharePanel={
+	webCommandMetadata: GM_GetWebPlayerSharePanel;
+};
+type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
+type E_WebPlayerShareEntityService={
+	clickTrackingParams: string;
+	commandMetadata: M_GetWebPlayerSharePanel;
+	webPlayerShareEntityServiceEndpoint: DE_WebPlayerShareEntityService;
+};
 //#endregion
 type EG_GetNotificationMenuRequest=T_SE_Signal<M_GetNotificationMenu,Signal_GetNotificationsMenu>;
 type E_Page=YTNavigateFinishDetail['endpoint'];

@@ -15,15 +15,10 @@ type DE_Unsubscribe={
 	params: string;
 };
 
-type E_Unsubscribe={
-	clickTrackingParams: string;
-	commandMetadata: M_Unsubscribe;
-	unsubscribeEndpoint: DE_Unsubscribe;
-};
-type D_Button_NavEP=GE_Browse;
+type D_Button_NavEP=GE_Browse|E_ShareEntityService;
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 type D_Button={
-	style?: "STYLE_DEFAULT"|"STYLE_BLUE_TEXT"|"STYLE_TEXT"|"STYLE_SUGGESTIVE";
+	style?: "STYLE_DEFAULT"|"STYLE_BLUE_TEXT"|"STYLE_TEXT"|"STYLE_SUGGESTIVE"|"STYLE_OPACITY";
 	size?: "SIZE_DEFAULT";
 	isDisabled?: false;
 	serviceEndpoint?: D_Button_SE;

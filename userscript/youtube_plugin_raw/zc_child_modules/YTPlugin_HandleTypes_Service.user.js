@@ -2612,7 +2612,8 @@ class HandleTypes extends HandleTypesEval {
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
 	/** @private @arg {D_Button_NavEP} x */
-	D_Button_NavEP(x) {
+	D_Button_navigationEndpoint(x) {
+		const cf="D_Button.navigationEndpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) this.GE_Browse(x);
 		debugger;
 	}
@@ -2630,6 +2631,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(style,x => {
 			switch(x) {
 				default: debugger; x===""; break;
+				case "STYLE_OPACITY":
 				case "STYLE_SUGGESTIVE":
 				case "STYLE_TEXT":
 				case "STYLE_BLUE_TEXT":
@@ -2639,7 +2641,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(isDisabled,x => {if(x!==false) debugger;});
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
-		this.t(navigationEndpoint,this.D_Button_NavEP);
+		this.t(navigationEndpoint,this.D_Button_navigationEndpoint);
 		this.t(accessibility,this.D_Label);
 		this.t(tooltip,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
@@ -6340,6 +6342,7 @@ class HandleTypes extends HandleTypesEval {
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
 		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
+		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */

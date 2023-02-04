@@ -45,7 +45,7 @@ type GE_Browse=
 	|E_VE23462_Browse
 	|E_VE42352_Browse
 	|E_VE96368_Browse
-	|D_SearchBox["endpoint"]
+	|E_VE6827_Browse_SearchBox
 	;
 ;
 type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
