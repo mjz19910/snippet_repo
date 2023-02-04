@@ -6783,7 +6783,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_LikeButton.like"; this.k(cf,x);
 		const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(status!=="INDIFFERENT") debugger;
-		this.a_primitive_num(count);
+		this.t(count,this.a_primitive_num);
 		this.G_Text(countText);
 		this.G_Text(countWithLikeText);
 		this.G_Text(countWithUnlikeText);

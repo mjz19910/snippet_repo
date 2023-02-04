@@ -1906,7 +1906,7 @@ type D_LikeApi={videoId: string;}|{playlistId: D_PlaylistId;};
 type D_LikeButton={
 	target: D_LikeApi;
 	likeStatus: "INDIFFERENT";
-	likeCount: number;
+	likeCount?: number;
 	likeCountText: G_Text;
 	likeCountWithLikeText: G_Text;
 	likeCountWithUnlikeText: G_Text;
