@@ -35,6 +35,7 @@ function generate_ts_setup {
 	generate_ts_make_tmp_git_repo
 	generate_ts_backup_output
 	pushd "$TMP_DIR/$DEST_DIR"
+	npm i --silent --no-progress
 	generate_ts_init_cwd
 }
 function generate_ts_restore {
