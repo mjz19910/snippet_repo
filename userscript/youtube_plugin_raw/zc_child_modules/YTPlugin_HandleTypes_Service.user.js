@@ -2806,8 +2806,9 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
 					let {icon: a,targetId,...y1}=this.D_Button_Omit_TP(cf1,x); y1;
 					switch(a.iconType) {
-						default: debugger; break;
-						case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
+						default: switch(a.iconType) {
+						}; debugger; break;
+						case "PAUSE_OUTLINED": case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
 					}
 				} break;
 			}
