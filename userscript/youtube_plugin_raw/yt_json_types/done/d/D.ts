@@ -93,6 +93,7 @@ type D_UrlFormat=
 	|D_ExternalUrlFormat
 	|D_VE6827_PageUrl
 	|YTExternalUrl
+	|NonNullable<D_AdaptiveFormatItem["url"]>
 	;
 ;
 type WatchUrlFormat=
@@ -1412,31 +1413,6 @@ type D_AdPlacementConfig={
 type D_AdTimeOffset={
 	offsetStartMilliseconds: `${number}`;
 	offsetEndMilliseconds: "-1";
-};
-type D_AdaptiveFormatItem={
-	itag: number;
-	url?: string;
-	mimeType: G_MimeTypeFormat;
-	bitrate: number;
-	width?: number;
-	height?: number;
-	initRange: D_Range;
-	indexRange: D_Range;
-	lastModified: string;
-	contentLength: string;
-	quality: G_FormatQuality;
-	fps?: D_FormatFps;
-	qualityLabel?: QualityLabel;
-	projectionType: "RECTANGULAR";
-	averageBitrate: number;
-	colorInfo?: D_FormatColorInfo;
-	highReplication?: true,
-	audioQuality?: "AUDIO_QUALITY_MEDIUM";
-	approxDurationMs: `${number}`;
-	audioSampleRate?: `${D_AudioSampleRate}`;
-	audioChannels?: 2;
-	loudnessDb?: number;
-	signatureCipher?: `s=${string}&sp=${"sig"}&url=${string}`;
 };
 type QualArr=[
 	...make_qual_for_fps<50>,

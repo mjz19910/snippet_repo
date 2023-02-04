@@ -1,0 +1,25 @@
+type D_AdaptiveFormatItem={
+	itag: number;
+	url?: `https://rr5---sn-nx5s7n7d.googlevideo.com/videoplayback?${string}`;
+	mimeType: G_MimeTypeFormat;
+	bitrate: number;
+	width?: number;
+	height?: number;
+	initRange: D_Range;
+	indexRange: D_Range;
+	lastModified: string;
+	contentLength: string;
+	quality: G_FormatQuality;
+	fps?: D_FormatFps;
+	qualityLabel?: QualityLabel;
+	projectionType: "RECTANGULAR";
+	averageBitrate: number;
+	colorInfo?: D_FormatColorInfo;
+	highReplication?: true;
+	audioQuality?: "AUDIO_QUALITY_MEDIUM";
+	approxDurationMs: `${number}`;
+	audioSampleRate?: `${D_AudioSampleRate}`;
+	audioChannels?: 2;
+	loudnessDb?: number;
+	signatureCipher?: `s=${string}&sp=${"sig"}&url=${string}`;
+};
