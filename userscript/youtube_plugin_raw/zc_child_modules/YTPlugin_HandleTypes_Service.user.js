@@ -152,19 +152,9 @@ class UrlParseHelper {
 }
 const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
-ECatcherService.known_experiments.push(...(() => {
-	/** @type {[number,number[]][]} */
-	const arr=[
-		[2,[24281897,24448383,24458839]],
-		[3,[24441239,24451434]],
-		[1,[24455878]],
-		[4,[24458634]],
-		[5,[24450366]],
-		[6,[24463911]],
-		[7,[24454001]],
-	];
-	return arr.map(e => e[1]);
-})().flat());
+ECatcherService.known_experiments.push(...[
+	[24281897,24448383,24458839,24437577,24441240,24463912,24441239,24451434,24455878,24458634,24450366,24463911,24454001],
+].flat());
 /** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
 class HandleTypes extends HandleTypesEval {
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
