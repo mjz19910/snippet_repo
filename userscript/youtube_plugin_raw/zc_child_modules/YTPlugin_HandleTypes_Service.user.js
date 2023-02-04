@@ -4166,7 +4166,7 @@ class HandleTypes extends HandleTypesEval {
 		this.S_Client_HandlePopup(popup);
 		switch(popupType) {
 			default: debugger; break;
-			case "TOAST": case "TOP_ALIGNED_DIALOG":
+			case "TOAST": case "TOP_ALIGNED_DIALOG": case "DIALOG":
 		}
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>} x */
