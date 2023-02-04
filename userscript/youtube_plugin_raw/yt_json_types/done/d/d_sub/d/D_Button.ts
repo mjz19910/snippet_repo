@@ -2,6 +2,16 @@
 type D_Button=
 	|never
 	|{
+		style: "STYLE_TEXT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		text: G_Text;
+		icon: T_Icon<"SETTINGS">;
+		navigationEndpoint: E_Url;
+		trackingParams: string;
+		targetId: "history-my-activity";
+	}
+	|{
 		text: G_Text;
 		icon: T_Icon<"PAUSE_OUTLINED">;
 		navigationEndpoint: {

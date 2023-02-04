@@ -2385,13 +2385,23 @@ class HandleTypes extends HandleTypesEval {
 		if("uploadEndpoint" in x) return this.E_Upload(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
 	D_CompactLink_Styled(cf,x) {
 		switch(x.style) {
-			default: debugger; break;
-			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
+			default: x===""; debugger; break;
+			case "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK": {
+				let u=this.D_Link_Omit(cf,x);
+				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
+				this.D_CompactLink_NavEndpoint(navigationEndpoint);
+			} break;
+			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": {
+				let u=this.D_Link_Omit(cf,x);
+				const {style,navigationEndpoint,...y}=this.s(`${cf}:omit`,u); this.g(y);
+				this.D_CompactLink_NavEndpoint(navigationEndpoint);
+			} break;
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": {
 				let u=this.D_Link_Omit(cf,x);
 				const {icon,style,navigationEndpoint,...y}=this.s(`${cf}.icon`,u); this.g(y);
@@ -2472,6 +2482,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf}`,x); break;
+			case "history-my-activity":
 			case "clip-info-button": case "comments-section":
 			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
 			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
@@ -2806,8 +2817,8 @@ class HandleTypes extends HandleTypesEval {
 					const cf1=`${cf}:${k}`; this.k(cf1,x);
 					let {icon: a,targetId,...y1}=this.D_Button_Omit_TP(cf1,x); y1;
 					switch(a.iconType) {
-						default: switch(a.iconType) {
-						}; debugger; break;
+						default: a===""; debugger; break;
+						case "SETTINGS":
 						case "PAUSE_OUTLINED": case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
 					}
 				} break;
