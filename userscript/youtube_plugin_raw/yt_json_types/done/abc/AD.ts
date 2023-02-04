@@ -17,6 +17,7 @@ type AD_Signal={signal: DU_SignalStr;};
 type AD_UpdateChannelSwitcherPage=T_Page<R_ChannelSwitcherPage>;
 type AD_UpdateEngagementPanel={targetId: "engagement-panel-searchable-transcript"; content: R_Transcript;};
 type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"; unseenCount: number; timeoutMs: number;};
+type AD_ViewCount={viewCount: R_VideoViewCount;};
 //#endregion
 type AD_ReelDismissal={onDismissalCompletionRenderer: RA_NotificationAction; trackingParams: string;};
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};

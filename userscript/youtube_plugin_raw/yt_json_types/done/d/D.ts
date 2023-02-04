@@ -2975,7 +2975,6 @@ type D_Video_Owner={
 	accessibility: D_Accessibility;
 	title: string;
 };
-type AD_ViewCount={viewCount: R_VideoViewCount;};
 type D_VisualElementType=keyof B_VEMap;
 type D_VoiceSearchDialog={
 	placeholderHeader: G_Text;
@@ -3012,7 +3011,6 @@ type D_WebSearchboxConfig={
 	hasOnscreenKeyboard: false;
 	focusSearchbox: true;
 };
-type DE_YpcGetCart={transactionParams: string;};
 type D_YtConfig={
 	visitorData: string;
 	sessionIndex: 0;
@@ -3069,7 +3067,6 @@ type D_DescriptionChapters={
 	trackingParams: string;
 	onChapterRepeat: TA_OpenPopup_Empty;
 };
-type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
 //#region DoExtract & DoOmit
 type D_Button_DoExtract<T extends D_Button>=T extends infer Y? Omit<Y,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">:never;
 type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>=

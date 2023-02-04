@@ -1,3 +1,5 @@
+type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
+type DE_YpcGetCart={transactionParams: string;};
 //#region String Enum
 type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND",[
 	"END",
