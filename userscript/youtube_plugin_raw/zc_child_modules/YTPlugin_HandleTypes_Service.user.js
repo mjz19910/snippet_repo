@@ -7511,6 +7511,10 @@ class HandleTypes extends HandleTypesEval {
 			return stateId;
 		});
 		if(this.group_sub_noti_toggle_btn) console.groupEnd();
+		switch(currentStateId) {
+			default: debugger; break;
+			case 0: case 2: case 3:
+		}
 		if(currentStateId!==2) debugger;
 		this.trackingParams(cf,trackingParams);
 		this.C_Executor(command);
@@ -9111,7 +9115,10 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_AdaptiveFormatItem";
 		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(itag);
-		this.t(url,x => this.parser.parse_url(cf,x));
+		this.t(url,x => {
+			debugger;
+			this.parser.parse_url(cf,x);
+		});
 		this.a_primitive_str(mimeType);
 		this.a_primitive_num(bitrate);
 		this.t(width,this.a_primitive_num);
@@ -9140,9 +9147,19 @@ class HandleTypes extends HandleTypesEval {
 				case "44100": case "48000":
 			}
 		});
-		audioChannels;
-		loudnessDb;
-		signatureCipher;
+		this.t(audioChannels,x => {
+			if(x!==2) debugger;
+		});
+		this.t(loudnessDb,this.a_primitive_num);
+		this.t(signatureCipher,x => {
+			let {s,sp,url,...y}=this.parse_url_search_params(x); this.g(y);
+			console.log("signatureCipher.s",s);
+			switch(sp) {
+				default: debugger; break;
+				case "sig": break;
+			}
+			this.parser.parse_url(url);
+		});
 	}
 	/** @private @arg {D_FormatColorInfo} x */
 	D_FormatColorInfo(x) {

@@ -405,25 +405,27 @@ type D_Button_NP_1_Style=D_Button_EX_1_Command|D_Button_EX_1_Style;
 type D_Button_NP_1_SrvEp=D_Button_NP_1_Style|D_Button_EX_1_SrvEp;
 type D_Button_SE=E_SignalService_SendPost|E_YpcGetOffers|E_ShareEntityService;
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
+type D_SubscriptionNotificationToggleButton_States=[
+	{
+		stateId: 2;
+		nextStateId: 2;
+		state: R_Button;
+	},
+	{
+		stateId: 3;
+		nextStateId: 3;
+		state: R_Button;
+	},
+	{
+		stateId: 0;
+		nextStateId: 0;
+		state: R_Button;
+	}
+];
+
 type D_SubscriptionNotificationToggleButton={
-	states: [
-		{
-			stateId: 2;
-			nextStateId: 2;
-			state: R_Button;
-		},
-		{
-			stateId: 3;
-			nextStateId: 3;
-			state: R_Button;
-		},
-		{
-			stateId: 0;
-			nextStateId: 0;
-			state: R_Button;
-		}
-	];
-	currentStateId: 2;
+	states: D_SubscriptionNotificationToggleButton_States;
+	currentStateId: D_SubscriptionNotificationToggleButton_States[number]["stateId"];
 	trackingParams: string;
 	command: C_Executor;
 	targetId: "notification-bell";
