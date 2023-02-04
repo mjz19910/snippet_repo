@@ -94,6 +94,7 @@ type D_VE6827_PageUrl=
 	|`/hashtag/${string}`
 	|"/hashtag/shorts/shorts"
 	|`/reporthistory`
+	|`/source/${string}/shorts`
 	;
 ;
 type D_WatchPageUrl=
