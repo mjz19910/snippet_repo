@@ -2594,15 +2594,22 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		const {isDisabled,text,icon,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,size,isDisabled,text,icon,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(style,x => {
+			switch(x) {
+				default: debugger; break;
+				case "STYLE_BLUE_TEXT":
+				case "STYLE_DEFAULT":
+			}
+		});
 		if(isDisabled!==false) debugger;
-		this.G_Text(text);
-		this.T_Icon(`${cf}.icon`,icon);
-		this.D_Label(accessibility);
-		this.a_primitive_str(tooltip);
+		this.t(text,this.G_Text);
+		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
+		this.t(accessibility,this.D_Label);
+		this.t(tooltip,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibilityData);
-		this.GC_Button(command);
+		this.t(command,this.GC_Button);
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {

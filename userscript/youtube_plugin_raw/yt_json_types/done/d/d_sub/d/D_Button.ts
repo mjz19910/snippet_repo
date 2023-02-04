@@ -3,16 +3,16 @@ type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsO
 
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 type D_Button={
-	style?: "STYLE_DEFAULT";
+	style?: "STYLE_DEFAULT"|"STYLE_BLUE_TEXT";
 	size?: "SIZE_DEFAULT";
 	isDisabled: false;
-	text: G_Text;
-	icon: T_Icon<"SHORTS_COMMENT">;
-	accessibility: D_Label;
-	tooltip: string;
+	text?: G_Text;
+	icon?: T_Icon<"SHORTS_COMMENT">;
+	accessibility?: D_Label;
+	tooltip?: string;
 	trackingParams: string;
 	accessibilityData: D_Accessibility;
-	command: C_ShowReelsCommentsOverlay;
+	command?: C_ShowReelsCommentsOverlay;
 };
 
 type R_Button={buttonRenderer: D_Button;};
