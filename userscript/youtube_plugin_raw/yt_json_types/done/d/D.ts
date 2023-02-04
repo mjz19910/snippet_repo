@@ -1830,7 +1830,22 @@ type D_FormatColorInfo={
 type D_FormatFps=25|50|60;
 type D_FormatItem={
 	itag: number;
-	url: string;
+	url: `https://rr3---sn-nx57ynlk.googlevideo.com/videoplayback?${string}`;
+	mimeType: "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"";
+	bitrate: number;
+	width: number;
+	height: number;
+	lastModified: `${number}`;
+	contentLength: `${number}`;
+	quality: QualityLabel;
+	fps: D_FormatFps;
+	qualityLabel: "360p";
+	projectionType: "RECTANGULAR";
+	averageBitrate: 545169;
+	audioQuality: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
+	approxDurationMs: `${number}`;
+	audioSampleRate: `${D_AudioSampleRate}`;
+	audioChannels: 2;
 };
 type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<MP_AccountMenu>; popupType: "DROPDOWN"; beReused: true;};
 type D_GhostGrid={rows: number;};
@@ -1970,6 +1985,7 @@ type D_PromotedSparklesWeb={
 	menu: R_Menu;
 	trackingParams: string;
 	clickLocationTargets: D_ClickLocationTarget[];
+	adBadge?: RMD_Badge;
 };
 type D_InFeedAdLayout={adLayoutMetadata: M_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
 type D_LinearAdSequence={adLayoutMetadata: M_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};

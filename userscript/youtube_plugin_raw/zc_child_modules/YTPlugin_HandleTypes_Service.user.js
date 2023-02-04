@@ -9157,7 +9157,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PromotedSparklesWeb} x */
 	D_PromotedSparklesWeb(x) {
 		const cf="D_PromotedSparklesWeb";
-		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,menu,trackingParams,clickLocationTargets,...y}=this.s(cf,x); this.g(y);
+		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,menu,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
 		thumbnail;
 		icon;
 		title;
@@ -9169,16 +9169,14 @@ class HandleTypes extends HandleTypesEval {
 		menu;
 		trackingParams;
 		clickLocationTargets;
+		adBadge;
 	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {
 		const cf="D_AdaptiveFormatItem";
 		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(itag);
-		this.t(url,x => {
-			debugger;
-			this.parser.parse_url(cf,as(x));
-		});
+		this.t(url,x => this.parser.parse_url(cf,x));
 		this.a_primitive_str(mimeType);
 		this.a_primitive_num(bitrate);
 		this.t(width,this.a_primitive_num);
@@ -9197,6 +9195,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(audioQuality,x => {
 			switch(x) {
 				default: debugger; break;
+				case "AUDIO_QUALITY_LOW":
 				case "AUDIO_QUALITY_MEDIUM":
 			}
 		});
@@ -9259,8 +9258,38 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {
-		const cf="D_FormatItem"; this.k(cf,x);
-		this.codegen_typedef_all(cf,x); this.GEN(cf,x);
+		const cf="D_FormatItem";
+		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(itag);
+		this.t(url,x => this.parser.parse_url(cf,x));
+		this.a_primitive_str(mimeType);
+		this.a_primitive_num(bitrate);
+		this.t(width,this.a_primitive_num);
+		this.t(height,this.a_primitive_num);
+		this.a_primitive_str(lastModified);
+		this.a_primitive_str(contentLength);
+		this.a_primitive_str(quality);
+		this.t(fps,this.D_FormatFps);
+		this.t(qualityLabel,this.a_primitive_str);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.a_primitive_num(averageBitrate);
+		this.t(audioQuality,x => {
+			switch(x) {
+				default: debugger; break;
+				case "AUDIO_QUALITY_LOW":
+				case "AUDIO_QUALITY_MEDIUM":
+			}
+		});
+		this.a_primitive_str(approxDurationMs);
+		this.t(audioSampleRate,x => {
+			switch(x) {
+				default: debugger; break;
+				case "44100": case "48000":
+			}
+		});
+		this.t(audioChannels,x => {
+			if(x!==2) debugger;
+		});
 	}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {

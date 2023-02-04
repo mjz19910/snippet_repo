@@ -16,7 +16,7 @@ type D_AdaptiveFormatItem={
 	averageBitrate: number;
 	colorInfo?: D_FormatColorInfo;
 	highReplication?: true;
-	audioQuality?: "AUDIO_QUALITY_MEDIUM";
+	audioQuality?: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
 	approxDurationMs: `${number}`;
 	audioSampleRate?: `${D_AudioSampleRate}`;
 	audioChannels?: 2;
