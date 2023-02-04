@@ -1795,7 +1795,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.D_ReelWatch(b);}
+	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_ReelWatch(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.D_ShowEngagementPanel(a);}
 	/** @private @arg {E_UndoFeedback} x */
@@ -3616,8 +3616,8 @@ class HandleTypes extends HandleTypesEval {
 		this.t(continuationEndpoint,this.C_Continuation);
 	}
 	/** @private @arg {DE_ReelWatch} x */
-	D_ReelWatch(x) {
-		const cf="D_ReelWatch"; this.k(cf,x);
+	DE_ReelWatch(x) {
+		const cf="DE_ReelWatch"; this.k(cf,x);
 		if("videoId" in x) {
 			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(videoId,this.videoId);
