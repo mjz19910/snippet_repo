@@ -2629,7 +2629,10 @@ class HandleTypes extends HandleTypesEval {
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
 	/** @private @arg {D_Button_NavEP} x */
-	D_Button_NavEP(x) {x;}
+	D_Button_NavEP(x) {
+		if("browseEndpoint" in x) this.GE_Browse(x);
+		debugger;
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
