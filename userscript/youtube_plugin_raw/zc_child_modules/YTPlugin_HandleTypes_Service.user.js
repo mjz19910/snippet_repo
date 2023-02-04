@@ -8799,11 +8799,13 @@ class HandleTypes extends HandleTypesEval {
 		if(this.log_buffer.length===0) return;
 		for(let log of this.log_buffer) {
 			let [cf,name,expiry_date]=log;
+			if(cf!=="D_VideoPlaybackShape") {debugger; return;}
+			if(name!=="expire") {debugger; return;}
 			let lp=this.load_moment_js_if_not_loaded();
 			if(lp!==null) {
 				await lp;
 			}
-			let exp_m_from_now=moment(expiry_date).fromNow();
+			let exp_m_from_now=moment(expiry_date*1000).fromNow();
 			console.log(`[${cf}.${name}] [${exp_m_from_now}]`);
 		}
 		this.log_buffer.length=0;
