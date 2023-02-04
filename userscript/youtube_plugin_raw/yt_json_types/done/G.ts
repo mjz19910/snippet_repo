@@ -49,7 +49,6 @@ type GE_Browse=
 	;
 ;
 type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
-type GE_Browse_WCM=GE_Browse["commandMetadata"];
 type GM_VE_WC_Browse=GE_Browse_WCM["webCommandMetadata"];
 type M_VE3854_ResolveUrl={
 	webCommandMetadata: GM_VE3854_WC;
@@ -58,6 +57,7 @@ type M_VE3854_ResolveUrl={
 	};
 };
 
+type GE_Browse_WCM=GE_Browse["commandMetadata"]|M_VE3854_ResolveUrl;
 
 type GE_ResponseReceived=
 	|A_AppendContinuationItems

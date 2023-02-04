@@ -922,14 +922,20 @@ class HandleTypes extends HandleTypesEval {
 	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	//#endregion
 	//#region web_command_metadata
-	/** @private @arg {GM_VE6827_WC} x */
+	/** @private @arg {Extract<GM_VE_WC_Browse,{rootVe:6827}>} x */
 	GM_VE6827_WC(x) {
 		const cf="GM_VE6827_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x);/*#destructure_done*/
 		this.t(url,this.D_VE6827_PageUrl);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==6827) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		if("sendPost" in y) {
+			const {sendPost,...y1}=y; this.g(y1);
+			if(sendPost!==true) debugger;
+			return;
+		}
+		this.g(y);
 	}
 	/** @private @arg {D_VE6827_PageUrl} x */
 	D_VE6827_PageUrl(x) {
