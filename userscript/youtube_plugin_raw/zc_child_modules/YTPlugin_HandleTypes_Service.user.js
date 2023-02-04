@@ -7615,7 +7615,7 @@ class HandleTypes extends HandleTypesEval {
 	D_SearchBox(x) {
 		const cf="D_SearchBox"; this.k(cf,x);
 		const {endpoint,searchButton,clearButton,placeholderText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.g(endpoint);
+		this.GE_Browse(endpoint);
 		this.R_Button(searchButton);
 		this.R_Button(clearButton);
 		this.G_Text(placeholderText);

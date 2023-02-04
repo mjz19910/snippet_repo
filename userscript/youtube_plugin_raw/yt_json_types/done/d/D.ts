@@ -2665,7 +2665,7 @@ type D_Saved={
 };
 type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
 type D_SearchBox={
-	endpoint: {};
+	endpoint: GE_Browse;
 	searchButton: R_Button;
 	clearButton: R_Button;
 	placeholderText: G_Text;
