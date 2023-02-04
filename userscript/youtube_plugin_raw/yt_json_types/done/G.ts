@@ -45,10 +45,12 @@ type GE_Browse=
 	|E_VE23462_Browse
 	|E_VE42352_Browse
 	|E_VE96368_Browse
+	|D_SearchBox["endpoint"]
 	;
 ;
-type G_DE_Browse_VE=DE_VE3611_Browse|DE_VE3854_Browse|DE_VE5754_Browse|DE_VE6827_Browse|DE_VE11487_Browse|DE_VE23462_Browse|DE_VE42352_Browse|DE_VE96368_Browse;
-type GM_VE_WC_Browse=GM_VE3611_WC|GM_VE3854_WC|GM_VE5754_WC|GM_VE6827_WC|GM_VE11487_WC|GM_VE23462_WC|GM_VE42352_WC|GM_VE96368_WC_browse;
+type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
+type GE_Browse_WCM=GE_Browse["commandMetadata"];
+type GM_VE_WC_Browse=GE_Browse_WCM["webCommandMetadata"];
 type M_VE3854_ResolveUrl={
 	webCommandMetadata: GM_VE3854_WC;
 	resolveUrlCommandMetadata: {
@@ -56,7 +58,6 @@ type M_VE3854_ResolveUrl={
 	};
 };
 
-type GE_Browse_WCM=M_VE3611|M_VE3854|M_VE5754|M_VE6827|M_VE11487|M_VE23462|M_VE42352|M_VE96368|M_VE3854_ResolveUrl;
 
 type GE_ResponseReceived=
 	|A_AppendContinuationItems

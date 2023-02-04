@@ -1939,6 +1939,11 @@ class HandleTypes extends HandleTypesEval {
 			this._decode_channel_url(ve_name,d);
 			return this.GU_E_BrowseId(ve_name,a);
 		}
+		if("query" in x) {
+			const {browseId: a,query: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(b!=="") debugger;
+			return this.GU_E_BrowseId(ve_name,a);
+		}
 		if("browseId" in x) {
 			const {browseId: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			return this.GU_E_BrowseId(ve_name,a);
@@ -5816,7 +5821,7 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId!=="browse-feedFEhistory") debugger;
 	}
 	/** @private @arg {R_TextHeader} x */
-	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader)}
+	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {D_TextHeader} x */
 	D_TextHeader(x) {x;}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */

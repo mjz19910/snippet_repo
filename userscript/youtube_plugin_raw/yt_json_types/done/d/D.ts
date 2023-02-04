@@ -2665,7 +2665,22 @@ type D_Saved={
 };
 type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
 type D_SearchBox={
-	endpoint: GE_Browse;
+	endpoint: {
+		clickTrackingParams: string;
+		commandMetadata: {
+			webCommandMetadata: {
+				url: "/feed/history";
+				sendPost: true;
+				webPageType: "WEB_PAGE_TYPE_BROWSE";
+				rootVe: 6827;
+				apiUrl: "/youtubei/v1/browse";
+			};
+		};
+		browseEndpoint: {
+			browseId: "FEhistory";
+			query: "";
+		};
+	};
 	searchButton: R_Button;
 	clearButton: R_Button;
 	placeholderText: G_Text;
