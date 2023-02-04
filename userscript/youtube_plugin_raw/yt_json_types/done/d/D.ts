@@ -2654,7 +2654,7 @@ type D_SubscribeButton_Alts={
 };
 type D_SubscribeButton={
 	buttonText: G_Text;
-	subscribed: false;
+	subscribed: boolean;
 	enabled: true;
 	type: "FREE";
 	channelId: D_ChannelId;
@@ -2665,6 +2665,9 @@ type D_SubscribeButton={
 	unsubscribeButtonText: G_Text;
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
+	notificationPreferenceButton: R_SubscriptionNotificationToggleButton;
+	targetId?: "watch-subscribe";
+	subscribedEntityKey?: string;
 	onSubscribeEndpoints: E_Subscribe[];
 	onUnsubscribeEndpoints: E_SignalService_SendPost[];
 };
