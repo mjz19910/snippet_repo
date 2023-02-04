@@ -970,6 +970,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#endregion
 	//#region general done
+	/** @private @arg {AU_NotificationsUnseenCount} x */
+	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_Signal} x */
@@ -992,12 +994,12 @@ class HandleTypes extends HandleTypesEval {
 	A_AddChatItem(x) {let [a,y]=this.TE_Endpoint_2("A_AddChatItem","addChatItemAction",x); this.g(y); this.AD_AddChatItem(a);}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
-	/** @private @arg {AU_NotificationsUnseenCount} x */
-	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_ReplayChatItem} x */
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
-	R_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
+	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
+	/** @private @arg {A_AppendContinuationItems} x */
+	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2(cf,"appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -5596,6 +5598,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="GA_ResponseReceived"; this.k(cf,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ConfirmDialog} x */
@@ -8202,7 +8205,7 @@ class HandleTypes extends HandleTypesEval {
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
 		if("buttonRenderer" in x) return this.R_Button(x);
-		if("accountItem" in x) return this.R_AccountItem(x);
+		if("accountItem" in x) return this.A_AccountItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
