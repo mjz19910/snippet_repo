@@ -7845,7 +7845,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x59:
 				case 0x60: case 0x61: case 0x62:
 				case 0x66:
-				case 0x69:
+				case 0x69: case 0x6a:
 			}
 			switch(b) {
 				default: log_color("l1_s_tc_b",b); break;
