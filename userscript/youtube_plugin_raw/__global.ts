@@ -18,6 +18,7 @@ declare global {
 	type PluginStore=import("./zb_plugin_types/PluginStore.js").PluginStore;
 	var __yt_plugin_log_imports__: boolean;
 	type LoadAllServices=import("./zc_child_modules/YTPlugin_LoadAllServices.user.js").LoadAllServices;
+	var moment: typeof EX.moment;
 }
 namespace EX {
 	export type ServiceMethods=Base$ImpType["ServiceMethods"];
@@ -59,4 +60,5 @@ namespace EX {
 	export var ModifyEnv: Base$ImpType["ModifyEnv"];
 	// youtube_plugin_HandleTypes
 	export var __youtube_plugin_base_loaded__: Base$ImpType["__youtube_plugin_base_loaded__"];
+	export var moment: typeof globalThis["moment"];
 }

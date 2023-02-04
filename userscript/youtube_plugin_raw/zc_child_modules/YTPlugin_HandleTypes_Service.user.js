@@ -8773,22 +8773,43 @@ class HandleTypes extends HandleTypesEval {
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
 		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
-	/** @type {[string,...any[]][]} */
+	/** @type {(["D_VideoPlaybackShape","expire",number])[]} */
 	log_buffer=[];
+	is_moment_js_loaded=false;
+	is_moment_js_loading=false;
+	load_moment_js_if_not_loaded() {
+		if(this.is_moment_js_loading) return null;
+		let s=document.createElement("script");
+		s.src="https://momentjs.com/downloads/moment.min.js";
+		this.is_moment_js_loading=true;
+		return new Promise((a) => {
+			s.onload=() => {
+				this.is_moment_js_loaded=true;
+				a(null);
+			};
+			document.head.append(s);
+		});
+	}
+	async run_logger() {
+		if(this.log_buffer.length===0) return;
+		for(let log of this.log_buffer) {
+			let [cf,name,expiry_date]=log;
+			let lp=this.load_moment_js_if_not_loaded();
+			if(lp!==null) {
+				await lp;
+			}
+			let exp_m_from_now=moment(expiry_date).fromNow();
+			console.log(`[${cf}.${name}] [${exp_m_from_now}]`);
+		}
+		this.log_buffer.length=0;
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
 		const {expire,...y}=this.s(cf,x);
 		let expiry_date=this.parse_number_template(expire);
-		let dt_str=new Date(expiry_date).toISOString(); dt_str;
-		this.log_buffer.push(["[D_VideoPlaybackShape.expire] [%s]",expire]);
-		Promise.resolve().then(() => {
-			if(this.log_buffer.length===0) return;
-			for(let log of this.log_buffer) {
-				console.log(...log);
-			}
-			this.log_buffer.length=0;
-		});
+		this.log_buffer.push([cf,"expire",expiry_date]);
+		Promise.resolve().then(() => this.run_logger());
 		let ka=this.get_keys_of(y);
 		console.log("[D_VideoPlaybackShape.next_key] [%s]",ka[0]);
 	}
