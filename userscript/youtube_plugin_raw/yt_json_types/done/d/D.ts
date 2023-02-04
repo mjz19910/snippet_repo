@@ -1704,7 +1704,7 @@ type D_FormatItem={
 	fps: D_FormatFps;
 	qualityLabel: "360p";
 	projectionType: "RECTANGULAR";
-	averageBitrate: 545169;
+	averageBitrate?: number;
 	audioQuality: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
 	approxDurationMs: `${number}`;
 	audioSampleRate: `${D_AudioSampleRate}`;
@@ -2179,8 +2179,8 @@ type D_PlayabilityStatus={
 };
 type D_PlaybackTracking={
 	atrUrl: D_UrlAndElapsedMediaTime;
-	ptrackingUrl: T_BaseUrl<never>;
-	qoeUrl: T_BaseUrl<never>;
+	ptrackingUrl: T_BaseUrl<`https://www.youtube.com/ptracking${string}`>;
+	qoeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/qoe${string}`>;
 	videostatsDefaultFlushIntervalSeconds: 40;
 	videostatsDelayplayUrl: D_UrlAndElapsedMediaTime;
 	videostatsPlaybackUrl: T_BaseUrl<never>;

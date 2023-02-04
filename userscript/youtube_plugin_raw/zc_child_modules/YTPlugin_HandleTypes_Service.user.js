@@ -8974,7 +8974,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
 		if(projectionType!=="RECTANGULAR") debugger;
-		this.a_primitive_num(averageBitrate);
+		this.t(averageBitrate,this.a_primitive_num);
 		this.t(audioQuality,x => {
 			switch(x) {
 				default: debugger; break;
@@ -9012,8 +9012,20 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {
-		const cf="D_PlaybackTracking";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_PlaybackTracking"; this.k(cf,x);
+		let [a,u]=this.unwrap_prefix(x,"videostats");
+		{
+			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
+		}
+		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
+		this.D_UrlAndElapsedMediaTime(atrUrl);
+	}
+	/** @private @arg {D_UrlAndElapsedMediaTime} x */
+	D_UrlAndElapsedMediaTime(x) {
+		const cf="D_UrlAndElapsedMediaTime";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(baseUrl);
+		this.a_primitive_num(elapsedMediaTimeSeconds);
 	}
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {
