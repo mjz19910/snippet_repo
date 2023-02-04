@@ -882,11 +882,10 @@ class HandleTypes extends HandleTypesEval {
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
-	/** @arg {CF_T_Icon} cf1 @private @template {string} T @arg {T_Icon<T>} x @arg {T} w */
-	T_Icon(cf1,x,w) {
+	/** @arg {CF_T_Icon} cf1 @private @template {string} T @arg {T_Icon<T>} x */
+	T_Icon(cf1,x) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		if(iconType!==w) debugger;
 		this.save_string(`[${cf1}.IconType]`,iconType);
 	}
 	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
@@ -2487,24 +2486,19 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf}`,x); break;
-			case "history-my-activity":
 			case "clip-info-button": case "comments-section":
 			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
 			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
 			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
 			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
 			case "search-feed": case "search-page": case "sponsorships-button":
-			case "watch-next-feed": case "watch-supervod-button": case "watch-related-menu-button":
+			case "watch-next-feed": case "watch-related-menu-button":
 			case "browse-video-menu-button":
-			case "create-clip-button-action-bar":
-			case "history-watch-pause-resume-toggle":
 		}
 	}
 	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
 	Button_iconType=[
-		"CONTENT_CUT","PLAYLIST_ADD","SHARE","INFO",
-		"NOTIFICATIONS_NONE","NOTIFICATIONS_OFF","CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE",
-		"CLOSE","MICROPHONE_ON","DISMISSAL","EXPAND","SETTINGS","NOTIFICATIONS_ACTIVE","MONEY_HEART",
+		"SHORTS_COMMENT",
 	];
 	expected_button_iconTypes_ex=[
 		"",
@@ -2529,8 +2523,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	Button_missing_iconType=[];
-	/** @private @private @arg {any} z @template {Extract<D_Button,{trackingParams:any}>} T @arg {CF_D_Button} cf @arg {T} x @returns {T extends infer V?Omit<V, "trackingParams">:never} */
-	D_Button_Omit_TP(cf,x,dc=true,z=null) {if(dc) {const {trackingParams,...y}=this.s(cf,x); z=y;} else {const {trackingParams,...y}=this.s(cf,x);/*@omit*/ this.trackingParams(cf,trackingParams); z=y;} return z;}
 	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x) {
 		let k=`${cf}:${k_arg}`;
@@ -2594,370 +2586,27 @@ class HandleTypes extends HandleTypesEval {
 			this.codegen_typedef_all(cf,x);
 		} finally {console.groupEnd();}
 	}
-	static {
-		let ka=[""];
-		for(let k of ka) {
-			switch(k) {}
-		}
-	}
-	/** @private @private @arg {any} z @template {Extract<D_Button,{targetId:any}>} T @arg {CF_D_Button} cf @arg {T} x1 @returns {T extends infer V?Omit<V, "targetId"|"trackingParams">:never} */
-	D_Button_With_TargetId_Omit(cf,x1,z=null) {
-		const {targetId,...y}=this.D_Button_Omit_TP(cf,x1); z=y;
-		this.D_Button_TargetId(cf,targetId);
-		return z;
-	}
-	/** @private @arg {Extract<D_Button,{targetId:any;}>} x */
-	D_Button_With_TargetId(x) {
-		const cf="D_Button_With_TargetId"; this.k(cf,x);
-		let ka=this.get_keys_of(x);
-		for(let k of ka) {
-			switch(k) {
-				default: debugger; break;
-				case "text": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {text,...y1}=this.D_Button_With_TargetId_Omit(cf,x); y1;
-					this.G_Text(text);
-					/** @typedef {keyof (typeof y1)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u,u1=() => {u==="";}; u1;
-					if(!("serviceEndpoint" in y1)) {
-						if(!("serviceEndpoint" in x)) {
-							/** @type {`${typeof cf}:${typeof k}:!serviceEndpoint`} */
-							const cf1=`${cf}:${k}:!serviceEndpoint`; this.k(cf1,x);
-						}
-						const {icon,...y2}=y1; y2;
-						return;
-					}
-					if("icon" in y1) {
-						/** @type {`${typeof cf}:${typeof k}:icon`} */
-						const cf1=`${cf}:${k}:icon`; this.k(cf1,x);
-						const {serviceEndpoint,icon,tooltip,...y2}=y1; y2;
-						this.C_GetPdgBuyFlow(serviceEndpoint);
-						return;
-					}
-					if("serviceEndpoint" in y1) {
-						/** @type {`${typeof cf}:${typeof k}:serviceEndpoint`} */
-						const cf1=`${cf}:${k}:serviceEndpoint`; this.k(cf1,x);
-						const {serviceEndpoint,...y2}=y1; y2;
-						this.E_YpcGetOffers(serviceEndpoint);
-						return;
-					}
-					y1==="";
-				} break;
-				case "serviceEndpoint": {
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					if(!(k in x)) return;
-					let {text,style,size,isDisabled,serviceEndpoint,accessibilityData,...y1}=this.D_Button_With_TargetId_Omit(cf,x); y1;
-					this.G_Text(text);
-					x: {
-						let x=serviceEndpoint;
-						if("ypcGetOffersEndpoint" in x) {
-							this.E_YpcGetOffers(x); break x;
-						}
-						if("getPdgBuyFlowCommand" in x) {
-							this.C_GetPdgBuyFlow(x); break x;
-						}
-						debugger;
-					}
-					/** @typedef {keyof (typeof y1)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "icon": {
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					if(!(k in x)) return;
-					let {icon,...y1}=this.D_Button_With_TargetId_Omit(cf,x); y1;
-					switch(icon.iconType) {
-						default: debugger; break;
-						case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
-					}
-					/** @typedef {keyof (typeof y1)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "tooltip": {
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					if(!(k in x)) return;
-					let {text,icon,style,size,isDisabled,tooltip,accessibilityData,...y1}=this.D_Button_With_TargetId_Omit(cf,x);
-					this.G_Text(text);
-					switch(icon.iconType) {
-						default: debugger; break;
-						case "MONEY_HEART": case "CONTENT_CUT":
-					}
-					/** @typedef {keyof (typeof y1)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "command": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {icon,command,style,accessibilityData,size,isDisabled,...y1}=this.D_Button_With_TargetId_Omit(cf,x);
-					switch(icon.iconType) {
-						default: debugger; break;
-						case "CONTENT_CUT": case "INFO":
-					}
-					/** @typedef {keyof (typeof y1)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-			}
-		}
-	}
 	/** @protected @arg {CF_D_Button} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
 	D_Button_Icon(cf,icon,x) {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
-	/** @private @arg {Extract<D_Button,{icon:any;}>} x */
-	D_Button_OnIcon(x) {
-		const cf="D_Button_OnIcon"; this.k(cf,x);
-		let ka=this.get_keys_of(x);
-		for(let k of ka) {
-			switch(k) {
-				case "serviceEndpoint": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {icon: a,serviceEndpoint,accessibilityData,tooltip,...y1}=this.D_Button_Omit_TP(cf1,x); y1;
-					switch(a.iconType) {
-						default: debugger; break;
-						case "MONEY_HEART": case "DISMISSAL": case "MICROPHONE_ON": case "SHARE":
-					}
-				} break;
-				case "tooltip": {
-					if(!(k in x)) return;
-					/** @type {`${cf}:${k}`} */
-					const cf1=`${cf}:${k}`;
-					x: {
-						const k2="targetId";
-						if(!(k2 in x)) break x;
-						/** @type {`${cf1}:${k2}`} */
-						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,...y1}=this.D_Button_Omit_TP(cf2,x); y1;
-						switch(a.iconType) {
-							default: debugger; break;
-							case "MONEY_HEART": case "CONTENT_CUT":
-						}
-						return;
-					}
-					x: {
-						const k2="command";
-						if(!(k2 in x)) break x;
-						/** @type {`${cf1}:${k2}`} */
-						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_Omit_TP(cf2,x); y1;
-						switch(a.iconType) {
-							default: this.codegen_typedef_all(cf2,x); debugger; break;
-							case "LOOP": case "LOOP_ACTIVE": case "PLAYLIST_ADD": case "LOOP_ONE_ACTIVE":
-						}
-						return;
-					}
-					x: {
-						const k2="text";
-						if(!(k2 in x)) break x;
-						/** @type {`${cf1}:${k2}`} */
-						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_Omit_TP(cf2,x); y1;
-						switch(a.iconType) {
-							default: debugger; break;
-							case "SHARE":
-						}
-						return;
-					}
-					x: {
-						const k2="serviceEndpoint";
-						if(!(k2 in x)) break x;
-						/** @type {`${cf1}:${k2}`} */
-						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,isDisabled,accessibilityData,...y1}=this.D_Button_Omit_TP(cf2,x); y1;
-						switch(a.iconType) {
-							default: debugger; break;
-							case "DISMISSAL": case "MICROPHONE_ON":
-						}
-						return;
-					}
-					x: {
-						const k2="isDisabled";
-						if(!(k2 in x)) break x;
-						/** @type {`${cf1}:${k2}`} */
-						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,isDisabled,...y1}=this.D_Button_Omit_TP(cf2,x); y1;
-						switch(a.iconType) {
-							default: this.codegen_typedef_all(cf2,x); debugger; break;
-							case "SETTINGS": case "SHARE": case "CHEVRON_RIGHT": case "CHEVRON_LEFT":
-						}
-						return;
-					}
-					x: {
-						const k2="accessibility";
-						if(!(k2 in x)) break x;
-						/** @type {`${cf1}:${k2}`} */
-						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
-						let {icon: a,tooltip,accessibility,...y1}=this.D_Button_Omit_TP(cf2,x); y1;
-						switch(a.iconType) {
-							default: debugger; break;
-							case "EXPAND":
-						}
-						return;
-					}
-					this.k(cf1,x); this.g(x);
-				} break;
-				case "targetId": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`; this.k(cf1,x);
-					let {icon: a,targetId,...y1}=this.D_Button_Omit_TP(cf1,x); y1;
-					switch(a.iconType) {
-						default: a===""; debugger; break;
-						case "SETTINGS":
-						case "PAUSE_OUTLINED": case "MONEY_HEART": case "INFO": case "CONTENT_CUT":
-					}
-				} break;
-			}
-		}
-	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
-		/*switch(size) {
-			default: debugger; break;
-			case "SIZE_DEFAULT":
-		}
-		switch(style) {
-			default: debugger; break;
-			case "STYLE_DEFAULT":
-			case "STYLE_SUGGESTIVE":
-		}
-		this.D_Accessibility(accessibilityData);
+		const cf="D_Button";
+		const {isDisabled,text,icon,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(isDisabled!==false) debugger;
-		*/
-		const cf="D_Button"; this.k(cf,x);
-		if("icon" in x) return this.D_Button_OnIcon(x);
-		if("targetId" in x) return this.D_Button_With_TargetId(x);
-		let ka=this.get_keys_of(x);
-		for(let k of ka) {
-			switch(k) {
-				default: k===""; debugger; break;
-				case "trackingParams": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "command": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {command,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					this.GC_Button(command);
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "style": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "size": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					const {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "isDisabled": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "text": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					const {text,isDisabled,size,style,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					this.G_Text(text);
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "navigationEndpoint": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					const {isDisabled,size,style,navigationEndpoint,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "accessibility": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {isDisabled,size,style,accessibility,accessibilityData,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-				case "accessibilityData": {
-					if(!(k in x)) return;
-					/** @type {`${typeof cf}:${typeof k}`} */
-					const cf1=`${cf}:${k}`;
-					let {isDisabled,size,style,accessibilityData,accessibility,...y}=this.D_Button_Omit_TP(cf1,x); y;
-					/** @typedef {keyof (typeof y)} T_has_keys_left */
-					/** @type {T_has_keys_left} */
-					let u;
-					function u1() {u==="";}
-					u1;
-				} break;
-			}
-		}
+		this.G_Text(text);
+		this.T_Icon(`${cf}.icon`,icon);
+		this.D_Label(accessibility);
+		this.a_primitive_str(tooltip);
+		this.trackingParams(cf,trackingParams);
+		this.D_Accessibility(accessibilityData);
+		this.GC_Button(command);
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
-		const cf="D_PdgBuyFlowHeader"; this.k(cf,x);
+		const cf="D_PdgBuyFlowHeader";
 		const {text,helpButton,dismissButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(text);
 		this.R_Button(helpButton);
@@ -5244,21 +4893,21 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_VerifiedArtist",icon,"OFFICIAL_ARTIST_BADGE");
+				this.T_Icon("DMD_Badge_VerifiedArtist",icon);
 				ia.push(["tooltip",[tooltip]]);
 				this.trackingParams(cf,trackingParams);
 				ia.push(["accessibilityData.label",[accessibilityData.label]]);
 			} break;
 			case "BADGE_STYLE_TYPE_VERIFIED": {
 				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_Verified",icon,"CHECK_CIRCLE_THICK");
+				this.T_Icon("DMD_Badge_Verified",icon);
 				ia.push(["tooltip",[tooltip]]);
 				this.trackingParams(cf,trackingParams);
 				ia.push(["accessibilityData.label",[accessibilityData.label]]);
 			} break;
 			case "BADGE_STYLE_TYPE_LIVE_NOW": {
 				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_LiveNow",icon,"LIVE");
+				this.T_Icon("DMD_Badge_LiveNow",icon);
 				this.trackingParams(cf,trackingParams);
 				ia.push(["label",[label]]);
 				switch(label) {
@@ -6171,8 +5820,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_GuideCollapsibleSectionEntry"; this.k(cf,x);
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_GuideEntry(headerEntry);
-		this.T_Icon("D_Guide_ExpandIcon",expanderIcon,"EXPAND");
-		this.T_Icon("D_Guide_CollapseIcon",collapserIcon,"COLLAPSE");
+		this.T_Icon("D_Guide_ExpandIcon",expanderIcon);
+		this.T_Icon("D_Guide_CollapseIcon",collapserIcon);
 		this.z(sectionItems,this.G_GuideSectionItem);
 		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
@@ -6641,7 +6290,7 @@ class HandleTypes extends HandleTypesEval {
 	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
 	/** @private @arg {M_GetNotificationMenu} x */
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
-	/** @private @arg {GC_Button} x */
+	/** @protected @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
@@ -6697,7 +6346,7 @@ class HandleTypes extends HandleTypesEval {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
 	}
-	/** @private @arg {C_GetPdgBuyFlow} x */
+	/** @protected @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {x;}
@@ -6723,7 +6372,7 @@ class HandleTypes extends HandleTypesEval {
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo"; this.k(cf,x);
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.T_Icon("D_Icon_YoutubeLogo",iconImage,"YOUTUBE_LOGO");
+		this.T_Icon("D_Icon_YoutubeLogo",iconImage);
 		this.G_Text(tooltipText);
 		this.GE_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
@@ -6740,7 +6389,7 @@ class HandleTypes extends HandleTypesEval {
 	D_FusionSearchbox(x) {
 		const cf="D_FusionSearchbox"; this.k(cf,x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.T_Icon("D_Icon_Search",icon,"SEARCH");
+		this.T_Icon("D_Icon_Search",icon);
 		this.G_Text(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
@@ -8367,7 +8016,7 @@ class HandleTypes extends HandleTypesEval {
 				this.G_Text(title);
 				this.G_Text(subtitle);
 				this.G_Text(callToAction);
-				this.T_Icon(cf,callToActionIcon,"CHEVRON_RIGHT");
+				this.T_Icon(cf,callToActionIcon);
 				if(!endpoint.browseEndpoint) debugger;
 				this.GE_Browse(endpoint);
 				this.trackingParams(cf,trackingParams);
@@ -8378,7 +8027,7 @@ class HandleTypes extends HandleTypesEval {
 				this.D_Thumbnail(thumbnail);
 				this.G_Text(title);
 				this.G_Text(callToAction);
-				this.T_Icon(cf,callToActionIcon,"CHEVRON_RIGHT");
+				this.T_Icon(cf,callToActionIcon);
 				if(!endpoint.browseEndpoint) debugger;
 				this.GE_Browse(endpoint);
 				this.trackingParams(cf,trackingParams);
@@ -8535,7 +8184,7 @@ class HandleTypes extends HandleTypesEval {
 		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
 	}
 	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon("D_Icon_Mix",x,"MIX"));}
+	D_ThumbnailOverlayBottomPanel(x) {this.y("D_ThumbnailOverlayBottomPanel","icon",x,x => this.T_Icon("D_Icon_Mix",x));}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
 	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
@@ -8543,7 +8192,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix"; this.k(cf,x);
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
-		this.T_Icon("D_Icon_Check",icon,"CHECK");
+		this.T_Icon("D_Icon_Check",icon);
 		if(tooltip!=="Added") debugger;
 		this.E_PlaylistEdit(serviceEndpoint);
 	}
@@ -8552,7 +8201,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1"; this.k(cf,x);
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
-		this.T_Icon("D_Icon_WatchLater",icon,"WATCH_LATER");
+		this.T_Icon("D_Icon_WatchLater",icon);
 		if(tooltip!=="Watch Later") debugger;
 		this.E_PlaylistEdit(serviceEndpoint);
 	}
@@ -8561,7 +8210,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix"; this.k(cf,x);
 		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
-		this.T_Icon("D_Icon:PLAYLIST_ADD_CHECK",icon,"PLAYLIST_ADD_CHECK");
+		this.T_Icon(cf,icon);
 		if(tooltip!=="Added") debugger;
 	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "untoggled">} x */
@@ -8569,7 +8218,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2"; this.k(cf,x);
 		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
-		this.T_Icon("D_Icon:ADD_TO_QUEUE_TAIL",icon,"ADD_TO_QUEUE_TAIL");
+		this.T_Icon(cf,icon);
 		if(tooltip!=="Add to queue") debugger;
 		let [wc,s]=this.T_SE_Signal(cf,serviceEndpoint);
 		const cf1="D_ToggleButton_ServiceEP.data";

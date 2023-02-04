@@ -4,24 +4,6 @@ export namespace Gen {
 	export type CF_Generated=
 		|{n: Prelude.CF_DC_Generic_CTP; t: Types.CF_DC_Generic_CTP_; v: "D_CD_NextRadio";}
 		|{n: Prelude.CF_DC_Generic_CTP; t: Types.CF_DC_Generic_CTP_; v: "D_CD_Reload";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibility";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:accessibilityData";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:command";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:isDisabled";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:navigationEndpoint";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:size";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:style";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:text";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button:trackingParams";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:serviceEndpoint";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:targetId";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:accessibility";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:command";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:isDisabled";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:serviceEndpoint";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:targetId";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_OnIcon:tooltip:text";}
-		|{n: Prelude.CF_D_Button; t: Types.CF_D_Button_; v: "D_Button_With_TargetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "DE_SignalNavigation.signal";}
@@ -100,7 +82,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
@@ -339,6 +320,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_BrowserMediaSession";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CarouselLockup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelSwitcherHeader";}
@@ -786,10 +768,9 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button.icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon:ADD_TO_QUEUE_TAIL";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon:PLAYLIST_ADD_CHECK";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Check";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Mix";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
@@ -797,6 +778,8 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_YoutubeLogo";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_Topic";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_ToggledPrefix";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithIcon:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithNavEP:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}

@@ -79,13 +79,14 @@ type GA_Playlist=A_ActionAddVideo|D_ActionRemoveVideoByVideoId|A_ActionSetPlayli
 type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_Continuation
-	|TA_OpenPopup_Empty
-	|E_SignalService_SendPost
-	|E_CreateBackstagePost
-	|E_Url
 	|C_Executor
 	|C_GetSurvey
+	|C_ShowReelsCommentsOverlay
 	|E_AddToPlaylistService
+	|E_CreateBackstagePost
+	|E_SignalService_SendPost
+	|E_Url
+	|TA_OpenPopup_Empty
 	;
 ;
 type GD_EngagementPanelMenu={
