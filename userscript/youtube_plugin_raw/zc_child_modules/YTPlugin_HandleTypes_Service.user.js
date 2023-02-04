@@ -3116,8 +3116,9 @@ class HandleTypes extends HandleTypesEval {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
-	/** @private @template T @arg {string} _cf @arg {T} x */
-	rl(_cf,x) {
+	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	rl(cf,x) {
+		this.k(`${cf}:omit`,x);
 		return x;
 	}
 	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */
