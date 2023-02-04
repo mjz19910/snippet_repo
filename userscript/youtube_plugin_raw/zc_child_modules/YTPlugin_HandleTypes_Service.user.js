@@ -2522,6 +2522,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
+			case "create-clip-button-action-bar":
 			case "comments-section":
 			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
 			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
@@ -2529,7 +2530,6 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
 			case "search-feed": case "search-page": case "sponsorships-button":
 			case "watch-next-feed": case "watch-related-menu-button":
-			case "browse-video-menu-button":
 		}
 	}
 	/** @type {NonNullable<D_Button["icon"]>["iconType"][]} */
