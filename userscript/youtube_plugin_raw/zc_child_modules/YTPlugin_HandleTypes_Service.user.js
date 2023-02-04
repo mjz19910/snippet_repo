@@ -8993,50 +8993,164 @@ class HandleTypes extends HandleTypesEval {
 	D_TranscriptSegment(x) {
 		const cf="D_TranscriptSegment";
 		const {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
-		this.trackingParams(cf,x);
+		this.a_primitive_str(startMs);
+		this.a_primitive_str(endMs);
+		this.G_Text(snippet);
+		this.G_Text(startTimeText);
+		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
 		this.t(targetId,x => console.log(`${cf}.targetId`,x));
 	}
+	/** @private @arg {D_ChipColorPalette} x */
+	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PdgCommentChip} x */
-	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	D_PdgCommentChip(x) {
+		const cf="D_PdgCommentChip";
+		const {chipText,chipColorPalette,chipIcon,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(chipText);
+		this.D_ChipColorPalette(chipColorPalette);
+		if(chipIcon.iconType!=="FILL_DOLLAR_SIGN_HEART_12") debugger;
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	D_PrivacyDropdownItem(x) {
+		const cf="D_PrivacyDropdownItem";
+		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(label);
+		if(icon.iconType!=="PRIVACY_PUBLIC") debugger;
+		this.G_Text(description);
+		if(int32Value!==1) debugger;
+		if(isSelected!==false) debugger;
+		this.D_Label(accessibility);
+	}
 	/** @private @arg {D_PromotedSparklesWeb} x */
-	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	D_PromotedSparklesWeb(x) {
+		const cf="D_PromotedSparklesWeb";
+		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,menu,trackingParams,clickLocationTargets,...y}=this.s(cf,x); this.g(y);
+		thumbnail;
+		icon;
+		title;
+		description;
+		websiteText;
+		actionButton;
+		navigationEndpoint;
+		impressionCommands;
+		menu;
+		trackingParams;
+		clickLocationTargets;
+	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
-	D_AdaptiveFormatItem(x) {x;}
+	D_AdaptiveFormatItem(x) {
+		const cf="D_AdaptiveFormatItem";
+		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		this.codegen_typedef_all(cf,x);
+		itag;
+		url;
+		mimeType;
+		bitrate;
+		width;
+		width;
+		height;
+		initRange;
+		indexRange;
+		lastModified;
+		contentLength;
+		quality;
+		fps;
+		qualityLabel;
+		projectionType;
+		averageBitrate;
+		colorInfo;
+		highReplication;
+		audioQuality;
+		approxDurationMs;
+		audioSampleRate;
+		audioChannels;
+		loudnessDb;
+		signatureCipher;
+	}
 	/** @private @arg {D_FormatItem} x */
-	D_FormatItem(x) {x;}
+	D_FormatItem(x) {
+		const cf="D_FormatItem"; this.k(cf,x);
+		this.codegen_typedef_all(cf,x); this.GEN(cf,x);
+	}
 	/** @private @arg {G_PlayerStoryboards} x */
-	G_PlayerStoryboards(x) {x;}
+	G_PlayerStoryboards(x) {
+		const cf="G_PlayerStoryboards"; this.k(cf,x);
+		if("playerStoryboardSpecRenderer" in x) return;
+		if("playerLiveStoryboardSpecRenderer" in x) return;
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_PlayerConfig} x */
-	D_PlayerConfig(x) {x;}
+	D_PlayerConfig(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x); this.GEN(cf,x);
+	}
 	/** @private @arg {D_VideoDetails} x */
-	D_VideoDetails(x) {x;}
+	D_VideoDetails(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_PlaybackTracking} x */
-	D_PlaybackTracking(x) {x;}
+	D_PlaybackTracking(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_DesktopWatchAds} x */
-	D_DesktopWatchAds(x) {x;}
+	D_DesktopWatchAds(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
-	D_PlayerCaptionsTracklist(x) {x;}
+	D_PlayerCaptionsTracklist(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_VideoQualityPromo} x */
-	D_VideoQualityPromo(x) {x;}
+	D_VideoQualityPromo(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_PlayerAttestation} x */
-	D_PlayerAttestation(x) {x;}
+	D_PlayerAttestation(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_CardCollection} x */
-	D_CardCollection(x) {x;}
+	D_CardCollection(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_PlayerMicroformat} x */
-	D_PlayerMicroformat(x) {x;}
+	D_PlayerMicroformat(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_AdPlacement} x */
-	D_AdPlacement(x) {x;}
+	D_AdPlacement(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {Popup_ShareEntityService} x */
-	Popup_ShareEntityService(x) {x; debugger;}
+	Popup_ShareEntityService(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {x;}
+	CD_PlayerSeek(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {CD_LiveChatReplay} x */
-	CD_LiveChatReplay(x) {x;}
+	CD_LiveChatReplay(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {CD_Invalidation} x */
-	CD_Invalidation(x) {x;}
+	CD_Invalidation(x) {
+		const cf="D_PlayerConfig";
+		this.codegen_typedef_all(cf,x);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
