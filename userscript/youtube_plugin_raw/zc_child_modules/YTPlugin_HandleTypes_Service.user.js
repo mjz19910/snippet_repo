@@ -1726,9 +1726,23 @@ class HandleTypes extends HandleTypesEval {
 		this.G_DE_Browse_VE(ve_name,x4);
 		this.g(x5);
 	}
+	/** @private @arg {Extract<GE_Browse_WCM,{resolveUrlCommandMetadata:any}>["resolveUrlCommandMetadata"]} x */
+	ResolveUrlCommandMetadata(x) {
+		x;
+	}
 	/** @private @arg {GE_Browse_WCM} x */
 	GE_Browse_WCM(x) {
-		const cf="M_VE_Browse",{webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const cf="M_VE_Browse";
+		if("resolveUrlCommandMetadata" in x) {
+			const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.ResolveUrlCommandMetadata(b);
+			if(a.rootVe===3854) {
+				return this.GM_VE3854_WC(a);
+			}
+			debugger;
+			return this.GM_VE_WC_Browse(a);
+		}
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		return this.GM_VE_WC_Browse(a);
 	}
 	/** @private @arg {E_Watch} x */
@@ -2073,7 +2087,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		if(rootVe!==3611) debugger;
 	}
-	/** @private @arg {GM_VE3854_WC} x */
+	/** @private @arg {GM_VE3854_WC} x @returns {`VE${rootVe}`} */
 	GM_VE3854_WC(x) {
 		const cf="GM_VE3854_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2083,6 +2097,7 @@ class HandleTypes extends HandleTypesEval {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_VE4724_WC} x */
 	GM_VE4724(x) {
