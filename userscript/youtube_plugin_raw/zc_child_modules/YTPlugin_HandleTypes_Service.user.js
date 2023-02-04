@@ -9267,7 +9267,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(width,this.a_primitive_num);
 		this.t(height,this.a_primitive_num);
 		this.a_primitive_str(lastModified);
-		this.a_primitive_str(contentLength);
+		this.t(contentLength,this.a_primitive_str);
 		this.a_primitive_str(quality);
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
