@@ -2564,7 +2564,8 @@ class HandleTypes extends HandleTypesEval {
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		x===""; this.codegen_typedef_all(cf,x); x==="";
+		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	static {this.prototype.Button_navigationEndpoint;}
 	/** @private @arg {GE_Button_navigation} x */
@@ -2594,7 +2595,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		const {style,size,isDisabled,text,icon,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,size,isDisabled,serviceEndpoint,text,icon,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
 			switch(x) {
 				default: debugger; break;
@@ -2602,13 +2604,13 @@ class HandleTypes extends HandleTypesEval {
 				case "STYLE_DEFAULT":
 			}
 		});
-		if(isDisabled!==false) debugger;
+		this.t(isDisabled,x => {if(x!==false) debugger;});
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
 		this.t(accessibility,this.D_Label);
 		this.t(tooltip,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
-		this.D_Accessibility(accessibilityData);
+		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
@@ -9040,6 +9042,8 @@ class HandleTypes extends HandleTypesEval {
 	C_ShowReelsCommentsOverlay(x) {x;}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {x;}
+	/** @private @arg {E_Unsubscribe} x */
+	E_Unsubscribe(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
