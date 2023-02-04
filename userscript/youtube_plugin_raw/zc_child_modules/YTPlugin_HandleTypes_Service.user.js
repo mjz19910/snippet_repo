@@ -3161,7 +3161,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("videoId" in x) {
 			if("topStandaloneBadge" in x) {return this.D_Video_Handle("D_Video_With_VideoId_TopStandaloneBadge",x);}
-			if("descriptionSnippet" in x) {return this.D_Video_Handle("D_Video_With_VideoId_DescriptionSnippet",x);}
+			if("descriptionSnippet" in x) {
+				return this.D_Video_Handle("D_Video_With_VideoId_DescriptionSnippet",x);
+			}
 			return this.D_Video_Handle("D_Video_With_VideoId",x);
 		}
 		console.log("video.other",this.get_keys_of(x).join());
