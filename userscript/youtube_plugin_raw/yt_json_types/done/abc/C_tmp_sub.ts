@@ -8,6 +8,3 @@ type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
 	targetId: T;
 	continuationItems: V["continuationItems"];
 };
-type C_Innertube={innertubeCommand: E_YpcGetOfflineUpsell;};
-type C_MusicLibraryStatusUpdate={musicLibraryStatusUpdateCommand: CD_MusicLibraryStatusUpdate;};
-type C_RunAttestation={runAttestationCommand: D_RunAttestation;};

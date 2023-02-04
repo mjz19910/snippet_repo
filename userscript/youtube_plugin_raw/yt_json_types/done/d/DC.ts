@@ -3,7 +3,7 @@ type DC_Params={params: string;};
 type DC_Generic_CTP={continuation: string; clickTrackingParams: string;};
 //#endregion
 //#region ContinuationData
-type DC_ResetChannelUnreadCount={};
+type DC_ChangeKeyedMarkersVisibility={key: "HEATSEEKER"; isVisible: true;};
 type DC_RepeatChapter={
 	repeat: "REPEAT_CHAPTER_TYPE_ENABLE_REPEAT";
 	startTimeMs: "0";
@@ -119,4 +119,5 @@ type DC_PlaylistPanel={};
 type DC_RefreshPlaylist={};
 // TODO: #15 Need type of DC_MusicShelf
 type DC_MusicShelf={};
+type DC_ResetChannelUnreadCount={};
 //#endregion
