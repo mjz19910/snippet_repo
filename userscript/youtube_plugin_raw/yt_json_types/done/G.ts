@@ -122,9 +122,41 @@ type GV_Dig_sn_nx=[
 	`57yn${GV_sub_57yn}`,
 	`5s7n${GV_sub_5s7n}`,
 ][number];
-// cSpell:ignoreRegExp /r1---sn-.+?"/
+// cSpell:ignoreRegExp /rr[12345]---sn-.+?"/
+// cSpell:ignoreRegExp /r[12345]---sn-.+?"/
 type GV_SubDomain=[
 	"r1---sn-p5qlsny6",
+	"rr1---sn-nx57ynlk",
+	"rr3---sn-nx57ynlk",
+	"rr5---sn-nx57ynlk",
+	"rr1---sn-nx57ynsd",
+	"rr2---sn-nx57ynsd",
+	"rr3---sn-nx57ynsd",
+	"rr5---sn-nx57ynsd",
+	"rr5---sn-nx57ynse",
+	"rr1---sn-nx57ynsk",
+	"rr2---sn-nx57ynsk",
+	"rr4---sn-nx57ynsk",
+	"rr1---sn-nx57ynsl",
+	"rr2---sn-nx57ynsl",
+	"rr3---sn-nx57ynsl",
+	"rr5---sn-nx57ynsl",
+	"rr1---sn-nx57ynss",
+	"rr4---sn-nx57ynss",
+	"rr1---sn-nx57ynsz",
+	"rr2---sn-nx57ynsz",
+	"rr5---sn-nx5s7n76",
+	"rr3---sn-nx5s7n7d",
+	"rr5---sn-nx5s7n7d",
+	"rr1---sn-nx5s7n7s",
+	"rr3---sn-nx5s7n7s",
+	"rr3---sn-nx5s7n7y",
+	"rr1---sn-nx5s7n7z",
+	"rr4---sn-nx5s7n7z",
+	"rr3---sn-nx5s7nee",
+	"rr4---sn-nx5s7nee",
+	"rr5---sn-nx5s7nee",
+	"rr2---sn-nx5s7nel",
 ][number];
 
 type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;

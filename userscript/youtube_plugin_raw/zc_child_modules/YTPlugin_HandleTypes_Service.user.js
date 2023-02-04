@@ -7830,7 +7830,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			switch(b) {
 				default: log_color("l1_s_tc_b",b); break;
-				case 0x48: case 0x4c: case 0x75: case 0x70: case 0x7a: case 0x84: case 0x89: case 0x5b: case 0x56: case 0x7f: case 0x5c: case 0x4f: case 0x66: case 0x55: case 0x5a: case 0x52:
+				case 0x48: case 0x4c: case 0x75: case 0x70: case 0x7a: case 0x84: case 0x89: case 0x5b: case 0x56: case 0x7f: case 0x5c: case 0x4f: case 0x66: case 0x55: case 0x5a: case 0x52: case 0x64: case 0x54:
 			}
 		}
 		{
@@ -8770,12 +8770,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
-		// cspell:ignore videogoodput
+		// cspell:ignore videogoodput videoplayback
 		let s_host=split_string_once(x.host,".");
 		switch(s_host[1]) {
 			case "googlevideo.com": {
 				this.save_string("google_video_host",s_host[0]);
 				switch(x.pathname) {
+					case "/videoplayback":
 					case "/initplayback": break;
 					case "/videogoodput": {
 						let pp=this.parse_url_search_params(x.search);
