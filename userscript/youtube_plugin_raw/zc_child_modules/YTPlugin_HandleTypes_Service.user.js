@@ -5928,7 +5928,7 @@ class HandleTypes extends HandleTypesEval {
 	D_GuideEntryBadges(x) {
 		const cf="D_GuideEntryBadges"; this.k(cf,x);
 		const {liveBroadcasting,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(liveBroadcasting!==false) debugger;
+		this.a_primitive_bool(liveBroadcasting);
 	}
 	/** @type {D_GuideEntry_IconType_Obj} */
 	D_GuideEntry_IconType={
