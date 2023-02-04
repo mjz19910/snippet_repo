@@ -5,7 +5,12 @@ type GU_VE6827_Id=GU_VE6827_Id_1|GU_VE6827_Id_Params;
 type GU_VE23462_Url="/account"|"/account_notifications";
 type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;
-type GU_VE83769_Url=GU_VE83769_Url_Internal|GU_YoutubeUrlRedirect|GU_VE83769_Url_External;
+type GU_VE83769_Url=
+	|`https://myactivity.google.com/activitycontrols/youtube?${string}`
+	|GU_VE83769_Url_Internal
+	|GU_YoutubeUrlRedirect
+	|GU_VE83769_Url_External
+	;
 type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
 type UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type GU_YoutubeUrlRedirect_Info={
