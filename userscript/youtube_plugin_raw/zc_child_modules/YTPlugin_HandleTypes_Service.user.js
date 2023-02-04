@@ -3150,7 +3150,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
 		this.tz(buttons,this.R_ToggleButton);
 	}
-	/** @private @arg {"D_Video_With:owner"|"D_Video_With:videoId"|"D_Video_With:videoId:topStandaloneBadge"|"D_Video_With:videoId:descriptionSnippet"} cf @arg {D_Video} x */
+	/** @private @arg {"D_Video_Other"|"D_Video_With:accessibility"|"D_Video_With:owner"|"D_Video_With:videoId"|"D_Video_With:videoId:topStandaloneBadge"|"D_Video_With:videoId:descriptionSnippet"} cf @arg {D_Video} x */
 	D_Video_With_Add_IsWatched(cf,x) {
 		if("isWatched" in x) return this.D_Video_Handle(`${cf}:isWatched`,x);
 		return this.D_Video_Handle(cf,x);
@@ -3170,13 +3170,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		if("accessibility" in x) {
-			return this.D_Video_Handle("D_Video_With_Accessibility",x);
+			return this.D_Video_With_Add_IsWatched("D_Video_With:accessibility",x);
 		}
 		if("owner" in x) return this.D_Video_With_Owner(x);
 		if("videoId" in x) return this.D_Video_With_VideoId(x);
 		console.log("video.other",this.get_keys_of(x).join());
 		debugger;
-		this.D_Video_Handle("D_Video_Other",x);
+		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
 	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
 	D_Button_DefServiceEP(x) {
