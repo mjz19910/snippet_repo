@@ -3,6 +3,8 @@ type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsO
 
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 type D_Button={
+	style?: "STYLE_DEFAULT";
+	size?: "SIZE_DEFAULT";
 	isDisabled: false;
 	text: G_Text;
 	icon: T_Icon<"SHORTS_COMMENT">;
