@@ -15,10 +15,18 @@ type D_UiTargetId=
 	;
 ;
 //#endregion
+//#region DC_
+type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId: any;}>["targetId"];
+type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
+type DC_EntityBatchUpdate={
+	mutations: DE_MutationItem[];
+	timestamp: D_TimestampWithNanos;
+};
+type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
+//#endregion
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
 type D_Menu_TargetId=Extract<D_Menu,{targetId: any;}>["targetId"];
-type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId: any;}>["targetId"];
 type D_TargetIdStr=
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
@@ -304,7 +312,6 @@ type D_CompactRadio={
 	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
-type DE_SuperThanksSelectedTier={key: string; index: number;};
 type D_PdgColorSlider={
 	notches: D_NotchesItem[];
 	superThanksSelectedTierEntity: DE_SuperThanksSelectedTier;
@@ -1634,10 +1641,6 @@ type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 ][number]>|
 	"comment-item-section"|
 	string&{_tag: "string";};
-type DC_EntityBatchUpdate={
-	mutations: DE_MutationItem[];
-	timestamp: D_TimestampWithNanos;
-};
 type D_Enum_GuideAction=T_EnumStr<"GUIDE_ACTION","ADD_TO_PLAYLISTS"|
 	"ADD_TO_SUBSCRIPTIONS"
 >;
@@ -2480,11 +2483,6 @@ type D_Saved={
 	ad_layout_data?: D_AdLayout;
 	data?: {[x: string]: ({}[])|undefined;};
 };
-type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
-type DE_VE6827_Browse_SearchBox={
-	browseId: "FEhistory";
-	query: "";
-};
 type D_SearchBox={
 	endpoint: E_VE6827_Browse_SearchBox;
 	searchButton: R_Button;
@@ -2746,7 +2744,6 @@ type D_TimestampWithNanos={
 	nanos: number;
 };
 type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|C_RepeatChapter|E_Like;
-type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 type T_SizeType<T>={sizeType: T;};
