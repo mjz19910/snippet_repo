@@ -2517,6 +2517,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
+			case "clip-info-button":
 			case "create-clip-button-action-bar":
 			case "comments-section":
 			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":

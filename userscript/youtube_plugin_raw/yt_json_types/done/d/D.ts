@@ -35,6 +35,7 @@ type D_TargetIdStr=
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']
+	|D_Button_targetId
 	|D_Button_With_TargetId["targetId"]
 	|D_ChipCloudChip_tid['targetId']
 	|D_EngagementPanelSectionTargetId
@@ -45,7 +46,6 @@ type D_TargetIdStr=
 	|DC_ScrollToEngagementPanel['targetId']
 	|DC_SectionList_TargetId
 	|G_SI_DB_EngagementPanel['targetId']
-	|NonNullable<D_Button["targetId"]>
 	|RS_Search['targetId']
 	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId']
 	;

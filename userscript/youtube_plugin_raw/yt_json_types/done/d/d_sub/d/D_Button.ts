@@ -10,6 +10,7 @@ type D_Button_style=
 	|"STYLE_TEXT"
 	;
 ;
+type D_Button_targetId="create-clip-button-action-bar"|"clip-info-button";
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 type D_Button={
 	style?: D_Button_style;
@@ -23,7 +24,7 @@ type D_Button={
 	tooltip?: string;
 	trackingParams: string;
 	accessibilityData?: D_Accessibility;
-	targetId?: "create-clip-button-action-bar";
+	targetId?: D_Button_targetId;
 	command?: C_ShowReelsCommentsOverlay|A_ChangeEngagementPanelVisibility;
 };
 
