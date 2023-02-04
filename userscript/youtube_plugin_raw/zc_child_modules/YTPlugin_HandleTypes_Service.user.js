@@ -2513,7 +2513,6 @@ class HandleTypes extends HandleTypesEval {
 		console.group(`-- [${cf}.gen_result] --`);
 		console.log("\n%s",all_types);
 		console.groupEnd();
-		{debugger;}
 	}
 	static {this.prototype.D_Button_SE;}
 	/** @private @arg {D_Button_SE} x */
@@ -3147,6 +3146,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
+		this.codegen_typedef_all("D_Video",x);
 		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_WithAccessibility",x);}
 		if("owner" in x) return this.D_Video_Handle("D_Video_WithOwner",x);
 		if("videoId" in x) {
