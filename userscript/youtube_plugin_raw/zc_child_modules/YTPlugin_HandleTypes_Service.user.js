@@ -9110,31 +9110,73 @@ class HandleTypes extends HandleTypesEval {
 	D_AdaptiveFormatItem(x) {
 		const cf="D_AdaptiveFormatItem";
 		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
-		this.codegen_typedef_all(cf,x);
-		itag;
-		url;
-		mimeType;
-		bitrate;
-		width;
-		width;
-		height;
-		initRange;
-		indexRange;
-		lastModified;
-		contentLength;
-		quality;
-		fps;
-		qualityLabel;
-		projectionType;
-		averageBitrate;
-		colorInfo;
-		highReplication;
-		audioQuality;
-		approxDurationMs;
-		audioSampleRate;
+		this.a_primitive_num(itag);
+		this.t(url,x => this.parser.parse_url(cf,x));
+		this.a_primitive_str(mimeType);
+		this.a_primitive_num(bitrate);
+		this.t(width,this.a_primitive_num);
+		this.t(height,this.a_primitive_num);
+		this.D_Range(initRange);
+		this.D_Range(indexRange);
+		this.a_primitive_str(lastModified);
+		this.a_primitive_str(contentLength);
+		this.a_primitive_str(quality);
+		this.t(fps,this.D_FormatFps);
+		this.t(qualityLabel,this.a_primitive_str);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.a_primitive_num(averageBitrate);
+		this.t(colorInfo,this.D_FormatColorInfo);
+		this.t(highReplication,x => {if(x!==true) debugger;});
+		this.t(audioQuality,x => {
+			switch(x) {
+				default: debugger; break;
+				case "AUDIO_QUALITY_MEDIUM":
+			}
+		});
+		this.a_primitive_str(approxDurationMs);
+		this.t(audioSampleRate,x => {
+			switch(x) {
+				default: debugger; break;
+				case "44100": case "48000":
+			}
+		});
 		audioChannels;
 		loudnessDb;
 		signatureCipher;
+	}
+	/** @private @arg {D_FormatColorInfo} x */
+	D_FormatColorInfo(x) {
+		const cf="D_Range";
+		const {primaries,transferCharacteristics,matrixCoefficients,...y}=this.s(cf,x); this.g(y);
+		switch(primaries) {
+			default: debugger; break;
+			case "COLOR_PRIMARIES_BT709":
+		}
+		switch(transferCharacteristics) {
+			default: debugger; break;
+			case "COLOR_TRANSFER_CHARACTERISTICS_BT709":
+		}
+		switch(matrixCoefficients) {
+			default: debugger; break;
+			case "COLOR_MATRIX_COEFFICIENTS_BT709":
+		}
+	}
+	/** @private @arg {D_FormatFps} x */
+	D_FormatFps(x) {
+		let xs=this.num_to_string(x);
+		switch(xs) {
+			default: switch(xs) {
+
+			}; debugger; break;
+			case "25": case "50": case "60":
+		}
+	}
+	/** @private @arg {D_Range} x */
+	D_Range(x) {
+		const cf="D_Range";
+		const {start,end,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(start);
+		this.a_primitive_str(end);
 	}
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {
