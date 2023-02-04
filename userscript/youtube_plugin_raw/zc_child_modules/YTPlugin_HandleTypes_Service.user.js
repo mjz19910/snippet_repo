@@ -4722,7 +4722,7 @@ class HandleTypes extends HandleTypesEval {
 		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_later*/
 		this.trackingParams(cf,trackingParams);
 		this.G_Text(text);
-		if(icon.iconType!=="INFO") debugger;
+		if(icon.iconType!=="INFO") this.codegen_typedef_all(cf,x);
 		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
 		if("accessibility" in y) return this.y(cf,"accessibility",y,this.D_Accessibility);
 		this.g(y);
