@@ -47,7 +47,6 @@ type CF_WithParams=
 	;
 ;
 type CF_M_s=
-	|string
 	|`${CF_parse_identifier}.identifier`
 	|CF_D_ToggleButton
 	|CF_D_CustomEmoji
@@ -61,7 +60,6 @@ type CF_M_s=
 	;
 ;
 type CF_L_TP_Params=
-	|string
 	|`T_Items_TP:${CF_T_Items_TP}`
 	|CF_D_ToggleButton
 	|CF_WithParams
