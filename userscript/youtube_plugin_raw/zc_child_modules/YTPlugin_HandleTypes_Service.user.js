@@ -2501,10 +2501,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
-	/** @protected @arg {string} root @arg {D_TargetIdStr} x */
-	targetId(root,x) {
-		const cf="targetId";
-		this.save_string(`[${root}.${cf}]`,x);
+	/** @protected @arg {string} cf1 @arg {D_TargetIdStr} x */
+	targetId(cf1,x) {
+		const cf2="targetId";
+		this.save_string(`[${cf1}.${cf2}]`,x);
 		this.parser.parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
@@ -2521,7 +2521,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
-			default: x===""; this.codegen_case(`D_TargetIdStr:${cf}`,x); break;
+			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
 			case "comments-section":
 			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
 			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
@@ -2636,7 +2636,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(targetId,x => {
+			this.targetId(cf,x);
+			switch(x) {
+				case "create-clip-button-action-bar": break;
+			}
+		});
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
 			switch(x) {
@@ -2649,7 +2655,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(isDisabled,x => {if(x!==false) debugger;});
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
-		this.t(navigationEndpoint,this.D_Button_NavEP)
+		this.t(navigationEndpoint,this.D_Button_NavEP);
 		this.t(accessibility,this.D_Label);
 		this.t(tooltip,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);

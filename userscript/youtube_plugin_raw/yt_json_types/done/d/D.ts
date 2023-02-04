@@ -18,24 +18,22 @@ type D_UiTargetId=
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
 type D_Menu_TargetId=Extract<D_Menu,{targetId: any;}>["targetId"];
-type D_Button_TargetId=Extract<D_Button,{targetId: any;}>["targetId"];
 type DC_SectionList_TargetId=Extract<G_DC_SectionList,{targetId: any;}>["targetId"];
 type D_TargetIdStr=
-	|"browse-video-menu-button"
-	|DC_ReloadContinuationItems["targetId"]
-	|D_Button_With_TargetId["targetId"]
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']
 	|AD_UpdateEngagementPanel['targetId']
-	|D_Button_TargetId
+	|D_Button_With_TargetId["targetId"]
 	|D_ChipCloudChip_tid['targetId']
 	|D_EngagementPanelSectionTargetId
 	|D_Menu_TargetId
 	|D_TargetIdStr_Template
 	|D_TranscriptSearchPanel['targetId']
+	|DC_ReloadContinuationItems["targetId"]
 	|DC_ScrollToEngagementPanel['targetId']
 	|DC_SectionList_TargetId
 	|G_SI_DB_EngagementPanel['targetId']
+	|NonNullable<D_Button["targetId"]>
 	|RS_Search['targetId']
 	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId']
 	;
