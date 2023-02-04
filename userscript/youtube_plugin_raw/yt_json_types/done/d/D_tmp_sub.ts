@@ -4,12 +4,6 @@ type DD_Streaming={
 	formats: D_FormatItem[];
 	probeUrl?: D_Youtube_Streaming_ProbeUrl;
 };
-type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",[
-	"SWITCHER",
-	"CREATION",
-	"NOTIFICATIONS",
-	"ACCOUNT"
-][number]>;
 type DMD_AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_IN_FEED";
