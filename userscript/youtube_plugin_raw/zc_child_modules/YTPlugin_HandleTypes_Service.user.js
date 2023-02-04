@@ -588,7 +588,7 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1[]":
-					case "f1": case "f2": case "f3":
+					case "f1": case "f2": case "f3": case "f4": case "f5":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
