@@ -8741,6 +8741,13 @@ class HandleTypes extends HandleTypesEval {
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
 		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
+	/** @private @arg {D_VideoPlaybackShape} x */
+	D_VideoPlaybackShape(x) {
+		const cf="D_VideoPlaybackShape";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log("[D_VideoPlaybackShape.next_key] [%s]",ka[0]);
+	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
 		const cf="D_PlayabilityStatus";
@@ -8777,7 +8784,10 @@ class HandleTypes extends HandleTypesEval {
 				this.save_string("google_video_host",s_host[0]);
 				switch(x.pathname) {
 					case "/videoplayback": {
-						debugger;
+						/** @type {D_VideoPlayback_SearchParams} */
+						let vp_search=as(x.search);
+						let pp=this.parse_url_search_params(vp_search);
+						this.D_VideoPlaybackShape(as_any(pp));
 					} break;
 					case "/initplayback": {
 						debugger;

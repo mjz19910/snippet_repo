@@ -536,6 +536,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoDescriptionMusicSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner:1";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPlaybackShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPrimaryInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoSecondaryInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoViewCount";}
