@@ -9024,9 +9024,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_UrlAndElapsedMediaTime(atrUrl,this.a_primitive_str);
 		this.T_BaseUrl(ptrackingUrl,this.a_primitive_str);
 		this.T_BaseUrl(qoeUrl,this.a_primitive_str);
-		if(youtubeRemarketingUrl) {
-			debugger;
-		}
+		this.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.a_primitive_str));
 	}
 	/** @private @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
 	T_BaseUrl(x,f) {this.y("T_BaseUrl","baseUrl",x,f);}
