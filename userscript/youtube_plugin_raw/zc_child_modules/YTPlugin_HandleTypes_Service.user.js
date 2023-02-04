@@ -9131,7 +9131,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(itag);
 		this.t(url,x => {
 			debugger;
-			this.parser.parse_url(cf,x);
+			this.parser.parse_url(cf,as(x));
 		});
 		this.a_primitive_str(mimeType);
 		this.a_primitive_num(bitrate);
@@ -9166,6 +9166,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.t(loudnessDb,this.a_primitive_num);
 		this.t(signatureCipher,x => {
+			/** @type {`${cf}:signatureCipher`} */
 			const cf1=`${cf}:signatureCipher`;
 			let {s,sp,url,...y}=this.parse_url_search_params(x); this.g(y);
 			console.log("signatureCipher.s",s);
