@@ -282,8 +282,11 @@ class CodegenService extends BaseService {
 		if(k1==="targetId") return o;
 		if(k1==="panelIdentifier") return o;
 		if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {return o;}
-		if(o.startsWith("https://")) return o;
-		if(o.startsWith("http://")) return o;
+		if(o.startsWith("https://")||o.startsWith("http://")) {
+			let pt=split_string_once(o,"?");
+			if(pt.length===1) return o;
+			return `TYPE::\`${pt[0]}\${string}\``;
+		}
 		if(o.length>max_str_len) {
 			console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
 			return "TYPE::string";
@@ -947,7 +950,7 @@ class CodegenService extends BaseService {
 			if(gen_url.startsWith("https://")) {
 				let pt=split_string_once(gen_url,"?");
 				if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
-				return `TYPE::T_BaseUrl<\`${pt[0]}>\${string}\``;
+				return `TYPE::T_BaseUrl<\`${pt[0]}\${string}\`>`;
 			}
 			return `TYPE::T_BaseUrl<${b.baseUrl}>`;
 		}

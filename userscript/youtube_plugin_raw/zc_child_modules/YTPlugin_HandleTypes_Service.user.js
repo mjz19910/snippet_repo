@@ -9305,67 +9305,67 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_VideoDetails";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_PlaybackTracking";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_DesktopWatchAds";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_PlayerCaptionsTracklist";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_VideoQualityPromo";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_PlayerAttestation";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_CardCollection";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_PlayerMicroformat";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
-		const cf="D_PlayerConfig";
+		const cf="D_AdPlacement";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
-		const cf="D_PlayerConfig";
+		const cf="Popup_ShareEntityService";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {CD_PlayerSeek} x */
 	CD_PlayerSeek(x) {
-		const cf="D_PlayerConfig";
+		const cf="CD_PlayerSeek";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {CD_LiveChatReplay} x */
 	CD_LiveChatReplay(x) {
-		const cf="D_PlayerConfig";
+		const cf="CD_LiveChatReplay";
 		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {
-		const cf="D_PlayerConfig";
+		const cf="CD_Invalidation";
 		this.codegen_typedef_all(cf,x);
 	}
 	//#endregion
