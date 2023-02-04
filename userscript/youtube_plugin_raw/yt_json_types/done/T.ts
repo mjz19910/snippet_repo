@@ -30,7 +30,7 @@ type T_DialogPopup<T=R_ConfirmDialog>={
 type T_DialogPopup_ReuseFlag<T=R_ConfirmDialog>={
 	popup: T;
 	popupType: "DIALOG";
-	beReused: false;
+	beReused: boolean;
 };
 type T_DropdownPopup_ReuseFlag<T>={
 	popup: T;

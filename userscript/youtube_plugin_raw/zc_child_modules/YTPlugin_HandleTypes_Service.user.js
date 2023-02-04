@@ -9026,7 +9026,7 @@ class HandleTypes extends HandleTypesEval {
 		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
 		this.R_UnifiedSharePanel(popup);
 		if(popupType!=="DIALOG") debugger;
-		if(beReused!==false) debugger;
+		this.a_primitive_bool(beReused);
 	}
 	/** @private @arg {CD_PlayerSeek} x */
 	CD_PlayerSeek(x) {
