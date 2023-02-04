@@ -5096,6 +5096,7 @@ class HandleTypes extends HandleTypesEval {
 			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
 			case "www.youtube.com": return this.GU_YoutubeUrlRedirect(up.href);
+			case "myactivity.google.com": return;
 			default: debugger; break;
 		}
 		const hn_yt_studio="https://studio.youtube.com";
