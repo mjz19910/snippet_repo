@@ -9046,8 +9046,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
-		const cf="D_CardCollection";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_CardCollection"; this.k(cf,x);
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
@@ -9055,8 +9054,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
-		const cf="D_AdPlacement";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_AdPlacement"; this.k(cf,x);
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
