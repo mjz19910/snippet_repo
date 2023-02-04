@@ -1420,12 +1420,92 @@ class HandleTypes extends HandleTypesEval {
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @arg {E_YpcGetOfflineUpsell} x */
-	G_Innertube(x) {this.E_YpcGetOfflineUpsell(x);}
-	/** @private @arg {D_TwoColumnSearchResults} x */
-	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
-	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
-	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo","videoOwner",x,this.R_VideoOwner);}
+	/** @protected @arg {D_ToggleButtonIdData} x */
+	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
+	/** @private @arg {C_CommandExecutor} x */
+	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
+	/** @private @arg {C_Continuation} x */
+	C_Continuation(x) {
+		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
+		function is_m_next(x) {return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";}
+		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+		x: {
+			if(!a) break x;
+			if(!is_m_next(a)) break x;
+			this.M_Next(a);
+		}
+		this.DC_Continuation(b);
+	}
+	/** @private @arg {C_GetSurvey} x */
+	C_GetSurvey(x) {
+		const cf="C_GetSurvey"; this.k(cf,x);
+		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,a);
+		this.D_GetSurvey(c);
+		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
+		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
+	C_AdsControlFlowOpportunityReceived(x) {
+		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
+		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
+	}
+	/** @private @arg {C_ScrollToEngagementPanel} x */
+	C_ScrollToEngagementPanel(x) {
+		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
+		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
+	}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
+	/** @private @arg {C_ReloadContinuationItems} x */
+	C_ReloadContinuationItems(x) {
+		const cf="C_ReloadContinuationItems"; this.k(cf,x);
+		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
+	}
+	/** @private @arg {C_ShowReloadUi} x */
+	C_ShowReloadUi(x) {
+		const cf="C_ShowReloadUi"; this.k(cf,x);
+		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ShowReloadUi(a);
+	}
+	/** @private @arg {C_Executor} x */
+	C_Executor(x) {
+		const cf="C_Executor"; this.k(cf,x);
+		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_Executor(commandExecutorCommand);
+	}
+	/** @private @arg {C_UpdateToggleButtonState} x */
+	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
+	/** @private @arg {C_Loop} x */
+	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
+	/** @private @arg {C_RelatedChip} x */
+	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	/** @private @arg {C_ResetChannelUnreadCount} x */
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.g(a);}
+	/** @private @arg {C_RepeatChapter} x */
+	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
+	/** @arg {C_FollowUp} x */
+	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
+	/** @private @arg {C_EntityUpdate} x */
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_EntityBatchUpdate(a);}
+	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
+	C_EngagementPanelHeaderShowNavigationButton(x) {
+		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
+		this.DC_EngagementPanelHeaderShowNavigationButton(a);
+	}
+	/** @protected @arg {C_GetPdgBuyFlow} x */
+	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {R_CommentActionButtons} x */
@@ -1578,6 +1658,97 @@ class HandleTypes extends HandleTypesEval {
 	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
 	/** @private @arg {R_AdPlacement} x */
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
+	/** @arg {E_YpcGetOfflineUpsell} x */
+	G_Innertube(x) {this.E_YpcGetOfflineUpsell(x);}
+	/** @private @arg {DC_RepeatChapter} x */
+	DC_RepeatChapter(x) {x;}
+	/** @private @arg {DC_AddFollowUpSurvey} x */
+	DC_AddFollowUpSurvey(x) {x;}
+	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
+	DC_EngagementPanelHeaderShowNavigationButton(x) {x;}
+	/** @private @arg {DC_EntityBatchUpdate} x */
+	DC_EntityBatchUpdate(x) {x;}
+	/** @private @arg {DC_Loop} x */
+	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
+	/** @private @arg {DC_GetPdgBuyFlow} x */
+	DC_GetPdgBuyFlow(x) {x;}
+	/** @private @arg {DC_UpdateToggleButtonState} x */
+	DC_UpdateToggleButtonState(x) {
+		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(a);
+		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
+	}
+	/** @private @arg {DC_RelatedChip} x */
+	DC_RelatedChip(x) {
+		const cf="DC_RelatedChip"; this.k(cf,x);
+		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
+		if(loadCached!==true) debugger;
+	}
+	/** @private @arg {DC_Timed} x */
+	DC_Timed(x) {
+		const cf="DC_Timed"; this.k(cf,x);
+		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(timeoutMs!==60000) debugger;
+		this.params(cf,"TimedContinuation",continuation);
+	}
+	/** @private @arg {DC_ShowReloadUi} x */
+	DC_ShowReloadUi(x) {
+		const cf="DC_ShowReloadUi"; this.k(cf,x);
+		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
+		this.D_UiTargetId(targetId);
+	}
+	/** @type {string[]} */
+	DC_AddToPlaylist_listTypes=[
+		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
+	];
+	/** @private @arg {DC_AddToPlaylist} x */
+	DC_AddToPlaylist(x) {
+		const code_template=(x => {let x1=x.split("/*Start*/")[1]; return x1.split("/*End*/")[0];})(`
+		switch(x.listType) {
+			default: break;
+			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
+				const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.SE_CreatePlaylist(onCreateListCommand);
+				this.t(openListPanel,this.a_primitive_bool);
+				this.z([openMiniplayer],this.a_primitive_bool);
+				this.videoId(videoId);
+				this.z(videoIds,this.videoId);
+			}/*End*/
+		}`);
+		const cf="DC_AddToPlaylist";
+		this.save_string(`${cf}.listType`,x.listType);
+		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
+			let known=this.DC_AddToPlaylist_listTypes;
+			this.DC_AddToPlaylist_listTypes.push(x.listType);
+			this.codegen_typedef_all(cf,x);
+			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
+			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
+		}
+		switch(x.listType) {
+			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
+				if("openListPanel" in x) {
+					const {openMiniplayer,videoId,listType: {},onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					this.E_CreatePlaylistService(onCreateListCommand);
+					if(openListPanel!==true) debugger;
+					if(openMiniplayer!==false) debugger;
+					this.a_primitive_bool(openMiniplayer);
+					this.videoId(videoId);
+					this.z(videoIds,this.videoId);
+					return;
+				}
+				const {openMiniplayer,videoId,listType: {},onCreateListCommand,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_CreatePlaylistService(onCreateListCommand);
+				this.a_primitive_bool(openMiniplayer);
+				this.videoId(videoId);
+				this.z(videoIds,this.videoId);
+			}
+		}
+	}
+	/** @private @arg {D_TwoColumnSearchResults} x */
+	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
+	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
+	D_PlaylistSidebarSecondaryInfo(x) {this.H_("D_PlaylistSidebarSecondaryInfo","videoOwner",x,this.R_VideoOwner);}
 	/** @arg {D_RichSection} x */
 	D_RichSection(x) {
 		const cf="D_RichSection"; this.k(cf,x);
@@ -3000,39 +3171,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
-	/** @protected @arg {D_ToggleButtonIdData} x */
-	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
-	/** @private @arg {C_CommandExecutor} x */
-	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
-	/** @private @arg {C_Continuation} x */
-	C_Continuation(x) {
-		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
-		function is_m_next(x) {return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";}
-		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		x: {
-			if(!a) break x;
-			if(!is_m_next(a)) break x;
-			this.M_Next(a);
-		}
-		this.DC_Continuation(b);
-	}
-	/** @private @arg {C_GetSurvey} x */
-	C_GetSurvey(x) {
-		const cf="C_GetSurvey"; this.k(cf,x);
-		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,a);
-		this.D_GetSurvey(c);
-		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
-		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
-		if(sendPost!==true) debugger;
-	}
-	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
-	C_AdsControlFlowOpportunityReceived(x) {
-		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
-		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
-	}
 	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
 	G_DC_CommandExecutor_CommandItem(x) {
 		const cf="DC_CommandExecutor.command";
@@ -3793,15 +3931,6 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {C_ScrollToEngagementPanel} x */
-	C_ScrollToEngagementPanel(x) {
-		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
-		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
-	}
-	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {DC_ScrollToEngagementPanel} x */
 	DC_ScrollToEngagementPanel(x) {
 		const cf="DC_ScrollToEngagementPanel"; this.k(cf,x);
@@ -3877,20 +4006,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @private @arg {C_ReloadContinuationItems} x */
-	C_ReloadContinuationItems(x) {
-		const cf="C_ReloadContinuationItems"; this.k(cf,x);
-		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
-	}
-	/** @private @arg {C_ShowReloadUi} x */
-	C_ShowReloadUi(x) {
-		const cf="C_ShowReloadUi"; this.k(cf,x);
-		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ShowReloadUi(a);
-	}
 	/** @type {D_UiTargetId[]} */
 	reload_ui_target_id_arr=[];
 	/** @arg {D_UiTargetId} x */
@@ -3898,66 +4013,6 @@ class HandleTypes extends HandleTypesEval {
 		switch(x) {
 			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
 			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
-		}
-	}
-	/** @private @arg {DC_ShowReloadUi} x */
-	DC_ShowReloadUi(x) {
-		const cf="DC_ShowReloadUi"; this.k(cf,x);
-		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
-		this.D_UiTargetId(targetId);
-	}
-	/** @private @arg {C_Executor} x */
-	C_Executor(x) {
-		const cf="C_Executor"; this.k(cf,x);
-		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_Executor(commandExecutorCommand);
-	}
-	/** @type {string[]} */
-	DC_AddToPlaylist_listTypes=[
-		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
-	];
-	/** @private @arg {DC_AddToPlaylist} x */
-	DC_AddToPlaylist(x) {
-		const code_template=(x => {let x1=x.split("/*Start*/")[1]; return x1.split("/*End*/")[0];})(`
-		switch(x.listType) {
-			default: break;
-			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
-				const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.SE_CreatePlaylist(onCreateListCommand);
-				this.t(openListPanel,this.a_primitive_bool);
-				this.z([openMiniplayer],this.a_primitive_bool);
-				this.videoId(videoId);
-				this.z(videoIds,this.videoId);
-			}/*End*/
-		}`);
-		const cf="DC_AddToPlaylist";
-		this.save_string(`${cf}.listType`,x.listType);
-		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
-			let known=this.DC_AddToPlaylist_listTypes;
-			this.DC_AddToPlaylist_listTypes.push(x.listType);
-			this.codegen_typedef_all(cf,x);
-			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
-			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
-		}
-		switch(x.listType) {
-			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
-				if("openListPanel" in x) {
-					const {openMiniplayer,videoId,listType: {},onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					this.E_CreatePlaylistService(onCreateListCommand);
-					if(openListPanel!==true) debugger;
-					if(openMiniplayer!==false) debugger;
-					this.a_primitive_bool(openMiniplayer);
-					this.videoId(videoId);
-					this.z(videoIds,this.videoId);
-					return;
-				}
-				const {openMiniplayer,videoId,listType: {},onCreateListCommand,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_CreatePlaylistService(onCreateListCommand);
-				this.a_primitive_bool(openMiniplayer);
-				this.videoId(videoId);
-				this.z(videoIds,this.videoId);
-			}
 		}
 	}
 	/** @private @arg {M_CreatePlaylist} x */
@@ -6352,61 +6407,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
-	/** @private @arg {C_UpdateToggleButtonState} x */
-	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
-	/** @private @arg {C_Loop} x */
-	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
-	/** @private @arg {C_RelatedChip} x */
-	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
-	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
-	/** @arg {C_FollowUp} x */
-	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
-	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_EntityBatchUpdate(a);}
-	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {
-		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
-		this.DC_EngagementPanelHeaderShowNavigationButton(a);
-	}
-	/** @protected @arg {C_GetPdgBuyFlow} x */
-	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
-	/** @private @arg {C_ShowReelsCommentsOverlay} x */
-	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
-	/** @private @arg {DC_RepeatChapter} x */
-	DC_RepeatChapter(x) {x;}
-	/** @private @arg {DC_AddFollowUpSurvey} x */
-	DC_AddFollowUpSurvey(x) {x;}
-	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
-	DC_EngagementPanelHeaderShowNavigationButton(x) {x;}
-	/** @private @arg {DC_EntityBatchUpdate} x */
-	DC_EntityBatchUpdate(x) {x;}
-	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
-	/** @private @arg {DC_GetPdgBuyFlow} x */
-	DC_GetPdgBuyFlow(x) {x;}
-	/** @private @arg {DC_UpdateToggleButtonState} x */
-	DC_UpdateToggleButtonState(x) {
-		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(a);
-		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
-	}
-	/** @private @arg {DC_RelatedChip} x */
-	DC_RelatedChip(x) {
-		const cf="DC_RelatedChip"; this.k(cf,x);
-		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
-		if(loadCached!==true) debugger;
-	}
-	/** @private @arg {DC_Timed} x */
-	DC_Timed(x) {
-		const cf="DC_Timed"; this.k(cf,x);
-		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(timeoutMs!==60000) debugger;
-		this.params(cf,"TimedContinuation",continuation);
-	}
 	/** @private @arg {D_TopbarLogo} x */
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo"; this.k(cf,x);
