@@ -9007,8 +9007,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
-		const cf="D_VideoDetails";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_VideoDetails"; this.k(cf,x);
 	}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {
@@ -9018,13 +9017,20 @@ class HandleTypes extends HandleTypesEval {
 			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
 		}
 		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
-		this.D_UrlAndElapsedMediaTime(atrUrl);
+		this.D_UrlAndElapsedMediaTime(atrUrl,this.a_primitive_str);
+		this.T_BaseUrl(ptrackingUrl,this.a_primitive_str);
+		this.T_BaseUrl(qoeUrl,this.a_primitive_str);
+		if(youtubeRemarketingUrl) {
+			debugger;
+		}
 	}
-	/** @private @arg {D_UrlAndElapsedMediaTime} x */
-	D_UrlAndElapsedMediaTime(x) {
+	/** @private @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
+	T_BaseUrl(x,f) {this.y("T_BaseUrl","baseUrl",x,f);}
+	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
+	D_UrlAndElapsedMediaTime(x,f) {
 		const cf="D_UrlAndElapsedMediaTime";
 		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(baseUrl);
+		f.call(this,baseUrl);
 		this.a_primitive_num(elapsedMediaTimeSeconds);
 	}
 	/** @private @arg {D_DesktopWatchAds} x */

@@ -2178,14 +2178,14 @@ type D_PlayabilityStatus={
 	contextParams: string;
 };
 type D_PlaybackTracking={
-	atrUrl: D_UrlAndElapsedMediaTime;
-	ptrackingUrl: T_BaseUrl<`https://www.youtube.com/ptracking${string}`>;
-	qoeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/qoe${string}`>;
+	atrUrl: D_UrlAndElapsedMediaTime<`https://s.youtube.com/api/stats/atr?${string}`>;
+	ptrackingUrl: T_BaseUrl<`https://www.youtube.com/ptracking?${string}`>;
+	qoeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/qoe?${string}`>;
 	videostatsDefaultFlushIntervalSeconds: 40;
-	videostatsDelayplayUrl: D_UrlAndElapsedMediaTime;
-	videostatsPlaybackUrl: T_BaseUrl<never>;
+	videostatsDelayplayUrl: D_UrlAndElapsedMediaTime<`https://s.youtube.com/api/stats/delayplay?${string}`>;
+	videostatsPlaybackUrl: T_BaseUrl<`https://s.youtube.com/api/stats/playback?${string}`>;
 	videostatsScheduledFlushWalltimeSeconds: [10,20,30];
-	videostatsWatchtimeUrl: T_BaseUrl<never>;
+	videostatsWatchtimeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/watchtime?${string}`>;
 	youtubeRemarketingUrl?: T_BaseUrl<never>;
 };
 type PlayerAdParams={
@@ -2207,11 +2207,39 @@ type D_PlayerCaptionsTracklist={
 	translationLanguages: D_TranslationLanguage[];
 	defaultAudioTrackIndex: number;
 };
+type E_WebPlayerShareEntityService={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: {
+			sendPost: true;
+			apiUrl: "/youtubei/v1/share/get_web_player_share_panel";
+		};
+	};
+	webPlayerShareEntityServiceEndpoint: {
+		serializedShareEntity: string;
+	};
+};
+
 type D_PlayerConfig={
 	audioConfig: D_AudioConfig;
 	streamSelectionConfig: D_StreamSelectionConfig;
-	mediaCommonConfig: {};
-	webPlayerConfig: {};
+	mediaCommonConfig: {
+		dynamicReadaheadConfig: {
+			maxReadAheadMediaTimeMs: 120000;
+			minReadAheadMediaTimeMs: 15000;
+			readAheadGrowthRateMs: 1000;
+		};
+	};
+	webPlayerConfig: {
+		useCobaltTvosDash: true;
+		webPlayerActionsPorting: {
+			getSharePanelCommand: E_WebPlayerShareEntityService;
+			subscribeCommand: E_Subscribe;
+			unsubscribeCommand: E_Unsubscribe;
+			addToWatchLaterCommand: E_PlaylistEdit;
+			removeFromWatchLaterCommand: E_PlaylistEdit;
+		};
+	};
 };
 type D_PlayerLiveStoryboardSpec={spec: string;};
 type D_PlayerMicroformat={
@@ -2878,8 +2906,8 @@ type D_Url={
 	target?: "TARGET_NEW_WINDOW";
 	nofollow?: true;
 };
-type D_UrlAndElapsedMediaTime={
-	baseUrl: string;
+type D_UrlAndElapsedMediaTime<T>={
+	baseUrl: T;
 	elapsedMediaTimeSeconds: number;
 };
 type YTExternalUrl=T_SplitOnce<T_SplitOnce<D_YTExternalEncUrl,"]">[1]," ">[1];
@@ -2906,9 +2934,19 @@ type D_VideoDescriptionMusicSection={
 };
 type D_VideoDetails={
 	videoId: string;
-	channelId: string;
-	author: string;
 	title: string;
+	lengthSeconds: `${number}`;
+	keywords: string[];
+	channelId: `UC${string}`;
+	isOwnerViewing: false;
+	shortDescription: string;
+	isCrawlable: true;
+	thumbnail: D_Thumbnail;
+	allowRatings: true;
+	author: string;
+	isPrivate: false;
+	isUnpluggedCorpus: false;
+	isLiveContent: false;
 };
 type D_VideoIdTagStr=string&{_tag: "YtVideoId";};
 type D_VideoOwner={
