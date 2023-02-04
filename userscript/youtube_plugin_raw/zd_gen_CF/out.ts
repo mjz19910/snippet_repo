@@ -480,6 +480,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PromotedSparklesWeb";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Radio";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RadioShareUrl";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Range";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelWatch";}
