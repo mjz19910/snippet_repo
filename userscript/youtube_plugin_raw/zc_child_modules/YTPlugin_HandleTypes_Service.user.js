@@ -2540,23 +2540,6 @@ class HandleTypes extends HandleTypesEval {
 		"",
 		"DELETE",
 	];
-	/** @protected @arg {CF_D_Button} cf @arg {Extract<D_Button,{targetId:any}>['targetId']} x */
-	D_Button_TargetId(cf,x) {
-		///** @type {string} */
-		//let ux=x;
-		///** @type {(typeof x)|"clip-info-button"} */
-		// let x=as(ux);
-		/** @private @type {D_Button_TargetId} */
-		switch(x) {
-			default: this.codegen_case("D_Button_TargetId",x); break;
-			case "clip-info-button":
-			case "create-clip-button-action-bar":
-			case "sponsorships-button":
-			case "watch-supervod-button":
-		}
-		this.targetId(cf,x);
-		this.t;
-	}
 	/** @type {string[]} */
 	Button_missing_iconType=[];
 	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
