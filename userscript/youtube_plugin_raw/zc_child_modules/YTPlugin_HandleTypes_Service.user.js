@@ -8898,8 +8898,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(signatureCipher,x => {
 			/** @type {`${cf}:signatureCipher`} */
 			const cf1=`${cf}:signatureCipher`;
-			let {s,sp,url,...y}=this.parse_url_search_params(x); this.g(y);
-			console.log("signatureCipher.s",s);
+			let {s: {},sp,url,...y}=this.parse_url_search_params(x); this.g(y);
 			switch(sp) {
 				default: debugger; break;
 				case "sig": break;
