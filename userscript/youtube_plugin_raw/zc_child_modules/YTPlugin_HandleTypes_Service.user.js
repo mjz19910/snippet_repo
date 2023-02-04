@@ -8856,6 +8856,17 @@ class HandleTypes extends HandleTypesEval {
 		clickLocationTargets;
 		adBadge;
 	}
+	/** @private @arg {"D_AdaptiveFormatItem"} cf @arg {`s=${string}&sp=sig&url=${string}`} x */
+	D_Format_signatureCipher(cf,x) {
+		/** @type {`${cf}:signatureCipher`} */
+		const cf1=`${cf}:signatureCipher`;
+		let {s: {},sp,url,...y}=this.parse_url_search_params(x); this.g(y);
+		switch(sp) {
+			default: debugger; break;
+			case "sig": break;
+		}
+		this.parser.parse_url(cf1,as(url));
+	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {
 		const cf="D_AdaptiveFormatItem";
@@ -8895,16 +8906,41 @@ class HandleTypes extends HandleTypesEval {
 			if(x!==2) debugger;
 		});
 		this.t(loudnessDb,this.a_primitive_num);
-		this.t(signatureCipher,x => {
-			/** @type {`${cf}:signatureCipher`} */
-			const cf1=`${cf}:signatureCipher`;
-			let {s: {},sp,url,...y}=this.parse_url_search_params(x); this.g(y);
-			switch(sp) {
+		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
+	}
+	/** @private @arg {D_FormatItem} x */
+	D_FormatItem(x) {
+		const cf="D_FormatItem";
+		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(itag);
+		this.t(url,x => this.parser.parse_url(cf,x));
+		this.a_primitive_str(mimeType);
+		this.a_primitive_num(bitrate);
+		this.t(width,this.a_primitive_num);
+		this.t(height,this.a_primitive_num);
+		this.a_primitive_str(lastModified);
+		this.t(contentLength,this.a_primitive_str);
+		this.a_primitive_str(quality);
+		this.t(fps,this.D_FormatFps);
+		this.t(qualityLabel,this.a_primitive_str);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.t(averageBitrate,this.a_primitive_num);
+		this.t(audioQuality,x => {
+			switch(x) {
 				default: debugger; break;
-				case "sig": break;
+				case "AUDIO_QUALITY_LOW":
+				case "AUDIO_QUALITY_MEDIUM":
 			}
-			this.parser.parse_url(cf1,as(url));
 		});
+		this.a_primitive_str(approxDurationMs);
+		this.t(audioSampleRate,x => {
+			switch(x) {
+				default: debugger; break;
+				case "44100": case "48000":
+			}
+		});
+		this.t(audioChannels,x => {if(x!==2) debugger;});
+		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 	}
 	/** @private @arg {D_FormatColorInfo} x */
 	D_FormatColorInfo(x) {
@@ -8939,41 +8975,6 @@ class HandleTypes extends HandleTypesEval {
 		const {start,end,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(start);
 		this.a_primitive_str(end);
-	}
-	/** @private @arg {D_FormatItem} x */
-	D_FormatItem(x) {
-		const cf="D_FormatItem";
-		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(itag);
-		this.t(url,x => this.parser.parse_url(cf,x));
-		this.a_primitive_str(mimeType);
-		this.a_primitive_num(bitrate);
-		this.t(width,this.a_primitive_num);
-		this.t(height,this.a_primitive_num);
-		this.a_primitive_str(lastModified);
-		this.t(contentLength,this.a_primitive_str);
-		this.a_primitive_str(quality);
-		this.t(fps,this.D_FormatFps);
-		this.t(qualityLabel,this.a_primitive_str);
-		if(projectionType!=="RECTANGULAR") debugger;
-		this.t(averageBitrate,this.a_primitive_num);
-		this.t(audioQuality,x => {
-			switch(x) {
-				default: debugger; break;
-				case "AUDIO_QUALITY_LOW":
-				case "AUDIO_QUALITY_MEDIUM":
-			}
-		});
-		this.a_primitive_str(approxDurationMs);
-		this.t(audioSampleRate,x => {
-			switch(x) {
-				default: debugger; break;
-				case "44100": case "48000":
-			}
-		});
-		this.t(audioChannels,x => {
-			if(x!==2) debugger;
-		});
 	}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {

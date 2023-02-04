@@ -1709,6 +1709,7 @@ type D_FormatItem={
 	approxDurationMs: `${number}`;
 	audioSampleRate: `${D_AudioSampleRate}`;
 	audioChannels: 2;
+	signatureCipher?: `s=${string}&sp=sig&url=${string}`;
 };
 type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<MP_AccountMenu>; popupType: "DROPDOWN"; beReused: true;};
 type D_GhostGrid={rows: number;};
