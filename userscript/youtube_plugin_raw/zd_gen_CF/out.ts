@@ -670,6 +670,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Reload";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_ShowReelsCommentsOverlay";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_UserFeedback";}

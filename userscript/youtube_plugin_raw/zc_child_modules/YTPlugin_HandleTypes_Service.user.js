@@ -6393,6 +6393,20 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(a);
 		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
 	}
+	/** @private @arg {DC_RelatedChip} x */
+	DC_RelatedChip(x) {
+		const cf="DC_RelatedChip"; this.k(cf,x);
+		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
+		if(loadCached!==true) debugger;
+	}
+	/** @private @arg {DC_Timed} x */
+	DC_Timed(x) {
+		const cf="DC_Timed"; this.k(cf,x);
+		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(timeoutMs!==60000) debugger;
+		this.params(cf,"TimedContinuation",continuation);
+	}
 	/** @private @arg {D_TopbarLogo} x */
 	D_TopbarLogo(x) {
 		const cf="D_TopbarLogo"; this.k(cf,x);
@@ -6547,13 +6561,6 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
 		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {DC_RelatedChip} x */
-	DC_RelatedChip(x) {
-		const cf="DC_RelatedChip"; this.k(cf,x);
-		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
-		if(loadCached!==true) debugger;
 	}
 	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
@@ -7588,13 +7595,22 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Thumbnail(thumbnail);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {DC_Timed} x */
-	DC_Timed(x) {
-		const cf="DC_Timed"; this.k(cf,x);
-		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(timeoutMs!==60000) debugger;
-		this.params(cf,"TimedContinuation",continuation);
+	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
+	DC_Generic_CTP(cf,path,x) {
+		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
+		this.params(cf,path,continuation);
+		this.clickTrackingParams(cf,clickTrackingParams);
 	}
+	/** @private @arg {DC_SectionList_SearchFeed} x */
+	DC_SectionList_SearchFeed(x) {
+		const cf="DC_SectionList_SearchFeed"; this.k(cf,x);
+		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(cf,trackingParams);
+		if(targetId!=="search-feed") debugger;
+		this.z(contents,this.TR_SectionListItem_3_Empty);
+	}
+	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
 		const cf="DC_LiveChat"; this.k(cf,x);
@@ -8137,12 +8153,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(autoReloadWhenEmpty,true);
 		this.R_Button(bottomButton);
 	}
-	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
-	DC_Generic_CTP(cf,path,x) {
-		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
-		this.params(cf,path,continuation);
-		this.clickTrackingParams(cf,clickTrackingParams);
-	}
 	/** @private @arg {D_EndScreenVideo} x */
 	D_EndScreenVideo(x) {
 		const cf="D_EndScreenVideo"; this.k(cf,x);
@@ -8517,14 +8527,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_HideEnclosingContainer} x */
 	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
-	/** @private @arg {DC_SectionList_SearchFeed} x */
-	DC_SectionList_SearchFeed(x) {
-		const cf="DC_SectionList_SearchFeed"; this.k(cf,x);
-		const {trackingParams,targetId,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(cf,trackingParams);
-		if(targetId!=="search-feed") debugger;
-		this.z(contents,this.TR_SectionListItem_3_Empty);
-	}
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
@@ -9090,8 +9092,6 @@ class HandleTypes extends HandleTypesEval {
 	R_UnifiedSharePanel(x) {x;}
 	/** @private @arg {R_Card} x */
 	R_Card(x) {x;}
-	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
