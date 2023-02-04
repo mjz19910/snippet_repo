@@ -3151,8 +3151,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
-		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_WithAccessibility",x);}
-		if("owner" in x) return this.D_Video_Handle("D_Video_WithOwner",x);
+		if("accessibility" in x) {
+			return this.D_Video_Handle("D_Video_With_Accessibility",x);
+		}
+		if("owner" in x) {
+			if("isWatched" in x) return this.D_Video_Handle("D_Video_With_Owner_IsWatched",x);
+			return this.D_Video_Handle("D_Video_With_Owner",x);
+		}
 		if("videoId" in x) {
 			if("topStandaloneBadge" in x) {return this.D_Video_Handle("D_Video_With_VideoId_TopStandaloneBadge",x);}
 			if("descriptionSnippet" in x) {return this.D_Video_Handle("D_Video_With_VideoId_DescriptionSnippet",x);}
