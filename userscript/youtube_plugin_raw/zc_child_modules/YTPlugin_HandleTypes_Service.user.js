@@ -8773,10 +8773,22 @@ class HandleTypes extends HandleTypesEval {
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
 		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
+	/** @type {[string,...any[]][]} */
+	log_buffer=[];
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
-		const {...y}=this.s(cf,x);
+		const {expire,...y}=this.s(cf,x);
+		let expiry_date=this.parse_number_template(expire);
+		let dt_str=new Date(expiry_date).toISOString(); dt_str;
+		this.log_buffer.push(["[D_VideoPlaybackShape.expire] [%s]",expire]);
+		Promise.resolve().then(() => {
+			if(this.log_buffer.length===0) return;
+			for(let log of this.log_buffer) {
+				console.log(...log);
+			}
+			this.log_buffer.length=0;
+		});
 		let ka=this.get_keys_of(y);
 		console.log("[D_VideoPlaybackShape.next_key] [%s]",ka[0]);
 	}
@@ -9031,7 +9043,7 @@ class HandleTypes extends HandleTypesEval {
 			default: switch(xs) {
 
 			}; debugger; break;
-			case "25": case "30": case "50": case "60":
+			case "13": case "25": case "30": case "50": case "60":
 		}
 	}
 	/** @private @arg {D_Range} x */

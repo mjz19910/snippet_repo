@@ -33,8 +33,9 @@ type D_UrlFormat=
 ;
 // cspell:disable-next
 type D_VideoPlayback_SearchParams=`?expire=${string}&ei=${string}&ip=${string}&id=${string}&itag=${string}&aitags=${string}&source=${string}&requiressl=${string}&mh=${string}&mm=${string}&mn=${string}&ms=${string}&mv=${string}&mvi=${string}&pl=${string}&initcwndbps=${string}&vprv=${string}&mime=${string}&ns=${string}&gir=${string}&clen=${string}&dur=${string}&lmt=${string}&mt=${string}&fvip=${string}&keepalive=${string}&fexp=${string}&c=${string}&txp=${string}&n=${string}&sparams=${string}&lsparams=${string}&lsig=${string}`;
+type T_UnixTime_In6Hours<T>=T;
 type D_VideoPlaybackShape_S_Params={
-	expire: "1675571153";
+	expire: `${T_UnixTime_In6Hours<number>}`;
 	// cspell:disable-next
 	ei: "cdveY6SaL5qWsfIPpY66yAM";
 	ip: "104.243.223.8";
