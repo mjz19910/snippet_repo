@@ -57,7 +57,7 @@ type D_VideoPlaybackShape_S_Params={
 };
 type D_VideoPlaybackShape_LS_Params={
 	mh: "B2";
-	mm: "31,26";
+	mm: `${31},${26}`;
 	// cspell:disable-next
 	mn: "sn-nx57ynsl,sn-n4v7snls";
 	ms: "au,onr";
@@ -66,16 +66,16 @@ type D_VideoPlaybackShape_LS_Params={
 	pl: "24";
 	// cspell:disable-next
 	initcwndbps: "727500";
-}
+};
 type D_VideoPlaybackShape=D_VideoPlaybackShape_S_Params&D_VideoPlaybackShape_LS_Params&{
-	itag: "137";
-	mt: "1675549280";
+	itag: `${137}`;
+	mt: `${1675549280}`;
 	// cspell:disable-next
 	fvip: "4";
 	keepalive: "yes";
-	fexp: "24007246";
+	fexp: `${24007246}`;
 	c: "WEB";
-	txp: "5432432";
+	txp: `${5432432}`;
 	n: "WK22LLZ6U2MWGn";
 	// cspell:disable-next
 	sparams: "expire,ei,ip,id,aitags,source,requiressl,vprv,mime,ns,gir,clen,dur,lmt";
