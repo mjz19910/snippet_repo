@@ -28,5 +28,6 @@ type D_UrlFormat=
 	|YTExternalUrl
 	|NonNullable<D_AdaptiveFormatItem["url"]>
 	|NonNullable<D_FormatItem["url"]>
+	|TP_ParseUrlSearchParams<D_FormatItem_signatureCipher>["url"]
 	;
 ;
