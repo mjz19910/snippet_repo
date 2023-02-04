@@ -2757,7 +2757,22 @@ type D_SubscribeButton_Alts={
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 };
-type D_SubscribeButton=D_SubscribeButton_Base&D_SubscribeButton_Alts;
+type D_SubscribeButton={
+	buttonText: G_Text;
+	subscribed: false;
+	enabled: true;
+	type: "FREE";
+	channelId: D_ChannelId;
+	showPreferences: false;
+	subscribedButtonText: G_Text;
+	unsubscribedButtonText: G_Text;
+	trackingParams: string;
+	unsubscribeButtonText: G_Text;
+	subscribeAccessibility: D_Accessibility;
+	unsubscribeAccessibility: D_Accessibility;
+	onSubscribeEndpoints: E_Subscribe[];
+	onUnsubscribeEndpoints: E_SignalService_SendPost[];
+};
 type D_SubscriptionButton={
 	type: "FREE";
 	subscribed?: boolean;

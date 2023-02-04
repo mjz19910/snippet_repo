@@ -3817,7 +3817,8 @@ class HandleTypes extends HandleTypesEval {
 		if("entityKey" in x) {
 			const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
 			this.G_Text(buttonText);
-			this.params(cf,"entity_key.subscribed",entityKey);
+			// this.params(cf,"entity_key.subscribed",entityKey);
+			debugger;
 			return;
 		}
 		if("buttonText" in x) {
@@ -3859,19 +3860,23 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton"; this.k(cf,x);
+		const {onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x); this.g(y);
+		this.z(onSubscribeEndpoints,this.E_Subscribe);
+		this.z(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
 		if("serviceEndpoints" in x) {
-			const {serviceEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x);
-			this.z(serviceEndpoints,this.E_Subscribe);
-			this.g(y);
+			// const {serviceEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x);
+			// this.z(serviceEndpoints,this.E_Subscribe);
+			// this.g(y);
+			debugger;
 			return;
 		}
 		if("targetId" in x) {
-			const {targetId,notificationPreferenceButton,onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x); this.g(y);
+			const {targetId,onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=this.D_SubButton_Omit_Button(cf,x); this.g(y);
 			this.ceq(targetId,"watch-subscribe");
-			this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
+			// this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 			return;
 		}
-		x===""; this.codegen_typedef_all(cf,x);
+		// x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_Subscribe} x */
 	DE_Subscribe(x) {
