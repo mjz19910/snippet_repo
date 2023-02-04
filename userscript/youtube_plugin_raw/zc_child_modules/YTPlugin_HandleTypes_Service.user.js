@@ -9174,7 +9174,7 @@ class HandleTypes extends HandleTypesEval {
 				default: debugger; break;
 				case "sig": break;
 			}
-			this.parser.parse_url(cf1,url);
+			this.parser.parse_url(cf1,as(url));
 		});
 	}
 	/** @private @arg {D_FormatColorInfo} x */
