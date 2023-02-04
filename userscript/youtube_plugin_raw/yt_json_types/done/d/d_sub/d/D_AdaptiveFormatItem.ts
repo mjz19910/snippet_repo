@@ -1,6 +1,7 @@
+type D_FormatItem_url=`https://rr5---sn-nx5s7n7d.googlevideo.com/videoplayback?${string}`;
 type D_AdaptiveFormatItem={
 	itag: number;
-	url?: `https://rr5---sn-nx5s7n7d.googlevideo.com/videoplayback?${string}`;
+	url?: D_FormatItem_url;
 	mimeType: G_MimeTypeFormat;
 	bitrate: number;
 	width?: number;
@@ -21,5 +22,6 @@ type D_AdaptiveFormatItem={
 	audioSampleRate?: `${D_AudioSampleRate}`;
 	audioChannels?: 2;
 	loudnessDb?: number;
-	signatureCipher?: `s=${string}&sp=${"sig"}&url=${string}`;
+	signatureCipher?: D_FormatItem_signatureCipher;
 };
+type D_FormatItem_signatureCipher=`s=${string}&sp=${"sig"}&url=https://rr3---sn-nx57ynsl.googlevideo.com/videoplayback%3F${string}`;

@@ -205,7 +205,8 @@ type TP_Color<T extends T_IsColorHelper<T,U>,U extends string>=T;
 type TP_ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? TP_ParseUrlValue<U>&TP_ParseUrlItems<Z>:T extends `${infer U}`? TP_ParseUrlValue<U>:never;
 type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${infer Z}`? [U,...TP_KeyofSearchParams<Z>]:T extends `${infer U}=${string}`? [U]:[];
 type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
-type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: C;}:T;
+type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: DecodeUriComponent<C>;}:T;
+type DecodeUriComponent<T extends string>=T_Replace<T,`%3${"f"|"F"}`,"?">;
 type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];

@@ -1,0 +1,20 @@
+type D_FormatItem={
+	itag: number;
+	url: D_FormatItem_url;
+	mimeType: "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"";
+	bitrate: number;
+	width: number;
+	height: number;
+	lastModified: `${number}`;
+	contentLength?: `${number}`;
+	quality: QualityLabel;
+	fps: D_FormatFps;
+	qualityLabel: "360p";
+	projectionType: "RECTANGULAR";
+	averageBitrate?: number;
+	audioQuality: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
+	approxDurationMs: `${number}`;
+	audioSampleRate: `${D_AudioSampleRate}`;
+	audioChannels: 2;
+	signatureCipher?: D_FormatItem_signatureCipher;
+};

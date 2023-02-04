@@ -8776,8 +8776,12 @@ class HandleTypes extends HandleTypesEval {
 			case "googlevideo.com": {
 				this.save_string("google_video_host",s_host[0]);
 				switch(x.pathname) {
-					case "/videoplayback":
-					case "/initplayback": break;
+					case "/videoplayback": {
+						debugger;
+					} break;
+					case "/initplayback": {
+						debugger;
+					} break;
 					case "/videogoodput": {
 						let pp=this.parse_url_search_params(x.search);
 						this.VideoGoodPutShape(pp);
@@ -8875,7 +8879,7 @@ class HandleTypes extends HandleTypesEval {
 		clickLocationTargets;
 		adBadge;
 	}
-	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {`s=${string}&sp=sig&url=${string}`} x */
+	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {D_FormatItem_signatureCipher} x */
 	D_Format_signatureCipher(cf,x) {
 		/** @type {`${cf}:signatureCipher`} */
 		const cf1=`${cf}:signatureCipher`;

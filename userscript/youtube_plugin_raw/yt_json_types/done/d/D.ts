@@ -1691,26 +1691,6 @@ type D_FormatColorInfo={
 	matrixCoefficients: "COLOR_MATRIX_COEFFICIENTS_BT709";
 };
 type D_FormatFps=25|30|50|60;
-type D_FormatItem={
-	itag: number;
-	url: `https://rr3---sn-nx57ynlk.googlevideo.com/videoplayback?${string}`;
-	mimeType: "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"";
-	bitrate: number;
-	width: number;
-	height: number;
-	lastModified: `${number}`;
-	contentLength?: `${number}`;
-	quality: QualityLabel;
-	fps: D_FormatFps;
-	qualityLabel: "360p";
-	projectionType: "RECTANGULAR";
-	averageBitrate?: number;
-	audioQuality: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";
-	approxDurationMs: `${number}`;
-	audioSampleRate: `${D_AudioSampleRate}`;
-	audioChannels: 2;
-	signatureCipher?: `s=${string}&sp=sig&url=${string}`;
-};
 type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<MP_AccountMenu>; popupType: "DROPDOWN"; beReused: true;};
 type D_GhostGrid={rows: number;};
 type D_GoogleLoginExternalUrl={url: "https://accounts.google.com/AddSession?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den-GB%26next%3D%252F&hl=en-GB&passive=false&service=youtube&uilel=0";}["url"];
