@@ -948,6 +948,16 @@ class HandleTypes extends HandleTypesEval {
 		let p=as_any(pf);
 		switch(p[0]) {
 			default: p[0]===""; debugger; break;
+			case "source": {
+				let [,id,...u]=p;
+				let s2=split_string_once(u[0],'?');
+				if(s2.length!==2) debugger;
+				this.videoId(id);
+				switch(s2[0]) {
+					default: s2[0]===""; debugger; break;
+					case "shorts": break;
+				}
+			} break;
 			case "hashtag": {
 				let [,ht,...u]=p;
 				if(u.length===0) {
