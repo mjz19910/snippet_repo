@@ -6531,7 +6531,8 @@ class HandleTypes extends HandleTypesEval {
 	G_BrowseFeed(x) {
 		const cf="G_BrowseFeed"; this.k(cf,x);
 		if("richItemRenderer" in x) return this.R_RichItem(x);
-		this.codegen_typedef_all(cf,x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
 	A_WatchNext(x) {
