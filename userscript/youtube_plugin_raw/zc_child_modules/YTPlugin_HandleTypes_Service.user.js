@@ -8777,18 +8777,23 @@ class HandleTypes extends HandleTypesEval {
 	log_buffer=[];
 	is_moment_js_loaded=false;
 	is_moment_js_loading=false;
+	/** @type {Promise<null>|null} */
+	loading_promise=null;
 	load_moment_js_if_not_loaded() {
+		if(this.loading_promise!==null) return this.loading_promise;
 		if(this.is_moment_js_loading) return null;
 		let s=document.createElement("script");
 		s.src="https://momentjs.com/downloads/moment.min.js";
 		this.is_moment_js_loading=true;
-		return new Promise((a) => {
+		this.loading_promise=new Promise((a) => {
 			s.onload=() => {
 				this.is_moment_js_loaded=true;
+				this.loading_promise=null;
 				a(null);
 			};
 			document.head.append(s);
 		});
+		return this.loading_promise;
 	}
 	async run_logger() {
 		if(this.log_buffer.length===0) return;
