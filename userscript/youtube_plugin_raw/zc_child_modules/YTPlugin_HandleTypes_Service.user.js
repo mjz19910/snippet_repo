@@ -6302,6 +6302,7 @@ class HandleTypes extends HandleTypesEval {
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
+		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
@@ -9028,6 +9029,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="CD_Invalidation";
 		this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	C_ShowReelsCommentsOverlay(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

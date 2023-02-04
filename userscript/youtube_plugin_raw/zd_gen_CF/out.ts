@@ -102,6 +102,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem:signatureCipher";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloudChip";}
