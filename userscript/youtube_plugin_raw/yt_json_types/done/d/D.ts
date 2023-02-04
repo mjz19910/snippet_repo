@@ -1690,7 +1690,7 @@ type D_FormatColorInfo={
 	transferCharacteristics: "COLOR_TRANSFER_CHARACTERISTICS_BT709";
 	matrixCoefficients: "COLOR_MATRIX_COEFFICIENTS_BT709";
 };
-type D_FormatFps=25|50|60;
+type D_FormatFps=25|30|50|60;
 type D_FormatItem={
 	itag: number;
 	url: `https://rr3---sn-nx57ynlk.googlevideo.com/videoplayback?${string}`;
@@ -2174,7 +2174,7 @@ type D_PlayabilityStatus={
 	status: "OK";
 	playableInEmbed: true;
 	offlineability?: R_Button;
-	miniplayer: R_Miniplayer;
+	miniplayer?: R_Miniplayer;
 	contextParams: string;
 };
 type D_PlaybackTracking={

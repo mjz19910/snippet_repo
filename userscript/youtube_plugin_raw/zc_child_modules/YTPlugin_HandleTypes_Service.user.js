@@ -361,6 +361,21 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "D_Browse.param.f94.f1.f2": switch(map_entry_key) {
+				case 1: case 2: case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "D_Browse.param.f94.f1": switch(map_entry_key) {
+				case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "D_Browse.param.f94": switch(map_entry_key) {
+				case 1: case 5:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "subscribe.params": switch(map_entry_key) {
 				case 2: case 3:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -568,7 +583,7 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1[]":
-					case "f1": case "f2":
+					case "f1": case "f2": case "f3":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
@@ -1736,8 +1751,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_Page"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
+		if("_tag" in x) return this.E_Settings(x);
+		if("searchEndpoint" in x) return this.E_Search(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {E_Settings} x */
+	E_Settings(x) {x;}
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
 	GE_Browse(x) {
@@ -3606,7 +3626,7 @@ class HandleTypes extends HandleTypesEval {
 			this.R_ReelPlayerOverlay(overlay);
 			this.params(cf,"reel.params",params);
 			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
-			this.params(cf,"reel.sequence_params",sequenceParams);
+			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
 			return;
 		}
 		if("inputType" in x) {
@@ -8727,7 +8747,7 @@ class HandleTypes extends HandleTypesEval {
 		if(status!=="OK") debugger;
 		if(playableInEmbed!==true) debugger;
 		this.t(offlineability,this.R_Button);
-		this.R_Miniplayer(miniplayer);
+		this.t(miniplayer,this.R_Miniplayer);
 		let ctx=atob(contextParams);
 		this.params(cf,"playability_status.context_params",ctx);
 	}
@@ -8928,7 +8948,7 @@ class HandleTypes extends HandleTypesEval {
 			default: switch(xs) {
 
 			}; debugger; break;
-			case "25": case "50": case "60":
+			case "25": case "30": case "50": case "60":
 		}
 	}
 	/** @private @arg {D_Range} x */
