@@ -3146,7 +3146,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
-		this.codegen_typedef_all("D_Video",x);
 		if("accessibility" in x) {console.log("video.accessibility",this.get_keys_of(x).join()); return this.D_Video_Handle("D_Video_WithAccessibility",x);}
 		if("owner" in x) return this.D_Video_Handle("D_Video_WithOwner",x);
 		if("videoId" in x) {
@@ -3290,7 +3289,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
-	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:D_Video['thumbnailOverlays']}} T @arg {T} x */
+	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
