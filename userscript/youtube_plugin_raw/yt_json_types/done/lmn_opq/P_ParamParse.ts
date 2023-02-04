@@ -1,4 +1,6 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [subscribe.params.f2]",
+	"[parse_value.gen_ns] [subscribe.params.f3]",
 	"[parse_value.gen_ns] [D_Browse.param.f2]",
 	"[parse_value.gen_ns] [entity_key.normal.f2.f1]",
 	"[parse_value.gen_ns] [playability_status.context_params.f2.f1]",

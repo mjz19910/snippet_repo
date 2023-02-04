@@ -268,13 +268,14 @@ type G_EngagementPanelSectionShowCommands=A_ChangeEngagementPanelVisibility|A_Sh
 type G_Action_GetNotificationsMenu_Popup=T_DropdownPopup_ReuseFlag<P_NotificationMenu_Popup>;
 type G_Action_GetNotificationsMenu=TA_OpenPopup<G_Action_GetNotificationsMenu_Popup>;
 type G_ClientSignal={signal: "CLIENT_SIGNAL"; actions: G_ClientSignal_Item[];};
-type G_ClientSignal_Item=[
-	A_SendFeedback,
-	A_Signal,
-	C_AddToPlaylist,
-	E_ShowEngagementPanel,
-	OP_ClientSignal,
-][number];
+type G_ClientSignal_Item=
+	|A_SendFeedback
+	|A_Signal
+	|C_AddToPlaylist
+	|E_ShowEngagementPanel
+	|OP_ClientSignal
+	;
+;
 type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;
 type G_Text=({runs: D_TextRun[];}|{simpleText: string;})&G_Text_Base;
 type G_Text_Base={accessibility?: D_Accessibility;};
