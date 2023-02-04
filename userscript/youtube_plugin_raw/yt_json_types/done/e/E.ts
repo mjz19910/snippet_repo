@@ -28,11 +28,6 @@ type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedb
 type E_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
 type E_Url=TE_Endpoint_3<"urlEndpoint",DU_Url,M_VE83769>;
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832_Watch>;
-type GM_VE3832_WatchPlaylist={
-	url: `/playlist?list=RD${string}&playnext=1&index=${number}`;
-	webPageType: "WEB_PAGE_TYPE_WATCH";
-	rootVe: 3832;
-};
 type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE3832_WatchPlaylist>;
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_Empty_WCM>;

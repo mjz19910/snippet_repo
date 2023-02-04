@@ -49,8 +49,6 @@ type GE_Browse=
 	;
 ;
 type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
-type GM_VE_WC_Browse=GE_Browse_WCM["webCommandMetadata"];
-type GM_VE3854_PT={parentTrackingParams: string;};
 
 type GE_Browse_WCM=GE_Browse["commandMetadata"]|M_VE3854_ResolveUrl;
 
@@ -101,12 +99,6 @@ type GD_Icon=NonNullable<[
 ][number]>;
 type GE_Button_navigation=E_ShareEntityService|E_Watch|GE_Browse;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
-type GM_Base={
-	url?: D_UrlFormat;
-	webPageType?: YtPageTypeEnum;
-	apiUrl?: D_ApiPathFormat;
-	sendPost?: boolean;
-};
 type GT_KnownSplit=T_Split<D_KnownGet>[number];
 type GV_sub_57yn=[
 	"lk",
@@ -135,7 +127,6 @@ type GV_SubDomain=[
 	"r1---sn-p5qlsny6",
 ][number];
 
-type GM_Like=GM_LikeLike|GM_Dislike|GM_RemoveLike;
 type GA_EditPlaylist=C_RefreshPlaylist|TA_OpenPopup_Empty;
 type RSB_EditPlaylist={
 	responseContext: RC_ResponseContext;

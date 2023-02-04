@@ -2482,13 +2482,6 @@ type D_Saved={
 	data?: {[x: string]: ({}[])|undefined;};
 };
 type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
-type GM_VE6827_Browse_SearchBox={
-	url: "/feed/history";
-	sendPost: true;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 6827;
-	apiUrl: "/youtubei/v1/browse";
-};
 type DE_VE6827_Browse_SearchBox={
 	browseId: "FEhistory";
 	query: "";

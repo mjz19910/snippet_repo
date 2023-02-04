@@ -1,6 +1,5 @@
 type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;};
 type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
-type GM_Unsubscribe={sendPost: true;apiUrl: "/youtubei/v1/subscription/unsubscribe";};
 type D_Button_NavEP=GE_Browse|E_ShareEntityService;
 type D_Button_style=
 	|"STYLE_BLUE_TEXT"
