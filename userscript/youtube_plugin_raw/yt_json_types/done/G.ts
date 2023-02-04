@@ -50,12 +50,7 @@ type GE_Browse=
 ;
 type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
 type GM_VE_WC_Browse=GE_Browse_WCM["webCommandMetadata"];
-type M_VE3854_ResolveUrl={
-	webCommandMetadata: GM_VE3854_WC;
-	resolveUrlCommandMetadata: {
-		parentTrackingParams: string;
-	};
-};
+type GM_VE3854_PT={parentTrackingParams: string;};
 
 type GE_Browse_WCM=GE_Browse["commandMetadata"]|M_VE3854_ResolveUrl;
 

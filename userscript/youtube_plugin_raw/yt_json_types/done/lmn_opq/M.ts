@@ -1,4 +1,6 @@
 type M_Empty_WCM=TM_Gen<{}>;
+type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
+type M_VE3854_ResolveUrl={webCommandMetadata: GM_VE3854_WC; resolveUrlCommandMetadata: GM_VE3854_PT;};
 //#region M_VE
 type M_VE3611=TM_Gen<GM_VE3611_WC>;
 type M_VE3832_Watch=TM_Gen<GM_VE3832_Watch>;

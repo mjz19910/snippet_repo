@@ -28,7 +28,6 @@ type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC
 // [DC_,GM_,M_,C_]
 type DC_GetPdgBuyFlow=DC_Params;
 type GM_GetPdgBuyFlow=T_GM_PostApi_WithApiUrl<"/youtubei/v1/pdg/get_pdg_buy_flow">;
-type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
 type C_GetPdgBuyFlow=TE_Endpoint_3<"getPdgBuyFlowCommand",DC_GetPdgBuyFlow,M_GetPdgBuyFlow>;
 //#endregion
 type DC_Generic={continuation: string;};
