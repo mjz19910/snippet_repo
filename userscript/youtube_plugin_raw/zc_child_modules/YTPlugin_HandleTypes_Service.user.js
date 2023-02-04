@@ -5413,6 +5413,22 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
+		if("videoInteractions" in x) {
+			const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.R_LikeButton(likeButton);
+			this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
+			this.R_Menu(menu);
+			this.R_Button(nextItemButton);
+			this.R_Button(prevItemButton);
+			this.R_SubscribeButton(subscribeButtonRenderer);
+			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+			this.g(videoInteractions);
+			this.R_Button(viewCommentsButton);
+			this.trackingParams(cf,trackingParams);
+			this.R_Button(shareButton);
+			this.R_PivotButton(pivotButton);
+			return;
+		}
 		if("likeButton" in x) {
 			const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.R_LikeButton(likeButton);
