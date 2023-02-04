@@ -8856,7 +8856,7 @@ class HandleTypes extends HandleTypesEval {
 		clickLocationTargets;
 		adBadge;
 	}
-	/** @private @arg {"D_AdaptiveFormatItem"} cf @arg {`s=${string}&sp=sig&url=${string}`} x */
+	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {`s=${string}&sp=sig&url=${string}`} x */
 	D_Format_signatureCipher(cf,x) {
 		/** @type {`${cf}:signatureCipher`} */
 		const cf1=`${cf}:signatureCipher`;
@@ -8911,7 +8911,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {
 		const cf="D_FormatItem";
-		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,...y}=this.s(cf,x); this.g(y);
+		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
 		this.a_primitive_str(mimeType);
