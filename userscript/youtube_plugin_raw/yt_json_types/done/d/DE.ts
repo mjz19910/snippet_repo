@@ -14,4 +14,3 @@ type DE_IconType_Button=[
 	"CHEVRON_RIGHT","CHEVRON_LEFT","REMOVE","INFO","CLOSE","MICROPHONE_ON",
 ][number];
 //#endregion
-//#region Entity data

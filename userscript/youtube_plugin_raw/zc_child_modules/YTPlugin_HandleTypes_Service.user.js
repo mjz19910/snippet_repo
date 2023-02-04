@@ -1969,20 +1969,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
 	G_DE_Browse_VE(ve_name,x) {
 		const cf="G_DE_Browse_VE";
-		if("params" in x&&"canonicalBaseUrl" in x) {
+		if("canonicalBaseUrl" in x) {
 			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.params(cf,"D_Browse.param",c);
+			this.t(c,c => this.params(cf,"D_Browse.param",c));
 			this._decode_channel_url(ve_name,d);
 			return this.GU_E_BrowseId(ve_name,a);
 		}
 		if("params" in x) {
 			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.params(cf,"D_Browse.param",c);
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("canonicalBaseUrl" in x) {
-			const {browseId: a,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this._decode_channel_url(ve_name,d);
+			this.t(c,c => this.params(cf,"D_Browse.param",c));
 			return this.GU_E_BrowseId(ve_name,a);
 		}
 		if("query" in x) {
@@ -2632,6 +2627,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(style,x => {
 			switch(x) {
 				default: debugger; x===""; break;
+				case "STYLE_PRIMARY":
 				case "STYLE_OPACITY":
 				case "STYLE_SUGGESTIVE":
 				case "STYLE_TEXT":
