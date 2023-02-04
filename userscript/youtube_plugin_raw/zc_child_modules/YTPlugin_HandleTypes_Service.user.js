@@ -51,7 +51,7 @@ const generate_typedef={value: null};
 class TypedefGenerator extends ServiceMethods {
 	/** @protected @arg {string} cf @arg {{}} x */
 	k=(cf,x) => this.save_keys(`[${cf}]`,x);
-	/** @arg {Popup_ConfirmDialog|Popup_DismissibleDialog} x */
+	/** @arg {D_TypedefGenerator_Popup} x */
 	popup_dialog(x) {
 		const cf="popup_dialog"; cf; this.k(cf,x);
 		let x1=this.unpack_popup_dialog(x);
@@ -59,7 +59,7 @@ class TypedefGenerator extends ServiceMethods {
 		let dialog=x1[1];
 		return this.popup_dialog_1(dialog);
 	}
-	/** @arg {R_ConfirmDialog|R_FancyDismissibleDialog} x */
+	/** @arg {D_TypedefGenerator_Popup_R} x */
 	popup_dialog_1(x) {
 		const cf="R_ConfirmDialog"; cf; this.k(cf,x);
 		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
@@ -1527,6 +1527,22 @@ class HandleTypes extends HandleTypesEval {
 	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
 	/** @private @arg {R_AdPlacement} x */
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
+	/** @private @arg {R_TextHeader} x */
+	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
+	/** @private @arg {R_UnifiedSharePanel} x */
+	R_UnifiedSharePanel(x) {
+		const cf="R_UnifiedSharePanel";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
+	/** @private @arg {R_Card} x */
+	R_Card(x) {
+		const cf="R_Card";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {CD_Reload} x */
@@ -5565,8 +5581,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(targetId!=="browse-feedFEhistory") debugger;
 	}
-	/** @private @arg {R_TextHeader} x */
-	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {D_TextHeader} x */
 	D_TextHeader(x) {x;}
 	/** @private @template T1,T2,T3 @arg {TR_SectionListItem_3<T1,T2,T3>} x */
@@ -9207,20 +9221,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Unsubscribe} x */
 	E_Unsubscribe(x) {
 		const cf="E_Unsubscribe";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
-	}
-	/** @private @arg {R_UnifiedSharePanel} x */
-	R_UnifiedSharePanel(x) {
-		const cf="R_UnifiedSharePanel";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
-	}
-	/** @private @arg {R_Card} x */
-	R_Card(x) {
-		const cf="R_Card";
 		const {...y}=this.s(cf,x);
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
