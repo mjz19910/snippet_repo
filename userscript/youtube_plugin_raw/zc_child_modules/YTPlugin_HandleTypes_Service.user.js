@@ -7791,7 +7791,8 @@ class HandleTypes extends HandleTypesEval {
 				default: log_color("l1_p_tc",x); break;
 				case 0xff191610: case 0xff191410: case 0xff101619: case 0xff101819: case 0xff101019: case 0xff191515: case 0xff191011: case 0xff191513:
 				case 0xff141319: case 0xff131019: case 0xff191615: case 0xff141019: case 0xff191014: case 0xff191110: case 0xff191010: case 0xff191310:
-				case 0xff181019: case 0xff101319: case 0xff191012: case 0xff101519: case 0xff101119: case 0xff161519:
+				case 0xff181019: case 0xff101319: case 0xff191012: case 0xff101519: case 0xff101119: case 0xff161519: case 0xff101219: case 0xff111019:
+				case 0xff101219:
 			}
 		}
 		{
@@ -7800,7 +7801,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xff706248: case 0xff755d4c: case 0xff4c6675: case 0xff486970: case 0xff595a89: case 0xff6b5a5a: case 0xff7f5255: case 0xff705d56:
 				case 0xff655684: case 0xff625c7a: case 0xff6b5d5b: case 0xff695684: case 0xff5b5989: case 0xff7f5267: case 0xff7f5254: case 0xff7a554f:
 				case 0xff755b4c: case 0xff4f5f7a: case 0xff7f525c: case 0xff75604c: case 0xff706148: case 0xff4c6275: case 0xff52607f: case 0xff7b527f:
-				case 0xff565a84: case 0xff605b6b:
+				case 0xff565a84: case 0xff605b6b: case 0xff565e84: case 0xff5c5a89: case 0xff565e84:
 			}
 		}
 		{
@@ -7808,7 +7809,7 @@ class HandleTypes extends HandleTypesEval {
 				default: log_color("l1_s2_c",x); break;
 				case 0xf2f8f6f1: case 0xf2f8f4f1: case 0xf2f1f5f8: case 0xf2f1f7f8: case 0xf2f1f1f8: case 0xf2f8f1f1: case 0xf2f3f1f8: case 0xf2f8f3f1:
 				case 0xf2f2f1f8: case 0xf2f4f1f8: case 0xf2f8f2f1: case 0xf2f8f1f4: case 0xf2f1f3f8: case 0xf2f8f5f1: case 0xf2f7f1f8: case 0xf2f8f1f2:
-				case 0xff565a84: case 0xff605b6b:
+				case 0xff565a84: case 0xff605b6b: case 0xf2f1f2f8:
 			}
 		}
 		{
@@ -7817,6 +7818,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xf2ebe7dd: case 0xf2ebe3dd: case 0xf2dde6eb: case 0xf2dde9eb: case 0xf2ddddeb: case 0xf2ebdddd: case 0xf2ebddde: case 0xf2ebe1dd:
 				case 0xf2e2ddeb: case 0xf2e0ddeb: case 0xf2e3ddeb: case 0xf2ebdfdd: case 0xf2deddeb: case 0xf2ebdde4: case 0xf2ebe2dd: case 0xf2dde2eb:
 				case 0xf2ebe4dd: case 0xf2ebdde0: case 0xf2ebe6dd: case 0xf2eaddeb: case 0xf2dde5eb: case 0xf2dde1eb: case 0xf2dddeeb: case 0xf2e1ddeb:
+				case 0xf2dde0eb:
 			}
 		}
 	}
@@ -7864,7 +7866,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xffccbea3: case 0xffccb4a3: case 0xffa3bccc: case 0xffa3c5cc: case 0xffa3a3cc: case 0xffccacac: case 0xffcca3a6: case 0xffccada3:
 				case 0xffb0a3cc: case 0xffaba3cc: case 0xffccb2ae: case 0xffb4a3cc: case 0xffa4a3cc: case 0xffcca3b6: case 0xffcca3a4: case 0xffcca9a3:
 				case 0xffccb2a3: case 0xffa3b2cc: case 0xffcca3ab: case 0xffccb7a3: case 0xffccbca3: case 0xffcca8a3: case 0xffa3b9cc: case 0xffa3afcc:
-				case 0xffc8a3cc: case 0xffa3a6cc: case 0xffcca9c3: case 0xffccb5a3: case 0xffb7aecc:
+				case 0xffc8a3cc: case 0xffa3a6cc: case 0xffcca9c3: case 0xffccb5a3: case 0xffb7aecc: case 0xffa3aacc: case 0xffa5a3cc:
 			}
 		}
 		{
@@ -7873,7 +7875,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xf228231a: case 0xf2331d0e: case 0xf2112633: case 0xf2062026: case 0xf2090a33: case 0xf2332b2b: case 0xf233191b: case 0xf2332a27:
 				case 0xf2231b33: case 0xf2292633: case 0xf2332c2b: case 0xf21f1133: case 0xf2090733: case 0xf2331925: case 0xf2331516: case 0xf2330e07:
 				case 0xf2332116: case 0xf233261f: case 0xf2071733: case 0xf2330e16: case 0xf233271c: case 0xf2282216: case 0xf2331a16: case 0xf2112333:
-				case 0xf2071433: case 0xf2311c33: case 0xf2070b33: case 0xf2332a30: case 0xf2332519: case 0xf22d2b33:
+				case 0xf2071433: case 0xf2311c33: case 0xf2070b33: case 0xf2332a30: case 0xf2332519: case 0xf22d2b33: case 0xf2151a33: case 0xf2222133:
 			}
 		}
 		{
@@ -7882,7 +7884,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xf20c0b08: case 0xf2190e07: case 0xf2081319: case 0xf2020a0c: case 0xf2040519: case 0xf2191515: case 0xf2190c0d: case 0xf2191513:
 				case 0xf2110d19: case 0xf2141319: case 0xf2191615: case 0xf20f0819: case 0xf2040319: case 0xf2190c12: case 0xf2190a0b: case 0xf2190703:
 				case 0xf219100b: case 0xf219130f: case 0xf2030b19: case 0xf219070b: case 0xf219130e: case 0xf20c0a07: case 0xf2190d0b: case 0xf2081119:
-				case 0xf2030a19: case 0xf2180e19: case 0xf2030519: case 0xf2191518: case 0xf219120c: case 0xf2161519:
+				case 0xf2030a19: case 0xf2180e19: case 0xf2030519: case 0xf2191518: case 0xf219120c: case 0xf2161519: case 0xf20a0d19: case 0xf2111019:
 			}
 		}
 	}
