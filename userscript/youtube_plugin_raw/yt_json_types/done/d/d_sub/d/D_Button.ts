@@ -34,7 +34,8 @@ type D_Button={
 	tooltip?: string;
 	trackingParams: string;
 	accessibilityData?: D_Accessibility;
-	command?: C_ShowReelsCommentsOverlay;
+	targetId?: "create-clip-button-action-bar";
+	command?: C_ShowReelsCommentsOverlay|A_ChangeEngagementPanelVisibility;
 };
 
 type R_Button={buttonRenderer: D_Button;};
