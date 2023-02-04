@@ -2496,7 +2496,7 @@ class HandleTypes extends HandleTypesEval {
 			case "browse-video-menu-button":
 		}
 	}
-	/** @type {NonNullable<Extract<D_Button,{icon:any}>["icon"]>["iconType"][]} */
+	/** @type {NonNullable<D_Button["icon"]>["iconType"][]} */
 	Button_iconType=[
 		"SHORTS_COMMENT",
 	];
