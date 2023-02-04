@@ -7793,13 +7793,13 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		{
-			const x=s_tc; switch(x) {
-				default: log_color("l1_s_tc",x); break;
-				case 0xff706248: case 0xff755d4c: case 0xff4c6675: case 0xff486970: case 0xff595a89: case 0xff6b5a5a: case 0xff7f5255: case 0xff705d56:
-				case 0xff655684: case 0xff625c7a: case 0xff6b5d5b: case 0xff695684: case 0xff5b5989: case 0xff7f5267: case 0xff7f5254: case 0xff7a554f:
-				case 0xff755b4c: case 0xff4f5f7a: case 0xff7f525c: case 0xff75604c: case 0xff706148: case 0xff4c6275: case 0xff52607f: case 0xff7b527f:
-				case 0xff565a84: case 0xff605b6b: case 0xff565e84: case 0xff5c5a89: case 0xff565e84: case 0xff6b5966: case 0xff486a70:
-			}
+			const x=s_tc;
+			let a=x%256;
+			let r=(x>>>8)%256;
+			let g=(x>>>16)%256;
+			let b=(x>>>24)%256;
+			if(a!==0xff) debugger;
+			log_color("l1_s_tc_r",r);
 		}
 		{
 			const x=s2_c; switch(x) {

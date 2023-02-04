@@ -7,7 +7,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.visibility";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "DE_SignalNavigation.signal";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_Button_TargetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_GuideEntry_TargetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_RichMetadata";}
@@ -82,6 +81,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
@@ -99,7 +99,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DMD_RowContainer";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem:signatureCipher";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem:signatureCipher" | "D_FormatItem:signatureCipher";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button";}
