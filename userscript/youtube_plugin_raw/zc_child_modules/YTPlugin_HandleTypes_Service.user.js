@@ -7884,7 +7884,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xf2231b33: case 0xf2292633: case 0xf2332c2b: case 0xf21f1133: case 0xf2090733: case 0xf2331925: case 0xf2331516: case 0xf2330e07:
 				case 0xf2332116: case 0xf233261f: case 0xf2071733: case 0xf2330e16: case 0xf233271c: case 0xf2282216: case 0xf2331a16: case 0xf2112333:
 				case 0xf2071433: case 0xf2311c33: case 0xf2070b33: case 0xf2332a30: case 0xf2332519: case 0xf22d2b33: case 0xf2151a33: case 0xf2222133:
-				case 0xf2052126:
+				case 0xf2052126: case 0xf233110d:
 			}
 		}
 		{
@@ -7894,7 +7894,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xf2110d19: case 0xf2141319: case 0xf2191615: case 0xf20f0819: case 0xf2040319: case 0xf2190c12: case 0xf2190a0b: case 0xf2190703:
 				case 0xf219100b: case 0xf219130f: case 0xf2030b19: case 0xf219070b: case 0xf219130e: case 0xf20c0a07: case 0xf2190d0b: case 0xf2081119:
 				case 0xf2030a19: case 0xf2180e19: case 0xf2030519: case 0xf2191518: case 0xf219120c: case 0xf2161519: case 0xf20a0d19: case 0xf2111019:
-				case 0xf2010b0c:
+				case 0xf2010b0c: case 0xf2190806:
 			}
 		}
 	}
