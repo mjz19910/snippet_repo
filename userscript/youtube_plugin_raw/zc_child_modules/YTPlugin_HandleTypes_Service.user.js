@@ -2628,10 +2628,12 @@ class HandleTypes extends HandleTypesEval {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
+	/** @private @arg {D_Button_NavEP} x */
+	D_Button_NavEP(x) {x;}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		const cf="D_Button";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,accessibilityData,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
 			switch(x) {
@@ -2644,6 +2646,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(isDisabled,x => {if(x!==false) debugger;});
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
+		this.t(navigationEndpoint,this.D_Button_NavEP)
 		this.t(accessibility,this.D_Label);
 		this.t(tooltip,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);

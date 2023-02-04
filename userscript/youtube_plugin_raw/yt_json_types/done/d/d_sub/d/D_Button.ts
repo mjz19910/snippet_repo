@@ -20,7 +20,7 @@ type E_Unsubscribe={
 	commandMetadata: M_Unsubscribe;
 	unsubscribeEndpoint: DE_Unsubscribe;
 };
-
+type D_Button_NavEP=GE_Browse;
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 type D_Button={
 	style?: "STYLE_DEFAULT"|"STYLE_BLUE_TEXT"|"STYLE_TEXT";
@@ -29,6 +29,7 @@ type D_Button={
 	serviceEndpoint?: D_Button_SE;
 	text?: G_Text;
 	icon?: T_Icon<"SHORTS_COMMENT">;
+	navigationEndpoint?: D_Button_NavEP;
 	accessibility?: D_Label;
 	tooltip?: string;
 	trackingParams: string;
