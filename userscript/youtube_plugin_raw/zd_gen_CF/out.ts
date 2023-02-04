@@ -324,6 +324,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_BrowserMediaSession";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CardCollection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CarouselLockup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelSwitcherHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelSwitcherPage";}
@@ -725,6 +726,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RelatedChip";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_RepeatChapter";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_ResetChannelUnreadCount";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_ShowReelsCommentsOverlay";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_UpdateToggleButtonState";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_ShowEngagementPanel";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_YpcGetOfflineUpsell";}
@@ -805,6 +807,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Feedback";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_FlagGetForm";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetNotificationMenu";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetPdgBuyFlow";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetSharePanel";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetTranscript";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}

@@ -1847,6 +1847,8 @@ class HandleTypes extends HandleTypesEval {
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
+	/** @private @arg {M_GetPdgBuyFlow} x */
+	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
 	/** @private @arg {M_GetTranscript} x */
@@ -2226,10 +2228,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @protected @arg {GM_UserFeedback} x */
-	GM_UserFeedback(x) {
-		const v=this.w("GM_UserFeedback","ignoreNavigation",x);
-		if(v!==true) debugger;
-	}
+	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
+	/** @protected @arg {GM_GetPdgBuyFlow} x */
+	GM_GetPdgBuyFlow(x) {x;}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_GetSharePanel} x */
@@ -6372,14 +6373,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {x;}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
 	DC_AddFollowUpSurvey(x) {x;}
 	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
 	DC_EngagementPanelHeaderShowNavigationButton(x) {x;}
-	/** @private @arg {M_GetPdgBuyFlow} x */
-	M_GetPdgBuyFlow(x) {x;}
 	/** @private @arg {DC_EntityBatchUpdate} x */
 	DC_EntityBatchUpdate(x) {x;}
 	/** @private @arg {DC_Loop} x */
@@ -9046,7 +9047,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
-		const cf="D_CardCollection"; this.k(cf,x);
+		const cf="D_CardCollection";
+		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x); this.g(y);
+		this.z(cards,this.R_Card);
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
@@ -9079,14 +9082,16 @@ class HandleTypes extends HandleTypesEval {
 		const cf="CD_Invalidation";
 		this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {C_ShowReelsCommentsOverlay} x */
-	C_ShowReelsCommentsOverlay(x) {x;}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {x;}
 	/** @private @arg {E_Unsubscribe} x */
 	E_Unsubscribe(x) {x;}
 	/** @private @arg {R_UnifiedSharePanel} x */
 	R_UnifiedSharePanel(x) {x;}
+	/** @private @arg {R_Card} x */
+	R_Card(x) {x;}
+	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
+	DC_ShowReelsCommentsOverlay(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
