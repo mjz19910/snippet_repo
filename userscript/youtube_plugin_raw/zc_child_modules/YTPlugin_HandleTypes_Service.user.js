@@ -3150,6 +3150,18 @@ class HandleTypes extends HandleTypesEval {
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
 		this.tz(buttons,this.R_ToggleButton);
 	}
+	/** @private @arg {"D_Video_With:videoId"|"D_Video_With:videoId:topStandaloneBadge"|"D_Video_With:videoId:descriptionSnippet"} cf @arg {D_Video} x */
+	D_Video_With_Add_IsWatched(cf,x) {
+		if("isWatched" in x) return this.D_Video_Handle(`${cf}:isWatched`,x);
+		return this.D_Video_Handle(cf,x);
+	}
+	/** @private @arg {D_Video} x */
+	D_Video_With_VideoId(x) {
+		const cf="D_Video_With:videoId";
+		if("topStandaloneBadge" in x) return this.D_Video_With_Add_IsWatched(`${cf}:topStandaloneBadge`,x);
+		if("descriptionSnippet" in x) return this.D_Video_With_Add_IsWatched(`${cf}:descriptionSnippet`,x);
+		return this.D_Video_With_Add_IsWatched(cf,x);
+	}
 	/** @private @arg {D_Video} x */
 	D_Video(x) {
 		if("accessibility" in x) {
@@ -3160,11 +3172,7 @@ class HandleTypes extends HandleTypesEval {
 			return this.D_Video_Handle("D_Video_With_Owner",x);
 		}
 		if("videoId" in x) {
-			if("topStandaloneBadge" in x) {return this.D_Video_Handle("D_Video_With_VideoId_TopStandaloneBadge",x);}
-			if("descriptionSnippet" in x) {
-				return this.D_Video_Handle("D_Video_With_VideoId_DescriptionSnippet",x);
-			}
-			return this.D_Video_Handle("D_Video_With_VideoId",x);
+			return this.D_Video_With_VideoId(x);
 		}
 		console.log("video.other",this.get_keys_of(x).join());
 		this.D_Video_Handle("D_Video_Other",x);
