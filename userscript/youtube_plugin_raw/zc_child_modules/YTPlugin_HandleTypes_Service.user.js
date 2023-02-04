@@ -8888,7 +8888,7 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case "sig": break;
 		}
-		this.parser.parse_url(cf1,as(url));
+		this.parser.parse_url(cf1,url);
 	}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {
