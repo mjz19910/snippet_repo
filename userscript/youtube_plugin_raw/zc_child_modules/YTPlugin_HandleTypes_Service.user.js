@@ -2767,8 +2767,8 @@ class HandleTypes extends HandleTypesEval {
 						const cf2=`${cf1}:${k2}`; this.k(cf2,x);
 						let {icon: a,tooltip,isDisabled,...y1}=this.D_Button_WithIcon_Omit(cf2,x); y1;
 						switch(a.iconType) {
-							default: debugger; break;
-							case "SETTINGS": case "SHARE":
+							default: this.codegen_typedef_all(cf2,x); debugger; break;
+							case "SETTINGS": case "SHARE": case "CHEVRON_RIGHT": case "CHEVRON_LEFT":
 						}
 						return;
 					}
@@ -8955,14 +8955,19 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
-	/** @private @arg {D_TranscriptSegment} x */
-	D_TranscriptSegment(x) {const cf="D_TranscriptSegment"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_PdgCommentChip} x */
-	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {D_PromotedSparklesWeb} x */
-	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {G_AdditionalDataItem} x */
+	G_AdditionalDataItem(x) {
+		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
+		switch(d.key) {
+			default: debugger; break;
+			case "lockup": {
+				if(d.value!=="player") debugger;
+			} break;
+			case "video_id": {
+				this.videoId(d.value);
+			} break;
+		}
+	}
 	/** @private @arg {AD_ReplayChatItem} x */
 	AD_ReplayChatItem(x) {
 		const cf="AD_ReplayChatItem";
@@ -8970,11 +8975,34 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,this.A_AddChatItem);
 		this.a_primitive_str(videoOffsetTimeMsec);
 	}
+	/** @private @arg {G_ChatItem} x */
+	G_ChatItem(x) {
+		const cf="G_ChatItem"; this.k(cf,x);
+		if("liveChatTextMessageRenderer" in x) return;
+		if("liveChatPlaceholderItemRenderer" in x) return;
+		if("liveChatViewerEngagementMessageRenderer" in x) return;
+	}
 	/** @private @arg {AD_AddChatItem} x */
 	AD_AddChatItem(x) {
 		const cf="AD_AddChatItem";
 		const {item,clientId,...y}=this.s(cf,x); this.g(y);
+		this.G_ChatItem(item);
+		this.t(clientId,x => console.log(`${cf}.clientId`,x));
 	}
+	/** @private @arg {D_TranscriptSegment} x */
+	D_TranscriptSegment(x) {
+		const cf="D_TranscriptSegment";
+		const {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+		this.trackingParams(cf,x);
+		this.D_Accessibility(accessibility);
+		this.t(targetId,x => console.log(`${cf}.targetId`,x));
+	}
+	/** @private @arg {D_PdgCommentChip} x */
+	D_PdgCommentChip(x) {const cf="D_PdgCommentChip"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {D_PrivacyDropdownItem} x */
+	D_PrivacyDropdownItem(x) {const cf="D_PrivacyDropdownItem"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {D_PromotedSparklesWeb} x */
+	D_PromotedSparklesWeb(x) {const cf="D_PromotedSparklesWeb"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {x;}
 	/** @private @arg {D_FormatItem} x */
@@ -9001,19 +9029,6 @@ class HandleTypes extends HandleTypesEval {
 	D_PlayerMicroformat(x) {x;}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {x;}
-	/** @private @arg {G_AdditionalDataItem} x */
-	G_AdditionalDataItem(x) {
-		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
-		switch(d.key) {
-			default: debugger; break;
-			case "lockup": {
-				if(d.value!=="player") debugger;
-			} break;
-			case "video_id": {
-				this.videoId(d.value);
-			} break;
-		}
-	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {x; debugger;}
 	/** @private @arg {CD_PlayerSeek} x */

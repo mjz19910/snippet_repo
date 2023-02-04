@@ -172,11 +172,12 @@ type G_BrowseSidebar=
 	;
 ;
 type G_ChannelSwitcherContent=R_Button|A_AccountItem;
-type G_ChatItem=[
-	R_LiveChatTextMessage,
-	R_LiveChatPlaceholderItem,
-	R_LiveChatViewerEngagementMessage,
-][number];
+type G_ChatItem=
+	|R_LiveChatTextMessage
+	|R_LiveChatPlaceholderItem
+	|R_LiveChatViewerEngagementMessage
+	;
+;
 type G_CodecType=[
 	G_CodecTypeStr,
 	T_SplitOnce<G_GenericCodecType,".">[0]

@@ -2,6 +2,24 @@
 type D_Button=
 	|never
 	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		icon: T_Icon<"CHEVRON_LEFT">;
+		tooltip: "Previous";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Previous">;
+	}
+	|{
+		style: "STYLE_DEFAULT";
+		size: "SIZE_DEFAULT";
+		isDisabled: false;
+		icon: T_Icon<"CHEVRON_RIGHT">;
+		tooltip: "Next";
+		trackingParams: string;
+		accessibilityData: TD_Accessibility<"Next">;
+	}
+	|{
 		style: "STYLE_OPACITY";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
