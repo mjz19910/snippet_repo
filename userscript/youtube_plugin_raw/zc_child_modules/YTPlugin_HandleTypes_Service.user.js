@@ -5080,7 +5080,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		throw new Error();
 	}
-	/** @private @arg {GU_VE83769_Url_Internal|GU_YoutubeUrlRedirect|GU_VE83769_Url_External} x */
+	/** @private @arg {GM_VE83769_WC["url"]} x */
 	GM_VE83769_UrlType(x) {
 		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
