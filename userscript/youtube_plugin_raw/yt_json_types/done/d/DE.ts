@@ -1,5 +1,3 @@
-type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
-type DE_YpcGetCart={transactionParams: string;};
 //#region String Enum
 type DE_AdPlacementKind=T_EnumStr<"AD_PLACEMENT_KIND","END"|"SELF_START"|"START">;
 type DE_OpportunityType=T_EnumStr<"OPPORTUNITY_TYPE",T_EnumStr<"ORGANIC",T_EnumStr<"BROWSE"|"WATCH_NEXT","RESPONSE_RECEIVED">>>;
@@ -31,6 +29,8 @@ type DE_VE96368_Browse=DE_VE<"FEsubscriptions">;
 //#endregion
 //#region DE_
 type DE_Subscribe={params: string; channelIds: D_ChannelId[];};
-type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_Unsubscribe={params: string; channelIds: `UC${string}`[];};
+type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
+type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
+type DE_YpcGetCart={transactionParams: string;};
 //#endregion
