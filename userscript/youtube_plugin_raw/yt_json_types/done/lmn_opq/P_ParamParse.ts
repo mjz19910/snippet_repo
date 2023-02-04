@@ -2,6 +2,9 @@ type P_LogItems=[
 	"[parse_value.gen_ns] [entity_key.normal.f2.f1]",
 	"[parse_value.gen_ns] [playability_status.context_params.f2.f1]",
 	"[parse_value.gen_ns] [D_Browse.param.f93.f1.f14]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f16.f4.f1]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f16.f4.f2]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f16.f4.f3]",
 ];
 type P_ParamParse=
 	|P_PathRootStr
