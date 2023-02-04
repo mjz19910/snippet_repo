@@ -261,6 +261,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CommentsSectionContinuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_Invalidation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_LiveChatReplay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_PlayerSeek";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_AdsControlFlowOpportunityReceived";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_Executor";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_GetSurvey";}
@@ -311,6 +314,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptTrackSelection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdLayoutMetadata";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlotAndLayoutItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdaptiveFormatItem";}
@@ -444,6 +448,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PivotButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerAnnotationsExpanded";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerAttestation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerCaptionsTracklist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerMicroformat";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay:autoplay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PlayerOverlay:autoplay:decoratedPlayerBarRenderer";}
@@ -514,6 +521,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayEndorsement";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayHoverText";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayInlineUnplayable";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayTimeStatus";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ThumbnailOverlayToggleButton_ToggledPrefix";}
@@ -539,6 +547,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoOwner:1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPlaybackShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoPrimaryInfo";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoQualityPromo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoSecondaryInfo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_VideoViewCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Video_Owner";}
@@ -556,6 +565,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
@@ -633,10 +643,12 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Success";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ChannelPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_UnifiedSharePanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_GetAccountMenu";}
