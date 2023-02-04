@@ -4490,9 +4490,21 @@ class HandleTypes extends HandleTypesEval {
 			if(!(k in x)) break x;
 			/** @type {`${typeof cf}:${typeof k}`} */
 			const cf1=`${cf}:${k}`;
+			y: {
+				const k2="trackingParams";
+				if(!(k2 in x)) break y;
+				/** @type {`${typeof cf1}:${typeof k2}`} */
+				const cf2=`${cf1}:${k2}`;
+				const {items,trackingParams,accessibility,loggingDirectives,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+				this.z(items,this.G_MenuItem);
+				this.trackingParams(cf2,trackingParams);
+				this.D_Accessibility(accessibility);
+				this.D_LoggingDirectives(loggingDirectives);
+				return;
+			}
 			const {items,accessibility,loggingDirectives,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.D_Accessibility(accessibility);
 			this.z(items,this.G_MenuItem);
+			this.D_Accessibility(accessibility);
 			this.D_LoggingDirectives(loggingDirectives);
 			return;
 		}

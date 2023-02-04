@@ -19,6 +19,12 @@ type D_Menu=
 	|{
 		items: R_MenuServiceItem[];
 		trackingParams: string;
+		accessibility: TD_Accessibility<"Action menu">;
+		loggingDirectives: D_LoggingDirectives;
+	}
+	|{
+		items: R_MenuServiceItem[];
+		trackingParams: string;
 	}
 	|{
 		items: R_MenuServiceItem[];
