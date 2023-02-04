@@ -3,6 +3,8 @@ type AD_AddChatItem={item: G_ChatItem; clientId?: string;};
 type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: D_Enum_GuideAction;};
 type AD_AppendContinuationItems=TA_CreateObjectFromContinuationMap<TB_ContinuationItemMap>;
 type AD_ChangeEngagementPanelVisibility={targetId: D_EngagementPanelTargetId; visibility: D_EngagementPanelVisibility;};
+type AD_DateText={dateText: G_Text;};
+type AD_Description={description: G_Text;};
 type AD_GetMultiPageMenu=T_Menu<TR_MultiPageMenu_Empty>;
 type AD_HideEnclosing={notificationId: `${number}`;};
 type AD_HideEngagementPanelTargetId={engagementPanelTargetId: "engagement-panel-clip-create";};
@@ -14,12 +16,15 @@ type AD_SendFeedback={bucket: "Kevlar";};
 type AD_SetActivePanelItem={};
 type AD_ShowEngagementPanelScrim={engagementPanelTargetId: "engagement-panel-clip-create"; onClickCommands: TA_OpenPopup<Popup_ConfirmDialog>[];};
 type AD_Signal={signal: DU_SignalStr;};
+type AD_SubscribeButton={subscribed: true; channelId: `UC${string}`;};
+type AD_Title={title: G_Text;};
+type AD_ToggleButtonText={buttonId: "TOGGLE_BUTTON_ID_TYPE_LIKE"; defaultText: G_Text; toggledText: G_Text;};
 type AD_UpdateChannelSwitcherPage=T_Page<R_ChannelSwitcherPage>;
 type AD_UpdateEngagementPanel={targetId: "engagement-panel-searchable-transcript"; content: R_Transcript;};
 type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"; unseenCount: number; timeoutMs: number;};
 type AD_ViewCount={viewCount: R_VideoViewCount;};
 //#endregion
-type AD_ReelDismissal={onDismissalCompletionRenderer: RA_NotificationAction; trackingParams: string;};
+type AD_ReelDismissal={trackingParams: string; onDismissalCompletionRenderer: RA_NotificationAction;};
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};
 type AD_AccountItem={
 	accountName: G_Text;

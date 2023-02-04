@@ -1,7 +1,3 @@
-type AD_SubscribeButton={
-	subscribed: true;
-	channelId: `UC${string}`;
-};
 // cSpell:ignoreRegExp /r\d---sn-.+?"/
 type D_VideoId=string;
 type D_Probe_Domain=[
@@ -113,6 +109,5 @@ type DT_MenuFlexibleItem={
 	menuItem: R_MenuServiceItem;
 	topLevelButton: R_Button;
 };
-type AD_Description={description: G_Text;};
 type D_RelatedChipCloud={content: R_ChipCloud;};
 type D_LoggingDirectives_Gestures=T_Types<4>;

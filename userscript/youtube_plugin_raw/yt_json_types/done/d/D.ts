@@ -1566,7 +1566,6 @@ type D_DarkColorPalette_1={
 };
 type D_DarkColorPalette=D_DarkColorPalette_1|D_DarkColorPalette_2|D_DarkColorPalette_3|D_DarkColorPalette_4;
 type D_DataArrType=[number,number,D_DecTypeNum[]][];
-type AD_DateText={dateText: G_Text;};
 type D_DecTypeNum=
 	["data32",number,number]|
 	["data_fixed32",number,number]|
@@ -2746,17 +2745,11 @@ type D_TimestampWithNanos={
 	seconds: `${number}`;
 	nanos: number;
 };
-type AD_Title={title: G_Text;};
 type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|C_RepeatChapter|E_Like;
 type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 type T_SizeType<T>={sizeType: T;};
-type AD_ToggleButtonText={
-	defaultText: G_Text;
-	toggledText: G_Text;
-	buttonId: "TOGGLE_BUTTON_ID_TYPE_LIKE";
-};
 type D_ToggleMenuServiceItem={
 	defaultText: G_Text;
 	defaultIcon: T_Icon<"LIBRARY_ADD">;
