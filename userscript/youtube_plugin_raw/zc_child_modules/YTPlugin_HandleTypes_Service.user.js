@@ -4156,6 +4156,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
 		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
+		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
