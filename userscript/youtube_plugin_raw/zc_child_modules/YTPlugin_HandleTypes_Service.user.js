@@ -6520,16 +6520,16 @@ class HandleTypes extends HandleTypesEval {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.g);
 	}
-	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
+	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>} x */
 	A_BrowseFeed(x) {
 		const cf="A_BrowseFeed"; this.k(cf,x);
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.R_BrowseFeed);
+		this.z(continuationItems,this.G_BrowseFeed);
 	}
-	/** @private @arg {R_BrowseFeed} x */
-	R_BrowseFeed(x) {
-		const cf="R_BrowseFeed"; this.k(cf,x);
+	/** @private @arg {G_BrowseFeed} x */
+	G_BrowseFeed(x) {
+		const cf="G_BrowseFeed"; this.k(cf,x);
 		if("richItemRenderer" in x) return this.R_RichItem(x);
 		this.codegen_typedef_all(cf,x);
 	}

@@ -38,7 +38,7 @@ type D_TargetIdStr=
 	|DC_SectionList_TargetId
 	|G_SI_DB_EngagementPanel['targetId']
 	|RS_Search['targetId']
-	|TA_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>['targetId']
+	|TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>['targetId']
 	;
 ;
 type D_PlaylistId=

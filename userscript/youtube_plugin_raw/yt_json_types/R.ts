@@ -19,7 +19,6 @@ type R_AlertWithButton={alertWithButtonRenderer: D_AlertWithButton;};
 type R_AutomixPreviewVideo={automixPreviewVideoRenderer: D_AutomixPreviewVideo;};
 type R_AutoplaySwitchButton={autoplaySwitchButtonRenderer: D_AutoplaySwitchButton;};
 type R_BrowseEndpointContextMusicConfig={browseEndpointContextMusicConfig: D_BrowseEndpointContextMusicConfig;};
-type R_BrowseFeed=R_RichItem;
 type R_BrowseFeedActions={browseFeedActionsRenderer: D_BrowseFeedActions;};
 type R_BrowserMediaSessionRenderer={browserMediaSessionRenderer: D_BrowserMediaSessionRenderer;};
 type R_C4TabbedHeader={c4TabbedHeaderRenderer: D_C4TabbedHeader;};
