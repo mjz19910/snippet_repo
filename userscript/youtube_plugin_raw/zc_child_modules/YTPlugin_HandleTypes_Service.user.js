@@ -1731,7 +1731,8 @@ class HandleTypes extends HandleTypesEval {
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
 	GE_Browse(x) {
-		let [x2,x4,x5]=this.TE_Endpoint_3("E_Browse","browseEndpoint",x);
+		const cf="GE_Browse";
+		let [x2,x4,x5]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
 		let ve_name=this.GE_Browse_WCM(x2);
 		this.G_DE_Browse_VE(ve_name,x4);
 		this.g(x5);
@@ -2599,7 +2600,8 @@ class HandleTypes extends HandleTypesEval {
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
 			switch(x) {
-				default: debugger; break;
+				default: debugger; x==="";break;
+				case "STYLE_TEXT":
 				case "STYLE_BLUE_TEXT":
 				case "STYLE_DEFAULT":
 			}
@@ -9021,7 +9023,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
 		const cf="Popup_ShareEntityService";
-		this.codegen_typedef_all(cf,x);
+		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
+		this.R_UnifiedSharePanel(popup);
+		if(popupType!=="DIALOG") debugger;
+		if(beReused!==false) debugger;
 	}
 	/** @private @arg {CD_PlayerSeek} x */
 	CD_PlayerSeek(x) {
@@ -9044,6 +9049,8 @@ class HandleTypes extends HandleTypesEval {
 	D_ThumbnailOverlayInlineUnplayable(x) {x;}
 	/** @private @arg {E_Unsubscribe} x */
 	E_Unsubscribe(x) {x;}
+	/** @private @arg {R_UnifiedSharePanel} x */
+	R_UnifiedSharePanel(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

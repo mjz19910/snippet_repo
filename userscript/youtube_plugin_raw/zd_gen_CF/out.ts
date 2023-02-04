@@ -579,6 +579,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_Browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RCA_RelevantStateTags";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RC_ConsistencyTokenJar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RC_MainAppWebResponseContext";}
@@ -727,7 +728,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "C_GetPdgBuyFlow";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_AddToPlaylistService";}
-		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Browse";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreateBackstagePost";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreatePlaylistService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetNotificationMenu";}
@@ -750,6 +750,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_WatchPlaylist";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetCart";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetOffers";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "GE_Browse";}
 		|{n: Prelude.CF_TE_Endpoint_Opt_3; t: Types.CF_TE_Endpoint_Opt_3_; v: "C_Continuation";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_Executor";}
