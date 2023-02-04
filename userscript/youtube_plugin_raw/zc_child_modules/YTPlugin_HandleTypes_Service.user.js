@@ -2969,8 +2969,15 @@ class HandleTypes extends HandleTypesEval {
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				default: debugger; break;
+				case "FEhistory": {
+					const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_History`,x); this.g(y);
+					if(selected!==true) debugger;
+					if(!content.sectionListRenderer) debugger;
+					this.R_SectionList(content);
+					this.trackingParams(cf,trackingParams);
+				} break;
 				case "FEsubscriptions": {
-					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
+					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_Subscriptions`,x); this.g(y);
 					this.D_Tab_subscriptionsEndpoint(endpoint);
 					if(selected!==true) debugger;
 					if(!content.sectionListRenderer) debugger;

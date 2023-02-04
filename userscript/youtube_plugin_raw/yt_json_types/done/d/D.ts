@@ -2808,26 +2808,6 @@ type D_SubscriptionButton={
 	type: "FREE";
 	subscribed?: boolean;
 };
-type D_Tab={
-	selected: true;
-	content: R_RichGrid;
-	tabIdentifier: "FEwhat_to_watch";
-	trackingParams: string;
-}|{
-	selected: true;
-	content: R_SectionList;
-	trackingParams: string;
-}|{
-	endpoint: E_VE96368_Browse;
-	selected: true;
-	content: R_SectionList;
-	tabIdentifier: "FEsubscriptions";
-	accessibility: D_Accessibility;
-	trackingParams: string;
-}|{
-	content: R_MusicQueue;
-	trackingParams: string;
-};
 type D_TabbedSearchResults={tabs: R_SearchResultsTab[];};
 type D_TemplateUpdate={
 	identifier: `track_selection_sheet_option.eml|${string}`;
