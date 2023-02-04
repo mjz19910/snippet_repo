@@ -65,6 +65,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_MutationItem";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_RecordNotificationInteractions";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832:playlistSetVideoId:params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
@@ -80,7 +81,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_EY_Offlineability.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
@@ -292,6 +292,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_PersistenceOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_RecordNotificationInteractions";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_ReelWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_SuperThanksSelectedTier";}
@@ -471,7 +472,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Range";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ResourceStatusInResponseCheckData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichGrid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichItem";}
