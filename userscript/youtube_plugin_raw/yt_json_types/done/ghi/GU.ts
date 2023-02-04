@@ -1,3 +1,4 @@
+type GU_VE3611="/gaming"|`/@${string}`|`/channel/UC${string}`;
 type GU_VE5754_Id=`VL${"LL"|"WL"|`PL${string}`}`;
 type GU_VE6827_Id_1="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
 type GU_VE6827_Id_Params="FEtrending"|"FEstorefront"|"FEhashtag";
@@ -12,7 +13,6 @@ type GU_VE83769_Url=
 	|GU_VE83769_Url_External
 	;
 type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
-type UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type GU_YoutubeUrlRedirect_Info={
 	url: `https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`,
 	encoded_params: {q: ST_EncodedURIComponent;};

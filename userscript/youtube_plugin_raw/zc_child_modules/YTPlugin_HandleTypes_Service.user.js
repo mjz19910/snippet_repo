@@ -4741,7 +4741,7 @@ class HandleTypes extends HandleTypesEval {
 		let tagged_obj=new UrlEncodedTag(x,tag);
 		return as(tagged_obj);
 	}
-	/** @template {keyof UrlInfoMap} K @arg {K} k @arg {UrlInfoMap[K]["url"]} x @returns {UrlInfoMap[K]} */
+	/** @template {keyof D_UrlInfoMap} K @arg {K} k @arg {D_UrlInfoMap[K]["url"]} x @returns {D_UrlInfoMap[K]} */
 	getInfoForUrl(x,k) {
 		switch(k) {
 			case "https://www.youtube.com/redirect": {

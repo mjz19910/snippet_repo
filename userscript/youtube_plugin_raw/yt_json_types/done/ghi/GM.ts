@@ -10,14 +10,14 @@ type GM_PostApiLike={sendPost: true; apiUrl: string;};
 type GM_SendPost={sendPost: true;};
 type GM_UserFeedback={ignoreNavigation: true;};
 //#endregion
-//#region WebCommandMetadata like {rootVe:number;}
+//#region GM_VE
 type GM_VE_WC_Browse=GE_Browse_WCM["webCommandMetadata"];
+type GM_VE3854_PT={parentTrackingParams: string;};
+//#endregion
+//#region WebCommandMetadata like {rootVe:number;}
+
 type GM_VE3611_WC={
-	url:
-	|"/gaming"
-	|`/@${string}`
-	|`/channel/UC${string}`
-	;
+	url: GU_VE3611;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 	rootVe: 3611;
 	apiUrl: "/youtubei/v1/browse";
@@ -56,7 +56,6 @@ type GM_VE11487_WC={
 	rootVe: 11487;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE3854_PT={parentTrackingParams: string;};
 type GM_VE3832_WatchPlaylist={
 	url: `/playlist?list=RD${string}&playnext=1&index=${number}`;
 	webPageType: "WEB_PAGE_TYPE_WATCH";
@@ -128,8 +127,6 @@ type GM_Unsubscribe=T_GM_PostApi_WithApiUrl<"/youtubei/v1/subscription/unsubscri
 type GM_ypc_get_offers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
 type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
 //#endregion
-//#endregion
-//#region GM_VE
 //#endregion
 //#region GM_WC
 type GM_WC_VE=[

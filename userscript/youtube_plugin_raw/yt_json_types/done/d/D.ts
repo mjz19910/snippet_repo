@@ -3081,13 +3081,6 @@ type D_Button_DoOmit<T_Btn extends D_Button,U extends T_DistributedKeyof<T_Btn>>
 	:never
 	:never;
 type D_Button_Ex_1_Omit_Size=D_Button_DoOmit<D_Button,"size"|"style"|"isDisabled"|"trackingParams"|"command"|"text">;
-type DC_Continuation_Omit_Return<T>=
-	Omit<T,"token"|"request"> extends infer y?
-	|["BROWSE",y]
-	|["REEL_WATCH_SEQUENCE",y]
-	|["WATCH_NEXT",y]
-	|[null,y]:
-	never;
 //#endregion
 //#region Extract & Exclude from data
 type D_GuideEntry_WithEntryData=Extract<D_GuideEntry,{entryData: any;}>;
@@ -3099,3 +3092,4 @@ type D_GuideEntry_IconType_Obj={
 	WithIcon: T_ExtractIconType<D_GuideEntry_With_ServiceEndpoint>[];
 };
 //#endregion
+type D_UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};

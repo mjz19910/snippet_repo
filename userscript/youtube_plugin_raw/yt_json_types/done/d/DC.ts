@@ -66,6 +66,15 @@ type DC_GetSurvey={
 	endpoint: D_PaidDigitalGoods;
 	action: "FOR_D_PaidDigitalGoods";
 };
+type DC_Continuation_Omit_Return<T>=
+	Omit<T,"token"|"request"> extends infer y?
+	|["BROWSE",y]
+	|["REEL_WATCH_SEQUENCE",y]
+	|["WATCH_NEXT",y]
+	|[null,y]:
+	never
+	;
+;
 // TODO: #14 Need type of DC_RefreshPlaylist
 type DC_RefreshPlaylist={};
 type DC_Invalidation={
