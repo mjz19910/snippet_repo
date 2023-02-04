@@ -2,6 +2,23 @@
 type D_Button=
 	|never
 	|{
+		text: G_Text;
+		icon: T_Icon<"PAUSE_OUTLINED">;
+		navigationEndpoint: {
+			clickTrackingParams: string;
+			commandMetadata: {
+				webCommandMetadata: {
+					ignoreNavigation: true;
+				};
+			};
+			confirmDialogEndpoint: {
+				content: R_ConfirmDialog;
+			};
+		};
+		trackingParams: string;
+		targetId: "history-watch-pause-resume-toggle";
+	}
+	|{
 		style: "STYLE_DEFAULT";
 		size: "SIZE_DEFAULT";
 		isDisabled: false;
