@@ -27,5 +27,6 @@ type D_UrlFormat=
 	|D_VE6827_PageUrl
 	|YTExternalUrl
 	|NonNullable<D_AdaptiveFormatItem["url"]>
+	|NonNullable<D_FormatItem["url"]>
 	;
 ;
