@@ -75,8 +75,6 @@ type DC_Continuation_Omit_Return<T>=
 	never
 	;
 ;
-// TODO: #14 Need type of DC_RefreshPlaylist
-type DC_RefreshPlaylist={};
 type DC_Invalidation={
 	invalidationId: D_InvalidationId;
 	timeoutMs: 10000;
@@ -117,6 +115,8 @@ type DC_AddToPlaylist=
 ;
 // TODO #4
 type DC_PlaylistPanel={};
+// TODO: #14 Need type of DC_RefreshPlaylist
+type DC_RefreshPlaylist={};
 // TODO: #15 Need type of DC_MusicShelf
 type DC_MusicShelf={};
 //#endregion
