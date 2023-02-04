@@ -1,4 +1,10 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [reel.params.f3.f1]",
+	"[parse_value.gen_ns] [reel.params.f3.f2]",
+	"[parse_value.gen_ns] [reel.params.f3.f3]",
+	"[parse_value.gen_ns] [reel.player_params.f72]",
+	"[parse_value.gen_ns] [reel.params.f3]",
+	"[parse_value.gen_ns] [reel.params.f5]",
 	"[parse_value.gen_ns] [D_Browse.param.f94.f1.f2.f1]",
 	"[parse_value.gen_ns] [D_Browse.param.f94.f1.f2.f2]",
 	"[parse_value.gen_ns] [D_Browse.param.f94.f1.f2.f3]",

@@ -361,6 +361,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "reel.params.f3": switch(map_entry_key) {
+				case 1: case 2: case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "D_Browse.param.f94.f1.f2": switch(map_entry_key) {
 				case 1: case 2: case 3:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -403,7 +408,7 @@ class HandleTypes extends HandleTypesEval {
 			case "reel.sequence_params.f5": switch(map_entry_key) {case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel.sequence_params": switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110.f1.f20": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel.params": switch(map_entry_key) {case 1: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "reel.params": switch(map_entry_key) {case 1: case 3: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "notification.opt_out": switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {case 19: case 20: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -424,7 +429,7 @@ class HandleTypes extends HandleTypesEval {
 			case "like.likeParams": case "like.dislikeParams": switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1":
 			case "tracking.trackingParams.f4": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel.player_params": switch(map_entry_key) {case 30: case 57: case 71: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "reel.player_params": switch(map_entry_key) {case 30: case 57: case 71: case 72: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "slot_ad_serving_data_entry": switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams.f16": switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -565,7 +570,7 @@ class HandleTypes extends HandleTypesEval {
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
 					case "f30": case "f33": case "f39": case "f40":
-					case "f56": case "f57": case "f71": case "f84": case "f93": case "f94": case "f110":
+					case "f56": case "f57": case "f71": case "f72": case "f84": case "f93": case "f94": case "f110":
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
@@ -5959,7 +5964,7 @@ class HandleTypes extends HandleTypesEval {
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with_rx(url,"/shorts/")) debugger;
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
@@ -5974,7 +5979,7 @@ class HandleTypes extends HandleTypesEval {
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with_rx(url,"/shorts/")) debugger;
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
@@ -5985,7 +5990,7 @@ class HandleTypes extends HandleTypesEval {
 		if(page!=="search") debugger;
 		this.E_Search(endpoint);
 		this.RS_Search(response);
-		if(!this.str_starts_with_rx(url,"/results?search_query=")) debugger;
+		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
 	/** @private @arg {G_BrowseHeader} x */
@@ -9002,8 +9007,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
-		const cf="D_PlayerConfig";
-		this.codegen_typedef_all(cf,x); this.GEN(cf,x);
+		const cf="D_PlayerConfig"; this.k(cf,x);
 	}
 	/** @private @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
@@ -9040,18 +9044,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
-		const cf="D_PlayerCaptionsTracklist";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_PlayerCaptionsTracklist"; this.k(cf,x);
 	}
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
-		const cf="D_VideoQualityPromo";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_VideoQualityPromo"; this.k(cf,x);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
-		const cf="D_PlayerAttestation";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_PlayerAttestation"; this.k(cf,x);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
@@ -9060,8 +9061,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
-		const cf="D_PlayerMicroformat";
-		this.codegen_typedef_all(cf,x);
+		const cf="D_PlayerMicroformat"; this.k(cf,x);
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
