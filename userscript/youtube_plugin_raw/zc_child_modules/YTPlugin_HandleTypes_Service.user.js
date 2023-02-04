@@ -999,7 +999,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {A_AppendContinuationItems} x */
-	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2(cf,"appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
+	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
