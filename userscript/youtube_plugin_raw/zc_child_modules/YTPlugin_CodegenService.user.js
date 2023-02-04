@@ -299,7 +299,7 @@ class CodegenService extends BaseService {
 			debugger;
 			return "TYPE::string";
 		}
-		if(k1=="videoId") {console.log("[video_id_json]",o); return "TYPE::string";}
+		if(k1=="videoId") return "TYPE::string";
 		if(k1==="playlistSetVideoId") return "TYPE::string";
 		console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 		return o;
