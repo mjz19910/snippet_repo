@@ -33,7 +33,6 @@ type GM_VE3832_WatchPlaylist={
 	webPageType: "WEB_PAGE_TYPE_WATCH";
 	rootVe: 3832;
 };
-type M_VE3832_WatchPlaylist=TM_Gen<GM_VE3832_WatchPlaylist>;
 type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE3832_WatchPlaylist>;
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_Empty_WCM>;
@@ -48,10 +47,6 @@ type E_Unsubscribe={
 	clickTrackingParams: string;
 	commandMetadata: M_Unsubscribe;
 	unsubscribeEndpoint: DE_Unsubscribe;
-};
-
-type M_GetWebPlayerSharePanel={
-	webCommandMetadata: GM_GetWebPlayerSharePanel;
 };
 type DE_WebPlayerShareEntityService={serializedShareEntity: string;};
 type E_WebPlayerShareEntityService={

@@ -4967,7 +4967,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[D_DisplayAd.next_key] [%s]",k);
 	}
 	/** @private @arg {MG_AdLayout['layoutType']} x */
-	D_AdLayout_TypeStr(x) {
+	MG_AdLayout_layoutType(x) {
 		this.save_enum("LAYOUT_TYPE",x);
 		switch(x) {
 			default: break;
@@ -4980,7 +4980,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x); this.k(cf,x);
 		let ba_id=base64_dec.decodeByteArray(layoutId);
 		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
-		this.D_AdLayout_TypeStr(y.layoutType);
+		this.MG_AdLayout_layoutType(y.layoutType);
 		switch(y.layoutType) {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=this.s(cf,y); this.g(u);/*#destructure_done*/ break;
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
@@ -6588,7 +6588,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(index);
 		this.params(cf,"watch_playlist.params",params);
 	}
-	/** @private @arg {MMD_AdLayout_TopImage} x */
+	/** @private @arg {MG_AdLayout_TopImage} x */
 	MMD_AdLayout_TopImage(x) {
 		const cf="MMD_AdLayout_TopImage"; this.k(cf,x);
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

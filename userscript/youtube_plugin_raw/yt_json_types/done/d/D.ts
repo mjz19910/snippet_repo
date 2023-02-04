@@ -1844,12 +1844,9 @@ type D_PromotedSparklesWeb={
 	clickLocationTargets: D_ClickLocationTarget[];
 	adBadge?: RMD_Badge;
 };
-type D_InFeedAdLayout={adLayoutMetadata: M_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
-type D_LinearAdSequence={adLayoutMetadata: M_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};
-type D_AdSlotAndLayoutItem={adLayoutMetadata: MMD_AdLayout_TopImage[]; adSlotMetadata: DMD_AdSlot;};
-type MG_AdLayout=M_AdLayout_PlayerBytes|MMD_AdLayout_TopImage;
-type M_AdLayout_PlayerBytes={layoutType: "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES"; layoutId: string;};
-type MMD_AdLayout_TopImage={layoutType: "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE"; layoutId: string; adLayoutLoggingData: D_AdLayoutLoggingData;};
+type D_InFeedAdLayout={adLayoutMetadata: MG_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
+type D_LinearAdSequence={adLayoutMetadata: MG_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};
+type D_AdSlotAndLayoutItem={adLayoutMetadata: MG_AdLayout_TopImage[]; adSlotMetadata: DMD_AdSlot;};
 type D_InfoRow={
 	title: G_Text;
 	defaultMetadata?: G_Text;
@@ -2492,7 +2489,6 @@ type GM_VE6827_Browse_SearchBox={
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
-type M_VE6827_Browse_SearchBox={webCommandMetadata: GM_VE6827_Browse_SearchBox;};
 type DE_VE6827_Browse_SearchBox={
 	browseId: "FEhistory";
 	query: "";
