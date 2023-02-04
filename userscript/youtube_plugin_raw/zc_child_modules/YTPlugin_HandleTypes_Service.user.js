@@ -9166,13 +9166,14 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.t(loudnessDb,this.a_primitive_num);
 		this.t(signatureCipher,x => {
+			const cf1=`${cf}:signatureCipher`;
 			let {s,sp,url,...y}=this.parse_url_search_params(x); this.g(y);
 			console.log("signatureCipher.s",s);
 			switch(sp) {
 				default: debugger; break;
 				case "sig": break;
 			}
-			this.parser.parse_url(url);
+			this.parser.parse_url(cf1,url);
 		});
 	}
 	/** @private @arg {D_FormatColorInfo} x */
