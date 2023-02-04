@@ -2186,7 +2186,7 @@ type D_PlaybackTracking={
 	videostatsPlaybackUrl: T_BaseUrl<`https://s.youtube.com/api/stats/playback?${string}`>;
 	videostatsScheduledFlushWalltimeSeconds: [10,20,30];
 	videostatsWatchtimeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/watchtime?${string}`>;
-	youtubeRemarketingUrl?: T_BaseUrl<never>;
+	youtubeRemarketingUrl?: T_BaseUrl<`https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`>;
 };
 type PlayerAdParams={
 	enabledEngageTypes: string;
