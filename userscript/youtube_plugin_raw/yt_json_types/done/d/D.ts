@@ -2220,27 +2220,6 @@ type E_WebPlayerShareEntityService={
 	};
 };
 
-type D_PlayerConfig={
-	audioConfig: D_AudioConfig;
-	streamSelectionConfig: D_StreamSelectionConfig;
-	mediaCommonConfig: {
-		dynamicReadaheadConfig: {
-			maxReadAheadMediaTimeMs: 120000;
-			minReadAheadMediaTimeMs: 15000;
-			readAheadGrowthRateMs: 1000;
-		};
-	};
-	webPlayerConfig: {
-		useCobaltTvosDash: true;
-		webPlayerActionsPorting: {
-			getSharePanelCommand: E_WebPlayerShareEntityService;
-			subscribeCommand: E_Subscribe;
-			unsubscribeCommand: E_Unsubscribe;
-			addToWatchLaterCommand: E_PlaylistEdit;
-			removeFromWatchLaterCommand: E_PlaylistEdit;
-		};
-	};
-};
 type D_PlayerLiveStoryboardSpec={spec: string;};
 type D_PlayerMicroformat={
 	thumbnail: D_Thumbnail;
