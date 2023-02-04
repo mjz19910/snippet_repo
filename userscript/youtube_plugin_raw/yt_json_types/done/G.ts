@@ -466,3 +466,11 @@ type G_RendererContentItem=
 	|R_CompactPlaylist
 	;
 ;
+type GD_RC_SectionList=
+	|DC_SectionListBase
+	|DC_SectionList_SearchFeed
+	|DC_SectionList_BrowseFeed_ChannelFeatured
+	|DC_SectionList_BrowseFeed_Subscriptions
+	|DC_SectionList_BrowseFeed_History
+	;
+;
