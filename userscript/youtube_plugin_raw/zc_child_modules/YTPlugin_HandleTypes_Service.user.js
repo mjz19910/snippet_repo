@@ -2621,7 +2621,9 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => {
 			this.targetId(cf,x);
 			switch(x) {
-				case "create-clip-button-action-bar": break;
+				default: debugger; x===""; break;
+				case "clip-info-button":
+				case "create-clip-button-action-bar":
 			}
 		});
 		this.t(serviceEndpoint,this.D_Button_SE);
