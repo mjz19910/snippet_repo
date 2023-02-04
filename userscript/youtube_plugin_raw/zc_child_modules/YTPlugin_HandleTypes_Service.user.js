@@ -1375,137 +1375,6 @@ class HandleTypes extends HandleTypesEval {
 	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
 	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
-	/** @private @arg {CD_TimedContinuation} x */
-	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {CD_Reload} x */
-	CD_Reload(x) {
-		this.y("CD_Reload","reloadContinuationData",x,
-			x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));
-	}
-	/** @private @arg {CD_NextRadio} x */
-	CD_NextRadio(x) {
-		this.y("CD_NextRadio","nextRadioContinuationData",x,
-			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
-	}
-	/** @private @arg {AU_SubscribeButton} x */
-	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
-	/** @private @arg {AU_ChannelSwitcherPage} x */
-	AU_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
-	/** @private @arg {AD_GetMultiPageMenu} x */
-	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
-	/** @private @arg {AD_Signal} x */
-	AD_Signal(x) {
-		const cf="AD_Signal"; this.k(cf,x);
-		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(signal) {
-			default: debugger; break;
-			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
-		}
-	}
-	/** @private @arg {AD_AppendContinuationItems} x */
-	AD_AppendContinuationItems(x) {
-		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
-		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
-		this.save_string("[ContinuationItem.targetId]",x.targetId);
-		switch(x.targetId) {
-			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
-			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
-			case "watch-next-feed": this.A_WatchNext(x); break;
-			default: x===0; debugger;
-		}
-	}
-	/** @private @arg {C_RunAttestation} x */
-	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
-	/** @arg {C_Innertube} x */
-	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
-	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @protected @arg {D_ToggleButtonIdData} x */
-	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
-	/** @private @arg {C_CommandExecutor} x */
-	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
-	/** @private @arg {C_Continuation} x */
-	C_Continuation(x) {
-		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
-		function is_m_next(x) {return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";}
-		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		x: {
-			if(!a) break x;
-			if(!is_m_next(a)) break x;
-			this.M_Next(a);
-		}
-		this.DC_Continuation(b);
-	}
-	/** @private @arg {C_GetSurvey} x */
-	C_GetSurvey(x) {
-		const cf="C_GetSurvey"; this.k(cf,x);
-		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,a);
-		this.D_GetSurvey(c);
-		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
-		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
-		if(sendPost!==true) debugger;
-	}
-	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
-	C_AdsControlFlowOpportunityReceived(x) {
-		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
-		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
-	}
-	/** @private @arg {C_ScrollToEngagementPanel} x */
-	C_ScrollToEngagementPanel(x) {
-		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
-		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
-	}
-	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
-	/** @private @arg {C_ReloadContinuationItems} x */
-	C_ReloadContinuationItems(x) {
-		const cf="C_ReloadContinuationItems"; this.k(cf,x);
-		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
-	}
-	/** @private @arg {C_ShowReloadUi} x */
-	C_ShowReloadUi(x) {
-		const cf="C_ShowReloadUi"; this.k(cf,x);
-		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ShowReloadUi(a);
-	}
-	/** @private @arg {C_Executor} x */
-	C_Executor(x) {
-		const cf="C_Executor"; this.k(cf,x);
-		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_Executor(commandExecutorCommand);
-	}
-	/** @private @arg {C_UpdateToggleButtonState} x */
-	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
-	/** @private @arg {C_Loop} x */
-	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
-	/** @private @arg {C_RelatedChip} x */
-	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
-	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
-	/** @arg {C_FollowUp} x */
-	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
-	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_EntityBatchUpdate(a);}
-	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {
-		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
-		this.DC_EngagementPanelHeaderShowNavigationButton(a);
-	}
-	/** @protected @arg {C_GetPdgBuyFlow} x */
-	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
-	/** @private @arg {C_ShowReelsCommentsOverlay} x */
-	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {R_CommentActionButtons} x */
@@ -1658,6 +1527,137 @@ class HandleTypes extends HandleTypesEval {
 	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
 	/** @private @arg {R_AdPlacement} x */
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
+	/** @private @arg {CD_TimedContinuation} x */
+	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
+	/** @private @arg {CD_Reload} x */
+	CD_Reload(x) {
+		this.y("CD_Reload","reloadContinuationData",x,
+			x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));
+	}
+	/** @private @arg {CD_NextRadio} x */
+	CD_NextRadio(x) {
+		this.y("CD_NextRadio","nextRadioContinuationData",x,
+			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
+	}
+	/** @private @arg {AU_SubscribeButton} x */
+	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
+	/** @private @arg {AU_ChannelSwitcherPage} x */
+	AU_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
+	/** @private @arg {AD_GetMultiPageMenu} x */
+	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
+	/** @private @arg {AD_Signal} x */
+	AD_Signal(x) {
+		const cf="AD_Signal"; this.k(cf,x);
+		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(signal) {
+			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+		}
+	}
+	/** @private @arg {AD_AppendContinuationItems} x */
+	AD_AppendContinuationItems(x) {
+		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
+		this.save_string("[ContinuationItem.targetId]",x.targetId);
+		switch(x.targetId) {
+			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
+			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
+			case "watch-next-feed": this.A_WatchNext(x); break;
+			default: x===0; debugger;
+		}
+	}
+	/** @private @arg {C_RunAttestation} x */
+	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
+	/** @arg {C_Innertube} x */
+	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
+	/** @private @arg {C_RefreshPlaylist} x */
+	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
+	/** @protected @arg {D_ToggleButtonIdData} x */
+	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
+	/** @private @arg {C_CommandExecutor} x */
+	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
+	/** @private @arg {C_Continuation} x */
+	C_Continuation(x) {
+		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
+		function is_m_next(x) {return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";}
+		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+		x: {
+			if(!a) break x;
+			if(!is_m_next(a)) break x;
+			this.M_Next(a);
+		}
+		this.DC_Continuation(b);
+	}
+	/** @private @arg {C_GetSurvey} x */
+	C_GetSurvey(x) {
+		const cf="C_GetSurvey"; this.k(cf,x);
+		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,a);
+		this.D_GetSurvey(c);
+		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
+		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
+	C_AdsControlFlowOpportunityReceived(x) {
+		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
+		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
+	}
+	/** @private @arg {C_ScrollToEngagementPanel} x */
+	C_ScrollToEngagementPanel(x) {
+		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
+		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
+	}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
+	/** @private @arg {C_ReloadContinuationItems} x */
+	C_ReloadContinuationItems(x) {
+		const cf="C_ReloadContinuationItems"; this.k(cf,x);
+		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
+	}
+	/** @private @arg {C_ShowReloadUi} x */
+	C_ShowReloadUi(x) {
+		const cf="C_ShowReloadUi"; this.k(cf,x);
+		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ShowReloadUi(a);
+	}
+	/** @private @arg {C_Executor} x */
+	C_Executor(x) {
+		const cf="C_Executor"; this.k(cf,x);
+		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_Executor(commandExecutorCommand);
+	}
+	/** @private @arg {C_UpdateToggleButtonState} x */
+	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
+	/** @private @arg {C_Loop} x */
+	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
+	/** @private @arg {C_RelatedChip} x */
+	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
+	/** @private @arg {C_ResetChannelUnreadCount} x */
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.g(a);}
+	/** @private @arg {C_RepeatChapter} x */
+	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
+	/** @arg {C_FollowUp} x */
+	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
+	/** @private @arg {C_EntityUpdate} x */
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_EntityBatchUpdate(a);}
+	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
+	C_EngagementPanelHeaderShowNavigationButton(x) {
+		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
+		this.DC_EngagementPanelHeaderShowNavigationButton(a);
+	}
+	/** @protected @arg {C_GetPdgBuyFlow} x */
+	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @arg {E_YpcGetOfflineUpsell} x */
 	G_Innertube(x) {this.E_YpcGetOfflineUpsell(x);}
 	/** @private @arg {DC_RepeatChapter} x */
