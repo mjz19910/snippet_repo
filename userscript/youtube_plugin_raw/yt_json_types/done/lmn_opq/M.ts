@@ -42,8 +42,8 @@ type M_UserFeedback=TM_Gen<GM_UserFeedback>;
 type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
 //#endregion
 //#region MG_
-type MG_AdLayout=MG_AdLayout_PlayerBytes|MG_AdLayout_TopImage;
 type MG_AdLayout_PlayerBytes={layoutType: "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES"; layoutId: string;};
 type MG_AdLayout_TopImage={layoutType: "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE"; layoutId: string; adLayoutLoggingData: D_AdLayoutLoggingData;};
+type MG_AdLayout=MG_AdLayout_PlayerBytes|MG_AdLayout_TopImage;
 //#endregion
 type MP_AccountMenu={trackingParams: string; style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT"; showLoadingSpinner: true;};
