@@ -41,6 +41,7 @@ type D_PlaylistContent={
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
 	shortBylineText: G_Text;
 	longBylineText: G_Text;
+	playerInfoView?: "DO_NOT_CHANGE";
 	trackingParams: string;
 	titleText: G_Text;
 	isEditable: true;

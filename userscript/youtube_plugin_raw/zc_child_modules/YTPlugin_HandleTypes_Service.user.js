@@ -5917,7 +5917,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const cf="D_PlaylistContent"; this.k(cf,x);
-		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,playerInfoView,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(playerInfoView,x => this.ceq(x,"DO_NOT_CHANGE"));
 		this.trackingParams(cf,trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.G_Text);
 		this.z(contents,this.R_PlaylistPanelVideo);
