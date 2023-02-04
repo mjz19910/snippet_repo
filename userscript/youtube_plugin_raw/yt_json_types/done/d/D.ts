@@ -1589,7 +1589,7 @@ type D_DecTypeNum=
 	["error",number];
 type D_DesktopWatchAds={
 	gutParams: B_TagObj;
-	playerAdParams: PlayerAdParams;
+	playerAdParams: D_PlayerAdParams;
 	showCompanion: true;
 	showInstream: true;
 	useGut: true;
@@ -2165,7 +2165,7 @@ type D_PlaybackTracking={
 	videostatsWatchtimeUrl: T_BaseUrl<`https://s.youtube.com/api/stats/watchtime?${string}`>;
 	youtubeRemarketingUrl?: T_BaseUrl<`https://www.youtube.com/pagead/viewthroughconversion/${number}/?${string}`>;
 };
-type PlayerAdParams={
+type D_PlayerAdParams={
 	enabledEngageTypes: string;
 	showContentThumbnail: boolean;
 };
