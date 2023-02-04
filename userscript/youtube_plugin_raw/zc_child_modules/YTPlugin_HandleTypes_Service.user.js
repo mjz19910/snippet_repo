@@ -1449,7 +1449,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MusicShelfDivider} x */
 	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.g);}
 	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.g);}
+	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
 	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
 	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {R_ThumbnailOverlayHoverText} x */
@@ -9031,6 +9031,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {x;}
+	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
+	D_ThumbnailOverlayInlineUnplayable(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

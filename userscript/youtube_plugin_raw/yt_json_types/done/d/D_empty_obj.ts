@@ -19,4 +19,3 @@ type D_Message={};
 type D_ModifyChannelPreference={};
 type D_MusicResponsiveListItem={};
 type D_MusicShelfDivider={};
-type D_ThumbnailOverlayInlineUnplayable={};
