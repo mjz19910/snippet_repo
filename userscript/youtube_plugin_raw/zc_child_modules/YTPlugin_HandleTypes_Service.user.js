@@ -5733,34 +5733,35 @@ class HandleTypes extends HandleTypesEval {
 	G_DC_SectionList(x) {
 		const cf="G_DC_SectionList"; this.k(cf,x);
 		if("targetId" in x) {
-			if(this.str_starts_with_rx(x.targetId,"browse-feed")) {
-				let ss=split_string(x.targetId,"browse-feed");
-				if(ss.length!==2) {debugger; return;}
-				let sa=ss[1];
-				if(sa==="FEsubscriptions") return;
-				let ll=sa.slice(24);
-				if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
-					/** @returns {`UC${string}`} */
-					function wx() {return "UCx";}
-					let [cid,fe]=split_string_once_last(sa,"featured",wx());
-					if(fe!=="") debugger;
-					this.D_ChannelId(cid);
-					return;
-				}
-				console.log("target_id.ll",ll);
-				if(this.str_starts_with_rx(sa,"UC")) {
-					let floc=sa.indexOf("featured");
-					if(floc<0) {debugger; return;}
-					let s1=sa.slice(0,floc);
-					let s2=sa.slice(floc);
-					if(ll!==s2) debugger;
-					console.log("[RichGrid.targetId]",x.targetId);
-					console.log("[target_id_parse]",s1,s2);
-				}
-				return;
-			}
 			switch(x.targetId) {
-				default: debugger; return;
+				default: {
+					if(this.str_starts_with_rx("browse-feed",x.targetId)) {
+						let ss=split_string(x.targetId,"browse-feed");
+						if(ss.length!==2) {debugger; return;}
+						let sa=ss[1];
+						let ll=sa.slice(24);
+						if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
+							/** @returns {`UC${string}`} */
+							function wx() {return "UCx";}
+							let [cid,fe]=split_string_once_last(sa,"featured",wx());
+							if(fe!=="") debugger;
+							this.D_ChannelId(cid);
+							return;
+						}
+						console.log("target_id.ll",ll);
+						if(this.str_starts_with_rx(sa,"UC")) {
+							let floc=sa.indexOf("featured");
+							if(floc<0) {debugger; return;}
+							let s1=sa.slice(0,floc);
+							let s2=sa.slice(floc);
+							if(ll!==s2) debugger;
+							console.log("[RichGrid.targetId]",x.targetId);
+							console.log("[target_id_parse]",s1,s2);
+						}
+						return;
+					};
+					debugger;
+				} return;
 				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
 				case "search-feed": return this.DC_SectionList_SearchFeed(x);
 			}
