@@ -7515,7 +7515,6 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case 0: case 2: case 3:
 		}
-		if(currentStateId!==2) debugger;
 		this.trackingParams(cf,trackingParams);
 		this.C_Executor(command);
 		switch(targetId) {
