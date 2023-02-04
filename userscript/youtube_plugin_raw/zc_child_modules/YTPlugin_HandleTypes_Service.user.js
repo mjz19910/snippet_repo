@@ -3171,9 +3171,7 @@ class HandleTypes extends HandleTypesEval {
 			if("isWatched" in x) return this.D_Video_Handle("D_Video_With_Owner_IsWatched",x);
 			return this.D_Video_Handle("D_Video_With_Owner",x);
 		}
-		if("videoId" in x) {
-			return this.D_Video_With_VideoId(x);
-		}
+		if("videoId" in x) return this.D_Video_With_VideoId(x);
 		console.log("video.other",this.get_keys_of(x).join());
 		this.D_Video_Handle("D_Video_Other",x);
 	}
