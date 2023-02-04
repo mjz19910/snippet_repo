@@ -9093,7 +9093,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {
 		const cf="D_DesktopWatchAds";
-		this.codegen_typedef_all(cf,x);
+		const {gutParams,playerAdParams,...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
