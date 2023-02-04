@@ -1656,9 +1656,9 @@ type D_ExpandableTab={
 	content?: R_SectionList;
 };
 type D_ExpandableVideoDescriptionBody={
-	descriptionBodyText: G_Text;
-	showMoreText: G_Text;
-	showLessText: G_Text;
+	descriptionBodyText?: G_Text;
+	showMoreText?: G_Text;
+	showLessText?: G_Text;
 };
 // spell:ignore trackclk aclk
 type D_ExternalUrlFormat=[

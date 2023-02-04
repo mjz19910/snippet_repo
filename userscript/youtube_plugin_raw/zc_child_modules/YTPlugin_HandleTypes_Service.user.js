@@ -8499,9 +8499,9 @@ class HandleTypes extends HandleTypesEval {
 	D_ExpandableVideoDescriptionBody(x) {
 		const cf="D_ExpandableVideoDescriptionBody"; this.k(cf,x);
 		const {descriptionBodyText,showMoreText,showLessText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(descriptionBodyText);
-		this.G_Text(showMoreText);
-		this.G_Text(showLessText);
+		this.t(descriptionBodyText,this.G_Text);
+		this.t(showMoreText,this.G_Text);
+		this.t(showLessText,this.G_Text);
 	}
 	/** @private @arg {D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x) {
