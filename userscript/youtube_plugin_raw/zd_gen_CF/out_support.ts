@@ -21,6 +21,7 @@ export namespace Prelude {
 		|"CF_L_TP_Params"
 		|"CF_M_s"
 		|"CF_M_VE"
+		|"CF_M_w"
 		|"CF_M_y"
 		|"CF_M_zy"
 		|"CF_MG_s"
