@@ -261,10 +261,6 @@ type D_TranscriptSearchPanel={
 	trackingParams: string;
 	targetId: "engagement-panel-searchable-transcript-search-panel";
 };
-type DCE_Button={
-	command: GC_Button;
-	targetId: D_Button_TargetId;
-};
 type TD_Accessibility<T>={accessibilityData: TD_Label<T>;};
 type Popup_ShareEntityService=T_DialogPopup_ReuseFlag<R_UnifiedSharePanel>;
 type D_SubscriptionNotificationToggleButton_States=[
