@@ -1,4 +1,6 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [reel.params.f5]",
+	"[parse_value.gen_ns] [D_Browse.param.f94]",
 	"[parse_value.gen_ns] [subscribe.params.f2]",
 	"[parse_value.gen_ns] [subscribe.params.f3]",
 	"[parse_value.gen_ns] [D_Browse.param.f2]",

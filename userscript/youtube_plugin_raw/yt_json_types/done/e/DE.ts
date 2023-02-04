@@ -19,20 +19,20 @@ type DE_PlaylistEditor={playlistId: D_PlaylistId;};
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
 type DE_ReelWatch=
 	|{
-		playerParams: "8AEBuAQP";
+		playerParams: string;
 		overlay: R_ReelPlayerOverlay;
-		params: "CA8%3D";
+		params: string;
 		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
 		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
 	}
 	|{
 		videoId: string;
-		playerParams: "8AEByANQuAQr";
+		playerParams: string;
 		thumbnail: D_Thumbnail;
 		overlay: R_ReelPlayerOverlay;
-		params: "CCkwAg%3D%3D";
+		params: string;
 		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
-		sequenceParams: string;
+		sequenceParams?: string;
 	}
 	;
 ;
