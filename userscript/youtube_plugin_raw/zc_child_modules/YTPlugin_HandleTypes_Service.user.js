@@ -9099,29 +9099,46 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
-		const cf="D_PlayerCaptionsTracklist"; this.k(cf,x);
+		const cf="D_PlayerCaptionsTracklist";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
-		const cf="D_VideoQualityPromo"; this.k(cf,x);
+		const cf="D_VideoQualityPromo";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
-		const cf="D_PlayerAttestation"; this.k(cf,x);
+		const cf="D_PlayerAttestation";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
 		const cf="D_CardCollection";
-		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x); this.g(y);
+		const {cards,...y}=this.s(cf,x);
 		this.z(cards,this.R_Card);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
-		const cf="D_PlayerMicroformat"; this.k(cf,x);
+		const cf="D_PlayerMicroformat";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
-		const cf="D_AdPlacement"; this.k(cf,x);
+		const cf="D_AdPlacement";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
@@ -9134,26 +9151,52 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CD_PlayerSeek} x */
 	CD_PlayerSeek(x) {
 		const cf="CD_PlayerSeek";
-		this.codegen_typedef_all(cf,x);
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {CD_LiveChatReplay} x */
 	CD_LiveChatReplay(x) {
 		const cf="CD_LiveChatReplay";
-		this.codegen_typedef_all(cf,x);
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {
 		const cf="CD_Invalidation";
-		this.codegen_typedef_all(cf,x);
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {x;}
+	D_ThumbnailOverlayInlineUnplayable(x) {
+		const cf="D_ThumbnailOverlayInlineUnplayable";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
 	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {x;}
+	E_Unsubscribe(x) {
+		const cf="E_Unsubscribe";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
 	/** @private @arg {R_UnifiedSharePanel} x */
-	R_UnifiedSharePanel(x) {x;}
+	R_UnifiedSharePanel(x) {
+		const cf="R_UnifiedSharePanel";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
 	/** @private @arg {R_Card} x */
-	R_Card(x) {x;}
+	R_Card(x) {
+		const cf="R_Card";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

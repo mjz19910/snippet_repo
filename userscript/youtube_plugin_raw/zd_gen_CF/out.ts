@@ -351,6 +351,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DecoratedPlayerBar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopTopbar";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopWatchAds";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DisplayAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Dropdown";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EY_Offlineability";}
