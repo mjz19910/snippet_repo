@@ -6785,9 +6785,9 @@ class HandleTypes extends HandleTypesEval {
 		if(status!=="INDIFFERENT") debugger;
 		this.t(count,this.a_primitive_num);
 		this.G_Text(countText);
-		this.G_Text(countWithLikeText);
-		this.G_Text(countWithUnlikeText);
-		this.G_Text(countTooltipText);
+		this.t(countWithLikeText,this.G_Text);
+		this.t(countWithUnlikeText,this.G_Text);
+		this.t(countTooltipText,this.G_Text);
 	}
 	/** @private @arg {D_LikeButton} x */
 	D_LikeButton(x) {
