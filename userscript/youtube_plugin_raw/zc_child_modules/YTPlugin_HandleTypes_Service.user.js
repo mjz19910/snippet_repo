@@ -382,7 +382,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "subscribe.params": switch(map_entry_key) {
-				case 2: case 3:
+				case 2: case 3: case 4:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -2630,6 +2630,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(style,x => {
 			switch(x) {
 				default: debugger; x===""; break;
+				case "STYLE_SUGGESTIVE":
 				case "STYLE_TEXT":
 				case "STYLE_BLUE_TEXT":
 				case "STYLE_DEFAULT":
