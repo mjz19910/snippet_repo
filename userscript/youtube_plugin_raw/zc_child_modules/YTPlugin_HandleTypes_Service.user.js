@@ -2600,16 +2600,14 @@ class HandleTypes extends HandleTypesEval {
 		this.G_DE_Browse_VE(ve_name,x4);
 		this.g(x5);
 	}
-	/** @private @arg {Extract<GE_Browse_WCM,{resolveUrlCommandMetadata:any}>["resolveUrlCommandMetadata"]} x */
-	ResolveUrlCommandMetadata(x) {
-		x;
-	}
+	/** @private @arg {GM_VE3854_PT} x */
+	GM_VE3854_PT(x) {const cf="GM_VE3854_PT"; this.y(cf,"parentTrackingParams",x,x => this.trackingParams(cf,x));}
 	/** @private @arg {GE_Browse_WCM} x */
 	GE_Browse_WCM(x) {
 		const cf="M_VE_Browse";
 		if("resolveUrlCommandMetadata" in x) {
 			const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.ResolveUrlCommandMetadata(b);
+			this.GM_VE3854_PT(b);
 			if(a.rootVe===3854) {
 				return this.GM_VE3854_WC(a);
 			}
@@ -5475,10 +5473,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		})(x);
 	}
-	/**
-	 * @private
-	 * @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x
-	 * @returns {T_OmitKey<T,Exclude<keyof T,Omit_y>>} */
+	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x @returns {T_OmitKey<T,Exclude<keyof T,Omit_y>>} */
 	D_CompactVideo_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {richThumbnail,accessibility,channelThumbnail,badges,viewCountText,shortViewCountText,...y}=u;
@@ -5486,12 +5481,8 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibility);
 		this.D_Thumbnail(channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
-		let og=this.get_omit_gen(y);
-		const r1=og.get();
-		this.assert_is_omit_key(x,r1,r1);
-		r1;
 		/** @typedef {keyof typeof y} Omit_y */
-		return as_any(r1);
+		return as_any(y);
 	}
 	/** @private @arg {D_CompactVideo} x */
 	D_CompactVideo(x) {
@@ -6598,7 +6589,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="A_CommentsSectionContinuation";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,x=>{
+		this.z(continuationItems,x => {
 			const cf="G_CommentsSection"; this.k(cf,x);
 			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
 			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);

@@ -117,6 +117,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Comment";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentSimplebox";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentThread";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentsEntryPointHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentsEntryPointTeaser";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentsHeader";}
@@ -221,6 +222,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoSecondaryInfo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_WatchNextEndScreen";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GD_RC_SectionList";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GM_VE3854_PT";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GM_WC_Base";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_Watch_ResultsItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_Watch_SecondaryResults_Results";}
@@ -359,6 +361,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreationTextInput";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Comment";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentSimplebox";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentThread";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsEntryPointHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsEntryPointTeaser";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsHeader";}
@@ -731,6 +734,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ToggleButtonIdData";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "GM_VE3854_PT";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_BaseUrl";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateText";}
