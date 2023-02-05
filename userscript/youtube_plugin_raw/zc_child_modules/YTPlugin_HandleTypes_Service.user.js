@@ -7459,14 +7459,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
 		const cf="D_Comment";
-		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,collapseButton,replyCount,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(authorText);
 		this.D_Thumbnail(authorThumbnail);
 		this.R_CommentActionButtons(actionButtons);
 		this.R_Menu(actionMenu);
 		this.GE_Browse(authorEndpoint);
 		this.a_primitive_bool(authorIsChannelOwner);
-		this.R_Button(collapseButton);
 		this.a_primitive_str(commentId);
 		this.G_Text(contentText);
 		this.D_Thumbnail(currentUserReplyThumbnail);
@@ -7476,6 +7475,8 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(publishedTimeText);
 		this.ceq(voteStatus,"INDIFFERENT");
 		this.trackingParams(cf,trackingParams);
+		this.R_Button(collapseButton);
+		this.t(replyCount,this.a_primitive_num);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {D_PlaylistHeader} x */

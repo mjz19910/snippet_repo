@@ -573,6 +573,7 @@ type D_Comment={
 	voteCount?: G_Text;
 	expandButton: R_Button;
 	collapseButton: R_Button;
+	replyCount?: number;
 	loggingDirectives: D_LoggingDirectives;
 };
 type D_CommentSimplebox={
