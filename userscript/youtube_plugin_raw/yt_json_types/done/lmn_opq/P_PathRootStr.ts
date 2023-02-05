@@ -1,6 +1,7 @@
 type P_PathRootStr=
 	|"_level_1_0"
 	|"_level_2_0._level_2_1"
+	|"invalidation.continuation"
 	|"live_chat_replay.continuation"
 	|"player_seek.continuation"
 	|"aadc_guidelines_state_entity_key"

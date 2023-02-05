@@ -9402,22 +9402,32 @@ class HandleTypes extends HandleTypesEval {
 	DC_LiveChatReplay(x) {
 		const cf="DC_LiveChatReplay";
 		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
-		this.params(cf,"live_chat_replay.continuation",continuation)
+		this.params(cf,"live_chat_replay.continuation",continuation);
+		this.a_primitive_num(timeUntilLastMessageMsec);
 	}
 	/** @private @arg {CD_LiveChatReplay} x */
-	CD_LiveChatReplay(x) {
-		const cf="CD_LiveChatReplay"; this.y(cf,"liveChatReplayContinuationData",x,this.DC_LiveChatReplay);
-	}
+	CD_LiveChatReplay(x) {this.y("CD_LiveChatReplay","liveChatReplayContinuationData",x,this.DC_LiveChatReplay);}
 	/** @private @arg {DC_Invalidation} x */
 	DC_Invalidation(x) {
 		const cf="DC_Invalidation";
 		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
+		this.D_InvalidationId(invalidationId);
+		if(timeoutMs!==10000) debugger;
+		this.params(cf,"invalidation.continuation",continuation);
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
 	}
-	/** @private @arg {CD_Invalidation} x */
-	CD_Invalidation(x) {
-		const cf="CD_Invalidation"; this.y(cf,"invalidationContinuationData",x,this.DC_Invalidation);
+	/** @private @arg {D_InvalidationId} x */
+	D_InvalidationId(x) {
+		const cf="D_InvalidationId";
+		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(objectSource);
+		console.log(`[${cf}.objectId]`,objectId);
+		console.log(`[${cf}.topic]`,topic);
+		if(subscribeToGcmTopics!==true) debugger;
+		console.log(`[${cf}.protoCreationTimestampMs]`,protoCreationTimestampMs);
 	}
+	/** @private @arg {CD_Invalidation} x */
+	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {
 		const cf="D_ThumbnailOverlayInlineUnplayable";
