@@ -9248,7 +9248,7 @@ class HandleTypes extends HandleTypesEval {
 			default: switch(xs) {
 
 			}; debugger; break;
-			case "13": case "25": case "30": case "50": case "60":
+			case "13": case "15": case "25": case "30": case "50": case "60":
 		}
 	}
 	/** @private @arg {D_Range} x */
