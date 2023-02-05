@@ -2183,15 +2183,9 @@ class HandleTypes extends HandleTypesEval {
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
-		/** @template {M_Next|M_Empty_WCM} T @arg {T} x @returns {x is M_Next} */
-		function is_m_next(x) {return "apiUrl" in x.webCommandMetadata&&x.webCommandMetadata.apiUrl==="/youtubei/v1/next";}
 		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		x: {
-			if(!a) break x;
-			if(!is_m_next(a)) break x;
-			this.M_Next(a);
-		}
-		this.DC_Continuation(b);
+		this.M_Next(as(a));
+		this.DC_Continuation(a,b);
 	}
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
@@ -2350,20 +2344,25 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
-	/** @private @arg {DC_Continuation} x */
-	DC_Continuation(x) {
+	/** @private @arg {C_Continuation["commandMetadata"]} c_meta @arg {DC_Continuation} x @returns {["CONTINUATION_REQUEST_TYPE_BROWSE"]} */
+	DC_Continuation(c_meta,x) {
 		if("continuationCommand" in x) debugger;
 		const cf="DC_Continuation";
 		switch(x.request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
 				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
+				this.g(this.DC_Continuation_Omit(cf,x));
+				return [x.request,c_meta];
 			}
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
+				this.g(this.DC_Continuation_Omit(cf,x));
+				return [x.request,c_meta];
+			}
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
 				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
+				this.g(this.DC_Continuation_Omit(cf,x));
+				return [x.request,c_meta];
 			}
 		}
 	}
@@ -2645,7 +2644,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
+	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(cf,a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
 	/** @private @arg {E_Unsubscribe} x */
@@ -2688,6 +2687,14 @@ class HandleTypes extends HandleTypesEval {
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
+	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
+	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	/** @private @arg {M_Next} x */
+	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
+	/** @private @arg {M_CreatePlaylist} x */
+	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
+	/** @private @arg {M_NotificationOptOut} x */
+	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
 	/** @protected @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @protected @arg {GM_Unsubscribe} x */
@@ -3439,8 +3446,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
-	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_CompactLink} x */
 	D_CompactLink(x) {
 		const cf="D_CompactLink"; this.k(cf,x);
@@ -4044,8 +4049,6 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {M_Next} x */
-	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
 	/** @private @arg {D_Color} x */
 	D_Color(x) {
 		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
@@ -4633,8 +4636,6 @@ class HandleTypes extends HandleTypesEval {
 			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
 		}
 	}
-	/** @private @arg {M_CreatePlaylist} x */
-	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist"; this.k(cf,x);
@@ -8998,13 +8999,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
-		const {expire,ei,...y}=this.s(cf,x);
+		// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,sig,lsparams,lsig,...y}=this.s(cf,x);
 		let expiry_date=this.parse_number_template(expire);
 		this.log_buffer.push([cf,"expire",expiry_date]);
 		Promise.resolve().then(() => this.run_logger());
-		this.params(cf,"video_playback.ei",ei);
+		let ei_bin=base64_url_dec.decodeByteArray(ei);
+		this.t(ei_bin,x=>this.save_next_byte(`${cf}.ei`,x));
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.lsparams`,lsparams);
 		let ka=this.get_keys_of(y);
-		console.log("[D_VideoPlaybackShape.next_key] [%s]",ka[0]);
+		if(ka.length>0) {
+			console.log("[D_VideoPlaybackShape.next_key] [%s]",ka.shift());
+		}
 	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
@@ -9404,6 +9411,8 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
+	/** @private @arg {GM_NotificationOptOut} x */
+	GM_NotificationOptOut(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

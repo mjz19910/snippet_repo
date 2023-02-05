@@ -120,7 +120,7 @@ type GM_GetWebPlayerSharePanel=T_GM_PostApi_WithApiUrl<"/youtubei/v1/share/get_w
 type GM_Like=GM_LikeLike|GM_Dislike|GM_RemoveLike;
 type GM_LikeLike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/like">;
 type GM_Next=T_GM_PostApi_WithApiUrl<"/youtubei/v1/next">;
-type GM_notification_opt_out=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/opt_out">;
+type GM_NotificationOptOut=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/opt_out">;
 type GM_RecordInteractions=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/record_interactions">;
 type GM_RemoveLike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/removelike">;
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
@@ -162,7 +162,7 @@ type GM_WC_PostApi=[
 	GM_RemoveLike,
 	GM_Next,
 	GM_GetUnseenNotificationCount,
-	GM_notification_opt_out,
+	GM_NotificationOptOut,
 	GM_RecordInteractions,
 	GM_CreatePlaylist,
 	GM_AddToPlaylistService,
