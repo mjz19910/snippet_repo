@@ -8,7 +8,6 @@ type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;
 type GU_VE42352_Url="/feed/downloads";
 type GU_VE83769_Url=
-	|`https://myactivity.google.com/activitycontrols/youtube?${string}`
 	|GU_VE83769_Url_Internal
 	|GU_YoutubeUrlRedirect
 	|GU_VE83769_Url_External
@@ -31,15 +30,17 @@ type GU_YoutubeUrlRedirect=
 type GU_VE83769_Url_Internal="/upload";
 type D_StrOnlyLen<T extends number,U extends string>=T_Split<U,"">['length'] extends T? U:never;
 type GU_VE83769_Url_External=
-	|"https://studio.youtube.com/channel/UC/livestreaming"
-	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}`
-	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}/videos`
-	|"https://studio.youtube.com/"
-	|"https://studio.youtube.com"
-	|"https://music.youtube.com/"
 	|"https://music.youtube.com"
+	|"https://music.youtube.com/"
+	|"https://studio.youtube.com"
+	|"https://studio.youtube.com/"
+	|"https://studio.youtube.com/channel/UC/livestreaming"
+	|"https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273"
+	|"https://www.google.com/get/videoqualityreport/"
 	|"https://www.youtubekids.com?source=youtube_web"
 	|"https://www.youtubekids.com/?source=youtube_web"
-	|"https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273"
+	|`https://myactivity.google.com/activitycontrols/youtube?${string}`
+	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}/videos`
+	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}`
 	;
 ;

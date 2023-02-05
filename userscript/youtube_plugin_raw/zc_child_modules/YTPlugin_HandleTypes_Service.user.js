@@ -2684,7 +2684,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {M_VE37414} x */
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
+	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {M_Next} x */
@@ -2742,7 +2742,7 @@ class HandleTypes extends HandleTypesEval {
 			case "/youtubei/v1/feedback": return this.GM_WC_Base(x);
 			case "/youtubei/v1/browse":
 				if("rootVe" in x) return this.GM_WC_Ex(x);
-				return this.GM_browse(x);
+				return this.GM_Browse(x);
 			case "/youtubei/v1/account/account_menu": return this.GM_WC_Base(x);
 			case "/youtubei/v1/notification/get_unseen_count": return this.GM_WC_Base(x);
 			case "/youtubei/v1/notification/get_notification_menu": return this.GM_WC_Base(x);
@@ -2796,7 +2796,7 @@ class HandleTypes extends HandleTypesEval {
 			case 3832: return this.GM_VE3832_Watch(x);
 			case 4724: return this.GM_VE4724(x);
 			case 37414: return this.GM_VE37414(x);
-			case 83769: return this.GM_VE83769(x);
+			case 83769: return this.GM_VE83769_WC(x);
 		}
 	}
 	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
@@ -2962,7 +2962,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.str_starts_with_rx("/watch",url)) debugger;
 	}
 	/** @private @arg {GM_VE83769_WC} x */
-	GM_VE83769(x) {
+	GM_VE83769_WC(x) {
 		const cf="GM_VE83769_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE83769_Url(url);
@@ -2970,15 +2970,15 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==83769) debugger;
 	}
 	/** @private @arg {GM_Browse} x */
-	GM_browse(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/browse"));}
+	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @private @arg {GM_RecordInteractions} x */
-	GM_RecordInteractions(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
+	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_Feedback} x */
-	GM_Feedback(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
+	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {GM_NotificationOptOut} x */
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
 	/** @private @arg {DE_Search} x */
-	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
+	DE_Search(x) {this.H_("DE_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_UserFeedback} x */
