@@ -5849,6 +5849,7 @@ class HandleTypes extends HandleTypesEval {
 					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 					this.R_SectionList(content);
 					this.t(header,this.R_EngagementPanelTitleHeader);
+					if(targetId!=="engagement-panel-comments-section") debugger;
 					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
