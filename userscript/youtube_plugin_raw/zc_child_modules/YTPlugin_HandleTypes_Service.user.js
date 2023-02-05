@@ -2147,6 +2147,10 @@ class HandleTypes extends HandleTypesEval {
 	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.D_Card);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("R_Card","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	/** @private @arg {R_EmojiPickerCategory} x */
+	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
+	/** @private @arg {R_EmojiPickerCategoryButton} x */
+	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -9522,7 +9526,47 @@ class HandleTypes extends HandleTypesEval {
 		if(refractorySeconds!==2592000) debugger;
 	}
 	/** @private @arg {D_EmojiPicker} x */
-	D_EmojiPicker(x) {x;}
+	D_EmojiPicker(x) {
+		const cf="D_EmojiPicker";
+		const {id,categories,categoryButtons,searchPlaceholderText,searchNoResultsText,pickSkinToneText,trackingParams,clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel,...y}=this.s(cf,x); this.g(y);
+		if(id!=="emoji") debugger;
+		this.z(categories,this.R_EmojiPickerCategory);
+		this.z(categoryButtons,this.R_EmojiPickerCategoryButton);
+		this.G_Text(searchPlaceholderText);
+		this.G_Text(searchNoResultsText);
+		this.G_Text(pickSkinToneText);
+		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],this.a_primitive_str);
+	}
+	/** @private @arg {D_EmojiPickerCategory} x */
+	D_EmojiPickerCategory(x) {
+		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
+			const cf="D_EmojiPicker:Global";
+			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.s(cf,x); this.g(y);
+			if(!this.str_starts_with(categoryId,"UC")) debugger;
+			this.G_Text(title);
+			this.z(emojiIds,x => {
+				this.save_string(`${categoryId}.emojiId`,x);
+			});
+			this.D_ChannelId(categoryId);
+			this.trackingParams(cf,trackingParams);
+			return;
+		}
+		const cf="D_EmojiPicker";
+		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "people": case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.G_Text(title);
+		this.z(emojiIds,x => {
+			this.save_string(`${categoryId}.emojiId`,x);
+		});
+		this.trackingParams(cf,trackingParams);
+		if(imageLoadingLazy!==true) debugger;
+		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
+	}
+	/** @private @arg {D_EmojiPickerCategoryButton} x */
+	D_EmojiPickerCategoryButton(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

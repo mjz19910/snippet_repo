@@ -123,6 +123,8 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommonConfig.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ConfirmDialog";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_DesktopTopbar";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EmojiPicker";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EmojiPicker:Global";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EndScreenPlaylist";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EngagementPanelTitleHeader";}
@@ -375,6 +377,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EY_Offlineability";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ElementResourceStatus";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiImage";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPicker";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPicker:Global";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelSectionList";}
@@ -875,6 +879,5 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
-		|{n: Prelude.P_PathRootStr; t: Types.P_PathRootStr_; v: "create_comment.params";}
 		;
 }
