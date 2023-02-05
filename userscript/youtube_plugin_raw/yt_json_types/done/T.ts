@@ -207,7 +207,9 @@ type TP_KeyofSearchParams<T extends string>=T extends `${infer U}=${string}&${in
 type TP_ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? TP_ParseUrlItems<V>:T extends `${infer V}`? TP_ParseUrlItems<V>:never;
 type TP_ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {[V in U]: DecodeUriComponent<C>;}:T;
 type DecodeUriComponent_1<T extends string>=T_Replace<T,`%3${"f"|"F"}`,"?">;
-type DecodeUriComponent<T extends string>=DecodeUriComponent_1<T>;
+type DecodeUriComponent_2<T extends string>=DecodeUriComponent_1<T_Replace<T,"%3D","=">>;
+type DecodeUriComponent_3<T extends string>=DecodeUriComponent_2<T_Replace<T,"%26","&">>;
+type DecodeUriComponent<T extends string>=DecodeUriComponent_3<T>;
 type TRS_Actions={
 	responseContext: RC_ResponseContext;
 	actions: G_ResponseActions[];

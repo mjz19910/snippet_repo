@@ -24,4 +24,4 @@ type D_AdaptiveFormatItem={
 	loudnessDb?: number;
 	signatureCipher?: D_FormatItem_signatureCipher;
 };
-type D_FormatItem_signatureCipher=`s=${string}&sp=${"sig"}&url=https://rr3---sn-nx57ynsl.googlevideo.com/videoplayback%3F${string}`;
+type D_FormatItem_signatureCipher=`s=${string}&sp=${"sig"}&url=https://rr3---sn-nx57ynsl.googlevideo.com/videoplayback%3Fexpire%3D${number}%26ei%3D${string}%26ip%3D${string}%26id%3D${string}%26itag%3D${string}%26source%3D${string}%26requiressl%3D${string}%26mh%3D${string}%26mm%3D${string}%26mn%3D${string}%26ms%3D${string}%26mv%3D${string}%26mvi%3D${string}%26pl%3D${string}%26initcwndbps%3D${string}%26vprv%3D${string}%26mime%3D${string}%26ns%3D${string}%26cnr%3D${string}%26ratebypass%3D${string}%26dur%3D${string}%26lmt%3D${string}%26mt%3D${string}%26fvip%3D${string}%26fexp%3D${string}%26c%3D${string}%26txp%3D${string}%26n%3D${string}%26sparams%3D${string}%26sig%3D${string}%26lsparams%3D${string}%26lsig%3D${string}`;

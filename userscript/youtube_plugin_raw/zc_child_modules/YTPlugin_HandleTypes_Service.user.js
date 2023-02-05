@@ -9044,10 +9044,9 @@ class HandleTypes extends HandleTypesEval {
 				this.save_string("google_video_host",s_host[0]);
 				switch(x.pathname) {
 					case "/videoplayback": {
-						/** @type {D_VideoPlayback_SearchParams} */
-						let vp_search=as(x.search);
-						let pp=this.parse_url_search_params(vp_search);
-						this.D_VideoPlaybackShape(as_any(pp));
+						let vp_search=x.search;
+						let {...pp}=this.parse_url_search_params(vp_search);
+						this.D_VideoPlaybackShape(pp);
 					} break;
 					case "/initplayback": {
 						debugger;
