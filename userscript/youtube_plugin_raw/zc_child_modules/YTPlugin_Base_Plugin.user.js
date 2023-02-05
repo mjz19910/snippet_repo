@@ -2905,7 +2905,7 @@ class HandleRendererContentItemArray extends BaseService {
 		// debugger;
 		return true;
 	}
-	/** @api @public @template {G_BrowseFeed[]|G_WatchNext[]|G_CommentsSection[]|G_SectionItem[]} T @arg {T} arr @returns {T} */
+	/** @api @public @template {(G_RendererContentItem|R_Comment)[]} T @arg {T} arr @returns {T} */
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			let keys=this.get_keys_of(content_item);
@@ -3843,7 +3843,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {string} x */
 	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
-	starts_with_targetId(x,w) {return this.str_starts_with_rx(x.targetId,w);}
+	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
 	playerParams(cf,path,x,callback) {this.parser.on_player_params(cf,path,x,callback);}
 	/** @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
