@@ -9665,6 +9665,7 @@ class HandleTypes extends HandleTypesEval {
 		let emoji_parts=this.split_str(emojiId,"");
 		if(emoji_parts.length!==2) debugger;
 		this.join_string(emoji_parts,"");
+		this.save_string(`save://Emoji.d/emojiId`,emojiId);
 		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
 		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
 	}
