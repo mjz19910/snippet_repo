@@ -7819,23 +7819,31 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{
-			const x=p_tc; switch(x) {
-				default: log_color("l1_p_tc",x); break;
-				case 0xff191610: case 0xff191410: case 0xff101619: case 0xff101819: case 0xff101019: case 0xff191515: case 0xff191011: case 0xff191513:
-				case 0xff141319: case 0xff131019: case 0xff191615: case 0xff141019: case 0xff191014: case 0xff191110: case 0xff191010: case 0xff191310:
-				case 0xff181019: case 0xff101319: case 0xff191012: case 0xff101519: case 0xff101119: case 0xff161519: case 0xff101219: case 0xff111019:
-				case 0xff101219: case 0xff191518:
-			}
-		}
-		{
-			const x=s_tc;
+			const x=p_tc,cf1="l1_p_tc";
 			let b=x%256; b;
 			let g=(x>>>8)%256; g;
 			let r=(x>>>16)%256;
 			let a=(x>>>24)%256;
 			if(a!==0xff) debugger;
 			switch(r) {
-				default: log_color("l1_s_tc_r",r); break;
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
+			}
+		}
+		{
+			const x=s_tc,cf1="l1_s_tc";
+			let b=x%256; b;
+			let g=(x>>>8)%256; g;
+			let r=(x>>>16)%256;
+			let a=(x>>>24)%256;
+			if(a!==0xff) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
 				case 0x48:
 				case 0x4c:
 				case 0x52:
@@ -7851,7 +7859,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x7f:
 			}
 			switch(g) {
-				default: log_color("l1_s_tc_g",g); break;
+				default: log_color(`${cf1}_g`,g); break;
 				case 0x52:
 				case 0x55: case 0x56:
 				case 0x58: case 0x59: case 0x5a: case 0x5b: case 0x5c: case 0x5d: case 0x5e: case 0x5f:
@@ -7860,7 +7868,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x69: case 0x6a:
 			}
 			switch(b) {
-				default: log_color("l1_s_tc_b",b); break;
+				default: log_color(`${cf1}_b`,b); break;
 				case 0x48:
 				case 0x4c:
 				case 0x4f:
@@ -7878,20 +7886,37 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		{
-			const x=s2_c; switch(x) {
-				default: log_color("l1_s2_c",x); break;
-				case 0xf2f8f6f1: case 0xf2f8f4f1: case 0xf2f1f5f8: case 0xf2f1f7f8: case 0xf2f1f1f8: case 0xf2f8f1f1: case 0xf2f3f1f8: case 0xf2f8f3f1:
-				case 0xf2f2f1f8: case 0xf2f4f1f8: case 0xf2f8f2f1: case 0xf2f8f1f4: case 0xf2f1f3f8: case 0xf2f8f5f1: case 0xf2f7f1f8: case 0xf2f8f1f2:
-				case 0xff565a84: case 0xff605b6b: case 0xf2f1f2f8: case 0xf2f8f1f6:
+			const x=s2_c,cf1="l1_s2_c";
+			let b=x%256; b;
+			let g=(x>>>8)%256; g;
+			let r=(x>>>16)%256;
+			let a=(x>>>24)%256;
+			if(a!==0xff) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
 			}
 		}
 		{
-			const x=s4_c; switch(x) {
-				default: log_color("l1_s4_c",x); break;
-				case 0xf2ebe7dd: case 0xf2ebe3dd: case 0xf2dde6eb: case 0xf2dde9eb: case 0xf2ddddeb: case 0xf2ebdddd: case 0xf2ebddde: case 0xf2ebe1dd:
-				case 0xf2e2ddeb: case 0xf2e0ddeb: case 0xf2e3ddeb: case 0xf2ebdfdd: case 0xf2deddeb: case 0xf2ebdde4: case 0xf2ebe2dd: case 0xf2dde2eb:
-				case 0xf2ebe4dd: case 0xf2ebdde0: case 0xf2ebe6dd: case 0xf2eaddeb: case 0xf2dde5eb: case 0xf2dde1eb: case 0xf2dddeeb: case 0xf2e1ddeb:
-				case 0xf2dde0eb: case 0xf2ebdde8:
+			const x=s4_c,cf1="l1_s4_c";
+			let b=x%256; b;
+			let g=(x>>>8)%256; g;
+			let r=(x>>>16)%256;
+			let a=(x>>>24)%256;
+			if(a!==0xff) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
 			}
 		}
 	}
@@ -7925,11 +7950,11 @@ class HandleTypes extends HandleTypesEval {
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{
 			const x=p_tc; switch(x) {
+				default: log_color("d1_p_tc",x); break;
 				case 0xfffff6e5: case 0xfffff0e5: case 0xffe5f5ff: case 0xffe5faff: case 0xffe5e5ff: case 0xffffe5e5: case 0xffffe5e7: case 0xffffece5:
 				case 0xffede5ff: case 0xffeae5ff: case 0xffffe9e5: case 0xfff0e5ff: case 0xffe6e5ff: case 0xffffe5f1: case 0xffffe5e6: case 0xffffeee5:
 				case 0xffffefe5: case 0xffe5eeff: case 0xffffe5ea: case 0xfffff2e5: case 0xfffff5e5: case 0xffffe8e5: case 0xffe5f3ff: case 0xffe5edff:
 					break;
-				default: log_color("d1_p_tc",x); break;
 				case 0xfffce5ff: case 0xffe5eaff: case 0xffffe5f8: case 0xffe5e7ff: case 0xffe5fbff:
 			}
 		}
