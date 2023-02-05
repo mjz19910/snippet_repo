@@ -52,15 +52,15 @@ class TypedefGenerator extends ServiceMethods {
 	/** @protected @arg {string} cf @arg {{}} x */
 	k=(cf,x) => this.save_keys(`[${cf}]`,x);
 	/** @arg {D_TypedefGenerator_Popup} x */
-	popup_dialog(x) {
+	D_TypedefGenerator_Popup(x) {
 		const cf="popup_dialog"; cf; this.k(cf,x);
 		let x1=this.unpack_popup_dialog(x);
 		if(!x1[0]) {debugger; return null;}
 		let dialog=x1[1];
-		return this.popup_dialog_1(dialog);
+		return this.D_TypedefGenerator_Popup_R(dialog);
 	}
 	/** @arg {D_TypedefGenerator_Popup_R} x */
-	popup_dialog_1(x) {
+	D_TypedefGenerator_Popup_R(x) {
 		const cf="R_ConfirmDialog"; cf; this.k(cf,x);
 		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
 		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
