@@ -570,7 +570,7 @@ type D_Comment={
 	currentUserReplyThumbnail: D_Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
-	voteCount: G_Text;
+	voteCount?: G_Text;
 	expandButton: R_Button;
 	collapseButton: R_Button;
 	loggingDirectives: D_LoggingDirectives;

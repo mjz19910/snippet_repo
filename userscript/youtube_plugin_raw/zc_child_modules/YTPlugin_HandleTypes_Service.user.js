@@ -7464,7 +7464,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(commentId);
 		this.G_Text(contentText);
 		this.D_Thumbnail(currentUserReplyThumbnail);
-		this.G_Text(voteCount);
+		this.t(voteCount,this.G_Text);
 		this.a_primitive_bool(isLiked);
 		this.R_Button(expandButton);
 		this.G_Text(publishedTimeText);
