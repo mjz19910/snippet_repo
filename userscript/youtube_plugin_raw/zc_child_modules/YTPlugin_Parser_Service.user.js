@@ -105,26 +105,6 @@ class ParserService extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {NS_DP_Parse.ParseUrlStr_2} x */
-	parse_url_3(x) {
-		if(this.str_starts_with_at_0(x,"@")) {
-			this.parse_channel_section_url(x[1]);
-			return;
-		}
-		if(x[0]==="") return;
-		switch(x[0]) {
-			case "feed": return this.parse_feed_url(x);
-			case "shorts": return this.parse_shorts_url(x);
-			case "channel": return this.parse_channel_url(x);
-			case "youtubei": return this.parse_youtube_url_2(x);
-			case "api": return this.parse_api_url(x);
-			case "hashtag": return this.parse_hashtag_url(x);
-			case "source": return this.parse_source_url(x);
-			case "embed": return this.parse_embed_url(x);
-			case "v": return this.parse_video_url(x);
-			default: x===""; debugger; return;
-		}
-	}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["hashtag",...any]>} x */
 	parse_hashtag_url(x) {
 		console.log("[parse_hashtag_url]",x);
@@ -574,14 +554,28 @@ class ParserService extends BaseService {
 			debugger;
 			return;
 		}
-		this.parse_url_1(root,up[1]);
-	}
-	/** @private @arg {CF_L_TP_Params} root @arg {NS_DP_Parse.ParseUrlStr_0} x */
-	parse_url_1(root,x) {
-		let v=split_string_once(x,"/");
-		switch(v.length) {
-			case 1: this.parse_url_2(root,v[0]); break;
-			case 2: this.parse_url_3(v); break;
+		{
+			let x=up[1];
+			let v=split_string_once(x,"/");
+			switch(v.length) {
+				case 1: this.parse_url_2(root,v[0]); break;
+				case 2: {
+					let x=v;
+					if(this.str_starts_with_at_0(x,"@")) return this.parse_channel_section_url(x[1]);
+					switch(x[0]) {
+						case "feed": return this.parse_feed_url(x);
+						case "shorts": return this.parse_shorts_url(x);
+						case "channel": return this.parse_channel_url(x);
+						case "youtubei": return this.parse_youtube_url_2(x);
+						case "api": return this.parse_api_url(x);
+						case "hashtag": return this.parse_hashtag_url(x);
+						case "source": return this.parse_source_url(x);
+						case "embed": return this.parse_embed_url(x);
+						case "v": return this.parse_video_url(x);
+						default: x===""; debugger; return;
+					}
+				} break;
+			}
 		}
 	}
 	log_playlist_index=false;
