@@ -2000,7 +2000,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {R_CommentActionButtons} x */
-	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.g);}
+	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
 	/** @private @arg {R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {R_PlaylistByline} x */
@@ -9637,10 +9637,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(isModeratedElqComment,false);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {D_ImpressionCommand} x */
-	D_ImpressionCommand(x) {x;}
-	/** @private @arg {D_ClickLocationTarget} x */
-	D_ClickLocationTarget(x) {x;}
 	/** @private @arg {R_InfoCardIcon} x */
 	R_InfoCardIcon(x) {
 		if("infoCardIconRenderer" in x) {
@@ -9650,8 +9646,33 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @private @arg {"R_InfoCardIcon"} cf @arg {D_Tracking} x */
-	D_Tracking(cf,x) {
-		this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));
+	D_Tracking(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
+	/** @private @arg {D_ImpressionCommand} x */
+	D_ImpressionCommand(x) {
+		const cf="D_ImpressionCommand";
+		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.z(loggingUrls,x => this.T_BaseUrl(x,x => this.parser.parse_url(`${cf}:LoggingUrlItem`,x)));
+		this.B_Hack(pingingEndpoint);
+	}
+	/** @private @arg {D_ClickLocationTarget} x */
+	D_ClickLocationTarget(x) {
+		const cf="D_ClickLocationTarget";
+		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
+		this.save_enum("PROMOTED_SPARKLES_CLICK_LOCATION",location);
+		this.save_number(`${cf}.code`,code);
+		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
+	}
+	/** @private @arg {D_CommentActionButtons} x */
+	D_CommentActionButtons(x) {
+		const cf="D_CommentActionButtons";
+		const {likeButton,replyButton,dislikeButton,trackingParams,protoCreationMs,style,...y}=this.s(cf,x); this.g(y);
+		this.R_ToggleButton(likeButton);
+		this.R_Button(replyButton);
+		this.R_ToggleButton(dislikeButton);
+		this.trackingParams(cf,trackingParams);
+		this.a_primitive_str(protoCreationMs);
+		if(style!=="COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR") debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

@@ -7,7 +7,6 @@ type D_VideoMastheadAdV3={};
 
 type D_AdActionInterstitial={};
 type D_AutomixPreviewVideo={};
-type D_CommentActionButtons={};
 type D_LiveChatHeader={};
 type D_LiveChatItemList={};
 type D_LiveChatMessageInput={};

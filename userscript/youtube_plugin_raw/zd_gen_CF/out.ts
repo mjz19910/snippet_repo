@@ -54,6 +54,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ShowReloadUi";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "DC_Invalidation";}
+		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "D_ImpressionCommand";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RSG_SharePanel_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
@@ -117,6 +118,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Comment";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentActionButtons";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentThread";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentsEntryPointHeader";}
@@ -143,6 +145,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Hint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HorizontalCardList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_HotkeyDialog";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ImpressionCommand:LoggingUrlItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InfoRow";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LikeButton.rest";}
@@ -359,11 +362,13 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloud";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CinematicContainer";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClickLocationTarget";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipAdState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreationScrubber";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreationTextInput";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Comment";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentActionButtons";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentThread";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsEntryPointHeader";}
@@ -425,6 +430,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HotkeyDialogSectionOption";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ImpressionCommand";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InfoRow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
