@@ -2184,8 +2184,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
 		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		this.M_Next(as(a));
-		this.DC_Continuation(a,b);
+		this.t(a,this.M_Next);
+		this.DC_Continuation(b);
 	}
 	/** @private @arg {C_GetSurvey} x */
 	C_GetSurvey(x) {
@@ -2344,25 +2344,20 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
-	/** @private @arg {C_Continuation["commandMetadata"]} c_meta @arg {DC_Continuation} x @returns {["CONTINUATION_REQUEST_TYPE_BROWSE"]} */
-	DC_Continuation(c_meta,x) {
+	/** @private @arg {DC_Continuation} x */
+	DC_Continuation(x) {
 		if("continuationCommand" in x) debugger;
 		const cf="DC_Continuation";
 		switch(x.request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
 				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				this.g(this.DC_Continuation_Omit(cf,x));
-				return [x.request,c_meta];
+				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
-				this.g(this.DC_Continuation_Omit(cf,x));
-				return [x.request,c_meta];
-			}
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
 				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				this.g(this.DC_Continuation_Omit(cf,x));
-				return [x.request,c_meta];
+				return this.g(this.DC_Continuation_Omit(cf,x));
 			}
 		}
 	}
