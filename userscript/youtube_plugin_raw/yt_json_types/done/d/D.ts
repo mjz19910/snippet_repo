@@ -1588,7 +1588,8 @@ type D_DecTypeNum=
 	["group",number,D_DecTypeNum[]]|
 	["error",number];
 type D_DesktopWatchAds={
-	gutParams: B_TagObj<string>;
+	// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
+	gutParams: B_TagObj<"\\4061\\ytpwmpu">;
 	playerAdParams: D_PlayerAdParams;
 	showCompanion: true;
 	showInstream: true;

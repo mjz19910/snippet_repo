@@ -8966,7 +8966,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {VideoGoodPutShape} x */
 	VideoGoodPutShape(x) {
-		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=x; this.g(y);
+		const cf="VideoGoodPutShape";
+		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
+		this.params(cf,"videogoodput.sparams",sparams);
 		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
 	/** @type {(["D_VideoPlaybackShape","expire",number])[]} */
@@ -9319,7 +9321,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_DesktopWatchAds";
 		const {gutParams,playerAdParams,showCompanion,...y}=this.s(cf,x);
 		let params_tag=this.B_TagObj(gutParams);
-		console.log("[${cf}.gutParams.tag] [%s]",params_tag);
+		console.log(`[${cf}.gutParams.tag] [%s]`,params_tag);
 		if(showCompanion!==true) debugger;
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
