@@ -361,6 +361,16 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "create_comment.params.f5": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "create_comment.params": switch(map_entry_key) {
+				case 2: case 5: case 10:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "aadc_guidelines_state_entity_key": switch(map_entry_key) {
 				case 2: case 4: case 5:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -2016,7 +2026,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
 	/** @private @arg {R_EmojiPicker} x */
-	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.g);}
+	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.D_EmojiPicker);}
 	/** @private @arg {R_ChannelHeaderLinks} x */
 	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
@@ -4646,6 +4656,7 @@ class HandleTypes extends HandleTypesEval {
 	D_UiTargetId(x) {
 		switch(x) {
 			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
+			case "comments-section":
 			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
 		}
 	}
@@ -7819,15 +7830,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
 		let fs=split_string_once(x,":");
-		let ls=split_string_once_last(fs[1],":",null);
-		console.log("[emoji_shortcut_info]",ls[0]);
+		let [ls,w]=split_string_once_last(fs[1],":",null); if(w!=="") debugger;
+		return ls;
 	}
 	/** @private @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {CF_D_CustomEmoji} cf @arg {T} x */
 	D_CustomEmoji_Omit(cf,x) {
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.s(cf,x);
 		this.parse_emoji_id(emojiId);
-		this.z(shortcuts,this.parse_emoji_shortcut);
-		this.z(searchTerms,this.a_primitive_str);
+		let [s_arr]=this.z(shortcuts,this.parse_emoji_shortcut);
+		this.z(s_arr,this.a_primitive_str);
+		this.save_string(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
+		this.save_string(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
 		this.D_EmojiImage(image);
 		this.a_primitive_bool(isCustomEmoji);
 		return y;
@@ -9502,6 +9515,8 @@ class HandleTypes extends HandleTypesEval {
 		if(watchTimeWindowSeconds!==180) debugger;
 		if(refractorySeconds!==2592000) debugger;
 	}
+	/** @private @arg {D_EmojiPicker} x */
+	D_EmojiPicker(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
