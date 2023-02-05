@@ -758,7 +758,18 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
+	GT_ShortsSurfaceIdentifier(x) {
+		const cf="GT_ShortsSurfaceIdentifier"; this.k(cf,x);
+		const {surface,tag,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+		switch(tag) {
+			case "engagement-panel-structured-description": break;
+			case "shorts-comments-panel": break;
+			default: debugger; break;
+		}
+		return tag;
+	}
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text"; this.k(cf,x);
@@ -775,6 +786,549 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @arg {G_RichSection} x */
+	G_RichSection(x) {
+		const cf="G_RichSection"; this.k(cf,x);
+		if("richShelfRenderer" in x) return this.R_RichShelf(x);
+		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
+		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_RS_WatchPage} x */
+	RS_WatchPage(x) {
+		const cf="R_WatchPage"; this.g_k(cf,x); this.k(cf,x);
+		if("rootVe" in x) switch(x.rootVe) {
+			case 3832: return this.RS_VE3832_Page_Watch(x);
+			default: debugger; return;
+		}
+		this.RS_Page_Watch(x);
+	}
+	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
+	G_DE_Browse_VE(ve_name,x) {
+		const cf="G_DE_Browse_VE";
+		if("canonicalBaseUrl" in x) {
+			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(c,c => this.params(cf,"D_Browse.param",c));
+			this._decode_channel_url(ve_name,d);
+			return this.GU_E_BrowseId(ve_name,a);
+		}
+		if("params" in x) {
+			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(c,c => this.params(cf,"D_Browse.param",c));
+			return this.GU_E_BrowseId(ve_name,a);
+		}
+		if("query" in x) {
+			const {browseId: a,query: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(b!=="") debugger;
+			return this.GU_E_BrowseId(ve_name,a);
+		}
+		if("browseId" in x) {
+			const {browseId: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			return this.GU_E_BrowseId(ve_name,a);
+		}
+	}
+	/** @private @arg {G_Browse_MD} x */
+	G_Browse_MD(x) {
+		const cf="G_Browse_MD"; this.k(cf,x);
+		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
+		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_BrowseSidebar} x */
+	G_BrowseSidebar(x) {
+		const cf="G_BrowseSidebar"; this.k(cf,x);
+		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
+		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_PlaylistSidebarItem} x */
+	G_PlaylistSidebarItem(x) {
+		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
+		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
+		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @arg {G_RichGridContent} x */
+	D_RichGridContent(x) {
+		const cf="D_RichGridContent"; this.k(cf,x);
+		if("richItemRenderer" in x) return this.R_RichItem(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("richSectionRenderer" in x) return this.R_RichSection(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_RichItemContent} x */
+	G_RichItemContent(x) {
+		const cf="G_RichItemContent"; this.k(cf,x);
+		if("adSlotRenderer" in x) return this.R_AdSlot(x);
+		if("videoRenderer" in x) return this.R_Video(x);
+		if("radioRenderer" in x) return this.R_Radio(x);
+		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
+	G_DC_CommandExecutor_CommandItem(x) {
+		const cf="DC_CommandExecutor.command";
+		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		if("commandExecutorCommand" in x) return this.C_RepeatChapter(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_DC_GetSurvey_Endpoint} x */
+	G_DC_GetSurvey_Endpoint(x) {
+		const cf="G_DC_GetSurvey_Endpoint"; this.k(cf,x);
+		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
+		if("watch" in x) return this.D_Survey_Watch(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
+	G_ResponseTypes(response,x) {
+		const cf="G_ResponseTypes"; this.g_k(cf,x);
+		if(!response.ok) {
+			console.log("not ok",x);
+			return;
+		}
+		/** @private @arg {{type:string}} x */
+		let g=x => {return this.save_string("[need_api_type]",x.type);};
+		switch(x.type) {case "_Generic": return g(x);}
+		/** @private */
+		this._current_response_type=x.type;
+		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
+		let v=x;
+		this.RC_ResponseContext(v.data.responseContext);
+		x: if("actions" in x.data) {
+			if(x.type==="account.account_menu") break x;
+			if(x.type==="browse.edit_playlist") break x;
+			if(x.type==="like.dislike") break x;
+			if(x.type==="notification.get_notification_menu") break x;
+			if(x.type==="notification.get_unseen_count") break x;
+			if(x.type==="notification.modify_channel_preference") break x;
+			if(x.type==="share.get_share_panel") break x;
+			if(x.type==="subscription.subscribe") break x;
+			if(x.type==="subscription.unsubscribe") break x;
+			if(x.type==="updated_metadata") break x;
+			if(x.type==="get_transcript") break x;
+		}
+		switch(x.type) {
+			case "account.account_menu": return this.RS_AccountMenu(x.data);
+			case "account.accounts_list": return this.RS_AccountsList(x.data);
+			case "account.set_setting": return this.RS_SetSetting(x.data);
+			case "att.get": return this.RS_AttGet(x.data);
+			case "att.log": return this.RS_AttLog_RC(x.data);
+			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
+			case "browse": return this.RS_Browse(x.data);
+			case "feedback": return this.RS_Feedback(x.data);
+			case "get_transcript": return this.RSG_Transcript(x.data);
+			case "get_survey": return this.RSG_Survey(x.data);
+			case "getAccountSwitcherEndpoint": return this.REG_AccountSwitcher(x.data);
+			case "getDatasyncIdsEndpoint": return this.REG_DatasyncIds(x.data);
+			case "guide": return this.RS_Guide(x.data);
+			case "like.like": return this.RSL_Like(x.data);
+			case "like.dislike": return this.RSL_Dislike(x.data);
+			case "like.removelike": return this.RSL_RemoveLike(x.data);
+			case "live_chat.get_live_chat_replay": return this.RS_GetLiveChat(x.data);
+			case "live_chat.get_live_chat": return this.RS_GetLiveChat(x.data);
+			case "music.get_search_suggestions": return this.RSG_SearchSuggestions(x.data);
+			case "next": return this.RS_Next(x.data);
+			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
+			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
+			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
+			case "notification.record_interactions": return this.RS_Success(x.data);
+			case "player": return this.RS_Player(x.data);
+			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
+			case "reel.reel_item_watch": return this.RSW_ReelItem(x.data);
+			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
+			case "share.get_share_panel": return this.RSG_SharePanel(x.data);
+			case "subscription.subscribe": return this.RS_Subscribe(x.data);
+			case "subscription.unsubscribe": return this.RS_Unsubscribe(x.data);
+			case "search": return this.RS_Search(x.data);
+			case "updated_metadata": return this.RSU_M(x.data);
+			case "pdg.get_pdg_buy_flow": return this.RSG_PdgBuyFlow(x.data);
+			default: debugger; return g(x);
+		}
+	}
+	/** @private @arg {G_NextContents} x */
+	G_NextContents(x) {
+		const cf="G_NextContents"; this.k(cf,x);
+		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
+		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
+		x===""; this.codegen_typedef_all(cf,x);
+		x===0;
+	}
+	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
+	G_SignalActionItem(cf1,x) {
+		/** @type {`G_SignalActionItem:${cf1}`} */
+		const cf2=`G_SignalActionItem:${cf1}`; this.k(cf2,x);
+		/** @type {G_ClientSignal_Item} */
+		if("openPopupAction" in x) return this.S_Client_Popup(x);
+		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
+		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
+		if("signalAction" in x) return this.A_Signal(x);
+		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
+		this.codegen_typedef_all(cf2,x);
+	}
+	/** @private @arg {string} cf1 @arg {G_ClientSignal} x */
+	G_ClientSignal(cf1,x) {
+		const cf2="G_ClientSignal";
+		let {actions,...y}=this.Signal_Omit(x,x => {
+			this.save_string(`[${cf2}.${cf1}.signal]`,x);
+			if(x!=="CLIENT_SIGNAL") debugger;
+		}); this.g(y);
+		this.z_cf(cf1,actions,this.G_SignalActionItem);
+	}
+	/** @private @arg {G_WatchNextEndScreenItem} x */
+	G_WatchNextEndScreenItem(x) {
+		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
+		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
+		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_MenuItem} x */
+	G_MenuItem(x) {
+		const cf="G_MenuItem"; this.g_k(cf,x); this.k(cf,x);
+		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
+		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+		this.codegen_typedef_all("MenuItems",x);
+		this.G_Text(x);
+	}
+	/** @private @arg {G_Watch_ResultsItem} x @returns {G_Watch_ContentsItem[]} */
+	G_Watch_ResultsItem(x) {
+		const cf="G_Watch_ResultsItem"; this.k(cf,x);
+		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(cf,trackingParams);
+		this.z(a,this.G_WatchResult_ContentsItem);
+	}
+	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
+	G_WatchResultItem_ItemSection_3(x) {
+		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
+		this.k(`${cf}.section`,x.itemSectionRenderer);
+		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
+		let u=this.TR_ItemSection_3(x); if(!u) return;
+		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section","comments-section">`,u); if(!u1) return;
+		this.ItemSection_3_CommentItemSection(u1);
+	}
+	/** @private @arg {Extract<G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
+	G_WatchResultItem_ItemSectionGroup(x) {
+		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
+		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
+		let u=this.TR_ItemSection_2(x); if(!u) return;
+		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
+	}
+	/** @private @arg {G_Watch_ContentsItem} x */
+	G_WatchResult_ContentsItem(x) {
+		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
+		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
+		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
+		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
+		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_Watch_AnyResultItem} x */
+	G_Watch_AnyResultItem(x) {
+		const cf="G_SecondaryContentsItem"; this.k(cf,x);
+		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
+		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
+		x===""; this.codegen_typedef_all(cf,x);
+		return null;
+	}
+	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
+	G_Watch_SecondaryResults_Contents(x) {
+		const cf="G_Watch_SecondaryResults_Contents"; this.k(cf,x);
+		const {contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.G_Watch_AnyResultItem);
+	}
+	/** @private @arg {G_Watch_SecondaryResults} x */
+	G_Watch_SecondaryResults(x) {
+		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
+		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
+		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
+	G_EngagementPanelSectionShowCommands(x) {
+		const cf="G_EngagementPanelSectionShowCommands"; this.k(cf,x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
+		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_GuideSectionItem} x */
+	G_GuideSectionItem(x) {
+		const cf="G_GuideSectionItem"; this.k(cf,x);
+		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
+		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
+		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
+		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
+		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
+		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
+		x===""; this.codegen_typedef_all(cf,x); x==="";
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_SI_DB_EngagementPanel} x */
+	G_SI_DB_EngagementPanel(x) {
+		const cf="DB_SI_EngagementPanel"; this.k(cf,x);
+		switch(x.targetId) {
+			default: x===""; debugger; break;
+			case "engagement-panel-ads": {
+				const {content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.R_AdsEngagementPanelContent(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-clip-create": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_ClipSection(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
+			} break;
+			case "engagement-panel-macro-markers-description-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-macro-markers-auto-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+		}
+	}
+	/** @private @arg {G_RS_Page_Settings} x */
+	G_RS_Page_Settings(x) {
+		const cf="R_SettingsPage"; this.k(cf,x);
+		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
+		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(page!=="settings") debugger;
+		this.GE_Browse(endpoint);
+		this.RS_Settings(response);
+		this.a_primitive_str(url);
+	}
+	/** @private @arg {G_RS_Page_Playlist} x */
+	G_RS_Page_Playlist(x) {
+		const cf="R_PlaylistPage"; this.k(cf,x);
+		const {url,endpoint,page,response,...y}=this.s(cf,x);
+		if(page!=="playlist") debugger;
+		this.GE_Browse(endpoint);
+		this.RS_Playlist(response);
+		this.a_primitive_str(url);
+		if("rootVe" in y) {
+			const {rootVe,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
+			switch(rootVe) {
+				default: debugger; break;
+				case 5754: break;
+			}
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {RS_VE23462_Page_Settings} x */
+	RS_VE23462_Page_Settings(x) {
+		const cf="Settings_VE23462"; this.k(cf,x);
+		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(page!=="settings") debugger;
+		this.GE_Browse(endpoint);
+		this.RS_Settings(response);
+		this.a_primitive_str(url);
+		if(rootVe!==23462) debugger;
+	}
+	/** @private @arg {RS_VE37414_Shorts} x */
+	RS_VE37414_Shorts(x) {
+		const cf="Shorts_VE37414"; this.k(cf,x);
+		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(rootVe!==37414) debugger;
+		if(page!=="shorts") debugger;
+		this.RS_Player(playerResponse);
+		this.E_ReelWatch(endpoint);
+		this.RS_Reel(response);
+		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(url.includes("&")) debugger;
+		if(!cachedReelWatchSequenceResponse) debugger;
+		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
+	}
+	/** @private @arg {G_BrowseHeader} x */
+	G_BrowseHeader(x) {
+		const cf="G_BrowseHeader"; this.k(cf,x);
+		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
+		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
+		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_RS_Page_Shorts} x */
+	G_RS_Page_Shorts(x) {
+		const cf="RS_ShortsPage"; this.k(cf,x);
+		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
+		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(page!=="shorts") debugger;
+		this.RS_Player(playerResponse);
+		this.E_ReelWatch(endpoint);
+		this.RS_Reel(response);
+		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(url.includes("&")) debugger;
+		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
+	}
+	/** @private @arg {G_BrowseContents} x */
+	G_BrowseContents(x) {
+		const cf="G_BrowseContents"; this.k(cf,x);
+		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
+		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
+	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
+	/**
+	 * @private @arg {G_EY_Entity} x
+	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
+	 */
+	G_EY_Entity(x) {
+		const cf="G_EY_Entity"; this.k(cf,x);
+		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="offlineabilityEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="superThanksSelectedTierEntity"; if(cn in x) return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];}
+		/** @returns {[]|[string]} */
+		const get_kl=() => {return this.get_keys_of(x);};
+		let kl=get_kl();
+		if(kl.length===0) return null;
+		let [cn,...cr]=kl;
+		if(cr.length!==0) debugger;
+		if(!cn) return null;
+		x===""; this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
+		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
+	}
+	/** @private @arg {G_TopbarButtonItem} x */
+	G_TopbarButtonItem(x) {
+		const cf="G_TopbarButtonItem"; this.k(cf,x);
+		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
+		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_BrowseFeed} x */
+	G_BrowseFeed(x) {
+		const cf="G_BrowseFeed"; this.k(cf,x);
+		if("richItemRenderer" in x) return this.R_RichItem(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_SecondaryContents} x */
+	G_SecondaryContents(x) {
+		const cf="G_SecondaryContents"; this.k(cf,x);
+		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
+		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_WatchNext} x */
+	G_WatchNext(x) {
+		const cf="G_WatchNext"; this.k(cf,x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_StructuredDescriptionContentItem} x */
+	G_StructuredDescriptionContentItem(x) {
+		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
+		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
+		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
+		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
+		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_RS_Subscribe_Action} x */
+	G_RS_Subscribe_Action(x) {
+		const cf="RS_Subscribe_ActionItem"; this.k(cf,x);
+		if("openPopupAction" in x) {
+			/** @type {`${typeof cf}_Action`} */
+			const cf1=`${cf}_Action`;
+			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
+			this.clickTrackingParams(cf1,clickTrackingParams);
+			console.log(`[${cf}.openPopupAction]`,openPopupAction);
+			return;
+		}
+		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
+		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
+		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
+	G_Watch_SecondaryResults_G_SectionItem(x) {
+		const cf="G_Watch_SecondaryResults_G_SectionItem"; this.k(cf,x);
+		if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
+		if("adSlotRenderer" in x) return this.R_AdSlot(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_Watch_SecondaryResults_Results} x */
+	G_Watch_SecondaryResults_Results(x) {
+		const cf="G_Watch_SecondaryResults_Results"; this.k(cf,x);
+		const {results,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(results,this.G_Watch_AnyResultItem);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {G_ProfileColumnItem} x */
+	G_ProfileColumnItem(x) {
+		const cf="G_ProfileColumnItem"; this.k(cf,x);
+		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
+		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_BrowseFeedContent} x */
+	G_BrowseFeedContent(x) {
+		const cf="G_BrowseFeedContent"; this.k(cf,x);
+		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
+		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_Action_GetNotificationsMenu_Popup} x */
+	G_Action_GetNotificationsMenu_Popup(x) {
+		const cf="G_Action_GetNotificationsMenu_Popup"; this.k(cf,x);
+		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(popupType!=="DROPDOWN") debugger;
+		if(beReused!==true) debugger;
+		return a;
+	}
+	/** @private @arg {G_EngagementPanelMenu} x */
+	G_EngagementPanelMenu(x) {
+		const cf="G_EngagementPanelMenu"; this.k(cf,x);
+		if("menuRenderer" in x) return this.R_Menu(x);
+		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_LiveChatContinuationItem} x */
+	G_LiveChatContinuationItem(x) {
+		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
+		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
+		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
+		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_RA_LiveChatContinuationActions} x */
+	G_LiveChatContinuationActions(x) {
+		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
+		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
+		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
@@ -923,18 +1477,6 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(`${cf1}.tracking`,clickTrackingParams);
 		return a;
-	}
-	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
-	T_ShortsSurfaceIdentifier(x) {
-		const cf="T_ShortsSurfaceIdentifier"; this.k(cf,x);
-		const {surface,tag,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-		switch(tag) {
-			case "engagement-panel-structured-description": break;
-			case "shorts-comments-panel": break;
-			default: debugger; break;
-		}
-		return tag;
 	}
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
@@ -1530,12 +2072,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {R_UnifiedSharePanel} x */
-	R_UnifiedSharePanel(x) {
-		const cf="R_UnifiedSharePanel";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
-	}
+	R_UnifiedSharePanel(x) {this.H_("R_UnifiedSharePanel","unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
 	/** @private @arg {R_Card} x */
 	R_Card(x) {
 		const cf="R_Card";
@@ -1588,8 +2125,6 @@ class HandleTypes extends HandleTypesEval {
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @protected @arg {D_ToggleButtonIdData} x */
-	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
 	/** @private @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {C_Continuation} x */
@@ -1609,7 +2144,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="C_GetSurvey"; this.k(cf,x);
 		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(cf,a);
-		this.D_GetSurvey(c);
+		this.DC_GetSurvey(c);
 		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
@@ -1761,6 +2296,50 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
+	/** @private @arg {DC_CommandExecutor} x */
+	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
+	/** @private @arg {DC_Continuation} x */
+	DC_Continuation(x) {
+		if("continuationCommand" in x) debugger;
+		const cf="DC_Continuation";
+		switch(x.request) {
+			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
+		}
+	}
+	/** @private @arg {DC_GetSurvey} x */
+	DC_GetSurvey(x) {
+		const cf="D_GetSurvey"; this.k(cf,x);
+		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if("paidDigitalGoods" in a) {debugger;}
+		this.save_string("GetSurvey.action",action);
+		switch(action) {
+			default: debugger; break;
+			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
+		}
+		this.G_DC_GetSurvey_Endpoint(a);
+	}
+	/** @protected @arg {D_ToggleButtonIdData} x */
+	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
+	/** @private @arg {D_UnifiedSharePanel} x */
+	D_UnifiedSharePanel(x) {
+		const cf="D_UnifiedSharePanel";
+		const {trackingParams,showLoadingSpinner,...y}=this.s(cf,x);
+		this.trackingParams(cf,trackingParams);
+		if(showLoadingSpinner!==true) debugger;
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log(`[${cf}.next_key] [${ka.shift()}]`);
+		}
+	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
@@ -1773,26 +2352,9 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,b);
 		if(fullBleed!==false) debugger;
 	}
-	/** @arg {G_RichSection} x */
-	G_RichSection(x) {
-		const cf="G_RichSection"; this.k(cf,x);
-		if("richShelfRenderer" in x) return this.R_RichShelf(x);
-		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
-		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
-	/** @private @arg {G_RS_WatchPage} x */
-	RS_WatchPage(x) {
-		const cf="R_WatchPage"; this.g_k(cf,x); this.k(cf,x);
-		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: return this.RS_VE3832_Page_Watch(x);
-			default: debugger; return;
-		}
-		this.RS_Page_Watch(x);
-	}
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player"; this.k(cf,x);
@@ -2154,30 +2716,6 @@ class HandleTypes extends HandleTypesEval {
 		let token_bin=bs.base64_url_dec.decodeByteArray(x);
 		if(!token_bin) {debugger; return;}
 		this.save_number("undo_token[0]",token_bin[0]);
-	}
-	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
-	G_DE_Browse_VE(ve_name,x) {
-		const cf="G_DE_Browse_VE";
-		if("canonicalBaseUrl" in x) {
-			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(c,c => this.params(cf,"D_Browse.param",c));
-			this._decode_channel_url(ve_name,d);
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("params" in x) {
-			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(c,c => this.params(cf,"D_Browse.param",c));
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("query" in x) {
-			const {browseId: a,query: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(b!=="") debugger;
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("browseId" in x) {
-			const {browseId: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			return this.GU_E_BrowseId(ve_name,a);
-		}
 	}
 	/** @private @arg {string} ve_name @arg {GE_Browse['browseEndpoint']['browseId']} x */
 	GU_E_BrowseId(ve_name,x) {
@@ -2581,20 +3119,6 @@ class HandleTypes extends HandleTypesEval {
 			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
 		}
 	}
-	/** @private @arg {G_Browse_MD} x */
-	G_Browse_MD(x) {
-		const cf="G_Browse_MD"; this.k(cf,x);
-		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
-		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_BrowseSidebar} x */
-	G_BrowseSidebar(x) {
-		const cf="G_BrowseSidebar"; this.k(cf,x);
-		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
-		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
 		const cf="D_SettingsSidebar"; this.k(cf,x);
@@ -2674,13 +3198,6 @@ class HandleTypes extends HandleTypesEval {
 		const {items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,this.G_PlaylistSidebarItem);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {G_PlaylistSidebarItem} x */
-	G_PlaylistSidebarItem(x) {
-		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
-		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
-		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
@@ -2908,14 +3425,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(content,this.R_PlaylistPanel);
 		this.t(hack,x => {if(x!==true) debugger;});
 	}
-	/** @arg {G_RichGridContent} x */
-	D_RichGridContent(x) {
-		const cf="D_RichGridContent"; this.k(cf,x);
-		if("richItemRenderer" in x) return this.R_RichItem(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("richSectionRenderer" in x) return this.R_RichSection(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @template {D_RichGrid} T @arg {"D_RichGrid"} cf @arg {T} x */
 	D_RichGrid_Omit(cf,x) {
 		const {contents,header,trackingParams,targetId,reflowOptions,...y}=this.s(cf,x);
@@ -2950,15 +3459,6 @@ class HandleTypes extends HandleTypesEval {
 		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_RichItemContent(content);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {G_RichItemContent} x */
-	G_RichItemContent(x) {
-		const cf="G_RichItemContent"; this.k(cf,x);
-		if("adSlotRenderer" in x) return this.R_AdSlot(x);
-		if("videoRenderer" in x) return this.R_Video(x);
-		if("radioRenderer" in x) return this.R_Radio(x);
-		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
@@ -3187,18 +3687,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
-	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
-	G_DC_CommandExecutor_CommandItem(x) {
-		const cf="DC_CommandExecutor.command";
-		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
-		if("likeEndpoint" in x) return this.E_Like(x);
-		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		if("commandExecutorCommand" in x) return this.C_RepeatChapter(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {DC_CommandExecutor} x */
-	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
@@ -3275,23 +3763,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {M_Next} x */
 	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
-	/** @private @arg {DC_Continuation} x */
-	DC_Continuation(x) {
-		if("continuationCommand" in x) debugger;
-		const cf="DC_Continuation";
-		switch(x.request) {
-			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
-			}
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
-			}
-		}
-	}
 	/** @private @arg {D_Color} x */
 	D_Color(x) {
 		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
@@ -3323,9 +3794,9 @@ class HandleTypes extends HandleTypesEval {
 			case "browse": return this.RS_Page_Browse(x);
 			case "watch": return this.RS_WatchPage(x);
 			case "channel": return this.RS_ChannelPage(x);
-			case "playlist": return this.RS_PlaylistPage(x);
-			case "settings": return this.RS_SettingsPage(x);
-			case "shorts": return this.RS_ShortsPage(x);
+			case "playlist": return this.G_RS_Page_Playlist(x);
+			case "settings": return this.G_RS_Page_Settings(x);
+			case "shorts": return this.G_RS_Page_Shorts(x);
 			case "search": return this.RS_SearchPage(x);
 			default: break;
 		}
@@ -3341,72 +3812,6 @@ class HandleTypes extends HandleTypesEval {
 			return null;
 		});
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
-	ResponseTypes(response,x) {
-		const cf="ResponseTypes"; this.g_k(cf,x);
-		if(!response.ok) {
-			console.log("not ok",x);
-			return;
-		}
-		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_string("[need_api_type]",x.type);};
-		switch(x.type) {case "_Generic": return g(x);}
-		/** @private */
-		this._current_response_type=x.type;
-		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
-		let v=x;
-		this.RC_ResponseContext(v.data.responseContext);
-		x: if("actions" in x.data) {
-			if(x.type==="account.account_menu") break x;
-			if(x.type==="browse.edit_playlist") break x;
-			if(x.type==="like.dislike") break x;
-			if(x.type==="notification.get_notification_menu") break x;
-			if(x.type==="notification.get_unseen_count") break x;
-			if(x.type==="notification.modify_channel_preference") break x;
-			if(x.type==="share.get_share_panel") break x;
-			if(x.type==="subscription.subscribe") break x;
-			if(x.type==="subscription.unsubscribe") break x;
-			if(x.type==="updated_metadata") break x;
-			if(x.type==="get_transcript") break x;
-		}
-		switch(x.type) {
-			case "account.account_menu": return this.RS_AccountMenu(x.data);
-			case "account.accounts_list": return this.RS_AccountsList(x.data);
-			case "account.set_setting": return this.RS_SetSetting(x.data);
-			case "att.get": return this.RS_AttGet(x.data);
-			case "att.log": return this.RS_AttLog_RC(x.data);
-			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
-			case "browse": return this.RS_Browse(x.data);
-			case "feedback": return this.RS_Feedback(x.data);
-			case "get_transcript": return this.RSG_Transcript(x.data);
-			case "get_survey": return this.RSG_Survey(x.data);
-			case "getAccountSwitcherEndpoint": return this.REG_AccountSwitcher(x.data);
-			case "getDatasyncIdsEndpoint": return this.REG_DatasyncIds(x.data);
-			case "guide": return this.RS_Guide(x.data);
-			case "like.like": return this.RSL_Like(x.data);
-			case "like.dislike": return this.RSL_Dislike(x.data);
-			case "like.removelike": return this.RSL_RemoveLike(x.data);
-			case "live_chat.get_live_chat_replay": return this.RS_GetLiveChat(x.data);
-			case "live_chat.get_live_chat": return this.RS_GetLiveChat(x.data);
-			case "music.get_search_suggestions": return this.RSG_SearchSuggestions(x.data);
-			case "next": return this.RS_Next(x.data);
-			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
-			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
-			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
-			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.RS_Player(x.data);
-			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.RSW_ReelItem(x.data);
-			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
-			case "share.get_share_panel": return this.RSG_SharePanel(x.data);
-			case "subscription.subscribe": return this.RS_Subscribe(x.data);
-			case "subscription.unsubscribe": return this.RS_Unsubscribe(x.data);
-			case "search": return this.RS_Search(x.data);
-			case "updated_metadata": return this.RSU_M(x.data);
-			case "pdg.get_pdg_buy_flow": return this.RSG_PdgBuyFlow(x.data);
-			default: debugger; return g(x);
-		}
 	}
 	/** @private @arg {RSG_AddToPlaylist} x */
 	RSG_AddToPlaylist(x) {
@@ -3466,25 +3871,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
-	}
-	/** @private @arg {DC_GetSurvey} x */
-	D_GetSurvey(x) {
-		const cf="D_GetSurvey"; this.k(cf,x);
-		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if("paidDigitalGoods" in a) {debugger;}
-		this.save_string("GetSurvey.action",action);
-		switch(action) {
-			default: debugger; break;
-			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
-		}
-		this.D_GetSurvey_Endpoint(a);
-	}
-	/** @private @arg {DC_GetSurvey['endpoint']} x */
-	D_GetSurvey_Endpoint(x) {
-		const cf="D_GetSurvey_Endpoint"; this.k(cf,x);
-		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
-		if("watch" in x) return this.D_Survey_Watch(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_Survey_Watch} x */
 	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
@@ -3854,14 +4240,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(queueContextParams,a => this.params(cf,"next.queue_context_params",a));
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
-	/** @private @arg {G_NextContents} x */
-	G_NextContents(x) {
-		const cf="G_NextContents"; this.k(cf,x);
-		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
-		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
-		x===""; this.codegen_typedef_all(cf,x);
-		x===0;
-	}
 	/** @private @arg {RC_MainAppWebResponseContext} x */
 	RC_MainAppWebResponseContext(x) {
 		const cf="RC_MainAppWebResponseContext"; this.k(cf,x);
@@ -3992,27 +4370,6 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
-	}
-	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
-	G_SignalActionItem(cf1,x) {
-		/** @type {`G_SignalActionItem:${cf1}`} */
-		const cf2=`G_SignalActionItem:${cf1}`; this.k(cf2,x);
-		/** @type {G_ClientSignal_Item} */
-		if("openPopupAction" in x) return this.S_Client_Popup(x);
-		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
-		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
-		if("signalAction" in x) return this.A_Signal(x);
-		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
-		this.codegen_typedef_all(cf2,x);
-	}
-	/** @private @arg {string} cf1 @arg {G_ClientSignal} x */
-	G_ClientSignal(cf1,x) {
-		const cf2="G_ClientSignal";
-		let {actions,...y}=this.Signal_Omit(x,x => {
-			this.save_string(`[${cf2}.${cf1}.signal]`,x);
-			if(x!=="CLIENT_SIGNAL") debugger;
-		}); this.g(y);
-		this.z_cf(cf1,actions,this.G_SignalActionItem);
 	}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	D_ShowEngagementPanel(x) {
@@ -4216,13 +4573,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {G_WatchNextEndScreenItem} x */
-	G_WatchNextEndScreenItem(x) {
-		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
-		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
-		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_BrowserMediaSession} x */
 	D_BrowserMediaSession(x) {
 		const cf="D_BrowserMediaSession"; this.k(cf,x);
@@ -4378,15 +4728,6 @@ class HandleTypes extends HandleTypesEval {
 		const {menuItem,topLevelButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_MenuServiceItem(menuItem);
 		this.R_Button(topLevelButton);
-	}
-	/** @private @arg {G_MenuItem} x */
-	G_MenuItem(x) {
-		const cf="G_MenuItem"; this.g_k(cf,x); this.k(cf,x);
-		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
-		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-		this.codegen_typedef_all("MenuItems",x);
-		this.G_Text(x);
 	}
 	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
 	TE_SignalService_I_0(x) {
@@ -4679,13 +5020,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
-	/** @private @arg {G_Watch_ResultsItem} x @returns {G_Watch_ContentsItem[]} */
-	D_WatchResult_ResultsItem(x) {
-		const cf="D_WatchResult_ResultsItem"; this.k(cf,x);
-		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(cf,trackingParams);
-		return a;
-	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {return x.includes(":");}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
@@ -5103,59 +5437,12 @@ class HandleTypes extends HandleTypesEval {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params(cf,"slot_ad_serving_data_entry",a);
 	}
-	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
-	G_WatchResultItem_ItemSection_3(x) {
-		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
-		this.k(`${cf}.section`,x.itemSectionRenderer);
-		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		let u=this.TR_ItemSection_3(x); if(!u) return;
-		let u1=this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section","comments-section">`,u); if(!u1) return;
-		this.ItemSection_3_CommentItemSection(u1);
-	}
-	/** @private @arg {Extract<G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
-	G_WatchResultItem_ItemSectionGroup(x) {
-		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
-		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
-		let u=this.TR_ItemSection_2(x); if(!u) return;
-		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
-	}
-	/** @private @arg {G_Watch_ContentsItem} x */
-	G_WatchResult_ContentsItem(x) {
-		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
-		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
-		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
-		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
-		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_Watch_AnyResultItem} x */
-	G_Watch_AnyResultItem(x) {
-		const cf="G_SecondaryContentsItem"; this.k(cf,x);
-		if("relatedChipCloudRenderer" in x) return this.R_RelatedChipCloud(x);
-		if("itemSectionRenderer" in x) return this.RG_Watch_ItemSection(x);
-		x===""; this.codegen_typedef_all(cf,x);
-		return null;
-	}
-	/** @private @arg {G_Watch_SecondaryResults_Contents} x */
-	G_Watch_SecondaryResults_Contents(x) {
-		const cf="G_Watch_SecondaryResults_Contents"; this.k(cf,x);
-		const {contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.G_Watch_AnyResultItem);
-	}
-	/** @private @arg {G_Watch_SecondaryResults} x */
-	G_Watch_SecondaryResults(x) {
-		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
-		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
-		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="D_TwoColumnWatchNextResults"; this.k(cf,x);
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let u=this.D_WatchResults(results);
-		let u1=this.D_WatchResult_ResultsItem(u);
-		this.z(u1,this.G_WatchResult_ContentsItem);
+		this.G_Watch_ResultsItem(u);
 		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
 		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
@@ -5294,7 +5581,7 @@ class HandleTypes extends HandleTypesEval {
 				case "engagement-panel-structured-description": break;
 				default: debugger; return;
 			}
-			let a1=this.T_ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
+			let a1=this.GT_ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
 			if(a1!=="engagement-panel-structured-description") debugger;
 			return;
 		}
@@ -5352,7 +5639,7 @@ class HandleTypes extends HandleTypesEval {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if(identifier) {
-						let a1=this.T_ShortsSurfaceIdentifier(identifier);
+						let a1=this.GT_ShortsSurfaceIdentifier(identifier);
 						if(a1!=="engagement-panel-structured-description") debugger;
 					}
 				} break;
@@ -5365,21 +5652,13 @@ class HandleTypes extends HandleTypesEval {
 					this.D_LoggingDirectives(loggingDirectives);
 					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
 					if(!identifier) debugger;
-					let a1=this.T_ShortsSurfaceIdentifier(identifier);
+					let a1=this.GT_ShortsSurfaceIdentifier(identifier);
 					if(a1!=="shorts-comments-panel") debugger;
 				} break;
 			}
 			return;
 		}
-		this.DB_SI_EngagementPanel(x);
-	}
-	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
-	G_EngagementPanelSectionShowCommands(x) {
-		const cf="G_EngagementPanelSectionShowCommands"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
-		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		this.G_SI_DB_EngagementPanel(x);
 	}
 	/** @private @arg {GA_ResponseReceived} x */
 	GA_ResponseReceived(x) {
@@ -5399,44 +5678,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(confirmButton);
 		this.R_Button(cancelButton);
 		this.a_primitive_bool(primaryIsCancel);
-	}
-	/** @private @arg {G_SI_DB_EngagementPanel} x */
-	DB_SI_EngagementPanel(x) {
-		const cf="DB_SI_EngagementPanel"; this.k(cf,x);
-		switch(x.targetId) {
-			default: x===""; debugger; break;
-			case "engagement-panel-ads": {
-				const {content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.R_AdsEngagementPanelContent(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
-			case "engagement-panel-clip-create": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_ClipSection(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
-			} break;
-			case "engagement-panel-macro-markers-description-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
-			case "engagement-panel-macro-markers-auto-chapters": {
-				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
-				this.R_EngagementPanelTitleHeader(header);
-				this.R_MacroMarkersList(content);
-				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.D_LoggingDirectives(loggingDirectives);
-			} break;
-		}
 	}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
@@ -5651,18 +5892,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {G_GuideSectionItem} x */
-	G_GuideSectionItem(x) {
-		const cf="G_GuideSectionItem"; this.k(cf,x);
-		if("guideEntryRenderer" in x) return this.R_GuideEntry(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) return this.R_GuideCollapsibleSectionEntry(x);
-		if("guideDownloadsEntryRenderer" in x) return this.R_GuideDownloadsEntry(x);
-		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
-		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
-		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		x===""; this.codegen_typedef_all(cf,x); x==="";
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_GuideCollapsibleEntry} x */
 	D_GuideCollapsibleEntry(x) {
@@ -5963,73 +6192,6 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Channel(response);
 		this.a_primitive_str(url);
 	}
-	/** @private @arg {G_RS_Page_Playlist} x */
-	RS_PlaylistPage(x) {
-		const cf="R_PlaylistPage"; this.k(cf,x);
-		const {url,endpoint,page,response,...y}=this.s(cf,x);
-		if(page!=="playlist") debugger;
-		this.GE_Browse(endpoint);
-		this.RS_Playlist(response);
-		this.a_primitive_str(url);
-		if("rootVe" in y) {
-			const {rootVe,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
-			switch(rootVe) {
-				default: debugger; break;
-				case 5754: break;
-			}
-			return;
-		}
-		this.g(y);
-	}
-	/** @private @arg {Extract<G_RS_Page_Settings,{rootVe:23462}>} x */
-	Settings_VE23462(x) {
-		const cf="Settings_VE23462"; this.k(cf,x);
-		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="settings") debugger;
-		this.GE_Browse(endpoint);
-		this.RS_Settings(response);
-		this.a_primitive_str(url);
-		if(rootVe!==23462) debugger;
-	}
-	/** @private @arg {G_RS_Page_Settings} x */
-	RS_SettingsPage(x) {
-		const cf="R_SettingsPage"; this.k(cf,x);
-		if("rootVe" in x) return this.Settings_VE23462(x);
-		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="settings") debugger;
-		this.GE_Browse(endpoint);
-		this.RS_Settings(response);
-		this.a_primitive_str(url);
-	}
-	/** @private @arg {Extract<G_RS_Page_Shorts,{rootVe:37414}>} x */
-	Shorts_VE37414(x) {
-		const cf="Shorts_VE37414"; this.k(cf,x);
-		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(rootVe!==37414) debugger;
-		if(page!=="shorts") debugger;
-		this.RS_Player(playerResponse);
-		this.E_ReelWatch(endpoint);
-		this.RS_Reel(response);
-		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
-		if(url.includes("&")) debugger;
-		if(!cachedReelWatchSequenceResponse) debugger;
-		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
-	}
-	/** @private @arg {G_RS_Page_Shorts} x */
-	RS_ShortsPage(x) {
-		const cf="RS_ShortsPage"; this.k(cf,x);
-		if("rootVe" in x) return this.Shorts_VE37414(x);
-		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="shorts") debugger;
-		this.RS_Player(playerResponse);
-		this.E_ReelWatch(endpoint);
-		this.RS_Reel(response);
-		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
-		if(url.includes("&")) debugger;
-		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
-	}
 	/** @private @arg {RS_Page_Search} x */
 	RS_SearchPage(x) {
 		const cf="RS_SearchPage"; this.k(cf,x);
@@ -6039,14 +6201,6 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
-	}
-	/** @private @arg {G_BrowseHeader} x */
-	G_BrowseHeader(x) {
-		const cf="G_BrowseHeader"; this.k(cf,x);
-		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_FeedTabbedHeader} x */
 	D_FeedTabbedHeader(x) {
@@ -6071,13 +6225,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {stateTag: {},onStateTagModified,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
-	}
-	/** @private @arg {G_BrowseContents} x */
-	G_BrowseContents(x) {
-		const cf="G_BrowseContents"; this.k(cf,x);
-		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
-		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	static {this.prototype.MC_ResolveUrl;}
 	/** @private @arg {MC_ResolveUrl} x */
@@ -6268,44 +6415,11 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
-	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
-	/**
-	 * @private @arg {G_EY_Entity} x
-	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
-	 */
-	G_EY_Entity(x) {
-		const cf="G_EY_Entity"; this.k(cf,x);
-		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="offlineabilityEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="superThanksSelectedTierEntity"; if(cn in x) return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];}
-		/** @returns {[]|[string]} */
-		const get_kl=() => {return this.get_keys_of(x);};
-		let kl=get_kl();
-		if(kl.length===0) return null;
-		let [cn,...cr]=kl;
-		if(cr.length!==0) debugger;
-		if(!cn) return null;
-		x===""; this.codegen_typedef_all(cf,x);
-		this.codegen_typedef_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
-		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
-	}
 	/** @private @arg {O_DU_Persistence} x */
 	DE_PersistenceOption(x) {
 		const cf="DE_PersistenceOption"; this.k(cf,x);
 		const {persistenceOption,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
-	}
-	/** @private @arg {G_TopbarButtonItem} x */
-	G_TopbarButtonItem(x) {
-		const cf="G_TopbarButtonItem"; this.k(cf,x);
-		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
-		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
@@ -6334,13 +6448,6 @@ class HandleTypes extends HandleTypesEval {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.G_BrowseFeed);
 	}
-	/** @private @arg {G_BrowseFeed} x */
-	G_BrowseFeed(x) {
-		const cf="G_BrowseFeed"; this.k(cf,x);
-		if("richItemRenderer" in x) return this.R_RichItem(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
 	A_WatchNext(x) {
 		const cf="A_WatchNext"; this.k(cf,x);
@@ -6358,20 +6465,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
-	}
-	/** @private @arg {G_SecondaryContents} x */
-	G_SecondaryContents(x) {
-		const cf="G_SecondaryContents"; this.k(cf,x);
-		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
-		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_WatchNext} x */
-	G_WatchNext(x) {
-		const cf="G_WatchNext"; this.k(cf,x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
@@ -6744,39 +6837,14 @@ class HandleTypes extends HandleTypesEval {
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
-	/** @private @arg {G_RS_Subscribe_Action} x */
-	RS_Subscribe_ActionItem(x) {
-		const cf="RS_Subscribe_ActionItem"; this.k(cf,x);
-		if("openPopupAction" in x) {
-			/** @type {`${typeof cf}_Action`} */
-			const cf1=`${cf}_Action`;
-			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
-			this.clickTrackingParams(cf1,clickTrackingParams);
-			console.log(`[${cf}.openPopupAction]`,openPopupAction);
-			return;
-		}
-		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
-		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
-		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
 		const cf="RS_Subscribe"; this.k(cf,x);
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,this.RS_Subscribe_ActionItem);
+		this.z(actions,this.G_RS_Subscribe_Action);
 		this.g(newNotificationButton);
 		this.trackingParams(cf,trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
-	}
-	/** @private @arg {G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
-		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
-		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
 	D_LikeButton_Like(x) {
@@ -6828,17 +6896,6 @@ class HandleTypes extends HandleTypesEval {
 				return this[cn](a);
 			}
 		}
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
-	G_Watch_SecondaryResults_G_SectionItem(x) {
-		const cf="G_Watch_SecondaryResults_G_SectionItem"; this.k(cf,x);
-		if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
-		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
-		if("adSlotRenderer" in x) return this.R_AdSlot(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
@@ -6959,13 +7016,6 @@ class HandleTypes extends HandleTypesEval {
 		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.Omit_Menu_Radio(cf,x); o;
 		this.D_CompactRadio_NavE(a); this.D_RadioShareUrl(b);
 	}
-	/** @private @arg {G_Watch_SecondaryResults_Results} x */
-	G_Watch_SecondaryResults_Results(x) {
-		const cf="G_Watch_SecondaryResults_Results"; this.k(cf,x);
-		const {results,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(results,this.G_Watch_AnyResultItem);
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {D_RelatedChipCloud} x */
 	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
 	/** @private @arg {D_AddToPlaylist} x */
@@ -6977,13 +7027,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ProfileColumn} x */
 	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
-	/** @private @arg {G_ProfileColumnItem} x */
-	G_ProfileColumnItem(x) {
-		const cf="G_ProfileColumnItem"; this.k(cf,x);
-		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
-		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
 		const cf="D_ProfileColumnStatsEntry"; this.k(cf,x);
@@ -7021,15 +7064,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(isSelected);
 		this.D_SubFeedOption_NavEP(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {G_BrowseFeedContent} x */
-	G_BrowseFeedContent(x) {
-		const cf="G_BrowseFeedContent"; this.k(cf,x);
-		if("searchBoxRenderer" in x) return this.R_SearchBox(x);
-		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
-		if("buttonRenderer" in x) return this.R_Button(x);
-		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_WebSearchboxConfig} x */
 	D_WebSearchboxConfig(x) {
@@ -7144,14 +7178,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		if(showLoadingSpinner!==true) debugger;
-	}
-	/** @private @arg {G_Action_GetNotificationsMenu_Popup} x */
-	G_Action_GetNotificationsMenu_Popup(x) {
-		const cf="G_Action_GetNotificationsMenu_Popup"; this.k(cf,x);
-		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(popupType!=="DROPDOWN") debugger;
-		if(beReused!==true) debugger;
-		return a;
 	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
 	R_CommentItemSection_EntryPoint(x) {
@@ -7513,13 +7539,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(visibilityButton);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {G_EngagementPanelMenu} x */
-	G_EngagementPanelMenu(x) {
-		const cf="G_EngagementPanelMenu"; this.k(cf,x);
-		if("menuRenderer" in x) return this.R_Menu(x);
-		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_Hint} x */
 	D_Hint(x) {
 		const cf="D_Hint"; this.k(cf,x);
@@ -7651,21 +7670,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ClientMessages} x */
 	D_ClientMessages(x) {this.k("D_ClientMessages",x); this.z(Object.values(x),this.G_Text);}
-	/** @private @arg {G_LiveChatContinuationItem} x */
-	G_LiveChatContinuationItem(x) {
-		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
-		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
-		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
-		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_RA_LiveChatContinuationActions} x */
-	G_LiveChatContinuationActions(x) {
-		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
-		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
-		if("addChatItemAction" in x) return this.A_AddChatItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_CommentSimplebox} x */
 	D_CommentSimplebox(x) {
 		const cf="D_CommentSimplebox"; this.k(cf,x);
@@ -8224,6 +8228,56 @@ class HandleTypes extends HandleTypesEval {
 		if("accountItem" in x) return this.A_AccountItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {G_ThumbnailOverlayItem} x */
+	G_ThumbnailOverlayItem(x) {
+		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
+		// COMPLETED: #11
+		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
+		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
+		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
+	}
+	/** @arg {G_PlaylistPanel_Item} x */
+	G_PlaylistPanel_Item(x) {
+		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
+		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
+		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_AdditionalDataItem} x */
+	G_AdditionalDataItem(x) {
+		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
+		switch(d.key) {
+			default: debugger; break;
+			case "lockup": {
+				if(d.value!=="player") debugger;
+			} break;
+			case "video_id": {
+				this.videoId(d.value);
+			} break;
+		}
+	}
+	/** @private @arg {G_ChatItem} x */
+	G_ChatItem(x) {
+		const cf="G_ChatItem"; this.k(cf,x);
+		if("liveChatTextMessageRenderer" in x) return;
+		if("liveChatPlaceholderItemRenderer" in x) return;
+		if("liveChatViewerEngagementMessageRenderer" in x) return;
+	}
+	/** @private @arg {G_PlayerStoryboards} x */
+	G_PlayerStoryboards(x) {
+		const cf="G_PlayerStoryboards"; this.k(cf,x);
+		if("playerStoryboardSpecRenderer" in x) return;
+		if("playerLiveStoryboardSpecRenderer" in x) return;
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
 		const cf="D_ChannelSwitcherHeader"; this.k(cf,x);
@@ -8401,23 +8455,6 @@ class HandleTypes extends HandleTypesEval {
 			if("watchEndpoint" in x) {this.E_Watch(x); break x;}
 			if(!x.reelWatchEndpoint) debugger;
 		}
-	}
-	/** @private @arg {G_ThumbnailOverlayItem} x */
-	G_ThumbnailOverlayItem(x) {
-		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
-		// TODO: #11 Handle thumbnailOverlay Renderers
-		// Actually iterate over these renderers
-		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
-		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
-		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
-		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
-		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
-		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
-		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
-		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
-		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
-		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
 	}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
@@ -8883,13 +8920,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_AdLayoutMetadata(adLayoutMetadata);
 		this.R_VideoMastheadAdV3(renderingContent);
 	}
-	/** @arg {G_PlaylistPanel_Item} x */
-	G_PlaylistPanel_Item(x) {
-		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
-		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
-		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @arg {D_PlaylistPanel} x */
 	D_PlaylistPanel(x) {
 		const cf="D_PlaylistPanel"; this.k(cf,x);
@@ -9074,32 +9104,12 @@ class HandleTypes extends HandleTypesEval {
 		console.log("[parse_url_external_1]",x);
 		{debugger;}
 	}
-	/** @private @arg {G_AdditionalDataItem} x */
-	G_AdditionalDataItem(x) {
-		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
-		switch(d.key) {
-			default: debugger; break;
-			case "lockup": {
-				if(d.value!=="player") debugger;
-			} break;
-			case "video_id": {
-				this.videoId(d.value);
-			} break;
-		}
-	}
 	/** @private @arg {AD_ReplayChatItem} x */
 	AD_ReplayChatItem(x) {
 		const cf="AD_ReplayChatItem";
 		const {actions,videoOffsetTimeMsec,...y}=this.s(cf,x); this.g(y);
 		this.z(actions,this.A_AddChatItem);
 		this.a_primitive_str(videoOffsetTimeMsec);
-	}
-	/** @private @arg {G_ChatItem} x */
-	G_ChatItem(x) {
-		const cf="G_ChatItem"; this.k(cf,x);
-		if("liveChatTextMessageRenderer" in x) return;
-		if("liveChatPlaceholderItemRenderer" in x) return;
-		if("liveChatViewerEngagementMessageRenderer" in x) return;
 	}
 	/** @private @arg {AD_AddChatItem} x */
 	AD_AddChatItem(x) {
@@ -9279,13 +9289,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(start);
 		this.a_primitive_str(end);
 	}
-	/** @private @arg {G_PlayerStoryboards} x */
-	G_PlayerStoryboards(x) {
-		const cf="G_PlayerStoryboards"; this.k(cf,x);
-		if("playerStoryboardSpecRenderer" in x) return;
-		if("playerLiveStoryboardSpecRenderer" in x) return;
-		this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig"; this.k(cf,x);
@@ -9321,7 +9324,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_DesktopWatchAds";
 		const {gutParams,playerAdParams,showCompanion,...y}=this.s(cf,x);
 		let params_tag=this.B_TagObj(gutParams);
-		console.log(`[${cf}.gutParams.tag] [%s]`,params_tag);
+		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
+		if(params_tag!=="\\4061\\ytpwmpu") debugger;
 		if(showCompanion!==true) debugger;
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);

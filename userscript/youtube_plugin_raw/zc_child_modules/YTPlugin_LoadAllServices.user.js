@@ -32,7 +32,7 @@ class LoadAllServices {
 		}
 		class RT_Caller extends HandleTypes {
 			/** @public @arg {Response} response @arg {G_ResponseTypes} x */
-			run(response,x) {this.ResponseTypes.call(this.x.get("handle_types"),response,x);}
+			run(response,x) {this.G_ResponseTypes.call(this.x.get("handle_types"),response,x);}
 			/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {G_ResponseTypes|null} */
 			decode_input(url_type,x) {return this.get_res_data(url_type,x);}
 			/** @public @arg {D_ApiUrlFormat} url */

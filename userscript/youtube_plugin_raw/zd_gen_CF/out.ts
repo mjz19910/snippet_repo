@@ -89,6 +89,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "G_DE_Browse_VE";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "VideoGoodPutShape";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "AD_Notification";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_LiveChat";}
@@ -671,6 +672,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Types";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_UrlWrappedValue";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "VideoGoodPutShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_VE3832_Watch:omit";}
