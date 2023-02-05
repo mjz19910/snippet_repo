@@ -7935,12 +7935,40 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0xe5:
+				case 0xe6:
+				case 0xea:
+				case 0xed:
+				case 0xfc:
+				case 0xff:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0xe5:
+				case 0xe7:
+				case 0xe8:
+				case 0xe9:
+				case 0xea:
+				case 0xec:
+				case 0xed:
+				case 0xef:
+				case 0xf0:
+				case 0xf1:
+				case 0xf2:
+				case 0xf3:
+				case 0xf5:
+				case 0xf6:
+				case 0xfa:
+				case 0xfb:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0xe5:
+				case 0xe7:
+				case 0xea:
+				case 0xf5:
+				case 0xf8:
+				case 0xff:
 			}
 		}
 		{
@@ -7949,12 +7977,45 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0xa3:
+				case 0xa4:
+				case 0xa5:
+				case 0xab:
+				case 0xb0:
+				case 0xc8:
+				case 0xcc:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0xa3:
+				case 0xa6:
+				case 0xa8:
+				case 0xa9:
+				case 0xaa:
+				case 0xab:
+				case 0xac:
+				case 0xad:
+				case 0xaf:
+				case 0xb2:
+				case 0xb4:
+				case 0xb5:
+				case 0xb7:
+				case 0xb9:
+				case 0xbc:
+				case 0xbe:
+				case 0xc5:
+				case 0xc6:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0xa3:
+				case 0xa6:
+				case 0xab:
+				case 0xac:
+				case 0xae:
+				case 0xbf:
+				case 0xc3:
+				case 0xcc:
 			}
 		}
 		{
@@ -7963,12 +8024,61 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0x05:
+				case 0x06:
+				case 0x07:
+				case 0x09:
+				case 0x11:
+				case 0x15:
+				case 0x1a:
+				case 0x22:
+				case 0x23:
+				case 0x28:
+				case 0x29:
+				case 0x31:
+				case 0x33:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0x07:
+				case 0x0a:
+				case 0x0b:
+				case 0x0e:
+				case 0x11:
+				case 0x14:
+				case 0x19:
+				case 0x1a:
+				case 0x1b:
+				case 0x1c:
+				case 0x1d:
+				case 0x1f:
+				case 0x20:
+				case 0x21:
+				case 0x23:
+				case 0x25:
+				case 0x26:
+				case 0x27:
+				case 0x2a:
+				case 0x2b:
+				case 0x2c:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0x07:
+				case 0x0d:
+				case 0x0e:
+				case 0x16:
+				case 0x19:
+				case 0x1a:
+				case 0x1b:
+				case 0x1c:
+				case 0x1f:
+				case 0x26:
+				case 0x27:
+				case 0x2b:
+				case 0x2f:
+				case 0x30:
+				case 0x33:
 			}
 		}
 		{
@@ -7977,12 +8087,54 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0x01:
+				case 0x02:
+				case 0x03:
+				case 0x04:
+				case 0x08:
+				case 0x0a:
+				case 0x0c:
+				case 0x0d:
+				case 0x11:
+				case 0x14:
+				case 0x18:
+				case 0x19:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0x03:
+				case 0x05:
+				case 0x07:
+				case 0x08:
+				case 0x0a:
+				case 0x0b:
+				case 0x0c:
+				case 0x0d:
+				case 0x0e:
+				case 0x0f:
+				case 0x10:
+				case 0x11:
+				case 0x12:
+				case 0x13:
+				case 0x15:
+				case 0x16:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0x03:
+				case 0x06:
+				case 0x07:
+				case 0x08:
+				case 0x0b:
+				case 0x0c:
+				case 0x0d:
+				case 0x0e:
+				case 0x0f:
+				case 0x13:
+				case 0x15:
+				case 0x17:
+				case 0x18:
+				case 0x19:
 			}
 		}
 	}
