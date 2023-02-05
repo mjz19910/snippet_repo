@@ -2983,11 +2983,8 @@ class HandleTypes extends HandleTypesEval {
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {GM_NotificationOptOut} x */
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
-	/** @private @arg {"DE_CreateComment"} cf @arg {string} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
-	TD_Params(cf,k,path,x) {
-		const {[k]:a}=x;
-		this.params(cf,path,a);
-	}
+	/** @private @arg {"DE_CreateComment"} cf @arg {P_PathRootStr} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
 	/** @private @arg {DE_CreateComment} x */
 	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
 	/** @private @arg {DE_Search} x */
