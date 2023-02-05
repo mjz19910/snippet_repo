@@ -288,7 +288,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ShowReloadUi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CacheMetadata";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CommentRepliesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DB_SI_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AddToPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AdsControlFlowOpportunityReceived";}
@@ -337,6 +336,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacementConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlotAndLayoutItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdTimeOffset";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdaptiveFormatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AddToPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AddToPlaylistCreate";}
@@ -596,6 +596,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GA_Continuation_CommentRepliesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}

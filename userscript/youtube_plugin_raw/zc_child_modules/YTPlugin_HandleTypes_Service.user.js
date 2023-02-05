@@ -2204,7 +2204,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {AD_AppendContinuationItems} x */
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
-		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.CommentRepliesItem(x);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
 			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
@@ -6403,12 +6403,17 @@ class HandleTypes extends HandleTypesEval {
 		let inner=this.T_Types(x);
 		if(inner!==4) debugger;
 	}
-	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,R_Comment>} x */
-	CommentRepliesItem(x) {
-		const cf="CommentRepliesItem"; this.k(cf,x);
+	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,G_CommentRepliesItem>} x */
+	GA_Continuation_CommentRepliesItem(x) {
+		const cf="GA_Continuation_CommentRepliesItem"; this.k(cf,x);
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.R_Comment);
+		this.z(continuationItems,x=>{
+			const cf="G_CommentRepliesItem"; this.k(cf,x);
+			if("commentRenderer" in x) return this.R_Comment(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			this.codegen_typedef_all(cf,x);
+		});
 	}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {

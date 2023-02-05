@@ -124,10 +124,17 @@ type T_Omit_Compact_Video<T extends D_Omit_Compact_Video>=Omit<T_Omit_Compact_Pl
 //#endregion
 //#region TA
 type TA_OpenPopup_Empty=TA_OpenPopup<{}>;
+type G_CommentRepliesItem=R_Comment|R_ContinuationItem;
+type GA_Continuation_CommentRepliesItem=TA_Continuation<`comment-replies-item-${string}`,R_Comment|R_ContinuationItem>;
+
 //#endregion
 //#region TB_
-type TB_ContinuationItemMap_1={"browse-feedFEwhat_to_watch": G_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
-type TB_ContinuationItemMap={"browse-feedFEwhat_to_watch": G_BrowseFeed; "comments-section": G_CommentsSection;[x: `comment-replies-item-${string}`]: R_Comment; "watch-next-feed": G_WatchNext;};
+type TB_ContinuationItemMap={
+	"browse-feedFEwhat_to_watch": G_BrowseFeed;
+	"comments-section": G_CommentsSection;
+	[x: `comment-replies-item-${string}`]: GA_Continuation_CommentRepliesItem["continuationItems"][number];
+	"watch-next-feed": G_WatchNext;
+};
 //#endregion
 //#region TD_
 type TD_ContinuationItem_CE<T>={trigger: "CONTINUATION_TRIGGER_ON_ITEM_SHOWN"; continuationEndpoint: T;};
