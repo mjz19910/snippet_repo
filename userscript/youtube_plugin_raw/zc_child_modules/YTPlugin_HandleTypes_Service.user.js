@@ -1827,8 +1827,6 @@ class HandleTypes extends HandleTypesEval {
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
 	/** @private @arg {R_PlaylistPanelVideo} x */
 	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
-	/** @private @arg {DE_Search} x */
-	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
 	/** @private @arg {R_FeedTabbedHeader} x */
@@ -2595,7 +2593,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_ReelWatch(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.D_ShowEngagementPanel(a);}
+	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
 	/** @private @arg {E_Url} x */
@@ -2641,12 +2639,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
 	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {
-		const cf="E_Unsubscribe";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
-	}
+	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
 	/** @private @arg {M_GetPdgBuyFlow} x */
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_UserFeedback} x */
@@ -2683,6 +2676,8 @@ class HandleTypes extends HandleTypesEval {
 	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
 	/** @private @arg {M_VE83769} x */
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
+	/** @private @arg {DE_Search} x */
+	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_UserFeedback} x */
@@ -2737,6 +2732,229 @@ class HandleTypes extends HandleTypesEval {
 		const {index,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		console.log("super_thanks_selected_tier.index",index);
 		console.log("super_thanks_selected_tier.key",key);
+	}
+	/** @private @arg {DE_YpcGetCart} x */
+	DE_YpcGetCart(x) {
+		const cf="DE_YpcGetCart"; this.k(cf,x);
+		let sp=this.y(cf,"transactionParams",x,x => x);
+		this.params(cf,"YpcGetCart.transactionParams",sp);
+	}
+	/** @private @arg {DE_Subscribe} x */
+	DE_Subscribe(x) {
+		const cf="DE_Subscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.D_ChannelId);
+		this.params(cf,"subscribe.params",params);
+	}
+	/** @private @arg {DE_Unsubscribe} x */
+	DE_Unsubscribe(x) {
+		const cf="DE_Unsubscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.D_ChannelId);
+		this.params(cf,"unsubscribe.params",params);
+	}
+	/** @private @arg {DE_ReelWatch} x */
+	DE_ReelWatch(x) {
+		const cf="DE_ReelWatch"; this.k(cf,x);
+		if("videoId" in x) {
+			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(videoId,this.videoId);
+			this.params(cf,"reel.player_params",playerParams);
+			this.t(thumbnail,this.D_Thumbnail);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
+			return;
+		}
+		if("inputType" in x) {
+			const {playerParams,overlay,params,sequenceProvider,inputType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.params(cf,"reel.player_params",playerParams);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			return;
+		}
+		this.g(x);
+	}
+	/** @private @arg {DE_ShowEngagementPanel} x */
+	DE_ShowEngagementPanel(x) {
+		const cf="D_ShowEngagementPanel"; this.k(cf,x);
+		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	}
+	/** @protected @arg {DE_AddToPlaylistService} x */
+	DE_AddToPlaylistService(x) {
+		const cf="DE_AddToPlaylistService"; this.k(cf,x);
+		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.videoId(videoId);
+	}
+	/** @private @arg {DE_PlaylistEdit} x */
+	DE_PlaylistEdit(x) {
+		const cf="D_PlaylistEdit"; this.k(cf,x);
+		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.playlistId(playlistId);
+		this.t(params,x => this.params(cf,"playlist_edit.params",x));
+		this.z(actions,x => {
+			// TODO: #12 Handle playlist actions
+			// Just skip them for now
+			switch(x.action) {
+				case "ACTION_ADD_VIDEO":
+				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
+				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
+				default: debugger; break;
+			}
+		});
+	}
+	/** @private @arg {DE_Feedback} x */
+	DE_Feedback(x) {
+		const cf="DE_Feedback",u=this.T_OmitKey(cf,"feedbackToken",x,this.DE_Feedback_onToken); this.k(cf,x);
+		if(!("uiActions" in u)) return this.g(u);
+		const {uiActions,actions,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+		this.D_HideEnclosingContainer(uiActions);
+		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
+	}
+	/** @private @arg {DE_VE3832_Watch} x */
+	DE_VE3832_Watch(x) {
+		// const cf="DE_VE3832_Watch";
+		if("playlistSetVideoId" in x) {
+			if("params" in x) {
+				const cf="DE_VE3832:playlistSetVideoId:params";
+				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.a_primitive_num(index);
+				this.a_primitive_str(playlistSetVideoId);
+				this.params(cf,"watch.params",params);
+				this.a_primitive_num(startTimeSeconds);
+				if(continuePlayback!==false) debugger;
+				this.R_VssLoggingContext(loggingContext);
+				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
+				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
+				this._primitive_of(nofollow,"boolean");
+				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
+				return;
+			}
+			x==="";
+			this.g(x);
+			return;
+		}
+		if("watchEndpointSupportedPrefetchConfig" in x) return;
+		if("watchEndpointSupportedOnesieConfig" in x) return;
+		if("playlistId" in x) return;
+		if("params" in x) return;
+		if("videoId" in x) {
+			const cf="DE_VE3832:videoId";
+			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.videoId(videoId);
+			return;
+		}
+		x==="";
+		this.g(x);
+	}
+	/** @private @arg {DE_RecordNotificationInteractions} x */
+	DE_RecordNotificationInteractions(x) {
+		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
+		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
+		this.tz(actions,this.A_HideEnclosing);
+	}
+	/** @private @arg {DE_MutationItem} x */
+	DE_MutationItem(x) {
+		const cf="DE_MutationItem"; this.k(cf,x);
+		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params(cf,"entity_key.normal",entityKey);
+		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
+		this.tf(this.O_DU_Persistence)(options);
+		let pr=this.tf(this.G_EY_Entity)(payload);
+		if(!pr) return;
+		const [pi,px]=pr;
+		switch(pi) {
+			case "offlineabilityEntity": this.D_EY_Offlineability(px); break;
+			case "subscriptionStateEntity": {
+				const cf="DS_EY_Subscription";
+				const {key,subscribed,...y}=this.s(cf,px); this.g(y);
+				this.params(cf,"subscriptionState.key",key);
+				// this.params(`${cf}.key`,"entity.key",key);
+				if(subscribed!==true) debugger;
+			} break;
+			case "playlistLoopStateEntity": {
+				const cf="DS_EY_PlaylistLoop";
+				const {key,state,...y}=this.s(cf,px); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+				switch(state) {
+					default: debugger; break;
+					case "PLAYLIST_LOOP_STATE_NONE":
+				}
+			} break;
+			case "transcriptTrackSelectionEntity": {
+				const cf="DS_EY_TranscriptTrackSelection";
+				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,px); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+				if(selectedTrackIndex!==0) debugger;
+				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
+			} break;
+			case "transcriptSearchBoxStateEntity": {
+				const cf="DS_EY_TranscriptSearchBox";
+				const {key,isHidden,...y}=this.s(cf,px); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+				if(isHidden!==false) debugger;
+			} break;
+			case "macroMarkersListEntity": {
+				const cf="EY_MacroMarkersList";
+				const {key,...y}=this.s(cf,px); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+			} break;
+			case "unknown": {
+				let pk=pr[1];
+				let x=pr[2];
+				if("key" in x) {
+					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
+				} else {debugger;}
+			} break;
+		}
+	}
+	/** @private @arg {DE_CreateBackstagePost} x */
+	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
+	/** @private @arg {DE_WatchPlaylist} x */
+	DE_WatchPlaylist(x) {
+		const cf="DE_WatchPlaylist"; this.k(cf,x);
+		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parser.parse_playlist_id(playlistId);
+		this.a_primitive_num(index);
+		this.params(cf,"watch_playlist.params",params);
+	}
+	/** @private @arg {DE_PlaylistEditor} x */
+	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
+	/** @private @arg {DE_Like} x */
+	DE_Like(x) {
+		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
+		switch(x.status) {
+			case "INDIFFERENT": {
+				const cf="E_LikeIndifferent";
+				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
+			} break;
+			case "LIKE": {
+				const cf="E_LikeLike";
+				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				actions;
+				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
+			} break;
+			case "DISLIKE": {
+				const cf="E_LikeDislike";
+				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
+			} break;
+		}
 	}
 	/** @private @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
 	T_GM(cf,x,f) {
@@ -3917,12 +4135,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
-	/** @private @arg {DE_YpcGetCart} x */
-	DE_YpcGetCart(x) {
-		const cf="DE_YpcGetCart"; this.k(cf,x);
-		let sp=this.y(cf,"transactionParams",x,x => x);
-		this.params(cf,"YpcGetCart.transactionParams",sp);
-	}
 	/** @private @arg {D_Survey_Watch} x */
 	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
 	codegen_group_id=1;
@@ -4146,13 +4358,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
 		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 	}
-	/** @private @arg {DE_Subscribe} x */
-	DE_Subscribe(x) {
-		const cf="DE_Subscribe"; this.k(cf,x);
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
-		this.params(cf,"subscribe.params",params);
-	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like"; this.k(cf,x);
@@ -4187,31 +4392,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(entries,x => this.T_Command_TP(x,this.E_ReelWatch));
 		this.trackingParams(cf,trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
-	}
-	/** @private @arg {DE_ReelWatch} x */
-	DE_ReelWatch(x) {
-		const cf="DE_ReelWatch"; this.k(cf,x);
-		if("videoId" in x) {
-			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(videoId,this.videoId);
-			this.params(cf,"reel.player_params",playerParams);
-			this.t(thumbnail,this.D_Thumbnail);
-			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
-			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
-			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
-			return;
-		}
-		if("inputType" in x) {
-			const {playerParams,overlay,params,sequenceProvider,inputType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.params(cf,"reel.player_params",playerParams);
-			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
-			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
-			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
-			return;
-		}
-		this.g(x);
 	}
 	/** @private @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
@@ -4427,12 +4607,6 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
-	}
-	/** @private @arg {DE_ShowEngagementPanel} x */
-	D_ShowEngagementPanel(x) {
-		const cf="D_ShowEngagementPanel"; this.k(cf,x);
-		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
@@ -4874,29 +5048,6 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 	}
-	/** @protected @arg {DE_AddToPlaylistService} x */
-	DE_AddToPlaylistService(x) {
-		const cf="DE_AddToPlaylistService"; this.k(cf,x);
-		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.videoId(videoId);
-	}
-	/** @private @arg {DE_PlaylistEdit} x */
-	DE_PlaylistEdit(x) {
-		const cf="D_PlaylistEdit"; this.k(cf,x);
-		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
-		this.t(params,x => this.params(cf,"playlist_edit.params",x));
-		this.z(actions,x => {
-			// TODO: #12 Handle playlist actions
-			// Just skip them for now
-			switch(x.action) {
-				case "ACTION_ADD_VIDEO":
-				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
-				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
-				default: debugger; break;
-			}
-		});
-	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
@@ -4914,14 +5065,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @template {{[U in K]:any}} T @template {keyof T} K @arg {"DE_Feedback"} cf @arg {K} k @arg {T} x @arg {(x:T[K])=>void} f @returns {T_OmitKey<T,K>} */
 	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return as_any(y);}
-	/** @private @arg {DE_Feedback} x */
-	DE_Feedback(x) {
-		const cf="DE_Feedback",u=this.T_OmitKey(cf,"feedbackToken",x,this.DE_Feedback_onToken); this.k(cf,x);
-		if(!("uiActions" in u)) return this.g(u);
-		const {uiActions,actions,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
-		this.D_HideEnclosingContainer(uiActions);
-		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
-	}
 	/** @private @arg {D_NotificationText} x */
 	D_NotificationText(x) {
 		const cf="D_NotificationText"; this.k(cf,x);
@@ -4996,44 +5139,6 @@ class HandleTypes extends HandleTypesEval {
 			other[u1]=cc[1];
 		}
 		return [un_prefix,other];
-	}
-	/** @private @arg {DE_VE3832_Watch} x */
-	DE_VE3832_Watch(x) {
-		// const cf="DE_VE3832_Watch";
-		if("playlistSetVideoId" in x) {
-			if("params" in x) {
-				const cf="DE_VE3832:playlistSetVideoId:params";
-				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.a_primitive_num(index);
-				this.a_primitive_str(playlistSetVideoId);
-				this.params(cf,"watch.params",params);
-				this.a_primitive_num(startTimeSeconds);
-				if(continuePlayback!==false) debugger;
-				this.R_VssLoggingContext(loggingContext);
-				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
-				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
-				this._primitive_of(nofollow,"boolean");
-				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
-				return;
-			}
-			x==="";
-			this.g(x);
-			return;
-		}
-		if("watchEndpointSupportedPrefetchConfig" in x) return;
-		if("watchEndpointSupportedOnesieConfig" in x) return;
-		if("playlistId" in x) return;
-		if("params" in x) return;
-		if("videoId" in x) {
-			const cf="DE_VE3832:videoId";
-			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.videoId(videoId);
-			return;
-		}
-		x==="";
-		this.g(x);
 	}
 	/** @private */
 	_decoder=new TextDecoder();
@@ -5786,13 +5891,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
-	/** @private @arg {DE_RecordNotificationInteractions} x */
-	DE_RecordNotificationInteractions(x) {
-		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
-		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
-		this.tz(actions,this.A_HideEnclosing);
-	}
 	/** @private @arg {GD_RC_SectionList} x */
 	GD_RC_SectionList(x) {
 		const cf="GD_RC_SectionList"; this.k(cf,x);
@@ -6416,65 +6514,9 @@ class HandleTypes extends HandleTypesEval {
 		if(addToOfflineButtonState!=="ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN") debugger;
 		this.params(`${cf}.key`,"entity.key",key);
 	}
-	/** @private @arg {DE_MutationItem} x */
-	DE_MutationItem(x) {
-		const cf="DE_MutationItem"; this.k(cf,x);
-		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"entity_key.normal",entityKey);
-		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
-		this.tf(this.DE_PersistenceOption)(options);
-		let pr=this.tf(this.G_EY_Entity)(payload);
-		if(!pr) return;
-		const [pi,px]=pr;
-		switch(pi) {
-			case "offlineabilityEntity": this.D_EY_Offlineability(px); break;
-			case "subscriptionStateEntity": {
-				const cf="DS_EY_Subscription";
-				const {key,subscribed,...y}=this.s(cf,px); this.g(y);
-				this.params(cf,"subscriptionState.key",key);
-				// this.params(`${cf}.key`,"entity.key",key);
-				if(subscribed!==true) debugger;
-			} break;
-			case "playlistLoopStateEntity": {
-				const cf="DS_EY_PlaylistLoop";
-				const {key,state,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				switch(state) {
-					default: debugger; break;
-					case "PLAYLIST_LOOP_STATE_NONE":
-				}
-			} break;
-			case "transcriptTrackSelectionEntity": {
-				const cf="DS_EY_TranscriptTrackSelection";
-				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				if(selectedTrackIndex!==0) debugger;
-				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
-			} break;
-			case "transcriptSearchBoxStateEntity": {
-				const cf="DS_EY_TranscriptSearchBox";
-				const {key,isHidden,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				if(isHidden!==false) debugger;
-			} break;
-			case "macroMarkersListEntity": {
-				const cf="EY_MacroMarkersList";
-				const {key,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-			} break;
-			case "unknown": {
-				let pk=pr[1];
-				let x=pr[2];
-				if("key" in x) {
-					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
-				} else {debugger;}
-			} break;
-		}
-	}
 	/** @private @arg {O_DU_Persistence} x */
-	DE_PersistenceOption(x) {
-		const cf="DE_PersistenceOption"; this.k(cf,x);
+	O_DU_Persistence(x) {
+		const cf="O_DU_Persistence"; this.k(cf,x);
 		const {persistenceOption,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}
@@ -6548,8 +6590,6 @@ class HandleTypes extends HandleTypesEval {
 		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
 	/** @private @arg {DC_Executor} x */
 	DC_Executor(x) {this.T_Commands("DC_Executor",x,this.AC_Executor);}
 	/** @private @arg {AC_Executor} x */
@@ -6755,14 +6795,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_WatchPlaylist(autoplayVideo);
 		this.E_WatchPlaylist(nextButtonVideo);
 		this.t(previousButtonVideo,this.E_WatchPlaylist);
-	}
-	/** @private @arg {DE_WatchPlaylist} x */
-	DE_WatchPlaylist(x) {
-		const cf="DE_WatchPlaylist"; this.k(cf,x);
-		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parser.parse_playlist_id(playlistId);
-		this.a_primitive_num(index);
-		this.params(cf,"watch_playlist.params",params);
 	}
 	/** @private @arg {MG_AdLayout_TopImage} x */
 	MMD_AdLayout_TopImage(x) {
@@ -7482,8 +7514,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
 	}
-	/** @private @arg {DE_PlaylistEditor} x */
-	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
 	/** @private @arg {D_EditableDetails} x */
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
 	/** @private @arg {D_CanShare} x */
@@ -7618,34 +7648,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(shortViewCount,this.G_Text);
 		this.t(extraShortViewCount,this.G_Text);
 		this.t(isLive,this.a_primitive_bool);
-	}
-	/** @private @arg {DE_Like} x */
-	DE_Like(x) {
-		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
-		switch(x.status) {
-			case "INDIFFERENT": {
-				const cf="E_LikeIndifferent";
-				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
-			} break;
-			case "LIKE": {
-				const cf="E_LikeLike";
-				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				actions;
-				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
-			} break;
-			case "DISLIKE": {
-				const cf="E_LikeDislike";
-				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
-			} break;
-		}
 	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
