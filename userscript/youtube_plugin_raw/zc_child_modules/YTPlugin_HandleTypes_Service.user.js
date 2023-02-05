@@ -7957,14 +7957,14 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		{
-			const x=s_tc,cf1="l1_s_tc";
+			const x=s_tc;
 			let b=x%256;
 			let g=(x>>>8)%256;
 			let r=(x>>>16)%256;
 			let a=(x>>>24)%256;
 			if(a!==0xff) debugger;
 			switch(r) {
-				default: log_color(`${cf1}_r`,r); break;
+				default: log_color(`l1_s_tc_r`,r); break;
 				case 0x45:
 				case 0x48:
 				case 0x4c:
@@ -7982,7 +7982,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x7f:
 			}
 			switch(g) {
-				default: log_color(`${cf1}_g`,g); break;
+				default: log_color(`l1_s_tc_g`,g); break;
 				case 0x52:
 				case 0x55: case 0x56:
 				case 0x58: case 0x59: case 0x5a: case 0x5b: case 0x5c: case 0x5d: case 0x5e: case 0x5f:
@@ -7991,12 +7991,12 @@ class HandleTypes extends HandleTypesEval {
 				case 0x69: case 0x6a: case 0x6b:
 			}
 			switch(b) {
-				default: log_color(`${cf1}_b`,b); break;
+				default: log_color(`l1_s_tc_b`,b); break;
 				case 0x48:
 				case 0x4c:
 				case 0x4f:
 				case 0x52:
-				case 0x54: case 0x55: case 0x56:
+				case 0x54: case 0x55: case 0x56: case 0x57:
 				case 0x5a: case 0x5b: case 0x5c:
 				case 0x64:
 				case 0x66: case 0x67:
@@ -8127,7 +8127,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(b) {
 				default: log_color(`d1_s_tc_b`,b); break;
 				case 0xa3:
-				case 0xa5: case 0xa6:
+				case 0xa5: case 0xa6: case 0xa7:
 				case 0xab: case 0xac:
 				case 0xae:
 				case 0xbf:
@@ -8174,7 +8174,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x12:
 				case 0x16:
 				case 0x19: case 0x1a: case 0x1b: case 0x1c:
-				case 0x1f:
+				case 0x1e: case 0x1f:
 				case 0x23:
 				case 0x26: case 0x27:
 				case 0x2b:
