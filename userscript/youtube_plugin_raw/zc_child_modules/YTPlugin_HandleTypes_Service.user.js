@@ -665,7 +665,7 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
 	}
 	/** @protected @arg {D_PlaylistId} x */
-	playlistId(x) {this.parser.parse_playlist_id(x);}
+	playlistId(x) {this.parse_playlist_id(x);}
 	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
 	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
@@ -812,7 +812,7 @@ class HandleTypes extends HandleTypesEval {
 		if("canonicalBaseUrl" in x) {
 			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(c,c => this.params(cf,"D_Browse.param",c));
-			this._decode_channel_url(ve_name,d);
+			this.GU_VE3611_Url(ve_name,d);
 			return this.GU_E_BrowseId(ve_name,a);
 		}
 		if("params" in x) {
@@ -2801,7 +2801,7 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._decode_channel_url("VE3611",url);
+		this.GU_VE3611_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		if(rootVe!==3611) debugger;
@@ -2830,9 +2830,7 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE5754_WC(x) {
 		const cf="GM_VE5754_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [f,url_playlist_id]=split_string_once(url,"/playlist?list=");
-		if(f!=="") debugger;
-		this.parser.parse_playlist_id(url_playlist_id);
+		this.GU_VE5754_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
 		if(rootVe!==5754) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
@@ -3209,7 +3207,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_WatchPlaylist(x) {
 		const cf="DE_WatchPlaylist"; this.k(cf,x);
 		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parser.parse_playlist_id(playlistId);
+		this.parse_playlist_id(playlistId);
 		this.a_primitive_num(index);
 		this.params(cf,"watch_playlist.params",params);
 	}
@@ -3292,10 +3290,23 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {string} ve_name @arg {GM_VE3611_WC['url']|GM_VE5754_WC["url"]} x */
-	_decode_channel_url(ve_name,x) {
-		ve_name;
+	/** @private @arg {GU_VE3611_Url} x */
+	GU_VE3611_Url(x) {
 		if(this.str_starts_with_rx("/@",x)) return;
+		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
+		let a1=split_string_once(y,"/");
+		switch(a1[0]) {
+			default: switch(a1[0]) {
+			} debugger; break;
+			case "gaming": if(a1.length!==1) debugger; break;
+			case "channel": {
+				let [,y1]=a1;
+				if(this.str_starts_with_rx("UC",y1)) return;
+			} break;
+		}
+	}
+	/** @private @arg {GU_VE5754_Url} x */
+	GU_VE5754_Url(x) {
 		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
 		if(this.str_is_search(y)) {
 			let [pp,qp]=split_string_once(y,"?");
@@ -3307,17 +3318,6 @@ class HandleTypes extends HandleTypesEval {
 					this.parse_playlist_id(p_sp.list);
 				} break;
 			}
-			return;
-		}
-		let a1=split_string_once(y,"/");
-		switch(a1[0]) {
-			default: switch(a1[0]) {
-			} debugger; break;
-			case "gaming": if(a1.length!==1) debugger; break;
-			case "channel": {
-				let [,y1]=a1;
-				if(this.str_starts_with_rx("UC",y1)) return;
-			} break;
 		}
 	}
 	/** @private @arg {RS_Browse} x */
@@ -9430,7 +9430,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Card";
 		const {teaser,cueRanges,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
-		this.z(cueRanges,this.D_CueRangeItem)
+		this.z(cueRanges,this.D_CueRangeItem);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_CueRangeItem} x */

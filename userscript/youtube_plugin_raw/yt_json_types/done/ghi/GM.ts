@@ -38,8 +38,10 @@ type GM_VE4724_WC={
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
+type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|`PL${string}`}`;
+
 type GM_VE5754_WC={
-	url: `/playlist?list=${"WL"|"LL"|`PL${string}`}`;
+	url: GU_VE5754_Url;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 	rootVe: 5754;
 	apiUrl: "/youtubei/v1/browse";

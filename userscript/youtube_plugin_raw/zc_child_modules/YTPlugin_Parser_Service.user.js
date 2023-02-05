@@ -46,37 +46,6 @@ class ParserService extends BaseService {
 			case "watch": break;
 		}
 	}
-	/** @api @public @arg {D_PlaylistId} x */
-	parse_playlist_id(x) {
-		if(x===void 0) {debugger; return;}
-		x: {
-			switch(x) {
-				case "LL": break;
-				case "WL": break;
-				default: break x;
-			}
-			return;
-		}
-		if(this.str_starts_with_r(x,"PL")) {
-			let pl=x.slice(2);
-			switch(pl.length) {case 32: return;}
-			console.log("[parse_playlist]",pl.length,pl);
-			return;
-		}
-		if(this.str_starts_with_r(x,"RDMM")) {
-			let pl=x.slice(4);
-			if(pl.length===11) return;
-			console.log("[parse_playlist_radio_mm]",pl.length,pl);
-			return;
-		}
-		if(this.str_starts_with_r(x,"RD")) {
-			let pl=x.slice(2);
-			if(this.log_playlist_parse) console.log("[parse_playlist_radio]",pl.length,pl);
-			return;
-		}
-		console.log("[new_parse_playlist_id]",x);
-		{debugger;}
-	}
 	/** @private @template {`${U}${string}${U}`} I @template {string} U @arg {I} x @arg {U} _w @returns {I extends `${U}${infer V}${U}`?V:never} */
 	extract_inner(x,_w) {
 		/** @private @type {any} */
@@ -673,7 +642,7 @@ class ParserService extends BaseService {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
 		switch(y[0]) {
-			case "list": return this.parse_playlist_id(y[1]);
+			case "list": return this.x.get("handle_types").parse_playlist_id(y[1]);
 			default: debugger;
 		}
 	}
