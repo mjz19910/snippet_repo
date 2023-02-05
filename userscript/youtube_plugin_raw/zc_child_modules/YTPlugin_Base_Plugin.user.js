@@ -2694,7 +2694,7 @@ class BaseService extends BaseServicePrivate {
 		if(!x) return;
 		this.z(x,f);
 	}
-	/** @protected @template {CF_L_TP_Params} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
+	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
 	t_cf(cf,x,f) {
 		if(x===void 0) return;
 		f.call(this,cf,x);

@@ -1,6 +1,7 @@
 type P_PathRootStr=
 	|"_level_1_0"
 	|"_level_2_0._level_2_1"
+	|"player_seek_continuation.params"
 	|"aadc_guidelines_state_entity_key"
 	|"AdServingDataEntry"
 	|"browse$param"

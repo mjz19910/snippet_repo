@@ -53,11 +53,13 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ReloadContinuationItems";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ShowReloadUi";}
+		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RSG_SharePanel_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "CD_PlayerSeek";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
@@ -267,9 +269,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_TagObj";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_Invalidation";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_LiveChatReplay";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_PlayerSeek";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_AdsControlFlowOpportunityReceived";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_Executor";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_GetSurvey";}
@@ -284,7 +283,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ChangeKeyedMarkersVisibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Generic_CTP";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChat";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChatReplay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LoadMarkers";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_RelatedChip";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ReloadContinuationItems";}
@@ -689,7 +690,10 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_Viewership";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_ViewershipData";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "B_HrefUrl";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Invalidation";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_LiveChatReplay";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_NextRadio";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_PlayerSeek";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Reload";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}

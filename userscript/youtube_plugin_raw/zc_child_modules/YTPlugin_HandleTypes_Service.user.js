@@ -7994,7 +7994,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe1: case 0xe3: case 0xe4: case 0xe5: case 0xe6: case 0xe7: case 0xe9: case 0xeb:
 			}
 			switch(b) {
-				default: log_color(`${cf1}_b`,b); break; 
+				default: log_color(`${cf1}_b`,b); break;
 				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe6: case 0xe8: case 0xea: case 0xeb:
 			}
 		}
@@ -9296,7 +9296,9 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(showInstream,true);
 		this.ceq(useGut,true);
 		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		if(ka.length>0) {
+			console.log(`[${cf}.next_key] [${ka.shift()}]`);
+		}
 	}
 	/** @private @template T @arg {B_TagObj<T>} x */
 	B_TagObj(x) {
@@ -9332,25 +9334,53 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
 		const cf="D_CardCollection";
-		const {cards,...y}=this.s(cf,x);
+		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x);
 		this.z(cards,this.R_Card);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		headerText;
+		icon;
+		closeButton;
+		trackingParams;
+		allowTeaserDismiss;
+		logIconVisibilityUpdates;
+	}
+	/** @private @arg {D_MicroformatEmbed} x */
+	D_MicroformatEmbed(x) {
+		const cf="D_CardCollection";
+		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
+		iframeUrl;
+		flashUrl;
+		width;
+		height;
+		flashSecureUrl;
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
 		const cf="D_PlayerMicroformat";
-		const {thumbnail,...y}=this.s(cf,x);
+		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,...y}=this.s(cf,x); this.g(y);
 		this.D_Thumbnail(thumbnail);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		this.D_MicroformatEmbed(embed);
+		title;
+		description;
+		lengthSeconds;
+		ownerProfileUrl;
+		externalChannelId;
+		isFamilySafe;
+		availableCountries;
+		isUnlisted;
+		hasYpcMetadata;
+		viewCount;
+		category;
+		publishDate;
+		ownerChannelName;
+		liveBroadcastDetails;
+		uploadDate;
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
 		const cf="D_AdPlacement";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		const {config,renderer,...y}=this.s(cf,x); this.g(y);
+		config;
+		renderer;
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
@@ -9360,33 +9390,35 @@ class HandleTypes extends HandleTypesEval {
 		if(popupType!=="DIALOG") debugger;
 		this.a_primitive_bool(beReused);
 	}
+	/** @private @arg {"CD_PlayerSeek"} cf @arg {P_PathRootStr} path @arg {DC_Generic} x */
+	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(cf,path,x));}
 	/** @private @arg {CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {
-		const cf="CD_PlayerSeek";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,x => this.DC_Generic(cf,"player_seek_continuation.params",x));}
+	/** @private @arg {DC_LiveChatReplay} x */
+	DC_LiveChatReplay(x) {
+		const cf="DC_LiveChatReplay";
+		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @private @arg {CD_LiveChatReplay} x */
 	CD_LiveChatReplay(x) {
-		const cf="CD_LiveChatReplay";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		const cf="CD_LiveChatReplay"; this.y(cf,"liveChatReplayContinuationData",x,this.DC_LiveChatReplay);
+	}
+	/** @private @arg {DC_Invalidation} x */
+	DC_Invalidation(x) {
+		const cf="DC_Invalidation";
+		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
+		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
 	}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {
-		const cf="CD_Invalidation";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		const cf="CD_Invalidation"; this.y(cf,"invalidationContinuationData",x,this.DC_Invalidation);
 	}
 	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
 	D_ThumbnailOverlayInlineUnplayable(x) {
 		const cf="D_ThumbnailOverlayInlineUnplayable";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		const {text,icon,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(text);
+		this.ceq(icon.iconType,"PLAY_DISABLED");
 	}
 	/** @private @arg {D_Card} x */
 	D_Card(x) {
