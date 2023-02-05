@@ -526,6 +526,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
 		if(path==="tracking.trackingParams.f8") return;
+		if(path==="entity_key.normal.f2.f1"&&typeof entry==="string") {
+			this.videoId(entry);
+			return;
+		}
+		if(path==="create_comment.params.f2"&&typeof entry==="string") {
+			this.videoId(entry);
+			return;
+		}
 		if(typeof entry==="number") {
 			if(entry>(65536*4)) return;
 			return this.save_number(path,entry);
@@ -2191,7 +2199,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
 			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
-			case "comments-section": this.A_CommentsSectionContinuation$(x); break;
+			case "comments-section": this.A_CommentsSectionContinuation(x); break;
 			case "watch-next-feed": this.A_WatchNext(x); break;
 			default: x===0; debugger;
 		}
@@ -6584,7 +6592,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string("[Visibility.types]",types);
 	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
-	A_CommentsSectionContinuation$(x) {
+	A_CommentsSectionContinuation(x) {
 		const cf="A_CommentsSectionContinuation";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
@@ -7835,7 +7843,7 @@ class HandleTypes extends HandleTypesEval {
 	parse_emoji_id(x) {
 		let eid=split_string_once(x,"/");
 		this.D_ChannelId(eid[0]);
-		console.log(eid[1]);
+		return eid[1];
 	}
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
@@ -9545,7 +9553,7 @@ class HandleTypes extends HandleTypesEval {
 			if(!this.str_starts_with(categoryId,"UC")) debugger;
 			this.G_Text(title);
 			this.z(emojiIds,x => {
-				this.save_string(`${categoryId}.emojiId`,x);
+				this.save_string(`${categoryId}.emojiId`,this.parse_emoji_id(x));
 			});
 			this.D_ChannelId(categoryId);
 			this.trackingParams(cf,trackingParams);
