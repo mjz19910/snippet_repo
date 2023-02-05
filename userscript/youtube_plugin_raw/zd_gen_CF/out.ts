@@ -214,6 +214,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_UnifiedSharePanel";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoOwner";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoPrimaryInfo";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoQualityPromo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoSecondaryInfo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_WatchNextEndScreen";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GD_RC_SectionList";}
@@ -334,6 +335,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Botguard";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_BrowserMediaSession";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}

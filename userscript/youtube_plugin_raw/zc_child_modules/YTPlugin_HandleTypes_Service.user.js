@@ -1757,8 +1757,6 @@ class HandleTypes extends HandleTypesEval {
 	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 	/** @private @arg {R_DecoratedPlayerBar} x */
 	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar","decoratedPlayerBarRenderer",x,this.D_DecoratedPlayerBar);}
-	/** @private @arg {RA_NotificationAction} x */
-	R_NotificationAction(x) {this.H_("R_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {R_AutoplaySwitchButton} x */
 	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton","autoplaySwitchButtonRenderer",x,this.D_AutoplaySwitchButton);}
 	/** @private @arg {R_PlayerOverlayAutoplay} x */
@@ -2133,6 +2131,8 @@ class HandleTypes extends HandleTypesEval {
 	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.D_Card);}
 	/** @private @arg {R_SimpleCardTeaser} x */
 	R_SimpleCardTeaser(x) {this.H_("R_Card","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	/** @private @arg {RA_NotificationAction} x */
+	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {RMD_Badge} x */
@@ -4603,7 +4603,7 @@ class HandleTypes extends HandleTypesEval {
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
-		if("notificationActionRenderer" in x) return this.R_NotificationAction(x);
+		if("notificationActionRenderer" in x) return this.RA_NotificationAction(x);
 		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
@@ -9323,16 +9323,30 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
 		const cf="D_VideoQualityPromo";
-		const {...y}=this.s(cf,x);
+		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x);
+		this.D_TriggerCriteria(triggerCriteria);
+		this.G_Text(text);
+		this.E_Url(endpoint);
+		this.trackingParams(cf,trackingParams);
+		this.RA_NotificationAction(snackbar);
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
 		const cf="D_PlayerAttestation";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		const {challenge,botguardData,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(challenge);
+		this.D_Botguard(botguardData);
+	}
+	/** @private @arg {D_Botguard} x */
+	D_Botguard(x) {
+		const cf="D_Botguard";
+		const {program,interpreterSafeUrl,serverEnvironment,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(program);
+		let interpreterUrl=this.UrlWrappedValueT(interpreterSafeUrl);
+		this.a_primitive_str(interpreterUrl);
+		if(serverEnvironment!==1) debugger;
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
@@ -9463,6 +9477,7 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
+	D_TriggerCriteria(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
