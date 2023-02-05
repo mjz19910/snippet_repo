@@ -29,6 +29,12 @@ type D_UrlFormat=
 	|NonNullable<D_AdaptiveFormatItem["url"]>
 	|NonNullable<D_FormatItem["url"]>
 	|TP_ParseUrlSearchParams<D_FormatItem_signatureCipher>["url"]
+	|D_MicroformatEmbed["flashSecureUrl"]
+	|D_MicroformatEmbed["flashUrl"]
+	|D_MicroformatEmbed["iframeUrl"]
+	|`/embed/${string}`
+	|`/v/${string}?version=3&autohide=1`
+	|D_PlayerMicroformat["ownerProfileUrl"]
 	;
 ;
 

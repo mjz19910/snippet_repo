@@ -112,6 +112,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button:style" | "D_Button:navigationEndpoint" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Card";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CardCollection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
@@ -171,6 +172,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PdgBuyFlow";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PdgCommentChip";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PivotButton";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlayerMicroformat";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistAddToOption";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistHeader";}
@@ -180,6 +182,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistVideoThumbnail";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ProductList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ProductListItem";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PromotedSparklesWeb";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichGrid";}
@@ -835,15 +838,15 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:targetId:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Check";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Mix";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_WatchLater";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_YoutubeLogo";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_Topic";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_ToggledPrefix";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PromotedSparklesWeb:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_Topic:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayBottomPanel:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_ToggledPrefix:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_1:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayToggleButton_UntoggledPrefix_2:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_TopbarLogo:iconImage";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithIcon:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_GuideEntry_WithNavEP:icon";}
 		|{n: Prelude.CF_T_Icon_Any; t: Types.CF_T_Icon_Any_; v: "D_Icon_Button";}

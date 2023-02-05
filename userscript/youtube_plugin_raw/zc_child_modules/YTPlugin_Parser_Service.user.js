@@ -111,14 +111,37 @@ class ParserService extends BaseService {
 			this.parse_channel_section_url(x[1]);
 			return;
 		}
+		if(x[0]==="") return;
 		switch(x[0]) {
 			case "feed": return this.parse_feed_url(x);
 			case "shorts": return this.parse_shorts_url(x);
 			case "channel": return this.parse_channel_url(x);
 			case "youtubei": return this.parse_youtube_url_2(x);
 			case "api": return this.parse_api_url(x);
-			default: debugger; return;
+			case "hashtag": return this.parse_hashtag_url(x);
+			case "source": return this.parse_source_url(x);
+			case "embed": return this.parse_embed_url(x);
+			case "v": return this.parse_video_url(x);
+			default: x===""; debugger; return;
 		}
+	}
+	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["hashtag",...any]>} x */
+	parse_hashtag_url(x) {
+		console.log("[parse_hashtag_url]",x);
+	}
+	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["source",...any]>} x */
+	parse_source_url(x) {
+		let a=split_string_once(x[1],"/");
+		console.log("[parse_source_url]",[x[0],...a]);
+	}
+	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["embed",...any]>} x */
+	parse_embed_url(x) {
+		console.log("[parse_embed_url]",x);
+	}
+	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["v",...any]>} x */
+	parse_video_url(x) {
+		let a=split_string_once(x[1],"?");
+		console.log("[parse_video_url]",[x[0],...a]);
 	}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["api",...any]>} x */
 	parse_api_url(x) {
@@ -499,7 +522,14 @@ class ParserService extends BaseService {
 			case "ad.doubleclick.net": return;
 			case "www.googleadservices.com": return;
 			case "www.youtube.com": {
-				this.parse_url(root,`${r.pathname}${r.search}`);
+				switch(r.pathname) {
+					case "/api/stats/ads": {
+						this.parse_url(root,`${r.pathname}${r.search}`);
+					} break;
+					case "/watch": {
+						this.parse_url(root,`${r.pathname}${r.search}`);
+					} break;
+				}
 				return;
 			}
 			default:
