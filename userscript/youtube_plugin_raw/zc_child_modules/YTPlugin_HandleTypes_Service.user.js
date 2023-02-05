@@ -5801,6 +5801,7 @@ class HandleTypes extends HandleTypesEval {
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_SectionList(content);
 					if(targetId!=="engagement-panel-comments-section") debugger;
+					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
@@ -5815,6 +5816,7 @@ class HandleTypes extends HandleTypesEval {
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_ProductList(content);
 					if(targetId!=="shopping_panel_for_entry_point_5") debugger;
+					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 				} break;
@@ -5824,6 +5826,7 @@ class HandleTypes extends HandleTypesEval {
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_ContinuationItem(content);
 					if(targetId!=="engagement-panel-searchable-transcript") debugger;
+					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
@@ -5838,6 +5841,7 @@ class HandleTypes extends HandleTypesEval {
 					this.R_EngagementPanelTitleHeader(header);
 					this.R_StructuredDescriptionContent(content);
 					if(targetId!=="engagement-panel-structured-description") debugger;
+					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.D_LoggingDirectives(loggingDirectives);
 					if(identifier) {
