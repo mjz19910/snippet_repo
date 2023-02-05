@@ -1661,8 +1661,6 @@ class HandleTypes extends HandleTypesEval {
 	R_FusionSearchbox(x) {this.H_("R_FusionSearchbox","fusionSearchboxRenderer",x,this.D_FusionSearchbox);}
 	/** @private @arg {R_HotkeyDialog} x */
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
-	/** @private @arg {RC_SectionList} x */
-	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {R_EntityBatchUpdate} x */
@@ -1735,8 +1733,6 @@ class HandleTypes extends HandleTypesEval {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @private @arg {RC_PlaylistPanel} x */
-	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.g);}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {R_CommentsHeader} x */
@@ -1761,9 +1757,6 @@ class HandleTypes extends HandleTypesEval {
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
-	static {
-		this.prototype.R_MenuFlexibleItem;
-	}
 	/** @private @arg {R_MenuServiceItem} x */
 	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @private @arg {R_NotificationText} x */
@@ -1881,14 +1874,10 @@ class HandleTypes extends HandleTypesEval {
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
 	/** @private @arg {R_StructuredDescriptionContent} x */
 	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent","structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
-	/** @private @arg {D_StructuredDescriptionContent} x */
-	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent","items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("R_ProductList","productListRenderer",x,this.D_ProductList);}
 	/** @private @arg {R_ClipSection} x */
 	R_ClipSection(x) {this.H_("R_ClipSection","clipSectionRenderer",x,this.D_ClipSection);}
-	/** @private @arg {D_ClipSection} x */
-	D_ClipSection(x) {this.H_("D_ClipSection","contents",x,x => this.z(x,this.R_ClipCreation));}
 	/** @private @arg {R_ClipCreation} x */
 	R_ClipCreation(x) {this.H_("C_RunAttestation","clipCreationRenderer",x,this.D_ClipCreation);}
 	/** @private @arg {R_MacroMarkersList} x */
@@ -1908,8 +1897,10 @@ class HandleTypes extends HandleTypesEval {
 	R_LikeButton(x) {this.H_("R_LikeButton","likeButtonRenderer",x,this.D_LikeButton);}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {RC_LiveChat} x */
-	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent","items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @private @arg {D_ClipSection} x */
+	D_ClipSection(x) {this.H_("D_ClipSection","contents",x,x => this.z(x,this.R_ClipCreation));}
 	/** @private @arg {R_CompactPlaylist} x */
 	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
 	/** @private @arg {R_CompactRadio} x */
@@ -4297,6 +4288,12 @@ class HandleTypes extends HandleTypesEval {
 		this.t(queueContextParams,a => this.params(cf,"next.queue_context_params",a));
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
+	/** @private @arg {RC_SectionList} x */
+	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
+	/** @private @arg {RC_PlaylistPanel} x */
+	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.g);}
+	/** @private @arg {RC_LiveChat} x */
+	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
 	/** @private @arg {RC_MainAppWebResponseContext} x */
 	RC_MainAppWebResponseContext(x) {
 		const cf="RC_MainAppWebResponseContext"; this.k(cf,x);
