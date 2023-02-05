@@ -111,7 +111,7 @@ type RS_Player={
 	attestation?: R_PlayerAttestation;
 	videoQualityPromoSupportedRenderers?: R_VideoQualityPromo;
 	adPlacements?: T_AnyObjectOrEmpty<R_AdPlacement>[];
-	frameworkUpdates: D_FrameworkUpdates;
+	frameworkUpdates?: D_FrameworkUpdates;
 	endscreen?: R_Endscreen;
 	paidContentOverlay?: {};
 	annotations?: R_PlayerAnnotationsExpanded[];

@@ -1815,7 +1815,7 @@ class HandleTypes extends HandleTypesEval {
 			let ka=this.get_keys_of(x);
 			if(ka.length!==0) debugger;
 		});
-		this.D_FrameworkUpdates(frameworkUpdates);
+		this.t(frameworkUpdates,this.D_FrameworkUpdates);
 		let ka=this.get_keys_of(y);
 		if(ka.length>0) {
 			console.log("[done.RS_Player.next_key] [%s]",ka[0]);
