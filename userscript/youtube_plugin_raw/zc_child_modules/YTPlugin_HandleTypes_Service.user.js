@@ -542,6 +542,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "videogoodput":
 			case "playability_status":
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
 			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
@@ -995,7 +996,7 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen_typedef_all("MenuItems",x);
 		this.G_Text(x);
 	}
-	/** @private @arg {G_Watch_ResultsItem} x @returns {G_Watch_ContentsItem[]} */
+	/** @private @arg {G_Watch_ResultsItem} x */
 	G_Watch_ResultsItem(x) {
 		const cf="G_Watch_ResultsItem"; this.k(cf,x);
 		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -9069,7 +9070,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
-		// cspell:ignore videogoodput videoplayback
 		let s_host=split_string_once(x.host,".");
 		switch(s_host[1]) {
 			case "googlevideo.com": {

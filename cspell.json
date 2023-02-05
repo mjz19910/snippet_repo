@@ -314,6 +314,8 @@
       "varg",
       "varint",
       "verifymethod",
+      "videogoodput",
+      "videoplayback",
       "videoqualityreport",
       "videostats",
       "VLLL",
