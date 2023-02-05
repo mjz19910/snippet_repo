@@ -1331,6 +1331,63 @@ class HandleTypes extends HandleTypesEval {
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {G_ChannelSwitcherContent} x */
+	G_ChannelSwitcherContent(x) {
+		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("accountItem" in x) return this.A_AccountItem(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_ThumbnailOverlayItem} x */
+	G_ThumbnailOverlayItem(x) {
+		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
+		// COMPLETED: #11
+		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
+		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
+		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
+	}
+	/** @arg {G_PlaylistPanel_Item} x */
+	G_PlaylistPanel_Item(x) {
+		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
+		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
+		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_AdditionalDataItem} x */
+	G_AdditionalDataItem(x) {
+		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
+		switch(d.key) {
+			default: debugger; break;
+			case "lockup": {
+				if(d.value!=="player") debugger;
+			} break;
+			case "video_id": {
+				this.videoId(d.value);
+			} break;
+		}
+	}
+	/** @private @arg {G_ChatItem} x */
+	G_ChatItem(x) {
+		const cf="G_ChatItem"; this.k(cf,x);
+		if("liveChatTextMessageRenderer" in x) return;
+		if("liveChatPlaceholderItemRenderer" in x) return;
+		if("liveChatViewerEngagementMessageRenderer" in x) return;
+	}
+	/** @private @arg {G_PlayerStoryboards} x */
+	G_PlayerStoryboards(x) {
+		const cf="G_PlayerStoryboards"; this.k(cf,x);
+		if("playerStoryboardSpecRenderer" in x) return;
+		if("playerLiveStoryboardSpecRenderer" in x) return;
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	D_TextRun(x,f_run) {
 		const cf="R_TextRun";
@@ -8220,63 +8277,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_ChannelSwitcherHeader(header);
 		this.ceq(targetId,"ceq");
 		this.z(contents,this.G_ChannelSwitcherContent);
-	}
-	/** @private @arg {G_ChannelSwitcherContent} x */
-	G_ChannelSwitcherContent(x) {
-		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
-		if("buttonRenderer" in x) return this.R_Button(x);
-		if("accountItem" in x) return this.A_AccountItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_ThumbnailOverlayItem} x */
-	G_ThumbnailOverlayItem(x) {
-		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
-		// COMPLETED: #11
-		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
-		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
-		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
-		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
-		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
-		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
-		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
-		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
-		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
-		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
-	}
-	/** @arg {G_PlaylistPanel_Item} x */
-	G_PlaylistPanel_Item(x) {
-		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
-		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
-		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_AdditionalDataItem} x */
-	G_AdditionalDataItem(x) {
-		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
-		switch(d.key) {
-			default: debugger; break;
-			case "lockup": {
-				if(d.value!=="player") debugger;
-			} break;
-			case "video_id": {
-				this.videoId(d.value);
-			} break;
-		}
-	}
-	/** @private @arg {G_ChatItem} x */
-	G_ChatItem(x) {
-		const cf="G_ChatItem"; this.k(cf,x);
-		if("liveChatTextMessageRenderer" in x) return;
-		if("liveChatPlaceholderItemRenderer" in x) return;
-		if("liveChatViewerEngagementMessageRenderer" in x) return;
-	}
-	/** @private @arg {G_PlayerStoryboards} x */
-	G_PlayerStoryboards(x) {
-		const cf="G_PlayerStoryboards"; this.k(cf,x);
-		if("playerStoryboardSpecRenderer" in x) return;
-		if("playerLiveStoryboardSpecRenderer" in x) return;
-		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ChannelSwitcherHeader} x */
 	D_ChannelSwitcherHeader(x) {
