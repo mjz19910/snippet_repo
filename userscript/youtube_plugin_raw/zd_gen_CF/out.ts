@@ -42,6 +42,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibilityData";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:defaultText";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:toggledAccessibilityData";}
+		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:toggledAccessibilityData:size";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other" | "D_Video_With:accessibility" | "D_Video_With:owner" | "D_Video_With:videoId" | "D_Video_With:videoId:topStandaloneBadge" | "D_Video_With:videoId:descriptionSnippet";}
 		|{n: Prelude.CF_D_Video_Handle; t: Types.CF_D_Video_Handle_; v: "D_Video_Other:isWatched" | "D_Video_With:accessibility:isWatched" | "D_Video_With:owner:isWatched" | "D_Video_With:videoId:isWatched" | "D_Video_With:videoId:topStandaloneBadge:isWatched" | "D_Video_With:videoId:descriptionSnippet:isWatched";}
 		|{n: Prelude.CF_GE_ResponseReceived; t: Types.CF_GE_ResponseReceived_; v: "RS_Next";}

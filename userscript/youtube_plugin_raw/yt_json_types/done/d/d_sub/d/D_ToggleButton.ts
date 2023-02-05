@@ -1,5 +1,22 @@
+type E_PerformCommentAction={};
+type D_Button_DefServiceEP=C_CommandExecutor|E_PerformCommentAction;
 type D_ToggleButton=
 	|never
+	|{
+		style: T_StyleType<"STYLE_TEXT">;
+		size: T_SizeType<"SIZE_DEFAULT">;
+		isToggled: false;
+		isDisabled: false;
+		defaultIcon: T_Icon<"LIKE">;
+		defaultServiceEndpoint: E_PerformCommentAction;
+		toggledServiceEndpoint: E_PerformCommentAction;
+		trackingParams: string;
+		defaultTooltip: "Like";
+		toggledTooltip: "Unlike";
+		toggledStyle: T_StyleType<"STYLE_DEFAULT_ACTIVE">;
+		accessibilityData: TD_Accessibility<"Like this reply along with 64 other people">;
+		toggledAccessibilityData: TD_Accessibility<"Unlike">;
+	}
 	|{
 		style: T_StyleType<"STYLE_TEXT">;
 		isToggled: boolean;

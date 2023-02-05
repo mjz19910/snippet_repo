@@ -3958,6 +3958,18 @@ class HandleTypes extends HandleTypesEval {
 			if(!(k in x)) break x;
 			/** @type {`${cf}:${k}`} */
 			const cf1=`${cf}:${k}`;
+			y: {
+				const k2="size";
+				if(!(k2 in x)) break y;
+				/** @type {`${cf1}:${k2}`} */
+				const cf2=`${cf1}:${k2}`;
+				const {toggledAccessibilityData,size,defaultTooltip,toggledTooltip,accessibilityData,...y}=this.D_ToggleButton_Omit(cf2,x); this.g(y);/*#destructure_done*/
+				if(size.sizeType!=="SIZE_DEFAULT") debugger;
+				defaultTooltip;
+				this.D_Accessibility(toggledAccessibilityData);
+				this.D_Accessibility(accessibilityData);
+				return;
+			}
 			const {toggledAccessibilityData,accessibilityData,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
 			this.D_Accessibility(toggledAccessibilityData);
 			this.D_Accessibility(accessibilityData);
@@ -3969,6 +3981,14 @@ class HandleTypes extends HandleTypesEval {
 			/** @type {`${cf}:${k}`} */
 			const cf1=`${cf}:${k}`;
 			const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			this.G_Text(defaultText);
+			this.G_Text(toggledText);
+			this.D_Label(accessibility);
+			this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
+			this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
+			this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
+			this.D_ToggleButtonIdData(toggleButtonSupportedData);
+			if(targetId!=="watch-like") debugger;
 			return;
 		}
 		x: {
