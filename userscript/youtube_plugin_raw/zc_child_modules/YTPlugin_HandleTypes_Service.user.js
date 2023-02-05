@@ -7904,10 +7904,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{
 			const x=s4_c,cf1="l1_s4_c";
-			let b=x%256; b;
-			let g=(x>>>8)%256; g;
-			let r=(x>>>16)%256;
-			let a=(x>>>24)%256;
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
@@ -7927,64 +7924,69 @@ class HandleTypes extends HandleTypesEval {
 		let log_color=(k,x) => this.log_color(cf1,cf,k,x);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{
-				const x=p_tc; switch(x) {
-					default: log_color("d2_p_tc",x); break;
-				}
-			}
-			{
-				const x=s_tc; switch(x) {
-					default: log_color("d2_s_tc",x); break;
-				}
-			}
+			{const x=p_tc; switch(x) {default: log_color("d2_p_tc",x); break;}}
+			{const x=s_tc; switch(x) {default: log_color("d2_s_tc",x); break;}}
 			{const x=s1_c; switch(x) {default: log_color("d2_s1_c",x); break;}}
 			{const x=s2_c; switch(x) {default: log_color("d2_s2_c",x); break;}}
 			{const x=s3_c; switch(x) {default: log_color("d2_s3_c",x); break;}}
-			{
-				const x=s4_c; switch(x) {
-					default: log_color("d2_s4_c",x); break;
-				}
-			}
+			{const x=s4_c; switch(x) {default: log_color("d2_s4_c",x); break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{
-			const x=p_tc; switch(x) {
-				default: log_color("d1_p_tc",x); break;
-				case 0xfffff6e5: case 0xfffff0e5: case 0xffe5f5ff: case 0xffe5faff: case 0xffe5e5ff: case 0xffffe5e5: case 0xffffe5e7: case 0xffffece5:
-				case 0xffede5ff: case 0xffeae5ff: case 0xffffe9e5: case 0xfff0e5ff: case 0xffe6e5ff: case 0xffffe5f1: case 0xffffe5e6: case 0xffffeee5:
-				case 0xffffefe5: case 0xffe5eeff: case 0xffffe5ea: case 0xfffff2e5: case 0xfffff5e5: case 0xffffe8e5: case 0xffe5f3ff: case 0xffe5edff:
-					break;
-				case 0xfffce5ff: case 0xffe5eaff: case 0xffffe5f8: case 0xffe5e7ff: case 0xffe5fbff:
+			const x=p_tc,cf1="d1_p_tc";
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+			if(a!==0xff) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
 			}
 		}
 		{
-			const x=s_tc; switch(x) {
-				default: log_color("d1_s_tc",x); break;
-				case 0xffccbea3: case 0xffccb4a3: case 0xffa3bccc: case 0xffa3c5cc: case 0xffa3a3cc: case 0xffccacac: case 0xffcca3a6: case 0xffccada3:
-				case 0xffb0a3cc: case 0xffaba3cc: case 0xffccb2ae: case 0xffb4a3cc: case 0xffa4a3cc: case 0xffcca3b6: case 0xffcca3a4: case 0xffcca9a3:
-				case 0xffccb2a3: case 0xffa3b2cc: case 0xffcca3ab: case 0xffccb7a3: case 0xffccbca3: case 0xffcca8a3: case 0xffa3b9cc: case 0xffa3afcc:
-				case 0xffc8a3cc: case 0xffa3a6cc: case 0xffcca9c3: case 0xffccb5a3: case 0xffb7aecc: case 0xffa3aacc: case 0xffa5a3cc: case 0xffa3c6cc:
+			const x=s_tc,cf1="d1_s_tc";
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+			if(a!==0xff) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
 			}
 		}
 		{
-			const x=s2_c; switch(x) {
-				default: log_color("d1_s2_c",x); break;
-				case 0xf228231a: case 0xf2331d0e: case 0xf2112633: case 0xf2062026: case 0xf2090a33: case 0xf2332b2b: case 0xf233191b: case 0xf2332a27:
-				case 0xf2231b33: case 0xf2292633: case 0xf2332c2b: case 0xf21f1133: case 0xf2090733: case 0xf2331925: case 0xf2331516: case 0xf2330e07:
-				case 0xf2332116: case 0xf233261f: case 0xf2071733: case 0xf2330e16: case 0xf233271c: case 0xf2282216: case 0xf2331a16: case 0xf2112333:
-				case 0xf2071433: case 0xf2311c33: case 0xf2070b33: case 0xf2332a30: case 0xf2332519: case 0xf22d2b33: case 0xf2151a33: case 0xf2222133:
-				case 0xf2052126: case 0xf233110d:
+			const x=s2_c,cf1="d1_s2_c";
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+			if(a!==0xf2) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
 			}
 		}
 		{
-			const x=s4_c; switch(x) {
-				default: log_color("d1_s4_c",x); break;
-				case 0xf20c0b08: case 0xf2190e07: case 0xf2081319: case 0xf2020a0c: case 0xf2040519: case 0xf2191515: case 0xf2190c0d: case 0xf2191513:
-				case 0xf2110d19: case 0xf2141319: case 0xf2191615: case 0xf20f0819: case 0xf2040319: case 0xf2190c12: case 0xf2190a0b: case 0xf2190703:
-				case 0xf219100b: case 0xf219130f: case 0xf2030b19: case 0xf219070b: case 0xf219130e: case 0xf20c0a07: case 0xf2190d0b: case 0xf2081119:
-				case 0xf2030a19: case 0xf2180e19: case 0xf2030519: case 0xf2191518: case 0xf219120c: case 0xf2161519: case 0xf20a0d19: case 0xf2111019:
-				case 0xf2010b0c: case 0xf2190806:
+			const x=s4_c,cf1="d1_s4_c";
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+			if(a!==0xf2) debugger;
+			switch(r) {
+				default: log_color(`${cf1}_r`,r); break;
+			}
+			switch(g) {
+				default: log_color(`${cf1}_g`,g); break;
+			}
+			switch(b) {
+				default: log_color(`${cf1}_b`,b); break;
 			}
 		}
 	}
