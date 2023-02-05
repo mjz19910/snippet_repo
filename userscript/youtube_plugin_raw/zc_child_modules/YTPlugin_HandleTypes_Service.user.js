@@ -8036,6 +8036,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xf0: case 0xf1: case 0xf2: case 0xf3:
 				case 0xf5: case 0xf6:
 				case 0xfa: case 0xfb:
+				case 0xff:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
@@ -8044,6 +8045,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xea:
 				case 0xf5:
 				case 0xf8:
+				case 0xfb:
 				case 0xff:
 			}
 		}
@@ -8072,7 +8074,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0xb9:
 				case 0xbc:
 				case 0xbe:
-				case 0xc5: case 0xc6:
+				case 0xc5: case 0xc6: case 0xcc:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
@@ -8081,19 +8083,19 @@ class HandleTypes extends HandleTypesEval {
 				case 0xab: case 0xac:
 				case 0xae:
 				case 0xbf:
-				case 0xc3:
+				case 0xc3: case 0xc6:
 				case 0xcc:
 			}
 		}
 		{
-			const x=s2_c,cf1="d1_s2_c";
+			const x=s2_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xf2) debugger;
 			switch(r) {
-				default: log_color(`${cf1}_r`,r); break;
+				default: log_color(`d1_s2_c_r`,r); break;
 				case 0x05: case 0x06: case 0x07:
 				case 0x09:
-				case 0x11:
+				case 0x11: case 0x12:
 				case 0x15:
 				case 0x1a:
 				case 0x22: case 0x23:
@@ -8103,7 +8105,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x33:
 			}
 			switch(g) {
-				default: log_color(`${cf1}_g`,g); break;
+				default: log_color(`d1_s2_c_g`,g); break;
 				case 0x07:
 				case 0x0a: case 0x0b:
 				case 0x0e:
@@ -8117,13 +8119,14 @@ class HandleTypes extends HandleTypesEval {
 				case 0x29: case 0x2a: case 0x2b: case 0x2c:
 			}
 			switch(b) {
-				default: log_color(`${cf1}_b`,b); break;
+				default: log_color(`d1_s2_c_b`,b); break;
 				case 0x07:
 				case 0x0d:
 				case 0x0e:
 				case 0x16:
 				case 0x19: case 0x1a: case 0x1b: case 0x1c:
 				case 0x1f:
+				case 0x23:
 				case 0x26: case 0x27:
 				case 0x2b:
 				case 0x2f:
@@ -8137,7 +8140,8 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
-				case 0x01: case 0x02: case 0x03: case 0x04:
+				case 0x01: case 0x02: case 0x03: case 0x04: 
+				case 0x06:
 				case 0x08:
 				case 0x0a:
 				case 0x0c: case 0x0d:
