@@ -2167,7 +2167,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_CommentReplies} x */
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_InfoCardIcon} x */
-	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,x => this.D_Tracking("D_InfoCardIcon",x));}
+	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,this.D_InfoCardIcon);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -6408,7 +6408,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="GA_Continuation_CommentRepliesItem"; this.k(cf,x);
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,x=>{
+		this.z(continuationItems,x => {
 			const cf="G_CommentRepliesItem"; this.k(cf,x);
 			if("commentRenderer" in x) return this.R_Comment(x);
 			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
@@ -9575,8 +9575,10 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(isModeratedElqComment,false);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {"R_InfoCardIcon"} cf @arg {D_Tracking} x */
+	/** @private @arg {"D_InfoCardIcon"} cf @arg {D_Tracking} x */
 	D_Tracking(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
+	/** @private @arg {D_Tracking} x */
+	D_InfoCardIcon(x) {this.D_Tracking("D_InfoCardIcon",x);}
 	/** @private @arg {D_ImpressionCommand} x */
 	D_ImpressionCommand(x) {
 		const cf="D_ImpressionCommand";
