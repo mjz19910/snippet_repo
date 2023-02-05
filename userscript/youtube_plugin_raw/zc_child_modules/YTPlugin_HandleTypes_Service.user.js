@@ -2709,7 +2709,6 @@ class HandleTypes extends HandleTypesEval {
 			if(sendPost!==true) debugger;
 			return;
 		}
-		x===0;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */

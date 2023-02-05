@@ -794,6 +794,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetUnseenNotificationCount";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_LikeLike";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Next";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_NotificationOptOut";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RemoveLike";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Subscribe";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
