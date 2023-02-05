@@ -8098,6 +8098,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x1a:
 				case 0x22: case 0x23:
 				case 0x28: case 0x29:
+				case 0x2b:
 				case 0x31:
 				case 0x33:
 			}
@@ -8113,7 +8114,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x20: case 0x21:
 				case 0x23:
 				case 0x25: case 0x26: case 0x27:
-				case 0x2a: case 0x2b: case 0x2c:
+				case 0x29: case 0x2a: case 0x2b: case 0x2c:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
