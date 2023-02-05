@@ -59,7 +59,7 @@ type DC_EngagementPanelHeaderShowNavigationButton={
 	targetId: "engagement-panel-macro-markers-description-chapters";
 	navigationButton: R_Button;
 };
-type G_DC_GetSurvey_Endpoint=DC_GetSurvey["endpoint"];
+type G_DC_GetSurvey_Endpoint=D_Survey_Watch|D_PaidDigitalGoods;
 type DC_GetSurvey={
 	endpoint: D_Survey_Watch;
 	action: "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";

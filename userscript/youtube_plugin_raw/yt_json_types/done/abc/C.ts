@@ -29,16 +29,19 @@ type C_ScrollToEngagementPanel=TE_Endpoint_2<"scrollToEngagementPanelCommand",DC
 type C_ShowReloadUi=TE_Endpoint_2<"showReloadUiCommand",DC_ShowReloadUi>;
 type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC_UpdateToggleButtonState>;
 // [DC_,GM_,M_,C_]
-type DC_GetPdgBuyFlow=DC_Params;
 //#endregion
 type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
 type DC_Executor=Record<"commands",AC_Executor[]>;
 type DC_Generic={continuation: string;};
+type DC_GetPdgBuyFlow=DC_Params;
 type DC_LiveChatReplay={continuation: string; timeUntilLastMessageMsec: number;};
 type DC_LoadMarkers={entityKeys: string[];};
 type DC_Loop={loop: false;};
+type DC_Next=DC_Generic_CTP;
+type DC_NextRadio=DC_Generic_CTP;
 type DC_PlayerSeek=DC_Generic;
 type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
+type DC_Reload=DC_Generic_CTP;
 type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
