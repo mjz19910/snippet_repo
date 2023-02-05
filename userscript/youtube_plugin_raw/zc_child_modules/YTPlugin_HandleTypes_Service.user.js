@@ -552,6 +552,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "invalidation":
 			case "live_chat_replay":
 			case "player_seek":
 			case "videogoodput": case "unsubscribe":

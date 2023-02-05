@@ -59,6 +59,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LiveChatReplay";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_PlayerSeek";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
@@ -409,6 +410,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InfoRow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InvalidationId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton";}
