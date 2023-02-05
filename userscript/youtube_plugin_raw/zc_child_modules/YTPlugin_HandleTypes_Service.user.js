@@ -552,7 +552,8 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "player_seek_continuation":
+			case "live_chat_replay":
+			case "player_seek":
 			case "videogoodput": case "unsubscribe":
 			case "playability_status":
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
@@ -9335,7 +9336,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
 		const cf="D_CardCollection";
-		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x);
+		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x); this.g(y);
 		this.z(cards,this.R_Card);
 		headerText;
 		icon;
@@ -9391,14 +9392,17 @@ class HandleTypes extends HandleTypesEval {
 		if(popupType!=="DIALOG") debugger;
 		this.a_primitive_bool(beReused);
 	}
-	/** @private @arg {"CD_PlayerSeek"} cf @arg {P_PathRootStr} path @arg {DC_Generic} x */
+	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_PathRootStr} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(cf,path,x));}
+	/** @private @arg {DC_PlayerSeek} x */
+	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
 	/** @private @arg {CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,x => this.DC_Generic("DC_PlayerSeek","player_seek_continuation.params",x));}
+	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,this.DC_PlayerSeek);}
 	/** @private @arg {DC_LiveChatReplay} x */
 	DC_LiveChatReplay(x) {
 		const cf="DC_LiveChatReplay";
 		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
+		this.params(cf,"live_chat_replay.continuation",continuation)
 	}
 	/** @private @arg {CD_LiveChatReplay} x */
 	CD_LiveChatReplay(x) {

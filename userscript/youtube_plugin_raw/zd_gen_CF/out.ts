@@ -59,7 +59,8 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "CD_PlayerSeek";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LiveChatReplay";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_PlayerSeek";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
@@ -697,6 +698,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Reload";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_Loop";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_PlayerSeek";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DC_ShowReelsCommentsOverlay";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
