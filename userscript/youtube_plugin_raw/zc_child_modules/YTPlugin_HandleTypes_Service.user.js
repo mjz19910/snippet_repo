@@ -812,7 +812,7 @@ class HandleTypes extends HandleTypesEval {
 		if("canonicalBaseUrl" in x) {
 			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(c,c => this.params(cf,"D_Browse.param",c));
-			this.GU_VE3611_Url(ve_name,d);
+			this.GU_VE3611_Url(d);
 			return this.GU_E_BrowseId(ve_name,a);
 		}
 		if("params" in x) {
@@ -2119,7 +2119,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_Card} x */
 	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.D_Card);}
 	/** @private @arg {R_SimpleCardTeaser} x */
-	R_SimpleCardTeaser(x) {this.H_("R_Card","cardRenderer",x,this.D_SimpleCardTeaser);}
+	R_SimpleCardTeaser(x) {this.H_("R_Card","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {RMD_Badge} x */

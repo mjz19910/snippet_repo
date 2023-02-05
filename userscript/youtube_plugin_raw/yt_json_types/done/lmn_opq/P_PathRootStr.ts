@@ -1,7 +1,6 @@
 type P_PathRootStr=
 	|"_level_1_0"
 	|"_level_2_0._level_2_1"
-	|"videogoodput.sparams"
 	|"aadc_guidelines_state_entity_key"
 	|"AdServingDataEntry"
 	|"browse$param"
@@ -40,6 +39,8 @@ type P_PathRootStr=
 	|"transcript_target_id.param"
 	|"transcriptTrackSelection.serializedParams"
 	|"UndoFeedback.undoToken"
+	|"unsubscribe.params"
+	|"videogoodput.sparams"
 	|"watch_page_url.pp"
 	|"watch_playlist.params"
 	|"watch.params"
