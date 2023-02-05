@@ -1430,7 +1430,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	D_TextRun(x,f_run) {
 		const cf="R_TextRun";
-		const {text,navigationEndpoint,loggingDirectives,bold,emoji,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {text,italics,navigationEndpoint,loggingDirectives,bold,emoji,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(italics,x => this.ceq(x,true));
 		this.t(navigationEndpoint,f_run);
 		this.a_primitive_str(text);
 		this.t(loggingDirectives,this.D_LoggingDirectives);

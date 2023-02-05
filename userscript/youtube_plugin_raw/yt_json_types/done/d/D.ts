@@ -1026,6 +1026,7 @@ type D_Emoji={
 };
 type D_TextRun={
 	text: string;
+	italics?: true;
 	navigationEndpoint?: G_TextRun_Endpoint;
 	loggingDirectives?: D_LoggingDirectives;
 	bold?: boolean;
