@@ -97,7 +97,6 @@ type GD_Icon=NonNullable<[
 	T_Icon<"LIBRARY_REMOVE">,
 	D_ThumbnailOverlayHoverText['icon']
 ][number]>;
-type GE_Button_navigation=E_ShareEntityService|E_Watch|GE_Browse;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 type G_SettingItemIdEnum=
 	|"NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS"

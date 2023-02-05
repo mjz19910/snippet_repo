@@ -1,6 +1,6 @@
 type DC_ShowReelsCommentsOverlay={engagementPanel: R_EngagementPanelSectionList;};
 type C_ShowReelsCommentsOverlay={clickTrackingParams: string; showReelsCommentsOverlayCommand: DC_ShowReelsCommentsOverlay;};
-type D_Button_NavEP=GE_Browse|E_ShareEntityService|E_Url;
+type D_Button_navigationEndpoint=GE_Browse|E_ShareEntityService|E_Url|E_Watch;
 type D_Button_style=
 	|"STYLE_BLUE_TEXT"
 	|"STYLE_DEFAULT"
@@ -19,7 +19,7 @@ type D_Button={
 	serviceEndpoint?: D_Button_SE;
 	text?: G_Text;
 	icon?: T_Icon<"SHORTS_COMMENT">;
-	navigationEndpoint?: D_Button_NavEP;
+	navigationEndpoint?: D_Button_navigationEndpoint;
 	accessibility?: D_Label;
 	tooltip?: string;
 	trackingParams: string;

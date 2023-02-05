@@ -2647,6 +2647,10 @@ class HandleTypes extends HandleTypesEval {
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
 	/** @private @arg {E_Unsubscribe} x */
 	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
+	/** @private @arg {E_CreateComment} x */
+	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
+	/** @private @arg {M_CreateComment} x */
+	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
 	/** @private @arg {M_Unsubscribe} x */
 	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
 	/** @private @arg {M_GetPdgBuyFlow} x */
@@ -2695,6 +2699,8 @@ class HandleTypes extends HandleTypesEval {
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
+	/** @private @arg {GM_CreateComment} x */
+	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
 	/** @protected @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @protected @arg {GM_Unsubscribe} x */
@@ -2977,6 +2983,13 @@ class HandleTypes extends HandleTypesEval {
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {GM_NotificationOptOut} x */
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
+	/** @private @arg {"DE_CreateComment"} cf @arg {string} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	TD_Params(cf,k,path,x) {
+		const {[k]:a}=x;
+		this.params(cf,path,a);
+	}
+	/** @private @arg {DE_CreateComment} x */
+	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
 	/** @private @arg {DE_Search} x */
 	DE_Search(x) {this.H_("DE_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {DE_GetTranscript} a */
@@ -3571,15 +3584,7 @@ class HandleTypes extends HandleTypesEval {
 		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	static {this.prototype.Button_navigationEndpoint;}
-	/** @private @arg {GE_Button_navigation} x */
-	Button_navigationEndpoint(x) {
-		const cf="Button_navigationEndpoint"; this.k(cf,x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
@@ -3598,19 +3603,21 @@ class HandleTypes extends HandleTypesEval {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
-	/** @private @arg {D_Button_NavEP} x */
+	/** @private @arg {D_Button_navigationEndpoint} x */
 	D_Button_navigationEndpoint(x) {
 		const cf="D_Button.navigationEndpoint"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
-		debugger;
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		/** @type {"D_Button"|`D_Button:${keyof D_Button}`} */
 		let cf="D_Button";
 		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
+		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
 		else if("command" in x) cf="D_Button:command";
 		else if("style" in x) cf="D_Button:style";
 		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

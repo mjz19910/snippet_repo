@@ -64,6 +64,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_PlayerSeek";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateComment";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_MutationItem";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_NotificationOptOut";}
@@ -108,7 +109,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem:signatureCipher" | "D_FormatItem:signatureCipher";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button:style" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button:style" | "D_Button:navigationEndpoint" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Card";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
@@ -337,7 +338,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Botguard";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_BrowserMediaSession";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:style" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:style" | "D_Button:navigationEndpoint" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CardCollection";}
@@ -768,6 +769,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "C_GetPdgBuyFlow";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_AddToPlaylistService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreateBackstagePost";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreateComment";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_CreatePlaylistService";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetNotificationMenu";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_GetReportForm";}
@@ -842,6 +844,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateComment";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreatePlaylist";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_EditPlaylist";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Feedback";}
