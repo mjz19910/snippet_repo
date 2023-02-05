@@ -7823,12 +7823,15 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0x19: case 0x10: case 0x14: case 0x13: case 0x18: case 0x11:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0x16: case 0x14: case 0x18: case 0x13: case 0x10: case 0x11: case 0x15: case 0x12:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0x10: case 0x19: case 0x13: case 0x12: case 0x15: case 0x18: case 0x11: case 0x17:
 			}
 		}
 		{
@@ -7890,12 +7893,15 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0xf8: case 0xf1: case 0xf2: case 0xf3: case 0xf7:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0xf6: case 0xf5: case 0xf4: case 0xf7: case 0xf1: case 0xf3: case 0xf2:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0xf1: case 0xf8: case 0xf2: case 0xf6: case 0xf5:
 			}
 		}
 		{
@@ -7904,12 +7910,15 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0xeb: case 0xdd: case 0xe0: case 0xe2: case 0xde: case 0xea:
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
+				case 0xe7: case 0xe6: case 0xe3: case 0xe9: case 0xdd: case 0xde: case 0xe4: case 0xe5: case 0xe1: case 0xdf: case 0xe0:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
+				case 0xdd: case 0xeb: case 0xe0: case 0xe8: case 0xde: case 0xe6:
 			}
 		}
 	}
