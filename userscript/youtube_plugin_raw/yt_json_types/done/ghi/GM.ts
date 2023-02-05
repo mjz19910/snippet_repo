@@ -17,7 +17,7 @@ type GM_VE3854_PT={parentTrackingParams: string;};
 //#region WebCommandMetadata like {rootVe:number;}
 
 type GM_VE3611_WC={
-	url: GU_VE3611;
+	url: GU_VE3611_Url;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 	rootVe: 3611;
 	apiUrl: "/youtubei/v1/browse";
@@ -80,7 +80,7 @@ type GM_VE37414_WC={
 	rootVe: 37414;
 };
 type GM_VE42352_WC={
-	url: "/feed/downloads";
+	url: GU_VE42352_Url;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 42352;
 	apiUrl: "/youtubei/v1/browse";
@@ -91,7 +91,7 @@ type GM_VE83769_WC={
 	rootVe: 83769;
 };
 type GM_VE96368_WC_browse={
-	url: "/feed/subscriptions";
+	url: GU_VE96368_Url;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 96368;
 	apiUrl: "/youtubei/v1/browse";

@@ -1,4 +1,4 @@
-type GU_VE3611="/gaming"|`/@${string}`|`/channel/UC${string}`;
+type GU_VE3611_Url="/gaming"|`/@${string}`|`/channel/UC${string}`;
 type GU_VE5754_Id=`VL${"LL"|"WL"|`PL${string}`}`;
 type GU_VE6827_Id_1="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
 type GU_VE6827_Id_Params="FEtrending"|"FEstorefront"|"FEhashtag";
@@ -6,12 +6,15 @@ type GU_VE6827_Id=GU_VE6827_Id_1|GU_VE6827_Id_Params;
 type GU_VE23462_Url="/account"|"/account_notifications";
 type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;
+type GU_VE42352_Url="/feed/downloads";
 type GU_VE83769_Url=
 	|`https://myactivity.google.com/activitycontrols/youtube?${string}`
 	|GU_VE83769_Url_Internal
 	|GU_YoutubeUrlRedirect
 	|GU_VE83769_Url_External
 	;
+;
+type GU_VE96368_Url="/feed/subscriptions";
 type ST_EncodedURIComponent=string&{_tag: "EncodedURIComponent";};
 type GU_YoutubeUrlRedirect_Info={
 	url: `https://www.youtube.com/redirect?event=video_description&redir_token=${string}&q=${string}&v=${string}`,
