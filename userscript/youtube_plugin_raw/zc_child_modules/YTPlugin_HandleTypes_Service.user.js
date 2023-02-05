@@ -3609,7 +3609,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
-		const cf="D_Button";
+		/** @type {"D_Button"|`D_Button:${keyof D_Button}`} */
+		let cf="D_Button";
+		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
+		else if("command" in x) cf="D_Button:command";
+		else if("style" in x) cf="D_Button:style";
 		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(targetId,x => {
 			this.targetId(cf,x);
