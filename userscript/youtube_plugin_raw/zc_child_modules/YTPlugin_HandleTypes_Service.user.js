@@ -552,6 +552,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "player_seek_continuation":
 			case "videogoodput": case "unsubscribe":
 			case "playability_status":
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
@@ -9393,7 +9394,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {"CD_PlayerSeek"} cf @arg {P_PathRootStr} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(cf,path,x));}
 	/** @private @arg {CD_PlayerSeek} x */
-	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,x => this.DC_Generic(cf,"player_seek_continuation.params",x));}
+	CD_PlayerSeek(x) {this.y("CD_PlayerSeek","playerSeekContinuationData",x,x => this.DC_Generic("DC_PlayerSeek","player_seek_continuation.params",x));}
 	/** @private @arg {DC_LiveChatReplay} x */
 	DC_LiveChatReplay(x) {
 		const cf="DC_LiveChatReplay";

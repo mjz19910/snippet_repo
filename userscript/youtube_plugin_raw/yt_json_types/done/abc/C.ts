@@ -31,19 +31,20 @@ type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC
 // [DC_,GM_,M_,C_]
 type DC_GetPdgBuyFlow=DC_Params;
 //#endregion
-type DC_Generic={continuation: string;};
-type DC_Executor=Record<"commands",AC_Executor[]>;
 type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
-type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
-type DC_LoadMarkers={entityKeys: string[];};
-type DC_ShowReloadUi={targetId: D_UiTargetId;};
-type DC_Loop={loop: false;};
+type DC_Executor=Record<"commands",AC_Executor[]>;
+type DC_Generic={continuation: string;};
 type DC_LiveChatReplay={continuation: string; timeUntilLastMessageMsec: number;};
-type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section","engagement-panel-comments-section">>;
+type DC_LoadMarkers={entityKeys: string[];};
+type DC_Loop={loop: false;};
+type DC_PlayerSeek=DC_Generic;
+type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
 type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
 type DC_SectionList_T=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
+type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"comment-item-section","engagement-panel-comments-section">>;
+type DC_ShowReloadUi={targetId: D_UiTargetId;};
 type DC_Timed={continuation: string; timeoutMs: 60000;};
 type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
 
