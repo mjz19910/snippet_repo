@@ -842,6 +842,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SendPost";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SetSetting";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Unsubscribe";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_UserFeedback";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE37414";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_Watch";}

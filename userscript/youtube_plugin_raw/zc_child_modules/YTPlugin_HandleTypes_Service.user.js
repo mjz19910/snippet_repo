@@ -361,6 +361,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "unsubscribe.params.f1": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "unsubscribe.params": switch(map_entry_key) {
 				case 1: case 2: case 3:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -7058,7 +7063,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @api @public @arg {"WL"|"LL"|`PL${string}`|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`} x */
 	parse_playlist_id(x) {
 		if(x===void 0) {debugger; return;}
-		this.playlistId(x);
 		switch(x) {case "LL": case "WL": return; default: }
 		// cspell:ignore RDCMUC
 		if(this.str_starts_with_rx("RDCMUC",x)) return this.save_next_char("playlist_id.RDCMUC",split_string_once(x,"RDCMUC")[1]);
