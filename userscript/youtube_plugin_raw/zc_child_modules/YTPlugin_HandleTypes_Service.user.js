@@ -8996,7 +8996,7 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
 		// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,...y}=this.s(cf,x);
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
 		let expiry_date=this.parse_number_template(expire);
 		this.log_buffer.push([cf,"expire",expiry_date]);
 		Promise.resolve().then(() => this.run_logger());
