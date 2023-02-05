@@ -2019,13 +2019,18 @@ type D_Microformat={
 	availableCountries?: string[];
 	linkAlternates: B_HrefUrl[];
 };
-type D_MicroformatEmbed={
+type D_MicroformatEmbed_Base={
 	iframeUrl: `https://www.youtube.com/embed/${string}`;
 	flashUrl: `http://www.youtube.com/v/${string}?version=3&autohide=1`;
-	width: 480;
-	height: 360;
 	flashSecureUrl: `https://www.youtube.com/v/${string}?version=3&autohide=1`;
 };
+type D_MicroformatEmbed=({
+	width: 480;
+	height: 360;
+}|{
+	width: 1280;
+	height: 720;
+})&D_MicroformatEmbed_Base;
 type D_ModifiedSetItem={
 	autoplayVideo: E_WatchPlaylist;
 	nextButtonVideo: E_WatchPlaylist;

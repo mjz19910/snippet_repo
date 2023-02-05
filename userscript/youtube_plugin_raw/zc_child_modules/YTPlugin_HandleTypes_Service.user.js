@@ -9410,8 +9410,14 @@ class HandleTypes extends HandleTypesEval {
 		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
 		this.parser.parse_url(cf,iframeUrl);
 		this.parser.parse_url(cf,flashUrl);
-		if(width!==480) debugger;
-		if(height!==360) debugger;
+		switch(width) {
+			default: debugger; break;
+			case 1280: case 480:
+		}
+		switch(height) {
+			default: debugger; break;
+			case 720: case 360:
+		}
 		this.parser.parse_url(cf,flashSecureUrl);
 	}
 	/** @private @arg {D_PlayerMicroformat} x */
@@ -9636,7 +9642,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ClickLocationTarget} x */
 	D_ClickLocationTarget(x) {x;}
 	/** @private @arg {R_InfoCardIcon} x */
-	R_InfoCardIcon(x) {x; debugger;}
+	R_InfoCardIcon(x) {
+		if("infoCardIconRenderer" in x) {
+			const cf="R_InfoCardIcon";
+			return this.H_(cf,"infoCardIconRenderer",x,x => this.D_Tracking(cf,x));
+		}
+		debugger;
+	}
+	/** @private @arg {"R_InfoCardIcon"} cf @arg {D_Tracking} x */
+	D_Tracking(cf,x) {
+		this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
