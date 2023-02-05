@@ -3963,11 +3963,12 @@ class HandleTypes extends HandleTypesEval {
 				if(!(k2 in x)) break y;
 				/** @type {`${cf1}:${k2}`} */
 				const cf2=`${cf1}:${k2}`;
-				const {toggledAccessibilityData,size,defaultTooltip,toggledTooltip,accessibilityData,...y}=this.D_ToggleButton_Omit(cf2,x); this.g(y);/*#destructure_done*/
+				const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...y}=this.D_ToggleButton_Omit(cf2,x); this.g(y);/*#destructure_done*/
 				if(size.sizeType!=="SIZE_DEFAULT") debugger;
-				defaultTooltip;
-				this.D_Accessibility(toggledAccessibilityData);
+				this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
+				this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
 				this.D_Accessibility(accessibilityData);
+				this.D_Accessibility(toggledAccessibilityData);
 				return;
 			}
 			const {toggledAccessibilityData,accessibilityData,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
