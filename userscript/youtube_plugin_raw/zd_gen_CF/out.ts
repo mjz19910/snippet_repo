@@ -835,7 +835,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:text.icon" | "D_Button:size.icon" | "D_Button:trackingParams.icon" | "D_Button:targetId.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:icon.icon" | "D_Button:accessibility.icon" | "D_Button:accessibilityData.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button:isDisabled.icon" | "D_Button:tooltip.icon" | "D_Button.icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:text.icon" | "D_Button:size.icon" | "D_Button:trackingParams.icon" | "D_Button:targetId.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:icon.icon" | "D_Button:accessibility.icon" | "D_Button:accessibilityData.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button:isDisabled.icon" | "D_Button:tooltip.icon" | "D_Button:iconPosition.icon" | "D_Button.icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:ForChannel:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:targetId:icon";}

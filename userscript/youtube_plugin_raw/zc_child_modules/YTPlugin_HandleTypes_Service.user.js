@@ -3645,7 +3645,8 @@ class HandleTypes extends HandleTypesEval {
 		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
 		else if("command" in x) cf="D_Button:command";
 		else if("style" in x) cf="D_Button:style";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
 		this.t(targetId,x => {
 			this.targetId(cf,x);
 			switch(x) {
