@@ -3604,6 +3604,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Button.navigationEndpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
 		debugger;
 	}
 	/** @private @arg {D_Button} x */
