@@ -2159,6 +2159,8 @@ class HandleTypes extends HandleTypesEval {
 	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
 	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
+	/** @private @arg {R_CommentThread} x */
+	R_CommentThread(x) {this.H_("R_CommentThread","commentThreadRenderer",x,this.D_CommentThread);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -6596,7 +6598,12 @@ class HandleTypes extends HandleTypesEval {
 		const cf="A_CommentsSectionContinuation";
 		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.g);
+		this.z(continuationItems,x=>{
+			const cf="G_CommentsSection"; this.k(cf,x);
+			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
+			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+			x===""; this.codegen_typedef_all(cf,x);
+		});
 	}
 	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>} x */
 	A_BrowseFeed(x) {
@@ -9613,6 +9620,16 @@ class HandleTypes extends HandleTypesEval {
 			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
 		}
 		this.D_Accessibility(accessibility);
+	}
+	/** @private @arg {D_CommentThread} x */
+	D_CommentThread(x) {
+		const cf="D_CommentThread";
+		const {comment,trackingParams,renderingPriority,isModeratedElqComment,loggingDirectives,...y}=this.s(cf,x); this.g(y);
+		this.R_Comment(comment);
+		this.trackingParams(cf,trackingParams);
+		if(renderingPriority!=="RENDERING_PRIORITY_UNKNOWN") debugger;
+		this.ceq(isModeratedElqComment,false);
+		this.D_LoggingDirectives(loggingDirectives);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
