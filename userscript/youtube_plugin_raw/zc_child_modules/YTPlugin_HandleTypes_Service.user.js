@@ -2162,6 +2162,12 @@ class HandleTypes extends HandleTypesEval {
 	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
 	/** @private @arg {R_CommentThread} x */
 	R_CommentThread(x) {this.H_("R_CommentThread","commentThreadRenderer",x,this.D_CommentThread);}
+	/** @private @arg {R_AdPlacementConfig} x */
+	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
+	/** @private @arg {R_CommentReplies} x */
+	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
+	/** @private @arg {R_InfoCardIcon} x */
+	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,x => this.D_Tracking(cf,x));}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -9379,8 +9385,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_VideoCategory} x */
 	D_VideoCategory(x) {x;}
-	/** @private @arg {R_AdPlacementConfig} x */
-	R_AdPlacementConfig(x) {x;}
 	/** @private @arg {G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x) {x;}
 	/** @private @arg {D_LiveBroadcastDetails} x */
@@ -9558,20 +9562,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CommentThread} x */
 	D_CommentThread(x) {
 		const cf="D_CommentThread";
-		const {comment,trackingParams,renderingPriority,isModeratedElqComment,loggingDirectives,...y}=this.s(cf,x); this.g(y);
+		const {comment,replies,trackingParams,renderingPriority,isModeratedElqComment,loggingDirectives,...y}=this.s(cf,x); this.g(y);
 		this.R_Comment(comment);
+		this.t(replies,this.R_CommentReplies);
 		this.trackingParams(cf,trackingParams);
 		if(renderingPriority!=="RENDERING_PRIORITY_UNKNOWN") debugger;
 		this.ceq(isModeratedElqComment,false);
 		this.D_LoggingDirectives(loggingDirectives);
-	}
-	/** @private @arg {R_InfoCardIcon} x */
-	R_InfoCardIcon(x) {
-		if("infoCardIconRenderer" in x) {
-			const cf="R_InfoCardIcon";
-			return this.H_(cf,"infoCardIconRenderer",x,x => this.D_Tracking(cf,x));
-		}
-		debugger;
 	}
 	/** @private @arg {"R_InfoCardIcon"} cf @arg {D_Tracking} x */
 	D_Tracking(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
@@ -9629,6 +9626,36 @@ class HandleTypes extends HandleTypesEval {
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("createCommentReplyDialogEndpoint" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_AdPlacementConfig} x */
+	D_AdPlacementConfig(x) {
+		const cf="D_AdPlacementConfig";
+		const {kind,adTimeOffset,hideCueRangeMarker,...y}=this.s(cf,x); this.g(y);
+		switch(kind) {
+			default: debugger; break;
+			case "AD_PLACEMENT_KIND_END":
+			case "AD_PLACEMENT_KIND_SELF_START":
+			case "AD_PLACEMENT_KIND_START":
+		}
+		this.t(adTimeOffset,this.D_AdTimeOffset);
+		this.ceq(hideCueRangeMarker,true);
+	}
+	/** @private @arg {D_AdTimeOffset} x */
+	D_AdTimeOffset(x) {
+		const cf="D_AdTimeOffset";
+		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(offsetStartMilliseconds);
+		if(offsetEndMilliseconds!=="-1") debugger;
+	}
+	/** @private @arg {D_CommentReplies} x */
+	D_CommentReplies(x) {
+		const cf="D_CommentReplies";
+		const {contents,trackingParams,viewReplies,hideReplies,targetId,...y}=this.s(cf,x); this.g(y);
+		this.z(contents,this.R_ContinuationItem);
+		this.trackingParams(cf,trackingParams);
+		this.R_Button(viewReplies);
+		this.R_Button(hideReplies);
+		if(!this.str_starts_with(targetId,"comment-replies-item-")) debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

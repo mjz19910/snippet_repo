@@ -62,7 +62,7 @@ class IndexedDBService extends BaseService {
 	get_data_index_cache(key) {return this.store_cache_index[key][1];}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
-	/** @type {Map<string,string[]>} */
+	/** @type {Map<"v"|"hashtag",string[]>} */
 	cached_data=new Map;
 	/** @arg {DatabaseStoreDescription["name"]} key */
 	check_size(key) {
@@ -80,7 +80,7 @@ class IndexedDBService extends BaseService {
 		let ac_obj=obj;
 		let index_val=ac_obj[index_key];
 		if(index_val==null) return;
-		let cache=this.cached_data.get(key);
+		let cache=this.cached_data.get(index_key);
 		if(cache?.includes(index_val)) return;
 		if(!this.database_open) this.requestOpen({name: key});
 		this.check_size(key);

@@ -1513,8 +1513,20 @@ type ColorSourceVars={
 	colorSourceWidthMultiplier: 1.5;
 	colorSourceHeightMultiplier: 2;
 };
+type D_CommentReplies={
+	contents: R_ContinuationItem[];
+	trackingParams: string;
+	viewReplies: R_Button;
+	hideReplies: R_Button;
+	targetId: `comment-replies-item-${string}`;
+};
+
+type R_CommentReplies={
+	commentRepliesRenderer: D_CommentReplies;
+};
 type D_CommentThread={
 	comment: R_Comment;
+	replies?: R_CommentReplies;
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";
 	isModeratedElqComment: false;

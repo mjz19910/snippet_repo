@@ -120,6 +120,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Comment";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentActionButtons";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentReplies";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentThread";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommentsEntryPointHeader";}
@@ -333,6 +334,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdLayoutMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacementConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlotAndLayoutItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdaptiveFormatItem";}
@@ -365,6 +367,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreationTextInput";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Comment";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentActionButtons";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentReplies";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentThread";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CommentsEntryPointHeader";}
