@@ -7816,8 +7816,8 @@ class HandleTypes extends HandleTypesEval {
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{
 			const x=p_tc,cf1="l1_p_tc";
-			let b=x%256; b;
-			let g=(x>>>8)%256; g;
+			let b=x%256;
+			let g=(x>>>8)%256;
 			let r=(x>>>16)%256;
 			let a=(x>>>24)%256;
 			if(a!==0xff) debugger;
@@ -7833,8 +7833,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{
 			const x=s_tc,cf1="l1_s_tc";
-			let b=x%256; b;
-			let g=(x>>>8)%256; g;
+			let b=x%256;
+			let g=(x>>>8)%256;
 			let r=(x>>>16)%256;
 			let a=(x>>>24)%256;
 			if(a!==0xff) debugger;
@@ -7883,8 +7883,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{
 			const x=s2_c,cf1="l1_s2_c";
-			let b=x%256; b;
-			let g=(x>>>8)%256; g;
+			let b=x%256;
+			let g=(x>>>8)%256;
 			let r=(x>>>16)%256;
 			let a=(x>>>24)%256;
 			if(a!==0xff) debugger;
