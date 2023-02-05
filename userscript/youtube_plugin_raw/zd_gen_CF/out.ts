@@ -105,6 +105,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Card";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ClipCreation";}
@@ -184,6 +185,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SectionList_BrowseFeed_History";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SectionList_BrowseFeed_Subscriptions";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SegmentedLikeDislikeButton";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SimpleCardTeaser";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SortFilterSubMenu";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SourcePivotHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SubFeedOption";}
@@ -331,6 +333,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_BrowserMediaSession";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CardCollection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CarouselLockup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelSwitcherHeader";}
@@ -355,6 +358,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CompactLink.icon";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ConfirmDialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ContinuationItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CueRangeItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DecoratedPlayerBar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DesktopTopbar";}
@@ -501,6 +505,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SettingsSidebar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ShowEngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SimpleCardTeaser";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SimpleMenuHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SortFilterSubMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SourcePivotHeader";}
@@ -648,7 +653,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Success";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ChannelPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}

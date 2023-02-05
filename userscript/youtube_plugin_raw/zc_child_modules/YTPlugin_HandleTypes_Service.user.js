@@ -2119,7 +2119,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_UnifiedSharePanel} x */
 	R_UnifiedSharePanel(x) {this.H_("R_UnifiedSharePanel","unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
 	/** @private @arg {R_Card} x */
-	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.g);}
+	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.D_Card);}
+	/** @private @arg {R_SimpleCardTeaser} x */
+	R_SimpleCardTeaser(x) {this.H_("R_Card","cardRenderer",x,this.D_SimpleCardTeaser);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {RMD_Badge} x */
@@ -2253,8 +2255,6 @@ class HandleTypes extends HandleTypesEval {
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
-	/** @arg {E_YpcGetOfflineUpsell} x */
-	G_Innertube(x) {this.E_YpcGetOfflineUpsell(x);}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {x;}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
@@ -2640,6 +2640,13 @@ class HandleTypes extends HandleTypesEval {
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_Empty_WCM(cf,a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
+	/** @private @arg {E_Unsubscribe} x */
+	E_Unsubscribe(x) {
+		const cf="E_Unsubscribe";
+		const {...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
 	/** @private @arg {M_GetPdgBuyFlow} x */
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_UserFeedback} x */
@@ -9412,12 +9419,32 @@ class HandleTypes extends HandleTypesEval {
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
-	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {
-		const cf="E_Unsubscribe";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	/** @private @arg {D_Card} x */
+	D_Card(x) {
+		const cf="D_Card";
+		const {teaser,cueRanges,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.R_SimpleCardTeaser(teaser);
+		this.z(cueRanges,this.D_CueRangeItem)
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {D_CueRangeItem} x */
+	D_CueRangeItem(x) {
+		const cf="D_CueRangeItem";
+		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
+		if(startCardActiveMs!=="0") debugger;
+		if(endCardActiveMs!=="5000") debugger;
+		if(teaserDurationMs!=="6000") debugger;
+		if(iconAfterTeaserMs!=="5000") debugger;
+	}
+	/** @private @arg {D_SimpleCardTeaser} x */
+	D_SimpleCardTeaser(x) {
+		const cf="D_SimpleCardTeaser";
+		const {message,trackingParams,prominent,logVisibilityUpdates,onTapCommand,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(message);
+		this.trackingParams(cf,trackingParams);
+		this.ceq(prominent,true);
+		this.ceq(logVisibilityUpdates,true);
+		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
