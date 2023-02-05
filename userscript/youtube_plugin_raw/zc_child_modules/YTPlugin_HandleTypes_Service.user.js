@@ -2878,7 +2878,7 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE42352_WC(x) {
 		const cf="GM_VE42352_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._decode_browse_url(url);
+		this.GU_VE42352_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==42352) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
@@ -3285,8 +3285,8 @@ class HandleTypes extends HandleTypesEval {
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId.${ve_name}] --\n\n\ncase "${x}":`); break;
 		};
 	}
-	/** @private @arg {GM_VE42352_WC['url']} x */
-	_decode_browse_url(x) {
+	/** @private @arg {GU_VE42352_Url} x */
+	GU_VE42352_Url(x) {
 		switch(x) {
 			case "/feed/downloads": break;
 			default: debugger; break;
