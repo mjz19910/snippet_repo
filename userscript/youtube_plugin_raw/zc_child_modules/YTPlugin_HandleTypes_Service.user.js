@@ -8990,6 +8990,7 @@ class HandleTypes extends HandleTypesEval {
 				await lp;
 			}
 			let exp_m_from_now=moment(expiry_date*1000).fromNow();
+			if(exp_m_from_now==="in 6 hours") continue;
 			console.log(`[${cf}.${name}] [${exp_m_from_now}]`);
 		}
 		this.log_buffer.length=0;
