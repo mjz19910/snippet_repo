@@ -6388,7 +6388,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_LoggingDirectives"; this.k(cf,x);
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(cf,trackingParams);
-		this.TM_Visibility(visibility);
+		this.t(visibility,this.TM_Visibility);
 		this.t(gestures,this.D_LoggingDirectives_Gestures);
 		if(enableDisplayloggerExperiment!==void 0) this._primitive_of(enableDisplayloggerExperiment,"boolean");
 	}

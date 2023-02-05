@@ -3008,7 +3008,7 @@ type D_YtConfig={
 type D_ParamObjType={[x: number]: number|string|D_ParamObjType;};
 type D_LoggingDirectives={
 	trackingParams: string;
-	visibility: TM_Visibility;
+	visibility?: TM_Visibility;
 	enableDisplayloggerExperiment?: boolean;
 	gestures?: D_LoggingDirectives_Gestures;
 };
