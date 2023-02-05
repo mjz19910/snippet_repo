@@ -7941,7 +7941,7 @@ class HandleTypes extends HandleTypesEval {
 				case 0x58: case 0x59: case 0x5a: case 0x5b: case 0x5c: case 0x5d: case 0x5e: case 0x5f:
 				case 0x60: case 0x61: case 0x62:
 				case 0x66:
-				case 0x69: case 0x6a:
+				case 0x69: case 0x6a: case 0x6b:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
@@ -7974,11 +7974,11 @@ class HandleTypes extends HandleTypesEval {
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
-				case 0xf6: case 0xf5: case 0xf4: case 0xf7: case 0xf1: case 0xf3: case 0xf2:
+				case 0xf6: case 0xf5: case 0xf4: case 0xf7: case 0xf1: case 0xf3: case 0xf2: case 0xf8:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
-				case 0xf1: case 0xf8: case 0xf2: case 0xf6: case 0xf5:
+				case 0xf1: case 0xf8: case 0xf2: case 0xf6: case 0xf5: case 0xf7:
 			}
 		}
 		{
@@ -7991,11 +7991,11 @@ class HandleTypes extends HandleTypesEval {
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
-				case 0xdd: case 0xde: case 0xe0: case 0xe1: case 0xe3: case 0xe4: case 0xe5: case 0xe6: case 0xe7: case 0xe9: case 0xdf:
+				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe1: case 0xe3: case 0xe4: case 0xe5: case 0xe6: case 0xe7: case 0xe9: case 0xeb:
 			}
 			switch(b) {
-				default: log_color(`${cf1}_b`,b); break;
-				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe6: case 0xe8: case 0xeb:
+				default: log_color(`${cf1}_b`,b); break; 
+				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe6: case 0xe8: case 0xea: case 0xeb:
 			}
 		}
 	}
@@ -9288,11 +9288,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {
 		const cf="D_DesktopWatchAds";
-		const {gutParams,playerAdParams,showCompanion,...y}=this.s(cf,x);
+		const {gutParams,playerAdParams,showCompanion,showInstream,useGut,...y}=this.s(cf,x);
 		let params_tag=this.B_TagObj(gutParams);
 		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
 		if(params_tag!=="\\4061\\ytpwmpu") debugger;
-		if(showCompanion!==true) debugger;
+		this.ceq(showCompanion,true);
+		this.ceq(showInstream,true);
+		this.ceq(useGut,true);
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
