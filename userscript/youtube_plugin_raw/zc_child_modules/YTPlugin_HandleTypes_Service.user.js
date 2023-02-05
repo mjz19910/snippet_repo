@@ -9565,13 +9565,46 @@ class HandleTypes extends HandleTypesEval {
 		if(imageLoadingLazy!==true) debugger;
 		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
 	}
+	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: `UC${string}`}} */
+	Is_D_EmojiPickerCategoryButton_WithChannelCategoryId(x) {
+		return this.str_starts_with(x.categoryId,"UC");
+	}
 	/** @private @arg {D_EmojiPickerCategoryButton} x */
 	D_EmojiPickerCategoryButton(x) {
 		if("targetId" in x) {
+			const cf="D_EmojiPickerCategoryButton:targetId";
+			const {categoryId,icon,tooltip,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
+			switch(categoryId) {
+				default: debugger; break;
+				case "people":
+			}
+			this.T_Icon(`${cf}:icon`,icon);
+			if(tooltip!=="People") debugger;
+			this.D_Accessibility(accessibility);
+			if(targetId!=="emoji-picker-category-button-people") debugger;
+			return;
+		}
+		if(this.Is_D_EmojiPickerCategoryButton_WithChannelCategoryId(x)) {
+			const cf="D_EmojiPickerCategoryButton:ForChannel";
+			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+			this.D_ChannelId(categoryId);
+			this.T_Icon(`${cf}:icon`,icon);
+			if(tooltip!=="YouTube") debugger;
+			this.D_Accessibility(accessibility);
 			return;
 		}
 		const cf="D_EmojiPickerCategoryButton";
-		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
+		const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
+		switch(categoryId) {
+			default: debugger; break;
+			case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
+		}
+		this.T_Icon(`${cf}:icon`,icon);
+		switch(tooltip) {
+			default: debugger; break;
+			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
+		}
+		this.D_Accessibility(accessibility);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

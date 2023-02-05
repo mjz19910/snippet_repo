@@ -123,8 +123,8 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_CommonConfig.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ConfirmDialog";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_DesktopTopbar";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EmojiPicker";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EmojiPicker:Global";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EmojiPickerCategory";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EmojiPickerCategory:Global";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EndScreenPlaylist";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_EngagementPanelTitleHeader";}
@@ -378,7 +378,11 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ElementResourceStatus";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPicker";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPicker:Global";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategory";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategory:Global";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategoryButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategoryButton:ForChannel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategoryButton:targetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelSectionList";}
@@ -822,6 +826,9 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:text.icon" | "D_Button:size.icon" | "D_Button:trackingParams.icon" | "D_Button:targetId.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:icon.icon" | "D_Button:accessibility.icon" | "D_Button:accessibilityData.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button:isDisabled.icon" | "D_Button:tooltip.icon" | "D_Button.icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:ForChannel:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:targetId:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Check";}
