@@ -83,6 +83,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_VideoPlaybackShape";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}

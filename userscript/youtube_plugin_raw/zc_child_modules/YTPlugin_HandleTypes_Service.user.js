@@ -8998,10 +8998,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
-		const {expire,...y}=this.s(cf,x);
+		const {expire,ei,...y}=this.s(cf,x);
 		let expiry_date=this.parse_number_template(expire);
 		this.log_buffer.push([cf,"expire",expiry_date]);
 		Promise.resolve().then(() => this.run_logger());
+		this.params(cf,"video_playback.ei",ei);
 		let ka=this.get_keys_of(y);
 		console.log("[D_VideoPlaybackShape.next_key] [%s]",ka[0]);
 	}
