@@ -559,12 +559,12 @@ type D_ClipCreation={
 type D_Comment={
 	authorText: G_Text;
 	authorThumbnail: D_Thumbnail;
-	authorEndpoint: {};
+	authorEndpoint: GE_Browse;
 	contentText: G_Text;
 	publishedTimeText: G_Text;
 	isLiked: boolean;
 	actionMenu: R_Menu;
-	commentId: string;
+	commentId: `${string}.${string}`;
 	actionButtons: R_CommentActionButtons;
 	authorIsChannelOwner: boolean;
 	currentUserReplyThumbnail: D_Thumbnail;

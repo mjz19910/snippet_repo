@@ -154,6 +154,7 @@ const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
 	[24281897,24448383,24458839,24437577,24441240,24463912,24441239,24451434,24455878,24458634,24450366,24463911,24454001],
+	[24440302,24448245],
 ].flat());
 /** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
 class HandleTypes extends HandleTypesEval {
@@ -4899,7 +4900,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
-		const {items,trackingParams,accessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(menuPopupAccessibility,this.D_Label);
 		this.tz(items,this.G_MenuItem);
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
@@ -7450,16 +7452,16 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Comment} x */
 	D_Comment(x) {
-		const cf="D_Comment"; this.k(cf,x);
+		const cf="D_Comment";
 		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,collapseButton,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(authorText);
 		this.D_Thumbnail(authorThumbnail);
 		this.R_CommentActionButtons(actionButtons);
 		this.R_Menu(actionMenu);
-		this.g(authorEndpoint);
+		this.GE_Browse(authorEndpoint);
 		this.a_primitive_bool(authorIsChannelOwner);
 		this.R_Button(collapseButton);
-		console.log(`[${cf}.commentId]`,commentId);
+		this.a_primitive_str(commentId);
 		this.G_Text(contentText);
 		this.D_Thumbnail(currentUserReplyThumbnail);
 		this.G_Text(voteCount);
@@ -8982,11 +8984,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_VideoPlaybackShape";
 		// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
 		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
-		let expiry_date=this.parse_number_template(expire);
-		this.log_buffer.push([cf,"expire",expiry_date]);
-		Promise.resolve().then(() => this.run_logger());
-		let ei_bin=base64_url_dec.decodeByteArray(ei);
-		this.t(ei_bin,x => this.save_next_byte(`${cf}.ei`,x));
+		this.a_primitive_str(expire);
+		this.a_primitive_str(ei);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.lsparams`,lsparams);
 		let ka=this.get_keys_of(y);

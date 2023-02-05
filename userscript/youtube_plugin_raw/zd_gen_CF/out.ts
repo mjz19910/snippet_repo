@@ -440,6 +440,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersListItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuFlexibleItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuNavigationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuServiceItem";}
@@ -890,6 +891,5 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
-		|{n: Prelude.D_TargetIdStr; t: Types.D_TargetIdStr_; v: "watch-related-menu-button";}
 		;
 }

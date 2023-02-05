@@ -19,6 +19,7 @@ type D_Menu={
 	trackingParams: string;
 	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
 	accessibility?: D_Accessibility;
+	menuPopupAccessibility?: TD_Label<"List of menu actions">;
 	flexibleItems?: R_MenuFlexibleItem[];
 	loggingDirectives?: D_LoggingDirectives;
 	targetId?: D_Menu_TargetId;
