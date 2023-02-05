@@ -9323,14 +9323,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
 		const cf="D_VideoQualityPromo";
-		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x);
+		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
 		this.E_Url(endpoint);
 		this.trackingParams(cf,trackingParams);
 		this.RA_NotificationAction(snackbar);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
@@ -9477,6 +9475,7 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
+	/** @private @arg {D_TriggerCriteria} x */
 	D_TriggerCriteria(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
