@@ -387,6 +387,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Dropdown";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EY_Offlineability";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ElementResourceStatus";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Emoji";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPicker";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategory";}

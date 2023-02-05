@@ -1430,11 +1430,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
 	D_TextRun(x,f_run) {
 		const cf="R_TextRun";
-		const {text,navigationEndpoint,loggingDirectives,bold,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {text,navigationEndpoint,loggingDirectives,bold,emoji,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(navigationEndpoint,f_run);
 		this.a_primitive_str(text);
 		this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.t(bold,this.a_primitive_bool);
+		this.t(emoji,this.D_Emoji);
 	}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
@@ -5978,7 +5979,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem"; this.k(cf,x);
-		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x);this.g(y);
+		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x); this.g(y);
 		this.t(trigger,x => {
 			this.ceq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
 			this.save_enum("CONTINUATION_TRIGGER",x);
@@ -9656,6 +9657,16 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(viewReplies);
 		this.R_Button(hideReplies);
 		if(!this.str_starts_with(targetId,"comment-replies-item-")) debugger;
+	}
+	/** @private @arg {D_Emoji} x */
+	D_Emoji(x) {
+		const cf="D_Emoji";
+		const {emojiId,shortcuts,searchTerms,image,...y}=this.s(cf,x); this.g(y);
+		let emoji_parts=this.split_str(emojiId,"");
+		if(emoji_parts.length!==2) debugger;
+		this.join_string(emoji_parts,"");
+		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
+		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

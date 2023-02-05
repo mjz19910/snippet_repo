@@ -1018,11 +1018,18 @@ type D_PageTopAdLayout={
 	adLayoutMetadata: D_AdLayoutMetadata;
 	renderingContent: R_VideoMastheadAdV3;
 };
+type D_Emoji={
+	emojiId: "🤣";
+	shortcuts: [":rolling_on_the_floor_laughing:"];
+	searchTerms: ["rolling"];
+	image: D_Thumbnail;
+};
 type D_TextRun={
 	text: string;
 	navigationEndpoint?: G_TextRun_Endpoint;
 	loggingDirectives?: D_LoggingDirectives;
 	bold?: boolean;
+	emoji?: D_Emoji;
 };
 type D_PlaylistPanel={
 	title: "YouTube Mix";
