@@ -7887,7 +7887,9 @@ class HandleTypes extends HandleTypesEval {
 			let g=(x>>>8)%256;
 			let r=(x>>>16)%256;
 			let a=(x>>>24)%256;
-			if(a!==0xff) debugger;
+			switch(a) {
+				default: log_color(`${cf1}_a`,a); break;
+			}
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
 			}
