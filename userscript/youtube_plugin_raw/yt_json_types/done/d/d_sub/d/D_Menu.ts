@@ -14,42 +14,12 @@ type D_Menu_old={
 	loggingDirectives?: D_LoggingDirectives;
 	flexibleItems?: R_MenuFlexibleItem[];
 };
-type D_Menu=
-	|never
-	|{
-		items: R_MenuServiceItem[];
-		trackingParams: string;
-		accessibility: TD_Accessibility<"Action menu">;
-		loggingDirectives: D_LoggingDirectives;
-	}
-	|{
-		items: R_MenuServiceItem[];
-		trackingParams: string;
-	}
-	|{
-		items: R_MenuServiceItem[];
-		accessibility: TD_Accessibility<"Action menu">;
-		loggingDirectives: D_LoggingDirectives;
-	}
-	|{
-		trackingParams: string;
-		topLevelButtons: R_PlaylistLoopButton[];
-	}
-	|{
-		items: R_MenuServiceItem[];
-		trackingParams: string;
-		accessibility: TD_Accessibility<"Action menu">;
-		targetId: "watch-related-menu-button";
-	}
-	|{
-		items: R_MenuServiceItem[];
-		trackingParams: string;
-		topLevelButtons: R_SegmentedLikeDislikeButton[];
-		accessibility: TD_Accessibility<"More actions">;
-		flexibleItems: R_MenuFlexibleItem[];
-	}
-	|{
-		items: R_MenuServiceItem[];
-		trackingParams: string;
-		accessibility: TD_Accessibility<"Action menu">;
-	};
+type D_Menu={
+	items?: R_MenuServiceItem[];
+	trackingParams: string;
+	topLevelButtons?: (R_PlaylistLoopButton|R_SegmentedLikeDislikeButton)[];
+	accessibility?: D_Accessibility;
+	flexibleItems?: R_MenuFlexibleItem[];
+	loggingDirectives?: D_LoggingDirectives;
+	targetId?: D_Menu_TargetId;
+};

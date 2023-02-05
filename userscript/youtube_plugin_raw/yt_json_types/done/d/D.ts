@@ -30,7 +30,6 @@ type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"
 //#endregion
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
-type D_Menu_TargetId=Extract<D_Menu,{targetId: any;}>["targetId"];
 type D_TargetIdStr=
 	|A_WatchNextContinuation['targetId']
 	|AD_AppendContinuationItems['targetId']

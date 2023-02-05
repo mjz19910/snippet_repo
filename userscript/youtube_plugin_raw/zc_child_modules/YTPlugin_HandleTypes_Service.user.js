@@ -3628,15 +3628,6 @@ class HandleTypes extends HandleTypesEval {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
-	/** @private @arg {D_Button_navigationEndpoint} x */
-	D_Button_navigationEndpoint(x) {
-		const cf="D_Button.navigationEndpoint"; this.k(cf,x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		/** @type {"D_Button"|`D_Button:${keyof D_Button}`} */
@@ -4908,86 +4899,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
-		x: {
-			const k="targetId";
-			if(!(k in x)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`;
-			const {items,trackingParams,accessibility,targetId,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.z(items,this.G_MenuItem);
-			this.trackingParams(cf1,trackingParams);
-			this.D_Accessibility(accessibility);
-			this.targetId(cf1,targetId);
-			return;
-		}
-		x: {
-			const k="flexibleItems";
-			if(!(k in x)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`;
-			const {items,trackingParams,topLevelButtons,accessibility,flexibleItems,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.z(items,this.G_MenuItem);
-			this.trackingParams(cf1,trackingParams);
-			this.z(topLevelButtons,this.D_Menu_Button);
-			this.D_Accessibility(accessibility);
-			this.z(flexibleItems,this.R_MenuFlexibleItem);
-			return;
-		}
-		x: {
-			const k="loggingDirectives";
-			if(!(k in x)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`;
-			y: {
-				const k2="trackingParams";
-				if(!(k2 in x)) break y;
-				/** @type {`${typeof cf1}:${typeof k2}`} */
-				const cf2=`${cf1}:${k2}`;
-				const {items,trackingParams,accessibility,loggingDirectives,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
-				this.z(items,this.G_MenuItem);
-				this.trackingParams(cf2,trackingParams);
-				this.D_Accessibility(accessibility);
-				this.D_LoggingDirectives(loggingDirectives);
-				return;
+		const {items,trackingParams,accessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.tz(items,this.G_MenuItem);
+		this.trackingParams(cf,trackingParams);
+		this.t(accessibility,this.D_Accessibility);
+		this.tz(flexibleItems,this.R_MenuFlexibleItem);
+		this.tz(topLevelButtons,this.D_Menu_Button);
+		this.t(targetId,x => {
+			switch(x) {
+				default: debugger; break;
+				case "watch-related-menu-button":
 			}
-			const {items,accessibility,loggingDirectives,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.z(items,this.G_MenuItem);
-			this.D_Accessibility(accessibility);
-			this.D_LoggingDirectives(loggingDirectives);
-			return;
-		}
-		x: {
-			const k="accessibility";
-			if(!(k in x)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`;
-			const {items,trackingParams,accessibility,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(cf1,trackingParams);
-			this.z(items,this.G_MenuItem);
-			this.D_Accessibility(accessibility);
-			return;
-		}
-		x: {
-			const k="items";
-			if(!(k in x)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`;
-			const {items,trackingParams,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(cf1,trackingParams);
-			this.z(items,this.G_MenuItem);
-			return;
-		}
-		x: {
-			const k="topLevelButtons";
-			if(!(k in x)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`;
-			const {trackingParams,topLevelButtons,...y}=this.s(cf1,x); this.g(y);/*#destructure_done*/
-			this.trackingParams(cf1,trackingParams);
-			this.z(topLevelButtons,this.D_Menu_Button);
-			return;
-		}
-		this.g(x);
+			this.targetId(cf,x);
+		});
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
@@ -9695,6 +9619,16 @@ class HandleTypes extends HandleTypesEval {
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("performCommentActionEndpoint" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_Button_navigationEndpoint} x */
+	D_Button_navigationEndpoint(x) {
+		const cf="D_Button.navigationEndpoint"; this.k(cf,x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
+		if("createCommentReplyDialogEndpoint" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	//#endregion
