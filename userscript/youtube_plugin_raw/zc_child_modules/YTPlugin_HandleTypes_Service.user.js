@@ -2167,7 +2167,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_CommentReplies} x */
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_InfoCardIcon} x */
-	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,x => this.D_Tracking(cf,x));}
+	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,x => this.D_Tracking("D_InfoCardIcon",x));}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
