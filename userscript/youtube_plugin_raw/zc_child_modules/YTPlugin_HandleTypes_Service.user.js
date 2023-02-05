@@ -7902,7 +7902,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			switch(g) {
 				default: log_color(`${cf1}_g`,g); break;
-				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x18:
+				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x18: case 0x19:
 			}
 			switch(b) {
 				default: log_color(`${cf1}_b`,b); break;
@@ -7918,6 +7918,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
+				case 0x45:
 				case 0x48:
 				case 0x4c:
 				case 0x52:
@@ -8140,7 +8141,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
-				case 0x01: case 0x02: case 0x03: case 0x04: 
+				case 0x01: case 0x02: case 0x03: case 0x04:
 				case 0x06:
 				case 0x08:
 				case 0x0a:
