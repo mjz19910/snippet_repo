@@ -5978,21 +5978,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem"; this.k(cf,x);
-		const {trigger,continuationEndpoint,...y}=this.s(cf,x);
-		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
-		this.save_enum("CONTINUATION_TRIGGER",trigger);
-		this.GE_Continuation(continuationEndpoint);
-		if("button" in y) {
-			const {button,...a}=this.s(cf,y); this.g(a);/*#destructure_done*/
-			this.R_Button(button);
-			return;
-		}
-		if("ghostCards" in y) {
-			const {ghostCards,...a}=this.s(cf,y); this.g(a);/*#destructure_done*/
-			this.R_GhostGrid(ghostCards);
-			return;
-		}
-		this.g(y);
+		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x);this.g(y);
+		this.t(trigger,x => {
+			this.ceq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
+			this.save_enum("CONTINUATION_TRIGGER",x);
+		});
+		this.t(continuationEndpoint,this.GE_Continuation);
+		this.t(ghostCards,this.R_GhostGrid);
+		this.t(button,this.R_Button);
 	}
 	/** @private @arg {D_GhostGrid} x */
 	D_GhostGrid(x) {
