@@ -66,6 +66,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_ReelWatch";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Subscribe";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_Unsubscribe";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_VE3832:playlistSetVideoId:params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetCart";}
@@ -298,13 +299,13 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_GetNotificationMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_MutationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_NotificationOptOut";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_PersistenceOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_ReelWatch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Subscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_SuperThanksSelectedTier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_UndoFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:playlistSetVideoId:params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE3832:videoId";}
@@ -573,7 +574,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
@@ -602,6 +602,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_Browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_ShareEntityService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RCA_RelevantStateTags";}
@@ -771,6 +772,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_SignalNavigation";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Subscribe";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_UndoFeedback";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Unsubscribe";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Upload";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Url";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Watch";}
