@@ -9540,7 +9540,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EmojiPickerCategory} x */
 	D_EmojiPickerCategory(x) {
 		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
-			const cf="D_EmojiPicker:Global";
+			const cf="D_EmojiPickerCategory:Global";
 			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.s(cf,x); this.g(y);
 			if(!this.str_starts_with(categoryId,"UC")) debugger;
 			this.G_Text(title);
@@ -9551,7 +9551,7 @@ class HandleTypes extends HandleTypesEval {
 			this.trackingParams(cf,trackingParams);
 			return;
 		}
-		const cf="D_EmojiPicker";
+		const cf="D_EmojiPickerCategory";
 		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
 		switch(categoryId) {
 			default: debugger; break;
@@ -9566,7 +9566,13 @@ class HandleTypes extends HandleTypesEval {
 		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
 	}
 	/** @private @arg {D_EmojiPickerCategoryButton} x */
-	D_EmojiPickerCategoryButton(x) {x;}
+	D_EmojiPickerCategoryButton(x) {
+		if("targetId" in x) {
+			return;
+		}
+		const cf="D_EmojiPickerCategoryButton";
+		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
