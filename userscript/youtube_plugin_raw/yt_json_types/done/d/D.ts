@@ -190,13 +190,12 @@ type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
 type D_VE3832_PreconnectUrl=`https://r1---sn-nx57ynlk.googlevideo.com/generate_204`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
-type D_EngagementPanelTargetId="engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
+type D_EngagementPanelTargetId="engagement-panel-error-corrections"|"engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
 type D_ChannelSwitcherUrlFormat="/channel_switcher";
 type D_ConnectionWhitelistItem="WIFI";
 type D_CountryCode="CA";
-type D_KnownGet="NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS,NOTIFICATION_RECOMMENDATION_WEB_CONTROL,NOTIFICATION_COMMENT_WEB_CONTROL,NOTIFICATION_COMMENT_REPLY_OTHER_WEB_CONTROL,NOTIFICATION_USER_MENTION_WEB_CONTROL,NOTIFICATION_RETUBING_WEB_CONTROL,EMAIL_KIDS_NEWSLETTER,EMAIL_BLOCK_ALL,EMAIL_MARKETING_NEWSLETTER,EMAIL_PAID_NEWSLETTER,EMAIL_CREATOR_NEWSLETTER";
 type D_GenSurvey_ActionStr="SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL";
 //#endregion
 //#region Entity data, ie `D_EY_${string}`
@@ -2505,7 +2504,7 @@ type D_SerializedSlotAdServingDataEntry={serializedSlotAdServingDataEntry: strin
 type D_SetSetting={
 	settingItemId: `${number}`;
 	boolValue?: boolean;
-	settingItemIdForClient: GT_KnownSplit;
+	settingItemIdForClient: G_SettingItemIdEnum;
 };
 type D_SettingsCheckbox={
 	title: G_Text;

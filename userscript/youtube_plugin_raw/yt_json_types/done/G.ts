@@ -99,7 +99,20 @@ type GD_Icon=NonNullable<[
 ][number]>;
 type GE_Button_navigation=E_ShareEntityService|E_Watch|GE_Browse;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
-type GT_KnownSplit=T_Split<D_KnownGet>[number];
+type G_SettingItemIdEnum=
+	|"NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS"
+	|"NOTIFICATION_RECOMMENDATION_WEB_CONTROL"
+	|"NOTIFICATION_COMMENT_WEB_CONTROL"
+	|"NOTIFICATION_COMMENT_REPLY_OTHER_WEB_CONTROL"
+	|"NOTIFICATION_USER_MENTION_WEB_CONTROL"
+	|"NOTIFICATION_RETUBING_WEB_CONTROL"
+	|"EMAIL_KIDS_NEWSLETTER"
+	|"EMAIL_BLOCK_ALL"
+	|"EMAIL_MARKETING_NEWSLETTER"
+	|"EMAIL_PAID_NEWSLETTER"
+	|"EMAIL_CREATOR_NEWSLETTER"
+	;
+;
 type GV_sub_57yn=[
 	"lk",
 	"sd",

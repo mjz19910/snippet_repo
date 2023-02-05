@@ -6659,17 +6659,19 @@ class HandleTypes extends HandleTypesEval {
 		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(targetId) {
 			default: targetId===""; this.codegen_case(`${cf}.targetId`,targetId); break;
-			case "engagement-panel-clip-create": break;
-			case "engagement-panel-clip-view": break;
-			case "engagement-panel-comments-section": break;
-			case "engagement-panel-structured-description": break;
-			case "engagement-panel-macro-markers-auto-chapters": break;
-			case "engagement-panel-macro-markers-description-chapters": break;
+			case "engagement-panel-clip-create":
+			case "engagement-panel-clip-view":
+			case "engagement-panel-comments-section":
+			case "engagement-panel-error-corrections":
+			case "engagement-panel-macro-markers-auto-chapters":
+			case "engagement-panel-macro-markers-description-chapters":
+			case "engagement-panel-structured-description":
+
 		}
 		switch(visibility) {
 			default: this.codegen_case(`${cf}.visibility`,visibility); break;
-			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED": break;
-			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
+			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
+			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
 		}
 	}
 	/** @private @arg {D_Transcript} x */
@@ -9001,7 +9003,7 @@ class HandleTypes extends HandleTypesEval {
 		this.log_buffer.push([cf,"expire",expiry_date]);
 		Promise.resolve().then(() => this.run_logger());
 		let ei_bin=base64_url_dec.decodeByteArray(ei);
-		this.t(ei_bin,x=>this.save_next_byte(`${cf}.ei`,x));
+		this.t(ei_bin,x => this.save_next_byte(`${cf}.ei`,x));
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.lsparams`,lsparams);
 		let ka=this.get_keys_of(y);
