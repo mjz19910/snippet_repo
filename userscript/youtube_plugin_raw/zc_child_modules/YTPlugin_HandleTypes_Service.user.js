@@ -7810,11 +7810,7 @@ class HandleTypes extends HandleTypesEval {
 			{const x=s1_c; switch(x) {default: log_color("l2_s1_c",x); break;}}
 			{const x=s2_c; switch(x) {default: log_color("l2_s2_c",x); break;}}
 			{const x=s3_c; switch(x) {default: log_color("l2_s3_c",x); break;}}
-			{
-				const x=s4_c; switch(x) {
-					default: log_color("l2_s4_c",x); break;
-				}
-			}
+			{const x=s4_c; switch(x) {default: log_color("l2_s4_c",x); break;}}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
