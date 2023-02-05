@@ -3922,14 +3922,6 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
-	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
-	D_Button_DefServiceEP(x) {
-		const cf="D_Button_DefServiceEP"; this.k(cf,x);
-		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
 	D_Button_ToggledServiceEP(x) {
 		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
@@ -9673,6 +9665,15 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.a_primitive_str(protoCreationMs);
 		if(style!=="COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR") debugger;
+	}
+	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
+	D_Button_DefServiceEP(x) {
+		const cf="D_Button_DefServiceEP"; this.k(cf,x);
+		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("performCommentActionEndpoint" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
