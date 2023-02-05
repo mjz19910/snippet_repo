@@ -254,15 +254,6 @@ type MC_ResolveUrl={
 	parentTrackingParams?: string;
 };
 type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
-type G_EngagementPanelSectionListItem=[
-	R_AdsEngagementPanelContent,
-	R_ClipSection,
-	R_ContinuationItem,
-	R_MacroMarkersList,
-	R_ProductList,
-	TR_SectionList_3<{},"comment-item-section","engagement-panel-comments-section">,
-	R_StructuredDescriptionContent,
-][number];
 type G_ExtraUrlParamItem={key: "inline";};
 type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;
 type G_FormatQuality=[

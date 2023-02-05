@@ -13,10 +13,9 @@ type D_AddToOfflineButtonState=T_EnumStr<
 	][number]
 >;
 type D_UiTargetId=
-	|"engagement-panel-comments-section"
-	|"browse-feedFEwhat_to_watch"
-	|"watch-next-feed"
-	|"comments-section"
+	|SI_VE76278_EngagementPanel["targetId"]
+	|A_WatchNextContinuation["targetId"]
+	|DC_ReloadContinuationItems['targetId']
 	;
 ;
 //#endregion
@@ -27,7 +26,7 @@ type DC_EntityBatchUpdate={
 	mutations: DE_MutationItem[];
 	timestamp: D_TimestampWithNanos;
 };
-type DC_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
+type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"];};
 //#endregion
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
@@ -191,7 +190,7 @@ type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
 type D_VE3832_PreconnectUrl=`https://r1---sn-nx57ynlk.googlevideo.com/generate_204`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
-type D_EngagementPanelTargetId="engagement-panel-error-corrections"|"engagement-panel-comments-section"|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
+type D_EngagementPanelTargetId="engagement-panel-error-corrections"|SI_VE76278_EngagementPanel["targetId"]|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
 type D_ChannelSwitcherUrlFormat="/channel_switcher";

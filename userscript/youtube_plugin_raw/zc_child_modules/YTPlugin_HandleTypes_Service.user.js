@@ -5973,6 +5973,7 @@ class HandleTypes extends HandleTypesEval {
 		let [u]=this.z(contents,this.TR_SectionListItem_3);
 		let [u1]=this.z(u,x => this.TD_ItemSection_3(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x));
 		this.z(u1,x => {
+			/** @type {DC_SectionListBase} */
 			switch(x[1]) {
 				default: debugger; break;
 				case "comment-item-section": {

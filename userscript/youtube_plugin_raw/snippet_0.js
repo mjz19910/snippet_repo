@@ -366,18 +366,6 @@ export class Snippet_0_tmp {
 	H$R_(x,f) {f.call(this,this.w(x));}
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
-	/** @protected @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListRendererTemplate(x) {this.SectionListDataTemplate(this.w(x));}
-	/** @private @template {{}} T @arg {TR_SectionList_3<T,"comment-item-section", "engagement-panel-comments-section">['sectionListRenderer']} x */
-	SectionListDataTemplate(x) {this.SectionListItemTemplate(this.w(x));}
-	/** @private @template {{}} T @arg {TR_ItemSection_3<T,"comment-item-section","engagement-panel-comments-section">} x */
-	SectionListItemTemplate(x) {
-		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
-			this.z(b,a => {a; debugger;});
-			let v=this.join_string(a,"-");
-			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
-		});
-	}
 	/** @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
