@@ -799,6 +799,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Browse";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateBackstagePost";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateComment";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Dislike";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_EditPlaylist";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Feedback";}
