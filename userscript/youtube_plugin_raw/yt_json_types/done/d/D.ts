@@ -1588,7 +1588,7 @@ type D_DecTypeNum=
 	["group",number,D_DecTypeNum[]]|
 	["error",number];
 type D_DesktopWatchAds={
-	gutParams: B_TagObj;
+	gutParams: B_TagObj<string>;
 	playerAdParams: D_PlayerAdParams;
 	showCompanion: true;
 	showInstream: true;

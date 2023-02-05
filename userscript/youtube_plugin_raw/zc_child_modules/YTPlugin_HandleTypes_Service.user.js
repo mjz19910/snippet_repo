@@ -9317,9 +9317,22 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {
 		const cf="D_DesktopWatchAds";
-		const {gutParams,playerAdParams,...y}=this.s(cf,x);
+		const {gutParams,playerAdParams,showCompanion,...y}=this.s(cf,x);
+		let params_tag=this.B_TagObj(gutParams);
+		console.log("[${cf}.gutParams.tag] [%s]",params_tag);
+		if(showCompanion!==true) debugger;
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
+	}
+	/** @private @template T @arg {B_TagObj<T>} x */
+	B_TagObj(x) {
+		const cf="B_TagObj";
+		const {tag,...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log(`[done.${cf}.next_key] [${ka.shift()}]`);
+		}
+		return tag;
 	}
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
@@ -9353,7 +9366,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
 		const cf="D_PlayerMicroformat";
-		const {...y}=this.s(cf,x);
+		const {thumbnail,...y}=this.s(cf,x);
+		this.D_Thumbnail(thumbnail);
 		let ka=this.get_keys_of(y);
 		console.log(`[${cf}.next_key] [${ka[0]}]`);
 	}

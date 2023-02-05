@@ -261,6 +261,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CommentsSectionContinuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_Hack";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "B_TagObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_Invalidation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_LiveChatReplay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CD_PlayerSeek";}

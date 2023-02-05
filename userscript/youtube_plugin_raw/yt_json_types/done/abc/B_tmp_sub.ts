@@ -11,7 +11,7 @@ type B_StateTag={
 	stateTag: 3;
 	onStateTagModified: "STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE";
 };
-type B_TagObj={tag: string;};
+type B_TagObj<T>={tag: T;};
 type B_VEMap={
 	3832: {CommandMetadata: M_VE3832_Watch;};
 	3611: {CommandMetadata: M_VE3611;};
