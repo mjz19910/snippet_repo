@@ -3922,14 +3922,6 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
-	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
-	D_Button_ToggledServiceEP(x) {
-		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
-		if("likeEndpoint" in x) return this.E_Like(x);
-		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle">[number]>:never} */
 	D_ToggleButton_Omit(cf,x,z=null) {
 		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x); z=y;
@@ -9692,6 +9684,15 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Button_DefServiceEP"; this.k(cf,x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("performCommentActionEndpoint" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
+	D_Button_ToggledServiceEP(x) {
+		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("performCommentActionEndpoint" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
