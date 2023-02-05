@@ -108,7 +108,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem:signatureCipher" | "D_FormatItem:signatureCipher";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button:style" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Card";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ChipCloud";}
@@ -337,7 +337,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Botguard";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_BrowserMediaSession";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Button:style" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_C4TabbedHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CardCollection";}
@@ -814,7 +814,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button.icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:text.icon" | "D_Button:size.icon" | "D_Button:trackingParams.icon" | "D_Button:targetId.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:icon.icon" | "D_Button:accessibility.icon" | "D_Button:accessibilityData.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button:isDisabled.icon" | "D_Button:tooltip.icon" | "D_Button.icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Check";}
