@@ -9476,7 +9476,16 @@ class HandleTypes extends HandleTypesEval {
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
 	/** @private @arg {D_TriggerCriteria} x */
-	D_TriggerCriteria(x) {x;}
+	D_TriggerCriteria(x) {
+		const cf="D_TriggerCriteria";
+		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=this.s(cf,x); this.g(y);
+		if(connectionWhitelist.length!==1) debugger;
+		this.ceq(connectionWhitelist[0],"WIFI");
+		if(joinLatencySeconds!==15) debugger;
+		if(rebufferTimeSeconds!==10) debugger;
+		if(watchTimeWindowSeconds!==180) debugger;
+		if(refractorySeconds!==2592000) debugger;
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
