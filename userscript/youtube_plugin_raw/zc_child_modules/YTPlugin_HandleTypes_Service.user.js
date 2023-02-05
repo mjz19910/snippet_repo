@@ -2118,12 +2118,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_UnifiedSharePanel} x */
 	R_UnifiedSharePanel(x) {this.H_("R_UnifiedSharePanel","unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
 	/** @private @arg {R_Card} x */
-	R_Card(x) {
-		const cf="R_Card";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
-	}
+	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.g);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {RMD_Badge} x */
