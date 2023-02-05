@@ -3564,7 +3564,6 @@ class HandleTypes extends HandleTypesEval {
 		console.groupEnd();
 		{debugger;}
 	}
-	static {this.prototype.D_Button_SE;}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
 		const cf="D_Button_SE"; this.k(cf,x);
@@ -8025,7 +8024,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{
-			const x=p_tc,cf1="d1_p_tc";
+			const x=p_tc;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xff) debugger;
 			switch(r) {
@@ -8051,7 +8050,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(b) {
 				default: log_color(`d1_p_tc_b`,b); break;
 				case 0xe5:
-				case 0xe7:
+				case 0xe6: case 0xe7:
 				case 0xea:
 				case 0xf5:
 				case 0xf8:
@@ -8060,7 +8059,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		{
-			const x=s_tc,cf1="d1_s_tc";
+			const x=s_tc;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xff) debugger;
 			switch(r) {
@@ -8089,7 +8088,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(b) {
 				default: log_color(`d1_s_tc_b`,b); break;
 				case 0xa3:
-				case 0xa6:
+				case 0xa5: case 0xa6:
 				case 0xab: case 0xac:
 				case 0xae:
 				case 0xbf:
