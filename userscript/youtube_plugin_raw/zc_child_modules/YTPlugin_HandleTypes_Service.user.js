@@ -2639,7 +2639,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(cf,a);}
+	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
 	/** @private @arg {E_Unsubscribe} x */
@@ -2690,6 +2690,8 @@ class HandleTypes extends HandleTypesEval {
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
+	/** @private @arg {GM_SendPost} x */
+	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @protected @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @protected @arg {GM_Unsubscribe} x */
@@ -2961,7 +2963,7 @@ class HandleTypes extends HandleTypesEval {
 	GM_VE83769(x) {
 		const cf="GM_VE83769_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GM_VE83769_UrlType(url);
+		this.GU_VE83769_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
@@ -2971,8 +2973,8 @@ class HandleTypes extends HandleTypesEval {
 	GM_RecordInteractions(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_Feedback} x */
 	GM_Feedback(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
-	/** @private @arg {GM_SendPost} x */
-	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
+	/** @private @arg {GM_NotificationOptOut} x */
+	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
 	/** @private @arg {DE_Search} x */
 	DE_Search(x) {this.H_("D_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {DE_GetTranscript} a */
@@ -5280,7 +5282,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
-		this.GM_VE83769_UrlType(sp.href);
+		this.GU_VE83769_Url(sp.href);
 	}
 	/** @private @arg {DU_Url} x */
 	DE_Url(x) {
@@ -5340,8 +5342,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		throw new Error();
 	}
-	/** @private @arg {GM_VE83769_WC["url"]} x */
-	GM_VE83769_UrlType(x) {
+	/** @private @arg {GU_VE83769_Url} x */
+	GU_VE83769_Url(x) {
 		if(this.str_starts_with_rx("/",x)) {
 			switch(x) {
 				default: x===""; debugger; break;
@@ -8995,7 +8997,7 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
 		// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,sig,lsparams,lsig,...y}=this.s(cf,x);
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,...y}=this.s(cf,x);
 		let expiry_date=this.parse_number_template(expire);
 		this.log_buffer.push([cf,"expire",expiry_date]);
 		Promise.resolve().then(() => this.run_logger());
@@ -9406,8 +9408,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
-	/** @private @arg {GM_NotificationOptOut} x */
-	GM_NotificationOptOut(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

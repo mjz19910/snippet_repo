@@ -1,4 +1,4 @@
-type D_FormatItem_url=`https://rr5---sn-nx5s7n7d.googlevideo.com/videoplayback?${string}`;
+type D_FormatItem_url=`https://rr5---sn-nx57ynsl.googlevideo.com/videoplayback?expire=${string}&ei=${string}&ip=${string}&id=${string}&itag=${string}&source=${string}&requiressl=${string}&mh=${string}&mm=${string}&mn=${string}&ms=${string}&mv=${string}&mvi=${string}&pl=${string}&initcwndbps=${string}&vprv=${string}&mime=${string}&ns=${string}&cnr=${string}&ratebypass=${string}&dur=${string}&lmt=${string}&mt=${string}&fvip=${string}&fexp=${string}&c=${string}&txp=${string}&n=${string}&sparams=${string}&sig=${string}&lsparams=${string}&lsig=${string}`;
 type D_AdaptiveFormatItem={
 	itag: number;
 	url?: D_FormatItem_url;
