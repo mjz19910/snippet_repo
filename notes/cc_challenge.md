@@ -267,3 +267,8 @@ Congratulations, you have completed CyberChef challenge #22!
 The code for this challenge is e35d52d2-abc1-4c06-afe6-5c9602854bc0.
 
 The next challenge can be found at https://pastebin.com/4uXPh7Kw.
+
+```js
+// so far
+From_Hex('Auto')
+```
