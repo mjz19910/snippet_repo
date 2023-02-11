@@ -255,3 +255,15 @@ This challenge explored Base58 and Base85 encoding. To learn more, visit wikiped
 The code for this challenge is 3bedfa5d-325c-4013-98fd-ff5281af9099.
 
 The next challenge can be found at https://pastebin.com/W6WFQM12.
+
+```js
+From_Hex('Auto')
+RC4({'option':'Hex','string':'3d31c39bdc8dad41'},'Latin1','Latin1')
+Drop_bytes(0,32357,false)
+```
+
+Congratulations, you have completed CyberChef challenge #22!
+
+The code for this challenge is e35d52d2-abc1-4c06-afe6-5c9602854bc0.
+
+The next challenge can be found at https://pastebin.com/4uXPh7Kw.
