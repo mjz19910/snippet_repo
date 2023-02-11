@@ -92,6 +92,7 @@
       "Edef",
       "Elems",
       "empend",
+      "endianness",
       "endregion",
       "endscreen",
       "evaler",
