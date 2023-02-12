@@ -3247,6 +3247,7 @@ class HandleTypes extends HandleTypesEval {
 					default: debugger; break;
 					case "PLAYLIST_LOOP_STATE_ALL":
 					case "PLAYLIST_LOOP_STATE_NONE":
+					case "PLAYLIST_LOOP_STATE_ONE":
 				}
 			} break;
 			case "transcriptTrackSelectionEntity": {
