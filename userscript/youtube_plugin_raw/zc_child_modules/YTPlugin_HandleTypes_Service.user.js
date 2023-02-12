@@ -5536,6 +5536,12 @@ class HandleTypes extends HandleTypesEval {
 		if(!ia) this.strings_map.set(x.style,ia=[]);
 		switch(x.style) {
 			default: x===0; debugger; break;
+			case "BADGE_STYLE_TYPE_MEDIUM_GREY": {
+				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.T_Icon("DMD_Badge_MediumGray",icon);
+				this.trackingParams(cf,trackingParams);
+				ia.push(["label",[label]]);
+			} break;
 			case "BADGE_STYLE_TYPE_SIMPLE": {
 				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.trackingParams(cf,trackingParams);
