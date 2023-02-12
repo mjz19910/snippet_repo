@@ -9864,9 +9864,9 @@ class HandleTypes extends HandleTypesEval {
 	on_google_video_url(x) {
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
 		let s_host=split_string_once(x.host,".");
+		this.on_googlevideo_host(x.host);
 		switch(s_host[1]) {
 			case "googlevideo.com": {
-				this.on_googlevideo_host(s_host[0]);
 				switch(x.pathname) {
 					case "/videoplayback": {
 						let vp_search=x.search;
