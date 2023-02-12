@@ -2026,6 +2026,11 @@ class BitmapResult {
 		const {strings_key_index_map: index,seen_strings: data}=this;
 		return {index,data,new_data};
 	}
+	/** @arg {[string,StoreData["seen_numbers"][number][1][1][number]][]} new_data */
+	get_number_store(new_data) {
+		const {numbers_index: index,seen_numbers: data}=this;
+		return {index,data,new_data};
+	}
 	/** @arg {[string,StoreData['seen_keys'][number][1][1][number]][]} new_data */
 	get_keys_store(new_data) {
 		const {seen_keys_index: index,seen_keys: data}=this;
@@ -2037,6 +2042,8 @@ class BitmapResult {
 	seen_booleans=[];
 	/** @api @protected @type {number[]} */
 	seen_root_visual_elements=[];
+	/** @api @protected @type {{[x:string]:number}} */
+	numbers_index={};
 	/** @api @protected @type {{[x:string]:number}} */
 	strings_key_index_map={};
 	/** @api @protected @type {{[x:string]:number}} */
@@ -2166,7 +2173,7 @@ class KnownDataSaver extends ApiBase {
 	/** @no_mod @type {[string,string|string[]][]} */
 	#new_keys=[];
 	#get_keys_store() {return this.#data_store.get_keys_store(this.#new_keys);}
-	/** @private @arg {string} key @arg {StoreDescription<string>} store */
+	/** @private @template T @arg {string} key @arg {StoreDescription<T>} store */
 	get_seen_string_item_store(key,store) {
 		const {index,data}=store;
 		let idx=index[key];
@@ -2178,12 +2185,12 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @no_mod @type {[string,string|string[]][]} */
 	#new_strings=[];
-	/** @private @arg {string|string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} data_item */
+	/** @private @template {string|number} T @arg {T|T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} data_item */
 	save_to_data_item(x,data_item) {
 		let target=data_item[1];
 		if(x instanceof Array) {return this.add_many_to_data_item(x,data_item);} else {return this.add_one_to_data_arr(x,target);}
 	}
-	/** @private @arg {string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} item */
+	/** @private @template {string|number} T @arg {T[]} x @arg {[string, ["one", T[]] | ["many", T[][]]]} item */
 	add_many_to_data_item(x,item) {
 		let target=item[1];
 		if(target[0]==="one") {
@@ -2195,7 +2202,7 @@ class KnownDataSaver extends ApiBase {
 		if(!found) return target[1].push(x);
 		return -1;
 	}
-	/** @private @arg {string} x @arg {["one", string[]] | ["many", string[][]]} target */
+	/** @private @template T @arg {T} x @arg {["one", T[]] | ["many", T[][]]} target */
 	add_one_to_data_arr(x,target) {
 		if(target[0]==="one") {if(!target[1].includes(x)) return target[1].push(x);} else if(target[0]==="many") {
 			let res=target[1].find(([e,...r]) => !r.length&&e===x);
@@ -2203,9 +2210,9 @@ class KnownDataSaver extends ApiBase {
 		}
 		return -1;
 	}
-	/** @private @arg {string} k @arg {StoreDescription<string>['data'][number][1]} x @arg {StoreDescription<string>} store */
+	/** @private @template T @arg {string} k @arg {StoreDescription<T>['data'][number][1]} x @arg {StoreDescription<T>} store */
 	add_to_index(k,x,store) {
-		/** @private @type {StoreDescription<string>['data'][number]} */
+		/** @private @type {StoreDescription<T>['data'][number]} */
 		let p=[k,x];
 		let nk=store.data.push(p)-1;
 		store.index[k]=nk;
@@ -2227,9 +2234,29 @@ class KnownDataSaver extends ApiBase {
 		return true;
 	}
 	do_random_breakpoint=false;
+	#get_number_store() {return this.#data_store.get_number_store(this.#new_numbers);}
+	/** @api @public @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
+	save_number(k,x,force_update) {
+		if(x===void 0) {debugger; return true;}
+		let store=this.#get_number_store();
+		let store_item=this.get_seen_string_item_store(k,store);
+		if(!store_item) {
+			store_item=[k,["one",[]]];
+			let nk=store.data.push(store_item)-1;
+			store.index[k]=nk;
+		}
+		let was_known=this.save_to_data_item(x,store_item);
+		if(was_known<0&&!force_update) return false;
+		store.new_data.push([k,x]);
+		this.#onDataChange();
+		console.log("store_num [%s]",k,x);
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return true;}
+		return true;
+	}
 	/** @api @public @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {
-		if(x===void 0) {debugger; return;}
+		if(x===void 0) {debugger; return true;}
 		let store=this.#get_string_store();
 		let store_item=this.get_seen_string_item_store(k,store);
 		if(!store_item) {
@@ -2239,11 +2266,11 @@ class KnownDataSaver extends ApiBase {
 		}
 		let was_known=this.save_to_data_item(x,store_item);
 		if(was_known<0) return false;
-		this.#new_strings.push([k,x]);
+		store.new_data.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
 		let idx=store.data.indexOf(store_item);
-		if(idx<0) {debugger; return;}
+		if(idx<0) {debugger; return true;}
 		return true;
 	}
 	/** @private @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
@@ -2391,50 +2418,6 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @no_mod @type {[string,number|number[]][]} */
 	#new_numbers=[];
-	/** @api @public @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
-	save_number(k,x,force_update) {
-		if(x===void 0) {debugger; return;}
-		let seen_numbers=this.get_data_store().get_seen_numbers();
-		let was_known=true;
-		/** @private @type {["one", number[]]|["many",number[][]]} */
-		let cur;
-		let p=seen_numbers.find(e => e[0]===k);
-		if(!p) {
-			cur=["one",[]];
-			p=[k,cur];
-			seen_numbers.push(p);
-		} else {cur=p[1];}
-		if(x instanceof Array) {
-			let target=p[1];
-			if(target[0]==="one") {
-				let inner=target[1].map(e => [e]);
-				target=["many",inner];
-				p[1]=target;
-			}
-			let found=target[1].find(e => this.eq_keys(e,x));
-			if(!found) {
-				was_known=false;
-				target[1].push(x);
-			}
-		} else {
-			if(cur[0]==="one") {
-				if(!cur[1].includes(x)) {
-					was_known=false;
-					cur[1].push(x);
-				}
-			} else if(cur[0]==="many") {
-				let res=cur[1].find(([e,...r]) => !r.length&&e===x);
-				if(!res) {
-					was_known=false;
-					cur[1].push([x]);
-				}
-			}
-		}
-		if(was_known&&!force_update) return;
-		this.#new_numbers.push([k,x]);
-		this.#onDataChange();
-		console.log("store_num [%s]",k,x);
-	}
 	/** @no_mod @type {[string,{t:boolean;f:boolean}][]} */
 	#new_booleans=[];
 	/** @api @public @arg {string} key @arg {boolean} bool */
