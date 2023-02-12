@@ -7016,7 +7016,7 @@ class HandleTypes extends HandleTypesEval {
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		switch(ss3) {
 			default: ss3===""; debugger; break;
-			case "2": case "3": case "4": case "5":
+			case "1": case "2": case "3": case "4": case "5":
 		}
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		x: {
@@ -7031,7 +7031,8 @@ class HandleTypes extends HandleTypesEval {
 		switch(ss6) {
 			default: ss6===""; debugger; break;
 			case "sz": case "sd": case "sk":
-			case "7d": case "el": case "ee":
+			case "7d": case "7s": case "7y":
+			case "el": case "ee":
 		}
 	}
 	/** @private @arg {D_PlaylistContent} x */
@@ -9787,7 +9788,6 @@ class HandleTypes extends HandleTypesEval {
 			default: this.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
-		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
 	/** @type {(["D_VideoPlaybackShape","expire",number])[]} */
 	log_buffer=[];
