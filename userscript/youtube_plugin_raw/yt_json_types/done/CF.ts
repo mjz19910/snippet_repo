@@ -74,23 +74,19 @@ type CF_T_Signal=
 ;
 type CF_M_w=
 	|T_ExtractImport<"CF_M_w">
-	|`y:${CF_M_y}`
-	|`zy:${CF_M_zy}`
-	|`Unpack:T_WCM:${CF_T_WCM_Unpack}`
-	|`TA_Page:${CF_TA_Page}`
-	|`TR_MultiPageMenu:${CF_TR_MultiPageMenu}`
+	|"GM_SendPost"
+	|"Other:D_ImpressionCap"
 	|`G_EY_Entity_Any:G_EY_Entity`
-	|`T_Items:${CF_T_Items}`
 	|`T_Commands:${CF_T_Commands}`
 	|`T_Items_TP:${CF_T_Items_TP}`
-	|"Other:D_ImpressionCap"
+	|`T_Items:${CF_T_Items}`
 	|`T_Signal:${CF_T_Signal}`
-	|"GM_SendPost"
-	;
-;
-type CF_M_y=
-	|T_ExtractImport<"CF_M_y">
 	|`T_WCM:${CF_T_WCM}`
+	|`TA_Page:${CF_TA_Page}`
+	|`TR_MultiPageMenu:${CF_TR_MultiPageMenu}`
+	|`Unpack:T_WCM:${CF_T_WCM_Unpack}`
+	|`y:${CF_M_y}`
+	|`zy:${CF_M_zy}`
 	;
 ;
 type CF_T_SE_Signal=
@@ -129,6 +125,7 @@ type CF_D_Video_Handle=T_ExtractImport<"CF_D_Video_Handle">|"CF_D_Video_Handle"|
 type CF_DC_Generic_CTP=T_ExtractImport<"CF_DC_Generic_CTP">|"CF_DC_Generic_CTP"|"a";
 type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">|"CF_GE_ResponseReceived"|"a";
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|"CF_M_VE"|"a";
+type CF_M_y=T_ExtractImport<"CF_M_y">|"CF_M_y"|"a";
 type CF_M_zy=T_ExtractImport<"CF_M_zy">|"CF_M_zy"|"a";
 type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|CF_D_Button;
 type CF_T_Commands=T_ExtractImport<"CF_T_Commands">|"CF_T_Commands"|"a";

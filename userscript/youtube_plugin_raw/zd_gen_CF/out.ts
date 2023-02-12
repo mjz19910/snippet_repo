@@ -627,7 +627,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
@@ -891,6 +890,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Subscribe";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Unsubscribe";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_UserFeedback";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3611";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE37414";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_Watch";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_WatchPlaylist";}

@@ -1,6 +1,6 @@
 //#region E_VE
-type E_VE3611_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3611_Browse,M_VE3611>;
-type E_VE3854_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3854_Browse,M_VE3854>;
+type E_VE3611_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3611_Browse,M_VE3611|M_VE3611_ResolveUrl>;
+type E_VE3854_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3854_Browse,M_VE3854|M_VE3854_ResolveUrl>;
 type E_VE5754_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE5754_Browse,M_VE5754>;
 type E_VE6827_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE6827_Browse,M_VE6827>;
 type E_VE11487_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE11487_Browse,M_VE11487>;

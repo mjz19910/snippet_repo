@@ -50,7 +50,7 @@ type GE_Browse=
 ;
 type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
 
-type GE_Browse_WCM=GE_Browse["commandMetadata"]|M_VE3854_ResolveUrl;
+type GE_Browse_WCM=GE_Browse["commandMetadata"];
 
 type GE_ResponseReceived=
 	|A_AppendContinuationItems
