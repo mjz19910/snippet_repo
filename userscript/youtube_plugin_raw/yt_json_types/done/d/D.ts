@@ -803,11 +803,19 @@ type D_ContinuationItem={
 	ghostCards?: R_GhostGrid;
 	button?: R_Button;
 };
+type D_AutoplaySetItem_ButtonVideoEP=E_Watch|E_WatchPlaylist;
 type D_AutoplaySetItem={
 	mode: "NORMAL";
 	autoplayVideo: E_Watch;
-	nextButtonVideo?: E_Watch;
-	previousButtonVideo?: E_Watch;
+}|{
+	mode: "LOOP";
+	autoplayVideo: E_Watch;
+	nextButtonVideo: E_Watch;
+	previousButtonVideo: E_WatchPlaylist;
+}|{
+	mode: "SHUFFLE";
+	autoplayVideo: E_Watch;
+	nextButtonVideo: E_Watch;
 };
 type D_EndScreenPlaylist={
 	playlistId: `RD${string}`;
