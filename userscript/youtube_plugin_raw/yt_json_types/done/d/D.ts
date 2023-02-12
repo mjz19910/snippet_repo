@@ -741,6 +741,12 @@ type D_ChipCloudChip_Style=[
 ][number];
 type D_ChipCloudChip=
 	|{
+		text: G_Text;
+		navigationEndpoint: C_Continuation;
+		trackingParams: string;
+		isSelected: false;
+	}
+	|{
 		style: T_StyleType<"STYLE_DEFAULT">;
 		text: G_Text;
 		navigationEndpoint: C_Continuation;

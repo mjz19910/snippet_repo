@@ -173,7 +173,7 @@ class DomObserver extends CustomEventTarget {
 			let list=this.port_to_resolvers_map.get(port);
 			if(!list) return;
 			if(list.every(e => !e.active)) {this.port_to_resolvers_map.set(port,[]);}
-			for(let x of list) {				if(x.active) x.resolver();}
+			for(let x of list) {if(x.active) x.resolver();}
 			if(list[0].active===false) {list.shift();}
 		};
 	}
@@ -261,7 +261,7 @@ function on_ytd_app(element) {
 			fire_on_visibility_change_restart_video_playback();
 			do_restart_video_playback=false;
 		}
-	} else {	ytd_app.app_is_visible=false;}
+	} else {ytd_app.app_is_visible=false;}
 	ytd_app.ytp_click_cint=setInterval(() => {
 		if(!is_watch_page_active()||!ytd_app) return;
 		if(!ytd_app.app_is_visible) {
@@ -278,11 +278,11 @@ function on_ytd_app(element) {
 				fire_on_visibility_change_restart_video_playback();
 				do_restart_video_playback=false;
 			}
-		} else {	ytd_app.app_is_visible=false;}
+		} else {ytd_app.app_is_visible=false;}
 	});
 }
 /** @private @arg {CustomEventType} event */
-function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {	console.log("async error",e);});}
+function _plugin_init(event) {async_plugin_init(event).then(() => {},(e) => {console.log("async error",e);});}
 /** @private @type {Element|null} */
 let main_page_app=null;
 /** @private @arg {CustomEventType} event */
@@ -387,7 +387,7 @@ async function async_plugin_init(event) {
 				if(!ytd_page_manager) break x;
 				if(!ytd_page_manager.getCurrentPage()) break x;
 				/** @private @template T @arg {T|undefined} x @arg {(e:T)=>void} w */
-				function using(x,w) {if(x) {w(x);}}
+				function using(x,w) {if(x) {w(x);} }
 				if(!ytd_page_manager.getCurrentPage()?.__has_theater_handler_plugin) {
 					ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 					using(ytd_page_manager.getCurrentPage(),e => e.__has_theater_handler_plugin=true);
@@ -582,7 +582,7 @@ class VolumeRange {
 	}
 }
 /** @private @arg {string|URL} url */
-function to_url(url) {if(url instanceof URL) {return url;} else {return new URL(url);}}
+function to_url(url) {if(url instanceof URL) {return url;} else {return new URL(url);} }
 /** @private @arg {Error} rejection @returns {Promise<Response>} */
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {throw rejection;}
@@ -616,7 +616,7 @@ class PropertyHandler {
 			this.override_value.value=proxy_override;
 		} else {
 			let t=this;
-			let proxy_override=new Proxy(value,{apply(...arr) {return t.on_target_apply_callback(arr);}});
+			let proxy_override=new Proxy(value,{apply(...arr) {return t.on_target_apply_callback(arr);} });
 			this.proxy_map.set(value,proxy_override);
 			this.override_value.value=proxy_override;
 		}
@@ -664,7 +664,7 @@ class R_HandleRichGrid_Base {
 		if(renderer.contents) {
 			if(this.enable_logging) console.log("on_contents",path);
 			let filtered=this.rendererContentItemArray.replace_array(renderer.contents);
-			if(filtered.length>0) {			renderer.contents=filtered;}
+			if(filtered.length>0) {renderer.contents=filtered;}
 		}
 	}
 }
@@ -755,10 +755,21 @@ class MyReader {
 		this.len=buf.length;
 		this.last_pos=0;
 	}
+	/** @api @public @arg {number} off */
+	offset(off) {
+		this.pos+=off;
+		this.last_pos=this.pos;
+	}
+	/** @api @public @arg {number} size */
+	read_bytes(size) {
+		let ret=this.buf.slice(this.pos,this.pos+size);
+		this.pos+=size;
+		return ret;
+	}
 	/** @api @public @arg {number} [size] */
-	try_read_any(size) {try {			return this.read_any(size);} catch {return null;}}
+	try_read_any(size) {try {return this.read_any(size);} catch {return null;} }
 	/** @private @arg {number} [size] */
-	reset_and_read_any(size) {	return this.read_any(size,0);}
+	reset_and_read_any(size) {return this.read_any(size,0);}
 	/** @private */
 	_use() {this.reset_and_read_any(0);}
 	static {
@@ -773,9 +784,9 @@ class MyReader {
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
-		if(size===void 0) {this.cur_len=this.len;} else {			this.cur_len=this.pos+size;}
+		if(size===void 0) {this.cur_len=this.len;} else {this.cur_len=this.pos+size;}
 		this.failed=false;
-		try {		return this.read_any_impl();} finally {
+		try {return this.read_any_impl();} finally {
 			this.pos=prev_pos;
 			this.cur_len=prev_len;
 			this.failed=was_failed;
@@ -1228,7 +1239,7 @@ function mk_run(cc) {
 		configurable: true,
 		enumerable: true,
 		get() {return cc.value;},
-		set(val) {			on_mk_property_set(cc,val);}
+		set(val) {on_mk_property_set(cc,val);}
 	});
 	if(locked_set.has(cc.target)) {locked_set.get(cc.target).names.push(cc.property_key);} else {locked_set.set(cc.target,{names: [cc.property_key]});}
 	return cc;
@@ -1260,7 +1271,7 @@ function on_ytd_watch_flexy(element) {
 	element_map.set(element_id,element);
 	ytd_watch_flexy=element;
 	window.ytd_watch_flexy=element;
-	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {for(let handler of on_yt_navigate) {handler(event);}});
+	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {for(let handler of on_yt_navigate) {handler(event);} });
 }
 /** @private @type {string[]} */
 let page_type_changes=[];
@@ -1532,7 +1543,7 @@ function _close_div_scope() {
 				cache.left_offset+=cur_element.offsetLeft;
 				/** @private @type {Element|null} */
 				let next_element=cur_element.offsetParent;
-				if(next_element instanceof HTMLElement) {					cur_element=next_element;} else {break;}
+				if(next_element instanceof HTMLElement) {cur_element=next_element;} else {break;}
 			}
 			return cache;
 		}
@@ -1687,7 +1698,7 @@ class AudioGainController {
 	/** @api @public @arg {Event} event */
 	onKeyDown(event) {this.last_event=event;}
 	/** @private @arg {AudioNode[]} node_chain */
-	init_node_chain(node_chain) {for(let i=0;i<node_chain.length-1;i++) {node_chain[i].connect(node_chain[i+1]);}}
+	init_node_chain(node_chain) {for(let i=0;i<node_chain.length-1;i++) {node_chain[i].connect(node_chain[i+1]);} }
 	/** @private @arg {DynamicsCompressorNode} node */
 	initCompressor(node) {
 		node.knee.value=27;
@@ -1935,7 +1946,7 @@ class ApiBase {
 				ret.push(k);
 			}
 		}
-		if(!ret.length) {for(let k of x) {ret.push(k);}}
+		if(!ret.length) {for(let k of x) {ret.push(k);} }
 		return ret;
 	}
 	/** @protected @arg {unknown} x */
@@ -2780,7 +2791,7 @@ class YtHandlers extends BaseService {
 	on_handle_api(request,response,data) {
 		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
-			if(typeof req=="string") {				return {url: to_url(req)};}
+			if(typeof req=="string") {return {url: to_url(req)};}
 			if(req instanceof URL) {return {url: req};}
 			return {url: to_url(req.url)};
 		}
@@ -3258,7 +3269,7 @@ class ModifyEnv extends BaseService {
 				}
 			});
 			let ret;
-			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;}} catch(err) {
+			try {if(onfulfilled) {ret=onfulfilled(response_text);} else {ret=response_text;} } catch(err) {
 				if(on_rejected) return on_rejected(err);
 				throw err;
 			} finally {
@@ -3289,7 +3300,7 @@ class ModifyEnv extends BaseService {
 					if(is_yt_debug_enabled) console.log("response.text()");
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 				}
-				get redirected() {			return response.redirected;}
+				get redirected() {return response.redirected;}
 				get ok() {return response.ok;}
 				get status() {return response.status;}
 			}

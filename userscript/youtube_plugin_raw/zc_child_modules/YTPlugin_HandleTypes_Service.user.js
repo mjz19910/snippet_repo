@@ -5945,9 +5945,17 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	decode_continuation_token(x) {
-		let dec=this._decode_b64_url_proto_obj(decodeURIComponent(x));
+		this.decode_continuation_token_no_uri(decodeURIComponent(x));
+	}
+	/** @private @arg {string} x */
+	decode_continuation_token_no_uri(x) {
+		let buffer=base64_url_dec.decodeByteArray(x);
+		if(!buffer) return;
+		let reader=new MyReader(buffer);
+		let msg_id=reader.read_bytes(1);
+		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
-		console.log("[continuation_token]",dec);
+		console.log("[continuation_token]",[...msg_id],dec);
 	}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
@@ -7215,18 +7223,29 @@ class HandleTypes extends HandleTypesEval {
 		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
 		if("isSelected" in x) {
 			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {isSelected: a,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
-			if(a!==true) debugger;
+			const {style: a,isSelected: b,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
+			switch(a.styleType) {
+				default: debugger; break;
+				case "STYLE_DEFAULT":
+				case "STYLE_HOME_FILTER":
+				case "STYLE_REFRESH_TO_NOVEL_CHIP":
+			}
+			if(b!==true) debugger;
 			return;
 		}
 	}
 	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_WithNav(cf,x) {
-		let {style,text,trackingParams,...x1}=this.D_ChipCloudChip_OmitNav(cf,x);
+		let {text,trackingParams,...x2}=this.D_ChipCloudChip_OmitNav(cf,x);
+		this.G_Text(text);
+		this.trackingParams(cf,trackingParams);
+		if(!("style" in x2)) {
+			return;
+		}
+		const {style,...x1}=x2;
 		let ia=this.strings_map.get(cf);
 		if(!ia) this.strings_map.set(cf,ia=[]);
 		ia.push(["style.styleType",[style.styleType]]);
-		this.trackingParams(cf,trackingParams);
 		if("isSelected" in x1) {
 			const {isSelected: a,...y}=x1; this.g(y);
 			this.a_primitive_bool(a);
@@ -7259,12 +7278,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
-		const {style: a,text: b,trackingParams: c,...y}=this.s(cf,x);
-		switch(a.styleType) {
-			case "STYLE_DEFAULT":
-			case "STYLE_HOME_FILTER":
-			case "STYLE_REFRESH_TO_NOVEL_CHIP": break;
-		}
+		const {text: b,trackingParams: c,...y}=this.s(cf,x);
 		this.G_Text(b);
 		this.trackingParams(cf,c);
 		return y;
