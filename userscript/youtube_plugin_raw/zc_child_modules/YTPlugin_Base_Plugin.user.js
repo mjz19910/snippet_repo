@@ -2072,10 +2072,10 @@ class KnownDataSaver extends ApiBase {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	/** @api @public @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
+	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys(k,x) {
 		if(!x) return;
-		let ki=this.unwrap_brackets(k);
+		let ki=k;
 		if(this.do_save_keys_obj) {
 			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
 				arr: [],
@@ -2200,10 +2200,9 @@ class KnownDataSaver extends ApiBase {
 		store.index[k]=nk;
 		return p;
 	}
-	/** @private @arg {string} ns @arg {`[${string}]`} ka @arg {string|string[]} x @arg {StoreDescription<string>} store */
-	save_to_store(ns,ka,x,store) {
+	/** @private @arg {string} ns @arg {string} k @arg {string|string[]} x @arg {StoreDescription<string>} store */
+	save_to_store(ns,k,x,store) {
 		if(x===void 0) {debugger; return;}
-		let k=this.unwrap_brackets(ka);
 		let store_item=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
@@ -2382,10 +2381,9 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @no_mod @type {[string,number|number[]][]} */
 	#new_numbers=[];
-	/** @api @public @arg {`[${string}]`} key @arg {number|number[]} x @arg {boolean} [force_update] */
-	save_number(key,x,force_update) {
+	/** @api @public @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
+	save_number(k,x,force_update) {
 		if(x===void 0) {debugger; return;}
-		let k=this.unwrap_brackets(key);
 		let seen_numbers=this.get_data_store().get_seen_numbers();
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
@@ -2727,7 +2725,7 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @protected @type {KnownDataSaver['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
+	/** @protected @type {KnownDataSaver['save_keys']} @arg {string} k @arg {{}|undefined} x */
 	save_keys(k,x) {return this.ds.save_keys(k,x);}
 }
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */

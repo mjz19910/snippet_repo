@@ -130,7 +130,7 @@ class HandleTypesEval extends ServiceMethods {
 	//#region section to support above stuff
 	/** @private @arg {{accessibility?:D_Accessibility}} x */
 	handle_accessibility(x) {
-		this.save_keys("[default.Accessibility]",x);
+		this.save_keys("default.Accessibility",x);
 		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
 	//#endregion
@@ -886,7 +886,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_string("[need_api_type]",x.type);};
+		let g=x => {return this.save_string("need_api_type",x.type);};
 		switch(x.type) {case "_Generic": return g(x);}
 		/** @private */
 		this._current_response_type=x.type;
@@ -1521,7 +1521,7 @@ class HandleTypes extends HandleTypesEval {
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
 		const is_missing_iconType=!ty_arr.includes(iconType);
 		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
-		this.save_string("[IconType]",iconType);
+		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
 	/** @private @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
@@ -2162,7 +2162,7 @@ class HandleTypes extends HandleTypesEval {
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
-		this.save_string("[ContinuationItem.targetId]",x.targetId);
+		this.save_string("ContinuationItem.targetId",x.targetId);
 		switch(x.targetId) {
 			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
 			case "comments-section": this.A_CommentsSectionContinuation(x); break;
@@ -3943,14 +3943,14 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle">[number]>:never} */
 	D_ToggleButton_Omit(cf,x,z=null) {
 		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x); z=y;
-		this.save_string("[D_ToggleButton.style]",style.styleType);
+		this.save_string("D_ToggleButton.style",style.styleType);
 		this.ceq(isDisabled,false);
 		this.a_primitive_bool(isToggled);
-		this.save_string("[D_ToggleButton.defaultIcon.type]",defaultIcon.iconType);
+		this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
 		this.D_Button_DefServiceEP(defaultServiceEndpoint);
 		this.D_Button_ToggledServiceEP(toggledServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.save_string("[D_ToggleButton.toggledStyle.type]",toggledStyle.styleType);
+		this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
 		return z;
 	}
 	/** @private @arg {D_ToggleButton} x */
@@ -3962,7 +3962,7 @@ class HandleTypes extends HandleTypesEval {
 		// this.D_Label(accessibility);
 		// this.a_primitive_str(defaultTooltip);
 		// this.a_primitive_str(toggledTooltip);
-		// this.save_string("[D_ToggleButton.targetId]",targetId);
+		// this.save_string("D_ToggleButton.targetId",targetId);
 		x: {
 			const k="toggledAccessibilityData";
 			if(!(k in x)) break x;
@@ -4740,13 +4740,13 @@ class HandleTypes extends HandleTypesEval {
 			case "RELOAD_CONTINUATION_SLOT_BODY": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				this.save_string("[Body.targetId]",targetId);
-				this.z(continuationItems,a => {this.save_keys("[continuationItem]",a);});
+				this.save_string("Body.targetId",targetId);
+				this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
 			} break;
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				this.save_string("[Header.targetId]",targetId);
+				this.save_string("Header.targetId",targetId);
 				if(targetId!=="comments-section") debugger;
 				this.z(continuationItems,this.R_CommentsHeader);
 			} break;
@@ -4856,7 +4856,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(enabledAccessibilityData);
 		this.D_Accessibility(disabledAccessibilityData);
 		this.trackingParams(cf,trackingParams);
-		this.save_boolean("[autoplay.switch.enabled]",enabled);
+		this.save_boolean("autoplay.switch.enabled",enabled);
 	}
 	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
 	T_DE_SettingItem_AutonavForDesktop(x) {
@@ -5068,7 +5068,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} x */
 	DE_Feedback_onToken(x) {
 		let fb_dec=base64_url_dec.decodeByteArray(x);
-		this.t(fb_dec,x => this.ds.save_number("[feedbackToken.bytes[0..1]]",[x[0],x[1]]));
+		this.t(fb_dec,x => this.ds.save_number("feedbackToken.bytes[0..1]",[x[0],x[1]]));
 	}
 	/** @private @template {{[U in K]:any}} T @template {keyof T} K @arg {"DE_Feedback"} cf @arg {K} k @arg {T} x @arg {(x:T[K])=>void} f @returns {T_OmitKey<T,K>} */
 	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return as_any(y);}
@@ -5551,7 +5551,7 @@ class HandleTypes extends HandleTypesEval {
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x); this.k(cf,x);
 		let ba_id=base64_dec.decodeByteArray(layoutId);
-		this.t(ba_id,([x]) => this.save_number("[AdLayout.layoutId.bytes[0]]",x));
+		this.t(ba_id,([x]) => this.save_number("AdLayout.layoutId.bytes[0]",x));
 		this.MG_AdLayout_layoutType(y.layoutType);
 		switch(y.layoutType) {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=this.s(cf,y); this.g(u);/*#destructure_done*/ break;
@@ -5570,8 +5570,8 @@ class HandleTypes extends HandleTypesEval {
 			let sid=split_string(slotId,":");
 			let n=(BigInt(sid[0]));
 			n/=1000n;
-			this.save_number("[AdSlot.slotId[0]]",Number(n));
-			this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
+			this.save_number("AdSlot.slotId[0]",Number(n));
+			this.save_number("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		}
 		switch(slotPhysicalPosition) {
 			case 0:
@@ -6546,7 +6546,7 @@ class HandleTypes extends HandleTypesEval {
 	TM_Visibility(x) {
 		const cf="TM_Visibility"; this.k(cf,x);
 		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string("[Visibility.types]",types);
+		this.save_string("Visibility.types",types);
 	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation(x) {
