@@ -25,3 +25,14 @@ type A_AccountItem=TE_Endpoint_1<"accountItem",AD_AccountItem>;
 type A_WatchNextContinuation=TA_Continuation<"watch-next-feed",G_WatchNext>;
 type A_ActionAddVideo={action: "ACTION_ADD_VIDEO"; addedVideoId: string;};
 type A_ActionSetPlaylistVideoOrder={action: "ACTION_SET_PLAYLIST_VIDEO_ORDER";};
+//#region AU_
+type AU_ChannelSwitcherPage={updateChannelSwitcherPageAction: AD_UpdateChannelSwitcherPage;};
+type AU_DateText={updateDateTextAction: AD_DateText;};
+type AU_Description={updateDescriptionAction: AD_Description;};
+type AU_EngagementPanel={clickTrackingParams: string; updateEngagementPanelAction: AD_UpdateEngagementPanel;};
+type AU_NotificationsUnseenCount={clickTrackingParams: string; updateNotificationsUnseenCountAction: AD_UpdateNotificationsUnseenCount;};
+type AU_SubscribeButton={updateSubscribeButtonAction: AD_SubscribeButton;};
+type AU_Title={updateTitleAction: AD_Title;};
+type AU_ToggleButtonText={updateToggleButtonTextAction: AD_ToggleButtonText;};
+type AU_Viewership={updateViewershipAction: AD_ViewCount;};
+//#endregion
