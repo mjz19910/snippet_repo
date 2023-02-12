@@ -362,6 +362,26 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "request_continuation.token.f6.f4": switch(map_entry_key) {
+				case 4: case 6: case 15:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "request_continuation.token.f6": switch(map_entry_key) {
+				case 4: case 8:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "request_continuation.token.f2": switch(map_entry_key) {
+				case 2: case 4: case 6: case 25: case 28: case 36:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "request_continuation.token": switch(map_entry_key) {
+				case 2: case 3: case 6:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "continuation_token.data.f110.f3.f15.f2": switch(map_entry_key) {
 				case 1:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -523,6 +543,12 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="create_comment.params.f2") return this.videoId(entry);
 			// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 			if(path==="continuation_token.data.f110.f3.f15.f2.f1") return this.targetId(`Binary.value:${path}`,as(entry));
+			if(path==="like.likeParams.f1.f1") return this.videoId(entry);
+			if(path==="like.removeLikeParams.f1.f1") return this.videoId(entry);
+			if(path==="like.dislikeParams.f1.f1") return this.videoId(entry);
+			if(path==="subscribe.params.f4") return this.videoId(entry);
+			if(path==="unsubscribe.params.f2") return this.videoId(entry);
+			if(path==="request_continuation.token.f6.f4.f4") return;
 			let new_data=this.save_string(path,entry);
 			if(new_data) debugger;
 			return;
@@ -531,6 +557,9 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="tracking.trackingParams.f4.f1") return;
 			if(path==="tracking.trackingParams.f4.f2") return;
 			if(path==="tracking.trackingParams.f4.f3") return;
+			if(path==="like.likeParams.f6.f1") return; if(path==="like.likeParams.f6.f2") return;
+			if(path==="like.removeLikeParams.f5.f1") return; if(path==="like.removeLikeParams.f5.f2") return;
+			if(path==="like.dislikeParams.f4.f1") return; if(path==="like.dislikeParams.f4.f2") return;
 			let new_data=this.save_number(path,entry);
 			if(new_data) debugger;
 			return;
@@ -587,7 +616,7 @@ class HandleTypes extends HandleTypesEval {
 			case "like": case "live_chat_replay":
 			case "next_radio": case "next": case "notification":
 			case "player_seek": case "playability_status": case "playlist_edit":
-			case "record_notification_interactions": case "reel": case "reload":
+			case "record_notification_interactions": case "reel": case "reload": case "request_continuation":
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
 			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
 			case "UndoFeedback": case "unsubscribe":
@@ -600,7 +629,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "context_params": case "sparams": case "data":
+					case "context_params": case "sparams": case "data": case "token":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
@@ -624,13 +653,13 @@ class HandleTypes extends HandleTypesEval {
 						}; u(idx); debugger; parts[3]==="";
 					} return;
 					case "f1[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f7": case "f9":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f12": case "f13": case "f14": case "f25": case "f28": case "f31": case "f36":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f2": case "f3": case "f5": case "f6": case "f7": case "f8": case "f9":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
@@ -6051,6 +6080,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
 		let msg_id=reader.read_bytes(4);
+		debugger;
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
@@ -6089,13 +6119,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.s(cf,x);
-		this.decode_continuation_token(token);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE":
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE":
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT":
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
+				this.decode_continuation_token(token);
+			} break;
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
+				this.params("ContinuationRequestType_WatchNext.token","request_continuation.token",token);
+			} break;
 		};
 		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
 		function gu() {return y;}

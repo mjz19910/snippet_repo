@@ -35,6 +35,7 @@ type P_PathRootStr=
 	|"reel.player_params"
 	|"reel.sequence_params"
 	|"reload.continuation"
+	|"request_continuation.token"
 	|"service$create_playlist"
 	|"slot_ad_serving_data_entry"
 	|"subscribe.params"
