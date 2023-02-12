@@ -1077,6 +1077,7 @@ type D_Channel_MD={
 	avatar: D_Thumbnail;
 	channelUrl: string;
 	isFamilySafe: true;
+	facebookProfileId?: string;
 	availableCountryCodes: string[];
 	androidDeepLink: string;
 	androidAppindexingLink: string;
@@ -2631,7 +2632,7 @@ type D_SubscribeButton={
 	enabled: true;
 	type: "FREE";
 	channelId: D_ChannelId;
-	showPreferences: false;
+	showPreferences: boolean;
 	subscribedButtonText: G_Text;
 	unsubscribedButtonText: G_Text;
 	trackingParams: string;

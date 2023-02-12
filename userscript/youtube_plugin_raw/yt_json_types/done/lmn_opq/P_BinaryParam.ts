@@ -4,4 +4,5 @@ type BinaryBrowseTab={
 	8: "playlists";
 	9: "community";
 	10: "channels";
+	11: "search";
 };

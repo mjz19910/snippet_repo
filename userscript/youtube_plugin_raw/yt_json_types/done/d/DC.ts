@@ -120,5 +120,3 @@ type DC_PlaylistPanel={};
 type DC_RefreshPlaylist={};
 // TODO: #15 Need type of DC_MusicShelf
 type DC_MusicShelf={};
-type DC_ResetChannelUnreadCount={};
-//#endregion

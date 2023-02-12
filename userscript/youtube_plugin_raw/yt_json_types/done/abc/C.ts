@@ -18,7 +18,7 @@ type C_GetSurvey=TE_Endpoint_3<"getSurveyCommand",DC_GetSurvey,M_GetSurvey>;
 type C_Innertube={innertubeCommand: E_YpcGetOfflineUpsell;};
 type C_LoadMarkers=TE_Endpoint_2<"loadMarkersCommand",DC_LoadMarkers>;
 type C_Loop=TE_Endpoint_2<"loopCommand",DC_Loop>;
-type C_MusicLibraryStatusUpdate={musicLibraryStatusUpdateCommand: CD_MusicLibraryStatusUpdate;};
+type C_MusicLibraryStatusUpdate={musicLibraryStatusUpdateCommand: DC_MusicLibraryStatusUpdate;};
 type C_RefreshPlaylist=TE_Endpoint_2<"refreshPlaylistCommand",DC_RefreshPlaylist>;
 type C_RelatedChip=TE_Endpoint_2<"relatedChipCommand",DC_RelatedChip>;
 type C_ReloadContinuationItems=TE_Endpoint_2<"reloadContinuationItemsCommand",DC_ReloadContinuationItems>;
@@ -28,20 +28,25 @@ type C_RunAttestation={runAttestationCommand: D_RunAttestation;};
 type C_ScrollToEngagementPanel=TE_Endpoint_2<"scrollToEngagementPanelCommand",DC_ScrollToEngagementPanel>;
 type C_ShowReloadUi=TE_Endpoint_2<"showReloadUiCommand",DC_ShowReloadUi>;
 type C_UpdateToggleButtonState=TE_Endpoint_2<"updateToggleButtonStateCommand",DC_UpdateToggleButtonState>;
-// [DC_,GM_,M_,C_]
 //#endregion
+//#region Command Data
 type DC_AddFollowUpSurvey={followUpOptions: G_FollowUpOption[]; followUpText: G_Text;};
+type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command: C_ShowReloadUi;};
+type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
+type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string;};
 type DC_Executor=Record<"commands",AC_Executor[]>;
 type DC_Generic={continuation: string;};
 type DC_GetPdgBuyFlow=DC_Params;
 type DC_LiveChatReplay={continuation: string; timeUntilLastMessageMsec: number;};
 type DC_LoadMarkers={entityKeys: string[];};
 type DC_Loop={loop: false;};
+type DC_MusicLibraryStatusUpdate={libraryStatus: "MUSIC_LIBRARY_STATUS_IN_LIBRARY"; addToLibraryFeedbackToken: string;};
 type DC_Next=DC_Generic_CTP;
 type DC_NextRadio=DC_Generic_CTP;
 type DC_PlayerSeek=DC_Generic;
 type DC_RelatedChip={targetSectionIdentifier: "sid-wn-chips"; loadCached: true;};
 type DC_Reload=DC_Generic_CTP;
+type DC_ResetChannelUnreadCount={channelId: `UC${string}`;};
 type DC_SectionList_BrowseFeed_ChannelFeatured=T_DC_Content_2<`browse-feedUC${string}featured`,TR_SectionListItem_3_Empty>;
 type DC_SectionList_BrowseFeed_Subscriptions=T_DC_Content_2<"browse-feedFEsubscriptions",TR_SectionListItem_3_Empty>;
 type DC_SectionList_SearchFeed=T_DC_Content_2<"search-feed",TR_SectionListItem_3_Empty>;
@@ -50,7 +55,4 @@ type DC_SectionListBase=T_DC_Content<TR_ItemSection_3<R_ContinuationItem,"commen
 type DC_ShowReloadUi={targetId: D_UiTargetId;};
 type DC_Timed={continuation: string; timeoutMs: 60000;};
 type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
-
-type DC_Continuation_ReelWatchSeq={request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE"; token: string;};
-type DC_Continuation_Browse={request: "CONTINUATION_REQUEST_TYPE_BROWSE"; token: string; command: C_ShowReloadUi;};
-type DC_Continuation_WatchNext={request: "CONTINUATION_REQUEST_TYPE_WATCH_NEXT"; token: string;};
+//#endregion

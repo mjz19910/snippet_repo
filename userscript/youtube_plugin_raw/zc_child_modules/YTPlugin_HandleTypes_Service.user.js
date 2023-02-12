@@ -365,7 +365,7 @@ class HandleTypes extends HandleTypesEval {
 			// binary tab enum
 			/** @type {BinaryBrowseTab} */
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {
-				case 2: case 6: case 7: case 8: case 9: case 10:// case 19: case 20:
+				case 2: case 6: case 8: case 9: case 10: case 11:// case 19: case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -575,7 +575,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f2": case "f3": case "f6": case "f7": case "f8": case "f9": case "f10": case "f14": case "f19": case "f20":
+					case "f1": case "f2": case "f3": case "f6": case "f8": case "f9": case "f10": case "f11": case "f14": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
@@ -4348,7 +4348,7 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="FREE") debugger;
 		this.D_ChannelId(channelId);
 		this.trackingParams(cf,trackingParams);
-		if(showPreferences!==false) debugger;
+		this.a_primitive_bool(showPreferences);
 		let [u1,x1]=this.unwrap_prefix(y,"subscribed");
 		return [u1,x1];
 	}
@@ -8186,14 +8186,12 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(videosCountText);
 	}
 	/** @private @arg {D_ChannelHeaderLinks} x */
-	D_ChannelHeaderLinks(x) {
-		const cf="D_ChannelHeaderLinks"; this.k(cf,x);
-		this.zy(cf,"primaryLinks",x,this.D_PrimaryLinkItem);
-	}
+	D_ChannelHeaderLinks(x) {this.zy("D_ChannelHeaderLinks","primaryLinks",x,this.D_PrimaryLinkItem);}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
-		const cf="D_Channel_MD"; this.k(cf,x);
-		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const cf="D_Channel_MD";
+		const {title,description,androidDeepLink,iosAppindexingLink,isFamilySafe,facebookProfileId,externalId,androidAppindexingLink,availableCountryCodes,avatar,rssUrl,keywords,ownerUrls,channelUrl,vanityChannelUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(facebookProfileId,this.a_primitive_str);
 		this.a_primitive_str(title);
 		this.a_primitive_str(description);
 		this.a_primitive_str(androidDeepLink);
