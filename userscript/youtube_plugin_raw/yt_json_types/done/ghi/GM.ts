@@ -12,7 +12,10 @@ type GM_UserFeedback={ignoreNavigation: true;};
 //#endregion
 //#region GM_VE
 type GM_VE_WC_Browse=GE_Browse_WCM["webCommandMetadata"];
-type GM_VE3854_PT={parentTrackingParams: string;};
+type GM_VE3854_ResolveUrl_C_MD={
+	parentTrackingParams?: string;
+	isVanityUrl?: true;
+};
 //#endregion
 //#region WebCommandMetadata like {rootVe:number;}
 

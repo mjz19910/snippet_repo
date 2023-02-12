@@ -2609,14 +2609,19 @@ class HandleTypes extends HandleTypesEval {
 		this.G_DE_Browse_VE(ve_name,x4);
 		this.g(x5);
 	}
-	/** @private @arg {GM_VE3854_PT} x */
-	GM_VE3854_PT(x) {const cf="GM_VE3854_PT"; this.y(cf,"parentTrackingParams",x,x => this.trackingParams(cf,x));}
+	/** @private @arg {GM_VE3854_ResolveUrl_C_MD} x */
+	GM_VE3854_ResolveUrl_C_MD(x) {
+		const cf="GM_VE3854_ResolveUrl_C_MD";
+		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(parentTrackingParams,x => this.trackingParams(cf,x));
+		this.t(isVanityUrl,x => this.ceq(x,true));
+	}
 	/** @private @arg {GE_Browse_WCM} x */
 	GE_Browse_WCM(x) {
 		const cf="M_VE_Browse";
 		if("resolveUrlCommandMetadata" in x) {
 			const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.GM_VE3854_PT(b);
+			this.GM_VE3854_ResolveUrl_C_MD(b);
 			if(a.rootVe===3854) {
 				return this.GM_VE3854_WC(a);
 			}

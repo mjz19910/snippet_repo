@@ -1,6 +1,5 @@
 function generate_ts_after_tmp_git_repo {
 	git apply --allow-empty "../snippet_repo.diff"
-	npm i --silent --no-progress
 }
 function generate_ts_make_tmp_git_repo {
 	pushd /dev/shm
@@ -21,6 +20,7 @@ function generate_ts_make_tmp_git_repo {
 	popd
 }
 function generate_ts_init_cwd {
+	npm i --silent --no-progress
 	cp "out_empty.ts" "out.ts"
 	cp "gen_export_tmp.ts" "gen_export_cur.ts"
 	mv "tmp.ts" "tmp.ts.bak"
