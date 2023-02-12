@@ -6225,7 +6225,6 @@ class HandleTypes extends HandleTypesEval {
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:LL") return false;
 		if(x.type==="playlist:WL") return false;
-		x.type;
 		switch(x.raw_id.length) {
 			case 11: return false;
 			case 24: return false;
@@ -6524,7 +6523,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x) {
 			default: x===""; console.log("new with param [Browse_param_2c_VL]",x); debugger; break;
-			case "LL": case "WL": this.log_url_info({type: `playlist:${x}`,id: x});
+			case "LL": this.log_url_info({type: "playlist:LL",id: x}); break;
+			case "WL": this.log_url_info({type: "playlist:WL",id: x}); break;
 		}
 	}
 	/** @private @arg {D_GuideEntryData} x */
