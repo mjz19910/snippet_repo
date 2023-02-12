@@ -1,1 +1,5 @@
-type D_Menu_TargetId="watch-related-menu-button";
+type D_Menu_TargetId=
+	|"browse-video-menu-button"
+	|"watch-related-menu-button"
+	;
+;
