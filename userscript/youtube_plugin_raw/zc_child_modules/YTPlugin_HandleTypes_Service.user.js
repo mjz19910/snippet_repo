@@ -6487,11 +6487,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} x */
 	parse_guide_entry_id(x) {
-		x: if(this.str_starts_with_rx("RD",x)) {
+		if(this.str_starts_with_rx("RD",x)) {
 			if(this.str_starts_with_rx("RDCMUC",x)) {
 				let [,raw_id]=split_string_once(x,"RDCM");
+				this.save_next_char("playlist_id.RDCMUC",split_string_once(x,"RDCMUC")[1]);
 				this.log_url_info({type: "playlist:RDCM",id: x,raw_id});
-				break x;
+				return console.log("[guideEntryId.playlist.RDCM.length]",x.length);
 			}
 			if(this.str_starts_with_rx("RDMM",x)) {
 				let [,raw_id]=split_string_once(x,"RDMM");
@@ -6500,7 +6501,7 @@ class HandleTypes extends HandleTypesEval {
 					id: x,
 					raw_id,
 				});
-				break x;
+				return console.log("[guideEntryId.radio_my_mix.length]",x.length);
 			}
 			let [,raw_id]=split_string_once(x,"RD");
 			this.log_url_info({
@@ -6508,6 +6509,7 @@ class HandleTypes extends HandleTypesEval {
 				id: x,
 				raw_id,
 			});
+			return console.log("[guideEntryId.radio.length]",x.length);
 		}
 		if(this.str_starts_with_rx("UC",x)) {
 			let [,raw_id]=split_string_once(x,"UC");
@@ -6526,17 +6528,6 @@ class HandleTypes extends HandleTypesEval {
 			this.log_url_info({type: "playlist:UU",id: x,raw_id});
 			if(x.length===26) return;
 			return console.log("[guideEntryId.uploads_playlist.length]",x.length);
-		}
-		if(this.str_starts_with_rx("RDCMUC",x)) {
-			let [,raw_id]=split_string_once(x,"RDCM");
-			this.log_url_info({type: "playlist:RDCM",id: x,raw_id});
-			return console.log("[guideEntryId.radio_channel_mix.length]",x.length);
-		}
-		if(this.str_starts_with_rx("RDMM",x)) {
-			return console.log("[guideEntryId.radio_my_mix.length]",x.length);
-		}
-		if(this.str_starts_with_rx("RD",x)) {
-			return console.log("[guideEntryId.radio.length]",x.length);
 		}
 		switch(x) {
 			default: x===""; console.log("new with param [Browse_param_2c_VL]",x); debugger; break;
