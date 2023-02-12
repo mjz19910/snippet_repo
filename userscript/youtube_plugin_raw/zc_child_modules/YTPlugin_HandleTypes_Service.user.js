@@ -3614,6 +3614,7 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if(this.str_starts_with(x,"browse-feed")) return;
+		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
 			case "browse-video-menu-button":
@@ -4802,8 +4803,19 @@ class HandleTypes extends HandleTypesEval {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
 				this.save_string("Header.targetId",targetId);
-				if(targetId!=="comments-section") debugger;
-				this.z(continuationItems,this.R_CommentsHeader);
+				if(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.exec(targetId)===null) {
+					switch(targetId) {
+						default: debugger; break;
+						case "comments-section":
+					}
+				}
+				/** @type {typeof continuationItems[number][]} */
+				let iterable_items=continuationItems;
+				this.z(iterable_items,x => {
+					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
+					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+					debugger;
+				});
 			} break;
 			default: debugger; break;
 		};
@@ -5929,10 +5941,16 @@ class HandleTypes extends HandleTypesEval {
 		function u1() {u;}
 		/**/u1; x; o2;
 	}
+	/** @private @arg {string} x */
+	decode_continuation_token(x) {
+		let dec=this._decode_b64_url_proto_obj(decodeURIComponent(x));
+		if(!dec) {debugger; return;}
+		console.log("[continuation_token]",dec);
+	}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.s(cf,x);
-		this.a_primitive_str(token);
+		this.decode_continuation_token(token);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
 			default: debugger; break;

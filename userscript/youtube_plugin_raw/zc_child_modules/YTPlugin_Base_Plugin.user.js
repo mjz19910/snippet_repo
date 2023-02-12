@@ -2902,7 +2902,7 @@ class HandleRendererContentItemArray extends BaseService {
 		// debugger;
 		return true;
 	}
-	/** @api @public @template {(G_RendererContentItem|R_Comment)[]} T @arg {T} arr @returns {T} */
+	/** @api @public @template {(G_RendererContentItem|(DC_ReloadContinuationItems|AD_AppendContinuationItems)["continuationItems"][number])[]} T @arg {T} arr @returns {T} */
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			if("richItemRenderer" in content_item) {return this.filter_for_rich_item_renderer(content_item);}
@@ -2922,8 +2922,10 @@ class YtObjectVisitor {
 	/** @handler @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
 	reloadContinuationItemsCommand({t: state},command) {
 		if(!command.continuationItems) {debugger;}
-		let filtered=state.handlers.renderer_content_item_array.replace_array(command.continuationItems);
-		if(filtered.length>0) {command.continuationItems=filtered;}
+		/** @type {(typeof command)["continuationItems"][number][]} */
+		let iterable_items=command.continuationItems;
+		let filtered=state.handlers.renderer_content_item_array.replace_array(iterable_items);
+		if(filtered.length>0) {command.continuationItems=as(filtered);}
 	}
 	/** @handler @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection_3<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer) {

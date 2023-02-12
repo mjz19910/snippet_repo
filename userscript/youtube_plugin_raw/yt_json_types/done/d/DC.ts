@@ -18,6 +18,10 @@ type DC_ReloadContinuationItems={
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 	targetId: "comments-section";
 	continuationItems: R_CommentsHeader[];
+}|{
+	targetId: "63fee7f6-0000-225f-a68a-94eb2c051234";
+	continuationItems: R_FeedFilterChipBar[];
+	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 };
 type DC_AdsControlFlowOpportunityReceived={
 	opportunityType: DE_OpportunityType;
