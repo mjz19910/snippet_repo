@@ -362,6 +362,21 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
+				case 1: case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "request_continuation.token.f14": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "request_continuation.token.f9.f1": switch(map_entry_key) {
 				case 1: case 3: case 4:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -393,7 +408,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token": switch(map_entry_key) {
-				case 2: case 3: case 6: case 9: case 13: case 14:
+				case 1: case 2: case 3: case 5: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -582,6 +597,7 @@ class HandleTypes extends HandleTypesEval {
 		if(entry instanceof Map) return;
 		if(this.is_bigint(entry)) {
 			if(path==="tracking.trackingParams.f9") return;
+			if(path==="request_continuation.token.f9.f1.f1[].f1") return;
 			let new_data=this.handle_bigint(path,entry);
 			if(new_data) debugger;
 			return;

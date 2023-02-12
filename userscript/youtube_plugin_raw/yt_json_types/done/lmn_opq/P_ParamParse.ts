@@ -1,4 +1,10 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [request_continuation.token.f5]",
+	"[parse_value.gen_ns] [request_continuation.token.f1]",
+	"[parse_value.gen_ns] [request_continuation.token.f9.f1.f1[].f1]",
+	"[parse_value.gen_ns] [request_continuation.token.f9.f1.f1[].f3]",
+	"[parse_value.gen_ns] [request_continuation.token.f14.f1]",
+	"[parse_value.gen_ns] [request_continuation.token.f9.f1.f1[].f1]",
 	"[parse_value.gen_ns_g1] [request_continuation.token.f9.f1.f1[]]",
 	"[parse_value.gen_ns] [request_continuation.token.f9.f1.f1]",
 	"[parse_value.gen_ns] [request_continuation.token.f9.f1.f3]",
