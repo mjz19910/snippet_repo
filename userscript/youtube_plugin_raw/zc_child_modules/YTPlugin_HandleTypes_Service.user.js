@@ -599,6 +599,9 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
+				case "tracking.trackingParams.f16.f4.f3":
+				case "tracking.trackingParams.f16.f4.f2":
+				case "tracking.trackingParams.f16.f4.f1":
 				case "slot_ad_serving_data_entry.f1.f3":
 				case "slot_ad_serving_data_entry.f1.f2":
 				case "slot_ad_serving_data_entry.f1.f1":
