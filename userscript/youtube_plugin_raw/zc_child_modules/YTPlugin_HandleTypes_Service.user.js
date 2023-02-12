@@ -398,7 +398,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token.f6": switch(map_entry_key) {
-				case 4: case 8:
+				case 4: case 6: case 8:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -580,9 +580,8 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="unsubscribe.params.f2") return this.videoId(entry);
 			if(path==="request_continuation.token.f6.f4.f4") return;
 			if(path==="request_continuation.token.f5") return;
-			let new_data=this.save_string(path,entry);
-			if(new_data) debugger;
-			return;
+			if(path==="tracking.trackingParams.f7") return;
+			if(path==="record_notification_interactions.f2.f14.f2") return;
 		}
 		if(typeof entry==="number") {
 			if(path==="tracking.trackingParams.f4.f1") return;
@@ -591,6 +590,14 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="like.likeParams.f6.f1") return; if(path==="like.likeParams.f6.f2") return;
 			if(path==="like.removeLikeParams.f5.f1") return; if(path==="like.removeLikeParams.f5.f2") return;
 			if(path==="like.dislikeParams.f4.f1") return; if(path==="like.dislikeParams.f4.f2") return;
+			if(path==="record_notification_interactions.f2.f14.f1.f1") return;
+		}
+		if(typeof entry==="string") {
+			let new_data=this.save_string(path,entry);
+			if(new_data) debugger;
+			return;
+		}
+		if(typeof entry==="number") {
 			let new_data=this.save_number(path,entry);
 			if(new_data) debugger;
 			return;
