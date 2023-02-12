@@ -586,8 +586,9 @@ class HandleTypes extends HandleTypesEval {
 				}
 				case "request_continuation.token.f6.f4.f37":
 				case "entity_key.subscribed.f2":
-				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4":
-					return;
+				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4": {
+				} return;
+				case "request_continuation.token.f9.f1.f2": return;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) debugger;
