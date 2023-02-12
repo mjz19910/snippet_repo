@@ -9654,10 +9654,10 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(isModeratedElqComment,false);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {"D_InfoCardIcon"} cf @arg {D_Tracking} x */
-	D_Tracking(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
-	/** @private @arg {D_Tracking} x */
-	D_InfoCardIcon(x) {this.D_Tracking("D_InfoCardIcon",x);}
+	/** @private @arg {"D_InfoCardIcon"} cf @arg {D_TrackingParams} x */
+	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
+	/** @private @arg {D_TrackingParams} x */
+	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
 	/** @private @arg {D_ImpressionCommand} x */
 	D_ImpressionCommand(x) {
 		const cf="D_ImpressionCommand";

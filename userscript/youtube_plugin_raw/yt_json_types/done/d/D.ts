@@ -2801,7 +2801,7 @@ type D_TopicLink={
 	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
 	trackingParams: string;
 };
-type D_Tracking={trackingParams: string;};
+type D_TrackingParams={trackingParams: string;};
 type D_Transcript=Record<"content",R_TranscriptSearchPanel>&{trackingParams: string;};
 type D_TranscriptFooter={languageMenu: R_SortFilterSubMenu;};
 type D_TranscriptSegment={

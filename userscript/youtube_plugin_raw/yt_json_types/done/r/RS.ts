@@ -261,6 +261,17 @@ type RS_Page_Channel={
 	page: "channel";
 	response: RS_Channel;
 	expirationTime: number;
+}|{
+	page: "channel";
+	endpoint: E_VE3611_Browse;
+	response: RS_Channel;
+	url: `/@${string}`;
+	expirationTime: 1676178220452;
+	graftedVes: {
+		veData: D_TrackingParams;
+		csn: "MC42NTk2NDYxNjk3NjI0NzUz";
+	}[];
+	csn: "MC42MDQ3OTM1NTIyODcyNzY1";
 };
 type RS_Page_Playlist={
 	page: "playlist";
