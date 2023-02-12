@@ -806,9 +806,10 @@ class HandleTypes extends HandleTypesEval {
 	G_DE_Browse_VE(ve_name,x) {
 		const cf="G_DE_Browse_VE";
 		if("canonicalBaseUrl" in x) {
-			const {browseId: a,params: c,canonicalBaseUrl: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			const {browseId: a,params: c,canonicalBaseUrl: d,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(c,c => this.params(cf,"D_Browse.param",c));
 			this.GU_VE3611_Url(d);
+			this.t(query,this.a_primitive_str);
 			return this.GU_E_BrowseId(ve_name,a);
 		}
 		if("params" in x) {

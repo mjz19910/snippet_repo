@@ -16,7 +16,7 @@ type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",
 //#endregion
 //#region DE_VE
 type DE_VE<T>={browseId: T;};
-type DE_VE3611_Browse={params?: string; browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`;};
+type DE_VE3611_Browse={params?: string; browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`; query?: string;};
 type DE_VE3854_Browse=DE_VE<"FEwhat_to_watch">;
 type DE_VE5754_Browse=DE_VE<GU_VE5754_Id>;
 type DE_VE6827_Browse_SearchBox={browseId: "FEhistory"; query: "";};
@@ -35,5 +35,5 @@ type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
 type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_YpcGetCart={transactionParams: string;};
 type DE_SuperThanksSelectedTier={key: string; index: number;};
-type DE_UndoFeedback={undoToken: string;actions: A_UndoFeedback[];};
+type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
 //#endregion
