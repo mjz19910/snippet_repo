@@ -64,8 +64,10 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "ContinuationRequestType_WatchNext.token";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_ChangeMarkersVisibility.entity_key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LiveChatReplay";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LoadMarkers.entity_key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_PlayerSeek";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Timed";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
@@ -299,6 +301,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AddToPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AdsControlFlowOpportunityReceived";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ChangeKeyedMarkersVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ChangeMarkersVisibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_EngagementPanelHeaderShowNavigationButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Generic_CTP";}
@@ -792,6 +795,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_Signal";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_UndoFeedback";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_AddToPlaylist";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_ChangeMarkersVisibility";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_CommandExecutor";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_EngagementPanelHeaderShowNavigationButton";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_EntityUpdate";}

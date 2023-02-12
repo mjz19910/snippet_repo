@@ -23,6 +23,7 @@ type D_UiTargetId=
 type DC_EntityBatchUpdate={entityBatchUpdate: DR_DC_EntityBatchUpdate;};
 type DC_SectionList_TargetId=Extract<GD_RC_SectionList,{targetId: any;}>["targetId"];
 type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
+type DC_ChangeMarkersVisibility={entityKeys: string[]; isVisible: false;};
 type DR_DC_EntityBatchUpdate={
 	mutations: DE_MutationItem[];
 	timestamp?: D_TimestampWithNanos;

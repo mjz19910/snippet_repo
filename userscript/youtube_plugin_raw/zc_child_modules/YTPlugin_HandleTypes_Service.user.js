@@ -362,6 +362,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "change_markers_visibility.entity_key": switch(map_entry_key) {
+				case 2: case 4: case 5:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "request_continuation.token.f9.f1.f4": switch(map_entry_key) {
 				case 13:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -670,7 +675,7 @@ class HandleTypes extends HandleTypesEval {
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
 			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry":
 			case "browse$param":
-			case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
+			case "change_markers_visibility": case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
 			case "D_Browse":
 			case "entity_key": case "entity":
 			case "feedback":
@@ -691,7 +696,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "context_params": case "data": case "token":
+					case "context_params": case "data": case "token": case "entity_key":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
@@ -2359,6 +2364,8 @@ class HandleTypes extends HandleTypesEval {
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
+	/** @private @arg {C_ChangeMarkersVisibility} x */
+	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
 	/** @private @arg {MC_Continuation} x */
 	MC_Continuation(x) {
 		this.T_WCM("MC_Continuation",x,x => {
@@ -2552,6 +2559,15 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
+	/** @private @arg {DC_ChangeMarkersVisibility} x */
+	DC_ChangeMarkersVisibility(x) {
+		const cf="DC_ChangeMarkersVisibility";
+		const {isVisible,entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(isVisible!==false) debugger;
+		this.z(entityKeys,x => {
+			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
+		});
+	}
 	/** @private @arg {DC_Continuation} x */
 	DC_Continuation(x) {
 		if("continuationCommand" in x) debugger;
@@ -5012,7 +5028,9 @@ class HandleTypes extends HandleTypesEval {
 	DC_LoadMarkers(x) {
 		const cf="DC_LoadMarkers"; this.k(cf,x);
 		const {entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entityKeys,this.a_primitive_str);
+		this.z(entityKeys,x => {
+			this.params(`${cf}.entity_key`,"load_markers.entity_key",x);
+		});
 	}
 	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
 	DC_ChangeKeyedMarkersVisibility(x) {
@@ -7415,7 +7433,7 @@ class HandleTypes extends HandleTypesEval {
 		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
 		if("loopCommand" in x) return this.C_Loop(x);
 		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
-		if("changeMarkersVisibilityCommand" in x) {debugger; return this.z([x],a => a);}
+		if("changeMarkersVisibilityCommand" in x) return this.C_ChangeMarkersVisibility(x);
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
 		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
 		x===""; this.codegen_typedef_all(cf,x);
