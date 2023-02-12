@@ -556,6 +556,7 @@ class HandleTypes extends HandleTypesEval {
 			};
 			switch(path)/*parse_param_next_arr*/ {
 				default: g1(); debugger; return;
+				case "request_continuation.token.f9.f1.f4.f13": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
 				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
 				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
 				case "request_continuation.token.f9.f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
@@ -713,7 +714,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
-					case "f1[]":
+					case "f1[]": case "f13[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f13":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
