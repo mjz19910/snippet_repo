@@ -3829,8 +3829,6 @@ class ServiceMethods extends ServiceData {
 	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(cf,path,x,callback) {this.parser.on_player_params(cf,path,x,callback);}
 	/** @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
 }

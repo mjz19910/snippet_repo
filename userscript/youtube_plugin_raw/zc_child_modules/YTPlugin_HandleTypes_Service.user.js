@@ -24,6 +24,7 @@ const split_string_once=bs.split_string_once;
 const split_string_once_last=bs.split_string_once_last;
 const base64_dec=bs.base64_dec;
 const base64_url_dec=bs.base64_url_dec;
+const MyReader=bs.MyReader;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
@@ -658,7 +659,7 @@ class HandleTypes extends HandleTypesEval {
 	params(root,path,x) {
 		/** @type {number[]} */
 		let map_entry_key_path=[];
-		this.parser.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
+		this.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
 	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
@@ -6178,18 +6179,16 @@ class HandleTypes extends HandleTypesEval {
 	parse_video_id(x) {this.x.get("indexed_db").put("video_id",{v: x});}
 	/** @api @public @arg {string} type @arg {string} x */
 	parse_channel_id(type,x) {this.x.get("indexed_db").put("channel_id",{type,id: x});}
-	/** @public @arg {G_UrlInfoItem[]} x */
-	log_url_info_arr(x) {
-		for(let url_info of x) {
-			switch(url_info._tag) {
-				default: url_info===""; debugger; break;
-				case "channel": this.parse_channel_id(url_info.type, url_info.id); break;
-				case "play-next": url_info; break;
-				case "playlist-channel-mix": break;
-				case "playlist": this.parse_playlist_url_info(url_info); break;
-				case "video": this.parse_video_id(url_info.id); break;
-				case "video-referral": this.parse_video_id(url_info.id); break;
-			}
+	/** @public @arg {G_UrlInfoItem} url_info */
+	log_url_info(url_info) {
+		switch(url_info._tag) {
+			default: url_info===""; debugger; break;
+			case "channel": this.parse_channel_id(url_info.type,url_info.id); break;
+			case "play-next": url_info; break;
+			case "playlist-channel-mix": break;
+			case "playlist": this.parse_playlist_url_info(url_info); break;
+			case "video": this.parse_video_id(url_info.id); break;
+			case "video-referral": this.parse_video_id(url_info.id); break;
 		}
 	}
 	/** @private @arg {D_UrlInfoPlaylist} x */
@@ -6216,28 +6215,276 @@ class HandleTypes extends HandleTypesEval {
 		let is_critical=this.get_playlist_url_info_critical(x);
 		this.log_playlist_id(x,is_critical);
 	}
-	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId_NoRadio} x */
-	parse_guide_entry_id(x) {
+	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
+	parse_endpoint_param(root,path,map_entry_key_path,map,callback) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
+		let mk=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		for(let i=1;i<40;i++) {
+			if(!mk.includes(i)) continue;
+			map_entry_key_path.push(i);
+			parse_key(map_entry_key_path);
+			map_entry_key_path.pop();
+		}
+		// endpoint.create_playlist.params
+		this.parse_value(root,path,map,mk,[...map_entry_key_path,77],map.get(77),map_entry_value => {
+			if(map_entry_value.length===1&&typeof map_entry_value[0]==="string") {
+				let bt=this.decode_browse_id(map_entry_value[0]);
+				if(!bt) {debugger; return;}
+				return this.parse_browse_id(bt);
+			}
+			debugger;
+		});
+		for(let i=1;i<300;i++) {
+			if(!mk.includes(i)) continue;
+			parse_key([i]);
+		}
+		if(this.eq_keys(mk,[])) return;
+		let param_obj=this.to_param_obj(map);
+		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
+		{debugger;}
+	}
+	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
+	make_parse_key(root,path,map,mk,callback) {
+		/** @private @arg {number[]} map_entry_key_path */
+		let parse_key=(map_entry_key_path) => {
+			let t_at=map_entry_key_path.at(-1);
+			if(t_at===void 0) return;
+			this.parse_value(root,path,map,mk,map_entry_key_path,map.get(t_at),callback);
+		};
+		return parse_key;
+	}
+	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
+	parse_player_param(root,path,map,callback) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
+		let mk=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		for(let i=1;i<72;i++) {
+			if(!mk.includes(i)) continue;
+			parse_key([i]);
+		}
+		parse_key([72]);
+		if(this.eq_keys(mk,[])) return;
+		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
+		{debugger;}
+	}
+	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} params_callback */
+	on_endpoint_params(root,path,map_entry_key_path,x,params_callback) {
+		if(x===void 0) {debugger; return;}
+		x=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return;
+		this.cache_player_params.push(x);
+		switch(root) {
+			case "D_TemplateUpdate": {
+				let buffer=bs.base64_url_dec.decodeByteArray(x);
+				if(!buffer) return;
+				let reader=new MyReader(buffer);
+				reader.pos+=1;
+				let res_e=reader.try_read_any();
+				if(!res_e) return;
+				let [_ru,...ex]=res_e;
+				let bi=ex[0];
+				if(bi[0]==="data64") {
+					let ui=bi[3];
+					let rem=ui%300n;
+					if(rem>0n) debugger;
+					let nu=Number(ui/300n)/1000;
+					console.log("[TemplateTime]",nu);
+				}
+				let param_map=this.make_param_map(res_e);
+				this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
+				return;
+			}
+		}
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
+		switch(root) {case "DE_GetTranscript": return this.parse_get_transcript(root,path,map_entry_key_path,param_map,params_callback);}
+		this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
+	}
+	/** @private @type {string[]} */
+	cache_player_params=[];
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
+	playerParams(cf,path,x,callback) {this.on_player_params(cf,path,x,callback);}
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
+	on_player_params(root,path,x,callback) {
+		x=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return;
+		this.cache_player_params.push(x);
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
+		this.parse_player_param(root,path,param_map,callback);
+	}
+	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} param_map @arg {T_ParseCallbackFunction<T>} callback */
+	parse_get_transcript(root,path,map_entry_key_path,param_map,callback) {
+		this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),callback);
+		/** @private @type {V_ParamMapValue[]} */
+		let transcript_args=[];
+		let pMap=param_map;
+		/** @private @arg {number} x */
+		function convert_param(x) {
+			if(x<=0) {debugger; return;}
+			let pf=pMap.get(x);
+			if(pf) {
+				if(pf.length!==1) debugger;
+				transcript_args[x-1]=pf[0];
+			}
+		}
+		this.z([1,2,3,5,6,7,8],a => convert_param(a));
+		/** @private @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
+		let transcript_args_dec=null;
+		let p0=transcript_args[0];
+		let p1=transcript_args[1];
+		let p2=transcript_args[2];
+		let p4=transcript_args[4];
+		let p5=transcript_args[5];
+		let p6=transcript_args[6];
+		let p7=transcript_args[7];
+		x: if(
+			typeof p0=='string'&&typeof p1=='string'
+			&&p2===1
+			&&typeof p4=='string'
+			&&p5===1&&p6===1&&p7===1
+		) {
+			switch(p4) {
+				case "engagement-panel-searchable-transcript-search-panel": break;
+				default: debugger; break x;
+			}
+			transcript_args_dec={
+				videoId: p0,
+				langParams: p1,
+				unk3: p2,
+				targetId: p4,
+				unk6: p5,
+				unk7: p6,
+				unk8: p7
+			};
+		}
+		x: if(transcript_args_dec) {
+			let param_1=decodeURIComponent(transcript_args_dec.langParams);
+			let param_buf_1=this._decode_b64_url_proto_obj(param_1);
+			if(param_buf_1===null) {debugger; break x;}
+			let param_map_1=this.make_param_map(param_buf_1);
+			if(!param_map_1) {debugger; break x;}
+			let lp_p1=param_map_1.get(1);
+			let lp_p2=param_map_1.get(2);
+			let lp_p3=param_map_1.get(3);
+			y: if(lp_p1&&lp_p2&&typeof lp_p1==='string'&&typeof lp_p2==='string'&&lp_p3 instanceof Map) {
+				if(lp_p1!=="asr") break y;
+				if(lp_p2!=="en") break y;
+				if(lp_p3.size!==0) break y;
+				return;
+			}
+			y: if(lp_p1!==void 0&&lp_p2!==void 0&&lp_p3!==void 0) {
+				c: if(lp_p1 instanceof Map) {
+					if(lp_p1.size===0) break c;
+					let lp_p1_=this.to_param_obj(lp_p1);
+					console.log("[lp_p1_]",lp_p1_);
+					break y;
+				}
+				c: if(typeof lp_p2==='string') {
+					if(lp_p2==="en") break c;
+					console.log("[lp_p2]",lp_p2);
+					break y;
+				}
+				c: if(lp_p3 instanceof Map) {
+					if(lp_p3.size===0) break c;
+					let lp_p3_=this.to_param_obj(lp_p3);
+					console.log("[lp_p3_]",lp_p3_);
+					break y;
+				}
+				return;
+			}
+			console.log("[get_transcript_args]",transcript_args_dec);
+			let param_obj_1=this.to_param_obj(param_map_1);
+			console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
+			debugger;
+			return;
+		}
+		if(transcript_args_dec) {console.log("[get_transcript_args]",transcript_args_dec);}
+		let param_obj=this.to_param_obj(param_map);
+		console.log("[new_get_transcript_endpoint_params]",param_obj);
+		{debugger;}
+	}
+	/** @private @type {string[]} */
+	cache_playlist_index=[];
+	/** @public @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	parse_watch_page_url_url_arr(root,x) {
+		let vv=split_string(x,"&");
 		/** @private @type {G_UrlInfoItem[]} */
-		let arr=[];
-		if(this.str_starts_with_rx("RD",x)) {arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});}
-		if(this.str_starts_with_rx("PL",x)) {arr.push({_tag: "playlist",type: "PL",id: x.slice(2)});}
-		if(this.str_starts_with_rx("UU",x)) {arr.push({_tag: "playlist",type: "UU",id: x.slice(2)});}
-		if(this.str_starts_with_rx("UC",x)) {arr.push({_tag: "channel",type: "UC",id: x.slice(2)});}
-		this.log_url_info_arr(arr);
+		let url_info_arr=[];
+		// spell:ignore RDMM
+		for(let prop of vv) {
+			/** @private @type {T_SplitOnce<typeof prop,"=">} */
+			let res=split_string_once(prop,"=");
+			switch(res[0]) {
+				case "v": {
+					let value=res[1];
+					url_info_arr.push({_tag: "video",id: value});
+				} break;
+				case "list": {
+					let v=res[1];
+					this.x.get("handle_types").parse_guide_entry_id(v);
+					if(this.str_starts_with_rx("RD",v)) {
+						if(this.str_starts_with_rx("RDMM",v)) {url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)}); break;}
+						if(this.str_starts_with_rx("RDGM",v)) {url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)}); break;}
+						if(this.str_starts_with_rx("RDCMUC",v)) {
+							let ucp=split_string_once(v,"RDCM");
+							url_info_arr.push({
+								_tag: "playlist-channel-mix",
+								type: "RDCM",
+								channel_id: ucp[1],
+							});
+							break;
+						}
+						url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
+					}
+					if(this.str_starts_with_rx(v,"PL")) {url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)}); break;}
+					debugger;
+				} break;
+				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
+				case "pp": {this.on_player_params(root,"watch_page_url.pp",res[1],x => {x;});} break;
+				case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
+				case "index": {
+					if(this.cache_playlist_index.includes(res[1])) break;
+					this.cache_playlist_index.push(res[1]);
+					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
+				} break;
+				case "t": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
+				case "playnext": url_info_arr.push({_tag: "play-next",value: res[1]}); break;
+				default: res[0]===""; debugger;
+			}
+		}
+		this.x.get("handle_types").log_url_info(url_info_arr);
+	}
+	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} x */
+	parse_guide_entry_id(x) {
+		if(this.str_starts_with_rx("RDCMUC",x)) {
+			let ucp=split_string_once(x,"RDCM");
+			this.log_url_info({
+				_tag: "playlist-channel-mix",
+				type: "RDCM",
+				channel_id: ucp[1],
+			});
+		}
+		if(this.str_starts_with_rx("RD",x)) {this.log_url_info({_tag: "playlist",type: "RD",id: x.slice(2)});}
+		if(this.str_starts_with_rx("PL",x)) {this.log_url_info({_tag: "playlist",type: "PL",id: x.slice(2)});}
+		if(this.str_starts_with_rx("UU",x)) {this.log_url_info({_tag: "playlist",type: "UU",id: x.slice(2)});}
+		if(this.str_starts_with_rx("UC",x)) {this.log_url_info({_tag: "channel",type: "UC",id: x.slice(2)});}
 		if(this.str_starts_with_rx("UC",x)) {
 			if(x.length===24) return;
-			console.log("[guideEntryId.channel.length]",x.length);
-			return;
+			return console.log("[guideEntryId.channel.length]",x.length);
 		}
 		if(this.str_starts_with_rx("PL",x)) {
 			if(x.length===34) return;
-			console.log("[guideEntryId.playlist.length]",x.length);
-			return;
+			return console.log("[guideEntryId.playlist.length]",x.length);
 		}
 		if(this.str_starts_with_rx("UU",x)) {
-			console.log("[guideEntryId.uploads_playlist.length]",x.length);
-			return;
+			return console.log("[guideEntryId.uploads_playlist.length]",x.length);
+		}
+		if(this.str_starts_with_rx("RD",x)) {
+			return console.log("[guideEntryId.radio.length]",x.length);
 		}
 		switch(x) {
 			default: x===""; console.log("new with param [Browse_param_2c_VL]",x); debugger; break;
