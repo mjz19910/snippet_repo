@@ -589,6 +589,7 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_string(path,entry);
 					if(new_data) debugger;
 				} return;
+				case "request_continuation.token.f9.f1.f4": return;
 			}
 		}
 		if(typeof entry==="number") {
