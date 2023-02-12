@@ -584,13 +584,14 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
+				case "request_continuation.token.f6.f4.f37":
+				case "entity_key.subscribed.f2":
 				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4":
 					return;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) debugger;
 				} return;
-				case "request_continuation.token.f6.f4.f37": return;
 			}
 		}
 		if(typeof entry==="number") {
@@ -7611,15 +7612,13 @@ class HandleTypes extends HandleTypesEval {
 			case "LOOP": {
 				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.E_Watch(autoplayVideo);
-				this.E_Watch(nextButtonVideo);
+				this.t(nextButtonVideo,this.E_Watch);
 				this.D_AutoplaySetItem_ButtonVideoEP(previousButtonVideo);
 			} break;
 			case "NORMAL": {
-				/** @type {D_AutoplaySetItem_NormalOpt} */
-				let u=x;
-				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.E_Watch(autoplayVideo);
-				this.E_Watch(nextButtonVideo);
+				this.t(nextButtonVideo,this.E_Watch);
 				this.t(previousButtonVideo,this.E_Watch);
 			} break;
 			case "SHUFFLE": {

@@ -820,22 +820,13 @@ type D_AutoplaySetItem_NormalOpt={
 type D_AutoplaySetItem={
 	mode: "NORMAL";
 	autoplayVideo: E_Watch;
-	nextButtonVideo: E_Watch;
-}|{
-	mode: "NORMAL";
-	autoplayVideo: E_Watch;
-	nextButtonVideo: E_Watch;
-	previousButtonVideo: E_Watch;
+	nextButtonVideo?: E_Watch;
+	previousButtonVideo?: E_Watch;
 }|{
 	mode: "LOOP";
 	autoplayVideo: E_Watch;
 	nextButtonVideo: E_Watch;
-	previousButtonVideo: E_WatchPlaylist;
-}|{
-	mode: "LOOP";
-	autoplayVideo: E_Watch;
-	nextButtonVideo: E_Watch;
-	previousButtonVideo: E_Watch;
+	previousButtonVideo: E_Watch|E_WatchPlaylist;
 }|{
 	mode: "SHUFFLE";
 	autoplayVideo: E_Watch;
