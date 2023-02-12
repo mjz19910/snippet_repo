@@ -205,7 +205,7 @@ class IndexedDBService extends BaseService {
 	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
 	start_transaction(db,store_desc) {
 		let cur_name=store_desc.name;
-		const transaction=db.transaction("video_id","readwrite");
+		const transaction=db.transaction(cur_name,"readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);

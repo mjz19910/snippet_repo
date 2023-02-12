@@ -489,6 +489,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
 		if(path==="tracking.trackingParams.f8") return;
+		if(path==="watch_playlist.params.f1") return;
 		if(path==="entity_key.normal.f2"&&typeof entry==="string") {
 			this.D_ChannelId(as(entry));
 			return;
@@ -6476,15 +6477,27 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} x */
 	parse_guide_entry_id(x) {
-		if(this.str_starts_with_rx("RDCMUC",x)) {
-			let ucp=split_string_once(x,"RDCM");
-			this.log_url_info({
-				_tag: "playlist-channel-mix",
-				type: "RDCM",
-				channel_id: ucp[1],
-			});
+		x: if(this.str_starts_with_rx("RD",x)) {
+			if(this.str_starts_with_rx("RDCMUC",x)) {
+				let [,channel_id]=split_string_once(x,"RDCM");
+				this.log_url_info({
+					_tag: "playlist-channel-mix",
+					type: "RDCM",
+					channel_id,
+				});
+				break x;
+			}
+			if(this.str_starts_with_rx("RDMM",x)) {
+				let [,id]=split_string_once(x,"RDMM");
+				this.log_url_info({
+					_tag: "playlist",
+					type: "RDMM",
+					id,
+				});
+				break x;
+			}
+			this.log_url_info({_tag: "playlist",type: "RD",id: x.slice(2)});
 		}
-		if(this.str_starts_with_rx("RD",x)) {this.log_url_info({_tag: "playlist",type: "RD",id: x.slice(2)});}
 		if(this.str_starts_with_rx("PL",x)) {this.log_url_info({_tag: "playlist",type: "PL",id: x.slice(2)});}
 		if(this.str_starts_with_rx("UU",x)) {this.log_url_info({_tag: "playlist",type: "UU",id: x.slice(2)});}
 		if(this.str_starts_with_rx("UC",x)) {this.log_url_info({_tag: "channel",type: "UC",id: x.slice(2)});}
@@ -6497,6 +6510,7 @@ class HandleTypes extends HandleTypesEval {
 			return console.log("[guideEntryId.playlist.length]",x.length);
 		}
 		if(this.str_starts_with_rx("UU",x)) {
+			if(x.length===26) return;
 			return console.log("[guideEntryId.uploads_playlist.length]",x.length);
 		}
 		if(this.str_starts_with_rx("RDCM",x)) {
