@@ -403,7 +403,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token.f2": switch(map_entry_key) {
-				case 2: case 4: case 6: case 25: case 28: case 36:
+				case 2: case 4: case 6: case 7: case 25: case 28: case 36:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -578,6 +578,8 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
+				case "request_continuation.token.f2.f2":
+					return;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) debugger;
