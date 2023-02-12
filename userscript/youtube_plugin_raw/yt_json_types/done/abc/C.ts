@@ -56,3 +56,9 @@ type DC_ShowReloadUi={targetId: D_UiTargetId;};
 type DC_Timed={continuation: string; timeoutMs: 60000;};
 type DC_UpdateToggleButtonState={buttonId: "TOGGLE_BUTTON_ID_TYPE_STRUCTURED_DESCRIPTION"; toggled: false;};
 //#endregion
+type CP_Tracking={clickTrackingParams: string;};
+type CR_ContinuationItemsFor<T,U,V extends {continuationItems: any;}>={
+	slot: U;
+	targetId: T;
+	continuationItems: V["continuationItems"];
+};
