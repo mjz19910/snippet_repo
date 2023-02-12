@@ -719,6 +719,7 @@ class HandleTypes extends HandleTypesEval {
 					case "continuationItemRenderer":
 					case "compactVideoRenderer":
 					case "compactRadioRenderer":
+					case "adSlotRenderer":
 				}
 			}
 			return as_any([contents,sectionIdentifier,targetId]);
@@ -5421,6 +5422,7 @@ class HandleTypes extends HandleTypesEval {
 			case "www.youtube.com": return this.GU_YoutubeUrlRedirect(up.href);
 			case "myactivity.google.com": return;
 			case "www.google.com": return;
+			case "www.googleadservices.com": return;
 			default: debugger; break;
 		}
 		const hn_yt_studio="https://studio.youtube.com";
@@ -6219,6 +6221,7 @@ class HandleTypes extends HandleTypesEval {
 				if(!this.str_starts_with_rx("UC",url_info.raw_id)) debugger;
 				this.parse_channel_id(url_info.raw_id);
 			} break;
+			case "playlist:LL": case "playlist:WL":
 			case "playlist:RDMM": case "playlist:RD": case "playlist:UU":
 			case "playlist:PL": {
 				let x=url_info;
@@ -6531,7 +6534,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x) {
 			default: x===""; console.log("new with param [Browse_param_2c_VL]",x); debugger; break;
-			case "LL": case "WL":
+			case "LL": case "WL": this.log_url_info({type: `playlist:${x}`,id: x});
 		}
 	}
 	/** @private @arg {D_GuideEntryData} x */

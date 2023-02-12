@@ -453,6 +453,8 @@ type G_UrlInfoItem={
 }|{
 	type: "playlist:UU"; id: `UU${string}`; raw_id: string;
 }|{
+	type: `playlist:${"LL"|"WL"}`; id: "LL"|"WL";
+}|{
 	type: "video"; id: string;
 }|{
 	type: "video-referral"; id: string;

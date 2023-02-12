@@ -46,5 +46,6 @@ type GU_VE83769_Url_External=
 	|`https://myactivity.google.com/activitycontrols/youtube?${string}`
 	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}/videos`
 	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}`
+	|`https://www.googleadservices.com/pagead/aclk?${string}`
 	;
 ;
