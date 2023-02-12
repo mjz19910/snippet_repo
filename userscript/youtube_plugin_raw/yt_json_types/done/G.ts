@@ -471,6 +471,15 @@ type G_RendererContentItem=
 ;
 type GD_RC_SectionList=
 	|DC_SectionListBase
+	|{
+		contents: {
+			itemSectionRenderer: {
+				contents: R_Message[];
+				trackingParams: string;
+			};
+		}[];
+		trackingParams: string;
+	}
 	|DC_SectionList_SearchFeed
 	|DC_SectionList_BrowseFeed_ChannelFeatured
 	|DC_SectionList_BrowseFeed_Subscriptions

@@ -1,7 +1,7 @@
 type CF_M_s_priv=
 	|`D_Params:${CF_D_Params}`
 	|`T_Endpoint_Tracking:${"C_GetSurvey"}`
-	|`TD_ItemSection_3:${CF_TD_ItemSection_3}`
+	|`TD_ItemSection_3:${CF_TD_ItemSection}`
 	|`TE_Endpoint_2:${CF_TE_Endpoint_2}`
 	|`TE_Endpoint_3:${CF_TE_Endpoint_3}`
 	|`TE_Endpoint_Opt_3:${CF_TE_Endpoint_Opt_3}`
@@ -138,7 +138,7 @@ type CF_T_SE_Signal_P1=T_ExtractImport<"CF_T_SE_Signal_P1">|"CF_T_SE_Signal_P1"|
 type CF_T_WCM_Unpack=T_ExtractImport<"CF_T_WCM_Unpack">|"CF_T_WCM_Unpack"|"a";
 type CF_T_WCM=T_ExtractImport<"CF_T_WCM">|"CF_T_WCM"|"a";
 type CF_TA_Page=T_ExtractImport<"CF_TA_Page">|"CF_TA_Page"|"a";
-type CF_TD_ItemSection_3=T_ExtractImport<"CF_TD_ItemSection_3">|"CF_TD_ItemSection_3"|"a";
+type CF_TD_ItemSection=T_ExtractImport<"CF_TD_ItemSection">|"CF_TD_ItemSection"|"a";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|"CF_TE_Endpoint_2"|"a";
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|"CF_TE_Endpoint_3"|"a";
 type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|"CF_TE_Endpoint_Opt_3"|"a";

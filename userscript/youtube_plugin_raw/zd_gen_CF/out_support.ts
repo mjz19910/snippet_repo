@@ -40,7 +40,7 @@ export namespace Prelude {
 		|"CF_T_WCM"
 		|"CF_TA_OpenPopup"
 		|"CF_TA_Page"
-		|"CF_TD_ItemSection_3"
+		|"CF_TD_ItemSection"
 		|"CF_TE_Endpoint_2"
 		|"CF_TE_Endpoint_3"
 		|"CF_TE_Endpoint_Opt_3"
@@ -88,7 +88,7 @@ export namespace Prelude {
 	export type CF_T_WCM="CF_T_WCM";
 	export type CF_TA_OpenPopup="CF_TA_OpenPopup";
 	export type CF_TA_Page="CF_TA_Page";
-	export type CF_TD_ItemSection_3="CF_TD_ItemSection_3";
+	export type CF_TD_ItemSection="CF_TD_ItemSection";
 	export type CF_TE_Endpoint_2="CF_TE_Endpoint_2";
 	export type CF_TE_Endpoint_3="CF_TE_Endpoint_3";
 	export type CF_TE_Endpoint_Opt_3="CF_TE_Endpoint_Opt_3";
@@ -139,7 +139,7 @@ export namespace Types {
 	export type CF_T_WCM_Unpack_=CF_T_WCM_Unpack;
 	export type CF_TA_OpenPopup_=CF_TA_OpenPopup;
 	export type CF_TA_Page_=CF_TA_Page;
-	export type CF_TD_ItemSection_3_=CF_TD_ItemSection_3;
+	export type CF_TD_ItemSection_=CF_TD_ItemSection;
 	export type CF_TE_Endpoint_2_=CF_TE_Endpoint_2;
 	export type CF_TE_Endpoint_3_=CF_TE_Endpoint_3;
 	export type CF_TE_Endpoint_Opt_3_=CF_TE_Endpoint_Opt_3;

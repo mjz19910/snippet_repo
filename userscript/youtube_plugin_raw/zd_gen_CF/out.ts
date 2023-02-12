@@ -262,8 +262,8 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_VE3832";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_2_CommentsEntryPoint";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "TD_ItemSection_3";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "T_Command_TP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AccountItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddChatItem";}
@@ -717,6 +717,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "VideoGoodPutShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
+		|{n: Prelude.CF_M_s_priv; t: Types.CF_M_s_priv_; v: "TD_ItemSection:a" | "TD_ItemSection:CF_TD_ItemSection";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_VE3832_Watch:omit";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_AdditionalDataItem";}
@@ -767,9 +768,9 @@ export namespace Gen {
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup:R_PdgBuyFlow";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup_Empty";}
 		|{n: Prelude.CF_TA_Page; t: Types.CF_TA_Page_; v: "AD_UpdateChannelSwitcherPage";}
-		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
-		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
-		|{n: Prelude.CF_TD_ItemSection_3; t: Types.CF_TD_ItemSection_3_; v: "TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}
+		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
+		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
+		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AU_NotificationsUnseenCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddChatItem";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddToGuideSection";}

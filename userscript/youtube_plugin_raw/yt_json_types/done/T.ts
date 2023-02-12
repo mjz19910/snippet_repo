@@ -187,18 +187,14 @@ type TCmp_Is_Endpoint_3<T extends TE_Endpoint_3<any,any,any>>=T;
 type TCmp_Is_Endpoint_2<T extends TE_Endpoint_2<any,any>>=T;
 //#endregion
 //#region TR_
-type TR_SectionListItem_3_Empty=TR_SectionListItem_3<{},{},{}>;
+type TR_SectionListItem_3_Empty=TR_ItemSection_3<{},{},{}>;
 type TR_MP_MenuSection<T>={multiPageMenuSectionRenderer: T_Items_TP<T>;};
 type TR_ContinuationItem_CE<T>={continuationItemRenderer: TD_ContinuationItem_CE<T>;};
 type TR_ItemSection_2<CType,T>={itemSectionRenderer: TD_ItemSection_2<CType,T>;};
+type TD_ItemSection_1<T_ContentType>={trackingParams: string; contents: T_ContentType[];};
 type TR_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>={itemSectionRenderer: TD_ItemSection_3<T_ContentType,T_sectionIdentifier,T_targetId>;};
-type TR_SectionListItem_3<T_ContentType,B,C>=
-	|R_ContinuationItem
-	|TR_ItemSection_3<T_ContentType,B,C>
-	|R_MusicCarouselShelf
-	|R_MusicShelf
-	;
-;
+type TR_ItemSection_1<T_ContentType>={itemSectionRenderer: TD_ItemSection_1<T_ContentType>;};
+type TR_SectionListItem_1<T_ContentType>=TR_ItemSection_1<T_ContentType>;
 type TR_SectionList_3<C,T,U>={sectionListRenderer: Record<"contents",TR_ItemSection_3<C,T,U>>;};
 type TR_MultiPageMenu_Empty=TR_MultiPageMenu<{}>;
 type TR_MultiPageMenu<T>={multiPageMenuRenderer: T;};
