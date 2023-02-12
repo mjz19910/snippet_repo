@@ -362,71 +362,20 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
-			case "create_comment.params.f5": switch(map_entry_key) {
-				case 1:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "create_comment.params": switch(map_entry_key) {
-				case 2: case 5: case 10:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "aadc_guidelines_state_entity_key": switch(map_entry_key) {
-				case 2: case 4: case 5:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "unsubscribe.params.f1": switch(map_entry_key) {
-				case 1:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "unsubscribe.params": switch(map_entry_key) {
-				case 1: case 2: case 3:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "reel.params.f3": switch(map_entry_key) {
-				case 1: case 2: case 3:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "D_Browse.param.f94.f1.f2": switch(map_entry_key) {
-				case 1: case 2: case 3: case 4: case 5:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "D_Browse.param.f94.f1": switch(map_entry_key) {
-				case 2:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "D_Browse.param.f94": switch(map_entry_key) {
-				case 1: case 5:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "subscribe.params": switch(map_entry_key) {
-				case 2: case 3: case 4:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "tracking.trackingParams.f16.f4": switch(map_entry_key) {
-				case 1: case 2: case 3:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "D_Browse.param.f93.f1": switch(map_entry_key) {
-				case 14:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "entity_key.normal.f2": switch(map_entry_key) {
-				case 1:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
+			case "D_Browse.param": switch(map_entry_key) {case 2: case 23: case 84: case 93: case 94: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+			case "create_comment.params.f5": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "create_comment.params": switch(map_entry_key) {case 2: case 5: case 10: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "aadc_guidelines_state_entity_key": switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "unsubscribe.params.f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "unsubscribe.params": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "reel.params.f3": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "D_Browse.param.f94.f1.f2": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "D_Browse.param.f94.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "D_Browse.param.f94": switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "subscribe.params": switch(map_entry_key) {case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "tracking.trackingParams.f16.f4": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "D_Browse.param.f93.f1": switch(map_entry_key) {case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "entity_key.normal.f2": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "playability_status.context_params.f2": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "playability_status.context_params": switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "watch_playlist.params.f27": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -438,7 +387,6 @@ class HandleTypes extends HandleTypesEval {
 			case "notification.opt_out": switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {case 19: case 20: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param": switch(map_entry_key) {case 2: case 84: case 93: case 94: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 			case "transcriptTrackSelection.serializedParams": switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_transcript.params": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.params.f28.f1[].f1.f1[]": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
