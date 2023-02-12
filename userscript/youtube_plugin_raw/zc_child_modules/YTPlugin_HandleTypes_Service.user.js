@@ -6388,6 +6388,18 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isCourse,"boolean");
 		return y;
 	}
+	/** @private @arg {M_VE5754} x */
+	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754_WC);}
+	/** @private @arg {DE_VE5754_Browse} x */
+	DE_VE5754_Browse(x) {this.y("DE_VE5754_Browse","browseId",x,this.browseId);}
+	/** @private @arg {E_VE5754_Browse} x */
+	E_VE5754_Browse(x) {
+		const cf="E_VE5754_Browse";
+		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+		this.M_VE5754(x2);
+		this.DE_VE5754_Browse(x4);
+		this.g(x5);
+	}
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
@@ -6402,6 +6414,10 @@ class HandleTypes extends HandleTypesEval {
 			const {totalVideos,continuations,totalVideosText,endpoint,badges,videoCountText,...y}=u; this.g(y);
 			this.a_primitive_num(totalVideos);
 			this.z(continuations,this.CD_Next);
+			this.G_Text(totalVideosText);
+			this.E_VE5754_Browse(endpoint);
+			this.z(badges,this.RMD_Badge);
+			this.G_Text(videoCountText);
 			return;
 		}
 		debugger;

@@ -743,6 +743,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_PlaylistEditor";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_UserFeedback";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_VE5754_Browse";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_CanShare";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_EditableDetails";}
@@ -825,6 +826,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Upload";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Url";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE3611_Browse";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE5754_Browse";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_Watch";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_WatchPlaylist";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetCart";}
@@ -910,6 +912,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_Watch";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE3832_WatchPlaylist";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE4724";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE5754";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE83769";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetCart";}
 		|{n: Prelude.CF_T_WCM_Unpack; t: Types.CF_T_WCM_Unpack_; v: "MG_Survey_CMD";}
