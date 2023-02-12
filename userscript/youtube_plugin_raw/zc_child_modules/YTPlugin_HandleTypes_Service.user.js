@@ -7260,10 +7260,12 @@ class HandleTypes extends HandleTypesEval {
 				this.E_WatchPlaylist(previousButtonVideo);
 			} break;
 			case "NORMAL": {
-				const {mode: {},autoplayVideo,nextButtonVideo,/*previousButtonVideo,*/...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				/** @type {D_AutoplaySetItem_NormalOpt} */
+				let u=x;
+				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
 				this.E_Watch(autoplayVideo);
 				this.E_Watch(nextButtonVideo);
-				// this.E_Watch(previousButtonVideo);
+				this.t(previousButtonVideo,this.E_Watch);
 			} break;
 			case "SHUFFLE": {
 				const {mode: {},autoplayVideo,nextButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
