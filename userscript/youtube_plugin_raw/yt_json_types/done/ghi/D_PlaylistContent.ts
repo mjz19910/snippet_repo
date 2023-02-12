@@ -1,4 +1,26 @@
 type D_PlaylistContent={
+	title: "Abyss Soul Lotus OSTs";
+	contents: R_PlaylistPanelVideo[];
+	currentIndex: number;
+	playlistId: `PL${string}`;
+	totalVideos: number;
+	ownerName: G_Text;
+	isInfinite: false;
+	playlistShareUrl: `http://www.youtube.com/watch?${string}`;
+	shortBylineText: G_Text;
+	longBylineText: G_Text;
+	totalVideosText: G_Text;
+	playerInfoView: "DO_NOT_CHANGE";
+	trackingParams: string;
+	titleText: G_Text;
+	endpoint: E_VE5754_Browse;
+	menu: R_Menu;
+	localCurrentIndex: number;
+	playlistButtons: R_Menu;
+	videoCountText: G_Text;
+	isCourse: false;
+	nextVideoLabel: G_Text;
+}|{
 	title: string;
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;

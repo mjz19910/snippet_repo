@@ -403,7 +403,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token.f2": switch(map_entry_key) {
-				case 2: case 4: case 6: case 7: case 25: case 28: case 36:
+				case 2: case 4: case 6: case 7: case 24: case 25: case 28: case 36: case 47:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -592,9 +592,11 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
-				// f4,f13=watch_playlist.params.localCurrentIndex
+				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_playlist.params.f4": case "watch_playlist.params.f13":
 					return;
+				// {[x:"f2.f7"]:"STORE::Playlist.localCurrentIndex";}
+				case "request_continuation.token.f2.f7": return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
 				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
@@ -691,7 +693,8 @@ class HandleTypes extends HandleTypesEval {
 					} return;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f12": case "f13": case "f14": case "f25": case "f28": case "f31": case "f36":
+					case "f12": case "f13": case "f14": case "f24": case "f25": case "f28": case "f31": case "f36":
+					case "f47":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
@@ -6990,6 +6993,11 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(totalVideosText);
 		this.E_VE5754_Browse(endpoint);
 		this.G_Text(videoCountText);
+		if("menu" in u1&&"playerInfoView" in u1) {
+			const {menu,playerInfoView,...y}=u1; this.g(y);
+			this.R_Menu(menu);
+			return;
+		}
 		if("menu" in u1) {
 			const {menu,...y}=u1; this.g(y);
 			this.R_Menu(menu);
