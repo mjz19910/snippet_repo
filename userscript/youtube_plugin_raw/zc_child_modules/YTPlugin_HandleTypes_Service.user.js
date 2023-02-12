@@ -3690,13 +3690,18 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("selected" in x) {return;}
-		/** @type {`${cf}_${"R_MusicQueue"}`} */
-		const new_cf=`${cf}_${"R_MusicQueue"}`;
-		{
-			const cf=new_cf;
-			const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if("content" in x) {
+			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
+			const cf2=`${cf}_${"R_MusicQueue"}`;
+			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
 			this.R_MusicQueue(content);
-			this.trackingParams(cf,trackingParams);
+			this.trackingParams(cf2,trackingParams);
+			return;
+		}
+		x: {
+			if(!("endpoint" in x)) break x;
+			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
+			const cf2=`${cf}_${"R_MusicQueue"}`;
 		}
 	}
 	/** @private @arg {D_MusicQueue} x */

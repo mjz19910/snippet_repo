@@ -641,6 +641,13 @@ class CodegenService extends BaseService {
 			if(!xu.label) break x;
 			return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
 		}
+		x: if(b.browseEndpoint) {
+			/** @type {Partial<GE_Browse>} */
+			let xu=b;
+			if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
+			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
+			return `TYPE::E_VE${ve_num}_Browse`;
+		}
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false

@@ -1,4 +1,8 @@
 type D_Tab={
+	endpoint: GE_Browse;
+	title: "Home";
+	trackingParams: string;
+}|{
 	selected: true;
 	content: R_RichGrid;
 	tabIdentifier: "FEwhat_to_watch";
