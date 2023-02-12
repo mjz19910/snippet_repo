@@ -6296,6 +6296,7 @@ class HandleTypes extends HandleTypesEval {
 			const {expirationTime,...y}=u; this.g(y);
 			return this._primitive_of(expirationTime,"number");
 		}
+		this.g(u);
 	}
 	/** @private @arg {RS_Page_Search} x */
 	RS_SearchPage(x) {
