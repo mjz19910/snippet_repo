@@ -1,4 +1,8 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [next.continuation.f1]",
+	"[parse_value.gen_ns] [next.continuation.f2]",
+	"[parse_value.gen_ns] [next.continuation.f3]",
+	"[parse_value.gen_ns] [next.continuation.f16]",
 ];
 type P_ParamParse=
 	|P_PathRootStr
