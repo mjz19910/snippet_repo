@@ -3630,11 +3630,30 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	known_target_id=[];
+	/** @api @public @arg {D_TargetIdStr} x */
+	parse_target_id(x) {
+		if(x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)) return;
+		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
+		if(this.str_starts_with_rx("browse-feed",x)) {
+			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
+			return this.save_enum_with_sep("browse-feed",x,"");
+		}
+		if(this.str_starts_with_rx("comment-replies-item",x)) {return this.save_enum("comment-replies-item",x);}
+		if(this.str_starts_with(x,"engagement-panel")) {return this.save_enum("engagement-panel",x);}
+		if(this.str_starts_with(x,"comments")) {return this.save_enum("comments",x);}
+		if(this.str_starts_with(x,"library")) {return this.save_enum("library",x);}
+		if(this.str_starts_with(x,"watch")) {return this.save_enum("watch",x);}
+		if(this.str_starts_with(x,"shopping_panel")) {return this.save_enum("shopping_panel",x);}
+		if(this.str_starts_with(x,"clip")) {return this.save_enum("clip",x);}
+		this.save_string("target_id",x);
+	}
 	/** @protected @arg {string} cf1 @arg {D_TargetIdStr} x */
 	targetId(cf1,x) {
 		const cf2="targetId";
+		this.parse_target_id(x);
+		if(x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)) return;
+		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
 		this.save_string(`${cf1}.${cf2}`,x);
-		this.parser.parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			switch(x) {
@@ -3649,7 +3668,6 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if(this.str_starts_with(x,"browse-feed")) return;
-		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
 			case "browse-video-menu-button":

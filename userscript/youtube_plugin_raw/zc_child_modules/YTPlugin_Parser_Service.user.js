@@ -412,21 +412,6 @@ class ParserService extends BaseService {
 	}
 	/** @private @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with_r(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @api @public @arg {D_TargetIdStr} x */
-	parse_target_id(x) {
-		if(this.str_starts_with_rx("browse-feed",x)) {
-			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
-			return this.save_enum_with_sep("browse-feed",x,"");
-		}
-		if(this.str_starts_with_rx("comment-replies-item",x)) {return this.save_enum("comment-replies-item",x);}
-		if(this.str_starts_with_r(x,"engagement-panel")) {return this.save_enum("engagement-panel",x);}
-		if(this.str_starts_with_r(x,"comments")) {return this.save_enum("comments",x);}
-		if(this.str_starts_with_r(x,"library")) {return this.save_enum("library",x);}
-		if(this.str_starts_with_r(x,"watch")) {return this.save_enum("watch",x);}
-		if(this.str_starts_with_r(x,"shopping_panel")) {return this.save_enum("shopping_panel",x);}
-		if(this.str_starts_with_r(x,"clip")) {return this.save_enum("clip",x);}
-		this.save_string("target_id",x);
-	}
 	/** @api @public @arg {T_SplitOnce<D_ChanLoc,".">} x */
 	parse_channel_section(x) {
 		switch(x[1]) {
