@@ -683,37 +683,48 @@ class HandleTypes extends HandleTypesEval {
 		if(!wr) return;
 		return f.call(this,wr);
 	}
-	/** @arg {CF_TD_ItemSection} cf1 @protected @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @returns {[contents,sectionIdentifier,targetId]|null} */
+	/** @arg {CF_TD_ItemSection} cf1 @protected @template CT,T,U @template {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {(VU extends TD_ItemSection_3<CT,T,U>?[VU["contents"],VU["sectionIdentifier"],VU["targetId"]]:[VU["contents"]])|null} */
 	TD_ItemSection(cf1,x) {
 		const cf2="TD_ItemSection";
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(cf2,trackingParams);
-		if(contents.length>0) {
-			let cu=contents[0];
-			if(typeof cu!=="object"||!cu) {debugger; return null;}
-			let k=this.get_keys_of(cu);
-			switch(cf1) {
-				default: debugger; break;
-				case `TD_ItemSection_3<"comment-item-section","comments-section">`: break;
-				case `TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`: break;
-				case `TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`: break;
+		/** @type {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} */
+		let u=x;
+		if("targetId" in u) {
+			const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
+			this.trackingParams(cf2,trackingParams);
+			if(contents.length>0) {
+				let cu=contents[0];
+				if(typeof cu!=="object"||!cu) {debugger; return null;}
+				let k=this.get_keys_of(cu);
+				switch(cf1) {
+					default: debugger; break;
+					case `TD_ItemSection_3<"comment-item-section","comments-section">`: break;
+					case `TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`: break;
+					case `TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`: break;
+				}
+				switch(k[0]) {
+					default: console.log(`-- [TD_Section_3.${cf1}.Section_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
+					case "continuationItemRenderer":
+					case "compactVideoRenderer":
+					case "compactRadioRenderer":
+				}
 			}
-			switch(k[0]) {
-				default: console.log(`-- [TD_Section_3.${cf1}.Section_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
-				case "continuationItemRenderer":
-				case "compactVideoRenderer":
-				case "compactRadioRenderer":
-			}
+			return as_any([contents,sectionIdentifier,targetId]);
 		}
-		return [contents,sectionIdentifier,targetId];
+		const {contents,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
+		this.trackingParams(cf2,trackingParams);
+		return as_any([contents]);
 	}
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x */
 	H_Get(cf,k,x) {return this.wn(cf,x,k);}
 	// const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;
 	/** @protected @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
-	/** @protected @template CT,T,U @arg {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} x */
-	TR_ItemSection(x) {return this.wn("TR_ItemSection",x,"itemSectionRenderer");}
+	/** @protected @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU, "itemSectionRenderer">]} */
+	TR_ItemSection(x) {
+		const cf="TR_ItemSection";
+		const {itemSectionRenderer: a,...y}=this.s(cf,x);/*#destructure_done*/
+		return [a,y];
+	}
 	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
@@ -1005,7 +1016,8 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
 		this.k(`${cf}.section`,x.itemSectionRenderer);
 		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		let u=this.TR_ItemSection(x); if(!u) return;
+		let [u,y]=this.TR_ItemSection(x); this.g(y);
+		if(!u) return;
 		let u1=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","comments-section">`,u); if(!u1) return;
 		this.ItemSection_3_CommentItemSection(u1);
 	}
@@ -5963,10 +5975,23 @@ class HandleTypes extends HandleTypesEval {
 				case "search-feed": return this.DC_SectionList_SearchFeed(x);
 			}
 		}
-		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [u]=this.z(contents,this.TR_SectionListItem);
-		let [u1]=this.z(u,x => this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x));
-		this.z(u1,x => {
+		const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
+		let ux_1=[];
+		let ux_2=[];
+		for(let item of arr) {
+			const {itemSectionRenderer: x,...y}=item; this.g(y);
+			if("targetId" in x) {
+				let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
+				if(r===null) continue;
+				ux_1.push(r);
+				continue;
+			}
+			let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
+			ux_2.push(r);
+			x;
+		}
+		this.z(ux_1,x => {
 			/** @type {DC_SectionListBase} */
 			switch(x[1]) {
 				default: debugger; break;
@@ -6013,17 +6038,18 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId!=="browse-feedFEhistory") debugger;
 	}
 	/** @private @arg {D_TextHeader} x */
-	D_TextHeader(x) {x;}
-	/** @private @template T1,T2,T3 @arg {TR_ItemSection_1<T1>|TR_ItemSection_3<T1,T2,T3>} x */
-	TR_SectionListItem(x) {
-		const cf="SectionListItem"; this.k(cf,x);
-		if("itemSectionRenderer" in x) return this.TR_ItemSection(x);
-		this.codegen_typedef_all(cf,x);
-		return null;
+	D_TextHeader(x) {
+		const cf="D_ContinuationItem";
+		const {title,style,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		switch(style) {
+			default: debugger; break;
+			case "TEXT_HEADER_RENDERER_STYLE_BOLD":
+		}
 	}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
-		const cf="D_ContinuationItem"; this.k(cf,x);
+		const cf="D_ContinuationItem";
 		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x); this.g(y);
 		this.t(trigger,x => {
 			this.ceq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
@@ -7066,7 +7092,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RG_Watch_ItemSection} x */
 	RG_Watch_ItemSection(x) {
-		let u=this.TR_ItemSection(x); if(!u) return;
+		let [u,y]=this.TR_ItemSection(x); this.g(y);
+		if(!u) return;
 		let u1=this.TD_ItemSection(`TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`,u);
 		if(!u1) return;
 		let [a,...section_arr]=u1;
@@ -8854,13 +8881,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
 		const cf="TR_SectionListItem_3_Empty";
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
-		if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		if("itemSectionRenderer" in x) {
-			return this.codegen_typedef_all(cf,x);
-		}
-		x===""; this.codegen_typedef_all(cf,x);
+		this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_PrimaryLinkItem} x */
 	D_PrimaryLinkItem(x) {

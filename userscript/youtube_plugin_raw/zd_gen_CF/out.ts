@@ -707,6 +707,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection_2_CommentsEntryPoint";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_SignalService_I_0";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TM_Visibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TR_ItemSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Autoplay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Command_TP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_DE_SettingItem.407";}
@@ -717,7 +718,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "VideoGoodPutShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
-		|{n: Prelude.CF_M_s_priv; t: Types.CF_M_s_priv_; v: "TD_ItemSection:a" | "TD_ItemSection:CF_TD_ItemSection";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_VE3832_Watch:omit";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_AdditionalDataItem";}
@@ -768,6 +768,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup:R_PdgBuyFlow";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup_Empty";}
 		|{n: Prelude.CF_TA_Page; t: Types.CF_TA_Page_; v: "AD_UpdateChannelSwitcherPage";}
+		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_1<any>";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}

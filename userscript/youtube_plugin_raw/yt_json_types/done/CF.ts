@@ -1,7 +1,7 @@
 type CF_M_s_priv=
 	|`D_Params:${CF_D_Params}`
 	|`T_Endpoint_Tracking:${"C_GetSurvey"}`
-	|`TD_ItemSection_3:${CF_TD_ItemSection}`
+	|`TD_ItemSection:${CF_TD_ItemSection}`
 	|`TE_Endpoint_2:${CF_TE_Endpoint_2}`
 	|`TE_Endpoint_3:${CF_TE_Endpoint_3}`
 	|`TE_Endpoint_Opt_3:${CF_TE_Endpoint_Opt_3}`
