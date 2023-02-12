@@ -7249,6 +7249,12 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,c);
 		return y;
 	}
+	/** @private @arg {D_AutoplaySetItem_ButtonVideoEP} x */
+	D_AutoplaySetItem_ButtonVideoEP(x) {
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("watchPlaylistEndpoint" in x) return this.E_WatchPlaylist(x);
+		debugger;
+	}
 	/** @private @arg {D_AutoplaySetItem} x */
 	D_AutoplaySetItem(x) {
 		const cf="D_AutoplaySetItem"; this.k(cf,x);
@@ -7257,7 +7263,7 @@ class HandleTypes extends HandleTypesEval {
 				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.E_Watch(autoplayVideo);
 				this.E_Watch(nextButtonVideo);
-				this.E_WatchPlaylist(previousButtonVideo);
+				this.D_AutoplaySetItem_ButtonVideoEP(previousButtonVideo);
 			} break;
 			case "NORMAL": {
 				/** @type {D_AutoplaySetItem_NormalOpt} */

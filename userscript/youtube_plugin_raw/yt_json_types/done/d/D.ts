@@ -825,6 +825,11 @@ type D_AutoplaySetItem={
 	nextButtonVideo: E_Watch;
 	previousButtonVideo: E_WatchPlaylist;
 }|{
+	mode: "LOOP";
+	autoplayVideo: E_Watch;
+	nextButtonVideo: E_Watch;
+	previousButtonVideo: E_Watch;
+}|{
 	mode: "SHUFFLE";
 	autoplayVideo: E_Watch;
 	nextButtonVideo: E_Watch;
