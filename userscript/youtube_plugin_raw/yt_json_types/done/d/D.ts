@@ -2101,8 +2101,8 @@ type D_MicroformatEmbed=({
 	height: 720;
 })&D_MicroformatEmbed_Base;
 type D_ModifiedSetItem={
-	autoplayVideo: E_WatchPlaylist;
-	nextButtonVideo: E_WatchPlaylist;
+	autoplayVideo?: E_WatchPlaylist;
+	nextButtonVideo?: E_WatchPlaylist;
 	previousButtonVideo?: E_WatchPlaylist;
 };
 type D_MovingThumbnail={

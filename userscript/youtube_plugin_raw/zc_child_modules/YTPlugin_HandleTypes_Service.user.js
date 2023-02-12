@@ -7630,8 +7630,8 @@ class HandleTypes extends HandleTypesEval {
 	D_ModifiedSetItem(x) {
 		const cf="D_ModifiedSetItem"; this.k(cf,x);
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_WatchPlaylist(autoplayVideo);
-		this.E_WatchPlaylist(nextButtonVideo);
+		this.t(autoplayVideo,this.E_WatchPlaylist);
+		this.t(nextButtonVideo,this.E_WatchPlaylist);
 		this.t(previousButtonVideo,this.E_WatchPlaylist);
 	}
 	/** @private @arg {MG_AdLayout_TopImage} x */
