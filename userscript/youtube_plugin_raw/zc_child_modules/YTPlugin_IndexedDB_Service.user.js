@@ -34,8 +34,8 @@ class DatabaseArguments {
 }
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class IndexedDBService extends BaseService {
-	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x @arg {string} db_name */
-	constructor(x,db_name,version=1) {
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x @arg {string} [db_name] */
+	constructor(x,db_name="yt_plugin",version=4) {
 		super(x);
 		this.db_args=new DatabaseArguments(db_name,version);
 	}
@@ -45,85 +45,115 @@ class IndexedDBService extends BaseService {
 	store_cache_index={
 		video_id: ["video_id",new Map],
 		hashtag: ["hashtag",new Map],
+		channel_id: ["channel_id",new Map],
 	};
 	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,DatabaseStoreTypes[R][]]})} */
 	store_cache={
 		video_id: ["video_id",[]],
 		hashtag: ["hashtag",[]],
+		channel_id: ["channel_id",[]],
 	};
-	/** @arg {keyof DatabaseStoreTypes} key */
+	/** @template {keyof DatabaseStoreTypes} T @arg {T} key @returns {Extract<data_cache_Return,[T,...any]>} */
 	get_data_cache(key) {
-		switch(key) {
-			case "video_id": {const cache=this.store_cache[key][1]; return this.exact_arr(key,cache);}
-			case "hashtag": {const cache=this.store_cache[key][1]; return this.exact_arr(key,cache);}
-		}
+		return as([key,this.store_cache[key][1]]);
 	}
 	/** @arg {keyof DatabaseStoreTypes} key */
 	get_data_index_cache(key) {return this.store_cache_index[key][1];}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
-	/** @type {Map<"v"|"hashtag",string[]>} */
+	/** @type {Map<"v"|"hashtag"|"channel_id",string[]>} */
 	cached_data=new Map;
 	/** @arg {DatabaseStoreDescription["name"]} key */
 	check_size(key) {
 		let d_cache=this.get_data_cache(key);
-		switch(d_cache[0]) {
-			case "video_id": if(d_cache[1].length!==d_cache[1].reduce((r) => r+1,0)) {debugger;} break;
-			case "hashtag": if(d_cache[1].length!==d_cache[1].reduce((r) => r+1,0)) {debugger;} break;
+		/** @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
+		let arr=d_cache[1];
+		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
+	}
+	/** @api @public @arg {push_waiting_obj_Args} args */
+	put(...args) {
+		if(!args[1]) {debugger; return;}
+		switch(args[0]) {
+			case "channel_id": {
+				const [key,obj]=args;
+				let cache=this.cached_data.get(key);
+				let cache_key=`${key}:${obj.type}:${obj.id}`;
+				if(cache?.includes(cache_key)) return;
+				if(!this.database_open) this.requestOpen({name: key});
+				this.push_waiting_obj(key,obj);
+				this.check_size(key);
+			} break;
+			case "hashtag": {
+				const [key,obj]=args;
+				/** @type {T_UnionToPartial<typeof obj>} */
+				let ac_obj=obj;
+				let index_val=ac_obj[key];
+				if(index_val==null) return;
+				let cache=this.cached_data.get(key);
+				if(cache?.includes(index_val)) return;
+				if(!this.database_open) this.requestOpen({name: key});
+				this.push_waiting_obj(key,obj);
+				this.check_size(key);
+			} break;
+			case "video_id": {
+				const [key,obj]=args;
+				const index_key="v";
+				/** @type {T_UnionToPartial<typeof obj>} */
+				let ac_obj=obj;
+				let index_val=ac_obj[index_key];
+				if(index_val==null) return;
+				let cache=this.cached_data.get(index_key);
+				if(cache?.includes(index_val)) return;
+				if(!this.database_open) this.requestOpen({name: key});
+				this.push_waiting_obj(key,obj);
+				this.check_size(key);
+			} break;
 		}
 	}
-	/** @api @public @template {DatabaseStoreDescription["name"]} K @arg {K} key @arg {DatabaseStoreTypes[keyof DatabaseStoreTypes]} obj */
-	put(key,obj) {
-		if(!obj) {debugger; return;}
-		const index_key=this.get_index_key(key);
-		/** @type {T_UnionToPartial<typeof obj>} */
-		let ac_obj=obj;
-		let index_val=ac_obj[index_key];
-		if(index_val==null) return;
-		let cache=this.cached_data.get(index_key);
-		if(cache?.includes(index_val)) return;
-		if(!this.database_open) this.requestOpen({name: key});
-		this.check_size(key);
-		this.push_waiting_obj(key,obj);
-		this.check_size(key);
-	}
-	/** @private @arg {K} key @template {keyof DatabaseStoreTypes} K @arg {DatabaseStoreTypes[keyof DatabaseStoreTypes]} obj */
-	push_waiting_obj(key,obj) {
-		let d_cache=this.get_data_cache(key);
-		let c_index=this.store_cache_index[key][1];
-		const index_key=this.get_index_key(key);
-		/** @type {T_UnionToPartial<typeof obj>} */
-		let ac_obj=obj;
-		let idx;
-		switch(d_cache[0]) {
-			case "hashtag": {
-				let index_val=ac_obj[index_key];
-				if(index_val===void 0) break;
-				idx=c_index.get(index_val);
-				if(d_cache[0] in obj) {
-					if(idx!==void 0) {
-						d_cache[1][idx]=obj;
-						return;
-					}
-					idx=d_cache[1].push(obj)-1;
-					c_index.set(index_val,idx);
+	/** @private @arg {push_waiting_obj_Args} args */
+	push_waiting_obj(...args) {
+		switch(args[0]) {
+			case "channel_id": {
+				const [key,obj]=args;
+				let d_cache=this.get_data_cache(key);
+				let c_index=this.store_cache_index[key][1];
+				let index_val=`${key}:${obj.type}:${obj.id}`;
+				let idx=c_index.get(index_val);
+				if(idx!==void 0) {
+					d_cache[1][idx]=obj;
+					return;
 				}
-			}; break;
+				idx=d_cache[1].push(obj)-1;
+				c_index.set(index_val,idx);
+			} break;
+			case "hashtag": {
+				const [key,obj]=args;
+				let d_cache=this.get_data_cache(key);
+				let c_index=this.store_cache_index[key][1];
+				let index_val=obj.hashtag;
+				if(index_val===void 0) break;
+				let idx=c_index.get(index_val);
+				if(idx!==void 0) {
+					d_cache[1][idx]=obj;
+					return;
+				}
+				idx=d_cache[1].push(obj)-1;
+				c_index.set(index_val,idx);
+			} break;
 			case "video_id": {
-				const dc_type=d_cache[0];
-				const index_key=this.get_index_key(dc_type);
-				let index_val=ac_obj[index_key];
+				const [key,obj]=args;
+				let d_cache=this.get_data_cache(key);
+				let c_index=this.store_cache_index[key][1];
+				let index_val=obj.v;
 				if(index_val===void 0) break;
 				if(!index_val) {debugger; throw new Error("Invalid index key");}
-				idx=c_index.get(index_val);
-				if("v" in obj) {
-					if(idx!==void 0) {
-						d_cache[1][idx]=obj;
-						return;
-					}
-					idx=d_cache[1].push(obj)-1;
-					c_index.set(index_val,idx);
+				let idx=c_index.get(index_val);
+				if(idx!==void 0) {
+					d_cache[1][idx]=obj;
+					return;
 				}
+				idx=d_cache[1].push(obj)-1;
+				c_index.set(index_val,idx);
 			}; break;
 		}
 	}
@@ -192,6 +222,7 @@ class IndexedDBService extends BaseService {
 			/** @type {T_UnionToPartial<typeof val>} */
 			let ac_val=val;
 			if(!this.committed_data.includes(val)) continue;
+			if(!index_key) {debugger; continue;}
 			x: {
 				if(!this.cached_data.has(index_key)) this.cached_data.set(index_key,[]);
 				let cache=this.cached_data.get(index_key);
@@ -219,13 +250,14 @@ class IndexedDBService extends BaseService {
 		const obj_store=transaction.objectStore(store_desc.name);
 		this.consume_data_with_store(store_desc,obj_store);
 	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @returns {K extends "hashtag"?"hashtag":"v"} */
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
 	get_index_key(key) {
-		return as(this.get_index_key_str(key));
+		return this.get_index_key_str(key);
 	}
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
 	get_index_key_str(key) {
 		switch(key) {
+			case "channel_id": return null;
 			case "hashtag": return "hashtag";
 			case "video_id": return "v";
 		}
@@ -269,7 +301,7 @@ class IndexedDBService extends BaseService {
 					if("v" in data) {
 						new_data_map.set(content,data);
 					} else {
-						new_data_map.set(content,data);	
+						new_data_map.set(content,data);
 					}
 				}
 			} else {debugger;}
@@ -324,18 +356,31 @@ class IndexedDBService extends BaseService {
 		/** @private @type {IDBRequest<T[]>} */
 		let get_all_video_id_req=src_obj_store.getAll();
 		let {result: video_id_result}=await this.await_success(get_all_video_id_req);
-		const dst_obj_store=db.createObjectStore(key,{keyPath: this.get_index_key(key)});
-		dst_obj_store.createIndex(key,index_key,options);
-		for(let x of video_id_result) {
-			if(!(index_key in x)) throw new Error("Invalid transfer_store result");
-			dst_obj_store.put(x);
+		if(index_key) {
+			const dst_obj_store=db.createObjectStore(key,{keyPath: index_key});
+			dst_obj_store.createIndex(key,index_key,options);
+			for(let x of video_id_result) {
+				if(index_key) {
+					if(!(index_key in x)) throw new Error("Invalid transfer_store result");
+					dst_obj_store.put(x);
+				}
+			}
+		} else {
+			const dst_obj_store=db.createObjectStore(key);
+			for(let x of video_id_result) {
+				dst_obj_store.put(x);
+			}
 		}
 	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db @arg {IDBIndexParameters} options */
+	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db @arg {IDBIndexParameters} [options] */
 	create_store(key,db,options) {
 		let index_key=this.get_index_key(key);
-		let obj_store=db.createObjectStore(key,{keyPath: this.get_index_key(key)});
-		obj_store.createIndex(key,index_key,options);
+		if(index_key) {
+			let obj_store=db.createObjectStore(key,{keyPath: this.get_index_key(key)});
+			obj_store.createIndex(key,index_key,options);
+		} else {
+			db.createObjectStore(key);
+		}
 	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
@@ -354,12 +399,16 @@ class IndexedDBService extends BaseService {
 			this.transfer_store("video_id",video_id_store,db,{unique: true});
 			this.create_store("hashtag",db,{unique: true});
 		}
+		if(event.oldVersion<4) {
+			this.create_store("channel_id",db);
+		}
 	}
 	/** @private @arg {IDBOpenDBRequest} request */
 	createLatestDatabaseVersion(request) {
 		const db=request.result;
 		this.create_store("video_id",db,{unique: true});
 		this.create_store("hashtag",db,{unique: true});
+		this.create_store("channel_id",db);
 	}
 	/** @private @arg {Event} event */
 	onError(event) {console.log("idb error",event);}

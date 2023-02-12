@@ -172,8 +172,6 @@ class ParserService extends BaseService {
 		let a=split_string_once(x,"/");
 		this.get_yt_url_type(["youtubei","v1",...a]);
 	}
-	/** @api @public @arg {string} x */
-	parse_video_id(x) {this.x.get("indexed_db").put("video_id",{v: x});}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {this.x.get("indexed_db").put("video_id",{v: x[1]});}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["feed",any]>} x */
@@ -227,7 +225,7 @@ class ParserService extends BaseService {
 				default: res[0]===""; debugger;
 			}
 		}
-		this.log_url_info_arr(url_info_arr);
+		this.x.get("handle_types").log_url_info_arr(url_info_arr);
 	}
 	/** @console_api @public @arg {string} x */
 	create_param_map_dbg(x) {
@@ -482,8 +480,6 @@ class ParserService extends BaseService {
 	/** @private @type {string[]} */
 	cache_playlist_index=[];
 	/** @private @type {string[]} */
-	cache_playlist_id=[];
-	/** @private @type {string[]} */
 	cache_player_params=[];
 	/** @private @arg {CF_L_TP_Params} root @arg {Extract<D_UrlFormat,`https://${string}`|`http://${string}`>} x */
 	parse_full_url(root,x) {
@@ -569,37 +565,6 @@ class ParserService extends BaseService {
 		}
 	}
 	log_playlist_index=false;
-	/** @private @arg {D_UrlInfoPlaylist} x */
-	log_playlist_id(x,critical=false) {
-		if(!this.cache_playlist_id.includes(x.id)) {
-			this.cache_playlist_id.push(x.id);
-			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
-		}
-	}
-	/** @private @arg {D_UrlInfoPlaylist} x */
-	get_playlist_url_info_critical(x) {
-		switch(x.id.length) {
-			case 11: return false;
-			case 24: return false;
-			case 32: return false;
-			default: debugger; return true;
-		}
-	}
-	/** @private @arg {D_UrlInfoPlaylist} x */
-	parse_playlist_url_info(x) {
-		let is_critical=this.get_playlist_url_info_critical(x);
-		this.log_playlist_id(x,is_critical);
-	}
-	/** @public @arg {G_UrlInfoItem[]} x */
-	log_url_info_arr(x) {
-		for(let url_info of x) {
-			switch(url_info._tag) {
-				case "playlist": this.parse_playlist_url_info(url_info); break;
-				case "video": this.parse_video_id(url_info.id); break;
-				case "video-referral": this.parse_video_id(url_info.id); break;
-			}
-		}
-	}
 	/** @private @arg {CF_L_TP_Params} root @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
 	parse_url_with_search(root,x) {
 		let a=split_string(x,"?");

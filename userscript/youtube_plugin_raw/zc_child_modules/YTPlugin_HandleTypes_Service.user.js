@@ -6174,6 +6174,47 @@ class HandleTypes extends HandleTypesEval {
 		this.D_GuideEntry_TargetId(targetId);
 		if(isPrimary!==true) debugger;
 	}
+	/** @api @public @arg {string} x */
+	parse_video_id(x) {this.x.get("indexed_db").put("video_id",{v: x});}
+	/** @api @public @arg {string} type @arg {string} x */
+	parse_channel_id(type,x) {this.x.get("indexed_db").put("channel_id",{type,id: x});}
+	/** @public @arg {G_UrlInfoItem[]} x */
+	log_url_info_arr(x) {
+		for(let url_info of x) {
+			switch(url_info._tag) {
+				default: url_info===""; debugger; break;
+				case "channel": this.parse_channel_id(url_info.type, url_info.id); break;
+				case "play-next": url_info; break;
+				case "playlist": this.parse_playlist_url_info(url_info); break;
+				case "video": this.parse_video_id(url_info.id); break;
+				case "video-referral": this.parse_video_id(url_info.id); break;
+			}
+		}
+	}
+	/** @private @arg {D_UrlInfoPlaylist} x */
+	get_playlist_url_info_critical(x) {
+		switch(x.id.length) {
+			case 11: return false;
+			case 24: return false;
+			case 32: return false;
+			default: debugger; return true;
+		}
+	}
+	log_enabled_playlist_id=false;
+	/** @private @type {string[]} */
+	cache_playlist_id=[];
+	/** @private @arg {D_UrlInfoPlaylist} x */
+	log_playlist_id(x,critical=false) {
+		if(!this.cache_playlist_id.includes(x.id)) {
+			this.cache_playlist_id.push(x.id);
+			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
+		}
+	}
+	/** @private @arg {D_UrlInfoPlaylist} x */
+	parse_playlist_url_info(x) {
+		let is_critical=this.get_playlist_url_info_critical(x);
+		this.log_playlist_id(x,is_critical);
+	}
 	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId_NoRadio} x */
 	parse_guide_entry_id(x) {
 		/** @private @type {G_UrlInfoItem[]} */
@@ -6182,7 +6223,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx("PL",x)) {arr.push({_tag: "playlist",type: "PL",id: x.slice(2)});}
 		if(this.str_starts_with_rx("UU",x)) {arr.push({_tag: "playlist",type: "UU",id: x.slice(2)});}
 		if(this.str_starts_with_rx("UC",x)) {arr.push({_tag: "channel",type: "UC",id: x.slice(2)});}
-		this.x.get("parser_service").log_url_info_arr(arr);
+		this.log_url_info_arr(arr);
 		if(this.str_starts_with_rx("UC",x)) {
 			if(x.length===24) return;
 			console.log("[guideEntryId.channel.length]",x.length);
