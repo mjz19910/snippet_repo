@@ -494,6 +494,10 @@ type G_RendererContentItem=
 type GD_RC_SectionList=
 	|DC_SectionListBase
 	|{
+		trackingParams: string;
+		disablePullToRefresh: true;
+	}
+	|{
 		contents: {
 			itemSectionRenderer: {
 				contents: R_Message[];

@@ -6142,41 +6142,51 @@ class HandleTypes extends HandleTypesEval {
 				case "search-feed": return this.DC_SectionList_SearchFeed(x);
 			}
 		}
-		const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!arr) {debugger; return;}
-		/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
-		let ux_1=[];
-		let ux_2=[];
-		for(let item of arr) {
-			const {itemSectionRenderer: x,...y}=item; this.g(y);
-			if("targetId" in x) {
-				let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
-				if(r===null) continue;
-				ux_1.push(r);
-				continue;
+		if("contents" in x) {
+			const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(!arr) {debugger; return;}
+			/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
+			let ux_1=[];
+			let ux_2=[];
+			for(let item of arr) {
+				const {itemSectionRenderer: x,...y}=item; this.g(y);
+				if("targetId" in x) {
+					let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
+					if(r===null) continue;
+					ux_1.push(r);
+					continue;
+				}
+				let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
+				ux_2.push(r);
+				x;
 			}
-			let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
-			ux_2.push(r);
-			x;
+			this.z(ux_1,x => {
+				/** @type {DC_SectionListBase} */
+				switch(x[1]) {
+					default: debugger; break;
+					case "comment-item-section": {
+						let [x0,,x2]=x;
+						if(x2!=="engagement-panel-comments-section") debugger;
+						this.z(x0,x => {
+							if(!x.continuationItemRenderer) debugger;
+							return this.R_ContinuationItem(x);
+						});
+					} break;
+				}
+			});
+			// this.tz(continuations,this.RD_NextContinuation);
+			this.trackingParams(cf,trackingParams);
+			// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
+			// if(hideBottomSeparator!==void 0) this.save_boolean(`${cf}.hideBottomSeparator`,hideBottomSeparator);
+			return;
 		}
-		this.z(ux_1,x => {
-			/** @type {DC_SectionListBase} */
-			switch(x[1]) {
-				default: debugger; break;
-				case "comment-item-section": {
-					let [x0,,x2]=x;
-					if(x2!=="engagement-panel-comments-section") debugger;
-					this.z(x0,x => {
-						if(!x.continuationItemRenderer) debugger;
-						return this.R_ContinuationItem(x);
-					});
-				} break;
-			}
-		});
-		// this.tz(continuations,this.RD_NextContinuation);
-		this.trackingParams(cf,trackingParams);
-		// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
-		// if(hideBottomSeparator!==void 0) this.save_boolean(`${cf}.hideBottomSeparator`,hideBottomSeparator);
+		if("disablePullToRefresh" in x) {
+			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(cf,trackingParams);
+			if(disablePullToRefresh!==true) debugger;
+			return;
+		}
+		debugger;
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
