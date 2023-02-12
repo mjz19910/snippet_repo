@@ -225,8 +225,8 @@ class ParserService extends BaseService {
 	report$params(x) {this.save_string("report.params.path",x.join("$"));}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
-		this.save_number(`[${path}]`,x[1]);
-		this.save_string(`[${path}]`,`${x[2]}n`);
+		this.save_number(path,x[1]);
+		this.save_string(path,`${x[2]}n`);
 	}
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
 	to_param_obj(x) {
@@ -388,7 +388,7 @@ class ParserService extends BaseService {
 		let su1=split_string_once(su,"/");
 		if(su1.length===1) {
 			let [pt0]=su1;
-			this.save_string(`[ve_6827.part[0]]`,`${pt0}`);
+			this.save_string(`ve_6827.part[0]`,`${pt0}`);
 			switch(pt0) {
 				case "reporthistory": return;
 				default: debugger; return;
@@ -397,7 +397,7 @@ class ParserService extends BaseService {
 		switch(su1[0]) {
 			case "feed": {
 				let [pt]=split_string_once(su1[1],"?");
-				this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
+				this.save_string(cf,`${su1[0]}/${pt}`);
 				switch(pt) {
 					case "trending": break;
 					case "library": break;

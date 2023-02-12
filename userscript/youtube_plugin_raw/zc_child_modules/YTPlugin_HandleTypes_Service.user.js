@@ -995,7 +995,7 @@ class HandleTypes extends HandleTypesEval {
 	G_ClientSignal(cf1,x) {
 		const cf2="G_ClientSignal";
 		let {actions,...y}=this.Signal_Omit(x,x => {
-			this.save_string(`[${cf2}.${cf1}.signal]`,x);
+			this.save_string(`${cf2}.${cf1}.signal`,x);
 			if(x!=="CLIENT_SIGNAL") debugger;
 		}); this.g(y);
 		this.z_cf(cf1,actions,this.G_SignalActionItem);
@@ -1541,7 +1541,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Icon(cf1,x) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		this.save_string(`[${cf1}:icon.iconType]`,iconType);
+		this.save_string(`${cf1}:icon.iconType`,iconType);
 	}
 	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
@@ -3596,7 +3596,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {string} cf1 @arg {D_TargetIdStr} x */
 	targetId(cf1,x) {
 		const cf2="targetId";
-		this.save_string(`[${cf1}.${cf2}]`,x);
+		this.save_string(`${cf1}.${cf2}`,x);
 		this.parser.parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
@@ -5002,8 +5002,8 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string(`[${cf}.style]`,style);
-		this.save_string(`[${cf}.size]`,size);
+		this.save_string(`${cf}.style`,style);
+		this.save_string(`${cf}.size`,size);
 		if(isDisabled!==false) debugger;
 		this.G_Text(text);
 		this.E_ShareEntityService(serviceEndpoint);
@@ -6039,7 +6039,7 @@ class HandleTypes extends HandleTypesEval {
 		// this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
 		// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
-		// if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+		// if(hideBottomSeparator!==void 0) this.save_boolean(`${cf}.hideBottomSeparator`,hideBottomSeparator);
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
 	D_SectionList_BrowseFeed_Subscriptions(x) {
@@ -7314,7 +7314,7 @@ class HandleTypes extends HandleTypesEval {
 		for(let u of Object.entries(config)) {
 			if(u[0]==="animationConfig") continue;
 			if(typeof u[1]==="object") {debugger; continue;}
-			this.save_string(`[${cf}.config.${u[0]}]`,`${u[1]}`);
+			this.save_string(`${cf}.config.${u[0]}`,`${u[1]}`);
 		}
 		this.save_keys(`${cf}.config.animationConfig`,config.animationConfig);
 	}

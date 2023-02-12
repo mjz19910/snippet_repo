@@ -2483,9 +2483,9 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value.get("codegen");
 	}
 	/** @protected @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {this.ds.save_string(`[${k}]`,x);}
+	save_string(k,x) {this.ds.save_string(k,x);}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean(k,x) {this.ds.save_boolean(`[${k}]`,x);}
+	save_boolean(k,x) {this.ds.save_boolean(k,x);}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */
@@ -2617,7 +2617,7 @@ class BaseService extends BaseServicePrivate {
 		if(!nn[1]) throw new Error();
 		/** @private @type {T_SplitOnce<NonNullable<T_SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
-		this.save_string(`[${ns_name}::${ns}]`,no_ns_part);
+		this.save_string(`${ns_name}::${ns}`,no_ns_part);
 	}
 	/** @protected @template {string} T @template {string} Sep @template {`${T}${Sep}${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
 	save_enum_with_sep(enum_base,enum_str,sep) {
@@ -2627,8 +2627,8 @@ class BaseService extends BaseServicePrivate {
 		let n2=n1[1];
 		if(sep!=="") {
 			let sd=this.drop_separator(n1[1],sep);
-			this.save_string(`[${ns_name}::${enum_base}]`,sd);
-		} else {this.save_string(`[${ns_name}::${enum_base}]`,n2);}
+			this.save_string(`${ns_name}::${enum_base}`,sd);
+		} else {this.save_string(`${ns_name}::${enum_base}`,n2);}
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {T_SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
@@ -3071,7 +3071,7 @@ class CsiService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "c": {
-					this.save_string(`[CsiService.${param.key}]`,param.value);
+					this.save_string(`CsiService.${param.key}`,param.value);
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": this.data[param.key]=param.value; continue;
