@@ -362,6 +362,31 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "continuation_token.data.f110.f3.f15.f2": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data.f110.f3.f15": switch(map_entry_key) {
+				case 2: case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data.f110.f3": switch(map_entry_key) {
+				case 15:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data.f110": switch(map_entry_key) {
+				case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data": switch(map_entry_key) {
+				case 110:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "next.continuation.f2.f36": switch(map_entry_key) {
 				case 5: case 8:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -597,7 +622,8 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f2": case "f3": case "f5": case "f6": case "f7": case "f8": case "f9": case "f10": case "f11": case "f14": case "f19": case "f20":
+					case "f1": case "f2": case "f3": case "f5": case "f6": case "f7": case "f8": case "f9":
+					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
@@ -5989,7 +6015,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				let x1=decodeURIComponent(f3i);
 				this.params("continuation_token.+4.f0.f3","continuation_token.data",x1);
-				console.log("[continuation_token]","0x"+(new Uint32Array(msg_id.buffer)[0].toString(16)),x1);
+				this.save_string("continuation_token_binary_ns","0x"+(new Uint32Array(msg_id.buffer)[0].toString(16)));
 			} break;
 		}
 	}

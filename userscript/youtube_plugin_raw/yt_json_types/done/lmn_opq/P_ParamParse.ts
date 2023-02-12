@@ -1,4 +1,9 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [continuation_token.data.f110.f3.f15.f2.f1]",
+	"[parse_value.gen_ns] [continuation_token.data.f110.f3.f15.f2]",
+	"[parse_value.gen_ns] [continuation_token.data.f110.f3.f15.f3]",
+	"[parse_value.gen_ns] [continuation_token.data.f110.f3.f15]",
+	"[parse_value.gen_ns] [continuation_token.data.f110.f3]",
 	"[parse_value.gen_ns] [continuation_token.data.f110]",
 	"[parse_value.gen_ns] [D_Browse.param.f77]",
 	"[parse_value.gen_ns] [watch_playlist.params.f4]",
