@@ -424,6 +424,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FusionSearchbox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GetSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GhostGrid";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GraftedVeItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideCollapsibleEntry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideCollapsibleSectionEntry";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_GuideDownloadsEntry";}
@@ -891,7 +892,6 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetTranscript";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Like";}
-		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_Next";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_NotificationOptOut";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_RecordInteractions";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_SendPost";}

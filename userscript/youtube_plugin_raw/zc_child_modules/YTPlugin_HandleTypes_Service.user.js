@@ -4146,7 +4146,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(x.page) {
 			case "browse": return this.RS_Page_Browse(x);
 			case "watch": return this.RS_WatchPage(x);
-			case "channel": return this.RS_ChannelPage(x);
+			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
 			case "settings": return this.G_RS_Page_Settings(x);
 			case "shorts": return this.G_RS_Page_Shorts(x);
@@ -6371,14 +6371,32 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(url);
 		return y;
 	}
+	/** @private @arg {D_GraftedVeItem} x */
+	D_GraftedVeItem(x) {
+		const cf="D_GraftedVeItem";
+		const {veData,csn,...y}=this.s(cf,x); this.g(y);
+		this.D_VeCsn(csn);
+	}
+	/** @private @arg {string} x */
+	D_VeCsn(x) {
+		let csn_dec=atob(x);
+		console.log("[csn_dec]",csn_dec);
+	}
 	/** @private @arg {RS_Page_Channel} x */
-	RS_ChannelPage(x) {
-		const cf="R_ChannelPage";
+	RS_Page_Channel(x) {
+		const cf="RS_Page_Channel";
 		if("rootVe" in x) {
 			const {...u}=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
 			const {rootVe,expirationTime,...y}=u; this.g(y);
 			if(rootVe!==3611) debugger;
 			return;
+		}
+		if("csn" in x) {
+			const {...u}=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			const {csn,expirationTime,graftedVes,...y}=u; this.g(y);
+			this.D_VeCsn(csn);
+			this.z(graftedVes,this.D_GraftedVeItem);
+			return this._primitive_of(expirationTime,"number");
 		}
 		if("expirationTime" in x) {
 			const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
