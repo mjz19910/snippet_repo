@@ -22,7 +22,7 @@ type D_PlaylistContent={
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: 0;
 	playlistId: string;
-	totalVideos: 689;
+	totalVideos: number;
 	ownerName: G_Text;
 	isInfinite: false;
 	playlistShareUrl: `http://www.youtube.com/watch?${string}`;

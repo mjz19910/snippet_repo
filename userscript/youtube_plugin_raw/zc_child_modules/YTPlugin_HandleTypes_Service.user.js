@@ -2161,6 +2161,10 @@ class HandleTypes extends HandleTypesEval {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
 			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
 	}
+	/** @private @arg {CD_Next} x */
+	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
+	/** @private @arg {DC_Generic_CTP} x */
+	D_CD_Next(x) {this.DC_Generic_CTP("D_CD_Next","next.continuation",x);}
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
@@ -6386,7 +6390,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
-		const cf="D_PlaylistContent";
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
 		if("menu" in u) {
 			const {playerInfoView,isEditable,menu,...y}=u; this.g(y);
@@ -6397,6 +6400,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("continuations" in u) {
 			const {totalVideos,continuations,totalVideosText,endpoint,badges,videoCountText,...y}=u; this.g(y);
+			this.a_primitive_num(totalVideos);
+			this.z(continuations,this.CD_Next);
 			return;
 		}
 		debugger;

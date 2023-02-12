@@ -2,6 +2,7 @@ import {Prelude} from "./out_support.js"; export {Prelude};
 import {Types} from "./out_support.js"; export {Types};
 export namespace Gen {
 	export type CF_Generated=
+		|{n: Prelude.CF_DC_Generic_CTP; t: Types.CF_DC_Generic_CTP_; v: "D_CD_Next";}
 		|{n: Prelude.CF_DC_Generic_CTP; t: Types.CF_DC_Generic_CTP_; v: "D_CD_NextRadio";}
 		|{n: Prelude.CF_DC_Generic_CTP; t: Types.CF_DC_Generic_CTP_; v: "D_CD_Reload";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "AD_ChangeEngagementPanelVisibility.targetId";}
@@ -731,6 +732,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "B_HrefUrl";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Invalidation";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_LiveChatReplay";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Next";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_NextRadio";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_PlayerSeek";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "CD_Reload";}
