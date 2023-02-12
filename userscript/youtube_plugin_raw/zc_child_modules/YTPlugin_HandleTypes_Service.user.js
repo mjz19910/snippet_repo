@@ -2631,7 +2631,7 @@ class HandleTypes extends HandleTypesEval {
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
-		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
+		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		this.E_Watch(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.RS_Player(playerResponse);
