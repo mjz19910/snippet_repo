@@ -2622,13 +2622,10 @@ class HandleTypes extends HandleTypesEval {
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GM_VE3854_ResolveUrl_C_MD(b);
 		switch(a.rootVe) {
+			default: debugger; break;
 			case 3611: this.GM_VE3611_WC(a); break;
 			case 3854: this.GM_VE3854_WC(a); break;
 		}
-		if(a.rootVe===3854) {
-			return this.GM_VE3854_WC(a);
-		}
-		debugger;
 		return this.GM_VE_WC_Browse(a);
 	}
 	/** @private @arg {GE_Browse_WCM} x */
