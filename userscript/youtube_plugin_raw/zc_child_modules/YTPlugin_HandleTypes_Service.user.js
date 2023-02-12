@@ -7022,7 +7022,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
 			switch(ss6) {
 				default: ss6===""; debugger; break;
-				case "el": case "ee":
+				case "7d": case "el": case "ee":
 			}
 			return;
 		}
