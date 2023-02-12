@@ -9511,7 +9511,14 @@ class HandleTypes extends HandleTypesEval {
 	D_YoutubeUrl(x) {
 		const cf="D_YoutubeUrl";
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
-		let [h,sp]=split_string_once(s1,"/");
+		let pa=split_string_once(s1,"/channel/");
+		if(pa.length===1) {
+			let [h,sp]=split_string_once(pa[0],"/");
+			if(h!=="www.youtube.com") debugger;
+			console.log("yt-channel-url",sp);
+			return;
+		}
+		let [h,sp]=pa;
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
 			let [pp,qs]=split_string_once(sp,"?");
@@ -9521,13 +9528,9 @@ class HandleTypes extends HandleTypesEval {
 			let p_arr=this.split_str(pp,"/");
 			switch(p_arr.length) {
 				default: this.codegen_str(cf,x); return;
-				case 3: break;
+				case 2: break;
 			}
-			let [p_0,p_1,...arr_2]=p_arr;
-			switch(p_0) {
-				default: this.codegen_str(cf,x); return;
-				case "channel": break;
-			}
+			let [p_1,...arr_2]=p_arr;
 			if(!this.str_starts_with(p_1,"UC")) {this.codegen_str(cf,x); return;}
 			switch(arr_2[0]) {
 				default: this.codegen_str(cf,x); return;

@@ -1279,7 +1279,7 @@ type D_FeedNudge={
 	style: "FEED_NUDGE_STYLE_CHIP";
 	contents: R_ChipCloudChip[];
 };
-type D_YoutubeUrl=DU_InternalUrl["url"];
+type D_YoutubeUrl=DU_InternalUrl["url"]|DU_ChannelUrl["url"];
 //#region imported
 type D_AboutThisAd={url: D_UrlWrappedValue;};
 type D_Accessibility={accessibilityData: D_Label;};
