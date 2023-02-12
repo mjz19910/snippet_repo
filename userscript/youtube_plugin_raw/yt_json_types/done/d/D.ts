@@ -1536,12 +1536,21 @@ type D_CommentThread={
 	isModeratedElqComment: false;
 	loggingDirectives: D_LoggingDirectives;
 };
+type D_CommentsSimplebox={
+	simpleboxAvatar: D_Thumbnail;
+	simpleboxPlaceholder: G_Text;
+	trackingParams: string;
+};
+
+type R_CommentsSimplebox={
+	commentsSimpleboxRenderer: D_CommentsSimplebox;
+};
 type D_CommentsEntryPointHeader={
 	headerText: G_Text;
 	onTap: C_Executor;
 	trackingParams: string;
 	commentCount: G_Text;
-	contentRenderer: R_CommentsEntryPointTeaser;
+	contentRenderer: R_CommentsEntryPointTeaser|R_CommentsSimplebox;
 	targetId: "comments-entry-point-header-identifier";
 };
 type D_CommentsEntryPointHeader_contentRenderer=D_CommentsEntryPointHeader["contentRenderer"];
@@ -3096,16 +3105,18 @@ type D_Playlist_MD={
 	androidAppindexingLink: string;
 	iosAppindexingLink: string;
 };
-type D_RichMetadata={
+type D_RichMetadata_BoxArt={
 	style: "RICH_METADATA_RENDERER_STYLE_BOX_ART";
 	thumbnail: D_Thumbnail;
 	title: G_Text;
-	subtitle: G_Text;
+	subtitle?: G_Text;
 	callToAction: G_Text;
 	callToActionIcon: T_Icon<"CHEVRON_RIGHT">;
 	endpoint: GE_Browse;
 	trackingParams: string;
-}|{
+};
+
+type D_RichMetadata_Topic={
 	style: "RICH_METADATA_RENDERER_STYLE_TOPIC";
 	thumbnail: D_Thumbnail;
 	title: G_Text;
@@ -3114,6 +3125,8 @@ type D_RichMetadata={
 	endpoint: GE_Browse;
 	trackingParams: string;
 };
+
+type D_RichMetadata=D_RichMetadata_BoxArt|D_RichMetadata_Topic;
 type D_RichMetadataRow={
 	contents: R_RichMetadata[];
 	trackingParams: string;

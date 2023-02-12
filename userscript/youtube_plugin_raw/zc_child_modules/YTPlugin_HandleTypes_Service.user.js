@@ -1751,6 +1751,8 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog","commentsHeaderRenderer",x,this.D_CommentsHeader);}
 	/** @private @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
+	/** @private @arg {R_CommentsSimplebox} x */
+	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
 	/** @private @arg {R_SortFilterSubMenu} x */
 	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 	/** @private @arg {R_DecoratedPlayerBar} x */
@@ -7392,6 +7394,9 @@ class HandleTypes extends HandleTypesEval {
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer"; this.k(cf,x);
 		if("commentsEntryPointTeaserRenderer" in x) return this.R_CommentsEntryPointTeaser(x);
+		x.commentsSimpleboxRenderer;
+		this.R_CommentSimplebox;
+		if("commentsSimpleboxRenderer" in x) return this.R_CommentsSimplebox(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_CommentsEntryPointTeaser} x */
@@ -7878,6 +7883,14 @@ class HandleTypes extends HandleTypesEval {
 		this.R_EmojiPicker(emojiPicker);
 		this.trackingParams(cf,trackingParams);
 		this.R_Button(emojiButton);
+	}
+	/** @private @arg {D_CommentsSimplebox} x */
+	D_CommentsSimplebox(x) {
+		const cf="D_CommentsSimplebox";
+		const {simpleboxAvatar,simpleboxPlaceholder,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(simpleboxAvatar);
+		this.G_Text(simpleboxPlaceholder);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
@@ -8438,7 +8451,7 @@ class HandleTypes extends HandleTypesEval {
 				const {style: {},thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.D_Thumbnail(thumbnail);
 				this.G_Text(title);
-				this.G_Text(subtitle);
+				this.t(subtitle,this.G_Text);
 				this.G_Text(callToAction);
 				this.T_Icon(`${cf}:icon`,callToActionIcon);
 				if(!endpoint.browseEndpoint) debugger;
