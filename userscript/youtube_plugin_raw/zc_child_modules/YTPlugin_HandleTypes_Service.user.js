@@ -6973,21 +6973,27 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
-		if("menu" in u) {
+		if("isEditable" in u) {
 			const {playerInfoView,isEditable,menu,...y}=u; this.g(y);
-			this.t(playerInfoView,x => this.ceq(x,"DO_NOT_CHANGE"));
+			this.ceq(playerInfoView,"DO_NOT_CHANGE");
 			this.R_Menu(menu);
 			this._primitive_of(isEditable,"boolean");
 			return;
 		}
-		if("continuations" in u) {
-			const {totalVideos,continuations,totalVideosText,endpoint,badges,videoCountText,...y}=u; this.g(y);
-			this.a_primitive_num(totalVideos);
+		const {totalVideos,totalVideosText,endpoint,videoCountText,...u1}=u; u1;
+		this.a_primitive_num(totalVideos);
+		this.G_Text(totalVideosText);
+		this.E_VE5754_Browse(endpoint);
+		this.G_Text(videoCountText);
+		if("menu" in u1) {
+			const {menu,...y}=u1; this.g(y);
+			this.R_Menu(menu);
+			return;
+		}
+		if("continuations" in u1) {
+			const {continuations,badges,...y}=u1; this.g(y);
 			this.z(continuations,this.CD_Next);
-			this.G_Text(totalVideosText);
-			this.E_VE5754_Browse(endpoint);
 			this.z(badges,this.RMD_Badge);
-			this.G_Text(videoCountText);
 			return;
 		}
 		debugger;
