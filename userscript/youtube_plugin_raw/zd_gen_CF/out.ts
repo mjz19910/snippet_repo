@@ -208,6 +208,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SuperVodBuyFlowContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab_R_MusicQueue";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Tab_WithEndpoint";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayEndorsement";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailOverlayToggleButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ThumbnailsList";}
@@ -546,7 +547,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_R_MusicQueue";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_Subscriptions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_WhatToWatch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_endpoint";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_WithEndpoint";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TemplateUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TextInputFormField";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Thumbnail";}

@@ -3700,12 +3700,13 @@ class HandleTypes extends HandleTypesEval {
 		}
 		x: {
 			if(!("endpoint" in x)) break x;
-			/** @type {`${typeof cf}_endpoint`} */
-			const cf2=`${cf}_endpoint`;
+			/** @type {`${typeof cf}_WithEndpoint`} */
+			const cf2=`${cf}_WithEndpoint`;
 			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			if(endpoint.commandMetadata.webCommandMetadata.rootVe!==3611) debugger;
 			this.GE_Browse(endpoint);
 			this.trackingParams(cf2,trackingParams);
-			this.save_string(`${cf}.title`,title);
+			this.save_string(`${cf2}.title`,title);
 		}
 	}
 	/** @private @arg {D_MusicQueue} x */
