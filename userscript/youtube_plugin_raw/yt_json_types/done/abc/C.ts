@@ -1,8 +1,9 @@
 //#region Commands
+type MC_Continuation=M_Next|M_Browse;
 type C_Continuation=
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_WatchNext,M_Next>
 	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_ReelWatchSeq,M_Next>
-	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Next>
+	|TE_Endpoint_Opt_3<"continuationCommand",DC_Continuation_Browse,M_Browse>
 	;
 ;
 type C_AddToPlaylist=TE_Endpoint_2<"addToPlaylistCommand",DC_AddToPlaylist>;

@@ -876,6 +876,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "E_SignalService_SendPost";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "GC_Button.SE_Signal";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "GE_Browse_WCM";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "MC_Continuation";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}

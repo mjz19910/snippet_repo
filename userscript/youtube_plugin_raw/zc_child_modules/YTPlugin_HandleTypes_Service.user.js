@@ -2178,10 +2178,20 @@ class HandleTypes extends HandleTypesEval {
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
+	/** @private @arg {MC_Continuation} x */
+	MC_Continuation(x) {
+		this.T_WCM("MC_Continuation",x,x => {
+			switch(x.apiUrl) {
+				default: debugger; break;
+				case "/youtubei/v1/browse": this.GM_Browse(x); break;
+				case "/youtubei/v1/next": this.GM_Next(x); break;
+			}
+		});
+	}
 	/** @private @arg {C_Continuation} x */
 	C_Continuation(x) {
 		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		this.t(a,this.M_Next);
+		this.t(a,this.MC_Continuation);
 		this.DC_Continuation(b);
 	}
 	/** @private @arg {C_GetSurvey} x */
@@ -2711,8 +2721,6 @@ class HandleTypes extends HandleTypesEval {
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {M_Next} x */
-	M_Next(x) {this.T_WCM("M_Next",x,this.GM_Next);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {M_NotificationOptOut} x */
@@ -3563,6 +3571,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
+			case "browse-video-menu-button":
 			case "clip-info-button":
 			case "create-clip-button-action-bar":
 			case "comments-section":
@@ -4934,7 +4943,9 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(topLevelButtons,this.D_Menu_Button);
 		this.t(targetId,x => {
 			switch(x) {
-				default: debugger; break;
+				default: switch(x) {
+				} debugger; break;
+				case "browse-video-menu-button":
 				case "watch-related-menu-button":
 			}
 			this.targetId(cf,x);
