@@ -543,26 +543,31 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "get_pdg_buy_flow":
-			case "create_comment":
+			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry":
+			case "browse$param":
+			case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
+			case "D_Browse":
+			case "entity_key": case "entity":
+			case "feedback":
+			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript": case "GetNotificationMenu":
 			case "invalidation":
-			case "live_chat_replay":
-			case "player_seek":
-			case "videogoodput": case "unsubscribe":
-			case "playability_status":
-			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "browse$param": case "create_playlist": case "createBackstagePost":
-			case "D_Browse": case "entity_key": case "entity": case "feedback": case "get_report_form": case "get_transcript": case "GetNotificationMenu": case "like":
-			case "next_radio": case "next": case "notification": case "playlist_edit": case "reel": case "reload": case "service$create_playlist": case "slot_ad_serving_data_entry":
-			case "subscribe": case "subscriptionState": case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "UndoFeedback":
-			case "watch_page_url": case "watch_playlist": case "watch": case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart":
-			case "record_notification_interactions": case "transcript_target_id": case "watch": {
+			case "like": case "live_chat_replay":
+			case "next_radio": case "next": case "notification":
+			case "player_seek": case "playability_status": case "playlist_edit":
+			case "record_notification_interactions": case "reel": case "reload":
+			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
+			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
+			case "UndoFeedback": case "unsubscribe":
+			case "videogoodput":
+			case "watch_page_url": case "watch_playlist": case "watch":
+			case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart": {
 				if(parts.length===1) return this.handle_map_value(path,map_entry_value);
 				switch(parts[1]) {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "context_params": case "sparams":
+					case "context_params": case "sparams": case "data":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
