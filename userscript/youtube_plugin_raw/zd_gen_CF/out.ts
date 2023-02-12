@@ -227,7 +227,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_VideoSecondaryInfo";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_WatchNextEndScreen";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GD_RC_SectionList";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GM_VE3854_ResolveUrl_C_MD";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GM_VE_ResolveUrl_C_MD";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "GM_WC_Base";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_Watch_ResultsItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "G_Watch_SecondaryResults_Results";}
@@ -601,13 +601,11 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GA_Continuation_CommentRepliesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GE_Browse_WCM";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE37414_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3832_WatchPlaylist" | "GM_VE3832_Watch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3854_ResolveUrl_C_MD";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3854_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE42352_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE4724_WC";}
@@ -615,6 +613,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE6827_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE83769_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE96368_WC_browse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE_ResolveUrl_C_MD";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_WC_Base";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GT_ShortsSurfaceIdentifier";}
@@ -629,6 +628,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
@@ -868,6 +868,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "D_TopbarMenuButton.SE_Signal";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "E_SignalService_SendPost";}
 		|{n: Prelude.CF_T_SE_Signal; t: Types.CF_T_SE_Signal_; v: "GC_Button.SE_Signal";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "GE_Browse_WCM";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AccountMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_AddToPlaylistService";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_CreateBackstagePost";}

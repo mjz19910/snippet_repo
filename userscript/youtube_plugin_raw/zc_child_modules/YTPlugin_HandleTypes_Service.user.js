@@ -1537,7 +1537,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
 	/** @private @arg {CF_T_WCM} cf @template T @template U @arg {{webCommandMetadata:T;}} x @arg {(this:this,x:T)=>U} f */
-	T_WCM(cf,x,f) {this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
+	T_WCM(cf,x,f) {return this.y(`T_WCM:${cf}`,"webCommandMetadata",x,f);}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {Extract<GM_VE_WC_Browse,{rootVe:6827}>} x */
@@ -2563,9 +2563,9 @@ class HandleTypes extends HandleTypesEval {
 		this.G_DE_Browse_VE(ve_name,x4);
 		this.g(x5);
 	}
-	/** @private @arg {GM_VE3854_ResolveUrl_C_MD} x */
-	GM_VE3854_ResolveUrl_C_MD(x) {
-		const cf="GM_VE3854_ResolveUrl_C_MD";
+	/** @private @arg {GM_VE_ResolveUrl_C_MD} x */
+	GM_VE_ResolveUrl_C_MD(x) {
+		const cf="GM_VE_ResolveUrl_C_MD";
 		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(parentTrackingParams,x => this.trackingParams(cf,x));
 		this.t(isVanityUrl,x => this.ceq(x,true));
@@ -2574,7 +2574,7 @@ class HandleTypes extends HandleTypesEval {
 	M_VE_ResolveUrl(x) {
 		const cf="M_VE_ResolveUrl";
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GM_VE3854_ResolveUrl_C_MD(b);
+		this.GM_VE_ResolveUrl_C_MD(b);
 		switch(a.rootVe) {
 			default: debugger; break;
 			case 3611: this.GM_VE3611_WC(a); break;
@@ -2586,8 +2586,7 @@ class HandleTypes extends HandleTypesEval {
 	GE_Browse_WCM(x) {
 		const cf="GE_Browse_WCM";
 		if("resolveUrlCommandMetadata" in x) return this.M_VE_ResolveUrl(x);
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		return this.GM_VE_WC_Browse(a);
+		return this.T_WCM(cf,x,this.GM_VE_WC_Browse);
 	}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {const [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832_Watch(a); this.DE_VE3832_Watch(b);}
@@ -4665,7 +4664,6 @@ class HandleTypes extends HandleTypesEval {
 			/** @type {`${cf}.SE_Signal`} */
 			const cf1=`${cf}.SE_Signal`;
 			let [a,gc]=this.T_SE_Signal(cf1,x);
-			if(!this.eq_keys(this.get_keys_of(a),["webCommandMetadata"])) debugger;
 			this.M_SendPost(a);
 			/** @type {`${cf1}.data`} */
 			const cf2=`${cf1}.data`;
@@ -7389,16 +7387,16 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {M_VE3611_ResolveUrl} x */
 	M_VE3611_ResolveUrl(x) {
+		const cf="M_VE3611_ResolveUrl";
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GM_VE3854_ResolveUrl_C_MD(b);
+		this.GM_VE_ResolveUrl_C_MD(b);
 		return this.GM_VE3611_WC(a);
 	}
 	/** @private @arg {M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
 		if("resolveUrlCommandMetadata" in x) return this.M_VE3611_ResolveUrl(x);
-		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		return this.GM_VE3611_WC(a);
+		return this.T_WCM(cf,x,this.GM_VE3611_WC);
 	}
 	/** @private @arg {E_VE3611_Browse} x */
 	E_VE3611_Browse(x) {
