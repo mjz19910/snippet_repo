@@ -3747,6 +3747,7 @@ class HandleTypes extends HandleTypesEval {
 				default: debugger; x===""; break;
 				case "clip-info-button":
 				case "create-clip-button-action-bar":
+				case "sponsorships-button":
 			}
 		});
 		this.t(serviceEndpoint,this.D_Button_SE);

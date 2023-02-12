@@ -10,7 +10,7 @@ type D_Button_style=
 	|"STYLE_TEXT"
 	;
 ;
-type D_Button_targetId="create-clip-button-action-bar"|"clip-info-button";
+type D_Button_targetId="sponsorships-button"|"create-clip-button-action-bar"|"clip-info-button";
 // cSpell:ignoreRegExp /(?<=")[^"]{40,}/
 type D_Button={
 	style?: D_Button_style;
