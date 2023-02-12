@@ -3081,6 +3081,8 @@ type D_Thumbnail={
 	accessibility?: D_Accessibility;
 	isOriginalAspectRatio?: true;
 	sampledThumbnailColor?: D_ThumbnailColor;
+	lightColorPalette?: D_LightColorPalette;
+	darkColorPalette?: D_DarkColorPalette;
 };
 type D_Omit_Compact_Player={
 	title: G_Text;

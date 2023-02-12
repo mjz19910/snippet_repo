@@ -362,6 +362,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "load_markers.entity_key":
 			case "change_markers_visibility.entity_key": switch(map_entry_key) {
 				case 2: case 4: case 5:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -681,7 +682,7 @@ class HandleTypes extends HandleTypesEval {
 			case "feedback":
 			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript": case "GetNotificationMenu":
 			case "invalidation":
-			case "like": case "live_chat_replay":
+			case "like": case "live_chat_replay": case "load_markers":
 			case "next_radio": case "next": case "notification":
 			case "player_seek": case "playability_status": case "playlist_edit":
 			case "reel": case "reload": case "request_continuation":
