@@ -619,6 +619,10 @@ class HandleTypes extends HandleTypesEval {
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
 				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
 					return;
+
+				case "tracking.trackingParams.f1": {
+					this.save_number(path,entry);
+				} return;
 			}
 		}
 		if(entry instanceof Map) return;
@@ -7041,7 +7045,7 @@ class HandleTypes extends HandleTypesEval {
 			default: ss6===""; debugger; break;
 			case "lk":
 			case "sd": case "se": case "sk": case "sl": case "ss": case "sz":
-			case "7d": case "7s": case "7y":
+			case "76": case "7d": case "7s": case "7y": case "7z":
 			case "el": case "ee":
 		}
 	}
