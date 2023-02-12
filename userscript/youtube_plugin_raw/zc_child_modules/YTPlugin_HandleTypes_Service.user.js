@@ -1192,7 +1192,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
 	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
 	/**
-	 * @private @arg {G_EY_Entity} x
+	 * @public @arg {G_EY_Entity} x
 	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
 	 */
 	G_EY_Entity(x) {
@@ -3228,6 +3228,56 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE") debugger;
 		this.tf(this.O_DU_Persistence)(options);
 	}
+	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]:never:never)|["unknown",string,{}]} p */
+	XP_EntityPayload(p) {
+		const [k,x]=p;
+		switch(k) {
+			case "offlineabilityEntity": this.D_EY_Offlineability(x); break;
+			case "subscriptionStateEntity": {
+				const cf="DS_EY_Subscription";
+				const {key,subscribed,...y}=this.s(cf,x); this.g(y);
+				this.params(cf,"subscriptionState.key",key);
+				this.a_primitive_bool(subscribed);
+			} break;
+			case "playlistLoopStateEntity": {
+				const cf="DS_EY_PlaylistLoop";
+				const {key,state,...y}=this.s(cf,x); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+				switch(state) {
+					default: debugger; break;
+					case "PLAYLIST_LOOP_STATE_ALL":
+					case "PLAYLIST_LOOP_STATE_NONE":
+				}
+			} break;
+			case "transcriptTrackSelectionEntity": {
+				const cf="DS_EY_TranscriptTrackSelection";
+				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+				if(selectedTrackIndex!==0) debugger;
+				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
+			} break;
+			case "transcriptSearchBoxStateEntity": {
+				const cf="DS_EY_TranscriptSearchBox";
+				const {key,isHidden,...y}=this.s(cf,x); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+				if(isHidden!==false) debugger;
+			} break;
+			case "macroMarkersListEntity": {
+				const cf="EY_MacroMarkersList";
+				const {key,...y}=this.s(cf,x); this.g(y);
+				this.params(`${cf}.key`,"entity.key",key);
+			} break;
+			case "unknown": {
+				const cf="XP_EntityPayload.unknown";
+				let pk=p[1];
+				let x=p[2];
+				if("key" in x) {
+					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
+				} else {debugger;}
+			} break;
+		}
+	}
 	/** @private @arg {DU_MutationReplace} x */
 	DU_MutationReplace(x) {
 		const cf="DU_MutationReplace";
@@ -3236,51 +3286,7 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		let pr=this.G_EY_Entity(payload);
 		if(!pr) return;
-		const [pi,px]=pr;
-		switch(pi) {
-			case "offlineabilityEntity": this.D_EY_Offlineability(px); break;
-			case "subscriptionStateEntity": {
-				const cf="DS_EY_Subscription";
-				const {key,subscribed,...y}=this.s(cf,px); this.g(y);
-				this.params(cf,"subscriptionState.key",key);
-				this.a_primitive_bool(subscribed);
-			} break;
-			case "playlistLoopStateEntity": {
-				const cf="DS_EY_PlaylistLoop";
-				const {key,state,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				switch(state) {
-					default: debugger; break;
-					case "PLAYLIST_LOOP_STATE_NONE":
-				}
-			} break;
-			case "transcriptTrackSelectionEntity": {
-				const cf="DS_EY_TranscriptTrackSelection";
-				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				if(selectedTrackIndex!==0) debugger;
-				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
-			} break;
-			case "transcriptSearchBoxStateEntity": {
-				const cf="DS_EY_TranscriptSearchBox";
-				const {key,isHidden,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				if(isHidden!==false) debugger;
-			} break;
-			case "macroMarkersListEntity": {
-				const cf="EY_MacroMarkersList";
-				const {key,...y}=this.s(cf,px); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-			} break;
-			case "unknown": {
-				let pk=pr[1];
-				let x=pr[2];
-				if("key" in x) {
-					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
-				} else {debugger;}
-			} break;
-		}
+		this.XP_EntityPayload(pr);
 	}
 	/** @private @arg {DE_MutationItem} x */
 	DE_MutationItem(x) {
