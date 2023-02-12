@@ -1,4 +1,5 @@
 type RE_D_VE3832_PreconnectUrl=
+	|"https://rr1---sn-nx5s7n7s.googlevideo.com/generate_204"
 	|"https://rr2---sn-nx57ynsz.googlevideo.com/generate_204"
 	|"https://rr3---sn-nx5s7n7d.googlevideo.com/generate_204"
 	|"https://rr3---sn-nx5s7nee.googlevideo.com/generate_204"
