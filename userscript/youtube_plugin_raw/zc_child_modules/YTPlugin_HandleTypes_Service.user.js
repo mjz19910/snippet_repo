@@ -4766,7 +4766,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(datasyncId);
 		this._primitive_of(loggedOut,"boolean");
 	}
-	/** @override @protected @arg {RC_ResponseContext} x */
+	/** @protected @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="RC_ResponseContext"; this.k(cf,x);
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -7000,7 +7000,7 @@ class HandleTypes extends HandleTypesEval {
 			let ss6=this.join_string(ss5,"");
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
 			switch(ss6) {
-				case "ee": break;
+				case "el": case "ee": break;
 				default: ss6===""; debugger;
 			}
 		} else {
