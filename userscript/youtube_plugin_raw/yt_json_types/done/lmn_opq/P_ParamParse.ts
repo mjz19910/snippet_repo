@@ -1,5 +1,5 @@
 type P_LogItems=[
-	`[parse_value.gen_ns] [D_Browse.param.f110.f1.f${keyof BinaryBrowseTab}]`,
+	"[parse_value.gen_ns] [D_Browse.param.f5]",
 	"[parse_value.gen_ns] [D_Browse.param.f23]",
 	"[parse_value.gen_ns] [create_comment.params.f5.f1]",
 	"[parse_value.gen_ns] [create_comment.params.f2]",
