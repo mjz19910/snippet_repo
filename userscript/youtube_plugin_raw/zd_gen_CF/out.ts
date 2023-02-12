@@ -16,7 +16,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_TargetIdStr:targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "GM_WC_RootVe";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "VideoGoodPutShape.sparams";}
+		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "S_VideoGoodPutShape.sparams";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
@@ -702,6 +702,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_VE3832";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_GetAccountMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_VideoGoodPutShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_VoiceSearchPopup_Dialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Settings_VE23462";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Shorts_VE37414";}
@@ -720,7 +721,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Types";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_UrlWrappedValue";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "VideoGoodPutShape";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "XP_EntityPayload.unknown";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}

@@ -9781,8 +9781,8 @@ class HandleTypes extends HandleTypesEval {
 		});
 	}
 	/** @arg {S_VideoGoodPutShape} x */
-	VideoGoodPutShape(x) {
-		const cf="VideoGoodPutShape";
+	S_VideoGoodPutShape(x) {
+		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
 		switch(sparams) {
 			default: this.codegen_case(`${cf}.sparams`,sparams); debugger; break;
@@ -9885,7 +9885,7 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 					case "/videogoodput": {
 						let pp=this.parse_url_search_params(x.search);
-						this.VideoGoodPutShape(pp);
+						this.S_VideoGoodPutShape(pp);
 					} break;
 				}
 			} return;
