@@ -206,11 +206,21 @@ class ParserService extends BaseService {
 				case "list": {
 					let v=res[1];
 					if(this.str_starts_with_rx("RD",v)) {
-						if(this.str_starts_with_rx("RDMM",v)) {url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});} else if(this.str_starts_with_rx("RDGM",v)) {url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)});} else if(this.str_starts_with_rx("RDCM",v)) {
-							// url_info[playlist] "RDCM" still needs a valid `UC${string}` channel id
-							url_info_arr.push({_tag: "playlist",type: "RDCM",id: v.slice(4)});
-						} else {url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});}
-					} else if(this.str_starts_with_rx(v,"PL")) {url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});} else {debugger;}
+						if(this.str_starts_with_rx("RDMM",v)) {url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)}); break;}
+						if(this.str_starts_with_rx("RDGM",v)) {url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)}); break;}
+						if(this.str_starts_with_rx("RDCMUC",v)) {
+							let ucp=split_string_once(v,"RDCM");
+							url_info_arr.push({
+								_tag: "playlist-channel-mix",
+								type: "RDCM",
+								channel_id: ucp[1],
+							});
+							break;
+						}
+						url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
+					}
+					if(this.str_starts_with_rx(v,"PL")) {url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)}); break;}
+					debugger;
 				} break;
 				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
 				case "pp": {this.on_player_params(root,"watch_page_url.pp",res[1],x => {x;});} break;

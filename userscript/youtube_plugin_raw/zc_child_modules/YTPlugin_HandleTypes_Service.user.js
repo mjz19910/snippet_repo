@@ -6185,6 +6185,7 @@ class HandleTypes extends HandleTypesEval {
 				default: url_info===""; debugger; break;
 				case "channel": this.parse_channel_id(url_info.type, url_info.id); break;
 				case "play-next": url_info; break;
+				case "playlist-channel-mix": break;
 				case "playlist": this.parse_playlist_url_info(url_info); break;
 				case "video": this.parse_video_id(url_info.id); break;
 				case "video-referral": this.parse_video_id(url_info.id); break;

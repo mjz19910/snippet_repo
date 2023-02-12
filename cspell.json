@@ -231,6 +231,7 @@
       "RAWTEXT",
       "RCDATA",
       "RDCM",
+      "RDCMUC",
       "RDGM",
       "RDMM",
       "Readahead",

@@ -446,6 +446,10 @@ type G_UrlInfoItem=D_UrlInfoPlaylist|D_UrlInfoVideo|D_UrlVideoReferral|D_UrlPlay
 	_tag: "channel";
 	type: "UC";
 	id: string;
+}|{
+	_tag: "playlist-channel-mix";
+	type: "RDCM",
+	channel_id: `UC${string}`,
 };
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
 type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
