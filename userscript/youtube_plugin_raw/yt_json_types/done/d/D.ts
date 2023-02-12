@@ -24,7 +24,7 @@ type DC_SectionList_TargetId=Extract<GD_RC_SectionList,{targetId: any;}>["target
 type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
 type DR_DC_EntityBatchUpdate={
 	mutations: DE_MutationItem[];
-	timestamp: D_TimestampWithNanos;
+	timestamp?: D_TimestampWithNanos;
 };
 type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"];};
 //#endregion

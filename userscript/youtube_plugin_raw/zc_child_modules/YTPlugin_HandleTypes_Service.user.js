@@ -2297,7 +2297,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DR_DC_EntityBatchUpdate";
 		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(mutations,this.DE_MutationItem);
-		this.D_TimestampWithNanos(timestamp);
+		this.t(timestamp,this.D_TimestampWithNanos);
 	}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
