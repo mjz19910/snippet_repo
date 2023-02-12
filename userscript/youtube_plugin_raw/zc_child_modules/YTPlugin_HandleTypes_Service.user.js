@@ -5855,8 +5855,9 @@ class HandleTypes extends HandleTypesEval {
 	GA_ResponseReceived(x) {
 		const cf="GA_ResponseReceived"; this.k(cf,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_ConfirmDialog} x */
