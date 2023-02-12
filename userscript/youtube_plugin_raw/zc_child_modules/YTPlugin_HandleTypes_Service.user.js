@@ -6174,8 +6174,15 @@ class HandleTypes extends HandleTypesEval {
 		this.D_GuideEntry_TargetId(targetId);
 		if(isPrimary!==true) debugger;
 	}
-	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
+	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId_NoRadio} x */
 	parse_guide_entry_id(x) {
+		/** @private @type {G_UrlInfoItem[]} */
+		let arr=[];
+		if(this.str_starts_with_rx("RD",x)) {arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});}
+		if(this.str_starts_with_rx("PL",x)) {arr.push({_tag: "playlist",type: "PL",id: x.slice(2)});}
+		if(this.str_starts_with_rx("UU",x)) {arr.push({_tag: "playlist",type: "UU",id: x.slice(2)});}
+		if(this.str_starts_with_rx("UC",x)) {arr.push({_tag: "channel",type: "UC",id: x.slice(2)});}
+		this.x.get("parser_service").log_url_info_arr(arr);
 		if(this.str_starts_with_rx("UC",x)) {
 			if(x.length===24) return;
 			console.log("[guideEntryId.channel.length]",x.length);
@@ -6184,6 +6191,10 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx("PL",x)) {
 			if(x.length===34) return;
 			console.log("[guideEntryId.playlist.length]",x.length);
+			return;
+		}
+		if(this.str_starts_with_rx("UU",x)) {
+			console.log("[guideEntryId.uploads_playlist.length]",x.length);
 			return;
 		}
 		switch(x) {

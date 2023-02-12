@@ -67,7 +67,7 @@ type D_RadioShareUrl=
 ;
 type D_BrowseIdStr=
 	|`FE${D_BrowseEndpointPages}`
-	|`VL${`${"LL"|"WL"|`PL${string}`}`}`
+	|GU_VE5754_Id
 	|`UC${string}`
 	|`SP${D_Settings_Id}`
 	|`MP${"TRt"|"REb"|"LYt"}_${string}`
@@ -150,9 +150,10 @@ type D_Settings_Id=
 type D_UrlInfoItemType=
 	|"PL"
 	|"RD"
+	|"RDCM"
 	|"RDGM"
 	|"RDMM"
-	|"RDCM"
+	|"UU"
 	;
 ;
 type D_VideoCategory=

@@ -442,7 +442,11 @@ type G_ThumbnailOverlayItem=
 	;
 ;
 type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
-type G_UrlInfoItem=D_UrlInfoPlaylist|D_UrlInfoVideo|D_UrlVideoReferral|D_UrlPlayNext;
+type G_UrlInfoItem=D_UrlInfoPlaylist|D_UrlInfoVideo|D_UrlVideoReferral|D_UrlPlayNext|{
+	_tag: "channel";
+	type: "UC";
+	id: string;
+};
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
 type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
 	R_EndScreenVideo;

@@ -1,5 +1,8 @@
 type GU_VE3611_Url="/gaming"|`/@${string}`|`/channel/UC${string}`;
-type GU_VE5754_Id=`VL${"LL"|"WL"|`PL${string}`}`;
+// cspell:ignore RDCMUC
+type GU_PlaylistId=GU_PlaylistId_NoRadio|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`;
+type GU_PlaylistId_NoRadio="WL"|"LL"|`UU${string}`|`PL${string}`;
+type GU_VE5754_Id=`VL${GU_PlaylistId_NoRadio}`;
 type GU_VE6827_Id_1="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
 type GU_VE6827_Id_Params="FEtrending"|"FEstorefront"|"FEhashtag";
 type GU_VE6827_Id=GU_VE6827_Id_1|GU_VE6827_Id_Params;

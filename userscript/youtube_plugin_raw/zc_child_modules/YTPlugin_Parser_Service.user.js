@@ -190,16 +190,6 @@ class ParserService extends BaseService {
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
-	/** @private @arg {D_GuideEntryData['guideEntryId']} x */
-	parse_guide_entry_id(x) {
-		/** @private @type {G_UrlInfoItem[]} */
-		let arr=[];
-		if(this.str_starts_with_r(x,"RD")) {arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});} else {
-			console.log(x);
-			debugger;
-		}
-		this.log_url_info_arr(arr);
-	}
 	log_start_radio=false;
 	/** @private @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url(root,x) {
@@ -600,7 +590,7 @@ class ParserService extends BaseService {
 		let is_critical=this.get_playlist_url_info_critical(x);
 		this.log_playlist_id(x,is_critical);
 	}
-	/** @private @arg {G_UrlInfoItem[]} x */
+	/** @public @arg {G_UrlInfoItem[]} x */
 	log_url_info_arr(x) {
 		for(let url_info of x) {
 			switch(url_info._tag) {
@@ -1016,7 +1006,7 @@ class ParserService extends BaseService {
 			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
 			return;
 		}
-		if(this.str_starts_with_r(x,"VL")) {return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);}
+		if(this.str_starts_with_r(x,"VL")) {return this.x.get("handle_types").parse_guide_entry_id(split_string_once(x,"VL")[1]);}
 		if(this.str_starts_with_r(x,"UC")) {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
