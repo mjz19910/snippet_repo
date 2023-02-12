@@ -4859,8 +4859,8 @@ class HandleTypes extends HandleTypesEval {
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				this.save_string("Header.targetId",targetId);
 				if(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.exec(targetId)===null) {
+					this.save_string("Header.targetId",targetId);
 					switch(targetId) {
 						default: debugger; break;
 						case "comments-section":
