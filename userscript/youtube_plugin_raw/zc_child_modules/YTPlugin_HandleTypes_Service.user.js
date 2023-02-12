@@ -599,6 +599,9 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
+				case "AdServingDataEntry.f9.f3":
+				case "AdServingDataEntry.f9.f2":
+				case "AdServingDataEntry.f9.f1":
 				case "request_continuation.token.f9.f1.f4.f13[]":
 				case "request_continuation.token.f9.f1.f4.f13": return;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
@@ -7030,7 +7033,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`);
 		switch(ss6) {
 			default: ss6===""; debugger; break;
-			case "sz": case "sd": case "sk":
+			case "sd": case "se": case "sk": case "ss": case "sz":
 			case "7d": case "7s": case "7y":
 			case "el": case "ee":
 		}
