@@ -99,5 +99,5 @@ type RSM_ChannelPreference={
 	channelId: `UC${string}`;
 	newNotificationButton: R_SubscriptionNotificationToggleButton;
 	trackingParams: string;
-	frameworkUpdates: R_EntityBatchUpdate;
+	frameworkUpdates: DC_EntityBatchUpdate;
 };

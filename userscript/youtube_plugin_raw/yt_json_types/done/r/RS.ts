@@ -35,7 +35,7 @@ type RS_Browse={
 	trackingParams: string;
 	topbar?: R_DesktopTopbar;
 	microformat?: R_Microformat;
-	frameworkUpdates?: R_EntityBatchUpdate;
+	frameworkUpdates?: DC_EntityBatchUpdate;
 	maxAgeStoreSeconds?: number;
 	background?: R_MusicThumbnail;
 	onResponseReceivedActions?: GA_ResponseReceived[];

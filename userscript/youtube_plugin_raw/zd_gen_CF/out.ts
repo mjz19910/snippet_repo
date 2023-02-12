@@ -300,7 +300,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ChangeKeyedMarkersVisibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_EngagementPanelHeaderShowNavigationButton";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_EntityBatchUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Generic_CTP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChat";}
@@ -334,6 +333,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_AdSlot";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_Badge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_RowContainer";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DR_DC_EntityBatchUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_CreatePlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_PlaylistLoop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_Subscription";}
@@ -411,7 +411,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelSectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelTitleHeader";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EntityBatchUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableSurveyResponse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableTab";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableVideoDescriptionBody";}

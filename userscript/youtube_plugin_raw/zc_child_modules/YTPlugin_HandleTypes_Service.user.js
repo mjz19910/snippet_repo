@@ -1666,8 +1666,8 @@ class HandleTypes extends HandleTypesEval {
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
-	/** @private @arg {R_EntityBatchUpdate} x */
-	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate","entityBatchUpdate",x,this.D_EntityBatchUpdate);}
+	/** @private @arg {DC_EntityBatchUpdate} x */
+	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate","entityBatchUpdate",x,this.DR_DC_EntityBatchUpdate);}
 	/** @private @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @private @arg {R_CompactLink} x */
@@ -2267,7 +2267,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {C_FollowUp} x */
 	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
 	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.DC_EntityBatchUpdate(a);}
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
 	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
 	C_EngagementPanelHeaderShowNavigationButton(x) {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
@@ -2292,9 +2292,9 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_EngagementPanelHeaderShowNavigationButton";
 		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @private @arg {DC_EntityBatchUpdate} x */
-	DC_EntityBatchUpdate(x) {
-		const cf="DC_EntityBatchUpdate";
+	/** @private @arg {DR_DC_EntityBatchUpdate} x */
+	DR_DC_EntityBatchUpdate(x) {
+		const cf="DR_DC_EntityBatchUpdate";
 		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(mutations,this.DE_MutationItem);
 		this.D_TimestampWithNanos(timestamp);
@@ -2526,7 +2526,7 @@ class HandleTypes extends HandleTypesEval {
 	D_FrameworkUpdates(x) {
 		const cf="D_FrameworkUpdates"; this.k(cf,x);
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_EntityBatchUpdate(entityBatchUpdate);
+		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
 	/** @private @arg {RSB_EditPlaylist} x */
@@ -6899,13 +6899,6 @@ class HandleTypes extends HandleTypesEval {
 			if(idp[0]!=="bottom_sheet_list_option.eml") debugger;
 			this.a_primitive_str(a);
 		}
-	}
-	/** @private @arg {DC_EntityBatchUpdate} x */
-	D_EntityBatchUpdate(x) {
-		const cf="D_EntityBatchUpdate"; this.k(cf,x);
-		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(mutations,this.DE_MutationItem);
-		this.D_TimestampWithNanos(timestamp);
 	}
 	/** @private @arg {D_TimestampWithNanos} x */
 	D_TimestampWithNanos(x) {
