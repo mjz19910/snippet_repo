@@ -333,10 +333,6 @@ class IndexedDBService extends BaseService {
 			db_request.onerror=function(event) {reject(event);};
 		});
 	}
-	database_store_index_shape={
-		video_id: {v: ""},
-		hashtag: {hashtag: ""},
-	};
 	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
 	objectStore(tx,key) {
 		let rq=tx.objectStore(key);
