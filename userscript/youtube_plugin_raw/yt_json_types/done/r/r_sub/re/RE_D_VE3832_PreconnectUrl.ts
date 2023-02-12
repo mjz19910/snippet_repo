@@ -4,3 +4,4 @@ type RE_D_VE3832_PreconnectUrl=
 	|"https://rr2---sn-nx57ynsz.googlevideo.com/generate_204"
 	;
 ;
+type RE_D_GoogleVideoUrl_Hostname=UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>["host"];

@@ -152,11 +152,8 @@ type GV_SubDomain_rr_SN=[
 	"sn-nx57ynsl",
 	"sn-nx57ynss",
 	"sn-nx57ynsz",
-
 ];
 type GV_SubDomain=[
-	"r1---sn-p5qlsny6",
-	"rr?---sn-n4v7snls",
 	"rr1---sn-nx5s7n7s",
 	"rr1---sn-nx5s7n7z",
 	"rr1---sn-nx57ynlk",
@@ -165,6 +162,7 @@ type GV_SubDomain=[
 	"rr1---sn-nx57ynsl",
 	"rr1---sn-nx57ynss",
 	"rr1---sn-nx57ynsz",
+	"rr1---sn-p5qlsny6",
 	"rr2---sn-nx5s7nel",
 	"rr2---sn-nx57ynsd",
 	"rr2---sn-nx57ynsk",
@@ -179,6 +177,7 @@ type GV_SubDomain=[
 	"rr3---sn-nx57ynsl",
 	"rr4---sn-nx5s7n7z",
 	"rr4---sn-nx5s7nee",
+	"rr4---sn-nx5s7nel",
 	"rr4---sn-nx57ynsk",
 	"rr4---sn-nx57ynss",
 	"rr5---sn-nx5s7n7d",

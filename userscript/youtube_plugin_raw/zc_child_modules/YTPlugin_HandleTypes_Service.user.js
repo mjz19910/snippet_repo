@@ -6983,11 +6983,17 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length!==1) debugger;
 		this.parse_preconnect_url(x[0]);
 	}
+	/** @private @arg {RE_D_GoogleVideoUrl_Hostname} x */
+	on_googlevideo_host(x) {
+		this.save_string("googlevideo_host",x);
+		console.log("[googlevideo_host] [%s]",x);
+	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	parse_preconnect_url(x) {
 		let up=this.parse_with_url_parse(x);
 		if(up.pathname!=="/generate_204") debugger;
 		const hn=up.host;
+		this.on_googlevideo_host(hn);
 		let [ux,u1,...y]=split_string(hn,".googlevideo.com");
 		if(y.length!==0) debugger;
 		if(u1!=="") debugger;
@@ -7003,7 +7009,6 @@ class HandleTypes extends HandleTypesEval {
 			let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
-			console.log("[googlevideo_host]%s",hn);
 			switch(ss6) {
 				default: ss6===""; debugger; break;
 				case "el": case "ee":
@@ -7014,7 +7019,6 @@ class HandleTypes extends HandleTypesEval {
 			let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
-			console.log("[googlevideo_host] [%s]",hn);
 			switch(ss6) {
 				default: ss6===""; debugger; break;
 				case "sz":
@@ -9862,7 +9866,7 @@ class HandleTypes extends HandleTypesEval {
 		let s_host=split_string_once(x.host,".");
 		switch(s_host[1]) {
 			case "googlevideo.com": {
-				this.save_string("google_video_host",s_host[0]);
+				this.on_googlevideo_host(s_host[0]);
 				switch(x.pathname) {
 					case "/videoplayback": {
 						let vp_search=x.search;
