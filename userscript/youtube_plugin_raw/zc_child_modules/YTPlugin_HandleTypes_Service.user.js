@@ -592,8 +592,9 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
-				// f13=watch_playlist.params.localCurrentIndex
-				case "watch_playlist.params.f13": return;
+				// f4,f13=watch_playlist.params.localCurrentIndex
+				case "watch_playlist.params.f4": case "watch_playlist.params.f13":
+					return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
 				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
