@@ -2906,21 +2906,8 @@ class HandleRendererContentItemArray extends BaseService {
 	/** @api @public @template {(G_RendererContentItem|R_Comment)[]} T @arg {T} arr @returns {T} */
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
-			let keys=this.get_keys_of(content_item);
 			if("richItemRenderer" in content_item) {return this.filter_for_rich_item_renderer(content_item);}
-			if("commentThreadRenderer" in content_item) return true;
-			if("commentsHeaderRenderer" in content_item) return true;
-			if("continuationItemRenderer" in content_item) return true;
-			if("compactVideoRenderer" in content_item) return true;
-			if("compactPlaylistRenderer" in content_item) return true;
-			if("feedFilterChipBarRenderer" in content_item) return true;
-			if("commentRenderer" in content_item) return true;
-			if("itemSectionRenderer" in content_item) return true;
-			if("compactRadioRenderer" in content_item) return true;
-			if(!("richSectionRenderer" in content_item)) {
-				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
-				return true;
-			};
+			if(!("richSectionRenderer" in content_item)) return true;
 			return this.handle_rich_section_renderer(content_item);
 		}));
 	}
