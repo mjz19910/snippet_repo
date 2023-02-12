@@ -6203,14 +6203,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @api @public @arg {string} x */
 	parse_video_id(x) {this.x.get("indexed_db").put("video_id",{v: x});}
 	/** @api @public @arg {string} type @arg {string} x */
-	parse_channel_id(type,x) {this.x.get("indexed_db").put("channel_id",{type,id: x});}
+	parse_channel_id(type,x) {this.x.get("indexed_db").put("boxed_id",{type: `channel_id:${type}`,id: x});}
 	/** @public @arg {G_UrlInfoItem} url_info */
 	log_url_info(url_info) {
 		switch(url_info._tag) {
 			default: url_info===""; debugger; break;
 			case "channel": this.parse_channel_id(url_info.type,url_info.id); break;
 			case "play-next": url_info; break;
-			case "playlist-channel-mix": break;
+			case "playlist-channel-mix": {
+				this.x.get("indexed_db").put("boxed_id",{type: `${url_info._tag}:${url_info.type}`,id: `${url_info.type}${url_info.channel_id}`});
+				if(!this.str_starts_with_rx("UC",url_info.channel_id)) debugger;
+				const [,id]=split_string_once(url_info.channel_id,"UC");
+				this.x.get("indexed_db").put("boxed_id",{type: "channel_id:UC",id});
+			} break;
 			case "playlist": this.parse_playlist_url_info(url_info); break;
 			case "video": this.parse_video_id(url_info.id); break;
 			case "video-referral": this.parse_video_id(url_info.id); break;
@@ -6237,6 +6242,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_UrlInfoPlaylist} x */
 	parse_playlist_url_info(x) {
+		this.x.get("indexed_db").put("boxed_id",{type: `${x._tag}:${x.type}`,id: x.id});
 		let is_critical=this.get_playlist_url_info_critical(x);
 		this.log_playlist_id(x,is_critical);
 	}

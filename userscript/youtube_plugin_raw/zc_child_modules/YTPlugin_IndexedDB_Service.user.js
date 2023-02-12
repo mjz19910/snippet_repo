@@ -45,13 +45,13 @@ class IndexedDBService extends BaseService {
 	store_cache_index={
 		video_id: ["video_id",new Map],
 		hashtag: ["hashtag",new Map],
-		channel_id: ["channel_id",new Map],
+		boxed_id: ["boxed_id",new Map],
 	};
 	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,DatabaseStoreTypes[R][]]})} */
 	store_cache={
 		video_id: ["video_id",[]],
 		hashtag: ["hashtag",[]],
-		channel_id: ["channel_id",[]],
+		boxed_id: ["boxed_id",[]],
 	};
 	/** @template {keyof DatabaseStoreTypes} T @arg {T} key @returns {Extract<data_cache_Return,[T,...any]>} */
 	get_data_cache(key) {
@@ -61,7 +61,7 @@ class IndexedDBService extends BaseService {
 	get_data_index_cache(key) {return this.store_cache_index[key][1];}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
-	/** @type {Map<"v"|"hashtag"|"channel_id",string[]>} */
+	/** @type {Map<keyof DatabaseStoreTypes,string[]>} */
 	cached_data=new Map;
 	/** @arg {DatabaseStoreDescription["name"]} key */
 	check_size(key) {
@@ -74,7 +74,7 @@ class IndexedDBService extends BaseService {
 	put(...args) {
 		if(!args[1]) {debugger; return;}
 		switch(args[0]) {
-			case "channel_id": {
+			case "boxed_id": {
 				const [key,obj]=args;
 				let cache=this.cached_data.get(key);
 				let cache_key=`${key}:${obj.type}:${obj.id}`;
@@ -85,9 +85,7 @@ class IndexedDBService extends BaseService {
 			} break;
 			case "hashtag": {
 				const [key,obj]=args;
-				/** @type {T_UnionToPartial<typeof obj>} */
-				let ac_obj=obj;
-				let index_val=ac_obj[key];
+				let index_val=obj.hashtag;
 				if(index_val==null) return;
 				let cache=this.cached_data.get(key);
 				if(cache?.includes(index_val)) return;
@@ -97,12 +95,9 @@ class IndexedDBService extends BaseService {
 			} break;
 			case "video_id": {
 				const [key,obj]=args;
-				const index_key="v";
-				/** @type {T_UnionToPartial<typeof obj>} */
-				let ac_obj=obj;
-				let index_val=ac_obj[index_key];
+				let index_val=obj.v;
 				if(index_val==null) return;
-				let cache=this.cached_data.get(index_key);
+				let cache=this.cached_data.get(key);
 				if(cache?.includes(index_val)) return;
 				if(!this.database_open) this.requestOpen({name: key});
 				this.push_waiting_obj(key,obj);
@@ -113,7 +108,7 @@ class IndexedDBService extends BaseService {
 	/** @private @arg {push_waiting_obj_Args} args */
 	push_waiting_obj(...args) {
 		switch(args[0]) {
-			case "channel_id": {
+			case "boxed_id": {
 				const [key,obj]=args;
 				let d_cache=this.get_data_cache(key);
 				let c_index=this.store_cache_index[key][1];
@@ -213,9 +208,9 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
-		const cur_name=store_desc.name;
-		const index_key=this.get_index_key(cur_name);
-		const [,dc]=this.get_data_cache(cur_name);
+		const key=store_desc.name;
+		const index_key=this.get_index_key(key);
+		const [,dc]=this.get_data_cache(key);
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
 		for(let i=dc.length-1;i>=0;i--) {
 			const val=dc[i];
@@ -224,8 +219,8 @@ class IndexedDBService extends BaseService {
 			if(!this.committed_data.includes(val)) continue;
 			if(!index_key) {debugger; continue;}
 			x: {
-				if(!this.cached_data.has(index_key)) this.cached_data.set(index_key,[]);
-				let cache=this.cached_data.get(index_key);
+				if(!this.cached_data.has(key)) this.cached_data.set(key,[]);
+				let cache=this.cached_data.get(key);
 				if(!cache) throw new Error();
 				let index_val=ac_val[index_key];
 				if(!index_val) break x;
@@ -239,7 +234,7 @@ class IndexedDBService extends BaseService {
 			console.log("[new_data_after_tx_complete]",dc);
 		} else {
 			this.committed_data.length=0;
-			let index=this.get_data_index_cache(cur_name);
+			let index=this.get_data_index_cache(key);
 			index.clear();
 		}
 		this.database_open=false;
@@ -400,7 +395,7 @@ class IndexedDBService extends BaseService {
 			this.create_store("hashtag",db,{unique: true});
 		}
 		if(event.oldVersion<4) {
-			this.create_store("channel_id",db);
+			this.create_store("boxed_id",db);
 		}
 	}
 	/** @private @arg {IDBOpenDBRequest} request */
@@ -408,7 +403,7 @@ class IndexedDBService extends BaseService {
 		const db=request.result;
 		this.create_store("video_id",db,{unique: true});
 		this.create_store("hashtag",db,{unique: true});
-		this.create_store("channel_id",db);
+		this.create_store("boxed_id",db);
 	}
 	/** @private @arg {Event} event */
 	onError(event) {console.log("idb error",event);}
