@@ -101,6 +101,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "VideoGoodPutShape";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "continuation_token.+4.f0.f3";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "AD_Notification";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_LiveChat";}

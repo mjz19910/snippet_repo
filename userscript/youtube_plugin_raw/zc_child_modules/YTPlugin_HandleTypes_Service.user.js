@@ -5968,7 +5968,23 @@ class HandleTypes extends HandleTypesEval {
 				const [,field_id,_raw_bin,dec_bin]=x;
 				if(field_id!==0) debugger;
 				if(dec_bin===null) {debugger; break;}
-				console.log("[continuation_token]","0x"+(new Uint32Array(msg_id.buffer)[0].toString(16)),dec_bin);
+				let bin_map=this.make_param_map(dec_bin);
+				if(bin_map===null) {debugger; break;}
+				let f2=bin_map.get(2);
+				let f3=bin_map.get(3);
+				if(!(f2&&f3)) {debugger; break;}
+				let [f2i,...f2r]=f2; if(f2r.length!==0) debugger;
+				let [f3i,...f3r]=f3; if(f3r.length!==0) debugger;
+				if(typeof f2i!=='string') {debugger; break;}
+				if(typeof f3i!=='string') {debugger; break;}
+				if(this.str_starts_with(f2i,"UC")) {
+					this.D_ChannelId(f2i);
+				} else {
+					debugger;
+				}
+				let x1=decodeURIComponent(f3i);
+				this.params("continuation_token.+4.f0.f3","continuation_token.data",x1);
+				console.log("[continuation_token]","0x"+(new Uint32Array(msg_id.buffer)[0].toString(16)),x1);
 			} break;
 		}
 	}

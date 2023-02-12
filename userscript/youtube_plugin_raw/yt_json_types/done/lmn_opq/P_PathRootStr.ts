@@ -4,6 +4,7 @@ type P_PathRootStr=
 	|"aadc_guidelines_state_entity_key"
 	|"AdServingDataEntry"
 	|"browse$param"
+	|"continuation_token.data"
 	|"create_comment.params"
 	|"create_playlist.params"
 	|"createBackstagePost.params"
