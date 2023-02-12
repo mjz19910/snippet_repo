@@ -516,20 +516,30 @@ class HandleTypes extends HandleTypesEval {
 		if(path==="tracking.trackingParams.f2") return;
 		if(path==="tracking.trackingParams.f8") return;
 		if(path==="watch_playlist.params.f1") return;
-		if(path==="entity_key.normal.f2"&&typeof entry==="string") return this.D_ChannelId(as(entry));
-		if(path==="entity_key.normal.f2.f1"&&typeof entry==="string") return this.videoId(entry);
-		if(path==="create_comment.params.f2"&&typeof entry==="string") return this.videoId(entry);
-		// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
-		if(path==="continuation_token.data.f110.f3.f15.f2.f1"&&typeof entry==="string") {
-			return this.parse_target_id(as(entry));
+		if(typeof entry==="string") {
+			if(path==="entity_key.normal.f2") return this.D_ChannelId(as(entry));
+			if(path==="tracking.trackingParams.f11") return this.D_ChannelId(as(entry));
+			if(path==="entity_key.normal.f2.f1") return this.videoId(entry);
+			if(path==="create_comment.params.f2") return this.videoId(entry);
+			// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
+			if(path==="continuation_token.data.f110.f3.f15.f2.f1") return this.targetId(`Binary.value:${path}`,as(entry));
+			return this.save_string(path,entry);
 		}
 		if(typeof entry==="number") {
-			if(entry>(65536*4)) return;
-			return this.save_number(path,entry);
+			if(path==="tracking.trackingParams.f4.f1") return;
+			if(path==="tracking.trackingParams.f4.f2") return;
+			if(path==="tracking.trackingParams.f4.f3") return;
+			this.save_number(path,entry);
+			debugger;
+			return;
 		}
-		if(typeof entry==="string") return this.save_string(path,entry);
 		if(entry instanceof Map) return;
-		if(this.is_bigint(entry)) return this.handle_bigint(path,entry);
+		if(this.is_bigint(entry)) {
+			if(path==="tracking.trackingParams.f9") return;
+			this.handle_bigint(path,entry);
+			debugger;
+			return;
+		}
 		switch(entry) {default: debugger; return;}
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
@@ -7713,11 +7723,11 @@ class HandleTypes extends HandleTypesEval {
 		let k=`${rk}[${JSON.stringify(f)}]`;
 		this.save_string(rk,f);
 		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
-		if(!s_url_data) return this.save_number(k,1);
+		if(!s_url_data) {this.save_number(k,1); return;}
 		let wd=s_url_data[1];
 		if(wd[0]!=="one") {debugger; return;}
 		let [,di]=wd;
-		if(!di.length) return this.save_number(k,1);
+		if(!di.length) {this.save_number(k,1); return;}
 		let n=di[0]+1;
 		this.save_number(k,n);
 	}
