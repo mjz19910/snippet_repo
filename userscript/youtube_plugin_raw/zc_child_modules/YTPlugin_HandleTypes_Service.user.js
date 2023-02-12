@@ -7387,15 +7387,25 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
+	/** @private @arg {M_VE3611|M_VE3611_ResolveUrl} x */
+	M_VE3611(x) {x;}
+	/** @private @arg {E_VE3611_Browse} x */
+	E_VE3611_Browse(x) {
+		const cf="E_VE3611_Browse";
+		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+		this.M_VE3611(x2);
+		this.G_DE_Browse_VE("VE3611",x4);
+		this.g(x5);
+	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
-		const cf="D_ExpandableTab"; this.k(cf,x);
-		const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.g(endpoint);
+		const cf="D_ExpandableTab";
+		const {endpoint,title,selected,/*expandedText,content,*/...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_VE3611_Browse(endpoint);
 		this.a_primitive_str(title);
 		this.a_primitive_bool(selected);
-		this.t(expandedText,this.a_primitive_str);
-		this.t(content,this.R_SectionList);
+		//this.t(expandedText,this.a_primitive_str);
+		//this.t(content,this.R_SectionList);
 	}
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {

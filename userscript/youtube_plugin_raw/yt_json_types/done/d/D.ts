@@ -1663,11 +1663,11 @@ type D_Enum_GuideAction=T_EnumStr<"GUIDE_ACTION","ADD_TO_PLAYLISTS"|
 	"ADD_TO_SUBSCRIPTIONS"
 >;
 type D_ExpandableTab={
-	endpoint: {};
-	title: string;
-	selected: boolean;
-	expandedText?: string;
-	content?: R_SectionList;
+	endpoint: E_VE3611_Browse;
+	title: "Search";
+	selected: false;
+	// expandedText?: string;
+	// content?: R_SectionList;
 };
 type D_ExpandableVideoDescriptionBody={
 	descriptionBodyText?: G_Text;
