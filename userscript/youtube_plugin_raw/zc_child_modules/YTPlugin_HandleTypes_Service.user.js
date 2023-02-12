@@ -5540,17 +5540,9 @@ class HandleTypes extends HandleTypesEval {
 		if(!ia) this.strings_map.set(x.style,ia=[]);
 		switch(x.style) {
 			default: x===0; debugger; break;
+			case "BADGE_STYLE_TYPE_AD": case "BADGE_STYLE_TYPE_COLLECTION":
+			case "BADGE_STYLE_TYPE_YPC":
 			case "BADGE_STYLE_TYPE_SIMPLE": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.trackingParams(cf,trackingParams);
-				ia.push(["label",[label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_YPC": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.trackingParams(cf,trackingParams);
-				ia.push(["label",[label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_COLLECTION": {
 				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.trackingParams(cf,trackingParams);
 				ia.push(["label",[label]]);
