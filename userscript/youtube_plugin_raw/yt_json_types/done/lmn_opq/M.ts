@@ -44,6 +44,7 @@ type M_Subscribe=TM_Gen<GM_Subscribe>;
 type M_Unsubscribe=TM_Gen<GM_Unsubscribe>;
 type M_UserFeedback=TM_Gen<GM_UserFeedback>;
 type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
+type M_YpcGetOffers=TM_Gen<GM_YpcGetOffers>;
 //#endregion
 //#region MG_
 type MG_AdLayout_PlayerBytes={layoutType: "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES"; layoutId: string;};

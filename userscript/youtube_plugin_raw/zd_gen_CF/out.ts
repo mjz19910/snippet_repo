@@ -16,7 +16,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_TargetIdStr:targetId";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "GM_WC_RootVe";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "GU_YoutubeUrlRedirect@parsed_search.event";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
@@ -837,9 +836,11 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_Executor";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AccountMenu";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AddToPlaylistService";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Browse";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateBackstagePost";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreateComment";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_CreatePlaylist";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Dislike";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_EditPlaylist";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Feedback";}
@@ -853,12 +854,14 @@ export namespace Gen {
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_NotificationOptOut";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RecordInteractions";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_RemoveLike";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_SetSetting";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Subscribe";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_YpcGetOffers";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_LiveNow";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_MediumGray";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:text.icon" | "D_Button:size.icon" | "D_Button:trackingParams.icon" | "D_Button:targetId.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:icon.icon" | "D_Button:accessibility.icon" | "D_Button:accessibilityData.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button:isDisabled.icon" | "D_Button:tooltip.icon" | "D_Button:iconPosition.icon" | "D_Button.icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button.icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:ForChannel:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:targetId:icon";}
@@ -917,6 +920,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE5754";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_VE83769";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetCart";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_YpcGetOffers";}
 		|{n: Prelude.CF_T_WCM_Unpack; t: Types.CF_T_WCM_Unpack_; v: "MG_Survey_CMD";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}

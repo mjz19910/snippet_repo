@@ -129,7 +129,7 @@ type GM_RemoveLike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/removelike">;
 type GM_SetSetting=T_GM_PostApi_WithApiUrl<"/youtubei/v1/account/set_setting">;
 type GM_Subscribe=T_GM_PostApi_WithApiUrl<"/youtubei/v1/subscription/subscribe">;
 type GM_Unsubscribe=T_GM_PostApi_WithApiUrl<"/youtubei/v1/subscription/unsubscribe">;
-type GM_ypc_get_offers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
+type GM_YpcGetOffers=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_offers">;
 type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
 //#endregion
 //#endregion
@@ -172,7 +172,7 @@ type GM_WC_PostApi=[
 	GM_SendPost,
 	GM_GetSharePanel,
 	GM_Subscribe,
-	GM_ypc_get_offers,
+	GM_YpcGetOffers,
 	GM_YpcGetCart,
 ][number];
 type GM_WC=[

@@ -2709,7 +2709,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_Empty_WCM("M_YpcGetOffers",a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
@@ -2764,6 +2764,8 @@ class HandleTypes extends HandleTypesEval {
 	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
+	/** @private @arg {M_YpcGetOffers} x */
+	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {M_SetSetting} x */
@@ -3044,13 +3046,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GM_Next} x */
 	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
 	/** @private @arg {GM_YpcGetCart} x */
-	GM_YpcGetCart(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
+	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
+	/** @private @arg {GM_YpcGetOffers} x */
+	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
 	/** @private @arg {GM_CreatePlaylist} x */
-	GM_CreatePlaylist(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
+	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
-	GM_SetSetting(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
+	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
-	GM_AddToPlaylistService(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
+	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {"GM_VE3832_WatchPlaylist"|"GM_VE3832_Watch"} cf @arg {T} x @template {GM_VE3832_WatchPlaylist|GM_VE3832_Watch} T */
 	GM_VE3832(cf,x) {
 		const {rootVe,webPageType,...y}=this.s(cf,x);/*#destructure_omit*/
