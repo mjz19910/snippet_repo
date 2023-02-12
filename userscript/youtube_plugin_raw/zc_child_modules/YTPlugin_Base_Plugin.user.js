@@ -2477,9 +2477,9 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value.get("codegen");
 	}
 	/** @protected @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {this.ds.save_string(k,x);}
+	save_string(k,x) {return this.ds.save_string(k,x);}
 	/** @protected @arg {string} k @arg {boolean} x */
-	save_boolean(k,x) {this.ds.save_boolean(k,x);}
+	save_boolean(k,x) {return this.ds.save_boolean(k,x);}
 	/** @arg {string} x */
 	trim_brackets(x) {
 		/** @type {`[${string}]`} */

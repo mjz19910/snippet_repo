@@ -523,21 +523,23 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="create_comment.params.f2") return this.videoId(entry);
 			// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 			if(path==="continuation_token.data.f110.f3.f15.f2.f1") return this.targetId(`Binary.value:${path}`,as(entry));
-			return this.save_string(path,entry);
+			let new_data=this.save_string(path,entry);
+			if(new_data) debugger;
+			return;
 		}
 		if(typeof entry==="number") {
 			if(path==="tracking.trackingParams.f4.f1") return;
 			if(path==="tracking.trackingParams.f4.f2") return;
 			if(path==="tracking.trackingParams.f4.f3") return;
-			this.save_number(path,entry);
-			debugger;
+			let new_data=this.save_number(path,entry);
+			if(new_data) debugger;
 			return;
 		}
 		if(entry instanceof Map) return;
 		if(this.is_bigint(entry)) {
 			if(path==="tracking.trackingParams.f9") return;
-			this.handle_bigint(path,entry);
-			debugger;
+			let new_data=this.handle_bigint(path,entry);
+			if(new_data) debugger;
 			return;
 		}
 		switch(entry) {default: debugger; return;}
@@ -656,7 +658,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
 		this.save_number(path,x[1]);
-		this.save_string(path,`${x[2]}n`);
+		return this.save_string(path,`${x[2]}n`);
 	}
 	get generate_typedef() {
 		if(!generate_typedef.value) throw new Error();
