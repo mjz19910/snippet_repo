@@ -8433,7 +8433,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DMD_RowContainer"; this.k(cf,x);
 		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.tz(rows,this.R_RichMetadataRow);
-		this.save_number(`[${cf}.coll_item_count]`,collapsedItemCount);
+		this.save_number(`${cf}.coll_item_count`,collapsedItemCount);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */

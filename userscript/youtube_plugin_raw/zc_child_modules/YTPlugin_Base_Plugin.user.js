@@ -2495,7 +2495,7 @@ class BaseServicePrivate extends ApiBase {
 	}
 	/** @protected @arg {string} k @arg {number|number[]} x @arg {boolean} [force_update] */
 	save_number(k,x,force_update=false) {
-		this.ds.save_number(`[${k}]`,x,force_update);
+		this.ds.save_number(k,x,force_update);
 	}
 	//#endregion
 	#x;
