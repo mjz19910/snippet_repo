@@ -7014,7 +7014,7 @@ class HandleTypes extends HandleTypesEval {
 			let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
-			console.log("[googlevideo_host]%s",hn);
+			console.log("[googlevideo_host] [%s]",hn);
 			switch(ss6) {
 				default: ss6===""; debugger; break;
 				case "sz":
