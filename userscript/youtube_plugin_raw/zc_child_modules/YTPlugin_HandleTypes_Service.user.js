@@ -6888,18 +6888,24 @@ class HandleTypes extends HandleTypesEval {
 		const {veData,csn,...y}=this.s(cf,x); this.g(y);
 		this.D_VeCsn(csn);
 	}
-	/** @private @arg {string} x */
-	D_VeCsn(x) {
+	/** @private @arg {string} x @arg {boolean} is_prev */
+	D_VeCsn(x,is_prev=false) {
 		let csn_dec=atob(x);
-		console.log("[csn_dec]",csn_dec);
+		if(is_prev) {
+			console.log("[prev_csn_dec]",csn_dec);
+		} else {
+			console.log("[csn_dec]",csn_dec);
+		}
 	}
 	/** @private @arg {RS_Page_Channel} x */
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
 		if("rootVe" in x) {
 			const {...u}=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			const {rootVe,expirationTime,...y}=u; this.g(y);
+			const {rootVe,expirationTime,csn,...y}=u; this.g(y);
+			this._primitive_of(expirationTime,"number");
 			if(rootVe!==3611) debugger;
+			this.t(csn,this.D_VeCsn);
 			return;
 		}
 		if("csn" in x) {
@@ -6907,12 +6913,21 @@ class HandleTypes extends HandleTypesEval {
 			const {csn,expirationTime,graftedVes,...y}=u; this.g(y);
 			this.D_VeCsn(csn);
 			this.z(graftedVes,this.D_GraftedVeItem);
-			return this._primitive_of(expirationTime,"number");
+			this._primitive_of(expirationTime,"number");
+			return;
+		}
+		if("expirationTime" in x&&"previousCsn" in x) {
+			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
+			const {previousCsn,expirationTime,...y}=u; this.g(y);
+			this.D_VeCsn(previousCsn,true);
+			this._primitive_of(expirationTime,"number");
+			return;
 		}
 		if("expirationTime" in x) {
 			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
 			const {expirationTime,...y}=u; this.g(y);
-			return this._primitive_of(expirationTime,"number");
+			this._primitive_of(expirationTime,"number");
+			return;
 		}
 		{
 			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
