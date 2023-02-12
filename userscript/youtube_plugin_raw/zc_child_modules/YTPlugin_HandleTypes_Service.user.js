@@ -2616,18 +2616,25 @@ class HandleTypes extends HandleTypesEval {
 		this.t(parentTrackingParams,x => this.trackingParams(cf,x));
 		this.t(isVanityUrl,x => this.ceq(x,true));
 	}
+	/** @private @arg {Extract<GE_Browse_WCM,{resolveUrlCommandMetadata:any}>} x */
+	M_VE_ResolveUrl(x) {
+		const cf="M_VE_ResolveUrl";
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GM_VE3854_ResolveUrl_C_MD(b);
+		switch(a.rootVe) {
+			case 3611: this.GM_VE3611_WC(a); break;
+			case 3854: this.GM_VE3854_WC(a); break;
+		}
+		if(a.rootVe===3854) {
+			return this.GM_VE3854_WC(a);
+		}
+		debugger;
+		return this.GM_VE_WC_Browse(a);
+	}
 	/** @private @arg {GE_Browse_WCM} x */
 	GE_Browse_WCM(x) {
-		const cf="M_VE_Browse";
-		if("resolveUrlCommandMetadata" in x) {
-			const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.GM_VE3854_ResolveUrl_C_MD(b);
-			if(a.rootVe===3854) {
-				return this.GM_VE3854_WC(a);
-			}
-			debugger;
-			return this.GM_VE_WC_Browse(a);
-		}
+		const cf="GE_Browse_WCM";
+		if("resolveUrlCommandMetadata" in x) return this.M_VE_ResolveUrl(x);
 		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		return this.GM_VE_WC_Browse(a);
 	}

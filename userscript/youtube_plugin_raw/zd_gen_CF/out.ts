@@ -599,6 +599,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GA_Continuation_CommentRepliesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GD_RC_SectionList";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GE_Browse_WCM";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE11487_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE23462_WC";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "GM_VE3611_WC";}
@@ -625,7 +626,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_Browse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "NotchesItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "O_DU_Persistence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Popup_GetAccountMenu";}
