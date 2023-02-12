@@ -513,6 +513,7 @@ class HandleTypes extends HandleTypesEval {
 	parse_key_index=1;
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
+		if(path==="tracking.trackingParams.f2") return;
 		if(path==="tracking.trackingParams.f8") return;
 		if(path==="watch_playlist.params.f1") return;
 		if(path==="entity_key.normal.f2"&&typeof entry==="string") return this.D_ChannelId(as(entry));
@@ -6126,6 +6127,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!arr) {debugger; return;}
 		/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
 		let ux_1=[];
 		let ux_2=[];
