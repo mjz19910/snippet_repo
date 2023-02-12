@@ -23,6 +23,7 @@ type D_Button={
 	accessibility?: D_Label;
 	tooltip?: string;
 	trackingParams: string;
+	hint?: R_Hint;
 	iconPosition?: "BUTTON_ICON_POSITION_TYPE_LEFT_OF_TEXT";
 	accessibilityData?: D_Accessibility;
 	targetId?: D_Button_targetId;

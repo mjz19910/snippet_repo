@@ -349,7 +349,7 @@ class HandleTypes extends HandleTypesEval {
 			// binary tab enum
 			/** @type {B_BinaryBrowseTab} */
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {
-				case 2: case 6: case 7: case 8: case 9: case 10: case 11: case 19:// case 20:
+				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19:// case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -3732,13 +3732,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
-		/** @type {"D_Button"|`D_Button:${keyof D_Button}`} */
+		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
 		let cf="D_Button";
 		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
 		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
 		else if("command" in x) cf="D_Button:command";
 		else if("style" in x) cf="D_Button:style";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(hint,this.R_Hint);
 		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
 		this.t(targetId,x => {
 			this.targetId(cf,x);
