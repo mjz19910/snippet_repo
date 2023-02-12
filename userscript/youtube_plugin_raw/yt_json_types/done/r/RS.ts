@@ -254,6 +254,13 @@ type RS_Page_Channel={
 	response: RS_Channel;
 	url: `/@${string}/videos`;
 	expirationTime: number;
+}|{
+	rootVe: 3611;
+	url: `/@${string}/videos`;
+	endpoint: GE_Browse;
+	page: "channel";
+	response: RS_Channel;
+	expirationTime: number;
 };
 type RS_Page_Playlist={
 	page: "playlist";

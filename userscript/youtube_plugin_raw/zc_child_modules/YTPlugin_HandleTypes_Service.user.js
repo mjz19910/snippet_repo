@@ -6362,7 +6362,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.G_Text(subtitle);
 	}
-	/** @private @arg {"R_ChannelPage"} cf @arg {RS_Page_Channel} x */
+	/** @private @arg {"R_ChannelPage"} cf @template {RS_Page_Channel} T @arg {T} x */
 	RS_ChannelPage_Omit(cf,x) {
 		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(page!=="channel") debugger;
@@ -6374,12 +6374,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Page_Channel} x */
 	RS_ChannelPage(x) {
 		const cf="R_ChannelPage";
-		const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
-		if("expirationTime" in u) {
+		if("rootVe" in x) {
+			const {...u}=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			const {rootVe,expirationTime,...y}=u; this.g(y);
+			if(rootVe!==3611) debugger;
+			return;
+		}
+		if("expirationTime" in x) {
+			const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
 			const {expirationTime,...y}=u; this.g(y);
 			return this._primitive_of(expirationTime,"number");
 		}
-		this.g(u);
+		{
+			const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			this.g(u);
+		}
 	}
 	/** @private @arg {RS_Page_Search} x */
 	RS_SearchPage(x) {
