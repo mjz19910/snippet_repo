@@ -6174,10 +6174,7 @@ class HandleTypes extends HandleTypesEval {
 					} break;
 				}
 			});
-			// this.tz(continuations,this.RD_NextContinuation);
 			this.trackingParams(cf,trackingParams);
-			// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
-			// if(hideBottomSeparator!==void 0) this.save_boolean(`${cf}.hideBottomSeparator`,hideBottomSeparator);
 			return;
 		}
 		if("disablePullToRefresh" in x) {
@@ -6186,6 +6183,9 @@ class HandleTypes extends HandleTypesEval {
 			if(disablePullToRefresh!==true) debugger;
 			return;
 		}
+		// this.tz(continuations,this.RD_NextContinuation);
+		// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
+		// if(hideBottomSeparator!==void 0) this.save_boolean(`${cf}.hideBottomSeparator`,hideBottomSeparator);
 		debugger;
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
