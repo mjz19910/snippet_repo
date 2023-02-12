@@ -271,7 +271,7 @@ type RS_Page_Channel={
 	endpoint: E_VE3611_Browse;
 	response: RS_Channel;
 	url: `/@${string}`;
-	expirationTime: 1676178220452;
+	expirationTime: number;
 	graftedVes: D_GraftedVeItem[];
 	csn: string;
 };
