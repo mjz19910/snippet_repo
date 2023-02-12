@@ -6983,10 +6983,15 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length!==1) debugger;
 		this.parse_preconnect_url(x[0]);
 	}
+	/** @type {string[]} */
+	logged_hosts=[];
 	/** @private @arg {RE_D_GoogleVideoUrl_Hostname} x */
 	on_googlevideo_host(x) {
+		if(this.logged_hosts.includes(x)) return;
+		this.logged_hosts.push(x);
 		this.save_string("googlevideo_host",x);
 		console.log("[googlevideo_host] [%s]",x);
+		Promise.resolve().then(() => this.logged_hosts.length=0);
 	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	parse_preconnect_url(x) {
