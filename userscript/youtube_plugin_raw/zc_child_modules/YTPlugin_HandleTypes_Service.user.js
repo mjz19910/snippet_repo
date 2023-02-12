@@ -599,6 +599,7 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
+				case "request_continuation.token.f9.f1.f4.f13[]":
 				case "request_continuation.token.f9.f1.f4.f13": return;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_playlist.params.f4": case "watch_playlist.params.f13":
