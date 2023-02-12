@@ -73,7 +73,6 @@ type R_EndScreenPlaylist={endScreenPlaylistRenderer: D_EndScreenPlaylist;};
 type R_EndScreenVideo={endScreenVideoRenderer: D_EndScreenVideo;};
 type R_EngagementPanelSectionList={engagementPanelSectionListRenderer: D_EngagementPanelSectionList;};
 type R_EngagementPanelTitleHeader={engagementPanelTitleHeaderRenderer: D_EngagementPanelTitleHeader;};
-type DC_EntityBatchUpdate={entityBatchUpdate: DR_DC_EntityBatchUpdate;};
 type R_ExpandableSurveyResponse={expandableSurveyResponseRenderer: D_ExpandableSurveyResponse;};
 type R_ExpandableTab={expandableTabRenderer: D_ExpandableTab;};
 type R_ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D_ExpandableVideoDescriptionBody;};
