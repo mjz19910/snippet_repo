@@ -515,17 +515,12 @@ class HandleTypes extends HandleTypesEval {
 	handle_map_value(path,entry) {
 		if(path==="tracking.trackingParams.f8") return;
 		if(path==="watch_playlist.params.f1") return;
-		if(path==="entity_key.normal.f2"&&typeof entry==="string") {
-			this.D_ChannelId(as(entry));
-			return;
-		}
-		if(path==="entity_key.normal.f2.f1"&&typeof entry==="string") {
-			this.videoId(entry);
-			return;
-		}
-		if(path==="create_comment.params.f2"&&typeof entry==="string") {
-			this.videoId(entry);
-			return;
+		if(path==="entity_key.normal.f2"&&typeof entry==="string") return this.D_ChannelId(as(entry));
+		if(path==="entity_key.normal.f2.f1"&&typeof entry==="string") return this.videoId(entry);
+		if(path==="create_comment.params.f2"&&typeof entry==="string") return this.videoId(entry);
+		// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
+		if(path==="continuation_token.data.f110.f3.f15.f2.f1"&&typeof entry==="string") {
+			return this.parse_target_id(as(entry));
 		}
 		if(typeof entry==="number") {
 			if(entry>(65536*4)) return;
@@ -3632,8 +3627,7 @@ class HandleTypes extends HandleTypesEval {
 	known_target_id=[];
 	/** @api @public @arg {D_TargetIdStr} x */
 	parse_target_id(x) {
-		if(x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)) return;
-		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
+		if(this.is_yt_uuid(x)) return;
 		if(this.str_starts_with_rx("browse-feed",x)) {
 			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
@@ -3647,12 +3641,15 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"clip")) {return this.save_enum("clip",x);}
 		this.save_string("target_id",x);
 	}
+	/** @arg {string} x @returns {x is `${string}-0000-${string}`} */
+	is_yt_uuid(x) {
+		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
+	}
 	/** @protected @arg {string} cf1 @arg {D_TargetIdStr} x */
 	targetId(cf1,x) {
 		const cf2="targetId";
 		this.parse_target_id(x);
-		if(x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)) return;
-		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
+		if(this.is_yt_uuid(x)) return;
 		this.save_string(`${cf1}.${cf2}`,x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
@@ -4800,8 +4797,7 @@ class HandleTypes extends HandleTypesEval {
 	reload_ui_target_id_arr=[];
 	/** @arg {D_UiTargetId} x */
 	D_UiTargetId(x) {
-		if(x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)) return;
-		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
+		if(this.is_yt_uuid(x)) return;
 		switch(x) {
 			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
 			case "comments-section":
@@ -4853,13 +4849,19 @@ class HandleTypes extends HandleTypesEval {
 			case "RELOAD_CONTINUATION_SLOT_BODY": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				this.save_string("Body.targetId",targetId);
+				if(!this.is_yt_uuid(targetId)) {
+					this.save_string("Body.targetId",targetId);
+					switch(targetId) {
+						default: debugger; break;
+						case "browse-feedFEwhat_to_watch":
+					}
+				}
 				this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
 			} break;
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
 				this.targetId(cf,targetId);
-				if(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.exec(targetId)===null) {
+				if(!this.is_yt_uuid(targetId)) {
 					this.save_string("Header.targetId",targetId);
 					switch(targetId) {
 						default: debugger; break;

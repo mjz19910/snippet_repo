@@ -11,6 +11,10 @@ type DC_RepeatChapter={
 	repeatStateEntityKey: string;
 };
 type DC_ReloadContinuationItems={
+	targetId: "64063a76-0000-2c8b-9801-f4f5e8090f44";
+	continuationItems: R_RichItem[];
+	slot: "RELOAD_CONTINUATION_SLOT_BODY";
+}|{
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
 	targetId: "browse-feedFEwhat_to_watch";
 	continuationItems: G_SectionItem[];
