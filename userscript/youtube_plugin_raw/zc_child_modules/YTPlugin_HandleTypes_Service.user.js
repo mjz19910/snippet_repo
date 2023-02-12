@@ -365,7 +365,7 @@ class HandleTypes extends HandleTypesEval {
 			// binary tab enum
 			/** @type {BinaryBrowseTab} */
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {
-				case 2: case 6: case 8: case 9: case 10: case 11:// case 19: case 20:
+				case 2: case 6: case 7: case 8: case 9: case 10: case 11:// case 19: case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -576,7 +576,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f2": case "f3": case "f6": case "f8": case "f9": case "f10": case "f11": case "f14": case "f19": case "f20":
+					case "f1": case "f2": case "f3": case "f6": case "f7": case "f8": case "f9": case "f10": case "f11": case "f14": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
