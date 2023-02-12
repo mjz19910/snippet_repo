@@ -15,12 +15,14 @@ function generate_ts_make_tmp_git_repo {
 		git clone "$PROJ_DIR" snippet_repo_tmp -q
 		pushd "$TMP_DIR"
 		generate_ts_after_tmp_git_repo
+		pushd "$TMP_DIR/$DEST_DIR"
+		npm i --silent --no-progress
+		popd "$TMP_DIR/$DEST_DIR"
 		popd
 	fi
 	popd
 }
 function generate_ts_init_cwd {
-	npm i --silent --no-progress
 	cp "out_empty.ts" "out.ts"
 	cp "gen_export_tmp.ts" "gen_export_cur.ts"
 	mv "tmp.ts" "tmp.ts.bak"
