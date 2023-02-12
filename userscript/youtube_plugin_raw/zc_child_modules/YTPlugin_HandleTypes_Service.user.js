@@ -4423,6 +4423,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ChannelId(x) {
 		const cf="D_ChannelId"; this.k(cf,x);
 		if(this.str_starts_with_rx("UC",x)) {
+			this.parse_channel_id(x);
 			if(x.length===24) return;
 			console.log("[channelId.length]",x.length);
 			return;
@@ -6202,26 +6203,35 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @api @public @arg {string} x */
 	parse_video_id(x) {this.x.get("indexed_db").put("video_id",{v: x});}
-	/** @api @public @arg {string} type @arg {string} x */
-	parse_channel_id(type,x) {this.x.get("indexed_db").put("boxed_id",{type: `channel_id:${type}`,id: x});}
+	/** @api @public @arg {`UC${string}`} x */
+	parse_channel_id(x) {
+		const [,id]=split_string_once(x,"UC");
+		this.x.get("indexed_db").put("boxed_id",{type: `channel_id:UC`,id});
+	}
 	/** @public @arg {G_UrlInfoItem} url_info */
 	log_url_info(url_info) {
-		switch(url_info._tag) {
+		switch(url_info.type) {
 			default: url_info===""; debugger; break;
-			case "channel": this.parse_channel_id(url_info.type,url_info.id); break;
+			case "channel:UC": this.parse_channel_id(url_info.id); break;
 			case "play-next": url_info; break;
-			case "playlist-channel-mix": {
-				this.x.get("indexed_db").put("boxed_id",{type: `${url_info._tag}:${url_info.type}`,id: `${url_info.type}${url_info.channel_id}`});
-				if(!this.str_starts_with_rx("UC",url_info.channel_id)) debugger;
-				const [,id]=split_string_once(url_info.channel_id,"UC");
-				this.x.get("indexed_db").put("boxed_id",{type: "channel_id:UC",id});
+			case "playlist:RDCM": {
+				this.x.get("indexed_db").put("boxed_id",{type: url_info.type,id: url_info.raw_id});
+				if(!this.str_starts_with_rx("UC",url_info.raw_id)) debugger;
+				this.parse_channel_id(url_info.raw_id);
 			} break;
-			case "playlist": this.parse_playlist_url_info(url_info); break;
+			case "playlist:RDMM": case "playlist:RD": case "playlist:UU":
+			case "playlist:PL": {
+				let x=url_info;
+				const {type,id}=x;
+				this.x.get("indexed_db").put("boxed_id",{type,id});
+				let is_critical=this.get_playlist_url_info_critical(x);
+				this.log_playlist_id(x,is_critical);
+			} break;
 			case "video": this.parse_video_id(url_info.id); break;
 			case "video-referral": this.parse_video_id(url_info.id); break;
 		}
 	}
-	/** @private @arg {D_UrlInfoPlaylist} x */
+	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
 		switch(x.id.length) {
 			case 11: return false;
@@ -6233,18 +6243,12 @@ class HandleTypes extends HandleTypesEval {
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
 	cache_playlist_id=[];
-	/** @private @arg {D_UrlInfoPlaylist} x */
+	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
 	log_playlist_id(x,critical=false) {
 		if(!this.cache_playlist_id.includes(x.id)) {
 			this.cache_playlist_id.push(x.id);
 			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
 		}
-	}
-	/** @private @arg {D_UrlInfoPlaylist} x */
-	parse_playlist_url_info(x) {
-		this.x.get("indexed_db").put("boxed_id",{type: `${x._tag}:${x.type}`,id: x.id});
-		let is_critical=this.get_playlist_url_info_critical(x);
-		this.log_playlist_id(x,is_critical);
 	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
@@ -6460,9 +6464,9 @@ class HandleTypes extends HandleTypesEval {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
-				case "v": this.log_url_info({_tag: "video",id: res[1]}); break;
+				case "v": this.log_url_info({type: "video",id: res[1]}); break;
 				case "list": this.parse_guide_entry_id(res[1]); break;
-				case "rv": this.log_url_info({_tag: "video-referral",id: res[1]}); break;
+				case "rv": this.log_url_info({type: "video-referral",id: res[1]}); break;
 				case "pp": {
 					this.on_player_params(root,"watch_page_url.pp",res[1],x => {
 						x;
@@ -6475,8 +6479,8 @@ class HandleTypes extends HandleTypesEval {
 					this.cache_playlist_index.push(res[1]);
 					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
-				case "t": this.log_url_info({_tag: "video-referral",id: res[1]}); break;
-				case "playnext": this.log_url_info({_tag: "play-next",value: res[1]}); break;
+				case "t": this.log_url_info({type: "video-referral",id: res[1]}); break;
+				case "playnext": this.log_url_info({type: "play-next",value: res[1]}); break;
 				default: res[0]===""; debugger;
 			}
 		}
@@ -6485,41 +6489,47 @@ class HandleTypes extends HandleTypesEval {
 	parse_guide_entry_id(x) {
 		x: if(this.str_starts_with_rx("RD",x)) {
 			if(this.str_starts_with_rx("RDCMUC",x)) {
-				let [,channel_id]=split_string_once(x,"RDCM");
-				this.log_url_info({
-					_tag: "playlist-channel-mix",
-					type: "RDCM",
-					channel_id,
-				});
+				let [,raw_id]=split_string_once(x,"RDCM");
+				this.log_url_info({type: "playlist:RDCM",id: x,raw_id});
 				break x;
 			}
 			if(this.str_starts_with_rx("RDMM",x)) {
-				let [,id]=split_string_once(x,"RDMM");
+				let [,raw_id]=split_string_once(x,"RDMM");
 				this.log_url_info({
-					_tag: "playlist",
-					type: "RDMM",
-					id,
+					type: "playlist:RDMM",
+					id: x,
+					raw_id,
 				});
 				break x;
 			}
-			this.log_url_info({_tag: "playlist",type: "RD",id: x.slice(2)});
+			let [,raw_id]=split_string_once(x,"RD");
+			this.log_url_info({
+				type: "playlist:RD",
+				id: x,
+				raw_id,
+			});
 		}
-		if(this.str_starts_with_rx("PL",x)) {this.log_url_info({_tag: "playlist",type: "PL",id: x.slice(2)});}
-		if(this.str_starts_with_rx("UU",x)) {this.log_url_info({_tag: "playlist",type: "UU",id: x.slice(2)});}
-		if(this.str_starts_with_rx("UC",x)) {this.log_url_info({_tag: "channel",type: "UC",id: x.slice(2)});}
 		if(this.str_starts_with_rx("UC",x)) {
+			let [,raw_id]=split_string_once(x,"UC");
+			this.log_url_info({type: "channel:UC",id: x,raw_id});
 			if(x.length===24) return;
 			return console.log("[guideEntryId.channel.length]",x.length);
 		}
 		if(this.str_starts_with_rx("PL",x)) {
+			let [,raw_id]=split_string_once(x,"PL");
+			this.log_url_info({type: "playlist:PL",id: x,raw_id});
 			if(x.length===34) return;
 			return console.log("[guideEntryId.playlist.length]",x.length);
 		}
 		if(this.str_starts_with_rx("UU",x)) {
+			let [,raw_id]=split_string_once(x,"UU");
+			this.log_url_info({type: "playlist:UU",id: x,raw_id});
 			if(x.length===26) return;
 			return console.log("[guideEntryId.uploads_playlist.length]",x.length);
 		}
-		if(this.str_starts_with_rx("RDCM",x)) {
+		if(this.str_starts_with_rx("RDCMUC",x)) {
+			let [,raw_id]=split_string_once(x,"RDCM");
+			this.log_url_info({type: "playlist:RDCM",id: x,raw_id});
 			return console.log("[guideEntryId.radio_channel_mix.length]",x.length);
 		}
 		if(this.str_starts_with_rx("RDMM",x)) {

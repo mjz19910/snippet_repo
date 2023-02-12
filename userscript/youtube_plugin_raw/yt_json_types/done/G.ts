@@ -442,14 +442,24 @@ type G_ThumbnailOverlayItem=
 	;
 ;
 type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
-type G_UrlInfoItem=D_UrlInfoPlaylist|D_UrlInfoVideo|D_UrlVideoReferral|D_UrlPlayNext|{
-	_tag: "channel";
-	type: "UC";
-	id: string;
+type G_UrlInfoItem={
+	type: "playlist:RDMM"; id: `RDMM${string}`; raw_id: string;
 }|{
-	_tag: "playlist-channel-mix";
-	type: "RDCM",
-	channel_id: `UC${string}`,
+	type: "playlist:RDCM"; id: `RDCMUC${string}`; raw_id: `UC${string}`;
+}|{
+	type: "playlist:PL"; id: `PL${string}`; raw_id: string;
+}|{
+	type: "playlist:RD"; id: `RD${string}`; raw_id: string;
+}|{
+	type: "playlist:UU"; id: `UU${string}`; raw_id: string;
+}|{
+	type: "video"; id: string;
+}|{
+	type: "video-referral"; id: string;
+}|{
+	type: "play-next"; value: string;
+}|{
+	type: "channel:UC"; id: `UC${string}`; raw_id: string;
 };
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
 type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
