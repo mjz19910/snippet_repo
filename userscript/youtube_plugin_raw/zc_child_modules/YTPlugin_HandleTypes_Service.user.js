@@ -4745,6 +4745,8 @@ class HandleTypes extends HandleTypesEval {
 	reload_ui_target_id_arr=[];
 	/** @arg {D_UiTargetId} x */
 	D_UiTargetId(x) {
+		if(x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)) return;
+		if(x==="63fee7f6-0000-225f-a68a-94eb2c051234") return;
 		switch(x) {
 			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
 			case "comments-section":
