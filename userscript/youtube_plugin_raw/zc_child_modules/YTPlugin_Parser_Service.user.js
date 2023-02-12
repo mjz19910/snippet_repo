@@ -187,7 +187,6 @@ class ParserService extends BaseService {
 	}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
-	log_start_radio=false;
 	/** @console_api @public @arg {string} x */
 	create_param_map_dbg(x) {
 		{debugger;}
@@ -202,18 +201,6 @@ class ParserService extends BaseService {
 		x.delete(ta);
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
-	}
-	/** @private @type {P_LogItems} */
-	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
-	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
-		let last_key=map_entry_key_path.at(-1);
-		let saved_map_keys=map_keys.slice();
-		if(map_entry_values!==void 0&&last_key) {
-			map.delete(last_key);
-			let cx=map_keys.indexOf(last_key);
-			if(cx>-1) map_keys.splice(cx,1);
-			callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
-		}
 	}
 	/** @unused_api @protected @arg {V_ParamMapValue} map_entry_value */
 	mapper_use(map_entry_value) {
@@ -329,11 +316,10 @@ class ParserService extends BaseService {
 						case "v": return this.parse_video_url(x);
 						default: x===""; debugger; return;
 					}
-				} break;
+				}
 			}
 		}
 	}
-	log_playlist_index=false;
 	/** @private @arg {CF_L_TP_Params} root @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
 	parse_url_with_search(root,x) {
 		let a=split_string(x,"?");
@@ -717,17 +703,6 @@ class ParserService extends BaseService {
 			default:
 		}
 		switch(x) {default: debugger; return false;}
-	}
-	/** @private @arg {string} x @returns {D_BrowseIdStr|null} */
-	decode_browse_id(x) {
-		if(this.str_starts_with_r(x,"FE")) {
-			switch(x) {
-				case "FEwhat_to_watch": return x;
-				case "FEexplore": return x;
-				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}: return x;`); return null;
-			}
-		}
-		return null;
 	}
 	/** @api @public @arg {D_BrowseIdStr} x */
 	parse_browse_id(x) {

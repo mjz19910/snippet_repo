@@ -166,16 +166,6 @@ class HandleTypes extends HandleTypesEval {
 			return [e[0],ei];
 		}));
 	}
-	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
-	make_parse_key(root,path,map,mk,callback) {
-		/** @private @arg {number[]} ta */
-		let parse_key=(ta) => {
-			let t_at=ta.at(-1);
-			if(t_at===void 0) return;
-			this.parser.parse_value(root,path,map,mk,ta,map.get(t_at),callback);
-		};
-		return parse_key;
-	}
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_any_param(root,path,map_entry_key_path,map,callback) {
@@ -6215,35 +6205,45 @@ class HandleTypes extends HandleTypesEval {
 		let is_critical=this.get_playlist_url_info_critical(x);
 		this.log_playlist_id(x,is_critical);
 	}
+	/** @private @arg {string} x @returns {D_BrowseIdStr|null} */
+	decode_browse_id(x) {
+		if(this.str_starts_with(x,"FE")) {
+			switch(x) {
+				case "FEwhat_to_watch": return x;
+				case "FEexplore": return x;
+				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}: return x;`); return null;
+			}
+		}
+		return null;
+	}
 	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_endpoint_param(root,path,map_entry_key_path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		let parse_key=this.make_parse_key(root,path,map,mk,callback);
-		for(let i=1;i<40;i++) {
+		for(let i=1;i<300;i++) {
 			if(!mk.includes(i)) continue;
 			map_entry_key_path.push(i);
 			parse_key(map_entry_key_path);
 			map_entry_key_path.pop();
 		}
-		// endpoint.create_playlist.params
-		this.parse_value(root,path,map,mk,[...map_entry_key_path,77],map.get(77),map_entry_value => {
-			if(map_entry_value.length===1&&typeof map_entry_value[0]==="string") {
-				let bt=this.decode_browse_id(map_entry_value[0]);
-				if(!bt) {debugger; return;}
-				return this.parse_browse_id(bt);
-			}
-			debugger;
-		});
-		for(let i=1;i<300;i++) {
-			if(!mk.includes(i)) continue;
-			parse_key([i]);
-		}
 		if(this.eq_keys(mk,[])) return;
 		let param_obj=this.to_param_obj(map);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		{debugger;}
+	}
+	/** @private @type {P_LogItems} */
+	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
+	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
+		let last_key=map_entry_key_path.at(-1);
+		let saved_map_keys=map_keys.slice();
+		if(map_entry_values!==void 0&&last_key) {
+			map.delete(last_key);
+			let cx=map_keys.indexOf(last_key);
+			if(cx>-1) map_keys.splice(cx,1);
+			callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
+		}
 	}
 	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
 	make_parse_key(root,path,map,mk,callback) {
@@ -6409,6 +6409,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	cache_playlist_index=[];
+	log_start_radio=false;
+	log_playlist_index=false;
 	/** @public @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url_url_arr(root,x) {
 		let vv=split_string(x,"&");
@@ -6419,31 +6421,12 @@ class HandleTypes extends HandleTypesEval {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
-				case "v": {
-					let value=res[1];
-					url_info_arr.push({_tag: "video",id: value});
-				} break;
+				case "v": {this.log_url_info({_tag: "video",id: res[1]});} break;
 				case "list": {
 					let v=res[1];
 					this.x.get("handle_types").parse_guide_entry_id(v);
-					if(this.str_starts_with_rx("RD",v)) {
-						if(this.str_starts_with_rx("RDMM",v)) {url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)}); break;}
-						if(this.str_starts_with_rx("RDGM",v)) {url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)}); break;}
-						if(this.str_starts_with_rx("RDCMUC",v)) {
-							let ucp=split_string_once(v,"RDCM");
-							url_info_arr.push({
-								_tag: "playlist-channel-mix",
-								type: "RDCM",
-								channel_id: ucp[1],
-							});
-							break;
-						}
-						url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
-					}
-					if(this.str_starts_with_rx(v,"PL")) {url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)}); break;}
-					debugger;
 				} break;
-				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
+				case "rv": this.log_url_info({_tag: "video-referral",id: res[1]}); break;
 				case "pp": {this.on_player_params(root,"watch_page_url.pp",res[1],x => {x;});} break;
 				case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
 				case "index": {
@@ -6451,12 +6434,11 @@ class HandleTypes extends HandleTypesEval {
 					this.cache_playlist_index.push(res[1]);
 					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
-				case "t": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
-				case "playnext": url_info_arr.push({_tag: "play-next",value: res[1]}); break;
+				case "t": this.log_url_info({_tag: "video-referral",id: res[1]}); break;
+				case "playnext": this.log_url_info({_tag: "play-next",value: res[1]}); break;
 				default: res[0]===""; debugger;
 			}
 		}
-		this.x.get("handle_types").log_url_info(url_info_arr);
 	}
 	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} x */
 	parse_guide_entry_id(x) {
@@ -6482,6 +6464,12 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(this.str_starts_with_rx("UU",x)) {
 			return console.log("[guideEntryId.uploads_playlist.length]",x.length);
+		}
+		if(this.str_starts_with_rx("RDCM",x)) {
+			return console.log("[guideEntryId.radio_channel_mix.length]",x.length);
+		}
+		if(this.str_starts_with_rx("RDMM",x)) {
+			return console.log("[guideEntryId.radio_my_mix.length]",x.length);
 		}
 		if(this.str_starts_with_rx("RD",x)) {
 			return console.log("[guideEntryId.radio.length]",x.length);
