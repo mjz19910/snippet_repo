@@ -361,6 +361,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "next.continuation.f2.f36": switch(map_entry_key) {
+				case 5: case 8:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "next.continuation.f2": switch(map_entry_key) {
 				case 2: case 4: case 7: case 25: case 28: case 31: case 36:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -8503,19 +8508,17 @@ class HandleTypes extends HandleTypesEval {
 				case 0xe5: case 0xe6:
 				case 0xea:
 				case 0xec: case 0xed:
+				case 0xe7: case 0xe9: case 0xeb: case 0xee:
+				case 0xf0: case 0xf1: case 0xf4: case 0xf9:
 				case 0xfc:
 				case 0xff:
 			}
 			switch(g) {
 				default: log_color(`d1_p_tc_g`,g); break;
 				case 0xe5:
-				case 0xe7: case 0xe8: case 0xe9: case 0xea:
-				case 0xec:
-				case 0xed:
-				case 0xef:
-				case 0xf0: case 0xf1: case 0xf2: case 0xf3:
-				case 0xf5: case 0xf6:
-				case 0xfa: case 0xfb:
+				case 0xe6: case 0xe7: case 0xe8: case 0xe9: case 0xea: case 0xeb: case 0xec: case 0xed: case 0xee: case 0xef:
+				case 0xf0: case 0xf1: case 0xf2: case 0xf3: case 0xf4: case 0xf5: case 0xf6:
+				case 0xf8: case 0xf9: case 0xfa: case 0xfb:
 				case 0xff:
 			}
 			switch(b) {
@@ -8523,9 +8526,9 @@ class HandleTypes extends HandleTypesEval {
 				case 0xe5:
 				case 0xe6: case 0xe7:
 				case 0xea:
-				case 0xf5:
+				case 0xf2: case 0xf4: case 0xf5: case 0xf6:
 				case 0xf8:
-				case 0xfb:
+				case 0xfb: case 0xfc: case 0xfd:
 				case 0xff:
 			}
 		}
