@@ -579,6 +579,7 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="subscribe.params.f4") return this.videoId(entry);
 			if(path==="unsubscribe.params.f2") return this.videoId(entry);
 			if(path==="request_continuation.token.f6.f4.f4") return;
+			if(path==="request_continuation.token.f5") return;
 			let new_data=this.save_string(path,entry);
 			if(new_data) debugger;
 			return;
