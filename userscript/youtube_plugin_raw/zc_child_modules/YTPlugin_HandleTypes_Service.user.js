@@ -361,6 +361,11 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "next.continuation.f2": switch(map_entry_key) {
+				case 2: case 4: case 7: case 25: case 28: case 31: case 36:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "next.continuation": switch(map_entry_key) {
 				case 1: case 2: case 3: case 16:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -569,15 +574,18 @@ class HandleTypes extends HandleTypesEval {
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
-					default: {const idx=4; u(idx); debugger; parts[3]==="";} return;
+					default: {
+						const idx=4; switch(parts[3]) {
+						}; u(idx); debugger; parts[3]==="";
+					} return;
 					case "f1[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f9":
-					case "f12": case "f13": case "f14":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f7": case "f9":
+					case "f12": case "f13": case "f14": case "f25": case "f28": case "f31": case "f36":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f2": case "f3": case "f6": case "f7": case "f8": case "f9": case "f10": case "f11": case "f14": case "f19": case "f20":
+					case "f1": case "f2": case "f3": case "f5": case "f6": case "f7": case "f8": case "f9": case "f10": case "f11": case "f14": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
