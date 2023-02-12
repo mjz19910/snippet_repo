@@ -5540,12 +5540,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!ia) this.strings_map.set(x.style,ia=[]);
 		switch(x.style) {
 			default: x===0; debugger; break;
-			case "BADGE_STYLE_TYPE_MEDIUM_GREY": {
-				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_MediumGray",icon);
-				this.trackingParams(cf,trackingParams);
-				ia.push(["label",[label]]);
-			} break;
 			case "BADGE_STYLE_TYPE_SIMPLE": {
 				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.trackingParams(cf,trackingParams);
@@ -5553,6 +5547,23 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			case "BADGE_STYLE_TYPE_YPC": {
 				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.trackingParams(cf,trackingParams);
+				ia.push(["label",[label]]);
+			} break;
+			case "BADGE_STYLE_TYPE_COLLECTION": {
+				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.trackingParams(cf,trackingParams);
+				ia.push(["label",[label]]);
+			} break;
+			case "BADGE_STYLE_TYPE_MEDIUM_GREY": {
+				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.T_Icon("DMD_Badge_MediumGray",icon);
+				this.trackingParams(cf,trackingParams);
+				ia.push(["label",[label]]);
+			} break;
+			case "BADGE_STYLE_TYPE_LIVE_NOW": {
+				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.T_Icon("DMD_Badge_LiveNow",icon);
 				this.trackingParams(cf,trackingParams);
 				ia.push(["label",[label]]);
 			} break;
@@ -5569,22 +5580,6 @@ class HandleTypes extends HandleTypesEval {
 				ia.push(["tooltip",[tooltip]]);
 				this.trackingParams(cf,trackingParams);
 				ia.push(["accessibilityData.label",[accessibilityData.label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_LIVE_NOW": {
-				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_LiveNow",icon);
-				this.trackingParams(cf,trackingParams);
-				ia.push(["label",[label]]);
-				switch(label) {
-					default: debugger; break;
-					case "LIVE": break;
-					case "PREMIERE": break;
-				}
-			} break;
-			case "BADGE_STYLE_TYPE_COLLECTION": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.trackingParams(cf,trackingParams);
-				ia.push(["label",[label]]);
 			} break;
 		}
 	}
