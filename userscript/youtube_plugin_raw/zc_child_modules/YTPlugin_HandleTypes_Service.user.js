@@ -7188,7 +7188,7 @@ class HandleTypes extends HandleTypesEval {
 		let n=di[0]+1;
 		this.save_number(k,n);
 	}
-	/** @api @public @arg {"WL"|"LL"|`PL${string}`|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`} x */
+	/** @api @public @arg {"WL"|"LL"|`UU${string}`|`PL${string}`|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`} x */
 	parse_playlist_id(x) {
 		if(x===void 0) {debugger; return;}
 		switch(x) {case "LL": case "WL": return; default: }
@@ -7197,6 +7197,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx("RDMM",x)) return this.save_next_char("playlist_id.RDMM",split_string_once(x,"RDMM")[1]);
 		if(this.str_starts_with_rx("RD",x)) return this.save_next_char("playlist_id.RD",split_string_once(x,"RD")[1]);
 		if(this.str_starts_with_rx("PL",x)) return this.save_next_char("playlist_id.PL",split_string_once(x,"PL")[1]);
+		if(this.str_starts_with_rx("UU",x)) return this.save_next_char("playlist_id.UU",split_string_once(x,"UU")[1]);
 		this.save_next_char("playlist_id.other",x[0]);
 		console.log("[new_parse_playlist_id]",x);
 		{debugger;}
