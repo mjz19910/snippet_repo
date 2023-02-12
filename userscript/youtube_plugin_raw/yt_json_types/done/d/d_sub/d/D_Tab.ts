@@ -1,5 +1,5 @@
 type D_Tab={
-	endpoint: GE_Browse;
+	endpoint: E_VE3611_Browse;
 	title: "Home";
 	trackingParams: string;
 }|{

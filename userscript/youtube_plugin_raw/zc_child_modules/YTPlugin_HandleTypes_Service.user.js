@@ -2552,7 +2552,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GE_Browse} x */
 	GE_Browse(x) {
 		const cf="GE_Browse";
-		let [x2,x4,x5]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
 		let ve_name=this.GE_Browse_WCM(x2);
 		this.G_DE_Browse_VE(ve_name,x4);
 		this.g(x5);
@@ -3700,8 +3700,12 @@ class HandleTypes extends HandleTypesEval {
 		}
 		x: {
 			if(!("endpoint" in x)) break x;
-			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
-			const cf2=`${cf}_${"R_MusicQueue"}`;
+			/** @type {`${typeof cf}_endpoint`} */
+			const cf2=`${cf}_endpoint`;
+			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			this.GE_Browse(endpoint);
+			this.trackingParams(cf2,trackingParams);
+			this.save_string(`${cf}.title`,title);
 		}
 	}
 	/** @private @arg {D_MusicQueue} x */

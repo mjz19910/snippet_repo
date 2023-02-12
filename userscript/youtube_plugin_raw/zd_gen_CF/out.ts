@@ -546,6 +546,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_R_MusicQueue";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_Subscriptions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_WhatToWatch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Tab_endpoint";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TemplateUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TextInputFormField";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Thumbnail";}
