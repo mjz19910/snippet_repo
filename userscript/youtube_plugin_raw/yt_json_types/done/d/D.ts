@@ -125,7 +125,7 @@ type D_WatchUrlStr=
 	|`v=${string}&${G_YtWatchUrl}`
 	;
 ;
-type D_ChannelPageGrid=
+type D_ChannelPageGridStyleType=
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID"
 	|"FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT"
 	;
@@ -656,11 +656,12 @@ type D_FeaturedChannel={
 	channelName: string;
 	subscribeButton: R_SubscribeButton;
 };
-type D_FeedFilterChipBar=Record<"contents",R_ChipCloudChip[]>&{
+type D_FeedFilterChipBar={
+	contents: R_ChipCloudChip[];
 	trackingParams: string;
-	nextButton: R_Button;
-	previousButton: R_Button;
-	styleType: D_ChannelPageGrid;
+	nextButton?: R_Button;
+	previousButton?: R_Button;
+	styleType: D_ChannelPageGridStyleType;
 };
 type D_FusionSearchbox={
 	icon: T_Icon<"SEARCH">;

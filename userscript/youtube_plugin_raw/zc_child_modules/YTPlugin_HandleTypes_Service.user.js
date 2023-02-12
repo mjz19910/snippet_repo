@@ -5952,7 +5952,7 @@ class HandleTypes extends HandleTypesEval {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
-		let msg_id=reader.read_bytes(1);
+		let msg_id=reader.read_bytes(4);
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		console.log("[continuation_token]",[...msg_id],dec);
@@ -7215,6 +7215,11 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.R_Button(nextButton);
 		this.R_Button(previousButton);
+		switch(styleType) {
+			default: debugger; break;
+			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID": break;
+			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT": break;
+		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @private @arg {D_ChipCloudChip} x */
