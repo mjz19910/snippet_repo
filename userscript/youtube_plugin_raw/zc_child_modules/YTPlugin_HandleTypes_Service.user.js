@@ -2801,7 +2801,14 @@ class HandleTypes extends HandleTypesEval {
 		return this.T_WCM(cf,x,this.GM_VE_WC_Browse);
 	}
 	/** @private @arg {E_Watch} x */
-	E_Watch(x) {const [a,b,y]=this.TE_Endpoint_3("E_Watch","watchEndpoint",x); this.g(y); this.M_VE3832_Watch(a); this.DE_VE3832_Watch(b);}
+	E_Watch(x) {
+		const cf="E_Watch";
+		if("clickTrackingParams" in x) {
+			const [a,b,y]=this.TE_Endpoint_3(cf,"watchEndpoint",x); this.g(y); this.M_VE3832_Watch(a); this.DE_VE3832_Watch(b);
+		} else {
+			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832_Watch(a); this.DE_VE3832_Watch(b);
+		}
+	}
 	/** @private @arg {E_Upload} x */
 	E_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
