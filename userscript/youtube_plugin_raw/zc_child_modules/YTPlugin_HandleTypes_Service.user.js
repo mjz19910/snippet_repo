@@ -6223,7 +6223,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
-		switch(x.id.length) {
+		if(x.type==="playlist:LL") return false;
+		if(x.type==="playlist:WL") return false;
+		x.type;
+		switch(x.raw_id.length) {
 			case 11: return false;
 			case 24: return false;
 			case 32: return false;
