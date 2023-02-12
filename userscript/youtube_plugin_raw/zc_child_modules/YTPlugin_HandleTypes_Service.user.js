@@ -6205,7 +6205,7 @@ class HandleTypes extends HandleTypesEval {
 		let is_critical=this.get_playlist_url_info_critical(x);
 		this.log_playlist_id(x,is_critical);
 	}
-	/** @private @arg {string} x @returns {D_BrowseIdStr|null} */
+	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
 		if(this.str_starts_with(x,"FE")) {
 			switch(x) {
@@ -6414,20 +6414,20 @@ class HandleTypes extends HandleTypesEval {
 	/** @public @arg {CF_L_TP_Params} root @arg {Extract<T_SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url_url_arr(root,x) {
 		let vv=split_string(x,"&");
-		/** @private @type {G_UrlInfoItem[]} */
-		let url_info_arr=[];
 		// spell:ignore RDMM
 		for(let prop of vv) {
 			/** @private @type {T_SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
-				case "v": {this.log_url_info({_tag: "video",id: res[1]});} break;
-				case "list": {
-					let v=res[1];
-					this.x.get("handle_types").parse_guide_entry_id(v);
-				} break;
+				case "v": this.log_url_info({_tag: "video",id: res[1]}); break;
+				case "list": this.parse_guide_entry_id(res[1]); break;
 				case "rv": this.log_url_info({_tag: "video-referral",id: res[1]}); break;
-				case "pp": {this.on_player_params(root,"watch_page_url.pp",res[1],x => {x;});} break;
+				case "pp": {
+					this.on_player_params(root,"watch_page_url.pp",res[1],x => {
+						x;
+						debugger;
+					});
+				} break;
 				case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
 				case "index": {
 					if(this.cache_playlist_index.includes(res[1])) break;
