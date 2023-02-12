@@ -593,11 +593,17 @@ class HandleTypes extends HandleTypesEval {
 			if(path==="record_notification_interactions.f2.f14.f1.f1") return;
 		}
 		if(typeof entry==="string") {
+			if(path==="notification.opt_out.f3") return;
+			if(path==="notification.opt_out.f7") return;
+			if(path==="notification.record_interactions.f2.f14.f2") return;
 			let new_data=this.save_string(path,entry);
 			if(new_data) debugger;
 			return;
 		}
 		if(typeof entry==="number") {
+			if(path==="record_notification_interactions.f5") return;
+			if(path==="notification.record_interactions.f5") return;
+			if(path==="notification.record_interactions.f2.f14.f1.f1") return;
 			let new_data=this.save_number(path,entry);
 			if(new_data) debugger;
 			return;
