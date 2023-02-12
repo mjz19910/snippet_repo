@@ -5955,7 +5955,22 @@ class HandleTypes extends HandleTypesEval {
 		let msg_id=reader.read_bytes(4);
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
-		console.log("[continuation_token]",[...msg_id],dec);
+		if(dec.length===0) debugger;
+		for(let v of dec) {
+			this.decode_continuation_token_binary(msg_id,v);
+		}
+	}
+	/** @private @arg {Uint8Array} msg_id @arg {D_DecTypeNum} x */
+	decode_continuation_token_binary(msg_id,x) {
+		switch(x[0]) {
+			default: debugger; break;
+			case "child": {
+				const [,field_id,_raw_bin,dec_bin]=x;
+				if(field_id!==0) debugger;
+				if(dec_bin===null) {debugger; break;}
+				console.log("[continuation_token]","0x"+(new Uint32Array(msg_id.buffer)[0].toString(16)),dec_bin);
+			} break;
+		}
 	}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
