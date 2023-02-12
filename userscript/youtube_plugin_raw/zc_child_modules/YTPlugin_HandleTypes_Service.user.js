@@ -228,9 +228,9 @@ class HandleTypes extends HandleTypesEval {
 		let new_path=() => {
 			/** @private @type {P_LogItems} */
 			console.log("[parse_value.new_path_gen]",path);
-			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: new_ns(); debugger; return;\n\t}\n`);
+			console.log(`\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: new_ns(); debugger; return;\n\t}\n`);
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
@@ -361,6 +361,11 @@ class HandleTypes extends HandleTypesEval {
 				{debugger;}
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
+			}
+			case "request_continuation.token.f9.f1.f4": switch(map_entry_key) {
+				case 13:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
 				case 1: case 3:
@@ -592,6 +597,7 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
+				case "request_continuation.token.f9.f1.f4.f13": return;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_playlist.params.f4": case "watch_playlist.params.f13":
 					return;
@@ -707,7 +713,7 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f13":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
@@ -7026,7 +7032,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
 			switch(ss6) {
 				default: ss6===""; debugger; break;
-				case "sz":
+				case "sd": case "sz":
 			}
 			return;
 		}
