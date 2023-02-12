@@ -7509,7 +7509,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="D_ExpandableTab";
-		const {endpoint,title,selected,/*expandedText,content,*/...y}=this.s(cf,x);/*#destructure_later*/
+		if(x.selected) {
+			const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.E_VE3611_Browse(endpoint);
+			this.a_primitive_str(title);
+			this.a_primitive_bool(selected);
+			this.t(expandedText,this.a_primitive_str);
+			return this.t(content,this.R_SectionList);
+		}
+		const {endpoint,title,selected,...y}=this.s(cf,x);/*#destructure_later*/
 		this.E_VE3611_Browse(endpoint);
 		this.a_primitive_str(title);
 		this.a_primitive_bool(selected);
@@ -7518,7 +7526,6 @@ class HandleTypes extends HandleTypesEval {
 			return this.t(expandedText,this.a_primitive_str);
 		}
 		this.g(y);
-		//this.t(content,this.R_SectionList);
 	}
 	/** @private @arg {D_FeedNudge} x */
 	D_FeedNudge(x) {

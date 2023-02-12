@@ -1667,12 +1667,17 @@ type D_ExpandableTab={
 	endpoint: E_VE3611_Browse;
 	title: "Search";
 	selected: false;
-	// content?: R_SectionList;
 }|{
 	endpoint: E_VE3611_Browse;
 	title: "Search";
 	selected: false;
 	expandedText: "";
+}|{
+	endpoint: E_VE3611_Browse;
+	title: "Search";
+	selected: true;
+	expandedText: string;
+	content: R_SectionList;
 };
 type D_ExpandableVideoDescriptionBody={
 	descriptionBodyText?: G_Text;
