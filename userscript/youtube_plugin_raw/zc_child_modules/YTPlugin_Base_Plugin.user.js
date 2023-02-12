@@ -3759,39 +3759,6 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {if(x!==true) debugger;}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @protected @arg {[D_VE3832_PreconnectUrl]} x */
-	parse_preconnect_arr(x) {
-		if(x.length!==1) debugger;
-		this.parse_preconnect_url(x[0]);
-	}
-	/** @private @arg {D_VE3832_PreconnectUrl} x */
-	parse_preconnect_url(x) {
-		let up=this.parse_with_url_parse(x);
-		if(up.pathname!=="/generate_204") debugger;
-		let ss1=split_string(up.host,".");
-		if(ss1.length!==3) debugger;
-		if(ss1[1]!=="googlevideo") debugger;
-		if(ss1[2]!=="com") debugger;
-		/** @type {T_Split<T_Split<RE_D_VE3832_PreconnectUrl,"/">[2],".">[0]} */
-		let ux=as(ss1[0]);
-		let ss2=split_string(ux,"---");
-		if(!this.str_starts_with(ss2[0],"r")) debugger;
-		let ss3=split_string_once(ss2[0],"r")[1];
-		if(ss3!=="1") debugger;
-		let ss4=split_string_once(ss2[1],"sn-nx")[1];
-		console.log("google video r [%s] sn-nx [%s]",ss3,ss4);
-		if(this.str_starts_with_rx("57yn",ss4)) {
-			let [,,,,...ss5]=split_string(ss4,"");
-			let ss6=this.join_string(ss5,"");
-			switch(ss6) {
-				case "lk": break;
-				default: ss6===""; debugger;
-			}
-		} else {
-			ss4==="";
-			debugger;
-		}
-	}
 	/** @private @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);

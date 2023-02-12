@@ -6978,6 +6978,36 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_VE5754_Browse(x4);
 		this.g(x5);
 	}
+	/** @private @arg {[RE_D_VE3832_PreconnectUrl]} x */
+	parse_preconnect_arr(x) {
+		if(x.length!==1) debugger;
+		this.parse_preconnect_url(x[0]);
+	}
+	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
+	parse_preconnect_url(x) {
+		let up=this.parse_with_url_parse(x);
+		if(up.pathname!=="/generate_204") debugger;
+		let [ux,u1,...y]=split_string(up.host,".googlevideo.com");
+		if(y.length!==0) debugger;
+		if(u1!=="") debugger;
+		let ss2=split_string(ux,"---");
+		if(!this.str_starts_with(ss2[0],"rr")) debugger;
+		let ss3=split_string_once(ss2[0],"rr")[1];
+		if(ss3!=="3") debugger;
+		let ss4=split_string_once(ss2[1],"sn-nx")[1];
+		if(this.str_starts_with_rx("5s7n",ss4)) {
+			let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
+			let ss6=this.join_string(ss5,"");
+			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}]`,ss4);
+			switch(ss6) {
+				case "ee": break;
+				default: ss6===""; debugger;
+			}
+		} else {
+			ss4==="";
+			debugger;
+		}
+	}
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/

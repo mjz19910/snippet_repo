@@ -188,7 +188,6 @@ type D_SettingsIdStr=`SP${G_SettingsEndpointPages}`;
 type D_YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
-type D_VE3832_PreconnectUrl=`https://r1---sn-nx57ynlk.googlevideo.com/generate_204`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
 type D_EngagementPanelTargetId="engagement-panel-error-corrections"|SI_VE76278_EngagementPanel["targetId"]|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
