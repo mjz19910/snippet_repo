@@ -5220,7 +5220,7 @@ class HandleTypes extends HandleTypesEval {
 					let parsed_search=this.parse_url_search_params(query_search);
 					switch(parsed_search.event) {
 						default: {
-							const cf="GU_YoutubeUrlRedirect.event";
+							const cf="GU_YoutubeUrlRedirect@parsed_search.event";
 							this.codegen_case_key(cf,parsed_search,"event");
 						} break;
 						case "channel_banner": {
