@@ -243,6 +243,11 @@ type RS_Page_Browse={
 	response: RS_Browse;
 	expirationTime: number;
 };
+type D_GraftedVeItem={
+	veData: D_TrackingParams;
+	csn: string;
+};
+
 type RS_Page_Channel={
 	page: "channel";
 	endpoint: GE_Browse;
@@ -267,11 +272,8 @@ type RS_Page_Channel={
 	response: RS_Channel;
 	url: `/@${string}`;
 	expirationTime: 1676178220452;
-	graftedVes: {
-		veData: D_TrackingParams;
-		csn: "MC42NTk2NDYxNjk3NjI0NzUz";
-	}[];
-	csn: "MC42MDQ3OTM1NTIyODcyNzY1";
+	graftedVes: D_GraftedVeItem[];
+	csn: string;
 };
 type RS_Page_Playlist={
 	page: "playlist";
