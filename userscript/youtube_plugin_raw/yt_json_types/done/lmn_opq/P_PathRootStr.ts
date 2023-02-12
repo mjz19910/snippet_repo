@@ -12,6 +12,7 @@ type P_PathRootStr=
 	|"entity_key.subscribed"
 	|"entity.key"
 	|"feedback.feedbackToken"
+	|"get_pdg_buy_flow.params"
 	|"get_report_form.params"
 	|"get_transcript.params"
 	|"GetNotificationMenu.ctoken"

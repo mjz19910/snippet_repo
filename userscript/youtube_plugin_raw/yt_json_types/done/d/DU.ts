@@ -1,7 +1,6 @@
 //#region Discriminated Unions
 type DU_ExternalUrl={url: GU_VE83769_Url_External;target: "TARGET_NEW_WINDOW";};
 type DU_RedirectUrl={url: `https://www.youtube.com/redirect?${string}`;target: "TARGET_NEW_WINDOW";nofollow: true;};
-type DU_D_EntityMutationItem=DU_MutationReplace|DU_MutationDelete;
 type DU_InternalUrl={
 	url: `https://www.youtube.com/channel/UC${string}/join`;
 	nofollow: true;
@@ -11,7 +10,7 @@ type DU_MutationDelete={type: T_MutType<"DELETE">; entityKey: string; options: O
 type DU_MutationReplace={type: T_MutType<"REPLACE">; entityKey: string; payload: G_EY_Entity;};
 //#endregion
 //#region Partial Objects from Discriminated Unions
-type DE_MutationItem=T_UnionToPartial<DU_D_EntityMutationItem>;
+type DE_MutationItem=DU_MutationReplace|DU_MutationDelete;
 //#endregion
 //#region Discriminated String Unions
 type DU_SignalStr=

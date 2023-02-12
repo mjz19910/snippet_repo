@@ -28,6 +28,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlayerOverlayAutoplay";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlaylistSidebarPrimaryInfo";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
+		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DC_GetPdgBuyFlow";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
@@ -68,7 +69,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateBackstagePost.params";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_CreateComment";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_GetNotificationMenu";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_MutationItem";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_ReelWatch";}
@@ -83,6 +83,8 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptSearchBox.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptTrackSelection.key";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DU_MutationDelete";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DU_MutationReplace";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_AdLayoutLogging";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_EY_Offlineability.key";}
@@ -290,10 +292,13 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "C_ShowReloadUi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "CacheMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DB_SI_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AddFollowUpSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AddToPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_AdsControlFlowOpportunityReceived";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ChangeKeyedMarkersVisibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Continuation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_EngagementPanelHeaderShowNavigationButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_EntityBatchUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Generic_CTP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChat";}
@@ -301,6 +306,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LoadMarkers";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_RelatedChip";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ReloadContinuationItems";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_RepeatChapter";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ResetChannelUnreadCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_SectionList_SearchFeed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_ShowReloadUi";}
@@ -310,7 +317,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_AddToPlaylistService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_Feedback";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_GetNotificationMenu";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_MutationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_NotificationOptOut";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_RecordNotificationInteractions";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_ReelWatch";}
@@ -331,6 +337,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptSearchBox";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptTrackSelection";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationDelete";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationReplace";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdLayoutMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}

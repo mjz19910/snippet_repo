@@ -530,6 +530,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "get_pdg_buy_flow":
 			case "create_comment":
 			case "invalidation":
 			case "live_chat_replay":
@@ -2237,7 +2238,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
-	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.g(a);}
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @arg {C_FollowUp} x */
@@ -2254,17 +2255,31 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @private @arg {DC_RepeatChapter} x */
-	DC_RepeatChapter(x) {x;}
+	DC_RepeatChapter(x) {
+		const cf="DC_RepeatChapter";
+		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
-	DC_AddFollowUpSurvey(x) {x;}
+	DC_AddFollowUpSurvey(x) {
+		const cf="DC_AddFollowUpSurvey";
+		const {followUpOptions,followUpText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
 	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
-	DC_EngagementPanelHeaderShowNavigationButton(x) {x;}
+	DC_EngagementPanelHeaderShowNavigationButton(x) {
+		const cf="DC_EngagementPanelHeaderShowNavigationButton";
+		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
 	/** @private @arg {DC_EntityBatchUpdate} x */
-	DC_EntityBatchUpdate(x) {x;}
+	DC_EntityBatchUpdate(x) {
+		const cf="DC_EntityBatchUpdate";
+		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(mutations,this.DE_MutationItem);
+		this.D_TimestampWithNanos(timestamp);
+	}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
 	/** @private @arg {DC_GetPdgBuyFlow} x */
-	DC_GetPdgBuyFlow(x) {x;}
+	DC_GetPdgBuyFlow(x) {this.D_Params("DC_GetPdgBuyFlow",x,"get_pdg_buy_flow.params");}
 	/** @private @arg {DC_UpdateToggleButtonState} x */
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2277,6 +2292,12 @@ class HandleTypes extends HandleTypesEval {
 		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
+	}
+	/** @private @arg {DC_ResetChannelUnreadCount} x */
+	DC_ResetChannelUnreadCount(x) {
+		const cf="DC_ResetChannelUnreadCount";
+		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_ChannelId(channelId);
 	}
 	/** @private @arg {DC_Timed} x */
 	DC_Timed(x) {
@@ -3178,14 +3199,21 @@ class HandleTypes extends HandleTypesEval {
 		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
-	/** @private @arg {DE_MutationItem} x */
-	DE_MutationItem(x) {
-		const cf="DE_MutationItem"; this.k(cf,x);
-		const {entityKey,type,options,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	/** @private @arg {DU_MutationDelete} x */
+	DU_MutationDelete(x) {
+		const cf="DU_MutationDelete";
+		const {entityKey,type,options,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params(cf,"entity_key.normal",entityKey);
-		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
+		if(type!=="ENTITY_MUTATION_TYPE_DELETE") debugger;
 		this.tf(this.O_DU_Persistence)(options);
-		let pr=this.tf(this.G_EY_Entity)(payload);
+	}
+	/** @private @arg {DU_MutationReplace} x */
+	DU_MutationReplace(x) {
+		const cf="DU_MutationReplace";
+		const {entityKey,type,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params(cf,"entity_key.normal",entityKey);
+		if(type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
+		let pr=this.G_EY_Entity(payload);
 		if(!pr) return;
 		const [pi,px]=pr;
 		switch(pi) {
@@ -3232,6 +3260,15 @@ class HandleTypes extends HandleTypesEval {
 					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
 				} else {debugger;}
 			} break;
+		}
+	}
+	/** @private @arg {DE_MutationItem} x */
+	DE_MutationItem(x) {
+		const cf="DE_MutationItem"; this.k(cf,x);
+		switch(x.type) {
+			default: debugger; break;
+			case "ENTITY_MUTATION_TYPE_DELETE": this.DU_MutationDelete(x); break;
+			case "ENTITY_MUTATION_TYPE_REPLACE": this.DU_MutationReplace(x); break;
 		}
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
