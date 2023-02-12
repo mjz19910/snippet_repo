@@ -37,3 +37,6 @@ type DE_YpcGetCart={transactionParams: string;};
 type DE_SuperThanksSelectedTier={key: string; index: number;};
 type DE_UndoFeedback={undoToken: string; actions: A_UndoFeedback[];};
 //#endregion
+//#region Partial Objects from Discriminated Unions
+type DE_MutationItem=DU_MutationReplace|DU_MutationDelete;
+//#endregion

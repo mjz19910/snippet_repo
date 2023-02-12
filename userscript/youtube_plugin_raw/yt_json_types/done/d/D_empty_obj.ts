@@ -3,8 +3,14 @@
 type D_ReportFormModal={};
 // TODO #2
 type D_LiveChat={};
+// TODO #4
+type DC_PlaylistPanel={};
 // TODO #5
 type D_VideoMastheadAdV3={};
+// TODO: #14 Need type of DC_RefreshPlaylist
+type DC_RefreshPlaylist={};
+// TODO: #15 Need type of DC_MusicShelf
+type DC_MusicShelf={};
 
 
 type D_AccountItem={};

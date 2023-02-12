@@ -13,9 +13,6 @@ type DU_Url=DU_InternalUrl|DU_RedirectUrl|DU_ExternalUrl|DU_ChannelUrl;
 type DU_MutationDelete={type: T_MutType<"DELETE">; entityKey: string; options: O_DU_Persistence;};
 type DU_MutationReplace={type: T_MutType<"REPLACE">; entityKey: string; payload: G_EY_Entity;};
 //#endregion
-//#region Partial Objects from Discriminated Unions
-type DE_MutationItem=DU_MutationReplace|DU_MutationDelete;
-//#endregion
 //#region Discriminated String Unions
 type DU_SignalStr=
 	|"ENABLE_CHROME_NOTIFICATIONS"
