@@ -328,7 +328,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					data_saver.save_string("[body_element]",fut_data);
+					data_saver.save_string("body_element",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2084,8 +2084,8 @@ class KnownDataSaver extends ApiBase {
 			};
 			this.save_key_objs[ki]?.set(x);
 		}
-		if(typeof x!=="object") return this.save_string(`[${ki}.type]`,typeof x);
-		if(x instanceof Array) return this.save_string(`[${ki}.type]`,"array");
+		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
+		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
 		let ret=this.save_to_store("save_keys",k,keys.join(),store);
@@ -2216,10 +2216,9 @@ class KnownDataSaver extends ApiBase {
 		return true;
 	}
 	do_random_breakpoint=false;
-	/** @api @public @arg {`[${string}]`} k_arg @arg {string|string[]} x */
-	save_string(k_arg,x) {
+	/** @api @public @arg {string} k @arg {string|string[]} x */
+	save_string(k,x) {
 		if(x===void 0) {debugger; return;}
-		let k=this.unwrap_brackets(k_arg);
 		let store=this.#get_string_store();
 		let store_item=this.get_seen_string_item_store(k,store);
 		if(!store_item) {
@@ -2284,9 +2283,9 @@ class KnownDataSaver extends ApiBase {
 		let g1=gg[1];
 		if(g1[0]==="many") return;
 		let sr=g1[1].slice().sort((a,b) => a-b);
-		this.save_number("[arr.tracking.trackingParams.f1]",sr);
+		this.save_number("arr.tracking.trackingParams.f1",sr);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
-		this.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.save_string("tp.f1.b_map",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.#get_string_store().data.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
 	}
 	/** @private @arg {string[]} bitmap_src */
@@ -3011,14 +3010,14 @@ class CsiService extends BaseService {
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
 		this.decode_rid_section(x);
-		this.save_string("[rid_key]",x.key);
+		this.save_string("rid_key",x.key);
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
-			this.save_string("[section_id]",section_id);
+			this.save_string("section_id",section_id);
 		} else {debugger;}
 	}
 	/** @private @arg {{key:T_RidFormat<string>;value:`0x${string}`}} param */

@@ -57,7 +57,7 @@ class ParserService extends BaseService {
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
-		this.save_string("[mime-type]",vv[0]);
+		this.save_string("mime-type",vv[0]);
 		let v1=split_string(vns,"=")[1];
 		let codec_type_raw=this.extract_inner(v1,"\"");
 		if(this.str_has_sep(codec_type_raw,".")) {
@@ -222,7 +222,7 @@ class ParserService extends BaseService {
 		if(xx instanceof Array) {return xx.map(mapper);} else {return xx;}
 	}
 	/** @unused_api @protected @arg {string[]} x */
-	report$params(x) {this.save_string("[report.params.path]",x.join("$"));}
+	report$params(x) {this.save_string("report.params.path",x.join("$"));}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
 		this.save_number(`[${path}]`,x[1]);
@@ -425,7 +425,7 @@ class ParserService extends BaseService {
 		if(this.str_starts_with_r(x,"watch")) {return this.save_enum("watch",x);}
 		if(this.str_starts_with_r(x,"shopping_panel")) {return this.save_enum("shopping_panel",x);}
 		if(this.str_starts_with_r(x,"clip")) {return this.save_enum("clip",x);}
-		this.save_string("[target_id]",x);
+		this.save_string("target_id",x);
 	}
 	/** @api @public @arg {T_SplitOnce<D_ChanLoc,".">} x */
 	parse_channel_section(x) {

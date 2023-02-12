@@ -807,6 +807,7 @@ type D_AutoplaySetItem_ButtonVideoEP=E_Watch|E_WatchPlaylist;
 type D_AutoplaySetItem={
 	mode: "NORMAL";
 	autoplayVideo: E_Watch;
+	nextButtonVideo: E_Watch;
 }|{
 	mode: "LOOP";
 	autoplayVideo: E_Watch;

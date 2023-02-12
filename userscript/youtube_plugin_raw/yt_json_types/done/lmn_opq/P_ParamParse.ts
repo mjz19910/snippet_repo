@@ -1,4 +1,6 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [watch_playlist.params.f4]",
+	"[parse_value.gen_ns] [watch_playlist.params.f1]",
 	"[parse_value.gen_ns] [next.continuation.f2.f36.f5]",
 	"[parse_value.gen_ns] [next.continuation.f2.f36.f8]",
 	"[parse_value.gen_ns] [next.continuation.f2.f2]",

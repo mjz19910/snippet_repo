@@ -394,7 +394,7 @@ class HandleTypes extends HandleTypesEval {
 			case "playability_status.context_params.f2": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "playability_status.context_params": switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "watch_playlist.params.f27": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_playlist.params": switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "watch_playlist.params": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel.sequence_params.f5": switch(map_entry_key) {case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel.sequence_params": switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110.f1.f20": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -7246,9 +7246,9 @@ class HandleTypes extends HandleTypesEval {
 				this.E_WatchPlaylist(previousButtonVideo);
 			} break;
 			case "NORMAL": {
-				const {mode: {},autoplayVideo,/*nextButtonVideo,previousButtonVideo,*/...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				const {mode: {},autoplayVideo,nextButtonVideo,/*previousButtonVideo,*/...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.E_Watch(autoplayVideo);
-				// this.E_Watch(nextButtonVideo);
+				this.E_Watch(nextButtonVideo);
 				// this.E_Watch(previousButtonVideo);
 			} break;
 			case "SHUFFLE": {
