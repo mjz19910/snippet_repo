@@ -7387,8 +7387,19 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
-	/** @private @arg {M_VE3611|M_VE3611_ResolveUrl} x */
-	M_VE3611(x) {x;}
+	/** @private @arg {M_VE3611_ResolveUrl} x */
+	M_VE3611_ResolveUrl(x) {
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GM_VE3854_ResolveUrl_C_MD(b);
+		return this.GM_VE3611_WC(a);
+	}
+	/** @private @arg {M_VE3611} x */
+	M_VE3611(x) {
+		const cf="M_VE3611";
+		if("resolveUrlCommandMetadata" in x) return this.M_VE3611_ResolveUrl(x);
+		const {webCommandMetadata: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		return this.GM_VE3611_WC(a);
+	}
 	/** @private @arg {E_VE3611_Browse} x */
 	E_VE3611_Browse(x) {
 		const cf="E_VE3611_Browse";

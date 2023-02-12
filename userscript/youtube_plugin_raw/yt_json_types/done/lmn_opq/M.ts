@@ -3,10 +3,10 @@ type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
 type M_VE3611_ResolveUrl={webCommandMetadata: GM_VE3611_WC; resolveUrlCommandMetadata: GM_VE3854_ResolveUrl_C_MD;};
 type M_VE3854_ResolveUrl={webCommandMetadata: GM_VE3854_WC; resolveUrlCommandMetadata: GM_VE3854_ResolveUrl_C_MD;};
 //#region M_VE
-type M_VE3611=TM_Gen<GM_VE3611_WC>;
+type M_VE3611=TM_Gen<GM_VE3611_WC>|M_VE3611_ResolveUrl;
 type M_VE3832_Watch=TM_Gen<GM_VE3832_Watch>;
 type M_VE3832_WatchPlaylist=TM_Gen<GM_VE3832_WatchPlaylist>;
-type M_VE3854=TM_Gen<GM_VE3854_WC>;
+type M_VE3854=TM_Gen<GM_VE3854_WC>|M_VE3854_ResolveUrl;
 type M_VE4724=TM_Gen<GM_VE4724_WC>;
 type M_VE5754=TM_Gen<GM_VE5754_WC>;
 type M_VE6827_Browse_SearchBox=TM_Gen<GM_VE6827_Browse_SearchBox>;
