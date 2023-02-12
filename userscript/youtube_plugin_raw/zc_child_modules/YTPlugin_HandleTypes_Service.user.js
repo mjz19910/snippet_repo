@@ -5193,6 +5193,20 @@ class HandleTypes extends HandleTypesEval {
 	str_is_uri(x) {return x.includes(":");}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
 	str_is_search(x) {return x.includes("?");}
+	/** @private @arg {string} x */
+	GU_YoutubeUrlRedirect_RedirectToken(x) {
+		let token_str=atob(x);
+		let token_parts=split_string_once(token_str,"|");
+		if(token_parts.length===1) {debugger; return;}
+		let [p1,p2]=token_parts.map(x => base64_url_dec.decodeByteArray(x));
+		if(!(p1&&p2)) return;
+		for(let i=0;i<3;i++) {
+			this.save_next_byte("url.redir_token[0].data",p1,i);
+		}
+		for(let i=0;i<3;i++) {
+			this.save_next_byte("url.redir_token[1].data",p2,i);
+		}
+	}
 	/** @private @arg {GU_YoutubeUrlRedirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect"; this.k(cf,x);
@@ -5209,20 +5223,18 @@ class HandleTypes extends HandleTypesEval {
 							const cf="GU_YoutubeUrlRedirect.event";
 							this.codegen_case_key(cf,parsed_search,"event");
 						} break;
+						case "channel_banner": {
+							let {event: {},redir_token,q,...y}=parsed_search; this.g(y);
+							this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
+							this.a_primitive_str(q);
+						} return;
 						case "video_description": break;
 						case "product_shelf": break;
 					}
 					let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
-					let redir_parts=split_string_once(atob(redir_token),"|");
-					if(redir_parts.length===1) {debugger; return;}
-					let [p1,p2]=redir_parts.map(x => base64_url_dec.decodeByteArray(x));
-					if(!p1||!p2) return;
-					for(let i=0;i<3;i++) {
-						this.save_next_byte("url.redir_token[0].data",p1,i);
-					}
-					for(let i=0;i<3;i++) {
-						this.save_next_byte("url.redir_token[1].data",p2,i);
-					}
+					this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
+					this.a_primitive_str(q);
+					this.a_primitive_str(v);
 					return;
 				}
 				default: debugger; break;
