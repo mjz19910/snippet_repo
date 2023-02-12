@@ -2225,9 +2225,22 @@ class HandleTypes extends HandleTypesEval {
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
-		this.save_string("ContinuationItem.targetId",x.targetId);
+		if(this.starts_with_targetId(x,"browse-feed")) {
+			if(this.starts_with_targetId(x,"browse-feedUC")) {
+				const cp0=split_string(x.targetId,"browse-feed")[1];
+				let cp=split_string(cp0,"channels");
+				this.parse_channel_id(cp[0]);
+				if(cp[1]!=="156") debugger;
+				return;
+			}
+			switch(x.targetId) {
+				case "browse-feedFEwhat_to_watch": {
+					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
+				} break;
+			}
+			return;
+		}
 		switch(x.targetId) {
-			case "browse-feedFEwhat_to_watch": this.A_BrowseFeed(x); break;
 			case "comments-section": this.A_CommentsSectionContinuation(x); break;
 			case "watch-next-feed": this.A_WatchNext(x); break;
 			default: x===0; debugger;
@@ -3630,7 +3643,10 @@ class HandleTypes extends HandleTypesEval {
 	parse_target_id(x) {
 		if(this.is_yt_uuid(x)) return;
 		if(this.str_starts_with_rx("browse-feed",x)) {
-			console.log("[target_id.browse_feed","browse-feed",split_string_once(x,"browse-feed")[1]);
+			if(this.str_starts_with(x,"browse-feedUC")) {
+				return;
+			}
+			console.log("[target_id.browse_feed]","browse-feed",split_string_once(x,"browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
 		if(this.str_starts_with_rx("comment-replies-item",x)) {return this.save_enum("comment-replies-item",x);}
