@@ -7213,8 +7213,8 @@ class HandleTypes extends HandleTypesEval {
 		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_ChipCloudChip);
 		this.trackingParams(cf,trackingParams);
-		this.R_Button(nextButton);
-		this.R_Button(previousButton);
+		this.t(nextButton,this.R_Button);
+		this.t(previousButton,this.R_Button);
 		switch(styleType) {
 			default: debugger; break;
 			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID": break;
