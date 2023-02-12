@@ -6368,10 +6368,9 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_PlaylistContent} x */
-	D_PlaylistContent(x) {
-		const cf="D_PlaylistContent"; this.k(cf,x);
-		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,playerInfoView,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(playerInfoView,x => this.ceq(x,"DO_NOT_CHANGE"));
+	D_PlaylistContent_Omit(x) {
+		const cf="D_PlaylistContent";
+		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x);/*#destructure_omit*/
 		this.trackingParams(cf,trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.G_Text);
 		this.z(contents,this.R_PlaylistPanelVideo);
@@ -6379,12 +6378,28 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
 		this.parser.parse_url(cf,playlistShareUrl);
-		this.R_Menu(menu);
 		this.save_number("Playlist.localCurrentIndex",localCurrentIndex);
 		this.R_Menu(playlistButtons);
 		this._primitive_of(isInfinite,"boolean");
-		this._primitive_of(isEditable,"boolean");
 		this._primitive_of(isCourse,"boolean");
+		return y;
+	}
+	/** @private @arg {D_PlaylistContent} x */
+	D_PlaylistContent(x) {
+		const cf="D_PlaylistContent";
+		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
+		if("menu" in u) {
+			const {playerInfoView,isEditable,menu,...y}=u; this.g(y);
+			this.t(playerInfoView,x => this.ceq(x,"DO_NOT_CHANGE"));
+			this.R_Menu(menu);
+			this._primitive_of(isEditable,"boolean");
+			return;
+		}
+		if("continuations" in u) {
+			const {totalVideos,continuations,totalVideosText,endpoint,badges,videoCountText,...y}=u; this.g(y);
+			return;
+		}
+		debugger;
 	}
 	/** @private @arg {D_PlayerOverlayVideoDetails} x */
 	D_PlayerOverlayVideoDetails(x) {

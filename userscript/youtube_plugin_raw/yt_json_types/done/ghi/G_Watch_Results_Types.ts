@@ -31,26 +31,6 @@ type G_Watch_ContentsItem=[
 //#endregion
 //#endregion
 //#region Data
-type D_PlaylistContent={
-	title: string;
-	contents: R_PlaylistPanelVideo[];
-	currentIndex: number;
-	playlistId: D_PlaylistId;
-	ownerName: G_Text;
-	isInfinite: boolean;
-	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
-	shortBylineText: G_Text;
-	longBylineText: G_Text;
-	playerInfoView?: "DO_NOT_CHANGE";
-	trackingParams: string;
-	titleText: G_Text;
-	isEditable: true;
-	menu: R_Menu;
-	localCurrentIndex: number;
-	playlistButtons: R_Menu;
-	isCourse: false;
-	nextVideoLabel: G_Text;
-};
 type D_AutoplayContent={
 	sets: D_AutoplaySetItem[];
 	countDownSecs?: 5;
