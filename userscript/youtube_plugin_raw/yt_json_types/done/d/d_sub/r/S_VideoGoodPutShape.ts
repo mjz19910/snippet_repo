@@ -1,4 +1,4 @@
-type VideoGoodPutShape={
+type S_VideoGoodPutShape={
 	id: string;
 	source: string;
 	range: string;

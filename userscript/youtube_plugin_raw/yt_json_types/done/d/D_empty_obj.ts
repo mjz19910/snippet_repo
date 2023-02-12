@@ -5,6 +5,7 @@ type D_ReportFormModal={};
 type D_VideoMastheadAdV3={};
 
 
+type D_AccountItem={};
 type D_AdActionInterstitial={};
 type D_AutomixPreviewVideo={};
 type D_LiveChatHeader={};

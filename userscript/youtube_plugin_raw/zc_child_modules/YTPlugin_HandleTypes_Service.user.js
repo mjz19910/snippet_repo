@@ -9753,7 +9753,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		});
 	}
-	/** @arg {VideoGoodPutShape} x */
+	/** @arg {S_VideoGoodPutShape} x */
 	VideoGoodPutShape(x) {
 		const cf="VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
