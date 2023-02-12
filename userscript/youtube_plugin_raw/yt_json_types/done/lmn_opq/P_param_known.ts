@@ -226,6 +226,6 @@ type P_param_known=
 	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14`
 	|`${"record_notification_interactions"|"notification.record_interactions"}.f2`
 	|`${"record_notification_interactions"|"notification.record_interactions"}.f5`
-	|`D_Browse.param.f110.f1.f${keyof BinaryBrowseTab}`
+	|`D_Browse.param.f110.f1.f${keyof B_BinaryBrowseTab}`
 	;
 ;

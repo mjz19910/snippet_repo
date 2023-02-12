@@ -1,4 +1,4 @@
-type BinaryBrowseTab={
+type B_BinaryBrowseTab={
 	2: "about";
 	6: "featured";
 	7: "videos";
@@ -6,4 +6,5 @@ type BinaryBrowseTab={
 	9: "community";
 	10: "channels";
 	11: "search";
+	19: "shorts";
 };

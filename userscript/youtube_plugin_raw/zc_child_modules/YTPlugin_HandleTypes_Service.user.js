@@ -347,9 +347,9 @@ class HandleTypes extends HandleTypesEval {
 		};
 		switch(path) {
 			// binary tab enum
-			/** @type {BinaryBrowseTab} */
+			/** @type {B_BinaryBrowseTab} */
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {
-				case 2: case 6: case 7: case 8: case 9: case 10: case 11:// case 19: case 20:
+				case 2: case 6: case 7: case 8: case 9: case 10: case 11: case 19:// case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
