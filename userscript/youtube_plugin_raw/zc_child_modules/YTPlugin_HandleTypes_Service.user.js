@@ -5307,38 +5307,46 @@ class HandleTypes extends HandleTypesEval {
 			this.save_next_byte("url.redir_token[1].data",p2,i);
 		}
 	}
-	/** @private @arg {GU_YoutubeUrlRedirect} x */
+	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/redirect?${string}`} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect"; this.k(cf,x);
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
 		let [h,sp]=split_string_once(s1,"/");
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
-			let [pp,query_search]=split_string_once(sp,"?");
-			switch(pp) {
-				case "redirect": {
-					let parsed_search=this.parse_url_search_params(query_search);
-					switch(parsed_search.event) {
-						default: {
-							const cf="GU_YoutubeUrlRedirect@parsed_search.event";
-							this.codegen_case_key(cf,parsed_search,"event");
-						} break;
-						case "channel_banner": {
-							let {event: {},redir_token,q,...y}=parsed_search; this.g(y);
-							this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
-							this.a_primitive_str(q);
-						} return;
-						case "video_description": break;
-						case "product_shelf": break;
-					}
-					let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
-					this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
-					this.a_primitive_str(q);
-					this.a_primitive_str(v);
-					return;
-				}
-				default: debugger; break;
+			if(this.str_starts_with(sp,"redirect?event=video_description&")) {
+				let [pp,query_search]=split_string_once(sp,"?");
+				if(pp!=="redirect") debugger;
+				let parsed_search=this.parse_url_search_params(query_search);
+				if(parsed_search.event!=="video_description") debugger;
+				let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
+				this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
+				this.a_primitive_str(q);
+				this.a_primitive_str(v);
+				return;
 			}
+			if(this.str_starts_with(sp,"redirect?event=channel_banner&")) {
+				let [pp,query_search]=split_string_once(sp,"?");
+				if(pp!=="redirect") debugger;
+				let parsed_search=this.parse_url_search_params(query_search);
+				if(parsed_search.event!=="channel_banner") debugger;
+				let {event,redir_token,q,...y}=parsed_search; this.g(y);
+				this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
+				this.a_primitive_str(q);
+				return;
+			}
+			if(this.str_starts_with(sp,"redirect?event=product_shelf&")) {
+				let [pp,query_search]=split_string_once(sp,"?");
+				if(pp!=="redirect") debugger;
+				let parsed_search=this.parse_url_search_params(query_search);
+				if(parsed_search.event!=="product_shelf") debugger;
+				let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
+				this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
+				this.a_primitive_str(q);
+				this.a_primitive_str(v);
+				return;
+			}
+			debugger;
 		}
 		this.codegen_str(cf,x);
 	}
@@ -5449,6 +5457,10 @@ class HandleTypes extends HandleTypesEval {
 		}
 		throw new Error();
 	}
+	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/${string}`} x */
+	GU_FullYoutubeUrl(x) {
+		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(x);
+	}
 	/** @private @arg {GU_VE83769_Url} x */
 	GU_VE83769_Url(x) {
 		if(this.str_starts_with_rx("/",x)) {
@@ -5464,7 +5476,7 @@ class HandleTypes extends HandleTypesEval {
 			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
 			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
 			case "tv.youtube.com": return;
-			case "www.youtube.com": return this.GU_YoutubeUrlRedirect(up.href);
+			case "www.youtube.com": return this.GU_FullYoutubeUrl(up.href);
 			case "myactivity.google.com": return;
 			case "www.google.com": return;
 			case "www.googleadservices.com": return;
