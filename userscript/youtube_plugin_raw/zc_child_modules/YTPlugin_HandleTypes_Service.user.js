@@ -6998,7 +6998,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx("5s7n",ss4)) {
 			let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
-			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}]`,ss4);
+			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
 			switch(ss6) {
 				case "ee": break;
 				default: ss6===""; debugger;
