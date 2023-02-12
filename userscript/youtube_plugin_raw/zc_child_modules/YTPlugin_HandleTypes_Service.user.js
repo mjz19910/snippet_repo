@@ -480,6 +480,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
 		if(path==="tracking.trackingParams.f8") return;
+		if(path==="entity_key.normal.f2"&&typeof entry==="string") {
+			this.D_ChannelId(as(entry));
+			return;
+		}
 		if(path==="entity_key.normal.f2.f1"&&typeof entry==="string") {
 			this.videoId(entry);
 			return;
