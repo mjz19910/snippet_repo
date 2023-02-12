@@ -3229,8 +3229,7 @@ class HandleTypes extends HandleTypesEval {
 				const cf="DS_EY_Subscription";
 				const {key,subscribed,...y}=this.s(cf,px); this.g(y);
 				this.params(cf,"subscriptionState.key",key);
-				// this.params(`${cf}.key`,"entity.key",key);
-				if(subscribed!==true) debugger;
+				this.a_primitive_bool(subscribed);
 			} break;
 			case "playlistLoopStateEntity": {
 				const cf="DS_EY_PlaylistLoop";
