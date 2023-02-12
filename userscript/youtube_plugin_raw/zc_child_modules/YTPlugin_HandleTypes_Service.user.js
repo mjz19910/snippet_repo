@@ -482,8 +482,8 @@ class HandleTypes extends HandleTypesEval {
 			case "get_report_form.params.f28.f1[].f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.params.f28.f1[]": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.params.f28": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "notification.record_interactions.f2": case "record_notification_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "notification.record_interactions": case "record_notification_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "notification.record_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "notification.record_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.params": switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_report_form.params.f18.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "like.removeLikeParams": switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -509,8 +509,8 @@ class HandleTypes extends HandleTypesEval {
 			case "entity_key.subscribed":
 				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			// Object type {f1:any;f2:any;}
-			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "record_notification_interactions.f2.f14.f1":
-			case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "record_notification_interactions.f2.f14":
+			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1":
+			case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
 				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "create_playlist.params": case "browse$param":
 				switch(map_entry_key) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -567,43 +567,33 @@ class HandleTypes extends HandleTypesEval {
 		if(path==="tracking.trackingParams.f8") return;
 		if(path==="watch_playlist.params.f1") return;
 		if(typeof entry==="string") {
-			if(path==="entity_key.normal.f2") return this.D_ChannelId(as(entry));
-			if(path==="tracking.trackingParams.f11") return this.D_ChannelId(as(entry));
-			if(path==="entity_key.normal.f2.f1") return this.videoId(entry);
-			if(path==="create_comment.params.f2") return this.videoId(entry);
-			// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
-			if(path==="continuation_token.data.f110.f3.f15.f2.f1") return this.targetId(`Binary.value:${path}`,as(entry));
-			if(path==="like.likeParams.f1.f1") return this.videoId(entry);
-			if(path==="like.removeLikeParams.f1.f1") return this.videoId(entry);
-			if(path==="like.dislikeParams.f1.f1") return this.videoId(entry);
-			if(path==="subscribe.params.f4") return this.videoId(entry);
-			if(path==="unsubscribe.params.f2") return this.videoId(entry);
-			if(path==="request_continuation.token.f6.f4.f4") return;
-			if(path==="request_continuation.token.f5") return;
-			if(path==="tracking.trackingParams.f7") return;
-			if(path==="record_notification_interactions.f2.f14.f2") return;
+			switch(path) {
+				case "entity_key.normal.f2": case "tracking.trackingParams.f11":
+					return this.D_ChannelId(as(entry));
+				case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4": case "unsubscribe.params.f2":
+					return this.videoId(entry);
+				case "request_continuation.token.f6.f4.f4": case "request_continuation.token.f5": case "tracking.trackingParams.f7": case "notification.record_interactions.f2.f14.f2": case "notification.opt_out.f3": case "notification.opt_out.f7": case "notification.record_interactions.f2.f14.f2":
+					return;
+				case "continuation_token.data.f110.f3.f15.f2.f1": {
+					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
+					return this.targetId(`Binary.value:${path}`,as(entry));
+				}
+			}
 		}
 		if(typeof entry==="number") {
-			if(path==="tracking.trackingParams.f4.f1") return;
-			if(path==="tracking.trackingParams.f4.f2") return;
-			if(path==="tracking.trackingParams.f4.f3") return;
-			if(path==="like.likeParams.f6.f1") return; if(path==="like.likeParams.f6.f2") return;
-			if(path==="like.removeLikeParams.f5.f1") return; if(path==="like.removeLikeParams.f5.f2") return;
-			if(path==="like.dislikeParams.f4.f1") return; if(path==="like.dislikeParams.f4.f2") return;
-			if(path==="record_notification_interactions.f2.f14.f1.f1") return;
+			switch(path) {
+				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
+				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
+				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
+					return;
+			}
 		}
 		if(typeof entry==="string") {
-			if(path==="notification.opt_out.f3") return;
-			if(path==="notification.opt_out.f7") return;
-			if(path==="notification.record_interactions.f2.f14.f2") return;
 			let new_data=this.save_string(path,entry);
 			if(new_data) debugger;
 			return;
 		}
 		if(typeof entry==="number") {
-			if(path==="record_notification_interactions.f5") return;
-			if(path==="notification.record_interactions.f5") return;
-			if(path==="notification.record_interactions.f2.f14.f1.f1") return;
 			let new_data=this.save_number(path,entry);
 			if(new_data) debugger;
 			return;
@@ -661,7 +651,7 @@ class HandleTypes extends HandleTypesEval {
 			case "like": case "live_chat_replay":
 			case "next_radio": case "next": case "notification":
 			case "player_seek": case "playability_status": case "playlist_edit":
-			case "record_notification_interactions": case "reel": case "reload": case "request_continuation":
+			case "notification.record_interactions": case "reel": case "reload": case "request_continuation":
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
 			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
 			case "UndoFeedback": case "unsubscribe":
@@ -3371,7 +3361,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
 		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"record_notification_interactions",serializedInteractionsRequest);
+		this.params(cf,"notification.record_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
 	/** @private @arg {DU_MutationDelete} x */

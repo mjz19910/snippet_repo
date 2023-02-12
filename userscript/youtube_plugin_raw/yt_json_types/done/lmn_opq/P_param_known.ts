@@ -108,6 +108,14 @@ type P_param_known=
 	|"notification.opt_out.f3"
 	|"notification.opt_out.f4"
 	|"notification.opt_out.f7"
+	|"notification.record_interactions.f2.f1"
+	|"notification.record_interactions.f2.f14.f1.f1"
+	|"notification.record_interactions.f2.f14.f1.f2"
+	|"notification.record_interactions.f2.f14.f1"
+	|"notification.record_interactions.f2.f14.f2"
+	|"notification.record_interactions.f2.f14"
+	|"notification.record_interactions.f2"
+	|"notification.record_interactions.f5"
 	|"playability_status.context_params.f1"
 	|"playability_status.context_params.f2.f1"
 	|"playability_status.context_params.f2"
@@ -217,14 +225,6 @@ type P_param_known=
 	|"ypc_get_offers.params.f5.f9"
 	|"ypc_get_offers.params.f5"
 	|`${"entity_key.subscribed"|"entity_key.normal"}.${"f2"|"f4"|"f5"}`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f1`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f1.f1`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f1.f2`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f1`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14.f2`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2.f14`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f2`
-	|`${"record_notification_interactions"|"notification.record_interactions"}.f5`
 	|`D_Browse.param.f110.f1.f${keyof B_BinaryBrowseTab}`
 	;
 ;

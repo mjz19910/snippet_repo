@@ -30,7 +30,7 @@ type P_PathRootStr=
 	|"playability_status.context_params"
 	|"player_seek.continuation"
 	|"playlist_edit.params"
-	|"record_notification_interactions"
+	|"notification.record_interactions"
 	|"reel.params"
 	|"reel.player_params"
 	|"reel.sequence_params"
