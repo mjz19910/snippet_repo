@@ -676,6 +676,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Guide";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Next";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Browse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Channel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Player";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Playlist";}
@@ -691,7 +692,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Success";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Watch";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ChannelPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}

@@ -6362,8 +6362,8 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.G_Text(subtitle);
 	}
-	/** @private @arg {"R_ChannelPage"} cf @template {RS_Page_Channel} T @arg {T} x */
-	RS_ChannelPage_Omit(cf,x) {
+	/** @private @arg {"RS_Page_Channel"} cf @template {RS_Page_Channel} T @arg {T} x */
+	RS_Page_Channel_Omit(cf,x) {
 		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(page!=="channel") debugger;
 		this.GE_Browse(endpoint);
@@ -6386,25 +6386,25 @@ class HandleTypes extends HandleTypesEval {
 	RS_Page_Channel(x) {
 		const cf="RS_Page_Channel";
 		if("rootVe" in x) {
-			const {...u}=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			const {...u}=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
 			const {rootVe,expirationTime,...y}=u; this.g(y);
 			if(rootVe!==3611) debugger;
 			return;
 		}
 		if("csn" in x) {
-			const {...u}=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			const {...u}=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
 			const {csn,expirationTime,graftedVes,...y}=u; this.g(y);
 			this.D_VeCsn(csn);
 			this.z(graftedVes,this.D_GraftedVeItem);
 			return this._primitive_of(expirationTime,"number");
 		}
 		if("expirationTime" in x) {
-			const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
 			const {expirationTime,...y}=u; this.g(y);
 			return this._primitive_of(expirationTime,"number");
 		}
 		{
-			const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
 			this.g(u);
 		}
 	}
