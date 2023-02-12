@@ -578,7 +578,7 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
-				case "request_continuation.token.f2.f2":
+				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12":
 					return;
 				default: {
 					let new_data=this.save_string(path,entry);
@@ -592,6 +592,8 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) debugger;
 				} return;
+				// f13=watch_playlist.params.localCurrentIndex
+				case "watch_playlist.params.f13": return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
 				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
@@ -655,7 +657,6 @@ class HandleTypes extends HandleTypesEval {
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
 			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
 			case "UndoFeedback": case "unsubscribe":
-			case "videogoodput":
 			case "watch_page_url": case "watch_playlist": case "watch":
 			case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart": {
 				if(parts.length===1) return this.handle_map_value(path,map_entry_value);
@@ -664,7 +665,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "context_params": case "sparams": case "data": case "token":
+					case "context_params": case "data": case "token":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
@@ -9717,7 +9718,10 @@ class HandleTypes extends HandleTypesEval {
 	VideoGoodPutShape(x) {
 		const cf="VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
-		this.params(cf,"videogoodput.sparams",sparams);
+		switch(sparams) {
+			default: this.codegen_case(`${cf}.sparams`,sparams); debugger; break;
+			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
+		}
 		console.log("[VideoGoodPutShape]",id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key);
 	}
 	/** @type {(["D_VideoPlaybackShape","expire",number])[]} */

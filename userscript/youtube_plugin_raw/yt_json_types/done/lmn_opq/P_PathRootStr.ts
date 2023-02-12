@@ -47,7 +47,6 @@ type P_PathRootStr=
 	|"transcriptTrackSelection.serializedParams"
 	|"UndoFeedback.undoToken"
 	|"unsubscribe.params"
-	|"videogoodput.sparams"
 	|"watch_page_url.pp"
 	|"watch_playlist.params"
 	|"watch.params"
