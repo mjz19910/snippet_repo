@@ -364,6 +364,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Card";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CardCollection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CarouselLockup";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelHeaderLinks";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelSwitcherHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelSwitcherPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChannelThumbnailWithLink";}
@@ -767,7 +768,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Description";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_Title";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_TitleData";}
-		|{n: Prelude.CF_M_zy; t: Types.CF_M_zy_; v: "D_ChannelHeaderLinks";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "DE_ShareEntityService";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "G_Action_GetNotificationsMenu";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "RSG_NotificationMenu_Action";}

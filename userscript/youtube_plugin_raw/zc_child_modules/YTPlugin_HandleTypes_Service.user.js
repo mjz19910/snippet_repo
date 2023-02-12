@@ -8779,7 +8779,12 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(videosCountText);
 	}
 	/** @private @arg {D_ChannelHeaderLinks} x */
-	D_ChannelHeaderLinks(x) {this.zy("D_ChannelHeaderLinks","primaryLinks",x,this.D_PrimaryLinkItem);}
+	D_ChannelHeaderLinks(x) {
+		const cf="D_ChannelHeaderLinks";
+		const {primaryLinks,secondaryLinks,...y}=this.s(cf,x); this.g(y);
+		this.z(primaryLinks,this.D_PrimaryLinkItem);
+		this.tz(secondaryLinks,this.D_PrimaryLinkItem);
+	}
 	/** @private @arg {D_Channel_MD} x */
 	D_Channel_MD(x) {
 		const cf="D_Channel_MD";
@@ -9346,7 +9351,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="TR_SectionListItem_3_Empty";
 		this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_PrimaryLinkItem} x */
+	/** @private @arg {D_NavigationLinkItem} x */
 	D_PrimaryLinkItem(x) {
 		const cf="D_PrimaryLinkItem"; this.k(cf,x);
 		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

@@ -1479,7 +1479,10 @@ type ChanTabStr=[
 	"streams",
 	"videos",
 ][number];
-type D_ChannelHeaderLinks={primaryLinks: D_PrimaryLinkItem[];};
+type D_ChannelHeaderLinks={
+	primaryLinks: D_NavigationLinkItem[];
+	secondaryLinks?: D_NavigationLinkItem[];
+};
 type ChannelSubUrl=ChanTabStr;
 type ChannelSubUrlFormat=ChannelSubUrl|`search?query=${string}`;
 type D_ChannelSwitcherHeader={
@@ -2381,7 +2384,7 @@ type D_PrefetchHintConfig={
 	prefetchPriority: 0;
 	playbackRelativeSecondsPrefetchCondition: -3;
 };
-type D_PrimaryLinkItem={
+type D_NavigationLinkItem={
 	navigationEndpoint: E_Url;
 	icon: D_Thumbnail;
 	title: G_Text;
