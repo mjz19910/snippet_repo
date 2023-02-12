@@ -8354,6 +8354,7 @@ class HandleTypes extends HandleTypesEval {
 		let arr=this.lc[k]??=[];
 		if(!arr.includes(x)) {
 			arr.push(x);
+			arr.sort((a,b) => a-b);
 			console.log(`-- [${cf1}:${cf}:${k}] --\n\n${arr.map(x => `case 0x${x.toString(16)}:`).join(" ")}`);
 		}
 	};
