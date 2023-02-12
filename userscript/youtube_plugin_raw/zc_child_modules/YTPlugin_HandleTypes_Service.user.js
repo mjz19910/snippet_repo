@@ -49,8 +49,7 @@ const CodegenService=required(store["mod$CodegenService"]?.CodegenService); Code
 const generate_typedef={value: null};
 /** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class TypedefGenerator extends ServiceMethods {
-	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	k=this.save_keys;
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
 		const cf="popup_dialog"; cf; this.k(cf,x);
@@ -1414,7 +1413,7 @@ class HandleTypes extends HandleTypesEval {
 		return x;
 	}
 	/** @override @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
+	k=(cf,x) => this.save_keys(cf,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
@@ -2464,7 +2463,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Watch(response);
 		this.RS_Player(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
-		this.save_keys(`[${cf}.wp_params]`,wp_params);
+		this.save_keys(`${cf}.wp_params`,wp_params);
 		if(previousCsn!==void 0) this._previousCsn(previousCsn);
 	}
 	/** @private @arg {RS_VE3832_Page_Watch} x */
@@ -3412,6 +3411,7 @@ class HandleTypes extends HandleTypesEval {
 			if(jk==="responseContext,trackingParams,onResponseReceivedActions") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar") break x;
 			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
+			debugger;
 		}
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,metadata,microformat,maxAgeStoreSeconds,background,continuationContents,alerts,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_ResponseContext(responseContext);
@@ -4713,7 +4713,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
-		this.save_keys(`[${cf}.response_endpoint]`,x);
+		this.save_keys(`${cf}.response_endpoint`,x);
 		if("signalServiceEndpoint" in x) {
 			/** @type {`${cf}.SE_Signal`} */
 			const cf1=`${cf}.SE_Signal`;
@@ -4905,7 +4905,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistLoopButtonState} x */
 	D_PlaylistLoopButtonState(x) {
 		const cf="D_PlaylistLoopButtonState";
-		this.save_keys(`[${cf}]`,x);
 		const {state,button,...y}=this.s(cf,x); this.g(y);
 		this.save_enum("PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
@@ -4913,7 +4912,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlaylistLoopButton} x */
 	D_PlaylistLoopButton(x) {
 		const cf="D_PlaylistLoopButton";
-		this.save_keys(`[${cf}]`,x);
 		const {states,currentState,playlistLoopStateEntityKey,...y}=this.s(cf,x); this.g(y);
 		this.z(states,this.R_PlaylistLoopButtonState);
 		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
@@ -5978,7 +5976,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		// this.tz(continuations,this.RD_NextContinuation);
 		this.trackingParams(cf,trackingParams);
-		// this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
+		// this.t(subMenu,a => this.save_keys(`${cf}.subMenu`,a));
 		// if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 	}
 	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
@@ -6913,13 +6911,13 @@ class HandleTypes extends HandleTypesEval {
 		this.D_GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
 		if(config.lightThemeBackgroundColor!==4278190080) debugger;
-		this.save_keys(`[${cf}.config]`,config);
+		this.save_keys(`${cf}.config`,config);
 		for(let u of Object.entries(config)) {
 			if(u[0]==="animationConfig") continue;
 			if(typeof u[1]==="object") {debugger; continue;}
 			this.save_string(`[${cf}.config.${u[0]}]`,`${u[1]}`);
 		}
-		this.save_keys(`[${cf}.config.animationConfig]`,config.animationConfig);
+		this.save_keys(`${cf}.config.animationConfig`,config.animationConfig);
 	}
 	/** @private @arg {D_GradientColorConfig} x */
 	D_GradientColorConfig(x) {
