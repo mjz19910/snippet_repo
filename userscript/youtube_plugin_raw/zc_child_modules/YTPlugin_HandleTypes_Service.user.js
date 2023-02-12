@@ -7036,7 +7036,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`);
 		switch(ss6) {
 			default: ss6===""; debugger; break;
-			case "sd": case "se": case "sk": case "ss": case "sz":
+			case "sd": case "se": case "sk": case "sl": case "ss": case "sz":
 			case "7d": case "7s": case "7y":
 			case "el": case "ee":
 		}
