@@ -248,6 +248,12 @@ type RS_Page_Channel={
 	endpoint: GE_Browse;
 	response: RS_Channel;
 	url: string;
+}|{
+	page: "channel";
+	endpoint: GE_Browse;
+	response: RS_Channel;
+	url: `/@${string}/videos`;
+	expirationTime: number;
 };
 type RS_Page_Playlist={
 	page: "playlist";

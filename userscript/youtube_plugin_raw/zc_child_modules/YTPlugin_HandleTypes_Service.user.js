@@ -385,7 +385,7 @@ class HandleTypes extends HandleTypesEval {
 			case "D_Browse.param.f110.f1.f20": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel.params": switch(map_entry_key) {case 1: case 3: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "notification.opt_out": switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f110.f1": switch(map_entry_key) {case 19: case 20: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "D_Browse.param.f110.f1": switch(map_entry_key) {case 7: case 19: case 20: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f110": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "transcriptTrackSelection.serializedParams": switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "get_transcript.params": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -569,7 +569,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1": case "f2": case "f3": case "f14": case "f19": case "f20":
+					case "f1": case "f2": case "f3": case "f7": case "f14": case "f19": case "f20":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
@@ -2512,7 +2512,7 @@ class HandleTypes extends HandleTypesEval {
 			switch(x.rootVe) {
 				case 3854: {
 					const {rootVe,expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-					this.t(expirationTime,x => this._primitive_of(x,"number"));
+					this._primitive_of(expirationTime,"number");
 					this.save_number(`${cf}.rootVe`,rootVe);
 				} break;
 				default: debugger; break;
@@ -2521,7 +2521,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if("expirationTime" in x) {
 			const {expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-			this.t(expirationTime,x => this._primitive_of(x,"number"));
+			this._primitive_of(expirationTime,"number");
 			return;
 		}
 		if("previousCsn" in x) {
@@ -6279,14 +6279,23 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.G_Text(subtitle);
 	}
-	/** @private @arg {RS_Page_Channel} x */
-	RS_ChannelPage(x) {
-		const cf="R_ChannelPage"; this.k(cf,x);
-		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	/** @private @arg {"R_ChannelPage"} cf @arg {RS_Page_Channel} x */
+	RS_ChannelPage_Omit(cf,x) {
+		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(page!=="channel") debugger;
 		this.GE_Browse(endpoint);
 		this.RS_Channel(response);
 		this.a_primitive_str(url);
+		return y;
+	}
+	/** @private @arg {RS_Page_Channel} x */
+	RS_ChannelPage(x) {
+		const cf="R_ChannelPage";
+		const u=this.RS_ChannelPage_Omit(cf,x);/*#destructure_done*/
+		if("expirationTime" in u) {
+			const {expirationTime,...y}=u; this.g(y);
+			return this._primitive_of(expirationTime,"number");
+		}
 	}
 	/** @private @arg {RS_Page_Search} x */
 	RS_SearchPage(x) {
