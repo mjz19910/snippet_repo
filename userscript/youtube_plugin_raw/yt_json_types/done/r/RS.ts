@@ -52,6 +52,7 @@ type RS_Channel={
 	topbar: R_DesktopTopbar;
 	microformat: R_Microformat;
 	onResponseReceivedActions: C_ResetChannelUnreadCount[];
+	cacheMetadata?: D_Cache_MD;
 };
 type RS_Feedback={
 	responseContext: RC_ResponseContext;

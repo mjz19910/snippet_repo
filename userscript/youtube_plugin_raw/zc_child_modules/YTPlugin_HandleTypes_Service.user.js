@@ -6747,7 +6747,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Channel} x */
 	RS_Channel(x) {
 		const cf="RS_Channel"; this.k(cf,x);
-		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_C4TabbedHeader(header);
 		this.R_Channel_MD(metadata);
@@ -6755,6 +6755,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.R_Microformat(microformat);
 		this.z(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
+		this.t(cacheMetadata,this.D_Cache_MD);
 	}
 	/** @private @arg {RS_Playlist} x */
 	RS_Playlist(x) {
