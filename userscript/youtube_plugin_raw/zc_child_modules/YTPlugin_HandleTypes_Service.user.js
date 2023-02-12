@@ -383,7 +383,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token.f9.f1": switch(map_entry_key) {
-				case 1: case 3: case 4:
+				case 1: case 2: case 3: case 4:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
