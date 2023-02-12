@@ -1405,7 +1405,7 @@ type D_AutoplaySwitchButton={
 type D_Botguard={
 	program: string;
 	interpreterSafeUrl: T_UrlWrappedValue<`//www.google.com/js/th/${string}.js`>;
-	serverEnvironment: 1|6;
+	serverEnvironment: number;
 };
 type D_BrowseEndpointPages=[
 	"explore",

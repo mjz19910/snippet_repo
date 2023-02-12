@@ -584,13 +584,13 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
-				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12":
+				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4":
 					return;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) debugger;
 				} return;
-				case "request_continuation.token.f9.f1.f4": return;
+				case "request_continuation.token.f6.f4.f37": return;
 			}
 		}
 		if(typeof entry==="number") {
@@ -716,7 +716,7 @@ class HandleTypes extends HandleTypesEval {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20":
+					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20": case "f37":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
@@ -10172,10 +10172,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(program);
 		let interpreterUrl=this.UrlWrappedValueT(interpreterSafeUrl);
 		this.a_primitive_str(interpreterUrl);
-		switch(serverEnvironment) {
-			default: debugger; break;
-			case 1: case 6:
-		}
+		this.save_number(`${cf}.serverEnvironment`,serverEnvironment);
 	}
 	/** @private @arg {D_CardCollection} x */
 	D_CardCollection(x) {
