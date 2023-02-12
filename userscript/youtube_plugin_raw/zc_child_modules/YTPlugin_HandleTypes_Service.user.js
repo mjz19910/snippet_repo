@@ -578,25 +578,23 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
+				default: {
+					let new_data=this.save_string(path,entry);
+					if(new_data) debugger;
+				} return;
 			}
 		}
 		if(typeof entry==="number") {
 			switch(path) {
+				default: {
+					let new_data=this.save_number(path,entry);
+					if(new_data) debugger;
+				} return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
 				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
 					return;
 			}
-		}
-		if(typeof entry==="string") {
-			let new_data=this.save_string(path,entry);
-			if(new_data) debugger;
-			return;
-		}
-		if(typeof entry==="number") {
-			let new_data=this.save_number(path,entry);
-			if(new_data) debugger;
-			return;
 		}
 		if(entry instanceof Map) return;
 		if(this.is_bigint(entry)) {
@@ -651,7 +649,7 @@ class HandleTypes extends HandleTypesEval {
 			case "like": case "live_chat_replay":
 			case "next_radio": case "next": case "notification":
 			case "player_seek": case "playability_status": case "playlist_edit":
-			case "notification.record_interactions": case "reel": case "reload": case "request_continuation":
+			case "reel": case "reload": case "request_continuation":
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
 			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
 			case "UndoFeedback": case "unsubscribe":
