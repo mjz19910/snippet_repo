@@ -3402,6 +3402,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_Browse"; this.k(cf,x);
 		x: {
 			let jk=this.get_keys_of(x).join();
+			if(jk==="responseContext,contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
