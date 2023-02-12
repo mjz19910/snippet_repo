@@ -235,7 +235,7 @@ class HandleTypes extends HandleTypesEval {
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
 			console.log("[parse_value.new_ns_gen]",path);
-			let ak_gen=["",""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
 			console.log(`-- [parse_value.gen_ns] --\n\n\t${map_keys.map(e => `case ${e}:`).join(" ")} \n`);
 		};
@@ -398,7 +398,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "request_continuation.token.f6.f4": switch(map_entry_key) {
-				case 4: case 6: case 15:
+				case 4: case 6: case 15: case 37:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
