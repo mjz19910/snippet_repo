@@ -6987,21 +6987,26 @@ class HandleTypes extends HandleTypesEval {
 	parse_preconnect_url(x) {
 		let up=this.parse_with_url_parse(x);
 		if(up.pathname!=="/generate_204") debugger;
-		let [ux,u1,...y]=split_string(up.host,".googlevideo.com");
+		const hn=up.host;
+		let [ux,u1,...y]=split_string(hn,".googlevideo.com");
 		if(y.length!==0) debugger;
 		if(u1!=="") debugger;
 		let ss2=split_string(ux,"---");
 		if(!this.str_starts_with(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
-		if(ss3!=="3") debugger;
+		switch(ss3) {
+			default: ss3===""; debugger;
+			case "3": case "4":
+		}
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		if(this.str_starts_with_rx("5s7n",ss4)) {
 			let [s0,s1,s2,s3,...ss5]=split_string(ss4,"");
 			let ss6=this.join_string(ss5,"");
 			console.log(`google video [rr:${ss3}]---[sn]-[nx:${s0}${s1}:${s2}${s3}:${ss6}].[googlevideo.com]`,ss4);
+			console.log("[googlevideo_host]%s",hn);
 			switch(ss6) {
-				case "el": case "ee": break;
 				default: ss6===""; debugger;
+				case "el": case "ee": break;
 			}
 		} else {
 			ss4==="";
