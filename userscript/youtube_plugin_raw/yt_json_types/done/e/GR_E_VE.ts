@@ -1,3 +1,6 @@
+type TM_VE<T extends number>=TM_Gen<{rootVe:T}>;
+type TE_VE<T extends number>=TE_Endpoint_3<"browseEndpoint",any,TM_VE<T>>;
+type TE_VE_In=TE_Endpoint_3<"browseEndpoint",any,TM_VE<number>>;
 //#region E_VE
 type E_VE3611_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3611_Browse,M_VE3611|M_VE3611_ResolveUrl>;
 type E_VE3854_Browse=TE_Endpoint_3<"browseEndpoint",DE_VE3854_Browse,M_VE3854|M_VE3854_ResolveUrl>;

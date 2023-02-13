@@ -857,7 +857,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "context_params": case "data": case "token": case "entity_key":
+					case "context_params": case "data": case "token": case "entity_key": case "xtags":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
@@ -1855,8 +1855,15 @@ class HandleTypes extends HandleTypesEval {
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
-	/** @private @arg {CF_T_WCM} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"])=>U} f */
-	T_WCM(cf,x,f) {this.k(cf,x); return f.call(this,x.webCommandMetadata);}
+	/**
+	 * @private @arg {CF_T_WCM} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"])=>U} f
+	 * @returns {[U,Omit<T, "webCommandMetadata">]}
+	 * */
+	T_WCM(cf,x,f) {
+		const {webCommandMetadata: a,...y}=this.s(`T_WCM:${cf}`,x);
+		let ret=f.call(this,a);
+		return [ret,y];
+	}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {Extract<GM_VE_WC_Browse,{rootVe:6827}>} x */
@@ -2959,11 +2966,66 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GE_Browse} x */
 	GE_Browse(x) {
 		const cf="GE_Browse";
-		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-		let ve_name=this.GE_Browse_WCM(x2);
-		this.G_DE_Browse_VE(ve_name,x4);
-		this.g(x5);
+		if(this.is_TE_VE(x,3611)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,3854)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,5754)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,6827)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,11487)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,23462)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,42352)) {
+			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
+			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,x4);
+			this.g(x5);
+			return;
+		}
+		if(this.is_TE_VE(x,96368)) {
+			let [a,b,{...y}]=this.TE_Endpoint_3(cf,"browseEndpoint",x); this.g(y);
+			this.M_VE96368(a); this.DE_VE96368_Browse(b);
+			let [ve_name,y1]=this.GE_Browse_WCM(a); this.g(y1);
+			this.G_DE_Browse_VE(ve_name,b);
+			return;
+		}
+		debugger;
 	}
+	/** @private @arg {DE_VE96368_Browse} x */
+	DE_VE96368_Browse(x) {x;}
 	/** @private @arg {GM_VE_ResolveUrl_C_MD} x */
 	GM_VE_ResolveUrl_C_MD(x) {
 		const cf="GM_VE_ResolveUrl_C_MD";
@@ -2971,23 +3033,58 @@ class HandleTypes extends HandleTypesEval {
 		this.t(parentTrackingParams,x => this.trackingParams(cf,x));
 		this.t(isVanityUrl,x => this.ceq(x,true));
 	}
-	/** @private @arg {Extract<GE_Browse_WCM,{resolveUrlCommandMetadata:any}>} x */
+	/** @private @template {Extract<GE_Browse_WCM,{resolveUrlCommandMetadata:any}>} T @arg {T} x @returns {[`VE${T["webCommandMetadata"]["rootVe"]}`,Omit<T,"webCommandMetadata"|"resolveUrlCommandMetadata">]} */
 	M_VE_ResolveUrl(x) {
 		const cf="M_VE_ResolveUrl";
-		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x);/*#destructure_done*/
 		this.GM_VE_ResolveUrl_C_MD(b);
 		switch(a.rootVe) {
 			default: debugger; break;
 			case 3611: this.GM_VE3611_WC(a); break;
 			case 3854: this.GM_VE3854_WC(a); break;
 		}
-		return this.GM_VE_WC_Browse(a);
+		return [as(`VE${x.webCommandMetadata.rootVe}`),y];
 	}
-	/** @private @arg {GE_Browse_WCM} x */
+	/** @private @arg {GE_Continuation} x */
+	GE_Continuation(x) {
+		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
+		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
+		if("continuationCommand" in x) {this.C_Continuation(x);} else if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);} else {debugger;}
+	}
+	/** @private @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
+	GE_ResponseReceived(cf,x) {
+		this.save_keys(`${cf}.response_endpoint`,x);
+		if("signalServiceEndpoint" in x) {
+			/** @type {`${cf}.SE_Signal`} */
+			const cf1=`${cf}.SE_Signal`;
+			let [a,gc]=this.T_SE_Signal(cf1,x);
+			this.M_SendPost(a);
+			/** @type {`${cf1}.data`} */
+			const cf2=`${cf1}.data`;
+			this.G_ClientSignal(cf2,gc);
+		} else if("adsControlFlowOpportunityReceivedCommand" in x) {this.C_AdsControlFlowOpportunityReceived(x);} else if("changeKeyedMarkersVisibilityCommand" in x) {
+			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.clickTrackingParams(cf,clickTrackingParams);
+			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
+		} else if("loadMarkersCommand" in x) {
+			const {clickTrackingParams,loadMarkersCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.clickTrackingParams(cf,clickTrackingParams);
+			this.DC_LoadMarkers(loadMarkersCommand);
+		} else if("reloadContinuationItemsCommand" in x) {this.C_ReloadContinuationItems(x);} else if("appendContinuationItemsAction" in x) {
+			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.clickTrackingParams(cf,clickTrackingParams);
+			this.AD_AppendContinuationItems(appendContinuationItemsAction);
+		} else {debugger;}
+	}
+	/** @private @template {GE_Browse_WCM} T @arg {T} x @returns {[`VE${T["webCommandMetadata"]["rootVe"]}`,Omit<T,"resolveUrlCommandMetadata"|"webCommandMetadata">]} */
 	GE_Browse_WCM(x) {
 		const cf="GE_Browse_WCM";
-		if("resolveUrlCommandMetadata" in x) return this.M_VE_ResolveUrl(x);
-		return this.T_WCM(cf,x,this.GM_VE_WC_Browse);
+		if("resolveUrlCommandMetadata" in x) {
+			const rv=this.M_VE_ResolveUrl(x);
+			return as_any(rv);
+		}
+		const ret=this.T_WCM(cf,x,this.GM_VE_WC_Browse);
+		return as_any(ret);
 	}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {
@@ -3088,22 +3185,49 @@ class HandleTypes extends HandleTypesEval {
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
-	/** @protected @arg {M_VE3832_WatchPlaylist} x */
-	M_VE3832_WatchPlaylist(x) {this.T_WCM("M_VE3832_WatchPlaylist",x,this.GM_VE3832_WatchPlaylist);}
-	/** @private @arg {M_VE3832_Watch} x */
-	M_VE3832_Watch(x) {this.T_WCM("M_VE3832_Watch",x,this.GM_VE3832_Watch);}
-	/** @private @arg {M_VE4724} x */
-	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
-	/** @private @arg {M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
-	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
+	/** @private @arg {M_SendPost} x */
+	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
+	/** @private @arg {M_CreateBackstagePost} x */
+	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
+	/** @private @arg {M_AccountMenu} x */
+	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
+	/** @private @arg {M_GetUnseenNotificationCount} x */
+	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
+	/** @private @arg {M_GetNotificationMenu} x */
+	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
+	/** @private @arg {M_VE3611|M_VE3611_ResolveUrl} x */
+	M_VE3611(x) {
+		const cf="M_VE3611";
+		if("resolveUrlCommandMetadata" in x) return this.M_VE3611_ResolveUrl(x);
+		return this.T_WCM(cf,x,this.GM_VE3611_WC);
+	}
+	/** @private @arg {M_VE3611_ResolveUrl} x */
+	M_VE3611_ResolveUrl(x) {
+		const cf="M_VE3611_ResolveUrl";
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GM_VE_ResolveUrl_C_MD(b);
+		return this.GM_VE3611_WC(a);
+	}
+	/** @protected @arg {M_VE3832_WatchPlaylist} x */
+	M_VE3832_WatchPlaylist(x) {this.T_WCM("M_VE3832_WatchPlaylist",x,this.GM_VE3832_WatchPlaylist);}
+	/** @private @arg {M_VE3832_Watch} x */
+	M_VE3832_Watch(x) {this.T_WCM("M_VE3832_Watch",x,this.GM_VE3832_Watch);}
+	/** @private @arg {M_VE4724} x */
+	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
+	/** @private @arg {M_VE5754} x */
+	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754_WC);}
+	/** @private @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
+	/** @private @arg {M_VE83769} x */
+	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769_WC);}
+	/** @private @arg {M_VE96368} x */
+	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368_WC_browse);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @private @arg {GM_CreateComment} x */
@@ -3179,7 +3303,7 @@ class HandleTypes extends HandleTypesEval {
 			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
 		}
 	}
-	/** @private @arg {GM_VE_WC_Browse} x @returns {`VE${GM_VE_WC_Browse["rootVe"]}`} */
+	/** @private @template {GM_VE_WC_Browse} T @arg {T} x @returns {`VE${T["rootVe"]}`} */
 	GM_VE_WC_Browse(x) {
 		switch(x.rootVe) {
 			case 3611: this.GM_VE3611_WC(x); break;
@@ -3190,10 +3314,10 @@ class HandleTypes extends HandleTypesEval {
 			case 23462: this.GM_VE23462_WC(x); break;
 			case 42352: this.GM_VE42352_WC(x); break;
 			case 96368: this.GM_VE96368_WC_browse(x); break;
-			default: x===""; debugger; break;
+			default: debugger; break;
 		}
 		this.GM_WC(x);
-		return `VE${x.rootVe}`;
+		return as(`VE${x.rootVe}`);
 	}
 	/** @private @arg {Exclude<Extract<GM_WC,{rootVe:any}>,{apiUrl:any}>} x */
 	GM_WC_RootVe(x) {
@@ -5148,31 +5272,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
-	/** @private @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
-	GE_ResponseReceived(cf,x) {
-		this.save_keys(`${cf}.response_endpoint`,x);
-		if("signalServiceEndpoint" in x) {
-			/** @type {`${cf}.SE_Signal`} */
-			const cf1=`${cf}.SE_Signal`;
-			let [a,gc]=this.T_SE_Signal(cf1,x);
-			this.M_SendPost(a);
-			/** @type {`${cf1}.data`} */
-			const cf2=`${cf1}.data`;
-			this.G_ClientSignal(cf2,gc);
-		} else if("adsControlFlowOpportunityReceivedCommand" in x) {this.C_AdsControlFlowOpportunityReceived(x);} else if("changeKeyedMarkersVisibilityCommand" in x) {
-			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
-			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
-		} else if("loadMarkersCommand" in x) {
-			const {clickTrackingParams,loadMarkersCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
-			this.DC_LoadMarkers(loadMarkersCommand);
-		} else if("reloadContinuationItemsCommand" in x) {this.C_ReloadContinuationItems(x);} else if("appendContinuationItemsAction" in x) {
-			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
-			this.AD_AppendContinuationItems(appendContinuationItemsAction);
-		} else {debugger;}
-	}
 	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
 		const {slot,...y}=this.s(cf,x);
@@ -6533,12 +6632,6 @@ class HandleTypes extends HandleTypesEval {
 		if(this.get_keys_of(x).join()!=="rows") debugger;
 		if(rows!==2) debugger;
 	}
-	/** @private @arg {GE_Continuation} x */
-	GE_Continuation(x) {
-		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
-		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
-		if("continuationCommand" in x) {this.C_Continuation(x);} else if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);} else {debugger;}
-	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
 		const cf="RSG_Transcript"; this.k(cf,x);
@@ -7058,8 +7151,6 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isCourse,"boolean");
 		return y;
 	}
-	/** @private @arg {M_VE5754} x */
-	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754_WC);}
 	/** @private @arg {DE_VE5754_Browse} x */
 	DE_VE5754_Browse(x) {this.y("DE_VE5754_Browse","browseId",x,this.browseId);}
 	/** @private @arg {E_VE5754_Browse} x */
@@ -7441,16 +7532,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
 	}
-	/** @private @arg {M_SendPost} x */
-	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
-	/** @private @arg {M_CreateBackstagePost} x */
-	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
-	/** @private @arg {M_AccountMenu} x */
-	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
-	/** @private @arg {M_GetUnseenNotificationCount} x */
-	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
-	/** @private @arg {M_GetNotificationMenu} x */
-	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @protected @arg {GC_Button} x */
 	GC_Button(x) {
 		const cf="GC_Button"; this.k(cf,x);
@@ -8333,19 +8414,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
-	/** @private @arg {M_VE3611_ResolveUrl} x */
-	M_VE3611_ResolveUrl(x) {
-		const cf="M_VE3611_ResolveUrl";
-		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GM_VE_ResolveUrl_C_MD(b);
-		return this.GM_VE3611_WC(a);
-	}
-	/** @private @arg {M_VE3611|M_VE3611_ResolveUrl} x */
-	M_VE3611(x) {
-		const cf="M_VE3611";
-		if("resolveUrlCommandMetadata" in x) return this.M_VE3611_ResolveUrl(x);
-		return this.T_WCM(cf,x,this.GM_VE3611_WC);
-	}
 	/** @private @arg {E_VE3611_Browse} x */
 	E_VE3611_Browse(x) {
 		const cf="E_VE3611_Browse";
@@ -8783,23 +8851,32 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibility);
 		this.z(thumbnails,this.D_ThumbnailItem);
 	}
+	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
+	is_TE_VE(x,t) {
+		return x.commandMetadata.webCommandMetadata.rootVe===t;
+	}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
 		const cf="D_PivotButton"; this.k(cf,x);
-		if(!("trackingParams" in x)) return this.D_PivotButton_Empty(x);
-		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(thumbnail);
-		this.GE_Browse(onClickCommand);
-		this.trackingParams(cf,trackingParams);
-		this.G_Text(contentDescription);
-		this.G_Text(soundAttributionTitle);
+		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(thumbnail,this.D_Thumbnail);
+		this.t(onClickCommand,x => {
+			if("addToToastAction" in x) return this.A_AddToToast(x);
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611_Browse(x);
+			x;
+		});
+		if(trackingParams) this.trackingParams(cf,trackingParams);
+		this.t(contentDescription,this.G_Text);
+		this.t(soundAttributionTitle,this.G_Text);
+		this.t(backgroundColor,x => {
+			switch(x) {
+				default: debugger; break;
+				case "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM":
+			}
+		});
 	}
-	/** @private @arg {Record<string,never>} x */
-	D_PivotButton_Empty(x) {
-		/** @type {{}} */
-		let u=x;
-		this.g(u);
-	}
+	/** @private @arg {A_AddToToast} x */
+	A_AddToToast(x) {x;}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo"; this.k(cf,x);

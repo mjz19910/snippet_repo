@@ -48,6 +48,7 @@ type CF_WithParams=
 ;
 type CF_M_s=
 	|`${CF_parse_identifier}.identifier`
+	|`T_WCM:${CF_T_WCM}`
 	|CF_D_ToggleButton
 	|CF_D_CustomEmoji
 	|CF_D_Video_Handle
@@ -81,7 +82,6 @@ type CF_M_w=
 	|`T_Items_TP:${CF_T_Items_TP}`
 	|`T_Items:${CF_T_Items}`
 	|`T_Signal:${CF_T_Signal}`
-	|`T_WCM:${CF_T_WCM}`
 	|`TA_Page:${CF_TA_Page}`
 	|`TR_MultiPageMenu:${CF_TR_MultiPageMenu}`
 	|`Unpack:T_WCM:${CF_T_WCM_Unpack}`
