@@ -6090,7 +6090,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
-		const {reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.trackingParams(cf,trackingParams);
 		switch(reelPlayerNavigationModel) {
@@ -6099,16 +6099,17 @@ class HandleTypes extends HandleTypesEval {
 			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
 		}
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.t(likeButton,this.R_LikeButton);
+		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
+		this.t(menu,this.R_Menu);
+		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
+		this.t(pivotButton,this.R_PivotButton);
+		multimixAttributionLabel;
 		this.t(videoInteractions,this.g);
 		this.t(nextItemButton,this.R_Button);
 		this.t(prevItemButton,this.R_Button);
 		this.t(shareButton,this.R_Button);
 		this.t(viewCommentsButton,this.R_Button);
-		this.t(likeButton,this.R_LikeButton);
-		this.t(menu,this.R_Menu);
-		this.t(pivotButton,this.R_PivotButton);
-		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
