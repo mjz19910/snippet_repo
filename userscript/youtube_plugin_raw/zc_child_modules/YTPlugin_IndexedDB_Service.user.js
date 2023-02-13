@@ -206,6 +206,11 @@ class IndexedDBService extends BaseService {
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
 		if(this.get_data_cache(cur_name).length>0) this.consume_data(transaction,store_desc);
 	}
+	/** @private @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
+	consume_data(transaction,store_desc) {
+		const obj_store=transaction.objectStore(store_desc.name);
+		this.consume_data_with_store(obj_store);
+	}
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
 		const key=store_desc.name;
@@ -240,12 +245,7 @@ class IndexedDBService extends BaseService {
 		this.database_open=false;
 		db.close();
 	}
-	/** @private @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
-	consume_data(transaction,store_desc={name: "video_id"}) {
-		const obj_store=transaction.objectStore(store_desc.name);
-		this.consume_data_with_store(store_desc,obj_store);
-	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
+	/** @protected @template {keyof DatabaseStoreTypes} K @arg {K} key */
 	get_index_key(key) {
 		switch(key) {
 			case "hashtag": return "hashtag";
@@ -254,8 +254,8 @@ class IndexedDBService extends BaseService {
 		}
 		throw new Error();
 	}
-	/** @private @arg {IDBObjectStore} obj_store @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T[]} database_data @arg {K} key */
-	on_cursor_complete(obj_store,database_data,key) {
+	/** @protected @arg {IDBObjectStore} obj_store @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T[]} database_data @arg {K} key */
+	on_cursor_complete_old(obj_store,database_data,key) {
 		const index_key=this.get_index_key(key);
 		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
 		let database_map=new Map;
@@ -299,9 +299,8 @@ class IndexedDBService extends BaseService {
 		}
 		[...new_data_map.values()].forEach(e => {this.add_data_to_store(obj_store,e);});
 	}
-	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store @arg {DatabaseStoreDescription} store_desc */
-	consume_data_with_store(store_desc,obj_store) {
-		const key=store_desc.name;
+	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store */
+	consume_data_with_store(obj_store) {
 		const cursor_req=obj_store.openCursor();
 		/** @private @type {T[]} */
 		let database_data=[];
@@ -310,7 +309,7 @@ class IndexedDBService extends BaseService {
 			if(cursor) {
 				database_data.push(cursor.value);
 				cursor.continue();
-			} else {this.on_cursor_complete(obj_store,database_data,key);}
+			}
 		};
 	}
 	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
