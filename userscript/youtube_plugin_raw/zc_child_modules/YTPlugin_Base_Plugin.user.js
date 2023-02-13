@@ -3122,7 +3122,7 @@ class GFeedbackService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.parser.parse_browse_id(param.value); break;
+				case "browse_id": this.x.get("handle_types").parse_browse_id(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
 				case "e": this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
@@ -3203,7 +3203,7 @@ class TrackingServices extends BaseService {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.parser.parse_browse_id(param.value); break;
+				case "browse_id": this.x.get("handle_types").parse_browse_id(param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
 			}
 		}
@@ -3783,8 +3783,6 @@ class ServiceMethods extends ServiceData {
 		}
 		switch(ss) {default: debugger;}
 	}
-	/** @protected @arg {D_BrowseIdStr} x */
-	browseId(x) {this.parser.parse_browse_id(x);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */

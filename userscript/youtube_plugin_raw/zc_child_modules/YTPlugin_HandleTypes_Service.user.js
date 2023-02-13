@@ -615,6 +615,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x) {default: debugger; return false;}
 	}
+	/** @protected @arg {D_BrowseIdStr} x */
+	browseId(x) {this.parse_browse_id(x);}
 	/** @api @public @arg {D_BrowseIdStr} x */
 	parse_browse_id(x) {
 		if(this.str_starts_with(x,"FE")) {
@@ -708,6 +710,7 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f15":
 				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4": {
 				} return;
+				case "reel.sequence_params.f1":
 				case "D_Browse.param.f93.f1":
 				case "continuation_token.data.f49": return;
 				default: {
@@ -10261,7 +10264,7 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.parse_url(cf,flashUrl);
 		switch(width) {
 			default: debugger; break;
-			case 1280: case 480:
+			case 1280: case 480: case 405:
 		}
 		switch(height) {
 			default: debugger; break;

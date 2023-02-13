@@ -2067,6 +2067,9 @@ type D_MicroformatEmbed=({
 	width: 480;
 	height: 360;
 }|{
+	width: 405;
+	height: 720;
+}|{
 	width: 1280;
 	height: 720;
 })&D_MicroformatEmbed_Base;
