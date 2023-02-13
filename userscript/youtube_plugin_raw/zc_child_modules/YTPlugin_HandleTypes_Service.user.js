@@ -1795,6 +1795,8 @@ class HandleTypes extends HandleTypesEval {
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {A_AppendContinuationItems} x */
 	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
+	/** @arg {A_SetActivePanelItem} x */
+	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -2327,7 +2329,7 @@ class HandleTypes extends HandleTypesEval {
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {AD_Signal} x */
 	AD_Signal(x) {
-		const cf="AD_Signal"; this.k(cf,x);
+		const cf="AD_Signal";
 		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(signal) {
 			default: debugger; break;
@@ -2359,10 +2361,20 @@ class HandleTypes extends HandleTypesEval {
 			default: x===0; debugger;
 		}
 	}
+	/** @private @arg {AD_SetActivePanelItem} x */
+	AD_SetActivePanelItem(x) {
+		const cf="AD_SetActivePanelItem";
+		const {panelTargetId,itemIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(panelTargetId) {
+			default: debugger; break;
+			case "engagement-panel-macro-markers-auto-chapters":
+		}
+		this.save_number(`${cf}.itemIndex`,itemIndex);
+	}
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
 	/** @arg {C_Innertube} x */
-	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.E_YpcGetOfflineUpsell);}
+	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {C_CommandExecutor} x */
@@ -10664,6 +10676,13 @@ class HandleTypes extends HandleTypesEval {
 		if(durationMillis!=="10000") debugger;
 		this.D_Thumbnail(thumbnailDetails);
 		this.C_Innertube(onActive);
+	}
+	/** @arg {G_DC_Innertube} x */
+	G_DC_Innertube(x) {
+		const cf="G_DC_Innertube"; this.k(cf,x);
+		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
+		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
+		debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
