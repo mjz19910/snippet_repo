@@ -712,16 +712,18 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
+				case "D_Browse.param.f94.f1.f2.f3": case "D_Browse.param.f94.f1.f2.f2": case "D_Browse.param.f94.f1.f2.f1": case "continuation_token.data.f53.f4.f4": case "reel_request_continuation.token.f15.f6.f1":
 				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1": case "D_Browse.param.f93.f1": case "continuation_token.data.f49": case "continuation_token.data.f15":
 				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
 				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
 				} return;
-				case "D_Browse.param.f94.f1.f2.f3":
-				case "D_Browse.param.f94.f1.f2.f2":
-				case "D_Browse.param.f94.f1.f2.f1":
-				case "continuation_token.data.f53.f4.f4":
-				case "reel_request_continuation.token.f15.f6.f1":
+				case "tracking.trackingParams.f6": {
+					this.save_string(path,entry);
+				} return;
 				case "reel_request_continuation.token.f3.f1": return;
+				case "continuation_token.data.f53.f8": {
+					this.save_string(path,entry);
+				} return;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) {
@@ -732,19 +734,31 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		if(typeof entry==="number") {
+			if(entry===1||entry===0) {
+				this.save_number(path,entry);
+				return;
+			}
 			switch(path) {
 				default: {
 					let new_data=this.save_number(path,entry);
 					if(new_data) {
 						let x=path; x;
+						console.log(`-- [handle_value_gen$value_save_number] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 				} return;
+				case "continuation_token.data.f53.f4.f15":
+				case "entity_key.normal.f4":
+				case "playability_status.context_params.f2.f1":
+				case "playability_status.context_params.f1":
+				case "reel.params.f6":
+				case "reel.player_params.f30": {
+					this.save_number(path,entry);
+				} return;
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
-				case "reel.sequence_params.f5.f3":
-				case "reel.params.f1":
-				case "reel.player_params.f71":
-				case "D_Browse.param.f93.f1.f14": {
+				case "reel.sequence_params.f5.f3": case "reel.params.f1": case "reel.player_params.f71": case "D_Browse.param.f93.f1.f14":
+				case "reel_request_continuation.token.f15.f6.f7.f1.f1": case "reel_request_continuation.token.f15.f6.f6.f1[].f2": case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
+				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
 				} return;
 				case "reel_request_continuation.token.f15.f6.f4.f1":
@@ -773,12 +787,6 @@ class HandleTypes extends HandleTypesEval {
 				case "notification.record_interactions.f5":
 				case "reel_request_continuation.token.f15.f6.f7.f1[].f1":
 				case "notification.record_interactions.f2.f14.f1.f1": {
-				} return;
-				case "reel_request_continuation.token.f15.f6.f7.f1.f1":
-				case "reel_request_continuation.token.f15.f6.f6.f1[].f2":
-				case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
-				case "tracking.trackingParams.f1": {
-					this.save_number(path,entry);
 				} return;
 			}
 		}
