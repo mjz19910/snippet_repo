@@ -3473,6 +3473,7 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpointSupportedOnesieConfig" in x) return;
 		if("playlistId" in x) return;
 		if("params" in x) return;
+		if("startTimeSeconds" in x) return;
 		if("videoId" in x) {
 			const cf="DE_VE3832:videoId";
 			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

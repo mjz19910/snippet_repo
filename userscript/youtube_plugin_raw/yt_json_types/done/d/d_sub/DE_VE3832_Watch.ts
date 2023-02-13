@@ -2,6 +2,10 @@ type DE_VE3832_Watch=
 	|{videoId: string;}
 	|{
 		videoId: string;
+		startTimeSeconds: number;
+	}
+	|{
+		videoId: string;
 		params: string;
 		playerParams: string;
 	}
