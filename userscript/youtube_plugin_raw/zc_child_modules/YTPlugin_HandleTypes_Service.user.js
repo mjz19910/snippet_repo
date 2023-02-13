@@ -650,6 +650,7 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} return;
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
+				case "reel_request_continuation.token.f15.f6.f6.f1[].f2":
 				case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
 				case "reel_request_continuation.token.f15.f6.f7.f1[].f1": {
 					this.save_number(path,entry);
