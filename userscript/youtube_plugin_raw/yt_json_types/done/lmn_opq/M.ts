@@ -1,11 +1,8 @@
 type M_Empty_WCM=TM_Gen<{}>;
-type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
-type M_VE3611_ResolveUrl={webCommandMetadata: GM_VE3611; resolveUrlCommandMetadata: GM_VE_ResolveUrl_C_MD;};
-type M_VE3854_ResolveUrl={webCommandMetadata: GM_VE3854; resolveUrlCommandMetadata: GM_VE_ResolveUrl_C_MD;};
 //#region M_VE
-type M_VE3611=TM_Gen<GM_VE3611>;
+type M_VE3611={webCommandMetadata: GM_VE3611; resolveUrlCommandMetadata?: M_ResolveUrlCommand;};
 type M_VE3832=TM_Gen<GM_VE3832>;
-type M_VE3854=TM_Gen<GM_VE3854>;
+type M_VE3854={webCommandMetadata: GM_VE3854; resolveUrlCommandMetadata?: M_ResolveUrlCommand;};
 type M_VE4724=TM_Gen<GM_VE4724>;
 type M_VE5754=TM_Gen<GM_VE5754>;
 type M_VE6827_FeedHistory=TM_Gen<GM_VE6827_FeedHistory>;
@@ -28,6 +25,7 @@ type M_EditPlaylist=TM_Gen<GM_EditPlaylist>;
 type M_Feedback=TM_Gen<GM_Feedback>;
 type M_FlagGetForm=TM_Gen<GM_FlagGetForm>;
 type M_GetNotificationMenu=TM_Gen<GM_GetNotificationMenu>;
+type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
 type M_GetSharePanel=TM_Gen<GM_GetSharePanel>;
 type M_GetSurvey=TM_Gen<GM_GetSurvey>;
 type M_GetTranscript=TM_Gen<GM_GetTranscript>;

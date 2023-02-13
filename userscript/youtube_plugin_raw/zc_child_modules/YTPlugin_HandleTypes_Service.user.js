@@ -2967,7 +2967,7 @@ class HandleTypes extends HandleTypesEval {
 	GE_Browse(x) {
 		const cf="GE_Browse";
 		if(this.is_TE_VE(x,3611)) return this.E_VE3611_Browse(x);
-		if(this.is_TE_VE(x,3854)) return this.E_VE3854_Browse(x);
+		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
 		if(this.is_TE_VE(x,5754)) return this.E_VE5754_Browse(x);
 		if(this.is_TE_VE(x,6827)) return this.GE_VE6827(x);
 		if(this.is_TE_VE(x,11487)) return this.E_VE11487_Browse(x);
@@ -2976,21 +2976,23 @@ class HandleTypes extends HandleTypesEval {
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368_Browse(x);
 		debugger;
 	}
+	/** @private @arg {E_VE3854} x */
+	E_VE3854(x) {x;}
 	/** @private @arg {E_VE6827|E_VE6827_SearchBox} x */
 	GE_VE6827(x) {x;}
 	/** @private @arg {E_VE11487} x */
-	E_VE11487_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	E_VE11487_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487_Browse","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
 	/** @private @arg {E_VE23462} x */
-	E_VE23462_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	E_VE23462_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462_Browse","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE96368(b);}
 	/** @private @arg {E_VE42352} x */
-	E_VE42352_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	E_VE42352_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352_Browse","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
 	/** @private @arg {E_VE96368} x */
-	E_VE96368_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
-	/** @private @arg {DE_VE3611_Browse} x */
+	E_VE96368_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
+	/** @private @arg {DE_VE3611} x */
 	DE_VE3611_Browse(x) {x;}
-	/** @private @arg {DE_VE96368_Browse} x */
-	DE_VE96368_Browse(x) {x;}
-	/** @private @arg {GM_VE_ResolveUrl_C_MD} x */
+	/** @private @arg {DE_VE96368} x */
+	DE_VE96368(x) {x;}
+	/** @private @arg {M_ResolveUrlCommand} x */
 	GM_VE_ResolveUrl_C_MD(x) {
 		const cf="GM_VE_ResolveUrl_C_MD";
 		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3165,13 +3167,13 @@ class HandleTypes extends HandleTypesEval {
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
-	/** @private @arg {M_VE3611|M_VE3611_ResolveUrl} x */
+	/** @private @arg {M_VE3611|M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
 		if("resolveUrlCommandMetadata" in x) return this.M_VE3611_ResolveUrl(x);
 		return this.T_WCM(cf,x,this.GM_VE3611_WC);
 	}
-	/** @private @arg {M_VE3611_ResolveUrl} x */
+	/** @private @arg {M_VE3611} x */
 	M_VE3611_ResolveUrl(x) {
 		const cf="M_VE3611_ResolveUrl";
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -7115,7 +7117,7 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isCourse,"boolean");
 		return y;
 	}
-	/** @private @arg {DE_VE5754_Browse} x */
+	/** @private @arg {DE_VE5754} x */
 	DE_VE5754_Browse(x) {this.y("DE_VE5754_Browse","browseId",x,this.browseId);}
 	/** @private @arg {E_VE5754_Browse} x */
 	E_VE5754_Browse(x) {
