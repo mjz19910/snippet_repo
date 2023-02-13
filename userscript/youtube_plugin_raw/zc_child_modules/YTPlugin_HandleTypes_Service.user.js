@@ -752,11 +752,17 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(entry instanceof Map) return;
 		if(this.is_bigint(entry)) {
-			if(path==="tracking.trackingParams.f9") return;
-			if(path==="request_continuation.token.f9.f1.f1[].f1") return;
-			let new_data=this.handle_bigint(path,entry);
-			if(new_data) debugger;
-			return;
+			switch(path) {
+				default: {
+					let new_data=this.handle_bigint(path,entry);
+					if(new_data) {
+						let x=path; x;
+						debugger;
+					}
+				} return;
+				case "tracking.trackingParams.f9":
+				case "request_continuation.token.f9.f1.f1[].f1": return;
+			}
 		}
 		switch(entry) {default: debugger; return;}
 	}
