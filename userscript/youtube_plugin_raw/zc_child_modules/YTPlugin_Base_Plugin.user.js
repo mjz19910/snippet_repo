@@ -2678,12 +2678,12 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s]",jk);
 		{debugger;}
 	}
-	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
-	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @protected @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template U @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>U} f @returns {U|null} */
+	t(x,f) {if(!x) return null; return f.call(this,x);}
+	/** @protected @template U @template {{}} T @arg {T[]|null|undefined} x @arg {(this:this,x:T)=>U} f */
 	tz(x,f) {
-		if(!x) return;
-		this.z(x,f);
+		if(!x) return null;
+		return this.z(x,f);
 	}
 	/** @protected @template {string} CF_T @arg {CF_T} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:CF_T,x:T)=>void} f */
 	t_cf(cf,x,f) {

@@ -625,6 +625,10 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
 				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
 				} return;
+				case "D_Browse.param.f94.f1.f2.f3":
+				case "D_Browse.param.f94.f1.f2.f2":
+				case "D_Browse.param.f94.f1.f2.f1":
+				case "continuation_token.data.f53.f4.f4":
 				case "reel_request_continuation.token.f15.f6.f1":
 				case "reel_request_continuation.token.f3.f1": return;
 				default: {
@@ -645,6 +649,10 @@ class HandleTypes extends HandleTypesEval {
 						debugger;
 					}
 				} return;
+				case "watch_request_continuation.token.f9.f1.f4.f13": return;
+				case "reel_request_continuation.token.f15.f6.f7.f1[].f1": {
+					this.save_number(path,entry);
+				} return;
 				case "reel_request_continuation.token.f15.f6.f4.f1":
 				case "reel_request_continuation.token.f15.f6.f3.f2":
 				case "reel_request_continuation.token.f15.f6.f3.f1":
@@ -660,17 +668,16 @@ class HandleTypes extends HandleTypesEval {
 				case "AdServingDataEntry.f9.f3":
 				case "AdServingDataEntry.f9.f2":
 				case "AdServingDataEntry.f9.f1":
-				case "watch_request_continuation.token.f9.f1.f4.f13[]":
-				case "watch_request_continuation.token.f9.f1.f4.f13": return;
+				case "watch_request_continuation.token.f9.f1.f4.f13[]": return;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
-				case "watch_playlist.params.f4": case "watch_playlist.params.f13":
-					return;
+				case "watch_playlist.params.f4": case "watch_playlist.params.f13": {
+				} return;
 				// {[x:"f2.f7"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_request_continuation.token.f2.f7": return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
-				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
-					return;
+				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1": {
+				} return;
 				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
 				} return;
@@ -4776,10 +4783,13 @@ class HandleTypes extends HandleTypesEval {
 	RSL_Dislike(x) {
 		const cf="RSL_Dislike"; this.k(cf,x);
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(actions,x => {
+		let ac=this.tz(actions,x => {
 			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 			return null;
 		});
+		if(!ac) return;
+		let [r1]=ac;
+		this.z(r1,this.g);
 	}
 	/** @private @arg {RSL_RemoveLike} x */
 	RSL_RemoveLike(x) {
@@ -6052,53 +6062,25 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
-		const cf="D_ReelPlayerOverlay"; this.k(cf,x);
-		if("reelPlayerNavigationModel" in x) {
-			const {style: a,trackingParams: b,reelPlayerNavigationModel: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(a!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-			this.trackingParams(cf,b);
-			switch(c) {
-				default: this.codegen_case(cf,c); this.codegen_typedef_all(cf,x); break;
-				case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED": break;
-			}
-			return;
-		}
-		if("videoInteractions" in x) {
-			const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.R_LikeButton(likeButton);
-			this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
-			this.R_Menu(menu);
-			this.R_Button(nextItemButton);
-			this.R_Button(prevItemButton);
-			this.R_SubscribeButton(subscribeButtonRenderer);
-			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-			this.g(videoInteractions);
-			this.R_Button(viewCommentsButton);
-			this.trackingParams(cf,trackingParams);
-			this.R_Button(shareButton);
-			this.R_PivotButton(pivotButton);
-			return;
-		}
-		if("likeButton" in x) {
-			const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.R_LikeButton(likeButton);
-			this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
-			this.R_Menu(menu);
-			this.R_Button(nextItemButton);
-			this.R_Button(prevItemButton);
-			this.R_SubscribeButton(subscribeButtonRenderer);
-			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-			this.R_Button(viewCommentsButton);
-			this.trackingParams(cf,trackingParams);
-			this.R_Button(shareButton);
-			this.R_PivotButton(pivotButton);
-			return;
-		}
-		const {reelPlayerHeaderSupportedRenderers,nextItemButton,prevItemButton,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_ReelPlayerHeader(reelPlayerHeaderSupportedRenderers);
-		this.R_Button(nextItemButton);
-		this.R_Button(prevItemButton);
+		const cf="D_ReelPlayerOverlay";
+		const {reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.trackingParams(cf,trackingParams);
+		switch(reelPlayerNavigationModel) {
+			default: this.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef_all(cf,x); break;
+			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED": break;
+		}
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.t(videoInteractions,this.g);
+		this.t(nextItemButton,this.R_Button);
+		this.t(prevItemButton,this.R_Button);
+		this.R_Button(shareButton);
+		this.R_Button(viewCommentsButton);
+		this.R_LikeButton(likeButton);
+		this.R_Menu(menu);
+		this.R_PivotButton(pivotButton);
+		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
+		this.R_SubscribeButton(subscribeButtonRenderer);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
@@ -7767,23 +7749,36 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
-		const cf="RS_Subscribe"; this.k(cf,x);
+		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(actions,this.G_RS_Subscribe_Action);
 		this.g(newNotificationButton);
 		this.trackingParams(cf,trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {T_RemovePrefix<Omit<D_LikeButton,"likesAllowed">, "like">} x */
+	/** @private @arg {D_LikeButton_Like} x */
 	D_LikeButton_Like(x) {
-		const cf="D_LikeButton.like"; this.k(cf,x);
+		const cf="D_LikeButton.like";
 		const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(status!=="INDIFFERENT") debugger;
+		switch(status) {
+			default: debugger; break;
+			case "DISLIKE":
+			case "INDIFFERENT":
+		}
 		this.t(count,this.a_primitive_num);
 		this.G_Text(countText);
 		this.t(countWithLikeText,this.G_Text);
 		this.t(countWithUnlikeText,this.G_Text);
 		this.t(countTooltipText,this.G_Text);
+	}
+	/** @private @arg {D_LikeButton_Dislike} x */
+	D_LikeButton_Dislike(x) {
+		const cf="D_LikeButton.dislike";
+		const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(countText);
+		this.G_Text(countWithDislikeText);
+		this.G_Text(countWithUndislikeText);
+		this.G_Text(countTooltipText);
 	}
 	/** @private @arg {D_LikeButton} x */
 	D_LikeButton(x) {
@@ -7792,13 +7787,8 @@ class HandleTypes extends HandleTypesEval {
 		if(likesAllowed!==true) debugger;
 		let [upt,ur]=this.unwrap_prefix(y,"like");
 		this.D_LikeButton_Like(upt);
-		{
-		}
-		let [{...ud},{...r2}]=this.unwrap_prefix(ur,"dislike");
-		{
-			const cf="D_LikeButton.dislike";
-			const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.s(cf,ud); this.g(y);
-		}
+		let [ud,{...r2}]=this.unwrap_prefix(ur,"dislike");
+		this.D_LikeButton_Dislike(ud);
 		{
 			const cf="D_LikeButton.rest";
 			const {target,trackingParams,serviceEndpoints,...y}=r2; this.g(y);

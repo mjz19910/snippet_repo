@@ -84,7 +84,10 @@ type RSG_Transcript={
 	actions: AU_EngagementPanel[];
 	trackingParams: string;
 };
-type RSL_Dislike=RRC_ResponseContext&T_Actions<TA_OpenPopup_Empty>;
+type RSL_Dislike={
+	responseContext: RC_ResponseContext;
+	actions?: TA_OpenPopup_Empty[];
+};
 type RSL_Like={
 	responseContext: RC_ResponseContext;
 	actions?: (TA_OpenPopup_Empty|A_AddToGuideSection)[];

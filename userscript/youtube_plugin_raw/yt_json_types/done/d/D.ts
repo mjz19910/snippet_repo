@@ -439,46 +439,21 @@ type D_GuideDownloadsEntry={
 	alwaysShow: false;
 	entryRenderer: R_GuideEntry;
 };
-type D_ReelPlayerOverlay=
-	|never
-	|{
-		likeButton: R_LikeButton;
-		reelPlayerHeaderSupportedRenderers: R_ReelPlayerHeader;
-		menu: R_Menu;
-		nextItemButton: R_Button;
-		prevItemButton: R_Button;
-		subscribeButtonRenderer: R_SubscribeButton;
-		style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
-		viewCommentsButton: R_Button;
-		videoInteractions: {};
-		trackingParams: string;
-		shareButton: R_Button;
-		pivotButton: R_PivotButton;
-	}
-	|{
-		reelPlayerHeaderSupportedRenderers: R_ReelPlayerHeader;
-		nextItemButton: R_Button;
-		prevItemButton: R_Button;
-		style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
-		trackingParams: string;
-	}
-	|{
-		likeButton: R_LikeButton;
-		reelPlayerHeaderSupportedRenderers: R_ReelPlayerHeader;
-		menu: R_Menu;
-		nextItemButton: R_Button;
-		prevItemButton: R_Button;
-		subscribeButtonRenderer: R_SubscribeButton;
-		style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
-		viewCommentsButton: R_Button;
-		trackingParams: string;
-		shareButton: R_Button;
-		pivotButton: R_PivotButton;
-	}|{
-		style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
-		trackingParams: string;
-		reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
-	};
+type D_ReelPlayerOverlay={
+	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
+	trackingParams: string;
+	reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
+	likeButton: R_LikeButton;
+	viewCommentsButton: R_Button;
+	videoInteractions?: {};
+	shareButton: R_Button;
+	menu: R_Menu;
+	subscribeButtonRenderer: R_SubscribeButton;
+	pivotButton: R_PivotButton;
+	reelPlayerHeaderSupportedRenderers?: R_ReelPlayerHeader;
+	nextItemButton?: R_Button;
+	prevItemButton?: R_Button;
+};
 type D_AccountLinkButton={
 	providerKey: K_AccountLinkProviderKey;
 	unlinkedButton: R_Button;
@@ -1923,22 +1898,6 @@ type D_LightColorPalette_1={
 
 type D_LightColorPalette=D_LightColorPalette_1|D_LightColorPalette_2|D_LightColorPalette_3|D_LightColorPalette_4;
 type D_LikeApi={videoId: string;}|{playlistId: D_PlaylistId;};
-type D_LikeButton={
-	target: D_LikeApi;
-	likeStatus: "INDIFFERENT";
-	likeCount?: number;
-	likeCountText: G_Text;
-	likeCountWithLikeText?: G_Text;
-	likeCountWithUnlikeText?: G_Text;
-	dislikeCountText: G_Text;
-	dislikeCountWithDislikeText: G_Text;
-	dislikeCountWithUndislikeText: G_Text;
-	trackingParams: string;
-	likesAllowed: true;
-	serviceEndpoints: E_Like[];
-	likeCountTooltipText?: G_Text;
-	dislikeCountTooltipText: G_Text;
-};
 type D_LiveBroadcastDetails={
 	isLiveNow: true;
 	startTimestamp: string;
