@@ -545,9 +545,24 @@ class CodegenService extends BaseService {
 		if(type_name==="MetadataBadgeRenderer") {return "RMD_Badge";}
 		x: if(type_name==="OpenPopupAction"&&typeof x.openPopupAction==="object") {
 			if(!x.openPopupAction) break x;
-			let sr=this.get_typedef_part(x.openPopupAction);
-			if(!sr) break x;
-			return "TA_OpenPopup<"+sr+">";
+			/** @type {TA_OpenPopup<T_OpenPopup_Dialog<{}>|T_OpenPopup_Toast<{}>>} */
+			let u=as(x);
+			let at=u.openPopupAction;
+			switch(at.popupType) {
+				case "DIALOG": {
+					let sr=this.get_typedef_part(at.popup);
+					return `T_OpenPopup_Dialog<${sr}>`;
+				}
+				case "TOAST": {
+					let sr=this.get_typedef_part(at.popup);
+					return `T_OpenPopup_Toast<${sr}>`;
+				}
+				default: {
+					let sr=this.get_typedef_part(x.openPopupAction);
+					if(!sr) break x;
+					return "TA_OpenPopup<"+sr+">";
+				}
+			}
 		}
 		if(type_name.endsWith("Action")) {
 			let real_val=split_string_once_last(type_name,"Action")[0];

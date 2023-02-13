@@ -2459,7 +2459,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {RA_Notification} x */
-	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
+	RA_Notification(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {RMD_Badge} x */
@@ -5059,7 +5059,7 @@ class HandleTypes extends HandleTypesEval {
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);
 		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
-		if("notificationActionRenderer" in x) return this.RA_NotificationAction(x);
+		if("notificationActionRenderer" in x) return this.RA_Notification(x);
 		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
@@ -8199,15 +8199,24 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
+	/** @private @template T @arg {T_OpenPopup_Toast<T>} x */
+	T_OpenPopup_Toast(x) {
+		const cf="T_OpenPopup_Toast";
+		const {popupType,popup,...y}=this.s(cf,x); this.g(y);
+		if(popupType!=="TOAST") return null;
+		return popup;
+	}
 	/** @private @arg {RSM_ChannelPreference} x */
 	RSM_ChannelPreference(x) {
 		const cf="RSM_ChannelPreference"; this.k(cf,x);
 		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_ResponseContext(responseContext);
-		this.z(actions,x => {
+		let [u1]=this.z(actions,x => {
 			if(!x.openPopupAction) debugger;
-			this.g(x.openPopupAction);
+			let a=this.TA_OpenPopup(cf,x);
+			return this.T_OpenPopup_Toast(a);
 		});
+		this.z(u1,this.RA_Notification);
 		this.trackingParams(cf,trackingParams);
 		this.R_EntityBatchUpdate(frameworkUpdates);
 		this.D_ChannelId(channelId);
@@ -10176,7 +10185,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(text);
 		this.E_Url(endpoint);
 		this.trackingParams(cf,trackingParams);
-		this.RA_NotificationAction(snackbar);
+		this.RA_Notification(snackbar);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
 	D_PlayerAttestation(x) {
