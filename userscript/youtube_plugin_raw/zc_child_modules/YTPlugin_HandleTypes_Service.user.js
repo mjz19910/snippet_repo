@@ -369,6 +369,16 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "reel_request_continuation.token.f3": switch(map_entry_key) {
+				case 1: case 3: case 4: case 6:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token": switch(map_entry_key) {
+				case 1: case 3: case 5: case 15:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "continuation_token.data.f53.f4": switch(map_entry_key) {
 				case 4: case 6: case 15: case 25:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -392,57 +402,57 @@ class HandleTypes extends HandleTypesEval {
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f9.f1.f4": switch(map_entry_key) {
+			case "watch_request_continuation.token.f9.f1.f4": switch(map_entry_key) {
 				case 13:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
+			case "watch_request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
 				case 1: case 3:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f14": switch(map_entry_key) {
+			case "watch_request_continuation.token.f14": switch(map_entry_key) {
 				case 1:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
+			case "watch_request_continuation.token.f9.f1.f1[]": switch(map_entry_key) {
 				case 1:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f9.f1": switch(map_entry_key) {
+			case "watch_request_continuation.token.f9.f1": switch(map_entry_key) {
 				case 1: case 2: case 3: case 4:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f9": switch(map_entry_key) {
+			case "watch_request_continuation.token.f9": switch(map_entry_key) {
 				case 1: case 3:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f2.f36": switch(map_entry_key) {
+			case "watch_request_continuation.token.f2.f36": switch(map_entry_key) {
 				case 5: case 8:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f6.f4": switch(map_entry_key) {
+			case "watch_request_continuation.token.f6.f4": switch(map_entry_key) {
 				case 4: case 6: case 15: case 37:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f6": switch(map_entry_key) {
+			case "watch_request_continuation.token.f6": switch(map_entry_key) {
 				case 4: case 6: case 8:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token.f2": switch(map_entry_key) {
+			case "watch_request_continuation.token.f2": switch(map_entry_key) {
 				case 2: case 4: case 6: case 7: case 24: case 25: case 28: case 36: case 47:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "request_continuation.token": switch(map_entry_key) {
+			case "watch_request_continuation.token": switch(map_entry_key) {
 				case 1: case 2: case 3: case 5: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
@@ -674,10 +684,10 @@ class HandleTypes extends HandleTypesEval {
 			};
 			switch(path)/*parse_param_next_arr*/ {
 				default: g1(); debugger; continue;
-				case "request_continuation.token.f9.f1.f4.f13": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
+				case "watch_request_continuation.token.f9.f1.f4.f13": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
 				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
 				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
-				case "request_continuation.token.f9.f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
+				case "watch_request_continuation.token.f9.f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
 			}
 			off++;
 		}
@@ -696,26 +706,23 @@ class HandleTypes extends HandleTypesEval {
 					return this.D_ChannelId(as(entry));
 				case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4": case "unsubscribe.params.f2":
 					return this.videoId(entry);
-				case "request_continuation.token.f6.f4.f4": case "request_continuation.token.f5": case "tracking.trackingParams.f7": case "notification.record_interactions.f2.f14.f2": case "notification.opt_out.f3": case "notification.opt_out.f7": case "notification.record_interactions.f2.f14.f2":
+				case "watch_request_continuation.token.f6.f4.f4": case "watch_request_continuation.token.f5": case "tracking.trackingParams.f7": case "notification.record_interactions.f2.f14.f2": case "notification.opt_out.f3": case "notification.opt_out.f7": case "notification.record_interactions.f2.f14.f2":
 					return;
 				case "continuation_token.data.f110.f3.f15.f2.f1": {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
-				case "continuation_token.data.f49.f6":
-				case "continuation_token.data.f72":
-				case "request_continuation.token.f9.f1.f2":
-				case "request_continuation.token.f6.f4.f37":
-				case "entity_key.subscribed.f2":
-				case "continuation_token.data.f15":
-				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4": {
+				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1": case "D_Browse.param.f93.f1": case "continuation_token.data.f49": case "continuation_token.data.f15":
+				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
+				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
 				} return;
-				case "reel.sequence_params.f1":
-				case "D_Browse.param.f93.f1":
-				case "continuation_token.data.f49": return;
+				case "reel_request_continuation.token.f3.f1": return;
 				default: {
 					let new_data=this.save_string(path,entry);
-					if(new_data) debugger;
+					if(new_data) {
+						let x=path; x;
+						debugger;
+					}
 				} return;
 			}
 		}
@@ -723,8 +730,14 @@ class HandleTypes extends HandleTypesEval {
 			switch(path) {
 				default: {
 					let new_data=this.save_number(path,entry);
-					if(new_data) debugger;
+					if(new_data) {
+						let x=path; x;
+						debugger;
+					}
 				} return;
+				case "reel.params.f3.f3":
+				case "reel.params.f3.f2":
+				case "reel.params.f3.f1":
 				case "tracking.trackingParams.f16.f4.f3":
 				case "tracking.trackingParams.f16.f4.f2":
 				case "tracking.trackingParams.f16.f4.f1":
@@ -734,13 +747,13 @@ class HandleTypes extends HandleTypesEval {
 				case "AdServingDataEntry.f9.f3":
 				case "AdServingDataEntry.f9.f2":
 				case "AdServingDataEntry.f9.f1":
-				case "request_continuation.token.f9.f1.f4.f13[]":
-				case "request_continuation.token.f9.f1.f4.f13": return;
+				case "watch_request_continuation.token.f9.f1.f4.f13[]":
+				case "watch_request_continuation.token.f9.f1.f4.f13": return;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_playlist.params.f4": case "watch_playlist.params.f13":
 					return;
 				// {[x:"f2.f7"]:"STORE::Playlist.localCurrentIndex";}
-				case "request_continuation.token.f2.f7": return;
+				case "watch_request_continuation.token.f2.f7": return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
 				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1":
@@ -760,8 +773,10 @@ class HandleTypes extends HandleTypesEval {
 						debugger;
 					}
 				} return;
+				case "reel.player_params.f72":
+				case "D_Browse.param.f94.f5":
 				case "tracking.trackingParams.f9":
-				case "request_continuation.token.f9.f1.f1[].f1": return;
+				case "watch_request_continuation.token.f9.f1.f1[].f1": return;
 			}
 		}
 		switch(entry) {default: debugger; return;}
@@ -809,7 +824,7 @@ class HandleTypes extends HandleTypesEval {
 			case "like": case "live_chat_replay": case "load_markers":
 			case "next_radio": case "next": case "notification":
 			case "player_seek": case "playability_status": case "playlist_edit":
-			case "reel": case "reload": case "request_continuation":
+			case "reel": case "reload": case "watch_request_continuation": case "reel_request_continuation":
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
 			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
 			case "UndoFeedback": case "unsubscribe":
@@ -6368,11 +6383,10 @@ class HandleTypes extends HandleTypesEval {
 				this.decode_continuation_token(token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
-				debugger;
-				this.decode_continuation_token(token);
+				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				this.params("ContinuationRequestType_WatchNext.token","request_continuation.token",token);
+				this.params("ContinuationRequestType_WatchNext.token","watch_request_continuation.token",token);
 			} break;
 		};
 		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
