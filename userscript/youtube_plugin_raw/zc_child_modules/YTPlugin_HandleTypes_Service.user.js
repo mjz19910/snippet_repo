@@ -5609,6 +5609,17 @@ class HandleTypes extends HandleTypesEval {
 			this.save_next_byte("url.redir_token[1].data",p2,i);
 		}
 	}
+	/** @private @arg {GU_YoutubeUrlRedirect_Event} x */
+	GU_YoutubeUrlRedirect_Event(x) {
+		switch(x) {
+			default: debugger; break;
+			case "":
+			case "channel_banner":
+			case "endscreen":
+			case "product_shelf":
+			case "video_description":
+		}
+	}
 	/** @private @arg {GU_YoutubeUrlRedirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect"; this.k(cf,x);
@@ -5620,13 +5631,7 @@ class HandleTypes extends HandleTypesEval {
 			if(pp!=="redirect") debugger;
 			let parsed_search=this.parse_url_search_params(query_search);
 			let {event,redir_token,q,...y}=parsed_search;
-			switch(event) {
-				default: debugger; break;
-				case "":
-				case "channel_banner":
-				case "product_shelf":
-				case "video_description":
-			}
+			this.GU_YoutubeUrlRedirect_Event(event);
 			this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
 			this.a_primitive_str(q);
 			if("v" in y) {
@@ -10724,11 +10729,12 @@ class HandleTypes extends HandleTypesEval {
 		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {D_EndscreenElement["endpoint"]} x */
+	/** @private @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
 		const cf="D_EndscreenElement_EP"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
 		debugger;
 	}
 	/** @private @arg {D_EndscreenElement} x */

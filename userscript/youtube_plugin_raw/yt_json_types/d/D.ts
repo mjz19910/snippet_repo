@@ -1613,27 +1613,6 @@ type D_Endscreen={
 	startMs: `${number}`;
 	trackingParams: string;
 };
-type D_EndscreenElement={
-	style: "VIDEO"|"CHANNEL"|"WEBSITE";
-	image: D_Thumbnail;
-	icon?: D_Thumbnail;
-	left: number;
-	width: number,
-	top: number;
-	aspectRatio: number;
-	startMs: `${number}`;
-	endMs: `${number}`;
-	title: G_Text;
-	metadata: G_Text;
-	callToAction?: G_Text;
-	dismiss?: G_Text;
-	endpoint: E_VE3611|E_Watch;
-	hovercardButton?: R_SubscribeButton;
-	trackingParams: string;
-	isSubscribe?: true;
-	id: string;
-	thumbnailOverlays?: G_ThumbnailOverlayItem[];
-};
 type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 	"clip-create",
 	"structured-description"

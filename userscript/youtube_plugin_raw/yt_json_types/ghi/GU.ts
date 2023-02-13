@@ -45,12 +45,14 @@ type GU_YoutubeUrlRedirect_Info={
 };
 type GU_YoutubeUrlRedirect_Event=
 	|""
-	|"video_description"
+	|"channel_banner"
+	|"endscreen"
 	|"product_shelf"
+	|"video_description"
 	;
 type GU_YoutubeUrlRedirect=
 	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}&v=${string}`
-	|`https://www.youtube.com/redirect?event=channel_banner&redir_token=${string}&q=${string}`
+	|`https://www.youtube.com/redirect?event=${GU_YoutubeUrlRedirect_Event}&redir_token=${string}&q=${string}`
 	;
 ;
 type GU_VE83769_Url_Internal="/upload";
