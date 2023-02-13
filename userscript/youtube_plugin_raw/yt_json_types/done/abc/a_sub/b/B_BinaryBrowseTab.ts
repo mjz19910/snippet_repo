@@ -9,4 +9,5 @@ type B_BinaryBrowseTab={
 	11: "search";
 	15: "streams";
 	19: "shorts";
+	20: "TYPE::VE3611@channelNavigationEndpoint";
 };

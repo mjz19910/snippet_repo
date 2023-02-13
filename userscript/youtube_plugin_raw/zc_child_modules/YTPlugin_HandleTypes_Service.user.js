@@ -355,7 +355,7 @@ class HandleTypes extends HandleTypesEval {
 			// binary tab enum
 			/** @type {B_BinaryBrowseTab} */
 			case "D_Browse.param.f110.f1": switch(map_entry_key) {
-				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19:// case 20:
+				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -367,6 +367,11 @@ class HandleTypes extends HandleTypesEval {
 				{debugger;}
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
+			}
+			case "continuation_token.data.f49": switch(map_entry_key) {
+				case 6:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
 			}
 			case "player_state.entity_key":
 			case "macro_marker_repeat_state.entity_key":
@@ -604,6 +609,9 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f15":
 				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4": {
 				} return;
+				case "continuation_token.data.f49":
+				case "continuation_token.data.f49.f6":
+				case "continuation_token.data.f72":
 				case "request_continuation.token.f9.f1.f2": return;
 				default: {
 					let new_data=this.save_string(path,entry);
