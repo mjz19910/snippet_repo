@@ -2853,7 +2853,7 @@ class HandleTypes extends HandleTypesEval {
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {E_Settings} x */
-	E_Settings(x) {x;}
+	E_Settings(x) {x; debugger;}
 	//#region E_ (Endpoints)
 	/** @private @arg {GE_Browse} x */
 	GE_Browse(x) {
@@ -6074,13 +6074,13 @@ class HandleTypes extends HandleTypesEval {
 		this.t(videoInteractions,this.g);
 		this.t(nextItemButton,this.R_Button);
 		this.t(prevItemButton,this.R_Button);
-		this.R_Button(shareButton);
-		this.R_Button(viewCommentsButton);
-		this.R_LikeButton(likeButton);
-		this.R_Menu(menu);
-		this.R_PivotButton(pivotButton);
+		this.t(shareButton,this.R_Button);
+		this.t(viewCommentsButton,this.R_Button);
+		this.t(likeButton,this.R_LikeButton);
+		this.t(menu,this.R_Menu);
+		this.t(pivotButton,this.R_PivotButton);
 		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-		this.R_SubscribeButton(subscribeButtonRenderer);
+		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
