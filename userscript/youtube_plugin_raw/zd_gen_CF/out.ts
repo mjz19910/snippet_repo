@@ -28,7 +28,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlayerOverlayAutoplay";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_PlaylistSidebarPrimaryInfo";}
 		|{n: Prelude.CF_D_Menu_Omit; t: Types.CF_D_Menu_Omit_; v: "D_Radio";}
-		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DC_GetPdgBuyFlow";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetReportForm";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_GetTranscript";}
 		|{n: Prelude.CF_D_Params; t: Types.CF_D_Params_; v: "DE_YpcGetOffers";}
@@ -65,6 +64,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "ContinuationRequestType_ReelWatchSeq.token";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "ContinuationRequestType_WatchNext.token";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_ChangeMarkersVisibility.entity_key";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_GetPdgBuyFlow";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LiveChatReplay";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LoadMarkers.entity_key";}
@@ -312,6 +312,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_EngagementPanelHeaderShowNavigationButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Generic_CTP";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_GetPdgBuyFlow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_Invalidation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChat";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DC_LiveChatReplay";}

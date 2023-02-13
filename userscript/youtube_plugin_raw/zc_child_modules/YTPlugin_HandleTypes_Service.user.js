@@ -369,6 +369,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "get_pdg_buy_flow.params":
 			case "D_Browse.param.f110.f1.f20":
 			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f4": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f7.f1[]": case "subscribe.params.f2": case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2": case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_request_continuation.token.f14": case "watch_playlist.params.f27": case "D_Browse.param.f110": case "entity_key.normal.f2": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f10.f1":
 			case "get_report_form.params.f28.f1[].f1": {
@@ -2651,7 +2652,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
 	/** @private @arg {DC_GetPdgBuyFlow} x */
-	DC_GetPdgBuyFlow(x) {this.D_Params("DC_GetPdgBuyFlow",x,"get_pdg_buy_flow.params");}
+	DC_GetPdgBuyFlow(x) {
+		const cf="DC_GetPdgBuyFlow";
+		const {params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let dec_params=atob(params);
+		this.params(cf,"get_pdg_buy_flow.params",dec_params);
+	}
 	/** @private @arg {DC_UpdateToggleButtonState} x */
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2660,7 +2666,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
-		const cf="DC_RelatedChip"; this.k(cf,x);
+		const cf="DC_RelatedChip";
 		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
 		if(loadCached!==true) debugger;
@@ -4019,6 +4025,7 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
 		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
+		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */

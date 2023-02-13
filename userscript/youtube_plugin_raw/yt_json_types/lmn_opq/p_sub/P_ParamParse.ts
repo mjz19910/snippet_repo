@@ -1,4 +1,5 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [get_pdg_buy_flow.params.f1]",
 	"[parse_value.gen_ns] [D_Browse.param.f94.f1.f2.f4.f1]",
 	"[parse_value.gen_ns] [D_Browse.param.f94.f1.f2.f4.f2]",
 	"[parse_value.gen_ns] [D_Browse.param.f110.f1.f20.f1]",
