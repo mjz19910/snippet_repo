@@ -369,6 +369,46 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "reel_request_continuation.token.f15.f6.f7.f1": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f6": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f9.f1": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f9": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f8": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f8.f1": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f8": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f7.f1[]": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "reel_request_continuation.token.f15.f6.f7": switch(map_entry_key) {
 				case 1:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -395,7 +435,7 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "reel_request_continuation.token.f15.f6": switch(map_entry_key) {
-				case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: 
+				case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -719,16 +759,18 @@ class HandleTypes extends HandleTypesEval {
 		for(let val of tva) {
 			let g1=() => {
 				console.log(`\n\t"[parse_value.gen_ar] [${path}[]]",`);
-				console.log(`\n\tcase ${JSON.stringify(path)}: /*tva*/{this.parse_param_next(root,\`\${path}[]\`,map_entry_key_path,[val],callback);}; continue;`);
+				console.log(`\n\tcase ${JSON.stringify(path)}:\n`);
 				console.log("path offset",off);
 			};
 			switch(path)/*parse_param_next_arr*/ {
 				default: g1(); debugger; continue;
-				case "reel_request_continuation.token.f15.f6.f7.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
-				case "watch_request_continuation.token.f9.f1.f4.f13": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
-				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
-				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
-				case "watch_request_continuation.token.f9.f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
+				case "reel_request_continuation.token.f15.f6.f6.f1":
+				case "reel_request_continuation.token.f15.f6.f7.f1":
+				case "watch_request_continuation.token.f9.f1.f4.f13":
+				case "get_report_form.params.f28.f1":
+				case "get_report_form.params.f28.f1[].f1.f1":
+				case "watch_request_continuation.token.f9.f1.f1":
+					{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
 			}
 			off++;
 		}
@@ -926,7 +968,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
 					default: {const idx=7; u(idx); debugger; parts[6]==="";} return;
-					case "f1":
+					case "f1": case "f2":
 				}
 				if(parts.length===7) return this.handle_map_value(path,map_entry_value);
 				switch(parts[7]) {
@@ -9973,7 +10015,8 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
 		// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
+		this.t(ctier,x => this.ceq("SH",x));
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.save_string(`${cf}.sparams`,sparams);
@@ -9981,6 +10024,7 @@ class HandleTypes extends HandleTypesEval {
 		let ka=this.get_keys_of(y);
 		if(ka.length>0) {
 			console.log("[D_VideoPlaybackShape.next_key] [%s]",ka.shift());
+			debugger;
 		}
 	}
 	/** @private @arg {D_PlayabilityStatus} x */
