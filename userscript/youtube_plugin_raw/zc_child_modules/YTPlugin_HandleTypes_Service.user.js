@@ -4744,9 +4744,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_UUIDString} x */
 	parse_uuid(x) {
 		let uuid_parts=split_string(x,"-");
-		let [_up0,up1,up2,up3,_up4]=uuid_parts;
-		if(up1!=="0000") debugger;
-		if(split_string(up2,"")[0]!=="2") debugger;
+		let [_up0,_up1,_up2,up3,_up4]=uuid_parts;
 		let bd=parseInt(split_string(up3,"")[0],16).toString(2);
 		if(bd.length!==4) debugger;
 		if(bd.slice(0,2)!=="10") debugger;
@@ -10732,14 +10730,16 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
 		const cf="D_EndscreenElement";
-		const {style,image,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
 		switch(style) {
 			default: debugger; break;
 			case "CHANNEL":
 			case "VIDEO":
 			case "WEBSITE":
+			case "PLAYLIST":
 		}
 		this.D_Thumbnail(image);
+		this.t(playlistLength,this.G_Text);
 		this.t(icon,this.D_Thumbnail);
 		this.a_primitive_num(left);
 		this.a_primitive_num(width);

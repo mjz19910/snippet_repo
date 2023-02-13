@@ -161,7 +161,7 @@ type D_ApiUrlFormat=`https://www.youtube.com/${D_ApiPathFormat_1}`;
 type D_ChanLoc=`channel.${ChanTabStr|""}`;
 type D_ChannelId=`UC${string}`;
 type T_ChannelIdStr<T extends string>=`UC${T}`;
-type D_UUIDString=`${string}-0000-2${string}-a${string}-${string}`;
+type D_UUIDString=`${string}-${string}-${string}-${string}-${string}`;
 type D_PlaylistUrlParams=`list=${D_PlaylistId}`;
 type D_PlaylistUrlStr=`/playlist?${D_PlaylistUrlParams}`;
 type D_RadioPlaylistStr<T extends string>=`RD${T}`;

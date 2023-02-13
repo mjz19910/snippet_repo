@@ -1,6 +1,7 @@
 type D_EndscreenElement={
-	style: "VIDEO"|"CHANNEL"|"WEBSITE";
+	style: "VIDEO"|"CHANNEL"|"WEBSITE"|"PLAYLIST";
 	image: D_Thumbnail;
+	playlistLength?: G_Text;
 	icon?: D_Thumbnail;
 	left: number;
 	width: number;
