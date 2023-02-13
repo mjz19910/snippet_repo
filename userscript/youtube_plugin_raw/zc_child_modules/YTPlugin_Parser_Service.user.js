@@ -379,10 +379,10 @@ class ParserService extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @unused_api @protected @arg {D_VE6827_PageUrl} x */
+	/** @unused_api @protected @arg {GU_VE6827_Url} x */
 	parse_ve_6827_url(x) {
 		const cf="parse_ve_6827_url";
-		/** @private @type {T_SplitOnce<D_VE6827_PageUrl,"/">[1]} */
+		/** @private @type {T_SplitOnce<GU_VE6827_Url,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string_once(su,"/");
 		if(su1.length===1) {

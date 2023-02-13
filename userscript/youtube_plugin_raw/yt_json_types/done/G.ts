@@ -38,18 +38,16 @@ type G_RA_LiveChatContinuationActions=
 ;
 type GE_Browse=
 	|E_VE3611_Browse
-	|E_VE3854_Browse
+	|E_VE3854
 	|E_VE5754_Browse
 	|E_VE6827
 	|E_VE11487
 	|E_VE23462
 	|E_VE42352
 	|E_VE96368
-	|E_VE6827_SearchBox
+	|E_VE6827
 	;
 ;
-type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
-
 type GE_Browse_WCM=GE_Browse["commandMetadata"];
 
 type GE_ResponseReceived=

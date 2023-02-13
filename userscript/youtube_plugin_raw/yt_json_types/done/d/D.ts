@@ -85,18 +85,6 @@ type D_UrlFormatStr_2=
 	|`/watch?${D_WatchUrlStr}`
 	;
 ;
-type D_VE6827_PageUrl=
-	|"/feed/guide_builder"
-	|`/feed/history`
-	|`/feed/library`
-	|`/feed/storefront?${string}`
-	|`/feed/trending?${string}`
-	|`/hashtag/${string}`
-	|"/hashtag/shorts/shorts"
-	|`/reporthistory`
-	|`/source/${string}/shorts`
-	;
-;
 type D_WatchPageUrl=
 	|`/watch?v=${string}&list=RD${string}&index=${number}`
 	|`/watch?v=${string}&list=RD${string}&start_radio=1`
@@ -2459,7 +2447,7 @@ type D_Saved={
 	data?: {[x: string]: ({}[])|undefined;};
 };
 type D_SearchBox={
-	endpoint: E_VE6827_SearchBox;
+	endpoint: E_VE6827;
 	searchButton: R_Button;
 	clearButton: R_Button;
 	placeholderText: G_Text;

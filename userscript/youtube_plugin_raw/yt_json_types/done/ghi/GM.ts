@@ -50,22 +50,17 @@ type GM_VE5754={
 	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE6827={
-	url?: D_VE6827_PageUrl;
+	url?: GU_VE6827_Url;
+	sendPost?: true;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
+
 type GM_VE11487={
-	url: "/premium";
+	url: GU_VE11487_Url;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 11487;
-	apiUrl: "/youtubei/v1/browse";
-};
-type GM_VE6827_FeedHistory={
-	url: "/feed/history";
-	sendPost: true;
-	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
 type GM_VE23462={

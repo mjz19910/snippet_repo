@@ -3,9 +3,30 @@ type GU_VE3611_Url="/gaming"|`/@${string}`|`/channel/UC${string}`;
 type GU_PlaylistId=GU_PlaylistId_NoRadio|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`;
 type GU_PlaylistId_NoRadio="WL"|"LL"|`UU${string}`|`PL${string}`;
 type GU_VE5754_Id=`VL${GU_PlaylistId_NoRadio}`;
-type GU_VE6827_Id_1="FElibrary"|"FEhistory"|"FEguide_builder"|"SPreport_history";
-type GU_VE6827_Id_Params="FEtrending"|"FEstorefront"|"FEhashtag"|"FEsfv_audio_pivot";
-type GU_VE6827_Id=GU_VE6827_Id_1|GU_VE6827_Id_Params;
+type GU_VE6827_Id=
+	|"FEguide_builder"
+	|"FEhashtag"
+	|"FEhistory"
+	|"FElibrary"
+	|"FEsfv_audio_pivot"
+	|"FEstorefront"
+	|"FEtrending"
+	|"SPreport_history"
+	;
+;
+type GU_VE6827_Url=
+	|"/feed/guide_builder"
+	|`/feed/history`
+	|`/feed/library`
+	|`/feed/storefront?${string}`
+	|`/feed/trending?${string}`
+	|`/hashtag/${string}`
+	|"/hashtag/shorts/shorts"
+	|`/reporthistory`
+	|`/source/${string}/shorts`
+	;
+;
+type GU_VE11487_Url="/premium";
 type GU_VE23462_Url="/account"|"/account_notifications";
 type GU_VE23462_Id="SPaccount_notifications"|"SPaccount_overview";
 type GU_VE37414_Url="/shorts/"|`/shorts/${string}`;

@@ -36,11 +36,6 @@ type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_YpcGetOffers>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
 type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",DE_UserFeedback,M_UserFeedback>;
-type E_VE6827_SearchBox={
-	clickTrackingParams: string;
-	commandMetadata: M_VE6827_FeedHistory;
-	browseEndpoint: DE_VE6827_Browse_SearchBox;
-};
 type E_Unsubscribe={
 	clickTrackingParams: string;
 	commandMetadata: M_Unsubscribe;

@@ -1125,31 +1125,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.RS_Page_Watch(x);
 	}
-	/** @private @arg {`VE${GM_VE_WC_Browse["rootVe"]}`} ve_name @arg {G_DE_Browse_VE} x */
-	G_DE_Browse_VE(ve_name,x) {
-		const cf="G_DE_Browse_VE";
-		if("canonicalBaseUrl" in x) {
-			const {browseId: a,params: c,canonicalBaseUrl: d,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(c,c => this.params(cf,"D_Browse.param",c));
-			this.GU_VE3611_Url(d);
-			this.t(query,this.a_primitive_str);
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("params" in x) {
-			const {browseId: a,params: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(c,c => this.params(cf,"D_Browse.param",c));
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("query" in x) {
-			const {browseId: a,query: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(b!=="") debugger;
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-		if("browseId" in x) {
-			const {browseId: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			return this.GU_E_BrowseId(ve_name,a);
-		}
-	}
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
 		const cf="G_Browse_MD"; this.k(cf,x);
@@ -1866,11 +1841,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#endregion
 	//#region web_command_metadata
-	/** @private @arg {Extract<GM_VE_WC_Browse,{rootVe:6827}>} x */
-	GM_VE6827_WC(x) {
-		const cf="GM_VE6827_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x);/*#destructure_done*/
-		this.t(url,this.D_VE6827_PageUrl);
+	/** @private @arg {GM_VE6827} x */
+	GM_VE6827(x) {
+		const cf="GM_VE6827"; this.k(cf,x);
+		const {url,sendPost,webPageType,rootVe,apiUrl,...y}=this.s(cf,x);/*#destructure_done*/
+		this.t(url,this.D_VE6827_Url);
+		this.t(sendPost,x => this.ceq(x,true));
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==6827) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
@@ -1881,8 +1857,8 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {D_VE6827_PageUrl} x */
-	D_VE6827_PageUrl(x) {
+	/** @private @arg {GU_VE6827_Url} x */
+	D_VE6827_Url(x) {
 		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;
 		/** @type {D_VE6827_PageUrl_parts} */
 		let p=as_any(pf);
@@ -2970,28 +2946,40 @@ class HandleTypes extends HandleTypesEval {
 		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
 		if(this.is_TE_VE(x,5754)) return this.E_VE5754_Browse(x);
 		if(this.is_TE_VE(x,6827)) return this.GE_VE6827(x);
-		if(this.is_TE_VE(x,11487)) return this.E_VE11487_Browse(x);
-		if(this.is_TE_VE(x,23462)) return this.E_VE23462_Browse(x);
-		if(this.is_TE_VE(x,42352)) return this.E_VE42352_Browse(x);
-		if(this.is_TE_VE(x,96368)) return this.E_VE96368_Browse(x);
+		if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
+		if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
+		if(this.is_TE_VE(x,42352)) return this.E_VE42352(x);
+		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}
 	/** @private @arg {E_VE3854} x */
 	E_VE3854(x) {x;}
-	/** @private @arg {E_VE6827|E_VE6827_SearchBox} x */
+	/** @private @arg {E_VE6827|E_VE6827} x */
 	GE_VE6827(x) {x;}
 	/** @private @arg {E_VE11487} x */
-	E_VE11487_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487_Browse","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
+	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
 	/** @private @arg {E_VE23462} x */
-	E_VE23462_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462_Browse","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE96368(b);}
+	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @private @arg {E_VE42352} x */
-	E_VE42352_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352_Browse","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
 	/** @private @arg {E_VE96368} x */
-	E_VE96368_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
+	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @private @arg {DE_VE3611} x */
-	DE_VE3611_Browse(x) {x;}
+	DE_VE3611(x) {x;}
+	/** @private @arg {DE_VE11487} x */
+	DE_VE11487(x) {x;}
+	/** @private @arg {DE_VE23462} x */
+	DE_VE23462(x) {x;}
+	/** @private @arg {DE_VE42352} x */
+	DE_VE42352(x) {x;}
 	/** @private @arg {DE_VE96368} x */
 	DE_VE96368(x) {x;}
+	/** @private @arg {M_VE11487} x */
+	M_VE11487(x) {x;}
+	/** @private @arg {M_VE23462} x */
+	M_VE23462(x) {x;}
+	/** @private @arg {M_VE42352} x */
+	M_VE42352(x) {x;}
 	/** @private @arg {M_ResolveUrlCommand} x */
 	GM_VE_ResolveUrl_C_MD(x) {
 		const cf="GM_VE_ResolveUrl_C_MD";
@@ -3275,7 +3263,7 @@ class HandleTypes extends HandleTypesEval {
 			case 3611: this.GM_VE3611_WC(x); break;
 			case 3854: this.GM_VE3854_WC(x); break;
 			case 5754: this.GM_VE5754_WC(x); break;
-			case 6827: this.GM_VE6827_WC(x); break;
+			case 6827: this.GM_VE6827(x); break;
 			case 11487: this.GM_VE11487_WC(x); break;
 			case 23462: this.GM_VE23462_WC(x); break;
 			case 42352: this.GM_VE42352_WC(x); break;
@@ -3308,7 +3296,7 @@ class HandleTypes extends HandleTypesEval {
 			case 3611: return this.GM_VE3611_WC(x);
 			case 3854: return this.GM_VE3854_WC(x);
 			case 5754: return this.GM_VE5754_WC(x);
-			case 6827: return this.GM_VE6827_WC(x);
+			case 6827: return this.GM_VE6827(x);
 			case 11487: return this.GM_VE11487_WC(x);
 			case 23462: return this.GM_VE23462_WC(x);
 			case 42352: return this.GM_VE42352_WC(x);
@@ -8385,7 +8373,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="E_VE3611_Browse";
 		let [a,b,{...y}]=this.TE_Endpoint_3(cf,"browseEndpoint",x); this.g(y);
 		this.M_VE3611(a);
-		this.DE_VE3611_Browse(b);
+		this.DE_VE3611(b);
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {

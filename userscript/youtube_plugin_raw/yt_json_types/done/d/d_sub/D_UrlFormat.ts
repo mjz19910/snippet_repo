@@ -24,7 +24,7 @@ type D_UrlFormat=
 	|`https://www.youtube.com/watch?${string}`
 	|D_Youtube_Streaming_ProbeUrl
 	|D_ExternalUrlFormat
-	|D_VE6827_PageUrl
+	|GU_VE6827_Url
 	|YTExternalUrl
 	|NonNullable<D_AdaptiveFormatItem["url"]>
 	|NonNullable<D_FormatItem["url"]>
