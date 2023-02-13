@@ -368,6 +368,16 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "continuation_token.data.f53.f4": switch(map_entry_key) {
+				case 4: case 6: case 15: case 25:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data.f53": switch(map_entry_key) {
+				case 4: case 6: case 8:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "continuation_token.data.f49": switch(map_entry_key) {
 				case 6:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -458,7 +468,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			/** @private @type {P_LogItems} */
 			case "continuation_token.data": switch(map_entry_key) {
-				case 1: case 15: case 49: case 72: case 110:
+				case 1: case 15: case 49: case 53: case 72: case 110:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -604,15 +614,16 @@ class HandleTypes extends HandleTypesEval {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
+				case "continuation_token.data.f49.f6":
+				case "continuation_token.data.f72":
+				case "request_continuation.token.f9.f1.f2":
 				case "request_continuation.token.f6.f4.f37":
 				case "entity_key.subscribed.f2":
 				case "continuation_token.data.f15":
 				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4": {
 				} return;
-				case "continuation_token.data.f49":
-				case "continuation_token.data.f49.f6":
-				case "continuation_token.data.f72":
-				case "request_continuation.token.f9.f1.f2": return;
+				case "D_Browse.param.f93.f1":
+				case "continuation_token.data.f49": return;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) debugger;
@@ -730,7 +741,7 @@ class HandleTypes extends HandleTypesEval {
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f23": case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
 					case "f30": case "f33": case "f39": case "f40": case "f49":
-					case "f56": case "f57": case "f71": case "f72": case "f77": case "f84": case "f93": case "f94": case "f110":
+					case "f53": case "f56": case "f57": case "f71": case "f72": case "f77": case "f84": case "f93": case "f94": case "f110":
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
@@ -748,7 +759,7 @@ class HandleTypes extends HandleTypesEval {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20": case "f37":
+					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20": case "f25": case "f37":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
@@ -3660,6 +3671,7 @@ class HandleTypes extends HandleTypesEval {
 			if(jk==="responseContext,contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="responseContext,continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
 			if(jk==="responseContext,contents,header,trackingParams,topbar,observedStateTags") break x;
@@ -6585,9 +6597,10 @@ class HandleTypes extends HandleTypesEval {
 	decode_browse_id(x) {
 		if(this.str_starts_with(x,"FE")) {
 			switch(x) {
-				case "FEwhat_to_watch": return x;
+				case "FEcomment_shorts_web_top_level":
+				case "FEwhat_to_watch":
 				case "FEexplore": return x;
-				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}: return x;`); return null;
+				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}:`); return null;
 			}
 		}
 		return null;

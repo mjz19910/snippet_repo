@@ -1372,6 +1372,7 @@ type D_Botguard={
 	serverEnvironment: number;
 };
 type D_BrowseEndpointPages=[
+	"comment_shorts_web_top_level",
 	"explore",
 	"guide_builder",
 	"hashtag",

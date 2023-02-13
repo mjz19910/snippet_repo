@@ -1,4 +1,12 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [continuation_token.data.f53.f4.f4]",
+	"[parse_value.gen_ns] [continuation_token.data.f53.f4.f6]",
+	"[parse_value.gen_ns] [continuation_token.data.f53.f4.f15]",
+	"[parse_value.gen_ns] [continuation_token.data.f53.f4.f25]",
+	"[parse_value.gen_ns] [continuation_token.data.f53.f4]",
+	"[parse_value.gen_ns] [continuation_token.data.f53.f6]",
+	"[parse_value.gen_ns] [continuation_token.data.f53.f8]",
+	"[parse_value.gen_ns] [continuation_token.data.f53]",
 	"[parse_value.gen_ns] [continuation_token.data.f49.f6]",
 	"[parse_value.gen_ns] [continuation_token.data.f49]",
 	"[parse_value.gen_ns] [continuation_token.data.f72]",
