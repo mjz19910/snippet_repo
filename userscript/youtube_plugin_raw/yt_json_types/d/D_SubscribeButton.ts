@@ -2,7 +2,7 @@ type D_SubscribeButton_UnsubscribedPrefix={
 	buttonText: G_Text;
 };
 type D_SubscribeButton_SubscribedPrefix={
-	buttonText: G_Text;
+	buttonText?: G_Text;
 	entityKey?: string;
 };
 type D_SubscribeButton_SubscribePrefix={

@@ -760,10 +760,10 @@ class HandleTypes extends HandleTypesEval {
 				} return;
 				case "tracking.trackingParams.f16.f2":
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
-				case "reel_request_continuation.token.f15.f6.f10.f2": case "reel_request_continuation.token.f15.f6.f9.f2": case "reel_request_continuation.token.f15.f6.f10.f1.f1": case "reel_request_continuation.token.f15.f6.f9.f1.f1": case "reel_request_continuation.token.f15.f6.f8.f2": 
-				case "reel_request_continuation.token.f15.f6.f8.f1.f1": case "reel_request_continuation.token.f15.f6.f5.f2": case "reel_request_continuation.token.f15.f6.f5.f1": case "reel_request_continuation.token.f15.f6.f2.f6": case "reel_request_continuation.token.f15.f3": 
-				case "reel_request_continuation.token.f15.f1": case "reel_request_continuation.token.f5.f3": case "reel_request_continuation.token.f3.f4": case "reel_request_continuation.token.f3.f3": case "reel.player_params.f57": case "unsubscribe.params.f1.f1": case "subscribe.params.f2.f1": 
-				case "tracking.trackingParams.f3": case "continuation_token.data.f53.f4.f15": case "entity_key.normal.f4": case "playability_status.context_params.f2.f1": case "playability_status.context_params.f1": case "reel.params.f6": case "reel.player_params.f30": case "reel.sequence_params.f5.f3": 
+				case "reel_request_continuation.token.f15.f6.f10.f2": case "reel_request_continuation.token.f15.f6.f9.f2": case "reel_request_continuation.token.f15.f6.f10.f1.f1": case "reel_request_continuation.token.f15.f6.f9.f1.f1": case "reel_request_continuation.token.f15.f6.f8.f2":
+				case "reel_request_continuation.token.f15.f6.f8.f1.f1": case "reel_request_continuation.token.f15.f6.f5.f2": case "reel_request_continuation.token.f15.f6.f5.f1": case "reel_request_continuation.token.f15.f6.f2.f6": case "reel_request_continuation.token.f15.f3":
+				case "reel_request_continuation.token.f15.f1": case "reel_request_continuation.token.f5.f3": case "reel_request_continuation.token.f3.f4": case "reel_request_continuation.token.f3.f3": case "reel.player_params.f57": case "unsubscribe.params.f1.f1": case "subscribe.params.f2.f1":
+				case "tracking.trackingParams.f3": case "continuation_token.data.f53.f4.f15": case "entity_key.normal.f4": case "playability_status.context_params.f2.f1": case "playability_status.context_params.f1": case "reel.params.f6": case "reel.player_params.f30": case "reel.sequence_params.f5.f3":
 				case "reel.params.f1": case "reel.player_params.f71": case "D_Browse.param.f93.f1.f14": case "reel_request_continuation.token.f15.f6.f7.f1.f1": case "reel_request_continuation.token.f15.f6.f6.f1[].f2": case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
 				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
@@ -4767,10 +4767,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @arg {"D_SubscribeButton"} cf @arg {T_RemovePrefix<Extract<D_SubscribeButton,{subscribedButtonText:any}>,"subscribed">} x */
-	D_SubButton_Prefix_1(cf,x) {
-		const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
-		this.G_Text(buttonText);
+	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
+	D_SubscribeButton_SubscribedPrefix(x) {
+		const cf="D_SubscribeButton_SubscribedPrefix";
+		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
+		this.t(buttonText,this.G_Text);
 		this.t(entityKey,x => this.params(cf,"entity_key.subscribed",x));
 	}
 	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
@@ -4779,36 +4780,38 @@ class HandleTypes extends HandleTypesEval {
 		const {buttonText,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(buttonText);
 	}
+	/** @private @arg {D_SubscribeButton_SubscribePrefix} x */
+	D_SubscribeButton_SubscribePrefix(x) {
+		const cf="D_SubscribeButton_SubscribePrefix";
+		const {accessibility,...y}=this.s(cf,x); this.g(y);
+		this.D_Accessibility(accessibility);
+	}
+	/** @private @arg {D_SubscribeButton_UnsubscribePrefix} x */
+	D_SubscribeButton_UnsubscribePrefix(x) {
+		const cf="D_SubscribeButton_UnsubscribePrefix";
+		const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
+		this.G_Text(buttonText);
+		this.D_Accessibility(accessibility);
+	}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
-		const cf="D_SubscribeButton"; this.k(cf,x);
+		const cf="D_SubscribeButton";
 		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
 		this.a_primitive_bool(enabled);
 		this.t(buttonText,this.G_Text);
 		this.t(subscribed,this.a_primitive_bool);
-		if(type!=="FREE") debugger;
+		this.t(type,x => this.ceq(x,"FREE"));
 		this.t(channelId,this.D_ChannelId);
 		if(trackingParams) this.trackingParams(cf,trackingParams);
 		this.t(showPreferences,this.a_primitive_bool);
-		let [sub,o1]=this.unwrap_prefix(y1,"subscribed");
-		this.D_SubButton_Prefix_1(cf,sub);
-		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
-		this.D_SubscribeButton_UnsubscribedPrefix(un_sub);
-		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
-		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
-		let r_sub_2=({...x}) => {
-			const {accessibility,...y}=this.s(`${cf}.subscribe`,x); this.g(y);
-			this.D_Accessibility(accessibility);
-		};
-		r_sub_2(sub_2);
-		let [un_sub_2,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
-		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
-		let r_un_sub_2=({...x}) => {
-			const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
-			this.G_Text(buttonText);
-			this.D_Accessibility(accessibility);
-		};
-		r_un_sub_2(un_sub_2);
+		let [p1,o1]=this.unwrap_prefix(y1,"subscribed");
+		this.D_SubscribeButton_SubscribedPrefix(p1);
+		let [p2,o2]=this.unwrap_prefix(o1,"unsubscribed");
+		this.D_SubscribeButton_UnsubscribedPrefix(p2);
+		let [p3,o3]=this.unwrap_prefix(o2,"subscribe");
+		this.D_SubscribeButton_SubscribePrefix(p3);
+		let [p4,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
+		this.D_SubscribeButton_UnsubscribePrefix(p4);
 		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
 		this.tz(onSubscribeEndpoints,this.E_Subscribe);
 		this.tz(onUnsubscribeEndpoints,this.E_SignalService_SendPost);

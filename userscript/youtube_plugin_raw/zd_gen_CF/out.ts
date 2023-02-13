@@ -36,7 +36,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_ChannelId";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_RadioShareUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeKidsUrl";}
-		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "D_YoutubeUrl";}
 		|{n: Prelude.CF_D_STR; t: Types.CF_D_STR_; v: "GU_YoutubeUrlRedirect";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibility";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:accessibilityData";}
@@ -99,7 +98,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton_SubscribedPrefix";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}
@@ -576,9 +575,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubFeedOption";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubFeedSelector";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton.subscribe";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton.subscribed";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton.unsubscribe";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton_SubscribePrefix";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton_SubscribedPrefix";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton_UnsubscribePrefix.unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton_UnsubscribedPrefix";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscriptionButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscriptionNotificationToggleButton";}
