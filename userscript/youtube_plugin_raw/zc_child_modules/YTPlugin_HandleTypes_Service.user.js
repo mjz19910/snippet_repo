@@ -369,16 +369,27 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "reel_request_continuation.token.f15.f6.f11.f2": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f11": switch(map_entry_key) {
+				case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f10.f1": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "reel_request_continuation.token.f15.f6.f10":
 			case "reel_request_continuation.token.f15.f6.f6.f1[]":
 			case "reel_request_continuation.token.f15.f6.f9":
 			case "reel_request_continuation.token.f15.f6.f8":
 			case "reel_request_continuation.token.f15.f6.f3":
-			case "reel_request_continuation.token.f15.f6.f5": switch(map_entry_key) {
-				case 1: case 2:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
+			case "reel_request_continuation.token.f15.f6.f5": switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel_request_continuation.token.f15.f6": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel_request_continuation.token.f15": switch(map_entry_key) {case 1: case 3: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel_request_continuation.token.f3": switch(map_entry_key) {case 1: case 3: case 4: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -10138,9 +10149,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
 		const cf="D_PlayerCaptionsTracklist";
-		const {...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		console.log(`[${cf}.next_key] [${ka[0]}]`);
+		const {captionTracks,audioTracks,translationLanguages,defaultAudioTrackIndex,...y}=this.s(cf,x); this.g(y);
+		this.z(captionTracks,this.D_CaptionTrackItem);
+		this.z(audioTracks,this.D_AudioTrackItem);
+		this.z(translationLanguages,this.D_TranslationLanguage);
+		this.a_primitive_num(defaultAudioTrackIndex);
 	}
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
@@ -10622,6 +10635,27 @@ class HandleTypes extends HandleTypesEval {
 		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		debugger;
+	}
+	/** @private @arg {D_CaptionTrackItem} x */
+	D_CaptionTrackItem(x) {
+		const cf="D_CaptionTrackItem";
+		const {baseUrl,name,vssId,...y}=this.s(cf,x); this.g(y);
+		console.log(`${cf}.baseUrl`,baseUrl);
+		this.G_Text(name);
+		this.save_string(`${cf}.vssId`,vssId);
+	}
+	/** @private @arg {D_AudioTrackItem} x */
+	D_AudioTrackItem(x) {
+		const cf="D_CaptionTrackItem";
+		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
+		this.z(captionTrackIndices,this.a_primitive_num);
+	}
+	/** @private @arg {D_TranslationLanguage} x */
+	D_TranslationLanguage(x) {
+		const cf="D_CaptionTrackItem";
+		const {languageCode,languageName,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(languageCode);
+		this.G_Text(languageName);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

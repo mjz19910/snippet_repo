@@ -1358,7 +1358,7 @@ type D_AttBgChallenge={
 type D_AudioSampleRate=[
 	44100,48000
 ][number];
-type AudioTrackItem={captionTrackIndices: number[];};
+type D_AudioTrackItem={captionTrackIndices: number[];};
 type D_AutoplaySwitchButton={
 	onEnabledCommand: T_Setting_AutoNavForDesktop<true>;
 	onDisabledCommand: T_Setting_AutoNavForDesktop<false>;
@@ -1428,7 +1428,7 @@ type D_ButtonStyleType=[
 type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
-type CaptionTrackItem={
+type D_CaptionTrackItem={
 	baseUrl: string;
 	name: G_Text;
 	vssId: "a.en";
@@ -2227,8 +2227,8 @@ type D_PlayerAttestation={
 	botguardData: D_Botguard;
 };
 type D_PlayerCaptionsTracklist={
-	captionTracks: CaptionTrackItem[];
-	audioTracks: AudioTrackItem[];
+	captionTracks: D_CaptionTrackItem[];
+	audioTracks: D_AudioTrackItem[];
 	translationLanguages: D_TranslationLanguage[];
 	defaultAudioTrackIndex: number;
 };
