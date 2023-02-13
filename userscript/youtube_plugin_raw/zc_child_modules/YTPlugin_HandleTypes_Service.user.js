@@ -2466,6 +2466,8 @@ class HandleTypes extends HandleTypesEval {
 	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
 	/** @private @arg {R_AdActionInterstitial} x */
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
+	/** @private @arg {R_ReelMultimixAttributionLabel} x */
+	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -6104,7 +6106,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(menu,this.R_Menu);
 		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
 		this.t(pivotButton,this.R_PivotButton);
-		multimixAttributionLabel;
+		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
 		this.t(videoInteractions,this.g);
 		this.t(nextItemButton,this.R_Button);
 		this.t(prevItemButton,this.R_Button);
@@ -10691,6 +10693,17 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(displayName);
 		this.save_string(`${cf}.id`,id);
 		this.ceq(audioIsDefault,false);
+	}
+	/** @private @arg {D_ReelMultimixAttributionLabel} x */
+	D_ReelMultimixAttributionLabel(x) {
+		const cf="D_AudioTrack";
+		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.T_Icon(cf,icon);
+		this.G_Text(title);
+		if(!command.watchEndpoint) debugger;
+		this.E_Watch(command);
+		this.a_primitive_str(a11yLabel);
+		this.trackingParams(cf,trackingParams);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
