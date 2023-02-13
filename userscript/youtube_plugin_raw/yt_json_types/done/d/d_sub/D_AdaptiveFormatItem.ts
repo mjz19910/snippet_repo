@@ -16,7 +16,7 @@ type D_AdaptiveFormatItem={
 	fps?: D_FormatFps;
 	qualityLabel?: QualityLabel;
 	projectionType: "RECTANGULAR";
-	averageBitrate: number;
+	averageBitrate?: number;
 	colorInfo?: D_FormatColorInfo;
 	highReplication?: true;
 	audioQuality?: "AUDIO_QUALITY_MEDIUM"|"AUDIO_QUALITY_LOW";

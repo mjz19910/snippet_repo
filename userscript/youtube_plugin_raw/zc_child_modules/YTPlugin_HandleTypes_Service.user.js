@@ -10080,7 +10080,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
 		if(projectionType!=="RECTANGULAR") debugger;
-		this.a_primitive_num(averageBitrate);
+		this.t(averageBitrate,this.a_primitive_num);
 		this.t(colorInfo,this.D_FormatColorInfo);
 		this.t(highReplication,x => {if(x!==true) debugger;});
 		this.t(audioQuality,x => {
