@@ -44,6 +44,12 @@ type D_SubscribeButton_Alts={
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 };
+type D_SubscribeButton_UnsubscribedPrefix={
+	buttonText: G_Text;
+};
+type D_SubscribeButton_SubscribedPrefix={
+	buttonText: G_Text;
+};
 type D_SubscribeButton={
 	buttonText: G_Text;
 	subscribed: boolean;

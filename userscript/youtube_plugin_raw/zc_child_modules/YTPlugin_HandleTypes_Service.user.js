@@ -4720,7 +4720,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {D_SubscribeButton} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {y} */
 	D_SubscribeButton_Omit(cf,x) {
 		const {enabled,...y}=this.s(cf,x);
-		this.a_primitive_bool(enabled);
 		return y;
 	}
 	/** @arg {"D_SubscribeButton"} cf @arg {T_RemovePrefix<Extract<D_SubscribeButton,{subscribedButtonText:any}>,"subscribed">} x */
@@ -4729,24 +4728,31 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(buttonText);
 		this.t(entityKey,x => this.params(cf,"entity_key.subscribed",x));
 	}
-	/** @private @arg {D_SubscribeButton} x */
-	D_SubscribeButton_UnsubscribedPrefix(x) {x;}
+	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
+	D_SubscribeButton_UnsubscribedPrefix(x) {
+		const cf="D_SubscribeButton_UnsubscribedPrefix";
+		const {buttonText,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(buttonText);
+	}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton"; this.k(cf,x);
 		if(!("buttonText" in x)) {
 			const {enabled,...y1}=this.s(cf,x);
-			let [{...x1},{...o2}]=this.unwrap_prefix(y1,"unsubscribed");
+			this.a_primitive_bool(enabled);
+			let [x1,y2]=this.unwrap_prefix(y1,"unsubscribed"); this.g(y2);
+			this.D_SubscribeButton_UnsubscribedPrefix(x1);
 			return;
 		}
-		const {buttonText,subscribed,...y1}=this.s(cf,x);
+		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
+		this.a_primitive_bool(enabled);
 		this.G_Text(buttonText);
 		this._primitive_of(subscribed,"boolean");
 		if(type!=="FREE") debugger;
 		this.D_ChannelId(channelId);
 		this.trackingParams(cf,trackingParams);
 		this.a_primitive_bool(showPreferences);
-		let [u1,x1]=this.unwrap_prefix(y1,"subscribed");
+		let [sub,o1]=this.unwrap_prefix(y1,"subscribed");
 		this.D_SubButton_Prefix_1(cf,sub);
 		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
 		/** @arg {T_RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
@@ -4756,13 +4762,13 @@ class HandleTypes extends HandleTypesEval {
 		};
 		r_un_sub(un_sub);
 		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
-		let [un_sub_2,o4]=this.unwrap_prefix(o3,"unsubscribe");
 		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
 		let r_sub_2=({...x}) => {
 			const {accessibility,...y}=this.s(`${cf}.subscribe`,x); this.g(y);
 			this.D_Accessibility(accessibility);
 		};
 		r_sub_2(sub_2);
+		let [un_sub_2,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
 		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
 		let r_un_sub_2=({...x}) => {
 			const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
@@ -4770,7 +4776,7 @@ class HandleTypes extends HandleTypesEval {
 			this.D_Accessibility(accessibility);
 		};
 		r_un_sub_2(un_sub_2);
-		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y}=y1; this.g(y);
+		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y}=o4; this.g(y);
 		this.z(onSubscribeEndpoints,this.E_Subscribe);
 		this.z(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
 		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
