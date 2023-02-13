@@ -10729,14 +10729,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {D_EndscreenElement_EP} x */
-	D_EndscreenElement_EP(x) {
-		const cf="D_EndscreenElement_EP"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.E_VE3611(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		debugger;
-	}
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
 		const cf="D_EndscreenElement";
@@ -10765,6 +10757,14 @@ class HandleTypes extends HandleTypesEval {
 		this.t(isSubscribe,x => this.ceq(x,true));
 		this.a_primitive_str(id);
 		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+	}
+	/** @private @arg {D_EndscreenElement_EP} x */
+	D_EndscreenElement_EP(x) {
+		const cf="D_EndscreenElement_EP"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_VE3611(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
+		debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
