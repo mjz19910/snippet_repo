@@ -1614,7 +1614,7 @@ type D_Endscreen={
 	trackingParams: string;
 };
 type D_EndscreenElement={
-	style: "VIDEO"|"CHANNEL";
+	style: "VIDEO"|"CHANNEL"|"WEBSITE";
 	image: D_Thumbnail;
 	icon?: D_Thumbnail;
 	left: number;
