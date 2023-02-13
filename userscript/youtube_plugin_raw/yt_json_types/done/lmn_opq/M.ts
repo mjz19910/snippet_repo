@@ -5,7 +5,6 @@ type M_VE3832=TM_Gen<GM_VE3832>;
 type M_VE3854={webCommandMetadata: GM_VE3854; resolveUrlCommandMetadata?: M_ResolveUrlCommand;};
 type M_VE4724=TM_Gen<GM_VE4724>;
 type M_VE5754=TM_Gen<GM_VE5754>;
-type M_VE6827_FeedHistory=TM_Gen<GM_VE6827>;
 type M_VE6827=TM_Gen<GM_VE6827>;
 type M_VE11487=TM_Gen<GM_VE11487>;
 type M_VE23462=TM_Gen<GM_VE23462>;
