@@ -1600,7 +1600,7 @@ type D_EmojiImage={
 };
 type D_Endscreen={
 	elements: R_EndscreenElement[];
-	startMs?: number;
+	startMs: `${number}`;
 	trackingParams: string;
 };
 type D_EndscreenElement={
