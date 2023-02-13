@@ -362,6 +362,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "player_state.entity_key":
 			case "macro_marker_repeat_state.entity_key":
 			case "load_markers.entity_key":
 			case "change_markers_visibility.entity_key": switch(map_entry_key) {
@@ -2565,7 +2566,7 @@ class HandleTypes extends HandleTypesEval {
 	DC_ChangeMarkersVisibility(x) {
 		const cf="DC_ChangeMarkersVisibility";
 		const {isVisible,entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(isVisible!==false) debugger;
+		this.a_primitive_bool(isVisible);
 		this.z(entityKeys,x => {
 			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
 		});
@@ -3460,11 +3461,7 @@ class HandleTypes extends HandleTypesEval {
 				this.params(`${cf}.key`,"entity.key",key);
 				if(isHidden!==false) debugger;
 			} break;
-			case "macroMarkersListEntity": {
-				const cf="EY_MacroMarkersList";
-				const {key,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-			} break;
+			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
 			case "unknown": {
 				const cf="XP_EntityPayload.unknown";
 				let pk=p[1];
@@ -3475,6 +3472,19 @@ class HandleTypes extends HandleTypesEval {
 				} else {debugger;}
 			} break;
 		}
+	}
+	/** @private @arg {DS_EY_MacroMarkersList} x */
+	DS_EY_MacroMarkersList(x) {
+		const cf="DS_EY_MacroMarkersList";
+		const {key,...y}=this.s(cf,x);
+		this.params(`${cf}.key`,"entity.key",key);
+		if("externalVideoId" in y) {
+			const {externalVideoId,markersList,...y1}=y; this.g(y1);
+			this.videoId(externalVideoId);
+			this.D_MarkersList(markersList);
+			return;
+		}
+		this.g(y);
 	}
 	/** @private @arg {DU_MutationReplace} x */
 	DU_MutationReplace(x) {
@@ -10606,7 +10616,19 @@ class HandleTypes extends HandleTypesEval {
 	D_InstreamVideoAd(x) {
 		const cf="D_InstreamVideoAd";
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
-		debugger;
+		this.a_primitive_num(skipOffsetMilliseconds);
+		this.g(pings);
+		this.g(clickthroughEndpoint);
+		this.z(csiParameters,this.g);
+		this.params(cf,as_any("playerVars"),playerVars);
+		this.g(playerOverlay);
+		console.log(`${cf}.elementId`,elementId);
+		this.trackingParams(cf,trackingParams);
+		if(legacyInfoCardVastExtension!=="") debugger;
+		this.g(sodarExtensionData);
+		this.videoId(externalVideoId);
+		this.g(adLayoutLoggingData);
+		if(layoutId!=="") debugger;
 	}
 	/** @private @arg {D_ClientForecastingAd} x */
 	D_ClientForecastingAd(x) {
@@ -10622,6 +10644,26 @@ class HandleTypes extends HandleTypesEval {
 		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
 		if(prefetchMilliseconds!=="10000") debugger;
 		debugger;
+	}
+	/** @private @arg {D_MarkersList} x */
+	D_MarkersList(x) {
+		const cf="D_MarkersList";
+		const {markerType,markers,headerTitle,onTap,loggingDirectives,...y}=this.s(cf,x); this.g(y);
+		if(markerType!=="MARKER_TYPE_TIMESTAMPS") debugger;
+		this.z(markers,this.D_MarkerItem);
+		this.G_Text(headerTitle);
+		this.C_Innertube(onTap);
+		this.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @private @arg {D_MarkerItem} x */
+	D_MarkerItem(x) {
+		const cf="D_MarkerItem";
+		const {title,startMillis,durationMillis,thumbnailDetails,onActive,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.a_primitive_str(startMillis);
+		if(durationMillis!=="10000") debugger;
+		this.D_Thumbnail(thumbnailDetails);
+		this.C_Innertube(onActive);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

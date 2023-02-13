@@ -82,6 +82,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_WatchPlaylist";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_CreatePlaylist";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_PlaylistLoop.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DS_EY_TranscriptSearchBox.key";}
@@ -92,12 +93,12 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_AdLayoutLogging";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_EY_Offlineability.key";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_InstreamVideoAd";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_MacroMarkersListItem";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SubscribeButton";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "EY_MacroMarkersList.key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "E_LikeLike";}
@@ -160,6 +161,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InfoCardIcon";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InfoRow";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InlineSurvey";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InstreamVideoAd";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LikeButton.rest";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MP_MenuNotificationSection";}
@@ -341,6 +343,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DMD_RowContainer";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DR_DC_EntityBatchUpdate";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_CreatePlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_PlaylistLoop";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_Subscription";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptSearchBox";}
@@ -468,6 +471,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersListItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MarkerItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Menu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuFlexibleItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuNavigationItem";}
@@ -617,7 +622,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WatchResults";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebPrefetch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_WebSearchboxConfig";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "EY_MacroMarkersList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeDislike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeIndifferent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "E_LikeLike";}
