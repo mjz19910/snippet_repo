@@ -1504,7 +1504,7 @@ type D_CommentsEntryPointHeader={
 	headerText: G_Text;
 	onTap: C_CommandExecutor;
 	trackingParams: string;
-	commentCount: G_Text;
+	commentCount?: G_Text;
 	contentRenderer: R_CommentsEntryPointTeaser|R_CommentsSimplebox;
 	targetId: "comments-entry-point-header-identifier";
 };

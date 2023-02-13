@@ -370,7 +370,7 @@ class HandleTypes extends HandleTypesEval {
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
 			case "D_Browse.param.f110.f1.f20":
-			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f4": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f7.f1[]": case "subscribe.params.f2": case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2": case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_request_continuation.token.f14": case "watch_request_continuation.token.f9.f1.f1[]": case "watch_playlist.params.f27": case "D_Browse.param.f110": case "entity_key.normal.f2": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f10.f1":
+			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f4": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f7.f1[]": case "subscribe.params.f2": case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2": case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_request_continuation.token.f14": case "watch_playlist.params.f27": case "D_Browse.param.f110": case "entity_key.normal.f2": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f10.f1":
 			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -720,6 +720,10 @@ class HandleTypes extends HandleTypesEval {
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
 				} return;
+				case "transcriptTrackSelection.serializedParams.f2":
+				case "transcriptTrackSelection.serializedParams.f1":
+				case "get_transcript.params.f2":
+				case "get_transcript.params.f1":
 				case "reel_request_continuation.token.f3.f1": return;
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
@@ -728,18 +732,19 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_string(path,entry);
 					if(new_data) {
 						let x=path; x;
+						console.log(`-- [handle_value_gen$value_save_string] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 				} return;
 			}
 		}
 		if(typeof entry==="number") {
-			if(entry===1||entry===0) {
-				this.save_number(path,entry);
-				return;
-			}
 			switch(path) {
 				default: {
+					if(entry<1000) {
+						this.save_number(path,entry);
+						return;
+					}
 					let new_data=this.save_number(path,entry);
 					if(new_data) {
 						let x=path; x;
@@ -747,6 +752,7 @@ class HandleTypes extends HandleTypesEval {
 						debugger;
 					}
 				} return;
+				case "AdServingDataEntry.f7":
 				case "reel_request_continuation.token.f15.f6.f10.f2":
 				case "reel_request_continuation.token.f15.f6.f9.f2":
 				case "reel_request_continuation.token.f15.f6.f10.f1.f1":
@@ -2811,8 +2817,8 @@ class HandleTypes extends HandleTypesEval {
 	cg_mismatch_list=[];
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
-		const cf="RS_Player"; this.k(cf,x);
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,...y}=this.s(cf,x);
+		const cf="RS_Player";
+		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,...y}=this.s(cf,x); this.g(y);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
@@ -2832,10 +2838,6 @@ class HandleTypes extends HandleTypesEval {
 			if(ka.length!==0) debugger;
 		});
 		this.t(frameworkUpdates,this.D_FrameworkUpdates);
-		let ka=this.get_keys_of(y);
-		if(ka.length>0) {
-			console.log("[done.RS_Player.next_key] [%s]",ka[0]);
-		}
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
@@ -8125,7 +8127,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(headerText);
 		this.C_Executor(onTap);
 		this.trackingParams(cf,trackingParams);
-		this.G_Text(commentCount);
+		this.t(commentCount,this.G_Text);
 		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);
 		if(targetId!=="comments-entry-point-header-identifier") debugger;
 	}
