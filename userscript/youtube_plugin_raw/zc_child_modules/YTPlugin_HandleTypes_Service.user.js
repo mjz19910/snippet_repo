@@ -369,6 +369,21 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "reel_request_continuation.token.f15.f6": switch(map_entry_key) {
+				case 1: case 2: case 3: case 4: case 5: case 7: case 8: case 9: case 10: case 11:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15": switch(map_entry_key) {
+				case 1: case 3: case 6:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f5": switch(map_entry_key) {
+				case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "reel_request_continuation.token.f3": switch(map_entry_key) {
 				case 1: case 3: case 4: case 6:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -773,6 +788,7 @@ class HandleTypes extends HandleTypesEval {
 						debugger;
 					}
 				} return;
+				case "reel_request_continuation.token.f3.f6":
 				case "reel.player_params.f72":
 				case "D_Browse.param.f94.f5":
 				case "tracking.trackingParams.f9":
