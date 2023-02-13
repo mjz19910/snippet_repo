@@ -117,7 +117,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AdaptiveFormatItem:signatureCipher" | "D_FormatItem:signatureCipher";}
-		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AudioTrack";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_AutoplaySwitchButton";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_Button:style" | "D_Button:navigationEndpoint" | "D_Button:serviceEndpoint" | "D_Button:command" | "D_Button";}
@@ -196,6 +195,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ProductList";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ProductListItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PromotedSparklesWeb";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ReelMultimixAttributionLabel";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_RichGrid";}
@@ -365,6 +365,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AlertWithButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AttBgChallenge";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AudioTrack";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AudioTrackItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplayContent";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySetItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AutoplaySwitchButton";}
@@ -424,6 +425,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EmojiPickerCategoryButton:targetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenPlaylist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenVideo";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Endscreen";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelSectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelTitleHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableSurveyResponse";}
@@ -541,6 +543,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Radio";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RadioShareUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Range";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelMultimixAttributionLabel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ResourceStatusInResponseCheckData";}
@@ -603,6 +606,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TranscriptSearchPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TranscriptSegment";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TranscriptSegmentList";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TranslationLanguage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TriggerCriteria";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TwoColumnBrowseResults";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TwoColumnWatchNextResults";}
@@ -882,7 +886,6 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_MediumGray";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_Verified";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "DMD_Badge_VerifiedArtist";}
-		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_AudioTrack";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Button:style.icon" | "D_Button:navigationEndpoint.icon" | "D_Button:serviceEndpoint.icon" | "D_Button:command.icon" | "D_Button.icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:ForChannel:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_EmojiPickerCategoryButton:icon";}
@@ -891,6 +894,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PromotedSparklesWeb:icon";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ReelMultimixAttributionLabel";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_Topic:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ThumbnailOverlayBottomPanel:icon";}

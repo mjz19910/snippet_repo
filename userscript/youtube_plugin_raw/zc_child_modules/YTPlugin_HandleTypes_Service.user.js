@@ -2474,6 +2474,10 @@ class HandleTypes extends HandleTypesEval {
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {R_ReelMultimixAttributionLabel} x */
 	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
+	/** @private @arg {R_Endscreen} x */
+	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
+	/** @private @arg {R_EndscreenElement} x */
+	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -2818,7 +2822,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player";
-		const {responseContext: {},playabilityStatus,streamingData,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,...y}=this.s(cf,x); this.g(y);
+		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,...y}=this.s(cf,x); this.g(y);
+		heartbeatParams;
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.tz(playerAds,this.R_DesktopWatchAds);
@@ -2838,6 +2843,12 @@ class HandleTypes extends HandleTypesEval {
 			if(ka.length!==0) debugger;
 		});
 		this.t(frameworkUpdates,this.D_FrameworkUpdates);
+		this.t(endscreen,this.R_Endscreen);
+		this.t(paidContentOverlay,this.g);
+		this.tz(annotations,x => {
+			if(!x.playerAnnotationsExpandedRenderer) debugger;
+			this.R_PlayerAnnotationsExpanded(x);
+		});
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
@@ -10677,13 +10688,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_AudioTrackItem} x */
 	D_AudioTrackItem(x) {
-		const cf="D_CaptionTrackItem";
+		const cf="D_AudioTrackItem";
 		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
 		this.z(captionTrackIndices,this.a_primitive_num);
 	}
 	/** @private @arg {D_TranslationLanguage} x */
 	D_TranslationLanguage(x) {
-		const cf="D_CaptionTrackItem";
+		const cf="D_TranslationLanguage";
 		const {languageCode,languageName,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(languageCode);
 		this.G_Text(languageName);
@@ -10698,7 +10709,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_ReelMultimixAttributionLabel} x */
 	D_ReelMultimixAttributionLabel(x) {
-		const cf="D_AudioTrack";
+		const cf="D_ReelMultimixAttributionLabel";
 		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.T_Icon(cf,icon);
 		this.G_Text(title);
@@ -10706,6 +10717,22 @@ class HandleTypes extends HandleTypesEval {
 		this.E_Watch(command);
 		this.a_primitive_str(a11yLabel);
 		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {D_Endscreen} x */
+	D_Endscreen(x) {
+		const cf="D_Endscreen";
+		const {elements,startMs,...y}=this.s(cf,x); this.g(y);
+		this.z(elements,this.R_EndscreenElement)
+	}
+	/** @private @arg {D_EndscreenElement} x */
+	D_EndscreenElement(x) {
+		const cf="D_EndscreenElement";
+		const {style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		switch(style) {
+			default: debugger; break;
+			case "CHANNEL":
+			case "VIDEO":
+		}
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

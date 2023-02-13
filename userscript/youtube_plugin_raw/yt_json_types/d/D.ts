@@ -1604,19 +1604,19 @@ type D_Endscreen={
 };
 type D_EndscreenElement={
 	style: "VIDEO"|"CHANNEL";
-	image: {},
-	left: number,
+	image: {};
+	left: number;
 	width: number,
-	top: number,
-	aspectRatio: number,
-	startMs: `${number}`,
-	endMs: `${number}`,
-	title: {},
-	metadata: {},
-	endpoint: {},
-	trackingParams: string,
+	top: number;
+	aspectRatio: number;
+	startMs: `${number}`;
+	endMs: `${number}`;
+	title: {};
+	metadata: {};
+	endpoint: {};
+	trackingParams: string;
 	id: string;
-	thumbnailOverlays: {}[];
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };
 type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 	"clip-create",
