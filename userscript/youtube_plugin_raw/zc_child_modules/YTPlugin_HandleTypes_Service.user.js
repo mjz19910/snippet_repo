@@ -10309,6 +10309,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				debugger;
 			} break;
+			case "Pets & Animals":
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
 			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
 		}

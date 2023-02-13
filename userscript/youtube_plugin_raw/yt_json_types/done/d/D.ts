@@ -148,15 +148,16 @@ type D_UrlInfoItemType=
 	;
 ;
 type D_VideoCategory=
-	|"Science & Technology"
-	|"Film & Animation"
 	|"Autos & Vehicles"
-	|"People & Blogs"
-	|"Howto & Style"
-	|"Entertainment"
-	|"Gaming"
 	|"Comedy"
+	|"Entertainment"
+	|"Film & Animation"
+	|"Gaming"
+	|"Howto & Style"
 	|"Music"
+	|"People & Blogs"
+	|"Pets & Animals"
+	|"Science & Technology"
 	;
 ;
 type D_VE6827_PageLocation=
