@@ -13,6 +13,7 @@ type D_AdaptiveFormatItem={
 	lastModified: string;
 	contentLength: string;
 	quality: G_FormatQuality;
+	xtags?: string;
 	fps?: D_FormatFps;
 	qualityLabel?: QualityLabel;
 	projectionType: "RECTANGULAR";

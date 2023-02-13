@@ -2,6 +2,7 @@ type P_PathRootStr=
 	|"_level_1_0"
 	|"_level_2_0._level_2_1"
 	|"aadc_guidelines_state.entity_key"
+	|"adaptive_format.xtags"
 	|"AdServingDataEntry"
 	|"browse.params"
 	|"change_markers_visibility.entity_key"

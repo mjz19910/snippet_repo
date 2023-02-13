@@ -23,7 +23,15 @@ type P_param_known_service=
 	|"service$create_playlist"
 	;
 ;
-type P_param_other_known=P_param_known_service|P_param_tracking|P_param_known_like;
+type P_param_other_known=
+	|`${"entity_key.subscribed"|"entity_key.normal"}.${"f2"|"f4"|"f5"}`
+	|`${"player_state"|"load_markers"|"change_markers_visibility"|"macro_marker_repeat_state"}.entity_key.${"f2"|"f4"|"f5"}`
+	|`D_Browse.param.f110.f1.f${keyof B_BinaryBrowseTab}`
+	|P_param_known_like
+	|P_param_known_service
+	|P_param_tracking
+	;
+;
 type P_param_tracking<T extends string="tracking">=[
 	`${T}.parentTrackingParams`,
 	`${T}.trackingParams.f1`,

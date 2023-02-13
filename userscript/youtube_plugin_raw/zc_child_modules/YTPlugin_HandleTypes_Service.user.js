@@ -374,7 +374,6 @@ class HandleTypes extends HandleTypesEval {
 			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f94.f1.f2.f4":
 			case "get_report_form.params.f18.f1": case "D_Browse.param.f94.f1":
 			case "reel_request_continuation.token.f15.f6.f11": {
 				switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -402,6 +401,7 @@ class HandleTypes extends HandleTypesEval {
 			case "continuation_token.data.f110.f3": {
 				switch(map_entry_key) {case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
+			case "D_Browse.param.f94.f1.f2.f4":
 			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
 			case "reel_request_continuation.token.f15.f6.f11.f2": case "reel_request_continuation.token.f15.f6.f10": case "reel_request_continuation.token.f15.f6.f6.f1[]": case "reel_request_continuation.token.f15.f6.f9": case "reel_request_continuation.token.f15.f6.f8": case "reel_request_continuation.token.f15.f6.f3": case "reel_request_continuation.token.f15.f6.f5":
 			case "playability_status.context_params": {
@@ -833,6 +833,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "browse":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
@@ -10072,7 +10073,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {
 		const cf="D_AdaptiveFormatItem";
-		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
 		this.a_primitive_str(mimeType);
@@ -10084,6 +10085,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(lastModified);
 		this.a_primitive_str(contentLength);
 		this.a_primitive_str(quality);
+		this.t(xtags,x => this.params(cf,"adaptive_format.xtags",x));
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
 		if(projectionType!=="RECTANGULAR") debugger;
