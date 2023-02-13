@@ -369,8 +369,28 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "reel_request_continuation.token.f15.f6.f5": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f4": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f3": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "reel_request_continuation.token.f15.f6.f2": switch(map_entry_key) {
+				case 6:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "reel_request_continuation.token.f15.f6": switch(map_entry_key) {
-				case 1: case 2: case 3: case 4: case 5: case 7: case 8: case 9: case 10: case 11:
+				case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: 
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -731,6 +751,7 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
 				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
 				} return;
+				case "reel_request_continuation.token.f15.f6.f1":
 				case "reel_request_continuation.token.f3.f1": return;
 				default: {
 					let new_data=this.save_string(path,entry);
@@ -750,6 +771,9 @@ class HandleTypes extends HandleTypesEval {
 						debugger;
 					}
 				} return;
+				case "reel_request_continuation.token.f15.f6.f4.f1":
+				case "reel_request_continuation.token.f15.f6.f3.f2":
+				case "reel_request_continuation.token.f15.f6.f3.f1":
 				case "reel.params.f3.f3":
 				case "reel.params.f3.f2":
 				case "reel.params.f3.f1":
@@ -891,7 +915,7 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1[]": case "f13[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f13":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f13":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
@@ -3746,7 +3770,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx("VL",x)) return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);
 		switch(x) {
 			case "FEdownloads": case "FEhistory": case "FElibrary": case "FEsubscriptions": case "FEtrending": case "FEwhat_to_watch": break;
-			case "FEguide_builder": case "FEstorefront": case "FEhashtag": break;
+			case "FEguide_builder": case "FEstorefront": case "FEhashtag": break; case "FEsfv_audio_pivot":
 			case "SPaccount_notifications": case "SPunlimited": case "SPreport_history":
 			case "SPaccount_overview": break;
 			default: x===""; console.log(`-- [E_Browse_ParseBrowseId.${ve_name}] --\n\n\ncase "${x}":`); break;
