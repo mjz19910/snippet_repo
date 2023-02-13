@@ -2173,6 +2173,7 @@ type D_PlayerCaptionsTracklist={
 	audioTracks: D_AudioTrackItem[];
 	translationLanguages: D_TranslationLanguage[];
 	defaultAudioTrackIndex: number;
+	openTranscriptCommand?: A_ChangeEngagementPanelVisibility;
 };
 type D_PlayerLiveStoryboardSpec={spec: string;};
 type D_PlayerMicroformat={

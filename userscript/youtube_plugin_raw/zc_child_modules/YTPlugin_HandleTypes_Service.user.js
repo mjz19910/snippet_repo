@@ -374,6 +374,7 @@ class HandleTypes extends HandleTypesEval {
 			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
+			case "D_Browse.param.f94.f1.f2.f4":
 			case "get_report_form.params.f18.f1": case "D_Browse.param.f94.f1":
 			case "reel_request_continuation.token.f15.f6.f11": {
 				switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -740,10 +741,10 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} return;
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
-				case "reel_request_continuation.token.f15.f6.f7.f1.f1":
-				case "reel_request_continuation.token.f15.f6.f6.f1[].f2":
-				case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
-				case "reel_request_continuation.token.f15.f6.f7.f1[].f1": {
+				case "reel.sequence_params.f5.f3":
+				case "reel.params.f1":
+				case "reel.player_params.f71":
+				case "D_Browse.param.f93.f1.f14": {
 					this.save_number(path,entry);
 				} return;
 				case "reel_request_continuation.token.f15.f6.f4.f1":
@@ -769,8 +770,13 @@ class HandleTypes extends HandleTypesEval {
 				case "watch_request_continuation.token.f2.f7": return;
 				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
-				case "notification.record_interactions.f5": case "notification.record_interactions.f2.f14.f1.f1": {
+				case "notification.record_interactions.f5":
+				case "reel_request_continuation.token.f15.f6.f7.f1[].f1":
+				case "notification.record_interactions.f2.f14.f1.f1": {
 				} return;
+				case "reel_request_continuation.token.f15.f6.f7.f1.f1":
+				case "reel_request_continuation.token.f15.f6.f6.f1[].f2":
+				case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
 				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
 				} return;
@@ -10237,11 +10243,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PlayerCaptionsTracklist} x */
 	D_PlayerCaptionsTracklist(x) {
 		const cf="D_PlayerCaptionsTracklist";
-		const {captionTracks,audioTracks,translationLanguages,defaultAudioTrackIndex,...y}=this.s(cf,x); this.g(y);
+		const {captionTracks,audioTracks,translationLanguages,defaultAudioTrackIndex,openTranscriptCommand,...y}=this.s(cf,x); this.g(y);
 		this.z(captionTracks,this.D_CaptionTrackItem);
 		this.z(audioTracks,this.D_AudioTrackItem);
 		this.z(translationLanguages,this.D_TranslationLanguage);
 		this.a_primitive_num(defaultAudioTrackIndex);
+		this.t(openTranscriptCommand,x => {
+			if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+			debugger;
+		});
 	}
 	/** @private @arg {D_VideoQualityPromo} x */
 	D_VideoQualityPromo(x) {
@@ -10334,6 +10344,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				debugger;
 			} break;
+			case "Sports":
 			case "Education":
 			case "Pets & Animals":
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
