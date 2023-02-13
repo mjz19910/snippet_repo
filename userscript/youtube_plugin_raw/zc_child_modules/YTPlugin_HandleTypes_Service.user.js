@@ -581,15 +581,15 @@ class HandleTypes extends HandleTypesEval {
 		for(let val of tva) {
 			let g1=() => {
 				console.log(`\n\t"[parse_value.gen_ns_g1] [${path}[]]",`);
-				console.log(`\n\tcase ${JSON.stringify(path)}: /*tva*/{this.parse_param_next(root,\`\${path}[]\`,map_entry_key_path,[val],callback);}; return;`);
+				console.log(`\n\tcase ${JSON.stringify(path)}: /*tva*/{this.parse_param_next(root,\`\${path}[]\`,map_entry_key_path,[val],callback);}; continue;`);
 				console.log("path offset",off);
 			};
 			switch(path)/*parse_param_next_arr*/ {
-				default: g1(); debugger; return;
-				case "request_continuation.token.f9.f1.f4.f13": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
-				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
-				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
-				case "request_continuation.token.f9.f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; return;
+				default: g1(); debugger; continue;
+				case "request_continuation.token.f9.f1.f4.f13": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
+				case "get_report_form.params.f28.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
+				case "get_report_form.params.f28.f1[].f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
+				case "request_continuation.token.f9.f1.f1": /*tva*/{this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);}; continue;
 			}
 			off++;
 		}

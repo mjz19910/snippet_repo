@@ -651,45 +651,6 @@ class ParserService extends BaseService {
 		}
 		return x[0];
 	}
-	/** @private @arg {D_BrowseEndpointPages} x */
-	parse_known_page(x) {
-		switch(x) {
-			case "comment_shorts_web_top_level":
-			case "explore":
-			case "guide_builder":
-			case "history":
-			case "library":
-			case "storefront":
-			case "subscriptions":
-			case "trending":
-			case "what_to_watch": return true;
-			default:
-		}
-		switch(x) {
-			case "music_charts":
-			case "music_explore":
-			case "music_home":
-			case "music_library_corpus_artists":
-			case "music_library_corpus_track_artists":
-			case "music_library_landing":
-			case "music_liked_albums":
-			case "music_liked_playlists":
-			case "music_liked_videos":
-			case "music_moods_and_genres_category":
-			case "music_moods_and_genres":
-			case "music_new_releases": return true;
-			default:
-		}
-		switch(x) {
-			case "hashtag": return true;
-			default:
-		}
-		switch(x) {
-			case "": return true;
-			default:
-		}
-		switch(x) {default: debugger; return false;}
-	}
 	/** @api @public @arg {D_BrowseIdStr} x */
 	parse_browse_id(x) {
 		if(this.str_starts_with_r(x,"FE")) {
