@@ -7765,9 +7765,9 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_LikeButton.dislike";
 		const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(countText);
-		this.G_Text(countWithDislikeText);
-		this.G_Text(countWithUndislikeText);
-		this.G_Text(countTooltipText);
+		this.t(countWithDislikeText,this.G_Text);
+		this.t(countWithUndislikeText,this.G_Text);
+		this.t(countTooltipText,this.G_Text);
 	}
 	/** @private @arg {D_LikeButton} x */
 	D_LikeButton(x) {

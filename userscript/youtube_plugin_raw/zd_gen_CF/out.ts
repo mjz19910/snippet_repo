@@ -733,6 +733,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TM_Visibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TR_ItemSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Autoplay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_BaseUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Command_TP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_DE_SettingItem.407";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Playlist";}
@@ -780,7 +781,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayNowPlaying";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ThumbnailOverlayResumePlayback";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "D_ToggleButtonIdData";}
-		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_BaseUrl";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "T_Item";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateText";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "UA_DateTextData";}
