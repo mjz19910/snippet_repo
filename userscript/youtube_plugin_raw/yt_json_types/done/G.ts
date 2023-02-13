@@ -77,6 +77,7 @@ type GC_Button=
 	|C_ShowReelsCommentsOverlay
 	|E_AddToPlaylistService
 	|E_CreateBackstagePost
+	|E_ShareEntityService
 	|E_SignalService_SendPost
 	|E_Url
 	|TA_OpenPopup_Empty

@@ -4106,7 +4106,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {
 		const cf="D_Thumbnail"; this.k(cf,x);
-		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {lightColorPalette,darkColorPalette,sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(lightColorPalette,x => this.D_LightColorPalette(`${cf}.light`,x));
+		this.t(darkColorPalette,x => this.D_DarkColorPalette(`${cf}.dark`,x));
 		this.t(sampledThumbnailColor,x => this.D_Color(x));
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.D_Accessibility);
@@ -7421,6 +7423,7 @@ class HandleTypes extends HandleTypesEval {
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DC_Executor} x */
