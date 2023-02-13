@@ -301,48 +301,6 @@ export class Snippet_0_tmp {
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @arg {GM_WC} x */
-	GenericWebCommandMetadata(x) {
-		if(!("apiUrl" in x)) return;
-		let cx=x.apiUrl;
-		switch(x.apiUrl) {
-			default: {
-				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
-				let url_type=this.parser.get_url_type(path_parts);
-				if(!url_type) {
-					debugger;
-					return;
-				}
-				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-				/** @arg {GM_WC} x */
-				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
-				debugger;
-			} break;
-			case "/youtubei/v1/playlist/create": return this.GeneratedWebCommandMetadata(x);
-		}
-	}
-	/** @arg {GM_WC} x */
-	GeneratedWebCommandMetadata(x) {
-		if("apiUrl" in x&&"sendPost" in x) {
-			const {sendPost,apiUrl}=x;
-			this.primitive_of(sendPost,"boolean");
-			apiUrl;
-		} else if("rootVe" in x) {
-			switch(x.rootVe) {
-				case 3832:
-				case 3854:
-				case 6827:
-				case 11487: break;
-				case 96368: break;
-				default: let rve=((/**@template {number} T @arg {{rootVe:T}} v @return {{rootVe:T}}*/(v) => {
-					/** @type {{rootVe:T}} */
-					let c=as(v);
-					return c;
-				}))(x).rootVe;
-					rve;
-			}
-		}
-	}
 	//#region dispatch_in_progress
 	//#endregion
 	/** @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */

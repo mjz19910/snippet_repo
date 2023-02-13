@@ -2966,64 +2966,28 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {GE_Browse} x */
 	GE_Browse(x) {
 		const cf="GE_Browse";
-		if(this.is_TE_VE(x,3611)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,3854)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,5754)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,6827)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,11487)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,23462)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,42352)) {
-			let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-			let [ve_name,y1]=this.GE_Browse_WCM(x2); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,x4);
-			this.g(x5);
-			return;
-		}
-		if(this.is_TE_VE(x,96368)) {
-			let [a,b,{...y}]=this.TE_Endpoint_3(cf,"browseEndpoint",x); this.g(y);
-			this.M_VE96368(a); this.DE_VE96368_Browse(b);
-			let [ve_name,y1]=this.GE_Browse_WCM(a); this.g(y1);
-			this.G_DE_Browse_VE(ve_name,b);
-			return;
-		}
+		if(this.is_TE_VE(x,3611)) return this.E_VE3611_Browse(x);
+		if(this.is_TE_VE(x,3854)) return this.E_VE3854_Browse(x);
+		if(this.is_TE_VE(x,5754)) return this.E_VE5754_Browse(x);
+		if(this.is_TE_VE(x,6827)) return this.GE_VE6827(x);
+		if(this.is_TE_VE(x,11487)) return this.E_VE11487_Browse(x);
+		if(this.is_TE_VE(x,23462)) return this.E_VE23462_Browse(x);
+		if(this.is_TE_VE(x,42352)) return this.E_VE42352_Browse(x);
+		if(this.is_TE_VE(x,96368)) return this.E_VE96368_Browse(x);
 		debugger;
 	}
+	/** @private @arg {E_VE6827|E_VE6827_SearchBox} x */
+	GE_VE6827(x) {x;}
+	/** @private @arg {E_VE11487} x */
+	E_VE11487_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	/** @private @arg {E_VE23462} x */
+	E_VE23462_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	/** @private @arg {E_VE42352} x */
+	E_VE42352_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	/** @private @arg {E_VE96368} x */
+	E_VE96368_Browse(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368_Browse","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368_Browse(b);}
+	/** @private @arg {DE_VE3611_Browse} x */
+	DE_VE3611_Browse(x) {x;}
 	/** @private @arg {DE_VE96368_Browse} x */
 	DE_VE96368_Browse(x) {x;}
 	/** @private @arg {GM_VE_ResolveUrl_C_MD} x */
@@ -3214,9 +3178,9 @@ class HandleTypes extends HandleTypesEval {
 		this.GM_VE_ResolveUrl_C_MD(b);
 		return this.GM_VE3611_WC(a);
 	}
-	/** @protected @arg {M_VE3832_WatchPlaylist} x */
+	/** @protected @arg {M_VE3832} x */
 	M_VE3832_WatchPlaylist(x) {this.T_WCM("M_VE3832_WatchPlaylist",x,this.GM_VE3832_WatchPlaylist);}
-	/** @private @arg {M_VE3832_Watch} x */
+	/** @private @arg {M_VE3832} x */
 	M_VE3832_Watch(x) {this.T_WCM("M_VE3832_Watch",x,this.GM_VE3832_Watch);}
 	/** @private @arg {M_VE4724} x */
 	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
@@ -3236,9 +3200,9 @@ class HandleTypes extends HandleTypesEval {
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @protected @arg {GM_Unsubscribe} x */
 	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
-	/** @private @arg {Extract<GM_WC,{sendPost:boolean;apiUrl:string}>} x */
+	/** @private @arg {Extract<GM_All,{sendPost:boolean;apiUrl:string}>} x */
 	GM_WC_Base(x) {const cf="GM_WC_Base",{sendPost,apiUrl}=this.s(cf,x); this._primitive_of(sendPost,"boolean"); return this.parser.parse_url(cf,apiUrl);}
-	/** @private @arg {GM_WC} x */
+	/** @private @arg {GM_All} x */
 	GM_WC(x) {
 		const cf="GM_WC"; this.k(cf,x);
 		if("rootVe" in x&&!("apiUrl" in x)) return this.GM_WC_RootVe(x);
@@ -3251,7 +3215,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {Extract<GM_WC,{apiUrl:any}>} x */
+	/** @private @arg {Extract<GM_All,{apiUrl:any}>} x */
 	GM_WC_ApiUrl(x) {
 		let cx=x.apiUrl;
 		switch(x.apiUrl) {
@@ -3262,7 +3226,7 @@ class HandleTypes extends HandleTypesEval {
 					return;
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-				/** @private @arg {GM_WC} x */
+				/** @private @arg {GM_All} x */
 				let typedef_str=this.codegen.codegen_typedef(`G_${url_type_ex}`,x,true);
 				const l1="-- [GeneratedWebCommandMetadata] --";
 				const r2="return this.GeneratedWebCommandMetadata(x);";
@@ -3319,13 +3283,13 @@ class HandleTypes extends HandleTypesEval {
 		this.GM_WC(x);
 		return as(`VE${x.rootVe}`);
 	}
-	/** @private @arg {Exclude<Extract<GM_WC,{rootVe:any}>,{apiUrl:any}>} x */
+	/** @private @arg {Exclude<Extract<GM_All,{rootVe:any}>,{apiUrl:any}>} x */
 	GM_WC_RootVe(x) {
 		let cx=x.rootVe;
 		switch(x.rootVe) {
 			default: {
 				x===0;
-				/** @private @arg {GM_WC} x */
+				/** @private @arg {GM_All} x */
 				this.codegen_str(`G_VE${x}`,x);
 				console.log(`\n\tG_VE${cx},`);
 				this.codegen_case("GM_WC_RootVe",x,"return this.GeneratedWebCommandMetadata(x);");
@@ -3336,7 +3300,7 @@ class HandleTypes extends HandleTypesEval {
 			case 83769: return this.GM_VE83769_WC(x);
 		}
 	}
-	/** @private @arg {Extract<GM_WC,{rootVe:any;apiUrl:any}>} x */
+	/** @private @arg {Extract<GM_All,{rootVe:any;apiUrl:any}>} x */
 	GM_WC_Ex(x) {
 		switch(x.rootVe) {
 			case 3611: return this.GM_VE3611_WC(x);
@@ -3350,7 +3314,7 @@ class HandleTypes extends HandleTypesEval {
 			default: x===0; debugger; break;
 		}
 	}
-	/** @private @arg {GM_VE3611_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
 	GM_VE3611_WC(x) {
 		const cf="GM_VE3611_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3360,7 +3324,7 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==3611) debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE3854_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
 	GM_VE3854_WC(x) {
 		const cf="GM_VE3854_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3372,7 +3336,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE4724_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
 	GM_VE4724(x) {
 		const cf="GM_VE4724_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3381,7 +3345,7 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==4724) debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE5754_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
 	GM_VE5754_WC(x) {
 		const cf="GM_VE5754_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3391,7 +3355,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE11487_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE11487} x @returns {`VE${rootVe}`} */
 	GM_VE11487_WC(x) {
 		const cf="GM_VE11487_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3401,7 +3365,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE23462_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE23462} x @returns {`VE${rootVe}`} */
 	GM_VE23462_WC(x) {
 		const cf="GM_VE23462_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3415,7 +3379,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE37414_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
 	GM_VE37414(x) {
 		const cf="GM_VE37414_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3431,7 +3395,7 @@ class HandleTypes extends HandleTypesEval {
 		if(rootVe!==37414) debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE42352_WC} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE42352} x @returns {`VE${rootVe}`} */
 	GM_VE42352_WC(x) {
 		const cf="GM_VE42352_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3441,7 +3405,7 @@ class HandleTypes extends HandleTypesEval {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
-	/** @private @arg {GM_VE96368_WC_browse} x @returns {`VE${rootVe}`} */
+	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
 	GM_VE96368_WC_browse(x) {
 		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3489,26 +3453,26 @@ class HandleTypes extends HandleTypesEval {
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
-	/** @private @arg {"GM_VE3832_WatchPlaylist"|"GM_VE3832_Watch"} cf @arg {T} x @template {GM_VE3832_WatchPlaylist|GM_VE3832_Watch} T */
+	/** @private @arg {"GM_VE3832_WatchPlaylist"|"GM_VE3832_Watch"} cf @arg {T} x @template {GM_VE3832|GM_VE3832} T */
 	GM_VE3832(cf,x) {
 		const {rootVe,webPageType,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(rootVe!==3832) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		return y;
 	}
-	/** @private @arg {GM_VE3832_WatchPlaylist} x */
+	/** @private @arg {GM_VE3832} x */
 	GM_VE3832_WatchPlaylist(x) {
 		const cf="GM_VE3832_WatchPlaylist";
 		const {url,...y}=this.GM_VE3832(cf,x); this.g(y);/*#destructure_done*/
 		if(!this.str_starts_with_rx("/playlist",url)) debugger;
 	}
-	/** @private @arg {GM_VE3832_Watch} x */
+	/** @private @arg {GM_VE3832} x */
 	GM_VE3832_Watch(x) {
 		const cf="GM_VE3832_Watch";
 		const url=this.w(`${cf}:omit`,"url",this.GM_VE3832(cf,x));
 		if(!this.str_starts_with_rx("/watch",url)) debugger;
 	}
-	/** @private @arg {GM_VE83769_WC} x */
+	/** @private @arg {GM_VE83769} x */
 	GM_VE83769_WC(x) {
 		const cf="GM_VE83769_WC"; this.k(cf,x);
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -8417,10 +8381,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_VE3611_Browse} x */
 	E_VE3611_Browse(x) {
 		const cf="E_VE3611_Browse";
-		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-		this.M_VE3611(x2);
-		this.G_DE_Browse_VE("VE3611",x4);
-		this.g(x5);
+		let [a,b,{...y}]=this.TE_Endpoint_3(cf,"browseEndpoint",x); this.g(y);
+		this.M_VE3611(a);
+		this.DE_VE3611_Browse(b);
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {

@@ -281,7 +281,7 @@ class ParserService extends BaseService {
 		}
 		this.x.get("handle_types").on_google_video_url(r);
 	}
-	/** @unused_api @protected @arg {GM_VE3832_Watch['url']} x */
+	/** @unused_api @protected @arg {GM_VE3832['url']} x */
 	parse_url_VE3832(x) {if(!this.str_starts_with_rx("/watch?",x)) debugger;}
 	/** @api @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
 	parse_url(root,x) {

@@ -40,12 +40,12 @@ type GE_Browse=
 	|E_VE3611_Browse
 	|E_VE3854_Browse
 	|E_VE5754_Browse
-	|E_VE6827_Browse
-	|E_VE11487_Browse
-	|E_VE23462_Browse
-	|E_VE42352_Browse
-	|E_VE96368_Browse
-	|E_VE6827_Browse_SearchBox
+	|E_VE6827
+	|E_VE11487
+	|E_VE23462
+	|E_VE42352
+	|E_VE96368
+	|E_VE6827_SearchBox
 	;
 ;
 type G_DE_Browse_VE=GE_Browse["browseEndpoint"];
@@ -245,9 +245,9 @@ type G_CodecTypeStr=[
 	"vp9"
 ][number];
 type G_CommandMetadata={
-	webCommandMetadata: GM_WC;
+	webCommandMetadata: GM_All;
 	resolveUrlCommandMetadata: MC_ResolveUrl;
-}|{webCommandMetadata: GM_WC;};
+}|{webCommandMetadata: GM_All;};
 // COMPLETED: #7
 type MC_ResolveUrl={
 	isVanityUrl?: boolean;

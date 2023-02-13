@@ -1,22 +1,21 @@
 type M_Empty_WCM=TM_Gen<{}>;
 type M_GetPdgBuyFlow=TM_Gen<GM_GetPdgBuyFlow>;
-type M_VE3611_ResolveUrl={webCommandMetadata: GM_VE3611_WC; resolveUrlCommandMetadata: GM_VE_ResolveUrl_C_MD;};
-type M_VE3854_ResolveUrl={webCommandMetadata: GM_VE3854_WC; resolveUrlCommandMetadata: GM_VE_ResolveUrl_C_MD;};
+type M_VE3611_ResolveUrl={webCommandMetadata: GM_VE3611; resolveUrlCommandMetadata: GM_VE_ResolveUrl_C_MD;};
+type M_VE3854_ResolveUrl={webCommandMetadata: GM_VE3854; resolveUrlCommandMetadata: GM_VE_ResolveUrl_C_MD;};
 //#region M_VE
-type M_VE3611=TM_Gen<GM_VE3611_WC>;
-type M_VE3832_Watch=TM_Gen<GM_VE3832_Watch>;
-type M_VE3832_WatchPlaylist=TM_Gen<GM_VE3832_WatchPlaylist>;
-type M_VE3854=TM_Gen<GM_VE3854_WC>;
-type M_VE4724=TM_Gen<GM_VE4724_WC>;
-type M_VE5754=TM_Gen<GM_VE5754_WC>;
-type M_VE6827_Browse_SearchBox=TM_Gen<GM_VE6827_Browse_SearchBox>;
-type M_VE6827=TM_Gen<GM_VE6827_WC>;
-type M_VE11487=TM_Gen<GM_VE11487_WC>;
-type M_VE23462=TM_Gen<GM_VE23462_WC>;
-type M_VE37414=TM_Gen<GM_VE37414_WC>;
-type M_VE42352=TM_Gen<GM_VE42352_WC>;
-type M_VE83769=TM_Gen<GM_VE83769_WC>;
-type M_VE96368=TM_Gen<GM_VE96368_WC_browse>;
+type M_VE3611=TM_Gen<GM_VE3611>;
+type M_VE3832=TM_Gen<GM_VE3832>;
+type M_VE3854=TM_Gen<GM_VE3854>;
+type M_VE4724=TM_Gen<GM_VE4724>;
+type M_VE5754=TM_Gen<GM_VE5754>;
+type M_VE6827_FeedHistory=TM_Gen<GM_VE6827_FeedHistory>;
+type M_VE6827=TM_Gen<GM_VE6827>;
+type M_VE11487=TM_Gen<GM_VE11487>;
+type M_VE23462=TM_Gen<GM_VE23462>;
+type M_VE37414=TM_Gen<GM_VE37414>;
+type M_VE42352=TM_Gen<GM_VE42352>;
+type M_VE83769=TM_Gen<GM_VE83769>;
+type M_VE96368=TM_Gen<GM_VE96368>;
 //#endregion
 //#region M_
 type M_AccountMenu=TM_Gen<GM_AccountMenu>;

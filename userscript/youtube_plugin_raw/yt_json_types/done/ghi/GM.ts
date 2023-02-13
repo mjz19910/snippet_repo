@@ -19,83 +19,78 @@ type GM_VE_ResolveUrl_C_MD={
 //#endregion
 //#region WebCommandMetadata like {rootVe:number;}
 
-type GM_VE3611_WC={
+type GM_VE3611={
 	url: GU_VE3611_Url;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 	rootVe: 3611;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE3832_Watch={
-	url: `/watch?${string}`;
+type GM_VE3832={
+	url: `/watch?${string}`|`/playlist?list=RD${string}&playnext=1&index=${number}`;
 	webPageType: "WEB_PAGE_TYPE_WATCH";
 	rootVe: 3832;
 };
-type GM_VE3854_WC={
+type GM_VE3854={
 	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 3854;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE4724_WC={
+type GM_VE4724={
 	url: `/results?search_query=${string}`;
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
 type GU_VE5754_Url=`/playlist?list=${"WL"|"LL"|`PL${string}`}`;
 
-type GM_VE5754_WC={
+type GM_VE5754={
 	url: GU_VE5754_Url;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 	rootVe: 5754;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE6827_WC={
+type GM_VE6827={
 	url?: D_VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE11487_WC={
+type GM_VE11487={
 	url: "/premium";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 11487;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE3832_WatchPlaylist={
-	url: `/playlist?list=RD${string}&playnext=1&index=${number}`;
-	webPageType: "WEB_PAGE_TYPE_WATCH";
-	rootVe: 3832;
-};
-type GM_VE6827_Browse_SearchBox={
+type GM_VE6827_FeedHistory={
 	url: "/feed/history";
 	sendPost: true;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE23462_WC={
+type GM_VE23462={
 	url: GU_VE23462_Url;
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
 	rootVe: 23462;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE37414_WC={
+type GM_VE37414={
 	url: GU_VE37414_Url;
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
-type GM_VE42352_WC={
+type GM_VE42352={
 	url: GU_VE42352_Url;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 42352;
 	apiUrl: "/youtubei/v1/browse";
 };
-type GM_VE83769_WC={
+type GM_VE83769={
 	url: GU_VE83769_Url;
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };
-type GM_VE96368_WC_browse={
+type GM_VE96368={
 	url: GU_VE96368_Url;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 96368;
@@ -134,49 +129,51 @@ type GM_YpcGetCart=T_GM_PostApi_WithApiUrl<"/youtubei/v1/ypc/get_cart">;
 //#endregion
 //#endregion
 //#region GM_WC
-type GM_WC_VE=[
-	GM_VE3611_WC,
-	GM_VE3832_Watch,
-	GM_VE3854_WC,
-	GM_VE4724_WC,
-	GM_VE5754_WC,
-	GM_VE6827_WC,
-	GM_VE11487_WC,
-	GM_VE23462_WC,
-	GM_VE37414_WC,
-	GM_VE42352_WC,
-	GM_VE83769_WC,
-	GM_VE96368_WC_browse,
-][number];
-type GM_WC_PostApi=[
-	GM_SetSetting,
-	GM_AccountMenu,
-	GM_CreateBackstagePost,
-	GM_EditPlaylist,
-	GM_Browse,
-	GM_CreateComment,
-	GM_Feedback,
-	GM_FlagGetForm,
-	GM_GetSurvey,
-	GM_GetTranscript,
-	GM_GetNotificationMenu,
-	GM_Dislike,
-	GM_LikeLike,
-	GM_RemoveLike,
-	GM_Next,
-	GM_GetUnseenNotificationCount,
-	GM_NotificationOptOut,
-	GM_RecordInteractions,
-	GM_CreatePlaylist,
-	GM_AddToPlaylistService,
-	GM_SendPost,
-	GM_GetSharePanel,
-	GM_Subscribe,
-	GM_YpcGetOffers,
-	GM_YpcGetCart,
-][number];
-type GM_WC=[
-	GM_WC_VE,
-	GM_WC_PostApi
+type GM_VE=
+	|GM_VE3611
+	|GM_VE3832
+	|GM_VE3854
+	|GM_VE4724
+	|GM_VE5754
+	|GM_VE6827
+	|GM_VE11487
+	|GM_VE23462
+	|GM_VE37414
+	|GM_VE42352
+	|GM_VE83769
+	|GM_VE96368
+	;
+;
+type GM_PostApi=
+	|GM_SetSetting
+	|GM_AccountMenu
+	|GM_CreateBackstagePost
+	|GM_EditPlaylist
+	|GM_Browse
+	|GM_CreateComment
+	|GM_Feedback
+	|GM_FlagGetForm
+	|GM_GetSurvey
+	|GM_GetTranscript
+	|GM_GetNotificationMenu
+	|GM_Dislike
+	|GM_LikeLike
+	|GM_RemoveLike
+	|GM_Next
+	|GM_GetUnseenNotificationCount
+	|GM_NotificationOptOut
+	|GM_RecordInteractions
+	|GM_CreatePlaylist
+	|GM_AddToPlaylistService
+	|GM_SendPost
+	|GM_GetSharePanel
+	|GM_Subscribe
+	|GM_YpcGetOffers
+	|GM_YpcGetCart
+	;
+;
+type GM_All=[
+	GM_VE,
+	GM_PostApi
 ][number];
 //#endregion

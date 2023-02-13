@@ -15,7 +15,7 @@ type E_NotificationOptOut=TE_Endpoint_3<"notificationOptOutEndpoint",DE_Notifica
 type E_PlaylistEdit=TE_Endpoint_3<"playlistEditEndpoint",DE_PlaylistEdit,M_EditPlaylist>;
 type E_PlaylistEditor=TE_Endpoint_3<"playlistEditorEndpoint",DE_PlaylistEditor,M_Empty_WCM>;
 type E_RecordNotificationInteractions=TE_Endpoint_3<"recordNotificationInteractionsEndpoint",DE_RecordNotificationInteractions,M_RecordInteractions>;
-type E_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE37414_WC>>;
+type E_ReelWatch=TE_Endpoint_3<"reelWatchEndpoint",DE_ReelWatch,TM_Gen<GM_VE37414>>;
 type E_Search=TE_Endpoint_3<"searchEndpoint",DE_Search,M_VE4724>;
 type E_SetSetting=TE_SetSetting<"407",boolean,"AUTONAV_FOR_DESKTOP">;
 type E_ShareEntityService=TE_Endpoint_3<"shareEntityServiceEndpoint",DE_ShareEntityService,M_GetSharePanel>;
@@ -27,18 +27,18 @@ type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedback>;
 type E_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
 type E_Url=TE_Endpoint_3<"urlEndpoint",DU_Url,M_VE83769>;
-type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832_Watch>|{
+type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
 	watchEndpoint: DE_VE3832_Watch;
-	commandMetadata: M_VE3832_Watch;
+	commandMetadata: M_VE3832;
 };
-type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE3832_WatchPlaylist>;
+type E_WatchPlaylist=TE_Endpoint_3<"watchPlaylistEndpoint",DE_WatchPlaylist,M_VE3832>;
 type E_YpcGetCart=TE_Endpoint_3<"ypcGetCartEndpoint",DE_YpcGetCart,M_YpcGetCart>;
 type E_YpcGetOffers=TE_Endpoint_3<"ypcGetOffersEndpoint",DE_YpcGetOffers,M_YpcGetOffers>;
 type E_YpcGetOfflineUpsell=TE_Endpoint_2<"ypcGetOfflineUpsellEndpoint",DE_YpcGetOfflineUpsell>;
 type E_UserFeedback=TE_Endpoint_3<"userFeedbackEndpoint",DE_UserFeedback,M_UserFeedback>;
-type E_VE6827_Browse_SearchBox={
+type E_VE6827_SearchBox={
 	clickTrackingParams: string;
-	commandMetadata: M_VE6827_Browse_SearchBox;
+	commandMetadata: M_VE6827_FeedHistory;
 	browseEndpoint: DE_VE6827_Browse_SearchBox;
 };
 type E_Unsubscribe={

@@ -3759,7 +3759,7 @@ class ServiceMethods extends ServiceData {
 	expect_true(x) {if(x!==true) debugger;}
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
-	/** @private @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
+	/** @private @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
@@ -3777,7 +3777,7 @@ class ServiceMethods extends ServiceData {
 			case "83769": return;
 			case "96368": return;
 			default: {
-				/** @private @type {GM_WC[]} */
+				/** @private @type {GM_All[]} */
 				let x=[]; x;
 			}
 		}
@@ -3789,7 +3789,7 @@ class ServiceMethods extends ServiceData {
 	_previousCsn(x) {console.log(base64_dec.decode_str(x));}
 	/** @protected @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
-	/** @protected @arg {Extract<GM_WC,{rootVe:any}>['rootVe']} x */
+	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
 }
 //#endregion

@@ -2459,7 +2459,7 @@ type D_Saved={
 	data?: {[x: string]: ({}[])|undefined;};
 };
 type D_SearchBox={
-	endpoint: E_VE6827_Browse_SearchBox;
+	endpoint: E_VE6827_SearchBox;
 	searchButton: R_Button;
 	clearButton: R_Button;
 	placeholderText: G_Text;
