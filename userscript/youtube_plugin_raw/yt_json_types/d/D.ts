@@ -1614,10 +1614,10 @@ type D_EndscreenElement={
 	startMs: `${number}`;
 	endMs: `${number}`;
 	title: G_Text;
-	metadata: {};
+	metadata: G_Text;
 	callToAction?: G_Text;
 	dismiss?: G_Text;
-	endpoint: E_VE3611;
+	endpoint: E_VE3611|E_Watch;
 	hovercardButton?: R_SubscribeButton;
 	trackingParams: string;
 	isSubscribe?: true;

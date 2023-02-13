@@ -4839,7 +4839,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
 		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 		const {serviceEndpoints,...y}=y2; this.g(y);
-		this.tz(serviceEndpoints,x=>{
+		this.tz(serviceEndpoints,x => {
 			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
 			if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 			debugger;
@@ -10718,6 +10718,13 @@ class HandleTypes extends HandleTypesEval {
 		this.t(startMs,this.a_primitive_num);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {D_EndscreenElement["endpoint"]} x */
+	D_EndscreenElement_EP(x) {
+		const cf="D_EndscreenElement_EP"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_VE3611(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		debugger;
+	}
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
 		const cf="D_EndscreenElement";
@@ -10736,10 +10743,10 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(startMs);
 		this.a_primitive_str(endMs);
 		this.G_Text(title);
-		this.g(metadata);
+		this.G_Text(metadata);
 		this.t(callToAction,this.G_Text);
 		this.t(dismiss,this.G_Text);
-		this.E_VE3611(endpoint);
+		this.D_EndscreenElement_EP(endpoint);
 		this.t(hovercardButton,this.R_SubscribeButton);
 		this.trackingParams(cf,trackingParams);
 		this.t(isSubscribe,x => this.ceq(x,true));
