@@ -252,9 +252,9 @@ class IndexedDBService extends BaseService {
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
 	get_index_key_str(key) {
 		switch(key) {
-			case "channel_id": return null;
 			case "hashtag": return "hashtag";
 			case "video_id": return "v";
+			case "boxed_id": return "id";
 		}
 		throw new Error();
 	}
