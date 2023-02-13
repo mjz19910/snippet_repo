@@ -247,7 +247,8 @@ class HandleTypes extends HandleTypesEval {
 		f();
 		console.groupEnd();
 	}
-	/** @template {"DE_VE3832_Watch"} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
+	/** @typedef {"DE_VE3832_Watch"|"R_WatchPage_VE3832"} CF_PlayerParams */
+	/** @template {CF_PlayerParams} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		switch(path)/*player_params*/ {
 			default: debugger; return;
@@ -256,7 +257,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 		/** @type {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} */
 		let t_pt=as(map_entry_key_path);
-		if(root!=="DE_VE3832_Watch") {debugger; return;}
+		switch(root) {
+			default: debugger; break;
+			case "DE_VE3832_Watch":
+			case "R_WatchPage_VE3832":
+		}
 		switch(t_pt.length) {
 			default: debugger; return;
 			case 1: {
@@ -299,7 +304,7 @@ class HandleTypes extends HandleTypesEval {
 		return as(x.map(v => `${v}`).join(".f"));
 	}
 	/**
-	 * @template {"DE_VE3832_Watch"} T
+	 * @template {CF_PlayerParams} T
 	 * @arg {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} map_entry_key_path
 	 * @arg {V_ParamMapValue[]} map_entry_values @arg {ARG_PathFor_PlayerParams} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
@@ -325,10 +330,11 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @template {"DE_VE3832_Watch"} T @template {P_ParamParse} U @arg {ARG_on_player_params_callback_ty_len1<T,U>} x */
+	/** @template {CF_PlayerParams} T @template {P_ParamParse} U @arg {ARG_on_player_params_callback_ty_len1<T,U>} x */
 	on_player_params_callback_ty_len1(...x) {
 		switch(x[0]) {
 			case "DE_VE3832_Watch": break;
+			case "R_WatchPage_VE3832": break;
 			default: debugger; break;
 		}
 	}
@@ -6776,10 +6782,12 @@ class HandleTypes extends HandleTypesEval {
 				case "list": this.parse_guide_entry_id(res[1]); break;
 				case "rv": this.log_url_info({type: "video-referral",id: res[1]}); break;
 				case "pp": {
-					this.on_player_params(root,"watch_page_url.pp",res[1],x => {
-						x;
+					if(root==="R_WatchPage_VE3832") {
+						const [,playerParams]=res;
+						this.playerParams(root,"watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+					} else {
 						debugger;
-					});
+					}
 				} break;
 				case "start_radio": {if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);} break;
 				case "index": {
