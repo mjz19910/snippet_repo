@@ -1238,7 +1238,7 @@ type QualArr=[
 	"1080p","720p","480p","360p","240p","144p",
 ];
 type make_qual_for_fps<T extends 50|60>=[`2160p${T}`,`1440p${T}`,`1080p${T}`,`720p${T}`,];
-type QualityLabel=QualArr[number];
+type D_QualityLabel=QualArr[number];
 type D_AddToPlaylist={playlists: R_PlaylistAddToOption[];}&T_Actions<R_AddToPlaylistCreate>;
 type D_AnimationConfig={
 	minImageUpdateIntervalMs: 10000|5000;

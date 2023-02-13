@@ -1,6 +1,12 @@
 // cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
 
 type D_FormatItem_url=`https://rr5---sn-nx5s7nel.googlevideo.com/videoplayback?${D_VideoPlayback_SearchParams}`;
+type D_AudioTrack={
+	displayName: string;
+	id: string;
+	audioIsDefault: false;
+};
+
 type D_AdaptiveFormatItem={
 	itag: number;
 	url?: D_FormatItem_url;
@@ -15,8 +21,9 @@ type D_AdaptiveFormatItem={
 	quality: G_FormatQuality;
 	xtags?: string;
 	fps?: D_FormatFps;
-	qualityLabel?: QualityLabel;
+	qualityLabel?: D_QualityLabel;
 	projectionType: "RECTANGULAR";
+	audioTrack?: D_AudioTrack;
 	averageBitrate?: number;
 	colorInfo?: D_FormatColorInfo;
 	highReplication?: true;

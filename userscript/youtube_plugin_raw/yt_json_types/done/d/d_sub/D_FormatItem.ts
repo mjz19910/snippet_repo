@@ -7,7 +7,7 @@ type D_FormatItem={
 	height: number;
 	lastModified: `${number}`;
 	contentLength?: `${number}`;
-	quality: QualityLabel;
+	quality: D_QualityLabel;
 	fps: D_FormatFps;
 	qualityLabel: "360p";
 	projectionType: "RECTANGULAR";

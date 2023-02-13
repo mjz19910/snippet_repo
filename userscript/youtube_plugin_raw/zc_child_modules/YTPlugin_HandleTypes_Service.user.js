@@ -743,10 +743,28 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.save_number(path,entry);
 					if(new_data) {
 						let x=path; x;
-						console.log(`-- [handle_value_gen$value_save_number] --\n\ncase "${x}":\n`);
+						console.log(`-- [handle_value_gen$value_save_number] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 				} return;
+				case "reel_request_continuation.token.f15.f6.f10.f2":
+				case "reel_request_continuation.token.f15.f6.f9.f2":
+				case "reel_request_continuation.token.f15.f6.f10.f1.f1":
+				case "reel_request_continuation.token.f15.f6.f9.f1.f1":
+				case "reel_request_continuation.token.f15.f6.f8.f2":
+				case "reel_request_continuation.token.f15.f6.f8.f1.f1":
+				case "reel_request_continuation.token.f15.f6.f5.f2":
+				case "reel_request_continuation.token.f15.f6.f5.f1":
+				case "reel_request_continuation.token.f15.f6.f2.f6":
+				case "reel_request_continuation.token.f15.f3":
+				case "reel_request_continuation.token.f15.f1":
+				case "reel_request_continuation.token.f5.f3":
+				case "reel_request_continuation.token.f3.f4":
+				case "reel_request_continuation.token.f3.f3":
+				case "reel.player_params.f57":
+				case "unsubscribe.params.f1.f1":
+				case "subscribe.params.f2.f1":
+				case "tracking.trackingParams.f3":
 				case "continuation_token.data.f53.f4.f15":
 				case "entity_key.normal.f4":
 				case "playability_status.context_params.f2.f1":
