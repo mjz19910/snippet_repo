@@ -9,7 +9,9 @@ type DU_ChannelUrl={
 	url: `https://www.youtube.com/${string}`;
 	nofollow: true;
 }
-type DU_Url=DU_InternalUrl|DU_RedirectUrl|DU_ExternalUrl|DU_ChannelUrl;
+type DU_Url=DU_InternalUrl|DU_RedirectUrl|DU_ExternalUrl|DU_ChannelUrl|{
+	url: "https://www.youtube.com/t/creative_commons";
+};
 type DU_MutationDelete={type: T_MutType<"DELETE">; entityKey: string; options: O_DU_Persistence;};
 type DU_MutationReplace={type: T_MutType<"REPLACE">; entityKey: string; payload: G_EY_Entity;};
 //#endregion

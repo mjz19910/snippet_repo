@@ -5696,22 +5696,25 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DU_Url} x */
 	DE_Url(x) {
 		const cf="DE_Url"; this.k(cf,x);
-		if(!("target" in x)) {
-			const {url,nofollow,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.D_YoutubeUrl(url);
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("nofollow" in x) {
-			const {url,target,nofollow,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.GM_E_Url_TargetUrlType(url);
+		const {url,...u}=this.s(cf,x);/*#destructure_later*/
+		this.GM_E_Url_TargetUrlType(url);
+		if("nofollow" in u&&"target" in u) {
+			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
 			if(target!=="TARGET_NEW_WINDOW") debugger;
 			if(nofollow!==true) debugger;
 			return;
 		}
-		const {url,target,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GM_E_Url_TargetUrlType(url);
-		if(target!=="TARGET_NEW_WINDOW") debugger;
+		if("nofollow" in u) {
+			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("target" in u) {
+			const {target,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return;
+		}
+		this.g(u);
 	}
 	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
@@ -10774,7 +10777,13 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_MetadataRow} x */
-	D_MetadataRow(x) {x;}
+	D_MetadataRow(x) {
+		const cf="D_MetadataRow";
+		const {title,contents,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.z(contents,this.G_Text);
+		this.trackingParams(cf,trackingParams);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

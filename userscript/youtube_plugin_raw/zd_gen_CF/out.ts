@@ -174,6 +174,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MenuServiceItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MerchandiseItem";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MerchandiseShelf";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MetadataRow";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MusicCarouselShelf";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MusicShelf";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MusicThumbnail";}
@@ -489,6 +490,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MenuServiceItem_Omit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MerchandiseItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MerchandiseShelf";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MetadataRow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat.ios";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat.url";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Microformat_Other";}
