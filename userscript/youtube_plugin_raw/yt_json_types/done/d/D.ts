@@ -150,8 +150,8 @@ type D_UrlInfoItemType=
 type D_VideoCategory=
 	|"Autos & Vehicles"
 	|"Comedy"
-	|"Entertainment"
 	|"Education"
+	|"Entertainment"
 	|"Film & Animation"
 	|"Gaming"
 	|"Howto & Style"
@@ -159,6 +159,7 @@ type D_VideoCategory=
 	|"People & Blogs"
 	|"Pets & Animals"
 	|"Science & Technology"
+	|"Sports"
 	;
 ;
 type D_VE6827_PageLocation=
