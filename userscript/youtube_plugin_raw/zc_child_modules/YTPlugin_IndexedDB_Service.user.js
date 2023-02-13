@@ -247,10 +247,6 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
 	get_index_key(key) {
-		return this.get_index_key_str(key);
-	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key */
-	get_index_key_str(key) {
 		switch(key) {
 			case "hashtag": return "hashtag";
 			case "video_id": return "v";
@@ -260,7 +256,7 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @arg {IDBObjectStore} obj_store @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T[]} database_data @arg {K} key */
 	on_cursor_complete(obj_store,database_data,key) {
-		const index_key=this.get_index_key_str(key);
+		const index_key=this.get_index_key(key);
 		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
 		let database_map=new Map;
 		/** @private @type {Map<string,DatabaseStoreTypes[keyof DatabaseStoreTypes]>} */
