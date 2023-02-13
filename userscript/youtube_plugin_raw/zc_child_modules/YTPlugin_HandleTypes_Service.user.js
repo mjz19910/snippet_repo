@@ -1033,24 +1033,6 @@ class HandleTypes extends HandleTypesEval {
 		if("targetId" in u) {
 			const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
 			this.trackingParams(cf2,trackingParams);
-			if(contents.length>0) {
-				let cu=contents[0];
-				if(typeof cu!=="object"||!cu) {debugger; return null;}
-				let k=this.get_keys_of(cu);
-				switch(cf1) {
-					default: debugger; break;
-					case `TD_ItemSection_3<"comment-item-section","comments-section">`: break;
-					case `TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`: break;
-					case `TD_ItemSection_3<"sid-wn-chips","watch-next-feed">`: break;
-				}
-				switch(k[0]) {
-					default: console.log(`-- [TD_Section_3.${cf1}.Section_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); break;
-					case "continuationItemRenderer":
-					case "compactVideoRenderer":
-					case "compactRadioRenderer":
-					case "adSlotRenderer":
-				}
-			}
 			return as_any([contents,sectionIdentifier,targetId]);
 		}
 		const {contents,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
