@@ -53,7 +53,7 @@ class IndexedDBService extends BaseService {
 		hashtag: ["hashtag",[]],
 		boxed_id: ["boxed_id",[]],
 	};
-	/** @template {keyof DatabaseStoreTypes} T @arg {T} key @returns {Extract<data_cache_Return,[T,...any]>} */
+	/** @template {keyof DatabaseStoreTypes} T @arg {T} key @returns {Mk_data_cache_Return<T>} */
 	get_data_cache(key) {
 		return as([key,this.store_cache[key][1]]);
 	}
@@ -204,12 +204,45 @@ class IndexedDBService extends BaseService {
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
-		if(this.get_data_cache(cur_name).length>0) this.consume_data(transaction,store_desc);
+		switch(cur_name) {
+			case "boxed_id": {
+				let d_cache=this.get_data_cache(cur_name); d_cache;
+			} break;
+			case "hashtag": {
+				let d_cache=this.get_data_cache(cur_name); d_cache;
+			} break;
+			case "video_id": {
+				let d_cache=this.get_data_cache(cur_name); d_cache;
+			} break;
+		}
+		const obj_store=transaction.objectStore(cur_name);
+		const cursor_req=obj_store.openCursor(IDBKeyRange.only(cur_name));
+		cursor_req.onsuccess=() => {
+			const cursor=cursor_req.result;
+			if(cursor) {
+				console.log("cursor_result",cursor.value);
+				cursor.continue();
+			}
+		};
+		// if(this.get_data_cache(cur_name).length>0) this.consume_data(transaction,store_desc);
 	}
-	/** @private @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
-	consume_data(transaction,store_desc) {
+	/** @protected @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
+	consume_data_old(transaction,store_desc) {
 		const obj_store=transaction.objectStore(store_desc.name);
 		this.consume_data_with_store(obj_store);
+	}
+	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store */
+	consume_data_with_store(obj_store) {
+		const cursor_req=obj_store.openCursor();
+		/** @private @type {T[]} */
+		let database_data=[];
+		cursor_req.onsuccess=() => {
+			const cursor=cursor_req.result;
+			if(cursor) {
+				database_data.push(cursor.value);
+				cursor.continue();
+			}
+		};
 	}
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
@@ -298,19 +331,6 @@ class IndexedDBService extends BaseService {
 			} else {debugger;}
 		}
 		[...new_data_map.values()].forEach(e => {this.add_data_to_store(obj_store,e);});
-	}
-	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store */
-	consume_data_with_store(obj_store) {
-		const cursor_req=obj_store.openCursor();
-		/** @private @type {T[]} */
-		let database_data=[];
-		cursor_req.onsuccess=() => {
-			const cursor=cursor_req.result;
-			if(cursor) {
-				database_data.push(cursor.value);
-				cursor.continue();
-			}
-		};
 	}
 	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	add_data_to_store(store,data) {
