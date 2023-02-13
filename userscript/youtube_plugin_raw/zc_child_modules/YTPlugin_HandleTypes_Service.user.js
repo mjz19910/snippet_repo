@@ -4040,7 +4040,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Button_targetId} x */
 	D_Button_targetId(x) {
 		let cf="D_Button_targetId";
-		this.targetId(cf,x);
 		switch(x) {
 			default: debugger; x===""; break;
 			case "watch-supervod-button":
@@ -4048,6 +4047,7 @@ class HandleTypes extends HandleTypesEval {
 			case "create-clip-button-action-bar":
 			case "sponsorships-button":
 		}
+		this.targetId(cf,x);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
