@@ -315,7 +315,11 @@ type G_ClientSignal_Item=
 	;
 ;
 type G_RichSection=R_RichShelf|R_InlineSurvey|R_SourcePivotHeader;
-type G_Text=({runs: D_TextRun[];}|{simpleText: string;})&G_Text_Base;
+type G_Text={
+	runs?: D_TextRun[];
+	simpleText?: string;
+	accessibility?: D_Accessibility;
+};
 type G_Text_Base={accessibility?: D_Accessibility;};
 type G_SE_MenuService=
 	|A_ChangeEngagementPanelVisibility

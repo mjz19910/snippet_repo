@@ -1124,9 +1124,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
 		const cf="G_Text"; this.k(cf,x);
-		/** @type {T_UnionToPartial<G_Text>} */
-		let x1=x;
-		const {runs,simpleText,accessibility,...y}=this.s(cf,x1); this.g(y);/*#destructure_done*/
+		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(simpleText,this.a_primitive_str);
 		this.tz(runs,x => this.D_TextRun(x,this.G_TextRun_Endpoint));
 		this.t(accessibility,this.D_Accessibility);
@@ -4808,39 +4806,27 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton"; this.k(cf,x);
-		if(!("buttonText" in x)) {
-			const {enabled,...y1}=this.s(cf,x);
-			this.a_primitive_bool(enabled);
-			let [x1,y2]=this.unwrap_prefix(y1,"unsubscribed"); this.g(y2);
-			this.D_SubscribeButton_UnsubscribedPrefix(x1);
-			return;
-		}
 		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
 		this.a_primitive_bool(enabled);
-		this.G_Text(buttonText);
-		this._primitive_of(subscribed,"boolean");
+		this.t(buttonText,this.G_Text);
+		this.t(subscribed,this.a_primitive_bool);
 		if(type!=="FREE") debugger;
-		this.D_ChannelId(channelId);
-		this.trackingParams(cf,trackingParams);
-		this.a_primitive_bool(showPreferences);
+		this.t(channelId,this.D_ChannelId);
+		if(trackingParams) this.trackingParams(cf,trackingParams);
+		this.t(showPreferences,this.a_primitive_bool);
 		let [sub,o1]=this.unwrap_prefix(y1,"subscribed");
 		this.D_SubButton_Prefix_1(cf,sub);
 		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
-		/** @arg {T_RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
-		let r_un_sub=({...x}) => {
-			const {buttonText,...y}=this.s(`${cf}.unsubscribed`,x); this.g(y);
-			this.G_Text(buttonText);
-		};
-		r_un_sub(un_sub);
+		this.D_SubscribeButton_UnsubscribedPrefix(un_sub);
 		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
-		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton_Alts_1,`subscribed${string}`>,"subscribe">} x */
+		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
 		let r_sub_2=({...x}) => {
 			const {accessibility,...y}=this.s(`${cf}.subscribe`,x); this.g(y);
 			this.D_Accessibility(accessibility);
 		};
 		r_sub_2(sub_2);
 		let [un_sub_2,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
-		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton_Alts_1,`unsubscribed${string}`>,"unsubscribe">} x */
+		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
 		let r_un_sub_2=({...x}) => {
 			const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
 			this.G_Text(buttonText);
@@ -4848,8 +4834,8 @@ class HandleTypes extends HandleTypesEval {
 		};
 		r_un_sub_2(un_sub_2);
 		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y}=o4; this.g(y);
-		this.z(onSubscribeEndpoints,this.E_Subscribe);
-		this.z(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
+		this.tz(onSubscribeEndpoints,this.E_Subscribe);
+		this.tz(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
 		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
 		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
 	}
@@ -10729,7 +10715,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
 		const cf="D_EndscreenElement";
-		const {style,image,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		const {style,image,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
 		switch(style) {
 			default: debugger; break;
 			case "CHANNEL":
@@ -10745,10 +10731,14 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(endMs);
 		this.G_Text(title);
 		this.g(metadata);
+		this.t(callToAction,this.G_Text);
+		this.t(dismiss,this.G_Text);
 		this.E_VE3611(endpoint);
+		this.t(hovercardButton,this.R_SubscribeButton);
 		this.trackingParams(cf,trackingParams);
+		this.t(isSubscribe,x => this.ceq(x,true));
 		console.log(`${cf}.id`,id);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

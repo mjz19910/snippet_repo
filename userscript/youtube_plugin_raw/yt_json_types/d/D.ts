@@ -1620,8 +1620,9 @@ type D_EndscreenElement={
 	endpoint: E_VE3611;
 	hovercardButton?: R_SubscribeButton;
 	trackingParams: string;
+	isSubscribe?: true;
 	id: string;
-	thumbnailOverlays: G_ThumbnailOverlayItem[];
+	thumbnailOverlays?: G_ThumbnailOverlayItem[];
 };
 type D_EngagementSectionPanelId=T_TargetIdStr<"engagement-panel",[
 	"clip-create",
