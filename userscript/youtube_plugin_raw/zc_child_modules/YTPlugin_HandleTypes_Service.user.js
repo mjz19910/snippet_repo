@@ -451,8 +451,9 @@ class HandleTypes extends HandleTypesEval {
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
+			/** @private @type {P_LogItems} */
 			case "continuation_token.data": switch(map_entry_key) {
-				case 110:
+				case 1: case 15: case 49: case 72: case 110:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
@@ -600,6 +601,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				case "request_continuation.token.f6.f4.f37":
 				case "entity_key.subscribed.f2":
+				case "continuation_token.data.f15":
 				case "request_continuation.token.f2.f2": case "request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "request_continuation.token.f9.f1.f4": {
 				} return;
 				case "request_continuation.token.f9.f1.f2": return;
@@ -705,6 +707,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
+					case "entry_f15":
 					case "context_params": case "data": case "token": case "entity_key":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
@@ -719,7 +722,7 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f23": case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
-					case "f30": case "f33": case "f39": case "f40":
+					case "f30": case "f33": case "f39": case "f40": case "f49":
 					case "f56": case "f57": case "f71": case "f72": case "f77": case "f84": case "f93": case "f94": case "f110":
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
@@ -6642,31 +6645,8 @@ class HandleTypes extends HandleTypesEval {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
-		switch(root) {
-			case "D_TemplateUpdate": {
-				let buffer=bs.base64_url_dec.decodeByteArray(x);
-				if(!buffer) return;
-				let reader=new MyReader(buffer);
-				reader.pos+=1;
-				let res_e=reader.try_read_any();
-				if(!res_e) return;
-				let [_ru,...ex]=res_e;
-				let bi=ex[0];
-				if(bi[0]==="data64") {
-					let ui=bi[3];
-					let rem=ui%300n;
-					if(rem>0n) debugger;
-					let nu=Number(ui/300n)/1000;
-					console.log("[TemplateTime]",nu);
-				}
-				let param_map=this.make_param_map(res_e);
-				this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
-				return;
-			}
-		}
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		switch(root) {case "DE_GetTranscript": return this.parse_get_transcript(root,path,map_entry_key_path,param_map,params_callback);}
 		this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
 	}
 	/** @private @type {string[]} */
@@ -6681,97 +6661,6 @@ class HandleTypes extends HandleTypesEval {
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
 		this.parse_player_param(root,path,param_map,callback);
-	}
-	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} param_map @arg {T_ParseCallbackFunction<T>} callback */
-	parse_get_transcript(root,path,map_entry_key_path,param_map,callback) {
-		this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),callback);
-		/** @private @type {V_ParamMapValue[]} */
-		let transcript_args=[];
-		let pMap=param_map;
-		/** @private @arg {number} x */
-		function convert_param(x) {
-			if(x<=0) {debugger; return;}
-			let pf=pMap.get(x);
-			if(pf) {
-				if(pf.length!==1) debugger;
-				transcript_args[x-1]=pf[0];
-			}
-		}
-		this.z([1,2,3,5,6,7,8],a => convert_param(a));
-		/** @private @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
-		let transcript_args_dec=null;
-		let p0=transcript_args[0];
-		let p1=transcript_args[1];
-		let p2=transcript_args[2];
-		let p4=transcript_args[4];
-		let p5=transcript_args[5];
-		let p6=transcript_args[6];
-		let p7=transcript_args[7];
-		x: if(
-			typeof p0=='string'&&typeof p1=='string'
-			&&p2===1
-			&&typeof p4=='string'
-			&&p5===1&&p6===1&&p7===1
-		) {
-			switch(p4) {
-				case "engagement-panel-searchable-transcript-search-panel": break;
-				default: debugger; break x;
-			}
-			transcript_args_dec={
-				videoId: p0,
-				langParams: p1,
-				unk3: p2,
-				targetId: p4,
-				unk6: p5,
-				unk7: p6,
-				unk8: p7
-			};
-		}
-		x: if(transcript_args_dec) {
-			let param_1=decodeURIComponent(transcript_args_dec.langParams);
-			let param_buf_1=this._decode_b64_url_proto_obj(param_1);
-			if(param_buf_1===null) {debugger; break x;}
-			let param_map_1=this.make_param_map(param_buf_1);
-			if(!param_map_1) {debugger; break x;}
-			let lp_p1=param_map_1.get(1);
-			let lp_p2=param_map_1.get(2);
-			let lp_p3=param_map_1.get(3);
-			y: if(lp_p1&&lp_p2&&typeof lp_p1==='string'&&typeof lp_p2==='string'&&lp_p3 instanceof Map) {
-				if(lp_p1!=="asr") break y;
-				if(lp_p2!=="en") break y;
-				if(lp_p3.size!==0) break y;
-				return;
-			}
-			y: if(lp_p1!==void 0&&lp_p2!==void 0&&lp_p3!==void 0) {
-				c: if(lp_p1 instanceof Map) {
-					if(lp_p1.size===0) break c;
-					let lp_p1_=this.to_param_obj(lp_p1);
-					console.log("[lp_p1_]",lp_p1_);
-					break y;
-				}
-				c: if(typeof lp_p2==='string') {
-					if(lp_p2==="en") break c;
-					console.log("[lp_p2]",lp_p2);
-					break y;
-				}
-				c: if(lp_p3 instanceof Map) {
-					if(lp_p3.size===0) break c;
-					let lp_p3_=this.to_param_obj(lp_p3);
-					console.log("[lp_p3_]",lp_p3_);
-					break y;
-				}
-				return;
-			}
-			console.log("[get_transcript_args]",transcript_args_dec);
-			let param_obj_1=this.to_param_obj(param_map_1);
-			console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
-			debugger;
-			return;
-		}
-		if(transcript_args_dec) {console.log("[get_transcript_args]",transcript_args_dec);}
-		let param_obj=this.to_param_obj(param_map);
-		console.log("[new_get_transcript_endpoint_params]",param_obj);
-		{debugger;}
 	}
 	/** @private @type {string[]} */
 	cache_playlist_index=[];

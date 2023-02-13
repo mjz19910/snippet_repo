@@ -1,4 +1,8 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [continuation_token.data.f49]",
+	"[parse_value.gen_ns] [continuation_token.data.f72]",
+	"[parse_value.gen_ns] [continuation_token.data.f1]",
+	"[parse_value.gen_ns] [continuation_token.data.f15]",
 	`[parse_value.gen_ns] [${"player_state"|"load_markers"|"change_markers_visibility"|"macro_marker_repeat_state"}.entity_key.${"f2"|"f4"|"f5"}]`,
 	"[parse_value.gen_ns] [request_continuation.token.f9.f1.f2]",
 	"[parse_value.gen_ns] [request_continuation.token.f6.f4.f37]",
