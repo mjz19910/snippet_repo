@@ -3,7 +3,7 @@ type P_PathRootStr=
 	|"_level_2_0._level_2_1"
 	|"aadc_guidelines_state.entity_key"
 	|"AdServingDataEntry"
-	|"browse$param"
+	|"browse.params"
 	|"change_markers_visibility.entity_key"
 	|"continuation_token.data"
 	|"create_comment.params"
