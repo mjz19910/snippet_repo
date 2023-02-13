@@ -16,6 +16,7 @@
 const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {throw new Error("Failed to load base plugin");}
 if(__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
+const seen_map=new Set;
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 const as=required(bs.as_);
@@ -574,6 +575,91 @@ class HandleTypes extends HandleTypesEval {
 				}
 				return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 		}
+	}
+	/** @private @arg {D_BrowseEndpointPages} x */
+	parse_known_page(x) {
+		switch(x) {
+			case "comment_shorts_web_top_level":
+			case "explore":
+			case "guide_builder":
+			case "history":
+			case "library":
+			case "storefront":
+			case "subscriptions":
+			case "trending":
+			case "what_to_watch": return true;
+			default:
+		}
+		switch(x) {
+			case "music_charts":
+			case "music_explore":
+			case "music_home":
+			case "music_library_corpus_artists":
+			case "music_library_corpus_track_artists":
+			case "music_library_landing":
+			case "music_liked_albums":
+			case "music_liked_playlists":
+			case "music_liked_videos":
+			case "music_moods_and_genres_category":
+			case "music_moods_and_genres":
+			case "music_new_releases": return true;
+			default:
+		}
+		switch(x) {
+			case "hashtag": return true;
+			default:
+		}
+		switch(x) {
+			case "": return true;
+			default:
+		}
+		switch(x) {default: debugger; return false;}
+	}
+	/** @api @public @arg {D_BrowseIdStr} x */
+	parse_browse_id(x) {
+		if(this.str_starts_with(x,"FE")) {
+			let page=split_string_once(x,"FE")[1];
+			let known_page=this.parse_known_page(page);
+			if(known_page) return;
+			if(seen_map.has(page)) return;
+			seen_map.add(page);
+			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
+			return;
+		}
+		if(this.str_starts_with(x,"VL")) {return this.x.get("handle_types").parse_guide_entry_id(split_string_once(x,"VL")[1]);}
+		if(this.str_starts_with(x,"UC")) {
+			if(x.slice(2).length===22) return;
+			console.log("new with param [param_2c_UC]",x);
+			return;
+		}
+		if(this.str_starts_with(x,"SP")) {
+			/** @private @type {D_Settings_Id} */
+			let x1=split_string_once(x,"SP")[1];
+			switch(x1) {
+				case "account_advanced":
+				case "account_downloads":
+				case "account_overview":
+				case "account":
+				case "report_history":
+				case "unlimited":
+					return;
+				default: console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
+			}
+			console.log("new with param [param_2c_SP]",x,x1);
+			return;
+		}
+		if(this.str_starts_with(x,"MP")) {
+			let x1=split_string_once(x,"MP")[1];
+			let x2=split_string_once(x1,"_");
+			switch(x2[0]) {
+				case "TRt": break;
+				case "REb": break;
+				case "LYt": break;
+				default: console.log("new with param [param_2c_MP]",x,x1,x2); debugger;
+			}
+			return;
+		}
+		{debugger;}
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {

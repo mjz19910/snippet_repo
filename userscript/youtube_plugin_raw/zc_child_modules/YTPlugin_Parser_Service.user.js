@@ -21,7 +21,6 @@ const split_string_once=bs.split_string_once;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-const seen_map=new Set;
 if(__yt_plugin_log_imports__) console.log("Load Parser Service");
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
@@ -650,52 +649,6 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[0]);
 		}
 		return x[0];
-	}
-	/** @api @public @arg {D_BrowseIdStr} x */
-	parse_browse_id(x) {
-		if(this.str_starts_with_r(x,"FE")) {
-			let page=split_string_once(x,"FE")[1];
-			let known_page=this.parse_known_page(page);
-			if(known_page) return;
-			if(seen_map.has(page)) return;
-			seen_map.add(page);
-			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
-			return;
-		}
-		if(this.str_starts_with_r(x,"VL")) {return this.x.get("handle_types").parse_guide_entry_id(split_string_once(x,"VL")[1]);}
-		if(this.str_starts_with_r(x,"UC")) {
-			if(x.slice(2).length===22) return;
-			console.log("new with param [param_2c_UC]",x);
-			return;
-		}
-		if(this.str_starts_with_r(x,"SP")) {
-			/** @private @type {D_Settings_Id} */
-			let x1=split_string_once(x,"SP")[1];
-			switch(x1) {
-				case "account_advanced":
-				case "account_downloads":
-				case "account_overview":
-				case "account":
-				case "report_history":
-				case "unlimited":
-					return;
-				default: console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
-			}
-			console.log("new with param [param_2c_SP]",x,x1);
-			return;
-		}
-		if(this.str_starts_with_r(x,"MP")) {
-			let x1=split_string_once(x,"MP")[1];
-			let x2=split_string_once(x1,"_");
-			switch(x2[0]) {
-				case "TRt": break;
-				case "REb": break;
-				case "LYt": break;
-				default: console.log("new with param [param_2c_MP]",x,x1,x2); debugger;
-			}
-			return;
-		}
-		{debugger;}
 	}
 }
 
