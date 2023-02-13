@@ -1,4 +1,6 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [reel_request_continuation.token.f8]",
+	"[parse_value.gen_ns] [reel_request_continuation.token.f12]",
 	"[parse_value.gen_ns] [get_pdg_buy_flow.params.f1.f1]",
 	"[parse_value.gen_ns] [get_pdg_buy_flow.params.f1.f2]",
 	"[parse_value.gen_ns] [get_pdg_buy_flow.params.f1.f3]",

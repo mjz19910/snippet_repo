@@ -475,9 +475,6 @@ class HandleTypes extends HandleTypesEval {
 			case "reel_request_continuation.token.f3": {
 				switch(map_entry_key) {case 1: case 3: case 4: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "reel_request_continuation.token": {
-				switch(map_entry_key) {case 1: case 3: case 5: case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			}
 			case "continuation_token.data.f53.f4": {
 				switch(map_entry_key) {case 4: case 6: case 15: case 25: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -517,8 +514,12 @@ class HandleTypes extends HandleTypesEval {
 			case "watch.player_params": {
 				switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
+			/** @private @type {P_LogItems} */
 			case "transcriptTrackSelection.serializedParams": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token": {
+				switch(map_entry_key) {case 1: case 3: case 5: case 8: case 12: case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
 			case "continuation_token.data": {
 				switch(map_entry_key) {case 1: case 15: case 49: case 53: case 72: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
