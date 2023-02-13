@@ -1,4 +1,7 @@
 type P_LogItems=[
+	"[parse_value.gen_ns] [macro_marker_repeat_state.entity_key.f2]",
+	"[parse_value.gen_ns] [macro_marker_repeat_state.entity_key.f4]",
+	"[parse_value.gen_ns] [macro_marker_repeat_state.entity_key.f5]",
 	"[parse_value.gen_ns] [load_markers.entity_key.f2]",
 	"[parse_value.gen_ns] [load_markers.entity_key.f4]",
 	"[parse_value.gen_ns] [load_markers.entity_key.f5]",

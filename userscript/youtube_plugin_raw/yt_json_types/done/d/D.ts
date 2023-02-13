@@ -852,47 +852,30 @@ type D_HeroPlaylistThumbnail={
 	onTap: E_Watch;
 	thumbnailOverlays: G_ThumbnailOverlayItem;
 };
-type D_MacroMarkersListItem=
-	|never
-	|{
-		title: G_Text;
-		timeDescription: G_Text;
-		thumbnail: D_Thumbnail;
-		onTap: E_Watch;
-		trackingParams: string;
-		shareButton: R_Button;
-		repeatButton: R_ToggleButton;
-		macroMarkerRepeatStateEntityKey: string;
-		endRepeatCommand: C_CommandExecutor;
-		playerStateEntityKey: string;
-		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-		timeDescriptionA11yLabel: "0 seconds";
-	}
-	|{
-		title: G_Text;
-		timeDescription: G_Text;
-		thumbnail: D_Thumbnail;
-		onTap: E_Watch;
-		trackingParams: string;
-		shareButton: R_Button;
-		repeatButton?: R_ToggleButton;
-		macroMarkerRepeatStateEntityKey: string;
-		endRepeatCommand: C_CommandExecutor;
-		playerStateEntityKey: string;
-		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-		lightColorPalette: D_LightColorPalette;
-		darkColorPalette: D_DarkColorPalette;
-		timeDescriptionA11yLabel: `${number} seconds`;
-	}
-	|{
-		title: G_Text;
-		timeDescription: G_Text;
-		thumbnail: D_Thumbnail;
-		onTap: E_Watch;
-		trackingParams: string;
-		layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
-		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
-	};
+type D_MacroMarkersListItem={
+	title: G_Text;
+	timeDescription: G_Text;
+	thumbnail: D_Thumbnail;
+	onTap: E_Watch;
+	trackingParams: string;
+	shareButton: R_Button;
+	repeatButton?: R_ToggleButton;
+	macroMarkerRepeatStateEntityKey: string;
+	endRepeatCommand?: C_CommandExecutor;
+	playerStateEntityKey: string;
+	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
+	lightColorPalette?: D_LightColorPalette;
+	darkColorPalette?: D_DarkColorPalette;
+	timeDescriptionA11yLabel: `${number} seconds`;
+}|{
+	title: G_Text;
+	timeDescription: G_Text;
+	thumbnail: D_Thumbnail;
+	onTap: E_Watch;
+	trackingParams: string;
+	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
+	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
+};
 type D_Notification={
 	thumbnail: D_Thumbnail;
 	videoThumbnail: D_Thumbnail;

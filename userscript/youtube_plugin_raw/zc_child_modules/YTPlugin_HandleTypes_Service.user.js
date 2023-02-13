@@ -362,6 +362,7 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "macro_marker_repeat_state.entity_key":
 			case "load_markers.entity_key":
 			case "change_markers_visibility.entity_key": switch(map_entry_key) {
 				case 2: case 4: case 5:
@@ -8862,7 +8863,6 @@ class HandleTypes extends HandleTypesEval {
 		{
 			const x=s4_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`l1_s4_c_r`,r); break;
 				case 0xdf: case 0xe4: case 0xe5: case 0xe8: case 0xe9:
@@ -8878,13 +8878,17 @@ class HandleTypes extends HandleTypesEval {
 				case 0xe5: case 0xe7: case 0xe9:
 				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe6: case 0xe8: case 0xea: case 0xeb:
 			}
+			switch(a) {
+				default: log_color(`l1_s4_c_a`,r); break;
+				case 0xf2: case 0xff:
+			}
 		}
 		if("section1Color" in y) {
 			const {section1Color: s1_c,section3Color: s3_c,...y1}=y; this.g(y1);
 			{
 				const x=s1_c;
 				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xf2) debugger;
+				if(a!==0xff) debugger;
 				switch(r) {
 					default: log_color(`l1_s1_c_r`,r); break;
 				}
@@ -8898,15 +8902,15 @@ class HandleTypes extends HandleTypesEval {
 			{
 				const x=s3_c;
 				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xf2) debugger;
+				if(a!==0xff) debugger;
 				switch(r) {
-					default: log_color(`l2_s3_c_r`,r); break;
+					default: log_color(`l1_s3_c_r`,r); break;
 				}
 				switch(g) {
-					default: log_color(`l2_s3_c_g`,g); break;
+					default: log_color(`l1_s3_c_g`,g); break;
 				}
 				switch(b) {
-					default: log_color(`l2_s3_c_b`,b); break;
+					default: log_color(`l1_s3_c_b`,b); break;
 				}
 			}
 			return;
@@ -8986,7 +8990,7 @@ class HandleTypes extends HandleTypesEval {
 		{
 			const x=s2_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xf2) debugger;
+			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`d1_s2_c_r`,r); break;
 				case 0x05: case 0x06: case 0x07: case 0x09: case 0x0a:
@@ -9018,7 +9022,7 @@ class HandleTypes extends HandleTypesEval {
 		{
 			const x=s4_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xf2) debugger;
+			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`d1_s4_c_r`,r); break;
 				case 0x01: case 0x02: case 0x03: case 0x04: case 0x05: case 0x06: case 0x07:
@@ -9563,7 +9567,7 @@ class HandleTypes extends HandleTypesEval {
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem"; this.k(cf,x);
 		if("playerStateEntityKey" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,timeDescriptionA11yLabel,...y}=this.s(cf,x);
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
 			this.G_Text(title);
 			this.G_Text(timeDescription);
 			this.D_Thumbnail(thumbnail);
@@ -9572,21 +9576,12 @@ class HandleTypes extends HandleTypesEval {
 			this.R_Button(shareButton);
 			this.t(repeatButton,this.R_ToggleButton);
 			this.params(cf,"macro_marker_repeat_state.entity_key",a);
-			x: {
-				let x=endRepeatCommand;
-				if("commandExecutorCommand" in x) {this.C_CommandExecutor(x); break x;}
-				this.C_Executor(x);
-			}
+			this.t(endRepeatCommand,this.C_CommandExecutor);
 			this.params(cf,"player_state.entity_key",b);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 			this.a_primitive_str(timeDescriptionA11yLabel);
-			if("lightColorPalette" in y) {
-				const {lightColorPalette,darkColorPalette,...y1}=y; this.g(y1);
-				this.D_LightColorPalette(cf,lightColorPalette);
-				this.D_DarkColorPalette(cf,darkColorPalette);
-				return;
-			}
-			this.g(y);
+			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
+			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
 			return;
 		}
 		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
