@@ -6068,7 +6068,8 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		switch(reelPlayerNavigationModel) {
 			default: this.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef_all(cf,x); break;
-			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED": break;
+			case void 0:
+			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
 		}
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.t(videoInteractions,this.g);
