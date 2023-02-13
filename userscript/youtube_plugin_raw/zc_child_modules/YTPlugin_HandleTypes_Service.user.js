@@ -10736,7 +10736,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(hovercardButton,this.R_SubscribeButton);
 		this.trackingParams(cf,trackingParams);
 		this.t(isSubscribe,x => this.ceq(x,true));
-		console.log(`${cf}.id`,id);
+		this.a_primitive_str(id);
 		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 	}
 	//#endregion
