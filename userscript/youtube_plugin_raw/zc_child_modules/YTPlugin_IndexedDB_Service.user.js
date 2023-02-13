@@ -198,7 +198,7 @@ class IndexedDBService extends BaseService {
 		db.close();
 	}
 	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
-	start_transaction(db,store_desc) {
+	async start_transaction(db,store_desc) {
 		let cur_name=store_desc.name;
 		const transaction=db.transaction(cur_name,"readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
@@ -225,6 +225,10 @@ class IndexedDBService extends BaseService {
 			}
 		};
 		// if(this.get_data_cache(cur_name).length>0) this.consume_data(transaction,store_desc);
+		for(;;) {
+			let cursor_res=await this.await_success(cursor_req);
+			if(!cursor_res) break;
+		}
 	}
 	/** @protected @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
 	consume_data_old(transaction,store_desc) {
@@ -341,10 +345,10 @@ class IndexedDBService extends BaseService {
 			this.committed_data.push(data);
 		};
 	}
-	/** @template T @arg {IDBRequest<T>} db_request @returns {Promise<{result:T;event:Event}>} */
+	/** @template T @arg {IDBRequest<T>} db_request @returns {Promise<Event>} */
 	await_success(db_request) {
 		return new Promise(function(accept,reject) {
-			db_request.onsuccess=function(event) {accept({result: db_request.result,event});};
+			db_request.onsuccess=function(event) {accept(event);};
 			db_request.onerror=function(event) {reject(event);};
 		});
 	}
@@ -361,7 +365,8 @@ class IndexedDBService extends BaseService {
 		const index_key=this.get_index_key(key);
 		/** @private @type {IDBRequest<T[]>} */
 		let get_all_video_id_req=src_obj_store.getAll();
-		let {result: video_id_result}=await this.await_success(get_all_video_id_req);
+		await this.await_success(get_all_video_id_req);
+		const video_id_result=get_all_video_id_req.result;
 		if(index_key) {
 			const dst_obj_store=db.createObjectStore(key,{keyPath: index_key});
 			dst_obj_store.createIndex(key,index_key,options);
