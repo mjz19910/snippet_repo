@@ -474,14 +474,6 @@ class HandleTypes extends HandleTypesEval {
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: new_ns(); debugger; return;
 			}
-			case "player_state.entity_key":
-			case "macro_marker_repeat_state.entity_key":
-			case "load_markers.entity_key":
-			case "change_markers_visibility.entity_key": switch(map_entry_key) {
-				case 2: case 4: case 5:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
 			case "watch_request_continuation.token.f9.f1.f4": switch(map_entry_key) {
 				case 13:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -581,7 +573,6 @@ class HandleTypes extends HandleTypesEval {
 			case "D_Browse.param": switch(map_entry_key) {case 2: case 5: case 23: case 77: case 84: case 93: case 94: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 			case "create_comment.params.f5": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "create_comment.params": switch(map_entry_key) {case 2: case 5: case 10: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "aadc_guidelines_state_entity_key": switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "unsubscribe.params.f1": switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "unsubscribe.params": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "reel.params.f3": switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -631,9 +622,6 @@ class HandleTypes extends HandleTypesEval {
 			case "D_Browse.param.f93": case "browse$param.f93":
 			case "get_report_form.params.f28.f1": switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "D_Browse.param.f84": case "browse$param.f84": switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "entity_key.normal":
-			case "entity_key.subscribed":
-				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			// Object type {f1:any;f2:any;}
 			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1":
 			case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
@@ -648,6 +636,11 @@ class HandleTypes extends HandleTypesEval {
 				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "slot_ad_serving_data_entry.f3": case "AdServingDataEntry.f10":
 				switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			case "player_state.entity_key":			case "macro_marker_repeat_state.entity_key":			case "load_markers.entity_key":			case "change_markers_visibility.entity_key":
+			case "entity_key.normal":
+			case "entity_key.subscribed":
+			case "aadc_guidelines_state.entity_key":
+				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			case "tracking.trackingParams":
 				switch(map_entry_key) {
 					case 16: case 19: break;
@@ -901,7 +894,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
+			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "browse$param":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
 			case "D_Browse":
@@ -928,7 +921,7 @@ class HandleTypes extends HandleTypesEval {
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f9":
+					case "f1": case "f3": case "f4": case "f5": case "f6": case "f7": case "f9":
 					case "f10": case "f13": case "f14":
 					case "f84": case "f93":
 				}
@@ -8786,7 +8779,7 @@ class HandleTypes extends HandleTypesEval {
 		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_Button(submitButton);
 		this.R_Button(cancelButton);
-		this.params(cf,"aadc_guidelines_state_entity_key",aadcGuidelinesStateEntityKey);
+		this.params(cf,"aadc_guidelines_state.entity_key",aadcGuidelinesStateEntityKey);
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);

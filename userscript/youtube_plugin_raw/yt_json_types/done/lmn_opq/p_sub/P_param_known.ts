@@ -1,7 +1,7 @@
 type P_param_known=
-	|"aadc_guidelines_state_entity_key.f2"
-	|"aadc_guidelines_state_entity_key.f4"
-	|"aadc_guidelines_state_entity_key.f5"
+	|"aadc_guidelines_state.entity_key.f2"
+	|"aadc_guidelines_state.entity_key.f4"
+	|"aadc_guidelines_state.entity_key.f5"
 	|"AdServingDataEntry.f4"
 	|"AdServingDataEntry.f5"
 	|"AdServingDataEntry.f6"
