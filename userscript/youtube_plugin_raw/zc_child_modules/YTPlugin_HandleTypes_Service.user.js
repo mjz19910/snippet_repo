@@ -8841,7 +8841,6 @@ class HandleTypes extends HandleTypesEval {
 		{
 			const x=s2_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`l1_s2_c_r`,r); break;
 				case 0xf4: case 0xf5: case 0xf6:
@@ -8854,6 +8853,10 @@ class HandleTypes extends HandleTypesEval {
 			switch(b) {
 				default: log_color(`l1_s2_c_b`,b); break;
 				case 0xf1: case 0xf8: case 0xf2: case 0xf6: case 0xf5: case 0xf7:
+			}
+			switch(a) {
+				default: log_color(`l1_s2_c_a`,r); break;
+				case 0xf2: case 0xff:
 			}
 		}
 		{
@@ -10592,6 +10595,11 @@ class HandleTypes extends HandleTypesEval {
 	MG_AdLayout_PlayerBytes(x) {
 		const cf="MG_AdLayout_PlayerBytes";
 		const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);
+		switch(layoutType) {
+			default: debugger; break;
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
+		}
+		console.log(`${cf}.layoutId`,layoutId);
 	}
 	/** @private @arg {G_LinearAdsItem} x */
 	G_LinearAdsItem(x) {
@@ -10603,6 +10611,7 @@ class HandleTypes extends HandleTypesEval {
 	D_InstreamVideoAd(x) {
 		const cf="D_InstreamVideoAd";
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
+		debugger;
 	}
 	/** @private @arg {D_ClientForecastingAd} x */
 	D_ClientForecastingAd(x) {
@@ -10616,6 +10625,8 @@ class HandleTypes extends HandleTypesEval {
 	D_AdBreakService(x) {
 		const cf="D_AdBreakService";
 		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
+		if(prefetchMilliseconds!=="10000") debugger;
+		debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
