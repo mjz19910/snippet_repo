@@ -10733,6 +10733,19 @@ class HandleTypes extends HandleTypesEval {
 			case "CHANNEL":
 			case "VIDEO":
 		}
+		this.g(image);
+		this.a_primitive_num(left);
+		this.a_primitive_num(width);
+		this.a_primitive_num(top);
+		this.a_primitive_num(aspectRatio);
+		this.a_primitive_str(startMs);
+		this.a_primitive_str(endMs);
+		this.g(title);
+		this.g(metadata);
+		this.g(endpoint);
+		this.trackingParams(cf,trackingParams);
+		this.a_primitive_num(id);
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
