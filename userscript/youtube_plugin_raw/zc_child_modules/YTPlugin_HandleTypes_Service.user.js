@@ -1098,6 +1098,7 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("urlEndpoint" in x) return this.E_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {G_RichSection} x */

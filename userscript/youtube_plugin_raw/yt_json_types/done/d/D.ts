@@ -953,7 +953,7 @@ type D_Radio={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	videoCountShortText: G_Text;
 };
-type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch;
+type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch|E_ReelWatch;
 type D_WebPrefetch={navigationEndpoints: E_Watch[];};
 type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
 type D_SubFeedOption={
