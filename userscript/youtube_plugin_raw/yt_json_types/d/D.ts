@@ -1601,19 +1601,24 @@ type D_EmojiImage={
 type D_Endscreen={
 	elements: R_EndscreenElement[];
 	startMs?: number;
+	trackingParams: string;
 };
 type D_EndscreenElement={
 	style: "VIDEO"|"CHANNEL";
-	image: {};
+	image: D_Thumbnail;
+	icon?: D_Thumbnail;
 	left: number;
 	width: number,
 	top: number;
 	aspectRatio: number;
 	startMs: `${number}`;
 	endMs: `${number}`;
-	title: {};
+	title: G_Text;
 	metadata: {};
-	endpoint: {};
+	callToAction?: G_Text;
+	dismiss?: G_Text;
+	endpoint: E_VE3611;
+	hovercardButton?: R_SubscribeButton;
 	trackingParams: string;
 	id: string;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
@@ -1628,16 +1633,16 @@ type D_Enum_GuideAction=T_EnumStr<"GUIDE_ACTION","ADD_TO_PLAYLISTS"|
 	"ADD_TO_SUBSCRIPTIONS"
 >;
 type D_ExpandableTab={
-	endpoint: E_VE3611_Browse;
+	endpoint: E_VE3611;
 	title: "Search";
 	selected: false;
 }|{
-	endpoint: E_VE3611_Browse;
+	endpoint: E_VE3611;
 	title: "Search";
 	selected: false;
 	expandedText: "";
 }|{
-	endpoint: E_VE3611_Browse;
+	endpoint: E_VE3611;
 	title: "Search";
 	selected: true;
 	expandedText: string;

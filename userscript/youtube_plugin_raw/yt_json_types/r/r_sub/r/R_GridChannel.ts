@@ -4,7 +4,7 @@ type R_GridChannel={
 		thumbnail: D_Thumbnail;
 		videoCountText: G_Text;
 		subscriberCountText: G_Text;
-		navigationEndpoint: E_VE3611_Browse;
+		navigationEndpoint: E_VE3611;
 		title: G_Text;
 		subscribeButton: R_SubscribeButton;
 		trackingParams: string;

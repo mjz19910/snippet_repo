@@ -7,7 +7,7 @@ type A_AddToToast={
 
 type D_PivotButton={
 	thumbnail?: D_Thumbnail;
-	onClickCommand?: E_VE3611_Browse|A_AddToToast;
+	onClickCommand?: E_VE3611|A_AddToToast;
 	trackingParams?: string;
 	contentDescription?: G_Text;
 	soundAttributionTitle?: G_Text;

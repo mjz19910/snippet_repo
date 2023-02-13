@@ -250,7 +250,7 @@ type D_GraftedVeItem={
 };
 type RS_Page_Channel={
 	page: "channel";
-	endpoint: E_VE3611_Browse;
+	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: `/@${string}`;
 	previousCsn: string;
@@ -276,7 +276,7 @@ type RS_Page_Channel={
 	csn?: string;
 }|{
 	page: "channel";
-	endpoint: E_VE3611_Browse;
+	endpoint: E_VE3611;
 	response: RS_Channel;
 	url: `/@${string}`;
 	expirationTime: number;

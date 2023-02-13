@@ -8269,9 +8269,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
-	/** @private @arg {E_VE3611_Browse} x */
+	/** @private @arg {E_VE3611} x */
 	E_VE3611(x) {
-		const cf="E_VE3611_Browse";
+		const cf="E_VE3611";
 		let [a,b,{...y}]=this.TE_Endpoint_3(cf,"browseEndpoint",x); this.g(y);
 		this.M_VE3611(a);
 		this.DE_VE3611(b);
@@ -10721,30 +10721,33 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_Endscreen} x */
 	D_Endscreen(x) {
 		const cf="D_Endscreen";
-		const {elements,startMs,...y}=this.s(cf,x); this.g(y);
-		this.z(elements,this.R_EndscreenElement)
+		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.z(elements,this.R_EndscreenElement);
+		this.t(startMs,this.a_primitive_num);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
 		const cf="D_EndscreenElement";
-		const {style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		const {style,image,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
 		switch(style) {
 			default: debugger; break;
 			case "CHANNEL":
 			case "VIDEO":
 		}
-		this.g(image);
+		this.D_Thumbnail(image);
+		this.t(icon,this.D_Thumbnail);
 		this.a_primitive_num(left);
 		this.a_primitive_num(width);
 		this.a_primitive_num(top);
 		this.a_primitive_num(aspectRatio);
 		this.a_primitive_str(startMs);
 		this.a_primitive_str(endMs);
-		this.g(title);
+		this.G_Text(title);
 		this.g(metadata);
-		this.g(endpoint);
+		this.E_VE3611(endpoint);
 		this.trackingParams(cf,trackingParams);
-		this.a_primitive_num(id);
+		console.log(`${cf}.id`,id);
 		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
 	}
 	//#endregion

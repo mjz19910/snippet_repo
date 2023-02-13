@@ -37,7 +37,7 @@ type G_RA_LiveChatContinuationActions=
 	;
 ;
 type GE_Browse=
-	|E_VE3611_Browse
+	|E_VE3611
 	|E_VE3854
 	|E_VE5754_Browse
 	|E_VE6827
