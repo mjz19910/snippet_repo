@@ -5579,7 +5579,7 @@ class HandleTypes extends HandleTypesEval {
 			if(pp!=="redirect") debugger;
 			let parsed_search=this.parse_url_search_params(query_search);
 			if(parsed_search.event!=="video_description") debugger;
-			let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
+			let {event,redir_token,q,...y}=parsed_search;
 			switch(event) {
 				default: debugger; break;
 				case "channel_banner":
@@ -5588,8 +5588,13 @@ class HandleTypes extends HandleTypesEval {
 			}
 			this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
 			this.a_primitive_str(q);
-			this.a_primitive_str(v);
-			debugger;
+			if("v" in y) {
+				let {v,...y1}=y; this.g(y1);
+				this.a_primitive_str(v);
+				return;
+			}
+			this.g(y);
+			return;
 		}
 		this.codegen_str(cf,x);
 	}
