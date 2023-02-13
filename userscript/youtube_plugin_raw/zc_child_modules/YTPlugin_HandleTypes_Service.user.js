@@ -7429,12 +7429,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
-	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
-	AD_ChangeEngagementPanelVisibility(x) {
-		const cf="AD_ChangeEngagementPanelVisibility"; this.k(cf,x);
-		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(targetId) {
-			default: targetId===""; this.codegen_case(`${cf}.targetId`,targetId); break;
+	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf @arg {D_EngagementPanelTargetId} x */
+	D_EngagementPanelTargetId(cf,x) {
+		switch(x) {
+			default: x===""; this.codegen_case(`${cf}.targetId`,x); break;
 			case "engagement-panel-clip-create":
 			case "engagement-panel-clip-view":
 			case "engagement-panel-comments-section":
@@ -7442,8 +7440,13 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-macro-markers-auto-chapters":
 			case "engagement-panel-macro-markers-description-chapters":
 			case "engagement-panel-structured-description":
-
 		}
+	}
+	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
+	AD_ChangeEngagementPanelVisibility(x) {
+		const cf="AD_ChangeEngagementPanelVisibility";
+		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_EngagementPanelTargetId(cf,targetId);
 		switch(visibility) {
 			default: this.codegen_case(`${cf}.visibility`,visibility); break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
@@ -7452,14 +7455,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
-		const cf="D_Transcript"; this.k(cf,x);
+		const cf="D_Transcript";
 		const {trackingParams,content: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(cf,trackingParams);
 		this.R_TranscriptSearchPanel(a);
 	}
 	/** @private @arg {RS_Channel} x */
 	RS_Channel(x) {
-		const cf="RS_Channel"; this.k(cf,x);
+		const cf="RS_Channel";
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_C4TabbedHeader(header);
@@ -10697,7 +10700,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Endscreen";
 		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.z(elements,this.R_EndscreenElement);
-		this.t(startMs,this.a_primitive_num);
+		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_EndscreenElement["endpoint"]} x */
