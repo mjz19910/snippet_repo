@@ -2293,6 +2293,8 @@ class HandleTypes extends HandleTypesEval {
 	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
 	/** @private @arg {R_AdBreakService} x */
 	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
+	/** @private @arg {R_AdActionInterstitial} x */
+	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -8782,109 +8784,21 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_LightColorPalette";
 		/** @arg {string} k @arg {number} x */
 		let log_color=(k,x) => this.log_color(cf1,cf,k,x);
-		if("section1Color" in x) {
-			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{
-				const x=p_tc;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xff) debugger;
-				switch(r) {
-					default: log_color(`l2_p_tc_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l2_p_tc_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l2_p_tc_b`,b); break;
-				}
-			}
-			{
-				const x=s_tc;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xff) debugger;
-				switch(r) {
-					default: log_color(`l2_s_tc_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l2_s_tc_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l2_s_tc_b`,b); break;
-				}
-			}
-			{
-				const x=s1_c;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xf2) debugger;
-				switch(r) {
-					default: log_color(`l2_s1_c_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l2_s1_c_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l2_s1_c_b`,b); break;
-				}
-			}
-			{
-				const x=s2_c;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xf2) debugger;
-				switch(r) {
-					default: log_color(`l2_s2_c_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l2_s2_c_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l2_s2_c_b`,b); break;
-				}
-			}
-			{
-				const x=s3_c;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xf2) debugger;
-				switch(r) {
-					default: log_color(`l2_s3_c_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l2_s3_c_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l2_s3_c_b`,b); break;
-				}
-			}
-			{
-				const x=s4_c;
-				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-				if(a!==0xf2) debugger;
-				switch(r) {
-					default: log_color(`l2_s4_c_r`,r); break;
-				}
-				switch(g) {
-					default: log_color(`l2_s4_c_g`,g); break;
-				}
-				switch(b) {
-					default: log_color(`l2_s4_c_b`,b); break;
-				}
-			}
-			return;
-		}
-		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x);
 		{
-			const x=p_tc,cf1="l1_p_tc";
+			const x=p_tc;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xff) debugger;
 			switch(r) {
-				default: log_color(`${cf1}_r`,r); break;
+				default: log_color(`l1_p_tc_r`,r); break;
 				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19:
 			}
 			switch(g) {
-				default: log_color(`${cf1}_g`,g); break;
+				default: log_color(`l1_p_tc_g`,g); break;
 				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19:
 			}
 			switch(b) {
-				default: log_color(`${cf1}_b`,b); break;
+				default: log_color(`l1_p_tc_b`,b); break;
 				case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19:
 			}
 		}
@@ -8925,20 +8839,20 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		{
-			const x=s2_c,cf1="l1_s2_c";
+			const x=s2_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xf2) debugger;
 			switch(r) {
-				default: log_color(`${cf1}_r`,r); break;
+				default: log_color(`l1_s2_c_r`,r); break;
 				case 0xf4: case 0xf5: case 0xf6:
 				case 0xf8: case 0xf1: case 0xf2: case 0xf3: case 0xf7:
 			}
 			switch(g) {
-				default: log_color(`${cf1}_g`,g); break;
+				default: log_color(`l1_s2_c_g`,g); break;
 				case 0xf6: case 0xf5: case 0xf4: case 0xf7: case 0xf1: case 0xf3: case 0xf2: case 0xf8:
 			}
 			switch(b) {
-				default: log_color(`${cf1}_b`,b); break;
+				default: log_color(`l1_s2_c_b`,b); break;
 				case 0xf1: case 0xf8: case 0xf2: case 0xf6: case 0xf5: case 0xf7:
 			}
 		}
@@ -8962,23 +8876,46 @@ class HandleTypes extends HandleTypesEval {
 				case 0xdd: case 0xde: case 0xdf: case 0xe0: case 0xe6: case 0xe8: case 0xea: case 0xeb:
 			}
 		}
+		if("section1Color" in y) {
+			const {section1Color: s1_c,section3Color: s3_c,...y1}=y; this.g(y1);
+			{
+				const x=s1_c;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xf2) debugger;
+				switch(r) {
+					default: log_color(`l1_s1_c_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l1_s1_c_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l1_s1_c_b`,b); break;
+				}
+			}
+			{
+				const x=s3_c;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xf2) debugger;
+				switch(r) {
+					default: log_color(`l2_s3_c_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_s3_c_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_s3_c_b`,b); break;
+				}
+			}
+			return;
+		}
+		this.g(y);
 	}
 	/** @private @arg {string} cf1 @arg {D_DarkColorPalette} x */
 	D_DarkColorPalette(cf1,x) {
 		const cf="D_DarkColorPalette";
 		/** @arg {`d${1|2}_${string}`} k @arg {number} x */
 		let log_color=(k,x) => this.log_color(cf1,cf,k,x);
-		if("section1Color" in x) {
-			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: log_color("d2_p_tc",x); break;}}
-			{const x=s_tc; switch(x) {default: log_color("d2_s_tc",x); break;}}
-			{const x=s1_c; switch(x) {default: log_color("d2_s1_c",x); break;}}
-			{const x=s2_c; switch(x) {default: log_color("d2_s2_c",x); break;}}
-			{const x=s3_c; switch(x) {default: log_color("d2_s3_c",x); break;}}
-			{const x=s4_c; switch(x) {default: log_color("d2_s4_c",x); break;}}
-			return;
-		}
-		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
+		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x);
 		{
 			const x=p_tc;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
@@ -9101,6 +9038,10 @@ class HandleTypes extends HandleTypesEval {
 				case 0x18: case 0x19:
 			}
 		}
+		if("section1Color" in y) {
+			return;
+		}
+		this.g(y);
 	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
@@ -10655,16 +10596,21 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {G_LinearAdsItem} x */
 	G_LinearAdsItem(x) {
 		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+		if("adActionInterstitialRenderer" in x) return this.R_AdActionInterstitial(x);
+		debugger;
 	}
 	/** @private @arg {D_InstreamVideoAd} x */
 	D_InstreamVideoAd(x) {
 		const cf="D_InstreamVideoAd";
-		const {skipOffsetMilliseconds,...y}=this.s(cf,x); this.g(y);
+		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @private @arg {D_ClientForecastingAd} x */
 	D_ClientForecastingAd(x) {
 		const cf="D_ClientForecastingAd";
-		const {...y}=this.s(cf,x); this.g(y);
+		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
+		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
+			this.parser.parse_url(`${cf}.impressionUrl`,x);
+		}));
 	}
 	/** @private @arg {D_AdBreakService} x */
 	D_AdBreakService(x) {
