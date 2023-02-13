@@ -23,6 +23,7 @@ type GU_YoutubeUrlRedirect_Info={
 	encoded_params: {q: ST_EncodedURIComponent;};
 };
 type GU_YoutubeUrlRedirect_Event=
+	|""
 	|"video_description"
 	|"product_shelf"
 	;

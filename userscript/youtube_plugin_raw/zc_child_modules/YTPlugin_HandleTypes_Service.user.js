@@ -650,6 +650,7 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} return;
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
+				case "reel_request_continuation.token.f15.f6.f7.f1.f1":
 				case "reel_request_continuation.token.f15.f6.f6.f1[].f2":
 				case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
 				case "reel_request_continuation.token.f15.f6.f7.f1[].f1": {
@@ -4716,28 +4717,36 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @template {D_SubscribeButton} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {[u1,x1]} */
+	/** @private @template {D_SubscribeButton} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {y} */
 	D_SubscribeButton_Omit(cf,x) {
-		const {buttonText,subscribed,enabled,type,channelId,trackingParams,showPreferences,...y}=this.s(cf,x);
-		this.G_Text(buttonText);
-		this._primitive_of(subscribed,"boolean");
-		if(enabled!==true) debugger;
-		if(type!=="FREE") debugger;
-		this.D_ChannelId(channelId);
-		this.trackingParams(cf,trackingParams);
-		this.a_primitive_bool(showPreferences);
-		let [u1,x1]=this.unwrap_prefix(y,"subscribed");
-		return [u1,x1];
+		const {enabled,...y}=this.s(cf,x);
+		this.a_primitive_bool(enabled);
+		return y;
 	}
-	/** @arg {"D_SubscribeButton"} cf @arg {T_RemovePrefix<D_SubscribeButton,"subscribed">} x */
+	/** @arg {"D_SubscribeButton"} cf @arg {T_RemovePrefix<Extract<D_SubscribeButton,{subscribedButtonText:any}>,"subscribed">} x */
 	D_SubButton_Prefix_1(cf,x) {
 		const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
 		this.G_Text(buttonText);
 		this.t(entityKey,x => this.params(cf,"entity_key.subscribed",x));
 	}
-	/** @template {Extract<D_SubscribeButton,{subscribedButtonText:any}>} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {YRet} */
-	D_SubButton_Omit_Button(cf,x) {
-		const [sub,o1]=this.D_SubscribeButton_Omit(cf,x);
+	/** @private @arg {D_SubscribeButton} x */
+	D_SubscribeButton_UnsubscribedPrefix(x) {x;}
+	/** @private @arg {D_SubscribeButton} x */
+	D_SubscribeButton(x) {
+		const cf="D_SubscribeButton"; this.k(cf,x);
+		if(!("buttonText" in x)) {
+			const {enabled,...y1}=this.s(cf,x);
+			let [{...x1},{...o2}]=this.unwrap_prefix(y1,"unsubscribed");
+			return;
+		}
+		const {buttonText,subscribed,...y1}=this.s(cf,x);
+		this.G_Text(buttonText);
+		this._primitive_of(subscribed,"boolean");
+		if(type!=="FREE") debugger;
+		this.D_ChannelId(channelId);
+		this.trackingParams(cf,trackingParams);
+		this.a_primitive_bool(showPreferences);
+		let [u1,x1]=this.unwrap_prefix(y1,"subscribed");
 		this.D_SubButton_Prefix_1(cf,sub);
 		let [un_sub,o2]=this.unwrap_prefix(o1,"unsubscribed");
 		/** @arg {T_RemovePrefix<D_SubscribeButton,"unsubscribed">} x */
@@ -4761,13 +4770,7 @@ class HandleTypes extends HandleTypesEval {
 			this.D_Accessibility(accessibility);
 		};
 		r_un_sub_2(un_sub_2);
-		/** @typedef {typeof o4} YRet */
-		return o4;
-	}
-	/** @private @arg {D_SubscribeButton} x */
-	D_SubscribeButton(x) {
-		const cf="D_SubscribeButton"; this.k(cf,x);
-		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y}=this.D_SubButton_Omit_Button(cf,x); this.g(y);
+		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y}=y1; this.g(y);
 		this.z(onSubscribeEndpoints,this.E_Subscribe);
 		this.z(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
 		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
@@ -5280,16 +5283,13 @@ class HandleTypes extends HandleTypesEval {
 		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	static {
-		this.prototype.D_Menu_Button;
-	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
 		const cf="D_Menu";
 		const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(menuPopupAccessibility,this.D_Label);
 		this.tz(items,this.G_MenuItem);
-		this.trackingParams(cf,trackingParams);
+		if(trackingParams) this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D_Accessibility);
 		this.tz(flexibleItems,this.R_MenuFlexibleItem);
 		this.tz(topLevelButtons,this.D_Menu_Button);
@@ -5580,10 +5580,10 @@ class HandleTypes extends HandleTypesEval {
 			let [pp,query_search]=split_string_once(sp,"?");
 			if(pp!=="redirect") debugger;
 			let parsed_search=this.parse_url_search_params(query_search);
-			if(parsed_search.event!=="video_description") debugger;
 			let {event,redir_token,q,...y}=parsed_search;
 			switch(event) {
 				default: debugger; break;
+				case "":
 				case "channel_banner":
 				case "product_shelf":
 				case "video_description":
@@ -7778,18 +7778,19 @@ class HandleTypes extends HandleTypesEval {
 		if(likesAllowed!==true) debugger;
 		let [upt,ur]=this.unwrap_prefix(y,"like");
 		this.D_LikeButton_Like(upt);
-		let [ud,{...r2}]=this.unwrap_prefix(ur,"dislike");
+		let [ud,{...y1}]=this.unwrap_prefix(ur,"dislike");
 		this.D_LikeButton_Dislike(ud);
-		{
+		if("target" in y1) {
 			const cf="D_LikeButton.rest";
-			const {target,trackingParams,serviceEndpoints,...y}=r2; this.g(y);
-			this.D_LikeApi(target);
-			this.trackingParams(cf,trackingParams);
-			this.z(serviceEndpoints,this.E_Like);
+			const {target,trackingParams,serviceEndpoints,...y2}=y1; this.g(y2);
+			this.t(target,this.D_LikeApi);
+			if(trackingParams) this.trackingParams(cf,trackingParams);
+			this.tz(serviceEndpoints,this.E_Like);
 		}
 	}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
+		if(!x) {debugger; return;}
 		const cf="D_LikeApi"; this.k(cf,x);
 		{
 			const cn="videoId";
@@ -8686,6 +8687,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
 		const cf="D_PivotButton"; this.k(cf,x);
+		if(!("trackingParams" in x)) return this.D_PivotButton_Empty(x);
 		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnail);
 		this.GE_Browse(onClickCommand);
@@ -8693,6 +8695,8 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(contentDescription);
 		this.G_Text(soundAttributionTitle);
 	}
+	/** @private @arg {Record<string,never>} x */
+	D_PivotButton_Empty(x) {this.g(x);}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
@@ -10064,7 +10068,7 @@ class HandleTypes extends HandleTypesEval {
 			default: switch(xs) {
 
 			}; debugger; break;
-			case "13": case "15": case "25": case "30": case "50": case "60":
+			case "13": case "15": case "24": case "25": case "30": case "50": case "60":
 		}
 	}
 	/** @private @arg {D_Range} x */
@@ -10234,6 +10238,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				debugger;
 			} break;
+			case "Education":
 			case "Pets & Animals":
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
 			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
