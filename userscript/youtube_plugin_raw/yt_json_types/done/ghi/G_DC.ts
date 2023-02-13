@@ -12,3 +12,5 @@ type G_DC_CommandExecutor_CommandItem=
 	|TA_OpenPopup_Empty
 	;
 ;
+type G_DC_GetSurvey_Endpoint=D_Survey_Watch|D_PaidDigitalGoods;
+type G_DC_Innertube=A_SetActivePanelItem|E_YpcGetOfflineUpsell;
