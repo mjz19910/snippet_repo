@@ -5568,45 +5568,27 @@ class HandleTypes extends HandleTypesEval {
 			this.save_next_byte("url.redir_token[1].data",p2,i);
 		}
 	}
-	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/redirect?${string}`} x */
+	/** @private @arg {GU_YoutubeUrlRedirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect"; this.k(cf,x);
 		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
 		let [h,sp]=split_string_once(s1,"/");
 		if(h!=="www.youtube.com") debugger;
 		if(this.str_is_search(sp)) {
-			if(this.str_starts_with(sp,"redirect?event=video_description&")) {
-				let [pp,query_search]=split_string_once(sp,"?");
-				if(pp!=="redirect") debugger;
-				let parsed_search=this.parse_url_search_params(query_search);
-				if(parsed_search.event!=="video_description") debugger;
-				let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
-				this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
-				this.a_primitive_str(q);
-				this.a_primitive_str(v);
-				return;
+			let [pp,query_search]=split_string_once(sp,"?");
+			if(pp!=="redirect") debugger;
+			let parsed_search=this.parse_url_search_params(query_search);
+			if(parsed_search.event!=="video_description") debugger;
+			let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
+			switch(event) {
+				default: debugger; break;
+				case "channel_banner":
+				case "product_shelf":
+				case "video_description":
 			}
-			if(this.str_starts_with(sp,"redirect?event=channel_banner&")) {
-				let [pp,query_search]=split_string_once(sp,"?");
-				if(pp!=="redirect") debugger;
-				let parsed_search=this.parse_url_search_params(query_search);
-				if(parsed_search.event!=="channel_banner") debugger;
-				let {event,redir_token,q,...y}=parsed_search; this.g(y);
-				this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
-				this.a_primitive_str(q);
-				return;
-			}
-			if(this.str_starts_with(sp,"redirect?event=product_shelf&")) {
-				let [pp,query_search]=split_string_once(sp,"?");
-				if(pp!=="redirect") debugger;
-				let parsed_search=this.parse_url_search_params(query_search);
-				if(parsed_search.event!=="product_shelf") debugger;
-				let {event,redir_token,q,v,...y}=parsed_search; this.g(y);
-				this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
-				this.a_primitive_str(q);
-				this.a_primitive_str(v);
-				return;
-			}
+			this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
+			this.a_primitive_str(q);
+			this.a_primitive_str(v);
 			debugger;
 		}
 		this.codegen_str(cf,x);
@@ -5720,7 +5702,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/${string}`} x */
 	GU_FullYoutubeUrl(x) {
-		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(x);
+		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
 	/** @private @arg {GU_VE83769_Url} x */
 	GU_VE83769_Url(x) {
