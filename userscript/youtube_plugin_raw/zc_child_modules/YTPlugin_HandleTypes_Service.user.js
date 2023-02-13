@@ -369,112 +369,77 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
-			case "reel_request_continuation.token.f15.f6.f11.f2": switch(map_entry_key) {
-				case 1: case 2:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "reel_request_continuation.token.f15.f6.f11": switch(map_entry_key) {
-				case 2:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "reel_request_continuation.token.f15.f6.f10.f1": switch(map_entry_key) {
-				case 1:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
-			case "reel_request_continuation.token.f15.f6.f10":
-			case "reel_request_continuation.token.f15.f6.f6.f1[]":
-			case "reel_request_continuation.token.f15.f6.f9":
-			case "reel_request_continuation.token.f15.f6.f8":
-			case "reel_request_continuation.token.f15.f6.f3":
-			case "reel_request_continuation.token.f15.f6.f5": switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel_request_continuation.token.f15.f6": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel_request_continuation.token.f15": switch(map_entry_key) {case 1: case 3: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel_request_continuation.token.f3": switch(map_entry_key) {case 1: case 3: case 4: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel_request_continuation.token": switch(map_entry_key) {case 1: case 3: case 5: case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "continuation_token.data.f53.f4": switch(map_entry_key) {case 4: case 6: case 15: case 25: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel_request_continuation.token.f15.f6.f2":
-			case "continuation_token.data.f49": switch(map_entry_key) {case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_request_continuation.token.f9.f1.f4": switch(map_entry_key) {case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_request_continuation.token.f2.f36": switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_request_continuation.token.f6.f4": switch(map_entry_key) {case 4: case 6: case 15: case 37: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "continuation_token.data.f53":
-			case "watch_request_continuation.token.f6": switch(map_entry_key) {case 4: case 6: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_request_continuation.token.f2": switch(map_entry_key) {case 2: case 4: case 6: case 7: case 24: case 25: case 28: case 36: case 47: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_request_continuation.token": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 9: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "continuation_token.data.f110.f3.f15": switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "continuation_token.data.f110.f3": switch(map_entry_key) {case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "continuation_token.data": switch(map_entry_key) {case 1: case 15: case 49: case 53: case 72: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "next.continuation.f2.f36": switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "next.continuation.f2": switch(map_entry_key) {case 2: case 4: case 7: case 25: case 28: case 31: case 36: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "next.continuation": switch(map_entry_key) {case 1: case 2: case 3: case 16: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param": switch(map_entry_key) {case 2: case 5: case 23: case 77: case 84: case 93: case 94: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-			case "create_comment.params": switch(map_entry_key) {case 2: case 5: case 10: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f94.f1.f2": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f94.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f94": switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "subscribe.params": switch(map_entry_key) {case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f93.f1": switch(map_entry_key) {case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch_playlist.params": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel_request_continuation.token.f5": case "continuation_token.data.f110": case "reel.sequence_params.f5":
-				switch(map_entry_key) {case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel.sequence_params": switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel.params": switch(map_entry_key) {case 1: case 3: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "notification.opt_out": switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "transcriptTrackSelection.serializedParams": switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_transcript.params": switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "notification.record_interactions.f2": switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "notification.record_interactions": switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.params": switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.params.f18.f1": switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "like.removeLikeParams": switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "like.dislikeParams": switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch.params.f33": switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "like.likeParams": case "like.dislikeParams": switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "reel.player_params": switch(map_entry_key) {case 30: case 57: case 71: case 72: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "slot_ad_serving_data_entry": switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch.params": switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "tracking.trackingParams.f6": switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "AdServingDataEntry": switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "watch.player_params": switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "ypc_get_offers.params.f5": switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "ypc_get_offers.params": switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "tracking.trackingParams.f16": case "watch_request_continuation.token.f9.f1":
-				switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.params.f28.f1.f1.f1.f1": switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f93": case "browse.params.f93": case "get_report_form.params.f28.f1[]": case "watch_request_continuation.token.f9.f1.f1[]": case "watch_request_continuation.token.f9": case "get_report_form.params.f28.f1":
-				switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "D_Browse.param.f84": case "browse.params.f84":
-				switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1":
-			case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14": case "playability_status.context_params":
-				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "create_playlist.params": case "browse.params":
-				switch(map_entry_key) {case 84: case 93: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1":
-			case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "subscribe.params.f2":
-			case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f4":
-			case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f7.f1[]":
-			case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2":
-			case "watch_request_continuation.token.f14": case "watch_request_continuation.token.f9.f1.f1[]": case "create_comment.params.f5": case "unsubscribe.params.f1":
-			case "entity_key.normal.f2": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
-			case "D_Browse.param.f110.f1.f20": case "D_Browse.param.f110": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f28.f1[].f1":
-			case "get_report_form.params.f28":
+			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f4": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f7.f1[]": case "subscribe.params.f2": case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2": case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_request_continuation.token.f14": case "watch_request_continuation.token.f9.f1.f1[]": case "watch_playlist.params.f27": case "D_Browse.param.f110": case "entity_key.normal.f2": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f10.f1":
+			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "transcript_target_id.param": case "watch.player_params.f40.f1":
+			}
+			case "get_report_form.params.f18.f1": case "D_Browse.param.f94.f1":
+			case "reel_request_continuation.token.f15.f6.f11": {
+				switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token.f5": case "continuation_token.data.f110":
+			case "reel.sequence_params.f5": {
+				switch(map_entry_key) {case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "get_report_form.params.f28.f1.f1.f1.f1": {
+				switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "D_Browse.param.f84": case "browse.params.f84": {
+				switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token.f15.f6.f2":
+			case "continuation_token.data.f49": {
+				switch(map_entry_key) {case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch_request_continuation.token.f9.f1.f4": {
+				switch(map_entry_key) {case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "D_Browse.param.f93.f1": {
+				switch(map_entry_key) {case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "continuation_token.data.f110.f3": {
+				switch(map_entry_key) {case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
+			case "reel_request_continuation.token.f15.f6.f11.f2": case "reel_request_continuation.token.f15.f6.f10": case "reel_request_continuation.token.f15.f6.f6.f1[]": case "reel_request_continuation.token.f15.f6.f9": case "reel_request_continuation.token.f15.f6.f8": case "reel_request_continuation.token.f15.f6.f3": case "reel_request_continuation.token.f15.f6.f5":
+			case "playability_status.context_params": {
+				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "D_Browse.param.f93": case "browse.params.f93": case "get_report_form.params.f28.f1[]": case "watch_request_continuation.token.f9.f1.f1[]": case "watch_request_continuation.token.f9":
+			case "get_report_form.params.f28.f1": {
+				switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "transcript_target_id.param": case "watch.player_params.f40.f1": {
 				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "slot_ad_serving_data_entry.f3": case "AdServingDataEntry.f10":
-				switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "player_state.entity_key": case "macro_marker_repeat_state.entity_key": case "load_markers.entity_key": case "change_markers_visibility.entity_key":
-			case "entity_key.normal":
-			case "entity_key.subscribed":
-			case "aadc_guidelines_state.entity_key":
-				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4": case "tracking.trackingParams.f4":
+			}
+			case "D_Browse.param.f94":
+			case "reel.sequence_params": {
+				switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "create_playlist.params": case "browse.params": {
+				switch(map_entry_key) {case 84: case 93: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
+			case "tracking.trackingParams.f4": {
 				switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			case "tracking.trackingParams":
+			}
+			case "player_state.entity_key": case "macro_marker_repeat_state.entity_key": case "load_markers.entity_key": case "change_markers_visibility.entity_key": case "entity_key.normal": case "entity_key.subscribed":
+			case "aadc_guidelines_state.entity_key": {
+				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "continuation_token.data.f53":
+			case "watch_request_continuation.token.f6": {
+				switch(map_entry_key) {case 4: case 6: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "slot_ad_serving_data_entry.f3":
+			case "AdServingDataEntry.f10": {
+				switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "tracking.trackingParams.f16":
+			case "watch_request_continuation.token.f9.f1": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "tracking.trackingParams": {
 				switch(map_entry_key) {
 					case 16: case 19: break;
 					default: {
@@ -490,6 +455,121 @@ class HandleTypes extends HandleTypesEval {
 					}
 				}
 				return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+			}
+			case "watch_request_continuation.token.f2.f36": {
+				switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token.f15": {
+				switch(map_entry_key) {case 1: case 3: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token.f3": {
+				switch(map_entry_key) {case 1: case 3: case 4: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token": {
+				switch(map_entry_key) {case 1: case 3: case 5: case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "continuation_token.data.f53.f4": {
+				switch(map_entry_key) {case 4: case 6: case 15: case 25: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch_request_continuation.token.f6.f4": {
+				switch(map_entry_key) {case 4: case 6: case 15: case 37: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel_request_continuation.token.f15.f6": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch_request_continuation.token.f2": {
+				switch(map_entry_key) {case 2: case 4: case 6: case 7: case 24: case 25: case 28: case 36: case 47: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch_request_continuation.token": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 9: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "continuation_token.data.f110.f3.f15": {
+				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "continuation_token.data": {
+				switch(map_entry_key) {case 1: case 15: case 49: case 53: case 72: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "next.continuation.f2.f36": {
+				switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "next.continuation.f2": {
+				switch(map_entry_key) {case 2: case 4: case 7: case 25: case 28: case 31: case 36: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "next.continuation": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 16: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "D_Browse.param": {
+				switch(map_entry_key) {case 2: case 5: case 23: case 77: case 84: case 93: case 94: case 110: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`D_Browse.param.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+			}
+			case "create_comment.params": {
+				switch(map_entry_key) {case 2: case 5: case 10: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "D_Browse.param.f94.f1.f2": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "subscribe.params": {
+				switch(map_entry_key) {case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "notification.record_interactions.f2": {
+				switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "notification.record_interactions": {
+				switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "tracking.trackingParams.f6": {
+				switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch_playlist.params": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel.params": {
+				switch(map_entry_key) {case 1: case 3: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "notification.opt_out": {
+				switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "transcriptTrackSelection.serializedParams": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "get_transcript.params": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "get_report_form.params": {
+				switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "like.removeLikeParams": {
+				switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "like.dislikeParams": {
+				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch.params.f33": {
+				switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "like.likeParams": case "like.dislikeParams": {
+				switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "reel.player_params": {
+				switch(map_entry_key) {case 30: case 57: case 71: case 72: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "slot_ad_serving_data_entry": {
+				switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch.params": {
+				switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "ypc_get_offers.params": {
+				switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "AdServingDataEntry": {
+				switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "watch.player_params": {
+				switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
+			case "ypc_get_offers.params.f5": {
+				switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			}
 		}
 	}
 	/** @private @arg {D_BrowseEndpointPages} x */
@@ -4717,11 +4797,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.codegen_str(cf,x);
 	}
-	/** @private @template {D_SubscribeButton} T @arg {"D_SubscribeButton"} cf @arg {T} x @returns {y} */
-	D_SubscribeButton_Omit(cf,x) {
-		const {enabled,...y}=this.s(cf,x);
-		return y;
-	}
 	/** @arg {"D_SubscribeButton"} cf @arg {T_RemovePrefix<Extract<D_SubscribeButton,{subscribedButtonText:any}>,"subscribed">} x */
 	D_SubButton_Prefix_1(cf,x) {
 		const {buttonText,entityKey,...y}=this.s(`${cf}.subscribed`,x); this.g(y);
@@ -4762,14 +4837,14 @@ class HandleTypes extends HandleTypesEval {
 		};
 		r_un_sub(un_sub);
 		let [sub_2,o3]=this.unwrap_prefix(o2,"subscribe");
-		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`subscribed${string}`>,"subscribe">} x */
+		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton_Alts_1,`subscribed${string}`>,"subscribe">} x */
 		let r_sub_2=({...x}) => {
 			const {accessibility,...y}=this.s(`${cf}.subscribe`,x); this.g(y);
 			this.D_Accessibility(accessibility);
 		};
 		r_sub_2(sub_2);
 		let [un_sub_2,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
-		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton,`unsubscribed${string}`>,"unsubscribe">} x */
+		/** @arg {T_RemovePrefix<Omit<D_SubscribeButton_Alts_1,`unsubscribed${string}`>,"unsubscribe">} x */
 		let r_un_sub_2=({...x}) => {
 			const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
 			this.G_Text(buttonText);
@@ -8702,7 +8777,11 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(soundAttributionTitle);
 	}
 	/** @private @arg {Record<string,never>} x */
-	D_PivotButton_Empty(x) {this.g(x);}
+	D_PivotButton_Empty(x) {
+		/** @type {{}} */
+		let u=x;
+		this.g(u);
+	}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo"; this.k(cf,x);

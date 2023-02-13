@@ -571,6 +571,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton.subscribed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton.unsubscribe";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton.unsubscribed";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscribeButton_UnsubscribedPrefix";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscriptionButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SubscriptionNotificationToggleButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SuperVodBuyFlowContent";}

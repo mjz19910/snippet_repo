@@ -50,6 +50,7 @@ type D_SubscribeButton_UnsubscribedPrefix={
 type D_SubscribeButton_SubscribedPrefix={
 	buttonText: G_Text;
 };
+type D_SubscribeButton_Alts_1=Extract<D_SubscribeButton,{subscribedButtonText:any}>;
 type D_SubscribeButton={
 	buttonText: G_Text;
 	subscribed: boolean;
