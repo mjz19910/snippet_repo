@@ -9988,7 +9988,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_AdaptiveFormatItem} x */
 	D_AdaptiveFormatItem(x) {
 		const cf="D_AdaptiveFormatItem";
-		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,audioTrack,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		this.t(audioTrack,this.D_AudioTrack);
 		this.a_primitive_num(itag);
 		this.t(url,x => this.parser.parse_url(cf,x));
 		this.a_primitive_str(mimeType);
@@ -10681,6 +10682,14 @@ class HandleTypes extends HandleTypesEval {
 		const {languageCode,languageName,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(languageCode);
 		this.G_Text(languageName);
+	}
+	/** @private @arg {D_AudioTrack} x */
+	D_AudioTrack(x) {
+		const cf="D_AudioTrack";
+		const {displayName,id,audioIsDefault,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(displayName);
+		this.save_string(`${cf}.id`,id);
+		this.ceq(audioIsDefault,false);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

@@ -197,6 +197,7 @@ type R_RadioButtonSurveyOption={radioButtonSurveyOptionRenderer: D_RadioButtonSu
 type R_RatingSurvey={ratingSurveyRenderer: D_RatingSurvey;};
 type R_RatingSurveyOption={ratingSurveyOptionRenderer: D_RatingSurveyOption;};
 type R_ReelItem={reelItemRenderer: D_ReelItem;};
+type R_ReelMultimixAttributionLabel={reelMultimixAttributionLabelRenderer: D_ReelMultimixAttributionLabel;};
 type R_ReelPlayerHeader={reelPlayerHeaderRenderer: D_ReelPlayerHeader;};
 type R_ReelPlayerOverlay={reelPlayerOverlayRenderer: D_ReelPlayerOverlay;};
 type R_ReelShelf={reelShelfRenderer: D_ReelShelf;};

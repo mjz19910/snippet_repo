@@ -9,6 +9,7 @@ type D_ReelPlayerOverlay={
 	menu?: R_Menu;
 	subscribeButtonRenderer?: R_SubscribeButton;
 	pivotButton?: R_PivotButton;
+	multimixAttributionLabel?: R_ReelMultimixAttributionLabel|R_ReelMultimixAttributionLabel;
 	reelPlayerHeaderSupportedRenderers?: R_ReelPlayerHeader;
 	nextItemButton?: R_Button;
 	prevItemButton?: R_Button;
