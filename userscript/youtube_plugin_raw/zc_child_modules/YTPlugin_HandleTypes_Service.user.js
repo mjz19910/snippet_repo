@@ -9784,11 +9784,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
-		// cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
 		this.t(ctier,x => this.ceq("SH",x));
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
+		this.a_primitive_str(ip);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.lsparams`,lsparams);
 		let ka=this.get_keys_of(y);
