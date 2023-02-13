@@ -54,6 +54,8 @@ type D_googlevideo_host_q4flrn=[
 type D_googlevideo_host_nx57yn=[
 	"sn-nx57ynlk.googlevideo.com",
 	"sn-nx57ynsd.googlevideo.com",
+	"sn-nx57ynse.googlevideo.com",
+	"sn-nx57ynsk.googlevideo.com",
 	"sn-nx57ynsl.googlevideo.com",
 	"sn-nx57ynss.googlevideo.com",
 	"sn-nx57ynsz.googlevideo.com",
