@@ -4784,7 +4784,7 @@ class HandleTypes extends HandleTypesEval {
 	D_SubscribeButton_SubscribePrefix(x) {
 		const cf="D_SubscribeButton_SubscribePrefix";
 		const {accessibility,...y}=this.s(cf,x); this.g(y);
-		this.D_Accessibility(accessibility);
+		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {D_SubscribeButton_UnsubscribePrefix} x */
 	D_SubscribeButton_UnsubscribePrefix(x) {

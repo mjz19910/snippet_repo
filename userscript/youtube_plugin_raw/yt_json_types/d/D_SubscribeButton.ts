@@ -6,7 +6,7 @@ type D_SubscribeButton_SubscribedPrefix={
 	entityKey?: string;
 };
 type D_SubscribeButton_SubscribePrefix={
-	accessibility: D_Accessibility;
+	accessibility?: D_Accessibility;
 };
 type D_SubscribeButton_UnsubscribePrefix={
 	buttonText: G_Text;
