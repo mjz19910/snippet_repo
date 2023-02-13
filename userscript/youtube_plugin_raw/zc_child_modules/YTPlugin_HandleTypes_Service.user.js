@@ -10063,6 +10063,7 @@ class HandleTypes extends HandleTypesEval {
 		const {primaries,transferCharacteristics,matrixCoefficients,...y}=this.s(cf,x); this.g(y);
 		switch(primaries) {
 			default: debugger; break;
+			case void 0:
 			case "COLOR_PRIMARIES_BT709":
 		}
 		switch(transferCharacteristics) {
@@ -10071,6 +10072,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(matrixCoefficients) {
 			default: debugger; break;
+			case void 0:
 			case "COLOR_MATRIX_COEFFICIENTS_BT709":
 		}
 	}
@@ -10639,10 +10641,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x) {
 		const cf="D_CaptionTrackItem";
-		const {baseUrl,name,vssId,...y}=this.s(cf,x); this.g(y);
+		const {baseUrl,name,vssId,languageCode,kind,isTranslatable,...y}=this.s(cf,x); this.g(y);
 		console.log(`${cf}.baseUrl`,baseUrl);
 		this.G_Text(name);
 		this.save_string(`${cf}.vssId`,vssId);
+		this.save_string(`${cf}.languageCode`,languageCode);
+		this.save_string(`${cf}.kind`,kind);
+		if(isTranslatable!==true) debugger;
 	}
 	/** @private @arg {D_AudioTrackItem} x */
 	D_AudioTrackItem(x) {

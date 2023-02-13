@@ -1429,9 +1429,12 @@ type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_CaptionTrackItem={
-	baseUrl: string;
+	baseUrl: `https://www.youtube.com/api/timedtext?${string}`;
 	name: G_Text;
 	vssId: "a.en";
+	languageCode: "en";
+	kind: "asr";
+	isTranslatable: true;
 };
 type D_CarouselLockup={infoRows: R_InfoRow[];};
 type ChanTabStr=[
@@ -1726,9 +1729,9 @@ type D_FeedTabbedHeader={title: G_Text;};
 type D_FeedbackResponseItem=D_FeedbackResponseProcessedStatus;
 type D_FeedbackResponseProcessedStatus={isProcessed: true;};
 type D_FormatColorInfo={
-	primaries: "COLOR_PRIMARIES_BT709";
+	primaries?: "COLOR_PRIMARIES_BT709";
 	transferCharacteristics: "COLOR_TRANSFER_CHARACTERISTICS_BT709";
-	matrixCoefficients: "COLOR_MATRIX_COEFFICIENTS_BT709";
+	matrixCoefficients?: "COLOR_MATRIX_COEFFICIENTS_BT709";
 };
 type D_GetAccountMenu_Popup={popup: TR_MultiPageMenu<MP_AccountMenu>; popupType: "DROPDOWN"; beReused: true;};
 type D_GhostGrid={rows: number;};
