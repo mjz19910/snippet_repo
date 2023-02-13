@@ -3070,8 +3070,15 @@ type DMD_Badge={
 	label: "Fundraiser";
 	trackingParams: string;
 };
+type D_MetadataRow={
+	title: G_Text;
+	contents: G_Text[];
+	trackingParams: string;
+};
+type DMD_RowItem=R_RichMetadataRow|R_MetadataRow;
+
 type DMD_RowContainer={
-	rows?: R_RichMetadataRow[];
+	rows?: DMD_RowItem[];
 	collapsedItemCount: number;
 	trackingParams: string;
 };

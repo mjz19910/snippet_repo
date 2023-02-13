@@ -131,6 +131,7 @@ type R_MenuServiceItem={menuServiceItemRenderer: RD_MenuServiceItem;};
 type R_MerchandiseItem={merchandiseItemRenderer: D_MerchandiseItem;};
 type R_MerchandiseShelf={merchandiseShelfRenderer: D_MerchandiseShelf;};
 type R_Message={messageRenderer: D_Message;};
+type R_MetadataRow={metadataRowRenderer: D_MetadataRow;};
 type R_Microformat={microformatDataRenderer: D_Microformat;};
 type R_Miniplayer={miniplayerRenderer: D_Miniplayer;};
 type R_MovingThumbnail={movingThumbnailRenderer: D_MovingThumbnail;};
