@@ -7439,6 +7439,7 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-error-corrections":
 			case "engagement-panel-macro-markers-auto-chapters":
 			case "engagement-panel-macro-markers-description-chapters":
+			case "engagement-panel-searchable-transcript":
 			case "engagement-panel-structured-description":
 		}
 	}

@@ -171,7 +171,17 @@ type D_YTExternalEncUrl=`[parse_url_external_1] https://m.youtube.com/premium`;
 type D_ResultsPageUrl=`/results?search_query=${string}`;
 type D_PlaylistUrlFormat=`/playlist?list=${D_PlaylistId}`;
 type D_FE_SectionId=`FE${"trending"|"history"|"library"|"storefront"|"guide_builder"}`;
-type D_EngagementPanelTargetId="engagement-panel-error-corrections"|SI_VE76278_EngagementPanel["targetId"]|"engagement-panel-clip-view"|"engagement-panel-clip-create"|"engagement-panel-structured-description"|"engagement-panel-macro-markers-auto-chapters"|"engagement-panel-macro-markers-description-chapters";
+type D_EngagementPanelTargetId=
+	|"engagement-panel-error-corrections"
+	|SI_VE76278_EngagementPanel["targetId"]
+	|SI_VE126250_EngagementPanel["targetId"]
+	|"engagement-panel-clip-view"
+	|SI_DB_EngagementPanel_ClipCreate["targetId"]
+	|SI_VE124975_EngagementPanel["targetId"]
+	|SI_DB_EngagementPanel_MacroMarkers_AutoChapters["targetId"]
+	|SI_DB_EngagementPanel_MacroMarkers_DescriptionChapters["targetId"]
+	;
+;
 type D_EngagementPanelVisibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"|"ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 type D_ButtonSizeType="SIZE_DEFAULT"|"SIZE_SMALL";
 type D_ChannelSwitcherUrlFormat="/channel_switcher";
