@@ -8784,21 +8784,96 @@ class HandleTypes extends HandleTypesEval {
 		let log_color=(k,x) => this.log_color(cf1,cf,k,x);
 		if("section1Color" in x) {
 			const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section1Color: s1_c,section2Color: s2_c,section3Color: s3_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
-			{const x=p_tc; switch(x) {default: log_color("l2_p_tc",x); break;}}
-			{const x=s_tc; switch(x) {default: log_color("l2_s_tc",x); break;}}
-			{const x=s1_c; switch(x) {default: log_color("l2_s1_c",x); break;}}
-			{const x=s2_c; switch(x) {default: log_color("l2_s2_c",x); break;}}
-			{const x=s3_c; switch(x) {default: log_color("l2_s3_c",x); break;}}
-			{const x=s4_c; switch(x) {default: log_color("l2_s4_c",x); break;}}
+			{
+				const x=p_tc;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xff) debugger;
+				switch(r) {
+					default: log_color(`l2_p_tc_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_p_tc_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_p_tc_b`,b); break;
+				}
+			}
+			{
+				const x=s_tc;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xff) debugger;
+				switch(r) {
+					default: log_color(`l2_s_tc_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_s_tc_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_s_tc_b`,b); break;
+				}
+			}
+			{
+				const x=s1_c;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xf2) debugger;
+				switch(r) {
+					default: log_color(`l2_s1_c_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_s1_c_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_s1_c_b`,b); break;
+				}
+			}
+			{
+				const x=s2_c;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xf2) debugger;
+				switch(r) {
+					default: log_color(`l2_s2_c_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_s2_c_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_s2_c_b`,b); break;
+				}
+			}
+			{
+				const x=s3_c;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xf2) debugger;
+				switch(r) {
+					default: log_color(`l2_s3_c_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_s3_c_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_s3_c_b`,b); break;
+				}
+			}
+			{
+				const x=s4_c;
+				let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
+				if(a!==0xf2) debugger;
+				switch(r) {
+					default: log_color(`l2_s4_c_r`,r); break;
+				}
+				switch(g) {
+					default: log_color(`l2_s4_c_g`,g); break;
+				}
+				switch(b) {
+					default: log_color(`l2_s4_c_b`,b); break;
+				}
+			}
 			return;
 		}
 		const {primaryTitleColor: p_tc,secondaryTitleColor: s_tc,section2Color: s2_c,section4Color: s4_c,...y}=this.s(cf,x); this.g(y);
 		{
 			const x=p_tc,cf1="l1_p_tc";
-			let b=x%256;
-			let g=(x>>>8)%256;
-			let r=(x>>>16)%256;
-			let a=(x>>>24)%256;
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
@@ -8815,10 +8890,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{
 			const x=s_tc;
-			let b=x%256;
-			let g=(x>>>8)%256;
-			let r=(x>>>16)%256;
-			let a=(x>>>24)%256;
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`l1_s_tc_r`,r); break;
@@ -8854,10 +8926,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{
 			const x=s2_c,cf1="l1_s2_c";
-			let b=x%256;
-			let g=(x>>>8)%256;
-			let r=(x>>>16)%256;
-			let a=(x>>>24)%256;
+			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
 			if(a!==0xf2) debugger;
 			switch(r) {
 				default: log_color(`${cf1}_r`,r); break;
