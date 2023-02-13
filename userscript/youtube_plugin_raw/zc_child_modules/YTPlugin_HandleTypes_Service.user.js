@@ -3954,6 +3954,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
 			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
+			case "watch-supervod-button":
 			case "browse-video-menu-button":
 			case "clip-info-button":
 			case "create-clip-button-action-bar":
@@ -4036,6 +4037,18 @@ class HandleTypes extends HandleTypesEval {
 		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
 		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
 	}
+	/** @private @arg {D_Button_targetId} x */
+	D_Button_targetId(x) {
+		let cf="D_Button_targetId";
+		this.targetId(cf,x);
+		switch(x) {
+			default: debugger; x===""; break;
+			case "watch-supervod-button":
+			case "clip-info-button":
+			case "create-clip-button-action-bar":
+			case "sponsorships-button":
+		}
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
@@ -4047,15 +4060,7 @@ class HandleTypes extends HandleTypesEval {
 		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(hint,this.R_Hint);
 		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
-		this.t(targetId,x => {
-			this.targetId(cf,x);
-			switch(x) {
-				default: debugger; x===""; break;
-				case "clip-info-button":
-				case "create-clip-button-action-bar":
-				case "sponsorships-button":
-			}
-		});
+		this.t(targetId,this.D_Button_targetId);
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
 			switch(x) {
