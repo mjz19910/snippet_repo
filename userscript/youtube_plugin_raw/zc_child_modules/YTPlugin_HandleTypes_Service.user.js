@@ -5687,11 +5687,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx(rp,x)) {
 			/** @type {GU_YoutubeUrlRedirect} */
 			let arg_x=as(x);
-			this.D_YoutubeUrl(arg_x);
 			return this.GU_YoutubeUrlRedirect(arg_x);
-		}
-		if(this.str_starts_with(x,"https://www.youtube.com")) {
-			this.D_YoutubeUrl(x);
 		}
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
@@ -9777,39 +9773,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.layoutId`,layoutId);
 		if(layoutType!=="LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED") debugger;
 		this.D_AdLayoutLoggingData(adLayoutLoggingData);
-	}
-	/** @private @arg {D_YoutubeUrl} x */
-	D_YoutubeUrl(x) {
-		const cf="D_YoutubeUrl";
-		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
-		let pa=split_string_once(s1,"/channel/");
-		if(pa.length===1) {
-			let [h,sp]=split_string_once(pa[0],"/");
-			if(h!=="www.youtube.com") debugger;
-			console.log("yt-channel-url",sp);
-			return;
-		}
-		let [h,sp]=pa;
-		if(h!=="www.youtube.com") debugger;
-		if(this.str_is_search(sp)) {
-			let [pp,qs]=split_string_once(sp,"?");
-			pp; qs;
-		} else {
-			let pp=sp;
-			let p_arr=this.split_str(pp,"/");
-			switch(p_arr.length) {
-				default: this.codegen_str(cf,x); return;
-				case 2: break;
-			}
-			let [p_1,...arr_2]=p_arr;
-			if(!this.str_starts_with(p_1,"UC")) {this.codegen_str(cf,x); return;}
-			switch(arr_2[0]) {
-				default: this.codegen_str(cf,x); return;
-				case "join": break;
-			}
-			return;
-		}
-		this.codegen_str(cf,x);
 	}
 	/** @private @arg {D_InfoRow} x */
 	D_InfoRow(x) {
