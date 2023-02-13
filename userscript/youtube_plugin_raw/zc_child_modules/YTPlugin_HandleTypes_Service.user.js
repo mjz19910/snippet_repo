@@ -2460,6 +2460,8 @@ class HandleTypes extends HandleTypesEval {
 	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
+	/** @private @arg {R_MetadataRow} x */
+	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {RA_Notification} x */
 	RA_Notification(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -9220,11 +9222,16 @@ class HandleTypes extends HandleTypesEval {
 		this.z(contents,this.R_RichMetadata);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {DMD_RowItem} x */
+	DMD_RowItem(x) {
+		if("metadataRowRenderer" in x) return this.R_MetadataRow(x);
+		if("richMetadataRowRenderer" in x) return this.R_RichMetadataRow(x);
+	}
 	/** @private @arg {DMD_RowContainer} x */
 	DMD_RowContainer(x) {
 		const cf="DMD_RowContainer"; this.k(cf,x);
 		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(rows,this.R_RichMetadataRow);
+		this.tz(rows,this.DMD_RowItem);
 		this.save_number(`${cf}.coll_item_count`,collapsedItemCount);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -10628,6 +10635,45 @@ class HandleTypes extends HandleTypesEval {
 		this.g(adLayoutLoggingData);
 		if(layoutId!=="") debugger;
 	}
+	/** @private @arg {D_EndscreenElement} x */
+	D_EndscreenElement(x) {
+		const cf="D_EndscreenElement";
+		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		switch(style) {
+			default: debugger; break;
+			case "CHANNEL":
+			case "VIDEO":
+			case "WEBSITE":
+			case "PLAYLIST":
+		}
+		this.D_Thumbnail(image);
+		this.t(playlistLength,this.G_Text);
+		this.t(icon,this.D_Thumbnail);
+		this.a_primitive_num(left);
+		this.a_primitive_num(width);
+		this.a_primitive_num(top);
+		this.a_primitive_num(aspectRatio);
+		this.a_primitive_str(startMs);
+		this.a_primitive_str(endMs);
+		this.G_Text(title);
+		this.G_Text(metadata);
+		this.t(callToAction,this.G_Text);
+		this.t(dismiss,this.G_Text);
+		this.D_EndscreenElement_EP(endpoint);
+		this.t(hovercardButton,this.R_SubscribeButton);
+		this.trackingParams(cf,trackingParams);
+		this.t(isSubscribe,x => this.ceq(x,true));
+		this.a_primitive_str(id);
+		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+	}
+	/** @private @arg {D_EndscreenElement_EP} x */
+	D_EndscreenElement_EP(x) {
+		const cf="D_EndscreenElement_EP"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_VE3611(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
+		debugger;
+	}
 	/** @private @arg {D_ClientForecastingAd} x */
 	D_ClientForecastingAd(x) {
 		const cf="D_ClientForecastingAd";
@@ -10727,45 +10773,8 @@ class HandleTypes extends HandleTypesEval {
 		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {D_EndscreenElement} x */
-	D_EndscreenElement(x) {
-		const cf="D_EndscreenElement";
-		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
-		switch(style) {
-			default: debugger; break;
-			case "CHANNEL":
-			case "VIDEO":
-			case "WEBSITE":
-			case "PLAYLIST":
-		}
-		this.D_Thumbnail(image);
-		this.t(playlistLength,this.G_Text);
-		this.t(icon,this.D_Thumbnail);
-		this.a_primitive_num(left);
-		this.a_primitive_num(width);
-		this.a_primitive_num(top);
-		this.a_primitive_num(aspectRatio);
-		this.a_primitive_str(startMs);
-		this.a_primitive_str(endMs);
-		this.G_Text(title);
-		this.G_Text(metadata);
-		this.t(callToAction,this.G_Text);
-		this.t(dismiss,this.G_Text);
-		this.D_EndscreenElement_EP(endpoint);
-		this.t(hovercardButton,this.R_SubscribeButton);
-		this.trackingParams(cf,trackingParams);
-		this.t(isSubscribe,x => this.ceq(x,true));
-		this.a_primitive_str(id);
-		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
-	}
-	/** @private @arg {D_EndscreenElement_EP} x */
-	D_EndscreenElement_EP(x) {
-		const cf="D_EndscreenElement_EP"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.E_VE3611(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		debugger;
-	}
+	/** @private @arg {D_MetadataRow} x */
+	D_MetadataRow(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

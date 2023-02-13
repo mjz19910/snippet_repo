@@ -3076,7 +3076,6 @@ type D_MetadataRow={
 	trackingParams: string;
 };
 type DMD_RowItem=R_RichMetadataRow|R_MetadataRow;
-
 type DMD_RowContainer={
 	rows?: DMD_RowItem[];
 	collapsedItemCount: number;
