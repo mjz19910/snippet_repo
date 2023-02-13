@@ -6229,6 +6229,9 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof f3i!=='string') {debugger; break;}
 				if(this.str_starts_with(f2i,"UC")) {
 					this.D_ChannelId(f2i);
+				} if(this.str_starts_with(f2i,"FE")) {
+					let browse_id=this.decode_browse_id(f2i);
+					if(browse_id) this.browseId(browse_id);
 				} else {
 					debugger;
 				}
