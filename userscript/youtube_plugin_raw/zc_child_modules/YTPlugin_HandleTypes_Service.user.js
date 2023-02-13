@@ -6201,7 +6201,8 @@ class HandleTypes extends HandleTypesEval {
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
 		let msg_id=reader.read_bytes(4);
-		debugger;
+		let hex_id=new Uint32Array(msg_id.buffer)[0].toString(16);
+		if(hex_id!=="b285a9e2") debugger;
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
@@ -6243,8 +6244,11 @@ class HandleTypes extends HandleTypesEval {
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
 			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE":
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
+				this.decode_continuation_token(token);
+			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
+				debugger;
 				this.decode_continuation_token(token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
