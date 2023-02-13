@@ -98,7 +98,7 @@ type RSL_RemoveLike={
 };
 type RSM_ChannelPreference={
 	responseContext: RC_ResponseContext;
-	actions: TA_OpenPopup_Empty[];
+	actions: TA_OpenPopup<T_OpenPopup_Toast<RA_Notification>>[];
 	channelId: `UC${string}`;
 	newNotificationButton: R_SubscriptionNotificationToggleButton;
 	trackingParams: string;

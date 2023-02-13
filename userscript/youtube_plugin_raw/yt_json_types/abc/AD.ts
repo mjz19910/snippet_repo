@@ -24,7 +24,7 @@ type AD_UpdateEngagementPanel={targetId: "engagement-panel-searchable-transcript
 type AD_UpdateNotificationsUnseenCount={handlerData: "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"; unseenCount: number; timeoutMs: number;};
 type AD_ViewCount={viewCount: R_VideoViewCount;};
 //#endregion
-type AD_ReelDismissal={trackingParams: string; onDismissalCompletionRenderer: RA_NotificationAction;};
+type AD_ReelDismissal={trackingParams: string; onDismissalCompletionRenderer: RA_Notification;};
 type AD_Notification={trackingParams: string; responseText: G_Text; actionButton?: R_Button;};
 type AD_AccountItem={
 	accountName: G_Text;

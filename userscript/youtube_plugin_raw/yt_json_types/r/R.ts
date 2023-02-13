@@ -331,7 +331,7 @@ type R_PageTypeShorts={
 //#endregion
 //#region RA_
 type RA_ReelDismissal={reelDismissalActionRenderer: AD_ReelDismissal;};
-type RA_NotificationAction={notificationActionRenderer: AD_Notification;};
+type RA_Notification={notificationActionRenderer: AD_Notification;};
 //#endregion
 //#region RC_
 //#region Continuation Renderer

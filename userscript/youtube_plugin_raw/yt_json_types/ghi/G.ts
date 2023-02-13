@@ -291,7 +291,7 @@ type G_MimeTypeFormat=[
 type G_PopupItem=
 	|R_ConfirmDialog
 	|TR_MultiPageMenu<{}>
-	|RA_NotificationAction
+	|RA_Notification
 	|R_PdgBuyFlow
 	|R_UnifiedSharePanel
 	|R_VoiceSearchDialog
