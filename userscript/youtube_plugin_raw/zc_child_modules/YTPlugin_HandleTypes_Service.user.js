@@ -10682,6 +10682,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_DC_Innertube"; this.k(cf,x);
 		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
 		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		debugger;
 	}
 	//#endregion
