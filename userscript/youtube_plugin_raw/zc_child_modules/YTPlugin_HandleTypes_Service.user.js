@@ -6997,13 +6997,16 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	logged_hosts=[];
+	log_googlevideo_host=false;
 	/** @private @arg {RE_D_GoogleVideoUrl_Hostname} x */
 	on_googlevideo_host(x) {
-		if(this.logged_hosts.includes(x)) return;
-		this.logged_hosts.push(x);
 		this.save_string("googlevideo_host",x);
-		console.log("[googlevideo_host] [%s]",x);
-		Promise.resolve().then(() => this.logged_hosts.length=0);
+		if(this.log_googlevideo_host) {
+			if(this.logged_hosts.includes(x)) return;
+			this.logged_hosts.push(x);
+			console.log("[googlevideo_host] [%s]",x);
+			Promise.resolve().then(() => this.logged_hosts.length=0);
+		}
 	}
 	/** @private @arg {RE_D_VE3832_PreconnectUrl} x */
 	parse_preconnect_url(x) {
