@@ -281,6 +281,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Notification";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ReplayChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SendFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SetActivePanelItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_ShowEngagementPanelScrim";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_Signal";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_SubscribeButton";}
