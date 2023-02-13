@@ -5687,7 +5687,11 @@ class HandleTypes extends HandleTypesEval {
 		if(this.str_starts_with_rx(rp,x)) {
 			/** @type {GU_YoutubeUrlRedirect} */
 			let arg_x=as(x);
+			this.D_YoutubeUrl(arg_x);
 			return this.GU_YoutubeUrlRedirect(arg_x);
+		}
+		if(this.str_starts_with(x,"https://www.youtube.com")) {
+			this.D_YoutubeUrl(x);
 		}
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
