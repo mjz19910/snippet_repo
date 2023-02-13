@@ -10089,13 +10089,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_FormatFps} x */
 	D_FormatFps(x) {
-		let xs=this.num_to_string(x);
-		switch(xs) {
-			default: switch(xs) {
-
-			}; debugger; break;
-			case "13": case "15": case "24": case "25": case "30": case "50": case "60":
-		}
+		const cf="D_FormatFps";
+		this.save_number(cf,x);
 	}
 	/** @private @arg {D_Range} x */
 	D_Range(x) {
