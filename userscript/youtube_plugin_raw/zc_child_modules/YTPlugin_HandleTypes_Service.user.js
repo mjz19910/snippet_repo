@@ -707,7 +707,6 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
-					case "entry_f15":
 					case "context_params": case "data": case "token": case "entity_key":
 					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
