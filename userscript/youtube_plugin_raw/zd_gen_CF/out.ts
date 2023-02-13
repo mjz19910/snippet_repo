@@ -63,6 +63,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RS_Subscribe_ActionItem_Action";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "TE_SignalService_I_0";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "ContinuationRequestType_ReelWatchSeq.token";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "ContinuationRequestType_WatchNext.token";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_ChangeMarkersVisibility.entity_key";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Invalidation";}
@@ -106,7 +107,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "continuation_token.+4.f0.f3";}
-		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "continuation_token.data.f15.+0";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "AD_Notification";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "B_HrefUrl.url";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "DC_LiveChat";}
