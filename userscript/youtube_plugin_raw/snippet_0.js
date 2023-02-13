@@ -1,5 +1,4 @@
 import {Base64Binary} from "./support_1/Base64Binary";
-import {KnownDataSaver} from "./support_2/KnownDataSaver";
 import {MyReader} from "./support_2/MyReader";
 import {split_string} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
 `
@@ -292,7 +291,6 @@ export class Snippet_0_tmp {
 		}
 		return true;
 	}
-	ds=new KnownDataSaver;
 	parser=new ParserService;
 	codegen=new CodegenService;
 	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */

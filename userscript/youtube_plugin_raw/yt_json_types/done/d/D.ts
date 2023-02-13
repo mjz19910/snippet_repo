@@ -19,17 +19,6 @@ type D_UiTargetId=
 	;
 ;
 //#endregion
-//#region DC_
-type DC_EntityBatchUpdate={entityBatchUpdate: DR_DC_EntityBatchUpdate;};
-type DC_SectionList_TargetId=Extract<GD_RC_SectionList,{targetId: any;}>["targetId"];
-type DC_CommandExecutor={commands: (G_DC_CommandExecutor_CommandItem)[];};
-type DC_ChangeMarkersVisibility={entityKeys: string[]; isVisible: false;};
-type DR_DC_EntityBatchUpdate={
-	mutations: DE_MutationItem[];
-	timestamp?: D_TimestampWithNanos;
-};
-type DC_ScrollToEngagementPanel={targetId: SI_VE76278_EngagementPanel["targetId"];};
-//#endregion
 //#region String data
 type D_TargetIdStr_Template=`shopping_panel_for_entry_point_${"5"|"22"}`;
 type D_TargetIdStr=
@@ -297,7 +286,7 @@ type D_SubscriptionNotificationToggleButton={
 	states: D_SubscriptionNotificationToggleButton_States;
 	currentStateId: D_SubscriptionNotificationToggleButton_States[number]["stateId"];
 	trackingParams: string;
-	command: C_Executor;
+	command: C_CommandExecutor;
 	targetId: "notification-bell";
 	secondaryIcon: T_Icon<"EXPAND_MORE">;
 };
@@ -886,9 +875,9 @@ type D_MacroMarkersListItem=
 		onTap: E_Watch;
 		trackingParams: string;
 		shareButton: R_Button;
-		repeatButton: R_ToggleButton;
+		repeatButton?: R_ToggleButton;
 		macroMarkerRepeatStateEntityKey: string;
-		endRepeatCommand: C_Executor;
+		endRepeatCommand: C_CommandExecutor;
 		playerStateEntityKey: string;
 		carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
 		lightColorPalette: D_LightColorPalette;
@@ -1575,7 +1564,7 @@ type R_CommentsSimplebox={
 };
 type D_CommentsEntryPointHeader={
 	headerText: G_Text;
-	onTap: C_Executor;
+	onTap: C_CommandExecutor;
 	trackingParams: string;
 	commentCount: G_Text;
 	contentRenderer: R_CommentsEntryPointTeaser|R_CommentsSimplebox;
@@ -1742,6 +1731,11 @@ type D_Factoid={
 	value: G_Text;
 	label: G_Text;
 	accessibilityText: string;
+};
+type D_FancyDismissibleDialog={
+	dialogMessage: G_Text;
+	confirmLabel: G_Text;
+	trackingParams: string;
 };
 type D_FeedTabbedHeader={title: G_Text;};
 type D_FeedbackResponseItem=D_FeedbackResponseProcessedStatus;
@@ -2793,7 +2787,6 @@ type D_TimestampWithNanos={
 	seconds: `${number}`;
 	nanos: number;
 };
-type G_DC_CommandExecutor_CommandItem=C_EntityUpdate|C_UpdateToggleButtonState|C_RepeatChapter|E_Like;
 type T_Id<T>={id: T;};
 type D_ToggleButtonIdData={toggleButtonIdData: T_Id<"TOGGLE_BUTTON_ID_TYPE_LIKE">;};
 type T_SizeType<T>={sizeType: T;};
@@ -2996,7 +2989,7 @@ type D_VideoSecondaryInfo={
 	trackingParams: string;
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;
-	showMoreCommand?: C_Executor;
+	showMoreCommand?: C_CommandExecutor;
 	showLessCommand?: A_ChangeEngagementPanelVisibility;
 };
 type D_VideoViewCount={

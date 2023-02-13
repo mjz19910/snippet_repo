@@ -674,7 +674,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry":
+			case "aadc_guidelines_state_entity_key": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "browse$param":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
 			case "D_Browse":
@@ -1026,16 +1026,6 @@ class HandleTypes extends HandleTypesEval {
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
-	G_DC_CommandExecutor_CommandItem(x) {
-		const cf="DC_CommandExecutor.command";
-		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
-		if("likeEndpoint" in x) return this.E_Like(x);
-		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		if("commandExecutorCommand" in x) return this.C_RepeatChapter(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_DC_GetSurvey_Endpoint} x */
@@ -2295,6 +2285,14 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_InfoCardIcon} x */
 	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,this.D_InfoCardIcon);}
+	/** @private @arg {R_LinearAdSequence} x */
+	R_LinearAdSequence(x) {this.H_("R_LinearAdSequence","linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
+	/** @private @arg {R_InstreamVideoAd} x */
+	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
+	/** @private @arg {R_ClientForecastingAd} x */
+	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
+	/** @private @arg {R_AdBreakService} x */
+	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
 	/** @private @arg {RA_NotificationAction} x */
 	RA_NotificationAction(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -2423,12 +2421,12 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ShowReloadUi(a);
 	}
-	/** @private @arg {C_Executor} x */
+	/** @private @arg {C_CommandExecutor} x */
 	C_Executor(x) {
 		const cf="C_Executor"; this.k(cf,x);
 		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_Executor(commandExecutorCommand);
+		this.DC_CommandExecutor(commandExecutorCommand);
 	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
@@ -7426,11 +7424,9 @@ class HandleTypes extends HandleTypesEval {
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {DC_Executor} x */
-	DC_Executor(x) {this.T_Commands("DC_Executor",x,this.AC_Executor);}
-	/** @private @arg {AC_Executor} x */
-	AC_Executor(x) {
-		const cf="AC_Executor"; this.k(cf,x);
+	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
+	G_DC_CommandExecutor_CommandItem(x) {
+		const cf="G_DC_CommandExecutor_CommandItem"; this.k(cf,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
@@ -7440,6 +7436,8 @@ class HandleTypes extends HandleTypesEval {
 		if("changeMarkersVisibilityCommand" in x) return this.C_ChangeMarkersVisibility(x);
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
 		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {string} cf @arg {{}} x */
@@ -9551,38 +9549,31 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_MacroMarkersListItem} x */
 	D_MacroMarkersListItem(x) {
 		const cf="D_MacroMarkersListItem"; this.k(cf,x);
-		if("lightColorPalette" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey,endRepeatCommand,playerStateEntityKey,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
-			this.G_Text(title);
-			this.G_Text(timeDescription);
-			this.D_Thumbnail(thumbnail);
-			this.E_Watch(onTap);
-			this.trackingParams(cf,trackingParams);
-			this.R_Button(shareButton);
-			this.R_ToggleButton(repeatButton);
-			console.log(`${cf}:macroMarkerRepeatStateEntityKey`,macroMarkerRepeatStateEntityKey);
-			this.C_Executor(endRepeatCommand);
-			console.log(`${cf}:playerStateEntityKey`,playerStateEntityKey);
-			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-			this.D_LightColorPalette(cf,lightColorPalette);
-			this.D_DarkColorPalette(cf,darkColorPalette);
-			this.a_primitive_str(timeDescriptionA11yLabel);
-			return;
-		}
 		if("playerStateEntityKey" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey,endRepeatCommand,playerStateEntityKey,carouselType,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
+			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,timeDescriptionA11yLabel,...y}=this.s(cf,x);
 			this.G_Text(title);
 			this.G_Text(timeDescription);
 			this.D_Thumbnail(thumbnail);
 			this.E_Watch(onTap);
 			this.trackingParams(cf,trackingParams);
 			this.R_Button(shareButton);
-			this.R_ToggleButton(repeatButton);
-			console.log(`${cf}:macroMarkerRepeatStateEntityKey`,macroMarkerRepeatStateEntityKey);
-			this.C_CommandExecutor(endRepeatCommand);
-			console.log(`${cf}:playerStateEntityKey`,playerStateEntityKey);
+			this.t(repeatButton,this.R_ToggleButton);
+			this.params(cf,"macro_marker_repeat_state.entity_key",a);
+			x: {
+				let x=endRepeatCommand;
+				if("commandExecutorCommand" in x) {this.C_CommandExecutor(x); break x;}
+				this.C_Executor(x);
+			}
+			this.params(cf,"player_state.entity_key",b);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 			this.a_primitive_str(timeDescriptionA11yLabel);
+			if("lightColorPalette" in y) {
+				const {lightColorPalette,darkColorPalette,...y1}=y; this.g(y1);
+				this.D_LightColorPalette(cf,lightColorPalette);
+				this.D_DarkColorPalette(cf,darkColorPalette);
+				return;
+			}
+			this.g(y);
 			return;
 		}
 		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
@@ -10268,11 +10259,37 @@ class HandleTypes extends HandleTypesEval {
 		this.G_AdPlacementRendererItem(renderer);
 	}
 	/** @private @arg {D_VideoCategory} x */
-	D_VideoCategory(x) {x;}
+	D_VideoCategory(x) {
+		switch(x) {
+			default: {
+				switch(x) {
+				}
+				debugger;
+			} break;
+			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
+			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
+		}
+	}
 	/** @private @arg {G_AdPlacementRendererItem} x */
-	G_AdPlacementRendererItem(x) {x;}
+	G_AdPlacementRendererItem(x) {
+		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
+		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
+		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
+		debugger;
+	}
 	/** @private @arg {D_LiveBroadcastDetails} x */
-	D_LiveBroadcastDetails(x) {x;}
+	D_LiveBroadcastDetails(x) {
+		const cf="D_LiveBroadcastDetails";
+		const {isLiveNow,startTimestamp,...y}=this.s(cf,x);
+		this.a_primitive_bool(isLiveNow);
+		this.a_primitive_str(startTimestamp);
+		if("endTimestamp" in y) {
+			const {endTimestamp,...y1}=y; this.g(y1);
+			return;
+		}
+		this.g(y);
+	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {
 		const cf="Popup_ShareEntityService";
@@ -10553,6 +10570,37 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`save://Emoji.d/emojiId`,emojiId);
 		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
 		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
+	}
+	/** @private @arg {D_LinearAdSequence} x */
+	D_LinearAdSequence(x) {
+		const cf="D_LinearAdSequence";
+		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
+		this.MG_AdLayout_PlayerBytes(adLayoutMetadata);
+		this.z(linearAds,this.G_LinearAdsItem);
+	}
+	/** @private @arg {MG_AdLayout_PlayerBytes} x */
+	MG_AdLayout_PlayerBytes(x) {
+		const cf="MG_AdLayout_PlayerBytes";
+		const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);
+	}
+	/** @private @arg {G_LinearAdsItem} x */
+	G_LinearAdsItem(x) {
+		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+	}
+	/** @private @arg {D_InstreamVideoAd} x */
+	D_InstreamVideoAd(x) {
+		const cf="D_InstreamVideoAd";
+		const {skipOffsetMilliseconds,...y}=this.s(cf,x); this.g(y);
+	}
+	/** @private @arg {D_ClientForecastingAd} x */
+	D_ClientForecastingAd(x) {
+		const cf="D_ClientForecastingAd";
+		const {...y}=this.s(cf,x); this.g(y);
+	}
+	/** @private @arg {D_AdBreakService} x */
+	D_AdBreakService(x) {
+		const cf="D_AdBreakService";
+		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

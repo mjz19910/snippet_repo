@@ -5,6 +5,8 @@ type P_PathRootStr=
 	|"AdServingDataEntry"
 	|"browse$param"
 	|"change_markers_visibility.entity_key"
+	|"macro_marker_repeat_state.entity_key"
+	|"player_state.entity_key"
 	|"continuation_token.data"
 	|"create_comment.params"
 	|"create_playlist.params"

@@ -92,6 +92,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_AdLayoutLogging";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_CommentSimplebox";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_EY_Offlineability.key";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_MacroMarkersListItem";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlayabilityStatus";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_PlaylistEdit";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_SerializedSlotAdServingDataEntry";}
@@ -346,6 +347,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationDelete";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationReplace";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdBreakService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdLayoutMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacementConfig";}
@@ -377,6 +379,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CinematicContainer";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClickLocationTarget";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClientForecastingAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipAdState";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClipCreationScrubber";}
@@ -451,12 +454,15 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InFeedAdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InfoRow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InstreamVideoAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InvalidationId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.dislike";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.like";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LinearAdSequence";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveBroadcastDetails";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}
@@ -642,6 +648,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MC_ResolveUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_PlayerBytes";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611_ResolveUrl";}
@@ -840,7 +847,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "GE_Browse";}
 		|{n: Prelude.CF_TE_Endpoint_Opt_3; t: Types.CF_TE_Endpoint_Opt_3_; v: "C_Continuation";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
-		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_Executor";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AddToPlaylistService";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Browse";}

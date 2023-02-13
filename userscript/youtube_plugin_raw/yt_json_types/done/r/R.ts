@@ -77,6 +77,7 @@ type R_ExpandableSurveyResponse={expandableSurveyResponseRenderer: D_ExpandableS
 type R_ExpandableTab={expandableTabRenderer: D_ExpandableTab;};
 type R_ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D_ExpandableVideoDescriptionBody;};
 type R_Factoid={factoidRenderer: D_Factoid;};
+type R_FancyDismissibleDialog={fancyDismissibleDialogRenderer: D_FancyDismissibleDialog;};
 type R_FeedFilterChipBar={feedFilterChipBarRenderer: D_FeedFilterChipBar;};
 type R_FeedNudge={feedNudgeRenderer: D_FeedNudge;};
 type R_FeedTabbedHeader={feedTabbedHeaderRenderer: D_FeedTabbedHeader;};

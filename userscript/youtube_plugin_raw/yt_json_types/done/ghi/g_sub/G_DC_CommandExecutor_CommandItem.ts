@@ -1,12 +1,14 @@
-type AC_Executor=
+type G_DC_CommandExecutor_CommandItem=
 	|A_ChangeEngagementPanelVisibility
 	|A_HideEngagementPanelScrim
 	|C_ChangeMarkersVisibility
 	|C_EngagementPanelHeaderShowNavigationButton
 	|C_EntityUpdate
 	|C_Loop
+	|C_RepeatChapter
 	|C_ScrollToEngagementPanel
 	|C_UpdateToggleButtonState
+	|E_Like
 	|TA_OpenPopup_Empty
 	;
 ;

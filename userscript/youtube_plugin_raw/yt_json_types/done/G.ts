@@ -72,7 +72,7 @@ type GA_Playlist=A_ActionAddVideo|D_ActionRemoveVideoByVideoId|A_ActionSetPlayli
 type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_Continuation
-	|C_Executor
+	|C_CommandExecutor
 	|C_GetSurvey
 	|C_ShowReelsCommentsOverlay
 	|E_AddToPlaylistService
@@ -282,7 +282,6 @@ type G_GuideSubscriptionsSectionItem=
 ;
 type G_HexNibbleStr=T_Split<"abcdef0123456789","">[number];
 type G_ItemSectionItems=R_CompactRadio|R_ContinuationItem|R_CompactVideo|R_CompactPlaylist|R_AdSlot;
-type G_LinearAdsItem=R_InstreamVideoAd|R_AdActionInterstitial;
 type G_MenuItem=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;
 type G_MimeTypeFormat=[
 	`video/mp4; codecs="${S_acv1_codec}"`,
