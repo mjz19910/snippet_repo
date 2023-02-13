@@ -18,7 +18,10 @@ type T_Items_TP<T>={trackingParams: string; items: T[];};
 type T_Actions<T>={actions: T[];};
 type T_AnyObjectOrEmpty<T extends {}>={}|T;
 type T_Autoplay<T>={autoplay: T;};
-type T_BaseUrl<T extends string>={baseUrl: T;};
+type T_BaseUrl<T extends string>={
+	baseUrl: T;
+	elapsedMediaTimeSeconds?: number;
+};
 type T_Command$<T>={
 	command: T;
 	trackingParams: string;

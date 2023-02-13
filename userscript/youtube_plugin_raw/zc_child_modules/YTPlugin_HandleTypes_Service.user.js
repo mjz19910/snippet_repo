@@ -4012,10 +4012,10 @@ class HandleTypes extends HandleTypesEval {
 		this.t(isDisabled,x => {if(x!==false) debugger;});
 		this.t(text,this.G_Text);
 		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
-		this.t(navigationEndpoint,this.D_Button_navigationEndpoint);
+		this.t(navigationEndpoint,this.D_Button_NavEP);
 		this.t(accessibility,this.D_Label);
 		this.t(tooltip,this.a_primitive_str);
-		this.trackingParams(cf,trackingParams);
+		this.t(trackingParams,x => this.trackingParams(cf,x));
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
@@ -10094,7 +10094,12 @@ class HandleTypes extends HandleTypesEval {
 		this.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.a_primitive_str));
 	}
 	/** @private @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
-	T_BaseUrl(x,f) {this.y("T_BaseUrl","baseUrl",x,f);}
+	T_BaseUrl(x,f) {
+		const cf="T_BaseUrl";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
+		f.call(this,baseUrl);
+		this.t(elapsedMediaTimeSeconds,this.a_primitive_num);
+	}
 	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
 	D_UrlAndElapsedMediaTime(x,f) {
 		const cf="D_UrlAndElapsedMediaTime";
@@ -10482,9 +10487,9 @@ class HandleTypes extends HandleTypesEval {
 		if("performCommentActionEndpoint" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_Button_navigationEndpoint} x */
-	D_Button_navigationEndpoint(x) {
-		const cf="D_Button.navigationEndpoint"; this.k(cf,x);
+	/** @private @arg {D_Button_NavEP} x */
+	D_Button_NavEP(x) {
+		const cf="D_Button_NavEP"; this.k(cf,x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
