@@ -650,6 +650,7 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} return;
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
+				case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
 				case "reel_request_continuation.token.f15.f6.f7.f1[].f1": {
 					this.save_number(path,entry);
 				} return;
@@ -10633,7 +10634,12 @@ class HandleTypes extends HandleTypesEval {
 	D_CaptionTrackItem(x) {
 		const cf="D_CaptionTrackItem";
 		const {baseUrl,name,vssId,languageCode,kind,isTranslatable,...y}=this.s(cf,x); this.g(y);
-		console.log(`${cf}.baseUrl`,baseUrl);
+		{
+			let x=baseUrl;
+			let x1=split_string_once(x,"?");
+			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
+			let {v,caps,xoaf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y1}=this.parse_url_search_params(x1[1]); this.g(y1);
+		}
 		this.G_Text(name);
 		this.save_string(`${cf}.vssId`,vssId);
 		this.save_string(`${cf}.languageCode`,languageCode);

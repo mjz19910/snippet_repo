@@ -1389,7 +1389,7 @@ type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_CaptionTrackItem={
-	baseUrl: `https://www.youtube.com/api/timedtext?${string}`;
+	baseUrl: `https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`;
 	name: G_Text;
 	vssId: "a.en";
 	languageCode: "en";
