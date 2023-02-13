@@ -25,7 +25,7 @@ type D_SubscribeButton=
 		channelId?: D_ChannelId;
 		showPreferences?: boolean;
 		trackingParams?: string;
-		serviceEndpoints?: E_Subscribe[];
+		serviceEndpoints?: (E_Subscribe|E_SignalService_SendPost)[];
 		notificationPreferenceButton?: R_SubscriptionNotificationToggleButton;
 		targetId?: "watch-subscribe";
 		onSubscribeEndpoints?: E_Subscribe[];

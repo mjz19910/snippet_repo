@@ -4833,11 +4833,17 @@ class HandleTypes extends HandleTypesEval {
 			this.D_Accessibility(accessibility);
 		};
 		r_un_sub_2(un_sub_2);
-		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y}=o4; this.g(y);
+		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
 		this.tz(onSubscribeEndpoints,this.E_Subscribe);
 		this.tz(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
 		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
 		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
+		const {serviceEndpoints,...y}=y2; this.g(y);
+		this.tz(serviceEndpoints,x=>{
+			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
+			if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+			debugger;
+		});
 	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
