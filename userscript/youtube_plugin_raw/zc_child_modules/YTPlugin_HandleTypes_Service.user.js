@@ -6498,6 +6498,11 @@ class HandleTypes extends HandleTypesEval {
 		let dec_t=as_any(dec);
 		switch(dec_t.length) {
 			default: debugger; break;
+			case 5: {
+				const [dec_0,dec_1,dec_2,dec_3,dec_4]=dec_t;
+				dec_0; dec_1; dec_2; dec_3; dec_4;
+
+			} break;
 			case 1: {
 				const [dec_0]=dec_t;
 				this.D_ReadAny_CR_0x4c82a9c(dec_0);
