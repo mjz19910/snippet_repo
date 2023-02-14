@@ -6900,21 +6900,6 @@ class HandleTypes extends HandleTypesEval {
 		return mp;
 	};
 	icon_types_map=this.make_icon_types_map();
-	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
-	D_ThumbnailOverlaySidePanel(x) {
-		const cf="D_ThumbnailOverlaySidePanel"; this.k(cf,x);
-		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		let store=this.icon_types_map.get(cf);
-		if(!store) return;
-		const {known,unknown}=store;
-		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
-		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
-	}
-	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
-	D_ThumbnailOverlayBottomPanel(x) {const cf="D_ThumbnailOverlayBottomPanel"; this.y(cf,"icon",x,x => this.T_Icon(`${cf}:icon`,x));}
-	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
-	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix"; this.k(cf,x);

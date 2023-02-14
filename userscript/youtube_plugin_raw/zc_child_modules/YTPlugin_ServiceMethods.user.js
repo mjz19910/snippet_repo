@@ -3361,6 +3361,8 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(text);
 		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
+	/** @private @arg {D_ThumbnailOverlayBottomPanel} x */
+	D_ThumbnailOverlayBottomPanel(x) {const cf="D_ThumbnailOverlayBottomPanel"; this.y(cf,"icon",x,x => this.T_Icon(`${cf}:icon`,x));}
 	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
 	D_ThumbnailOverlayEndorsement(x) {
 		const cf="D_ThumbnailOverlayEndorsement"; this.k(cf,x);
@@ -3368,6 +3370,19 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(text);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
+	D_ThumbnailOverlaySidePanel(x) {
+		const cf="D_ThumbnailOverlaySidePanel"; this.k(cf,x);
+		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		let store=this.icon_types_map.get(cf);
+		if(!store) return;
+		const {known,unknown}=store;
+		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
+		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
+	}
+	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
+	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
 	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
 	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
