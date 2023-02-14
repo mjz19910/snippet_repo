@@ -5687,13 +5687,16 @@ class HandleTypes extends HandleTypesEval {
 					}
 				}
 			}
-		} else {console.log(r);}
+		} else {
+			console.log(`${cf}.serializedContextData.decode_item`,r);
+			debugger;
+		}
 	}
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext"; this.k(cf,x);
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.V_SerializedContextData(serializedContextData);
+		this.V_SerializedContextData(cf,serializedContextData);
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);}
