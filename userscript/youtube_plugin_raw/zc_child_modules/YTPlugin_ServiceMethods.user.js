@@ -17,6 +17,8 @@ function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__modu
 const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
+	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
 	get handle_types() {
 		return this.x.get("handle_types");
 	}
@@ -1076,6 +1078,9 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
+	/** @type {string[]} */
+	logged_strings=[];
+	group_sub_noti_toggle_btn=false;
 	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
 	D_SubscriptionNotificationToggleButton(x) {
 		const cf="D_SubscriptionNotificationToggleButton"; this.k(cf,x);
@@ -4130,6 +4135,22 @@ class ServiceMethods extends ServiceData {
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
+	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
+	G_DC_CommandExecutor_CommandItem(x) {
+		const cf="G_DC_CommandExecutor_CommandItem"; this.k(cf,x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
+		if("loopCommand" in x) return this.C_Loop(x);
+		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
+		if("changeMarkersVisibilityCommand" in x) return this.C_ChangeMarkersVisibility(x);
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
+		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
+		if("likeEndpoint" in x) return this.E_Like(x);
+		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @private @arg {DC_RepeatChapter} x */

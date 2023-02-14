@@ -892,8 +892,6 @@ class HandleTypes extends HandleTypesEval {
 		if("liveChatPlaceholderItemRenderer" in x) return;
 		if("liveChatViewerEngagementMessageRenderer" in x) return;
 	}
-	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
-	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
 	//#endregion
 	//#region helpers
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
@@ -4780,22 +4778,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
 	}
-	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
-	G_DC_CommandExecutor_CommandItem(x) {
-		const cf="G_DC_CommandExecutor_CommandItem"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
-		if("loopCommand" in x) return this.C_Loop(x);
-		if("updateToggleButtonStateCommand" in x) return this.C_UpdateToggleButtonState(x);
-		if("changeMarkersVisibilityCommand" in x) return this.C_ChangeMarkersVisibility(x);
-		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return this.C_EngagementPanelHeaderShowNavigationButton(x);
-		if("entityUpdateCommand" in x) return this.C_EntityUpdate(x);
-		if("likeEndpoint" in x) return this.E_Like(x);
-		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @arg {string} cf @arg {{}} x */
 	codegen_break(cf,x) {
 		this.codegen_typedef_all(`${cf}.commandMetadata`,x);
@@ -5466,9 +5448,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_ChannelId(channelId);
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
-	/** @type {string[]} */
-	logged_strings=[];
-	group_sub_noti_toggle_btn=false;
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="D_ExpandableTab";
