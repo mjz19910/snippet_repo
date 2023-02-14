@@ -733,6 +733,7 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
 				} return;
+				case "ypc_get_offers.params.f5.f5.f1":
 				case "ypc_get_offers.params.f5.f1": {
 					return this.videoId(entry);
 				}

@@ -1,8 +1,6 @@
 
 // TODO #1
 type D_ReportFormModal={};
-// TODO #2
-type D_LiveChat={};
 // TODO #4
 type DC_PlaylistPanel={};
 // TODO #5
