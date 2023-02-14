@@ -723,10 +723,11 @@ class HandleTypes extends HandleTypesEval {
 		if(path==="watch_playlist.params.f1") return;
 		if(typeof entry==="string") {
 			switch(path) {
-				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2":
+				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f1":
 				case "tracking.trackingParams.f11": {
 					return this.D_ChannelId(as(entry));
 				}
+				case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1":
 				case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
 				case "unsubscribe.params.f2": {
 					return this.videoId(entry);
@@ -739,7 +740,7 @@ class HandleTypes extends HandleTypesEval {
 				}
 				case "transcriptTrackSelection.serializedParams.f2": case "transcriptTrackSelection.serializedParams.f1": case "get_transcript.params.f2": case "get_transcript.params.f1": case "reel_request_continuation.token.f3.f1":
 				case "continuation_token.data.f53.f4.f4": case "reel_request_continuation.token.f15.f6.f1":
-				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1": 
+				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1":
 				case "continuation_token.data.f49": case "continuation_token.data.f15":
 				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
 				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
@@ -751,11 +752,9 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
 				} return;
-				case "ypc_get_offers.params.f5.f5.f1":
-				case "ypc_get_offers.params.f5.f1": {
+				case "continuation_token.data$sub_obj$f3.f1.f5.f2": {
 					return this.videoId(entry);
 				}
-				case "continuation_token.data$sub_obj$f3.f1.f5.f1":
 				case "ypc_get_offers.params.f1.f2": {
 					return this.D_ChannelId(as(entry));
 				}
