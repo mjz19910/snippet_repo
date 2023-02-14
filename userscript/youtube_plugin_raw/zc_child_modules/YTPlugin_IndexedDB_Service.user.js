@@ -205,45 +205,15 @@ class IndexedDBService extends BaseService {
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
 		const key=store_desc.key;
-		const index_key=this.get_index_key(key);
-		const [,dc]=this.get_data_cache(key);
+		const [,d_cache]=this.get_data_cache(key);
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
-		for(let i=dc.length-1;i>=0;i--) {
-			const val=dc[i];
-			/** @type {T_UnionToPartial<typeof val>} */
-			let ac_val=val;
-			if(!this.committed_data.includes(val)) continue;
-			if(!index_key) {debugger; continue;}
-			x: {
-				if(!this.cached_data.has(key)) this.cached_data.set(key,[]);
-				let cache=this.cached_data.get(key);
-				if(!cache) throw new Error();
-				let index_val=ac_val[index_key];
-				if(!index_val) break x;
-				if(cache.includes(index_val)) break x;
-				cache.push(index_val);
-			}
-			dc.splice(i,1);
-		}
-		if(dc.length>0) {
-			console.log("transaction done, but not all data was committed");
-			console.log("[new_data_after_tx_complete]",dc);
-		} else {
-			this.committed_data.length=0;
-			let index=this.get_data_index_cache(key);
-			index.clear();
-		}
+		this.cached_data.set(key,[]);
+		this.committed_data.length=0;
+		d_cache.length=0;
+		let index=this.get_data_index_cache(key);
+		index.clear();
 		this.database_open=false;
 		db.close();
-	}
-	/** @protected @template {keyof DatabaseStoreTypes} K @arg {K} key */
-	get_index_key(key) {
-		switch(key) {
-			case "hashtag": return "hashtag";
-			case "video_id": return "v";
-			case "boxed_id": return "id";
-		}
-		throw new Error();
 	}
 	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	add_data_to_store(store,data) {
@@ -295,13 +265,8 @@ class IndexedDBService extends BaseService {
 	}
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db @arg {IDBIndexParameters} [options] */
 	create_store(key,db,options) {
-		let index_key=this.get_index_key(key);
-		if(index_key) {
-			let obj_store=db.createObjectStore(key,{keyPath: "key"});
-			obj_store.createIndex(key,index_key,options);
-		} else {
-			db.createObjectStore(key);
-		}
+		let obj_store=db.createObjectStore(key,{keyPath: "key"});
+		obj_store.createIndex(key,"key",options);
 	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
