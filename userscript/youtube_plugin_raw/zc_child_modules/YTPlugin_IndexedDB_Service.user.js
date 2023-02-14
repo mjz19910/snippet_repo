@@ -34,10 +34,10 @@ class DatabaseArguments {
 }
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class IndexedDBService extends BaseService {
-	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x @arg {string} [db_name] */
-	constructor(x,db_name="yt_plugin",version=4) {
+	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
+	constructor(x) {
 		super(x);
-		this.db_args=new DatabaseArguments(db_name,version);
+		this.db_args=new DatabaseArguments("yt_plugin",IndexedDBService.schema_version);
 	}
 	database_opening=false;
 	database_open=false;
