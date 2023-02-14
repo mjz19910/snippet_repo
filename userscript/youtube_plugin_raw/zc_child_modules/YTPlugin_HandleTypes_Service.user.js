@@ -6486,7 +6486,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==0x4c82a9c) debugger; buffer;
 		this.D_ReadAny_CD_0x4c82a9c(dec_0);
 	}
-	/** @arg {D_ReadAny_CR_0x12f639cf} x */
+	/** @arg {D_RA_CR_0x12f639cf} x */
 	D_ReadAny_CR_0x12f639cf(x) {x;}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
