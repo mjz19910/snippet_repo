@@ -6580,7 +6580,6 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} break;
 			}
-			buffer; dec;
 		}
 		{
 			const [type,field_id,buffer]=dec_1;
