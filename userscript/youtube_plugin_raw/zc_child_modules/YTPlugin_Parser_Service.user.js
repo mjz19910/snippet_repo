@@ -170,8 +170,6 @@ class ParserService extends BaseService {
 		let a=split_string_once(x,"/");
 		this.get_yt_url_type(["youtubei","v1",...a]);
 	}
-	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
-	parse_shorts_url(x) {this.x.get("indexed_db").put("video_id",{v: x[1]});}
 	/** @private @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
 		let [,a]=x;
@@ -305,7 +303,7 @@ class ParserService extends BaseService {
 					if(this.str_starts_with_at_0(x,"@")) return this.parse_channel_section_url(x[1]);
 					switch(x[0]) {
 						case "feed": return this.parse_feed_url(x);
-						case "shorts": return this.parse_shorts_url(x);
+						case "shorts": return this.x.get("handle_types").parse_shorts_url(x);
 						case "channel": return this.parse_channel_url(x);
 						case "youtubei": return this.parse_youtube_url_2(x);
 						case "api": return this.parse_api_url(x);

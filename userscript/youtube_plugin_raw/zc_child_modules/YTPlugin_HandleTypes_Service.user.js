@@ -973,7 +973,7 @@ class HandleTypes extends HandleTypesEval {
 		return this.x.get("indexed_db");
 	}
 	/** @protected @arg {{v:string}} x */
-	put_video_args(x) {this.indexed_db.put("video_id",{key: `video_id:${x.v}`,v: x.v});}
+	put_video_args(x) {this.indexed_db.put("video_id",{key: `video_id:${x.v}`,...x});}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
@@ -6596,6 +6596,8 @@ class HandleTypes extends HandleTypesEval {
 			case "video-referral": this.parse_video_id(url_info.id); break;
 		}
 	}
+	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
+	parse_shorts_url(x) {this.put_video_args({type: "shorts",v: x[1]});}
 	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:LL") return false;
