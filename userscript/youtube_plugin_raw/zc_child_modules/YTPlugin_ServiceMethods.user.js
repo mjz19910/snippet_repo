@@ -4295,7 +4295,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
+	/** @private @arg {DC_UpdateToggleButtonState} x */
+	DC_UpdateToggleButtonState(x) {
+		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(a);
+		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
+	}
 	/** @private @arg {C_Loop} x */
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
+	/** @private @arg {DC_Loop} x */
+	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

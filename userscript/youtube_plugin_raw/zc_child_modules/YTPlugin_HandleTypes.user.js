@@ -1459,14 +1459,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(mutations,this.DE_MutationItem);
 		this.t(timestamp,this.D_TimestampWithNanos);
 	}
-	/** @private @arg {DC_Loop} x */
-	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
-	/** @private @arg {DC_UpdateToggleButtonState} x */
-	DC_UpdateToggleButtonState(x) {
-		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(a);
-		this.save_enum("TOGGLE_BUTTON_ID_TYPE",b);
-	}
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
 		const cf="DC_RelatedChip";
