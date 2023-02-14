@@ -3834,9 +3834,9 @@ class HandleTypes extends HandleTypesEval {
 	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
-		let token_bin=base64_url_dec.decodeByteArray(x);
-		if(!token_bin) {debugger; return;}
-		this.save_number("undo_token.0-2",token_bin.slice(0,2));
+		let buffer=base64_url_dec.decodeByteArray(x);
+		if(!buffer) {debugger; return;}
+		this.save_number("undo_token.0-2",buffer.slice(0,2));
 	}
 	/** @private @arg {GU_VE42352_Url} x */
 	GU_VE42352_Url(x) {
@@ -6144,11 +6144,15 @@ class HandleTypes extends HandleTypesEval {
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE":
 		}
 	}
+	/** @private @arg {MG_AdLayout["layoutId"]} x */
+	MG_AdLayout_LayoutId(x) {
+		let buffer=base64_dec.decodeByteArray(layoutId);
+		if(!buffer) {debugger; return;}
+		this.save_number("AdLayout.layoutId.bytes.0-2",buffer.slice(0,2));
+	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x); this.k(cf,x);
-		let buffer=base64_dec.decodeByteArray(layoutId);
-		this.t(buffer,([x]) => this.save_number("AdLayout.layoutId.bytes[0]",x));
 		this.MG_AdLayout_layoutType(y.layoutType);
 		switch(y.layoutType) {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=this.s(cf,y); this.g(u);/*#destructure_done*/ break;
@@ -10328,7 +10332,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} x */
 	D_VideoPlayback_ns(x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
-		if(!buffer) return;
+		if(!buffer) {debugger; return;}
 		this.save_number(`video_playback.buf.ns.0-2`,buffer.slice(0,2));
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
