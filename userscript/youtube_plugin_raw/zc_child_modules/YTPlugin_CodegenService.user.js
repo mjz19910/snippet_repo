@@ -354,7 +354,7 @@ class CodegenService extends BaseService {
 		if(state.is_root&&k1==="") {
 			/** @type {{[U in string|number]: unknown}} */
 			let fx={};
-			let fk=Object.keys(fx);
+			let fk=Object.keys(x);
 			for(let kk of fk) {
 				if(kk.match(/^\d+$/)) {
 					let num=parseInt(kk,10);
