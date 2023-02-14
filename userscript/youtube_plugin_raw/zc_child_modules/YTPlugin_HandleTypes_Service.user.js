@@ -6859,15 +6859,21 @@ class HandleTypes extends HandleTypesEval {
 		this.V_BinaryTimestamp(f3);
 		this.V_BinaryTimestamp(f4);
 	}
+	/** @private @arg {R_0x12f639cf[6]} x */
+	R_0x12f639cf_f6(x) {
+		if(3 in f6) {
+		}
+		this.RV_Bigint(f6);
+	}
 	/** @private @arg {R_0x12f639cf} x */
 	R_0x12f639cf(x) {
 		const cf="R_0x12f639cf";
 		const {3: f3,6: f6,11: f11,12: f12,0x12f639cf: f_0x12f639cf,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(f3);
-		this.RV_Bigint(f6);
-		this.D_0x12f639cf(f_0x12f639cf);
+		this.R_0x12f639cf_f6(f6);
 		this.R_f11(f11);
 		this.D_f12(f12);
+		this.D_0x12f639cf(f_0x12f639cf);
 	}
 	/** @private @arg {R_0x4c82a9c} x */
 	R_0x4c82a9c(x) {
