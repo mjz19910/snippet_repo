@@ -3634,7 +3634,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
-		const {feedbackToken,uiActions,actions,...u}=this.s(cf,x); this.g(y);
+		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
 		this.save_b64_binary("feedbackToken",feedbackToken);
 		this.t(uiActions,this.D_HideEnclosingContainer);
 		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
