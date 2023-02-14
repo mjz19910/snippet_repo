@@ -15,6 +15,7 @@ const __module_name__="mod$ServiceMethods",store=required(window.__plugin_module
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
+const as_any=bs.as_any;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
@@ -3941,6 +3942,14 @@ class ServiceMethods extends ServiceData {
 		if("accessibility" in y) return this.y(cf,"accessibility",y,this.D_Accessibility);
 		this.g(y);
 	}
+	/** @arg {["Signal",Extract<RD_MenuServiceItem["serviceEndpoint"],{signalServiceEndpoint:any}>["signalServiceEndpoint"]]} x */
+	RD_MenuServiceItem_ServiceInfo(x) {
+		const cf="RD_MenuServiceItem_ServiceInfo"; this.k(cf,x);
+		switch(x[0]) {
+			case "Signal": return this.G_ClientSignal(cf,x[1]);
+			default: debugger; break;
+		}
+	}
 	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
 	RD_MenuServiceItem_Omit(cf,x) {
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
@@ -3949,6 +3958,12 @@ class ServiceMethods extends ServiceData {
 		this.t(res,this.RD_MenuServiceItem_ServiceInfo);
 		this.trackingParams(cf,trackingParams);
 		return y;
+	}
+	/** @arg {string} cf @arg {string} x */
+	new_service_icon(cf,x) {
+		if(this.service_menu_icons.includes(x)) return;
+		this.service_menu_icons.push(x);
+		this.codegen_all_service_menu_icons(cf);
 	}
 	/** @private @arg {Extract<RD_MenuServiceItem,{icon:any}>["icon"]} x */
 	RD_MenuServiceItem_Icon(x) {

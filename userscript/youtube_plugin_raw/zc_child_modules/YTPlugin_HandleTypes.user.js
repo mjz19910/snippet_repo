@@ -2802,22 +2802,8 @@ class HandleTypes extends HandleTypesEval {
 		let arr_items=JSON.stringify(this.service_menu_icons,null,"\t");
 		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
 	}
-	/** @arg {string} cf @arg {string} x */
-	new_service_icon(cf,x) {
-		if(this.service_menu_icons.includes(x)) return;
-		this.service_menu_icons.push(x);
-		this.codegen_all_service_menu_icons(cf);
-	}
 	/** @private @type {string[]} */
 	service_menu_icons=[];
-	/** @arg {["Signal",Extract<RD_MenuServiceItem["serviceEndpoint"],{signalServiceEndpoint:any}>["signalServiceEndpoint"]]} x */
-	RD_MenuServiceItem_ServiceInfo(x) {
-		const cf="RD_MenuServiceItem_ServiceInfo"; this.k(cf,x);
-		switch(x[0]) {
-			case "Signal": return this.G_ClientSignal(cf,x[1]);
-			default: debugger; break;
-		}
-	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
