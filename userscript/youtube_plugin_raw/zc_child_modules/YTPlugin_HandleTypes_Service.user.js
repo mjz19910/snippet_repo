@@ -10351,7 +10351,7 @@ class HandleTypes extends HandleTypesEval {
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
 			switch(mi) {
-				default: debugger; break;
+				default: console.log(`-- [gen_case:log_videoplayback:${cf1}.mn.mi] --\n\ncase "${mi}":`); break;
 				case "sn-nx57ynlk":
 				case "sn-nx5s7n7s":
 				case "sn-nx57ynsl":
