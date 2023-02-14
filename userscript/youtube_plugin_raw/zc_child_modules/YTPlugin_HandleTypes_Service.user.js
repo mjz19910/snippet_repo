@@ -6615,12 +6615,15 @@ class HandleTypes extends HandleTypesEval {
 		const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
 		this.D_0x14527fab(a);
 	}
+	/** @private @arg {D_BinaryCategoryObj} x */
+	D_BinaryCategoryObj(x) {x;}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
 		this.k(`${cf}.continuation.binary_obj`,x);
 		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
 		if(0x12f639cf in x) return this.R_0x12f639cf(x);
 		if(0x14527fab in x) return this.R_0x14527fab(x);
+		x;
 		if(1 in x) {
 			let kk=this.get_keys_of_2(x);
 			switch(x[3]) {
@@ -6657,12 +6660,6 @@ class HandleTypes extends HandleTypesEval {
 			if(is_token_g2(x,53)) return;
 			let kk=this.get_keys_of_2(x);
 			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
-			debugger;
-			return;
-		}
-		if(11 in x) {
-			let kk=this.get_keys_of_2(x);
-			this.codegen_typedef_all(`decode_continuation_token:BinaryToken:${kk.join()}`,x,false);
 			debugger;
 			return;
 		}

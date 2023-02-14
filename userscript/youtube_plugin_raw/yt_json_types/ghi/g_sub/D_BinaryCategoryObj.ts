@@ -1,0 +1,1 @@
+type D_BinaryCategoryObj=D_BinaryCategoryObj_23|D_BinaryCategoryObj_13;
