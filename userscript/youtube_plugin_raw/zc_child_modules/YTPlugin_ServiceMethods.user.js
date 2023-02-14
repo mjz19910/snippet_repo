@@ -4418,5 +4418,45 @@ class ServiceMethods extends ServiceData {
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
+	/** @private @arg {DC_AddToPlaylist} x */
+	DC_AddToPlaylist(x) {
+		const cf="DC_AddToPlaylist";
+		this.save_string(`${cf}.listType`,x.listType);
+		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
+			let known=this.DC_AddToPlaylist_listTypes;
+			this.DC_AddToPlaylist_listTypes.push(x.listType);
+			this.codegen_typedef_all(cf,x);
+			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
+			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}:`).join("\n")}`);
+		}
+		switch(x.listType) {
+			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
+				if("openListPanel" in x) {
+					const {openMiniplayer,videoId,listType: {},onCreateListCommand,openListPanel,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+					this.E_CreatePlaylistService(onCreateListCommand);
+					if(openListPanel!==true) debugger;
+					if(openMiniplayer!==false) debugger;
+					this.a_primitive_bool(openMiniplayer);
+					this.videoId(videoId);
+					this.z(videoIds,this.videoId);
+					return;
+				}
+				const {openMiniplayer,videoId,listType: {},onCreateListCommand,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_CreatePlaylistService(onCreateListCommand);
+				this.a_primitive_bool(openMiniplayer);
+				this.videoId(videoId);
+				this.z(videoIds,this.videoId);
+			}
+		}
+	}
+	/** @private @arg {DC_ChangeMarkersVisibility} x */
+	DC_ChangeMarkersVisibility(x) {
+		const cf="DC_ChangeMarkersVisibility";
+		const {isVisible,entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(isVisible);
+		this.z(entityKeys,x => {
+			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
+		});
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
