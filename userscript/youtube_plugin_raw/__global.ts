@@ -20,7 +20,7 @@ declare global {
 	type LoadAllServices=import("./zc_child_modules/YTPlugin_LoadAllServices.user.js").LoadAllServices;
 }
 namespace EX {
-	export type ServiceMethods=Base$ImpType["ServiceMethods"];
+	export type ServiceMethods=PluginStore["mod$ServiceMethods"]["ServiceMethods"];
 	export type split_string_once=Base$ImpType["split_string_once"];
 	export type as_=typeof import("./zc_child_modules/YtPlugin_Base.user.js").as_;
 	export type AudioGainController=Base$ImpType["AudioGainController"];

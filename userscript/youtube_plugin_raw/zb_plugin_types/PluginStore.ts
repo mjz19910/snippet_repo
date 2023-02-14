@@ -8,4 +8,5 @@ export interface PluginStore {
 	mod$IndexedDBService: typeof import("../zc_child_modules/YTPlugin_IndexedDB.user.js");
 	mod$SupportService: typeof import("../zc_child_modules/YTPlugin_Support.user.js");
 	mod$InitPlugin: typeof import("../zc_child_modules/YTPlugin_Init.user.js");
+	mod$ServiceMethods: typeof import("../zc_child_modules/YTPlugin_ServiceMethods.user.js");
 }
