@@ -1298,7 +1298,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {A_SetActivePanelItem} x */
 	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
 	/** @private @arg {R_Button} x */
-	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
+	R_Button(x) {this.RS_handle.R_Button(x);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
@@ -10194,45 +10194,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.kind`,kind);
 		this.save_string(`${cf}.lang`,lang);
 	}
-	/** @private @arg {D_CaptionTrackItem} x */
-	D_CaptionTrackItem(x) {
-		const cf="D_CaptionTrackItem";
-		const {baseUrl,name,vssId,languageCode,kind,isTranslatable,...y}=this.s(cf,x); this.g(y);
-		{
-			let x=baseUrl;
-			let x1=split_string_once(x,"?");
-			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
-			let {...rx}=this.parse_url_search_params(x1[1]);
-			this.D_TimedTextApi(rx);
-		}
-		this.G_Text(name);
-		this.save_string(`${cf}.vssId`,vssId);
-		this.save_string(`${cf}.languageCode`,languageCode);
-		this.t(kind,x => this.save_string(`${cf}.kind`,x));
-		if(isTranslatable!==true) debugger;
-	}
-	/** @private @arg {D_AudioTrackItem} x */
-	D_AudioTrackItem(x) {
-		const cf="D_AudioTrackItem";
-		if("defaultCaptionTrackIndex" in x) {
-			const {captionTrackIndices,defaultCaptionTrackIndex,visibility,hasDefaultTrack,captionsInitialState,...y}=this.s(cf,x); this.g(y);
-			this.z(captionTrackIndices,this.a_primitive_num);
-			this.a_primitive_num(defaultCaptionTrackIndex);
-			this.ceq(visibility,"UNKNOWN");
-			this.ceq(hasDefaultTrack,true);
-			if(captionsInitialState!=="CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED") debugger;
-			return;
-		}
-		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
-		this.z(captionTrackIndices,this.a_primitive_num);
-	}
-	/** @private @arg {D_TranslationLanguage} x */
-	D_TranslationLanguage(x) {
-		const cf="D_TranslationLanguage";
-		const {languageCode,languageName,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(languageCode);
-		this.G_Text(languageName);
-	}
 	/** @private @arg {D_AudioTrack} x */
 	D_AudioTrack(x) {
 		const cf="D_AudioTrack";
@@ -10250,14 +10211,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!command.watchEndpoint) debugger;
 		this.E_Watch(command);
 		this.a_primitive_str(a11yLabel);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_Endscreen} x */
-	D_Endscreen(x) {
-		const cf="D_Endscreen";
-		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.z(elements,this.R_EndscreenElement);
-		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_MetadataRow} x */

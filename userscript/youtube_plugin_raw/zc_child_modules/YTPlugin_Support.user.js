@@ -16,7 +16,7 @@ const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
-const ServiceMethods=bs.ServiceMethods;
+const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -143,7 +143,7 @@ class HandleRS extends ServiceMethods {
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_Endscreen} x */
 	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
-	/** @private @arg {R_Button} x */
+	/** @public @arg {R_Button} x */
 	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {
@@ -205,12 +205,58 @@ class HandleRS extends ServiceMethods {
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x) {
-		const cls_=this.x.get("handle_types");
 		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
-		if("clientForecastingAdRenderer" in x) return cls_.R_ClientForecastingAd(x);
-		if("instreamVideoAdRenderer" in x) return cls_.R_InstreamVideoAd(x);
-		if("linearAdSequenceRenderer" in x) return cls_.R_LinearAdSequence(x);
+		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
+		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
 		debugger;
+	}
+	/** @private @arg {D_CaptionTrackItem} x */
+	D_CaptionTrackItem(x) {
+		const cf="D_CaptionTrackItem";
+		const {baseUrl,name,vssId,languageCode,kind,isTranslatable,...y}=this.s(cf,x); this.g(y);
+		{
+			let x=baseUrl;
+			let x1=split_string_once(x,"?");
+			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
+			let {...rx}=this.parse_url_search_params(x1[1]);
+			this.D_TimedTextApi(rx);
+		}
+		this.G_Text(name);
+		this.save_string(`${cf}.vssId`,vssId);
+		this.save_string(`${cf}.languageCode`,languageCode);
+		this.t(kind,x => this.save_string(`${cf}.kind`,x));
+		if(isTranslatable!==true) debugger;
+	}
+	/** @private @arg {D_AudioTrackItem} x */
+	D_AudioTrackItem(x) {
+		const cf="D_AudioTrackItem";
+		if("defaultCaptionTrackIndex" in x) {
+			const {captionTrackIndices,defaultCaptionTrackIndex,visibility,hasDefaultTrack,captionsInitialState,...y}=this.s(cf,x); this.g(y);
+			this.z(captionTrackIndices,this.a_primitive_num);
+			this.a_primitive_num(defaultCaptionTrackIndex);
+			this.ceq(visibility,"UNKNOWN");
+			this.ceq(hasDefaultTrack,true);
+			if(captionsInitialState!=="CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED") debugger;
+			return;
+		}
+		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
+		this.z(captionTrackIndices,this.a_primitive_num);
+	}
+	/** @private @arg {D_TranslationLanguage} x */
+	D_TranslationLanguage(x) {
+		const cf="D_TranslationLanguage";
+		const {languageCode,languageName,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(languageCode);
+		this.G_Text(languageName);
+	}
+	/** @private @arg {D_Endscreen} x */
+	D_Endscreen(x) {
+		const cf="D_Endscreen";
+		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.z(elements,this.R_EndscreenElement);
+		this.t(startMs,this.a_primitive_str);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
