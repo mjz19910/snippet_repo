@@ -780,6 +780,7 @@ class HandleTypes extends HandleTypesEval {
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
 				} break;
+				case "reel_request_continuation.token.f1":
 				case "reel.sequence_params.f1": {
 					this.videoId(entry);
 				} break;
@@ -2873,7 +2874,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player";
-		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,...y}=this.s(cf,x); this.g(y);
+		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
 		heartbeatParams;
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
@@ -2900,6 +2901,7 @@ class HandleTypes extends HandleTypesEval {
 			if(!x.playerAnnotationsExpandedRenderer) debugger;
 			this.R_PlayerAnnotationsExpanded(x);
 		});
+		this.t(cacheMetadata,this.D_Cache_MD);
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {

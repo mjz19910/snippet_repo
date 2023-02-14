@@ -95,6 +95,7 @@ type RS_Next={
 	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: D_FrameworkUpdates;
 };
+type D_IsCacheHit=D_Cache_MD;
 type RS_Player={
 	responseContext: RC_ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;
@@ -116,6 +117,7 @@ type RS_Player={
 	endscreen?: R_Endscreen;
 	paidContentOverlay?: {};
 	annotations?: R_PlayerAnnotationsExpanded[];
+	cacheMetadata?: D_IsCacheHit;
 };
 type RS_Playlist=Record<"contents",R_TwoColumnBrowseResults>&{
 	responseContext: RC_ResponseContext;
