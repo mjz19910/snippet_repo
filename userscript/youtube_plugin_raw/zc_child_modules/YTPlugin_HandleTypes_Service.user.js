@@ -6464,8 +6464,8 @@ class HandleTypes extends HandleTypesEval {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
-		/** @type {[{}]} */
-		let dec_t=dec;
+		/** @type {D_ReadAnyResult} */
+		let dec_t=as_any(dec);
 		switch(dec_t.length) {
 			default: debugger; break;
 			case 1: {
