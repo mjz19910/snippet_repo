@@ -20,7 +20,7 @@ type DE_VE3611={params?: string; browseId: `UC${string}`; canonicalBaseUrl: `/@$
 type DE_VE3854=DE_VE<"FEwhat_to_watch">;
 type DE_VE5754=DE_VE<GU_VE5754_Id>;
 type DE_VE6827_FeedHistory={browseId: "FEhistory"; query: "";};
-type DE_VE6827={browseId: GU_VE6827_Id|GU_VE6827_Id;params?: string};
+type DE_VE6827={browseId: GU_VE6827_Id|GU_VE6827_Id; params?: string;};
 type DE_VE6827_NoParams=DE_VE<GU_VE6827_Id>;
 type DE_VE6827_Params={params: string; browseId: GU_VE6827_Id;};
 type DE_VE11487=DE_VE<"SPunlimited">;
@@ -31,7 +31,12 @@ type DE_VE96368=DE_VE<"FEsubscriptions">;
 //#region DE_
 type DE_Subscribe={params: string; channelIds: D_ChannelId[];};
 type DE_Unsubscribe={params: string; channelIds: `UC${string}`[];};
-type DE_UserFeedback={additionalDatas: G_AdditionalDataItem[];};
+type DE_UserFeedback={
+	additionalDatas: G_AdditionalDataItem[];
+}|{
+	hack: true;
+	bucketIdentifier: "live_chat";
+};
 type DE_WatchPlaylist={params: string; playlistId: `RD${string}`; index: 13;};
 type DE_YpcGetCart={transactionParams: string;};
 type DE_SuperThanksSelectedTier={key: string; index: number;};

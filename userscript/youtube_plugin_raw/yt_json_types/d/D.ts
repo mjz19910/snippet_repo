@@ -2527,6 +2527,18 @@ type D_SortFilterSubMenu={
 	accessibility?: D_Accessibility;
 	tooltip?: string;
 	trackingParams: string;
+}|{
+	subMenuItems: {
+		title: "Top chat replay";
+		selected: true;
+		continuation: D_ReloadContinuationData;
+		accessibility: TD_Accessibility<"Top chat replay">;
+		subtitle: "Some messages, such as potential spam, may not be visible";
+		trackingParams: string;
+	}[];
+	accessibility: TD_Accessibility<"Live Chat mode selection">;
+	trackingParams: string;
+	targetId: "live-chat-view-selector-sub-menu";
 };
 type D_StreamSelectionConfig={maxBitrate: `${number};`;};
 type D_StructuredDescriptionContent={items: G_StructuredDescriptionContentItem[];};

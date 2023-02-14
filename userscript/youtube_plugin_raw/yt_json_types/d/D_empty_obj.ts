@@ -15,7 +15,6 @@ type D_AccountItem={};
 type D_AdActionInterstitial={};
 type D_AutomixPreviewVideo={};
 type D_BrowserMediaSessionRenderer={};
-type D_LiveChatHeader={};
 type D_LiveChatItemList={};
 type D_LiveChatMessageInput={};
 type D_LiveChatParticipantsList={};

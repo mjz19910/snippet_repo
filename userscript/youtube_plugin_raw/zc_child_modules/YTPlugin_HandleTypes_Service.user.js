@@ -2325,7 +2325,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_LiveChatItemList} x */
 	R_LiveChatItemList(x) {this.H_("R_LiveChatItemList","liveChatItemListRenderer",x,this.g);}
 	/** @private @arg {R_LiveChatHeader} x */
-	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.g);}
+	R_LiveChatHeader(x) {this.H_("R_LiveChatHeader","liveChatHeaderRenderer",x,this.D_LiveChatHeader);}
 	/** @private @arg {R_LiveChatMessageInput} x */
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
 	/** @private @arg {R_EmojiPicker} x */
@@ -3406,7 +3406,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_UserFeedback} x */
-	DE_UserFeedback(x) {this.y("DE_UserFeedback","additionalDatas",x,x => this.z(x,this.G_AdditionalDataItem));}
+	DE_UserFeedback(x) {
+		const cf="DE_UserFeedback";
+		if("additionalDatas" in x) {
+			const {additionalDatas,...y}=this.s(cf,x); this.g(y);
+			this.z(additionalDatas,this.G_AdditionalDataItem);
+			return;
+		}
+		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
+		this.ceq(hack,true);
+		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
+	}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
@@ -6311,8 +6321,9 @@ class HandleTypes extends HandleTypesEval {
 		for(let k of x.keys()) {
 			let value=x.get(k);
 			if(!value) continue;
+			if(value.length!==1) {console.log(`[${k}]`,value); continue;}
 			let v2=first(value);
-			if(!v2) {console.log(`[${k}]`,value); continue;}
+			if(v2===null) continue;
 			res[k]=v2;
 		}
 		return as(res);
@@ -6359,19 +6370,16 @@ class HandleTypes extends HandleTypesEval {
 						let res_s=this.convert_map_to_obj(f14);
 						/** @type {{1:4;3:2;4:0;}|{1:4,3:2}} */
 						let res=as(res_s);
-						if(this.eq_keys(this.get_keys_of_2(res),[1,3,4])) {
-							if("4" in res) {
-								const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
-								if(r_f1!==4) debugger;
-								if(r_f3!==2) debugger;
-								if(r_f4!==0) debugger;
-							} else {
-								const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
-								if(r_f1!==4) debugger;
-								if(r_f3!==2) debugger;
-							}
+						if("4" in res) {
+							const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
+							if(r_f1!==4) debugger;
+							if(r_f3!==2) debugger;
+							if(r_f4!==0) debugger;
+						} else {
+							const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
+							if(r_f1!==4) debugger;
+							if(r_f3!==2) debugger;
 						}
-						debugger;
 					} return;
 				}
 				if(dec_bin===null) {debugger; break;}
@@ -8729,9 +8737,26 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
 	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
+	/** @private @arg {Extract<D_SortFilterSubMenu,{targetId:any}>} x */
+	D_SortFilterSubMenu_WithTargetId(x) {
+		const cf="D_SortFilterSubMenu_WithTargetId";
+		switch(x.targetId) {
+			default: debugger; break;
+			case "live-chat-view-selector-sub-menu": {
+				const {subMenuItems,accessibility,trackingParams,targetId: {},...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.z(subMenuItems,x => {
+					const {title,selected,...y}=this.s(`${cf}.MenuItem`,x); this.g(y);
+					x;
+				});
+				this.D_Accessibility(accessibility);
+				this.trackingParams(cf,trackingParams);
+			} break;
+		}
+	}
 	/** @private @arg {D_SortFilterSubMenu} x */
 	D_SortFilterSubMenu(x) {
 		const cf="D_SortFilterSubMenu"; this.k(cf,x);
+		if("targetId" in x) return this.D_SortFilterSubMenu_WithTargetId(x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(subMenuItems,this.D_ActionSetPlaylistVideoOrder);
 		this.t(title,this.a_primitive_str);
@@ -10826,6 +10851,14 @@ class HandleTypes extends HandleTypesEval {
 		const {continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
 		this.decode_continuation_token(cf,continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
+	}
+	/** @private @arg {D_LiveChatHeader} x */
+	D_LiveChatHeader(x) {
+		const cf="D_LiveChatHeader";
+		const {overflowMenu,collapseButton,viewSelector,...y}=this.s(cf,x); this.g(y);
+		this.R_Menu(overflowMenu);
+		this.R_Button(collapseButton);
+		this.R_SortFilterSubMenu(viewSelector);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
