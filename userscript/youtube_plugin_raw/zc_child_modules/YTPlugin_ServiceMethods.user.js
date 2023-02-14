@@ -23,6 +23,37 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
+	save_next_char(user_key,x,idx=0) {
+		let f=x[idx];
+		/** @type {`${user_key}.data[${typeof idx}]`} */
+		let rk=`${user_key}.data[${idx}]`;
+		/** @type {`${typeof rk}[${f}]`} */
+		let k=`${rk}[${JSON.stringify(f)}]`;
+		this.save_string(rk,f);
+		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
+		if(!s_url_data) {this.save_number(k,1); return;}
+		let wd=s_url_data[1];
+		if(wd[0]!=="one") {debugger; return;}
+		let [,di]=wd;
+		if(!di.length) {this.save_number(k,1); return;}
+		let n=di[0]+1;
+		this.save_number(k,n);
+	}
+	/** @api @public @arg {"WL"|"LL"|`UU${string}`|`PL${string}`|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`} x */
+	parse_playlist_id(x) {
+		if(x===void 0) {debugger; return;}
+		switch(x) {case "LL": case "WL": return; default: }
+		// cspell:ignore RDCMUC
+		if(this.str_starts_with_rx("RDCMUC",x)) return this.save_next_char("playlist_id.RDCMUC",split_string_once(x,"RDCMUC")[1]);
+		if(this.str_starts_with_rx("RDMM",x)) return this.save_next_char("playlist_id.RDMM",split_string_once(x,"RDMM")[1]);
+		if(this.str_starts_with_rx("RD",x)) return this.save_next_char("playlist_id.RD",split_string_once(x,"RD")[1]);
+		if(this.str_starts_with_rx("PL",x)) return this.save_next_char("playlist_id.PL",split_string_once(x,"PL")[1]);
+		if(this.str_starts_with_rx("UU",x)) return this.save_next_char("playlist_id.UU",split_string_once(x,"UU")[1]);
+		this.save_next_char("playlist_id.other",x[0]);
+		console.log("[new_parse_playlist_id]",x);
+		{debugger;}
+	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
@@ -161,8 +192,12 @@ class ServiceMethods extends ServiceData {
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @protected @arg {E_VE83769_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
-	/** @private @arg {E_Url} x */
-	E_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
+	/** @private @arg {B_Hack} x */
+	B_Hack(x) {
+		const cf="B_Hack"; this.k(cf,x);
+		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(hack!==true) debugger;
+	}
 	/** @private @arg {E_VE3611} x */
 	E_VE3611(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);}
 	/** @private @arg {E_VE3854} x */
@@ -179,6 +214,8 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @private @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @private @arg {E_VE83769_Url} x */
+	E_VE83769_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);}
 	/** @private @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @private @arg {DE_VE3611} x */
@@ -239,6 +276,29 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DE_VE42352} x */
 	DE_VE42352(x) {x;}
+	/** @private @arg {DU_Url} x */
+	DE_VE83769_Url(x) {
+		const cf="DE_Url"; this.k(cf,x);
+		const {url,...u}=this.s(cf,x);/*#destructure_later*/
+		this.GM_E_Url_TargetUrlType(url);
+		if("nofollow" in u&&"target" in u) {
+			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("nofollow" in u) {
+			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
+			if(nofollow!==true) debugger;
+			return;
+		}
+		if("target" in u) {
+			const {target,...y}=u; this.g(y); /*#destructure_done*/
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			return;
+		}
+		this.g(u);
+	}
 	/** @private @arg {DE_VE96368} x */
 	DE_VE96368(x) {x;}
 	/** @private @arg {M_VE3611|M_VE3611} x */
@@ -396,7 +456,7 @@ class ServiceMethods extends ServiceData {
 	G_TextRun_Endpoint(x) {
 		const cf="G_TextRun_Endpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		x===""; this.codegen_typedef_all(cf,x);

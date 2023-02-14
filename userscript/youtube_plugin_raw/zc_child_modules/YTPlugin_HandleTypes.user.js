@@ -3532,12 +3532,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {B_Hack} x */
-	B_Hack(x) {
-		const cf="B_Hack"; this.k(cf,x);
-		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(hack!==true) debugger;
-	}
 	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
 		const cf="D_SubscribeButton_SubscribedPrefix";
@@ -4406,29 +4400,6 @@ class HandleTypes extends HandleTypesEval {
 		let sp=this.parse_with_url_parse(x);
 		if(this.str_starts_with_rx("https://",sp.href)) {return;}
 		this.GU_VE83769_Url(sp.href);
-	}
-	/** @private @arg {DU_Url} x */
-	DE_Url(x) {
-		const cf="DE_Url"; this.k(cf,x);
-		const {url,...u}=this.s(cf,x);/*#destructure_later*/
-		this.GM_E_Url_TargetUrlType(url);
-		if("nofollow" in u&&"target" in u) {
-			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("nofollow" in u) {
-			const {nofollow,...y}=u; this.g(y);/*#destructure_done*/
-			if(nofollow!==true) debugger;
-			return;
-		}
-		if("target" in u) {
-			const {target,...y}=u; this.g(y); /*#destructure_done*/
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			return;
-		}
-		this.g(u);
 	}
 	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
@@ -6901,37 +6872,6 @@ class HandleTypes extends HandleTypesEval {
 		let k=`${rk}=${f}`;
 		this.save_number(rk,f);
 		this.save_number(k,1);
-	}
-	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
-	save_next_char(user_key,x,idx=0) {
-		let f=x[idx];
-		/** @type {`${user_key}.data[${typeof idx}]`} */
-		let rk=`${user_key}.data[${idx}]`;
-		/** @type {`${typeof rk}[${f}]`} */
-		let k=`${rk}[${JSON.stringify(f)}]`;
-		this.save_string(rk,f);
-		let s_url_data=this.ds.get_data_store().get_seen_numbers().find(e => e[0]===k);
-		if(!s_url_data) {this.save_number(k,1); return;}
-		let wd=s_url_data[1];
-		if(wd[0]!=="one") {debugger; return;}
-		let [,di]=wd;
-		if(!di.length) {this.save_number(k,1); return;}
-		let n=di[0]+1;
-		this.save_number(k,n);
-	}
-	/** @api @public @arg {"WL"|"LL"|`UU${string}`|`PL${string}`|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`} x */
-	parse_playlist_id(x) {
-		if(x===void 0) {debugger; return;}
-		switch(x) {case "LL": case "WL": return; default: }
-		// cspell:ignore RDCMUC
-		if(this.str_starts_with_rx("RDCMUC",x)) return this.save_next_char("playlist_id.RDCMUC",split_string_once(x,"RDCMUC")[1]);
-		if(this.str_starts_with_rx("RDMM",x)) return this.save_next_char("playlist_id.RDMM",split_string_once(x,"RDMM")[1]);
-		if(this.str_starts_with_rx("RD",x)) return this.save_next_char("playlist_id.RD",split_string_once(x,"RD")[1]);
-		if(this.str_starts_with_rx("PL",x)) return this.save_next_char("playlist_id.PL",split_string_once(x,"PL")[1]);
-		if(this.str_starts_with_rx("UU",x)) return this.save_next_char("playlist_id.UU",split_string_once(x,"UU")[1]);
-		this.save_next_char("playlist_id.other",x[0]);
-		console.log("[new_parse_playlist_id]",x);
-		{debugger;}
 	}
 	/** @private @arg {D_RadioShareUrl} b */
 	D_RadioShareUrl(b) {

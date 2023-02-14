@@ -958,7 +958,7 @@ type D_Radio={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	videoCountShortText: G_Text;
 };
-type G_TextRun_Endpoint=E_Url|GE_Browse|E_Watch|E_ReelWatch;
+type G_TextRun_Endpoint=E_VE83769_Url|GE_Browse|E_Watch|E_ReelWatch;
 type D_WebPrefetch={navigationEndpoints: E_Watch[];};
 type D_Video_inlinePlaybackEndpoint=D_Video['inlinePlaybackEndpoint']&{};
 type D_SubFeedOption={
@@ -1132,7 +1132,7 @@ type D_MerchandiseItem={
 	vendorName: string;
 	trackingParams: string;
 	buttonText: string;
-	buttonCommand: E_Url;
+	buttonCommand: E_VE83769_Url;
 	accessibilityTitle: string;
 	buttonAccessibilityText: string;
 	fromVendorText: string;
@@ -1148,7 +1148,7 @@ type D_GuideEntry_HelpService={
 	serviceEndpoint: E_SignalService_SendPost;
 };
 type D_GuideEntry_MyVideosTab={
-	navigationEndpoint: E_Url;
+	navigationEndpoint: E_VE83769_Url;
 	icon: T_Icon<"MY_VIDEOS">;
 	trackingParams: string;
 	formattedTitle: G_Text;
@@ -1858,7 +1858,7 @@ type D_PromotedSparklesWeb={
 	description: G_Text;
 	websiteText: G_Text;
 	actionButton: R_Button;
-	navigationEndpoint: E_Url;
+	navigationEndpoint: E_VE83769_Url;
 	impressionCommands: D_ImpressionCommand[];
 	menu: R_Menu;
 	trackingParams: string;
@@ -2332,7 +2332,7 @@ type D_PrefetchHintConfig={
 	playbackRelativeSecondsPrefetchCondition: -3;
 };
 type D_NavigationLinkItem={
-	navigationEndpoint: E_Url;
+	navigationEndpoint: E_VE83769_Url;
 	icon: D_Thumbnail;
 	title: G_Text;
 };
@@ -2353,7 +2353,7 @@ type D_ProductListItem={
 	accessibilityTitle: string;
 	thumbnail: D_Thumbnail;
 	price: `CA$${string}`;
-	onClickCommand: E_Url;
+	onClickCommand: E_VE83769_Url;
 	trackingParams: string;
 	loggingDirectives: D_LoggingDirectives;
 };
@@ -2864,7 +2864,7 @@ type D_VideoPrimaryInfo={
 type D_VideoQualityPromo={
 	triggerCriteria: D_TriggerCriteria;
 	text: G_Text;
-	endpoint: E_Url;
+	endpoint: E_VE83769_Url;
 	trackingParams: string;
 	snackbar: RA_Notification;
 };

@@ -1,6 +1,6 @@
 type D_CompactLink={
 	title: G_Text;
-	navigationEndpoint: E_Url;
+	navigationEndpoint: E_VE83769_Url;
 	trackingParams: string;
 	style: "COMPACT_LINK_STYLE_TYPE_HISTORY_MY_ACTIVITY_LINK";
 }|{
