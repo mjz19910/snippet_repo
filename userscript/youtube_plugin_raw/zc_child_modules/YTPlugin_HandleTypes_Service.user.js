@@ -761,9 +761,22 @@ class HandleTypes extends HandleTypesEval {
 					let bc=decodeURIComponent(entry);
 					let buffer=base64_url_dec.decodeByteArray(bc);
 					if(!buffer) {debugger; break;}
-					let na_05=[...buffer.slice(0,5)];
-					this.save_number(`${path}.0-5`,na_05);
-					console.log("[continuation_token_data_f49_log]",[...buffer.slice(6,6+5)]);
+					let c_pos=0;
+					let na_arr;
+					let na_05=[...buffer.slice(0,c_pos+5)];
+					this.save_number(`${path}.0-4`,na_05);
+					c_pos+=5;
+					this.save_number(`${path}.${c_pos}`,buffer[c_pos]);
+					c_pos+=1;
+					{
+						let n_len=4; na_arr=[...buffer.slice(c_pos,c_pos+n_len)];
+						this.save_number(`${path}.${c_pos}-${c_pos+n_len}`,na_arr);
+						c_pos+=n_len;
+					}
+					{
+						let n_len=4;
+						console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,[...buffer.slice(c_pos,c_pos+4)]);
+					}
 				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
