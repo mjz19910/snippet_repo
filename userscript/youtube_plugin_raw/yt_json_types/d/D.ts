@@ -999,6 +999,11 @@ type D_TextRun={
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
 }|{
+	text: "#lockpicking";
+	bold: true;
+	navigationEndpoint: E_VE6827;
+	loggingDirectives: D_LoggingDirectives;
+}|{
 	text: string;
 	bold: boolean;
 }|{
