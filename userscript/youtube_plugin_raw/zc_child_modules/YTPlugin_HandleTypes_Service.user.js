@@ -4473,7 +4473,15 @@ class HandleTypes extends HandleTypesEval {
 			if(!(k in x)) break x;
 			/** @type {`${cf}:${k}`} */
 			const cf1=`${cf}:${k}`;
-			const {accessibilityData,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf1,x);
+			this.save_string("D_ToggleButton.style",style.styleType);
+			this.ceq(isDisabled,false);
+			this.a_primitive_bool(isToggled);
+			this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
+			this.C_CommandExecutor(defaultServiceEndpoint);
+			this.E_Like(toggledServiceEndpoint);
+			this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
+			const {accessibilityData,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_Accessibility(accessibilityData);
 			this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
 			this.D_Label(accessibility);
@@ -4488,7 +4496,15 @@ class HandleTypes extends HandleTypesEval {
 			if(!(k in x)) break x;
 			/** @type {`${cf}:${k}`} */
 			const cf1=`${cf}:${k}`;
-			const {size,accessibility,defaultTooltip,toggledTooltip,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf1,x);
+			this.save_string("D_ToggleButton.style",style.styleType);
+			this.ceq(isDisabled,false);
+			this.a_primitive_bool(isToggled);
+			this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
+			this.E_SignalService_SendPost(defaultServiceEndpoint);
+			this.E_SignalService_SendPost(toggledServiceEndpoint);
+			this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
+			const {size,accessibility,defaultTooltip,toggledTooltip,...y}=u; this.g(y);/*#destructure_done*/
 			if(size.sizeType!=="SIZE_DEFAULT") debugger;
 			this.D_Label(accessibility);
 			this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
@@ -10622,16 +10638,16 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(protoCreationMs);
 		if(style!=="COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR") debugger;
 	}
-	/** @private @arg {D_ToggleButton["defaultServiceEndpoint"]} x */
+	/** @protected @arg {Extract<D_ToggleButton,{defaultServiceEndpoint:any}>["defaultServiceEndpoint"]} x */
 	D_Button_DefServiceEP(x) {
 		const cf="D_Button_DefServiceEP"; this.k(cf,x);
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("performCommentActionEndpoint" in x) return;
+		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_ToggleButton["toggledServiceEndpoint"]} x */
+	/** @protected @arg {Extract<D_ToggleButton,{toggledServiceEndpoint:any}>["toggledServiceEndpoint"]} x */
 	D_Button_ToggledServiceEP(x) {
 		const cf="D_Button_ToggledServiceEP"; this.k(cf,x);
 		if("likeEndpoint" in x) return this.E_Like(x);

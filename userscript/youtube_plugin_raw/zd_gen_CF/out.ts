@@ -1099,5 +1099,6 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_SortFilterSubMenu_WithTargetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SortFilterSubMenu_WithTargetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SortFilterSubMenu_WithTargetId.MenuItem";}
+		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:defaultText:style";}
 		;
 }
