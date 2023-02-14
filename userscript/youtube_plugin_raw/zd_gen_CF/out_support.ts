@@ -44,7 +44,7 @@ export namespace Prelude {
 		|"CF_TE_Endpoint_2"
 		|"CF_TE_Endpoint_3"
 		|"CF_TE_Endpoint_Opt_3"
-		|"P_PathRootStr"
+		|"P_ParamParse"
 		//#endregion
 		;
 	;
@@ -93,7 +93,7 @@ export namespace Prelude {
 	export type CF_TE_Endpoint_2="CF_TE_Endpoint_2";
 	export type CF_TE_Endpoint_3="CF_TE_Endpoint_3";
 	export type CF_TE_Endpoint_Opt_3="CF_TE_Endpoint_Opt_3";
-	export type P_PathRootStr="P_PathRootStr";
+	export type P_ParamParse="P_ParamParse";
 	//#endregion
 }
 export namespace TypesTemplate {
@@ -145,6 +145,6 @@ export namespace Types {
 	export type CF_TE_Endpoint_2_=CF_TE_Endpoint_2;
 	export type CF_TE_Endpoint_3_=CF_TE_Endpoint_3;
 	export type CF_TE_Endpoint_Opt_3_=CF_TE_Endpoint_Opt_3;
-	export type P_PathRootStr_=P_PathRootStr;
+	export type P_ParamParse_=P_ParamParse;
 	//#endregion
 }

@@ -963,5 +963,57 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "GetNotificationMenu.ctoken";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "TimedContinuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "YpcGetCart.transactionParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data$sub_obj$f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "createBackstagePost.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "invalidation.continuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "live_chat_replay.continuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.queue_context_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_radio.continuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playlist_edit.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel_request_continuation.token";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reload.continuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "service$create_playlist";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "slot_ad_serving_data_entry";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscriptionState.key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.parentTrackingParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_request_continuation.token";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offline_upsell.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_seek.continuation";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params";}
 		;
 }

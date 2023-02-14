@@ -413,7 +413,7 @@ class HandleTypes extends HandleTypesEval {
 			case "get_report_form.params.f28.f1": {
 				switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "transcript_target_id.param": case "watch.player_params.f40.f1":
+			case "watch.player_params.f40.f1":
 			case "continuation_token.data.f110.f3.f15": {
 				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -434,9 +434,9 @@ class HandleTypes extends HandleTypesEval {
 			case "notification.record_interactions.f2": {
 				switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "create_playlist.params": case "browse.params": {
-				switch(map_entry_key) {case 84: case 93: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			}
+			// case "create_playlist.params": case "browse.params": {
+			// 	switch(map_entry_key) {case 84: case 93: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			// }
 			case "get_pdg_buy_flow.params.f1":
 			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "slot_ad_serving_data_entry.f1": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
 			case "tracking.trackingParams.f4": {
@@ -537,9 +537,9 @@ class HandleTypes extends HandleTypesEval {
 			case "watch_playlist.params": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param": {
-				switch(map_entry_key) {case 2: case 5: case 23: case 77: case 84: case 93: case 94: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			}
+			// case "D_Browse.param": {
+			// 	switch(map_entry_key) {case 2: case 5: case 23: case 77: case 84: case 93: case 94: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			// }
 			case "AdServingDataEntry": {
 				switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -863,7 +863,7 @@ class HandleTypes extends HandleTypesEval {
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
 			case "D_Browse":
 			case "entity_key": case "entity":
-			case "feedback":
+			// case "feedback":
 			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript": case "GetNotificationMenu":
 			case "invalidation":
 			case "like": case "live_chat_replay": case "load_markers":
@@ -872,8 +872,8 @@ class HandleTypes extends HandleTypesEval {
 			case "reel": case "reload": case "watch_request_continuation": case "reel_request_continuation":
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
 			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
-			case "UndoFeedback": case "unsubscribe":
-			case "watch_page_url": case "watch_playlist": case "watch":
+			case "unsubscribe":
+			case "watch_playlist": case "watch":
 			case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart": {
 				if(parts.length===1) return this.handle_map_value(path,map_entry_value);
 				switch(parts[1]) {
@@ -881,10 +881,11 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
+					case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
-					case "params": case "param": case "normal": case "subscribed": case "feedbackToken": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
-					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "undoToken": case "transactionParams": case "likeParams": case "dislikeParams":
-					case "removeLikeParams": case "sequence_params": case "pp": case "record_interactions": case "opt_out":
+					case "params": case "param": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
+					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "transactionParams": case "likeParams": case "dislikeParams":
+					case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
 					case "f1": case "f3": case "f4": case "f5": case "f6": case "f7": case "f9":
 					case "f10": case "f13": case "f14":
 				}
@@ -988,7 +989,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(x);
 		this.put_video_args({type: "normal",v: x});
 	}
-	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
+	/** @protected @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {
 		/** @type {number[]} */
 		let map_entry_key_path=[];
@@ -1692,7 +1693,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
-	/** @private @arg {P_PathRootStr} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
+	/** @private @arg {P_ParamParse} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
 	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
 	//#endregion
 	//#region helpers
@@ -3369,7 +3370,7 @@ class HandleTypes extends HandleTypesEval {
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {GM_NotificationOptOut} x */
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
-	/** @private @arg {"DE_CreateComment"} cf @arg {P_PathRootStr} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	/** @private @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
 	/** @private @arg {DE_CreateComment} x */
 	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
@@ -6278,12 +6279,13 @@ class HandleTypes extends HandleTypesEval {
 			if(x.length!==1) return null;
 			return x[0];
 		}
-		/** @type {{[x:number]:T}} */
+		/** @type {{[x:number]:V_ParamMapValue}} */
 		let res={};
 		for(let k of x.keys()) {
 			let value=x.get(k);
 			if(!value) continue;
 			let v2=first(value);
+			if(!v2) {console.log(`[${k}]`,value); continue;}
 			res[k]=v2;
 		}
 		return as(res);
@@ -6320,9 +6322,9 @@ class HandleTypes extends HandleTypesEval {
 						let res_s=this.convert_map_to_obj(f14);
 						/** @type {{1:4;3:2;4:0;}} */
 						let res=as(res_s);
-						const {[1]:r_f1,[3]: r_f3, [4]: r_f4,...r_y}=res; this.g(r_y);
+						const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
 						if(r_f1!==4) debugger;
-						if(r_f3!==4) debugger;
+						if(r_f3!==2) debugger;
 						if(r_f4!==0) debugger;
 						f3; f8; f14; f15;
 						debugger;
@@ -8618,7 +8620,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Thumbnail(thumbnail);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_PathRootStr} path @arg {DC_Generic_CTP} x */
+	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(cf,path,x) {
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
 		this.params(cf,path,continuation);
@@ -10293,7 +10295,7 @@ class HandleTypes extends HandleTypesEval {
 		if(popupType!=="DIALOG") debugger;
 		this.a_primitive_bool(beReused);
 	}
-	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_PathRootStr} path @arg {DC_Generic} x */
+	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(cf,path,x));}
 	/** @private @arg {DC_PlayerSeek} x */
 	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
