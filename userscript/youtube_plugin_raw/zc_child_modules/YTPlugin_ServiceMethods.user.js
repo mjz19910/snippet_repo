@@ -993,5 +993,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
+	/** @protected @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

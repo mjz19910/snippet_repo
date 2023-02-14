@@ -2493,8 +2493,6 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @private @template T_LoadAllServices,T_ServiceFlags @extends {BaseServicePrivate<T_LoadAllServices,T_ServiceFlags>} */
 class BaseService extends BaseServicePrivate {
-	/** @protected @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
-	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}
