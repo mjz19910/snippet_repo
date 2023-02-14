@@ -303,28 +303,15 @@ class IndexedDBService extends BaseService {
 	onUpgradeNeeded(request,event) {
 		if(event.oldVersion===0) {return this.createLatestDatabaseVersion(request);}
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
-		const db=request.result;
-		if(event.oldVersion<1) {db.createObjectStore("video_id",{autoIncrement: true});}
-		if(!request.transaction) throw new Error("No transaction");
-		let tx=request.transaction;
-		if(event.oldVersion<2) {
-			this.transfer_store(tx,"video_id",db,{});
-		}
-		if(event.oldVersion<3) {
-			this.transfer_store(tx,"video_id",db,{unique: true});
-			this.create_store("hashtag",db,{unique: true});
-		}
-		if(event.oldVersion<5) {
+		const {result: db,transaction: tx}=request;
+		if(!tx) throw new Error("No transaction");
+		if(event.oldVersion<1) {
 			this.transfer_store(tx,"video_id",db,{unique: true});
 			this.transfer_store(tx,"hashtag",db,{unique: true});
 			this.transfer_store(tx,"boxed_id",db,{unique: true});
 		}
-		if(event.oldVersion<6) {
-			db.deleteObjectStore("channel_id");
-			this.create_store("boxed_id",db,{unique: true});
-		}
 	}
-	static schema_version=6;
+	static schema_version=1;
 	/** @private @arg {IDBOpenDBRequest} request */
 	createLatestDatabaseVersion(request) {
 		const db=request.result;
