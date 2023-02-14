@@ -257,37 +257,38 @@ class IndexedDBService extends BaseService {
 		let rq=tx.objectStore(key);
 		return as(rq);
 	}
-	/** 
-	 * @template {keyof DatabaseStoreTypes} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {TypedIDBObjectStore<T>} src_obj_store @arg {IDBDatabase} db
+	/**
+	 * @arg {IDBTransaction} tx
+	 * @template {keyof DatabaseStoreTypes} K @arg {K} key @template {DatabaseStoreTypes[K]} T @arg {IDBDatabase} db
 	 * @arg {IDBIndexParameters} options
 	 * */
-	async transfer_store(key,src_obj_store,db,options) {
-		const index_key=this.get_index_key(key);
+	async transfer_store(tx,key,db,options) {
+		const src_obj_store=this.objectStore(tx,key);
 		/** @private @type {IDBRequest<T[]>} */
 		let get_all_video_id_req=src_obj_store.getAll();
 		await this.await_success(get_all_video_id_req);
 		const video_id_result=get_all_video_id_req.result;
-		if(index_key) {
-			const dst_obj_store=db.createObjectStore(key,{keyPath: index_key});
-			dst_obj_store.createIndex(key,index_key,options);
-			for(let x of video_id_result) {
-				if(index_key) {
-					if(!(index_key in x)) throw new Error("Invalid transfer_store result");
-					dst_obj_store.put(x);
-				}
+		db.deleteObjectStore(key);
+		const dst_obj_store=db.createObjectStore(key,{keyPath: "key"});
+		dst_obj_store.createIndex(key,"key",options);
+		for(let x of video_id_result) {
+			/** @type {DatabaseStoreTypes[keyof DatabaseStoreTypes]} */
+			let u=x;
+			if("v" in u) {
+				u.key=`video_id:${u.v}`;
+			} else if("id" in u) {
+				u.key=`boxed_id:${u.type}:${u.id}`;
+			} else {
+				u.key=`hashtag:${u.hashtag}`;
 			}
-		} else {
-			const dst_obj_store=db.createObjectStore(key);
-			for(let x of video_id_result) {
-				dst_obj_store.put(x);
-			}
+			dst_obj_store.put(x);
 		}
 	}
 	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db @arg {IDBIndexParameters} [options] */
 	create_store(key,db,options) {
 		let index_key=this.get_index_key(key);
 		if(index_key) {
-			let obj_store=db.createObjectStore(key,{keyPath: this.get_index_key(key)});
+			let obj_store=db.createObjectStore(key,{keyPath: "key"});
 			obj_store.createIndex(key,index_key,options);
 		} else {
 			db.createObjectStore(key);
@@ -302,24 +303,28 @@ class IndexedDBService extends BaseService {
 		if(!request.transaction) throw new Error("No transaction");
 		let tx=request.transaction;
 		if(event.oldVersion<2) {
-			const video_id_store=this.objectStore(tx,"video_id");
-			this.transfer_store("video_id",video_id_store,db,{});
+			this.transfer_store(tx,"video_id",db,{});
 		}
 		if(event.oldVersion<3) {
-			const video_id_store=this.objectStore(tx,"video_id");
-			this.transfer_store("video_id",video_id_store,db,{unique: true});
+			this.transfer_store(tx,"video_id",db,{unique: true});
 			this.create_store("hashtag",db,{unique: true});
 		}
 		if(event.oldVersion<4) {
-			this.create_store("boxed_id",db);
+			this.create_store("boxed_id",db,{unique: true});
+		}
+		if(event.oldVersion<5) {
+			this.transfer_store(tx,"video_id",db,{unique: true});
+			this.transfer_store(tx,"hashtag",db,{unique: true});
+			this.transfer_store(tx,"boxed_id",db,{unique: true});
 		}
 	}
+	static schema_version=5;
 	/** @private @arg {IDBOpenDBRequest} request */
 	createLatestDatabaseVersion(request) {
 		const db=request.result;
 		this.create_store("video_id",db,{unique: true});
 		this.create_store("hashtag",db,{unique: true});
-		this.create_store("boxed_id",db);
+		this.create_store("boxed_id",db,{unique: true});
 	}
 	/** @private @arg {Event} event */
 	onError(event) {console.log("idb error",event);}
