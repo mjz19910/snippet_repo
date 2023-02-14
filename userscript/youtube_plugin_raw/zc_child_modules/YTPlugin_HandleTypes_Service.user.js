@@ -6422,6 +6422,10 @@ class HandleTypes extends HandleTypesEval {
 			this.D_0x4c82a9c(t_bin_obj[0x4c82a9c]);
 			return;
 		}
+		if(0x12f639cf in t_bin_obj) {
+			this.R_0x12f639cf(t_bin_obj);
+			return;
+		}
 		let kk=this.get_keys_of_2(t_bin_obj);
 		if(kk.length>0) {
 			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,t_bin_obj);
@@ -6559,6 +6563,53 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		debugger;
+	}
+	/** @private @arg {{1:bigint}} x */
+	RV_Bigint(x) {
+		const cf="RV_Bigint";
+		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		this._primitive_of(f1,"bigint");
+	}
+	/** @private @arg {R_0x12f639cf[11]} x */
+	R_f11(x) {
+		const cf="R_f11";
+		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		this.D_f11(f1);
+	}
+	/** @private @arg {R_0x12f639cf[11][1]} x */
+	D_f11(x) {
+		const cf="R_f11";
+		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+		if(f1!=="yt_page_snapshot_regional") debugger;
+		/** @type {(["d",0|1])[]} */
+		let f3_res=[];
+		for(let i=0;i<f3.length;i++) {
+			const fc=f3[i];
+			if(fc===0||fc===1) {
+				f3_res.push(['d',fc]);
+				continue;
+			}
+			let ni=f3.indexOf(0,i); ni;
+			debugger;
+		}
+		console.log(f3[0]);
+		debugger;
+		f1;
+	}
+	/** @private @arg {R_0x12f639cf} x */
+	R_0x12f639cf(x) {
+		const cf="R_0x12f639cf";
+		const {3: f3,6: f6,11: f11,12: f12,0x12f639cf: f_0x12f639cf,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(f3);
+		this.RV_Bigint(f6);
+		this.D_0x12f639cf(f_0x12f639cf);
+		this.R_f11;
+	}
+	/** @private @arg {D_0x12f639cf} x */
+	D_0x12f639cf(x) {
+		const cf="D_0x12f639cf";
+		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		if(f1!==25) debugger;
 	}
 	/** @private @arg {D_0x4c82a9c} x */
 	D_0x4c82a9c(x) {

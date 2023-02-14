@@ -77,6 +77,7 @@ type T_FeedEntry<T extends string>=`FE${T}`;
 type T_GetTypeof<T>=
 	T extends undefined? "undefined":
 	T extends number? "number":
+	T extends bigint? "bigint":
 	T extends string? "string":
 	T extends boolean? "boolean":
 	T extends {}? "object":
