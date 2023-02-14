@@ -255,6 +255,21 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
+	/** @private @arg {D_VoiceSearchDialog} x */
+	D_VoiceSearchDialog(x) {
+		const cf="D_VoiceSearchDialog"; this.k(cf,x);
+		const {trackingParams,exitButton,...y}=this.s(cf,x);
+		this.trackingParams(cf,trackingParams);
+		this.R_Button(exitButton);
+		let u=Object.entries(y);
+		for(let x of u) {
+			let c=x[1];
+			if("runs" in c) {
+				this.G_Text(c);
+				continue;
+			}
+		}
+	}
 	/** @private @arg {P_ClientSignal["popup"]} x */
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);

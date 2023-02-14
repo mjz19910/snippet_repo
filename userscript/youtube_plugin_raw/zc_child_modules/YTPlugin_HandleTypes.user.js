@@ -2681,19 +2681,6 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.parse_url(cf,as(unicodeEmojisUrl));
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {D_VoiceSearchDialog} x */
-	D_VoiceSearchDialog(x) {
-		const cf="D_VoiceSearchDialog"; this.k(cf,x);
-		const {trackingParams,exitButton,...y}=this.s(cf,x);
-		let u=Object.entries(y);
-		for(let x of u) {
-			let c=x[1];
-			if("runs" in c) {
-				this.G_Text(c);
-				continue;
-			}
-		}
-	}
 	/** @private @arg {DC_ScrollToEngagementPanel} x */
 	DC_ScrollToEngagementPanel(x) {
 		const cf="DC_ScrollToEngagementPanel"; this.k(cf,x);
