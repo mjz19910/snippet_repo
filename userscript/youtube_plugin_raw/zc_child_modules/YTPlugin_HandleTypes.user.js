@@ -1729,8 +1729,6 @@ class HandleTypes extends HandleTypesEval {
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
-	/** @private @arg {M_EditPlaylist} x */
-	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_SetSetting} x */
@@ -1749,14 +1747,10 @@ class HandleTypes extends HandleTypesEval {
 	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
-	/** @private @arg {GM_SendPost} x */
-	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @protected @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
-	/** @private @arg {GM_EditPlaylist} x */
-	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
@@ -1807,23 +1801,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_AddToPlaylistService"; this.k(cf,x);
 		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.videoId(videoId);
-	}
-	/** @private @arg {DE_PlaylistEdit} x */
-	DE_PlaylistEdit(x) {
-		const cf="D_PlaylistEdit"; this.k(cf,x);
-		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
-		this.t(params,x => this.params(cf,"playlist_edit.params",x));
-		this.z(actions,x => {
-			// TODO: #12 Handle playlist actions
-			// Just skip them for now
-			switch(x.action) {
-				case "ACTION_ADD_VIDEO":
-				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
-				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
-				default: debugger; break;
-			}
-		});
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {

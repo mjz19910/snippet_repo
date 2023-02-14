@@ -156,6 +156,27 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
+	/** @private @arg {M_EditPlaylist} x */
+	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
+	/** @private @arg {GM_EditPlaylist} x */
+	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
+	/** @private @arg {DE_PlaylistEdit} x */
+	DE_PlaylistEdit(x) {
+		const cf="D_PlaylistEdit"; this.k(cf,x);
+		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.playlistId(playlistId);
+		this.t(params,x => this.params(cf,"playlist_edit.params",x));
+		this.z(actions,x => {
+			// TODO: #12 Handle playlist actions
+			// Just skip them for now
+			switch(x.action) {
+				case "ACTION_ADD_VIDEO":
+				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
+				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
+				default: debugger; break;
+			}
+		});
+	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1"; this.k(cf,x);
@@ -3961,6 +3982,11 @@ class ServiceMethods extends ServiceData {
 		this.parse_undo_token(undoToken);
 		this.z(actions,this.A_UndoFeedback);
 	}
+	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x @arg {boolean} [force_update] */
+	save_number(k,x,force_update=false) {
+		if(x instanceof Uint8Array) x=[...x];
+		return super.save_number(k,x,force_update);
+	}
 	/** @protected @arg {string} cf @arg {string} x */
 	save_b64_binary(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -3977,5 +4003,7 @@ class ServiceMethods extends ServiceData {
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
+	/** @private @arg {GM_SendPost} x */
+	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
