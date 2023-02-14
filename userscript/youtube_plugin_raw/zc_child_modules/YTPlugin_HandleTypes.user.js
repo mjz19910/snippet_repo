@@ -2122,38 +2122,12 @@ class HandleTypes extends HandleTypesEval {
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		if("_tag" in x) return this.E_Settings(x);
-		if("searchEndpoint" in x) return this.E_Search(x);
+		if("searchEndpoint" in x) return this.E_VE4724_Search(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
 	//#region E_ (Endpoints)
-	/** @private @arg {E_VE3854} x */
-	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
-	/** @private @arg {E_VE6827} x */
-	E_VE6827(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);}
-	/** @private @arg {E_VE11487} x */
-	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
-	/** @private @arg {E_VE23462} x */
-	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
-	/** @private @arg {E_VE42352} x */
-	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
-	/** @private @arg {E_VE96368} x */
-	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
-	/** @private @arg {DE_VE3611} x */
-	DE_VE3611(x) {x;}
-	/** @private @arg {DE_VE3854} x */
-	DE_VE3854(x) {x;}
-	/** @private @arg {DE_VE6827} x */
-	DE_VE6827(x) {x;}
-	/** @private @arg {DE_VE11487} x */
-	DE_VE11487(x) {x;}
-	/** @private @arg {DE_VE23462} x */
-	DE_VE23462(x) {x;}
-	/** @private @arg {DE_VE42352} x */
-	DE_VE42352(x) {x;}
-	/** @private @arg {DE_VE96368} x */
-	DE_VE96368(x) {x;}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
 		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
@@ -2214,8 +2188,6 @@ class HandleTypes extends HandleTypesEval {
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
-	/** @private @arg {E_Search} x */
-	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_WatchPlaylist} x */
@@ -2288,39 +2260,6 @@ class HandleTypes extends HandleTypesEval {
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
-	/** @private @arg {M_VE3611|M_VE3611} x */
-	M_VE3611(x) {
-		const cf="M_VE3611";
-		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		return this.GM_VE3611(a);
-	}
-	/** @protected @arg {M_VE3832} x */
-	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832);}
-	/** @private @arg {M_VE3854} x */
-	M_VE3854(x) {
-		const cf="M_VE3854";
-		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GM_VE3854(a);
-		this.t(b,this.M_ResolveUrlCommand);
-	}
-	/** @private @arg {M_VE4724} x */
-	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
-	/** @private @arg {M_VE5754} x */
-	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754);}
-	/** @private @arg {M_VE6827} x */
-	M_VE6827(x) {this.T_WCM("M_VE83769",x,this.GM_VE6827);}
-	/** @private @arg {M_VE11487} x */
-	M_VE11487(x) {this.T_WCM("M_VE83769",x,this.GM_VE11487);}
-	/** @private @arg {M_VE23462} x */
-	M_VE23462(x) {this.T_WCM("M_VE83769",x,this.GM_VE23462);}
-	/** @private @arg {M_VE37414} x */
-	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
-	/** @private @arg {M_VE42352} x */
-	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
-	/** @private @arg {M_VE83769} x */
-	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
-	/** @private @arg {M_VE96368} x */
-	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
 	/** @private @arg {M_ResolveUrlCommand} x */
 	M_ResolveUrlCommand(x) {
 		const cf="GM_VE_ResolveUrl_C_MD";
@@ -2341,107 +2280,6 @@ class HandleTypes extends HandleTypesEval {
 			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
 			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
 		}
-	}
-	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
-	GM_VE3611(x) {
-		const cf="GM_VE3611_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_VE3611_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		if(rootVe!==3611) debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
-	GM_VE3854(x) {
-		const cf="GM_VE3854_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(url==="/") break x;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==3854) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
-	GM_VE4724(x) {
-		const cf="GM_VE4724_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
-	GM_VE5754(x) {
-		const cf="GM_VE5754_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_VE5754_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
-		if(rootVe!==5754) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE11487} x @returns {`VE${rootVe}`} */
-	GM_VE11487(x) {
-		const cf="GM_VE11487_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(url!=="/premium") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==11487) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE23462} x @returns {`VE${rootVe}`} */
-	GM_VE23462(x) {
-		const cf="GM_VE23462_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(url) {
-			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
-			case "/account": break;
-			case "/account_notifications": break;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(rootVe!==23462) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
-	GM_VE37414(x) {
-		const cf="GM_VE37414_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(url==="/shorts/") break x;
-			let up=split_string_once(url,"/");
-			let [p1,p2]=up; if(p1!=="") debugger;
-			let u2=split_string_once(p2,"/");
-			let [p3,p4]=u2; if(p3!=="shorts") debugger;
-			this.videoId(p4);
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-		if(rootVe!==37414) debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE42352} x @returns {`VE${rootVe}`} */
-	GM_VE42352(x) {
-		const cf="GM_VE42352_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_VE42352_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==42352) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
-	}
-	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
-	GM_VE96368(x) {
-		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
-		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(url!=="/feed/subscriptions") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(rootVe!==96368) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		return `VE${rootVe}`;
 	}
 	/** @private @arg {GM_Subscribe} x */
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
@@ -2507,8 +2345,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {GM_NotificationOptOut} x */
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
-	/** @private @arg {DE_Search} x */
-	DE_Search(x) {this.H_("DE_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_UserFeedback} x */
@@ -6379,25 +6215,6 @@ class HandleTypes extends HandleTypesEval {
 	DU_VE5754_BrowseId_2(x) {
 		if(this.str_starts_with(x,"VL")) this.DU_VE5754_BrowseId_VL(x);
 	}
-	/** @private @arg {DE_VE5754} x */
-	DE_VE5754(x) {
-		const cf="DE_VE5754";
-		if("canonicalBaseUrl" in x) {
-			const {browseId,canonicalBaseUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.DU_VE5754_BrowseId_2(browseId);
-			return;
-		}
-		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
-		debugger;
-	}
-	/** @private @arg {E_VE5754} x */
-	E_VE5754(x) {
-		const cf="E_VE5754";
-		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
-		this.M_VE5754(x2);
-		this.DE_VE5754(x4);
-		this.g(x5);
-	}
 	/** @public @arg {[RE_D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
@@ -6556,7 +6373,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RS_SearchPage"; this.k(cf,x);
 		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="search") debugger;
-		this.E_Search(endpoint);
+		this.E_VE4724_Search(endpoint);
 		this.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
@@ -6836,7 +6653,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
-		this.E_Search(searchEndpoint);
+		this.E_VE4724_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
 	/** @private @arg {AD_HideEnclosing} x */
@@ -7668,13 +7485,6 @@ class HandleTypes extends HandleTypesEval {
 			case "notification-bell": break;
 		}
 		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
-	}
-	/** @private @arg {E_VE3611} x */
-	E_VE3611(x) {
-		const cf="E_VE3611";
-		let [a,b,{...y}]=this.TE_Endpoint_3(cf,"browseEndpoint",x); this.g(y);
-		this.M_VE3611(a);
-		this.DE_VE3611(b);
 	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {

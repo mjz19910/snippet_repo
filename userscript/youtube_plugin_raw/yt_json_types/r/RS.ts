@@ -289,7 +289,7 @@ type RS_Page_Playlist={
 };
 type RS_Page_Search={
 	page: "search";
-	endpoint: E_Search;
+	endpoint: E_VE4724_Search;
 	response: RS_Search;
 	url: `/results?search_query=${string}`;
 };

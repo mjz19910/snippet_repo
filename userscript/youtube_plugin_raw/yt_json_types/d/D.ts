@@ -619,7 +619,7 @@ type D_FusionSearchbox={
 	placeholderText: G_Text;
 	config: R_WebSearchboxConfig;
 	trackingParams: string;
-	searchEndpoint: E_Search;
+	searchEndpoint: E_VE4724_Search;
 	clearButton: R_Button;
 };
 type D_ChannelOptions={
@@ -2500,7 +2500,7 @@ type D_SearchPyv={
 	trackingParams: string;
 };
 type D_SearchResultsTab={
-	endpoint?: E_Search;
+	endpoint?: E_VE4724_Search;
 	title: string;
 	selected?: boolean;
 	content: R_SectionList;

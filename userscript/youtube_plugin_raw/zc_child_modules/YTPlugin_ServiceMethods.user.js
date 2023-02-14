@@ -23,11 +23,190 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {E_VE3611} x */
+	E_VE3611(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);}
+	/** @private @arg {E_VE3854} x */
+	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
+	/** @protected @arg {E_VE4724_Search} x */
+	E_VE4724_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE4724_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_VE4724_Search(b);}
+	/** @private @arg {E_VE5754} x */
+	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
+	/** @private @arg {E_VE6827} x */
+	E_VE6827(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);}
+	/** @private @arg {E_VE11487} x */
+	E_VE11487(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE11487(a); this.DE_VE11487(b);}
+	/** @private @arg {E_VE23462} x */
+	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
+	/** @private @arg {E_VE42352} x */
+	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @private @arg {E_VE96368} x */
+	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
+	/** @private @arg {DE_VE3611} x */
+	DE_VE3611(x) {x;}
+	/** @private @arg {DE_VE3854} x */
+	DE_VE3854(x) {x;}
+	/** @private @arg {DE_VE4724_Search} x */
+	DE_VE4724_Search(x) {this.H_("DE_VE4724_Search","query",x,this.a_primitive_str);}
+	/** @private @arg {DE_VE5754} x */
+	DE_VE5754(x) {
+		const cf="DE_VE5754";
+		if("canonicalBaseUrl" in x) {
+			const {browseId,canonicalBaseUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.DU_VE5754_BrowseId_2(browseId);
+			return;
+		}
+		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
+		debugger;
+	}
+	/** @private @arg {DE_VE6827} x */
+	DE_VE6827(x) {x;}
+	/** @private @arg {DE_VE11487} x */
+	DE_VE11487(x) {x;}
+	/** @private @arg {DE_VE23462} x */
+	DE_VE23462(x) {x;}
+	/** @private @arg {DE_VE42352} x */
+	DE_VE42352(x) {x;}
+	/** @private @arg {DE_VE96368} x */
+	DE_VE96368(x) {x;}
+	/** @private @arg {M_VE3611|M_VE3611} x */
+	M_VE3611(x) {
+		const cf="M_VE3611";
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		return this.GM_VE3611(a);
+	}
+	/** @protected @arg {M_VE3832} x */
+	M_VE3832(x) {this.T_WCM("M_VE3832",x,this.GM_VE3832);}
+	/** @private @arg {M_VE3854} x */
+	M_VE3854(x) {
+		const cf="M_VE3854";
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GM_VE3854(a);
+		this.t(b,this.M_ResolveUrlCommand);
+	}
+	/** @private @arg {M_VE4724} x */
+	M_VE4724(x) {this.T_WCM("M_VE4724",x,this.GM_VE4724);}
+	/** @private @arg {M_VE5754} x */
+	M_VE5754(x) {this.T_WCM("M_VE5754",x,this.GM_VE5754);}
+	/** @private @arg {M_VE6827} x */
+	M_VE6827(x) {this.T_WCM("M_VE83769",x,this.GM_VE6827);}
+	/** @private @arg {M_VE11487} x */
+	M_VE11487(x) {this.T_WCM("M_VE83769",x,this.GM_VE11487);}
+	/** @private @arg {M_VE23462} x */
+	M_VE23462(x) {this.T_WCM("M_VE83769",x,this.GM_VE23462);}
+	/** @private @arg {M_VE37414} x */
+	M_VE37414(x) {this.T_WCM("M_VE37414",x,this.GM_VE37414);}
+	/** @private @arg {M_VE42352} x */
+	M_VE42352(x) {this.T_WCM("M_VE42352",x,this.GM_VE42352);}
+	/** @private @arg {M_VE83769} x */
+	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
+	/** @private @arg {M_VE96368} x */
+	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
+	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
+	GM_VE3611(x) {
+		const cf="GM_VE3611_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GU_VE3611_Url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		if(rootVe!==3611) debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
+	GM_VE3854(x) {
+		const cf="GM_VE3854_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(url==="/") break x;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==3854) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
+	GM_VE4724(x) {
+		const cf="GM_VE4724_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		if(rootVe!==4724) debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
+	GM_VE5754(x) {
+		const cf="GM_VE5754_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GU_VE5754_Url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
+		if(rootVe!==5754) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE11487} x @returns {`VE${rootVe}`} */
+	GM_VE11487(x) {
+		const cf="GM_VE11487_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(url!=="/premium") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==11487) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE23462} x @returns {`VE${rootVe}`} */
+	GM_VE23462(x) {
+		const cf="GM_VE23462_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(url) {
+			default: console.log(`-- [GM_VE23462_WC] --\n\n\ncase "${url}":`); break;
+			case "/account": break;
+			case "/account_notifications": break;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		if(rootVe!==23462) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE37414} x @returns {`VE${rootVe}`} */
+	GM_VE37414(x) {
+		const cf="GM_VE37414_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(url==="/shorts/") break x;
+			let up=split_string_once(url,"/");
+			let [p1,p2]=up; if(p1!=="") debugger;
+			let u2=split_string_once(p2,"/");
+			let [p3,p4]=u2; if(p3!=="shorts") debugger;
+			this.videoId(p4);
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
+		if(rootVe!==37414) debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE42352} x @returns {`VE${rootVe}`} */
+	GM_VE42352(x) {
+		const cf="GM_VE42352_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GU_VE42352_Url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==42352) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
+	GM_VE96368(x) {
+		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
+		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(url!=="/feed/subscriptions") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==96368) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		return `VE${rootVe}`;
+	}
 	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
 	is_TE_VE(x,t) {
 		return x.commandMetadata.webCommandMetadata.rootVe===t;
 	}
-	/** @private @arg {GE_Browse} x */
+	/** @protected @arg {GE_Browse} x */
 	GE_Browse(x) {
 		const cf="GE_Browse"; this.k(cf,x);
 		if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
