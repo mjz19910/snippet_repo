@@ -4024,6 +4024,10 @@ class ServiceMethods extends ServiceData {
 		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 	}
+	/** @private @arg {AD_HideEnclosing} x */
+	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
+	/** @private @arg {A_HideEnclosing} x */
+	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
@@ -4075,6 +4079,17 @@ class ServiceMethods extends ServiceData {
 		const cf="DC_ShowReloadUi"; this.k(cf,x);
 		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
 		this.D_UiTargetId(targetId);
+	}
+	/** @type {D_UiTargetId[]} */
+	reload_ui_target_id_arr=[];
+	/** @arg {D_UiTargetId} x */
+	D_UiTargetId(x) {
+		if(this.is_yt_uuid(x)) return;
+		switch(x) {
+			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
+			case "comments-section":
+			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
+		}
 	}
 	/** @private @arg {R_PlaylistLoopButton} x */
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
@@ -4131,7 +4146,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {
 		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.gk(x.item);
+		let k=this.get_keys_of(x.item);
 		switch(k[0]) {
 			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
 			case "notificationTextRenderer":
@@ -4174,6 +4189,8 @@ class ServiceMethods extends ServiceData {
 	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
+	/** @private @returns {true} */
+	true_() {return true;}
 	/** @protected @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {D_ChipUniqueId} x */
@@ -4271,6 +4288,19 @@ class ServiceMethods extends ServiceData {
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
+	/** @private @arg {DC_ScrollToEngagementPanel} x */
+	DC_ScrollToEngagementPanel(x) {
+		const cf="DC_ScrollToEngagementPanel"; this.k(cf,x);
+		const {targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.targetId(cf,targetId);
+	}
+	/** @private @arg {C_ScrollToEngagementPanel} x */
+	C_ScrollToEngagementPanel(x) {
+		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
+		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
+	}
 	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
 	G_DC_CommandExecutor_CommandItem(x) {
 		const cf="G_DC_CommandExecutor_CommandItem"; this.k(cf,x);

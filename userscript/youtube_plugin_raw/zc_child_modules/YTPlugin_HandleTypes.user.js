@@ -907,8 +907,6 @@ class HandleTypes extends HandleTypesEval {
 	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
-	/** @private @arg {A_HideEnclosing} x */
-	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
 	/** @private @arg {A_AddChatItem} x */
@@ -1379,13 +1377,6 @@ class HandleTypes extends HandleTypesEval {
 		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
-	}
-	/** @private @arg {C_ScrollToEngagementPanel} x */
-	C_ScrollToEngagementPanel(x) {
-		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
-		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
 	}
 	/** @private @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {
@@ -2591,27 +2582,10 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.parse_url(cf,as(unicodeEmojisUrl));
 		this.D_LoggingDirectives(loggingDirectives);
 	}
-	/** @private @arg {DC_ScrollToEngagementPanel} x */
-	DC_ScrollToEngagementPanel(x) {
-		const cf="DC_ScrollToEngagementPanel"; this.k(cf,x);
-		const {targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.targetId(cf,targetId);
-	}
 	//#region pause
 	//#endregion
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @type {D_UiTargetId[]} */
-	reload_ui_target_id_arr=[];
-	/** @arg {D_UiTargetId} x */
-	D_UiTargetId(x) {
-		if(this.is_yt_uuid(x)) return;
-		switch(x) {
-			default: if(!this.reload_ui_target_id_arr.includes(x)) {this.reload_ui_target_id_arr.push(x); debugger;} break;
-			case "comments-section":
-			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
-		}
-	}
 	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
 		const {slot,...y}=this.s(cf,x);
@@ -4571,8 +4545,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_VE4724_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
-	/** @private @arg {AD_HideEnclosing} x */
-	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
 		const cf="D_Transcript";
