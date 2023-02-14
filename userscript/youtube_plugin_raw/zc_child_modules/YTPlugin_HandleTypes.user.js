@@ -6864,7 +6864,6 @@ class HandleTypes extends HandleTypesEval {
 				default: this.codegen_case(`${cf}.icon`,icon.iconType); break;
 				case "YOUTUBE_SHORTS_BRAND_24": break;
 			}
-
 		}
 		this.G_Text(title);
 		this.z(contents,this.R_RichItem);
