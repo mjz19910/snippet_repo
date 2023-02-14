@@ -32,6 +32,9 @@ function generate_ts_backup_output {
 	pushd "$DEST_DIR"
 	mkdir -p "bak/$BACKUP_DATE"
 	cp "out.ts" "bak/"${BACKUP_DATE}"/out.ts.bak"
+	pushd "$TMP_DIR/$DEST_DIR"
+	cp "out.ts" "out.ts.bak"
+	popd
 	popd
 }
 function generate_ts_setup {

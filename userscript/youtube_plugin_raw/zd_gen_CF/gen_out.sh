@@ -6,6 +6,7 @@ export TMP_DIR="/dev/shm/snippet_repo_tmp"
 function gen_code {
 	cat "out_prelude.ts" >"$TMP_DIR/tmp.ts"
 	echo "export namespace Gen {\n\texport type CF_Generated=" >>"$TMP_DIR/tmp.ts"
+	cat "$TMP_DIR/tmp_partial.ts" >>"$TMP_DIR/tmp.ts"
 	for ((i = 0; ; ++i)); do
 		generate_ts_filter_errors "$TMP_DIR/errors.out" | generate_ts_with_perl | sort -u >tmp_out.txt
 		echo "--- [tmp_out.txt] $i ---"
@@ -28,9 +29,15 @@ function gen_code {
 }
 function generate_ts_output {
 	generate_ts_setup
+	grep "|{n:" "out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
+	cat "out_prelude.ts" >"$TMP_DIR/tmp.ts"
+	echo "export namespace Gen {\n\texport type CF_Generated=" >>"$TMP_DIR/tmp.ts"
+	cat "$TMP_DIR/tmp_partial.ts" >>"$TMP_DIR/tmp.ts"
+	echo "\t\t;" >>"$TMP_DIR/tmp.ts"
+	echo "}" >>"$TMP_DIR/tmp.ts"
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 	gen_code
-	return
+	return;
 	generate_ts_restore
 }
 generate_ts_output
