@@ -1,8 +1,4 @@
-type D_Continuation={
-	continuation: string;
-	clickTrackingParams: string;
-};
-type D_ReloadContinuationData={reloadContinuationData: D_Continuation|D_Continuation;};
+type D_ReloadContinuationData=CD_Reload;
 type D_LiveChat={
 	continuations: D_ReloadContinuationData[];
 	header: R_LiveChatHeader;

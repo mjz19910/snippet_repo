@@ -2164,7 +2164,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {R_LiveChat} x */
-	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.g);}
+	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.D_LiveChat);}
 	/** @private @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
@@ -10702,6 +10702,20 @@ class HandleTypes extends HandleTypesEval {
 		this.z(contents,this.G_Text);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {D_LiveChat} x */
+	D_LiveChat(x) {
+		const cf="D_LiveChat";
+		const {continuations,header,trackingParams,clientMessages,isReplay,initialDisplayState,showHideButton,...y}=this.s(cf,x); this.g(y);
+		this.z(continuations,x=>{
+			if(!x.reloadContinuationData) debugger;
+			this.D_ReloadContinuationData(x);
+		})
+		this.G_Text(title);
+		this.z(contents,this.G_Text);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {D_ReloadContinuationData} x */
+	D_ReloadContinuationData(x) {this.CD_Reload(x);}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
