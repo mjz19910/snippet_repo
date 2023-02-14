@@ -4513,28 +4513,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_0x19ac5ceb"; this.k(cf,x);
 		debugger;
 	}
-	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
-	DC_Continuation_Omit(cf,x) {
-		const {token,request,...y}=this.s(cf,x);
-		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
-		switch(request) {
-			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				this.decode_continuation_token(cf,token);
-			} break;
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
-				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
-			} break;
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				this.params("ContinuationRequestType_WatchNext.token","watch_request_continuation.token",token);
-			} break;
-		};
-		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
-		function gu() {return y;}
-		let u=gu();
-		this.assert_is_omit_key(x,y,u);
-		return u;
-	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification"; this.k(cf,x);
@@ -6417,8 +6395,6 @@ class HandleTypes extends HandleTypesEval {
 		if(targetId!=="search-feed") debugger;
 		this.z(contents,this.TR_SectionListItem_3_Empty);
 	}
-	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
 		const cf="DC_LiveChat"; this.k(cf,x);

@@ -23,6 +23,30 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
+	DC_Continuation_Omit(cf,x) {
+		const {token,request,...y}=this.s(cf,x);
+		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
+		switch(request) {
+			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
+				this.decode_continuation_token(cf,token);
+			} break;
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
+				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
+			} break;
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
+				this.params("ContinuationRequestType_WatchNext.token","watch_request_continuation.token",token);
+			} break;
+		};
+		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
+		function gu() {return y;}
+		let u=gu();
+		this.assert_is_omit_key(x,y,u);
+		return u;
+	}
+	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem"; this.k(cf,x);
