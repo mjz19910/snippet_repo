@@ -763,11 +763,10 @@ class HandleTypes extends HandleTypesEval {
 					if(!buffer) {debugger; break;}
 					let c_pos=0;
 					let na_arr;
-					let na_05=[...buffer.slice(0,c_pos+5)];
-					this.save_number(`${path}.0-4`,na_05);
-					c_pos+=5;
-					this.save_number(`${path}.${c_pos}`,buffer[c_pos]);
-					c_pos+=1;
+					for(let i=0;i<6;i++) {
+						this.save_number(`${path}.${c_pos}`,buffer[c_pos]);
+						c_pos+=1;
+					}
 					{
 						let n_len=4; na_arr=[...buffer.slice(c_pos,c_pos+n_len)];
 						this.save_number(`${path}.${c_pos}-${c_pos+n_len}`,na_arr);
