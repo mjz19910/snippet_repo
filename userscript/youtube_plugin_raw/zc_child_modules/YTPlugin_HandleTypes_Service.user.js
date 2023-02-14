@@ -6464,11 +6464,14 @@ class HandleTypes extends HandleTypesEval {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
-		for(let dec_item of dec) {
-			switch(dec_item[0]) {
-				default: debugger; break;
-				case "child": debugger; break;
-			}
+		/** @type {[{}]} */
+		let dec_t=dec;
+		switch(dec_t.length) {
+			default: debugger; break;
+			case 1: {
+				const [dec_0]=dec_t; dec_0;
+				debugger;
+			} break;
 		}
 		debugger;
 		let bin_obj=this.convert_arr_to_obj(dec);
