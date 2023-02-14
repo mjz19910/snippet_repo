@@ -6362,7 +6362,10 @@ class HandleTypes extends HandleTypesEval {
 		let res=x[14];
 		if("4" in res) {
 			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
-			if(r_f1!==4) debugger;
+			switch(r_f1) {
+				default: debugger; break;
+				case 1: case 4:
+			}
 			switch(r_f3) {
 				default: debugger; break;
 				case 1: case 2:
