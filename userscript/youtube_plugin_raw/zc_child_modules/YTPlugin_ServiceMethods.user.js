@@ -17,6 +17,9 @@ function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__modu
 const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	get handle_types() {
+		return this.x.get("handle_types");
+	}
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
@@ -97,7 +100,7 @@ class ServiceMethods extends ServiceData {
 		switch(request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				this.decode_continuation_token(cf,token);
+				this.x.get("handle_types").decode_continuation_token(cf,token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
 				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
