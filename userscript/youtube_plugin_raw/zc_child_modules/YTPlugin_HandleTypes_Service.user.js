@@ -6460,7 +6460,24 @@ class HandleTypes extends HandleTypesEval {
 	D_ReadAny_CD_0x4c82a9c(x) {
 		if(x.length!==3) debugger;
 		const [a,b,c]=x;
-		a; b; c;
+		{
+			const [type,field_id,buffer,dec]=a; buffer;
+			if(type!=="child") debugger;
+			if(field_id!==2) debugger;
+			if(dec!==null) debugger;
+		}
+		{
+			const [type,field_id,buffer,dec]=b; buffer;
+			if(type!=="child") debugger;
+			if(field_id!==3) debugger;
+			if(dec!==null) debugger;
+		}
+		{
+			const [type,field_id,buffer,dec]=c; buffer;
+			if(type!=="child") debugger;
+			if(field_id!==35) debugger;
+			if(dec!==null) debugger;
+		}
 		debugger;
 	}
 	/** @arg {D_ReadAny_CR_0x4c82a9c} x */
