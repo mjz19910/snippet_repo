@@ -348,9 +348,26 @@ class CodegenService extends BaseService {
 	as$T_Signal=x => as(x);
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
+	text_decoder=new TextDecoder();
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
-	/** @private @arg {JsonReplacerState} state @arg {{[U in string|number]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
+	/** @private @arg {JsonReplacerState} state @arg {{[U in string|number]: unknown}|Uint8Array} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
+		if(!state.object_store.includes(x)) {
+			state.object_store.push(x);
+			let mi=state.object_store.indexOf(x);
+			state.parent_map.set(x,[mi,k1]);
+		}
+		let mi=state.object_store.indexOf(x);
+		if (x instanceof Uint8Array) {
+			let res=this.text_decoder.decode(x);
+			return `TYPE::V_Uint8Array<"${res}">`;
+		}
+		let xi=Object.entries(x);
+		for(let [k_in,val] of xi) {
+			if(state.object_store.includes(val)) continue;
+			state.object_store.push(val);
+			state.parent_map.set(val,[mi,k_in]);
+		}
 		if(state.is_root&&k1==="") {
 			/** @type {{[U in string|number]: unknown}} */
 			let fx={};
@@ -497,18 +514,6 @@ class CodegenService extends BaseService {
 		if(typeof o!=="object") return o;
 		/** @private @type {{[U in string]?:unknown}} */
 		let x=o;
-		if(!state.object_store.includes(x)) {
-			state.object_store.push(x);
-			let mi=state.object_store.indexOf(x);
-			state.parent_map.set(x,[mi,k1]);
-		}
-		let mi=state.object_store.indexOf(x);
-		let xi=Object.entries(x);
-		for(let [k_in,val] of xi) {
-			if(state.object_store.includes(val)) continue;
-			state.object_store.push(val);
-			state.parent_map.set(val,[mi,k_in]);
-		}
 		let res_type=this.typedef_json_replace_object(state,x,k1);
 		if(res_type!==null) return res_type;
 		if(state.key_keep_arr.includes(k1)) return x;
