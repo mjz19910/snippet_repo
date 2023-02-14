@@ -784,7 +784,7 @@ class MyReader {
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
-		if(size===void 0) {this.cur_len=this.len;} else {this.cur_len=this.pos+size;}
+		if(size===void 0) {this.cur_len=this.len-prev_pos;} else {this.cur_len=this.pos+size;}
 		this.failed=false;
 		try {return this.read_any_impl();} finally {
 			this.pos=prev_pos;

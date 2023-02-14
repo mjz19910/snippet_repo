@@ -6260,6 +6260,7 @@ class HandleTypes extends HandleTypesEval {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
+		len=4;
 		let msg_id=reader.read_bytes(len);
 		let hex_id=[...msg_id].map(e=>{
 			let hex=e.toString(16);
