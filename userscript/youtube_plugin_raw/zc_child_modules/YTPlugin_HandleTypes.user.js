@@ -894,19 +894,6 @@ class HandleTypes extends HandleTypesEval {
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {G_AdditionalDataItem} x */
-	G_AdditionalDataItem(x) {
-		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
-		switch(d.key) {
-			default: debugger; break;
-			case "lockup": {
-				if(d.value!=="player") debugger;
-			} break;
-			case "video_id": {
-				this.videoId(d.value);
-			} break;
-		}
-	}
 	/** @private @arg {G_ChatItem} x */
 	G_ChatItem(x) {
 		const cf="G_ChatItem"; this.k(cf,x);

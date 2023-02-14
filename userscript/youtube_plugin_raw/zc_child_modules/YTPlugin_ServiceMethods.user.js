@@ -3908,5 +3908,18 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(successResponseText);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {G_AdditionalDataItem} x */
+	G_AdditionalDataItem(x) {
+		let d=this.w("G_AdditionalDataItem","userFeedbackEndpointProductSpecificValueData",x);
+		switch(d.key) {
+			default: debugger; break;
+			case "lockup": {
+				if(d.value!=="player") debugger;
+			} break;
+			case "video_id": {
+				this.videoId(d.value);
+			} break;
+		}
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
