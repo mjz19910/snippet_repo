@@ -6456,7 +6456,7 @@ class HandleTypes extends HandleTypesEval {
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
-	/** @arg {D_ReadAny_CD_0x4c82a9c} x */
+	/** @arg {D_RA_CD_0x4c82a9c} x */
 	D_ReadAny_CD_0x4c82a9c(x) {
 		if(x.length!==3) debugger;
 		const [a,b,c]=x;
