@@ -141,12 +141,6 @@ ECatcherService.known_experiments.push(...[
 	[24473107],
 ].flat());
 class HandleTypes extends HandleTypesEval {
-	/** @private @arg {string} ns @arg {()=>void} f */
-	grouped(ns,f) {
-		console.group(ns);
-		f();
-		console.groupEnd();
-	}
 	/** @typedef {"DE_VE3832_Watch"|"R_WatchPage_VE3832"} CF_PlayerParams */
 	/** @template {CF_PlayerParams} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {

@@ -23,6 +23,12 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {string} ns @arg {()=>void} f */
+	grouped(ns,f) {
+		console.group(ns);
+		f();
+		console.groupEnd();
+	}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
 		this.save_number(path,x[1]);
