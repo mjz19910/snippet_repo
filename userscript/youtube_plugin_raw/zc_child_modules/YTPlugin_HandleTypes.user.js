@@ -927,8 +927,6 @@ class HandleTypes extends HandleTypesEval {
 	//#region helpers
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
-	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
-	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	//#endregion
 	//#region static & typedefs
 	/** @typedef {{}} minimal_handler_member */
@@ -1650,18 +1648,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(entityKeys,x => {
 			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
 		});
-	}
-	/** @private @arg {DC_GetSurvey} x */
-	DC_GetSurvey(x) {
-		const cf="D_GetSurvey"; this.k(cf,x);
-		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if("paidDigitalGoods" in a) {debugger;}
-		this.save_string("GetSurvey.action",action);
-		switch(action) {
-			default: debugger; break;
-			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
-		}
-		this.G_DC_GetSurvey_Endpoint(a);
 	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}

@@ -416,6 +416,20 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
 		if(sendPost!==true) debugger;
 	}
+	/** @private @arg {DC_GetSurvey} x */
+	DC_GetSurvey(x) {
+		const cf="D_GetSurvey"; this.k(cf,x);
+		const {action,endpoint: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if("paidDigitalGoods" in a) {debugger;}
+		this.save_string("GetSurvey.action",action);
+		switch(action) {
+			default: debugger; break;
+			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
+		}
+		this.G_DC_GetSurvey_Endpoint(a);
+	}
+	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
+	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
