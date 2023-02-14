@@ -6481,10 +6481,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_CR_0x4c82a9c} x */
 	D_ReadAny_CR_0x4c82a9c(x) {
-		const [type,field_id,buffer,dec_0]=x;
+		if(x.length!==1) debugger;
+		const [dec_0]=x;
+		const [type,field_id,buffer,dec_1]=dec_0;
 		if(type!=="child") debugger;
 		if(field_id!==0x4c82a9c) debugger; buffer;
-		this.D_ReadAny_CD_0x4c82a9c(dec_0);
+		this.D_ReadAny_CD_0x4c82a9c(dec_1);
 	}
 	/** @arg {D_RA_CR_0x12f639cf} x */
 	D_RA_CR_0x12f639cf(x) {
@@ -6530,9 +6532,11 @@ class HandleTypes extends HandleTypesEval {
 			case 5: {
 				this.D_RA_CR_0x12f639cf(dec_t);
 			} break;
+			case 4: {
+
+			} break;
 			case 1: {
-				const [dec_0]=dec_t;
-				this.D_ReadAny_CR_0x4c82a9c(dec_0);
+				this.D_ReadAny_CR_0x4c82a9c(dec_t);
 			} break;
 		}
 		let bin_obj=this.convert_arr_to_obj(dec);
