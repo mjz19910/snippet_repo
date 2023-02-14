@@ -1770,12 +1770,6 @@ class HandleTypes extends HandleTypesEval {
 	//#region helpers
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
 	gs(cf,x) {this.g(this.s(cf,x));}
-	/** @private @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
-	s_priv(cf,x) {
-		if(!x) debugger;
-		this.k(cf,x);
-		return x;
-	}
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
@@ -1800,20 +1794,6 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
 		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
 		return [endpoint,y];
-	}
-	/**
-	 * @private
-	 * @arg {CF_TE_Endpoint_3} cf1
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
-	 * @arg {EP_Key} k
-	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
-	 */
-	TE_Endpoint_3(cf1,k,x) {
-		const cf2="TE_Endpoint_3";
-		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
-		/** @type {`${CF_TE_Endpoint_3}.endpoint`} */
-		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
-		return [commandMetadata,a,y];
 	}
 	/** @private @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
 	TE_Endpoint_Opt_3(cf,k,x) {
@@ -2179,8 +2159,10 @@ class HandleTypes extends HandleTypesEval {
 	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
 	/** @private @arg {R_ElementUpdate} x */
 	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
-	/** @private @arg {R_TemplateUpdate} x */
+	/** @public @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
+	/** @public @arg {R_ResourceStatusInResponseCheck} x */
+	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
 	/** @private @arg {R_ProfileColumn} x */
 	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
 	/** @private @arg {R_BrowseFeedActions} x */
@@ -2195,8 +2177,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
 	/** @private @arg {R_PrefetchHintConfig} x */
 	R_PrefetchHintConfig(x) {this.H_("R_PrefetchHintConfig","prefetchHintConfig",x,this.D_PrefetchHintConfig);}
-	/** @private @arg {R_ResourceStatusInResponseCheck} x */
-	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {R_LiveChat} x */
@@ -2448,8 +2428,6 @@ class HandleTypes extends HandleTypesEval {
 	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
 	/** @private @arg {R_CommentThread} x */
 	R_CommentThread(x) {this.H_("R_CommentThread","commentThreadRenderer",x,this.D_CommentThread);}
-	/** @private @arg {R_AdPlacementConfig} x */
-	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_CommentReplies} x */
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_InfoCardIcon} x */
@@ -2460,8 +2438,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
 	/** @private @arg {R_ClientForecastingAd} x */
 	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
-	/** @private @arg {R_AdBreakService} x */
-	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
 	/** @private @arg {R_AdActionInterstitial} x */
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {R_ReelMultimixAttributionLabel} x */
@@ -4180,8 +4156,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(videoCountShortText);
 		return y;
 	}
-	/** @private @template T @template {T} U @arg {T} v1 @arg {U} v2 */
-	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @private @returns {true} */
 	true_() {return true;}
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
@@ -10340,12 +10314,6 @@ class HandleTypes extends HandleTypesEval {
 		const {gcr,...y}=y3; this.g(y);
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
-	/** @private @arg {D_Miniplayer} x */
-	D_Miniplayer(x) {
-		const cf="D_Miniplayer";
-		const {playbackMode,...y}=this.s(cf,x); this.g(y);
-		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
-	}
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {
 		// cSpell:ignoreRegExp /r\d---sn-.+?"/
@@ -10572,16 +10540,6 @@ class HandleTypes extends HandleTypesEval {
 		f.call(this,baseUrl);
 		this.a_primitive_num(elapsedMediaTimeSeconds);
 	}
-	/** @private @template T @arg {B_TagObj<T>} x */
-	B_TagObj(x) {
-		const cf="B_TagObj";
-		const {tag,...y}=this.s(cf,x);
-		let ka=this.get_keys_of(y);
-		if(ka.length>0) {
-			console.log(`[done.${cf}.next_key] [${ka.shift()}]`);
-		}
-		return tag;
-	}
 	/** @private @arg {D_Botguard} x */
 	D_Botguard(x) {
 		const cf="D_Botguard";
@@ -10633,14 +10591,6 @@ class HandleTypes extends HandleTypesEval {
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
 			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
 		}
-	}
-	/** @private @arg {G_AdPlacementRendererItem} x */
-	G_AdPlacementRendererItem(x) {
-		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
-		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
-		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
-		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
-		debugger;
 	}
 	/** @private @arg {D_LiveBroadcastDetails} x */
 	D_LiveBroadcastDetails(x) {
@@ -11022,13 +10972,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
 			this.parser.parse_url(`${cf}.impressionUrl`,x);
 		}));
-	}
-	/** @private @arg {D_AdBreakService} x */
-	D_AdBreakService(x) {
-		const cf="D_AdBreakService";
-		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
-		if(prefetchMilliseconds!=="10000") debugger;
-		debugger;
 	}
 	/** @private @arg {D_MarkersList} x */
 	D_MarkersList(x) {

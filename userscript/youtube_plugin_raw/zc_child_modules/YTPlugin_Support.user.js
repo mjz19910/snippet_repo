@@ -45,6 +45,16 @@ class HandleRS extends ServiceMethods {
 		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.R_ElementUpdate);
 	}
+	/** @private @arg {R_ElementUpdate} x */
+	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
+	/** @private @arg {D_ElementUpdate} x */
+	D_ElementUpdate(x) {
+		const cls_=this.x.get("handle_types");
+		const cf="D_ElementUpdate"; this.k(cf,x);
+		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
+		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	//#endregion
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
@@ -88,6 +98,8 @@ class HandleRS extends ServiceMethods {
 		}
 		this.RS_Page_Watch(x);
 	}
+	/** @private @arg {R_AdPlacementConfig} x */
+	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
 	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
 	/** @private @arg {R_Miniplayer} x */
@@ -157,8 +169,26 @@ class HandleRS extends ServiceMethods {
 		this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => cls_.D_VeCsn(x,true));
 	}
+	/** @private @arg {R_AdBreakService} x */
+	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
+	/** @private @arg {D_AdBreakService} x */
+	D_AdBreakService(x) {
+		const cf="D_AdBreakService";
+		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
+		if(prefetchMilliseconds!=="10000") debugger;
+		debugger;
+	}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
+	/** @private @arg {G_AdPlacementRendererItem} x */
+	G_AdPlacementRendererItem(x) {
+		const cls_=this.x.get("handle_types");
+		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
+		if("clientForecastingAdRenderer" in x) return cls_.R_ClientForecastingAd(x);
+		if("instreamVideoAdRenderer" in x) return cls_.R_InstreamVideoAd(x);
+		if("linearAdSequenceRenderer" in x) return cls_.R_LinearAdSequence(x);
+		debugger;
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
@@ -230,6 +260,12 @@ class HandleRS extends ServiceMethods {
 		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
 		this.ceq(softFailOnError,false);
 		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
+	}
+	/** @private @arg {D_Miniplayer} x */
+	D_Miniplayer(x) {
+		const cf="D_Miniplayer";
+		const {playbackMode,...y}=this.s(cf,x); this.g(y);
+		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
 	}
 	/** @private @arg {D_DesktopWatchAds} x */
 	D_DesktopWatchAds(x) {

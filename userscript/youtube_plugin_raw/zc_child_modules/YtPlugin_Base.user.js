@@ -3450,6 +3450,38 @@ class ServiceData extends BaseService {
 }
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
+	s_priv(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
+	/**
+	 * @protected
+	 * @arg {CF_TE_Endpoint_3} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_3<EPL,{},{}>} T_EP @arg {T_EP} x
+	 * @arg {EP_Key} k
+	 * @returns {[T_EP['commandMetadata'],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]}
+	 */
+	TE_Endpoint_3(cf1,k,x) {
+		const cf2="TE_Endpoint_3";
+		const {clickTrackingParams,commandMetadata,[k]: a,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_3}.endpoint`} */
+		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
+		return [commandMetadata,a,y];
+	}
+	/** @protected @template T @arg {B_TagObj<T>} x */
+	B_TagObj(x) {
+		const cf="B_TagObj";
+		const {tag,...y}=this.s(cf,x);
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log(`[done.${cf}.next_key] [${ka.shift()}]`);
+		}
+		return tag;
+	}
+	/** @protected @template T @template {T} U @arg {T} v1 @arg {U} v2 */
+	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
 	trackingParams(cf,x) {this.x.get("handle_types").params(cf,"tracking.trackingParams",x);}
 	/** @private @type {Map<string,string[]>} */
