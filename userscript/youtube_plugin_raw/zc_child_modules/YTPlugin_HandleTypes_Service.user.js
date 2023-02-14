@@ -6561,7 +6561,7 @@ class HandleTypes extends HandleTypesEval {
 			const [type,field_id,buffer,dec]=dec_1;
 			if(type!=="child") debugger;
 			if(field_id!==3) debugger;
-			if(dec!==null) debugger;
+			dec_1[3]=null;
 			buffer;
 		}
 	}
@@ -6861,7 +6861,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_0x12f639cf[6]} x */
 	R_0x12f639cf_f6(x) {
-		if(3 in x) return;
+		if(3 in x) {
+			const {3: f3,...y}=this.s(cf,x); this.g(y);
+			this.playlistId(f3);
+			return;
+		}
 		this.RV_Bigint(x);
 	}
 	/** @private @arg {R_0x12f639cf} x */
