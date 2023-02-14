@@ -54,6 +54,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ScrollToEngagementPanel";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "C_ShowReloadUi";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "DC_Invalidation";}
+		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "D_Continuation";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "D_ImpressionCommand";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "E_SetSettingAutonavForDesktop";}
 		|{n: Prelude.CF_L_CTP_Params; t: Types.CF_L_CTP_Params_; v: "RSG_SharePanel_Action";}
@@ -409,6 +410,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CompactLink.Styled:omit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CompactLink.icon";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ConfirmDialog";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Continuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ContinuationItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CueRangeItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_DarkColorPalette";}
@@ -553,6 +555,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelMultimixAttributionLabel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReelPlayerOverlay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ReloadContinuationData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ResourceStatusInResponseCheckData";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichGrid";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_RichItem";}
