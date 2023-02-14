@@ -36,6 +36,12 @@ class TypedefGenerator extends ServiceMethods {
 }
 class HandleRS extends ServiceMethods {
 	//#region dup
+	/** @arg {`${string}.${string}`} x */
+	parse_signature(x) {
+		let [sig_0,sig_1]=split_string_once(x,".");
+		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
+		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
+	}
 	/** @private @arg {DR_DC_EntityBatchUpdate} x */
 	DR_DC_EntityBatchUpdate(x) {this.x.get("handle_types").DR_DC_EntityBatchUpdate(x);}
 	/** @private @arg {D_FrameworkUpdates} x */
@@ -111,6 +117,16 @@ class HandleRS extends ServiceMethods {
 		this.z(channelIds,this.D_ChannelId);
 		this.params(cf,"unsubscribe.params",params);
 	}
+	/** @private @arg {M_CreateComment} x */
+	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
+	/** @private @arg {M_Unsubscribe} x */
+	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
+	/** @private @arg {R_EndscreenElement} x */
+	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
+	/** @private @arg {R_InstreamVideoAd} x */
+	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
+	/** @private @arg {R_AdActionInterstitial} x */
+	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {DE_CreateComment} x */
 	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
 	/** @private @arg {E_Unsubscribe} x */
@@ -443,6 +459,92 @@ class HandleRS extends ServiceMethods {
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.z(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
+	}
+	/** @private @arg {D_ClientForecastingAd} x */
+	D_ClientForecastingAd(x) {
+		const cf="D_ClientForecastingAd";
+		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
+		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
+			this.parser.parse_url(`${cf}.impressionUrl`,x);
+		}));
+	}
+	/** @private @arg {D_LinearAdSequence} x */
+	D_LinearAdSequence(x) {
+		const cf="D_LinearAdSequence";
+		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
+		this.MG_AdLayout_PlayerBytes(adLayoutMetadata);
+		this.z(linearAds,this.G_LinearAdsItem);
+	}
+	/** @private @arg {D_Button_NavEP} x */
+	D_Button_NavEP(x) {
+		const cf="D_Button_NavEP"; this.k(cf,x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
+		if("createCommentReplyDialogEndpoint" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_AdPlacementConfig} x */
+	D_AdPlacementConfig(x) {
+		const cf="D_AdPlacementConfig";
+		const {kind,adTimeOffset,hideCueRangeMarker,...y}=this.s(cf,x); this.g(y);
+		switch(kind) {
+			default: debugger; break;
+			case "AD_PLACEMENT_KIND_END":
+			case "AD_PLACEMENT_KIND_SELF_START":
+			case "AD_PLACEMENT_KIND_START":
+		}
+		this.t(adTimeOffset,this.D_AdTimeOffset);
+		this.ceq(hideCueRangeMarker,true);
+	}
+	/** @private @arg {D_TriggerCriteria} x */
+	D_TriggerCriteria(x) {
+		const cf="D_TriggerCriteria";
+		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=this.s(cf,x); this.g(y);
+		if(connectionWhitelist.length!==1) debugger;
+		this.ceq(connectionWhitelist[0],"WIFI");
+		if(joinLatencySeconds!==15) debugger;
+		if(rebufferTimeSeconds!==10) debugger;
+		if(watchTimeWindowSeconds!==180) debugger;
+		if(refractorySeconds!==2592000) debugger;
+	}
+	/** @private @arg {D_TimedTextApi} x */
+	D_TimedTextApi(x) {
+		const cf="D_TimedTextApi";
+		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
+		this.videoId(v);
+		this.save_string(`${cf}.caps`,caps);
+		this.save_string(`${cf}.xoaf`,xoaf);
+		if(xoadf) this.save_string(`${cf}.xoadf`,xoadf);
+		this.save_string(`${cf}.xosf`,xosf);
+		this.save_string(`${cf}.hl`,hl);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ipbits`,ipbits);
+		let e_num=this.parse_number_template(expire);
+		if(Number.isNaN(e_num)) debugger;
+		this.a_primitive_num(e_num);
+		this.parse_signature(signature);
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.key`,key);
+		this.save_string(`${cf}.kind`,kind);
+		this.save_string(`${cf}.lang`,lang);
+	}
+	/** @private @arg {MG_AdLayout_PlayerBytes} x */
+	MG_AdLayout_PlayerBytes(x) {
+		const cf="MG_AdLayout_PlayerBytes";
+		const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);
+		switch(layoutType) {
+			default: debugger; break;
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
+		}
+		this.save_string(`${cf}.layoutId`,layoutId);
+	}
+	/** @private @arg {G_LinearAdsItem} x */
+	G_LinearAdsItem(x) {
+		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+		if("adActionInterstitialRenderer" in x) return this.R_AdActionInterstitial(x);
+		debugger;
 	}
 	/** @private @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {

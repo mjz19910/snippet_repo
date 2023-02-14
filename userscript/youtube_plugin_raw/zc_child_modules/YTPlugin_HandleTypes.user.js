@@ -1769,14 +1769,8 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_InfoCardIcon} x */
 	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,this.D_InfoCardIcon);}
-	/** @private @arg {R_InstreamVideoAd} x */
-	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
-	/** @private @arg {R_AdActionInterstitial} x */
-	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {R_ReelMultimixAttributionLabel} x */
 	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
-	/** @private @arg {R_EndscreenElement} x */
-	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {RA_Notification} x */
@@ -2350,10 +2344,6 @@ class HandleTypes extends HandleTypesEval {
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
-	/** @private @arg {M_CreateComment} x */
-	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
-	/** @private @arg {M_Unsubscribe} x */
-	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
 	/** @private @arg {M_GetPdgBuyFlow} x */
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_UserFeedback} x */
@@ -6237,33 +6227,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return null;
 	}
-	/** @private @type {P_LogItems} */
-	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
-	parse_player_param(root,path,map,callback) {
-		this.parse_key_index++;
-		let key_index=this.parse_key_index;
-		let mk=[...map.keys()];
-		let parse_key=this.make_parse_key(root,path,map,mk,callback);
-		for(let i=1;i<72;i++) {
-			if(!mk.includes(i)) continue;
-			parse_key([i]);
-		}
-		parse_key([72]);
-		if(this.eq_keys(mk,[])) return;
-		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
-		{debugger;}
-	}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(cf,path,x,callback) {this.on_player_params(cf,path,x,callback);}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	on_player_params(root,path,x,callback) {
-		x=decodeURIComponent(x);
-		if(this.cache_player_params.includes(x)) return;
-		this.cache_player_params.push(x);
-		let param_map=this.create_param_map(x);
-		if(param_map===null) {debugger; return;}
-		this.parse_player_param(root,path,param_map,callback);
-	}
 	/** @private @type {string[]} */
 	cache_playlist_index=[];
 	log_start_radio=false;
@@ -9843,17 +9806,6 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
-	/** @private @arg {D_TriggerCriteria} x */
-	D_TriggerCriteria(x) {
-		const cf="D_TriggerCriteria";
-		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=this.s(cf,x); this.g(y);
-		if(connectionWhitelist.length!==1) debugger;
-		this.ceq(connectionWhitelist[0],"WIFI");
-		if(joinLatencySeconds!==15) debugger;
-		if(rebufferTimeSeconds!==10) debugger;
-		if(watchTimeWindowSeconds!==180) debugger;
-		if(refractorySeconds!==2592000) debugger;
-	}
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker";
@@ -9995,29 +9947,6 @@ class HandleTypes extends HandleTypesEval {
 		if("performCommentActionEndpoint" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_Button_NavEP} x */
-	D_Button_NavEP(x) {
-		const cf="D_Button_NavEP"; this.k(cf,x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		if("createCommentReplyDialogEndpoint" in x) return;
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {D_AdPlacementConfig} x */
-	D_AdPlacementConfig(x) {
-		const cf="D_AdPlacementConfig";
-		const {kind,adTimeOffset,hideCueRangeMarker,...y}=this.s(cf,x); this.g(y);
-		switch(kind) {
-			default: debugger; break;
-			case "AD_PLACEMENT_KIND_END":
-			case "AD_PLACEMENT_KIND_SELF_START":
-			case "AD_PLACEMENT_KIND_START":
-		}
-		this.t(adTimeOffset,this.D_AdTimeOffset);
-		this.ceq(hideCueRangeMarker,true);
-	}
 	/** @private @arg {D_AdTimeOffset} x */
 	D_AdTimeOffset(x) {
 		const cf="D_AdTimeOffset";
@@ -10045,29 +9974,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`save://Emoji.d/emojiId`,emojiId);
 		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
 		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
-	}
-	/** @private @arg {D_LinearAdSequence} x */
-	D_LinearAdSequence(x) {
-		const cf="D_LinearAdSequence";
-		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
-		this.MG_AdLayout_PlayerBytes(adLayoutMetadata);
-		this.z(linearAds,this.G_LinearAdsItem);
-	}
-	/** @private @arg {MG_AdLayout_PlayerBytes} x */
-	MG_AdLayout_PlayerBytes(x) {
-		const cf="MG_AdLayout_PlayerBytes";
-		const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);
-		switch(layoutType) {
-			default: debugger; break;
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
-		}
-		this.save_string(`${cf}.layoutId`,layoutId);
-	}
-	/** @private @arg {G_LinearAdsItem} x */
-	G_LinearAdsItem(x) {
-		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
-		if("adActionInterstitialRenderer" in x) return this.R_AdActionInterstitial(x);
-		debugger;
 	}
 	/** @private @arg {D_InstreamVideoAd} x */
 	D_InstreamVideoAd(x) {
@@ -10126,14 +10032,6 @@ class HandleTypes extends HandleTypesEval {
 		if("urlEndpoint" in x) return this.E_Url(x);
 		debugger;
 	}
-	/** @private @arg {D_ClientForecastingAd} x */
-	D_ClientForecastingAd(x) {
-		const cf="D_ClientForecastingAd";
-		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
-		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
-			this.parser.parse_url(`${cf}.impressionUrl`,x);
-		}));
-	}
 	/** @private @arg {D_MarkersList} x */
 	D_MarkersList(x) {
 		const cf="D_MarkersList";
@@ -10172,27 +10070,6 @@ class HandleTypes extends HandleTypesEval {
 		let [sig_0,sig_1]=split_string_once(x,".");
 		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
-	}
-	/** @private @arg {D_TimedTextApi} x */
-	D_TimedTextApi(x) {
-		const cf="D_TimedTextApi";
-		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
-		this.videoId(v);
-		this.save_string(`${cf}.caps`,caps);
-		this.save_string(`${cf}.xoaf`,xoaf);
-		if(xoadf) this.save_string(`${cf}.xoadf`,xoadf);
-		this.save_string(`${cf}.xosf`,xosf);
-		this.save_string(`${cf}.hl`,hl);
-		this.save_string(`${cf}.ip`,ip);
-		this.save_string(`${cf}.ipbits`,ipbits);
-		let e_num=this.parse_number_template(expire);
-		if(Number.isNaN(e_num)) debugger;
-		this.a_primitive_num(e_num);
-		this.parse_signature(signature);
-		this.save_string(`${cf}.sparams`,sparams);
-		this.save_string(`${cf}.key`,key);
-		this.save_string(`${cf}.kind`,kind);
-		this.save_string(`${cf}.lang`,lang);
 	}
 	/** @private @arg {D_AudioTrack} x */
 	D_AudioTrack(x) {

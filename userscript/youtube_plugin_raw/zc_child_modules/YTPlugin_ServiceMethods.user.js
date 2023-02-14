@@ -23,6 +23,32 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
+	playerParams(cf,path,x,callback) {this.on_player_params(cf,path,x,callback);}
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
+	on_player_params(root,path,x,callback) {
+		x=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return;
+		this.cache_player_params.push(x);
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
+		this.parse_player_param(root,path,param_map,callback);
+	}
+	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
+	parse_player_param(root,path,map,callback) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
+		let mk=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		for(let i=1;i<72;i++) {
+			if(!mk.includes(i)) continue;
+			parse_key([i]);
+		}
+		parse_key([72]);
+		if(this.eq_keys(mk,[])) return;
+		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
+		{debugger;}
+	}
 	/** @private @arg {string} ns @arg {()=>void} f */
 	grouped(ns,f) {
 		console.group(ns);
