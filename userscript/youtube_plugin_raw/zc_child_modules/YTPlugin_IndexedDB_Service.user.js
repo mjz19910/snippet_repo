@@ -286,21 +286,17 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
 		const {result: db,transaction: tx}=request;
 		if(!tx) throw new Error("No transaction");
-		this.createLatestDatabaseVersion(event.oldVersion,db);
-		if(event.oldVersion<2) {
-			this.create_store("channel_id",db);
-			this.create_store("playlist",db);
-		}
+		this.createDatabaseSchema(event.oldVersion,db);
 	}
 	static schema_version=2;
 	/** @private @arg {number} old_version @arg {IDBDatabase} db */
-	createLatestDatabaseVersion(old_version, db) {
-		if(old_version===0) {
+	createDatabaseSchema(old_version, db) {
+		if(old_version<1) {
 			this.create_store("video_id",db);
 			this.create_store("hashtag",db);
 			this.create_store("boxed_id",db);
 		}
-		if(old_version===1) {
+		if(old_version<2) {
 			this.create_store("channel_id",db);
 			this.create_store("playlist",db);
 		}
