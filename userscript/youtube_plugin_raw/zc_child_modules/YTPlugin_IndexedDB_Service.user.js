@@ -33,31 +33,31 @@ class IndexedDBService extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @private @type {{[R in keyof DatabaseStoreTypes]?: [R,Map<string,number>]}} */
+	/** @private @type {{[R in keyof DT_DatabaseStoreTypes]?: [R,Map<string,number>]}} */
 	store_cache_index={
 		video_id: ["video_id",new Map],
 		hashtag: ["hashtag",new Map],
 		boxed_id: ["boxed_id",new Map],
 	};
-	/** @private @type {{[R in keyof DatabaseStoreTypes]?: [R,DatabaseStoreTypes[R][]]}} */
+	/** @private @type {{[R in keyof DT_DatabaseStoreTypes]?: [R,DT_DatabaseStoreTypes[R][]]}} */
 	store_cache={
 		video_id: ["video_id",[]],
 		hashtag: ["hashtag",[]],
 		boxed_id: ["boxed_id",[]],
 	};
-	/** @template {keyof DatabaseStoreTypes} T @arg {T} key */
+	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
 	get_data_cache(key) {
-		/** @type {{[R in T]?: [R,DatabaseStoreTypes[R][]]}} */
+		/** @type {{[R in T]?: [R,DT_DatabaseStoreTypes[R][]]}} */
 		let sk_ac=this.store_cache;
-		/** @type {[T,DatabaseStoreTypes[T][]]|undefined} */
+		/** @type {[T,DT_DatabaseStoreTypes[T][]]|undefined} */
 		let cache_info=as(this.store_cache[key]);
 		cache_info=[key,[]];
 		sk_ac[key]=cache_info;
-		/** @type {Mk_data_cache_Return<T>} */
+		/** @type {TR_data_cache<T>} */
 		let sk=as([key,cache_info[1]]);
 		return sk;
 	}
-	/** @template {keyof DatabaseStoreTypes} T @arg {T} key */
+	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
 	get_data_index_cache(key) {
 		/** @type {{[R in T]?: [R,Map<string,number>]}} */
 		let sk_ac=this.store_cache_index;
@@ -67,18 +67,18 @@ class IndexedDBService extends BaseService {
 		sk_ac[key]=cache_info;
 		return cache_info[1];
 	}
-	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
+	/** @private @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} */
 	committed_data=[];
-	/** @type {Map<keyof DatabaseStoreTypes,string[]>} */
+	/** @type {Map<keyof DT_DatabaseStoreTypes,string[]>} */
 	cached_data=new Map;
-	/** @arg {DatabaseStoreDescription["key"]} key */
+	/** @arg {AG_DatabaseStoreDescription["key"]} key */
 	check_size(key) {
 		let d_cache=this.get_data_cache(key);
-		/** @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
+		/** @type {(DT_DatabaseStoreTypes[keyof DT_DatabaseStoreTypes])[]} */
 		let arr=d_cache[1];
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
-	/** @api @public @arg {push_waiting_obj_Args} args */
+	/** @api @public @arg {AGA_push_waiting_obj} args */
 	put(...args) {
 		if(!args[1]) {debugger; return;}
 		const [key,value,version]=args;
@@ -89,7 +89,7 @@ class IndexedDBService extends BaseService {
 		this.push_waiting_obj(...args);
 		this.check_size(key);
 	}
-	/** @private @template {keyof DatabaseStoreTypes} T @arg {Mk_push_waiting_obj_Args<T>} args */
+	/** @private @template {keyof DT_DatabaseStoreTypes} T @arg {TA_push_waiting_obj<T>} args */
 	push_waiting_obj(...args) {
 		const [key,obj]=args;
 		let d_cache=this.get_data_cache(key);
@@ -109,18 +109,18 @@ class IndexedDBService extends BaseService {
 		idx=d_cache[1].push(as(obj))-1;
 		c_index.set(index_val,idx);
 	}
-	/** @arg {DatabaseStoreDescription} store_desc @arg {number} version */
+	/** @arg {AG_DatabaseStoreDescription} store_desc @arg {number} version */
 	requestOpen(store_desc,version) {
 		if(this.database_opening||this.database_open) return;
 		this.database_opening=true;
 		this.open(store_desc,version);
 	}
-	/** @arg {DatabaseStoreDescription} store_desc @arg {number} version */
+	/** @arg {AG_DatabaseStoreDescription} store_desc @arg {number} version */
 	open(store_desc,version) {
 		const request=indexedDB.open("yt_plugin",version);
 		this.onOpenRequest(request,store_desc);
 	}
-	/** @private @arg {IDBOpenDBRequest} request @arg {DatabaseStoreDescription} store_desc */
+	/** @private @arg {IDBOpenDBRequest} request @arg {AG_DatabaseStoreDescription} store_desc */
 	onOpenRequest(request,store_desc) {
 		request.onsuccess=event => this.onSuccess(request,event,store_desc);
 		request.onerror=event => this.onError(event);
@@ -128,12 +128,12 @@ class IndexedDBService extends BaseService {
 	}
 	log_all_events=false;
 	close_db_on_transaction_complete=false;
-	/** @private @arg {IDBOpenDBRequest} request @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
+	/** @private @arg {IDBOpenDBRequest} request @arg {Event} event @arg {AG_DatabaseStoreDescription} store_desc */
 	onSuccess(request,event,store_desc) {
 		if(this.log_all_events) console.log("OpenDBRequest success",event);
 		this.onDatabaseReady(request.result,store_desc);
 	}
-	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
+	/** @private @arg {IDBDatabase} db @arg {AG_DatabaseStoreDescription} store_desc */
 	onDatabaseReady(db,store_desc) {
 		this.database_opening=false;
 		this.database_open=true;
@@ -153,11 +153,11 @@ class IndexedDBService extends BaseService {
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
-	/** @arg {TypedIDBObjectStore<DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DatabaseStoreTypes["video_id"]>|null>} */
+	/** @arg {TypedIDBObjectStore<DT_DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DT_DatabaseStoreTypes["video_id"]>|null>} */
 	openCursor(obj_store,query,direction) {
 		return obj_store.openCursor(query,direction);
 	}
-	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
+	/** @private @arg {IDBDatabase} db @arg {AG_DatabaseStoreDescription} store_desc */
 	async start_transaction(db,store_desc) {
 		let {key: tx_namespace}=store_desc;
 		const transaction=db.transaction(tx_namespace,"readwrite");
@@ -215,7 +215,7 @@ class IndexedDBService extends BaseService {
 		let ra=rq;
 		return ra;
 	}
-	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
+	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {AG_DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
 		const key=store_desc.key;
 		const [,d_cache]=this.get_data_cache(key);
@@ -228,7 +228,7 @@ class IndexedDBService extends BaseService {
 		this.database_open=false;
 		db.close();
 	}
-	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
+	/** @private @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	add_data_to_store(store,data) {
 		const request=store.add(data);
 		request.onerror=event => console.log("IDBRequest: error",event);
@@ -244,14 +244,14 @@ class IndexedDBService extends BaseService {
 			db_request.onerror=function(event) {reject(event);};
 		});
 	}
-	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
+	/** @arg {IDBTransaction} tx @arg {K} key @template {keyof DT_DatabaseStoreTypes} K @template {DT_DatabaseStoreTypes[K]} T @returns {TypedIDBObjectStore<T>} */
 	objectStore(tx,key) {
 		let rq=tx.objectStore(key);
 		return as(rq);
 	}
 	/**
-	 * @template {keyof DatabaseStoreTypes} K
-	 * @template {DatabaseStoreTypes[K]} T
+	 * @template {keyof DT_DatabaseStoreTypes} K
+	 * @template {DT_DatabaseStoreTypes[K]} T
 	 * @arg {IDBTransaction} tx
 	 * @arg {K} key
 	 * @arg {IDBDatabase} db
@@ -267,7 +267,7 @@ class IndexedDBService extends BaseService {
 		dst_obj_store.createIndex(key,"key",{unique: true});
 		for(let x of video_id_result) dst_obj_store.put(x);
 	}
-	/** @template {keyof DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db */
+	/** @template {keyof DT_DatabaseStoreTypes} K @arg {K} key @arg {IDBDatabase} db */
 	create_store(key,db) {
 		let obj_store=db.createObjectStore(key,{keyPath: "key"});
 		obj_store.createIndex(key,"key",{unique: true});
