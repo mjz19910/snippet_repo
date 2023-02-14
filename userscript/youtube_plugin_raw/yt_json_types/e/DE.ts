@@ -17,7 +17,24 @@ type DE_NotificationOptOut={optOutText: G_Text; serializedOptOut: string; serial
 type DE_PlaylistEdit={actions: GA_Playlist[]; playlistId: "WL"; params?: string;};
 type DE_PlaylistEditor={playlistId: D_PlaylistId;};
 type DE_RecordNotificationInteractions={serializedInteractionsRequest: string; actions?: A_HideEnclosing[];};
+type D_SerializedContextData={
+	serializedContextData: string;
+};
+type D_LoggingContext={
+	vssLoggingContext: D_SerializedContextData;
+	qoeLoggingContext: D_SerializedContextData;
+};
+
 type DE_ReelWatch=
+	|never
+	|{
+		playerParams: string;
+		overlay: R_ReelPlayerOverlay;
+		params: string;
+		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
+		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
+		loggingContext: D_LoggingContext;
+	}
 	|{
 		playerParams: string;
 		overlay: R_ReelPlayerOverlay;

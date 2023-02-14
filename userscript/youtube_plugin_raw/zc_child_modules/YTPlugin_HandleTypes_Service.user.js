@@ -3527,6 +3527,17 @@ class HandleTypes extends HandleTypesEval {
 			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
 			return;
 		}
+		if("loggingContext" in x) {
+			const {playerParams,overlay,params,sequenceProvider,inputType,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.params(cf,"reel.player_params",playerParams);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+			this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			return;
+		}
 		if("inputType" in x) {
 			const {playerParams,overlay,params,sequenceProvider,inputType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.params(cf,"reel.player_params",playerParams);
@@ -5651,35 +5662,38 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	_decoder=new TextDecoder();
+	D_QoeLoggingContext(x) {x;}
+	/** @private @arg {string} cf @arg {string} x */
+	V_SerializedContextData(cf,x) {
+		let x1=decodeURIComponent(x);
+		let b_res=this._decode_b64_url_proto_obj(x1);
+		if(!b_res) return;
+		if(b_res.length!==1) debugger;
+		let [r]=b_res;
+		if(r[0]==="child"&&r[1]===3) {
+			let playlist_id=this._decoder.decode(r[2]);
+			if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
+				switch(r[1]) {
+					default:
+						console.log(`${cf}.serializedContextData.fieldId`,r[1]);
+						let playlist_id=this._decoder.decode(r[2]);
+						console.log(`${cf}.serializedContextData.decode`,playlist_id);
+						break;
+					case 3: {
+						let playlist_id=this._decoder.decode(r[2]);
+						if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
+						if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
+						{console.log(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
+					}
+				}
+			}
+		} else {console.log(r);}
+	}
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
 		const cf="D_VssLoggingContext"; this.k(cf,x);
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		{
-			let x=decodeURIComponent(serializedContextData);
-			let b_res=this._decode_b64_url_proto_obj(x);
-			if(!b_res) return;
-			if(b_res.length!==1) debugger;
-			let [r]=b_res;
-			if(r[0]==="child"&&r[1]===3) {
-				let playlist_id=this._decoder.decode(r[2]);
-				if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
-					switch(r[1]) {
-						default:
-							console.log("D_VssLoggingContext_serializedContextData_fieldId",r[1]);
-							let playlist_id=this._decoder.decode(r[2]);
-							console.log("serializedContextData_decode",playlist_id);
-							break;
-						case 3: {
-							let playlist_id=this._decoder.decode(r[2]);
-							if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
-							if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
-							{console.log("serializedContextData_decode(f3).as_playlist_id",playlist_id); break;}
-						} break;
-					}
-				}
-			} else {console.log(r);}
-		}
+		this.V_SerializedContextData(serializedContextData);
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);}
