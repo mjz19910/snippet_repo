@@ -6443,9 +6443,12 @@ class HandleTypes extends HandleTypesEval {
 	D_0x4c82a9c(x) {
 		const cf="D_0x4c82a9c";
 		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
-		let x1=decodeURIComponent(f3);
-		this.params(`${cf}.continuation_token.+4.f0.f3`,"continuation_token.data",x1);
 		this.D_0x4c82a9c_f2(f2);
+		this.params(`${cf}.continuation_token.+4.f0.f3`,"continuation_token.data",f3);
+		switch(f35) {
+			default: debugger; break;
+			case "browse-feedFEwhat_to_watch":
+		}
 	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
