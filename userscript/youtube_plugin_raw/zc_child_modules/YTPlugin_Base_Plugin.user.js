@@ -2529,25 +2529,29 @@ class BaseService extends BaseServicePrivate {
 				case "data_fixed32":
 				case "data32": do_set(param[1],param[2]); break;
 				case "child": {
-					x: if(param[3]) {
-						let err=param[3].find(e => e[0]==="error");
+					const [,,u8_bin_arr,bin_arr]=param;
+					x: if(bin_arr) {
+						let err=bin_arr.find(e => e[0]==="error");
 						if(err) break x;
-						let u8_arr=param[2];
-						let p_map=this.make_param_map(param[3]);
-						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
-						if(p_map===null&&u8_arr[0]===0) {
-							do_set(param[1],u8_arr);
+						let p_map=this.make_param_map(bin_arr);
+						if(String.fromCharCode(...u8_bin_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
+						if(p_map===null&&u8_bin_arr[0]===0) {
+							debugger;
 							break;
 						}
 						if(!p_map) {
-							do_set(param[1],["failed",param[3]]);
+							do_set(param[1],["failed",bin_arr]);
 							break;
 						}
 						do_set(param[1],p_map);
 						break;
 					}
+					if(u8_bin_arr[0]===0) {
+						do_set(param[1],u8_bin_arr);
+						break;
+					}
 					let decoder=new TextDecoder();
-					do_set(param[1],decoder.decode(param[2]));
+					do_set(param[1],decoder.decode(u8_bin_arr));
 				} break;
 				case "data64": do_set(param[1],["bigint",param[2],param[3]]); break;
 				case "group": do_set(param[1],['group',param[2]]); break;
