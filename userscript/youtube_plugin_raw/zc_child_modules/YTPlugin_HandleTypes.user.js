@@ -2168,20 +2168,14 @@ class HandleTypes extends HandleTypesEval {
 			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
 		}
 	}
-	/** @private @arg {E_Upload} x */
-	E_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
 	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
-	/** @private @arg {E_ReelWatch} x */
-	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_ReelWatch(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
 	/** @private @arg {E_UndoFeedback} x */
 	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
-	/** @private @arg {E_Url} x */
-	E_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
@@ -2422,39 +2416,6 @@ class HandleTypes extends HandleTypesEval {
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(channelIds,this.D_ChannelId);
 		this.params(cf,"subscribe.params",params);
-	}
-	/** @private @arg {DE_ReelWatch} x */
-	DE_ReelWatch(x) {
-		const cf="DE_ReelWatch"; this.k(cf,x);
-		if("videoId" in x) {
-			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(videoId,this.videoId);
-			this.params(cf,"reel.player_params",playerParams);
-			this.t(thumbnail,this.D_Thumbnail);
-			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
-			if(loggingContext) {
-				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
-				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
-			}
-			this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
-			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
-			return;
-		}
-		if("inputType" in x) {
-			const {playerParams,overlay,params,sequenceProvider,inputType,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.params(cf,"reel.player_params",playerParams);
-			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
-			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
-			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
-			if(loggingContext) {
-				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
-				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
-			}
-			return;
-		}
-		this.g(x);
 	}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	DE_ShowEngagementPanel(x) {
@@ -2807,7 +2768,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
 	D_CompactLink_NavEndpoint(x) {
 		const cf="D_CompactLink_NavEndpoint"; this.k(cf,x);
-		if("uploadEndpoint" in x) return this.E_Upload(x);
+		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
 		if("urlEndpoint" in x) return this.E_Url(x);

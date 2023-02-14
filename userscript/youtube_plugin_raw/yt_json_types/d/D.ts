@@ -741,7 +741,7 @@ type D_ChipCloudChip=
 		trackingParams: string;
 		targetId: "feed_filter_chip_bar_second_chip";
 	};
-type EG_CompactLink_1=E_Upload|E_SignalNavigation;
+type EG_CompactLink_1=E_VE83769_Upload|E_SignalNavigation;
 type D_CompactPlaylist={
 	playlistId: `PL${string}`;
 	thumbnail: D_Thumbnail;

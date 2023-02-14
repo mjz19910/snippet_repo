@@ -25,7 +25,7 @@ type E_SignalService_SendPost=T_SE_Signal<M_SendPost,G_ClientSignal>;
 type E_SignalService_SubscribeButton=TE_Endpoint_3<"signalServiceEndpoint",G_ClientSignal,M_SendPost>;
 type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedback>;
-type E_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
+type E_VE83769_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
 type E_Url=TE_Endpoint_3<"urlEndpoint",DU_Url,M_VE83769>;
 type E_Watch=TE_Endpoint_3<"watchEndpoint",DE_VE3832_Watch,M_VE3832>|{
 	watchEndpoint: DE_VE3832_Watch;

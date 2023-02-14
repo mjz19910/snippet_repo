@@ -23,6 +23,12 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {E_ReelWatch} x */
+	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
+	/** @protected @arg {E_VE83769_Upload} x */
+	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
+	/** @private @arg {E_Url} x */
+	E_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_Url(b);}
 	/** @private @arg {E_VE3611} x */
 	E_VE3611(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);}
 	/** @private @arg {E_VE3854} x */
@@ -64,6 +70,39 @@ class ServiceMethods extends ServiceData {
 	DE_VE11487(x) {x;}
 	/** @private @arg {DE_VE23462} x */
 	DE_VE23462(x) {x;}
+	/** @private @arg {DE_ReelWatch} x */
+	DE_VE37414_ReelWatch(x) {
+		const cf="DE_ReelWatch"; this.k(cf,x);
+		if("videoId" in x) {
+			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(videoId,this.videoId);
+			this.params(cf,"reel.player_params",playerParams);
+			this.t(thumbnail,this.D_Thumbnail);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			if(loggingContext) {
+				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			}
+			this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
+			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
+			return;
+		}
+		if("inputType" in x) {
+			const {playerParams,overlay,params,sequenceProvider,inputType,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.params(cf,"reel.player_params",playerParams);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			if(loggingContext) {
+				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			}
+			return;
+		}
+		this.g(x);
+	}
 	/** @private @arg {DE_VE42352} x */
 	DE_VE42352(x) {x;}
 	/** @private @arg {DE_VE96368} x */
