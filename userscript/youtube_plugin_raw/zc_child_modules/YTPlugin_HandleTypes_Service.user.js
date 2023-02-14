@@ -10167,7 +10167,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_PlayerMicroformat";
 		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,...y}=this.s(cf,x); this.g(y);
 		this.D_Thumbnail(thumbnail);
-		this.D_MicroformatEmbed(embed);
+		this.t(embed,this.D_MicroformatEmbed);
 		this.G_Text(title);
 		this.t(description,this.G_Text);
 		this.a_primitive_str(lengthSeconds);

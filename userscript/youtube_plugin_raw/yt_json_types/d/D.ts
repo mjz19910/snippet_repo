@@ -2161,7 +2161,7 @@ type D_PlayerCaptionsTracklist={
 type D_PlayerLiveStoryboardSpec={spec: string;};
 type D_PlayerMicroformat={
 	thumbnail: D_Thumbnail;
-	embed: D_MicroformatEmbed;
+	embed?: D_MicroformatEmbed;
 	title: G_Text;
 	description?: G_Text;
 	lengthSeconds: `${number}`;
