@@ -399,8 +399,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{debugger;}
 	}
-	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
-	is_bigint(x) {return x[0]==="bigint";}
 	parse_key_index=1;
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
@@ -411,133 +409,6 @@ class HandleTypes extends HandleTypesEval {
 		for(;c_pos<6;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
-	}
-	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
-	handle_map_value(path,entry) {
-		if(typeof entry==="string") {
-			switch(path) {
-				case "continuation_token.data.f49": return this.continuation_token_data_f49(path,entry);
-				case "load_markers.entity_key.f2": case "reel_request_continuation.token.f12":
-				case "continuation_token.data.f53.f8": {
-					this.save_string(path,entry);
-				} break;
-				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f1":
-				case "tracking.trackingParams.f11": {
-					this.D_ChannelId(as(entry));
-				} break;
-				case "reel_request_continuation.token.f15.f6.f1": case "reel_request_continuation.token.f3.f1": case "continuation_token.data.f53.f4.f4": case "watch_request_continuation.token.f6.f4.f4": case "watch_request_continuation.token.f2.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f2":
-				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1": case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
-				case "unsubscribe.params.f2": {
-					this.videoId(entry);
-				} break;
-				case "continuation_token.data.f110.f3.f15.f2.f1": {
-					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
-					this.targetId(`Binary.value:${path}`,as(entry));
-				} break;
-				case null: {
-				} break;
-				case null: break;
-				case "continuation_token.data.f72":
-				case "continuation_token.data.f49.f6":
-				case "continuation_token.data.f15":
-				case "watch_request_continuation.token.f5": {
-					/** @type {`sub.${path}`} */
-					const cf=`sub.${path}`;
-					this.decode_continuation_token(cf,entry);
-				} break;
-				case "watch_request_continuation.token.f9.f1.f4":
-				case "tracking.trackingParams.f6": {
-					this.save_string(path,entry);
-				} break;
-				case "reel_request_continuation.token.f1":
-				case "reel.sequence_params.f1": {
-					this.videoId(entry);
-				} break;
-				case "entity_key.subscribed.f2":
-				case "ypc_get_offers.params.f1.f2": {
-					this.D_ChannelId(as(entry));
-				} break;
-				default: {
-					let new_data=this.save_string(path,entry);
-					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$value_save_string] [v:${entry}] --\n\ncase "${x}":\n`);
-						debugger;
-					}
-				} return;
-			}
-			return;
-		}
-		if(typeof entry==="number") {
-			switch(path) {
-				default: {
-					if(entry<1000) {
-						this.save_number(path,entry);
-						return;
-					}
-					let new_data=this.save_number(path,entry);
-					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$value_save_number] [v:${entry}] --\n\ncase "${x}":\n`);
-						debugger;
-					}
-				} return;
-				case "AdServingDataEntry.f7": {
-					this.save_number(path,entry);
-				} return;
-				case "tracking.trackingParams.f2":
-				case "tracking.trackingParams.f16.f2":
-				case "watch_request_continuation.token.f9.f1.f4.f13": return;
-				case "reel_request_continuation.token.f15.f6.f10.f2": case "reel_request_continuation.token.f15.f6.f9.f2": case "reel_request_continuation.token.f15.f6.f10.f1.f1": case "reel_request_continuation.token.f15.f6.f9.f1.f1": case "reel_request_continuation.token.f15.f6.f8.f2":
-				case "reel_request_continuation.token.f15.f6.f8.f1.f1": case "reel_request_continuation.token.f15.f6.f5.f2": case "reel_request_continuation.token.f15.f6.f5.f1": case "reel_request_continuation.token.f15.f6.f2.f6": case "reel_request_continuation.token.f15.f3":
-				case "reel_request_continuation.token.f15.f1": case "reel_request_continuation.token.f5.f3": case "reel_request_continuation.token.f3.f4": case "reel_request_continuation.token.f3.f3": case "reel.player_params.f57": case "unsubscribe.params.f1.f1": case "subscribe.params.f2.f1":
-				case "tracking.trackingParams.f3": case "continuation_token.data.f53.f4.f15": case "entity_key.normal.f4": case "playability_status.context_params.f2.f1": case "playability_status.context_params.f1": case "reel.params.f6": case "reel.player_params.f30": case "reel.sequence_params.f5.f3":
-				case "reel.params.f1": case "reel.player_params.f71": case "reel_request_continuation.token.f15.f6.f7.f1.f1": case "reel_request_continuation.token.f15.f6.f6.f1[].f2": case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
-				case "tracking.trackingParams.f1": {
-					this.save_number(path,entry);
-				} return;
-				case "watch_request_continuation.token.f9.f1.f4.f13[]": return;
-				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
-				case "watch_playlist.params.f4": case "watch_playlist.params.f13": {
-				} return;
-				// {[x:"f2.f7"]:"STORE::Playlist.localCurrentIndex";}
-				case "watch_request_continuation.token.f2.f7": return;
-				case "reel_request_continuation.token.f15.f6.f4.f1": case "reel_request_continuation.token.f15.f6.f3.f2": case "reel_request_continuation.token.f15.f6.f3.f1": case "reel.params.f3.f3": case "reel.params.f3.f2": case "reel.params.f3.f1":
-				case "tracking.trackingParams.f16.f4.f3": case "tracking.trackingParams.f16.f4.f2": case "tracking.trackingParams.f16.f4.f1": case "slot_ad_serving_data_entry.f1.f3": case "slot_ad_serving_data_entry.f1.f2": case "slot_ad_serving_data_entry.f1.f1":
-				case "AdServingDataEntry.f9.f3": case "AdServingDataEntry.f9.f2": case "AdServingDataEntry.f9.f1": case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
-				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2": case "notification.record_interactions.f5":
-				case "reel_request_continuation.token.f15.f6.f7.f1[].f1":
-				case "notification.record_interactions.f2.f14.f1.f1": {
-				} return;
-			}
-		}
-		if(entry instanceof Map) return;
-		if(entry instanceof Uint8Array) {
-			switch(path) {
-				default: {
-					this.save_number(path,[...entry]);
-				} break;
-			}
-			return;
-		}
-		if(this.is_bigint(entry)) {
-			switch(path) {
-				default: {
-					let new_data=this.handle_bigint(path,entry);
-					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$value_handle_bigint] [v:${entry[2]}n] --\n\ncase "${x}":\n`);
-						debugger;
-					}
-				} return;
-				case "tracking.trackingParams.f8":
-				case "reel_request_continuation.token.f3.f6":
-				case "reel.player_params.f72":
-				case "tracking.trackingParams.f9":
-				case "watch_request_continuation.token.f9.f1.f1[].f1": return;
-			}
-		}
-		switch(entry) {default: debugger; return;}
 	}
 	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
 	handle_bigint(path,x) {
@@ -578,12 +449,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.parser.parse_url(root,x);
 		return u3;
-	}
-	/** @protected @arg {string} x */
-	videoId(x) {
-		if(!this.is_normal_service(this)) return;
-		this.a_primitive_str(x);
-		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "normal",v: x});
 	}
 	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
 	indexed_db_createDatabaseSchema(service,old_version,db) {
@@ -3403,66 +3268,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(items,this.G_PlaylistSidebarItem);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @type {string[]} */
-	known_target_id=[];
-	/** @api @public @arg {D_TargetIdStr} x */
-	parse_target_id(x) {
-		if(this.is_yt_uuid(x)) return;
-		if(this.str_starts_with_rx("browse-feed",x)) {
-			if(this.str_starts_with(x,"browse-feedUC")) {
-				return;
-			}
-			console.log("[target_id.browse_feed]","browse-feed",split_string_once(x,"browse-feed")[1]);
-			return this.save_enum_with_sep("browse-feed",x,"");
-		}
-		if(this.str_starts_with_rx("comment-replies-item",x)) {return this.save_enum("comment-replies-item",x);}
-		if(this.str_starts_with(x,"engagement-panel")) {return this.save_enum("engagement-panel",x);}
-		if(this.str_starts_with(x,"comments")) {return this.save_enum("comments",x);}
-		if(this.str_starts_with(x,"library")) {return this.save_enum("library",x);}
-		if(this.str_starts_with(x,"watch")) {return this.save_enum("watch",x);}
-		if(this.str_starts_with(x,"shopping_panel")) {return this.save_enum("shopping_panel",x);}
-		if(this.str_starts_with(x,"clip")) {return this.save_enum("clip",x);}
-		this.save_string("target_id",x);
-	}
-	/** @arg {string} x @returns {x is `${string}-0000-${string}`} */
-	is_yt_uuid(x) {
-		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
-	}
-	/** @protected @arg {string} cf1 @arg {D_TargetIdStr} x */
-	targetId(cf1,x) {
-		const cf2="targetId";
-		this.parse_target_id(x);
-		if(this.is_yt_uuid(x)) return;
-		this.save_string(`${cf1}.${cf2}`,x);
-		if(this.str_starts_with(x,"comment-replies-item-")) return;
-		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
-			switch(x) {
-				case "shopping_panel_for_entry_point_22": return;
-				case "shopping_panel_for_entry_point_5": return;
-				default:
-			}
-			if(!this.known_target_id.includes(x)) {
-				this.known_target_id.push(x);
-				console.log("[target_id.shopping_panel_for_entry_point] [%s]",x);
-			}
-			return;
-		}
-		if(this.str_starts_with(x,"browse-feed")) return;
-		switch(x) {
-			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
-			case "watch-supervod-button":
-			case "browse-video-menu-button":
-			case "clip-info-button":
-			case "create-clip-button-action-bar":
-			case "comments-section":
-			case "engagement-panel-ads": case "engagement-panel-clip-create": case "engagement-panel-comments-section":
-			case "engagement-panel-macro-markers-description-chapters": case "engagement-panel-searchable-transcript-search-panel":
-			case "engagement-panel-searchable-transcript": case "engagement-panel-structured-description":
-			case "engagement-panel-macro-markers-auto-chapters": case "feed_filter_chip_bar_second_chip":
-			case "search-feed": case "search-page": case "sponsorships-button":
-			case "watch-next-feed": case "watch-related-menu-button":
-		}
-	}
 	/** @type {NonNullable<D_Button["icon"]>["iconType"][]} */
 	Button_iconType=[
 		"SHORTS_COMMENT",
@@ -4706,8 +4511,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,this.R_LikeButton);
 		this.R_BrowserMediaSession(browserMediaSession);
 	}
-	/** @private @arg {string} x */
-	a_primitive_str(x) {this._primitive_of(x,"string");}
 	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
 		let name=this.get_codegen_name(x);
