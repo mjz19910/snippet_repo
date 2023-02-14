@@ -23,6 +23,8 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
+	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
 		/** @private @type {T_RemovePrefix<U,VV>} */
@@ -164,6 +166,44 @@ class ServiceMethods extends ServiceData {
 	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
 	/** @private @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {R_ReelPlayerHeader} x */
+	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
+	/** @private @arg {D_ReelPlayerHeader} x */
+	D_ReelPlayerHeader(x) {
+		const cf="D_ReelPlayerHeader"; this.k(cf,x);
+		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(reelTitleText);
+		this.G_Text(timestampText);
+		this.GE_Browse(channelNavigationEndpoint);
+		this.G_Text(channelTitleText);
+		this.D_Thumbnail(channelThumbnail);
+		this.trackingParams(cf,trackingParams);
+		this.D_Accessibility(accessibility);
+	}
+	/** @private @arg {R_PivotButton} x */
+	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
+	/** @private @arg {A_AddToToast} x */
+	A_AddToToast(x) {x;}
+	/** @private @arg {D_PivotButton} x */
+	D_PivotButton(x) {
+		const cf="D_PivotButton"; this.k(cf,x);
+		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(thumbnail,this.D_Thumbnail);
+		this.t(onClickCommand,x => {
+			if("addToToastAction" in x) return this.A_AddToToast(x);
+			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+			x;
+		});
+		if(trackingParams) this.trackingParams(cf,trackingParams);
+		this.t(contentDescription,this.G_Text);
+		this.t(soundAttributionTitle,this.G_Text);
+		this.t(backgroundColor,x => {
+			switch(x) {
+				default: debugger; break;
+				case "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM":
+			}
+		});
+	}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";
@@ -854,6 +894,44 @@ class ServiceMethods extends ServiceData {
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		if(rootVe!==4724) debugger;
 		return `VE${rootVe}`;
+	}
+	/** @private @arg {M_ResolveUrlCommand} x */
+	M_ResolveUrlCommand(x) {
+		const cf="GM_VE_ResolveUrl_C_MD";
+		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(parentTrackingParams,x => this.trackingParams(cf,x));
+		this.t(isVanityUrl,x => this.ceq(x,true));
+	}
+	/** @protected @arg {E_WatchPlaylist} x */
+	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
+	/** @private @arg {DE_WatchPlaylist} x */
+	DE_WatchPlaylist(x) {
+		const cf="DE_WatchPlaylist"; this.k(cf,x);
+		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parse_playlist_id(playlistId);
+		this.a_primitive_num(index);
+		this.params(cf,"watch_playlist.params",params);
+	}
+	/** @protected @arg {E_SignalNavigation} x */
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
+	/** @private @arg {DE_SignalNavigation} x */
+	DE_SignalNavigation(x) {
+		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x); this.k(cf,x);
+		switch(a) {
+			default: this.codegen_case(`${cf}.signal`,a); break;
+			case "CHANNEL_SWITCHER":
+			case "LIVE_CONTROL_ROOM":
+		}
+	}
+	/** @private @arg {GM_Like} x */
+	GM_Like(x) {
+		const cf="GM_Like"; this.g_k(cf,x); this.k(cf,x);
+		switch(x.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
+			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
+			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
+		}
 	}
 	/** @private @arg {GM_VE5754} x @returns {`VE${rootVe}`} */
 	GM_VE5754(x) {

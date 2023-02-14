@@ -1168,10 +1168,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
-	/** @private @arg {R_ReelPlayerHeader} x */
-	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
-	/** @private @arg {R_PivotButton} x */
-	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
 	/** @public @arg {R_EngagementPanelSectionList} x */
 	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {R_ConfirmDialog} x */
@@ -1971,12 +1967,8 @@ class HandleTypes extends HandleTypesEval {
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
-	/** @private @arg {E_WatchPlaylist} x */
-	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @private @arg {E_GetReportForm} x */
@@ -2037,27 +2029,10 @@ class HandleTypes extends HandleTypesEval {
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {M_NotificationOptOut} x */
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
-	/** @private @arg {M_ResolveUrlCommand} x */
-	M_ResolveUrlCommand(x) {
-		const cf="GM_VE_ResolveUrl_C_MD";
-		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(parentTrackingParams,x => this.trackingParams(cf,x));
-		this.t(isVanityUrl,x => this.ceq(x,true));
-	}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @protected @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
-	/** @private @arg {GM_Like} x */
-	GM_Like(x) {
-		const cf="GM_Like"; this.g_k(cf,x); this.k(cf,x);
-		switch(x.apiUrl) {
-			default: debugger; break;
-			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
-			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
-			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
-		}
-	}
 	/** @private @arg {GM_Subscribe} x */
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @private @arg {GM_FlagGetForm} x */
@@ -2137,15 +2112,6 @@ class HandleTypes extends HandleTypesEval {
 		let no_uri_b=decodeURIComponent(un_b);
 		this.params(cf,"notification.opt_out",no_uri_b);
 		this.params(cf,"notification.record_interactions",c);
-	}
-	/** @private @arg {DE_SignalNavigation} x */
-	DE_SignalNavigation(x) {
-		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x); this.k(cf,x);
-		switch(a) {
-			default: this.codegen_case(`${cf}.signal`,a); break;
-			case "CHANNEL_SWITCHER":
-			case "LIVE_CONTROL_ROOM":
-		}
 	}
 	/** @private @arg {DE_UndoFeedback} x */
 	DE_UndoFeedback(x) {
@@ -2320,14 +2286,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
 	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
-	/** @private @arg {DE_WatchPlaylist} x */
-	DE_WatchPlaylist(x) {
-		const cf="DE_WatchPlaylist"; this.k(cf,x);
-		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_playlist_id(playlistId);
-		this.a_primitive_num(index);
-		this.params(cf,"watch_playlist.params",params);
-	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
@@ -2335,8 +2293,6 @@ class HandleTypes extends HandleTypesEval {
 		let val=obj[key];
 		this.codegen_case(cf,val,code);
 	}
-	/** @private @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
-	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
 		this.save_b64_binary("undo_token",x);
@@ -6502,18 +6458,6 @@ class HandleTypes extends HandleTypesEval {
 		if(horizontalScrollable!==false) debugger;
 		this.z([nextButton,previousButton],this.R_Button);
 	}
-	/** @private @arg {D_ReelPlayerHeader} x */
-	D_ReelPlayerHeader(x) {
-		const cf="D_ReelPlayerHeader"; this.k(cf,x);
-		const {reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,trackingParams,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(reelTitleText);
-		this.G_Text(timestampText);
-		this.GE_Browse(channelNavigationEndpoint);
-		this.G_Text(channelTitleText);
-		this.D_Thumbnail(channelThumbnail);
-		this.trackingParams(cf,trackingParams);
-		this.D_Accessibility(accessibility);
-	}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe"; this.k(cf,x);
@@ -7015,28 +6959,6 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Accessibility(accessibility);
 		this.z(thumbnails,this.D_ThumbnailItem);
 	}
-	/** @private @arg {D_PivotButton} x */
-	D_PivotButton(x) {
-		const cf="D_PivotButton"; this.k(cf,x);
-		const {thumbnail,onClickCommand,trackingParams,contentDescription,soundAttributionTitle,backgroundColor,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(thumbnail,this.D_Thumbnail);
-		this.t(onClickCommand,x => {
-			if("addToToastAction" in x) return this.A_AddToToast(x);
-			if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-			x;
-		});
-		if(trackingParams) this.trackingParams(cf,trackingParams);
-		this.t(contentDescription,this.G_Text);
-		this.t(soundAttributionTitle,this.G_Text);
-		this.t(backgroundColor,x => {
-			switch(x) {
-				default: debugger; break;
-				case "THEME_ATTRIBUTE_OVERLAY_BACKGROUND_MEDIUM":
-			}
-		});
-	}
-	/** @private @arg {A_AddToToast} x */
-	A_AddToToast(x) {x;}
 	/** @private @arg {D_PlaylistPanelVideo} x */
 	D_PlaylistPanelVideo(x) {
 		const cf="D_PlaylistPanelVideo"; this.k(cf,x);
