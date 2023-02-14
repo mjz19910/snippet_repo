@@ -1136,5 +1136,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "js_gen_case:log_videoplayback:${cf1}.mn.mi";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "js_gen_case:log_videoplayback:D_VideoPlaybackShape.mn.mi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_0x12f639cf_f6";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipUniqueId";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_FilterChipTransform";}
 		;
 }

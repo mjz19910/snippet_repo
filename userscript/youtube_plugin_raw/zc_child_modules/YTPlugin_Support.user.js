@@ -36,4 +36,58 @@ class TypedefGenerator extends ServiceMethods {
 		return null;
 	}
 }
+/** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
+class HandleRS extends ServiceMethods {
+	/** @public @arg {RS_Watch} x */
+	RS_Watch(x) {
+		const cf="RS_Watch"; const ht=this.x.get("handle_types");
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=ht.s(cf,x); this.g(y);/*#destructure_done*/
+		ht.RC_ResponseContext(responseContext);
+		ht.R_TwoColumnWatchNextResults(contents);
+		ht.E_Watch(currentVideoEndpoint);
+		ht.trackingParams(cf,trackingParams);
+		ht.R_PlayerOverlay(playerOverlays);
+		this.z(onResponseReceivedEndpoints,x => ht.GE_ResponseReceived(cf,x));
+		this.z(engagementPanels,x => ht.R_EngagementPanelSectionList(x));
+		ht.R_DesktopTopbar(topbar);
+		this.z(pageVisualEffects,x => ht.R_CinematicContainer(x));
+		ht.D_FrameworkUpdates(frameworkUpdates);
+	}
+	/** @public @arg {RS_VE3832_Page_Watch} x */
+	RS_VE3832_Page_Watch(x) {
+		const cls_=this.x.get("handle_types");
+		const cf="R_WatchPage_VE3832"; cls_.k(cf,x);
+		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=cls_.s(cf,x); this.g(y);/*#destructure_done*/
+		if(rootVe!==3832) debugger;
+		let wp_params=cls_.parse_watch_page_url(cf,url);
+		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
+		cls_.E_Watch(endpoint);
+		if(preconnect!==void 0) cls_.parse_preconnect_arr(preconnect);
+		cls_.RS_Player(playerResponse);
+		this.RS_Watch(response);
+	}
+	/** @public @arg {G_RS_WatchPage} x */
+	RS_WatchPage(x) {
+		const cls_=this.x.get("handle_types");
+		const cf="R_WatchPage"; cls_.k(cf,x);
+		if("rootVe" in x) switch(x.rootVe) {
+			case 3832: return this.RS_VE3832_Page_Watch(x);
+			default: debugger; return;
+		}
+		this.RS_Page_Watch(x);
+	}
+	/** @public @arg {RS_Page_Watch} x */
+	RS_Page_Watch(x) {
+		const cls_=this.x.get("handle_types");
+		const cf="RS_Page_Watch"; cls_.k(cf,x);
+		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=cls_.s(cf,x); this.g(y);/*#destructure_done*/
+		cls_.E_Watch(endpoint);
+		this.RS_Watch(response);
+		cls_.RS_Player(playerResponse);
+		let wp_params=cls_.parse_watch_page_url(cf,url);
+		this.save_keys(`${cf}.wp_params`,wp_params);
+		this.t(previousCsn,x => cls_.D_VeCsn(x,true));
+	}
+}
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
+export_(exports => {exports.HandleRS=HandleRS;});

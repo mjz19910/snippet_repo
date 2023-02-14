@@ -2088,6 +2088,13 @@ class KnownDataSaver extends ApiBase {
 		let [s3,_s4]=ua;
 		return s3;
 	}
+	k=this.save_keys;
+	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
+	s(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys(k,x) {
 		if(!x) return;

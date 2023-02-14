@@ -44,10 +44,10 @@ const ServiceMethods=bs.ServiceMethods;
 const ServiceResolver=bs.ServiceResolver; ServiceResolver;
 const as_any=bs.as_any;
 const CodegenService=required(store["mod$CodegenService"]).CodegenService; CodegenService;
-const TypedefGenerator=required(store["mod$SupportService"]).TypedefGenerator;
+const ss=required(store["mod$SupportService"]);
 //#endregion
 //#region Constants
-/** @type {{value:InstanceType<typeof TypedefGenerator>|null}} */
+/** @type {{value:InstanceType<(typeof ss)["TypedefGenerator"]>|null}} */
 const generate_typedef={value: null};
 //#endregion
 //#region HandleTypesEval
@@ -977,12 +977,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
-		generate_typedef.value=new TypedefGenerator(x);
+		generate_typedef.value=new ss.TypedefGenerator(x);
+		this.RS_handle=new ss.HandleRS(x);
 	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
 	is_eq_keys(src,target) {return this.eq_keys(src,target);}
-	/** @protected @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
+	/** @public @arg {CF_L_TP_Params} root @arg {D_WatchPageUrl} x */
 	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
@@ -1059,7 +1060,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
-	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
+	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
 	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
@@ -1182,15 +1183,6 @@ class HandleTypes extends HandleTypesEval {
 		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
 		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
 		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_RS_WatchPage} x */
-	RS_WatchPage(x) {
-		const cf="R_WatchPage"; this.g_k(cf,x); this.k(cf,x);
-		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: return this.RS_VE3832_Page_Watch(x);
-			default: debugger; return;
-		}
-		this.RS_Page_Watch(x);
 	}
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
@@ -1801,14 +1793,6 @@ class HandleTypes extends HandleTypesEval {
 		this.k(cf,x);
 		return x;
 	}
-	/** @private @template {{}} T @arg {CF_M_s} cf @arg {T} x */
-	s(cf,x) {
-		if(!x) debugger;
-		this.k(cf,x);
-		return x;
-	}
-	/** @override @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(cf,x);
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
@@ -2047,13 +2031,13 @@ class HandleTypes extends HandleTypesEval {
 	R_HotkeyDialogSectionOption(x) {this.H_("R_HotkeyDialogSectionOption","hotkeyDialogSectionOptionRenderer",x,this.D_HotkeyDialogSectionOption);}
 	/** @private @arg {R_PlayerOverlayVideoDetails} x */
 	R_PlayerOverlayVideoDetails(x) {this.H_("R_PlayerOverlayVideoDetails","playerOverlayVideoDetailsRenderer",x,this.D_PlayerOverlayVideoDetails);}
-	/** @private @arg {R_CinematicContainer} x */
+	/** @public @arg {R_CinematicContainer} x */
 	R_CinematicContainer(x) {this.H_("R_CinematicContainer","cinematicContainerRenderer",x,this.D_CinematicContainer);}
-	/** @private @arg {R_TwoColumnWatchNextResults} x */
+	/** @public @arg {R_TwoColumnWatchNextResults} x */
 	R_TwoColumnWatchNextResults(x) {this.H_("R_TwoColumnWatchNextResults","twoColumnWatchNextResults",x,this.D_TwoColumnWatchNextResults);}
-	/** @private @arg {R_PlayerOverlay} x */
+	/** @public @arg {R_PlayerOverlay} x */
 	R_PlayerOverlay(x) {this.H_("R_PlayerOverlay","playerOverlayRenderer",x,this.D_PlayerOverlay);}
-	/** @private @arg {R_DesktopTopbar} x */
+	/** @public @arg {R_DesktopTopbar} x */
 	R_DesktopTopbar(x) {this.H_("R_DesktopTopbar","desktopTopbarRenderer",x,this.D_DesktopTopbar);}
 	/** @private @arg {R_TopbarLogo} x */
 	R_TopbarLogo(x) {this.H_("R_TopbarLogo","topbarLogoRenderer",x,this.D_TopbarLogo);}
@@ -2194,7 +2178,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
 	/** @private @arg {R_PivotButton} x */
 	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
-	/** @private @arg {R_EngagementPanelSectionList} x */
+	/** @public @arg {R_EngagementPanelSectionList} x */
 	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {R_ConfirmDialog} x */
 	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
@@ -2717,6 +2701,16 @@ class HandleTypes extends HandleTypesEval {
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
+	/** @private @arg {C_FilterChipTransform} x */
+	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
+	/** @private @arg {D_ChipUniqueId} x */
+	D_ChipUniqueId(x) {
+		const cf="D_ChipUniqueId";
+		const {chipUniqueId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(chipUniqueId) {
+			case "ATTRIBUTE_FILTER_TYPE_EXPLORE": break;
+		}
+	}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {
 		const cf="DC_RepeatChapter";
@@ -2895,7 +2889,7 @@ class HandleTypes extends HandleTypesEval {
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
-	/** @private @arg {RS_Player} x */
+	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player";
 		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
@@ -2928,44 +2922,6 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.t(cacheMetadata,this.D_Cache_MD);
 	}
-	/** @private @arg {RS_Page_Watch} x */
-	RS_Page_Watch(x) {
-		const cf="RS_Page_Watch"; this.k(cf,x);
-		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Watch(endpoint);
-		this.RS_Watch(response);
-		this.RS_Player(playerResponse);
-		let wp_params=this.parse_watch_page_url(cf,url);
-		this.save_keys(`${cf}.wp_params`,wp_params);
-		this.t(previousCsn,x => this.D_VeCsn(x,true));
-	}
-	/** @private @arg {RS_VE3832_Page_Watch} x */
-	RS_VE3832_Page_Watch(x) {
-		const cf="R_WatchPage_VE3832"; this.k(cf,x);
-		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(rootVe!==3832) debugger;
-		let wp_params=this.parse_watch_page_url(cf,url);
-		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
-		this.E_Watch(endpoint);
-		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
-		this.RS_Player(playerResponse);
-		this.RS_Watch(response);
-	}
-	/** @private @arg {RS_Watch} x */
-	RS_Watch(x) {
-		const cf="RS_Watch";
-		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
-		this.R_TwoColumnWatchNextResults(contents);
-		this.E_Watch(currentVideoEndpoint);
-		this.trackingParams(cf,trackingParams);
-		this.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,x => this.GE_ResponseReceived(cf,x));
-		this.z(engagementPanels,this.R_EngagementPanelSectionList);
-		this.R_DesktopTopbar(topbar);
-		this.z(pageVisualEffects,this.R_CinematicContainer);
-		this.D_FrameworkUpdates(frameworkUpdates);
-	}
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
 		const cf="D_DesktopTopbar";
@@ -2981,7 +2937,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(a11ySkipNavigationButton);
 		this.R_Button(voiceSearchButton);
 	}
-	/** @private @arg {D_FrameworkUpdates} x */
+	/** @public @arg {D_FrameworkUpdates} x */
 	D_FrameworkUpdates(x) {
 		const cf="D_FrameworkUpdates"; this.k(cf,x);
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3095,7 +3051,7 @@ class HandleTypes extends HandleTypesEval {
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) {this.C_Continuation(x);} else if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);} else {debugger;}
 	}
-	/** @private @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
+	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`${cf}.response_endpoint`,x);
 		if("signalServiceEndpoint" in x) {
@@ -3120,7 +3076,7 @@ class HandleTypes extends HandleTypesEval {
 			this.AD_AppendContinuationItems(appendContinuationItemsAction);
 		} else {debugger;}
 	}
-	/** @private @arg {E_Watch} x */
+	/** @public @arg {E_Watch} x */
 	E_Watch(x) {
 		const cf="E_Watch";
 		if("clickTrackingParams" in x) {
@@ -3613,13 +3569,20 @@ class HandleTypes extends HandleTypesEval {
 			}
 		});
 	}
+	/** @private @arg {DE_Feedback_ActionItem} x */
+	DE_Feedback_ActionItem(x) {
+		const cf="DE_Feedback"; this.k(cf,x);
+		if("filterChipTransformCommand" in x) return this.C_FilterChipTransform(x);
+		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
+		debugger;
+	}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
 		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
 		this.save_b64_binary("feedbackToken",feedbackToken);
 		this.t(uiActions,this.D_HideEnclosingContainer);
-		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
+		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
 	}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
@@ -4693,7 +4656,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.RS_Page_Browse(x);
-			case "watch": return this.RS_WatchPage(x);
+			case "watch": return this.RS_handle.RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
 			case "settings": return this.G_RS_Page_Settings(x);
@@ -5119,7 +5082,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(datasyncId);
 		this._primitive_of(loggedOut,"boolean");
 	}
-	/** @protected @arg {RC_ResponseContext} x */
+	/** @public @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="RC_ResponseContext"; this.k(cf,x);
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -7654,7 +7617,7 @@ class HandleTypes extends HandleTypesEval {
 		this.DE_VE5754(x4);
 		this.g(x5);
 	}
-	/** @private @arg {[RE_D_VE3832_PreconnectUrl]} x */
+	/** @public @arg {[RE_D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
 		this.parse_preconnect_url(x[0]);
@@ -7761,7 +7724,7 @@ class HandleTypes extends HandleTypesEval {
 		const {veData,csn,...y}=this.s(cf,x); this.g(y);
 		this.D_VeCsn(csn);
 	}
-	/** @private @arg {string} x @arg {boolean} is_prev */
+	/** @public @arg {string} x @arg {boolean} is_prev */
 	D_VeCsn(x,is_prev=false) {
 		let csn_dec=atob(x);
 		if(is_prev) {
