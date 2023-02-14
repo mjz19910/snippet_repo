@@ -506,18 +506,6 @@ class HandleTypes extends HandleTypesEval {
 		x===""; this.codegen_typedef_all(cf,x);
 		x===0;
 	}
-	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
-	G_SignalActionItem(cf1,x) {
-		/** @type {`G_SignalActionItem:${cf1}`} */
-		const cf2=`G_SignalActionItem:${cf1}`; this.k(cf2,x);
-		/** @type {G_ClientSignal_Item} */
-		if("openPopupAction" in x) return this.S_Client_Popup(x);
-		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
-		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
-		if("signalAction" in x) return this.A_Signal(x);
-		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
-		this.codegen_typedef_all(cf2,x);
-	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
 	G_WatchNextEndScreenItem(x) {
 		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
@@ -917,16 +905,10 @@ class HandleTypes extends HandleTypesEval {
 	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
-	/** @private @arg {A_Signal} x */
-	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
-	/** @private @arg {A_HideEngagementPanelScrim} x */
-	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
-	/** @private @arg {A_SendFeedback} x */
-	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
 	/** @private @arg {A_AddToGuideSection} x */
 	A_AddToGuideSection(x) {let [a,y]=this.TE_Endpoint_2("A_AddToGuideSection","addToGuideSectionAction",x); this.g(y); this.AD_AddToGuideSection(a);}
 	/** @private @arg {A_AddChatItem} x */
@@ -1435,13 +1417,6 @@ class HandleTypes extends HandleTypesEval {
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
 	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
-	/** @private @arg {C_EntityUpdate} x */
-	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
-	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
-	C_EngagementPanelHeaderShowNavigationButton(x) {
-		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
-		this.DC_EngagementPanelHeaderShowNavigationButton(a);
-	}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
 	DC_AddFollowUpSurvey(x) {
 		const cf="DC_AddFollowUpSurvey";
@@ -1667,8 +1642,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {E_ShowEngagementPanel} x */
-	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
@@ -1741,12 +1714,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
-	}
-	/** @private @arg {DE_ShowEngagementPanel} x */
-	DE_ShowEngagementPanel(x) {
-		const cf="D_ShowEngagementPanel"; this.k(cf,x);
-		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @protected @arg {DE_AddToPlaylistService} x */
 	DE_AddToPlaylistService(x) {
@@ -2756,23 +2723,6 @@ class HandleTypes extends HandleTypesEval {
 		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
-	S_Client_OpenPopupAction(x) {
-		const cf="S_VoiceSearchPopup_Dialog"; this.k(cf,x);
-		const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.S_Client_HandlePopup(popup);
-		switch(popupType) {
-			default: debugger; break;
-			case "TOAST": case "TOP_ALIGNED_DIALOG": case "DIALOG":
-		}
-	}
-	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>} x */
-	S_Client_Popup(x) {
-		const cf="S_Client_Popup"; this.k(cf,x);
-		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.S_Client_OpenPopupAction(openPopupAction);
-	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
 	/** @type {D_UiTargetId[]} */
@@ -3300,8 +3250,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(unseenCount);
 		this.a_primitive_num(timeoutMs);
 	}
-	/** @private @arg {AD_HideEngagementPanelTargetId} x */
-	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
 	/** @private @arg {AD_UpdateEngagementPanel} x */
 	AD_UpdateEngagementPanel(x) {
 		const cf="AD_UpdateEngagementPanel"; this.k(cf,x);
@@ -5213,8 +5161,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
-	/** @private @arg {AD_SendFeedback} x */
-	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
 	/** @private @arg {AD_AddToGuideSection} x */
 	AD_AddToGuideSection(x) {
 		const cf="AD_AddToGuideSection"; this.k(cf,x);

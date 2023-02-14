@@ -224,6 +224,49 @@ class ServiceMethods extends ServiceData {
 		}
 		group_arr.push([k,[x]]);
 	}
+	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>} x */
+	S_Client_Popup(x) {
+		const cf="S_Client_Popup"; this.k(cf,x);
+		const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.S_Client_OpenPopupAction(openPopupAction);
+	}
+	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
+	S_Client_OpenPopupAction(x) {
+		const cf="S_VoiceSearchPopup_Dialog"; this.k(cf,x);
+		const {popup,popupType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.S_Client_HandlePopup(popup);
+		switch(popupType) {
+			default: debugger; break;
+			case "TOAST": case "TOP_ALIGNED_DIALOG": case "DIALOG":
+		}
+	}
+	/** @private @arg {AD_SendFeedback} x */
+	AD_SendFeedback(x) {const cf="AD_SendFeedback",{bucket,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ if(bucket!=="Kevlar") debugger;}
+	/** @private @arg {A_SendFeedback} x */
+	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
+	/** @private @arg {E_ShowEngagementPanel} x */
+	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
+	/** @private @arg {DE_ShowEngagementPanel} x */
+	DE_ShowEngagementPanel(x) {
+		const cf="D_ShowEngagementPanel"; this.k(cf,x);
+		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	}
+	/** @private @arg {A_Signal} x */
+	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
+	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
+	G_SignalActionItem(cf1,x) {
+		/** @type {`G_SignalActionItem:${cf1}`} */
+		const cf2=`G_SignalActionItem:${cf1}`; this.k(cf2,x);
+		/** @type {G_ClientSignal_Item} */
+		if("openPopupAction" in x) return this.S_Client_Popup(x);
+		if("showEngagementPanelEndpoint" in x) return this.E_ShowEngagementPanel(x);
+		if("sendFeedbackAction" in x) return this.A_SendFeedback(x);
+		if("signalAction" in x) return this.A_Signal(x);
+		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
+		this.codegen_typedef_all(cf2,x);
+	}
 	/** @protected @arg {string} cf1 @arg {G_ClientSignal} x */
 	G_ClientSignal(cf1,x) {
 		const cf2="G_ClientSignal";
@@ -4308,5 +4351,16 @@ class ServiceMethods extends ServiceData {
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
 	/** @returns {false} */
 	false_() {return false;}
+	/** @private @arg {A_HideEngagementPanelScrim} x */
+	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
+	/** @private @arg {AD_HideEngagementPanelTargetId} x */
+	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	/** @private @arg {C_EntityUpdate} x */
+	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
+	/** @private @arg {C_EngagementPanelHeaderShowNavigationButton} x */
+	C_EngagementPanelHeaderShowNavigationButton(x) {
+		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
+		this.DC_EngagementPanelHeaderShowNavigationButton(a);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
