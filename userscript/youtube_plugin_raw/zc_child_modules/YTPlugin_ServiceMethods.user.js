@@ -23,6 +23,8 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @arg {D_PlaylistId} x */
+	playlistId(x) {this.parse_playlist_id(x);}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
 	convert_value_item_to_param_item(x) {
 		if(typeof x==='string') return x;
@@ -97,6 +99,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private */
 	_decoder=new TextDecoder();
+	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf1 @arg {V_SerializedContext_BinaryObj} x */
+	V_SerializedContext_BinaryObj(cf1,x) {
+		const cf_base="V_SerializedContext_BinaryObj";
+		/** @type {`${cf_base}:${cf1}`} */
+		const cf2=`${cf_base}:${cf1}`;
+		const {1: {1: f1_f12,...y2},...y1}=this.s(cf2,x); this.g(y1); this.g(y2);
+		if(f1_f12!==12) debugger;
+		this.save_number(`${cf2}:f1:f12`,f1_f12);
+	}
 	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf @arg {string} x */
 	V_SerializedContextData(cf,x) {
 		let x1=decodeURIComponent(x);
