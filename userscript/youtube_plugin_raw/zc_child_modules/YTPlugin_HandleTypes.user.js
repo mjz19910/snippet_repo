@@ -16,7 +16,6 @@
 const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {throw new Error("Failed to load base plugin");}
 if(__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
-const seen_map=new Set;
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 const as=required(bs.as_);
@@ -231,45 +230,6 @@ class HandleTypes extends HandleTypesEval {
 			case "R_WatchPage_VE3832": break;
 			default: debugger; break;
 		}
-	}
-	/** @private @arg {D_BrowseEndpointPages} x */
-	parse_known_page(x) {
-		switch(x) {
-			case "comment_shorts_web_top_level":
-			case "explore":
-			case "guide_builder":
-			case "history":
-			case "library":
-			case "storefront":
-			case "subscriptions":
-			case "trending":
-			case "what_to_watch": return true;
-			default:
-		}
-		switch(x) {
-			case "music_charts":
-			case "music_explore":
-			case "music_home":
-			case "music_library_corpus_artists":
-			case "music_library_corpus_track_artists":
-			case "music_library_landing":
-			case "music_liked_albums":
-			case "music_liked_playlists":
-			case "music_liked_videos":
-			case "music_moods_and_genres_category":
-			case "music_moods_and_genres":
-			case "music_new_releases": return true;
-			default:
-		}
-		switch(x) {
-			case "hashtag": return true;
-			default:
-		}
-		switch(x) {
-			case "": return true;
-			default:
-		}
-		switch(x) {default: debugger; return false;}
 	}
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
