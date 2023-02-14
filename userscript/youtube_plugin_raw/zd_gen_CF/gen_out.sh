@@ -34,6 +34,7 @@ function generate_ts_output {
 	grep "|{n:" "out.ts.bak" >"$TMP_DIR/tmp_partial.ts"
 	cat "out_prelude.ts" >"$TMP_DIR/tmp.ts"
 	echo "export namespace Gen {\n\texport type CF_Generated=" >>"$TMP_DIR/tmp.ts"
+	echo "\n\t\t|never" >>"$TMP_DIR/tmp.ts"
 	cat "$TMP_DIR/tmp_partial.ts" >>"$TMP_DIR/tmp.ts"
 	echo "\t\t;" >>"$TMP_DIR/tmp.ts"
 	echo "}" >>"$TMP_DIR/tmp.ts"
