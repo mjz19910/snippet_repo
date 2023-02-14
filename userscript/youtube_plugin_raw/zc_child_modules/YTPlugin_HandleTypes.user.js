@@ -6755,8 +6755,17 @@ class HandleTypes extends HandleTypesEval {
 			switch(x[3]) {
 				default: {
 					const x3=x[3];
-					switch(x3) {
-						case "Audio commentaries": break;
+					let string_data=this.ds.get_data_store().get_string_store([]).data;
+					const save_key="CategoryObj.3";
+					x: {
+						let string_store=string_data.find(x => x[0]===save_key);
+						if(!string_store) {
+							this.save_string(save_key,x3);
+							break x;
+						}
+						if(string_store[1][0]!=="one") break x;
+						if(string_store[1][0].includes(x3)) return;
+						this.save_string(save_key,x3);
 					}
 					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 					debugger;
