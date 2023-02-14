@@ -4035,7 +4035,7 @@ class ServiceMethods extends ServiceData {
 		this.params(cf,"notification.record_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
-	/** @private @arg {E_RecordNotificationInteractions} x */
+	/** @protected @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
@@ -4189,7 +4189,7 @@ class ServiceMethods extends ServiceData {
 	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
-	/** @private @returns {true} */
+	/** @protected @returns {true} */
 	true_() {return true;}
 	/** @protected @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
@@ -4284,6 +4284,8 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(cf,trackingParams);
 		return z;
 	}
+	/** @private @arg {M_CreatePlaylist} x */
+	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @protected @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
@@ -4294,7 +4296,7 @@ class ServiceMethods extends ServiceData {
 		const {targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.targetId(cf,targetId);
 	}
-	/** @private @arg {C_ScrollToEngagementPanel} x */
+	/** @protected @arg {C_ScrollToEngagementPanel} x */
 	C_ScrollToEngagementPanel(x) {
 		const cf="C_ScrollToEngagementPanel"; this.k(cf,x);
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -4537,7 +4539,7 @@ class ServiceMethods extends ServiceData {
 			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
 		});
 	}
-	/** @private @arg {E_CreatePlaylistService} x */
+	/** @protected @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
@@ -4546,5 +4548,7 @@ class ServiceMethods extends ServiceData {
 		this.t(params,x => this.params(cf,"service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
+	/** @private @arg {GM_CreatePlaylist} x */
+	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

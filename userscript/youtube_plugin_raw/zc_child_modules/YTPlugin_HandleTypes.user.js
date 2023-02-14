@@ -1577,8 +1577,6 @@ class HandleTypes extends HandleTypesEval {
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
-	/** @private @arg {M_CreatePlaylist} x */
-	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {GM_AccountMenu} x */
@@ -1589,8 +1587,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
-	/** @private @arg {GM_CreatePlaylist} x */
-	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @private @arg {DE_GetTranscript} a */
@@ -2060,8 +2056,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(videoCountShortText);
 		return y;
 	}
-	/** @private @returns {true} */
-	true_() {return true;}
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	rl(cf,x) {
 		this.k(`${cf}:omit`,x);
