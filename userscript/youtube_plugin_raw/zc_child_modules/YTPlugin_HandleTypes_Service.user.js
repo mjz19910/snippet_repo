@@ -6143,9 +6143,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {MG_AdLayout["layoutId"]} x */
 	MG_AdLayout_LayoutId(x) {
-		let buffer=base64_dec.decodeByteArray(x);
-		if(!buffer) {debugger; return;}
-		this.save_number("AdLayout.layoutId.bytes.0-2",buffer.slice(0,2));
+		this.save_some_base64_url_data("AdLayout.layoutId.bytes",x);
 	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
@@ -10322,10 +10320,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} cf @arg {string} x */
 	parse_url_sig(cf,x) {
-		let buffer=base64_url_dec.decodeByteArray(x);
-		if(!buffer) {debugger; return;}
-		let c_pos=0;
-		for(;c_pos<2;c_pos++) this.save_number(`${cf}.bytes.${c_pos}`,buffer[c_pos]);
+		this.save_some_base64_url_data(`${cf}.bytes`,x);
 	}
 	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x @arg {boolean} [force_update] */
 	save_number(k,x,force_update=false) {
