@@ -231,6 +231,27 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.S_Client_OpenPopupAction(openPopupAction);
 	}
+	/** @private @arg {AD_Signal} x */
+	AD_Signal(x) {
+		const cf="AD_Signal";
+		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(signal) {
+			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
+		}
+	}
+	/** @private @arg {R_ConfirmDialog} x */
+	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
+	/** @private @arg {R_VoiceSearchDialog} x */
+	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
+	/** @private @arg {P_ClientSignal["popup"]} x */
+	S_Client_HandlePopup(x) {
+		const cf="S_Client_HandlePopup"; this.k(cf,x);
+		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
+		if("notificationActionRenderer" in x) return this.RA_Notification(x);
+		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>['openPopupAction']} x */
 	S_Client_OpenPopupAction(x) {
 		const cf="S_VoiceSearchPopup_Dialog"; this.k(cf,x);

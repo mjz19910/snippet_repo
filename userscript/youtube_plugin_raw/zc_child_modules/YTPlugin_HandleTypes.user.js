@@ -995,10 +995,8 @@ class HandleTypes extends HandleTypesEval {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @private @arg {R_VoiceSearchDialog} x */
-	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {R_CommentsHeader} x */
-	R_CommentsHeader(x) {this.H_("R_VoiceSearchDialog","commentsHeaderRenderer",x,this.D_CommentsHeader);}
+	R_CommentsHeader(x) {this.H_("R_CommentsHeader","commentsHeaderRenderer",x,this.D_CommentsHeader);}
 	/** @private @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {R_CommentsSimplebox} x */
@@ -1032,8 +1030,6 @@ class HandleTypes extends HandleTypesEval {
 	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
 	/** @public @arg {R_EngagementPanelSectionList} x */
 	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
-	/** @private @arg {R_ConfirmDialog} x */
-	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
 	/** @private @arg {R_AdsEngagementPanelContent} x */
 	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent","adsEngagementPanelContentRenderer",x,this.B_Hack);}
 	/** @private @arg {R_Notification} x */
@@ -1336,15 +1332,6 @@ class HandleTypes extends HandleTypesEval {
 	AU_ChannelSwitcherPage(x) {this.H_("UA_ChannelSwitcherPage","updateChannelSwitcherPageAction",x,this.AD_UpdateChannelSwitcherPage);}
 	/** @private @arg {AD_GetMultiPageMenu} x */
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
-	/** @private @arg {AD_Signal} x */
-	AD_Signal(x) {
-		const cf="AD_Signal";
-		const {signal,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(signal) {
-			default: debugger; break;
-			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
-		}
-	}
 	/** @private @arg {AD_AppendContinuationItems} x */
 	AD_AppendContinuationItems(x) {
 		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
@@ -2715,14 +2702,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region pause
 	//#endregion
-	/** @private @arg {P_ClientSignal["popup"]} x */
-	S_Client_HandlePopup(x) {
-		const cf="S_Client_HandlePopup"; this.k(cf,x);
-		if("voiceSearchDialogRenderer" in x) return this.R_VoiceSearchDialog(x);
-		if("notificationActionRenderer" in x) return this.RA_Notification(x);
-		if("confirmDialogRenderer" in x) return this.R_ConfirmDialog(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
 	/** @type {D_UiTargetId[]} */
