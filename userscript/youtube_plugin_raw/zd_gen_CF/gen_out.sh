@@ -35,6 +35,7 @@ function generate_ts_output {
 	cat "$TMP_DIR/tmp_partial.ts" >>"$TMP_DIR/tmp.ts"
 	echo "\t\t;" >>"$TMP_DIR/tmp.ts"
 	echo "}" >>"$TMP_DIR/tmp.ts"
+	cp "$TMP_DIR/tmp.ts" tmp.ts
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 	gen_code
 	return;
