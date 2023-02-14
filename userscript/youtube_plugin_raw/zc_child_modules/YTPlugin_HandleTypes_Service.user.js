@@ -11166,7 +11166,7 @@ class HandleTypes extends HandleTypesEval {
 	D_TimedTextApi(x) {
 		const cf="D_TimedTextApi";
 		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.v`,v);
+		this.videoId(v);
 		this.save_string(`${cf}.caps`,caps);
 		this.save_string(`${cf}.xoaf`,xoaf);
 		if(xoadf) this.save_string(`${cf}.xoadf`,xoadf);
