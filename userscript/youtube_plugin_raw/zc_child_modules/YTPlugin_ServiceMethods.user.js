@@ -115,8 +115,14 @@ class ServiceMethods extends ServiceData {
 		this.assert_is_omit_key(x,y,u);
 		return u;
 	}
+	_b_cls=null;
+	get b_cls() {
+		if(this._b_cls) return this._b_cls;
+		this._b_cls=this.handle_types;
+		return this._b_cls;
+	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.b_cls.R_EngagementPanelSectionList(x));}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem"; this.k(cf,x);
