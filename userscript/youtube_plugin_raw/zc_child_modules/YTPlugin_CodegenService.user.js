@@ -456,6 +456,7 @@ class CodegenService extends BaseService {
 			console.log(pi);
 			debugger;
 		}
+		if(1 in x) return x;
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
