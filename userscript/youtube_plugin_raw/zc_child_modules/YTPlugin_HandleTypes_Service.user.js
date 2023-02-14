@@ -10341,6 +10341,11 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.mv`,mv);
 		this.save_string(`${cf}.mvi`,mvi);
 		this.save_string(`${cf}.pl`,pl);
+		{
+			let x=initcwndbps;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
 		this.save_string(`${cf}.initcwndbps`,initcwndbps);
 		this.save_string(`${cf}.vprv`,vprv);
 		if(xtags) this.save_string(`${cf}.xtags`,xtags);

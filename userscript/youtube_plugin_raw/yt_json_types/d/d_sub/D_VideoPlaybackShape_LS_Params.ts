@@ -8,5 +8,5 @@ type D_VideoPlaybackShape_LS_Params={
 	mvi: "3";
 	pl: "24";
 	// cspell:disable-next
-	initcwndbps: "727500";
+	initcwndbps: `${number}`;
 };
