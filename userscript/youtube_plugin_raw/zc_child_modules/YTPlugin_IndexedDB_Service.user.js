@@ -212,15 +212,15 @@ class IndexedDBService extends BaseService {
 			case "video_id": {
 				let [,d_cache]=this.get_data_cache(tx_namespace); d_cache;
 				const obj_store=transaction.objectStore(tx_namespace);
-				debugger;
-				for(let cur_val of d_cache) {
+				for(let value of d_cache) {
 					for(let i=0;;i++) {
-						const cursor_req=obj_store.openCursor(IDBKeyRange.only(cur_val));
+						const index_val=value.v;
+						const cursor_req=obj_store.openCursor(IDBKeyRange.only(index_val));
 						let cursor_res=await this.await_success(cursor_req);
 						console.log("res event",cursor_res.type);
 						if(cursor_req.result===null) {
 							if(i===0) {
-								this.add_data_to_store(obj_store,cur_val);
+								this.add_data_to_store(obj_store,value);
 							}
 							console.log("cursor_done after %o",i);
 							break;
