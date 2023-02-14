@@ -224,6 +224,58 @@ class ServiceMethods extends ServiceData {
 	DE_VE3854(x) {x;}
 	/** @private @arg {DE_VE4724_Search} x */
 	DE_VE4724_Search(x) {this.H_("DE_VE4724_Search","query",x,this.a_primitive_str);}
+	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
+	put_boxed_id(value) {
+		const {type,id}=value;
+		this.indexed_db_put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
+	}
+	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
+	get_playlist_url_info_critical(x) {
+		if(x.type==="playlist:1:LL") return false;
+		if(x.type==="playlist:1:WL") return false;
+		switch(x.raw_id.length) {
+			case 11: return false;
+			case 24: return false;
+			case 32: return false;
+			default: debugger; return true;
+		}
+	}
+	/** @public @arg {G_UrlInfoItem} value */
+	G_UrlInfoItem(value) {
+		switch(value.type) {
+			default: value===""; debugger; break;
+			case "channel_id:UC": this.D_ChannelId(value.id); break;
+			case "play-next": value; break;
+			case "browse_id:VL": {
+				const {type,id,raw_id}=value;
+				this.indexed_db_put("browse_id",{key: `browse_id:VL:${id}`,type,id,raw_id});
+			} break;
+			case "playlist:2:RDCM": {
+				this.put_boxed_id(value);
+				if(!this.str_starts_with_rx("UC",value.raw_id)) debugger;
+				this.D_ChannelId(value.raw_id);
+			} break;
+			case "playlist:1:LL": case "playlist:1:WL":
+			case "playlist:2:RDMM": case "playlist:2:RD": case "playlist:4:UU":
+			case "playlist:3:PL": {
+				this.put_boxed_id(value);
+				let is_critical=this.get_playlist_url_info_critical(value);
+				this.log_playlist_id(value,is_critical);
+			} break;
+			case "video": this.videoId(value.id); break;
+			case "video-referral": this.videoId(value.id); break;
+		}
+	}
+	/** @private @arg {`VLPL${string}`} x */
+	DU_VE5754_BrowseId_VL(x) {
+		const [a,id]=split_string_once(x,"VL"); if(a!=="") debugger;
+		this.G_UrlInfoItem({type: "browse_id:VL",id,raw_id: x});
+		this.parse_guide_entry_id(id);
+	}
+	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
+	DU_VE5754_BrowseId_2(x) {
+		if(this.str_starts_with(x,"VL")) this.DU_VE5754_BrowseId_VL(x);
+	}
 	/** @private @arg {DE_VE5754} x */
 	DE_VE5754(x) {
 		const cf="DE_VE5754";
