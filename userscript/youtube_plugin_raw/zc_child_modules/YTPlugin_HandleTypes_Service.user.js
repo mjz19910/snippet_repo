@@ -3820,14 +3820,24 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;
+	/** @arg {(string|number)[]} known @arg {string} [code] */
+	codegen_case_result(known,code) {
+		if(code) return known.map(e => `case ${e}: ${code}`).join("\n");
+		return known.map(e => `case ${e}:`).join("\n");
+	}
+	/** @arg {CF_D_CaseGen} cf @arg {string|number} val */
+	codegen_case_cache(cf,val) {
+		let arr=this.cases_map.get(cf);
+		if(!arr) {arr=[]; this.cases_map.set(cf,arr);}
+		let val_str=JSON.stringify(val);
+		let has=arr.includes(val_str);
+		if(!arr.includes(val_str)) arr.push(val_str);
+		return {arr,has};
+	}
 	/** @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
 	codegen_case(cf,val,code) {
-		let known=this.cases_map.get(cf);
-		if(!known) {known=[]; this.cases_map.set(cf,known);}
-		let val_str=JSON.stringify(val);
-		if(!known.includes(val_str)) known.push(val_str);
-		if(code) return console.log(`-- [js_gen_case:${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
-		console.log(`-- [js_gen_case:${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
+		let {arr}=this.codegen_case_cache(cf,val);
+		console.log(`-- [js_gen_case:${cf}] --\n\n${this.codegen_case_result(arr,code)}`);
 	}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
 	codegen_case_key(cf,obj,key,code) {
@@ -10351,7 +10361,11 @@ class HandleTypes extends HandleTypesEval {
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
 			switch(mi) {
-				default: console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\ncase "${mi}":`); break;
+				default: {
+					let gen=this.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.mi`,mi);
+					if(gen.has) break;
+					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\n${this.codegen_case_result(gen.arr)}`);
+				} break;
 				case "sn-nx57ynlk":
 				case "sn-nx5s7n7s":
 				case "sn-nx57ynsl":
