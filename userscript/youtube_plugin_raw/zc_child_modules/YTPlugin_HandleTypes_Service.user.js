@@ -6597,10 +6597,23 @@ class HandleTypes extends HandleTypesEval {
 			let ni=f3.indexOf(0,i);
 			let txt=new TextDecoder().decode(f3.slice(i,ni));
 			f3_res.push(["str",txt]);
-			i+=i-ni;
-			debugger;
+			i=ni;
 		}
-		console.log(f3[0]);
+		let f3_idx=f3_res.map((e,z)=>({index:z,type:e[0],v:e[1]}));
+		for(let v of f3_idx) {
+			/** @type {f3_idx_item} */
+			let ui=as_any(v);
+			if(ui.index===2) {
+				return;
+			}
+			/** @type {`${ui["type"]}:${ui["v"]}`} */
+			let k=`${ui.type}:${ui.v}`;
+			switch(k) {
+				default: debugger; break;
+				case "d:0": break;
+			}
+		}
+		console.log(f3_res);
 		debugger;
 		f1;
 	}

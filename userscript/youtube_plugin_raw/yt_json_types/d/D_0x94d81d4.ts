@@ -78,3 +78,12 @@ type GR_RootBinaryObj=R_0x4c82a9c|R_0x12f639cf|{
 	};
 	3: "Gaming";
 };
+type f3_idx_item={
+	index: 0;
+	type: "d";
+	v: 0;
+}|{
+	index: 2;
+	type: "str";
+	v: "en-GB";
+};
