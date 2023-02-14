@@ -6862,55 +6862,6 @@ class HandleTypes extends HandleTypesEval {
 		return mp;
 	};
 	icon_types_map=this.make_icon_types_map();
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
-	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
-		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix"; this.k(cf,x);
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Added") debugger;
-		this.E_PlaylistEdit(serviceEndpoint);
-	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
-	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
-		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1"; this.k(cf,x);
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Watch Later") debugger;
-		this.E_PlaylistEdit(serviceEndpoint);
-	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "toggled">} x */
-	D_ThumbnailOverlayToggleButton_ToggledPrefix_2(x) {
-		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix"; this.k(cf,x);
-		const {accessibility,icon,tooltip,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Added") debugger;
-	}
-	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_2, "untoggled">} x */
-	D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(x) {
-		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_2"; this.k(cf,x);
-		const {accessibility,icon,tooltip,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.T_Icon(`${cf}:icon`,icon);
-		if(tooltip!=="Add to queue") debugger;
-		let [wc,s]=this.T_SE_Signal(cf,serviceEndpoint);
-		const cf1="D_ToggleButton_ServiceEP.data";
-		this.M_SendPost(wc);
-		this.G_ClientSignal(cf1,s);
-	}
-	/**
-	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
-	 * @returns {[p1,p2,o2]}
-	 * */
-	D_ThumbnailOverlayToggleButton_Omit(cf,x) {
-		this.k(cf,x);
-		let [p1,{...o1}]=this.unwrap_prefix(x,"toggled");
-		let [p2,{trackingParams,...o2}]=this.unwrap_prefix(o1,"untoggled");
-		this.trackingParams(cf,trackingParams);
-		return [p1,p2,o2];
-	}
 	/** @returns {false} */
 	false_() {return false;}
 	/** @private @arg {D_AddToPlaylistCreate} x */
