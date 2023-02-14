@@ -6465,7 +6465,11 @@ class HandleTypes extends HandleTypesEval {
 		let res={};
 		for(let k of x.keys()) {
 			let value=x.get(k);
-			if(!value) continue;
+			if(value===void 0) continue;
+			if(value.length===0) {
+				res[k]={};
+				continue;
+			}
 			if(value.length!==1) {
 				/** @template T @arg {T|null} x @returns {x is T} */
 				function is_not_null(x) {return x!==null;}
@@ -6553,6 +6557,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
+	/** @private @arg {D_0x19ac5ceb} x */
+	D_0x19ac5ceb(x) {
+		const cf="D_0x19ac5ceb"; this.k(cf,x);
+		debugger;
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
 		switch(x[0]) {
@@ -6566,6 +6575,7 @@ class HandleTypes extends HandleTypesEval {
 				this.k(`${cf}.continuation.binary_obj`,bin_obj);
 				switch(hex_id) {
 					default: debugger; break;
+					case "0x19ac5ceb": return this.D_0x19ac5ceb(as_any(bin_obj));
 					case "0x4c82a9c": return this.D_0x4c82a9c(as_any(bin_obj));
 					case "0x94d81d4": return this.D_0x94d81d4(as_any(bin_obj));
 				}
