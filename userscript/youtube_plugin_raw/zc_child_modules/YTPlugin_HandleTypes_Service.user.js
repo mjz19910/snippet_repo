@@ -6516,14 +6516,15 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{
 			const [type,field_id,buffer,dec]=dec_4;
-			let x=dec_4;
 			if(type!=="child") debugger;
 			if(field_id!==0x12f639cf) debugger;
 			buffer; dec;
 		}
 	}
 	/** @arg {D_RA_CR_0x14527fab} x */
-	D_RA_CR_0x14527fab(x) {x;}
+	D_RA_CR_0x14527fab(x) {
+		const [dec_0,dec_1,dec_2,dec_3]=x;
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
