@@ -1407,24 +1407,25 @@ type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_TimedTextApi={
-	v: string;
-	caps: string;
-	xoaf: string;
+	v: D_VideoId;
+	caps: "asr";
+	xoaf: `${5}`;
 	xoadf?: string;
-	xosf: string;
-	hl: string;
-	ip: string;
+	xosf: `${1}`;
+	hl: "en-GB";
+	ip: "0.0.0.0";
 	ipbits: string;
-	expire: string;
-	sparams: string;
-	signature: string;
-	key: string;
-	kind: string;
+	expire: `${number}`;
+	sparams: "ip,ipbits,expire,v,caps,xoaf";
+	signature: `${string}.${string}`;
+	key: "yt8";
+	kind: "asr";
 	lang: string;
 };
+type D_TimedTextApi_Req=Required<D_TimedTextApi>;
 type D_CaptionTrackItem_BaseUrl=
-	|`https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`
-	|`https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xoadf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`
+	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi["kind"]}&lang=${D_TimedTextApi["lang"]}`
+	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xoadf=${D_TimedTextApi_Req["xoadf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi["kind"]}&lang=${D_TimedTextApi["lang"]}`
 	;
 
 type D_CaptionTrackItem={
