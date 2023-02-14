@@ -5670,26 +5670,31 @@ class HandleTypes extends HandleTypesEval {
 		if(!b_res) return;
 		if(b_res.length!==1) debugger;
 		let [r]=b_res;
-		if(r[0]==="child"&&r[1]===3) {
-			let playlist_id=this._decoder.decode(r[2]);
-			if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
-				switch(r[1]) {
-					default:
-						console.log(`${cf}.serializedContextData.fieldId`,r[1]);
-						let playlist_id=this._decoder.decode(r[2]);
-						console.log(`${cf}.serializedContextData.decode`,playlist_id);
-						break;
-					case 3: {
-						let playlist_id=this._decoder.decode(r[2]);
-						if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
-						if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
-						{console.log(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
+		switch(r[0]) {
+			default: debugger; break;
+			case "child": {
+				if(r[1]===3) {
+					let playlist_id=this._decoder.decode(r[2]);
+					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
+						switch(r[1]) {
+							default:
+								console.log(`${cf}.serializedContextData.fieldId`,r[1]);
+								let playlist_id=this._decoder.decode(r[2]);
+								console.log(`${cf}.serializedContextData.decode`,playlist_id);
+								break;
+							case 3: {
+								let playlist_id=this._decoder.decode(r[2]);
+								if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
+								if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
+								{console.log(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
+							}
+						}
 					}
+				} else {
+					console.log(`${cf}.serializedContextData.decode_item`,r);
+					debugger;
 				}
-			}
-		} else {
-			console.log(`${cf}.serializedContextData.decode_item`,r);
-			debugger;
+			} break;
 		}
 	}
 	/** @private @arg {D_VssLoggingContext} x */
