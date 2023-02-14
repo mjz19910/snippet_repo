@@ -351,6 +351,10 @@ class ServiceMethods extends ServiceData {
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
+	/** @private @arg {GM_Next} x */
+	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
+	/** @private @arg {GM_Browse} x */
+	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @private @arg {MC_Continuation} x */
 	MC_Continuation(x) {
 		this.T_WCM("MC_Continuation",x,x => {

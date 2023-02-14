@@ -1921,8 +1921,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
 	/** @private @arg {GM_GetNotificationMenu} x */
 	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
-	/** @private @arg {GM_Next} x */
-	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
 	/** @private @arg {GM_CreatePlaylist} x */
@@ -1931,8 +1929,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
-	/** @private @arg {GM_Browse} x */
-	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @private @arg {GM_RecordInteractions} x */
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_Feedback} x */
