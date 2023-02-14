@@ -125,7 +125,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
-	/** @private @arg {E_Like} x */
+	/** @protected @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {M_Like} x */
 	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
@@ -149,11 +149,11 @@ class ServiceMethods extends ServiceData {
 		}
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {R_LikeButton} x */
+	/** @protected @arg {R_LikeButton} x */
 	R_LikeButton(x) {this.H_("R_LikeButton","likeButtonRenderer",x,this.D_LikeButton);}
 	/** @protected @arg {R_Hint} x */
 	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
-	/** @private @arg {R_ReelPlayerOverlay} x */
+	/** @protected @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
 	/** @private @arg {R_ReelPlayerHeader} x */
 	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
@@ -240,10 +240,26 @@ class ServiceMethods extends ServiceData {
 	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
 	/** @private @arg {E_CreateComment} x */
 	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
-	/** @private @arg {E_ShareEntityService} x */
+	/** @protected @arg {E_ShareEntityService} x */
 	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @protected @arg {C_GetPdgBuyFlow} x */
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {M_GetPdgBuyFlow} x */
+	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
+	/** @protected @arg {GM_GetPdgBuyFlow} x */
+	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
+	/** @private @arg {M_GetSharePanel} x */
+	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
+	/** @private @arg {GM_GetSharePanel} x */
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
+	/** @private @arg {DE_ShareEntityService} x */
+	DE_ShareEntityService(x) {
+		const cf="DE_ShareEntityService";
+		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
+		let [u1,y1]=this.z(b,x => this.TA_OpenPopup(cf,x));
+		this.z(y1,x => {if(x!==void 0) debugger;});
+		this.z(u1,this.Popup_ShareEntityService);
+	}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
 		const cf="D_Button_SE"; this.k(cf,x);
@@ -445,7 +461,7 @@ class ServiceMethods extends ServiceData {
 			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
 		}
 	}
-	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
+	/** @protected @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {
 		let f=x[idx];
 		/** @type {`${user_key}.data[${typeof idx}]`} */
@@ -620,13 +636,53 @@ class ServiceMethods extends ServiceData {
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hack!==true) debugger;
 	}
-	/** @private @arg {E_VE3611} x */
+	/** @private @arg {DC_GetPdgBuyFlow} x */
+	DC_GetPdgBuyFlow(x) {
+		const cf="DC_GetPdgBuyFlow";
+		const {params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let dec_params=atob(params);
+		this.params(cf,"get_pdg_buy_flow.params",dec_params);
+	}
+	/** @private @arg {R_ReelMultimixAttributionLabel} x */
+	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
+	/** @private @arg {R_WatchEndpointMusicConfig} x */
+	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig","watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
+	/** @private @arg {D_WatchEndpointMusicConfig} x */
+	D_WatchEndpointMusicConfig(x) {
+		const cf="D_WatchEndpointMusicConfig"; this.k(cf,x);
+		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_bool(hasPersistentPlaylistPanel);
+		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
+	}
+	/** @private @arg {R_PrefetchHintConfig} x */
+	R_PrefetchHintConfig(x) {this.H_("R_PrefetchHintConfig","prefetchHintConfig",x,this.D_PrefetchHintConfig);}
+	/** @private @arg {D_PrefetchHintConfig} x */
+	D_PrefetchHintConfig(x) {
+		const cf="D_PrefetchHintConfig"; this.k(cf,x);
+		const {prefetchPriority,...y}=this.s(cf,x);/*#destructure_off*/
+		this.ceq(prefetchPriority,0);
+		if(prefetchPriority!==0) debugger;
+		if("countdownUiRelativeSecondsPrefetchCondition" in y) {
+			const {countdownUiRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*#destructure_done*/
+			if(a!==-3) debugger;
+			return;
+		}
+		if("playbackRelativeSecondsPrefetchCondition" in y) {
+			const {playbackRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*#destructure_done*/
+			if(a!==-3) debugger;
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {D_CommonConfig} x */
+	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
+	/** @protected @arg {E_VE3611} x */
 	E_VE3611(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE3611","browseEndpoint",x); this.g(y); this.M_VE3611(a); this.DE_VE3611(b);}
 	/** @private @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
 	/** @protected @arg {E_VE4724_Search} x */
 	E_VE4724_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE4724_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_VE4724_Search(b);}
-	/** @private @arg {E_VE5754} x */
+	/** @protected @arg {E_VE5754} x */
 	E_VE5754(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE5754","browseEndpoint",x); this.g(y); this.M_VE5754(a); this.DE_VE5754(b);}
 	/** @private @arg {E_VE6827} x */
 	E_VE6827(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE6827(a); this.DE_VE6827(b);}
@@ -1368,7 +1424,7 @@ class ServiceMethods extends ServiceData {
 		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_Label} x */
+	/** @protected @arg {D_Label} x */
 	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
 	/** @protected @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}

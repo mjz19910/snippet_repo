@@ -1128,8 +1128,6 @@ class HandleTypes extends HandleTypesEval {
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {R_NotificationText} x */
 	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
-	/** @private @arg {D_CommonConfig} x */
-	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
 	/** @private @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {R_FulfilledLayout} x */
@@ -1207,16 +1205,12 @@ class HandleTypes extends HandleTypesEval {
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
-	/** @private @arg {R_PrefetchHintConfig} x */
-	R_PrefetchHintConfig(x) {this.H_("R_PrefetchHintConfig","prefetchHintConfig",x,this.D_PrefetchHintConfig);}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {R_LiveChat} x */
 	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.D_LiveChat);}
 	/** @private @arg {R_ReportFormModal} x */
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
-	/** @private @arg {R_WatchEndpointMusicConfig} x */
-	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig","watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
 	/** @private @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
 	/** @private @arg {R_StructuredDescriptionContent} x */
@@ -1453,8 +1447,6 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentThread(x) {this.H_("R_CommentThread","commentThreadRenderer",x,this.D_CommentThread);}
 	/** @private @arg {R_CommentReplies} x */
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
-	/** @private @arg {R_ReelMultimixAttributionLabel} x */
-	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
 	/** @private @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {RMD_RowContainer} x */
@@ -1655,13 +1647,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
-	/** @private @arg {DC_GetPdgBuyFlow} x */
-	DC_GetPdgBuyFlow(x) {
-		const cf="DC_GetPdgBuyFlow";
-		const {params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let dec_params=atob(params);
-		this.params(cf,"get_pdg_buy_flow.params",dec_params);
-	}
 	/** @private @arg {DC_UpdateToggleButtonState} x */
 	DC_UpdateToggleButtonState(x) {
 		const cf="DC_UpdateToggleButtonState",{toggled: a,buttonId: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1958,16 +1943,12 @@ class HandleTypes extends HandleTypesEval {
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
-	/** @private @arg {M_GetPdgBuyFlow} x */
-	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @private @arg {M_GetSharePanel} x */
-	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_Subscribe} x */
@@ -2000,8 +1981,6 @@ class HandleTypes extends HandleTypesEval {
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
-	/** @protected @arg {GM_GetPdgBuyFlow} x */
-	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @private @arg {GM_Subscribe} x */
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @private @arg {GM_FlagGetForm} x */
@@ -2012,8 +1991,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
-	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @private @arg {GM_RemoveLike} x */
@@ -2059,14 +2036,6 @@ class HandleTypes extends HandleTypesEval {
 		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
 		this.ceq(hack,true);
 		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
-	}
-	/** @private @arg {DE_ShareEntityService} x */
-	DE_ShareEntityService(x) {
-		const cf="DE_ShareEntityService";
-		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
-		let [u1,y1]=this.z(b,x => this.TA_OpenPopup(cf,x));
-		this.z(y1,x => {if(x!==void 0) debugger;});
-		this.z(u1,this.Popup_ShareEntityService);
 	}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
@@ -5983,24 +5952,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_AdLayoutLoggingData} x */
 	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"AdServingDataEntry",x));}
-	/** @private @arg {D_PrefetchHintConfig} x */
-	D_PrefetchHintConfig(x) {
-		const cf="D_PrefetchHintConfig"; this.k(cf,x);
-		const {prefetchPriority,...y}=this.s(cf,x);/*#destructure_off*/
-		this.ceq(prefetchPriority,0);
-		if(prefetchPriority!==0) debugger;
-		if("countdownUiRelativeSecondsPrefetchCondition" in y) {
-			const {countdownUiRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*#destructure_done*/
-			if(a!==-3) debugger;
-			return;
-		}
-		if("playbackRelativeSecondsPrefetchCondition" in y) {
-			const {playbackRelativeSecondsPrefetchCondition: a,...x1}=y; this.g(x1);/*#destructure_done*/
-			if(a!==-3) debugger;
-			return;
-		}
-		this.g(y);
-	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
@@ -6563,13 +6514,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
-	/** @private @arg {D_WatchEndpointMusicConfig} x */
-	D_WatchEndpointMusicConfig(x) {
-		const cf="D_WatchEndpointMusicConfig"; this.k(cf,x);
-		const {hasPersistentPlaylistPanel,musicVideoType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_bool(hasPersistentPlaylistPanel);
-		this.ceq(musicVideoType,"MUSIC_VIDEO_TYPE_ATV");
-	}
 	/** @private @arg {D_ProductList} x */
 	D_ProductList(x) {
 		const cf="D_ProductList"; this.k(cf,x);
