@@ -370,6 +370,16 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "continuation_token.data$sub_obj$f3.f1.f5": switch(map_entry_key) {
+				case 1: case 2:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data$sub_obj$f3.f1": switch(map_entry_key) {
+				case 5:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "continuation_token.data$sub_obj$f3": switch(map_entry_key) {
 				case 1: case 3: case 4: case 6:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -745,6 +755,7 @@ class HandleTypes extends HandleTypesEval {
 				case "ypc_get_offers.params.f5.f1": {
 					return this.videoId(entry);
 				}
+				case "continuation_token.data$sub_obj$f3.f1.f5.f1":
 				case "ypc_get_offers.params.f1.f2": {
 					return this.D_ChannelId(as(entry));
 				}

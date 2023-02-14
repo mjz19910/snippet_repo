@@ -18,10 +18,12 @@ function gen_code {
 			echo "}" >>"$TMP_DIR/tmp.ts"
 			cp "$TMP_DIR/tmp.ts" tmp.ts
 			tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
-			sleep 4
 			mv "$TMP_DIR/tmp_acc.ts" "$TMP_DIR/tmp.ts"
-			sleep 4
 		else
+			cat tmp_out.txt >>"$TMP_DIR/tmp.ts"
+			cp "$TMP_DIR/tmp.ts" "$TMP_DIR/tmp_acc.ts"
+			echo "\t\t;" >>"$TMP_DIR/tmp.ts"
+			echo "}" >>"$TMP_DIR/tmp.ts"
 			break
 		fi
 	done
