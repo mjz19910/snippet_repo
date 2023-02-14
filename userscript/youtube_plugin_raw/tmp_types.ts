@@ -5,7 +5,10 @@ type DatabaseStoreTypes={
 		type: put_video_args_Args["type"];
 		v: string;
 	};
-	hashtag: {key: `hashtag:${string}`; hashtag: string;};
+	hashtag: {
+		key: `hashtag:${string}`;
+		hashtag: string;
+	};
 	boxed_id: {
 		key: `boxed_id:${string}:${string}`;
 		type: string;
