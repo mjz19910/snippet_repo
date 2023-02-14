@@ -231,13 +231,31 @@ class IndexedDBService extends BaseService {
 							console.log("cursor_done after %o",i);
 							break;
 						}
-						if(cur_cursor.value.v!==index_val) debugger;
-						let keys=this.get_keys_of(cur_cursor.value);
+						const cursor_value=cur_cursor.value;
+						if(cursor_value.v!==index_val) debugger;
+						let value_keys=this.get_keys_of_2(value);
+						let cursor_keys=this.get_keys_of_2(cursor_value);
+						if(!this.eq_keys(value_keys,cursor_keys)) {
+							console.log("[database_needs_obj_merge]");
+							console.log("[obj_merge_new]",value);
+							console.log("[obj_merge_cur]",cursor_value);
+							debugger;
+						} else {
+							this.committed_data.push(value);
+						}
 						cur_cursor.continue();
 					}
 				}
 			} break;
 		}
+	}
+	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
+	get_keys_of_2(obj) {
+		if(!obj) {debugger;}
+		let rq=Object.keys(obj);
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
 	}
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
@@ -304,15 +322,7 @@ class IndexedDBService extends BaseService {
 			if(content!==void 0) {
 				if(database_map.has(content)) {
 					this.committed_data.push(data);
-					let ok=this.get_keys_of(data);
-					let in_db=database_map.get(content);
-					if(!in_db) continue;
-					let ok_db=this.get_keys_of(in_db);
-					if(this.eq_keys(ok,ok_db)) continue;
-					console.log("[database_needs_obj_merge]");
-					console.log("[obj_merge_new]",data);
-					console.log("[obj_merge_cur]",in_db);
-					debugger;
+					continue;
 				} else if(new_data_map.has(content)) {
 					this.committed_data.push(data);
 					continue;
