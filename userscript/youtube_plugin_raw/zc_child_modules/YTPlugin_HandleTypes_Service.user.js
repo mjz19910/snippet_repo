@@ -6787,9 +6787,10 @@ class HandleTypes extends HandleTypesEval {
 		const {type,id}=value;
 		this.x.get("indexed_db").put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
 	}
-	/** @api @public @arg {`UC${string}`} x */
-	parse_channel_id(x) {
-		this.put_boxed_id({type: "channel_id:UC",id: x,raw_id: x});
+	/** @api @public @arg {`UC${string}`} raw_id */
+	parse_channel_id(raw_id) {
+		const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
+		this.x.get("indexed_db").put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
 	}
 	/** @public @arg {G_UrlInfoItem} url_info */
 	log_url_info(url_info) {

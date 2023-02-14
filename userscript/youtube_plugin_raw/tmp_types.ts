@@ -12,9 +12,10 @@ type DatabaseStoreTypes={
 		id: string;
 	};
 	channel_id: {
-		key: `channel_id:${string}:${string}`;
-		type: string;
+		key: `channel_id:UC:UC${string}`;
+		type: "channel_id:UC";
 		id: string;
+		raw_id: `UC${string}`;
 	};
 	playlist: {
 		key: `playlist:${string}:${string}`;
