@@ -3826,8 +3826,8 @@ class HandleTypes extends HandleTypesEval {
 		if(!known) {known=[]; this.cases_map.set(cf,known);}
 		let val_str=JSON.stringify(val);
 		if(!known.includes(val_str)) known.push(val_str);
-		if(code) return console.log(`-- [js_gen_code:user_code:${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
-		console.log(`-- [js_gen_code:no_code:${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
+		if(code) return console.log(`-- [js_gen_case:${cf}] --\n\n${known.map(e => `case ${e}: ${code}`).join("\n")}`);
+		console.log(`-- [js_gen_case:${cf}] --\n\n${known.map(e => `case ${e}:`).join("\n")}`);
 	}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
 	codegen_case_key(cf,obj,key,code) {
@@ -10351,7 +10351,7 @@ class HandleTypes extends HandleTypesEval {
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
 			switch(mi) {
-				default: console.log(`-- [gen_case:log_videoplayback:${cf1}.mn.mi] --\n\ncase "${mi}":`); break;
+				default: console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\ncase "${mi}":`); break;
 				case "sn-nx57ynlk":
 				case "sn-nx5s7n7s":
 				case "sn-nx57ynsl":
