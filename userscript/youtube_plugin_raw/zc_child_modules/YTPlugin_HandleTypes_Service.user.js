@@ -6607,10 +6607,11 @@ class HandleTypes extends HandleTypesEval {
 			if(ui.index===4) continue;
 			if(ui.index===6) continue;
 			if(ui.index===9) continue;
-			/** @type {`${ui["type"]}:${ui["v"]}`} */
+			let uc=ui;
+			/** @type {`${uc["type"]}:${uc["v"]}`} */
 			let k=`${ui.type}:${ui.v}`;
 			switch(k) {
-				default: debugger; break;
+				default: k===""; debugger; break;
 				case "d:1": break;
 				case "d:0": break;
 			}
