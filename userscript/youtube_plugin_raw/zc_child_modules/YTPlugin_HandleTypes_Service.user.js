@@ -6271,6 +6271,23 @@ class HandleTypes extends HandleTypesEval {
 	number_as_hex(x) {
 		return `0x${x.toString(16)}`;
 	}
+	/** @arg {V_ParamMapType} x @returns {{[x:number]:V_ParamMapValue}} */
+	convert_map_to_obj(x) {
+		/** @template T @arg {T[]} x */
+		function first(x) {
+			if(x.length!==1) return null;
+			return x[0];
+		}
+		/** @type {{[x:number]:T}} */
+		let res={};
+		for(let k of x.keys()) {
+			let value=x.get(k);
+			if(!value) continue;
+			let v2=first(value);
+			res[k]=v2;
+		}
+		return as(res);
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
 		cf;
@@ -6288,13 +6305,25 @@ class HandleTypes extends HandleTypesEval {
 						/** @template T @arg {T[]|undefined} x */
 						function first(x) {
 							let r=required(x);
-							if(r.length!==0) debugger;
+							if(r.length!==1) debugger;
 							return r[0];
 						}
 						let f3=first(bin_map.get(3));
 						let f8=first(bin_map.get(8));
 						let f14=first(bin_map.get(14));
 						let f15=first(bin_map.get(15));
+						if(typeof f3!=='string') {debugger; break;}
+						if(typeof f8!=='number') {debugger; break;}
+						if(!(f14 instanceof Map)) {debugger; break;}
+						if(f8!==1) {debugger; break;}
+						this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",f3);
+						let res_s=this.convert_map_to_obj(f14);
+						/** @type {{1:4;3:2;4:0;}} */
+						let res=as(res_s);
+						const {[1]:r_f1,[3]: r_f3, [4]: r_f4,...r_y}=res; this.g(r_y);
+						if(r_f1!==4) debugger;
+						if(r_f3!==4) debugger;
+						if(r_f4!==0) debugger;
 						f3; f8; f14; f15;
 						debugger;
 					} return;
