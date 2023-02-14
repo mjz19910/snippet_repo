@@ -314,16 +314,17 @@ class IndexedDBService extends BaseService {
 			this.transfer_store(tx,"video_id",db,{unique: true});
 			this.create_store("hashtag",db,{unique: true});
 		}
-		if(event.oldVersion<4) {
-			this.create_store("boxed_id",db,{unique: true});
-		}
 		if(event.oldVersion<5) {
 			this.transfer_store(tx,"video_id",db,{unique: true});
 			this.transfer_store(tx,"hashtag",db,{unique: true});
 			this.transfer_store(tx,"boxed_id",db,{unique: true});
 		}
+		if(event.oldVersion<6) {
+			db.deleteObjectStore("channel_id");
+			this.create_store("boxed_id",db,{unique: true});
+		}
 	}
-	static schema_version=5;
+	static schema_version=6;
 	/** @private @arg {IDBOpenDBRequest} request */
 	createLatestDatabaseVersion(request) {
 		const db=request.result;
