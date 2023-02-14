@@ -887,6 +887,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "sub":
 			case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
@@ -909,6 +910,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
+					case "watch_request_continuation":
 					case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
 					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
@@ -920,6 +922,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					case "token":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
@@ -941,7 +944,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
-					case "f1[]":
+					case "f1[]": case "params":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f15": case "f25": case "f37":
 				}
@@ -6429,7 +6432,28 @@ class HandleTypes extends HandleTypesEval {
 		if(!x1) {debugger; return null;}
 		return this.convert_map_to_obj(x1);
 	}
-	/** @typedef {{[x:number]:string|bigint|number|null[]|V_ParamObj}} V_ParamObj */
+	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
+	convert_value_item_to_param_item(x) {
+		if(x instanceof Map) {
+			let x1=this.convert_map_to_obj(x);
+			if(!x1) return null;
+			return x1;
+		}
+		if(typeof x==='string') return x;
+		if(typeof x==="number") return x;
+		if(x[0]==="bigint") return x[2];
+		if(x[0]==="group") {
+			const [,r]=x;
+			let vr=this.convert_arr_to_obj(r);
+			if(!vr) {debugger; return null;;}
+			return vr;
+		}
+		if(x[0]==="failed") return null;
+		debugger;
+		return null;
+	}
+	/** @typedef {string|bigint|number|V_ParamObj} V_ParamObjData */
+	/** @typedef {{[x:number]:V_ParamObjData|V_ParamObjData[]}} V_ParamObj */
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
 	convert_map_to_obj(x) {
 		/** @template T @arg {T[]} x */
@@ -6442,29 +6466,25 @@ class HandleTypes extends HandleTypesEval {
 		for(let k of x.keys()) {
 			let value=x.get(k);
 			if(!value) continue;
-			if(value.length!==1) {console.log(`[${k}]`,value); continue;}
+			if(value.length!==1) {
+				/** @template T @arg {T|null} x @returns {x is T} */
+				function is_not_null(x) {return x!==null;}
+				/** @type {V_ParamObjData[]} */
+				let v1=value.map(x => {
+					let r=this.convert_value_item_to_param_item(x);
+					if(r===null) {debugger; return null;}
+					return r;
+				}).filter(is_not_null);
+				v1[k]=v1;
+				continue;
+			}
 			let v2=first(value);
 			if(v2===null) continue;
-			if(v2 instanceof Map) {
-				let vr=this.convert_map_to_obj(v2);
-				if(!vr) continue;
-				res[k]=vr;
-				continue;
-			}
-			if(typeof v2==='string') {res[k]=v2; continue;}
-			if(typeof v2==="number") {res[k]=v2; continue;}
-			if(v2[0]==="bigint") {res[k]=v2[2]; continue;}
-			if(v2[0]==="group") {
-				const [,r]=v2;
-				let vr=this.convert_arr_to_obj(r);
-				if(!vr) {debugger; continue;}
-				res[k]=vr;
-				continue;
-			}
-			if(v2[0]==="failed") return null;
-			debugger;
+			let v3=this.convert_value_item_to_param_item(v2);
+			if(v3===null) continue;
+			res[k]=v3;
 		}
-		return as(res);
+		return res;
 	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
