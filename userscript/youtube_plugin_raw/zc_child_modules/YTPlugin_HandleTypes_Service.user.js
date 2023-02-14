@@ -1129,7 +1129,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Text"; this.k(cf,x);
 		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,x => this.D_TextRun(x,this.G_TextRun_Endpoint));
+		this.tz(runs,this.D_TextRun);
 		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {G_TextRun_Endpoint} x */
@@ -1708,12 +1708,12 @@ class HandleTypes extends HandleTypesEval {
 		if("playerLiveStoryboardSpecRenderer" in x) return;
 		this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_TextRun} x @arg {(x:NonNullable<D_TextRun['navigationEndpoint']>)=>void} f_run */
-	D_TextRun(x,f_run) {
+	/** @private @arg {D_TextRun} x */
+	D_TextRun(x) {
 		const cf="R_TextRun";
 		const {text,italics,navigationEndpoint,loggingDirectives,bold,emoji,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(italics,x => this.ceq(x,true));
-		this.t(navigationEndpoint,f_run);
+		this.t(navigationEndpoint,this.G_TextRun_Endpoint);
 		this.a_primitive_str(text);
 		this.t(loggingDirectives,this.D_LoggingDirectives);
 		this.t(bold,this.a_primitive_bool);
