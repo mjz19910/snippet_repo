@@ -6267,6 +6267,10 @@ class HandleTypes extends HandleTypesEval {
 			this.decode_continuation_token_binary(cf,v);
 		}
 	}
+	/** @arg {number} x */
+	number_as_hex(x) {
+		return `0x${x.toString(16)}`;
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
 		cf;
@@ -6274,7 +6278,15 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case "child": {
 				const [,field_id,_raw_bin,dec_bin]=x;
-				if(field_id!==0) debugger;
+				let hex_id=this.number_as_hex(field_id);
+				switch(hex_id) {
+					default: debugger; break;
+					case "0x94d81d4": {
+						if(dec_bin===null) {debugger; break;}
+						let bin_map=this.make_param_map(dec_bin);
+						debugger;
+					} return;
+				}
 				if(dec_bin===null) {debugger; break;}
 				let bin_map=this.make_param_map(dec_bin);
 				if(bin_map===null) {debugger; break;}
