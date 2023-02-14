@@ -162,5 +162,23 @@ type D_BinaryCategoryObj_13=
 		};
 		3: "Audio commentaries";
 	}
+	|{
+		1: {
+			1: "/m/031hrg";
+		};
+		3: "Lectures";
+	}
+	|{
+		1: {
+			1: "/m/014dgf";
+		};
+		3: "Sales";
+	}
+	|{
+		1: {
+			1: "/m/0p9xx";
+		};
+		3: "Visual arts";
+	}
 	;
 ;
