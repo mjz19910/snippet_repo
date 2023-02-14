@@ -1324,24 +1324,6 @@ class HandleTypes extends HandleTypesEval {
 	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.g);}
 	/** @private @arg {R_MusicShelfDivider} x */
 	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.g);}
-	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
-	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
-	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
-	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
-	/** @private @arg {R_ThumbnailOverlayHoverText} x */
-	R_ThumbnailOverlayHoverText(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
-	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
-	R_ThumbnailOverlaySidePanel(x) {this.H_("R_ThumbnailOverlaySidePanel","thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
-	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
-	R_ThumbnailOverlayBottomPanel(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayBottomPanelRenderer",x,this.D_ThumbnailOverlayBottomPanel);}
-	/** @private @arg {R_ThumbnailOverlayNowPlaying} x */
-	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying","thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
-	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
-	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton","thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
-	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
-	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback","thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
-	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
-	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus","thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @private @arg {R_TextInputFormField} x */
 	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {R_Dropdown} x */
@@ -7629,13 +7611,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
-	/** @private @arg {D_ThumbnailOverlayInlineUnplayable} x */
-	D_ThumbnailOverlayInlineUnplayable(x) {
-		const cf="D_ThumbnailOverlayInlineUnplayable";
-		const {text,icon,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(text);
-		this.ceq(icon.iconType,"PLAY_DISABLED");
-	}
 	/** @private @arg {D_EmojiPicker} x */
 	D_EmojiPicker(x) {
 		const cf="D_EmojiPicker";
