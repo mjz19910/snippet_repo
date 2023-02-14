@@ -1787,7 +1787,7 @@ type D_GuideSubscriptionsSection={
 type D_HasSeparator={hasSeparator: boolean;};
 type D_HeartbeatParams={
 	intervalMilliseconds: `${number}`;
-	softFailOnError: boolean;
+	softFailOnError: false;
 	heartbeatServerData: string;
 };
 type D_HeatSeekerItemData={

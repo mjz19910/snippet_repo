@@ -7803,7 +7803,7 @@ class HandleTypes extends HandleTypesEval {
 		if("command" in x) {
 			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);
 			this.params(`${cf}.key`,"entity.key",key);
-			this.save_string(`${cf}.command`,command);
+			this.C_Innertube(command);
 			switch(addToOfflineButtonState) {
 				default: debugger; break;
 				case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
@@ -11352,7 +11352,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_HeartbeatParams";
 		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
 		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
-		this.save_string(`${cf}.softFailOnError`,softFailOnError);
+		this.ceq(softFailOnError,false);
 		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	//#endregion
