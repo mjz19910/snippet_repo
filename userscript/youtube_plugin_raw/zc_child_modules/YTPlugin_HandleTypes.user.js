@@ -1414,8 +1414,6 @@ class HandleTypes extends HandleTypesEval {
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {C_CommandExecutor} x */
-	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
@@ -1449,8 +1447,6 @@ class HandleTypes extends HandleTypesEval {
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
-	/** @private @arg {C_RepeatChapter} x */
-	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @arg {C_FollowUp} x */
 	C_FollowUp(x) {let [a,y]=this.TE_Endpoint_2("C_FollowUp","addFollowUpSurveyCommand",x); this.g(y); this.DC_AddFollowUpSurvey(a);}
 	/** @private @arg {C_EntityUpdate} x */
@@ -1459,11 +1455,6 @@ class HandleTypes extends HandleTypesEval {
 	C_EngagementPanelHeaderShowNavigationButton(x) {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
-	}
-	/** @private @arg {DC_RepeatChapter} x */
-	DC_RepeatChapter(x) {
-		const cf="DC_RepeatChapter";
-		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
 	/** @private @arg {DC_AddFollowUpSurvey} x */
 	DC_AddFollowUpSurvey(x) {
@@ -1557,8 +1548,6 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @private @arg {DC_CommandExecutor} x */
-	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
 	/** @private @arg {DC_ChangeMarkersVisibility} x */
 	DC_ChangeMarkersVisibility(x) {
 		const cf="DC_ChangeMarkersVisibility";

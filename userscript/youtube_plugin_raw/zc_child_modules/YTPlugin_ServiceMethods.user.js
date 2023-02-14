@@ -4126,6 +4126,17 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(cf,trackingParams);
 		return z;
 	}
+	/** @private @arg {C_CommandExecutor} x */
+	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
+	/** @private @arg {DC_CommandExecutor} x */
+	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
+	/** @private @arg {C_RepeatChapter} x */
+	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
+	/** @private @arg {DC_RepeatChapter} x */
+	DC_RepeatChapter(x) {
+		const cf="DC_RepeatChapter";
+		const {repeat,startTimeMs,endTimeMs,repeatStateEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf_base="D_ToggleButton";
