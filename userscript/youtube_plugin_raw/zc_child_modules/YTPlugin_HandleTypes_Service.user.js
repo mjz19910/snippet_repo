@@ -6503,7 +6503,6 @@ class HandleTypes extends HandleTypesEval {
 				this.D_ReadAny_CR_0x4c82a9c(dec_0);
 			} break;
 		}
-		debugger;
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
 		/** @type {GR_RootBinaryObj} */
