@@ -352,17 +352,22 @@ class CodegenService extends BaseService {
 	/** @private @arg {JsonReplacerState} state @arg {{[U in string|number]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
 		if(state.is_root&&k1==="") {
-			let fx=x; fx;
+			/** @type {{[U in string|number]: unknown}} */
+			let fx={};
 			let fk=Object.keys(fx);
 			for(let kk of fk) {
 				if(kk.match(/^\d+$/)) {
 					let num=parseInt(kk,10);
-					if(num >= 512) {
-						fx[`0x${num.toString(16)}`]=fx[kk];
+					if(num>=512) {
+						fx[`0x${num.toString(16)}`]=x[kk];
+						continue;
 					}
+					fx[kk]=x[kk];
+					continue;
 				}
+				fx[kk]=x[kk];
 			}
-			return x;
+			return fx;
 		}
 		let g=() => this.json_auto_replace(x);
 		const {gen_name: r,key_keep_arr}=state;
