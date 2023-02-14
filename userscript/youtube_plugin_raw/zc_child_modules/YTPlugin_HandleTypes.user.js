@@ -3732,14 +3732,6 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(feedbackResponses,this.D_FeedbackResponseProcessedStatus);
 	}
-	/** @arg {O2} tx @template {{}} T @template {{}} O2 @arg {O2} o2 @template {T_DistributedKeyof<T>} K @arg {T} x @arg {{}} o2 @returns {asserts tx is T_OmitKey<T,Exclude<K,T_DistributedKeyof<O2>>>} */
-	assert_is_omit_key(x,o2,tx) {
-		/** @typedef {[K,O2]} T_IN_ARGS */
-		/** @type {T_IN_ARGS} */
-		let u; tx;
-		function u1() {u;}
-		/**/u1; x; o2;
-	}
 	/** @public @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
