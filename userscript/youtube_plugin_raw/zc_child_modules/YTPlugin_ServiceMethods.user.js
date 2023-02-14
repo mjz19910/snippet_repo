@@ -3354,12 +3354,24 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(text);
 		this.ceq(icon.iconType,"PLAY_DISABLED");
 	}
+	/** @private @arg {D_ThumbnailOverlayHoverText} x */
+	D_ThumbnailOverlayHoverText(x) {
+		const cf="D_ThumbnailOverlayHoverText"; this.k(cf,x);
+		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		if(icon.iconType!=="PLAY_ALL") debugger;
+	}
+	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
+	D_ThumbnailOverlayEndorsement(x) {
+		const cf="D_ThumbnailOverlayEndorsement"; this.k(cf,x);
+		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {R_ThumbnailOverlayInlineUnplayable} x */
 	R_ThumbnailOverlayInlineUnplayable(x) {this.H_("R_ThumbnailOverlayInlineUnplayable","thumbnailOverlayInlineUnplayableRenderer",x,this.D_ThumbnailOverlayInlineUnplayable);}
-	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
-	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {R_ThumbnailOverlayHoverText} x */
-	R_ThumbnailOverlayHoverText(x) {this.H_("R_ThumbnailOverlayBottomPanel","thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
+	R_ThumbnailOverlayHoverText(x) {this.H_("R_ThumbnailOverlayHoverText","thumbnailOverlayHoverTextRenderer",x,this.D_ThumbnailOverlayHoverText);}
 	/** @private @arg {R_ThumbnailOverlaySidePanel} x */
 	R_ThumbnailOverlaySidePanel(x) {this.H_("R_ThumbnailOverlaySidePanel","thumbnailOverlaySidePanelRenderer",x,this.D_ThumbnailOverlaySidePanel);}
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
@@ -3368,23 +3380,27 @@ class ServiceMethods extends ServiceData {
 	R_ThumbnailOverlayNowPlaying(x) {this.H_("R_ThumbnailOverlayNowPlaying","thumbnailOverlayNowPlayingRenderer",x,this.D_ThumbnailOverlayNowPlaying);}
 	/** @private @arg {R_ThumbnailOverlayToggleButton} x */
 	R_ThumbnailOverlayToggleButton(x) {this.H_("R_ThumbnailOverlayToggleButton","thumbnailOverlayToggleButtonRenderer",x,this.D_ThumbnailOverlayToggleButton);}
+	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
+	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @private @arg {R_ThumbnailOverlayResumePlayback} x */
 	R_ThumbnailOverlayResumePlayback(x) {this.H_("R_ThumbnailOverlayResumePlayback","thumbnailOverlayResumePlaybackRenderer",x,this.D_ThumbnailOverlayResumePlayback);}
+	/** @private @arg {R_ThumbnailOverlayEndorsement} x */
+	R_ThumbnailOverlayEndorsement(x) {this.H_("R_ThumbnailOverlayEndorsement","thumbnailOverlayEndorsementRenderer",x,this.D_ThumbnailOverlayEndorsement);}
 	/** @private @arg {R_ThumbnailOverlayTimeStatus} x */
 	R_ThumbnailOverlayTimeStatus(x) {this.H_("R_ThumbnailOverlayTimeStatus","thumbnailOverlayTimeStatusRenderer",x,this.D_ThumbnailOverlayTimeStatus);}
 	/** @protected @arg {G_ThumbnailOverlayItem} x */
 	G_ThumbnailOverlayItem(x) {
 		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
-		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
-		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
-		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
 		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
+		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
+		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
 		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
 		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
-		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
-		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
-		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
-		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
 		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
 	}
 }

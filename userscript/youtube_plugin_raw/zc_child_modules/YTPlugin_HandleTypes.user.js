@@ -1059,8 +1059,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ToggleButton(x) {this.H_("R_ToggleButton","toggleButtonRenderer",x,this.D_ToggleButton);}
 	/** @private @arg {R_Video} x */
 	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
-	/** @private @arg {R_ThumbnailOverlayLoadingPreview} x */
-	R_ThumbnailOverlayLoadingPreview(x) {this.H_("R_ThumbnailOverlayLoadingPreview","thumbnailOverlayLoadingPreviewRenderer",x,this.D_ThumbnailOverlayLoadingPreview);}
 	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
 	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
@@ -6883,20 +6881,6 @@ class HandleTypes extends HandleTypesEval {
 			if("watchEndpoint" in x) {this.E_Watch(x); break x;}
 			if(!x.reelWatchEndpoint) debugger;
 		}
-	}
-	/** @private @arg {D_ThumbnailOverlayEndorsement} x */
-	D_ThumbnailOverlayEndorsement(x) {
-		const cf="D_ThumbnailOverlayEndorsement"; this.k(cf,x);
-		const {text,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_ThumbnailOverlayHoverText} x */
-	D_ThumbnailOverlayHoverText(x) {
-		const cf="D_ThumbnailOverlayHoverText"; this.k(cf,x);
-		const {text,icon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(text);
-		if(icon.iconType!=="PLAY_ALL") debugger;
 	}
 	make_icon_types_map=() => {
 		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
