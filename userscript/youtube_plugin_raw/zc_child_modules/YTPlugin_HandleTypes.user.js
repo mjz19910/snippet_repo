@@ -1432,10 +1432,6 @@ class HandleTypes extends HandleTypesEval {
 		if(timeoutMs!==60000) debugger;
 		this.params(cf,"TimedContinuation",continuation);
 	}
-	/** @type {string[]} */
-	DC_AddToPlaylist_listTypes=[
-		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
-	];
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
 	/** @private @arg {D_PlaylistSidebarSecondaryInfo} x */
