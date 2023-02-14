@@ -19,7 +19,6 @@ function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__modu
 const ServiceMethods=bs.ServiceMethods;
 /** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class TypedefGenerator extends ServiceMethods {
-	k=this.save_keys;
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
 		const cf="popup_dialog"; cf; this.k(cf,x);
@@ -56,7 +55,7 @@ class HandleRS extends ServiceMethods {
 	/** @public @arg {RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x) {
 		const cls_=this.x.get("handle_types");
-		const cf="R_WatchPage_VE3832"; cls_.k(cf,x);
+		const cf="R_WatchPage_VE3832"; this.k(cf,x);
 		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=cls_.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
 		let wp_params=cls_.parse_watch_page_url(cf,url);
@@ -68,8 +67,7 @@ class HandleRS extends ServiceMethods {
 	}
 	/** @public @arg {G_RS_WatchPage} x */
 	RS_WatchPage(x) {
-		const cls_=this.x.get("handle_types");
-		const cf="R_WatchPage"; cls_.k(cf,x);
+		const cf="R_WatchPage"; this.k(cf,x);
 		if("rootVe" in x) switch(x.rootVe) {
 			case 3832: return this.RS_VE3832_Page_Watch(x);
 			default: debugger; return;
@@ -79,8 +77,8 @@ class HandleRS extends ServiceMethods {
 	/** @public @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
 		const cls_=this.x.get("handle_types");
-		const cf="RS_Page_Watch"; cls_.k(cf,x);
-		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=cls_.s(cf,x); this.g(y);/*#destructure_done*/
+		const cf="RS_Page_Watch"; this.k(cf,x);
+		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		cls_.E_Watch(endpoint);
 		this.RS_Watch(response);
 		cls_.RS_Player(playerResponse);

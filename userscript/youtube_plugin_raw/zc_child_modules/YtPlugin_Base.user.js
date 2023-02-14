@@ -2088,13 +2088,6 @@ class KnownDataSaver extends ApiBase {
 		let [s3,_s4]=ua;
 		return s3;
 	}
-	k=this.save_keys;
-	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
-	s(cf,x) {
-		if(!x) debugger;
-		this.k(cf,x);
-		return x;
-	}
 	/** @api @public @template {{}} T @arg {string} k @arg {T|undefined} x */
 	save_keys(k,x) {
 		if(!x) return;
@@ -3457,6 +3450,13 @@ class ServiceData extends BaseService {
 }
 /** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
+	k=this.save_keys;
+	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
+	s(cf,x) {
+		if(!x) debugger;
+		this.k(cf,x);
+		return x;
+	}
 	/** @template T @template {T_OpenPopup_Dialog<T>} U @arg {U} x @returns {[true,U["popup"]]|[false,U["popupType"]]} */
 	unpack_popup_dialog(x) {
 		if(x.popupType!=="DIALOG") return [false,x.popupType];
