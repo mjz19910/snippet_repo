@@ -17,17 +17,6 @@ type D_BinaryCategoryObj_13=
 		3: "History";
 	}
 	|{
-		1: TR_Binary_f1<{}>;
-		3: "Touhou Project";
-	}
-	|{
-		1: TR_Binary_f1<{
-			6: 135950392;
-			13: 808726575;
-		}>;
-		3: "Podcasts";
-	}
-	|{
 		1: TR_Binary_f1<"/m/05qjt">;
 		3: "Physics";
 	}
@@ -36,45 +25,12 @@ type D_BinaryCategoryObj_13=
 		3: "Tools";
 	}
 	|{
-		1: TR_Binary_f1<{
-			13: 892481583;
-			15: 55;
-		}>;
-		3: "Geometry";
-	}
-	|{
-		1: TR_Binary_f1<{
-			6: {};
-			13: 1798778927;
-		}>;
-		3: "Media theories";
-	}
-	|{
 		1: TR_Binary_f1<"/m/059wk">;
 		3: "Nintendo";
 	}
 	|{
-		1: TR_Binary_f1<{
-			6: 1158093416;
-			13: 909193263;
-		}>;
-		3: "Editing";
-	}
-	|{
 		1: TR_Binary_f1<"/m/04q1x3q">;
 		3: "Puzzle games";
-	}
-	|{
-		1: TR_Binary_f1<{
-			6: 26;
-			7: 110;
-			13: 1748054063;
-		}>;
-		3: "Conversation";
-	}
-	|{
-		1: TR_Binary_f1<{}>;
-		3: "Electronic Music";
 	}
 	|{
 		1: TR_Binary_f1<"/m/0mkz">;
@@ -105,23 +61,12 @@ type D_BinaryCategoryObj_13=
 		3: "C++";
 	}
 	|{
-		1: TR_Binary_f1<{
-			6: 1632438298;
-			13: 1801728047;
-		}>;
-		3: "Machines";
-	}
-	|{
 		1: TR_Binary_f1<"/m/02mf1n">;
 		3: "Gadgets";
 	}
 	|{
 		1: TR_Binary_f1<"/m/016wb4">;
 		3: "Game engines";
-	}
-	|{
-		1: TR_Binary_f1<{}>;
-		3: "Puzzles";
 	}
 	|{
 		1: TR_Binary_f1<"/m/06mnr">;
@@ -132,6 +77,12 @@ type D_BinaryCategoryObj_13=
 			1: "/m/07657k";
 		};
 		3: "C#";
+	}
+	|{
+		1: {
+			1: "/m/07v7c";
+		};
+		3: "Universe";
 	}
 	;
 ;
