@@ -6723,7 +6723,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @private @arg {{1:bigint}} x */
+	/** @private @arg {R_BigInt} x */
 	RV_Bigint(x) {
 		const cf="RV_Bigint";
 		const {1: f1,...y}=this.s(cf,x); this.g(y);
@@ -6861,9 +6861,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_0x12f639cf[6]} x */
 	R_0x12f639cf_f6(x) {
-		if(3 in f6) {
-		}
-		this.RV_Bigint(f6);
+		if(3 in x) return;
+		this.RV_Bigint(x);
 	}
 	/** @private @arg {R_0x12f639cf} x */
 	R_0x12f639cf(x) {
