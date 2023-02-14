@@ -271,54 +271,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		switch(x) {default: debugger; return false;}
 	}
-	/** @protected @arg {D_BrowseIdStr} x */
-	browseId(x) {this.parse_browse_id(x);}
-	/** @api @public @arg {D_BrowseIdStr} x */
-	parse_browse_id(x) {
-		if(this.str_starts_with(x,"FE")) {
-			let page=split_string_once(x,"FE")[1];
-			let known_page=this.parse_known_page(page);
-			if(known_page) return;
-			if(seen_map.has(page)) return;
-			seen_map.add(page);
-			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
-			return;
-		}
-		if(this.str_starts_with(x,"VL")) {return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);}
-		if(this.str_starts_with(x,"UC")) {
-			if(x.slice(2).length===22) return;
-			console.log("new with param [param_2c_UC]",x);
-			return;
-		}
-		if(this.str_starts_with(x,"SP")) {
-			/** @private @type {D_Settings_Id} */
-			let x1=split_string_once(x,"SP")[1];
-			switch(x1) {
-				case "account_advanced":
-				case "account_downloads":
-				case "account_overview":
-				case "account":
-				case "report_history":
-				case "unlimited":
-					return;
-				default: console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
-			}
-			console.log("new with param [param_2c_SP]",x,x1);
-			return;
-		}
-		if(this.str_starts_with(x,"MP")) {
-			let x1=split_string_once(x,"MP")[1];
-			let x2=split_string_once(x1,"_");
-			switch(x2[0]) {
-				case "TRt": break;
-				case "REb": break;
-				case "LYt": break;
-				default: console.log("new with param [param_2c_MP]",x,x1,x2); debugger;
-			}
-			return;
-		}
-		{debugger;}
-	}
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
 		let x1=decodeURIComponent(x);
@@ -1052,41 +1004,10 @@ class HandleTypes extends HandleTypesEval {
 	// H_=super.H_;
 	//#endregion
 	//#region member functions
-	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
-	/**
-	 * @arg {CF_TE_Endpoint_2} cf1
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
-	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
-	 * */
-	TE_Endpoint_2(cf1,k,x) {
-		const cf2="TE_Endpoint_2";
-		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
-		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
-		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
-		return [endpoint,y];
-	}
-	/** @private @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
-	TE_Endpoint_Opt_3(cf,k,x) {
-		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
-		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
-		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
-		return [commandMetadata,endpoint,y];
-	}
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
 	w_priv(k,x) {
 		if(!(k in x)) {debugger; return null;}
 		return x[k];
-	}
-	/** @override @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
-	w(cf,k,x,excl=[]) {
-		this.k(cf,x);
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		if(keys.length!==1) debugger;
-		let hk=keys[0];
-		if(hk!==k) {debugger; throw new Error();}
-		let r=x[hk];
-		return r;
 	}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
 	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
@@ -1201,8 +1122,6 @@ class HandleTypes extends HandleTypesEval {
 	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {A_HideEnclosing} x */
 	A_HideEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_HideEnclosing","hideEnclosingAction",x); this.g(y); this.AD_HideEnclosing(a);}
-	/** @private @arg {A_ChangeEngagementPanelVisibility} x */
-	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
 	/** @private @arg {A_HideEngagementPanelScrim} x */
 	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {A_SendFeedback} x */
@@ -1341,8 +1260,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
 	/** @private @arg {R_MenuNavigationItem} x */
 	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
-	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
-	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig","html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
 	/** @private @arg {R_CommonConfig} x */
 	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {D_CommonConfig} x */
@@ -2155,15 +2072,6 @@ class HandleTypes extends HandleTypesEval {
 			this.AD_AppendContinuationItems(appendContinuationItemsAction);
 		} else {debugger;}
 	}
-	/** @public @arg {E_Watch} x */
-	E_Watch(x) {
-		const cf="E_Watch";
-		if("clickTrackingParams" in x) {
-			const [a,b,y]=this.TE_Endpoint_3(cf,"watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
-		} else {
-			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
-		}
-	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {E_Subscribe} x */
@@ -2457,45 +2365,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(uiActions,this.D_HideEnclosingContainer);
 		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
 	}
-	/** @private @arg {DE_VE3832_Watch} x */
-	DE_VE3832_Watch(x) {
-		// const cf="DE_VE3832_Watch";
-		if("playlistSetVideoId" in x) {
-			if("params" in x) {
-				const cf="DE_VE3832:playlistSetVideoId:params";
-				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.a_primitive_num(index);
-				this.a_primitive_str(playlistSetVideoId);
-				this.params(cf,"watch.params",params);
-				this.a_primitive_num(startTimeSeconds);
-				if(continuePlayback!==false) debugger;
-				this.R_VssLoggingContext(loggingContext);
-				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
-				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
-				this._primitive_of(nofollow,"boolean");
-				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
-				return;
-			}
-			x==="";
-			this.g(x);
-			return;
-		}
-		if("watchEndpointSupportedPrefetchConfig" in x) return;
-		if("watchEndpointSupportedOnesieConfig" in x) return;
-		if("playlistId" in x) return;
-		if("params" in x) return;
-		if("startTimeSeconds" in x) return;
-		if("videoId" in x) {
-			const cf="DE_VE3832:videoId";
-			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.videoId(videoId);
-			return;
-		}
-		x==="";
-		this.g(x);
-	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
@@ -2767,7 +2636,7 @@ class HandleTypes extends HandleTypesEval {
 		if("uploadEndpoint" in x) return this.E_VE83769_Upload(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
@@ -3321,19 +3190,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {D_Color} x */
-	D_Color(x) {
-		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
-		this.z(Object.values(x),x => this._primitive_of(x,"number"));
-	}
-	/** @private @arg {D_ThumbnailItem} x */
-	D_ThumbnailItem(x) {
-		const cf="D_ThumbnailItem"; this.k(cf,x);
-		const {url,width,height,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(url);
-		this.t(width,x => this._primitive_of(x,"number"));
-		this.t(height,x => this._primitive_of(x,"number"));
 	}
 	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -5576,16 +5432,6 @@ class HandleTypes extends HandleTypesEval {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
 		this.indexed_db_put("video_id",{key: `video_id:shorts:${id}`,type: "shorts",v: id});
 	}
-	log_enabled_playlist_id=false;
-	/** @private @type {string[]} */
-	cache_playlist_id=[];
-	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
-	log_playlist_id(x,critical=false) {
-		if(!this.cache_playlist_id.includes(x.id)) {
-			this.cache_playlist_id.push(x.id);
-			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
-		}
-	}
 	/** @protected @arg {string} x @returns {D_BrowseIdStr|null} */
 	decode_browse_id(x) {
 		if(this.str_starts_with(x,"FE")) {
@@ -5631,48 +5477,6 @@ class HandleTypes extends HandleTypesEval {
 				case "playnext": this.G_UrlInfoItem({type: "play-next",value: res[1]}); break;
 				default: res[0]===""; debugger;
 			}
-		}
-	}
-	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} id */
-	parse_guide_entry_id(id) {
-		if(this.str_starts_with_rx("RD",id)) {
-			if(this.str_starts_with_rx("RDCMUC",id)) {
-				let [,raw_id]=split_string_once(id,"RDCM");
-				this.save_next_char("playlist_id.RDCMUC",split_string_once(id,"RDCMUC")[1]);
-				this.G_UrlInfoItem({type: "playlist:2:RDCM",id,raw_id});
-				return console.log("[guideEntryId.playlist.RDCM.length]",id.length);
-			}
-			if(this.str_starts_with_rx("RDMM",id)) {
-				let [,raw_id]=split_string_once(id,"RDMM");
-				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id,});
-				return console.log("[guideEntryId.radio_my_mix.length]",id.length);
-			}
-			let [,raw_id]=split_string_once(id,"RD");
-			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id,});
-			return console.log("[guideEntryId.radio.length]",id.length);
-		}
-		if(this.str_starts_with_rx("UC",id)) {
-			let [,raw_id]=split_string_once(id,"UC");
-			this.G_UrlInfoItem({type: "channel_id:UC",id,raw_id});
-			if(id.length===24) return;
-			return console.log("[guideEntryId.channel.length]",id.length);
-		}
-		if(this.str_starts_with_rx("PL",id)) {
-			let [,raw_id]=split_string_once(id,"PL");
-			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
-			if(id.length===34) return;
-			return console.log("[guideEntryId.playlist.length]",id.length);
-		}
-		if(this.str_starts_with_rx("UU",id)) {
-			let [,raw_id]=split_string_once(id,"UU");
-			this.G_UrlInfoItem({type: "playlist:4:UU",id,raw_id});
-			if(id.length===26) return;
-			return console.log("[guideEntryId.uploads_playlist.length]",id.length);
-		}
-		switch(id) {
-			default: id===""; console.log("new with param [Browse_param_2c_VL]",id); debugger; break;
-			case "LL": this.G_UrlInfoItem({type: "playlist:1:LL",id: id}); break;
-			case "WL": this.G_UrlInfoItem({type: "playlist:1:WL",id: id}); break;
 		}
 	}
 	/** @private @arg {D_GuideEntryData} x */
@@ -5725,7 +5529,7 @@ class HandleTypes extends HandleTypesEval {
 				break x;
 			}
 			if("urlEndpoint" in x) {
-				this.E_Url(x);
+				this.E_VE83769_Url(x);
 				break x;
 			}
 		}
@@ -5733,7 +5537,7 @@ class HandleTypes extends HandleTypesEval {
 		if(is_not_in_set) this.onMissingIcon(cf2,icon,x,this.D_GuideEntry_IconType.WithNavEP,this.D_GuideEntry_MissingIconType);
 		{
 			let x=navigationEndpoint;
-			if("urlEndpoint" in x) return this.E_Url(x);
+			if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 			if("browseEndpoint" in x) return this.GE_Browse(x);;
 		}
 	}
@@ -6253,7 +6057,7 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.E_Url(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 		if("commandExecutorCommand" in x) return this.C_Executor(x);
 		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
 		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
@@ -6327,17 +6131,6 @@ class HandleTypes extends HandleTypesEval {
 			case "engagement-panel-macro-markers-description-chapters":
 			case "engagement-panel-searchable-transcript":
 			case "engagement-panel-structured-description":
-		}
-	}
-	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
-	AD_ChangeEngagementPanelVisibility(x) {
-		const cf="AD_ChangeEngagementPanelVisibility";
-		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_EngagementPanelTargetId(cf,targetId);
-		switch(visibility) {
-			default: this.codegen_case(`${cf}.visibility`,visibility); break;
-			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
-			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
 		}
 	}
 	/** @private @arg {D_Transcript} x */
@@ -7262,7 +7055,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		if(!this.str_starts_with(price,"CA$")) debugger;
 		if(!onClickCommand.urlEndpoint) debugger;
-		this.E_Url(onClickCommand);
+		this.E_VE83769_Url(onClickCommand);
 		this.D_LoggingDirectives(loggingDirectives);
 	}
 	/** @private @arg {D_ClipCreation} x */
@@ -7716,7 +7509,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(vendorName);
 		this.trackingParams(cf,trackingParams);
 		this.a_primitive_str(buttonText);
-		this.E_Url(buttonCommand);
+		this.E_VE83769_Url(buttonCommand);
 		this.a_primitive_str(accessibilityTitle);
 		this.a_primitive_str(buttonAccessibilityText);
 		this.a_primitive_str(fromVendorText);
@@ -8200,7 +7993,7 @@ class HandleTypes extends HandleTypesEval {
 	D_PrimaryLinkItem(x) {
 		const cf="D_PrimaryLinkItem"; this.k(cf,x);
 		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Url(navigationEndpoint);
+		this.E_VE83769_Url(navigationEndpoint);
 		this.D_Thumbnail(icon);
 		this.G_Text(title);
 	}
@@ -8554,7 +8347,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(description);
 		this.G_Text(websiteText);
 		this.R_Button(actionButton);
-		this.E_Url(navigationEndpoint);
+		this.E_VE83769_Url(navigationEndpoint);
 		this.z(impressionCommands,this.D_ImpressionCommand);
 		this.R_Menu(menu);
 		this.trackingParams(cf,trackingParams);
@@ -8767,14 +8560,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(viewReplies);
 		this.R_Button(hideReplies);
 		if(!this.str_starts_with(targetId,"comment-replies-item-")) debugger;
-	}
-	/** @private @arg {D_EndscreenElement_EP} x */
-	D_EndscreenElement_EP(x) {
-		const cf="D_EndscreenElement_EP"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.E_VE3611(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		debugger;
 	}
 	/** @private @arg {D_MarkersList} x */
 	D_MarkersList(x) {

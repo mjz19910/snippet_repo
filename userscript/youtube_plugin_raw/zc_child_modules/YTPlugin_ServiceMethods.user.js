@@ -23,6 +23,58 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/**
+	 * @arg {CF_TE_Endpoint_2} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
+	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
+	 * */
+	TE_Endpoint_2(cf1,k,x) {
+		const cf2="TE_Endpoint_2";
+		const {clickTrackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
+		this.clickTrackingParams(`${cf1}.endpoint`,clickTrackingParams);
+		return [endpoint,y];
+	}
+	/** @protected @arg {CF_TE_Endpoint_Opt_3} cf @template {EPL} EP_Key @template {TE_Endpoint_Opt_3<EP_Key,any,any>} T_EP @arg {EP_Key} k @arg {T_EP} x @returns {[T_EP["commandMetadata"],T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|"commandMetadata"|EP_Key>]} */
+	TE_Endpoint_Opt_3(cf,k,x) {
+		const {clickTrackingParams,commandMetadata,[k]: endpoint,...y}=this.s_priv(`TE_Endpoint_Opt_3:${cf}`,x);
+		/** @type {`${CF_TE_Endpoint_Opt_3}.endpoint`} */
+		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
+		return [commandMetadata,endpoint,y];
+	}
+	/** @protected @arg {A_ChangeEngagementPanelVisibility} x */
+	A_ChangeEngagementPanelVisibility(x) {let [a,y]=this.TE_Endpoint_2("A_ChangeEngagementPanelVisibility","changeEngagementPanelVisibilityAction",x); this.g(y); this.AD_ChangeEngagementPanelVisibility(a);}
+	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
+	w(cf,k,x,excl=[]) {
+		this.k(cf,x);
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length!==1) debugger;
+		let hk=keys[0];
+		if(hk!==k) {debugger; throw new Error();}
+		let r=x[hk];
+		return r;
+	}
+	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
+	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
+	/** @protected @arg {D_EndscreenElement_EP} x */
+	D_EndscreenElement_EP(x) {
+		const cf="D_EndscreenElement_EP"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.E_VE3611(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		debugger;
+	}
+	log_enabled_playlist_id=false;
+	/** @private @type {string[]} */
+	cache_playlist_id=[];
+	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
+	log_playlist_id(x,critical=false) {
+		if(!this.cache_playlist_id.includes(x.id)) {
+			this.cache_playlist_id.push(x.id);
+			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
+		}
+	}
 	/** @private @arg {string} user_key @arg {string} x @arg {number} [idx] */
 	save_next_char(user_key,x,idx=0) {
 		let f=x[idx];
@@ -192,7 +244,7 @@ class ServiceMethods extends ServiceData {
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @protected @arg {E_VE83769_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
-	/** @private @arg {B_Hack} x */
+	/** @protected @arg {B_Hack} x */
 	B_Hack(x) {
 		const cf="B_Hack"; this.k(cf,x);
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -272,10 +324,100 @@ class ServiceMethods extends ServiceData {
 		this.G_UrlInfoItem({type: "browse_id:VL",id,raw_id: x});
 		this.parse_guide_entry_id(id);
 	}
+	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} id */
+	parse_guide_entry_id(id) {
+		if(this.str_starts_with_rx("RD",id)) {
+			if(this.str_starts_with_rx("RDCMUC",id)) {
+				let [,raw_id]=split_string_once(id,"RDCM");
+				this.save_next_char("playlist_id.RDCMUC",split_string_once(id,"RDCMUC")[1]);
+				this.G_UrlInfoItem({type: "playlist:2:RDCM",id,raw_id});
+				return console.log("[guideEntryId.playlist.RDCM.length]",id.length);
+			}
+			if(this.str_starts_with_rx("RDMM",id)) {
+				let [,raw_id]=split_string_once(id,"RDMM");
+				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id,});
+				return console.log("[guideEntryId.radio_my_mix.length]",id.length);
+			}
+			let [,raw_id]=split_string_once(id,"RD");
+			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id,});
+			return console.log("[guideEntryId.radio.length]",id.length);
+		}
+		if(this.str_starts_with_rx("UC",id)) {
+			let [,raw_id]=split_string_once(id,"UC");
+			this.G_UrlInfoItem({type: "channel_id:UC",id,raw_id});
+			if(id.length===24) return;
+			return console.log("[guideEntryId.channel.length]",id.length);
+		}
+		if(this.str_starts_with_rx("PL",id)) {
+			let [,raw_id]=split_string_once(id,"PL");
+			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
+			if(id.length===34) return;
+			return console.log("[guideEntryId.playlist.length]",id.length);
+		}
+		if(this.str_starts_with_rx("UU",id)) {
+			let [,raw_id]=split_string_once(id,"UU");
+			this.G_UrlInfoItem({type: "playlist:4:UU",id,raw_id});
+			if(id.length===26) return;
+			return console.log("[guideEntryId.uploads_playlist.length]",id.length);
+		}
+		switch(id) {
+			default: id===""; console.log("new with param [Browse_param_2c_VL]",id); debugger; break;
+			case "LL": this.G_UrlInfoItem({type: "playlist:1:LL",id: id}); break;
+			case "WL": this.G_UrlInfoItem({type: "playlist:1:WL",id: id}); break;
+		}
+	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
 	DU_VE5754_BrowseId_2(x) {
 		if(this.str_starts_with(x,"VL")) this.DU_VE5754_BrowseId_VL(x);
 	}
+	/** @api @public @arg {D_BrowseIdStr} x */
+	parse_browse_id(x) {
+		if(this.str_starts_with(x,"FE")) {
+			let page=split_string_once(x,"FE")[1];
+			let known_page=this.parse_known_page(page);
+			if(known_page) return;
+			if(seen_map.has(page)) return;
+			seen_map.add(page);
+			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
+			return;
+		}
+		if(this.str_starts_with(x,"VL")) {return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);}
+		if(this.str_starts_with(x,"UC")) {
+			if(x.slice(2).length===22) return;
+			console.log("new with param [param_2c_UC]",x);
+			return;
+		}
+		if(this.str_starts_with(x,"SP")) {
+			/** @private @type {D_Settings_Id} */
+			let x1=split_string_once(x,"SP")[1];
+			switch(x1) {
+				case "account_advanced":
+				case "account_downloads":
+				case "account_overview":
+				case "account":
+				case "report_history":
+				case "unlimited":
+					return;
+				default: console.log(`case "${x1}": `); console.log(`\n|"${x1}"`); debugger;
+			}
+			console.log("new with param [param_2c_SP]",x,x1);
+			return;
+		}
+		if(this.str_starts_with(x,"MP")) {
+			let x1=split_string_once(x,"MP")[1];
+			let x2=split_string_once(x1,"_");
+			switch(x2[0]) {
+				case "TRt": break;
+				case "REb": break;
+				case "LYt": break;
+				default: console.log("new with param [param_2c_MP]",x,x1,x2); debugger;
+			}
+			return;
+		}
+		{debugger;}
+	}
+	/** @protected @arg {D_BrowseIdStr} x */
+	browseId(x) {this.parse_browse_id(x);}
 	/** @private @arg {DE_VE5754} x */
 	DE_VE5754(x) {
 		const cf="DE_VE5754";
@@ -652,7 +794,70 @@ class ServiceMethods extends ServiceData {
 		this.save_string(`save://Emoji.d/shortcuts/${emojiId}?custom=${false}`,shortcuts.join(","));
 		this.save_string(`save://Emoji.d/searchTerms/${emojiId}?custom=${false}`,searchTerms.join(","));
 	}
-	/** @private @arg {D_Thumbnail} x */
+	/** @private @arg {D_Color} x */
+	D_Color(x) {
+		if(!this.eq_keys(this.get_keys_of(x),["red","green","blue"])) debugger;
+		this.z(Object.values(x),x => this._primitive_of(x,"number"));
+	}
+	/** @private @arg {D_ThumbnailItem} x */
+	D_ThumbnailItem(x) {
+		const cf="D_ThumbnailItem"; this.k(cf,x);
+		const {url,width,height,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(url);
+		this.t(width,x => this._primitive_of(x,"number"));
+		this.t(height,x => this._primitive_of(x,"number"));
+	}
+	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
+	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig","html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
+	/** @private @arg {DE_VE3832_Watch} x */
+	DE_VE3832_Watch(x) {
+		// const cf="DE_VE3832_Watch";
+		if("playlistSetVideoId" in x) {
+			if("params" in x) {
+				const cf="DE_VE3832:playlistSetVideoId:params";
+				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.a_primitive_num(index);
+				this.a_primitive_str(playlistSetVideoId);
+				this.params(cf,"watch.params",params);
+				this.a_primitive_num(startTimeSeconds);
+				if(continuePlayback!==false) debugger;
+				this.R_VssLoggingContext(loggingContext);
+				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
+				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
+				this._primitive_of(nofollow,"boolean");
+				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
+				return;
+			}
+			x==="";
+			this.g(x);
+			return;
+		}
+		if("watchEndpointSupportedPrefetchConfig" in x) return;
+		if("watchEndpointSupportedOnesieConfig" in x) return;
+		if("playlistId" in x) return;
+		if("params" in x) return;
+		if("startTimeSeconds" in x) return;
+		if("videoId" in x) {
+			const cf="DE_VE3832:videoId";
+			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.videoId(videoId);
+			return;
+		}
+		x==="";
+		this.g(x);
+	}
+	/** @public @arg {E_Watch} x */
+	E_Watch(x) {
+		const cf="E_Watch";
+		if("clickTrackingParams" in x) {
+			const [a,b,y]=this.TE_Endpoint_3(cf,"watchEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
+		} else {
+			const {commandMetadata: a,watchEndpoint: b,...y}=this.s(cf,x); this.g(y); this.M_VE3832(a); this.DE_VE3832_Watch(b);
+		}
+	}
+	/** @protected @arg {D_Thumbnail} x */
 	D_Thumbnail(x) {
 		const cf="D_Thumbnail"; this.k(cf,x);
 		const {lightColorPalette,darkColorPalette,sampledThumbnailColor,accessibility,isOriginalAspectRatio,thumbnails: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2267,5 +2472,16 @@ class ServiceMethods extends ServiceData {
 	rootVe(x) {this.on_root_visual_element(x);}
 	/** @protected @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
+	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
+	AD_ChangeEngagementPanelVisibility(x) {
+		const cf="AD_ChangeEngagementPanelVisibility";
+		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_EngagementPanelTargetId(cf,targetId);
+		switch(visibility) {
+			default: this.codegen_case(`${cf}.visibility`,visibility); break;
+			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
+			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
+		}
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
