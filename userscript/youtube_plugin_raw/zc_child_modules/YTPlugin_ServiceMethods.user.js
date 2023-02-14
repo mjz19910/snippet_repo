@@ -3944,5 +3944,7 @@ class ServiceMethods extends ServiceData {
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {GM_Feedback} x */
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
+	/** @private @arg {A_UndoFeedback} x */
+	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
