@@ -1107,5 +1107,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Continuation.continuation_token.+4.f0.f3" | "D_Continuation.continuation_token.+4.f0.f3";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_0x4c82a9c.continuation_token.+4.f0.f3";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x4c82a9c";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_QoeLoggingContext";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_SerializedContext_BinaryObj:D_VssLoggingContext" | "V_SerializedContext_BinaryObj:D_QoeLoggingContext";}
 		;
 }

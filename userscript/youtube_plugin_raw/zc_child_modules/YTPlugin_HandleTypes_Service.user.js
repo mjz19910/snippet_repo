@@ -5662,11 +5662,16 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	_decoder=new TextDecoder();
-	/** @private @arg {string} cf @arg {V_SerializedContext_BinaryObj} x */
-	V_SerializedContext_BinaryObj(cf,x) {
-		cf; x; debugger;
+	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf1 @arg {V_SerializedContext_BinaryObj} x */
+	V_SerializedContext_BinaryObj(cf1,x) {
+		const cf_base="V_SerializedContext_BinaryObj";
+		/** @type {`${cf_base}:${cf1}`} */
+		const cf2=`${cf_base}:${cf1}`;
+		const {1: {1: f1_f12,...y2},...y1}=this.s(cf2,x); this.g(y1); this.g(y2);
+		if(f1_f12!==12) debugger;
+		this.save_number(`${cf2}:f1:f12`,f1_f12);
 	}
-	/** @private @arg {string} cf @arg {string} x */
+	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf @arg {string} x */
 	V_SerializedContextData(cf,x) {
 		let x1=decodeURIComponent(x);
 		let b_res=this._decode_b64_url_proto_obj(x1);
@@ -5709,7 +5714,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_SerializedContextData} x */
 	D_QoeLoggingContext(x) {
-		const cf="D_VssLoggingContext"; this.k(cf,x);
+		const cf="D_QoeLoggingContext"; this.k(cf,x);
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.V_SerializedContextData(cf,serializedContextData);
 	}
