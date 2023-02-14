@@ -4,17 +4,6 @@ import {ServiceMethods} from "./zc_child_modules/YTPlugin_ServiceMethods.user";
 function n() {throw new Error("Make never type");}
 n;
 export class HandleTypesEval_ extends ServiceMethods {
-	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
-	w(cf,k,x,excl=[]) {
-		this.k(cf,x);
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		if(keys.length!==1) debugger;
-		let hk=keys[0];
-		if(hk!==k) {debugger; throw new Error();}
-		let r=x[hk];
-		return r;
-	}
 	/** @protected @arg {D_YtConfig} x */
 	D_YtConfig(x) {x;}
 	/** @protected */

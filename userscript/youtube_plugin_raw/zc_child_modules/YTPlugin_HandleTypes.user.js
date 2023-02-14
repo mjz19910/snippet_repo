@@ -1020,8 +1020,6 @@ class HandleTypes extends HandleTypesEval {
 	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @arg {A_SetActivePanelItem} x */
 	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
-	/** @private @arg {R_Button} x */
-	R_Button(x) {this.RS_handle.R_Button(x);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
@@ -1128,18 +1126,8 @@ class HandleTypes extends HandleTypesEval {
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
 	/** @private @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
-	/** @private @arg {R_MenuFlexibleItem} x */
-	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
-	/** @private @arg {R_MenuServiceItem} x */
-	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @private @arg {R_NotificationText} x */
 	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
-	/** @private @arg {R_ToggleMenuServiceItem} x */
-	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
-	/** @private @arg {R_MenuNavigationItem} x */
-	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
-	/** @private @arg {R_CommonConfig} x */
-	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {D_CommonConfig} x */
 	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
 	/** @private @arg {R_AdSlot} x */
@@ -1633,8 +1621,6 @@ class HandleTypes extends HandleTypesEval {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
 	}
-	/** @protected @arg {C_GetPdgBuyFlow} x */
-	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @private @arg {C_FilterChipTransform} x */
@@ -1958,12 +1944,8 @@ class HandleTypes extends HandleTypesEval {
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {E_ShareEntityService} x */
-	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
-	/** @private @arg {E_SignalService_SendPost} x */
-	E_SignalService_SendPost(x) {const cf="E_SignalService_SendPost",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {E_PlaylistEdit} x */
@@ -3684,13 +3666,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibilityData);
 	}
-	/** @private @arg {DT_MenuFlexibleItem} x */
-	D_MenuFlexibleItem(x) {
-		const cf="D_MenuFlexibleItem"; this.k(cf,x);
-		const {menuItem,topLevelButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_MenuServiceItem(menuItem);
-		this.R_Button(topLevelButton);
-	}
 	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
 	TE_SignalService_I_0(x) {
 		const cf="TE_SignalService_I_0"; this.k(cf,x);
@@ -3751,32 +3726,6 @@ class HandleTypes extends HandleTypesEval {
 			default: this.new_service_icon("RD_MenuServiceItem",u.iconType); break;
 			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
 			case "VISIBILITY_OFF":
-		}
-	}
-	/** @type {RD_MenuServiceIconType_1} */
-	/** @private @arg {RD_MenuServiceItem} x */
-	RD_MenuServiceItem(x) {
-		const cf="RD_MenuServiceItem"; this.k(cf,x);
-		if("loggingDirectives" in x) {
-			if("icon" in x) {
-				const u=this.RD_MenuServiceItem_Omit(cf,x);
-				const {icon,loggingDirectives,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
-				this.RD_MenuServiceItem_Icon(icon);
-				this.D_LoggingDirectives(loggingDirectives);
-				return;
-			}
-			const u=this.RD_MenuServiceItem_Omit(cf,x);
-			const {loggingDirectives,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
-			this.D_LoggingDirectives(loggingDirectives);
-			return;
-		}
-		if("icon" in x&&"hasSeparator" in x&&"isDisabled" in x) {
-			const {...u}=this.RD_MenuServiceItem_Omit(cf,x);
-			const {icon,hasSeparator,isDisabled,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
-			this.RD_MenuServiceItem_Icon(icon);
-			this.ceq(hasSeparator,true);
-			this.ceq(isDisabled,false);
-			return;
 		}
 	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
@@ -7910,13 +7859,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
 		this.t(adBadge,this.RMD_Badge);
-	}
-	/** @private @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
-	T_BaseUrl(x,f) {
-		const cf="T_BaseUrl";
-		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
-		f.call(this,baseUrl);
-		this.t(elapsedMediaTimeSeconds,this.a_primitive_num);
 	}
 	/** @private @arg {Popup_ShareEntityService} x */
 	Popup_ShareEntityService(x) {

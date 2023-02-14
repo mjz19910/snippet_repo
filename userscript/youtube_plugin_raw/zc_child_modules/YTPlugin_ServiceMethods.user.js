@@ -23,9 +23,16 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
+	T_BaseUrl(x,f) {
+		const cf="T_BaseUrl";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
+		f.call(this,baseUrl);
+		this.t(elapsedMediaTimeSeconds,this.a_primitive_num);
+	}
 	/** @protected @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
 	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
-	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
+	/** @protected @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
 		/** @private @type {T_RemovePrefix<U,VV>} */
 		let un_prefix=as({});
@@ -108,34 +115,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} cf @arg {{}} x */
 	g_k=(cf,x) => this.k(cf,x);
-	/** @private @arg {DE_Like} x */
-	DE_Like(x) {
-		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
-		switch(x.status) {
-			case "INDIFFERENT": {
-				const cf="E_LikeIndifferent";
-				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
-			} break;
-			case "LIKE": {
-				const cf="E_LikeLike";
-				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				actions;
-				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
-			} break;
-			case "DISLIKE": {
-				const cf="E_LikeDislike";
-				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
-			} break;
-		}
-	}
 	/** @private @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {M_Like} x */
@@ -204,8 +183,117 @@ class ServiceMethods extends ServiceData {
 			}
 		});
 	}
+	/** @protected @arg {R_Button} x */
+	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
+	/** @private @arg {D_Button_targetId} x */
+	D_Button_targetId(x) {
+		let cf="D_Button_targetId";
+		switch(x) {
+			default: debugger; x===""; break;
+			case "watch-supervod-button":
+			case "clip-info-button":
+			case "create-clip-button-action-bar":
+			case "sponsorships-button":
+		}
+		this.targetId(cf,x);
+	}
+	/** @private @arg {E_Unsubscribe} x */
+	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
+	/** @private @arg {E_CreateComment} x */
+	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
+	/** @private @arg {E_ShareEntityService} x */
+	E_ShareEntityService(x) {const [a,b,y]=this.TE_Endpoint_3("E_ShareEntityService","shareEntityServiceEndpoint",x); this.g(y); this.M_GetSharePanel(a); this.DE_ShareEntityService(b);}
+	/** @protected @arg {C_GetPdgBuyFlow} x */
+	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
+	/** @private @arg {D_Button_SE} x */
+	D_Button_SE(x) {
+		const cf="D_Button_SE"; this.k(cf,x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
+		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
+		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_Button} x */
+	D_Button(x) {
+		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
+		let cf="D_Button";
+		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
+		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
+		else if("command" in x) cf="D_Button:command";
+		else if("style" in x) cf="D_Button:style";
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(hint,this.R_Hint);
+		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
+		this.t(targetId,this.D_Button_targetId);
+		this.t(serviceEndpoint,this.D_Button_SE);
+		this.t(style,x => {
+			switch(x) {
+				default: debugger; x===""; break;
+				case "STYLE_PRIMARY":
+				case "STYLE_OPACITY":
+				case "STYLE_SUGGESTIVE":
+				case "STYLE_TEXT":
+				case "STYLE_BLUE_TEXT":
+				case "STYLE_DEFAULT":
+			}
+		});
+		this.t(isDisabled,x => {if(x!==false) debugger;});
+		this.t(text,this.G_Text);
+		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
+		this.t(navigationEndpoint,this.D_Button_NavEP);
+		this.t(accessibility,this.D_Label);
+		this.t(tooltip,this.a_primitive_str);
+		this.t(trackingParams,x => this.trackingParams(cf,x));
+		this.t(accessibilityData,this.D_Accessibility);
+		this.t(command,this.GC_Button);
+	}
+	/** @private @arg {R_MenuFlexibleItem} x */
+	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
+	/** @private @arg {DT_MenuFlexibleItem} x */
+	D_MenuFlexibleItem(x) {
+		const cf="D_MenuFlexibleItem"; this.k(cf,x);
+		const {menuItem,topLevelButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_MenuServiceItem(menuItem);
+		this.R_Button(topLevelButton);
+	}
+	/** @private @arg {RD_MenuServiceItem} x */
+	RD_MenuServiceItem(x) {
+		const cf="RD_MenuServiceItem"; this.k(cf,x);
+		if("loggingDirectives" in x) {
+			if("icon" in x) {
+				const u=this.RD_MenuServiceItem_Omit(cf,x);
+				const {icon,loggingDirectives,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+				this.RD_MenuServiceItem_Icon(icon);
+				this.D_LoggingDirectives(loggingDirectives);
+				return;
+			}
+			const u=this.RD_MenuServiceItem_Omit(cf,x);
+			const {loggingDirectives,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("icon" in x&&"hasSeparator" in x&&"isDisabled" in x) {
+			const {...u}=this.RD_MenuServiceItem_Omit(cf,x);
+			const {icon,hasSeparator,isDisabled,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+			this.RD_MenuServiceItem_Icon(icon);
+			this.ceq(hasSeparator,true);
+			this.ceq(isDisabled,false);
+			return;
+		}
+	}
+	/** @private @arg {R_MenuServiceItem} x */
+	R_MenuServiceItem(x) {this.H_("R_MenuServiceItem","menuServiceItemRenderer",x,this.RD_MenuServiceItem);}
 	/** @protected @arg {R_Menu} x */
 	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
+	/** @private @arg {R_ToggleMenuServiceItem} x */
+	R_ToggleMenuServiceItem(x) {this.H_("R_ToggleMenuServiceItem","toggleMenuServiceItemRenderer",x,this.D_ToggleMenuServiceItem);}
+	/** @private @arg {R_MenuNavigationItem} x */
+	R_MenuNavigationItem(x) {this.H_("R_MenuNavigationItem","menuNavigationItemRenderer",x,this.D_MenuNavigationItem);}
+	/** @private @arg {R_CommonConfig} x */
+	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
 		const cf="G_MenuItem"; this.g_k(cf,x); this.k(cf,x);
@@ -509,10 +597,14 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @private @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
-	/** @private @arg {E_VE83769_Url} x */
+	/** @protected @arg {E_VE83769_Url} x */
 	E_VE83769_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);}
 	/** @private @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
+	/** @protected @arg {E_SignalService_SendPost} x */
+	E_SignalService_SendPost(x) {const cf="E_SignalService_SendPost",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
+	/** @private @arg {E_YpcGetOffers} x */
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {DE_VE3611} x */
 	DE_VE3611(x) {x;}
 	/** @private @arg {DE_VE3854} x */
@@ -758,7 +850,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
 	}
 	/** @private @arg {DU_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
-	GM_E_Url_TargetUrlType(x) {
+	GM_E_VE83769_Url_TargetUrlType(x) {
 		const rp="https://www.youtube.com/redirect?";
 		if(this.str_starts_with_rx(rp,x)) {
 			/** @type {GU_YoutubeUrlRedirect} */
@@ -827,9 +919,9 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {DU_Url} x */
 	DE_VE83769_Url(x) {
-		const cf="DE_Url"; this.k(cf,x);
+		const cf="DE_VE83769_Url"; this.k(cf,x);
 		const {url,...u}=this.s(cf,x);/*#destructure_later*/
-		this.GM_E_Url_TargetUrlType(url);
+		this.GM_E_VE83769_Url_TargetUrlType(url);
 		if("nofollow" in u&&"target" in u) {
 			const {target,nofollow,...y}=u; this.g(y); /*#destructure_done*/
 			if(target!=="TARGET_NEW_WINDOW") debugger;
@@ -943,8 +1035,6 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_num(index);
 		this.params(cf,"watch_playlist.params",params);
 	}
-	/** @protected @arg {E_SignalNavigation} x */
-	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {DE_SignalNavigation} x */
 	DE_SignalNavigation(x) {
 		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x); this.k(cf,x);
@@ -954,6 +1044,77 @@ class ServiceMethods extends ServiceData {
 			case "LIVE_CONTROL_ROOM":
 		}
 	}
+	/** @private @arg {DE_VE3832_Watch} x */
+	DE_VE3832_Watch(x) {
+		// const cf="DE_VE3832_Watch";
+		if("playlistSetVideoId" in x) {
+			if("params" in x) {
+				const cf="DE_VE3832:playlistSetVideoId:params";
+				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.a_primitive_num(index);
+				this.a_primitive_str(playlistSetVideoId);
+				this.params(cf,"watch.params",params);
+				this.a_primitive_num(startTimeSeconds);
+				if(continuePlayback!==false) debugger;
+				this.R_VssLoggingContext(loggingContext);
+				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
+				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
+				this._primitive_of(nofollow,"boolean");
+				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
+				return;
+			}
+			x==="";
+			this.g(x);
+			return;
+		}
+		if("watchEndpointSupportedPrefetchConfig" in x) return;
+		if("watchEndpointSupportedOnesieConfig" in x) return;
+		if("playlistId" in x) return;
+		if("params" in x) return;
+		if("startTimeSeconds" in x) return;
+		if("videoId" in x) {
+			const cf="DE_VE3832:videoId";
+			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.videoId(videoId);
+			return;
+		}
+		x==="";
+		this.g(x);
+	}
+	/** @private @arg {DE_CreateComment} x */
+	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
+	/** @private @arg {DE_Like} x */
+	DE_Like(x) {
+		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
+		switch(x.status) {
+			case "INDIFFERENT": {
+				const cf="E_LikeIndifferent";
+				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
+			} break;
+			case "LIKE": {
+				const cf="E_LikeLike";
+				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				actions;
+				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
+			} break;
+			case "DISLIKE": {
+				const cf="E_LikeDislike";
+				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
+			} break;
+		}
+	}
+	/** @protected @arg {E_SignalNavigation} x */
+	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
 		const cf="GM_Like"; this.g_k(cf,x); this.k(cf,x);
@@ -1170,7 +1331,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_Label} x */
 	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
-	/** @private @arg {D_Accessibility} x */
+	/** @protected @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
 	/** @protected @arg {boolean} x */
 	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
@@ -1252,45 +1413,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_Html5PlaybackOnesieConfig} x */
 	R_Html5PlaybackOnesieConfig(x) {this.H_("R_Html5PlaybackOnesieConfig","html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
-	/** @private @arg {DE_VE3832_Watch} x */
-	DE_VE3832_Watch(x) {
-		// const cf="DE_VE3832_Watch";
-		if("playlistSetVideoId" in x) {
-			if("params" in x) {
-				const cf="DE_VE3832:playlistSetVideoId:params";
-				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.a_primitive_num(index);
-				this.a_primitive_str(playlistSetVideoId);
-				this.params(cf,"watch.params",params);
-				this.a_primitive_num(startTimeSeconds);
-				if(continuePlayback!==false) debugger;
-				this.R_VssLoggingContext(loggingContext);
-				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
-				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
-				this._primitive_of(nofollow,"boolean");
-				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
-				return;
-			}
-			x==="";
-			this.g(x);
-			return;
-		}
-		if("watchEndpointSupportedPrefetchConfig" in x) return;
-		if("watchEndpointSupportedOnesieConfig" in x) return;
-		if("playlistId" in x) return;
-		if("params" in x) return;
-		if("startTimeSeconds" in x) return;
-		if("videoId" in x) {
-			const cf="DE_VE3832:videoId";
-			const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.videoId(videoId);
-			return;
-		}
-		x==="";
-		this.g(x);
-	}
 	/** @public @arg {E_Watch} x */
 	E_Watch(x) {
 		const cf="E_Watch";

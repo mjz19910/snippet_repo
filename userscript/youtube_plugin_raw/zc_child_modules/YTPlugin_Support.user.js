@@ -137,12 +137,6 @@ class HandleRS extends ServiceMethods {
 	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
 	/** @private @arg {R_AdActionInterstitial} x */
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
-	/** @private @arg {DE_CreateComment} x */
-	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
-	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
-	/** @private @arg {E_CreateComment} x */
-	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
 	/** @private @arg {R_ClientForecastingAd} x */
 	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
 	/** @private @arg {R_LinearAdSequence} x */
@@ -169,8 +163,6 @@ class HandleRS extends ServiceMethods {
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_Endscreen} x */
 	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
-	/** @public @arg {R_Button} x */
-	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {
 		const cf="G_PlayerStoryboards"; this.k(cf,x);
@@ -227,8 +219,6 @@ class HandleRS extends ServiceMethods {
 		if(prefetchMilliseconds!=="10000") debugger;
 		debugger;
 	}
-	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {G_AdPlacementRendererItem} x */
 	G_AdPlacementRendererItem(x) {
 		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
@@ -283,67 +273,6 @@ class HandleRS extends ServiceMethods {
 		this.z(elements,this.R_EndscreenElement);
 		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {R_Hint} x */
-	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
-	/** @private @arg {D_Hint} x */
-	D_Hint(x) {
-		const cf="D_Hint"; this.k(cf,x);
-		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.ceq(hintId,"sponsor-pre-purchase");
-		this.ceq(dwellTimeMs,"60000");
-		this.D_ImpressionCap(hintCap);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_ImpressionCap} x */
-	D_ImpressionCap(x) {
-		const cf="D_ImpressionCap"; this.k(cf,x);
-		if(this.w(`Other:${cf}`,"impressionCap",x)!=="1") debugger;
-	}
-	/** @private @arg {D_Button} x */
-	D_Button(x) {
-		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
-		let cf="D_Button";
-		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
-		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
-		else if("command" in x) cf="D_Button:command";
-		else if("style" in x) cf="D_Button:style";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(hint,this.R_Hint);
-		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
-		this.t(targetId,this.D_Button_targetId);
-		this.t(serviceEndpoint,this.D_Button_SE);
-		this.t(style,x => {
-			switch(x) {
-				default: debugger; x===""; break;
-				case "STYLE_PRIMARY":
-				case "STYLE_OPACITY":
-				case "STYLE_SUGGESTIVE":
-				case "STYLE_TEXT":
-				case "STYLE_BLUE_TEXT":
-				case "STYLE_DEFAULT":
-			}
-		});
-		this.t(isDisabled,x => {if(x!==false) debugger;});
-		this.t(text,this.G_Text);
-		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
-		this.t(navigationEndpoint,this.D_Button_NavEP);
-		this.t(accessibility,this.D_Label);
-		this.t(tooltip,this.a_primitive_str);
-		this.t(trackingParams,x => this.trackingParams(cf,x));
-		this.t(accessibilityData,this.D_Accessibility);
-		this.t(command,this.GC_Button);
-	}
-	/** @private @arg {D_Button_SE} x */
-	D_Button_SE(x) {
-		const cf="D_Button_SE"; this.k(cf,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
-		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
-		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
@@ -454,7 +383,7 @@ class HandleRS extends ServiceMethods {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
-		this.E_Url(endpoint);
+		this.E_VE83769_Url(endpoint);
 		this.trackingParams(cf,trackingParams);
 		this.RA_Notification(snackbar);
 	}
@@ -464,18 +393,6 @@ class HandleRS extends ServiceMethods {
 		const {challenge,botguardData,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(challenge);
 		this.D_Botguard(botguardData);
-	}
-	/** @private @arg {D_Button_targetId} x */
-	D_Button_targetId(x) {
-		let cf="D_Button_targetId";
-		switch(x) {
-			default: debugger; x===""; break;
-			case "watch-supervod-button":
-			case "clip-info-button":
-			case "create-clip-button-action-bar":
-			case "sponsorships-button":
-		}
-		this.targetId(cf,x);
 	}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
@@ -507,7 +424,7 @@ class HandleRS extends ServiceMethods {
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 		if("createCommentReplyDialogEndpoint" in x) return;
 		x===""; this.codegen_typedef_all(cf,x);
 	}
