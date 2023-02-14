@@ -2664,7 +2664,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_EngagementPanelHeaderShowNavigationButton";
 		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
-	/** @private @arg {DR_DC_EntityBatchUpdate} x */
+	/** @public @arg {DR_DC_EntityBatchUpdate} x */
 	DR_DC_EntityBatchUpdate(x) {
 		const cf="DR_DC_EntityBatchUpdate";
 		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2842,7 +2842,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(a11ySkipNavigationButton);
 		this.R_Button(voiceSearchButton);
 	}
-	/** @public @arg {D_FrameworkUpdates} x */
+	/** @private @arg {D_FrameworkUpdates} x */
 	D_FrameworkUpdates(x) {
 		const cf="D_FrameworkUpdates"; this.k(cf,x);
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3983,18 +3983,6 @@ class HandleTypes extends HandleTypesEval {
 			console.log("-- [D_Button.icon] --",arr_items);
 			this.codegen_typedef_all(cf,x);
 		} finally {console.groupEnd();}
-	}
-	/** @private @arg {D_Button_targetId} x */
-	D_Button_targetId(x) {
-		let cf="D_Button_targetId";
-		switch(x) {
-			default: debugger; x===""; break;
-			case "watch-supervod-button":
-			case "clip-info-button":
-			case "create-clip-button-action-bar":
-			case "sponsorships-button":
-		}
-		this.targetId(cf,x);
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
@@ -10585,21 +10573,6 @@ class HandleTypes extends HandleTypesEval {
 		f.call(this,baseUrl);
 		this.a_primitive_num(elapsedMediaTimeSeconds);
 	}
-	/** @private @arg {D_DesktopWatchAds} x */
-	D_DesktopWatchAds(x) {
-		const cf="D_DesktopWatchAds";
-		const {gutParams,playerAdParams,showCompanion,showInstream,useGut,...y}=this.s(cf,x);
-		let params_tag=this.B_TagObj(gutParams);
-		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
-		if(params_tag!=="\\4061\\ytpwmpu") debugger;
-		this.ceq(showCompanion,true);
-		this.ceq(showInstream,true);
-		this.ceq(useGut,true);
-		let ka=this.get_keys_of(y);
-		if(ka.length>0) {
-			console.log(`[${cf}.next_key] [${ka.shift()}]`);
-		}
-	}
 	/** @private @template T @arg {B_TagObj<T>} x */
 	B_TagObj(x) {
 		const cf="B_TagObj";
@@ -10646,35 +10619,6 @@ class HandleTypes extends HandleTypesEval {
 			case 720: case 360:
 		}
 		this.parser.parse_url(cf,flashSecureUrl);
-	}
-	/** @private @arg {D_PlayerMicroformat} x */
-	D_PlayerMicroformat(x) {
-		const cf="D_PlayerMicroformat";
-		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,...y}=this.s(cf,x); this.g(y);
-		this.D_Thumbnail(thumbnail);
-		this.t(embed,this.D_MicroformatEmbed);
-		this.G_Text(title);
-		this.t(description,this.G_Text);
-		this.a_primitive_str(lengthSeconds);
-		this.parser.parse_url(cf,ownerProfileUrl);
-		this.D_ChannelId(externalChannelId);
-		this.a_primitive_bool(isFamilySafe);
-		this.z(availableCountries,this.a_primitive_str);
-		this.a_primitive_bool(isUnlisted);
-		this.a_primitive_bool(hasYpcMetadata);
-		this.a_primitive_str(viewCount);
-		this.D_VideoCategory(category);
-		this.a_primitive_str(publishDate);
-		this.a_primitive_str(ownerChannelName);
-		this.t(liveBroadcastDetails,this.D_LiveBroadcastDetails);
-		this.a_primitive_str(uploadDate);
-	}
-	/** @private @arg {D_AdPlacement} x */
-	D_AdPlacement(x) {
-		const cf="D_AdPlacement";
-		const {config,renderer,...y}=this.s(cf,x); this.g(y);
-		this.R_AdPlacementConfig(config);
-		this.G_AdPlacementRendererItem(renderer);
 	}
 	/** @private @arg {D_VideoCategory} x */
 	D_VideoCategory(x) {

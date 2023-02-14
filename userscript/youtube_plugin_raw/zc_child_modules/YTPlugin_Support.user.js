@@ -17,7 +17,6 @@ const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const ServiceMethods=bs.ServiceMethods;
-/** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -36,6 +35,17 @@ class TypedefGenerator extends ServiceMethods {
 	}
 }
 class HandleRS extends ServiceMethods {
+	//#region dup
+	/** @private @arg {DR_DC_EntityBatchUpdate} x */
+	DR_DC_EntityBatchUpdate(x) {this.x.get("handle_types").DR_DC_EntityBatchUpdate(x);}
+	/** @private @arg {D_FrameworkUpdates} x */
+	D_FrameworkUpdates(x) {
+		const cf="D_FrameworkUpdates"; this.k(cf,x);
+		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
+		this.t(elementUpdate,this.R_ElementUpdate);
+	}
+	//#endregion
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
 		const cf="RS_Player";
@@ -221,6 +231,50 @@ class HandleRS extends ServiceMethods {
 		this.ceq(softFailOnError,false);
 		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
+	/** @private @arg {D_DesktopWatchAds} x */
+	D_DesktopWatchAds(x) {
+		const cf="D_DesktopWatchAds";
+		const {gutParams,playerAdParams,showCompanion,showInstream,useGut,...y}=this.s(cf,x);
+		let params_tag=this.B_TagObj(gutParams);
+		// cSpell:ignoreRegExp /\\\\4061\\\\ytpwmpu/
+		if(params_tag!=="\\4061\\ytpwmpu") debugger;
+		this.ceq(showCompanion,true);
+		this.ceq(showInstream,true);
+		this.ceq(useGut,true);
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log(`[${cf}.next_key] [${ka.shift()}]`);
+		}
+	}
+	/** @private @arg {D_PlayerMicroformat} x */
+	D_PlayerMicroformat(x) {
+		const cf="D_PlayerMicroformat";
+		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(thumbnail);
+		this.t(embed,this.D_MicroformatEmbed);
+		this.G_Text(title);
+		this.t(description,this.G_Text);
+		this.a_primitive_str(lengthSeconds);
+		this.parser.parse_url(cf,ownerProfileUrl);
+		this.D_ChannelId(externalChannelId);
+		this.a_primitive_bool(isFamilySafe);
+		this.z(availableCountries,this.a_primitive_str);
+		this.a_primitive_bool(isUnlisted);
+		this.a_primitive_bool(hasYpcMetadata);
+		this.a_primitive_str(viewCount);
+		this.D_VideoCategory(category);
+		this.a_primitive_str(publishDate);
+		this.a_primitive_str(ownerChannelName);
+		this.t(liveBroadcastDetails,this.D_LiveBroadcastDetails);
+		this.a_primitive_str(uploadDate);
+	}
+	/** @private @arg {D_AdPlacement} x */
+	D_AdPlacement(x) {
+		const cf="D_AdPlacement";
+		const {config,renderer,...y}=this.s(cf,x); this.g(y);
+		this.R_AdPlacementConfig(config);
+		this.G_AdPlacementRendererItem(renderer);
+	}
 	/** @private @arg {D_PlaybackTracking} x */
 	D_PlaybackTracking(x) {
 		const cf="D_PlaybackTracking"; this.k(cf,x);
@@ -263,6 +317,18 @@ class HandleRS extends ServiceMethods {
 		const {challenge,botguardData,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(challenge);
 		this.D_Botguard(botguardData);
+	}
+	/** @private @arg {D_Button_targetId} x */
+	D_Button_targetId(x) {
+		let cf="D_Button_targetId";
+		switch(x) {
+			default: debugger; x===""; break;
+			case "watch-supervod-button":
+			case "clip-info-button":
+			case "create-clip-button-action-bar":
+			case "sponsorships-button":
+		}
+		this.targetId(cf,x);
 	}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
