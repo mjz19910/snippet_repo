@@ -6456,6 +6456,20 @@ class HandleTypes extends HandleTypesEval {
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
+	/** @arg {D_ReadAny_CD_0x4c82a9c} x */
+	D_ReadAny_CD_0x4c82a9c(x) {
+		if(x.length!==3) debugger;
+		const [a,b,c]=x;
+		a; b; c;
+		debugger;
+	}
+	/** @arg {D_ReadAny_CR_0x4c82a9c} x */
+	D_ReadAny_CR_0x4c82a9c(x) {
+		const [type,field_id,buffer,dec_0]=x;
+		if(type!=="child") debugger;
+		if(field_id!==0x4c82a9c) debugger; buffer;
+		this.D_ReadAny_CD_0x4c82a9c(dec_0);
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -6469,12 +6483,8 @@ class HandleTypes extends HandleTypesEval {
 		switch(dec_t.length) {
 			default: debugger; break;
 			case 1: {
-				const [dec_0]=dec_t; dec_0;
-				const [type,field_id,buffer,dec_1]=dec_0;
-				if(type!=="child") debugger;
-				if(field_id!==0x4c82a9c) debugger;
-				buffer; dec_1;
-				debugger;
+				const [dec_0]=dec_t;
+				this.D_ReadAny_CR_0x4c82a9c(dec_0);
 			} break;
 		}
 		debugger;
