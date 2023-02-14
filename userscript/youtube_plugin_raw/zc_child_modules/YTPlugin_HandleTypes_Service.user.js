@@ -6252,24 +6252,28 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @typedef {"DC_Continuation"|"D_Continuation"} CF_decode_continuation_token */
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
-	decode_continuation_token(cf,x) {
-		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
+	decode_continuation_token(cf,x,len=4) {
+		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x),len);
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
-	decode_continuation_token_no_uri(cf,x) {
+	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x @arg {number} len */
+	decode_continuation_token_no_uri(cf,x,len) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
-		let msg_id=reader.read_bytes(4);
-		let hex_id=new Uint32Array(msg_id.buffer)[0].toString(16);
-		/** @type {"D_Continuation:0xd3b09da2"} */
+		let msg_id=reader.read_bytes(len);
+		let hex_id=[...msg_id].map(e=>{
+			let hex=e.toString(16);
+			if(hex.length===1) return `0${hex}`;
+			return hex;
+		}).join("");
+		/** @type {"D_Continuation:0xd3b0"} */
 		let id=as(`${cf}:0x${hex_id}`);
 		switch(id) {
 			default: {
 				console.log(`-- [${cf}:${id}] --\n\ncase "${id}":\n`);
 				debugger;
 			} break;
-			case "D_Continuation:0xd3b09da2": break;
+			case "D_Continuation:0xd3b0": break;
 		}
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
@@ -10736,7 +10740,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Continuation(x) {
 		const cf="D_Continuation";
 		const {continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
-		this.decode_continuation_token(cf,continuation);
+		this.decode_continuation_token(cf,continuation,2);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	//#endregion
