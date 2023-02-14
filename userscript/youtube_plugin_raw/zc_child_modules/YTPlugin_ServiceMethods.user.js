@@ -1658,6 +1658,7 @@ class ServiceMethods extends ServiceData {
 		// const cf="DE_VE3832_Watch";
 		if("playlistSetVideoId" in x) {
 			if("params" in x) {
+				const cls_=this.b_cls;
 				const cf="DE_VE3832:playlistSetVideoId:params";
 				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.a_primitive_num(index);
@@ -1668,7 +1669,7 @@ class ServiceMethods extends ServiceData {
 				this.R_VssLoggingContext(loggingContext);
 				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,cls_.on_player_params_callback.bind(cls_));
 				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
 				this._primitive_of(nofollow,"boolean");
 				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
