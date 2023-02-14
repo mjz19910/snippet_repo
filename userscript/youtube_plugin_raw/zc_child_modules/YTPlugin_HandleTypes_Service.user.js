@@ -4410,8 +4410,8 @@ class HandleTypes extends HandleTypesEval {
 				this.ceq(isDisabled,false);
 				this.a_primitive_bool(isToggled);
 				this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
-				this.E_PerformCommentAction(defaultServiceEndpoint);
-				this.E_PerformCommentAction(toggledServiceEndpoint);
+				this.E_PerformCommentAction(defaultServiceEndpoint/*1*/);
+				this.E_PerformCommentAction(toggledServiceEndpoint/*1*/);
 				this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
 				const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...y}=u; this.g(y);/*#destructure_done*/
 				if(size.sizeType!=="SIZE_DEFAULT") debugger;
@@ -4449,8 +4449,8 @@ class HandleTypes extends HandleTypesEval {
 				this.ceq(isDisabled,false);
 				this.a_primitive_bool(isToggled);
 				this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
-				this.E_PerformCommentAction(defaultServiceEndpoint);
-				this.E_PerformCommentAction(toggledServiceEndpoint);
+				this.C_CommandExecutor(defaultServiceEndpoint);
+				this.E_Like(toggledServiceEndpoint);
 				this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
 				const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,accessibilityData,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*#destructure_done*/
 				this.G_Text(defaultText);

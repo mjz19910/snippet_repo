@@ -1,4 +1,4 @@
-type E_PerformCommentAction={};
+type E_PerformCommentAction={performCommentActionEndpoint: {};};
 type D_Button_DefServiceEP=C_CommandExecutor|E_PerformCommentAction;
 type D_ToggleButton=
 	|never
