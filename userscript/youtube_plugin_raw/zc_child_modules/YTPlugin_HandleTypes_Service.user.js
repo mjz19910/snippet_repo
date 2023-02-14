@@ -734,7 +734,7 @@ class HandleTypes extends HandleTypesEval {
 		let c_pos=0;
 		for(;c_pos<6;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
-		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,[...buffer.slice(c_pos,c_pos+4)]);}
+		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
@@ -3836,7 +3836,7 @@ class HandleTypes extends HandleTypesEval {
 	parse_undo_token(x) {
 		let token_bin=base64_url_dec.decodeByteArray(x);
 		if(!token_bin) {debugger; return;}
-		this.save_number("undo_token[0]",token_bin[0]);
+		this.save_number("undo_token.0-2",token_bin.slice(0,2));
 	}
 	/** @private @arg {GU_VE42352_Url} x */
 	GU_VE42352_Url(x) {
@@ -5625,8 +5625,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	DE_Feedback_onToken(x) {
-		let fb_dec=base64_url_dec.decodeByteArray(x);
-		this.t(fb_dec,x => this.ds.save_number("feedbackToken.bytes[0..1]",[x[0],x[1]]));
+		let binary=base64_url_dec.decodeByteArray(x);
+		this.t(binary,x => this.save_number("feedbackToken.bytes.0-2",x.slice(0,2)));
 	}
 	/** @private @template {{[U in K]:any}} T @template {keyof T} K @arg {"DE_Feedback"} cf @arg {K} k @arg {T} x @arg {(x:T[K])=>void} f @returns {T_OmitKey<T,K>} */
 	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return as_any(y);}
@@ -6147,8 +6147,8 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x); this.k(cf,x);
-		let ba_id=base64_dec.decodeByteArray(layoutId);
-		this.t(ba_id,([x]) => this.save_number("AdLayout.layoutId.bytes[0]",x));
+		let buffer=base64_dec.decodeByteArray(layoutId);
+		this.t(buffer,([x]) => this.save_number("AdLayout.layoutId.bytes[0]",x));
 		this.MG_AdLayout_layoutType(y.layoutType);
 		switch(y.layoutType) {
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=this.s(cf,y); this.g(u);/*#destructure_done*/ break;
@@ -10320,6 +10320,17 @@ class HandleTypes extends HandleTypesEval {
 		let c_pos=0;
 		for(;c_pos<2;c_pos++) this.save_number(`${cf}.bytes.${c_pos}`,buffer[c_pos]);
 	}
+	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x @arg {boolean} [force_update] */
+	save_number(k,x,force_update=false) {
+		if(x instanceof Uint8Array) x=[...x];
+		return super.save_number(k,x,force_update);
+	}
+	/** @private @arg {string} x */
+	D_VideoPlayback_ns(x) {
+		let buffer=base64_url_dec.decodeByteArray(x);
+		if(!buffer) return;
+		this.save_number(`video_playback.buf.ns.0-2`,buffer.slice(0,2));
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
@@ -10349,7 +10360,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf1}.vprv`,vprv);
 		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
 		this.save_string(`${cf1}.mime`,mime);
-		this.params(`${cf1}.ns`,`${cf2}.ns`,ns);
+		this.D_VideoPlayback_ns(ns);
 		if(gir) this.save_string(`${cf1}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.t(clen,x => {
