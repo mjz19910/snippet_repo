@@ -752,6 +752,7 @@ class MyReader {
 	constructor(buf) {
 		this.buf=buf;
 		this.pos=0;
+		this.base=0;
 		this.len=buf.length;
 		this.last_pos=0;
 	}
@@ -784,7 +785,10 @@ class MyReader {
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
-		if(size===void 0) {this.cur_len=this.len-prev_pos;} else {this.cur_len=this.pos+size;}
+		if(size===void 0) {
+			this.cur_len=this.len-prev_pos;
+			this.base=prev_pos;
+		} else {this.cur_len=this.pos+size;}
 		this.failed=false;
 		try {return this.read_any_impl();} finally {
 			this.pos=prev_pos;
@@ -800,7 +804,8 @@ class MyReader {
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
-		for(;this.pos<this.cur_len;loop_count++) {
+		let end_pos=this.cur_len+this.base;
+		for(;this.pos<end_pos;loop_count++) {
 			let cur_byte=this.uint32();
 			if(cur_byte===null) {
 				this.failed=true;

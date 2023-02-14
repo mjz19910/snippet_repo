@@ -6278,6 +6278,10 @@ class HandleTypes extends HandleTypesEval {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
+		debugger;
+		reader.pos=3;
+		let dec_2=reader.try_read_any(); dec_2;
+		debugger;
 		for(let v of dec) {
 			this.decode_continuation_token_binary(cf,msg_id,v);
 		}
