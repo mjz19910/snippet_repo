@@ -6445,22 +6445,27 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
 	convert_value_item_to_param_item(x) {
+		if(typeof x==='string') return x;
+		if(typeof x==="number") return x;
 		if(x instanceof Map) {
 			let x1=this.convert_map_to_obj(x);
 			if(!x1) {debugger; return null;}
 			return x1;
 		}
-		if(typeof x==='string') return x;
-		if(typeof x==="number") return x;
-		if(x[0]==="bigint") return x[2];
-		if(x[0]==="group") {
-			const [,r]=x;
-			let vr=this.convert_arr_to_obj(r);
-			if(!vr) {debugger; return null;}
-			return vr;
+		if(x instanceof Array) {
+			if(x[0]==="bigint") return x[2];
+			if(x[0]==="group") {
+				const [,r]=x;
+				let vr=this.convert_arr_to_obj(r);
+				if(!vr) {debugger; return null;}
+				return vr;
+			}
+			if(x[0]==="failed") {debugger; return null;}
+			x==="";
+			return null;
 		}
-		if(x[0]==="failed") {debugger; return null;}
-		debugger;
+		if(x instanceof Uint8Array) return x;
+		x==="";
 		return null;
 	}
 	/** @typedef {string|bigint|number|V_ParamObj} V_ParamObjData */
