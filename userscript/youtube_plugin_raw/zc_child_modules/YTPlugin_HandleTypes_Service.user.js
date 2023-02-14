@@ -895,13 +895,10 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "player":
-			case "sub":
-			case "adaptive_format":
+			case "url": case "player": case "sub": case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
 			case "entity_key": case "entity":
-			// case "feedback":
 			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript": case "GetNotificationMenu":
 			case "invalidation":
 			case "like": case "live_chat_replay": case "load_markers":
@@ -917,11 +914,12 @@ class HandleTypes extends HandleTypesEval {
 				switch(parts[1]) {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
+							case "":
+							case "":
 						} parts[1]==="";
 					} return;
-					case "heartbeat_params":
-					case "watch_request_continuation":
-					case "data$sub_obj$f3":
+					case "sig":
+					case "heartbeat_params": case "watch_request_continuation": case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
 					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "transactionParams": case "likeParams": case "dislikeParams":
@@ -10327,8 +10325,7 @@ class HandleTypes extends HandleTypesEval {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
-		for(;c_pos<2;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
-		this.save_number(`${cf}.binary_arr.0`,token_bin[0]);
+		for(;c_pos<2;c_pos++) this.save_number(`${cf}.bytes.${c_pos}`,buffer[c_pos]);
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
@@ -10358,7 +10355,10 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.ns`,ns);
 		if(gir) this.save_string(`${cf}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=y2;
-		if(clen) this.save_string(`${cf}.clen`,clen);
+		this.t(clen,x => {
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		});
 		let dur_=this.parse_number_template(dur);
 		this.a_primitive_num(dur_);
 		let lmt_=this.parse_number_template(lmt);
