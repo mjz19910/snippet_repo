@@ -2038,8 +2038,6 @@ class HandleTypes extends HandleTypesEval {
 	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_WatchPlaylist} x */
 	E_WatchPlaylist(x) {const [a,b,y]=this.TE_Endpoint_3("E_WatchPlaylist","watchPlaylistEndpoint",x); this.g(y); this.M_VE3832(a); this.DE_WatchPlaylist(b);}
-	/** @private @arg {E_Like} x */
-	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {E_SignalNavigation} x */
@@ -2074,8 +2072,6 @@ class HandleTypes extends HandleTypesEval {
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @private @arg {M_Like} x */
-	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_Subscribe} x */
@@ -2399,34 +2395,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
-	/** @private @arg {DE_Like} x */
-	DE_Like(x) {
-		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
-		switch(x.status) {
-			case "INDIFFERENT": {
-				const cf="E_LikeIndifferent";
-				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
-			} break;
-			case "LIKE": {
-				const cf="E_LikeLike";
-				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				actions;
-				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
-			} break;
-			case "DISLIKE": {
-				const cf="E_LikeDislike";
-				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				status;
-				target;
-				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
-			} break;
-		}
-	}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
 	codegen_case_key(cf,obj,key,code) {
 		let val=obj[key];

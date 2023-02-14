@@ -104,6 +104,38 @@ class ServiceMethods extends ServiceData {
 			this.tz(serviceEndpoints,this.E_Like);
 		}
 	}
+	/** @private @arg {DE_Like} x */
+	DE_Like(x) {
+		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
+		switch(x.status) {
+			case "INDIFFERENT": {
+				const cf="E_LikeIndifferent";
+				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
+			} break;
+			case "LIKE": {
+				const cf="E_LikeLike";
+				const {status,target,actions,likeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				actions;
+				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
+			} break;
+			case "DISLIKE": {
+				const cf="E_LikeDislike";
+				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				status;
+				target;
+				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
+			} break;
+		}
+	}
+	/** @private @arg {E_Like} x */
+	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
+	/** @private @arg {M_Like} x */
+	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @private @arg {D_LikeApi} x */
 	D_LikeApi(x) {
 		if(!x) {debugger; return;}
