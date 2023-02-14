@@ -41,24 +41,40 @@ class IndexedDBService extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,Map<string,number>]})} */
+	/** @private @type {{[R in keyof DatabaseStoreTypes]?: [R,Map<string,number>]}} */
 	store_cache_index={
 		video_id: ["video_id",new Map],
 		hashtag: ["hashtag",new Map],
 		boxed_id: ["boxed_id",new Map],
 	};
-	/** @private @type {({[R in keyof DatabaseStoreTypes]:[R,DatabaseStoreTypes[R][]]})} */
+	/** @private @type {{[R in keyof DatabaseStoreTypes]?: [R,DatabaseStoreTypes[R][]]}} */
 	store_cache={
 		video_id: ["video_id",[]],
 		hashtag: ["hashtag",[]],
 		boxed_id: ["boxed_id",[]],
 	};
-	/** @template {keyof DatabaseStoreTypes} T @arg {T} key @returns {Mk_data_cache_Return<T>} */
+	/** @template {keyof DatabaseStoreTypes} T @arg {T} key */
 	get_data_cache(key) {
-		return as([key,this.store_cache[key][1]]);
+		/** @type {{[R in T]?: [R,DatabaseStoreTypes[R][]]}} */
+		let sk_ac=this.store_cache;
+		/** @type {[T,DatabaseStoreTypes[T][]]|undefined} */
+		let cache_info=as(this.store_cache[key]);
+		cache_info=[key,[]];
+		sk_ac[key]=cache_info;
+		/** @type {Mk_data_cache_Return<T>} */
+		let sk=as([key,cache_info[1]]);
+		return sk;
 	}
-	/** @arg {keyof DatabaseStoreTypes} key */
-	get_data_index_cache(key) {return this.store_cache_index[key][1];}
+	/** @template {keyof DatabaseStoreTypes} T @arg {T} key */
+	get_data_index_cache(key) {
+		/** @type {{[R in T]?: [R,Map<string,number>]}} */
+		let sk_ac=this.store_cache_index;
+		/** @type {[T,Map<string,number>]|undefined} */
+		let cache_info=as(this.store_cache_index[key]);
+		cache_info=[key,new Map];
+		sk_ac[key]=cache_info;
+		return cache_info[1];
+	}
 	/** @private @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
 	committed_data=[];
 	/** @type {Map<keyof DatabaseStoreTypes,string[]>} */
@@ -81,11 +97,17 @@ class IndexedDBService extends BaseService {
 		this.push_waiting_obj(...args);
 		this.check_size(key);
 	}
-	/** @private @arg {push_waiting_obj_Args} args */
+	/** @private @template {keyof DatabaseStoreTypes} T @arg {Mk_push_waiting_obj_Args<T>} args */
 	push_waiting_obj(...args) {
 		const [key,obj]=args;
 		let d_cache=this.get_data_cache(key);
-		let c_index=this.store_cache_index[key][1];
+		/** @type {{[R in T]?: [R,Map<string,number>]}} */
+		let sk_ac=this.store_cache_index;
+		/** @type {[T,Map<string,number>]|undefined} */
+		let cache_index_info=as_any(this.store_cache_index[key]);
+		cache_index_info=[key,new Map];
+		sk_ac[key]=cache_index_info;
+		let c_index=cache_index_info[1];
 		let index_val=obj.key;
 		let idx=c_index.get(index_val);
 		if(idx!==void 0) {
@@ -264,25 +286,24 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
 		const {result: db,transaction: tx}=request;
 		if(!tx) throw new Error("No transaction");
-		if(event.oldVersion<1) {
-			this.createLatestDatabaseVersion(db);
-		}
+		this.createLatestDatabaseVersion(event.oldVersion,db);
 		if(event.oldVersion<2) {
-			this.transfer_store(tx,"video_id",db,{unique: true});
-			this.transfer_store(tx,"hashtag",db,{unique: true});
-			this.transfer_store(tx,"boxed_id",db,{unique: true});
-		}
-		if(event.oldVersion<3) {
 			this.create_store("channel_id",db);
 			this.create_store("playlist",db);
 		}
 	}
-	static schema_version=3;
-	/** @private @arg {IDBDatabase} db */
-	createLatestDatabaseVersion(db) {
-		this.create_store("video_id",db,{unique: true});
-		this.create_store("hashtag",db,{unique: true});
-		this.create_store("boxed_id",db,{unique: true});
+	static schema_version=2;
+	/** @private @arg {number} old_version @arg {IDBDatabase} db */
+	createLatestDatabaseVersion(old_version, db) {
+		if(old_version===0) {
+			this.create_store("video_id",db);
+			this.create_store("hashtag",db);
+			this.create_store("boxed_id",db);
+		}
+		if(old_version===1) {
+			this.create_store("channel_id",db);
+			this.create_store("playlist",db);
+		}
 	}
 	/** @private @arg {Event} event */
 	onError(event) {console.log("idb error",event);}
