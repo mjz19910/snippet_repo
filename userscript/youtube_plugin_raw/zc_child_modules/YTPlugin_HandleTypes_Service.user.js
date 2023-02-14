@@ -2875,9 +2875,10 @@ class HandleTypes extends HandleTypesEval {
 	RS_Player(x) {
 		const cf="RS_Player";
 		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
-		heartbeatParams;
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
+		heartbeatParams;
+		this.t(heartbeatParams,x => this.params(cf,"player.heartbeat_params",x));
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
 		this.t(videoDetails,this.D_VideoDetails);
