@@ -41,3 +41,6 @@ type D_0x19ac5ceb={
 		5: "\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&";
 	};
 };
+type D_RootBinaryObj={
+	0x4c82a9c: D_0x4c82a9c;
+};

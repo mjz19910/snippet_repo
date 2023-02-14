@@ -749,6 +749,7 @@ class HandleTypes extends HandleTypesEval {
 				case null: {
 				} break;
 				case null: break;
+				case "continuation_token.data.f15":
 				case "watch_request_continuation.token.f5": {
 					/** @type {`sub.${path}`} */
 					const cf=`sub.${path}`;
@@ -6418,9 +6419,24 @@ class HandleTypes extends HandleTypesEval {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
-		for(let v of dec) {
-			this.decode_continuation_token_binary(cf,v);
+		let bin_obj=this.convert_arr_to_obj(dec);
+		if(!bin_obj) {debugger; return;}
+		/** @type {D_RootBinaryObj} */
+		let t_bin_obj=as(bin_obj);
+		if(0x4c82a9c in t_bin_obj) {
+			this.D_0x4c82a9c(t_bin_obj[0x4c82a9c]);
+			return;
 		}
+		let kk=this.get_keys_of_2(t_bin_obj);
+		if(kk.length>0) {
+			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(kk.shift())}`,t_bin_obj);
+			debugger;
+		}
+		// const [,field_id,_raw_bin,dec_bin]=x;
+		// if(dec_bin===null) {debugger; break;}
+		// let hex_id=this.number_as_hex(field_id);
+		// case "0x19ac5ceb": return this.D_0x19ac5ceb(as_any(bin_obj));
+		// case "0x94d81d4": return this.D_0x94d81d4(as_any(bin_obj));
 	}
 	/** @arg {number} x */
 	number_as_hex(x) {
@@ -6436,7 +6452,7 @@ class HandleTypes extends HandleTypesEval {
 	convert_value_item_to_param_item(x) {
 		if(x instanceof Map) {
 			let x1=this.convert_map_to_obj(x);
-			if(!x1) return null;
+			if(!x1) {debugger; return null;}
 			return x1;
 		}
 		if(typeof x==='string') return x;
@@ -6445,10 +6461,10 @@ class HandleTypes extends HandleTypesEval {
 		if(x[0]==="group") {
 			const [,r]=x;
 			let vr=this.convert_arr_to_obj(r);
-			if(!vr) {debugger; return null;;}
+			if(!vr) {debugger; return null;}
 			return vr;
 		}
-		if(x[0]==="failed") return null;
+		if(x[0]==="failed") {debugger; return null;}
 		debugger;
 		return null;
 	}
@@ -6465,7 +6481,10 @@ class HandleTypes extends HandleTypesEval {
 		let res={};
 		for(let k of x.keys()) {
 			let value=x.get(k);
-			if(value===void 0) continue;
+			if(k in res) {
+				debugger;
+			}
+			if(value===void 0) {debugger; continue;}
 			if(value.length===0) {
 				res[k]={};
 				continue;
@@ -6483,9 +6502,9 @@ class HandleTypes extends HandleTypesEval {
 				continue;
 			}
 			let v2=first(value);
-			if(v2===null) continue;
+			if(v2===null) {debugger; continue;}
 			let v3=this.convert_value_item_to_param_item(v2);
-			if(v3===null) continue;
+			if(v3===null) {debugger; continue;}
 			res[k]=v3;
 		}
 		return res;
@@ -6567,17 +6586,11 @@ class HandleTypes extends HandleTypesEval {
 		switch(x[0]) {
 			default: debugger; break;
 			case "child": {
-				const [,field_id,_raw_bin,dec_bin]=x;
-				if(dec_bin===null) {debugger; break;}
-				let hex_id=this.number_as_hex(field_id);
 				let bin_obj=this.convert_arr_to_obj(dec_bin);
 				if(bin_obj===null) {debugger; break;}
 				this.k(`${cf}.continuation.binary_obj`,bin_obj);
 				switch(hex_id) {
 					default: debugger; break;
-					case "0x19ac5ceb": return this.D_0x19ac5ceb(as_any(bin_obj));
-					case "0x4c82a9c": return this.D_0x4c82a9c(as_any(bin_obj));
-					case "0x94d81d4": return this.D_0x94d81d4(as_any(bin_obj));
 				}
 			} break;
 		}

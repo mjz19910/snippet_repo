@@ -1110,5 +1110,6 @@ export namespace Gen {
 		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.watch_request_continuation.token.f5";}
 		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "DC_Continuation";}
 		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "D_Continuation";}
+		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.watch_request_continuation.token.f5" | "sub.continuation_token.data.f15";}
 		;
 }
