@@ -3385,17 +3385,6 @@ class HandleTypes extends HandleTypesEval {
 		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {D_ConfirmDialog} x */
-	D_ConfirmDialog(x) {
-		const cf="D_ConfirmDialog"; this.k(cf,x);
-		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(title,this.G_Text);
-		this.trackingParams(cf,trackingParams);
-		this.z(dialogMessages,this.G_Text);
-		this.R_Button(confirmButton);
-		this.R_Button(cancelButton);
-		this.a_primitive_bool(primaryIsCancel);
-	}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting"; this.k(cf,x);

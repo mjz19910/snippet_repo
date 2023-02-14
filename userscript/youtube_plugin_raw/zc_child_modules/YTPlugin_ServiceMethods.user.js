@@ -240,8 +240,19 @@ class ServiceMethods extends ServiceData {
 			case "ENABLE_CHROME_NOTIFICATIONS": case "HELP": case "HISTORY_BACK": case "HISTORY_FORWARD": case "SKIP_NAVIGATION": case "TOGGLE_TRANSCRIPT_TIMESTAMPS":
 		}
 	}
-	/** @private @arg {R_ConfirmDialog} x */
+	/** @protected @arg {R_ConfirmDialog} x */
 	R_ConfirmDialog(x) {this.H_("R_ConfirmDialog","confirmDialogRenderer",x,this.D_ConfirmDialog);}
+	/** @private @arg {D_ConfirmDialog} x */
+	D_ConfirmDialog(x) {
+		const cf="D_ConfirmDialog"; this.k(cf,x);
+		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(title,this.G_Text);
+		this.trackingParams(cf,trackingParams);
+		this.z(dialogMessages,this.G_Text);
+		this.R_Button(confirmButton);
+		this.R_Button(cancelButton);
+		this.a_primitive_bool(primaryIsCancel);
+	}
 	/** @private @arg {R_VoiceSearchDialog} x */
 	R_VoiceSearchDialog(x) {this.H_("R_VoiceSearchDialog","voiceSearchDialogRenderer",x,this.D_VoiceSearchDialog);}
 	/** @private @arg {P_ClientSignal["popup"]} x */
