@@ -2,7 +2,6 @@ import {ServiceMethods} from "./zc_child_modules/YtPlugin_Base.user";
 /** @returns {never} */
 function n() {throw new Error("Make never type");}
 n;
-/** @template CLS_T,CLS_U @extends {ServiceMethods<CLS_T,CLS_U>} */
 export class HandleTypesEval_ extends ServiceMethods {
 	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(cf,k,x,excl=[]) {
