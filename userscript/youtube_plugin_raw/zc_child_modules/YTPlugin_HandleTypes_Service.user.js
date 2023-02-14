@@ -730,33 +730,6 @@ class HandleTypes extends HandleTypesEval {
 	handle_map_value(path,entry) {
 		if(typeof entry==="string") {
 			switch(path) {
-				case "load_markers.entity_key.f2": case "reel_request_continuation.token.f12":
-				case "continuation_token.data.f53.f8": {
-					this.save_string(path,entry);
-				} break;
-				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f1":
-				case "tracking.trackingParams.f11": {
-					this.D_ChannelId(as(entry));
-				} break;
-				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1": case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
-				case "unsubscribe.params.f2": {
-					this.videoId(entry);
-				} break;
-				case "continuation_token.data.f110.f3.f15.f2.f1": {
-					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
-					this.targetId(`Binary.value:${path}`,as(entry));
-				} break;
-				case null: {
-				} break;
-				case null: break;
-				case "continuation_token.data.f72":
-				case "continuation_token.data.f49.f6":
-				case "continuation_token.data.f15":
-				case "watch_request_continuation.token.f5": {
-					/** @type {`sub.${path}`} */
-					const cf=`sub.${path}`;
-					this.decode_continuation_token(cf,entry);
-				} break;
 				case "continuation_token.data.f49": {
 					let bc=decodeURIComponent(entry);
 					let buffer=base64_url_dec.decodeByteArray(bc);
@@ -777,16 +750,39 @@ class HandleTypes extends HandleTypesEval {
 						console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,[...buffer.slice(c_pos,c_pos+4)]);
 					}
 				} break;
+				case "load_markers.entity_key.f2": case "reel_request_continuation.token.f12":
+				case "continuation_token.data.f53.f8": {
+					this.save_string(path,entry);
+				} break;
+				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f1":
+				case "tracking.trackingParams.f11": {
+					this.D_ChannelId(as(entry));
+				} break;
+				case "reel_request_continuation.token.f15.f6.f1": case "reel_request_continuation.token.f3.f1": case "continuation_token.data.f53.f4.f4": case "watch_request_continuation.token.f6.f4.f4": case "watch_request_continuation.token.f2.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f2":
+				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1": case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
+				case "unsubscribe.params.f2": {
+					this.videoId(entry);
+				} break;
+				case "continuation_token.data.f110.f3.f15.f2.f1": {
+					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
+					this.targetId(`Binary.value:${path}`,as(entry));
+				} break;
+				case null: {
+				} break;
+				case null: break;
+				case "continuation_token.data.f72":
+				case "continuation_token.data.f49.f6":
+				case "continuation_token.data.f15":
+				case "watch_request_continuation.token.f5": {
+					/** @type {`sub.${path}`} */
+					const cf=`sub.${path}`;
+					this.decode_continuation_token(cf,entry);
+				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
 				} break;
-				case "reel_request_continuation.token.f15.f6.f1":
-				case "reel_request_continuation.token.f3.f1":
-				case "continuation_token.data.f53.f4.f4":
-				case "watch_request_continuation.token.f6.f4.f4":
-				case "watch_request_continuation.token.f2.f2":
-				case "continuation_token.data$sub_obj$f3.f1.f5.f2": {
+				case "reel.sequence_params.f1": {
 					this.videoId(entry);
 				} break;
 				case "entity_key.subscribed.f2":
