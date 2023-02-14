@@ -8,8 +8,8 @@
 // @match	https://*.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/za_userscript_meta/YTPlugin_HandleTypes_Service.meta.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes_Service.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/za_userscript_meta/YTPlugin_HandleTypes.meta.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_HandleTypes.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 //#region module setup
@@ -43,30 +43,12 @@ function init_module() {
 const ServiceMethods=bs.ServiceMethods;
 const ServiceResolver=bs.ServiceResolver; ServiceResolver;
 const as_any=bs.as_any;
-const CodegenService=required(store["mod$CodegenService"]?.CodegenService); CodegenService;
+const CodegenService=required(store["mod$CodegenService"]).CodegenService; CodegenService;
+const TypedefGenerator=required(store["mod$SupportService"]).TypedefGenerator;
 //#endregion
 //#region Constants
 /** @type {{value:TypedefGenerator|null}} */
 const generate_typedef={value: null};
-/** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
-class TypedefGenerator extends ServiceMethods {
-	k=this.save_keys;
-	/** @arg {D_TypedefGenerator_Popup} x */
-	D_TypedefGenerator_Popup(x) {
-		const cf="popup_dialog"; cf; this.k(cf,x);
-		let x1=this.unpack_popup_dialog(x);
-		if(!x1[0]) {debugger; return null;}
-		let dialog=x1[1];
-		return this.D_TypedefGenerator_Popup_R(dialog);
-	}
-	/** @arg {D_TypedefGenerator_Popup_R} x */
-	D_TypedefGenerator_Popup_R(x) {
-		const cf="R_ConfirmDialog"; cf; this.k(cf,x);
-		if("confirmDialogRenderer" in x) return "TYPE::Popup_ConfirmDialog";
-		if("fancyDismissibleDialogRenderer" in x) return "TYPE::Popup_DismissibleDialog";
-		return null;
-	}
-}
 //#endregion
 //#region HandleTypesEval
 /** @arg {TemplateStringsArray} x */
@@ -6576,7 +6558,7 @@ class HandleTypes extends HandleTypesEval {
 						/* [f_23_TR_Binary_Num_f1] */
 						switch(value) {
 							default: debugger; break;
-							case 1: case 3: case 4: case 14: case 15:  case 31: case 53:
+							case 1: case 3: case 4: case 14: case 15: case 31: case 53:
 						}
 					}
 				} break;
@@ -6778,7 +6760,7 @@ class HandleTypes extends HandleTypesEval {
 				case "3D printing":
 				case "AI":
 				case "Bitcoin":
-				case "C++": case "Calculus": case "Computer Science": case "Conversation": case "CPUs":
+				case "C++": case "Calculus": case "Computer Science": case "Conversation": case "CPUs": case "C#":
 				case "Editing": case "Electronic Music":
 				case "Gadgets": case "Game engines": case "Geometry":
 				case "History":

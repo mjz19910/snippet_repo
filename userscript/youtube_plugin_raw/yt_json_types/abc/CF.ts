@@ -88,6 +88,14 @@ type CF_M_w=
 	|`zy:${CF_M_zy}`
 	;
 ;
+type CF_TR_MultiPageMenu=
+	|"D_NotificationMenu_PopupItemMenu"
+	|"TR_MultiPageMenu_Empty"
+	|"P_NotificationMenu_Popup"
+	|"R_TopbarMenu"
+	|"TR_MultiPageMenu<MP_AccountMenu>"
+	;
+;
 type CF_T_SE_Signal=
 	|`${CF_GE_ResponseReceived}.SE_Signal`
 	|`${CF_T_SE_Signal_P1}.SE_Signal`

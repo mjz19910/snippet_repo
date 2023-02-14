@@ -1,1 +1,1 @@
-type ResolverT<T,U>={value: import("../zc_child_modules/YTPlugin_Base_Plugin.user.js").ServiceResolver<T,U>|null;};
+type ResolverT<T,U>={value: import("../zc_child_modules/YtPlugin_Base.user.js").ServiceResolver<T,U>|null;};

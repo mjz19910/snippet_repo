@@ -1,2 +1,2 @@
 export {};
-declare global {interface Window {yt_plugin?: import("../zc_child_modules/YTPlugin_Base_Plugin.user").YtPlugin;}}
+declare global {interface Window {yt_plugin?: import("../zc_child_modules/YtPlugin_Base.user").YtPlugin;}}

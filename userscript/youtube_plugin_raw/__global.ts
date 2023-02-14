@@ -2,7 +2,7 @@ import {HandleTypesEval_} from "./handle_types_eval.js";
 declare global {
 	interface Window {Polymer: {Class?: <T>(x: {}) => T;};}
 }
-type Base$ImpType=typeof import("./zc_child_modules/YTPlugin_Base_Plugin.user.js");
+type Base$ImpType=typeof import("./zc_child_modules/YtPlugin_Base.user.js");
 declare global {
 	interface URLSearchParams {
 		[Symbol.iterator](): IterableIterator<[string,string]>;
@@ -22,7 +22,7 @@ declare global {
 namespace EX {
 	export type ServiceMethods=Base$ImpType["ServiceMethods"];
 	export type split_string_once=Base$ImpType["split_string_once"];
-	export type as_=typeof import("./zc_child_modules/YTPlugin_Base_Plugin.user.js").as_;
+	export type as_=typeof import("./zc_child_modules/YtPlugin_Base.user.js").as_;
 	export type AudioGainController=Base$ImpType["AudioGainController"];
 	export type base64_dec=Base$ImpType["base64_dec"];
 	export type split_string_once_last=Base$ImpType["split_string_once_last"];
@@ -46,15 +46,15 @@ namespace EX {
 	export var BaseService: EX.BaseService;
 	// youtube_plugin_base
 	export var CsiService: Base$ImpType["CsiService"];
-	export var ECatcherService:  typeof import("./zc_child_modules/YTPlugin_ECatcherService_handler.user.js").ECatcherService;
+	export var ECatcherService:  typeof import("./zc_child_modules/YTPlugin_ECatcherService.user.js").ECatcherService;
 	export var GFeedbackService: Base$ImpType["GFeedbackService"];
 	export var GuidedHelpService: Base$ImpType["GuidedHelpService"];
 	export var TrackingServices: Base$ImpType["TrackingServices"];
-	export var ParserService: typeof import("./zc_child_modules/YTPlugin_Parser_Service.user.js").ParserService;
+	export var ParserService: typeof import("./zc_child_modules/YTPlugin_Parser.user.js").ParserService;
 	export var YtHandlers: Base$ImpType["YtHandlers"];
-	export var HandleTypes: typeof import("./zc_child_modules/YTPlugin_HandleTypes_Service.user.js").HandleTypes;
-	export var CodegenService: typeof import("./zc_child_modules/YTPlugin_CodegenService.user.js").CodegenService;
-	export var IndexedDBService: typeof import("./zc_child_modules/YTPlugin_IndexedDB_Service.user.js").IndexedDBService;
+	export var HandleTypes: typeof import("./zc_child_modules/YTPlugin_HandleTypes.user.js").HandleTypes;
+	export var CodegenService: typeof import("./zc_child_modules/YTPlugin_Codegen.user.js").CodegenService;
+	export var IndexedDBService: typeof import("./zc_child_modules/YTPlugin_IndexedDB.user.js").IndexedDBService;
 	export var YtPlugin: Base$ImpType["YtPlugin"];
 	export var ModifyEnv: Base$ImpType["ModifyEnv"];
 	// youtube_plugin_HandleTypes

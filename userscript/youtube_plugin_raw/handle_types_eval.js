@@ -1,4 +1,4 @@
-import {as_ as as,ServiceMethods} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
+import {as_ as as,ServiceMethods} from "./zc_child_modules/YtPlugin_Base.user";
 /** @returns {never} */
 function n() {throw new Error("Make never type");}
 n;

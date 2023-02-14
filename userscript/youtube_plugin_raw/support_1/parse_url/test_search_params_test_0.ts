@@ -1,7 +1,7 @@
 async function test_search_params_test_0() {
 	const ApiBaseExported=(await import("../../support_2/exports.js")).ApiBaseExported;
 	const api=new ApiBaseExported;
-	const split_string=(await import("../../zc_child_modules/YTPlugin_Base_Plugin.user.js")).split_string;
+	const split_string=(await import("../../zc_child_modules/YtPlugin_Base.user.js")).split_string;
 	function parse_with_url_parse<T extends `https://${string}`>(str: T): UrlParse<T> {
 		let s=new URL(str);
 		return s as any as UrlParse<T>;
