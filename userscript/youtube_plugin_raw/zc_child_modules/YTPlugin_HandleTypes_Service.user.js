@@ -6487,7 +6487,34 @@ class HandleTypes extends HandleTypesEval {
 		this.D_ReadAny_CD_0x4c82a9c(dec_0);
 	}
 	/** @arg {D_RA_CR_0x12f639cf} x */
-	D_ReadAny_CR_0x12f639cf(x) {x;}
+	D_RA_CR_0x12f639cf(x) {
+		const [dec_0,dec_1,dec_2,dec_3,dec_4]=x;
+		{
+			let x=dec_0;
+			if(x[0]!=="data32") debugger;
+			if(x[1]!==3) debugger;
+		}
+		{
+			let x=dec_1;
+			if(x[0]!=="child") debugger;
+			if(x[1]!==6) debugger;
+		}
+		{
+			let x=dec_2;
+			if(x[0]!=="child") debugger;
+			if(x[1]!==11) debugger;
+		}
+		{
+			let x=dec_3;
+			if(x[0]!=="child") debugger;
+			if(x[1]!==12) debugger;
+		}
+		{
+			let x=dec_4;
+			if(x[0]!=="child") debugger;
+			if(x[1]!==0x12f639cf) debugger;
+		}
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -6501,13 +6528,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(dec_t.length) {
 			default: debugger; break;
 			case 5: {
-				const [dec_0,dec_1,dec_2,dec_3,dec_4]=dec_t;
-				dec_0; dec_1; dec_2; dec_3; dec_4;
-				if(dec_0[1]!==3) debugger;
-				if(dec_1[1]!==6) debugger;
-				if(dec_2[1]!==11) debugger;
-				if(dec_3[1]!==12) debugger;
-				if(dec_4[1]!==0x12f639cf) debugger;
+				this.D_RA_CR_0x12f639cf(dec_t);
 			} break;
 			case 1: {
 				const [dec_0]=dec_t;
