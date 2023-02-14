@@ -6548,17 +6548,42 @@ class HandleTypes extends HandleTypesEval {
 			buffer; dec;
 		}
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_23} x */
+	/** @arg {D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13} x */
 	D_RA_D_BinaryCategoryObj(x) {
 		const [dec_0,dec_1]=x;
 		{
 			const [type,field_id,buffer,dec]=dec_0;
 			if(type!=="child") debugger;
-			if(field_id!==2) debugger;
+			switch(field_id) {
+				default: debugger; break;
+				case 1: {
+					if(dec.length!==1) debugger;
+					const [dec_0]=dec;
+					{
+						const [type,field_id,buffer,dec]=dec_0; buffer;
+						if(type!=="child") debugger;
+						if(field_id!==1) debugger;
+						if(dec!==null) debugger;
+					}
+				} break;
+				case 2: {
+					if(dec.length!==1) debugger;
+					const [dec_0]=dec;
+					{
+						const [type,field_id,value]=dec_0;
+						if(type!=="data32") debugger;
+						if(field_id!==1) debugger;
+						switch(value) {
+							default: debugger; break;
+							case 53:
+						}
+					}
+				} break;
+			}
 			buffer; dec;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_1;
+			const [type,field_id,buffer]=dec_1;
 			if(type!=="child") debugger;
 			if(field_id!==3) debugger;
 			dec_1[3]=null;
@@ -8215,11 +8240,12 @@ class HandleTypes extends HandleTypesEval {
 		this.D_ChipCloudChip_navigationEndpoint(a);
 		return y;
 	}
-	/** @private @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>['navigationEndpoint']} x */
+	/** @private @arg {D_ChipCloudChip_navigationEndpoint} x */
 	D_ChipCloudChip_navigationEndpoint(x) {
 		const cf="D_ChipCloudChip_navigationEndpoint"; this.k(cf,x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
+		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */

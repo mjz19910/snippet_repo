@@ -691,7 +691,13 @@ type D_ChipCloudChip_Style=[
 	"STYLE_HOME_FILTER",
 	"STYLE_REFRESH_TO_NOVEL_CHIP",
 ][number];
+type D_ChipCloudChip_navigationEndpoint=C_Continuation|C_RelatedChip|E_Feedback;
 type D_ChipCloudChip=
+	|{
+		text: G_Text;
+		navigationEndpoint: D_ChipCloudChip_navigationEndpoint;
+		trackingParams: string;
+	}
 	|{
 		text: G_Text;
 		navigationEndpoint: C_Continuation;
