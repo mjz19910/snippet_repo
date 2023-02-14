@@ -5673,7 +5673,8 @@ class HandleTypes extends HandleTypesEval {
 		switch(r[0]) {
 			default: debugger; break;
 			case "child": switch(r[1]) {
-				case 3: let playlist_id=this._decoder.decode(r[2]);
+				case 3: {
+					let playlist_id=this._decoder.decode(r[2]);
 					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
 						switch(r[1]) {
 							default:
@@ -5689,6 +5690,7 @@ class HandleTypes extends HandleTypesEval {
 							}
 						}
 					}
+				}
 			} break;
 		}
 	}
