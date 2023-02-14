@@ -3381,6 +3381,45 @@ class ServiceMethods extends ServiceData {
 		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
 		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
 	}
+	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
+	D_ThumbnailOverlayToggleButton(x) {
+		const cf="D_ThumbnailOverlayToggleButton"; this.k(cf,x);
+		if("toggledServiceEndpoint" in x) {
+			const [o1,o2,{isToggled,...y}]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
+			this.ceq(isToggled,this.false_());
+			this.D_ThumbnailOverlayToggleButton_ToggledPrefix_1(o1);
+			this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(o2);
+			return;
+		}
+		const [o1,o2,y]=this.D_ThumbnailOverlayToggleButton_Omit(cf,x); this.g(y);
+		this.D_ThumbnailOverlayToggleButton_ToggledPrefix_2(o1);
+		this.D_ThumbnailOverlayToggleButton_UntoggledPrefix_2(o2);
+	}
+	/** @private @arg {D_ThumbnailOverlayResumePlayback} x */
+	D_ThumbnailOverlayResumePlayback(x) {this.y("D_ThumbnailOverlayResumePlayback","percentDurationWatched",x,x => this.save_number("resume_playback.percentDurationWatched",x));}
+	/** @private @arg {D_ThumbnailOverlayTimeStatus} x */
+	D_ThumbnailOverlayTimeStatus(x) {
+		const cf="D_ThumbnailOverlayTimeStatus"; this.k(cf,x);
+		const {style,text,...y}=this.s(cf,x);
+		switch(style) {
+			default: debugger; break;
+			case "DEFAULT":
+			case "LIVE":
+			case "SHORTS":
+		}
+		if("icon" in y) {
+			const {icon,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
+			switch(icon.iconType) {
+				default: debugger; break;
+				case "LIVE":
+				case "YOUTUBE_SHORTS_FILL_NO_TRIANGLE_RED_16":
+			}
+			return;
+		}
+		this.g(y);
+	}
+	/** @protected @arg {D_ThumbnailOverlayLoadingPreview} x */
+	D_ThumbnailOverlayLoadingPreview(x) {this.H_("D_ThumbnailOverlayLoadingPreview","text",x,this.G_Text);}
 	/** @private @arg {D_ThumbnailOverlayNowPlaying} x */
 	D_ThumbnailOverlayNowPlaying(x) {const cf="D_ThumbnailOverlayNowPlaying"; this.y(cf,"text",x,this.G_Text);}
 	/** @private @arg {R_ThumbnailOverlayBottomPanel} x */
