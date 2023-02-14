@@ -678,6 +678,15 @@ class ServiceMethods extends ServiceData {
 		this.R_MenuServiceItem(menuItem);
 		this.R_Button(topLevelButton);
 	}
+	/** @private @arg {D_LoggingDirectives} x */
+	D_LoggingDirectives(x) {
+		const cf="D_LoggingDirectives"; this.k(cf,x);
+		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(cf,trackingParams);
+		this.t(visibility,this.TM_Visibility);
+		this.t(gestures,this.D_LoggingDirectives_Gestures);
+		if(enableDisplayloggerExperiment!==void 0) this._primitive_of(enableDisplayloggerExperiment,"boolean");
+	}
 	/** @private @arg {RD_MenuServiceItem} x */
 	RD_MenuServiceItem(x) {
 		const cf="RD_MenuServiceItem"; this.k(cf,x);

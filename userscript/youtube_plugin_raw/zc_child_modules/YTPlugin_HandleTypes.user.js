@@ -4662,15 +4662,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
-	/** @private @arg {D_LoggingDirectives} x */
-	D_LoggingDirectives(x) {
-		const cf="D_LoggingDirectives"; this.k(cf,x);
-		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(cf,trackingParams);
-		this.t(visibility,this.TM_Visibility);
-		this.t(gestures,this.D_LoggingDirectives_Gestures);
-		if(enableDisplayloggerExperiment!==void 0) this._primitive_of(enableDisplayloggerExperiment,"boolean");
-	}
 	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
 		const cf="D_LoggingDirectives_Gestures"; this.g_k(cf,x); this.k(cf,x);
