@@ -749,6 +749,8 @@ class HandleTypes extends HandleTypesEval {
 				case null: {
 				} break;
 				case null: break;
+				case "continuation_token.data.f72":
+				case "continuation_token.data.f49.f6":
 				case "continuation_token.data.f15":
 				case "watch_request_continuation.token.f5": {
 					/** @type {`sub.${path}`} */
@@ -4078,7 +4080,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @private @arg {string} cf @arg {{}} x */
-	codegen_typedef_all(cf,x) {
+	codegen_typedef_all(cf,x,do_break=true) {
 		let res=this.codegen.codegen_typedef(cf,x,true);
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
@@ -4094,7 +4096,7 @@ class HandleTypes extends HandleTypesEval {
 		console.group(`-- [${cf}.gen_result] --`);
 		console.log("\n%s",all_types);
 		console.groupEnd();
-		{debugger;}
+		if (do_break) {debugger;}
 	}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
@@ -6405,6 +6407,22 @@ class HandleTypes extends HandleTypesEval {
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
+	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
+	GR_RootBinaryObj(cf,x) {
+		this.k(`${cf}.continuation.binary_obj`,x);
+		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
+		if(0x12f639cf in x) return this.R_0x12f639cf(x);
+		if(2 in x) {
+			let kk=this.get_keys_of_2(x);
+			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
+			return;
+		}
+		let kk=this.get_keys_of_2(x);
+		if(kk.length>0) {
+			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
+			debugger;
+		}
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -6417,20 +6435,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!bin_obj) {debugger; return;}
 		/** @type {GR_RootBinaryObj} */
 		let t_bin_obj=as(bin_obj);
-		this.k(`${cf}.continuation.binary_obj`,t_bin_obj);
-		if(0x4c82a9c in t_bin_obj) {
-			this.D_0x4c82a9c(t_bin_obj[0x4c82a9c]);
-			return;
-		}
-		if(0x12f639cf in t_bin_obj) {
-			this.R_0x12f639cf(t_bin_obj);
-			return;
-		}
-		let kk=this.get_keys_of_2(t_bin_obj);
-		if(kk.length>0) {
-			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,t_bin_obj);
-			debugger;
-		}
+		this.GR_RootBinaryObj(cf,t_bin_obj);
 		// const [,field_id,_raw_bin,dec_bin]=x;
 		// if(dec_bin===null) {debugger; break;}
 		// let hex_id=this.number_as_hex(field_id);
@@ -6596,6 +6601,21 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 		f1;
 	}
+	/** @private @arg {V_BinaryTimestamp} x */
+	V_BinaryTimestamp(x) {
+		const cf="V_BinaryTimestamp";
+		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
+		debugger;
+	}
+	/** @private @arg {R_0x12f639cf[12]} x */
+	D_f12(x) {
+		const cf="D_f12";
+		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
+		if(f1!==0) debugger;
+		if(f2!=="page_snapshot_token") debugger;
+		this.V_BinaryTimestamp(f3);
+		this.V_BinaryTimestamp(f4);
+	}
 	/** @private @arg {R_0x12f639cf} x */
 	R_0x12f639cf(x) {
 		const cf="R_0x12f639cf";
@@ -6603,8 +6623,10 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(f3);
 		this.RV_Bigint(f6);
 		this.D_0x12f639cf(f_0x12f639cf);
-		this.R_f11;
+		this.R_f11(f11);
+		this.D_f12(f12);
 	}
+	R_0x4c82a9c(x) {this.D_0x4c82a9c(x[0x4c82a9c]);}
 	/** @private @arg {D_0x12f639cf} x */
 	D_0x12f639cf(x) {
 		const cf="D_0x12f639cf";
