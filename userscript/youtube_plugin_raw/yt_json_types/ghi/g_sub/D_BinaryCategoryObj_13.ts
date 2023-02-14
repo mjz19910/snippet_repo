@@ -180,5 +180,11 @@ type D_BinaryCategoryObj_13=
 		};
 		3: "Visual arts";
 	}
+	|{
+		1: {
+			1: "/m/02jnw";
+		};
+		3: "Equations";
+	}
 	;
 ;
