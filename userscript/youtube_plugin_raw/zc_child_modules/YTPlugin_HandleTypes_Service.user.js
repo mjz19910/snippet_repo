@@ -6486,6 +6486,8 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==0x4c82a9c) debugger; buffer;
 		this.D_ReadAny_CD_0x4c82a9c(dec_0);
 	}
+	/** @arg {D_ReadAny_CR_0x12f639cf} x */
+	D_ReadAny_CR_0x12f639cf(x) {x;}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -6501,7 +6503,11 @@ class HandleTypes extends HandleTypesEval {
 			case 5: {
 				const [dec_0,dec_1,dec_2,dec_3,dec_4]=dec_t;
 				dec_0; dec_1; dec_2; dec_3; dec_4;
-
+				if(dec_0[1]!==3) debugger;
+				if(dec_1[1]!==6) debugger;
+				if(dec_2[1]!==11) debugger;
+				if(dec_3[1]!==12) debugger;
+				if(dec_4[1]!==0x12f639cf) debugger;
 			} break;
 			case 1: {
 				const [dec_0]=dec_t;

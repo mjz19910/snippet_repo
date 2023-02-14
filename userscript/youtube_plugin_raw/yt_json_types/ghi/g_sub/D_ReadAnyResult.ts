@@ -9,10 +9,18 @@ type D_ReadAnyResult=
 	|DD_exv_2
 	;
 ;
+type D_ReadAny_V_BinaryTimestamp=[["data32",1,number],["data32",2,number],["data32",3,number]];
+type D_ReadAny_CR_0x12f639cf=[
+	["data32",3,number],
+	["child",6,Uint8Array,[["data64",1,number[],bigint]]],
+	["child",11,Uint8Array,[["child",1,Uint8Array,[["child",1,Uint8Array,null],["child",2,Uint8Array,null],["child",3,Uint8Array,null]]]]],
+	["child",12,Uint8Array,[["data32",1,0],["child",2,Uint8Array,null],["child",3,Uint8Array,D_ReadAny_V_BinaryTimestamp],["child",4,Uint8Array,D_ReadAny_V_BinaryTimestamp]]],
+	["child",318126543,Uint8Array,[["data32",1,25]]]
+];
 type DD_exv=T_DistributedKeysOf_2<R_0x12f639cf>;
 type DD_exv_3=keyof DD_exv;
 type DD_exv_2=DD_Exv_2<DD_exv,keyof DD_exv>;
-type DD_Exv_2<T extends U[],U>=T extends [infer F extends U]?[DD_Exv_1[F&keyof DD_Exv_1]]:T extends [infer F extends U,...infer R]?R extends Exclude<U,F>[]?[DD_Exv_1[F&keyof DD_Exv_1],...DD_Exv_2<R,Exclude<U,F>>]:never:[];
+type DD_Exv_2<T extends U[],U>=T extends [infer F extends U]? [DD_Exv_1[F&keyof DD_Exv_1]]:T extends [infer F extends U,...infer R]? R extends Exclude<U,F>[]? [DD_Exv_1[F&keyof DD_Exv_1],...DD_Exv_2<R,Exclude<U,F>>]:never:[];
 type DD_Exv_1={
 	[U in keyof R_0x12f639cf]: UD_R_0x12f639cf<U>;
 };
