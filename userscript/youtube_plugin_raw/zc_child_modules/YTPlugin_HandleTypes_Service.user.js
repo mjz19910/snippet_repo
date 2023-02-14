@@ -6595,6 +6595,9 @@ class HandleTypes extends HandleTypesEval {
 			if(x[3]==="Media theories") return;
 			if(x[3]==="Nintendo") return;
 			if(x[3]==="Puzzle games") return;
+			if(x[3]==="AI") return;
+			if(x[3]==="Calculus") return;
+			if(x[3]==="Soundtracks") return;
 			this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 			return;
 		}

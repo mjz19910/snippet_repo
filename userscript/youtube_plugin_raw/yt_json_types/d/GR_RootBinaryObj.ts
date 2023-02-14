@@ -140,5 +140,23 @@ type GR_RootBinaryObj=
 		};
 		3: "Electronic Music";
 	}
+	|{
+		1: {
+			1: "/m/0mkz";
+		};
+		3: "AI";
+	}
+	|{
+		1: {
+			1: "/m/01lgy";
+		};
+		3: "Calculus";
+	}
+	|{
+		1: {
+			1: "/m/0l14gg";
+		};
+		3: "Soundtracks";
+	}
 	;
 ;
