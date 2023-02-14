@@ -10931,12 +10931,21 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(name);
 		this.save_string(`${cf}.vssId`,vssId);
 		this.save_string(`${cf}.languageCode`,languageCode);
-		this.save_string(`${cf}.kind`,kind);
+		this.t(kind,x => this.save_string(`${cf}.kind`,x));
 		if(isTranslatable!==true) debugger;
 	}
 	/** @private @arg {D_AudioTrackItem} x */
 	D_AudioTrackItem(x) {
 		const cf="D_AudioTrackItem";
+		if("defaultCaptionTrackIndex" in x) {
+			const {captionTrackIndices,defaultCaptionTrackIndex,visibility,hasDefaultTrack,captionsInitialState,...y}=this.s(cf,x); this.g(y);
+			this.z(captionTrackIndices,this.a_primitive_num);
+			this.a_primitive_num(defaultCaptionTrackIndex);
+			this.ceq(visibility,"UNKNOWN");
+			this.ceq(hasDefaultTrack,true);
+			if(captionsInitialState!=="CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED") debugger;
+			return;
+		}
 		const {captionTrackIndices,...y}=this.s(cf,x); this.g(y);
 		this.z(captionTrackIndices,this.a_primitive_num);
 	}

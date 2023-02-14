@@ -1324,7 +1324,15 @@ type D_AttBgChallenge={
 type D_AudioSampleRate=[
 	44100,48000
 ][number];
-type D_AudioTrackItem={captionTrackIndices: number[];};
+type D_AudioTrackItem={
+	captionTrackIndices: number[];
+}|{
+	captionTrackIndices: number[];
+	defaultCaptionTrackIndex: number;
+	visibility: "UNKNOWN";
+	hasDefaultTrack: true;
+	captionsInitialState: "CAPTIONS_INITIAL_STATE_OFF_RECOMMENDED";
+};
 type D_AutoplaySwitchButton={
 	onEnabledCommand: T_Setting_AutoNavForDesktop<true>;
 	onDisabledCommand: T_Setting_AutoNavForDesktop<false>;
@@ -1397,9 +1405,9 @@ type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_CaptionTrackItem={
 	baseUrl: `https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`;
 	name: G_Text;
-	vssId: "a.en";
+	vssId: "a.en"|".en";
 	languageCode: "en";
-	kind: "asr";
+	kind?: "asr";
 	isTranslatable: true;
 };
 type D_CarouselLockup={infoRows: R_InfoRow[];};
