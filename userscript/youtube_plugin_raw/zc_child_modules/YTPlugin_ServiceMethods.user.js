@@ -104,6 +104,8 @@ class ServiceMethods extends ServiceData {
 			this.tz(serviceEndpoints,this.E_Like);
 		}
 	}
+	/** @protected @arg {string} cf @arg {{}} x */
+	g_k=(cf,x) => this.k(cf,x);
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
 		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
@@ -862,6 +864,69 @@ class ServiceMethods extends ServiceData {
 		if(rootVe!==5754) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
+	}
+	/** @private @arg {GM_VE6827} x */
+	GM_VE6827(x) {
+		const cf="GM_VE6827"; this.k(cf,x);
+		const {url,sendPost,webPageType,rootVe,apiUrl,...y}=this.s(cf,x);/*#destructure_done*/
+		this.t(url,this.D_VE6827_Url);
+		this.t(sendPost,x => this.ceq(x,true));
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==6827) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		if("sendPost" in y) {
+			const {sendPost,...y1}=y; this.g(y1);
+			if(sendPost!==true) debugger;
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {GU_VE6827_Url} x */
+	D_VE6827_Url(x) {
+		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;
+		/** @type {D_VE6827_PageUrl_parts} */
+		let p=as_any(pf);
+		switch(p[0]) {
+			default: p[0]===""; debugger; break;
+			case "source": {
+				let [,id,...u]=p;
+				let s2=split_string_once(u[0],'?');
+				if(s2.length!==2) debugger;
+				this.videoId(id);
+				switch(s2[0]) {
+					default: s2[0]===""; debugger; break;
+					case "shorts": break;
+				}
+			} break;
+			case "hashtag": {
+				let [,ht,...u]=p;
+				if(u.length===0) {
+					this.indexed_db_put("hashtag",{key: `hashtag:${ht}`,hashtag: ht});
+				} else if(u.length===1) {
+					switch(u[0]) {
+						default: u[0]===""; debugger; break;
+						case "shorts": break;
+					}
+				} else {
+				}
+			} break;
+			case "reporthistory": {
+				let [,...u]=p;
+				if(u.length!==0) debugger;
+			} break;
+			case "feed": {
+				let s2=split_string(p[1],'?');
+				let [...u]=s2;
+				switch(u[0]) {
+					default: u[0]===""; debugger; break;
+					case "history":
+					case "library":
+					case "guide_builder":
+					case "trending":
+					case "storefront": break;
+				}
+			} break;
+		}
 	}
 	/** @private @arg {GM_VE11487} x @returns {`VE${rootVe}`} */
 	GM_VE11487(x) {
