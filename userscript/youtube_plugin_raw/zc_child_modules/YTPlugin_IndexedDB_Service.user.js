@@ -154,6 +154,7 @@ class IndexedDBService extends BaseService {
 		let [,d_cache]=this.get_data_cache(tx_namespace);
 		const obj_store=this.objectStore(transaction,tx_namespace);
 		for(let value of d_cache) {
+			if(this.committed_data.includes(value)) continue;
 			const index_val=value.key;
 			const cursor_req=this.openCursor(obj_store,IDBKeyRange.only(index_val));
 			for(let i=0;;i++) {
