@@ -1216,8 +1216,6 @@ class HandleTypes extends HandleTypesEval {
 	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
 	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
 	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
-	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
-	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @private @arg {R_CommentActionButtons} x */
 	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
 	/** @private @arg {R_HeroPlaylistThumbnail} x */
@@ -2054,20 +2052,6 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @type {string[]} */
 	Button_missing_iconType=[];
-	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
-	add_string_to_map(cf,k_arg,x) {
-		/** @type {`${typeof cf}::${typeof k_arg}`} */
-		let k=`${cf}::${k_arg}`; this.save_string(k,x);
-		let group_arr=this.strings_map.get(cf);
-		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
-		let group_entry=group_arr.find(e => e[0]===k);
-		x: {
-			if(!group_entry) break x;
-			if(group_entry[1].includes(x)) return;
-			group_entry[1].push(x);
-		}
-		group_arr.push([k,[x]]);
-	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
 		const cf="D_PdgBuyFlowHeader";
@@ -2797,12 +2781,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:T["signal"])=>void} f @returns {Omit<T,"signal">} */
-	Signal_Omit(x,f) {
-		const cf="Signal_Omit";
-		const {signal,...y}=this.s(cf,x); f(signal);
-		return y;
-	}
 	/** @private @arg {P_ClientSignal["popup"]} x */
 	S_Client_HandlePopup(x) {
 		const cf="S_Client_HandlePopup"; this.k(cf,x);
@@ -3190,8 +3168,6 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 	}
-	/** @type {Map<string,[string,string[]][]>} */
-	strings_map=new Map;
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge"; this.k(cf,x);
@@ -4778,12 +4754,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.G_SecondaryContents);
 	}
-	/** @private @arg {TM_Visibility} x */
-	TM_Visibility(x) {
-		const cf="TM_Visibility"; this.k(cf,x);
-		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string("Visibility.types",types);
-	}
 	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation(x) {
 		const cf="A_CommentsSectionContinuation";
@@ -5510,40 +5480,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @type {string[]} */
 	logged_strings=[];
 	group_sub_noti_toggle_btn=false;
-	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
-	D_SubscriptionNotificationToggleButton(x) {
-		const cf="D_SubscriptionNotificationToggleButton"; this.k(cf,x);
-		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
-		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
-		const n2=2,n3=3,n0=0;
-		/** @type {[n2,n3,n0]} */
-		const ids_e=[n2,n3,n0];
-		let log_states=false;
-		if(!this.eq_keys(ids,ids_e)) log_states=true;
-		this.z(states,(x,i) => {
-			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
-			if(nextStateId!==stateId) debugger;
-			if(log_states) console.log("[button.state_id.%s]",i,stateId);
-			this.R_Button(state);
-			return stateId;
-		});
-		if(this.group_sub_noti_toggle_btn) console.groupEnd();
-		switch(currentStateId) {
-			default: debugger; break;
-			case 0: case 2: case 3:
-		}
-		this.trackingParams(cf,trackingParams);
-		this.C_Executor(command);
-		switch(targetId) {
-			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
-				this.logged_strings.push(`${cf}:${targetId}`);
-				console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
-			} break;
-			case "notification-bell": break;
-		}
-		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
-	}
 	/** @private @arg {D_ExpandableTab} x */
 	D_ExpandableTab(x) {
 		const cf="D_ExpandableTab";

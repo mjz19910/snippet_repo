@@ -206,7 +206,23 @@ class ServiceMethods extends ServiceData {
 		this.M_SendPost(wc);
 		this.G_ClientSignal(cf1,s);
 	}
-	/** @private @arg {string} cf1 @arg {G_ClientSignal} x */
+	/** @type {Map<string,[string,string[]][]>} */
+	strings_map=new Map;
+	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
+	add_string_to_map(cf,k_arg,x) {
+		/** @type {`${typeof cf}::${typeof k_arg}`} */
+		let k=`${cf}::${k_arg}`; this.save_string(k,x);
+		let group_arr=this.strings_map.get(cf);
+		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
+		let group_entry=group_arr.find(e => e[0]===k);
+		x: {
+			if(!group_entry) break x;
+			if(group_entry[1].includes(x)) return;
+			group_entry[1].push(x);
+		}
+		group_arr.push([k,[x]]);
+	}
+	/** @protected @arg {string} cf1 @arg {G_ClientSignal} x */
 	G_ClientSignal(cf1,x) {
 		const cf2="G_ClientSignal";
 		let {actions,...y}=this.Signal_Omit(x,x => {
@@ -215,7 +231,19 @@ class ServiceMethods extends ServiceData {
 		}); this.g(y);
 		this.z_cf(cf1,actions,this.G_SignalActionItem);
 	}
-	/** @private @arg {M_SendPost} x */
+	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:T["signal"])=>void} f @returns {Omit<T,"signal">} */
+	Signal_Omit(x,f) {
+		const cf="Signal_Omit";
+		const {signal,...y}=this.s(cf,x); f(signal);
+		return y;
+	}
+	/** @private @arg {TM_Visibility} x */
+	TM_Visibility(x) {
+		const cf="TM_Visibility"; this.k(cf,x);
+		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.save_string("Visibility.types",types);
+	}
+	/** @protected @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/**
 	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
@@ -678,7 +706,7 @@ class ServiceMethods extends ServiceData {
 		this.R_MenuServiceItem(menuItem);
 		this.R_Button(topLevelButton);
 	}
-	/** @private @arg {D_LoggingDirectives} x */
+	/** @protected @arg {D_LoggingDirectives} x */
 	D_LoggingDirectives(x) {
 		const cf="D_LoggingDirectives"; this.k(cf,x);
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1045,6 +1073,42 @@ class ServiceMethods extends ServiceData {
 		const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
 		this.t(buttonText,this.G_Text);
 		this.t(accessibility,this.D_Accessibility);
+	}
+	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
+	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
+	/** @private @arg {D_SubscriptionNotificationToggleButton} x */
+	D_SubscriptionNotificationToggleButton(x) {
+		const cf="D_SubscriptionNotificationToggleButton"; this.k(cf,x);
+		const {states,currentStateId,trackingParams,command,targetId,secondaryIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(this.group_sub_noti_toggle_btn) console.group(`--- [${cf}] ---`);
+		let ids=this.exact_arr(states[0].stateId,states[1].stateId,states[2].stateId);
+		const n2=2,n3=3,n0=0;
+		/** @type {[n2,n3,n0]} */
+		const ids_e=[n2,n3,n0];
+		let log_states=false;
+		if(!this.eq_keys(ids,ids_e)) log_states=true;
+		this.z(states,(x,i) => {
+			const {nextStateId,stateId,state,...y}=this.s("ToggleButton.state",x); this.g(y);
+			if(nextStateId!==stateId) debugger;
+			if(log_states) console.log("[button.state_id.%s]",i,stateId);
+			this.R_Button(state);
+			return stateId;
+		});
+		if(this.group_sub_noti_toggle_btn) console.groupEnd();
+		switch(currentStateId) {
+			default: debugger; break;
+			case 0: case 2: case 3:
+		}
+		this.trackingParams(cf,trackingParams);
+		this.C_Executor(command);
+		switch(targetId) {
+			default: if(!this.logged_strings.includes(`${cf}:${targetId}`)) {
+				this.logged_strings.push(`${cf}:${targetId}`);
+				console.log("[D_SubscriptionNotificationToggleButton.targetId]",targetId);
+			} break;
+			case "notification-bell": break;
+		}
+		if(secondaryIcon.iconType!=="EXPAND_MORE") debugger;
 	}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
