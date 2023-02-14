@@ -1189,15 +1189,6 @@ class HandleTypes extends HandleTypesEval {
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
 	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
-	/**
-	 * @private @arg {CF_T_WCM} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"])=>U} f
-	 * @returns {[U,Omit<T, "webCommandMetadata">]}
-	 * */
-	T_WCM(cf,x,f) {
-		const {webCommandMetadata: a,...y}=this.s(`T_WCM:${cf}`,x);
-		let ret=f.call(this,a);
-		return [ret,y];
-	}
 	//#endregion
 	//#region web_command_metadata
 	/** @private @arg {GM_VE6827} x */
@@ -2358,8 +2349,6 @@ class HandleTypes extends HandleTypesEval {
 	M_Like(x) {this.T_WCM("M_Like",x,this.GM_Like);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {M_YpcGetOffers} x */
-	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {M_SetSetting} x */
@@ -2430,8 +2419,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
-	/** @private @arg {GM_CreateComment} x */
-	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
 	/** @protected @arg {GM_GetPdgBuyFlow} x */
 	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @protected @arg {GM_Unsubscribe} x */
@@ -2577,8 +2564,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
-	/** @private @arg {GM_YpcGetOffers} x */
-	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
 	/** @private @arg {GM_CreatePlaylist} x */
 	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
@@ -2942,12 +2927,6 @@ class HandleTypes extends HandleTypesEval {
 				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
 			} break;
 		}
-	}
-	/** @private @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
-	T_GM(cf,x,f) {
-		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(sendPost!==true) debugger;
-		return f.call(this,apiUrl);
 	}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
 	codegen_case_key(cf,obj,key,code) {
@@ -3867,26 +3846,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="B_Hack"; this.k(cf,x);
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hack!==true) debugger;
-	}
-	/** @private @arg {D_UUIDString} x */
-	parse_uuid(x) {
-		let uuid_parts=split_string(x,"-");
-		let [_up0,_up1,_up2,up3,_up4]=uuid_parts;
-		let bd=parseInt(split_string(up3,"")[0],16).toString(2);
-		if(bd.length!==4) debugger;
-		if(bd.slice(0,2)!=="10") debugger;
-		return uuid_parts;
-	}
-	/** @private @arg {D_FeaturedChannel} x */
-	D_FeaturedChannel(x) {
-		const cf="D_FeaturedChannel"; this.k(cf,x);
-		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
-		this.D_Thumbnail(watermark);
-		this.trackingParams(cf,trackingParams);
-		this.GE_Browse(navigationEndpoint);
-		this.a_primitive_str(channelName);
-		this.R_SubscribeButton(subscribeButton);
 	}
 	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
@@ -9583,40 +9542,6 @@ class HandleTypes extends HandleTypesEval {
 			if(x!==2) debugger;
 		});
 		this.t(loudnessDb,this.a_primitive_num);
-		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
-	}
-	/** @private @arg {D_FormatItem} x */
-	D_FormatItem(x) {
-		const cf="D_FormatItem";
-		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(itag);
-		this.t(url,x => this.parser.parse_url(cf,x));
-		this.a_primitive_str(mimeType);
-		this.a_primitive_num(bitrate);
-		this.t(width,this.a_primitive_num);
-		this.t(height,this.a_primitive_num);
-		this.a_primitive_str(lastModified);
-		this.t(contentLength,this.a_primitive_str);
-		this.a_primitive_str(quality);
-		this.t(fps,this.D_FormatFps);
-		this.t(qualityLabel,this.a_primitive_str);
-		if(projectionType!=="RECTANGULAR") debugger;
-		this.t(averageBitrate,this.a_primitive_num);
-		this.t(audioQuality,x => {
-			switch(x) {
-				default: debugger; break;
-				case "AUDIO_QUALITY_LOW":
-				case "AUDIO_QUALITY_MEDIUM":
-			}
-		});
-		this.a_primitive_str(approxDurationMs);
-		this.t(audioSampleRate,x => {
-			switch(x) {
-				default: debugger; break;
-				case "44100": case "48000":
-			}
-		});
-		this.t(audioChannels,x => {if(x!==2) debugger;});
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 	}
 	/** @private @arg {D_FormatColorInfo} x */

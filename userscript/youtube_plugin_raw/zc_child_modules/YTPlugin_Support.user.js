@@ -17,6 +17,7 @@ const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
+const split_string_once=bs.split_string_once;
 class TypedefGenerator extends ServiceMethods {
 	/** @arg {D_TypedefGenerator_Popup} x */
 	D_TypedefGenerator_Popup(x) {
@@ -117,6 +118,12 @@ class HandleRS extends ServiceMethods {
 		this.z(channelIds,this.D_ChannelId);
 		this.params(cf,"unsubscribe.params",params);
 	}
+	/** @private @arg {GM_YpcGetOffers} x */
+	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
+	/** @private @arg {GM_CreateComment} x */
+	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
+	/** @private @arg {M_YpcGetOffers} x */
+	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
 	/** @private @arg {M_CreateComment} x */
 	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
 	/** @private @arg {M_Unsubscribe} x */
@@ -546,15 +553,69 @@ class HandleRS extends ServiceMethods {
 		if("adActionInterstitialRenderer" in x) return this.R_AdActionInterstitial(x);
 		debugger;
 	}
+	/** @private @arg {D_FormatItem} x */
+	D_FormatItem(x) {
+		const cf="D_FormatItem";
+		const {itag,url,mimeType,bitrate,width,height,lastModified,contentLength,quality,fps,qualityLabel,projectionType,averageBitrate,audioQuality,approxDurationMs,audioSampleRate,audioChannels,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(itag);
+		this.t(url,x => this.parser.parse_url(cf,x));
+		this.a_primitive_str(mimeType);
+		this.a_primitive_num(bitrate);
+		this.t(width,this.a_primitive_num);
+		this.t(height,this.a_primitive_num);
+		this.a_primitive_str(lastModified);
+		this.t(contentLength,this.a_primitive_str);
+		this.a_primitive_str(quality);
+		this.t(fps,this.D_FormatFps);
+		this.t(qualityLabel,this.a_primitive_str);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.t(averageBitrate,this.a_primitive_num);
+		this.t(audioQuality,x => {
+			switch(x) {
+				default: debugger; break;
+				case "AUDIO_QUALITY_LOW":
+				case "AUDIO_QUALITY_MEDIUM":
+			}
+		});
+		this.a_primitive_str(approxDurationMs);
+		this.t(audioSampleRate,x => {
+			switch(x) {
+				default: debugger; break;
+				case "44100": case "48000":
+			}
+		});
+		this.t(audioChannels,x => {if(x!==2) debugger;});
+		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
+	}
+	/** @private @arg {D_UUIDString} x */
+	parse_uuid(x) {
+		let uuid_parts=split_string(x,"-");
+		let [_up0,_up1,_up2,up3,_up4]=uuid_parts;
+		let bd=parseInt(split_string(up3,"")[0],16).toString(2);
+		if(bd.length!==4) debugger;
+		if(bd.slice(0,2)!=="10") debugger;
+		return uuid_parts;
+	}
+	/** @private @arg {D_FeaturedChannel} x */
+	D_FeaturedChannel(x) {
+		const cf="D_FeaturedChannel"; this.k(cf,x);
+		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
+		this.D_Thumbnail(watermark);
+		this.trackingParams(cf,trackingParams);
+		this.GE_Browse(navigationEndpoint);
+		this.a_primitive_str(channelName);
+		this.R_SubscribeButton(subscribeButton);
+	}
 	/** @private @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
-		const cf="D_PlayerConfig"; this.k(cf,x);
-		debugger;
+		const cf="D_PlayerConfig";
+		const {audioConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @private @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
-		const cf="D_VideoDetails"; this.k(cf,x);
-		debugger;
+		const cf="D_VideoDetails";
+		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x);
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});

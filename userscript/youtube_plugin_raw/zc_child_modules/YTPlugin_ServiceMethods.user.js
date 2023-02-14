@@ -23,6 +23,29 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
+	get_keys_of_2(obj) {
+		if(!obj) {debugger;}
+		let rq=Object.keys(obj);
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
+	}
+	/**
+	 * @protected @arg {CF_T_WCM} cf @template {{webCommandMetadata:any;}} T @template U @arg {T} x @arg {(this:this,x:T["webCommandMetadata"])=>U} f
+	 * @returns {[U,Omit<T, "webCommandMetadata">]}
+	 * */
+	T_WCM(cf,x,f) {
+		const {webCommandMetadata: a,...y}=this.s(`T_WCM:${cf}`,x);
+		let ret=f.call(this,a);
+		return [ret,y];
+	}
+	/** @protected @template U @arg {CF_T_GM} cf @template T @arg {{sendPost: true;apiUrl: T;}} x @arg {(this:this,x:T)=>U} f */
+	T_GM(cf,x,f) {
+		const {sendPost,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(sendPost!==true) debugger;
+		return f.call(this,apiUrl);
+	}
 	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
 	playerParams(cf,path,x,callback) {this.on_player_params(cf,path,x,callback);}
 	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
