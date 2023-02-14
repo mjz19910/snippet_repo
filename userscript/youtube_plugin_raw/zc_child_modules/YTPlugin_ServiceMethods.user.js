@@ -3347,5 +3347,21 @@ class ServiceMethods extends ServiceData {
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
 		}
 	}
+	/** @private @arg {G_ThumbnailOverlayItem} x */
+	G_ThumbnailOverlayItem(x) {
+		const cf="G_ThumbnailOverlayItem"; this.k(cf,x);
+		// COMPLETED: #11
+		if("thumbnailOverlaySidePanelRenderer" in x) return this.R_ThumbnailOverlaySidePanel(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.R_ThumbnailOverlayHoverText(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R_ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R_ThumbnailOverlayBottomPanel(x);
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R_ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R_ThumbnailOverlayResumePlayback(x);
+		if("thumbnailOverlayEndorsementRenderer" in x) return this.R_ThumbnailOverlayEndorsement(x);
+		if("thumbnailOverlayInlineUnplayableRenderer" in x) return this.R_ThumbnailOverlayInlineUnplayable(x);
+		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
