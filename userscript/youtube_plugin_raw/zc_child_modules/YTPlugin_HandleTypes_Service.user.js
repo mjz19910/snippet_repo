@@ -973,7 +973,7 @@ class HandleTypes extends HandleTypesEval {
 		return this.x.get("indexed_db");
 	}
 	/** @protected @arg {{v:string}} x */
-	put_video_args(x) {this.indexed_db.put("video_id",x);}
+	put_video_args(x) {this.indexed_db.put("video_id",{key: `video_id:${x.v}`,v: x.v});}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
@@ -1873,7 +1873,7 @@ class HandleTypes extends HandleTypesEval {
 			case "hashtag": {
 				let [,ht,...u]=p;
 				if(u.length===0) {
-					this.indexed_db.put("hashtag",{hashtag: ht});
+					this.indexed_db.put("hashtag",{key: `hashtag:${ht}`,hashtag: ht});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -6564,31 +6564,33 @@ class HandleTypes extends HandleTypesEval {
 		if(isPrimary!==true) debugger;
 	}
 	/** @api @public @arg {string} x */
-	parse_video_id(x) {this.x.get("indexed_db").put("video_id",{v: x});}
+	parse_video_id(x) {this.put_video_args({v: x});}
+	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
+	put_boxed_id(value) {
+		const {type,id}=value;
+		this.x.get("indexed_db").put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
+	}
 	/** @api @public @arg {`UC${string}`} x */
 	parse_channel_id(x) {
-		const [,id]=split_string_once(x,"UC");
-		this.x.get("indexed_db").put("boxed_id",{type: `channel_id:UC`,id});
+		this.put_boxed_id({type: "channel_id:UC",id: x,raw_id: x});
 	}
 	/** @public @arg {G_UrlInfoItem} url_info */
 	log_url_info(url_info) {
 		switch(url_info.type) {
 			default: url_info===""; debugger; break;
-			case "channel:UC": this.parse_channel_id(url_info.id); break;
+			case "channel_id:UC": this.parse_channel_id(url_info.id); break;
 			case "play-next": url_info; break;
 			case "playlist:RDCM": {
-				this.x.get("indexed_db").put("boxed_id",{type: url_info.type,id: url_info.raw_id});
+				this.put_boxed_id(url_info);
 				if(!this.str_starts_with_rx("UC",url_info.raw_id)) debugger;
 				this.parse_channel_id(url_info.raw_id);
 			} break;
 			case "playlist:LL": case "playlist:WL":
 			case "playlist:RDMM": case "playlist:RD": case "playlist:UU":
 			case "playlist:PL": {
-				let x=url_info;
-				const {type,id}=x;
-				this.x.get("indexed_db").put("boxed_id",{type,id});
-				let is_critical=this.get_playlist_url_info_critical(x);
-				this.log_playlist_id(x,is_critical);
+				this.put_boxed_id(url_info);
+				let is_critical=this.get_playlist_url_info_critical(url_info);
+				this.log_playlist_id(url_info,is_critical);
 			} break;
 			case "video": this.parse_video_id(url_info.id); break;
 			case "video-referral": this.parse_video_id(url_info.id); break;
@@ -6739,54 +6741,46 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} x */
-	parse_guide_entry_id(x) {
-		if(this.str_starts_with_rx("RD",x)) {
-			if(this.str_starts_with_rx("RDCMUC",x)) {
-				let [,raw_id]=split_string_once(x,"RDCM");
-				this.save_next_char("playlist_id.RDCMUC",split_string_once(x,"RDCMUC")[1]);
-				this.log_url_info({type: "playlist:RDCM",id: x,raw_id});
-				return console.log("[guideEntryId.playlist.RDCM.length]",x.length);
+	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} id */
+	parse_guide_entry_id(id) {
+		if(this.str_starts_with_rx("RD",id)) {
+			if(this.str_starts_with_rx("RDCMUC",id)) {
+				let [,raw_id]=split_string_once(id,"RDCM");
+				this.save_next_char("playlist_id.RDCMUC",split_string_once(id,"RDCMUC")[1]);
+				this.log_url_info({type: "playlist:RDCM",id,raw_id});
+				return console.log("[guideEntryId.playlist.RDCM.length]",id.length);
 			}
-			if(this.str_starts_with_rx("RDMM",x)) {
-				let [,raw_id]=split_string_once(x,"RDMM");
-				this.log_url_info({
-					type: "playlist:RDMM",
-					id: x,
-					raw_id,
-				});
-				return console.log("[guideEntryId.radio_my_mix.length]",x.length);
+			if(this.str_starts_with_rx("RDMM",id)) {
+				let [,raw_id]=split_string_once(id,"RDMM");
+				this.log_url_info({type: "playlist:RDMM",id,raw_id,});
+				return console.log("[guideEntryId.radio_my_mix.length]",id.length);
 			}
-			let [,raw_id]=split_string_once(x,"RD");
-			this.log_url_info({
-				type: "playlist:RD",
-				id: x,
-				raw_id,
-			});
-			return console.log("[guideEntryId.radio.length]",x.length);
+			let [,raw_id]=split_string_once(id,"RD");
+			this.log_url_info({type: "playlist:RD",id,raw_id,});
+			return console.log("[guideEntryId.radio.length]",id.length);
 		}
-		if(this.str_starts_with_rx("UC",x)) {
-			let [,raw_id]=split_string_once(x,"UC");
-			this.log_url_info({type: "channel:UC",id: x,raw_id});
-			if(x.length===24) return;
-			return console.log("[guideEntryId.channel.length]",x.length);
+		if(this.str_starts_with_rx("UC",id)) {
+			let [,raw_id]=split_string_once(id,"UC");
+			this.log_url_info({type: "channel_id:UC",id,raw_id});
+			if(id.length===24) return;
+			return console.log("[guideEntryId.channel.length]",id.length);
 		}
-		if(this.str_starts_with_rx("PL",x)) {
-			let [,raw_id]=split_string_once(x,"PL");
-			this.log_url_info({type: "playlist:PL",id: x,raw_id});
-			if(x.length===34) return;
-			return console.log("[guideEntryId.playlist.length]",x.length);
+		if(this.str_starts_with_rx("PL",id)) {
+			let [,raw_id]=split_string_once(id,"PL");
+			this.log_url_info({type: "playlist:PL",id,raw_id});
+			if(id.length===34) return;
+			return console.log("[guideEntryId.playlist.length]",id.length);
 		}
-		if(this.str_starts_with_rx("UU",x)) {
-			let [,raw_id]=split_string_once(x,"UU");
-			this.log_url_info({type: "playlist:UU",id: x,raw_id});
-			if(x.length===26) return;
-			return console.log("[guideEntryId.uploads_playlist.length]",x.length);
+		if(this.str_starts_with_rx("UU",id)) {
+			let [,raw_id]=split_string_once(id,"UU");
+			this.log_url_info({type: "playlist:UU",id,raw_id});
+			if(id.length===26) return;
+			return console.log("[guideEntryId.uploads_playlist.length]",id.length);
 		}
-		switch(x) {
-			default: x===""; console.log("new with param [Browse_param_2c_VL]",x); debugger; break;
-			case "LL": this.log_url_info({type: "playlist:LL",id: x}); break;
-			case "WL": this.log_url_info({type: "playlist:WL",id: x}); break;
+		switch(id) {
+			default: id===""; console.log("new with param [Browse_param_2c_VL]",id); debugger; break;
+			case "LL": this.log_url_info({type: "playlist:LL",id: id}); break;
+			case "WL": this.log_url_info({type: "playlist:WL",id: id}); break;
 		}
 	}
 	/** @private @arg {D_GuideEntryData} x */

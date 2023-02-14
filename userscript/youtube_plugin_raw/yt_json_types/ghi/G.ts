@@ -443,7 +443,7 @@ type G_ThumbnailOverlayItem=
 	;
 ;
 type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
-type G_UrlInfoItem={
+type G_PlaylistUrlInfo={
 	type: "playlist:RDMM"; id: `RDMM${string}`; raw_id: string;
 }|{
 	type: "playlist:RDCM"; id: `RDCMUC${string}`; raw_id: `UC${string}`;
@@ -457,15 +457,20 @@ type G_UrlInfoItem={
 	type: "playlist:WL"; id: "WL";
 }|{
 	type: "playlist:LL"; id: "LL";
-}|{
+}
+type G_ChannelUrlInfo={
+	type: "channel_id:UC";
+	id: `UC${string}`;
+	raw_id: string;
+};
+
+type G_UrlInfoItem=G_PlaylistUrlInfo|{
 	type: "video"; id: string;
 }|{
 	type: "video-referral"; id: string;
 }|{
 	type: "play-next"; value: string;
-}|{
-	type: "channel:UC"; id: `UC${string}`; raw_id: string;
-};
+}|G_ChannelUrlInfo;
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
 type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
 	R_EndScreenVideo;
