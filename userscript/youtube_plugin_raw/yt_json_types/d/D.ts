@@ -997,12 +997,6 @@ type D_TextRun={
 	loggingDirectives: D_LoggingDirectives;
 }|{
 	text: string;
-	navigationEndpoint: G_TextRun_Endpoint;
-}|{
-	text: string;
-	loggingDirectives: D_LoggingDirectives;
-}|{
-	text: string;
 	bold: boolean;
 }|{
 	text: string;

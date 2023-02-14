@@ -1722,12 +1722,8 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("navigationEndpoint" in u) {
-			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			const {navigationEndpoint,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
 			this.G_TextRun_Endpoint(navigationEndpoint);
-			return;
-		}
-		if("loggingDirectives" in u) {
-			const {loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_LoggingDirectives(loggingDirectives);
 			return;
 		}
