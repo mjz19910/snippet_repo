@@ -6576,7 +6576,7 @@ class HandleTypes extends HandleTypesEval {
 						/* [f_23_TR_Binary_Num_f1] */
 						switch(value) {
 							default: debugger; break;
-							case 53:
+							case 1: case 3: case 4: case 14: case 15:  case 31: case 53:
 						}
 					}
 				} break;
