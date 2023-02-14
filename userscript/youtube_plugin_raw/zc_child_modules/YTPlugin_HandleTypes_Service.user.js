@@ -5662,19 +5662,24 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	_decoder=new TextDecoder();
+	/** @private @arg {string} cf @arg {V_SerializedContext_BinaryObj} x */
+	V_SerializedContext_BinaryObj(cf,x) {
+		cf; x; debugger;
+	}
 	/** @private @arg {string} cf @arg {string} x */
 	V_SerializedContextData(cf,x) {
 		let x1=decodeURIComponent(x);
 		let b_res=this._decode_b64_url_proto_obj(x1);
-		if(!b_res) return;
+		if(!b_res) {debugger; return;}
 		if(b_res.length!==1) debugger;
+		let r_obj=this.convert_arr_to_obj(b_res);
+		if(!r_obj) {debugger; return;}
+		this.V_SerializedContext_BinaryObj(cf,as(r_obj));
 		let [r]=b_res;
 		switch(r[0]) {
 			default: debugger; break;
 			case "child": switch(r[1]) {
-				case 1: {
-
-				} break;
+				case 1: break;
 				case 3: {
 					let playlist_id=this._decoder.decode(r[2]);
 					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
