@@ -23,6 +23,36 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
+	is_TE_VE(x,t) {
+		return x.commandMetadata.webCommandMetadata.rootVe===t;
+	}
+	/** @private @arg {GE_Browse} x */
+	GE_Browse(x) {
+		const cf="GE_Browse"; this.k(cf,x);
+		if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
+		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
+		if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
+		if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
+		if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
+		if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
+		if(this.is_TE_VE(x,42352)) return this.E_VE42352(x);
+		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
+		debugger;
+	}
+	/** @private @arg {G_TextRun_Endpoint} x */
+	G_TextRun_Endpoint(x) {
+		const cf="G_TextRun_Endpoint"; this.k(cf,x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("urlEndpoint" in x) return this.E_Url(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_Label} x */
+	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
+	/** @private @arg {D_Accessibility} x */
+	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
 	/** @private @arg {boolean} x */
 	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
 	/** @protected @arg {G_Text} x */

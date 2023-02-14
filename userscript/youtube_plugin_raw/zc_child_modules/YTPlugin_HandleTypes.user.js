@@ -484,15 +484,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return tag;
 	}
-	/** @private @arg {G_TextRun_Endpoint} x */
-	G_TextRun_Endpoint(x) {
-		const cf="G_TextRun_Endpoint"; this.k(cf,x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("urlEndpoint" in x) return this.E_Url(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @arg {G_RichSection} x */
 	G_RichSection(x) {
 		const cf="G_RichSection"; this.k(cf,x);
@@ -1266,10 +1257,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PlaylistSidebar(x) {this.H_("PlaylistSidebar","playlistSidebarRenderer",x,this.D_PlaylistSidebar);}
 	/** @private @arg {R_PlaylistSidebarPrimaryInfo} x */
 	R_PlaylistSidebarPrimaryInfo(x) {this.H_("R_PlaylistSidebarPrimaryInfo","playlistSidebarPrimaryInfoRenderer",x,this.D_PlaylistSidebarPrimaryInfo);}
-	/** @private @arg {D_Label} x */
-	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
-	/** @private @arg {D_Accessibility} x */
-	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
 	/** @private @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {R_ExpandableTab} x */
@@ -2141,19 +2128,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
 	//#region E_ (Endpoints)
-	/** @private @arg {GE_Browse} x */
-	GE_Browse(x) {
-		const cf="GE_Browse"; this.k(cf,x);
-		if(this.is_TE_VE(x,3611)) return this.E_VE3611(x);
-		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
-		if(this.is_TE_VE(x,5754)) return this.E_VE5754(x);
-		if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
-		if(this.is_TE_VE(x,11487)) return this.E_VE11487(x);
-		if(this.is_TE_VE(x,23462)) return this.E_VE23462(x);
-		if(this.is_TE_VE(x,42352)) return this.E_VE42352(x);
-		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
-		debugger;
-	}
 	/** @private @arg {E_VE3854} x */
 	E_VE3854(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE11487","browseEndpoint",x); this.g(y); this.M_VE3854(a); this.DE_VE3854(b);}
 	/** @private @arg {E_VE6827} x */
@@ -8145,10 +8119,6 @@ class HandleTypes extends HandleTypesEval {
 		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Accessibility(accessibility);
 		this.z(thumbnails,this.D_ThumbnailItem);
-	}
-	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
-	is_TE_VE(x,t) {
-		return x.commandMetadata.webCommandMetadata.rootVe===t;
 	}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
