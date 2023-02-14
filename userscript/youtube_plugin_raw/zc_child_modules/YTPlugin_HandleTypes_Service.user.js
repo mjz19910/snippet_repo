@@ -749,7 +749,6 @@ class HandleTypes extends HandleTypesEval {
 				case null: {
 				} break;
 				case null: break;
-				case "continuation_token.data.f49":
 				case "continuation_token.data.f72":
 				case "continuation_token.data.f49.f6":
 				case "continuation_token.data.f15":
@@ -758,6 +757,7 @@ class HandleTypes extends HandleTypesEval {
 					const cf=`sub.${path}`;
 					this.decode_continuation_token(cf,entry);
 				} break;
+				case "continuation_token.data.f49":
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
