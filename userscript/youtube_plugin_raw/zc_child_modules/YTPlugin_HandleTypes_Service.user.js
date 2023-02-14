@@ -6283,7 +6283,19 @@ class HandleTypes extends HandleTypesEval {
 					default: debugger; break;
 					case "0x94d81d4": {
 						if(dec_bin===null) {debugger; break;}
-						let bin_map=this.make_param_map(dec_bin);
+						let bin_map=this.make_param_map(dec_bin); bin_map;
+						if(bin_map===null) {debugger; break;}
+						/** @template T @arg {T[]|undefined} x */
+						function first(x) {
+							let r=required(x);
+							if(r.length!==0) debugger;
+							return r[0];
+						}
+						let f3=first(bin_map.get(3));
+						let f8=first(bin_map.get(8));
+						let f14=first(bin_map.get(14));
+						let f15=first(bin_map.get(15));
+						f3; f8; f14; f15;
 						debugger;
 					} return;
 				}
@@ -10716,7 +10728,7 @@ class HandleTypes extends HandleTypesEval {
 	D_LiveChat(x) {
 		const cf="D_LiveChat";
 		const {continuations,header,trackingParams,clientMessages,isReplay,initialDisplayState,showHideButton,...y}=this.s(cf,x); this.g(y);
-		this.z(continuations,x=>{
+		this.z(continuations,x => {
 			if(!x.reloadContinuationData) debugger;
 			this.D_ReloadContinuationData(x);
 		});
