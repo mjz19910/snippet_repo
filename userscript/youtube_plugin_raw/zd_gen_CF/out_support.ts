@@ -2,6 +2,7 @@ type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
 		//#region
+		|"CF_decode_continuation_token"
 		|"CF_add_string_to_map"
 		|"CF_D_Button"
 		|"CF_D_CaseGen"
@@ -52,6 +53,7 @@ export namespace Prelude {
 	// |"CF_D_STR"
 	export type CF_NEW_STR="CF_NEW_STR";
 	//#region
+	export type CF_decode_continuation_token="CF_decode_continuation_token";
 	export type CF_add_string_to_map="CF_add_string_to_map";
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_CaseGen="CF_D_CaseGen";
@@ -106,6 +108,7 @@ export namespace Types {
 	// |"CF_D_STR"
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 	//#region
+	export type CF_decode_continuation_token_=CF_decode_continuation_token;
 	export type CF_add_string_to_map_=CF_add_string_to_map;
 	export type CF_D_CaseGen_=CF_D_CaseGen;
 	export type CF_D_ChipCloudChip_Omit_=CF_D_ChipCloudChip_Omit;

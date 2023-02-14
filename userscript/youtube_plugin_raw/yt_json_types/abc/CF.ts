@@ -142,3 +142,4 @@ type CF_TD_ItemSection=T_ExtractImport<"CF_TD_ItemSection">|""&{1: 1;}|"";
 type CF_TE_Endpoint_2=T_ExtractImport<"CF_TE_Endpoint_2">|""&{1: 1;}|"";
 type CF_TE_Endpoint_3=T_ExtractImport<"CF_TE_Endpoint_3">|""&{1: 1;}|"";
 type CF_TE_Endpoint_Opt_3=T_ExtractImport<"CF_TE_Endpoint_Opt_3">|""&{1: 1;}|"";
+type CF_decode_continuation_token=T_ExtractImport<"CF_decode_continuation_token">|""&{1: 1;}|"";

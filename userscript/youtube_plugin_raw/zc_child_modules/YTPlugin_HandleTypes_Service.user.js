@@ -6403,7 +6403,6 @@ class HandleTypes extends HandleTypesEval {
 		function u1() {u;}
 		/**/u1; x; o2;
 	}
-	/** @typedef {"DC_Continuation"|"D_Continuation"} CF_decode_continuation_token */
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
