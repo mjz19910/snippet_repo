@@ -18,7 +18,10 @@ type DE_MP_MenuStyle=T_EnumStr<"MULTI_PAGE_MENU_STYLE_TYPE",
 type DE_VE<T>={browseId: T;};
 type DE_VE3611={params?: string; browseId: `UC${string}`; canonicalBaseUrl: `/@${string}`; query?: string;};
 type DE_VE3854=DE_VE<"FEwhat_to_watch">;
-type DE_VE5754=DE_VE<GU_VE5754_Id>;
+type DE_VE5754=DE_VE<GU_VE5754_Id>|{
+	browseId: `VLPL${string}`;
+	canonicalBaseUrl: `/playlist?list=PL${string}`;
+};
 type DE_VE6827_FeedHistory={browseId: "FEhistory"; query: "";};
 type DE_VE6827={browseId: GU_VE6827_Id|GU_VE6827_Id; params?: string;};
 type DE_VE6827_NoParams=DE_VE<GU_VE6827_Id>;

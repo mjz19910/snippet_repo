@@ -457,7 +457,7 @@ type G_PlaylistUrlInfo={
 	type: "playlist:3:PL"; id: `PL${string}`; raw_id: string;
 }|{
 	type: "playlist:4:UU"; id: `UU${string}`; raw_id: string;
-}
+};
 type G_ChannelUrlInfo={
 	type: "channel_id:UC";
 	id: `UC${string}`;
@@ -470,7 +470,11 @@ type G_UrlInfoItem=G_PlaylistUrlInfo|{
 	type: "video-referral"; id: string;
 }|{
 	type: "play-next"; value: string;
-}|G_ChannelUrlInfo;
+}|G_ChannelUrlInfo|{
+	type: "browse_id:VL";
+	id: `PL${string}`;
+	raw_id: `VLPL${string}`;
+};
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
 type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
 	R_EndScreenVideo;

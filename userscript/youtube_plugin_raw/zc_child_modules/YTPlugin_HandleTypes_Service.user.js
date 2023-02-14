@@ -666,7 +666,7 @@ class HandleTypes extends HandleTypesEval {
 			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
 			return;
 		}
-		if(this.str_starts_with(x,"VL")) {return this.x.get("handle_types").parse_guide_entry_id(split_string_once(x,"VL")[1]);}
+		if(this.str_starts_with(x,"VL")) {return this.parse_guide_entry_id(split_string_once(x,"VL")[1]);}
 		if(this.str_starts_with(x,"UC")) {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
@@ -7019,26 +7019,30 @@ class HandleTypes extends HandleTypesEval {
 		const {type,id}=value;
 		this.x.get("indexed_db").put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
 	}
-	/** @public @arg {G_UrlInfoItem} url_info */
-	log_url_info(url_info) {
-		switch(url_info.type) {
-			default: url_info===""; debugger; break;
-			case "channel_id:UC": this.D_ChannelId(url_info.id); break;
-			case "play-next": url_info; break;
+	/** @public @arg {G_UrlInfoItem} value */
+	log_url_info(value) {
+		switch(value.type) {
+			default: value===""; debugger; break;
+			case "channel_id:UC": this.D_ChannelId(value.id); break;
+			case "play-next": value; break;
+			case "browse_id:VL": {
+				const {type,id}=value;
+				this.x.get("indexed_db").put("browse_id",{key: `browse_id:VL:${id}`,type,id});
+			} break;
 			case "playlist:2:RDCM": {
-				this.put_boxed_id(url_info);
-				if(!this.str_starts_with_rx("UC",url_info.raw_id)) debugger;
-				this.D_ChannelId(url_info.raw_id);
+				this.put_boxed_id(value);
+				if(!this.str_starts_with_rx("UC",value.raw_id)) debugger;
+				this.D_ChannelId(value.raw_id);
 			} break;
 			case "playlist:1:LL": case "playlist:1:WL":
 			case "playlist:2:RDMM": case "playlist:2:RD": case "playlist:4:UU":
 			case "playlist:3:PL": {
-				this.put_boxed_id(url_info);
-				let is_critical=this.get_playlist_url_info_critical(url_info);
-				this.log_playlist_id(url_info,is_critical);
+				this.put_boxed_id(value);
+				let is_critical=this.get_playlist_url_info_critical(value);
+				this.log_playlist_id(value,is_critical);
 			} break;
-			case "video": this.videoId(url_info.id); break;
-			case "video-referral": this.videoId(url_info.id); break;
+			case "video": this.videoId(value.id); break;
+			case "video-referral": this.videoId(value.id); break;
 		}
 	}
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
@@ -7430,8 +7434,27 @@ class HandleTypes extends HandleTypesEval {
 		this._primitive_of(isCourse,"boolean");
 		return y;
 	}
+	/** @private @arg {`VLPL${string}`} x */
+	DU_VE5754_BrowseId_VL(x) {
+		const [a,id]=split_string_once(x,"VL"); if(a!=="") debugger;
+		this.log_url_info({type: "browse_id:VL",id,raw_id: x});
+		this.parse_guide_entry_id(id);
+	}
+	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
+	DU_VE5754_BrowseId_2(x) {
+		if(this.str_starts_with(x,"VL")) this.DU_VE5754_BrowseId_VL(x);
+	}
 	/** @private @arg {DE_VE5754} x */
-	DE_VE5754(x) {this.y("DE_VE5754","browseId",x,this.browseId);}
+	DE_VE5754(x) {
+		const cf="DE_VE5754";
+		if("canonicalBaseUrl" in x) {
+			const {browseId,canonicalBaseUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.DU_VE5754_BrowseId_2(browseId);
+			return;
+		}
+		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
+		debugger;
+	}
 	/** @private @arg {E_VE5754} x */
 	E_VE5754(x) {
 		const cf="E_VE5754";
