@@ -993,7 +993,7 @@ type D_TextRun={
 	italics: true;
 }|{
 	text: "#shorts";
-	navigationEndpoint: E_VE6827_Browse;
+	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
 }|{
 	text: string;
