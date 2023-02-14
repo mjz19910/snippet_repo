@@ -950,8 +950,8 @@ class HandleTypes extends HandleTypesEval {
 					} return;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f12": case "f13": case "f14": case "f24": case "f25": case "f28": case "f31": case "f36":
-					case "f47":
+					case "f12": case "f13": case "f14": case "f15": case "f24": case "f25": case "f28": case "f31": case "f36":
+					case "f45": case "f47":
 					case "f48687757":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
@@ -3633,11 +3633,17 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
-		const cf="DE_Feedback",u=this.T_OmitKey(cf,"feedbackToken",x,this.DE_Feedback_onToken); this.k(cf,x);
-		if(!("uiActions" in u)) return this.g(u);
-		const {uiActions,actions,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
-		this.D_HideEnclosingContainer(uiActions);
-		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
+		const cf="DE_Feedback";
+		const {feedbackToken,...u}=this.s(cf,x);
+		this.save_b64_binary("feedbackToken",feedbackToken);
+		if("uiActions" in u) {
+			const {uiActions,actions,...y}=u; this.g(y);/*#destructure_done*/
+			this.save_b64_binary("feedbackToken",feedbackToken);
+			this.D_HideEnclosingContainer(uiActions);
+			this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
+			return;
+		}
+		this.g(u);
 	}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {
@@ -3838,7 +3844,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
-		this.save_some_base64_url_data("undo_token",x);
+		this.save_b64_binary("undo_token",x);
 	}
 	/** @private @arg {GU_VE42352_Url} x */
 	GU_VE42352_Url(x) {
@@ -5625,12 +5631,6 @@ class HandleTypes extends HandleTypesEval {
 		this.g(serviceEndpoint);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {string} x */
-	DE_Feedback_onToken(x) {
-		this.save_some_base64_url_data("feedbackToken.bytes",x);
-	}
-	/** @private @template {{[U in K]:any}} T @template {keyof T} K @arg {"DE_Feedback"} cf @arg {K} k @arg {T} x @arg {(x:T[K])=>void} f @returns {T_OmitKey<T,K>} */
-	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return as_any(y);}
 	/** @private @arg {D_NotificationText} x */
 	D_NotificationText(x) {
 		const cf="D_NotificationText"; this.k(cf,x);
@@ -6147,7 +6147,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {MG_AdLayout["layoutId"]} x */
 	MG_AdLayout_LayoutId(x) {
-		this.save_some_base64_url_data("AdLayout.layoutId.bytes",x);
+		this.save_b64_binary("AdLayout.layoutId",x);
 	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
@@ -10322,10 +10322,6 @@ class HandleTypes extends HandleTypesEval {
 		this.parse_signature(signature);
 		this.save_string(`${cf}.key`,key);
 	}
-	/** @private @arg {string} cf @arg {string} x */
-	parse_url_sig(cf,x) {
-		this.save_some_base64_url_data(`${cf}.bytes`,x);
-	}
 	/** @override @protected @arg {string} k @arg {number|number[]|Uint8Array} x @arg {boolean} [force_update] */
 	save_number(k,x,force_update=false) {
 		if(x instanceof Uint8Array) x=[...x];
@@ -10333,13 +10329,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	D_VideoPlayback_ns(x) {
-		this.save_some_base64_url_data("video_playback.buf.ns",x);
+		this.save_b64_binary("video_playback.buf.ns",x);
 	}
 	/** @private @arg {string} cf @arg {string} x */
-	save_some_base64_url_data(cf,x) {
+	save_b64_binary(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return;}
-		this.save_number(`${cf}.0-2`,buffer.slice(0,2));
+		this.save_number(`${cf}.bytes.0-2`,buffer.slice(0,2));
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
@@ -10391,12 +10387,12 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf1}.fexp`,fexp);
 		this.save_string(`${cf1}.c`,c);
 		this.save_string(`${cf1}.txp`,txp);
-		this.params(`${cf1}.n`,"video_playback.api_url.n",n);
+		this.save_b64_binary("video_playback.api_url.n",n);
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
-		this.parse_url_sig(`${cf2}.lsig`,lsig);
+		this.save_b64_binary(`${cf2}.lsig`,lsig);
 		spc&&this.save_string(`${cf1}.spc`,spc);
-		this.t(sig,x => this.parse_url_sig(`${cf2}.sig`,x));
+		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
 		cnr&&this.save_string(`${cf1}.cnr`,cnr);
 		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
 		const {gcr,...y}=y3; this.g(y);

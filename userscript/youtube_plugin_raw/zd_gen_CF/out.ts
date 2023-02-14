@@ -1132,5 +1132,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "video_playback.api_url.ns";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_VideoPlaybackShape.n";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "video_playback.api_url.n";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "video_playback.api_url.n.f15" | "video_playback.api_url.n.f45";}
 		;
 }
