@@ -3822,5 +3822,68 @@ class ServiceMethods extends ServiceData {
 	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
 	/** @private @arg {A_ReplaceEnclosing} x */
 	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
+	/** @private @arg {AD_ReplaceEnclosing} x */
+	AD_ReplaceEnclosing(x) {
+		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
+		let k=this.gk(x.item);
+		switch(k[0]) {
+			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
+			case "notificationTextRenderer":
+			case "reelDismissalActionRenderer":
+			case "notificationMultiActionRenderer":
+		}
+	}
+	/** @arg {AD_ReplaceEnclosing_Item} x */
+	AD_ReplaceEnclosing_Item(x) {
+		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x); this.k(cf,x);
+		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
+	}
+	/** @private @arg {DE_GetReportForm} x */
+	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,"get_report_form.params");}
+	/** @private @arg {DE_NotificationOptOut} x */
+	DE_NotificationOptOut(x) {
+		const cf="DE_NotificationOptOut";
+		const {optOutText: a,serializedOptOut: b,serializedRecordInteractionsRequest: c,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(a);
+		let un_b=atob(b);
+		let no_uri_b=decodeURIComponent(un_b);
+		this.params(cf,"notification.opt_out",no_uri_b);
+		this.params(cf,"notification.record_interactions",c);
+	}
+	/** @private @arg {DE_UserFeedback} x */
+	DE_UserFeedback(x) {
+		const cf="DE_UserFeedback";
+		if("additionalDatas" in x) {
+			const {additionalDatas,...y}=this.s(cf,x); this.g(y);
+			this.z(additionalDatas,this.G_AdditionalDataItem);
+			return;
+		}
+		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
+		this.ceq(hack,true);
+		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
+	}
+	/** @private @arg {M_NotificationOptOut} x */
+	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
+	/** @private @arg {M_FlagGetForm} x */
+	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
+	/** @private @arg {M_UserFeedback} x */
+	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
+	/** @private @arg {D_ChipUniqueId} x */
+	D_ChipUniqueId(x) {
+		const cf="D_ChipUniqueId";
+		const {chipUniqueId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(chipUniqueId) {
+			case "ATTRIBUTE_FILTER_TYPE_EXPLORE": break;
+		}
+	}
+	/** @private @arg {R_PlaylistLoopButtonState} x */
+	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
+	/** @private @arg {D_PlaylistLoopButtonState} x */
+	D_PlaylistLoopButtonState(x) {
+		const cf="D_PlaylistLoopButtonState";
+		const {state,button,...y}=this.s(cf,x); this.g(y);
+		this.save_enum("PLAYLIST_LOOP_STATE",state);
+		this.R_Button(button);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

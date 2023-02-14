@@ -1367,8 +1367,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
-	/** @private @arg {R_PlaylistLoopButtonState} x */
-	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
 	/** @private @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {R_EmojiPickerCategory} x */
@@ -1502,14 +1500,6 @@ class HandleTypes extends HandleTypesEval {
 	C_EngagementPanelHeaderShowNavigationButton(x) {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
-	}
-	/** @private @arg {D_ChipUniqueId} x */
-	D_ChipUniqueId(x) {
-		const cf="D_ChipUniqueId";
-		const {chipUniqueId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(chipUniqueId) {
-			case "ATTRIBUTE_FILTER_TYPE_EXPLORE": break;
-		}
 	}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {
@@ -1769,8 +1759,6 @@ class HandleTypes extends HandleTypesEval {
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
-	/** @private @arg {M_UserFeedback} x */
-	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_EditPlaylist} x */
@@ -1779,8 +1767,6 @@ class HandleTypes extends HandleTypesEval {
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
-	/** @private @arg {M_FlagGetForm} x */
-	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
 	/** @protected @arg {M_AddToPlaylistService} x */
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @private @arg {M_Feedback} x */
@@ -1799,8 +1785,6 @@ class HandleTypes extends HandleTypesEval {
 	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
 	/** @private @arg {M_CreatePlaylist} x */
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
-	/** @private @arg {M_NotificationOptOut} x */
-	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @private @arg {GM_FlagGetForm} x */
@@ -1833,32 +1817,8 @@ class HandleTypes extends HandleTypesEval {
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
-	/** @private @arg {DE_UserFeedback} x */
-	DE_UserFeedback(x) {
-		const cf="DE_UserFeedback";
-		if("additionalDatas" in x) {
-			const {additionalDatas,...y}=this.s(cf,x); this.g(y);
-			this.z(additionalDatas,this.G_AdditionalDataItem);
-			return;
-		}
-		const {hack,bucketIdentifier,...y}=this.s(cf,x); this.g(y);
-		this.ceq(hack,true);
-		this.save_string(`${cf}.bucketIdentifier`,bucketIdentifier);
-	}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
-	/** @private @arg {DE_GetReportForm} x */
-	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,"get_report_form.params");}
-	/** @private @arg {DE_NotificationOptOut} x */
-	DE_NotificationOptOut(x) {
-		const cf="DE_NotificationOptOut";
-		const {optOutText: a,serializedOptOut: b,serializedRecordInteractionsRequest: c,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(a);
-		let un_b=atob(b);
-		let no_uri_b=decodeURIComponent(un_b);
-		this.params(cf,"notification.opt_out",no_uri_b);
-		this.params(cf,"notification.record_interactions",c);
-	}
 	/** @private @arg {DE_UndoFeedback} x */
 	DE_UndoFeedback(x) {
 		const cf="DE_UndoFeedback"; this.k(cf,x);
@@ -3221,22 +3181,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {AD_ReplaceEnclosing} x */
-	AD_ReplaceEnclosing(x) {
-		this.T_Item(x,this.AD_ReplaceEnclosing_Item);
-		let k=this.gk(x.item);
-		switch(k[0]) {
-			default: console.log(`-- [AD_ReplaceEnclosing_Info] --\n\n${k.map(e => `case "${e}":`).join("\n")}`); debugger; break;
-			case "notificationTextRenderer":
-			case "reelDismissalActionRenderer":
-			case "notificationMultiActionRenderer":
-		}
-	}
-	/** @arg {AD_ReplaceEnclosing_Item} x */
-	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x); this.k(cf,x);
-		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
-	}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
@@ -3296,13 +3240,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!name) return;
 		this.codegen.codegen_renderer(x,`${cf}$${name}`);
 		debugger;
-	}
-	/** @private @arg {D_PlaylistLoopButtonState} x */
-	D_PlaylistLoopButtonState(x) {
-		const cf="D_PlaylistLoopButtonState";
-		const {state,button,...y}=this.s(cf,x); this.g(y);
-		this.save_enum("PLAYLIST_LOOP_STATE",state);
-		this.R_Button(button);
 	}
 	/** @arg {string} cf */
 	codegen_all_service_menu_icons(cf) {
