@@ -757,7 +757,9 @@ class HandleTypes extends HandleTypesEval {
 					const cf=`sub.${path}`;
 					this.decode_continuation_token(cf,entry);
 				} break;
-				case "continuation_token.data.f49":
+				case "continuation_token.data.f49": {
+					this.save_string(`${path}.un_uri_component`,decodeURIComponent(entry));
+				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
@@ -6601,6 +6603,9 @@ class HandleTypes extends HandleTypesEval {
 			if(x[3]==="3D printing") return;
 			if(x[3]==="Bitcoin") return;
 			if(x[3]==="CPUs") return;
+			if(x[3]==="C++") return;
+			if(x[3]==="Gadgets") return;
+			if(x[3]==="Machines") return;
 			this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 			return;
 		}
