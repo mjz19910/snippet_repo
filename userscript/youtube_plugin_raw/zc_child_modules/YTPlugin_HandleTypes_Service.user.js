@@ -6580,6 +6580,15 @@ class HandleTypes extends HandleTypesEval {
 		if(0x14527fab in x) return this.R_0x14527fab(x);
 		if(1 in x) {
 			let kk=this.get_keys_of_2(x);
+			if(x[3]==="Computer Science") return;
+			if(x[3]==="Geometry") return;
+			if(x[3]==="History") return;
+			if(x[3]==="Linux") return;
+			if(x[3]==="Physics") return;
+			if(x[3]==="Podcasts") return;
+			if(x[3]==="Python") return;
+			if(x[3]==="Tools") return;
+			if(x[3]==="Touhou Project") return;
 			this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 			return;
 		}
