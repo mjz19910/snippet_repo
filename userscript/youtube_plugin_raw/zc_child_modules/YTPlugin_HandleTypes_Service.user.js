@@ -7898,6 +7898,7 @@ class HandleTypes extends HandleTypesEval {
 		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
 		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
