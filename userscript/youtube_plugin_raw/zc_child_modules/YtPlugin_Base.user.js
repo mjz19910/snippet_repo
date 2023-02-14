@@ -2493,14 +2493,6 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @private @template T_LoadAllServices,T_ServiceFlags @extends {BaseServicePrivate<T_LoadAllServices,T_ServiceFlags>} */
 class BaseService extends BaseServicePrivate {
-	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
-	to_param_obj(x) {
-		return Object.fromEntries([...x.entries()].map(e => {
-			let ei=e[1];
-			if(ei instanceof Map) {return [e[0],this.to_param_obj(ei)];}
-			return [e[0],ei];
-		}));
-	}
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
 		let last_key=map_entry_key_path.at(-1);
@@ -2554,6 +2546,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {
+		const cls_=this.x.get("handle_types");
 		/** @type {number[]} */
 		let map_entry_key_path=[];
 		this.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
@@ -3517,6 +3510,14 @@ class ServiceData extends BaseService {
 }
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
+	to_param_obj(x) {
+		return Object.fromEntries([...x.entries()].map(e => {
+			let ei=e[1];
+			if(ei instanceof Map) {return [e[0],this.to_param_obj(ei)];}
+			return [e[0],ei];
+		}));
+	}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {this.x.get("handle_types").params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_D_STR} cf @arg {string} x */
