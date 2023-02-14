@@ -156,7 +156,7 @@ class ServiceMethods extends ServiceData {
 		if(tooltip!=="Added") debugger;
 		this.E_PlaylistEdit(serviceEndpoint);
 	}
-	/** @private @arg {E_PlaylistEdit} x */
+	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
@@ -1076,7 +1076,7 @@ class ServiceMethods extends ServiceData {
 		this.t(buttonText,this.G_Text);
 		this.t(accessibility,this.D_Accessibility);
 	}
-	/** @private @arg {R_SubscriptionNotificationToggleButton} x */
+	/** @protected @arg {R_SubscriptionNotificationToggleButton} x */
 	R_SubscriptionNotificationToggleButton(x) {this.H_("R_SubscriptionNotificationToggleButton","subscriptionNotificationToggleButtonRenderer",x,this.D_SubscriptionNotificationToggleButton);}
 	/** @type {string[]} */
 	logged_strings=[];
@@ -4152,7 +4152,7 @@ class ServiceMethods extends ServiceData {
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {C_RepeatChapter} x */
+	/** @protected @arg {C_RepeatChapter} x */
 	C_RepeatChapter(x) {let [a,y]=this.TE_Endpoint_2("C_RepeatChapter","repeatChapterCommand",x); this.g(y); this.DC_RepeatChapter(a);}
 	/** @private @arg {DC_RepeatChapter} x */
 	DC_RepeatChapter(x) {

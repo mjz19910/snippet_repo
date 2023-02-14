@@ -5664,7 +5664,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(retryLabel);
 		this.a_primitive_bool(touchCaptionsEnabled);
 	}
-	static {/*remove_this_static*/this.prototype.C_RepeatChapter;}
 	/** @private @arg {D_PlaylistSidebarPrimaryInfo} x */
 	D_PlaylistSidebarPrimaryInfo(x) {
 		const cf="D_PlaylistSidebarPrimaryInfo"; this.k(cf,x);
