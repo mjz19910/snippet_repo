@@ -807,36 +807,30 @@ class HandleTypes extends HandleTypesEval {
 				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
 				} return;
-				case "reel_request_continuation.token.f15.f6.f4.f1":
-				case "reel_request_continuation.token.f15.f6.f3.f2":
-				case "reel_request_continuation.token.f15.f6.f3.f1":
-				case "reel.params.f3.f3":
-				case "reel.params.f3.f2":
-				case "reel.params.f3.f1":
-				case "tracking.trackingParams.f16.f4.f3":
-				case "tracking.trackingParams.f16.f4.f2":
-				case "tracking.trackingParams.f16.f4.f1":
-				case "slot_ad_serving_data_entry.f1.f3":
-				case "slot_ad_serving_data_entry.f1.f2":
-				case "slot_ad_serving_data_entry.f1.f1":
-				case "AdServingDataEntry.f9.f3":
-				case "AdServingDataEntry.f9.f2":
-				case "AdServingDataEntry.f9.f1":
 				case "watch_request_continuation.token.f9.f1.f4.f13[]": return;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_playlist.params.f4": case "watch_playlist.params.f13": {
 				} return;
 				// {[x:"f2.f7"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_request_continuation.token.f2.f7": return;
-				case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
-				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2":
-				case "notification.record_interactions.f5":
+				case "reel_request_continuation.token.f15.f6.f4.f1": case "reel_request_continuation.token.f15.f6.f3.f2": case "reel_request_continuation.token.f15.f6.f3.f1": case "reel.params.f3.f3": case "reel.params.f3.f2": case "reel.params.f3.f1":
+				case "tracking.trackingParams.f16.f4.f3": case "tracking.trackingParams.f16.f4.f2": case "tracking.trackingParams.f16.f4.f1": case "slot_ad_serving_data_entry.f1.f3": case "slot_ad_serving_data_entry.f1.f2": case "slot_ad_serving_data_entry.f1.f1":
+				case "AdServingDataEntry.f9.f3": case "AdServingDataEntry.f9.f2": case "AdServingDataEntry.f9.f1": case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
+				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2": case "notification.record_interactions.f5":
 				case "reel_request_continuation.token.f15.f6.f7.f1[].f1":
 				case "notification.record_interactions.f2.f14.f1.f1": {
 				} return;
 			}
 		}
 		if(entry instanceof Map) return;
+		if(entry instanceof Uint8Array) {
+			switch(path) {
+				default: {
+					this.save_number(path,[...entry]);
+				} break;
+			}
+			return;
+		}
 		if(this.is_bigint(entry)) {
 			switch(path) {
 				default: {

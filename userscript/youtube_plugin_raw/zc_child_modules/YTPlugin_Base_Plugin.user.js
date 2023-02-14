@@ -2533,8 +2533,12 @@ class BaseService extends BaseServicePrivate {
 						let err=param[3].find(e => e[0]==="error");
 						if(err) break x;
 						let u8_arr=param[2];
-						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
 						let p_map=this.make_param_map(param[3]);
+						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
+						if(p_map===null&&u8_arr[0]===0) {
+							do_set(param[1],u8_arr);
+							break;
+						}
 						if(!p_map) {
 							do_set(param[1],["failed",param[3]]);
 							break;
