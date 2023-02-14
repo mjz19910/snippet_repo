@@ -749,6 +749,7 @@ class HandleTypes extends HandleTypesEval {
 				case null: {
 				} break;
 				case null: break;
+				case "continuation_token.data.f49":
 				case "continuation_token.data.f72":
 				case "continuation_token.data.f49.f6":
 				case "continuation_token.data.f15":
