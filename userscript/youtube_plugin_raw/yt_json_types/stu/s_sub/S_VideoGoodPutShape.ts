@@ -9,6 +9,6 @@ type S_VideoGoodPutShape={
 	pl: string;
 	nh: string;
 	sparams: string;
-	signature: string;
+	signature: `${string}.${string}`;
 	key: string;
 };

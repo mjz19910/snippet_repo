@@ -10306,21 +10306,67 @@ class HandleTypes extends HandleTypesEval {
 	S_VideoGoodPutShape(x) {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
+		console.log(`${cf}.id`,id);
+		console.log(`${cf}.source`,source);
+		console.log(`${cf}.range`,range);
+		console.log(`${cf}.expire`,expire);
+		console.log(`${cf}.ip`,ip);
+		console.log(`${cf}.ms`,ms);
+		console.log(`${cf}.mm`,mm);
+		console.log(`${cf}.pl`,pl);
+		console.log(`${cf}.nh`,nh);
 		switch(sparams) {
 			default: this.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
+		this.parse_signature(signature);
+		console.log(`${cf}.key`,key);
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=this.s(cf,x);
-		this.t(ctier,x => this.ceq("SH",x));
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,...y1}=this.s(cf,x);
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
+		console.log(`${cf}.id`,id);
+		console.log(`${cf}.itag`,itag);
+		console.log(`${cf}.aitags`,aitags);
+		console.log(`${cf}.source`,source);
+		console.log(`${cf}.requiressl`,requiressl);
+		this.t(ctier,x => this.ceq("SH",x));
+		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,...y2}=y1;
+		console.log(`${cf}.mh`,mh);
+		console.log(`${cf}.mm`,mm);
+		console.log(`${cf}.mn`,mn);
+		console.log(`${cf}.ms`,ms);
+		console.log(`${cf}.mv`,mv);
+		console.log(`${cf}.mvi`,mvi);
+		console.log(`${cf}.pl`,pl);
+		console.log(`${cf}.initcwndbps`,initcwndbps);
+		console.log(`${cf}.vprv`,vprv);
+		console.log(`${cf}.xtags`,xtags);
+		console.log(`${cf}.mime`,mime);
+		console.log(`${cf}.ns`,ns);
+		console.log(`${cf}.gir`,gir);
+		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=y2;
+		console.log(`${cf}.clen`,clen);
+		console.log(`${cf}.dur`,dur);
+		console.log(`${cf}.lmt`,lmt);
+		console.log(`${cf}.mt`,mt);
+		console.log(`${cf}.fvip`,fvip);
+		console.log(`${cf}.keepalive`,keepalive);
+		console.log(`${cf}.fexp`,fexp);
+		console.log(`${cf}.c`,c);
+		console.log(`${cf}.txp`,txp);
+		console.log(`${cf}.n`,n);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.lsparams`,lsparams);
+		console.log(`${cf}.lsig`,lsig);
+		console.log(`${cf}.spc`,spc);
+		console.log(`${cf}.sig`,sig);
+		console.log(`${cf}.cnr`,cnr);
+		console.log(`${cf}.ratebypass`,ratebypass);
 		let ka=this.get_keys_of(y);
 		if(ka.length>0) {
 			console.log("[D_VideoPlaybackShape.next_key] [%s]",ka.shift());
@@ -11162,6 +11208,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {number} x */
 	a_primitive_num(x) {this._primitive_of(x,"number");}
+	/** @arg {`${string}.${string}`} x */
+	parse_signature(x) {
+		let [sig_0,sig_1]=split_string_once(x,".");
+		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
+		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
+	}
 	/** @private @arg {D_TimedTextApi} x */
 	D_TimedTextApi(x) {
 		const cf="D_TimedTextApi";
@@ -11177,9 +11229,7 @@ class HandleTypes extends HandleTypesEval {
 		let e_num=this.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.a_primitive_num(e_num);
-		let [sig_0,sig_1]=split_string_once(signature,".");
-		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==1) debugger;
-		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==1) debugger;
+		this.parse_signature(signature);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);
 		this.save_string(`${cf}.kind`,kind);
