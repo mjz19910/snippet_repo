@@ -937,8 +937,6 @@ class HandleTypes extends HandleTypesEval {
 	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
-	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
-	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
@@ -1080,8 +1078,6 @@ class HandleTypes extends HandleTypesEval {
 	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
 	/** @private @arg {R_BrowserMediaSessionRenderer} x */
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
-	/** @private @arg {R_NotificationText} x */
-	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
 	/** @private @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {R_FulfilledLayout} x */
@@ -1787,8 +1783,6 @@ class HandleTypes extends HandleTypesEval {
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
-	/** @private @arg {GM_FlagGetForm} x */
-	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @protected @arg {GM_UserFeedback} x */
@@ -1813,8 +1807,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {GM_Feedback} x */
 	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
-	/** @private @arg {GM_NotificationOptOut} x */
-	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
@@ -3270,21 +3262,6 @@ class HandleTypes extends HandleTypesEval {
 		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(text);
 		this.g(serviceEndpoint);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_NotificationText} x */
-	D_NotificationText(x) {
-		const cf="D_NotificationText"; this.k(cf,x);
-		if("undoText" in x) {
-			const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.G_Text(successResponseText);
-			this.G_Text(undoText);
-			this.E_UndoFeedback(undoEndpoint);
-			this.trackingParams(cf,trackingParams);
-			return;
-		}
-		const {successResponseText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(successResponseText);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */

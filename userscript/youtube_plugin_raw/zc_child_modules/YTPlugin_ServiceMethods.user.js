@@ -17,6 +17,8 @@ function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__modu
 const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
+	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {return x.includes(":");}
 	/** @private @arg {string} x */
@@ -3884,6 +3886,27 @@ class ServiceMethods extends ServiceData {
 		const {state,button,...y}=this.s(cf,x); this.g(y);
 		this.save_enum("PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
+	}
+	/** @private @arg {GM_NotificationOptOut} x */
+	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
+	/** @private @arg {GM_FlagGetForm} x */
+	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
+	/** @private @arg {R_NotificationText} x */
+	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
+	/** @private @arg {D_NotificationText} x */
+	D_NotificationText(x) {
+		const cf="D_NotificationText"; this.k(cf,x);
+		if("undoText" in x) {
+			const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.G_Text(successResponseText);
+			this.G_Text(undoText);
+			this.E_UndoFeedback(undoEndpoint);
+			this.trackingParams(cf,trackingParams);
+			return;
+		}
+		const {successResponseText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(successResponseText);
+		this.trackingParams(cf,trackingParams);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
