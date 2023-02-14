@@ -763,8 +763,7 @@ class HandleTypes extends HandleTypesEval {
 					if(!buffer) {debugger; break;}
 					let na_05=[...buffer.slice(0,5)];
 					this.save_number(`${path}.0-5`,na_05);
-					this.save_number(`${path}.6`,buffer[6]);
-					debugger;
+					console.log("[continuation_token_data_f49_log]",[...buffer.slice(6,6+5)]);
 				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
