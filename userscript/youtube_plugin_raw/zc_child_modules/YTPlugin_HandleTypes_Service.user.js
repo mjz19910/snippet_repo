@@ -6586,7 +6586,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_f11";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		if(f1!=="yt_page_snapshot_regional") debugger;
-		/** @type {(["d",0|1])[]} */
+		/** @type {(["d",0|1]|["str",string])[]} */
 		let f3_res=[];
 		for(let i=0;i<f3.length;i++) {
 			const fc=f3[i];
@@ -6594,7 +6594,10 @@ class HandleTypes extends HandleTypesEval {
 				f3_res.push(['d',fc]);
 				continue;
 			}
-			let ni=f3.indexOf(0,i); ni;
+			let ni=f3.indexOf(0,i);
+			let txt=new TextDecoder().decode(f3.slice(i,ni));
+			f3_res.push(["str",txt]);
+			i+=i-ni;
 			debugger;
 		}
 		console.log(f3[0]);
