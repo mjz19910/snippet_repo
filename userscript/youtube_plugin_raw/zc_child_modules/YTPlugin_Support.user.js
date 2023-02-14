@@ -112,25 +112,6 @@ class HandleRS extends ServiceMethods {
 		}
 		this.RS_Page_Watch(x);
 	}
-	/** @private @arg {DE_Unsubscribe} x */
-	DE_Unsubscribe(x) {
-		const cf="DE_Unsubscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
-		this.params(cf,"unsubscribe.params",params);
-	}
-	/** @private @arg {GM_YpcGetOffers} x */
-	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
-	/** @private @arg {GM_CreateComment} x */
-	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
-	/** @private @arg {M_YpcGetOffers} x */
-	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
-	/** @private @arg {M_CreateComment} x */
-	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
-	/** @private @arg {M_Unsubscribe} x */
-	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
-	/** @protected @arg {GM_Unsubscribe} x */
-	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {R_InstreamVideoAd} x */
@@ -417,16 +398,6 @@ class HandleRS extends ServiceMethods {
 		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
 		this.MG_AdLayout_PlayerBytes(adLayoutMetadata);
 		this.z(linearAds,this.G_LinearAdsItem);
-	}
-	/** @private @arg {D_Button_NavEP} x */
-	D_Button_NavEP(x) {
-		const cf="D_Button_NavEP"; this.k(cf,x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("browseEndpoint" in x) return this.GE_Browse(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		if("createCommentReplyDialogEndpoint" in x) return;
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {D_AdPlacementConfig} x */
 	D_AdPlacementConfig(x) {

@@ -1457,8 +1457,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
 	/** @private @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
-	/** @private @arg {RA_Notification} x */
-	RA_Notification(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {RMD_RowContainer} x */
 	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {RMD_Badge} x */
@@ -3537,14 +3535,6 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		this.g(y);
-	}
-	/** @private @arg {AD_Notification} x */
-	AD_Notification(x) {
-		const cf="AD_Notification"; this.k(cf,x);
-		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(responseText);
-		this.t(actionButton,this.R_Button);
-		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {AD_ReplaceEnclosing} x */
 	AD_ReplaceEnclosing(x) {

@@ -23,6 +23,16 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @arg {RA_Notification} x */
+	RA_Notification(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
+	/** @private @arg {AD_Notification} x */
+	AD_Notification(x) {
+		const cf="AD_Notification"; this.k(cf,x);
+		const {responseText,actionButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(responseText);
+		this.t(actionButton,this.R_Button);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @protected @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
 	T_BaseUrl(x,f) {
 		const cf="T_BaseUrl";
@@ -197,6 +207,35 @@ class ServiceMethods extends ServiceData {
 		}
 		this.targetId(cf,x);
 	}
+	/** @private @arg {DE_Unsubscribe} x */
+	DE_Unsubscribe(x) {
+		const cf="DE_Unsubscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.D_ChannelId);
+		this.params(cf,"unsubscribe.params",params);
+	}
+	/** @private @arg {D_Button_NavEP} x */
+	D_Button_NavEP(x) {
+		const cf="D_Button_NavEP"; this.k(cf,x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("browseEndpoint" in x) return this.GE_Browse(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		if("createCommentReplyDialogEndpoint" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {GM_YpcGetOffers} x */
+	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
+	/** @private @arg {GM_CreateComment} x */
+	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
+	/** @protected @arg {GM_Unsubscribe} x */
+	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
+	/** @private @arg {M_YpcGetOffers} x */
+	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
+	/** @private @arg {M_CreateComment} x */
+	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
+	/** @private @arg {M_Unsubscribe} x */
+	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
 	/** @private @arg {E_Unsubscribe} x */
 	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
 	/** @private @arg {E_CreateComment} x */
