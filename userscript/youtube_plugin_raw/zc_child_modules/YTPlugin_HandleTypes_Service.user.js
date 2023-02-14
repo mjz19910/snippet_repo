@@ -6479,7 +6479,7 @@ class HandleTypes extends HandleTypesEval {
 			if(dec!==null) debugger;
 		}
 	}
-	/** @arg {D_ReadAny_CR_0x4c82a9c} x */
+	/** @arg {D_RA_CR_0x4c82a9c} x */
 	D_ReadAny_CR_0x4c82a9c(x) {
 		const [type,field_id,buffer,dec_0]=x;
 		if(type!=="child") debugger;
@@ -6496,7 +6496,7 @@ class HandleTypes extends HandleTypesEval {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
-		/** @type {D_ReadAnyResult} */
+		/** @type {D_RA_Result} */
 		let dec_t=as_any(dec);
 		switch(dec_t.length) {
 			default: debugger; break;
