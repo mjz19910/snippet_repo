@@ -6,7 +6,21 @@ type DatabaseStoreTypes={
 		v: string;
 	};
 	hashtag: {key: `hashtag:${string}`; hashtag: string;};
-	boxed_id: {key: `boxed_id:${string}:${string}`; type: string; id: string;};
+	boxed_id: {
+		key: `boxed_id:${string}:${string}`;
+		type: string;
+		id: string;
+	};
+	channel_id: {
+		key: `channel_id:${string}:${string}`;
+		type: string;
+		id: string;
+	};
+	playlist: {
+		key: `playlist:${string}:${string}`;
+		type: string;
+		id: string;
+	}
 };
 type put_video_args_Args={
 	type: "normal";
