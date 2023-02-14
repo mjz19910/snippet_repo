@@ -19,6 +19,7 @@ const as=bs.as_;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const ServiceData=bs.ServiceData;
+const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
@@ -244,6 +245,80 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 		switch(entry) {default: debugger; return;}
+	}
+	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
+	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
+	parse_any_param(root,path,map_entry_key_path,map,callback) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
+		let mk=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		let mk_max=Math.max(...mk,-1);
+		for(let i=1;i<mk_max+1;i++) {
+			if(!mk.includes(i)) continue;
+			map_entry_key_path.push(i);
+			parse_key(map_entry_key_path);
+			let l=map_entry_key_path.pop();
+			if(l!==i) debugger;
+		}
+		if(this.eq_keys(mk,[])) return;
+		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
+		{debugger;}
+	}
+	/** @private @arg {P_ParamParse} path @arg {number[]} map_keys @arg {V_ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
+	get_parse_fns(path,map_keys,map_entry_value,map_entry_key=null) {
+		let parts=split_string(path,".");
+		/** @private @arg {number} idx */
+		let gd=(idx) => {console.log("[param_next.next_new_ns]",parts.join(".")); gen_next_part(idx);};
+		/** @private @arg {number} idx */
+		let u=idx => this.grouped(parts.join("$"),() => gd(idx));
+		/** @private @arg {number} idx */
+		let gen_next_part=(idx) => {
+			let pad="\t\t\t";
+			if(idx>parts.length) return;
+			/** @type {string[]} */
+			let eq_len_arr=[];
+			if(parts.length===idx) {
+				if(map_entry_value instanceof Map) eq_len_arr.push(`if(map_entry_value instanceof Map) return;`);
+				switch(typeof map_entry_value) {
+					case "number": eq_len_arr.push(`if(typeof map_entry_value==="number") return this.save_number(\`[$\{path}]\`,map_entry_value);`); break;
+					case "string": eq_len_arr.push(`if(typeof map_entry_value==="string") return this.save_string(\`[$\{path}]\`,map_entry_value);`); break;
+				}
+			}
+			eq_len_arr.push("switch(map_entry_value) {default: debugger; return;}");
+			let res_case=[`default: {const idx=${idx+1}; u(idx); debugger; parts[${idx}]==="";} break;`];
+			if(idx<parts.length) {
+				res_case.push(`case "${parts[idx]}": u(idx); debugger; break;`);
+			}
+			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
+			/** @arg {string[]} arr */
+			let gen_for_part_case=(arr,gen_if_case=false) => {
+				if(arr.length===1) return arr[0];
+				let ret=`\n${pad}\t${arr.join(`\n${pad}\t`)}\n${pad}`;
+				if(!gen_if_case) return ret;
+				return `{${ret}}`;
+			};
+			console.log(`
+			-- [${parts.join(".")},${idx}] --\n\n
+			case "${parts[idx-1]}":
+			if(parts.length===${idx}) ${gen_for_part_case(eq_len_arr,true)}
+			switch(parts[${idx}]) {${gen_for_part_case(res_case)}}`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
+		};
+		let new_path=() => {
+			/** @private @type {P_LogItems} */
+			console.log("[parse_value.new_path_gen]",path);
+			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			console.log(ak_gen.join("\n"));
+			console.log(`\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: new_ns(); debugger; return;\n\t}\n`);
+		};
+		let new_ns=() => {
+			/** @private @type {P_LogItems} */
+			console.log("[parse_value.new_ns_gen]",path);
+			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
+			console.log(ak_gen.join("\n"));
+			console.log(`-- [parse_value.gen_ns] --\n\n\t${map_keys.map(e => `case ${e}:`).join(" ")} \n`);
+		};
+		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {
