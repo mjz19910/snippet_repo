@@ -107,7 +107,6 @@ export namespace Types {
 	export type CF_NEW_GEN_=CF_NEW_GEN;
 	//#region
 	export type CF_add_string_to_map_=CF_add_string_to_map;
-	export type CF_D_Button_=CF_D_Button;
 	export type CF_D_CaseGen_=CF_D_CaseGen;
 	export type CF_D_ChipCloudChip_Omit_=CF_D_ChipCloudChip_Omit;
 	export type CF_D_CustomEmoji_=CF_D_CustomEmoji;

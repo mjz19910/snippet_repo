@@ -4120,11 +4120,6 @@ class HandleTypes extends HandleTypesEval {
 			this.codegen_typedef_all(cf,x);
 		} finally {console.groupEnd();}
 	}
-	/** @protected @arg {CF_D_Button} cf @arg {Extract<D_Button,{icon:any;}>["icon"]} icon @arg {Extract<D_Button,{icon:any;}>} x */
-	D_Button_Icon(cf,icon,x) {
-		let missing=this.T_Icon_AnyOf("D_Icon_Button",icon,this.Button_iconType);
-		if(missing) this.onMissingIcon(cf,icon,x,this.Button_iconType,this.Button_missing_iconType);
-	}
 	/** @private @arg {D_Button_targetId} x */
 	D_Button_targetId(x) {
 		let cf="D_Button_targetId";

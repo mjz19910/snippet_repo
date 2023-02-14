@@ -39,7 +39,6 @@ type CF_L_Params=
 ;
 type CF_parse_identifier=T_ExtractImport<"CF_parse_identifier">|"aCF_parse_identifier"|"";
 type CF_WithParams=
-	|CF_D_Button
 	|CF_D_ChipCloudChip_Omit
 	|CF_D_GuideEntry
 	|CF_D_Link
@@ -113,7 +112,6 @@ type CF_D_Menu_Omit=
 	;
 ;
 type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|""&{1: 1;}|"";
-type CF_D_Button=T_ExtractImport<"CF_D_Button">|""&{1: 1;}|"";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|""&{1: 1;}|"";
 type CF_D_ChipCloudChip_Omit=T_ExtractImport<"CF_D_ChipCloudChip_Omit">|""&{1: 1;}|"";
 type CF_D_CustomEmoji=T_ExtractImport<"CF_D_CustomEmoji">|""&{1: 1;}|"";
@@ -129,7 +127,7 @@ type CF_GE_ResponseReceived=T_ExtractImport<"CF_GE_ResponseReceived">|""&{1: 1;}
 type CF_M_VE=T_ExtractImport<"CF_M_VE">|""&{1: 1;}|"";
 type CF_M_y=T_ExtractImport<"CF_M_y">|""&{1: 1;}|"";
 type CF_M_zy=T_ExtractImport<"CF_M_zy">|""&{1: 1;}|"";
-type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|CF_D_Button;
+type CF_onMissingIcon=T_ExtractImport<"CF_onMissingIcon">|""&{1: 1;}|"";
 type CF_T_Commands=T_ExtractImport<"CF_T_Commands">|""&{1: 1;}|"";
 type CF_T_Endpoint=T_ExtractImport<"CF_T_Endpoint">|""&{1: 1;}|"";
 type CF_T_GM=T_ExtractImport<"CF_T_GM">|""&{1: 1;}|"";
