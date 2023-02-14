@@ -216,6 +216,7 @@ type RS_Page_Shorts={
 	playerResponse: RS_Player;
 	reelWatchSequenceResponse?: RS_ReelWatchSequence;
 	url: `/shorts/${string}`;
+	previousCsn?: string;
 	cachedReelWatchSequenceResponse?: RS_ReelWatchSequence;
 };
 type RS_Page_Watch={
