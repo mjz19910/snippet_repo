@@ -9,8 +9,8 @@ type D_SubscribeButton_SubscribePrefix={
 	accessibility?: D_Accessibility;
 };
 type D_SubscribeButton_UnsubscribePrefix={
-	buttonText: G_Text;
-	accessibility: D_Accessibility;
+	buttonText?: G_Text;
+	accessibility?: D_Accessibility;
 };
 type D_SubscribeButton=
 	&T_AddPrefix<D_SubscribeButton_SubscribedPrefix,"subscribed">
