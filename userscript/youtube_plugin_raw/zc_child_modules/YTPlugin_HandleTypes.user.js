@@ -366,14 +366,6 @@ class HandleTypes extends HandleTypesEval {
 		const {secondaryResults,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		f.call(this,secondaryResults);
 	}
-	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
-	T_Types(x,_x=null) {
-		const cf="T_Types";
-		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
-		function parse_number(x,_v) {return as(Number.parseInt(x,10));}
-		return parse_number(types,_x);
-	}
 	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(this:this,x:T)=>void} f */
 	TD_ItemSection_2_CommentsEntryPoint(x,f) {
 		const cf="TD_ItemSection_2_CommentsEntryPoint";
@@ -1437,10 +1429,6 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
 	}
-	/** @private @arg {C_UpdateToggleButtonState} x */
-	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
-	/** @private @arg {C_Loop} x */
-	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {C_RelatedChip} x */
 	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
@@ -4625,12 +4613,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
-	/** @private @arg {D_LoggingDirectives_Gestures} x */
-	D_LoggingDirectives_Gestures(x) {
-		const cf="D_LoggingDirectives_Gestures"; this.g_k(cf,x); this.k(cf,x);
-		let inner=this.T_Types(x);
-		if(inner!==4) debugger;
-	}
 	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,G_CommentRepliesItem>} x */
 	GA_Continuation_CommentRepliesItem(x) {
 		const cf="GA_Continuation_CommentRepliesItem"; this.k(cf,x);

@@ -3709,7 +3709,7 @@ class ServiceMethods extends ServiceData {
 		return mp;
 	}
 	icon_types_map=this.make_icon_types_map();
-	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	/** @protected @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
 		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
@@ -3729,7 +3729,7 @@ class ServiceMethods extends ServiceData {
 		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
 		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
 	}
-	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
+	/** @protected @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
 	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
 		expected_arr.push(icon.iconType);
 		missing_arr.push(icon.iconType);
@@ -4123,7 +4123,7 @@ class ServiceMethods extends ServiceData {
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
-	/** @private @arg {R_ToggleButton} x */
+	/** @protected @arg {R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("R_ToggleButton","toggleButtonRenderer",x,this.D_ToggleButton);}
 	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"trackingParams">[number]>:never} */
 	D_ToggleButton_Omit(cf,x,z=null) {
@@ -4131,7 +4131,7 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(cf,trackingParams);
 		return z;
 	}
-	/** @private @arg {C_CommandExecutor} x */
+	/** @protected @arg {C_CommandExecutor} x */
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {DC_CommandExecutor} x */
 	DC_CommandExecutor(x) {this.T_Commands("DC_CommandExecutor",x,this.G_DC_CommandExecutor_CommandItem);}
@@ -4279,5 +4279,23 @@ class ServiceMethods extends ServiceData {
 		}
 		debugger;
 	}
+	/** @private @template {number} T @arg {T_Types<T>} x @arg {T|null} _x @returns {T} */
+	T_Types(x,_x=null) {
+		const cf="T_Types";
+		const {types,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		/** @private @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		function parse_number(x,_v) {return as(Number.parseInt(x,10));}
+		return parse_number(types,_x);
+	}
+	/** @private @arg {D_LoggingDirectives_Gestures} x */
+	D_LoggingDirectives_Gestures(x) {
+		const cf="D_LoggingDirectives_Gestures"; this.g_k(cf,x); this.k(cf,x);
+		let inner=this.T_Types(x);
+		if(inner!==4) debugger;
+	}
+	/** @private @arg {C_UpdateToggleButtonState} x */
+	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
+	/** @private @arg {C_Loop} x */
+	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
