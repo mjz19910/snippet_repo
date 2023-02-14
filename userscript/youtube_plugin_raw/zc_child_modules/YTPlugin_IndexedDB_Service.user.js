@@ -221,7 +221,7 @@ class IndexedDBService extends BaseService {
 					const cursor_req=this.openCursor(obj_store,IDBKeyRange.only(index_val));
 					for(let i=0;;i++) {
 						let cursor_res=await this.await_success(cursor_req);
-						console.log("res event",cursor_res.type);
+						cursor_res;
 						const cur_cursor=cursor_req.result;
 						if(cur_cursor===null) {
 							if(i===0) {
