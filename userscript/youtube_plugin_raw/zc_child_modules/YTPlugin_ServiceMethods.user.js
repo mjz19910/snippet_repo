@@ -4306,5 +4306,7 @@ class ServiceMethods extends ServiceData {
 	C_Loop(x) {let [a,b]=this.TE_Endpoint_2("C_Loop","loopCommand",x); this.g(b); this.DC_Loop(a);}
 	/** @private @arg {DC_Loop} x */
 	DC_Loop(x) {this.y("DC_Loop","loop",x,x => this.ceq(x,this.false_()));}
+	/** @returns {false} */
+	false_() {return false;}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

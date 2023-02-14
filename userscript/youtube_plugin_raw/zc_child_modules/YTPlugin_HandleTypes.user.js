@@ -6111,8 +6111,6 @@ class HandleTypes extends HandleTypesEval {
 			if(!x.reelWatchEndpoint) debugger;
 		}
 	}
-	/** @returns {false} */
-	false_() {return false;}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate"; this.k(cf,x);
