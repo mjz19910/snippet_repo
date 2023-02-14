@@ -215,5 +215,11 @@ type GR_RootBinaryObj=
 		};
 		3: "Puzzles";
 	}
+	|{
+		1: {
+			1: "/m/06mnr";
+		};
+		3: "Statistics";
+	}
 	;
 ;

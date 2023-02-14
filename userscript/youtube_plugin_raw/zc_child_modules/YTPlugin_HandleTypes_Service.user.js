@@ -6594,34 +6594,26 @@ class HandleTypes extends HandleTypesEval {
 		if(0x14527fab in x) return this.R_0x14527fab(x);
 		if(1 in x) {
 			let kk=this.get_keys_of_2(x);
-			if(x[3]==="Computer Science") return;
-			if(x[3]==="Geometry") return;
-			if(x[3]==="History") return;
-			if(x[3]==="Linux") return;
-			if(x[3]==="Physics") return;
-			if(x[3]==="Podcasts") return;
-			if(x[3]==="Python") return;
-			if(x[3]==="Tools") return;
-			if(x[3]==="Touhou Project") return;
-			if(x[3]==="Conversation") return;
-			if(x[3]==="Editing") return;
-			if(x[3]==="Electronic Music") return;
-			if(x[3]==="Media theories") return;
-			if(x[3]==="Nintendo") return;
-			if(x[3]==="Puzzle games") return;
-			if(x[3]==="AI") return;
-			if(x[3]==="Calculus") return;
-			if(x[3]==="Soundtracks") return;
-			if(x[3]==="3D printing") return;
-			if(x[3]==="Bitcoin") return;
-			if(x[3]==="CPUs") return;
-			if(x[3]==="C++") return;
-			if(x[3]==="Gadgets") return;
-			if(x[3]==="Machines") return;
-			if(x[3]==="Game engines") return;
-			if(x[3]==="Puzzles") return;
-			this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
-			debugger;
+			switch(x[3]) {
+				default: {
+					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
+					x[3]===""; debugger;
+				} break;
+				case "3D printing":
+				case "AI":
+				case "Bitcoin":
+				case "C++": case "Calculus": case "Computer Science": case "Conversation": case "CPUs":
+				case "Editing": case "Electronic Music":
+				case "Gadgets": case "Game engines": case "Geometry":
+				case "History":
+				case "Linux":
+				case "Machines":
+				case "Media theories":
+				case "Nintendo":
+				case "Physics": case "Podcasts": case "Puzzle games": case "Puzzles": case "Python":
+				case "Soundtracks": case "Statistics":
+				case "Tools": case "Touhou Project":
+			}
 			return;
 		}
 		if(2 in x) {
