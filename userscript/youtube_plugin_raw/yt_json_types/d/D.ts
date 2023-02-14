@@ -2122,7 +2122,7 @@ type D_PdgCommentOption={
 };
 type D_PlayabilityStatus={
 	status: "OK";
-	playableInEmbed: true;
+	playableInEmbed: boolean;
 	offlineability?: R_Button;
 	miniplayer?: R_Miniplayer;
 	contextParams: string;
