@@ -1109,5 +1109,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x4c82a9c";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_QoeLoggingContext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_SerializedContext_BinaryObj:D_VssLoggingContext" | "V_SerializedContext_BinaryObj:D_QoeLoggingContext";}
+		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "DE_VE5754";}
+		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_VE5754";}
 		;
 }
