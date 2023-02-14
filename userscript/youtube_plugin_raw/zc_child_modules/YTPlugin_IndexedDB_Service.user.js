@@ -170,7 +170,11 @@ class IndexedDBService extends BaseService {
 					break;
 				}
 				const cursor_value=cur_cursor.value;
-				if(cursor_value.v!==index_val) debugger;
+				if(cursor_value.key!==index_val) {
+					console.log(cursor_value.key.split(":"));
+					console.log(index_val.split(":"));
+					debugger;
+				}
 				let value_keys=this.get_keys_of_2(value);
 				let cursor_keys=this.get_keys_of_2(cursor_value);
 				if(!this.eq_keys(value_keys,cursor_keys)) {
