@@ -6560,10 +6560,10 @@ class HandleTypes extends HandleTypesEval {
 					if(dec.length!==1) debugger;
 					const [dec_0]=dec;
 					{
-						const [type,field_id,buffer,dec]=dec_0; buffer;
+						const [type,field_id,buffer]=dec_0; buffer;
 						if(type!=="child") debugger;
 						if(field_id!==1) debugger;
-						if(dec!==null) debugger;
+						dec_0[3]=null;
 					}
 				} break;
 				case 2: {
