@@ -6146,18 +6146,23 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {MG_AdLayout["layoutId"]} x */
 	MG_AdLayout_LayoutId(x) {
-		let buffer=base64_dec.decodeByteArray(layoutId);
+		let buffer=base64_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return;}
 		this.save_number("AdLayout.layoutId.bytes.0-2",buffer.slice(0,2));
 	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
-		const cf="MG_AdLayout",{layoutId,...y}=this.s(cf,x); this.k(cf,x);
-		this.MG_AdLayout_layoutType(y.layoutType);
-		switch(y.layoutType) {
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": const {layoutType: {},...u}=this.s(cf,y); this.g(u);/*#destructure_done*/ break;
+		const cf="MG_AdLayout";
+		switch(x.layoutType) {
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": {
+				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.MG_AdLayout_layoutType(layoutType);
+				this.MG_AdLayout_LayoutId(layoutId);
+			} break;
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
-				const {layoutType: {},adLayoutLoggingData,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
+				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.MG_AdLayout_layoutType(layoutType);
+				this.MG_AdLayout_LayoutId(layoutId);
 				this.D_AdLayoutLoggingData(adLayoutLoggingData);
 			}
 		}
