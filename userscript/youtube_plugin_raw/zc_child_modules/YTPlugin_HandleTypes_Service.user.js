@@ -6577,6 +6577,11 @@ class HandleTypes extends HandleTypesEval {
 		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
 		if(0x12f639cf in x) return this.R_0x12f639cf(x);
 		if(0x14527fab in x) return this.R_0x14527fab(x);
+		if(1 in x) {
+			let kk=this.get_keys_of_2(x);
+			this.codegen_typedef_all(`decode_continuation_token:BinaryCatagoryObj:${kk.join()}`,x,false);
+			return;
+		}
 		if(2 in x) {
 			let kk=this.get_keys_of_2(x);
 			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
