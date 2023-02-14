@@ -358,7 +358,7 @@ class CodegenService extends BaseService {
 			for(let kk of fk) {
 				if(kk.match(/^\d+$/)) {
 					let num=parseInt(kk,10);
-					if(num>=512) {
+					if(num>=50) {
 						fx[`0x${num.toString(16)}`]=x[kk];
 						continue;
 					}
