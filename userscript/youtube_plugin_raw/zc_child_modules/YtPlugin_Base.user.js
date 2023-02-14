@@ -3451,7 +3451,7 @@ class ServiceData extends BaseService {
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
+	clickTrackingParams(cf,x) {this.x.get("handle_types").params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_D_STR} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
