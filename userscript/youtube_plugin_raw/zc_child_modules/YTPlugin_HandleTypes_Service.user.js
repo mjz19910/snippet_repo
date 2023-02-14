@@ -6355,6 +6355,34 @@ class HandleTypes extends HandleTypesEval {
 		let ra=rq;
 		return ra;
 	}
+	/** @private @arg {D_0x94d81d4} x */
+	D_0x94d81d4(x) {
+		let bin_2=x;
+		
+		if(bin_2[8]!==1) {debugger; break;}
+		this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",bin_2[3]);
+		let res=bin_2[14];
+		if("4" in res) {
+			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
+			if(r_f1!==4) debugger;
+			switch(r_f3) {
+				default: debugger; break;
+				case 1: case 2:
+			}
+			if(r_f4!==0) debugger;
+		} else {
+			const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
+			if(r_f1!==4) debugger;
+			if(r_f3!==2) debugger;
+		}
+		if("15" in bin_2) {
+			switch(bin_2[15]) {
+				default: debugger; break;
+				case 1:
+			}
+			if(bin_2[15]!==1) {debugger; break;}
+		}
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
 		cf;
@@ -6372,29 +6400,7 @@ class HandleTypes extends HandleTypesEval {
 						let bin_obj=this.convert_map_to_obj(bin_map);
 						/** @type {D_0x94d81d4} */
 						let bin_2=as_any(bin_obj);
-						if(bin_2[8]!==1) {debugger; break;}
-						this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",bin_2[3]);
-						let res=bin_2[14];
-						if("4" in res) {
-							const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
-							if(r_f1!==4) debugger;
-							switch(r_f3) {
-								default: debugger; break;
-								case 1: case 2:
-							}
-							if(r_f4!==0) debugger;
-						} else {
-							const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
-							if(r_f1!==4) debugger;
-							if(r_f3!==2) debugger;
-						}
-						if("15" in bin_2) {
-							switch(bin_2[15]) {
-								default: debugger; break;
-								case 1:
-							}
-							if(bin_2[15]!==1) {debugger; break;}
-						}
+						this.D_0x94d81d4(bin_2);
 					} return;
 				}
 				if(dec_bin===null) {debugger; break;}
@@ -8762,7 +8768,7 @@ class HandleTypes extends HandleTypesEval {
 				this.z(subMenuItems,x => {
 					const {title,selected,continuation,accessibility,subtitle,trackingParams,...y}=this.s(`${cf}.MenuItem`,x); this.g(y);
 					this.a_primitive_str(title);
-					if(selected!==true) debugger;
+					this.a_primitive_bool(selected);
 					this.D_ReloadContinuationData(continuation);
 					this.D_Accessibility(accessibility);
 					this.a_primitive_str(subtitle);
