@@ -6756,7 +6756,7 @@ class HandleTypes extends HandleTypesEval {
 				default: {
 					const x3=x[3];
 					switch(x3) {
-						case "Electronic Music": break;
+						case "Raspberry": break;
 					}
 					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 					debugger;
@@ -6764,14 +6764,16 @@ class HandleTypes extends HandleTypesEval {
 				case "3D printing":
 				case "AI": case "Algorithms":
 				case "Bitcoin":
-				case "C++": case "Calculus": case "Computer Science": case "CPUs": case "C#": case "Computers":
+				case "C++": case "Calculus": case "Computer Science": case "CPUs": case "C#": case "Computers": case "Cars":
 				case "Drawing":
 				case "Electronic Music":
-				case "Gadgets": case "Game engines":
+				case "Gadgets": case "Game engines": case "Geometry":
 				case "History":
-				case "Linux":
+				case "Linux": case "Linux distribution":
+				case "Media theories": case "Machines":
 				case "Nintendo":
-				case "Physics": case "Puzzle games": case "Python":
+				case "Physics": case "Puzzle games": case "Python": case "Podcasts": case "Puzzles":
+				case "Raspberry Pi":
 				case "Soundtracks": case "Statistics":
 				case "Tools":
 				case "Universe":

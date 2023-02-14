@@ -108,5 +108,53 @@ type D_BinaryCategoryObj_13=
 		};
 		3: "Electronic Music";
 	}
+	|{
+		1: {
+			1: "/m/07kk5";
+		};
+		3: "Media theories";
+	}
+	|{
+		1: {
+			1: "/m/0lvmz";
+		};
+		3: "Puzzles";
+	}
+	|{
+		1: {
+			1: "/m/0dkw5";
+		};
+		3: "Machines";
+	}
+	|{
+		1: {
+			1: "/m/025x7g_";
+		};
+		3: "Geometry";
+	}
+	|{
+		1: {
+			1: "/m/04058p";
+		};
+		3: "Podcasts";
+	}
+	|{
+		1: {
+			1: "/m/04mj2";
+		};
+		3: "Linux distribution";
+	}
+	|{
+		1: {
+			1: "/m/0gmg36g";
+		};
+		3: "Raspberry Pi";
+	}
+	|{
+		1: {
+			1: "/m/0k4j";
+		};
+		3: "Cars";
+	}
 	;
 ;
