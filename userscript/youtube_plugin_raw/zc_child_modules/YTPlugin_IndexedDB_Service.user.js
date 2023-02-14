@@ -195,9 +195,18 @@ class IndexedDBService extends BaseService {
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
-	/** @arg {TypedIDBObjectStore<{v:string}>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<{v:string}>|null>} */
+	/** @arg {TypedIDBObjectStore<DatabaseStoreTypes["video_id"]>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<DatabaseStoreTypes["video_id"]>|null>} */
 	openCursor(obj_store,query,direction) {
 		return obj_store.openCursor(query,direction);
+	}
+	/**
+	 * @param {string} key
+	 * @param {{ v: string; } | { hashtag: string;} | { type: string; id: string; }} x
+	 */
+	get_index_value(key,x) {
+		switch(key) {
+			case "":x;
+		}
 	}
 	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
 	async start_transaction(db,store_desc) {
@@ -206,48 +215,39 @@ class IndexedDBService extends BaseService {
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
-		switch(tx_namespace) {
-			case "boxed_id": {
-				let d_cache=this.get_data_cache(tx_namespace); d_cache;
-			} break;
-			case "hashtag": {
-				let d_cache=this.get_data_cache(tx_namespace); d_cache;
-			} break;
-			case "video_id": {
-				let [,d_cache]=this.get_data_cache(tx_namespace); d_cache;
-				const obj_store=this.objectStore(transaction,tx_namespace);
-				for(let value of d_cache) {
-					const index_val=value.v;
-					const cursor_req=this.openCursor(obj_store,IDBKeyRange.only(index_val));
-					for(let i=0;;i++) {
-						let cursor_res=await this.await_success(cursor_req);
-						cursor_res;
-						const cur_cursor=cursor_req.result;
-						if(cur_cursor===null) {
-							if(i===0) {
-								this.committed_data.push(value);
-								this.add_data_to_store(obj_store,value);
-							}
-							if(i===0||i===1) break;
-							console.log("cursor_done after %o",i);
-							break;
-						}
-						const cursor_value=cur_cursor.value;
-						if(cursor_value.v!==index_val) debugger;
-						let value_keys=this.get_keys_of_2(value);
-						let cursor_keys=this.get_keys_of_2(cursor_value);
-						if(!this.eq_keys(value_keys,cursor_keys)) {
-							console.log("[database_needs_obj_merge]");
-							console.log("[obj_merge_new]",value);
-							console.log("[obj_merge_cur]",cursor_value);
-							debugger;
-						} else {
-							this.committed_data.push(value);
-						}
-						cur_cursor.continue();
+
+		let [,d_cache]=this.get_data_cache(tx_namespace);
+		const obj_store=this.objectStore(transaction,tx_namespace);
+		for(let value of d_cache) {
+			const index_val=value.key;
+			const cursor_req=this.openCursor(obj_store,IDBKeyRange.only(index_val));
+			for(let i=0;;i++) {
+				let cursor_res=await this.await_success(cursor_req);
+				cursor_res;
+				const cur_cursor=cursor_req.result;
+				if(cur_cursor===null) {
+					if(i===0) {
+						this.committed_data.push(value);
+						this.add_data_to_store(obj_store,value);
 					}
+					if(i===0||i===1) break;
+					console.log("cursor_done after %o",i);
+					break;
 				}
-			} break;
+				const cursor_value=cur_cursor.value;
+				if(cursor_value.v!==index_val) debugger;
+				let value_keys=this.get_keys_of_2(value);
+				let cursor_keys=this.get_keys_of_2(cursor_value);
+				if(!this.eq_keys(value_keys,cursor_keys)) {
+					console.log("[database_needs_obj_merge]");
+					console.log("[obj_merge_new]",value);
+					console.log("[obj_merge_cur]",cursor_value);
+					debugger;
+				} else {
+					this.committed_data.push(value);
+				}
+				cur_cursor.continue();
+			}
 		}
 	}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
