@@ -6589,6 +6589,12 @@ class HandleTypes extends HandleTypesEval {
 			if(x[3]==="Python") return;
 			if(x[3]==="Tools") return;
 			if(x[3]==="Touhou Project") return;
+			if(x[3]==="Conversation") return;
+			if(x[3]==="Editing") return;
+			if(x[3]==="Electronic Music") return;
+			if(x[3]==="Media theories") return;
+			if(x[3]==="Nintendo") return;
+			if(x[3]==="Puzzle games") return;
 			this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 			return;
 		}
