@@ -38,7 +38,6 @@ function generate_ts_output {
 	cp "$TMP_DIR/tmp.ts" tmp.ts
 	tsc -p "$TMP_DIR/userscript" >"$TMP_DIR/errors.out"
 	gen_code
-	return;
 	generate_ts_restore
 }
 generate_ts_output
