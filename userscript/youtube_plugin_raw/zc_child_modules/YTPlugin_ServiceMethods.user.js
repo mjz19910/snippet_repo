@@ -771,8 +771,36 @@ class ServiceMethods extends ServiceData {
 		let dec_params=atob(params);
 		this.params(cf,"get_pdg_buy_flow.params",dec_params);
 	}
-	/** @private @arg {R_SubscribeButton} x */
+	/** @protected @template {string} T @arg {T_UrlWrappedValue<T>} x */
+	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
+	/** @protected @arg {R_SubscribeButton} x */
 	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
+	D_SubscribeButton_SubscribedPrefix(x) {
+		const cf="D_SubscribeButton_SubscribedPrefix";
+		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
+		this.t(buttonText,this.G_Text);
+		this.t(entityKey,x => this.params(cf,"entity_key.subscribed",x));
+	}
+	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
+	D_SubscribeButton_UnsubscribedPrefix(x) {
+		const cf="D_SubscribeButton_UnsubscribedPrefix";
+		const {buttonText,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(buttonText);
+	}
+	/** @private @arg {D_SubscribeButton_SubscribePrefix} x */
+	D_SubscribeButton_SubscribePrefix(x) {
+		const cf="D_SubscribeButton_SubscribePrefix";
+		const {accessibility,...y}=this.s(cf,x); this.g(y);
+		this.t(accessibility,this.D_Accessibility);
+	}
+	/** @private @arg {D_SubscribeButton_UnsubscribePrefix} x */
+	D_SubscribeButton_UnsubscribePrefix(x) {
+		const cf="D_SubscribeButton_UnsubscribePrefix";
+		const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
+		this.t(buttonText,this.G_Text);
+		this.t(accessibility,this.D_Accessibility);
+	}
 	/** @private @arg {D_SubscribeButton} x */
 	D_SubscribeButton(x) {
 		const cf="D_SubscribeButton";

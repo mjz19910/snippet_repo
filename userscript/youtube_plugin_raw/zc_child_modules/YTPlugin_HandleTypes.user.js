@@ -973,8 +973,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
-	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
-	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
@@ -2991,32 +2989,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RSG_SearchSuggestions"; this.k(cf,x);
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
-	D_SubscribeButton_SubscribedPrefix(x) {
-		const cf="D_SubscribeButton_SubscribedPrefix";
-		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
-		this.t(buttonText,this.G_Text);
-		this.t(entityKey,x => this.params(cf,"entity_key.subscribed",x));
-	}
-	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
-	D_SubscribeButton_UnsubscribedPrefix(x) {
-		const cf="D_SubscribeButton_UnsubscribedPrefix";
-		const {buttonText,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(buttonText);
-	}
-	/** @private @arg {D_SubscribeButton_SubscribePrefix} x */
-	D_SubscribeButton_SubscribePrefix(x) {
-		const cf="D_SubscribeButton_SubscribePrefix";
-		const {accessibility,...y}=this.s(cf,x); this.g(y);
-		this.t(accessibility,this.D_Accessibility);
-	}
-	/** @private @arg {D_SubscribeButton_UnsubscribePrefix} x */
-	D_SubscribeButton_UnsubscribePrefix(x) {
-		const cf="D_SubscribeButton_UnsubscribePrefix";
-		const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
-		this.t(buttonText,this.G_Text);
-		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
