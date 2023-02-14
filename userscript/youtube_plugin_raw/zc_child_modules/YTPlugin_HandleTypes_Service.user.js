@@ -902,6 +902,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "player":
 			case "sub":
 			case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
@@ -925,6 +926,7 @@ class HandleTypes extends HandleTypesEval {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 						} parts[1]==="";
 					} return;
+					case "heartbeat_params":
 					case "watch_request_continuation":
 					case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
@@ -1741,9 +1743,15 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
-			const {navigationEndpoint,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
+			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
 			this.G_TextRun_Endpoint(navigationEndpoint);
 			this.D_LoggingDirectives(loggingDirectives);
+			if("bold" in y) {
+				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
+				this.ceq(bold,true);
+				return;
+			}
+			this.g(y);
 			return;
 		}
 		if("navigationEndpoint" in u) {
@@ -2878,7 +2886,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		heartbeatParams;
-		this.t(heartbeatParams,x => this.params(cf,"player.heartbeat_params",x));
+		this.t(heartbeatParams,this.D_HeartbeatParams);
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
 		this.t(videoDetails,this.D_VideoDetails);
@@ -11203,6 +11211,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_PerformCommentAction} x */
 	E_PerformCommentAction(x) {x; debugger;}
+	/** @private @arg {D_HeartbeatParams} x */
+	D_HeartbeatParams(x) {
+		const cf="D_HeartbeatParams";
+		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
+		console.log(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+		console.log(`${cf}.softFailOnError`,softFailOnError);
+		console.log(`${cf}.heartbeatServerData`,heartbeatServerData);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
