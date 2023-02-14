@@ -4,7 +4,7 @@ type D_VideoPlaybackShape=D_VideoPlaybackShape_S_Params&D_VideoPlaybackShape_LS_
 	itag: `${137}`;
 	mt: `${number}`;
 	fvip: "4";
-	keepalive: "yes";
+	keepalive?: "yes";
 	fexp: `${24007246}`;
 	c: "WEB";
 	txp: `${number}`;

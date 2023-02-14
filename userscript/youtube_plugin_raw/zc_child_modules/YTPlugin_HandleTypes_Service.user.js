@@ -8810,11 +8810,17 @@ class HandleTypes extends HandleTypesEval {
 		if(style!=="FEED_NUDGE_STYLE_CHIP") debugger;
 		this.z(contents,this.R_ChipCloudChip);
 	}
-	/** @template {number} T @arg {`${T}`} x */
+	/** @private @arg {`${number}`} x */
+	parse_number(x) {
+		if(typeof x!=="string") debugger;
+		if(x.includes(".")) return parseFloat(x);
+		if(x.includes("e")) return parseFloat(x);
+		return parseInt(x,10);
+	}
+	/** @private @template {number} T @arg {`${T}`} x */
 	parse_number_template(x) {
 		/** @type {T} */
-		let num=as(parseInt(x,10));
-		if(Number.isNaN(num)) {debugger;}
+		let num=as(this.parse_number(x));
 		return num;
 	}
 	/** @private @arg {D_EndScreenPlaylist} x */
@@ -10351,11 +10357,13 @@ class HandleTypes extends HandleTypesEval {
 		if(gir) this.save_string(`${cf}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=y2;
 		if(clen) this.save_string(`${cf}.clen`,clen);
-		this.save_string(`${cf}.dur`,dur);
-		this.save_string(`${cf}.lmt`,lmt);
+		let dur_=this.parse_number_template(dur);
+		this.a_primitive_num(dur_);
+		let lmt_=this.parse_number_template(lmt);
+		this.a_primitive_num(lmt_);
 		this.save_string(`${cf}.mt`,mt);
 		this.save_string(`${cf}.fvip`,fvip);
-		this.save_string(`${cf}.keepalive`,keepalive);
+		keepalive&&this.save_string(`${cf}.keepalive`,keepalive);
 		this.save_string(`${cf}.fexp`,fexp);
 		this.save_string(`${cf}.c`,c);
 		this.save_string(`${cf}.txp`,txp);
@@ -11207,7 +11215,10 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @arg {number} x */
-	a_primitive_num(x) {this._primitive_of(x,"number");}
+	a_primitive_num(x) {
+		this._primitive_of(x,"number");
+		if(Number.isNaN(x)) debugger;
+	}
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
 		let [sig_0,sig_1]=split_string_once(x,".");
