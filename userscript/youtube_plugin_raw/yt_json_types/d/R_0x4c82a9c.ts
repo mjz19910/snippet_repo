@@ -1,0 +1,1 @@
+type R_0x4c82a9c={0x4c82a9c: D_0x4c82a9c;};
