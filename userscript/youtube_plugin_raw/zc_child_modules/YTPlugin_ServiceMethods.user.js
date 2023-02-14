@@ -4409,5 +4409,14 @@ class ServiceMethods extends ServiceData {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
 	}
+	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
+	DC_EngagementPanelHeaderShowNavigationButton(x) {
+		const cf="DC_EngagementPanelHeaderShowNavigationButton";
+		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+	}
+	/** @private @arg {C_AddToPlaylist} x */
+	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
+	/** @private @arg {C_ChangeMarkersVisibility} x */
+	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

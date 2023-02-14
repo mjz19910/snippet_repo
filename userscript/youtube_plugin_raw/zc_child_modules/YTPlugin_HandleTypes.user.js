@@ -1373,8 +1373,6 @@ class HandleTypes extends HandleTypesEval {
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {C_ChangeMarkersVisibility} x */
-	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
 	C_AdsControlFlowOpportunityReceived(x) {
 		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
@@ -1389,8 +1387,6 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
 	}
-	/** @private @arg {C_AddToPlaylist} x */
-	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {
 		const cf="C_ReloadContinuationItems"; this.k(cf,x);
@@ -1408,11 +1404,6 @@ class HandleTypes extends HandleTypesEval {
 	DC_AddFollowUpSurvey(x) {
 		const cf="DC_AddFollowUpSurvey";
 		const {followUpOptions,followUpText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-	}
-	/** @private @arg {DC_EngagementPanelHeaderShowNavigationButton} x */
-	DC_EngagementPanelHeaderShowNavigationButton(x) {
-		const cf="DC_EngagementPanelHeaderShowNavigationButton";
-		const {targetId,navigationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 	}
 	/** @public @arg {DR_DC_EntityBatchUpdate} x */
 	DR_DC_EntityBatchUpdate(x) {
@@ -1447,18 +1438,6 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @private @arg {DC_AddToPlaylist} x */
 	DC_AddToPlaylist(x) {
-		const code_template=(x => {let x1=x.split("/*Start*/")[1]; return x1.split("/*End*/")[0];})(`
-		switch(x.listType) {
-			default: break;
-			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": /*Start*/{
-				const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.SE_CreatePlaylist(onCreateListCommand);
-				this.t(openListPanel,this.a_primitive_bool);
-				this.z([openMiniplayer],this.a_primitive_bool);
-				this.videoId(videoId);
-				this.z(videoIds,this.videoId);
-			}/*End*/
-		}`);
 		const cf="DC_AddToPlaylist";
 		this.save_string(`${cf}.listType`,x.listType);
 		if(!this.DC_AddToPlaylist_listTypes.includes(x.listType)) {
@@ -1466,7 +1445,7 @@ class HandleTypes extends HandleTypesEval {
 			this.DC_AddToPlaylist_listTypes.push(x.listType);
 			this.codegen_typedef_all(cf,x);
 			console.log(`-- [case_gen_list:${cf}.listType] --`,JSON.stringify(this.DC_AddToPlaylist_listTypes,null,"\t"));
-			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}: ${code_template}`).join("\n")}`);
+			console.log(`-- [js_gen:case_gen_${cf}] --\n\n${known.map(e => `			case ${e}:`).join("\n")}`);
 		}
 		switch(x.listType) {
 			case "PLAYLIST_EDIT_LIST_TYPE_QUEUE": {
