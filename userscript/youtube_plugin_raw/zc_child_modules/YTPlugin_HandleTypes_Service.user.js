@@ -1721,10 +1721,15 @@ class HandleTypes extends HandleTypesEval {
 			if(italics!==true) debugger;
 			return;
 		}
-		if("navigationEndpoint" in u) {
+		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
 			const {navigationEndpoint,loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
 			this.G_TextRun_Endpoint(navigationEndpoint);
 			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("navigationEndpoint" in u) {
+			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			this.G_TextRun_Endpoint(navigationEndpoint);
 			return;
 		}
 		if("bold" in u) {
