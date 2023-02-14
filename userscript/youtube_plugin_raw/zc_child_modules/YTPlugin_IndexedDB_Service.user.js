@@ -306,12 +306,17 @@ class IndexedDBService extends BaseService {
 		const {result: db,transaction: tx}=request;
 		if(!tx) throw new Error("No transaction");
 		if(event.oldVersion<1) {
+			this.create_store("video_id",db,{unique: true});
+			this.create_store("hashtag",db,{unique: true});
+			this.create_store("boxed_id",db,{unique: true});
+		}
+		if(event.oldVersion<2) {
 			this.transfer_store(tx,"video_id",db,{unique: true});
 			this.transfer_store(tx,"hashtag",db,{unique: true});
 			this.transfer_store(tx,"boxed_id",db,{unique: true});
 		}
 	}
-	static schema_version=1;
+	static schema_version=2;
 	/** @private @arg {IDBOpenDBRequest} request */
 	createLatestDatabaseVersion(request) {
 		const db=request.result;
