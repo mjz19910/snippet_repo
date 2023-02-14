@@ -615,7 +615,121 @@ class HandleRS extends ServiceMethods {
 	/** @private @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
-		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x);
+		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x); this.g(y);
+	}
+	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
+	D_UrlAndElapsedMediaTime(x,f) {
+		const cf="D_UrlAndElapsedMediaTime";
+		const {baseUrl,elapsedMediaTimeSeconds,...y}=this.s(cf,x); this.g(y);
+		f.call(this,baseUrl);
+		this.a_primitive_num(elapsedMediaTimeSeconds);
+	}
+	/** @private @arg {D_Botguard} x */
+	D_Botguard(x) {
+		const cf="D_Botguard";
+		const {program,interpreterSafeUrl,serverEnvironment,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(program);
+		let interpreterUrl=this.UrlWrappedValueT(interpreterSafeUrl);
+		this.a_primitive_str(interpreterUrl);
+		this.save_number(`${cf}.serverEnvironment`,serverEnvironment);
+	}
+	/** @private @arg {D_CardCollection} x */
+	D_CardCollection(x) {
+		const cf="D_CardCollection";
+		const {cards,headerText,icon,closeButton,trackingParams,allowTeaserDismiss,logIconVisibilityUpdates,...y}=this.s(cf,x); this.g(y);
+		this.z(cards,this.R_Card);
+		this.G_Text(headerText);
+		this.R_InfoCardIcon(icon);
+		this.R_InfoCardIcon(closeButton);
+		this.trackingParams(cf,trackingParams);
+		this.ceq(allowTeaserDismiss,true);
+		this.ceq(logIconVisibilityUpdates,true);
+	}
+	/** @private @arg {D_MicroformatEmbed} x */
+	D_MicroformatEmbed(x) {
+		const cf="D_CardCollection";
+		const {iframeUrl,flashUrl,width,height,flashSecureUrl,...y}=this.s(cf,x); this.g(y);
+		this.parser.parse_url(cf,iframeUrl);
+		this.parser.parse_url(cf,flashUrl);
+		switch(width) {
+			default: debugger; break;
+			case 1280: case 480: case 405:
+		}
+		switch(height) {
+			default: debugger; break;
+			case 720: case 360:
+		}
+		this.parser.parse_url(cf,flashSecureUrl);
+	}
+	/** @private @arg {D_VideoCategory} x */
+	D_VideoCategory(x) {
+		switch(x) {
+			default: {
+				switch(x) {
+				}
+				debugger;
+			} break;
+			case "Sports":
+			case "Education":
+			case "Pets & Animals":
+			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
+			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
+		}
+	}
+	/** @private @arg {D_LiveBroadcastDetails} x */
+	D_LiveBroadcastDetails(x) {
+		const cf="D_LiveBroadcastDetails";
+		const {isLiveNow,startTimestamp,...y}=this.s(cf,x);
+		this.a_primitive_bool(isLiveNow);
+		this.a_primitive_str(startTimestamp);
+		if("endTimestamp" in y) {
+			const {endTimestamp,...y1}=y; this.g(y1);
+			return;
+		}
+		this.g(y);
+	}
+	/** @private @arg {D_AdaptiveFormatItem} x */
+	D_AdaptiveFormatItem(x) {
+		const cf="D_AdaptiveFormatItem";
+		const {itag,url,mimeType,bitrate,width,height,initRange,indexRange,lastModified,contentLength,quality,xtags,fps,qualityLabel,projectionType,audioTrack,averageBitrate,colorInfo,highReplication,audioQuality,approxDurationMs,audioSampleRate,audioChannels,loudnessDb,signatureCipher,...y}=this.s(cf,x); this.g(y);
+		this.t(audioTrack,this.D_AudioTrack);
+		this.a_primitive_num(itag);
+		this.t(url,x => this.parser.parse_url(cf,x));
+		this.a_primitive_str(mimeType);
+		this.a_primitive_num(bitrate);
+		this.t(width,this.a_primitive_num);
+		this.t(height,this.a_primitive_num);
+		this.D_Range(initRange);
+		this.D_Range(indexRange);
+		this.a_primitive_str(lastModified);
+		this.a_primitive_str(contentLength);
+		this.a_primitive_str(quality);
+		this.t(xtags,x => this.params(cf,"adaptive_format.xtags",x));
+		this.t(fps,this.D_FormatFps);
+		this.t(qualityLabel,this.a_primitive_str);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.t(averageBitrate,this.a_primitive_num);
+		this.t(colorInfo,this.D_FormatColorInfo);
+		this.t(highReplication,x => {if(x!==true) debugger;});
+		this.t(audioQuality,x => {
+			switch(x) {
+				default: debugger; break;
+				case "AUDIO_QUALITY_LOW":
+				case "AUDIO_QUALITY_MEDIUM":
+			}
+		});
+		this.a_primitive_str(approxDurationMs);
+		this.t(audioSampleRate,x => {
+			switch(x) {
+				default: debugger; break;
+				case "44100": case "48000":
+			}
+		});
+		this.t(audioChannels,x => {
+			if(x!==2) debugger;
+		});
+		this.t(loudnessDb,this.a_primitive_num);
+		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
