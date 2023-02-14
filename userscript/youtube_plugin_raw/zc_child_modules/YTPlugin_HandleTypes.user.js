@@ -6754,23 +6754,25 @@ class HandleTypes extends HandleTypesEval {
 			let kk=this.get_keys_of_2(x);
 			switch(x[3]) {
 				default: {
+					const x3=x[3];
+					switch(x3) {
+						case "Universe": break;
+					}
 					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 					x[3]===""; debugger;
 				} break;
 				case "3D printing":
 				case "AI":
 				case "Bitcoin":
-				case "C++": case "Calculus": case "Computer Science": case "Conversation": case "CPUs": case "C#":
-				case "Editing": case "Electronic Music":
-				case "Gadgets": case "Game engines": case "Geometry":
+				case "C++": case "Calculus": case "Computer Science": case "CPUs": case "C#":
+				case "Gadgets": case "Game engines":
 				case "History":
 				case "Linux":
-				case "Machines":
-				case "Media theories":
 				case "Nintendo":
-				case "Physics": case "Podcasts": case "Puzzle games": case "Puzzles": case "Python":
+				case "Physics": case "Puzzle games": case "Python":
 				case "Soundtracks": case "Statistics":
-				case "Tools": case "Touhou Project":
+				case "Tools":
+				case "Universe":
 			}
 			return;
 		}
