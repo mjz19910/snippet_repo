@@ -6764,7 +6764,7 @@ class HandleTypes extends HandleTypesEval {
 							break x;
 						}
 						if(string_store[1][0]!=="one") break x;
-						if(string_store[1][0].includes(x3)) return;
+						if(string_store[1][1].includes(x3)) return;
 						this.save_string(save_key,x3);
 					}
 					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
