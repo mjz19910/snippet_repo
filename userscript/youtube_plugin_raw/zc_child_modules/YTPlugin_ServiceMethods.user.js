@@ -764,8 +764,18 @@ class ServiceMethods extends ServiceData {
 		}
 		this.G_DC_GetSurvey_Endpoint(a);
 	}
+	/** @protected @arg {GM_AddToPlaylistService} x */
+	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
+	/** @protected @arg {M_AddToPlaylistService} x */
+	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
+	/** @protected @arg {DE_AddToPlaylistService} x */
+	DE_AddToPlaylistService(x) {
+		const cf="DE_AddToPlaylistService"; this.k(cf,x);
+		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.videoId(videoId);
+	}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */

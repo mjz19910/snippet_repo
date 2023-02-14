@@ -1586,8 +1586,6 @@ class HandleTypes extends HandleTypesEval {
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
-	/** @protected @arg {M_AddToPlaylistService} x */
-	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {M_AccountMenu} x */
@@ -1614,8 +1612,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
-	/** @protected @arg {GM_AddToPlaylistService} x */
-	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {GM_RecordInteractions} x */
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {DE_GetTranscript} a */
@@ -1640,12 +1636,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
-	}
-	/** @protected @arg {DE_AddToPlaylistService} x */
-	DE_AddToPlaylistService(x) {
-		const cf="DE_AddToPlaylistService"; this.k(cf,x);
-		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.videoId(videoId);
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
