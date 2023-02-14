@@ -6756,13 +6756,13 @@ class HandleTypes extends HandleTypesEval {
 				default: {
 					const x3=x[3];
 					switch(x3) {
-						case "Universe": break;
+						case "Computers": break;
 					}
 					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
-					x[3]===""; debugger;
+					debugger;
 				} break;
 				case "3D printing":
-				case "AI":
+				case "AI": case "Algorithms":
 				case "Bitcoin":
 				case "C++": case "Calculus": case "Computer Science": case "CPUs": case "C#":
 				case "Gadgets": case "Game engines":

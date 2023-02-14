@@ -84,5 +84,29 @@ type D_BinaryCategoryObj_13=
 		};
 		3: "Universe";
 	}
+	|{
+		1: {
+			1: "/m/0jpv";
+		};
+		3: "Algorithms";
+	}
+	|{
+		1: {
+			1: "/m/01m3v";
+		};
+		3: "Computers";
+	}
+	|{
+		1: {
+			1: "/m/02csf";
+		};
+		3: "Drawing";
+	}
+	|{
+		1: {
+			1: "/m/02lkt";
+		};
+		3: "Electronic Music";
+	}
 	;
 ;
