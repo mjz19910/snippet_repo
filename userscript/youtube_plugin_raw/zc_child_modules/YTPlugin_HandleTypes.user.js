@@ -6599,17 +6599,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @type {{[U in string]?:number[]}} */
-	lc={};
-	/** @arg {string} cf1 @arg {string} cf @arg {string} k @arg {number} x */
-	log_color(cf1,cf,k,x) {
-		let arr=this.lc[k]??=[];
-		if(!arr.includes(x)) {
-			arr.push(x);
-			arr.sort((a,b) => a-b);
-			console.log(`-- [${cf1}:${cf}:${k}] --\n\n${arr.map(x => `case 0x${x.toString(16)}:`).join(" ")}`);
-		}
-	};
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
 		const cf="D_C4TabbedHeader"; this.k(cf,x);
