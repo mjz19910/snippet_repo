@@ -726,30 +726,28 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
 	is_bigint(x) {return x[0]==="bigint";}
 	parse_key_index=1;
+	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
+	continuation_token_data_f49(cf,x) {
+		let entry=x;
+		let path=cf;
+		let bc=decodeURIComponent(entry);
+		let buffer=base64_url_dec.decodeByteArray(bc);
+		if(!buffer) {debugger; return;}
+		let c_pos=0;
+		let na_arr;
+		for(;c_pos<6;c_pos++) this.save_number(`${path}.${c_pos}`,buffer[c_pos]);
+		{
+			let n_len=4; na_arr=[...buffer.slice(c_pos,c_pos+n_len)];
+			this.save_number(`${path}.${c_pos}-${c_pos+n_len}`,na_arr);
+			c_pos+=n_len;
+		}
+		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,[...buffer.slice(c_pos,c_pos+4)]);}
+	}
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
 		if(typeof entry==="string") {
 			switch(path) {
-				case "continuation_token.data.f49": {
-					let bc=decodeURIComponent(entry);
-					let buffer=base64_url_dec.decodeByteArray(bc);
-					if(!buffer) {debugger; break;}
-					let c_pos=0;
-					let na_arr;
-					for(let i=0;i<6;i++) {
-						this.save_number(`${path}.${c_pos}`,buffer[c_pos]);
-						c_pos+=1;
-					}
-					{
-						let n_len=4; na_arr=[...buffer.slice(c_pos,c_pos+n_len)];
-						this.save_number(`${path}.${c_pos}-${c_pos+n_len}`,na_arr);
-						c_pos+=n_len;
-					}
-					{
-						let n_len=4;
-						console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,[...buffer.slice(c_pos,c_pos+4)]);
-					}
-				} break;
+				case "continuation_token.data.f49": return this.continuation_token_data_f49(path,entry);
 				case "load_markers.entity_key.f2": case "reel_request_continuation.token.f12":
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
