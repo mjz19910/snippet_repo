@@ -758,7 +758,13 @@ class HandleTypes extends HandleTypesEval {
 					this.decode_continuation_token(cf,entry);
 				} break;
 				case "continuation_token.data.f49": {
-					this.save_string(`${path}.un_uri_component`,decodeURIComponent(entry));
+					let bc=decodeURIComponent(entry);
+					let buffer=base64_url_dec.decodeByteArray(bc);
+					if(!buffer) {debugger; break;}
+					let na_05=[...buffer.slice(0,5)];
+					this.save_number(`${path}.0-5`,na_05);
+					this.save_number(`${path}.6`,buffer[6]);
+					debugger;
 				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
@@ -6423,11 +6429,6 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {GR_RootBinaryObj} */
 		let t_bin_obj=as(bin_obj);
 		this.GR_RootBinaryObj(cf,t_bin_obj);
-		// const [,field_id,_raw_bin,dec_bin]=x;
-		// if(dec_bin===null) {debugger; break;}
-		// let hex_id=this.number_as_hex(field_id);
-		// case "0x19ac5ceb": return this.D_0x19ac5ceb(as_any(bin_obj));
-		// case "0x94d81d4": return this.D_0x94d81d4(as_any(bin_obj));
 	}
 	/** @arg {number} x */
 	number_as_hex(x) {
@@ -6611,7 +6612,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(2 in x) {
 			/** @template {number} T @arg {{2:{1:number}}} x @arg {T} v @returns {x is {2:{1:T}}} */
-			function is_token_g2(x,v) {return x[2][1]===v}
+			function is_token_g2(x,v) {return x[2][1]===v;}
 			if(is_token_g2(x,1)) return;
 			if(is_token_g2(x,3)) return;
 			if(is_token_g2(x,14)) return;
@@ -6681,8 +6682,12 @@ class HandleTypes extends HandleTypesEval {
 		const cf="V_BinaryTimestamp";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="number") debugger;
-		if(typeof f2==="number"&&f2>180670536) debugger;
-		if(typeof f3==="number"&&f3>3825595062) debugger;
+		if(typeof f2==="number"&&f2>0b1010110001001110011000100011) {
+			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
+		}
+		if(typeof f3==="number"&&f3>0b11100100000001011111001010110110) {
+			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
+		}
 	}
 	/** @private @arg {R_0x12f639cf[12]} x */
 	D_f12(x) {
