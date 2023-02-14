@@ -6618,7 +6618,10 @@ class HandleTypes extends HandleTypesEval {
 			if(x[3]==="C++") return;
 			if(x[3]==="Gadgets") return;
 			if(x[3]==="Machines") return;
+			if(x[3]==="Game engines") return;
+			if(x[3]==="Puzzles") return;
 			this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
+			debugger;
 			return;
 		}
 		if(2 in x) {
