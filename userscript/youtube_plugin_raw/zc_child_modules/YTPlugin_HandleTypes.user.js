@@ -973,13 +973,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string("IconType",iconType);
 		return is_missing_iconType;
 	}
-	/** @private @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
-	TA_OpenPopup(cf1,x) {
-		const cf2="TA_OpenPopup";
-		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(`${cf1}.tracking`,clickTrackingParams);
-		return a;
-	}
 	/** @private @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
@@ -1435,8 +1428,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
 	/** @private @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
-	/** @private @arg {R_UnifiedSharePanel} x */
-	R_UnifiedSharePanel(x) {this.H_("R_UnifiedSharePanel","unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
 	/** @private @arg {R_EmojiPickerCategory} x */
 	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
@@ -1763,19 +1754,6 @@ class HandleTypes extends HandleTypesEval {
 			case "SURVEY_TRIGGER_ACTION_AUTOPLAY_CANCEL": {} break;
 		}
 		this.G_DC_GetSurvey_Endpoint(a);
-	}
-	/** @protected @arg {D_ToggleButtonIdData} x */
-	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
-	/** @private @arg {D_UnifiedSharePanel} x */
-	D_UnifiedSharePanel(x) {
-		const cf="D_UnifiedSharePanel";
-		const {trackingParams,showLoadingSpinner,...y}=this.s(cf,x);
-		this.trackingParams(cf,trackingParams);
-		if(showLoadingSpinner!==true) debugger;
-		let ka=this.get_keys_of(y);
-		if(ka.length>0) {
-			console.log(`[${cf}.next_key] [${ka.shift()}]`);
-		}
 	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
@@ -2801,8 +2779,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
-	T_Id(x,f) {return f.call(this,x.id);}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
 	D_Omit_ThumbnailOverlay(cf,x) {
 		const {thumbnailOverlays,...y}=this.s(cf,x);
@@ -5660,20 +5636,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {AD_HideEnclosing} x */
 	AD_HideEnclosing(x) {this.y("AD_HideEnclosing","notificationId",x,this.a_primitive_str);}
-	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf @arg {D_EngagementPanelTargetId} x */
-	D_EngagementPanelTargetId(cf,x) {
-		switch(x) {
-			default: x===""; this.codegen_case(`${cf}.targetId`,x); break;
-			case "engagement-panel-clip-create":
-			case "engagement-panel-clip-view":
-			case "engagement-panel-comments-section":
-			case "engagement-panel-error-corrections":
-			case "engagement-panel-macro-markers-auto-chapters":
-			case "engagement-panel-macro-markers-description-chapters":
-			case "engagement-panel-searchable-transcript":
-			case "engagement-panel-structured-description":
-		}
-	}
 	/** @private @arg {D_Transcript} x */
 	D_Transcript(x) {
 		const cf="D_Transcript";
@@ -7760,14 +7722,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(cf,trackingParams);
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
 		this.t(adBadge,this.RMD_Badge);
-	}
-	/** @private @arg {Popup_ShareEntityService} x */
-	Popup_ShareEntityService(x) {
-		const cf="Popup_ShareEntityService";
-		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
-		this.R_UnifiedSharePanel(popup);
-		if(popupType!=="DIALOG") debugger;
-		this.a_primitive_bool(beReused);
 	}
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(cf,path,x));}

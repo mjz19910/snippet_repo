@@ -23,6 +23,22 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
+	T_Id(x,f) {return f.call(this,x.id);}
+	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf @arg {D_EngagementPanelTargetId} x */
+	D_EngagementPanelTargetId(cf,x) {
+		switch(x) {
+			default: x===""; this.codegen_case(`${cf}.targetId`,x); break;
+			case "engagement-panel-clip-create":
+			case "engagement-panel-clip-view":
+			case "engagement-panel-comments-section":
+			case "engagement-panel-error-corrections":
+			case "engagement-panel-macro-markers-auto-chapters":
+			case "engagement-panel-macro-markers-description-chapters":
+			case "engagement-panel-searchable-transcript":
+			case "engagement-panel-structured-description":
+		}
+	}
 	/** @protected @arg {RA_Notification} x */
 	RA_Notification(x) {this.H_("RA_NotificationAction","notificationActionRenderer",x,this.AD_Notification);}
 	/** @private @arg {AD_Notification} x */
@@ -252,6 +268,36 @@ class ServiceMethods extends ServiceData {
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
 	/** @private @arg {GM_GetSharePanel} x */
 	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
+	/** @protected @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
+	TA_OpenPopup(cf1,x) {
+		const cf2="TA_OpenPopup";
+		const {clickTrackingParams,openPopupAction: a,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(`${cf1}.tracking`,clickTrackingParams);
+		return a;
+	}
+	/** @protected @arg {D_ToggleButtonIdData} x */
+	D_ToggleButtonIdData(x) {this.y("D_ToggleButtonIdData","toggleButtonIdData",x,x => this.T_Id(x,x => this.save_enum("TOGGLE_BUTTON_ID_TYPE",x)));}
+	/** @private @arg {D_UnifiedSharePanel} x */
+	D_UnifiedSharePanel(x) {
+		const cf="D_UnifiedSharePanel";
+		const {trackingParams,showLoadingSpinner,...y}=this.s(cf,x);
+		this.trackingParams(cf,trackingParams);
+		if(showLoadingSpinner!==true) debugger;
+		let ka=this.get_keys_of(y);
+		if(ka.length>0) {
+			console.log(`[${cf}.next_key] [${ka.shift()}]`);
+		}
+	}
+	/** @private @arg {R_UnifiedSharePanel} x */
+	R_UnifiedSharePanel(x) {this.H_("R_UnifiedSharePanel","unifiedSharePanelRenderer",x,this.D_UnifiedSharePanel);}
+	/** @private @arg {Popup_ShareEntityService} x */
+	Popup_ShareEntityService(x) {
+		const cf="Popup_ShareEntityService";
+		const {popup,popupType,beReused,...y}=this.s(cf,x); this.g(y);
+		this.R_UnifiedSharePanel(popup);
+		if(popupType!=="DIALOG") debugger;
+		this.a_primitive_bool(beReused);
+	}
 	/** @private @arg {DE_ShareEntityService} x */
 	DE_ShareEntityService(x) {
 		const cf="DE_ShareEntityService";
