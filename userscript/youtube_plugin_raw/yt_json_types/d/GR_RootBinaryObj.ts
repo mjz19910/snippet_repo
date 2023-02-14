@@ -197,5 +197,11 @@ type GR_RootBinaryObj=
 		};
 		3: "Gadgets";
 	}
+	|{
+		2: {
+			1: 4;
+		};
+		3: "Live";
+	}
 	;
 ;

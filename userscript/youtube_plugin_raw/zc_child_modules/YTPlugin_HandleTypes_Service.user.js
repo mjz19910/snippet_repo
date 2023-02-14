@@ -6626,18 +6626,20 @@ class HandleTypes extends HandleTypesEval {
 			function is_token_g2(x,v) {return x[2][1]===v;}
 			if(is_token_g2(x,1)) return;
 			if(is_token_g2(x,3)) return;
+			if(is_token_g2(x,4)) return;
 			if(is_token_g2(x,14)) return;
 			if(is_token_g2(x,15)) return;
 			if(is_token_g2(x,31)) return;
 			if(is_token_g2(x,53)) return;
-			debugger;
 			let kk=this.get_keys_of_2(x);
 			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
+			debugger;
 			return;
 		}
 		if(11 in x) {
 			let kk=this.get_keys_of_2(x);
 			this.codegen_typedef_all(`decode_continuation_token:BinaryToken:${kk.join()}`,x,false);
+			debugger;
 			return;
 		}
 		let kk=this.get_keys_of_2(x);
