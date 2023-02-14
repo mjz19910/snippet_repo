@@ -781,6 +781,9 @@ class HandleTypes extends HandleTypesEval {
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
 				} break;
+				case "reel_request_continuation.token.f15.f6.f1":
+				case "reel_request_continuation.token.f3.f1":
+				case "continuation_token.data.f53.f4.f4":
 				case "watch_request_continuation.token.f6.f4.f4":
 				case "watch_request_continuation.token.f2.f2":
 				case "continuation_token.data$sub_obj$f3.f1.f5.f2": {
@@ -3538,46 +3541,32 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_ReelWatch} x */
 	DE_ReelWatch(x) {
 		const cf="DE_ReelWatch"; this.k(cf,x);
-		if("videoId" in x&&"sequenceProvider" in x) {
-			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if("videoId" in x) {
+			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(videoId,this.videoId);
 			this.params(cf,"reel.player_params",playerParams);
 			this.t(thumbnail,this.D_Thumbnail);
 			this.R_ReelPlayerOverlay(overlay);
 			this.params(cf,"reel.params",params);
-			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
+			if(loggingContext) {
+				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			}
+			this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
 			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
 			return;
 		}
-		if("videoId" in x) {
-			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.t(videoId,this.videoId);
-			this.params(cf,"reel.player_params",playerParams);
-			this.t(thumbnail,this.D_Thumbnail);
-			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
-			this.D_VssLoggingContext(loggingContext.vssLoggingContext);
-			this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
-			return;
-		}
-		if("loggingContext" in x) {
+		if("inputType" in x) {
 			const {playerParams,overlay,params,sequenceProvider,inputType,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.params(cf,"reel.player_params",playerParams);
 			this.R_ReelPlayerOverlay(overlay);
 			this.params(cf,"reel.params",params);
 			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
 			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
-			this.D_VssLoggingContext(loggingContext.vssLoggingContext);
-			this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
-			return;
-		}
-		if("inputType" in x) {
-			const {playerParams,overlay,params,sequenceProvider,inputType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.params(cf,"reel.player_params",playerParams);
-			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
-			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
-			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
+			if(loggingContext) {
+				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
+			}
 			return;
 		}
 		this.g(x);

@@ -33,34 +33,20 @@ type DE_ReelWatch=
 		thumbnail: D_Thumbnail;
 		overlay: R_ReelPlayerOverlay;
 		params: string;
-		loggingContext: {
+		loggingContext?: {
 			vssLoggingContext: D_SerializedContextData;
 			qoeLoggingContext: D_SerializedContextData;
 		};
-	}
-	|{
-		playerParams: string;
-		overlay: R_ReelPlayerOverlay;
-		params: string;
-		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
-		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
-		loggingContext: D_LoggingContext;
-	}
-	|{
-		playerParams: string;
-		overlay: R_ReelPlayerOverlay;
-		params: string;
-		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
-		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
-	}
-	|{
-		videoId: string;
-		playerParams: string;
-		thumbnail?: D_Thumbnail;
-		overlay: R_ReelPlayerOverlay;
-		params: string;
-		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
+		sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
 		sequenceParams?: string;
+	}
+	|{
+		playerParams: string;
+		overlay: R_ReelPlayerOverlay;
+		params: string;
+		sequenceProvider: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
+		inputType: "REEL_WATCH_INPUT_TYPE_SEEDLESS";
+		loggingContext?: D_LoggingContext;
 	}
 	;
 ;
