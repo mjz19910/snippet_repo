@@ -277,19 +277,7 @@ class IndexedDBService extends BaseService {
 		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
 		const {result: db,transaction: tx}=request;
 		if(!tx) throw new Error("No transaction");
-		this.createDatabaseSchema(event.oldVersion,db);
-	}
-	/** @private @arg {number} old_version @arg {IDBDatabase} db */
-	createDatabaseSchema(old_version, db) {
-		if(old_version<1) {
-			this.create_store("video_id",db);
-			this.create_store("hashtag",db);
-			this.create_store("boxed_id",db);
-		}
-		if(old_version<2) {
-			this.create_store("channel_id",db);
-			this.create_store("playlist",db);
-		}
+		this.x.get("handle_types").indexed_db_createDatabaseSchema(this,event.oldVersion,db);
 	}
 	/** @private @arg {Event} event */
 	onError(event) {console.log("idb error",event);}

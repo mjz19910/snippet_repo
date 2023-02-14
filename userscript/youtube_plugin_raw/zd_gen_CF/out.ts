@@ -1124,5 +1124,6 @@ export namespace Gen {
 		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.watch_request_continuation.token.f5" | "sub.continuation_token.data.f49" | "sub.continuation_token.data.f15" | "sub.continuation_token.data.f72" | "sub.continuation_token.data.f49.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player.heartbeat_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HeartbeatParams";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE5754";}
 		;
 }

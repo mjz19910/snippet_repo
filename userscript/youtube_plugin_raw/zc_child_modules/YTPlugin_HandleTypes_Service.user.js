@@ -1034,7 +1034,44 @@ class HandleTypes extends HandleTypesEval {
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
 		this.a_primitive_str(x);
-		this.indexed_db.put("video_id",{key: `video_id:normal:${x}`,type: "normal",v: x});
+		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "normal",v: x});
+	}
+	indexed_db_version=3;
+	/** @arg {AGA_push_waiting_obj_noVersion} args */
+	indexed_db_put(...args) {
+		this.indexed_db.put(...args,this.indexed_db_version);
+	}
+	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
+	indexed_db_createDatabaseSchema(service,old_version,db) {
+		if(old_version<1) {
+			service.create_store("video_id",db);
+			service.create_store("hashtag",db);
+			service.create_store("boxed_id",db);
+		}
+		if(old_version<2) {
+			service.create_store("channel_id",db);
+			service.create_store("playlist",db);
+		}
+		if(old_version<3) {
+			service.create_store("browse_id",db);
+		}
+		/** @type {DT_DatabaseStoreTypes} */
+		let v;
+		let ex=()=> {
+			let kk=this.get_keys_of_2(v);
+			for(let k of kk) {
+				switch(k) {
+					default: k===""; debugger; break;
+					case "video_id": break;
+					case "hashtag": break;
+					case "boxed_id": break;
+					case "browse_id": break;
+					case "channel_id": break;
+					case "playlist": break;
+				}
+			}
+		}
+		ex;
 	}
 	/** @protected @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {
@@ -1962,7 +1999,7 @@ class HandleTypes extends HandleTypesEval {
 			case "hashtag": {
 				let [,ht,...u]=p;
 				if(u.length===0) {
-					this.indexed_db.put("hashtag",{key: `hashtag:${ht}`,hashtag: ht});
+					this.indexed_db_put("hashtag",{key: `hashtag:${ht}`,hashtag: ht});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
@@ -4910,7 +4947,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
-			this.x.get("indexed_db").put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
+			this.indexed_db_put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);
 			return;
@@ -7017,7 +7054,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
 	put_boxed_id(value) {
 		const {type,id}=value;
-		this.x.get("indexed_db").put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
+		this.indexed_db_put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
 	}
 	/** @public @arg {G_UrlInfoItem} value */
 	G_UrlInfoItem(value) {
@@ -7027,7 +7064,7 @@ class HandleTypes extends HandleTypesEval {
 			case "play-next": value; break;
 			case "browse_id:VL": {
 				const {type,id,raw_id}=value;
-				this.x.get("indexed_db").put("browse_id",{key: `browse_id:VL:${id}`,type,id,raw_id});
+				this.indexed_db_put("browse_id",{key: `browse_id:VL:${id}`,type,id,raw_id});
 			} break;
 			case "playlist:2:RDCM": {
 				this.put_boxed_id(value);
@@ -7048,7 +7085,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @public @arg {Extract<T_SplitOnce<NS_DP_Parse.ParseUrlStr_0,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		const [sec,id]=x; if(sec!=="shorts") debugger;
-		this.indexed_db.put("video_id",{key: `video_id:shorts:${id}`,type: "shorts",v: id});
+		this.indexed_db_put("video_id",{key: `video_id:shorts:${id}`,type: "shorts",v: id});
 	}
 	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
