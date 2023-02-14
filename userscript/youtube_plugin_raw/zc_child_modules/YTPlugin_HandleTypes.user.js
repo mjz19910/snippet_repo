@@ -1052,8 +1052,6 @@ class HandleTypes extends HandleTypesEval {
 	R_Video(x) {this.H_("R_Video","videoRenderer",x,this.D_Video);}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
-	/** @private @arg {D_PaidDigitalGoods} x */
-	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -2820,8 +2818,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
-	/** @private @arg {D_Survey_Watch} x */
-	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
 	codegen_group_id=1;
 	/** @private @arg {string} cf @arg {{}} x */
 	make_codegen_group(cf,x,collapsed=true) {

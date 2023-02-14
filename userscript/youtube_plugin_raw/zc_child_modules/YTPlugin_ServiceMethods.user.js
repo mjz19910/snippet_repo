@@ -23,6 +23,10 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {D_Survey_Watch} x */
+	D_Survey_Watch(x) {this.y("D_Survey_Watch","watch",x,this.B_Hack);}
+	/** @private @arg {D_PaidDigitalGoods} x */
+	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
 	/** @private @arg {G_DC_GetSurvey_Endpoint} x */
 	G_DC_GetSurvey_Endpoint(x) {
 		const cf="G_DC_GetSurvey_Endpoint"; this.k(cf,x);
