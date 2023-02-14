@@ -154,6 +154,8 @@ class ServiceMethods extends ServiceData {
 		if(tooltip!=="Added") debugger;
 		this.E_PlaylistEdit(serviceEndpoint);
 	}
+	/** @private @arg {E_PlaylistEdit} x */
+	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1"; this.k(cf,x);
@@ -183,6 +185,17 @@ class ServiceMethods extends ServiceData {
 		this.M_SendPost(wc);
 		this.G_ClientSignal(cf1,s);
 	}
+	/** @private @arg {string} cf1 @arg {G_ClientSignal} x */
+	G_ClientSignal(cf1,x) {
+		const cf2="G_ClientSignal";
+		let {actions,...y}=this.Signal_Omit(x,x => {
+			this.save_string(`${cf2}.${cf1}.signal`,x);
+			if(x!=="CLIENT_SIGNAL") debugger;
+		}); this.g(y);
+		this.z_cf(cf1,actions,this.G_SignalActionItem);
+	}
+	/** @private @arg {M_SendPost} x */
+	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/**
 	 * @private @template {D_ThumbnailOverlayToggleButton} T @arg {"D_ThumbnailOverlayToggleButton"} cf @arg {T} x
 	 * @returns {[p1,p2,o2]}

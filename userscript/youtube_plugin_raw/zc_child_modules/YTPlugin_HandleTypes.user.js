@@ -526,15 +526,6 @@ class HandleTypes extends HandleTypesEval {
 		if("addToPlaylistCommand" in x) return this.C_AddToPlaylist(x);
 		this.codegen_typedef_all(cf2,x);
 	}
-	/** @private @arg {string} cf1 @arg {G_ClientSignal} x */
-	G_ClientSignal(cf1,x) {
-		const cf2="G_ClientSignal";
-		let {actions,...y}=this.Signal_Omit(x,x => {
-			this.save_string(`${cf2}.${cf1}.signal`,x);
-			if(x!=="CLIENT_SIGNAL") debugger;
-		}); this.g(y);
-		this.z_cf(cf1,actions,this.G_SignalActionItem);
-	}
 	/** @private @arg {G_WatchNextEndScreenItem} x */
 	G_WatchNextEndScreenItem(x) {
 		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
@@ -1732,8 +1723,6 @@ class HandleTypes extends HandleTypesEval {
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {E_PlaylistEdit} x */
-	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_CreatePlaylistService} x */
@@ -1750,8 +1739,6 @@ class HandleTypes extends HandleTypesEval {
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
-	/** @private @arg {M_SendPost} x */
-	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
