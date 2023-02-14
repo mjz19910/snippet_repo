@@ -14,9 +14,11 @@
 const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__),bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
-const base64_dec=bs.base64_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
+const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
+	str_is_uri(x) {return x.includes(":");}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
 		let token_str=atob(x);
@@ -3643,6 +3645,84 @@ class ServiceMethods extends ServiceData {
 		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R_ThumbnailOverlayTimeStatus(x);
 		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R_ThumbnailOverlayToggleButton(x);
 		this.codegen_typedef_all(`ThumbnailOverlay$${cf}`,x);
+	}
+	/** @private @arg {string} key @arg {Uint8Array} data @arg {number} [idx] */
+	save_next_byte(key,data,idx=0) {
+		let f=data[idx];
+		/** @type {`${typeof key}.data[${typeof idx}]`} */
+		let rk=`${key}.data[${idx}]`;
+		/** @type {`${typeof rk}=${typeof f}`} */
+		let k=`${rk}=${f}`;
+		this.save_number(rk,f);
+		this.save_number(k,1);
+	}
+	/** @private @arg {D_MenuNavigationItem} x */
+	D_MenuNavigationItem(x) {
+		const cf="D_MenuNavigationItem"; this.k(cf,x);
+		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_later*/
+		this.trackingParams(cf,trackingParams);
+		this.G_Text(text);
+		switch(icon.iconType) {
+			default: this.codegen_typedef_all(cf,x); break;
+			case "FEEDBACK": case "INFO":
+		}
+		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
+		if("accessibility" in y) return this.y(cf,"accessibility",y,this.D_Accessibility);
+		this.g(y);
+	}
+	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
+	RD_MenuServiceItem_Omit(cf,x) {
+		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
+		this.G_Text(text);
+		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
+		this.t(res,this.RD_MenuServiceItem_ServiceInfo);
+		this.trackingParams(cf,trackingParams);
+		return y;
+	}
+	/** @private @arg {Extract<RD_MenuServiceItem,{icon:any}>["icon"]} x */
+	RD_MenuServiceItem_Icon(x) {
+		let u=x;
+		switch(x.iconType) {
+			default: this.new_service_icon("RD_MenuServiceItem",u.iconType); break;
+			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
+			case "VISIBILITY_OFF":
+		}
+	}
+	/** @private @arg {D_Menu_Button} x */
+	D_Menu_Button(x) {
+		const cf="D_Menu_Button";
+		if("buttonRenderer" in x) return this.R_Button(x);
+		if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
+		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
+		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {DE_CreateBackstagePost} x */
+	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
+	/** @private @arg {DE_Feedback} x */
+	DE_Feedback(x) {
+		const cf="DE_Feedback";
+		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
+		this.save_b64_binary("feedbackToken",feedbackToken);
+		this.t(uiActions,this.D_HideEnclosingContainer);
+		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
+	}
+	/** @private @arg {GM_RemoveLike} x */
+	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
+	/** @private @arg {GM_Dislike} x */
+	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.ceq(x,"/youtubei/v1/like/dislike"));}
+	/** @private @arg {GM_LikeLike} x */
+	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.ceq(x,"/youtubei/v1/like/like"));}
+	/** @private @arg {M_CreateBackstagePost} x */
+	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
+	/** @private @arg {E_Subscribe} x */
+	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
+	/** @private @arg {C_ShowReloadUi} x */
+	C_ShowReloadUi(x) {
+		const cf="C_ShowReloadUi"; this.k(cf,x);
+		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_ShowReloadUi(a);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

@@ -1490,13 +1490,6 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
 	}
-	/** @private @arg {C_ShowReloadUi} x */
-	C_ShowReloadUi(x) {
-		const cf="C_ShowReloadUi"; this.k(cf,x);
-		const {clickTrackingParams,showReloadUiCommand: a,...y}=this.s(cf,x); this.g(y);//#destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_ShowReloadUi(a);
-	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
 	/** @private @arg {C_Loop} x */
@@ -1772,8 +1765,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {E_Subscribe} x */
-	E_Subscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Subscribe","subscribeEndpoint",x); this.g(y); this.M_Subscribe(a); this.DE_Subscribe(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
 	/** @private @arg {E_UndoFeedback} x */
@@ -1820,8 +1811,6 @@ class HandleTypes extends HandleTypesEval {
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {M_SendPost} x */
 	M_SendPost(x) {this.T_WCM("M_SendPost",x,this.GM_SendPost);}
-	/** @private @arg {M_CreateBackstagePost} x */
-	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
@@ -1848,12 +1837,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
-	/** @private @arg {GM_RemoveLike} x */
-	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
-	/** @private @arg {GM_Dislike} x */
-	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.ceq(x,"/youtubei/v1/like/dislike"));}
-	/** @private @arg {GM_LikeLike} x */
-	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.ceq(x,"/youtubei/v1/like/like"));}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
@@ -1971,14 +1954,6 @@ class HandleTypes extends HandleTypesEval {
 		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
 		debugger;
 	}
-	/** @private @arg {DE_Feedback} x */
-	DE_Feedback(x) {
-		const cf="DE_Feedback";
-		const {feedbackToken,uiActions,actions,...y}=this.s(cf,x); this.g(y);
-		this.save_b64_binary("feedbackToken",feedbackToken);
-		this.t(uiActions,this.D_HideEnclosingContainer);
-		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
-	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
@@ -2073,8 +2048,6 @@ class HandleTypes extends HandleTypesEval {
 			case "ENTITY_MUTATION_TYPE_REPLACE": this.DU_MutationReplace(x); break;
 		}
 	}
-	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
@@ -3379,15 +3352,6 @@ class HandleTypes extends HandleTypesEval {
 		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
 		this.a_primitive_str(playlistLoopStateEntityKey);
 	}
-	/** @private @arg {D_Menu_Button} x */
-	D_Menu_Button(x) {
-		const cf="D_Menu_Button";
-		if("buttonRenderer" in x) return this.R_Button(x);
-		if("segmentedLikeDislikeButtonRenderer" in x) return this.R_SegmentedLikeDislikeButton(x);
-		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
-		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
 		const cf="D_SegmentedLikeDislikeButton"; this.k(cf,x);
@@ -3452,24 +3416,6 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 		}
 	}
-	/** @private @template {RD_MenuServiceItem} T @arg {"RD_MenuServiceItem"} cf @arg {T} x */
-	RD_MenuServiceItem_Omit(cf,x) {
-		const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x);
-		this.G_Text(text);
-		let res=this.RD_MenuServiceItem_serviceEndpoint(serviceEndpoint);
-		this.t(res,this.RD_MenuServiceItem_ServiceInfo);
-		this.trackingParams(cf,trackingParams);
-		return y;
-	}
-	/** @private @arg {Extract<RD_MenuServiceItem,{icon:any}>["icon"]} x */
-	RD_MenuServiceItem_Icon(x) {
-		let u=x;
-		switch(x.iconType) {
-			default: this.new_service_icon("RD_MenuServiceItem",u.iconType); break;
-			case "ADD_TO_QUEUE_TAIL": case "CONTENT_CUT": case "FLAG": case "NOT_INTERESTED": case "PLAYLIST_ADD": case "REMOVE": case "SHARE": case "WATCH_LATER":
-			case "VISIBILITY_OFF":
-		}
-	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
@@ -3500,20 +3446,6 @@ class HandleTypes extends HandleTypesEval {
 		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 	}
-	/** @private @arg {D_MenuNavigationItem} x */
-	D_MenuNavigationItem(x) {
-		const cf="D_MenuNavigationItem"; this.k(cf,x);
-		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_later*/
-		this.trackingParams(cf,trackingParams);
-		this.G_Text(text);
-		switch(icon.iconType) {
-			default: this.codegen_typedef_all(cf,x); break;
-			case "FEEDBACK": case "INFO":
-		}
-		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
-		if("accessibility" in y) return this.y(cf,"accessibility",y,this.D_Accessibility);
-		this.g(y);
-	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
 		/** @private @type {Partial<T_RemovePrefix<U,"url">>} */
@@ -3539,8 +3471,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
-	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
-	str_is_uri(x) {return x.includes(":");}
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
@@ -5689,16 +5619,6 @@ class HandleTypes extends HandleTypesEval {
 	D_CompactRadio_NavE(x) {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
-	}
-	/** @private @arg {string} key @arg {Uint8Array} data @arg {number} [idx] */
-	save_next_byte(key,data,idx=0) {
-		let f=data[idx];
-		/** @type {`${typeof key}.data[${typeof idx}]`} */
-		let rk=`${key}.data[${idx}]`;
-		/** @type {`${typeof rk}=${typeof f}`} */
-		let k=`${rk}=${f}`;
-		this.save_number(rk,f);
-		this.save_number(k,1);
 	}
 	/** @private @arg {D_RadioShareUrl} b */
 	D_RadioShareUrl(b) {
