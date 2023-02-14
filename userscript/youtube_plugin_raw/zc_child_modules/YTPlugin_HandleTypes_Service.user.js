@@ -7248,13 +7248,13 @@ class HandleTypes extends HandleTypesEval {
 		return y;
 	}
 	/** @private @arg {DE_VE5754} x */
-	DE_VE5754_Browse(x) {this.y("DE_VE5754_Browse","browseId",x,this.browseId);}
-	/** @private @arg {E_VE5754_Browse} x */
+	DE_VE5754(x) {this.y("DE_VE5754","browseId",x,this.browseId);}
+	/** @private @arg {E_VE5754} x */
 	E_VE5754(x) {
-		const cf="E_VE5754_Browse";
+		const cf="E_VE5754";
 		let [x2,x4,{...x5}]=this.TE_Endpoint_3(cf,"browseEndpoint",x);
 		this.M_VE5754(x2);
-		this.DE_VE5754_Browse(x4);
+		this.DE_VE5754(x4);
 		this.g(x5);
 	}
 	/** @private @arg {[RE_D_VE3832_PreconnectUrl]} x */

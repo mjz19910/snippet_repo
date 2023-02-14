@@ -661,7 +661,7 @@ class CodegenService extends BaseService {
 			let xu=b;
 			if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
 			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
-			return `TYPE::E_VE${ve_num}_Browse`;
+			return `TYPE::E_VE${ve_num}`;
 		}
 		let g=() => this.json_auto_replace(b);
 		let hg=false

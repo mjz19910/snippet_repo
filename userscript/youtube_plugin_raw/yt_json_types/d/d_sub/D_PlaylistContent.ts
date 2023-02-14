@@ -13,7 +13,7 @@ type D_PlaylistContent={
 	playerInfoView: "DO_NOT_CHANGE";
 	trackingParams: string;
 	titleText: G_Text;
-	endpoint: E_VE5754_Browse;
+	endpoint: E_VE5754;
 	menu: R_Menu;
 	localCurrentIndex: number;
 	playlistButtons: R_Menu;
@@ -34,7 +34,7 @@ type D_PlaylistContent={
 	totalVideosText: G_Text;
 	trackingParams: string;
 	titleText: G_Text;
-	endpoint: E_VE5754_Browse;
+	endpoint: E_VE5754;
 	menu: R_Menu;
 	localCurrentIndex: number;
 	playlistButtons: R_Menu;
@@ -75,7 +75,7 @@ type D_PlaylistContent={
 	totalVideosText: G_Text;
 	trackingParams: string;
 	titleText: G_Text;
-	endpoint: E_VE5754_Browse;
+	endpoint: E_VE5754;
 	localCurrentIndex: 0;
 	playlistButtons: R_Menu;
 	badges: RMD_Badge[];
