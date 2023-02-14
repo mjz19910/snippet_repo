@@ -6518,7 +6518,7 @@ class HandleTypes extends HandleTypesEval {
 		let ra=rq;
 		return ra;
 	}
-	/** @private @arg {D_0x94d81d4} x */
+	/** @protected @arg {D_0x94d81d4} x */
 	D_0x94d81d4(x) {
 		if(x[8]!==1) {debugger; return;}
 		this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",x[3]);
@@ -6577,7 +6577,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {D_0x19ac5ceb} x */
+	/** @protected @arg {D_0x19ac5ceb} x */
 	D_0x19ac5ceb(x) {
 		const cf="D_0x19ac5ceb"; this.k(cf,x);
 		debugger;
