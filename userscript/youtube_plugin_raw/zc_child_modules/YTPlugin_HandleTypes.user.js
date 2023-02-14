@@ -1092,8 +1092,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
 	/** @private @arg {D_PaidDigitalGoods} x */
 	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
-	/** @private @arg {R_SubscribeButton} x */
-	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -3101,37 +3099,6 @@ class HandleTypes extends HandleTypesEval {
 		const {buttonText,accessibility,...y}=this.s(`${cf}.unsubscribe`,x); this.g(y);
 		this.t(buttonText,this.G_Text);
 		this.t(accessibility,this.D_Accessibility);
-	}
-	/** @private @arg {D_SubscribeButton} x */
-	D_SubscribeButton(x) {
-		const cf="D_SubscribeButton";
-		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
-		this.a_primitive_bool(enabled);
-		this.t(buttonText,this.G_Text);
-		this.t(subscribed,this.a_primitive_bool);
-		this.t(type,x => this.ceq(x,"FREE"));
-		this.t(channelId,this.D_ChannelId);
-		if(trackingParams) this.trackingParams(cf,trackingParams);
-		this.t(showPreferences,this.a_primitive_bool);
-		let [p1,o1]=this.unwrap_prefix(y1,"subscribed");
-		this.D_SubscribeButton_SubscribedPrefix(p1);
-		let [p2,o2]=this.unwrap_prefix(o1,"unsubscribed");
-		this.D_SubscribeButton_UnsubscribedPrefix(p2);
-		let [p3,o3]=this.unwrap_prefix(o2,"subscribe");
-		this.D_SubscribeButton_SubscribePrefix(p3);
-		let [p4,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
-		this.D_SubscribeButton_UnsubscribePrefix(p4);
-		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
-		this.tz(onSubscribeEndpoints,this.E_Subscribe);
-		this.tz(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
-		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
-		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
-		const {serviceEndpoints,...y}=y2; this.g(y);
-		this.tz(serviceEndpoints,x => {
-			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
-			if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-			debugger;
-		});
 	}
 	/** @private @arg {RSL_Like} x */
 	RSL_Like(x) {
@@ -8027,17 +7994,6 @@ class HandleTypes extends HandleTypesEval {
 		let [sig_0,sig_1]=split_string_once(x,".");
 		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
-	}
-	/** @private @arg {D_ReelMultimixAttributionLabel} x */
-	D_ReelMultimixAttributionLabel(x) {
-		const cf="D_ReelMultimixAttributionLabel";
-		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.T_Icon(cf,icon);
-		this.G_Text(title);
-		if(!command.watchEndpoint) debugger;
-		this.E_Watch(command);
-		this.a_primitive_str(a11yLabel);
-		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {D_MetadataRow} x */
 	D_MetadataRow(x) {

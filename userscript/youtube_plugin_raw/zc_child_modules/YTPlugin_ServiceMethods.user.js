@@ -643,8 +643,52 @@ class ServiceMethods extends ServiceData {
 		let dec_params=atob(params);
 		this.params(cf,"get_pdg_buy_flow.params",dec_params);
 	}
+	/** @private @arg {R_SubscribeButton} x */
+	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
+	/** @private @arg {D_SubscribeButton} x */
+	D_SubscribeButton(x) {
+		const cf="D_SubscribeButton";
+		const {enabled,buttonText,subscribed,type,channelId,trackingParams,showPreferences,...y1}=this.s(cf,x);
+		this.a_primitive_bool(enabled);
+		this.t(buttonText,this.G_Text);
+		this.t(subscribed,this.a_primitive_bool);
+		this.t(type,x => this.ceq(x,"FREE"));
+		this.t(channelId,this.D_ChannelId);
+		if(trackingParams) this.trackingParams(cf,trackingParams);
+		this.t(showPreferences,this.a_primitive_bool);
+		let [p1,o1]=this.unwrap_prefix(y1,"subscribed");
+		this.D_SubscribeButton_SubscribedPrefix(p1);
+		let [p2,o2]=this.unwrap_prefix(o1,"unsubscribed");
+		this.D_SubscribeButton_UnsubscribedPrefix(p2);
+		let [p3,o3]=this.unwrap_prefix(o2,"subscribe");
+		this.D_SubscribeButton_SubscribePrefix(p3);
+		let [p4,{...o4}]=this.unwrap_prefix(o3,"unsubscribe");
+		this.D_SubscribeButton_UnsubscribePrefix(p4);
+		const {onSubscribeEndpoints,onUnsubscribeEndpoints,targetId,notificationPreferenceButton,...y2}=o4;
+		this.tz(onSubscribeEndpoints,this.E_Subscribe);
+		this.tz(onUnsubscribeEndpoints,this.E_SignalService_SendPost);
+		this.t(targetId,x => this.ceq(x,"watch-subscribe"));
+		this.t(notificationPreferenceButton,this.R_SubscriptionNotificationToggleButton);
+		const {serviceEndpoints,...y}=y2; this.g(y);
+		this.tz(serviceEndpoints,x => {
+			if("subscribeEndpoint" in x) return this.E_Subscribe(x);
+			if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+			debugger;
+		});
+	}
 	/** @private @arg {R_ReelMultimixAttributionLabel} x */
 	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
+	/** @private @arg {D_ReelMultimixAttributionLabel} x */
+	D_ReelMultimixAttributionLabel(x) {
+		const cf="D_ReelMultimixAttributionLabel";
+		const {icon,title,command,a11yLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.T_Icon(cf,icon);
+		this.G_Text(title);
+		if(!command.watchEndpoint) debugger;
+		this.E_Watch(command);
+		this.a_primitive_str(a11yLabel);
+		this.trackingParams(cf,trackingParams);
+	}
 	/** @private @arg {R_WatchEndpointMusicConfig} x */
 	R_WatchEndpointMusicConfig(x) {this.H_("R_WatchEndpointMusicConfig","watchEndpointMusicConfig",x,this.D_WatchEndpointMusicConfig);}
 	/** @private @arg {D_WatchEndpointMusicConfig} x */
