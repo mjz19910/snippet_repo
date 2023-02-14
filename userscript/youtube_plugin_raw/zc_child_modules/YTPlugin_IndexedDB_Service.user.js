@@ -63,7 +63,7 @@ class IndexedDBService extends BaseService {
 	committed_data=[];
 	/** @type {Map<keyof DatabaseStoreTypes,string[]>} */
 	cached_data=new Map;
-	/** @arg {DatabaseStoreDescription["name"]} key */
+	/** @arg {DatabaseStoreDescription["key"]} key */
 	check_size(key) {
 		let d_cache=this.get_data_cache(key);
 		/** @type {(DatabaseStoreTypes[keyof DatabaseStoreTypes])[]} */
@@ -73,34 +73,32 @@ class IndexedDBService extends BaseService {
 	/** @api @public @arg {push_waiting_obj_Args} args */
 	put(...args) {
 		if(!args[1]) {debugger; return;}
-		switch(args[0]) {
+		const [key,value]=args;
+		switch(key) {
 			case "boxed_id": {
-				const [key,obj]=args;
 				let cache=this.cached_data.get(key);
-				let cache_key=`${key}:${obj.type}:${obj.id}`;
+				let cache_key=`${key}:${value.type}:${value.id}`;
 				if(cache?.includes(cache_key)) return;
-				if(!this.database_open) this.requestOpen({name: key});
-				this.push_waiting_obj(key,obj);
+				if(!this.database_open) this.requestOpen({key,value});
+				this.push_waiting_obj(key,value);
 				this.check_size(key);
 			} break;
 			case "hashtag": {
-				const [key,obj]=args;
-				let index_val=obj.hashtag;
+				let index_val=value.hashtag;
 				if(index_val==null) return;
 				let cache=this.cached_data.get(key);
 				if(cache?.includes(index_val)) return;
-				if(!this.database_open) this.requestOpen({name: key});
-				this.push_waiting_obj(key,obj);
+				if(!this.database_open) this.requestOpen({key,value});
+				this.push_waiting_obj(key,value);
 				this.check_size(key);
 			} break;
 			case "video_id": {
-				const [key,obj]=args;
-				let index_val=obj.v;
+				let index_val=value.v;
 				if(index_val==null) return;
 				let cache=this.cached_data.get(key);
 				if(cache?.includes(index_val)) return;
-				if(!this.database_open) this.requestOpen({name: key});
-				this.push_waiting_obj(key,obj);
+				if(!this.database_open) this.requestOpen({key,value});
+				this.push_waiting_obj(key,value);
 				this.check_size(key);
 			} break;
 		}
@@ -199,58 +197,44 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
 	async start_transaction(db,store_desc) {
-		let cur_name=store_desc.name;
-		const transaction=db.transaction(cur_name,"readwrite");
+		let {key: tx_namespace}=store_desc;
+		const transaction=db.transaction(tx_namespace,"readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
-		switch(cur_name) {
+		switch(tx_namespace) {
 			case "boxed_id": {
-				let d_cache=this.get_data_cache(cur_name); d_cache;
+				let d_cache=this.get_data_cache(tx_namespace); d_cache;
 			} break;
 			case "hashtag": {
-				let d_cache=this.get_data_cache(cur_name); d_cache;
+				let d_cache=this.get_data_cache(tx_namespace); d_cache;
 			} break;
 			case "video_id": {
-				let d_cache=this.get_data_cache(cur_name); d_cache;
+				let [,d_cache]=this.get_data_cache(tx_namespace); d_cache;
+				const obj_store=transaction.objectStore(tx_namespace);
+				debugger;
+				for(let cur_val of d_cache) {
+					for(let i=0;;i++) {
+						const cursor_req=obj_store.openCursor(IDBKeyRange.only(cur_val));
+						let cursor_res=await this.await_success(cursor_req);
+						console.log("res event",cursor_res.type);
+						if(cursor_req.result===null) {
+							if(i===0) {
+								this.add_data_to_store(obj_store,cur_val);
+							}
+							console.log("cursor_done after %o",i);
+							break;
+						}
+						const cur_cursor=cursor_req.result;
+						console.log("[cursor_value]",cur_cursor.value);
+					}
+				}
 			} break;
 		}
-		const obj_store=transaction.objectStore(cur_name);
-		const cursor_req=obj_store.openCursor(IDBKeyRange.only(cur_name));
-		cursor_req.onsuccess=() => {
-			const cursor=cursor_req.result;
-			if(cursor) {
-				console.log("cursor_result",cursor.value);
-				cursor.continue();
-			}
-		};
-		// if(this.get_data_cache(cur_name).length>0) this.consume_data(transaction,store_desc);
-		for(;;) {
-			let cursor_res=await this.await_success(cursor_req);
-			if(!cursor_res) break;
-		}
-	}
-	/** @protected @arg {IDBTransaction} transaction @arg {DatabaseStoreDescription} store_desc */
-	consume_data_old(transaction,store_desc) {
-		const obj_store=transaction.objectStore(store_desc.name);
-		this.consume_data_with_store(obj_store);
-	}
-	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} obj_store */
-	consume_data_with_store(obj_store) {
-		const cursor_req=obj_store.openCursor();
-		/** @private @type {T[]} */
-		let database_data=[];
-		cursor_req.onsuccess=() => {
-			const cursor=cursor_req.result;
-			if(cursor) {
-				database_data.push(cursor.value);
-				cursor.continue();
-			}
-		};
 	}
 	/** @private @arg {IDBDatabase} db @arg {Event} event @arg {DatabaseStoreDescription} store_desc */
 	onTransactionComplete(db,event,store_desc) {
-		const key=store_desc.name;
+		const key=store_desc.key;
 		const index_key=this.get_index_key(key);
 		const [,dc]=this.get_data_cache(key);
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
