@@ -55,6 +55,12 @@ class HandleRS extends ServiceMethods {
 		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {D_Cache_MD} x */
+	D_Cache_MD(x) {
+		const cf="CacheMetadata"; this.k(cf,x);
+		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!isCacheHit) debugger;
+	}
 	//#endregion
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
@@ -98,6 +104,23 @@ class HandleRS extends ServiceMethods {
 		}
 		this.RS_Page_Watch(x);
 	}
+	/** @private @arg {DE_Unsubscribe} x */
+	DE_Unsubscribe(x) {
+		const cf="DE_Unsubscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.D_ChannelId);
+		this.params(cf,"unsubscribe.params",params);
+	}
+	/** @private @arg {DE_CreateComment} x */
+	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
+	/** @private @arg {E_Unsubscribe} x */
+	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
+	/** @private @arg {E_CreateComment} x */
+	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
+	/** @private @arg {R_ClientForecastingAd} x */
+	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
+	/** @private @arg {R_LinearAdSequence} x */
+	R_LinearAdSequence(x) {this.H_("R_LinearAdSequence","linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
 	/** @private @arg {R_AdPlacementConfig} x */
 	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */

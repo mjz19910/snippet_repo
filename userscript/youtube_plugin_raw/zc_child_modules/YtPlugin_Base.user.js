@@ -3450,12 +3450,47 @@ class ServiceData extends BaseService {
 }
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
+	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
+	/** @protected @arg {CF_D_STR} cf @arg {string} x */
+	codegen_str(cf,x) {
+		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
+		if(x.startsWith("https://")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
+			return;
+		}
+		if(x.startsWith("http://")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
+			return;
+		}
+	}
+	get indexed_db() {
+		return this.x.get("indexed_db");
+	}
+	indexed_db_version=3;
+	/** @protected @arg {AGA_push_waiting_obj_noVersion} args */
+	indexed_db_put(...args) {
+		this.indexed_db.put(...args,this.indexed_db_version);
+	}
+	/** @protected @arg {`UC${string}`} raw_id */
+	D_ChannelId(raw_id) {
+		const cf="D_ChannelId"; this.k(cf,raw_id);
+		if(this.str_starts_with_rx("UC",raw_id)) {
+			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
+			this.indexed_db_put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
+			if(raw_id.length===24) return;
+			console.log("[channelId.length]",raw_id.length);
+			return;
+		}
+		this.codegen_str(cf,raw_id);
+	}
 	/** @protected @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
 	s_priv(cf,x) {
 		if(!x) debugger;
 		this.k(cf,x);
 		return x;
 	}
+	/** @typedef {`${string}${D_EndpointLikeEndings}`} EPL */
 	/**
 	 * @protected
 	 * @arg {CF_TE_Endpoint_3} cf1

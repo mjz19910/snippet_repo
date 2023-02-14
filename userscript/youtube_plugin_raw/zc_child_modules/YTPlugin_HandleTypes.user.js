@@ -1004,20 +1004,11 @@ class HandleTypes extends HandleTypesEval {
 		this.parser.parse_url(root,x);
 		return u3;
 	}
-	get indexed_db() {
-		if(!this.is_normal_service(this)) throw new Error();
-		return this.x.get("indexed_db");
-	}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
 		this.a_primitive_str(x);
 		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "normal",v: x});
-	}
-	indexed_db_version=3;
-	/** @arg {AGA_push_waiting_obj_noVersion} args */
-	indexed_db_put(...args) {
-		this.indexed_db.put(...args,this.indexed_db_version);
 	}
 	/** @api @public @arg {IndexedDBService} service @arg {number} old_version @arg {IDBDatabase} db */
 	indexed_db_createDatabaseSchema(service,old_version,db) {
@@ -1059,8 +1050,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
-	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @arg {boolean} x */
 	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
 	//#region templates
@@ -2432,12 +2421,8 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_InfoCardIcon} x */
 	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,this.D_InfoCardIcon);}
-	/** @private @arg {R_LinearAdSequence} x */
-	R_LinearAdSequence(x) {this.H_("R_LinearAdSequence","linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
 	/** @private @arg {R_InstreamVideoAd} x */
 	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
-	/** @private @arg {R_ClientForecastingAd} x */
-	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
 	/** @private @arg {R_AdActionInterstitial} x */
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {R_ReelMultimixAttributionLabel} x */
@@ -3017,10 +3002,6 @@ class HandleTypes extends HandleTypesEval {
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
 	/** @private @arg {E_UserFeedback} x */
 	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
-	/** @private @arg {E_Unsubscribe} x */
-	E_Unsubscribe(x) {const [a,b,y]=this.TE_Endpoint_3("E_Unsubscribe","unsubscribeEndpoint",x); this.g(y); this.DE_Unsubscribe(b); this.M_Unsubscribe(a);}
-	/** @private @arg {E_CreateComment} x */
-	E_CreateComment(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateComment","createCommentEndpoint",x); this.g(y); this.DE_CreateComment(b); this.M_CreateComment(a);}
 	/** @private @arg {M_CreateComment} x */
 	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
 	/** @private @arg {M_Unsubscribe} x */
@@ -3296,8 +3277,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
 	/** @private @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
-	/** @private @arg {DE_CreateComment} x */
-	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","createCommentParams","create_comment.params",x);}
 	/** @private @arg {DE_Search} x */
 	DE_Search(x) {this.H_("DE_Search","query",x,this.a_primitive_str);}
 	/** @private @arg {DE_GetTranscript} a */
@@ -3377,13 +3356,6 @@ class HandleTypes extends HandleTypesEval {
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(channelIds,this.D_ChannelId);
 		this.params(cf,"subscribe.params",params);
-	}
-	/** @private @arg {DE_Unsubscribe} x */
-	DE_Unsubscribe(x) {
-		const cf="DE_Unsubscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
-		this.params(cf,"unsubscribe.params",params);
 	}
 	/** @private @arg {DE_ReelWatch} x */
 	DE_ReelWatch(x) {
@@ -4660,30 +4632,6 @@ class HandleTypes extends HandleTypesEval {
 		this.GE_Browse(navigationEndpoint);
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
-	}
-	/** @arg {CF_D_STR} cf @arg {string} x */
-	codegen_str(cf,x) {
-		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
-		if(x.startsWith("https://")) {
-			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
-			return;
-		}
-		if(x.startsWith("http://")) {
-			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
-			return;
-		}
-	}
-	/** @private @arg {`UC${string}`} raw_id */
-	D_ChannelId(raw_id) {
-		const cf="D_ChannelId"; this.k(cf,raw_id);
-		if(this.str_starts_with_rx("UC",raw_id)) {
-			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
-			this.indexed_db_put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
-			if(raw_id.length===24) return;
-			console.log("[channelId.length]",raw_id.length);
-			return;
-		}
-		this.codegen_str(cf,raw_id);
 	}
 	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
