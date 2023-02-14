@@ -6673,7 +6673,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="V_BinaryTimestamp";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="number") debugger;
-		if(typeof f2==="number"&&f2>180668740) debugger;
+		if(typeof f2==="number"&&f2>180670536) debugger;
 		if(typeof f3==="number"&&f3>3825595062) debugger;
 	}
 	/** @private @arg {R_0x12f639cf[12]} x */
