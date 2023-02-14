@@ -728,45 +728,34 @@ class HandleTypes extends HandleTypesEval {
 	parse_key_index=1;
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
-		if(path==="tracking.trackingParams.f2") return;
-		if(path==="tracking.trackingParams.f8") return;
-		if(path==="watch_playlist.params.f1") return;
 		if(typeof entry==="string") {
 			switch(path) {
+				case "load_markers.entity_key.f2": case "reel_request_continuation.token.f12":
+				case "continuation_token.data.f53.f8": {
+					this.save_string(path,entry);
+				} return;
 				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f1":
 				case "tracking.trackingParams.f11": {
 					return this.D_ChannelId(as(entry));
 				}
-				case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1":
-				case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
+				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1": case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
 				case "unsubscribe.params.f2": {
 					return this.videoId(entry);
 				}
-				case "watch_request_continuation.token.f6.f4.f4": case "watch_request_continuation.token.f5": case "tracking.trackingParams.f7": case "notification.record_interactions.f2.f14.f2": case "notification.opt_out.f3": case "notification.opt_out.f7": case "notification.record_interactions.f2.f14.f2":
-					return;
 				case "continuation_token.data.f110.f3.f15.f2.f1": {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
-				case "transcriptTrackSelection.serializedParams.f2": case "transcriptTrackSelection.serializedParams.f1": case "get_transcript.params.f2": case "get_transcript.params.f1": case "reel_request_continuation.token.f3.f1":
-				case "continuation_token.data.f53.f4.f4": case "reel_request_continuation.token.f15.f6.f1":
-				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1":
-				case "continuation_token.data.f49": case "continuation_token.data.f15":
-				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
-				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
+				case null: {
 				} return;
+				case null: return;
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
 				} return;
-				case "get_pdg_buy_flow.params.f1.f1": return;
-				case "reel_request_continuation.token.f12":
-				case "continuation_token.data.f53.f8": {
-					this.save_string(path,entry);
-				} return;
-				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1":
 				case "continuation_token.data$sub_obj$f3.f1.f5.f2": {
 					return this.videoId(entry);
 				}
+				case "entity_key.subscribed.f2":
 				case "ypc_get_offers.params.f1.f2": {
 					return this.D_ChannelId(as(entry));
 				}
@@ -797,6 +786,7 @@ class HandleTypes extends HandleTypesEval {
 				case "AdServingDataEntry.f7": {
 					this.save_number(path,entry);
 				} return;
+				case "tracking.trackingParams.f2":
 				case "tracking.trackingParams.f16.f2":
 				case "watch_request_continuation.token.f9.f1.f4.f13": return;
 				case "reel_request_continuation.token.f15.f6.f10.f2": case "reel_request_continuation.token.f15.f6.f9.f2": case "reel_request_continuation.token.f15.f6.f10.f1.f1": case "reel_request_continuation.token.f15.f6.f9.f1.f1": case "reel_request_continuation.token.f15.f6.f8.f2":
@@ -4895,16 +4885,17 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 	}
-	/** @private @arg {`UC${string}`} x */
-	D_ChannelId(x) {
-		const cf="D_ChannelId"; this.k(cf,x);
-		if(this.str_starts_with_rx("UC",x)) {
-			this.parse_channel_id(x);
-			if(x.length===24) return;
-			console.log("[channelId.length]",x.length);
+	/** @private @arg {`UC${string}`} raw_id */
+	D_ChannelId(raw_id) {
+		const cf="D_ChannelId"; this.k(cf,raw_id);
+		if(this.str_starts_with_rx("UC",raw_id)) {
+			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
+			this.x.get("indexed_db").put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
+			if(raw_id.length===24) return;
+			console.log("[channelId.length]",raw_id.length);
 			return;
 		}
-		this.codegen_str(cf,x);
+		this.codegen_str(cf,raw_id);
 	}
 	/** @private @arg {D_SubscribeButton_SubscribedPrefix} x */
 	D_SubscribeButton_SubscribedPrefix(x) {
