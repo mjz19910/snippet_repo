@@ -51,33 +51,28 @@ type V_BinaryTimestamp={
 type D_0x12f639cf={
 	1: 25;
 };
+type D_YtPageSnapshot={
+	1: "yt_page_snapshot_regional";
+	// token in url_base64
+	2: string;
+	3: V_Uint8Array<"\u0000\u0000en-GB\u0000\u0001CA\u0000\u0001CA\u0000\u0001\u0000FEwhat_to_watch\u0000\u0001\u0001\u0001\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0001\u0001\u0000">;
+};
+type R_YtPageSnapshot={1: D_YtPageSnapshot;};
+type D_PageSnapshotToken={
+	1: 0;
+	2: "page_snapshot_token";
+	3: V_BinaryTimestamp;
+	4: V_BinaryTimestamp;
+};
+type R_BigInt={1: V_Bigint<bigint>;};
 type R_0x12f639cf={
 	3: number;
-	6: {
-		1: V_Bigint<bigint>;
-	};
-	11: {
-		1: {
-			1: "yt_page_snapshot_regional";
-			2: "U1xoHnr9K1IcsLNPz3snuEdWlP_xZBg";
-			3: V_Uint8Array<"\u0000\u0000en-GB\u0000\u0001CA\u0000\u0001CA\u0000\u0001\u0000FEwhat_to_watch\u0000\u0001\u0001\u0001\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0001\u0001\u0000">;
-		};
-	};
-	12: {
-		1: 0;
-		2: "page_snapshot_token";
-		3: V_BinaryTimestamp;
-		4: V_BinaryTimestamp;
-	};
+	6: R_BigInt;
+	11: R_YtPageSnapshot;
+	12: D_PageSnapshotToken;
 	0x12f639cf: D_0x12f639cf;
 };
 type R_0x4c82a9c={0x4c82a9c: D_0x4c82a9c;};
-type GR_RootBinaryObj=R_0x4c82a9c|R_0x12f639cf|{
-	2: {
-		1: 53;
-	};
-	3: "Gaming";
-};
 type f3_idx_item={
 	index: 0;
 	type: "d";
