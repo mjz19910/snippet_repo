@@ -23,7 +23,9 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
-	/** @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
+	/** @protected @arg {"D_InfoCardIcon"} cf @arg {D_TrackingParams} x */
+	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
+	/** @protected @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Id(x,f) {return f.call(this,x.id);}
 	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf @arg {D_EngagementPanelTargetId} x */
 	D_EngagementPanelTargetId(cf,x) {
@@ -382,13 +384,13 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
-	/** @private @arg {C_Continuation} x */
+	/** @protected @arg {C_Continuation} x */
 	C_Continuation(x) {
 		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
 		this.t(a,this.MC_Continuation);
 		this.DC_Continuation(b);
 	}
-	/** @private @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
+	/** @protected @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
 	T_SE_Signal(cf,x) {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		/** @type {`T_SE_Signal:${CF_T_SE_Signal}`} */
@@ -418,7 +420,7 @@ class ServiceMethods extends ServiceData {
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
 	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
-	/** @private @arg {E_Feedback} x */
+	/** @protected @arg {E_Feedback} x */
 	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @protected @arg {GC_Button} x */
 	GC_Button(x) {
