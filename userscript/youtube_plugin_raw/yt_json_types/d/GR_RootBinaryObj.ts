@@ -158,5 +158,23 @@ type GR_RootBinaryObj=
 		};
 		3: "Soundtracks";
 	}
+	|{
+		1: {
+			1: "/m/05p0rrx";
+		};
+		3: "Bitcoin";
+	}
+	|{
+		1: {
+			1: "/m/01lr2";
+		};
+		3: "CPUs";
+	}
+	|{
+		1: {
+			1: "/m/04rk8g";
+		};
+		3: "3D printing";
+	}
 	;
 ;
