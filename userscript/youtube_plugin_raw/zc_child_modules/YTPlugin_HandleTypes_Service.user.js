@@ -1538,14 +1538,15 @@ class HandleTypes extends HandleTypesEval {
 	G_RS_Page_Shorts(x) {
 		const cf="RS_ShortsPage"; this.k(cf,x);
 		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
-		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,previousCsn,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(page!=="shorts") debugger;
-		this.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
+		this.RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
+		this.t(previousCsn,x => this.D_VeCsn(x,true));
 		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
 	/** @private @arg {G_BrowseContents} x */
@@ -2949,7 +2950,7 @@ class HandleTypes extends HandleTypesEval {
 		this.RS_Player(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`${cf}.wp_params`,wp_params);
-		if(previousCsn!==void 0) this._previousCsn(previousCsn);
+		this.t(previousCsn,x => this.D_VeCsn(x,true));
 	}
 	/** @private @arg {RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x) {
@@ -3043,14 +3044,6 @@ class HandleTypes extends HandleTypesEval {
 		if("expirationTime" in x) {
 			const {expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
 			this._primitive_of(expirationTime,"number");
-			return;
-		}
-		if("previousCsn" in x) {
-			const {previousCsn,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
-			this.t(previousCsn,x => {
-				if(typeof x!=="string") {debugger; return;}
-				this._previousCsn(x);
-			});
 			return;
 		}
 		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
