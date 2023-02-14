@@ -6266,14 +6266,14 @@ class HandleTypes extends HandleTypesEval {
 			if(hex.length===1) return `0${hex}`;
 			return hex;
 		}).join("");
-		/** @type {"D_Continuation:0xd3b0"} */
+		/** @type {"D_Continuation:0xa29d"} */
 		let id=as(`${cf}:0x${hex_id}`);
 		switch(id) {
 			default: {
 				console.log(`-- [${cf}:${id}] --\n\ncase "${id}":\n`);
 				debugger;
 			} break;
-			case "D_Continuation:0xd3b0": break;
+			case "D_Continuation:0xa29d": break;
 		}
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
