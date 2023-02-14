@@ -16,6 +16,7 @@ const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
+const as_any=bs.as_any;
 const ServiceMethods=required(store["mod$ServiceMethods"]).ServiceMethods;
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
