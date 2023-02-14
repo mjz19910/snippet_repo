@@ -2493,13 +2493,80 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @private @template T_LoadAllServices,T_ServiceFlags @extends {BaseServicePrivate<T_LoadAllServices,T_ServiceFlags>} */
 class BaseService extends BaseServicePrivate {
+	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
+	to_param_obj(x) {
+		return Object.fromEntries([...x.entries()].map(e => {
+			let ei=e[1];
+			if(ei instanceof Map) {return [e[0],this.to_param_obj(ei)];}
+			return [e[0],ei];
+		}));
+	}
+	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
+	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
+		let last_key=map_entry_key_path.at(-1);
+		let saved_map_keys=map_keys.slice();
+		if(map_entry_values!==void 0&&last_key) {
+			map.delete(last_key);
+			let cx=map_keys.indexOf(last_key);
+			if(cx>-1) map_keys.splice(cx,1);
+			callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
+		}
+	}
+	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
+	make_parse_key(root,path,map,mk,callback) {
+		/** @private @arg {number[]} map_entry_key_path */
+		let parse_key=(map_entry_key_path) => {
+			let t_at=map_entry_key_path.at(-1);
+			if(t_at===void 0) return;
+			this.parse_value(root,path,map,mk,map_entry_key_path,map.get(t_at),callback);
+		};
+		return parse_key;
+	}
+	parse_key_index=1;
+	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
+	parse_endpoint_param(root,path,map_entry_key_path,map,callback) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
+		let mk=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		for(let i=1;i<300;i++) {
+			if(!mk.includes(i)) continue;
+			map_entry_key_path.push(i);
+			parse_key(map_entry_key_path);
+			map_entry_key_path.pop();
+		}
+		if(this.eq_keys(mk,[])) return;
+		let param_obj=this.to_param_obj(map);
+		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
+		{debugger;}
+	}
+	/** @private @type {string[]} */
+	cache_player_params=[];
+	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} params_callback */
+	on_endpoint_params(root,path,map_entry_key_path,x,params_callback) {
+		if(x===void 0) {debugger; return;}
+		x=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return;
+		this.cache_player_params.push(x);
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
+		this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
+	}
+	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
+	params(root,path,x) {
+		/** @type {number[]} */
+		let map_entry_key_path=[];
+		this.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
+	}
+	/** @protected @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
 	/** @protected @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {T_Split<X,string extends S?",":S>} */
 	split_str(x,s=as(",")) {
 		if(!x) {debugger;}
 		let r=x.split(s);
 		return as(r);
 	}
-	/** @arg {BaseService<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceMethods<LoadAllServices,ServiceOptions>} */
+	/** @arg {BaseService<T_LoadAllServices,T_ServiceFlags>} x @returns {x is ServiceData<LoadAllServices,ServiceOptions>} */
 	is_normal_service(x) {return x.service_type==="normal";}
 	/** @returns {"unknown"|"normal"} */
 	get service_type() {return "unknown";}
