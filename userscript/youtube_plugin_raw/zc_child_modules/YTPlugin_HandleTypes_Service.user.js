@@ -972,13 +972,13 @@ class HandleTypes extends HandleTypesEval {
 		if(!this.is_normal_service(this)) throw new Error();
 		return this.x.get("indexed_db");
 	}
-	/** @protected @arg {{v:string}} x */
-	put_video_args(x) {this.indexed_db.put("video_id",{key: `video_id:${x.v}`,...x});}
+	/** @protected @arg {put_video_args_Args} x */
+	put_video_args(x) {this.indexed_db.put("video_id",{key: `video_id:${x.type}:${x.v}`,...x});}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
 		this.a_primitive_str(x);
-		this.put_video_args({v: x});
+		this.put_video_args({type: "normal",v: x});
 	}
 	/** @protected @arg {CF_L_Params} root @arg {P_PathRootStr} path @arg {string} x */
 	params(root,path,x) {
@@ -6564,7 +6564,7 @@ class HandleTypes extends HandleTypesEval {
 		if(isPrimary!==true) debugger;
 	}
 	/** @api @public @arg {string} x */
-	parse_video_id(x) {this.put_video_args({v: x});}
+	parse_video_id(x) {this.put_video_args({type: "normal",v: x});}
 	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
 	put_boxed_id(value) {
 		const {type,id}=value;

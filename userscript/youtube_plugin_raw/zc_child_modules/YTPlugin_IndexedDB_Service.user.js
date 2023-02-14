@@ -275,7 +275,7 @@ class IndexedDBService extends BaseService {
 			/** @type {DatabaseStoreTypes[keyof DatabaseStoreTypes]} */
 			let u=x;
 			if("v" in u) {
-				u.key=`video_id:${u.v}`;
+				u.key=`video_id:${u.type}:${u.v}`;
 			} else if("id" in u) {
 				u.key=`boxed_id:${u.type}:${u.id}`;
 			} else {
