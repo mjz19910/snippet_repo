@@ -895,6 +895,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			case "video_playback":
 			case "url": case "player": case "sub": case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
@@ -918,7 +919,7 @@ class HandleTypes extends HandleTypesEval {
 							case "":
 						} parts[1]==="";
 					} return;
-					case "sig":
+					case "sig": case "api_url":
 					case "heartbeat_params": case "watch_request_continuation": case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
 					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
@@ -930,7 +931,7 @@ class HandleTypes extends HandleTypesEval {
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "token":
+					case "token": case "n": case "ns":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
@@ -10312,9 +10313,8 @@ class HandleTypes extends HandleTypesEval {
 		this.parse_signature(signature);
 		this.save_string(`${cf}.key`,key);
 	}
-	/** @private @arg {string} x */
-	parse_url_sig(x) {
-		const cf="url.sig";
+	/** @private @arg {string} cf @arg {string} x */
+	parse_url_sig(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
@@ -10322,36 +10322,35 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
-		const cf="D_VideoPlaybackShape";
-		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,...y1}=this.s(cf,x);
+		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
+		const {expire,ei,ip,id,itag,aitags,source,requiressl,ctier,...y1}=this.s(cf1,x);
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
-		this.save_string(`${cf}.id.0-2`,id.slice(0,2));
-		this.save_string(`${cf}.itag`,itag);
-		if(aitags) this.save_string(`${cf}.aitags`,aitags);
-		this.save_string(`${cf}.source`,source);
-		this.save_string(`${cf}.requiressl`,requiressl);
+		this.save_string(`${cf1}.id.0-2`,id.slice(0,2));
+		this.save_string(`${cf1}.itag`,itag);
+		if(aitags) this.save_string(`${cf1}.aitags`,aitags);
+		this.save_string(`${cf1}.source`,source);
+		this.save_string(`${cf1}.requiressl`,requiressl);
 		this.t(ctier,x => this.ceq("SH",x));
 		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,...y2}=y1;
-		this.save_string(`${cf}.mh`,mh);
-		this.save_string(`${cf}.mm`,mm);
-		this.save_string(`${cf}.mn`,mn);
-		this.save_string(`${cf}.ms`,ms);
-		this.save_string(`${cf}.mv`,mv);
-		this.save_string(`${cf}.mvi`,mvi);
-		this.save_string(`${cf}.pl`,pl);
+		this.save_string(`${cf1}.mh`,mh);
+		this.save_string(`${cf1}.mm`,mm);
+		this.save_string(`${cf1}.mn`,mn);
+		this.save_string(`${cf1}.ms`,ms);
+		this.save_string(`${cf1}.mv`,mv);
+		this.save_string(`${cf1}.mvi`,mvi);
+		this.save_string(`${cf1}.pl`,pl);
 		{
 			let x=initcwndbps;
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
 		}
-		this.save_string(`${cf}.initcwndbps`,initcwndbps);
-		this.save_string(`${cf}.vprv`,vprv);
-		if(xtags) this.save_string(`${cf}.xtags`,xtags);
-		this.save_string(`${cf}.mime`,mime);
-		this.save_string(`${cf}.ns`,ns);
-		if(gir) this.save_string(`${cf}.gir`,gir);
+		this.save_string(`${cf1}.vprv`,vprv);
+		if(xtags) this.save_string(`${cf1}.xtags`,xtags);
+		this.save_string(`${cf1}.mime`,mime);
+		this.params(`${cf1}.ns`,`${cf2}.ns`,ns);
+		if(gir) this.save_string(`${cf1}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.t(clen,x => {
 			let x1=this.parse_number_template(x);
@@ -10361,20 +10360,24 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(dur_);
 		let lmt_=this.parse_number_template(lmt);
 		this.a_primitive_num(lmt_);
-		this.save_string(`${cf}.mt`,mt);
-		this.save_string(`${cf}.fvip`,fvip);
-		keepalive&&this.save_string(`${cf}.keepalive`,keepalive);
-		this.save_string(`${cf}.fexp`,fexp);
-		this.save_string(`${cf}.c`,c);
-		this.save_string(`${cf}.txp`,txp);
-		this.save_string(`${cf}.n`,n);
-		this.save_string(`${cf}.sparams`,sparams);
-		this.save_string(`${cf}.lsparams`,lsparams);
-		this.save_string(`${cf}.lsig`,lsig);
-		spc&&this.save_string(`${cf}.spc`,spc);
-		this.t(sig,this.parse_url_sig);
-		cnr&&this.save_string(`${cf}.cnr`,cnr);
-		ratebypass&&this.save_string(`${cf}.ratebypass`,ratebypass);
+		{
+			let x=mt;
+			let x1=this.parse_number_template(x);
+			this.a_primitive_num(x1);
+		}
+		this.save_string(`${cf1}.fvip`,fvip);
+		keepalive&&this.save_string(`${cf1}.keepalive`,keepalive);
+		this.save_string(`${cf1}.fexp`,fexp);
+		this.save_string(`${cf1}.c`,c);
+		this.save_string(`${cf1}.txp`,txp);
+		this.params(`${cf1}.n`,"video_playback.api_url.n",n);
+		this.save_string(`${cf1}.sparams`,sparams);
+		this.save_string(`${cf1}.lsparams`,lsparams);
+		this.parse_url_sig(`${cf2}.lsig`,lsig);
+		spc&&this.save_string(`${cf1}.spc`,spc);
+		this.t(sig,x => this.parse_url_sig(`${cf2}.sig`,x));
+		cnr&&this.save_string(`${cf1}.cnr`,cnr);
+		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
 		const {gcr,...y}=y3; this.g(y);
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}

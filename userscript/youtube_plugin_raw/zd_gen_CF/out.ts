@@ -1128,5 +1128,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TimedTextApi";}
 		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_VideoPlaybackShape";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "url.sig";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_VideoPlaybackShape.ns";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "video_playback.api_url.ns";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_VideoPlaybackShape.n";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "video_playback.api_url.n";}
 		;
 }
