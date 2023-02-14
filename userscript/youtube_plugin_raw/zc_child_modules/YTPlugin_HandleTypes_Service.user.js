@@ -8745,8 +8745,13 @@ class HandleTypes extends HandleTypesEval {
 			case "live-chat-view-selector-sub-menu": {
 				const {subMenuItems,accessibility,trackingParams,targetId: {},...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.z(subMenuItems,x => {
-					const {title,selected,...y}=this.s(`${cf}.MenuItem`,x); this.g(y);
-					x;
+					const {title,selected,continuation,accessibility,subtitle,trackingParams,...y}=this.s(`${cf}.MenuItem`,x); this.g(y);
+					this.a_primitive_str(title);
+					if(selected!==true) debugger;
+					this.D_ReloadContinuationData(continuation);
+					this.D_Accessibility(accessibility);
+					this.a_primitive_str(subtitle);
+					this.trackingParams(cf,trackingParams);
 				});
 				this.D_Accessibility(accessibility);
 				this.trackingParams(cf,trackingParams);
