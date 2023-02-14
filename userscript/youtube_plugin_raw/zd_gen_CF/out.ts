@@ -164,6 +164,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_InstreamVideoAd";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LikeButton.rest";}
+		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LiveChat";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_MacroMarkersList";}
@@ -476,6 +477,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton.like";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LinearAdSequence";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveBroadcastDetails";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LiveChat";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LoggingDirectives";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MP_MenuNotificationSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_MacroMarkersList";}

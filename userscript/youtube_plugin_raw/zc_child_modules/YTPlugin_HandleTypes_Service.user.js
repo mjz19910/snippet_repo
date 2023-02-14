@@ -10709,10 +10709,11 @@ class HandleTypes extends HandleTypesEval {
 		this.z(continuations,x=>{
 			if(!x.reloadContinuationData) debugger;
 			this.D_ReloadContinuationData(x);
-		})
-		this.G_Text(title);
-		this.z(contents,this.G_Text);
+		});
+		this.R_LiveChatHeader(header);
 		this.trackingParams(cf,trackingParams);
+		clientMessages;
+		this.R_ToggleButton(showHideButton);
 	}
 	/** @private @arg {D_ReloadContinuationData} x */
 	D_ReloadContinuationData(x) {this.CD_Reload(x);}
