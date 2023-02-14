@@ -4843,7 +4843,6 @@ class HandleTypes extends HandleTypesEval {
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hack!==true) debugger;
 	}
-	static {(new this({value: null})).R_PlayerAnnotationsExpanded;}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x) {
 		const cf="D_PlayerAnnotationsExpanded"; this.k(cf,x);
