@@ -1,6 +1,7 @@
 
 // cspell: ignore aitags requiressl initcwndbps vprv clen fvip lsparams lsig
 type D_VideoPlaybackShape=D_VideoPlaybackShape_S_Params&D_VideoPlaybackShape_LS_Params&{
+	gcr?: "ca";
 	itag: `${137}`;
 	mt: `${number}`;
 	fvip: "4";

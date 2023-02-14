@@ -10327,7 +10327,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
-		this.save_string(`${cf}.id`,id);
+		this.save_string(`${cf}.id.0-2`,id.slice(0,2));
 		this.save_string(`${cf}.itag`,itag);
 		if(aitags) this.save_string(`${cf}.aitags`,aitags);
 		this.save_string(`${cf}.source`,source);
@@ -10347,7 +10347,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.mime`,mime);
 		this.save_string(`${cf}.ns`,ns);
 		if(gir) this.save_string(`${cf}.gir`,gir);
-		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=y2;
+		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y3}=y2;
 		this.t(clen,x => {
 			let x1=this.parse_number_template(x);
 			this.a_primitive_num(x1);
@@ -10370,11 +10370,8 @@ class HandleTypes extends HandleTypesEval {
 		this.t(sig,this.parse_url_sig);
 		cnr&&this.save_string(`${cf}.cnr`,cnr);
 		ratebypass&&this.save_string(`${cf}.ratebypass`,ratebypass);
-		let ka=this.get_keys_of(y);
-		if(ka.length>0) {
-			console.log("[D_VideoPlaybackShape.next_key] [%s]",ka.shift());
-			debugger;
-		}
+		const {gcr,...y}=y3; this.g(y);
+		this.t(gcr,x => this.ceq(x,"ca"));
 	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
