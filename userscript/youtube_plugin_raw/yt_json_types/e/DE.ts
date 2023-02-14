@@ -28,6 +28,17 @@ type D_LoggingContext={
 type DE_ReelWatch=
 	|never
 	|{
+		videoId: string;
+		playerParams: string;
+		thumbnail: D_Thumbnail;
+		overlay: R_ReelPlayerOverlay;
+		params: string;
+		loggingContext: {
+			vssLoggingContext: D_SerializedContextData;
+			qoeLoggingContext: D_SerializedContextData;
+		};
+	}
+	|{
 		playerParams: string;
 		overlay: R_ReelPlayerOverlay;
 		params: string;

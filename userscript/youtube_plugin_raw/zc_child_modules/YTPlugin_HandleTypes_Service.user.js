@@ -3516,7 +3516,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_ReelWatch} x */
 	DE_ReelWatch(x) {
 		const cf="DE_ReelWatch"; this.k(cf,x);
-		if("videoId" in x) {
+		if("videoId" in x&&"sequenceProvider" in x) {
 			const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(videoId,this.videoId);
 			this.params(cf,"reel.player_params",playerParams);
@@ -3525,6 +3525,17 @@ class HandleTypes extends HandleTypesEval {
 			this.params(cf,"reel.params",params);
 			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
 			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
+			return;
+		}
+		if("videoId" in x) {
+			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.t(videoId,this.videoId);
+			this.params(cf,"reel.player_params",playerParams);
+			this.t(thumbnail,this.D_Thumbnail);
+			this.R_ReelPlayerOverlay(overlay);
+			this.params(cf,"reel.params",params);
+			this.D_VssLoggingContext(loggingContext.vssLoggingContext);
+			this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
 			return;
 		}
 		if("loggingContext" in x) {
