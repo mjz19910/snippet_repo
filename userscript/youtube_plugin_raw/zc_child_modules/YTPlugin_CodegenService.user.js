@@ -349,7 +349,7 @@ class CodegenService extends BaseService {
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
 	/** @typedef {string|[string]|{}|null} JsonReplacementType */
-	/** @private @arg {JsonReplacerState} state @arg {{[U in string]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
+	/** @private @arg {JsonReplacerState} state @arg {{[U in string|number]: unknown}} x @arg {string} k1 @returns {JsonReplacementType} */
 	typedef_json_replace_object(state,x,k1) {
 		if(state.is_root&&k1==="") return x;
 		let g=() => this.json_auto_replace(x);
@@ -640,7 +640,7 @@ class CodegenService extends BaseService {
 		{debugger;}
 		return x;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{}} x @arg {string[]} keys */
+	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{}} x @arg {(string | number)[]} keys */
 	get_json_replace_type_len_1(state,r,x,keys) {
 		/** @type {{[U in string]:unknown}} */
 		let b=x;
@@ -666,6 +666,7 @@ class CodegenService extends BaseService {
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
+			//#region hg
 			//#region action
 			||b.addChatItemAction
 			||b.appendContinuationItemsAction
@@ -941,6 +942,7 @@ class CodegenService extends BaseService {
 			||b.engagementPanelPopupPresentationConfig
 			||b.html5PlaybackOnesieConfig
 			||b.twoColumnWatchNextResults
+			//#endregion
 			//#endregion
 			;
 		if(hg) {

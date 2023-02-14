@@ -6423,13 +6423,14 @@ class HandleTypes extends HandleTypesEval {
 		if(!bin_obj) {debugger; return;}
 		/** @type {D_RootBinaryObj} */
 		let t_bin_obj=as(bin_obj);
+		this.k(`${cf}.continuation.binary_obj`,t_bin_obj);
 		if(0x4c82a9c in t_bin_obj) {
 			this.D_0x4c82a9c(t_bin_obj[0x4c82a9c]);
 			return;
 		}
 		let kk=this.get_keys_of_2(t_bin_obj);
 		if(kk.length>0) {
-			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(kk.shift())}`,t_bin_obj);
+			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,t_bin_obj);
 			debugger;
 		}
 		// const [,field_id,_raw_bin,dec_bin]=x;
@@ -6580,20 +6581,6 @@ class HandleTypes extends HandleTypesEval {
 	D_0x19ac5ceb(x) {
 		const cf="D_0x19ac5ceb"; this.k(cf,x);
 		debugger;
-	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
-	decode_continuation_token_binary(cf,x) {
-		switch(x[0]) {
-			default: debugger; break;
-			case "child": {
-				let bin_obj=this.convert_arr_to_obj(dec_bin);
-				if(bin_obj===null) {debugger; break;}
-				this.k(`${cf}.continuation.binary_obj`,bin_obj);
-				switch(hex_id) {
-					default: debugger; break;
-				}
-			} break;
-		}
 	}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
