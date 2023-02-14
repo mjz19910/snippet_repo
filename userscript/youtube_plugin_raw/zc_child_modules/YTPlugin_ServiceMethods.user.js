@@ -23,6 +23,55 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @arg {D_ImpressionCap} x */
+	D_ImpressionCap(x) {
+		const cf="D_ImpressionCap"; this.k(cf,x);
+		if(this.w(`Other:${cf}`,"impressionCap",x)!=="1") debugger;
+	}
+	/** @protected @arg {D_Hint} x */
+	D_Hint(x) {
+		const cf="D_Hint"; this.k(cf,x);
+		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.ceq(hintId,"sponsor-pre-purchase");
+		this.ceq(dwellTimeMs,"60000");
+		this.D_ImpressionCap(hintCap);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @protected @arg {R_Hint} x */
+	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
+	/** @private @arg {R_ReelPlayerOverlay} x */
+	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
+	/** @private @arg {D_ReelPlayerOverlay} x */
+	D_ReelPlayerOverlay(x) {
+		const cf="D_ReelPlayerOverlay";
+		const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.trackingParams(cf,trackingParams);
+		switch(reelPlayerNavigationModel) {
+			default: this.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef_all(cf,x); break;
+			case void 0:
+			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
+		}
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.t(likeButton,this.R_LikeButton);
+		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
+		this.t(menu,this.R_Menu);
+		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
+		this.t(pivotButton,this.R_PivotButton);
+		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
+		this.t(videoInteractions,this.g);
+		this.t(nextItemButton,this.R_Button);
+		this.t(prevItemButton,this.R_Button);
+		this.t(shareButton,this.R_Button);
+		this.t(viewCommentsButton,this.R_Button);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @protected @arg {CF_T_Icon} cf1 @template {string} T @arg {T_Icon<T>} x */
+	T_Icon(cf1,x) {
+		const cf2="T_Icon";
+		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
+		this.save_string(`${cf1}:icon.iconType`,iconType);
+	}
 	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k

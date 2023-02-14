@@ -975,12 +975,6 @@ class HandleTypes extends HandleTypesEval {
 	//#region CheckedTemplates
 	/** @private @template T,U @arg {T_Item<T>} x @arg {(this:this,x:T)=>U} f */
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
-	/** @arg {CF_T_Icon} cf1 @private @template {string} T @arg {T_Icon<T>} x */
-	T_Icon(cf1,x) {
-		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:${cf1}`,x); this.g(y);/*#destructure_done*/
-		this.save_string(`${cf1}:icon.iconType`,iconType);
-	}
 	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
 	T_Icon_AnyOf(cf1,x,ty_arr) {
 		const cf2="T_Icon";
@@ -1239,8 +1233,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
-	/** @private @arg {R_ReelPlayerOverlay} x */
-	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay","reelPlayerOverlayRenderer",x,this.D_ReelPlayerOverlay);}
 	/** @private @arg {R_ReelPlayerHeader} x */
 	R_ReelPlayerHeader(x) {this.H_("R_ReelPlayerHeader","reelPlayerHeaderRenderer",x,this.D_ReelPlayerHeader);}
 	/** @private @arg {R_PivotButton} x */
@@ -1331,8 +1323,6 @@ class HandleTypes extends HandleTypesEval {
 	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
-	/** @private @arg {R_Hint} x */
-	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
 	/** @private @arg {R_VideoViewCount} x */
 	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
 	/** @private @arg {R_TwoColumnSearchResults} x */
@@ -4477,31 +4467,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
-	/** @private @arg {D_ReelPlayerOverlay} x */
-	D_ReelPlayerOverlay(x) {
-		const cf="D_ReelPlayerOverlay";
-		const {style,trackingParams,reelPlayerNavigationModel,likeButton,reelPlayerHeaderSupportedRenderers,menu,subscribeButtonRenderer,pivotButton,multimixAttributionLabel,viewCommentsButton,videoInteractions,shareButton,nextItemButton,prevItemButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.trackingParams(cf,trackingParams);
-		switch(reelPlayerNavigationModel) {
-			default: this.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef_all(cf,x); break;
-			case void 0:
-			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
-		}
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.t(likeButton,this.R_LikeButton);
-		this.t(reelPlayerHeaderSupportedRenderers,this.R_ReelPlayerHeader);
-		this.t(menu,this.R_Menu);
-		this.t(subscribeButtonRenderer,this.R_SubscribeButton);
-		this.t(pivotButton,this.R_PivotButton);
-		this.t(multimixAttributionLabel,this.R_ReelMultimixAttributionLabel);
-		this.t(videoInteractions,this.g);
-		this.t(nextItemButton,this.R_Button);
-		this.t(prevItemButton,this.R_Button);
-		this.t(shareButton,this.R_Button);
-		this.t(viewCommentsButton,this.R_Button);
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(cf,x) {
 		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
@@ -7027,20 +6992,6 @@ class HandleTypes extends HandleTypesEval {
 		this.t(menu,this.G_EngagementPanelMenu);
 		this.R_Button(visibilityButton);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_Hint} x */
-	D_Hint(x) {
-		const cf="D_Hint"; this.k(cf,x);
-		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.ceq(hintId,"sponsor-pre-purchase");
-		this.ceq(dwellTimeMs,"60000");
-		this.D_ImpressionCap(hintCap);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_ImpressionCap} x */
-	D_ImpressionCap(x) {
-		const cf="D_ImpressionCap"; this.k(cf,x);
-		if(this.w(`Other:${cf}`,"impressionCap",x)!=="1") debugger;
 	}
 	/** @private @arg {D_VideoViewCount} x */
 	D_VideoViewCount(x) {
