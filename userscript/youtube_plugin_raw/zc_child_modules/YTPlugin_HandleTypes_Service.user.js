@@ -7026,8 +7026,8 @@ class HandleTypes extends HandleTypesEval {
 			case "channel_id:UC": this.D_ChannelId(value.id); break;
 			case "play-next": value; break;
 			case "browse_id:VL": {
-				const {type,id}=value;
-				this.x.get("indexed_db").put("browse_id",{key: `browse_id:VL:${id}`,type,id});
+				const {type,id,raw_id}=value;
+				this.x.get("indexed_db").put("browse_id",{key: `browse_id:VL:${id}`,type,id,raw_id});
 			} break;
 			case "playlist:2:RDCM": {
 				this.put_boxed_id(value);

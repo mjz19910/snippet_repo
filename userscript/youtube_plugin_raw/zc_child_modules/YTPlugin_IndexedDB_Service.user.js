@@ -25,19 +25,11 @@ const is_firefox=h_detect_firefox(); is_firefox;
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
 const as=bs.as_;
-class DatabaseArguments {
-	/** @constructor @public @arg {string} name @arg {number} version */
-	constructor(name,version) {
-		this.name=name;
-		this.version=version;
-	}
-}
 /** @extends {BaseService<LoadAllServices,ServiceOptions>} */
 class IndexedDBService extends BaseService {
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
-		this.db_args=new DatabaseArguments("yt_plugin",IndexedDBService.schema_version);
 	}
 	database_opening=false;
 	database_open=false;
@@ -89,11 +81,11 @@ class IndexedDBService extends BaseService {
 	/** @api @public @arg {push_waiting_obj_Args} args */
 	put(...args) {
 		if(!args[1]) {debugger; return;}
-		const [key,value]=args;
+		const [key,value,version]=args;
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
 		if(cache?.includes(cache_key)) return;
-		if(!this.database_open) this.requestOpen(as_any({key,value}));
+		if(!this.database_open) this.requestOpen(as_any({key,value}),version);
 		this.push_waiting_obj(...args);
 		this.check_size(key);
 	}
@@ -117,16 +109,15 @@ class IndexedDBService extends BaseService {
 		idx=d_cache[1].push(as(obj))-1;
 		c_index.set(index_val,idx);
 	}
-	/** @arg {DatabaseStoreDescription} store_desc */
-	requestOpen(store_desc) {
+	/** @arg {DatabaseStoreDescription} store_desc @arg {number} version */
+	requestOpen(store_desc,version) {
 		if(this.database_opening||this.database_open) return;
 		this.database_opening=true;
-		this.open(store_desc);
+		this.open(store_desc,version);
 	}
-	/** @arg {DatabaseStoreDescription} store_desc */
-	open(store_desc) {
-		const {name,version}=this.db_args;
-		const request=indexedDB.open(name,version);
+	/** @arg {DatabaseStoreDescription} store_desc @arg {number} version */
+	open(store_desc,version) {
+		const request=indexedDB.open("yt_plugin",version);
 		this.onOpenRequest(request,store_desc);
 	}
 	/** @private @arg {IDBOpenDBRequest} request @arg {DatabaseStoreDescription} store_desc */
@@ -288,7 +279,6 @@ class IndexedDBService extends BaseService {
 		if(!tx) throw new Error("No transaction");
 		this.createDatabaseSchema(event.oldVersion,db);
 	}
-	static schema_version=2;
 	/** @private @arg {number} old_version @arg {IDBDatabase} db */
 	createDatabaseSchema(old_version, db) {
 		if(old_version<1) {
