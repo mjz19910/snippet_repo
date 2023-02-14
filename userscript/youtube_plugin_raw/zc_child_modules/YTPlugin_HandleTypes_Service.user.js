@@ -6357,11 +6357,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_0x94d81d4} x */
 	D_0x94d81d4(x) {
-		let bin_2=x;
-		
-		if(bin_2[8]!==1) {debugger; break;}
-		this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",bin_2[3]);
-		let res=bin_2[14];
+		if(x[8]!==1) {debugger; return;}
+		this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",x[3]);
+		let res=x[14];
 		if("4" in res) {
 			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
 			if(r_f1!==4) debugger;
@@ -6375,12 +6373,12 @@ class HandleTypes extends HandleTypesEval {
 			if(r_f1!==4) debugger;
 			if(r_f3!==2) debugger;
 		}
-		if("15" in bin_2) {
-			switch(bin_2[15]) {
+		if("15" in x) {
+			switch(x[15]) {
 				default: debugger; break;
 				case 1:
 			}
-			if(bin_2[15]!==1) {debugger; break;}
+			if(x[15]!==1) {debugger; return;}
 		}
 	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
