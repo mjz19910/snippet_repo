@@ -6433,22 +6433,34 @@ class HandleTypes extends HandleTypesEval {
 			if(x[15]!==1) {debugger; return;}
 		}
 	}
-	/** @private @arg {"FEwhat_to_watch"} x */
+	/** @private @arg {D_0x4c82a9c[2]} x */
 	D_0x4c82a9c_f2(x) {
 		if(this.str_starts_with(x,"UC")) {debugger; return this.D_ChannelId(x);}
-		if(this.str_starts_with(x,"FE")) return this.browseId(x);
+		if(this.str_starts_with(x,"FE")) {
+			switch(x) {
+				default: debugger; break;
+				case "FEcomment_shorts_web_top_level":
+				case "FEwhat_to_watch":
+			}
+			this.browseId(x);
+		}
 		debugger;
 	}
 	/** @private @arg {D_0x4c82a9c} x */
 	D_0x4c82a9c(x) {
 		const cf="D_0x4c82a9c";
-		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
+		const {2: f2,3: f3,...y}=this.s(cf,x);
 		this.D_0x4c82a9c_f2(f2);
 		this.params(`${cf}.continuation_token.+4.f0.f3`,"continuation_token.data",f3);
-		switch(f35) {
-			default: debugger; break;
-			case "browse-feedFEwhat_to_watch":
+		if(35 in y) {
+			const {35: f35,...y1}=y; this.g(y1);
+			switch(f35) {
+				default: debugger; break;
+				case "browse-feedFEwhat_to_watch":
+			}
+			return;
 		}
+		this.g(y);
 	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
