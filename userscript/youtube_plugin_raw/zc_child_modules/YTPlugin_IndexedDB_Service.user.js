@@ -195,6 +195,10 @@ class IndexedDBService extends BaseService {
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
+	/** @arg {TypedIDBObjectStore<{v:string}>} obj_store @arg {IDBValidKey|IDBKeyRange} [query] @arg {IDBCursorDirection} [direction] @returns {IDBRequest<TypedIDBCursorWithValue<{v:string}>|null>} */
+	openCursor(obj_store,query,direction) {
+		return obj_store.openCursor(query,direction);
+	}
 	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
 	async start_transaction(db,store_desc) {
 		let {key: tx_namespace}=store_desc;
@@ -211,22 +215,25 @@ class IndexedDBService extends BaseService {
 			} break;
 			case "video_id": {
 				let [,d_cache]=this.get_data_cache(tx_namespace); d_cache;
-				const obj_store=transaction.objectStore(tx_namespace);
+				const obj_store=this.objectStore(transaction,tx_namespace);
 				for(let value of d_cache) {
+					const index_val=value.v;
+					const cursor_req=this.openCursor(obj_store,IDBKeyRange.only(index_val));
 					for(let i=0;;i++) {
-						const index_val=value.v;
-						const cursor_req=obj_store.openCursor(IDBKeyRange.only(index_val));
 						let cursor_res=await this.await_success(cursor_req);
 						console.log("res event",cursor_res.type);
-						if(cursor_req.result===null) {
+						const cur_cursor=cursor_req.result;
+						if(cur_cursor===null) {
 							if(i===0) {
+								this.committed_data.push(value);
 								this.add_data_to_store(obj_store,value);
 							}
 							console.log("cursor_done after %o",i);
 							break;
 						}
-						const cur_cursor=cursor_req.result;
-						console.log("[cursor_value]",cur_cursor.value);
+						if(cur_cursor.value.v!==index_val) debugger;
+						let keys=this.get_keys_of(cur_cursor.value);
+						cur_cursor.continue();
 					}
 				}
 			} break;

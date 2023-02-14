@@ -40,7 +40,13 @@ type T_DropdownPopup_ReuseFlag<T>={
 	popupType: "DROPDOWN";
 	beReused: true;
 };
+
+type ValueOf<T>=T[keyof T];
+type NonEmptyArray<T>=[T,...T[]];
+type MustInclude<T,U extends T[]>=[T] extends [ValueOf<U>]? U:never;
+type UnionToArray<T,U extends NonEmptyArray<T>=NonEmptyArray<T>>=MustInclude<T,U>;
 type T_DistributedKeyof<T>=T extends infer A? keyof A:never;
+type T_DistributedKeyof_2<T>=T extends infer A? UnionToArray<keyof A>:never;
 type T_DistributedKeysOf<T extends {}>=T_DistributedKeyof<T> extends never? []:T_DistributedKeyof<T>[];
 type T_ElementId<T extends string,U extends string>=`${T}-${U}`;
 type T_EnsureHex<T extends `0x${string}`>=T extends `0x${infer G}`? T_Split<G,"">[number] extends T_Split<"0123456789abcdef","">[number]? T:never:never;
