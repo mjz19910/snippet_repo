@@ -319,7 +319,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		{debugger;}
 	}
-	parse_key_index=1;
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
 		let x1=decodeURIComponent(x);

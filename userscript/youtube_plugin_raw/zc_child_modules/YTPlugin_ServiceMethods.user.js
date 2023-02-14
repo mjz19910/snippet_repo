@@ -326,7 +326,7 @@ class ServiceMethods extends ServiceData {
 		};
 		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
-	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
+	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
 		if(tva.length!==1) return;
@@ -810,7 +810,7 @@ class ServiceMethods extends ServiceData {
 		}));
 	}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {this.x.get("handle_types").params(cf,"tracking.trackingParams",x);}
+	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_D_STR} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
@@ -877,7 +877,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {this.x.get("handle_types").params(cf,"tracking.trackingParams",x);}
+	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @protected @arg {string} cf @arg {{}} x */
