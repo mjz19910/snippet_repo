@@ -27,7 +27,7 @@ function do_export(fn,flags,exports,module_name) {
 		} else {
 			window.__plugin_modules__??={};
 			let all_modules=window.__plugin_modules__;
-			exports=as(all_modules[__module_name__]??{});
+			exports=as(all_modules[module_name]??{});
 			/** @type {{[U in keyof PluginStore]?:{}}} */
 			let ok_modules=all_modules;
 			ok_modules[module_name]=as(exports);
