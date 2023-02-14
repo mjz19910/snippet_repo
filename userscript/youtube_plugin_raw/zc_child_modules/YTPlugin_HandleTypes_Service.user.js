@@ -6616,14 +6616,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_0x14527fab(a);
 	}
 	/** @private @arg {D_BinaryCategoryObj} x */
-	D_BinaryCategoryObj(x) {x;}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
-	GR_RootBinaryObj(cf,x) {
-		this.k(`${cf}.continuation.binary_obj`,x);
-		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
-		if(0x12f639cf in x) return this.R_0x12f639cf(x);
-		if(0x14527fab in x) return this.R_0x14527fab(x);
-		x;
+	D_BinaryCategoryObj(x) {
 		if(1 in x) {
 			let kk=this.get_keys_of_2(x);
 			switch(x[3]) {
@@ -6668,6 +6661,14 @@ class HandleTypes extends HandleTypesEval {
 			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
 			debugger;
 		}
+	}
+	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
+	GR_RootBinaryObj(cf,x) {
+		this.k(`${cf}.continuation.binary_obj`,x);
+		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
+		if(0x12f639cf in x) return this.R_0x12f639cf(x);
+		if(0x14527fab in x) return this.R_0x14527fab(x);
+		this.D_BinaryCategoryObj(x);
 	}
 	/** @private @arg {R_0x12f639cf[11]} x */
 	R_f11(x) {
