@@ -6478,7 +6478,6 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==35) debugger;
 			if(dec!==null) debugger;
 		}
-		debugger;
 	}
 	/** @arg {D_ReadAny_CR_0x4c82a9c} x */
 	D_ReadAny_CR_0x4c82a9c(x) {
