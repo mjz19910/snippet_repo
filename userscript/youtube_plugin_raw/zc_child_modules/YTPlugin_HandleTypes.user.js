@@ -47,7 +47,7 @@ const CodegenService=required(store["mod$CodegenService"]).CodegenService; Codeg
 const TypedefGenerator=required(store["mod$SupportService"]).TypedefGenerator;
 //#endregion
 //#region Constants
-/** @type {{value:TypedefGenerator|null}} */
+/** @type {{value:InstanceType<typeof TypedefGenerator>|null}} */
 const generate_typedef={value: null};
 //#endregion
 //#region HandleTypesEval
