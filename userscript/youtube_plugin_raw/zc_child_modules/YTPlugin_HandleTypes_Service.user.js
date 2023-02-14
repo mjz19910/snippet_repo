@@ -6251,8 +6251,8 @@ class HandleTypes extends HandleTypesEval {
 		/**/u1; x; o2;
 	}
 	/** @typedef {"DC_Continuation"|"D_Continuation"} CF_decode_continuation_token */
-	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
-	decode_continuation_token(cf,x,len=4) {
+	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x @arg {number} len */
+	decode_continuation_token(cf,x,len) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x),len);
 	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x @arg {number} len */
@@ -6260,28 +6260,9 @@ class HandleTypes extends HandleTypesEval {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
-		let msg_id=reader.read_bytes(len);
-		let hex_id=[...msg_id].map(e=>{
-			let hex=e.toString(16);
-			if(hex.length===1) return `0${hex}`;
-			return hex;
-		}).join("");
-		/** @type {"D_Continuation:0xa29d"} */
-		let id=as(`${cf}:0x${hex_id}`);
-		switch(id) {
-			default: {
-				console.log(`-- [${cf}:${id}] --\n\ncase "${id}":\n`);
-				debugger;
-			} break;
-			case "D_Continuation:0xa29d": break;
-		}
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
-		debugger;
-		reader.pos=3;
-		let dec_2=reader.try_read_any(); dec_2;
-		debugger;
 		for(let v of dec) {
 			this.decode_continuation_token_binary(cf,msg_id,v);
 		}
@@ -6324,7 +6305,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				this.decode_continuation_token(cf,token);
+				this.decode_continuation_token(cf,token,4);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
 				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
