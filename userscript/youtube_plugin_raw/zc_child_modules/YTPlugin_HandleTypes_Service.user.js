@@ -3638,7 +3638,6 @@ class HandleTypes extends HandleTypesEval {
 		this.save_b64_binary("feedbackToken",feedbackToken);
 		if("uiActions" in u) {
 			const {uiActions,actions,...y}=u; this.g(y);/*#destructure_done*/
-			this.save_b64_binary("feedbackToken",feedbackToken);
 			this.D_HideEnclosingContainer(uiActions);
 			this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 			return;
