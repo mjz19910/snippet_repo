@@ -556,6 +556,8 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
 		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
 	}
+	/** @protected @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+	str_is_search(x) {return x.includes("?");}
 	/** @private @arg {GU_YoutubeUrlRedirect} x */
 	GU_YoutubeUrlRedirect(x) {
 		const cf="GU_YoutubeUrlRedirect"; this.k(cf,x);
@@ -638,6 +640,18 @@ class ServiceMethods extends ServiceData {
 	M_VE83769(x) {this.T_WCM("M_VE83769",x,this.GM_VE83769);}
 	/** @private @arg {M_VE96368} x */
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
+	/** @private @arg {GM_VE3832} x */
+	GM_VE3832(x) {
+		const cf="GM_VE3832_WatchPlaylist";
+		const {url,rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		x: {
+			if(this.str_starts_with(url,"/playlist")) break x;
+			if(this.str_starts_with(url,"/watch")) break x;
+			debugger;
+		}
+		if(rootVe!==3832) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+	}
 	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
 	GM_VE3611(x) {
 		const cf="GM_VE3611_WC"; this.k(cf,x);
@@ -729,6 +743,14 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
+	/** @private @arg {GM_VE83769} x */
+	GM_VE83769(x) {
+		const cf="GM_VE83769_WC"; this.k(cf,x);
+		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.GU_VE83769_Url(url);
+		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
+		if(rootVe!==83769) debugger;
+	}
 	/** @private @arg {GM_VE96368} x @returns {`VE${rootVe}`} */
 	GM_VE96368(x) {
 		const cf="GM_VE96368_WC_browse"; this.k(cf,x);
@@ -738,10 +760,6 @@ class ServiceMethods extends ServiceData {
 		if(rootVe!==96368) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
-	}
-	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
-	is_TE_VE(x,t) {
-		return x.commandMetadata.webCommandMetadata.rootVe===t;
 	}
 	/** @protected @arg {GE_Browse} x */
 	GE_Browse(x) {
@@ -755,6 +773,47 @@ class ServiceMethods extends ServiceData {
 		if(this.is_TE_VE(x,42352)) return this.E_VE42352(x);
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
+	}
+	/** @private @template {number} T @arg {TE_VE_In} x @arg {T} t @returns {x is TE_VE<T>} */
+	is_TE_VE(x,t) {
+		return x.commandMetadata.webCommandMetadata.rootVe===t;
+	}
+	/** @private @arg {GU_VE42352_Url} x */
+	GU_VE42352_Url(x) {
+		switch(x) {
+			case "/feed/downloads": break;
+			default: debugger; break;
+		}
+	}
+	/** @private @arg {GU_VE3611_Url} x */
+	GU_VE3611_Url(x) {
+		if(this.str_starts_with_rx("/@",x)) return;
+		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
+		let a1=split_string_once(y,"/");
+		switch(a1[0]) {
+			default: switch(a1[0]) {
+			} debugger; break;
+			case "gaming": if(a1.length!==1) debugger; break;
+			case "channel": {
+				let [,y1]=a1;
+				if(this.str_starts_with_rx("UC",y1)) return;
+			} break;
+		}
+	}
+	/** @private @arg {GU_VE5754_Url} x */
+	GU_VE5754_Url(x) {
+		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
+		if(this.str_is_search(y)) {
+			let [pp,qp]=split_string_once(y,"?");
+			let a1=split_string_once(pp,"/");
+			if(a1.length!==1) debugger;
+			switch(a1[0]) {
+				case "playlist": {
+					let p_sp=this.parse_url_search_params(qp);
+					this.parse_playlist_id(p_sp.list);
+				} break;
+			}
+		}
 	}
 	/** @private @arg {G_TextRun_Endpoint} x */
 	G_TextRun_Endpoint(x) {

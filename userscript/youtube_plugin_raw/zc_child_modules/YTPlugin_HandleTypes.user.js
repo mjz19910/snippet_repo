@@ -2175,26 +2175,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
-	/** @private @arg {GM_VE3832} x */
-	GM_VE3832(x) {
-		const cf="GM_VE3832_WatchPlaylist";
-		const {url,rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		x: {
-			if(this.str_starts_with(url,"/playlist")) break x;
-			if(this.str_starts_with(url,"/watch")) break x;
-			debugger;
-		}
-		if(rootVe!==3832) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
-	}
-	/** @private @arg {GM_VE83769} x */
-	GM_VE83769(x) {
-		const cf="GM_VE83769_WC"; this.k(cf,x);
-		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.GU_VE83769_Url(url);
-		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		if(rootVe!==83769) debugger;
-	}
 	/** @private @arg {GM_Browse} x */
 	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @private @arg {GM_RecordInteractions} x */
@@ -2469,43 +2449,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
 		this.save_b64_binary("undo_token",x);
-	}
-	/** @private @arg {GU_VE42352_Url} x */
-	GU_VE42352_Url(x) {
-		switch(x) {
-			case "/feed/downloads": break;
-			default: debugger; break;
-		}
-	}
-	/** @private @arg {GU_VE3611_Url} x */
-	GU_VE3611_Url(x) {
-		if(this.str_starts_with_rx("/@",x)) return;
-		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
-		let a1=split_string_once(y,"/");
-		switch(a1[0]) {
-			default: switch(a1[0]) {
-			} debugger; break;
-			case "gaming": if(a1.length!==1) debugger; break;
-			case "channel": {
-				let [,y1]=a1;
-				if(this.str_starts_with_rx("UC",y1)) return;
-			} break;
-		}
-	}
-	/** @private @arg {GU_VE5754_Url} x */
-	GU_VE5754_Url(x) {
-		let [w,y]=split_string_once(x,"/"); if(w!=="") debugger;
-		if(this.str_is_search(y)) {
-			let [pp,qp]=split_string_once(y,"?");
-			let a1=split_string_once(pp,"/");
-			if(a1.length!==1) debugger;
-			switch(a1[0]) {
-				case "playlist": {
-					let p_sp=this.parse_url_search_params(qp);
-					this.parse_playlist_id(p_sp.list);
-				} break;
-			}
-		}
 	}
 	/** @private @arg {RS_Browse} x */
 	RS_Browse(x) {
@@ -4117,8 +4060,6 @@ class HandleTypes extends HandleTypesEval {
 	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {return x.includes(":");}
-	/** @private @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
-	str_is_search(x) {return x.includes("?");}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
 		let token_str=atob(x);
