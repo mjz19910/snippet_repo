@@ -355,12 +355,12 @@ class HandleTypes extends HandleTypesEval {
 		};
 		switch(path) {
 			// binary tab enum
-			/** @type {B_BinaryBrowseTab} */
-			case "D_Browse.param.f110.f1": switch(map_entry_key) {
-				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: new_ns(); debugger; return;
-			}
+			// /** @type {B_BinaryBrowseTab} */
+			// case "D_Browse.param.f110.f1": switch(map_entry_key) {
+			// 	case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
+			// 		return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+			// 	default: new_ns(); debugger; return;
+			// }
 		}
 		/** @private @type {P_LogItems} */
 		switch(path)/*endpoint*/ {
@@ -376,12 +376,15 @@ class HandleTypes extends HandleTypesEval {
 				default: new_ns(); debugger; return;
 			}
 			case "get_pdg_buy_flow.params":
-			case "D_Browse.param.f110.f1.f20":
-			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f4": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f7.f1[]": case "subscribe.params.f2": case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2": case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_request_continuation.token.f14": case "watch_playlist.params.f27": case "D_Browse.param.f110": case "entity_key.normal.f2": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f10.f1":
+			// case "D_Browse.param.f110.f1.f20":
+			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f4": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "reel_request_continuation.token.f15.f6.f7.f1[]": case "subscribe.params.f2": case "reel_request_continuation.token.f15.f6.f6": case "reel_request_continuation.token.f15.f6.f7.f1": case "reel_request_continuation.token.f15.f6.f9.f1": case "continuation_token.data.f110.f3.f15.f2": case "reel_request_continuation.token.f15.f6.f7": case "reel_request_continuation.token.f15.f6.f8.f1": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_request_continuation.token.f14": case "watch_playlist.params.f27":
+			// case "D_Browse.param.f110":
+			case "entity_key.normal.f2": case "get_report_form.params.f28": case "reel_request_continuation.token.f15.f6.f10.f1":
 			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "get_report_form.params.f18.f1": case "D_Browse.param.f94.f1":
+			case "get_report_form.params.f18.f1":
+			// case "D_Browse.param.f94.f1":
 			case "reel_request_continuation.token.f15.f6.f11": {
 				switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -392,9 +395,9 @@ class HandleTypes extends HandleTypesEval {
 			case "get_report_form.params.f28.f1.f1.f1.f1": {
 				switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f84": case "browse.params.f84": {
-				switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			}
+			// case "D_Browse.param.f84": case "browse.params.f84": {
+			// 	switch(map_entry_key) {case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			// }
 			case "reel_request_continuation.token.f15.f6.f2":
 			case "continuation_token.data.f49": {
 				switch(map_entry_key) {case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -402,19 +405,19 @@ class HandleTypes extends HandleTypesEval {
 			case "watch_request_continuation.token.f9.f1.f4": {
 				switch(map_entry_key) {case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f93.f1": {
-				switch(map_entry_key) {case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			}
+			// case "D_Browse.param.f93.f1": {
+			// 	switch(map_entry_key) {case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			// }
 			case "continuation_token.data.f110.f3": {
 				switch(map_entry_key) {case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f94.f1.f2.f4":
+			// case "D_Browse.param.f94.f1.f2.f4":
 			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
 			case "reel_request_continuation.token.f15.f6.f11.f2": case "reel_request_continuation.token.f15.f6.f10": case "reel_request_continuation.token.f15.f6.f6.f1[]": case "reel_request_continuation.token.f15.f6.f9": case "reel_request_continuation.token.f15.f6.f8": case "reel_request_continuation.token.f15.f6.f3": case "reel_request_continuation.token.f15.f6.f5":
 			case "playability_status.context_params": {
 				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f93": case "browse.params.f93": case "get_report_form.params.f28.f1[]": case "watch_request_continuation.token.f9.f1.f1[]": case "watch_request_continuation.token.f9":
+			case "get_report_form.params.f28.f1[]": case "watch_request_continuation.token.f9.f1.f1[]": case "watch_request_continuation.token.f9":
 			case "get_report_form.params.f28.f1": {
 				switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -422,7 +425,6 @@ class HandleTypes extends HandleTypesEval {
 			case "continuation_token.data.f110.f3.f15": {
 				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f94":
 			case "reel.sequence_params": {
 				switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -505,9 +507,9 @@ class HandleTypes extends HandleTypesEval {
 			case "ypc_get_offers.params.f5": {
 				switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "D_Browse.param.f94.f1.f2": {
-				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			}
+			// case "D_Browse.param.f94.f1.f2": {
+			// 	switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
+			// }
 			case "like.removeLikeParams": {
 				switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -726,8 +728,9 @@ class HandleTypes extends HandleTypesEval {
 					return this.targetId(`Binary.value:${path}`,as(entry));
 				}
 				case "transcriptTrackSelection.serializedParams.f2": case "transcriptTrackSelection.serializedParams.f1": case "get_transcript.params.f2": case "get_transcript.params.f1": case "reel_request_continuation.token.f3.f1":
-				case "D_Browse.param.f94.f1.f2.f3": case "D_Browse.param.f94.f1.f2.f2": case "D_Browse.param.f94.f1.f2.f1": case "continuation_token.data.f53.f4.f4": case "reel_request_continuation.token.f15.f6.f1":
-				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1": case "D_Browse.param.f93.f1": case "continuation_token.data.f49": case "continuation_token.data.f15":
+				case "continuation_token.data.f53.f4.f4": case "reel_request_continuation.token.f15.f6.f1":
+				case "reel_request_continuation.token.f1": case "reel.sequence_params.f1": 
+				case "continuation_token.data.f49": case "continuation_token.data.f15":
 				case "continuation_token.data.f49.f6": case "continuation_token.data.f72": case "watch_request_continuation.token.f9.f1.f2": case "watch_request_continuation.token.f6.f4.f37": case "entity_key.subscribed.f2":
 				case "watch_request_continuation.token.f2.f2": case "watch_request_continuation.token.f2.f6": case "watch_playlist.params.f12": case "watch_request_continuation.token.f9.f1.f4": {
 				} return;
@@ -778,7 +781,7 @@ class HandleTypes extends HandleTypesEval {
 				case "reel_request_continuation.token.f15.f6.f8.f1.f1": case "reel_request_continuation.token.f15.f6.f5.f2": case "reel_request_continuation.token.f15.f6.f5.f1": case "reel_request_continuation.token.f15.f6.f2.f6": case "reel_request_continuation.token.f15.f3":
 				case "reel_request_continuation.token.f15.f1": case "reel_request_continuation.token.f5.f3": case "reel_request_continuation.token.f3.f4": case "reel_request_continuation.token.f3.f3": case "reel.player_params.f57": case "unsubscribe.params.f1.f1": case "subscribe.params.f2.f1":
 				case "tracking.trackingParams.f3": case "continuation_token.data.f53.f4.f15": case "entity_key.normal.f4": case "playability_status.context_params.f2.f1": case "playability_status.context_params.f1": case "reel.params.f6": case "reel.player_params.f30": case "reel.sequence_params.f5.f3":
-				case "reel.params.f1": case "reel.player_params.f71": case "D_Browse.param.f93.f1.f14": case "reel_request_continuation.token.f15.f6.f7.f1.f1": case "reel_request_continuation.token.f15.f6.f6.f1[].f2": case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
+				case "reel.params.f1": case "reel.player_params.f71": case "reel_request_continuation.token.f15.f6.f7.f1.f1": case "reel_request_continuation.token.f15.f6.f6.f1[].f2": case "reel_request_continuation.token.f15.f6.f6.f1[].f1":
 				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
 				} return;
@@ -823,7 +826,6 @@ class HandleTypes extends HandleTypesEval {
 				} return;
 				case "reel_request_continuation.token.f3.f6":
 				case "reel.player_params.f72":
-				case "D_Browse.param.f94.f5":
 				case "tracking.trackingParams.f9":
 				case "watch_request_continuation.token.f9.f1.f1[].f1": return;
 			}
@@ -864,9 +866,7 @@ class HandleTypes extends HandleTypesEval {
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
 			case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
-			case "browse":
-			case "change_markers_visibility": case "continuation_token": case "create_comment": case "create_playlist": case "createBackstagePost":
-			case "D_Browse":
+			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
 			case "entity_key": case "entity":
 			// case "feedback":
 			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript": case "GetNotificationMenu":
@@ -876,7 +876,7 @@ class HandleTypes extends HandleTypesEval {
 			case "player_seek": case "playability_status": case "playlist_edit":
 			case "reel": case "reload": case "watch_request_continuation": case "reel_request_continuation":
 			case "service$create_playlist": case "slot_ad_serving_data_entry": case "subscribe": case "subscriptionState":
-			case "TimedContinuation": case "tracking": case "transcriptTrackSelection": case "transcript_target_id":
+			case "TimedContinuation": case "tracking": case "transcriptTrackSelection":
 			case "unsubscribe":
 			case "watch_playlist": case "watch":
 			case "ypc_get_offers": case "ypc_get_offline_upsell": case "YpcGetCart": {
@@ -888,7 +888,7 @@ class HandleTypes extends HandleTypesEval {
 					} return;
 					case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
-					case "params": case "param": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
+					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "transactionParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
 					case "f1": case "f3": case "f4": case "f5": case "f6": case "f7": case "f9":
@@ -899,9 +899,9 @@ class HandleTypes extends HandleTypesEval {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
-					case "f23": case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
+					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
 					case "f30": case "f33": case "f39": case "f40": case "f49":
-					case "f53": case "f56": case "f57": case "f71": case "f72": case "f77": case "f84": case "f93": case "f94": case "f110":
+					case "f53": case "f56": case "f57": case "f71": case "f72": case "f110":
 				}
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
@@ -919,13 +919,13 @@ class HandleTypes extends HandleTypesEval {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f14": case "f15": case "f19": case "f20": case "f25": case "f37":
+					case "f10": case "f11": case "f15": case "f25": case "f37":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1[]": case "f13[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f13":
+					case "f1": case "f2": case "f3": case "f6": case "f13":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
