@@ -1,5 +1,5 @@
 type D_RA_D_BinaryCategoryObj_23=[
-	["child",2,Uint8Array,[["data32",1,53]]],
+	["child",2,Uint8Array,[["data32",1,D_BinaryCategoryObj_23[2][1]]]],
 	["child",3,Uint8Array,null]
 ];
 type D_RA_D_BinaryCategoryObj_13=[

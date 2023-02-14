@@ -6573,6 +6573,7 @@ class HandleTypes extends HandleTypesEval {
 						const [type,field_id,value]=dec_0;
 						if(type!=="data32") debugger;
 						if(field_id!==1) debugger;
+						/* [f_23_TR_Binary_Num_f1] */
 						switch(value) {
 							default: debugger; break;
 							case 53:
