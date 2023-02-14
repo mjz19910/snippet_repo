@@ -21,7 +21,7 @@ function h_detect_firefox() {
 	let ua=navigator.userAgent;
 	return ua.includes("Gecko/")&&ua.includes("Firefox/");
 }
-const is_firefox=h_detect_firefox();
+const is_firefox=h_detect_firefox(); is_firefox;
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
 const as=bs.as_;
@@ -74,34 +74,12 @@ class IndexedDBService extends BaseService {
 	put(...args) {
 		if(!args[1]) {debugger; return;}
 		const [key,value]=args;
-		switch(key) {
-			case "boxed_id": {
-				let cache=this.cached_data.get(key);
-				let cache_key=`${key}:${value.type}:${value.id}`;
-				if(cache?.includes(cache_key)) return;
-				if(!this.database_open) this.requestOpen({key,value});
-				this.push_waiting_obj(key,value);
-				this.check_size(key);
-			} break;
-			case "hashtag": {
-				let index_val=value.hashtag;
-				if(index_val==null) return;
-				let cache=this.cached_data.get(key);
-				if(cache?.includes(index_val)) return;
-				if(!this.database_open) this.requestOpen({key,value});
-				this.push_waiting_obj(key,value);
-				this.check_size(key);
-			} break;
-			case "video_id": {
-				let index_val=value.v;
-				if(index_val==null) return;
-				let cache=this.cached_data.get(key);
-				if(cache?.includes(index_val)) return;
-				if(!this.database_open) this.requestOpen({key,value});
-				this.push_waiting_obj(key,value);
-				this.check_size(key);
-			} break;
-		}
+		let cache=this.cached_data.get(key);
+		let cache_key=value.key;
+		if(cache?.includes(cache_key)) return;
+		if(!this.database_open) this.requestOpen(as_any({key,value}));
+		this.push_waiting_obj(...args);
+		this.check_size(key);
 	}
 	/** @private @arg {push_waiting_obj_Args} args */
 	push_waiting_obj(...args) {
@@ -257,43 +235,6 @@ class IndexedDBService extends BaseService {
 			case "boxed_id": return "id";
 		}
 		throw new Error();
-	}
-	/** @protected @arg {IDBObjectStore} obj_store @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {T[]} database_data @arg {K} key */
-	on_cursor_complete_old(obj_store,database_data,key) {
-		const index_key=this.get_index_key(key);
-		/** @private @type {Map<string,DatabaseStoreTypes[K]>} */
-		let database_map=new Map;
-		/** @private @type {Map<string,DatabaseStoreTypes[keyof DatabaseStoreTypes]>} */
-		let new_data_map=new Map;
-		database_data.forEach(e => {
-			if("hashtag" in e&&index_key==="hashtag") {database_map.set(e[index_key],e);}
-			if("v" in e&&index_key==="v") {database_map.set(e[index_key],e);}
-		});
-		if(is_firefox) {console.log(`database [%s:%s] has${"%o"}items`,this.db_args.name,key,database_data.length);} else {console.log("database [%s:%s] has %o items",this.db_args.name,key,database_data.length);}
-		for(let data of this.get_data_cache(key)[1]) {
-			if(!data) {debugger; continue;}
-			let content;
-			switch(index_key) {
-				case "v": index_key in data&&(content=data[index_key]); break;
-				case "hashtag": index_key in data&&(content=data[index_key]); break;
-			}
-			if(content!==void 0) {
-				if(database_map.has(content)) {
-					this.committed_data.push(data);
-					continue;
-				} else if(new_data_map.has(content)) {
-					this.committed_data.push(data);
-					continue;
-				} else {
-					if("v" in data) {
-						new_data_map.set(content,data);
-					} else {
-						new_data_map.set(content,data);
-					}
-				}
-			} else {debugger;}
-		}
-		[...new_data_map.values()].forEach(e => {this.add_data_to_store(obj_store,e);});
 	}
 	/** @private @template {keyof DatabaseStoreTypes} K @template {DatabaseStoreTypes[K]} T @arg {IDBObjectStore} store @arg {T} data */
 	add_data_to_store(store,data) {
