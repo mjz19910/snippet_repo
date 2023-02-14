@@ -1002,7 +1002,7 @@ type D_TextRun={
 	bold: boolean;
 }|{
 	text: string;
-	emoji: string;
+	emoji: D_Emoji;
 };
 type D_PlaylistPanel={
 	title: "YouTube Mix";

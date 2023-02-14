@@ -1738,7 +1738,7 @@ class HandleTypes extends HandleTypesEval {
 			this.a_primitive_bool(bold);
 			return;
 		}
-		if("bold" in u) {
+		if("emoji" in u) {
 			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_Emoji(emoji);
 			return;
