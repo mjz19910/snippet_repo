@@ -410,11 +410,6 @@ class HandleTypes extends HandleTypesEval {
 		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,buffer.slice(c_pos,c_pos+4));}
 	}
-	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
-	handle_bigint(path,x) {
-		this.save_number(path,x[1]);
-		return this.save_string(path,`${x[2]}n`);
-	}
 	get generate_typedef() {
 		if(!generate_typedef.value) throw new Error();
 		return generate_typedef.value;
@@ -3045,27 +3040,6 @@ class HandleTypes extends HandleTypesEval {
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @type {Map<string,(string|number)[]>} */
-	cases_map=new Map;
-	/** @arg {(string|number)[]} known @arg {string} [code] */
-	codegen_case_result(known,code) {
-		if(code) return known.map(e => `case ${e}: ${code}`).join("\n");
-		return known.map(e => `case ${e}:`).join("\n");
-	}
-	/** @arg {CF_D_CaseGen} cf @arg {string|number} val */
-	codegen_case_cache(cf,val) {
-		let arr=this.cases_map.get(cf);
-		if(!arr) {arr=[]; this.cases_map.set(cf,arr);}
-		let val_str=JSON.stringify(val);
-		let has=arr.includes(val_str);
-		if(!arr.includes(val_str)) arr.push(val_str);
-		return {arr,has};
-	}
-	/** @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
-	codegen_case(cf,val,code) {
-		let {arr}=this.codegen_case_cache(cf,val);
-		console.log(`-- [js_gen_case:${cf}] --\n\n${this.codegen_case_result(arr,code)}`);
-	}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
 	codegen_case_key(cf,obj,key,code) {
 		let val=obj[key];
@@ -5504,7 +5478,7 @@ class HandleTypes extends HandleTypesEval {
 		function u1() {u;}
 		/**/u1; x; o2;
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
+	/** @public @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}

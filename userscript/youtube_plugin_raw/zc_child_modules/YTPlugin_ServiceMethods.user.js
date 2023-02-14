@@ -22,7 +22,33 @@ const ServiceData=bs.ServiceData;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
-	/** @arg {string} x @returns {x is `${string}-0000-${string}`} */
+	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
+	handle_bigint(path,x) {
+		this.save_number(path,x[1]);
+		return this.save_string(path,`${x[2]}n`);
+	}
+	/** @type {Map<string,(string|number)[]>} */
+	cases_map=new Map;
+	/** @arg {CF_D_CaseGen} cf @arg {string|number} val */
+	codegen_case_cache(cf,val) {
+		let arr=this.cases_map.get(cf);
+		if(!arr) {arr=[]; this.cases_map.set(cf,arr);}
+		let val_str=JSON.stringify(val);
+		let has=arr.includes(val_str);
+		if(!arr.includes(val_str)) arr.push(val_str);
+		return {arr,has};
+	}
+	/** @protected @arg {(string|number)[]} known @arg {string} [code] */
+	codegen_case_result(known,code) {
+		if(code) return known.map(e => `case ${e}: ${code}`).join("\n");
+		return known.map(e => `case ${e}:`).join("\n");
+	}
+	/** @protected @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
+	codegen_case(cf,val,code) {
+		let {arr}=this.codegen_case_cache(cf,val);
+		console.log(`-- [js_gen_case:${cf}] --\n\n${this.codegen_case_result(arr,code)}`);
+	}
+	/** @protected @arg {string} x @returns {x is `${string}-0000-${string}`} */
 	is_yt_uuid(x) {
 		return x.match(/[0-9a-f]{8}-0{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)!==null;
 	}
@@ -123,7 +149,7 @@ class ServiceMethods extends ServiceData {
 				case "watch_request_continuation.token.f5": {
 					/** @type {`sub.${path}`} */
 					const cf=`sub.${path}`;
-					this.decode_continuation_token(cf,entry);
+					this.x.get("handle_types").decode_continuation_token(cf,entry);
 				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
