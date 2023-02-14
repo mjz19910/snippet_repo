@@ -3834,9 +3834,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
-		let buffer=base64_url_dec.decodeByteArray(x);
-		if(!buffer) {debugger; return;}
-		this.save_number("undo_token.0-2",buffer.slice(0,2));
+		this.save_some_base64_url_data("undo_token",x);
 	}
 	/** @private @arg {GU_VE42352_Url} x */
 	GU_VE42352_Url(x) {
@@ -5625,8 +5623,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	DE_Feedback_onToken(x) {
-		let binary=base64_url_dec.decodeByteArray(x);
-		this.t(binary,x => this.save_number("feedbackToken.bytes.0-2",x.slice(0,2)));
+		this.save_some_base64_url_data("feedbackToken.bytes",x);
 	}
 	/** @private @template {{[U in K]:any}} T @template {keyof T} K @arg {"DE_Feedback"} cf @arg {K} k @arg {T} x @arg {(x:T[K])=>void} f @returns {T_OmitKey<T,K>} */
 	T_OmitKey(cf,k,x,f) {const {[k]: a,...y}=this.s(cf,x); f.call(this,a); return as_any(y);}
@@ -6154,13 +6151,14 @@ class HandleTypes extends HandleTypesEval {
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout";
 		switch(x.layoutType) {
+			default: debugger; break;
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": {
 				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.MG_AdLayout_layoutType(layoutType);
 				this.MG_AdLayout_LayoutId(layoutId);
 			} break;
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
-				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.MG_AdLayout_layoutType(layoutType);
 				this.MG_AdLayout_LayoutId(layoutId);
 				this.D_AdLayoutLoggingData(adLayoutLoggingData);
@@ -10336,9 +10334,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	D_VideoPlayback_ns(x) {
+		this.save_some_base64_url_data("video_playback.buf.ns",x);
+	}
+	/** @private @arg {string} cf @arg {string} x */
+	save_some_base64_url_data(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return;}
-		this.save_number(`video_playback.buf.ns.0-2`,buffer.slice(0,2));
+		this.save_number(`${cf}.0-2`,buffer.slice(0,2));
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
