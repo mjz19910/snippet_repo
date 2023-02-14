@@ -6552,7 +6552,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_BinaryCategoryObj(x) {
 		const [dec_0,dec_1]=x;
 		{
-			const [type,field_id,buffer,dec]=dec_0;
+			const [type,field_id,buffer,dec]=dec_0; buffer;
 			if(type!=="child") debugger;
 			switch(field_id) {
 				default: debugger; break;
@@ -6885,6 +6885,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_0x12f639cf[6]} x */
 	R_0x12f639cf_f6(x) {
+		const cf="R_0x12f639cf_f6";
 		if(3 in x) {
 			const {3: f3,...y}=this.s(cf,x); this.g(y);
 			this.playlistId(f3);
