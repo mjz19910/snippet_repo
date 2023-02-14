@@ -351,6 +351,88 @@ class ServiceMethods extends ServiceData {
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
+	/** @private @arg {MC_Continuation} x */
+	MC_Continuation(x) {
+		this.T_WCM("MC_Continuation",x,x => {
+			switch(x.apiUrl) {
+				default: debugger; break;
+				case "/youtubei/v1/browse": this.GM_Browse(x); break;
+				case "/youtubei/v1/next": this.GM_Next(x); break;
+			}
+		});
+	}
+	/** @private @arg {DC_Continuation} x */
+	DC_Continuation(x) {
+		if("continuationCommand" in x) debugger;
+		const cf="DC_Continuation";
+		switch(x.request) {
+			default: debugger; break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
+				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
+				return this.g(this.DC_Continuation_Omit(cf,x));
+			}
+		}
+	}
+	/** @private @arg {C_Continuation} x */
+	C_Continuation(x) {
+		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
+		this.t(a,this.MC_Continuation);
+		this.DC_Continuation(b);
+	}
+	/** @private @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
+	T_SE_Signal(cf,x) {
+		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		/** @type {`T_SE_Signal:${CF_T_SE_Signal}`} */
+		this.clickTrackingParams(`T_SE_Signal:${cf}`,clickTrackingParams);
+		return [commandMetadata,signalServiceEndpoint];
+	}
+	/** @private @arg {C_CommandExecutor} x */
+	C_Executor(x) {
+		const cf="C_Executor"; this.k(cf,x);
+		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.DC_CommandExecutor(commandExecutorCommand);
+	}
+	/** @private @arg {E_CreateBackstagePost} x */
+	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
+	/** @private @arg {C_GetSurvey} x */
+	C_GetSurvey(x) {
+		const cf="C_GetSurvey"; this.k(cf,x);
+		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,a);
+		this.DC_GetSurvey(c);
+		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
+		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @protected @arg {E_AddToPlaylistService} x */
+	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
+	/** @private @arg {C_ShowReelsCommentsOverlay} x */
+	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
+	/** @private @arg {E_Feedback} x */
+	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
+	/** @protected @arg {GC_Button} x */
+	GC_Button(x) {
+		const cf="GC_Button"; this.k(cf,x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
+		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
+		if("commandExecutorCommand" in x) return this.C_Executor(x);
+		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
+		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
+		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("feedbackEndpoint" in x) return this.E_Feedback(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {R_MenuFlexibleItem} x */
 	R_MenuFlexibleItem(x) {this.H_("R_MenuFlexibleItem","menuFlexibleItemRenderer",x,this.D_MenuFlexibleItem);}
 	/** @private @arg {DT_MenuFlexibleItem} x */

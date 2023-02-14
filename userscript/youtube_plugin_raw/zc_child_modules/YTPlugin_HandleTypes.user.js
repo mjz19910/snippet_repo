@@ -1518,32 +1518,6 @@ class HandleTypes extends HandleTypesEval {
 	C_CommandExecutor(x) {let [a,b]=this.TE_Endpoint_2("C_CommandExecutor","commandExecutorCommand",x); this.g(b); this.DC_CommandExecutor(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
-	/** @private @arg {MC_Continuation} x */
-	MC_Continuation(x) {
-		this.T_WCM("MC_Continuation",x,x => {
-			switch(x.apiUrl) {
-				default: debugger; break;
-				case "/youtubei/v1/browse": this.GM_Browse(x); break;
-				case "/youtubei/v1/next": this.GM_Next(x); break;
-			}
-		});
-	}
-	/** @private @arg {C_Continuation} x */
-	C_Continuation(x) {
-		const [a,b,y]=this.TE_Endpoint_Opt_3("C_Continuation","continuationCommand",x); this.g(y);
-		this.t(a,this.MC_Continuation);
-		this.DC_Continuation(b);
-	}
-	/** @private @arg {C_GetSurvey} x */
-	C_GetSurvey(x) {
-		const cf="C_GetSurvey"; this.k(cf,x);
-		const {clickTrackingParams: a,commandMetadata: b,getSurveyCommand: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,a);
-		this.DC_GetSurvey(c);
-		const {apiUrl,sendPost,...y1}=this.unpack_T_WCM("MG_Survey_CMD",b); this.g(y1);
-		if(apiUrl!=="/youtubei/v1/get_survey") debugger;
-		if(sendPost!==true) debugger;
-	}
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
 	C_AdsControlFlowOpportunityReceived(x) {
 		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
@@ -1574,13 +1548,6 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ShowReloadUi(a);
 	}
-	/** @private @arg {C_CommandExecutor} x */
-	C_Executor(x) {
-		const cf="C_Executor"; this.k(cf,x);
-		const {clickTrackingParams,commandExecutorCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.DC_CommandExecutor(commandExecutorCommand);
-	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
 	/** @private @arg {C_Loop} x */
@@ -1600,8 +1567,6 @@ class HandleTypes extends HandleTypesEval {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
 	}
-	/** @private @arg {C_ShowReelsCommentsOverlay} x */
-	C_ShowReelsCommentsOverlay(x) {let [a,y]=this.TE_Endpoint_2("C_ShowReelsCommentsOverlay","showReelsCommentsOverlayCommand",x); this.g(y); this.DC_ShowReelsCommentsOverlay(a);}
 	/** @private @arg {C_FilterChipTransform} x */
 	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
 	/** @private @arg {D_ChipUniqueId} x */
@@ -1725,23 +1690,6 @@ class HandleTypes extends HandleTypesEval {
 		this.z(entityKeys,x => {
 			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
 		});
-	}
-	/** @private @arg {DC_Continuation} x */
-	DC_Continuation(x) {
-		if("continuationCommand" in x) debugger;
-		const cf="DC_Continuation";
-		switch(x.request) {
-			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
-			}
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": return this.g(this.DC_Continuation_Omit(cf,x));
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				if("command" in x) {return this.y(cf,"command",this.DC_Continuation_Omit(cf,x),this.C_ShowReloadUi);}
-				return this.g(this.DC_Continuation_Omit(cf,x));
-			}
-		}
 	}
 	/** @private @arg {DC_GetSurvey} x */
 	DC_GetSurvey(x) {
@@ -1899,18 +1847,12 @@ class HandleTypes extends HandleTypesEval {
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
-	/** @private @arg {E_CreateBackstagePost} x */
-	E_CreateBackstagePost(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreateBackstagePost","createBackstagePostEndpoint",x); this.g(y); this.M_CreateBackstagePost(a); this.DE_CreateBackstagePost(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {E_GetReportForm} x */
 	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
-	/** @protected @arg {E_AddToPlaylistService} x */
-	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
-	/** @private @arg {E_Feedback} x */
-	E_Feedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","feedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_Feedback(b);}
 	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_CreatePlaylistService} x */
@@ -3291,13 +3233,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	//#region pause
 	//#endregion
-	/** @private @arg {CF_T_SE_Signal} cf @template {{webCommandMetadata:any}} T @template U @arg {T_SE_Signal<T,U>} x @returns {[T,U]} */
-	T_SE_Signal(cf,x) {
-		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		/** @type {`T_SE_Signal:${CF_T_SE_Signal}`} */
-		this.clickTrackingParams(`T_SE_Signal:${cf}`,clickTrackingParams);
-		return [commandMetadata,signalServiceEndpoint];
-	}
 	/** @private @template U @template {T_Signal<U>} T @arg {T} x @arg {(t:T["signal"])=>void} f @returns {Omit<T,"signal">} */
 	Signal_Omit(x,f) {
 		const cf="Signal_Omit";
@@ -5566,23 +5501,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
-	}
-	/** @protected @arg {GC_Button} x */
-	GC_Button(x) {
-		const cf="GC_Button"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("continuationCommand" in x) return this.C_Continuation(x);
-		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		if("signalServiceEndpoint" in x) return this.T_SE_Signal(`${cf}.SE_Signal`,x);
-		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		if("commandExecutorCommand" in x) return this.C_Executor(x);
-		if("createBackstagePostEndpoint" in x) return this.E_CreateBackstagePost(x);
-		if("getSurveyCommand" in x) return this.C_GetSurvey(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		if("showReelsCommentsOverlayCommand" in x) return this.C_ShowReelsCommentsOverlay(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_DC_CommandExecutor_CommandItem} x */
 	G_DC_CommandExecutor_CommandItem(x) {
