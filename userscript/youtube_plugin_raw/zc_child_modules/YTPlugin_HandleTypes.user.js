@@ -1082,8 +1082,6 @@ class HandleTypes extends HandleTypesEval {
 	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
 	/** @private @arg {R_BrowserMediaSessionRenderer} x */
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
-	/** @private @arg {R_SegmentedLikeDislikeButton} x */
-	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 	/** @private @arg {R_NotificationText} x */
 	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
 	/** @private @arg {R_AdSlot} x */
@@ -1373,8 +1371,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @private @arg {R_PlaylistLoopButtonState} x */
 	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
-	/** @private @arg {R_PlaylistLoopButton} x */
-	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
 	/** @private @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {R_EmojiPickerCategory} x */
@@ -1568,12 +1564,6 @@ class HandleTypes extends HandleTypesEval {
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(timeoutMs!==60000) debugger;
 		this.params(cf,"TimedContinuation",continuation);
-	}
-	/** @private @arg {DC_ShowReloadUi} x */
-	DC_ShowReloadUi(x) {
-		const cf="DC_ShowReloadUi"; this.k(cf,x);
-		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
-		this.D_UiTargetId(targetId);
 	}
 	/** @type {string[]} */
 	DC_AddToPlaylist_listTypes=[
@@ -1797,8 +1787,6 @@ class HandleTypes extends HandleTypesEval {
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {M_Subscribe} x */
-	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {M_FlagGetForm} x */
@@ -1835,8 +1823,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
-	/** @private @arg {GM_CreateBackstagePost} x */
-	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
@@ -1911,13 +1897,6 @@ class HandleTypes extends HandleTypesEval {
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
 	}
-	/** @private @arg {DE_Subscribe} x */
-	DE_Subscribe(x) {
-		const cf="DE_Subscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
-		this.params(cf,"subscribe.params",params);
-	}
 	/** @private @arg {DE_ShowEngagementPanel} x */
 	DE_ShowEngagementPanel(x) {
 		const cf="D_ShowEngagementPanel"; this.k(cf,x);
@@ -1946,13 +1925,6 @@ class HandleTypes extends HandleTypesEval {
 				default: debugger; break;
 			}
 		});
-	}
-	/** @private @arg {DE_Feedback_ActionItem} x */
-	DE_Feedback_ActionItem(x) {
-		const cf="DE_Feedback"; this.k(cf,x);
-		if("filterChipTransformCommand" in x) return this.C_FilterChipTransform(x);
-		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
-		debugger;
 	}
 	/** @private @arg {DE_RecordNotificationInteractions} x */
 	DE_RecordNotificationInteractions(x) {
@@ -3380,21 +3352,6 @@ class HandleTypes extends HandleTypesEval {
 		this.M_SendPost(commandMetadata);
 		return ["Signal",signalServiceEndpoint];
 	}
-	/** @private @arg {RD_MenuServiceItem["serviceEndpoint"]} x */
-	RD_MenuServiceItem_serviceEndpoint(x) {
-		const cf="RD_MenuServiceItem_serviceEndpoint"; this.k(cf,x);
-		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
-		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("recordNotificationInteractionsEndpoint" in x) return this.E_RecordNotificationInteractions(x);
-		if("notificationOptOutEndpoint" in x) return this.E_NotificationOptOut(x);
-		x==="";
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @arg {string} cf */
 	codegen_all_service_menu_icons(cf) {
 		let arr_items=JSON.stringify(this.service_menu_icons,null,"\t");
@@ -3440,11 +3397,6 @@ class HandleTypes extends HandleTypesEval {
 		const {successResponseText,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(successResponseText);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
-	D_MenuNavigationItem_Endpoint(x) {
-		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
-		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 	}
 	/** @private @template {D_Microformat} U @arg {U} x */
 	unwrap_microformat(x) {
@@ -6862,8 +6814,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(commentText);
 		this.R_PdgCommentChip(chipRenderer);
 	}
-	/** @private @arg {D_HideEnclosingContainer} x */
-	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
 		const cf="TR_SectionListItem_3_Empty";

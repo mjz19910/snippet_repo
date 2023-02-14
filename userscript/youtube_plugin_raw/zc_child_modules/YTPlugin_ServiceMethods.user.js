@@ -3724,5 +3724,55 @@ class ServiceMethods extends ServiceData {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.DC_ShowReloadUi(a);
 	}
+	/** @private @arg {D_HideEnclosingContainer} x */
+	D_HideEnclosingContainer(x) {if(!this.eq_keys(this.get_keys_of(x),["hideEnclosingContainer"])) debugger; let q=Object.values(x); if(q.length!==1) debugger; if(q[0]!==true) debugger;}
+	/** @private @arg {D_MenuNavigationItem["navigationEndpoint"]} x */
+	D_MenuNavigationItem_Endpoint(x) {
+		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
+		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+	}
+	/** @private @arg {RD_MenuServiceItem["serviceEndpoint"]} x */
+	RD_MenuServiceItem_serviceEndpoint(x) {
+		const cf="RD_MenuServiceItem_serviceEndpoint"; this.k(cf,x);
+		if("feedbackEndpoint" in x) return this.E_Feedback(x);
+		if("signalServiceEndpoint" in x) return this.TE_SignalService_I_0(x);
+		if("playlistEditEndpoint" in x) return this.E_PlaylistEdit(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.E_AddToPlaylistService(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("getReportFormEndpoint" in x) return this.E_GetReportForm(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+		if("recordNotificationInteractionsEndpoint" in x) return this.E_RecordNotificationInteractions(x);
+		if("notificationOptOutEndpoint" in x) return this.E_NotificationOptOut(x);
+		x==="";
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {DE_Feedback_ActionItem} x */
+	DE_Feedback_ActionItem(x) {
+		const cf="DE_Feedback"; this.k(cf,x);
+		if("filterChipTransformCommand" in x) return this.C_FilterChipTransform(x);
+		if("replaceEnclosingAction" in x) return this.A_ReplaceEnclosing(x);
+		debugger;
+	}
+	/** @private @arg {DE_Subscribe} x */
+	DE_Subscribe(x) {
+		const cf="DE_Subscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.D_ChannelId);
+		this.params(cf,"subscribe.params",params);
+	}
+	/** @private @arg {GM_CreateBackstagePost} x */
+	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
+	/** @private @arg {M_Subscribe} x */
+	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
+	/** @private @arg {DC_ShowReloadUi} x */
+	DC_ShowReloadUi(x) {
+		const cf="DC_ShowReloadUi"; this.k(cf,x);
+		const {targetId,...y}=this.s(cf,x); this.g(y);//#destructure*/
+		this.D_UiTargetId(targetId);
+	}
+	/** @private @arg {R_PlaylistLoopButton} x */
+	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
+	/** @private @arg {R_SegmentedLikeDislikeButton} x */
+	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
