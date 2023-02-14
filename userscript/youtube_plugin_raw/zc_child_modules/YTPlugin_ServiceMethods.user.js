@@ -204,6 +204,37 @@ class ServiceMethods extends ServiceData {
 			}
 		});
 	}
+	/** @protected @arg {R_Menu} x */
+	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
+	/** @private @arg {G_MenuItem} x */
+	G_MenuItem(x) {
+		const cf="G_MenuItem"; this.g_k(cf,x); this.k(cf,x);
+		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
+		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
+		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
+		this.codegen_typedef_all("MenuItems",x);
+		this.G_Text(x);
+	}
+	/** @private @arg {D_Menu} x */
+	D_Menu(x) {
+		const cf="D_Menu";
+		const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(menuPopupAccessibility,this.D_Label);
+		this.tz(items,this.G_MenuItem);
+		if(trackingParams) this.trackingParams(cf,trackingParams);
+		this.t(accessibility,this.D_Accessibility);
+		this.tz(flexibleItems,this.R_MenuFlexibleItem);
+		this.tz(topLevelButtons,this.D_Menu_Button);
+		this.t(targetId,x => {
+			switch(x) {
+				default: switch(x) {
+				} debugger; break;
+				case "browse-video-menu-button":
+				case "watch-related-menu-button":
+			}
+			this.targetId(cf,x);
+		});
+	}
 	/** @private @arg {D_ReelPlayerOverlay} x */
 	D_ReelPlayerOverlay(x) {
 		const cf="D_ReelPlayerOverlay";

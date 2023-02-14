@@ -549,15 +549,6 @@ class HandleTypes extends HandleTypesEval {
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {G_MenuItem} x */
-	G_MenuItem(x) {
-		const cf="G_MenuItem"; this.g_k(cf,x); this.k(cf,x);
-		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
-		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
-		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-		this.codegen_typedef_all("MenuItems",x);
-		this.G_Text(x);
-	}
 	/** @private @arg {G_Watch_ResultsItem} x */
 	G_Watch_ResultsItem(x) {
 		const cf="G_Watch_ResultsItem"; this.k(cf,x);
@@ -1077,8 +1068,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview","pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
-	/** @private @arg {R_Menu} x */
-	R_Menu(x) {this.H_("R_Menu","menuRenderer",x,this.D_Menu);}
 	/** @private @arg {R_MusicQueue} x */
 	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {R_RichGrid} x */
@@ -3674,26 +3663,6 @@ class HandleTypes extends HandleTypesEval {
 		if("playlistLoopButtonRenderer" in x) return this.R_PlaylistLoopButton(x);
 		if("toggleButtonRenderer" in x) return this.R_ToggleButton(x);
 		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {D_Menu} x */
-	D_Menu(x) {
-		const cf="D_Menu";
-		const {items,trackingParams,accessibility,menuPopupAccessibility,topLevelButtons,flexibleItems,loggingDirectives,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(menuPopupAccessibility,this.D_Label);
-		this.tz(items,this.G_MenuItem);
-		if(trackingParams) this.trackingParams(cf,trackingParams);
-		this.t(accessibility,this.D_Accessibility);
-		this.tz(flexibleItems,this.R_MenuFlexibleItem);
-		this.tz(topLevelButtons,this.D_Menu_Button);
-		this.t(targetId,x => {
-			switch(x) {
-				default: switch(x) {
-				} debugger; break;
-				case "browse-video-menu-button":
-				case "watch-related-menu-button":
-			}
-			this.targetId(cf,x);
-		});
 	}
 	/** @private @arg {D_SegmentedLikeDislikeButton} x */
 	D_SegmentedLikeDislikeButton(x) {
