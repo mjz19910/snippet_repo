@@ -1,26 +1,9 @@
-import {as_ as as,ServiceMethods} from "./zc_child_modules/YtPlugin_Base.user";
+import {ServiceMethods} from "./zc_child_modules/YtPlugin_Base.user";
 /** @returns {never} */
 function n() {throw new Error("Make never type");}
 n;
 /** @template CLS_T,CLS_U @extends {ServiceMethods<CLS_T,CLS_U>} */
 export class HandleTypesEval_ extends ServiceMethods {
-	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
-	filter_out_keys(keys,to_remove) {
-		to_remove=to_remove.slice();
-		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-		let ok_e=[];
-		for(let i=0;i<keys.length;i++) {
-			let rm_idx=to_remove.findIndex(e => e===keys[i]);
-			if(rm_idx>=0) {
-				to_remove.splice(rm_idx,1);
-				continue;
-			}
-			ok_e.push(as(keys[i]));
-		}
-		return ok_e;
-	}
-	/** @protected @arg {string} cf @arg {{}} x */
-	k=(cf,x) => this.save_keys(`[${cf}]`,x);
 	/** @protected @arg {CF_M_w} cf @arg {SI} k @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(cf,k,x,excl=[]) {
 		this.k(cf,x);

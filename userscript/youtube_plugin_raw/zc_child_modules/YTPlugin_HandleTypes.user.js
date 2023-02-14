@@ -1074,13 +1074,6 @@ class HandleTypes extends HandleTypesEval {
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
 	}
-	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K])=>U} f */
-	H_(cf,k,x,f) {
-		if(!x) {debugger; return;}
-		let wr=this.wn(cf,x,k);
-		if(!wr) return;
-		return f.call(this,wr);
-	}
 	/** @arg {CF_TD_ItemSection} cf1 @protected @template CT,T,U @template {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {(VU extends TD_ItemSection_3<CT,T,U>?[VU["contents"],VU["sectionIdentifier"],VU["targetId"]]:[VU["contents"]])|null} */
 	TD_ItemSection(cf1,x) {
 		const cf2="TD_ItemSection";
@@ -1282,7 +1275,7 @@ class HandleTypes extends HandleTypesEval {
 			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
 			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.RS_Player(x.data);
+			case "player": return this.RS_handle.RS_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
 			case "reel.reel_item_watch": return this.RSW_ReelItem(x.data);
 			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
@@ -1496,7 +1489,7 @@ class HandleTypes extends HandleTypesEval {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
-		this.RS_Player(playerResponse);
+		this.RS_handle.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
@@ -1521,7 +1514,7 @@ class HandleTypes extends HandleTypesEval {
 		if(page!=="shorts") debugger;
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.RS_Player(playerResponse);
+		this.RS_handle.RS_Player(playerResponse);
 		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -1728,13 +1721,6 @@ class HandleTypes extends HandleTypesEval {
 		if("liveChatPlaceholderItemRenderer" in x) return;
 		if("liveChatViewerEngagementMessageRenderer" in x) return;
 	}
-	/** @private @arg {G_PlayerStoryboards} x */
-	G_PlayerStoryboards(x) {
-		const cf="G_PlayerStoryboards"; this.k(cf,x);
-		if("playerStoryboardSpecRenderer" in x) return;
-		if("playerLiveStoryboardSpecRenderer" in x) return;
-		this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {D_TextRun} x */
 	D_TextRun(x) {
 		const cf="R_TextRun";
@@ -1839,21 +1825,6 @@ class HandleTypes extends HandleTypesEval {
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
 		return [commandMetadata,endpoint,y];
 	}
-	/** @override @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
-	filter_out_keys(keys,to_remove) {
-		to_remove=to_remove.slice();
-		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-		let ok_e=[];
-		for(let i=0;i<keys.length;i++) {
-			let rm_idx=to_remove.findIndex(e => e===keys[i]);
-			if(rm_idx>=0) {
-				to_remove.splice(rm_idx,1);
-				continue;
-			}
-			ok_e.push(as(keys[i]));
-		}
-		return ok_e;
-	}
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @returns {T[K]|null} */
 	w_priv(k,x) {
 		if(!(k in x)) {debugger; return null;}
@@ -1868,17 +1839,6 @@ class HandleTypes extends HandleTypesEval {
 		let hk=keys[0];
 		if(hk!==k) {debugger; throw new Error();}
 		let r=x[hk];
-		return r;
-	}
-	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {(Exclude<T[SI],null>)|null} */
-	wn(cf,x,ex_name,excl=[]) {
-		this.k(cf,x);
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		if(keys.length!==1) debugger;
-		let k=keys[0];
-		if(k!==ex_name) {debugger; return null;}
-		let r=x[k];
 		return r;
 	}
 	/** @protected @arg {CF_M_zy} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K][number],i:number)=>U} f */
@@ -2103,8 +2063,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
 	/** @private @arg {D_PaidDigitalGoods} x */
 	R_PaidDigitalGoods(x) {this.H_("R_PaidDigitalGoods","paidDigitalGoods",x,this.B_Hack);}
-	/** @private @arg {R_PlayerAnnotationsExpanded} x */
-	R_PlayerAnnotationsExpanded(x) {this.H_("R_PlayerAnnotationsExpanded","playerAnnotationsExpandedRenderer",x,this.D_PlayerAnnotationsExpanded);}
 	/** @private @arg {R_SubscribeButton} x */
 	R_SubscribeButton(x) {this.H_("R_SubscribeButton","subscribeButtonRenderer",x,this.D_SubscribeButton);}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
@@ -2479,22 +2437,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PlaylistLoopButtonState(x) {this.H_("R_PlaylistLoopButtonState","playlistLoopButtonStateRenderer",x,this.D_PlaylistLoopButtonState);}
 	/** @private @arg {R_PlaylistLoopButton} x */
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
-	/** @private @arg {R_Miniplayer} x */
-	R_Miniplayer(x) {this.H_("R_Miniplayer","miniplayerRenderer",x,this.D_Miniplayer);}
-	/** @private @arg {R_DesktopWatchAds} x */
-	R_DesktopWatchAds(x) {this.H_("R_DesktopWatchAds","playerLegacyDesktopWatchAdsRenderer",x,this.D_DesktopWatchAds);}
-	/** @private @arg {R_PlayerCaptionsTracklist} x */
-	R_PlayerCaptionsTracklist(x) {this.H_("R_Miniplayer","playerCaptionsTracklistRenderer",x,this.D_PlayerCaptionsTracklist);}
-	/** @private @arg {R_VideoQualityPromo} x */
-	R_VideoQualityPromo(x) {this.H_("R_Miniplayer","videoQualityPromoRenderer",x,this.D_VideoQualityPromo);}
-	/** @private @arg {R_PlayerAttestation} x */
-	R_PlayerAttestation(x) {this.H_("R_Miniplayer","playerAttestationRenderer",x,this.D_PlayerAttestation);}
-	/** @private @arg {R_CardCollection} x */
-	R_CardCollection(x) {this.H_("R_Miniplayer","cardCollectionRenderer",x,this.D_CardCollection);}
-	/** @private @arg {R_PlayerMicroformat} x */
-	R_PlayerMicroformat(x) {this.H_("R_Miniplayer","playerMicroformatRenderer",x,this.D_PlayerMicroformat);}
-	/** @private @arg {R_AdPlacement} x */
-	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {R_UnifiedSharePanel} x */
@@ -2527,8 +2469,6 @@ class HandleTypes extends HandleTypesEval {
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {R_ReelMultimixAttributionLabel} x */
 	R_ReelMultimixAttributionLabel(x) {this.H_("R_ReelMultimixAttributionLabel","reelMultimixAttributionLabelRenderer",x,this.D_ReelMultimixAttributionLabel);}
-	/** @private @arg {R_Endscreen} x */
-	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {R_MetadataRow} x */
@@ -2889,39 +2829,6 @@ class HandleTypes extends HandleTypesEval {
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
-	/** @public @arg {RS_Player} x */
-	RS_Player(x) {
-		const cf="RS_Player";
-		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
-		this.D_PlayabilityStatus(playabilityStatus);
-		this.t(streamingData,this.DD_Streaming);
-		heartbeatParams;
-		this.t(heartbeatParams,this.D_HeartbeatParams);
-		this.tz(playerAds,this.R_DesktopWatchAds);
-		this.t(playbackTracking,this.D_PlaybackTracking);
-		this.t(videoDetails,this.D_VideoDetails);
-		this.t(playerConfig,this.D_PlayerConfig);
-		this.t(storyboards,this.G_PlayerStoryboards);
-		this.t(microformat,this.R_PlayerMicroformat);
-		this.t(cards,this.R_CardCollection);
-		this.trackingParams(cf,trackingParams);
-		this.t(attestation,this.R_PlayerAttestation);
-		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
-		this.t(captions,this.R_PlayerCaptionsTracklist);
-		this.tz(adPlacements,x => {
-			if("adPlacementRenderer" in x) return this.R_AdPlacement(x);
-			let ka=this.get_keys_of(x);
-			if(ka.length!==0) debugger;
-		});
-		this.t(frameworkUpdates,this.D_FrameworkUpdates);
-		this.t(endscreen,this.R_Endscreen);
-		this.t(paidContentOverlay,this.g);
-		this.tz(annotations,x => {
-			if(!x.playerAnnotationsExpandedRenderer) debugger;
-			this.R_PlayerAnnotationsExpanded(x);
-		});
-		this.t(cacheMetadata,this.D_Cache_MD);
-	}
 	/** @private @arg {D_DesktopTopbar} x */
 	D_DesktopTopbar(x) {
 		const cf="D_DesktopTopbar";
@@ -4069,27 +3976,6 @@ class HandleTypes extends HandleTypesEval {
 			group_entry[1].push(x);
 		}
 		group_arr.push([k,[x]]);
-	}
-	/** @private @type {Map<string,string[]>} */
-	missing_codegen_types=new Map;
-	/** @private @arg {string} cf @arg {{}} x */
-	codegen_typedef_all(cf,x,do_break=true) {
-		let res=this.codegen.codegen_typedef(cf,x,true);
-		if(!res) return;
-		let ci=this.missing_codegen_types.get(cf);
-		if(ci&&ci.includes(res)) return;
-		if(!ci) this.missing_codegen_types.set(cf,ci=[]);
-		ci.push(res);
-		let all_ty_1=ci.map(e => {
-			let ss=split_string_once(e,"=");
-			if(ss.length==1) throw new Error();
-			return ss[1].trim().slice(0,-1);
-		});
-		let all_types=all_ty_1.reduce((p,c) => p+"|"+c+"\n","");
-		console.group(`-- [${cf}.gen_result] --`);
-		console.log("\n%s",all_types);
-		console.groupEnd();
-		if(do_break) {debugger;}
 	}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
@@ -8928,19 +8814,6 @@ class HandleTypes extends HandleTypesEval {
 		if(style!=="FEED_NUDGE_STYLE_CHIP") debugger;
 		this.z(contents,this.R_ChipCloudChip);
 	}
-	/** @private @arg {`${number}`} x */
-	parse_number(x) {
-		if(typeof x!=="string") debugger;
-		if(x.includes(".")) return parseFloat(x);
-		if(x.includes("e")) return parseFloat(x);
-		return parseInt(x,10);
-	}
-	/** @private @template {number} T @arg {`${T}`} x */
-	parse_number_template(x) {
-		/** @type {T} */
-		let num=as(this.parse_number(x));
-		return num;
-	}
 	/** @private @arg {D_EndScreenPlaylist} x */
 	D_EndScreenPlaylist(x) {
 		const cf="D_EndScreenPlaylist"; this.k(cf,x);
@@ -10537,31 +10410,11 @@ class HandleTypes extends HandleTypesEval {
 		const {gcr,...y}=y3; this.g(y);
 		this.t(gcr,x => this.ceq(x,"ca"));
 	}
-	/** @private @arg {D_PlayabilityStatus} x */
-	D_PlayabilityStatus(x) {
-		const cf="D_PlayabilityStatus";
-		const {status,playableInEmbed,offlineability,miniplayer,contextParams,...y}=this.s(cf,x); this.g(y);
-		if(status!=="OK") debugger;
-		this.a_primitive_bool(playableInEmbed);
-		this.t(offlineability,this.R_Button);
-		this.t(miniplayer,this.R_Miniplayer);
-		let ctx=atob(contextParams);
-		this.params(cf,"playability_status.context_params",ctx);
-	}
 	/** @private @arg {D_Miniplayer} x */
 	D_Miniplayer(x) {
 		const cf="D_Miniplayer";
 		const {playbackMode,...y}=this.s(cf,x); this.g(y);
 		if(playbackMode!=="PLAYBACK_MODE_ALLOW") debugger;
-	}
-	/** @private @arg {DD_Streaming} x */
-	DD_Streaming(x) {
-		const cf="DD_Streaming";
-		const {expiresInSeconds,adaptiveFormats,formats,probeUrl,...y}=this.s(cf,x); this.g(y);
-		this.parse_number_template(expiresInSeconds);
-		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
-		this.z(formats,this.D_FormatItem);
-		this.t(probeUrl,x => this.parser.parse_url(cf,x));
 	}
 	/** @arg {UrlParse<Extract<D_UrlFormat,`https://${string}.googlevideo.com/${string}`>>} x */
 	on_google_video_url(x) {

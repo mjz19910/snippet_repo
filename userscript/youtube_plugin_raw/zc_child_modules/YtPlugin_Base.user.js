@@ -3450,6 +3450,73 @@ class ServiceData extends BaseService {
 }
 /** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
 class ServiceMethods extends ServiceData {
+	/** @private @type {Map<string,string[]>} */
+	missing_codegen_types=new Map;
+	/** @protected @arg {string} cf @arg {{}} x */
+	codegen_typedef_all(cf,x,do_break=true) {
+		let res=this.codegen.codegen_typedef(cf,x,true);
+		if(!res) return;
+		let ci=this.missing_codegen_types.get(cf);
+		if(ci&&ci.includes(res)) return;
+		if(!ci) this.missing_codegen_types.set(cf,ci=[]);
+		ci.push(res);
+		let all_ty_1=ci.map(e => {
+			let ss=split_string_once(e,"=");
+			if(ss.length==1) throw new Error();
+			return ss[1].trim().slice(0,-1);
+		});
+		let all_types=all_ty_1.reduce((p,c) => p+"|"+c+"\n","");
+		console.group(`-- [${cf}.gen_result] --`);
+		console.log("\n%s",all_types);
+		console.groupEnd();
+		if(do_break) {debugger;}
+	}
+	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	filter_out_keys(keys,to_remove) {
+		to_remove=to_remove.slice();
+		/** @private @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		let ok_e=[];
+		for(let i=0;i<keys.length;i++) {
+			let rm_idx=to_remove.findIndex(e => e===keys[i]);
+			if(rm_idx>=0) {
+				to_remove.splice(rm_idx,1);
+				continue;
+			}
+			ok_e.push(as(keys[i]));
+		}
+		return ok_e;
+	}
+	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {(Exclude<T[SI],null>)|null} */
+	wn(cf,x,ex_name,excl=[]) {
+		this.k(cf,x);
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length!==1) debugger;
+		let k=keys[0];
+		if(k!==ex_name) {debugger; return null;}
+		let r=x[k];
+		return r;
+	}
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K])=>U} f */
+	H_(cf,k,x,f) {
+		if(!x) {debugger; return;}
+		let wr=this.wn(cf,x,k);
+		if(!wr) return;
+		return f.call(this,wr);
+	}
+	/** @private @arg {`${number}`} x */
+	parse_number(x) {
+		if(typeof x!=="string") debugger;
+		if(x.includes(".")) return parseFloat(x);
+		if(x.includes("e")) return parseFloat(x);
+		return parseInt(x,10);
+	}
+	/** @protected @template {number} T @arg {`${T}`} x */
+	parse_number_template(x) {
+		/** @type {T} */
+		let num=as(this.parse_number(x));
+		return num;
+	}
 	k=this.save_keys;
 	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s(cf,x) {
