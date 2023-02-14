@@ -1349,8 +1349,6 @@ class HandleTypes extends HandleTypesEval {
 	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {D_CommonConfig} x */
 	D_CommonConfig(x) {this.H_("D_CommonConfig","url",x,x => this.parser.parse_url("D_CommonConfig.url",x));}
-	/** @private @arg {R_VssLoggingContext} x */
-	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext","vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @private @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {R_FulfilledLayout} x */
@@ -4299,8 +4297,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return [un_prefix,other];
 	}
-	/** @private */
-	_decoder=new TextDecoder();
 	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf1 @arg {V_SerializedContext_BinaryObj} x */
 	V_SerializedContext_BinaryObj(cf1,x) {
 		const cf_base="V_SerializedContext_BinaryObj";
@@ -4309,53 +4305,6 @@ class HandleTypes extends HandleTypesEval {
 		const {1: {1: f1_f12,...y2},...y1}=this.s(cf2,x); this.g(y1); this.g(y2);
 		if(f1_f12!==12) debugger;
 		this.save_number(`${cf2}:f1:f12`,f1_f12);
-	}
-	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf @arg {string} x */
-	V_SerializedContextData(cf,x) {
-		let x1=decodeURIComponent(x);
-		let b_res=this._decode_b64_url_proto_obj(x1);
-		if(!b_res) {debugger; return;}
-		if(b_res.length!==1) debugger;
-		let r_obj=this.convert_arr_to_obj(b_res);
-		if(!r_obj) {debugger; return;}
-		this.V_SerializedContext_BinaryObj(cf,as(r_obj));
-		let [r]=b_res;
-		switch(r[0]) {
-			default: debugger; break;
-			case "child": switch(r[1]) {
-				case 1: break;
-				case 3: {
-					let playlist_id=this._decoder.decode(r[2]);
-					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
-						switch(r[1]) {
-							default:
-								this.save_string(`${cf}.serializedContextData.fieldId`,r[1]);
-								let playlist_id=this._decoder.decode(r[2]);
-								this.save_string(`${cf}.serializedContextData.decode`,playlist_id);
-								break;
-							case 3: {
-								let playlist_id=this._decoder.decode(r[2]);
-								if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
-								if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
-								{this.save_string(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
-							}
-						}
-					}
-				}
-			} break;
-		}
-	}
-	/** @private @arg {D_VssLoggingContext} x */
-	D_VssLoggingContext(x) {
-		const cf="D_VssLoggingContext"; this.k(cf,x);
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.V_SerializedContextData(cf,serializedContextData);
-	}
-	/** @private @arg {D_SerializedContextData} x */
-	D_QoeLoggingContext(x) {
-		const cf="D_QoeLoggingContext"; this.k(cf,x);
-		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.V_SerializedContextData(cf,serializedContextData);
 	}
 	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);}
@@ -5213,86 +5162,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {number} x */
 	number_as_hex(x) {
 		return `0x${x.toString(16)}`;
-	}
-	/** @arg {D_DecTypeNum[]} x */
-	convert_arr_to_obj(x) {
-		let x1=this.make_param_map(x);
-		if(!x1) {debugger; return null;}
-		return this.convert_map_to_obj(x1);
-	}
-	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
-	convert_value_item_to_param_item(x) {
-		if(typeof x==='string') return x;
-		if(typeof x==="number") return x;
-		if(x instanceof Map) {
-			let x1=this.convert_map_to_obj(x);
-			if(!x1) {debugger; return null;}
-			return x1;
-		}
-		if(x instanceof Array) {
-			if(x[0]==="bigint") return x[2];
-			if(x[0]==="group") {
-				const [,r]=x;
-				let vr=this.convert_arr_to_obj(r);
-				if(!vr) {debugger; return null;}
-				return vr;
-			}
-			if(x[0]==="failed") {debugger; return null;}
-			x==="";
-			return null;
-		}
-		if(x instanceof Uint8Array) return x;
-		x==="";
-		return null;
-	}
-	/** @typedef {string|bigint|number|V_ParamObj} V_ParamObjData */
-	/** @typedef {{[x:number]:V_ParamObjData|V_ParamObjData[]}} V_ParamObj */
-	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
-	convert_map_to_obj(x) {
-		/** @template T @arg {T[]} x */
-		function first(x) {
-			if(x.length!==1) return null;
-			return x[0];
-		}
-		/** @type {V_ParamObj} */
-		let res={};
-		for(let k of x.keys()) {
-			let value=x.get(k);
-			if(k in res) {
-				debugger;
-			}
-			if(value===void 0) {debugger; continue;}
-			if(value.length===0) {
-				res[k]={};
-				continue;
-			}
-			if(value.length!==1) {
-				/** @template T @arg {T|null} x @returns {x is T} */
-				function is_not_null(x) {return x!==null;}
-				/** @type {V_ParamObjData[]} */
-				let v1=value.map(x => {
-					let r=this.convert_value_item_to_param_item(x);
-					if(r===null) {debugger; return null;}
-					return r;
-				}).filter(is_not_null);
-				v1[k]=v1;
-				continue;
-			}
-			let v2=first(value);
-			if(v2===null) {debugger; continue;}
-			let v3=this.convert_value_item_to_param_item(v2);
-			if(v3===null) {debugger; continue;}
-			res[k]=v3;
-		}
-		return res;
-	}
-	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
-	get_keys_of_2(obj) {
-		if(!obj) {debugger;}
-		let rq=Object.keys(obj);
-		/** @private @type {any} */
-		let ra=rq;
-		return ra;
 	}
 	/** @protected @arg {D_0x94d81d4} x */
 	D_0x94d81d4(x) {

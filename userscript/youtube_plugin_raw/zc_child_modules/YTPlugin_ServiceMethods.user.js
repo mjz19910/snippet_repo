@@ -23,6 +23,129 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
+	convert_value_item_to_param_item(x) {
+		if(typeof x==='string') return x;
+		if(typeof x==="number") return x;
+		if(x instanceof Map) {
+			let x1=this.convert_map_to_obj(x);
+			if(!x1) {debugger; return null;}
+			return x1;
+		}
+		if(x instanceof Array) {
+			if(x[0]==="bigint") return x[2];
+			if(x[0]==="group") {
+				const [,r]=x;
+				let vr=this.convert_arr_to_obj(r);
+				if(!vr) {debugger; return null;}
+				return vr;
+			}
+			if(x[0]==="failed") {debugger; return null;}
+			x==="";
+			return null;
+		}
+		if(x instanceof Uint8Array) return x;
+		x==="";
+		return null;
+	}
+	/** @typedef {string|bigint|number|V_ParamObj} V_ParamObjData */
+	/** @typedef {{[x:number]:V_ParamObjData|V_ParamObjData[]}} V_ParamObj */
+	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
+	convert_map_to_obj(x) {
+		/** @template T @arg {T[]} x */
+		function first(x) {
+			if(x.length!==1) return null;
+			return x[0];
+		}
+		/** @type {V_ParamObj} */
+		let res={};
+		for(let k of x.keys()) {
+			let value=x.get(k);
+			if(k in res) {
+				debugger;
+			}
+			if(value===void 0) {debugger; continue;}
+			if(value.length===0) {
+				res[k]={};
+				continue;
+			}
+			if(value.length!==1) {
+				/** @template T @arg {T|null} x @returns {x is T} */
+				function is_not_null(x) {return x!==null;}
+				/** @type {V_ParamObjData[]} */
+				let v1=value.map(x => {
+					let r=this.convert_value_item_to_param_item(x);
+					if(r===null) {debugger; return null;}
+					return r;
+				}).filter(is_not_null);
+				v1[k]=v1;
+				continue;
+			}
+			let v2=first(value);
+			if(v2===null) {debugger; continue;}
+			let v3=this.convert_value_item_to_param_item(v2);
+			if(v3===null) {debugger; continue;}
+			res[k]=v3;
+		}
+		return res;
+	}
+	/** @arg {D_DecTypeNum[]} x */
+	convert_arr_to_obj(x) {
+		let x1=this.make_param_map(x);
+		if(!x1) {debugger; return null;}
+		return this.convert_map_to_obj(x1);
+	}
+	/** @private */
+	_decoder=new TextDecoder();
+	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf @arg {string} x */
+	V_SerializedContextData(cf,x) {
+		let x1=decodeURIComponent(x);
+		let b_res=this._decode_b64_url_proto_obj(x1);
+		if(!b_res) {debugger; return;}
+		if(b_res.length!==1) debugger;
+		let r_obj=this.convert_arr_to_obj(b_res);
+		if(!r_obj) {debugger; return;}
+		this.V_SerializedContext_BinaryObj(cf,as(r_obj));
+		let [r]=b_res;
+		switch(r[0]) {
+			default: debugger; break;
+			case "child": switch(r[1]) {
+				case 1: break;
+				case 3: {
+					let playlist_id=this._decoder.decode(r[2]);
+					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
+						switch(r[1]) {
+							default:
+								this.save_string(`${cf}.serializedContextData.fieldId`,r[1]);
+								let playlist_id=this._decoder.decode(r[2]);
+								this.save_string(`${cf}.serializedContextData.decode`,playlist_id);
+								break;
+							case 3: {
+								let playlist_id=this._decoder.decode(r[2]);
+								if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
+								if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
+								{this.save_string(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
+							}
+						}
+					}
+				}
+			} break;
+		}
+	}
+	/** @private @arg {D_VssLoggingContext} x */
+	D_VssLoggingContext(x) {
+		const cf="D_VssLoggingContext"; this.k(cf,x);
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.V_SerializedContextData(cf,serializedContextData);
+	}
+	/** @private @arg {D_SerializedContextData} x */
+	D_QoeLoggingContext(x) {
+		const cf="D_QoeLoggingContext"; this.k(cf,x);
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.V_SerializedContextData(cf,serializedContextData);
+	}
+	/** @protected @arg {R_VssLoggingContext} x */
+	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext","vssLoggingContext",x,this.D_VssLoggingContext);}
 	/** @protected @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @protected @arg {E_VE83769_Upload} x */
@@ -271,7 +394,7 @@ class ServiceMethods extends ServiceData {
 	D_Label(x) {this.H_("Label","label",x,this.a_primitive_str);}
 	/** @private @arg {D_Accessibility} x */
 	D_Accessibility(x) {this.H_("D_Accessibility","accessibilityData",x,this.D_Label);}
-	/** @private @arg {boolean} x */
+	/** @protected @arg {boolean} x */
 	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
 	/** @protected @arg {G_Text} x */
 	G_Text(x) {
