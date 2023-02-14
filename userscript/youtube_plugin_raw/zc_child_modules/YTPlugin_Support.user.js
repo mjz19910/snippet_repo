@@ -37,7 +37,16 @@ class TypedefGenerator extends ServiceMethods {
 }
 /** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class HandleRS extends ServiceMethods {
-	/** @public @arg {RS_Watch} x */
+	/** @public @arg {G_RS_WatchPage} x */
+	RS_WatchPage(x) {
+		const cf="R_WatchPage"; this.k(cf,x);
+		if("rootVe" in x) switch(x.rootVe) {
+			case 3832: return this.RS_VE3832_Page_Watch(x);
+			default: debugger; return;
+		}
+		this.RS_Page_Watch(x);
+	}
+	/** @private @arg {RS_Watch} x */
 	RS_Watch(x) {
 		const cf="RS_Watch"; const ht=this.x.get("handle_types");
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=ht.s(cf,x); this.g(y);/*#destructure_done*/
@@ -52,7 +61,7 @@ class HandleRS extends ServiceMethods {
 		this.z(pageVisualEffects,x => ht.R_CinematicContainer(x));
 		ht.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @public @arg {RS_VE3832_Page_Watch} x */
+	/** @private @arg {RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x) {
 		const cls_=this.x.get("handle_types");
 		const cf="R_WatchPage_VE3832"; this.k(cf,x);
@@ -65,16 +74,7 @@ class HandleRS extends ServiceMethods {
 		cls_.RS_Player(playerResponse);
 		this.RS_Watch(response);
 	}
-	/** @public @arg {G_RS_WatchPage} x */
-	RS_WatchPage(x) {
-		const cf="R_WatchPage"; this.k(cf,x);
-		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: return this.RS_VE3832_Page_Watch(x);
-			default: debugger; return;
-		}
-		this.RS_Page_Watch(x);
-	}
-	/** @public @arg {RS_Page_Watch} x */
+	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
 		const cls_=this.x.get("handle_types");
 		const cf="RS_Page_Watch"; this.k(cf,x);
