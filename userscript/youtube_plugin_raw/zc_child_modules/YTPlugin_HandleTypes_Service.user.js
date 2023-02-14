@@ -370,6 +370,16 @@ class HandleTypes extends HandleTypesEval {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "continuation_token.data$sub_obj$f3.f3.f48687757": switch(map_entry_key) {
+				case 1:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
+			case "continuation_token.data$sub_obj$f3.f3": switch(map_entry_key) {
+				case 48687757:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 			case "continuation_token.data$sub_obj$f3.f1.f5": switch(map_entry_key) {
 				case 1: case 2:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
@@ -752,6 +762,7 @@ class HandleTypes extends HandleTypesEval {
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
 				} return;
+				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1":
 				case "continuation_token.data$sub_obj$f3.f1.f5.f2": {
 					return this.videoId(entry);
 				}
@@ -923,6 +934,7 @@ class HandleTypes extends HandleTypesEval {
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f12": case "f13": case "f14": case "f24": case "f25": case "f28": case "f31": case "f36":
 					case "f47":
+					case "f48687757":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
@@ -6305,6 +6317,14 @@ class HandleTypes extends HandleTypesEval {
 		}
 		return as(res);
 	}
+	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
+	get_keys_of_2(obj) {
+		if(!obj) {debugger;}
+		let rq=Object.keys(obj);
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
 		cf;
@@ -6332,16 +6352,25 @@ class HandleTypes extends HandleTypesEval {
 						if(typeof f3!=='string') {debugger; break;}
 						if(typeof f8!=='number') {debugger; break;}
 						if(!(f14 instanceof Map)) {debugger; break;}
+						if(typeof f15!=='number') {debugger; break;}
 						if(f8!==1) {debugger; break;}
+						if(f15!==1) {debugger; break;}
 						this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",f3);
 						let res_s=this.convert_map_to_obj(f14);
-						/** @type {{1:4;3:2;4:0;}} */
+						/** @type {{1:4;3:2;4:0;}|{1:4,3:2}} */
 						let res=as(res_s);
-						const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
-						if(r_f1!==4) debugger;
-						if(r_f3!==2) debugger;
-						if(r_f4!==0) debugger;
-						f3; f8; f14; f15;
+						if(this.eq_keys(this.get_keys_of_2(res),[1,3,4])) {
+							if("4" in res) {
+								const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
+								if(r_f1!==4) debugger;
+								if(r_f3!==2) debugger;
+								if(r_f4!==0) debugger;
+							} else {
+								const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
+								if(r_f1!==4) debugger;
+								if(r_f3!==2) debugger;
+							}
+						}
 						debugger;
 					} return;
 				}
