@@ -6603,19 +6603,18 @@ class HandleTypes extends HandleTypesEval {
 		for(let v of f3_idx) {
 			/** @type {f3_idx_item} */
 			let ui=as_any(v);
-			if(ui.index===2) {
-				return;
-			}
+			if(ui.index===2) continue;
+			if(ui.index===4) continue;
+			if(ui.index===6) continue;
+			if(ui.index===9) continue;
 			/** @type {`${ui["type"]}:${ui["v"]}`} */
 			let k=`${ui.type}:${ui.v}`;
 			switch(k) {
 				default: debugger; break;
+				case "d:1": break;
 				case "d:0": break;
 			}
 		}
-		console.log(f3_res);
-		debugger;
-		f1;
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
