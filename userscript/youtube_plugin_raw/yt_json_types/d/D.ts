@@ -1204,7 +1204,6 @@ type D_GuideEntry=
 	|TD_GuideEntry_Simple<"YOUTUBE_ROUND">
 	;
 ;
-type CF_D_GuideEntry=T_ExtractImport<"CF_D_GuideEntry">|""&{1: 1;}|"";
 //#endregion
 type D_GuideEntryData={guideEntryId: "WL"|"LL"|`UC${string}`|`PL${string}`;};
 // COMPLETED: #13
