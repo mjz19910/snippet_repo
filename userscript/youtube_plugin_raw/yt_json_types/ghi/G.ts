@@ -444,19 +444,19 @@ type G_ThumbnailOverlayItem=
 ;
 type G_TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;
 type G_PlaylistUrlInfo={
-	type: "playlist:RDMM"; id: `RDMM${string}`; raw_id: string;
+	type: "playlist:1:WL"; id: "WL";
 }|{
-	type: "playlist:RDCM"; id: `RDCMUC${string}`; raw_id: `UC${string}`;
+	type: "playlist:1:LL"; id: "LL";
 }|{
-	type: "playlist:PL"; id: `PL${string}`; raw_id: string;
+	type: "playlist:2:RDMM"; id: `RDMM${string}`; raw_id: string;
 }|{
-	type: "playlist:RD"; id: `RD${string}`; raw_id: string;
+	type: "playlist:2:RDCM"; id: `RDCMUC${string}`; raw_id: `UC${string}`;
 }|{
-	type: "playlist:UU"; id: `UU${string}`; raw_id: string;
+	type: "playlist:2:RD"; id: `RD${string}`; raw_id: string;
 }|{
-	type: "playlist:WL"; id: "WL";
+	type: "playlist:3:PL"; id: `PL${string}`; raw_id: string;
 }|{
-	type: "playlist:LL"; id: "LL";
+	type: "playlist:4:UU"; id: `UU${string}`; raw_id: string;
 }
 type G_ChannelUrlInfo={
 	type: "channel_id:UC";
