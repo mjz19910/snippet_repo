@@ -10712,7 +10712,7 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.R_LiveChatHeader(header);
 		this.trackingParams(cf,trackingParams);
-		this.clientMessages(clientMessages);
+		this.D_ClientMessages(clientMessages);
 		this.a_primitive_bool(isReplay);
 		this.save_enum("LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
 		this.R_ToggleButton(showHideButton);
