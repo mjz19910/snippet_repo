@@ -5750,15 +5750,15 @@ class HandleTypes extends HandleTypesEval {
 					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
 						switch(r[1]) {
 							default:
-								console.log(`${cf}.serializedContextData.fieldId`,r[1]);
+								this.save_string(`${cf}.serializedContextData.fieldId`,r[1]);
 								let playlist_id=this._decoder.decode(r[2]);
-								console.log(`${cf}.serializedContextData.decode`,playlist_id);
+								this.save_string(`${cf}.serializedContextData.decode`,playlist_id);
 								break;
 							case 3: {
 								let playlist_id=this._decoder.decode(r[2]);
 								if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(playlist_id); break;}
 								if(this.str_starts_with_rx("PL",playlist_id)) {this.playlistId(playlist_id); break;}
-								{console.log(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
+								{this.save_string(`${cf}.serializedContextData.decode(f3).as_playlist_id`,playlist_id); break;}
 							}
 						}
 					}
@@ -7803,7 +7803,7 @@ class HandleTypes extends HandleTypesEval {
 		if("command" in x) {
 			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);
 			this.params(`${cf}.key`,"entity.key",key);
-			console.log(`${cf}.command`,command);
+			this.save_string(`${cf}.command`,command);
 			switch(addToOfflineButtonState) {
 				default: debugger; break;
 				case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
@@ -8870,7 +8870,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(playButton);
 		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
 		this.playlistId(playlistId);
-		console.log(`${cf}.privacy`,privacy);
+		this.save_string(`${cf}.privacy`,privacy);
 		this.R_Button(shufflePlayButton);
 		this.trackingParams(cf,trackingParams);
 		this.D_EditableDetails(editableDetails);
@@ -10306,21 +10306,21 @@ class HandleTypes extends HandleTypesEval {
 	S_VideoGoodPutShape(x) {
 		const cf="S_VideoGoodPutShape";
 		const {id,source,range,expire,ip,ms,mm,pl,nh,sparams,signature,key,...y}=this.s(cf,x); this.g(y);
-		console.log(`${cf}.id`,id);
-		console.log(`${cf}.source`,source);
-		console.log(`${cf}.range`,range);
-		console.log(`${cf}.expire`,expire);
-		console.log(`${cf}.ip`,ip);
-		console.log(`${cf}.ms`,ms);
-		console.log(`${cf}.mm`,mm);
-		console.log(`${cf}.pl`,pl);
-		console.log(`${cf}.nh`,nh);
+		this.save_string(`${cf}.id`,id);
+		this.save_string(`${cf}.source`,source);
+		this.save_string(`${cf}.range`,range);
+		this.save_string(`${cf}.expire`,expire);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ms`,ms);
+		this.save_string(`${cf}.mm`,mm);
+		this.save_string(`${cf}.pl`,pl);
+		this.save_string(`${cf}.nh`,nh);
 		switch(sparams) {
 			default: this.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
 		this.parse_signature(signature);
-		console.log(`${cf}.key`,key);
+		this.save_string(`${cf}.key`,key);
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
@@ -10329,44 +10329,44 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(expire);
 		this.a_primitive_str(ei);
 		this.a_primitive_str(ip);
-		console.log(`${cf}.id`,id);
-		console.log(`${cf}.itag`,itag);
-		console.log(`${cf}.aitags`,aitags);
-		console.log(`${cf}.source`,source);
-		console.log(`${cf}.requiressl`,requiressl);
+		this.save_string(`${cf}.id`,id);
+		this.save_string(`${cf}.itag`,itag);
+		if(aitags) this.save_string(`${cf}.aitags`,aitags);
+		this.save_string(`${cf}.source`,source);
+		this.save_string(`${cf}.requiressl`,requiressl);
 		this.t(ctier,x => this.ceq("SH",x));
 		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,...y2}=y1;
-		console.log(`${cf}.mh`,mh);
-		console.log(`${cf}.mm`,mm);
-		console.log(`${cf}.mn`,mn);
-		console.log(`${cf}.ms`,ms);
-		console.log(`${cf}.mv`,mv);
-		console.log(`${cf}.mvi`,mvi);
-		console.log(`${cf}.pl`,pl);
-		console.log(`${cf}.initcwndbps`,initcwndbps);
-		console.log(`${cf}.vprv`,vprv);
-		console.log(`${cf}.xtags`,xtags);
-		console.log(`${cf}.mime`,mime);
-		console.log(`${cf}.ns`,ns);
-		console.log(`${cf}.gir`,gir);
+		this.save_string(`${cf}.mh`,mh);
+		this.save_string(`${cf}.mm`,mm);
+		this.save_string(`${cf}.mn`,mn);
+		this.save_string(`${cf}.ms`,ms);
+		this.save_string(`${cf}.mv`,mv);
+		this.save_string(`${cf}.mvi`,mvi);
+		this.save_string(`${cf}.pl`,pl);
+		this.save_string(`${cf}.initcwndbps`,initcwndbps);
+		this.save_string(`${cf}.vprv`,vprv);
+		if(xtags) this.save_string(`${cf}.xtags`,xtags);
+		this.save_string(`${cf}.mime`,mime);
+		this.save_string(`${cf}.ns`,ns);
+		if(gir) this.save_string(`${cf}.gir`,gir);
 		const {clen,dur,lmt,mt,fvip,keepalive,fexp,c,txp,n,sparams,lsparams,lsig,spc,sig,cnr,ratebypass,...y}=y2;
-		console.log(`${cf}.clen`,clen);
-		console.log(`${cf}.dur`,dur);
-		console.log(`${cf}.lmt`,lmt);
-		console.log(`${cf}.mt`,mt);
-		console.log(`${cf}.fvip`,fvip);
-		console.log(`${cf}.keepalive`,keepalive);
-		console.log(`${cf}.fexp`,fexp);
-		console.log(`${cf}.c`,c);
-		console.log(`${cf}.txp`,txp);
-		console.log(`${cf}.n`,n);
+		if(clen) this.save_string(`${cf}.clen`,clen);
+		this.save_string(`${cf}.dur`,dur);
+		this.save_string(`${cf}.lmt`,lmt);
+		this.save_string(`${cf}.mt`,mt);
+		this.save_string(`${cf}.fvip`,fvip);
+		this.save_string(`${cf}.keepalive`,keepalive);
+		this.save_string(`${cf}.fexp`,fexp);
+		this.save_string(`${cf}.c`,c);
+		this.save_string(`${cf}.txp`,txp);
+		this.save_string(`${cf}.n`,n);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.lsparams`,lsparams);
-		console.log(`${cf}.lsig`,lsig);
-		console.log(`${cf}.spc`,spc);
-		console.log(`${cf}.sig`,sig);
-		console.log(`${cf}.cnr`,cnr);
-		console.log(`${cf}.ratebypass`,ratebypass);
+		this.save_string(`${cf}.lsig`,lsig);
+		spc&&this.save_string(`${cf}.spc`,spc);
+		sig&&this.save_string(`${cf}.sig`,sig);
+		cnr&&this.save_string(`${cf}.cnr`,cnr);
+		ratebypass&&this.save_string(`${cf}.ratebypass`,ratebypass);
 		let ka=this.get_keys_of(y);
 		if(ka.length>0) {
 			console.log("[D_VideoPlaybackShape.next_key] [%s]",ka.shift());
@@ -10439,7 +10439,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AD_AddChatItem";
 		const {item,clientId,...y}=this.s(cf,x); this.g(y);
 		this.G_ChatItem(item);
-		this.t(clientId,x => console.log(`${cf}.clientId`,x));
+		this.t(clientId,x => this.save_string(`${cf}.clientId`,x));
 	}
 	/** @private @arg {D_TranscriptSegment} x */
 	D_TranscriptSegment(x) {
@@ -10451,7 +10451,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(startTimeText);
 		this.trackingParams(cf,trackingParams);
 		this.D_Accessibility(accessibility);
-		this.t(targetId,x => console.log(`${cf}.targetId`,x));
+		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
 	}
 	/** @private @arg {D_ChipColorPalette} x */
 	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
@@ -11098,7 +11098,7 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
 		}
-		console.log(`${cf}.layoutId`,layoutId);
+		this.save_string(`${cf}.layoutId`,layoutId);
 	}
 	/** @private @arg {G_LinearAdsItem} x */
 	G_LinearAdsItem(x) {
@@ -11116,7 +11116,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(csiParameters,this.g);
 		this.params(cf,as_any("playerVars"),playerVars);
 		this.g(playerOverlay);
-		console.log(`${cf}.elementId`,elementId);
+		this.save_string(`${cf}.elementId`,elementId);
 		this.trackingParams(cf,trackingParams);
 		if(legacyInfoCardVastExtension!=="") debugger;
 		this.g(sodarExtensionData);
@@ -11351,9 +11351,9 @@ class HandleTypes extends HandleTypesEval {
 	D_HeartbeatParams(x) {
 		const cf="D_HeartbeatParams";
 		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
-		console.log(`${cf}.intervalMilliseconds`,intervalMilliseconds);
-		console.log(`${cf}.softFailOnError`,softFailOnError);
-		console.log(`${cf}.heartbeatServerData`,heartbeatServerData);
+		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+		this.save_string(`${cf}.softFailOnError`,softFailOnError);
+		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

@@ -1422,6 +1422,7 @@ type D_TimedTextApi={
 	kind: "asr";
 	lang: string;
 };
+// D_TimedTextApi["signature"]
 type D_TimedTextApi_Req=Required<D_TimedTextApi>;
 type D_CaptionTrackItem_BaseUrl=
 	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi["kind"]}&lang=${D_TimedTextApi["lang"]}`
@@ -3004,7 +3005,7 @@ type D_GuideEntry_IconType_Obj={
 //#endregion
 type D_UrlInfoMap={["https://www.youtube.com/redirect"]: GU_YoutubeUrlRedirect_Info;};
 type D_VideoId=string;
-type D_Youtube_Streaming_ProbeUrl=`https://${D_Probe_Domain[number]}.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${string}&ip=${D_VideoPlaybackShape["ip"]}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${string}&key=${string}`;
+type D_Youtube_Streaming_ProbeUrl=`https://${D_Probe_Domain[number]}.googlevideo.com/videogoodput?id=${string}&source=${string}&range=${string}&expire=${string}&ip=${D_VideoPlaybackShape["ip"]}&ms=${string}&mm=${string}&pl=${string}&nh=${string}&sparams=${string}&signature=${D_TimedTextApi["signature"]}&key=${string}`;
 type D_Playlist_MD={
 	title: string;
 	androidAppindexingLink: string;
