@@ -1119,5 +1119,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_f12";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_BinaryTimestamp";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_0x4c82a9c";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x14527fab";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_0x14527fab";}
 		;
 }

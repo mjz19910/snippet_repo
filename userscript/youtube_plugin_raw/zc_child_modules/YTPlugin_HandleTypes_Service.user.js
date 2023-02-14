@@ -4096,7 +4096,7 @@ class HandleTypes extends HandleTypesEval {
 		console.group(`-- [${cf}.gen_result] --`);
 		console.log("\n%s",all_types);
 		console.groupEnd();
-		if (do_break) {debugger;}
+		if(do_break) {debugger;}
 	}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
@@ -6407,22 +6407,6 @@ class HandleTypes extends HandleTypesEval {
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
-	GR_RootBinaryObj(cf,x) {
-		this.k(`${cf}.continuation.binary_obj`,x);
-		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
-		if(0x12f639cf in x) return this.R_0x12f639cf(x);
-		if(2 in x) {
-			let kk=this.get_keys_of_2(x);
-			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
-			return;
-		}
-		let kk=this.get_keys_of_2(x);
-		if(kk.length>0) {
-			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
-			debugger;
-		}
-	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -6575,6 +6559,40 @@ class HandleTypes extends HandleTypesEval {
 		const {1: f1,...y}=this.s(cf,x); this.g(y);
 		this._primitive_of(f1,"bigint");
 	}
+	/** @private @arg {D_0x14527fab} x */
+	D_0x14527fab(x) {
+		const cf="D_0x14527fab";
+		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		if(f1!==0) debugger;
+	}
+	/** @private @arg {R_0x14527fab} x */
+	R_0x14527fab(x) {
+		const cf="R_0x14527fab";
+		const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
+		this.D_0x14527fab(a);
+	}
+	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
+	GR_RootBinaryObj(cf,x) {
+		this.k(`${cf}.continuation.binary_obj`,x);
+		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
+		if(0x12f639cf in x) return this.R_0x12f639cf(x);
+		if(0x14527fab in x) return this.R_0x14527fab(x);
+		if(2 in x) {
+			let kk=this.get_keys_of_2(x);
+			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
+			return;
+		}
+		if(11 in x) {
+			let kk=this.get_keys_of_2(x);
+			this.codegen_typedef_all(`decode_continuation_token:BinaryToken:${kk.join()}`,x,false);
+			return;
+		}
+		let kk=this.get_keys_of_2(x);
+		if(kk.length>0) {
+			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
+			debugger;
+		}
+	}
 	/** @private @arg {R_0x12f639cf[11]} x */
 	R_f11(x) {
 		const cf="R_f11";
@@ -6599,7 +6617,7 @@ class HandleTypes extends HandleTypesEval {
 			f3_res.push(["str",txt]);
 			i=ni;
 		}
-		let f3_idx=f3_res.map((e,z)=>({index:z,type:e[0],v:e[1]}));
+		let f3_idx=f3_res.map((e,z) => ({index: z,type: e[0],v: e[1]}));
 		for(let v of f3_idx) {
 			/** @type {f3_idx_item} */
 			let ui=as_any(v);
