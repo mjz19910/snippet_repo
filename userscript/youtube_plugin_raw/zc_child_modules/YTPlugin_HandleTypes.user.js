@@ -962,8 +962,6 @@ class HandleTypes extends HandleTypesEval {
 	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
-	/** @private @arg {A_ReplaceEnclosing} x */
-	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 	/** @private @arg {A_ShowEngagementPanelScrim} x */
 	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
 	/** @private @arg {A_HideEnclosing} x */
@@ -1505,8 +1503,6 @@ class HandleTypes extends HandleTypesEval {
 		let [a,y]=this.TE_Endpoint_2("C_EngagementPanelHeaderShowNavigationButton","engagementPanelHeaderShowNavigationButtonCommand",x); this.g(y);
 		this.DC_EngagementPanelHeaderShowNavigationButton(a);
 	}
-	/** @private @arg {C_FilterChipTransform} x */
-	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
 	/** @private @arg {D_ChipUniqueId} x */
 	D_ChipUniqueId(x) {
 		const cf="D_ChipUniqueId";
@@ -1767,18 +1763,12 @@ class HandleTypes extends HandleTypesEval {
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {E_GetReportForm} x */
-	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
 	/** @private @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
-	/** @private @arg {E_NotificationOptOut} x */
-	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
-	/** @private @arg {E_UserFeedback} x */
-	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
 	/** @private @arg {M_GetTranscript} x */
@@ -1813,8 +1803,6 @@ class HandleTypes extends HandleTypesEval {
 	M_NotificationOptOut(x) {this.T_WCM("M_NotificationOptOut",x,this.GM_NotificationOptOut);}
 	/** @private @arg {GM_SendPost} x */
 	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
-	/** @private @arg {GM_Subscribe} x */
-	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @private @arg {GM_FlagGetForm} x */
 	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
 	/** @protected @arg {GM_GetTranscript} x */
@@ -3315,42 +3303,6 @@ class HandleTypes extends HandleTypesEval {
 		const {state,button,...y}=this.s(cf,x); this.g(y);
 		this.save_enum("PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
-	}
-	/** @private @arg {D_PlaylistLoopButton} x */
-	D_PlaylistLoopButton(x) {
-		const cf="D_PlaylistLoopButton";
-		const {states,currentState,playlistLoopStateEntityKey,...y}=this.s(cf,x); this.g(y);
-		this.z(states,this.R_PlaylistLoopButtonState);
-		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
-		this.a_primitive_str(playlistLoopStateEntityKey);
-	}
-	/** @private @arg {D_SegmentedLikeDislikeButton} x */
-	D_SegmentedLikeDislikeButton(x) {
-		const cf="D_SegmentedLikeDislikeButton"; this.k(cf,x);
-		if("likeButton" in x) {
-			const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.R_ToggleButton(likeButton);
-			this.R_ToggleButton(dislikeButton);
-			return;
-		}
-		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string(`${cf}.style`,style);
-		this.save_string(`${cf}.size`,size);
-		if(isDisabled!==false) debugger;
-		this.G_Text(text);
-		this.E_ShareEntityService(serviceEndpoint);
-		if(icon.iconType!=="SHARE") debugger;
-		if(tooltip!=="Share") debugger;
-		this.trackingParams(cf,trackingParams);
-		this.D_Accessibility(accessibilityData);
-	}
-	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
-	TE_SignalService_I_0(x) {
-		const cf="TE_SignalService_I_0"; this.k(cf,x);
-		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.M_SendPost(commandMetadata);
-		return ["Signal",signalServiceEndpoint];
 	}
 	/** @arg {string} cf */
 	codegen_all_service_menu_icons(cf) {

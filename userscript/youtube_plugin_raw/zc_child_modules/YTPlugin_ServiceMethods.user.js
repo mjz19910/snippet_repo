@@ -3774,5 +3774,53 @@ class ServiceMethods extends ServiceData {
 	R_PlaylistLoopButton(x) {this.H_("R_PlaylistLoopButton","playlistLoopButtonRenderer",x,this.D_PlaylistLoopButton);}
 	/** @private @arg {R_SegmentedLikeDislikeButton} x */
 	R_SegmentedLikeDislikeButton(x) {this.H_("R_SegmentedLikeDislikeButton","segmentedLikeDislikeButtonRenderer",x,this.D_SegmentedLikeDislikeButton);}
+	/** @private @template T @arg {T_SE_Signal<M_SendPost,T>} x @returns {["Signal",T]} */
+	TE_SignalService_I_0(x) {
+		const cf="TE_SignalService_I_0"; this.k(cf,x);
+		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.M_SendPost(commandMetadata);
+		return ["Signal",signalServiceEndpoint];
+	}
+	/** @private @arg {D_PlaylistLoopButton} x */
+	D_PlaylistLoopButton(x) {
+		const cf="D_PlaylistLoopButton";
+		const {states,currentState,playlistLoopStateEntityKey,...y}=this.s(cf,x); this.g(y);
+		this.z(states,this.R_PlaylistLoopButtonState);
+		if(currentState!=="PLAYLIST_LOOP_STATE_NONE") debugger;
+		this.a_primitive_str(playlistLoopStateEntityKey);
+	}
+	/** @private @arg {D_SegmentedLikeDislikeButton} x */
+	D_SegmentedLikeDislikeButton(x) {
+		const cf="D_SegmentedLikeDislikeButton"; this.k(cf,x);
+		if("likeButton" in x) {
+			const {likeButton,dislikeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.R_ToggleButton(likeButton);
+			this.R_ToggleButton(dislikeButton);
+			return;
+		}
+		const {style,size,isDisabled,text,serviceEndpoint,icon,tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.save_string(`${cf}.style`,style);
+		this.save_string(`${cf}.size`,size);
+		if(isDisabled!==false) debugger;
+		this.G_Text(text);
+		this.E_ShareEntityService(serviceEndpoint);
+		if(icon.iconType!=="SHARE") debugger;
+		if(tooltip!=="Share") debugger;
+		this.trackingParams(cf,trackingParams);
+		this.D_Accessibility(accessibilityData);
+	}
+	/** @private @arg {GM_Subscribe} x */
+	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
+	/** @private @arg {E_NotificationOptOut} x */
+	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
+	/** @private @arg {E_UserFeedback} x */
+	E_UserFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","userFeedbackEndpoint",x); this.g(y); this.DE_UserFeedback(b); this.M_UserFeedback(a);}
+	/** @private @arg {E_GetReportForm} x */
+	E_GetReportForm(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetReportForm","getReportFormEndpoint",x); this.g(y); this.M_FlagGetForm(a); this.DE_GetReportForm(b);}
+	/** @private @arg {C_FilterChipTransform} x */
+	C_FilterChipTransform(x) {let [a,y]=this.TE_Endpoint_2("C_FilterChipTransform","filterChipTransformCommand",x); this.g(y); this.D_ChipUniqueId(a);}
+	/** @private @arg {A_ReplaceEnclosing} x */
+	A_ReplaceEnclosing(x) {let [a,y]=this.TE_Endpoint_2("A_ReplaceEnclosing","replaceEnclosingAction",x); this.g(y); this.AD_ReplaceEnclosing(a);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
