@@ -1749,8 +1749,6 @@ class HandleTypes extends HandleTypesEval {
 	M_CreatePlaylist(x) {this.T_WCM("M_CreatePlaylist",x,this.GM_CreatePlaylist);}
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
-	/** @protected @arg {GM_UserFeedback} x */
-	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
@@ -6400,24 +6398,6 @@ class HandleTypes extends HandleTypesEval {
 			if(!x.reelWatchEndpoint) debugger;
 		}
 	}
-	make_icon_types_map=() => {
-		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
-		let r=[
-			"PLAY_ALL","PLAYLISTS",
-		];
-		const mi={
-			known: r,
-			/** @type {string[]} */
-			unknown: []
-		};
-		const k="D_ThumbnailOverlaySidePanel";
-		/** @type {Map<typeof k,typeof mi>} */
-		let mp=new Map([
-			[k,mi]
-		]);
-		return mp;
-	};
-	icon_types_map=this.make_icon_types_map();
 	/** @returns {false} */
 	false_() {return false;}
 	/** @private @arg {D_AddToPlaylistCreate} x */

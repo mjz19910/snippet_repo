@@ -3613,6 +3613,24 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(text);
 		this.trackingParams(cf,trackingParams);
 	}
+	make_icon_types_map() {
+		/** @type {D_ThumbnailOverlaySidePanel_iconTypes} */
+		let r=[
+			"PLAY_ALL","PLAYLISTS",
+		];
+		const mi={
+			known: r,
+			/** @type {string[]} */
+			unknown: []
+		};
+		const k="D_ThumbnailOverlaySidePanel";
+		/** @type {Map<typeof k,typeof mi>} */
+		let mp=new Map([
+			[k,mi]
+		]);
+		return mp;
+	}
+	icon_types_map=this.make_icon_types_map();
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
 	D_ThumbnailOverlaySidePanel(x) {
 		const cf="D_ThumbnailOverlaySidePanel"; this.k(cf,x);
@@ -3922,6 +3940,8 @@ class ServiceMethods extends ServiceData {
 	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
+	/** @protected @arg {GM_UserFeedback} x */
+	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {D_ChipUniqueId} x */
 	D_ChipUniqueId(x) {
 		const cf="D_ChipUniqueId";
