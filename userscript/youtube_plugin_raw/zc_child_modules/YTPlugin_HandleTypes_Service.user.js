@@ -11358,8 +11358,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(collapseButton);
 		this.R_SortFilterSubMenu(viewSelector);
 	}
-	/** @private @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {x; debugger;}
 	/** @private @arg {D_HeartbeatParams} x */
 	D_HeartbeatParams(x) {
 		const cf="D_HeartbeatParams";
@@ -11368,6 +11366,8 @@ class HandleTypes extends HandleTypesEval {
 		this.ceq(softFailOnError,false);
 		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
+	/** @private @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
