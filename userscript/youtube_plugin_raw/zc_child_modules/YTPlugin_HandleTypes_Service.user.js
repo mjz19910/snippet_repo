@@ -6587,7 +6587,10 @@ class HandleTypes extends HandleTypesEval {
 			/** @template {number} T @arg {{2:{1:number}}} x @arg {T} v @returns {x is {2:{1:T}}} */
 			function is_token_g2(x,v) {return x[2][1]===v}
 			if(is_token_g2(x,1)) return;
+			if(is_token_g2(x,3)) return;
 			if(is_token_g2(x,14)) return;
+			if(is_token_g2(x,15)) return;
+			if(is_token_g2(x,31)) return;
 			if(is_token_g2(x,53)) return;
 			debugger;
 			let kk=this.get_keys_of_2(x);
@@ -6653,7 +6656,7 @@ class HandleTypes extends HandleTypesEval {
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="number") debugger;
 		if(typeof f2==="number"&&f2>180668740) debugger;
-		if(typeof f3==="number"&&f3>3809175190) debugger;
+		if(typeof f3==="number"&&f3>3825595062) debugger;
 	}
 	/** @private @arg {R_0x12f639cf[12]} x */
 	D_f12(x) {
