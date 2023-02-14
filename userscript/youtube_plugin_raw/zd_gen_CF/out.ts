@@ -1125,5 +1125,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player.heartbeat_params";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_HeartbeatParams";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DE_VE5754";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_TimedTextApi";}
 		;
 }

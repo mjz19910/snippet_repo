@@ -1406,8 +1406,29 @@ type D_ButtonStyleType=[
 type D_Cache_MD={isCacheHit: true;};
 type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
+type D_TimedTextApi={
+	v: string;
+	caps: string;
+	xoaf: string;
+	xoadf?: string;
+	xosf: string;
+	hl: string;
+	ip: string;
+	ipbits: string;
+	expire: string;
+	sparams: string;
+	signature: string;
+	key: string;
+	kind: string;
+	lang: string;
+};
+type D_CaptionTrackItem_BaseUrl=
+	|`https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`
+	|`https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xoadf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`
+	;
+
 type D_CaptionTrackItem={
-	baseUrl: `https://www.youtube.com/api/timedtext?v=${string}&caps=${string}&xoaf=${string}&xosf=${string}&hl=${string}&ip=${string}&ipbits=${string}&expire=${string}&sparams=${string}&signature=${string}&key=${string}&kind=${string}&lang=${string}`;
+	baseUrl: D_CaptionTrackItem_BaseUrl;
 	name: G_Text;
 	vssId: "a.en"|".en";
 	languageCode: "en";

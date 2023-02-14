@@ -11160,6 +11160,25 @@ class HandleTypes extends HandleTypesEval {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		debugger;
 	}
+	/** @private @arg {D_TimedTextApi} x */
+	D_TimedTextApi(x) {
+		const cf="D_TimedTextApi";
+		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
+		this.save_string(`${cf}.v`,v);
+		this.save_string(`${cf}.caps`,caps);
+		this.save_string(`${cf}.xoaf`,xoaf);
+		if(xoadf) this.save_string(`${cf}.xoadf`,xoadf);
+		this.save_string(`${cf}.xosf`,xosf);
+		this.save_string(`${cf}.hl`,hl);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ipbits`,ipbits);
+		this.save_string(`${cf}.expire`,expire);
+		this.save_string(`${cf}.signature`,signature);
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.key`,key);
+		this.save_string(`${cf}.kind`,kind);
+		this.save_string(`${cf}.lang`,lang);
+	}
 	/** @private @arg {D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x) {
 		const cf="D_CaptionTrackItem";
@@ -11168,7 +11187,8 @@ class HandleTypes extends HandleTypesEval {
 			let x=baseUrl;
 			let x1=split_string_once(x,"?");
 			if(x1[0]!=="https://www.youtube.com/api/timedtext") debugger;
-			let {v,caps,xoaf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y1}=this.parse_url_search_params(x1[1]); this.g(y1);
+			let {...rx}=this.parse_url_search_params(x1[1]);
+			this.D_TimedTextApi(rx);
 		}
 		this.G_Text(name);
 		this.save_string(`${cf}.vssId`,vssId);
