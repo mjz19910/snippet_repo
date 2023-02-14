@@ -128,6 +128,8 @@ class HandleRS extends ServiceMethods {
 	M_CreateComment(x) {this.T_WCM("M_CreateComment",x,this.GM_CreateComment);}
 	/** @private @arg {M_Unsubscribe} x */
 	M_Unsubscribe(x) {this.T_WCM("M_Unsubscribe",x,this.GM_Unsubscribe);}
+	/** @protected @arg {GM_Unsubscribe} x */
+	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
 	/** @private @arg {R_InstreamVideoAd} x */
@@ -730,6 +732,147 @@ class HandleRS extends ServiceMethods {
 		});
 		this.t(loudnessDb,this.a_primitive_num);
 		this.t_cf(cf,signatureCipher,this.D_Format_signatureCipher);
+	}
+	/** @private @arg {R_Card} x */
+	R_Card(x) {this.H_("R_Card","cardRenderer",x,this.D_Card);}
+	/** @private @arg {R_InfoCardIcon} x */
+	R_InfoCardIcon(x) {this.H_("R_InfoCardIcon","infoCardIconRenderer",x,this.D_InfoCardIcon);}
+	/** @private @arg {"D_AdaptiveFormatItem"|"D_FormatItem"} cf @arg {D_FormatItem_signatureCipher} x */
+	D_Format_signatureCipher(cf,x) {
+		/** @type {`${cf}:signatureCipher`} */
+		const cf1=`${cf}:signatureCipher`;
+		let {s: {},sp,url,...y}=this.parse_url_search_params(x); this.g(y);
+		switch(sp) {
+			default: debugger; break;
+			case "sig": break;
+		}
+		this.parser.parse_url(cf1,url);
+	}
+	/** @private @arg {D_FormatColorInfo} x */
+	D_FormatColorInfo(x) {
+		const cf="D_Range";
+		const {primaries,transferCharacteristics,matrixCoefficients,...y}=this.s(cf,x); this.g(y);
+		switch(primaries) {
+			default: debugger; break;
+			case void 0:
+			case "COLOR_PRIMARIES_BT709":
+		}
+		switch(transferCharacteristics) {
+			default: debugger; break;
+			case "COLOR_TRANSFER_CHARACTERISTICS_BT709":
+		}
+		switch(matrixCoefficients) {
+			default: debugger; break;
+			case void 0:
+			case "COLOR_MATRIX_COEFFICIENTS_BT709":
+		}
+	}
+	/** @private @arg {D_FormatFps} x */
+	D_FormatFps(x) {
+		const cf="D_FormatFps";
+		this.save_number(cf,x);
+	}
+	/** @private @arg {D_Range} x */
+	D_Range(x) {
+		const cf="D_Range";
+		const {start,end,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(start);
+		this.a_primitive_str(end);
+	}
+	/** @private @arg {D_AdTimeOffset} x */
+	D_AdTimeOffset(x) {
+		const cf="D_AdTimeOffset";
+		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(offsetStartMilliseconds);
+		if(offsetEndMilliseconds!=="-1") debugger;
+	}
+	/** @private @arg {D_InstreamVideoAd} x */
+	D_InstreamVideoAd(x) {
+		const cf="D_InstreamVideoAd";
+		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(skipOffsetMilliseconds);
+		this.g(pings);
+		this.g(clickthroughEndpoint);
+		this.z(csiParameters,this.g);
+		this.params(cf,as_any("playerVars"),playerVars);
+		this.g(playerOverlay);
+		this.save_string(`${cf}.elementId`,elementId);
+		this.trackingParams(cf,trackingParams);
+		if(legacyInfoCardVastExtension!=="") debugger;
+		this.g(sodarExtensionData);
+		this.videoId(externalVideoId);
+		this.g(adLayoutLoggingData);
+		if(layoutId!=="") debugger;
+	}
+	/** @private @arg {D_EndscreenElement} x */
+	D_EndscreenElement(x) {
+		const cf="D_EndscreenElement";
+		const {style,image,playlistLength,icon,left,width,top,aspectRatio,startMs,endMs,title,metadata,callToAction,dismiss,endpoint,hovercardButton,trackingParams,isSubscribe,id,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);
+		switch(style) {
+			default: debugger; break;
+			case "CHANNEL":
+			case "VIDEO":
+			case "WEBSITE":
+			case "PLAYLIST":
+		}
+		this.D_Thumbnail(image);
+		this.t(playlistLength,this.G_Text);
+		this.t(icon,this.D_Thumbnail);
+		this.a_primitive_num(left);
+		this.a_primitive_num(width);
+		this.a_primitive_num(top);
+		this.a_primitive_num(aspectRatio);
+		this.a_primitive_str(startMs);
+		this.a_primitive_str(endMs);
+		this.G_Text(title);
+		this.G_Text(metadata);
+		this.t(callToAction,this.G_Text);
+		this.t(dismiss,this.G_Text);
+		this.D_EndscreenElement_EP(endpoint);
+		this.t(hovercardButton,this.R_SubscribeButton);
+		this.trackingParams(cf,trackingParams);
+		this.t(isSubscribe,x => this.ceq(x,true));
+		this.a_primitive_str(id);
+		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+	}
+	/** @private @arg {D_AudioTrack} x */
+	D_AudioTrack(x) {
+		const cf="D_AudioTrack";
+		const {displayName,id,audioIsDefault,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(displayName);
+		this.save_string(`${cf}.id`,id);
+		this.ceq(audioIsDefault,false);
+	}
+	/** @private @arg {D_Card} x */
+	D_Card(x) {
+		const cf="D_Card";
+		const {teaser,cueRanges,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.R_SimpleCardTeaser(teaser);
+		this.z(cueRanges,this.D_CueRangeItem);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {D_TrackingParams} x */
+	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
+	/** @private @arg {R_SimpleCardTeaser} x */
+	R_SimpleCardTeaser(x) {this.H_("R_Card","simpleCardTeaserRenderer",x,this.D_SimpleCardTeaser);}
+	/** @private @arg {D_CueRangeItem} x */
+	D_CueRangeItem(x) {
+		const cf="D_CueRangeItem";
+		const {startCardActiveMs,endCardActiveMs,teaserDurationMs,iconAfterTeaserMs,...y}=this.s(cf,x); this.g(y);
+		if(startCardActiveMs!=="0") debugger;
+		if(endCardActiveMs!=="5000") debugger;
+		if(teaserDurationMs!=="6000") debugger;
+		if(iconAfterTeaserMs!=="5000") debugger;
+	}
+	/** @private @arg {D_SimpleCardTeaser} x */
+	D_SimpleCardTeaser(x) {
+		const cf="D_SimpleCardTeaser";
+		const {message,trackingParams,prominent,logVisibilityUpdates,onTapCommand,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(message);
+		this.trackingParams(cf,trackingParams);
+		this.ceq(prominent,true);
+		this.ceq(logVisibilityUpdates,true);
+		this.A_ChangeEngagementPanelVisibility(onTapCommand);
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
