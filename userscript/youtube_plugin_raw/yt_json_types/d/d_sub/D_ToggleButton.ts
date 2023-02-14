@@ -3,6 +3,11 @@ type D_Button_DefServiceEP=C_CommandExecutor|E_PerformCommentAction;
 type D_ToggleButton=
 	|never
 	|{
+		defaultText: G_Text;
+		toggledText: G_Text;
+		trackingParams: string;
+	}
+	|{
 		style: T_StyleType<"STYLE_TEXT">;
 		size: T_SizeType<"SIZE_DEFAULT">;
 		isToggled: false;

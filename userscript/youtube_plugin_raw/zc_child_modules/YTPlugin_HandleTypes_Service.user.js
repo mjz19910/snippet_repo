@@ -4379,29 +4379,22 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
-	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle">[number]>:never} */
+	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"trackingParams">[number]>:never} */
 	D_ToggleButton_Omit(cf,x,z=null) {
-		const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,trackingParams,toggledStyle,...y}=this.s(cf,x); z=y;
-		this.save_string("D_ToggleButton.style",style.styleType);
-		this.ceq(isDisabled,false);
-		this.a_primitive_bool(isToggled);
-		this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
-		this.D_Button_DefServiceEP(defaultServiceEndpoint);
-		this.D_Button_ToggledServiceEP(toggledServiceEndpoint);
+		const {trackingParams,...y}=this.s(cf,x); z=y;
+		// this.save_string("D_ToggleButton.style",style.styleType);
+		// this.ceq(isDisabled,false);
+		// this.a_primitive_bool(isToggled);
+		// this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
+		// this.D_Button_DefServiceEP(defaultServiceEndpoint);
+		// this.D_Button_ToggledServiceEP(toggledServiceEndpoint);
+		// this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
 		this.trackingParams(cf,trackingParams);
-		this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
 		return z;
 	}
 	/** @private @arg {D_ToggleButton} x */
 	D_ToggleButton(x) {
 		const cf="D_ToggleButton";
-		// const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,toggleButtonSupportedData,targetId,accessibilityData,...y}=u; this.g(y);/*#destructure_done*/
-		// this.G_Text(defaultText);
-		// this.G_Text(toggledText);
-		// this.D_Label(accessibility);
-		// this.a_primitive_str(defaultTooltip);
-		// this.a_primitive_str(toggledTooltip);
-		// this.save_string("D_ToggleButton.targetId",targetId);
 		x: {
 			const k="toggledAccessibilityData";
 			if(!(k in x)) break x;
@@ -4412,7 +4405,15 @@ class HandleTypes extends HandleTypesEval {
 				if(!(k2 in x)) break y;
 				/** @type {`${cf1}:${k2}`} */
 				const cf2=`${cf1}:${k2}`;
-				const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...y}=this.D_ToggleButton_Omit(cf2,x); this.g(y);/*#destructure_done*/
+				const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf2,x);
+				this.save_string("D_ToggleButton.style",style.styleType);
+				this.ceq(isDisabled,false);
+				this.a_primitive_bool(isToggled);
+				this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
+				this.E_PerformCommentAction(defaultServiceEndpoint);
+				this.E_PerformCommentAction(toggledServiceEndpoint);
+				this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
+				const {size,defaultTooltip,toggledTooltip,accessibilityData,toggledAccessibilityData,...y}=u; this.g(y);/*#destructure_done*/
 				if(size.sizeType!=="SIZE_DEFAULT") debugger;
 				this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
 				this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
@@ -4420,7 +4421,15 @@ class HandleTypes extends HandleTypesEval {
 				this.D_Accessibility(toggledAccessibilityData);
 				return;
 			}
-			const {toggledAccessibilityData,accessibilityData,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf1,x);
+			this.save_string("D_ToggleButton.style",style.styleType);
+			this.ceq(isDisabled,false);
+			this.a_primitive_bool(isToggled);
+			this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
+			this.C_RepeatChapter(defaultServiceEndpoint);
+			this.C_CommandExecutor(toggledServiceEndpoint);
+			this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
+			const {toggledAccessibilityData,accessibilityData,...y}=u; this.g(y);/*#destructure_done*/
 			this.D_Accessibility(toggledAccessibilityData);
 			this.D_Accessibility(accessibilityData);
 			return;
@@ -4430,15 +4439,33 @@ class HandleTypes extends HandleTypesEval {
 			if(!(k in x)) break x;
 			/** @type {`${cf}:${k}`} */
 			const cf1=`${cf}:${k}`;
-			const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,accessibilityData,toggleButtonSupportedData,targetId,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
+			y: {
+				const k2="style";
+				if(!(k2 in x)) break y;
+				/** @type {`${cf1}:${k2}`} */
+				const cf2=`${cf1}:${k2}`;
+				const {style,isDisabled,isToggled,defaultIcon,defaultServiceEndpoint,toggledServiceEndpoint,toggledStyle,...u}=this.D_ToggleButton_Omit(cf2,x);
+				this.save_string("D_ToggleButton.style",style.styleType);
+				this.ceq(isDisabled,false);
+				this.a_primitive_bool(isToggled);
+				this.save_string("D_ToggleButton.defaultIcon.type",defaultIcon.iconType);
+				this.E_PerformCommentAction(defaultServiceEndpoint);
+				this.E_PerformCommentAction(toggledServiceEndpoint);
+				this.save_string("D_ToggleButton.toggledStyle.type",toggledStyle.styleType);
+				const {defaultText,toggledText,accessibility,defaultTooltip,toggledTooltip,accessibilityData,toggleButtonSupportedData,targetId,...y}=u; this.g(y);/*#destructure_done*/
+				this.G_Text(defaultText);
+				this.G_Text(toggledText);
+				this.D_Label(accessibility);
+				this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
+				this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
+				this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
+				this.D_ToggleButtonIdData(toggleButtonSupportedData);
+				if(targetId!=="watch-like") debugger;
+				return;
+			}
+			const {defaultText,toggledText,...y}=this.D_ToggleButton_Omit(cf1,x); this.g(y);/*#destructure_done*/
 			this.G_Text(defaultText);
 			this.G_Text(toggledText);
-			this.D_Label(accessibility);
-			this.add_string_to_map(cf,"defaultTooltip",defaultTooltip);
-			this.add_string_to_map(cf,"toggledTooltip",toggledTooltip);
-			this.add_string_to_map(cf,"accessibilityData.accessibilityData.label",accessibilityData.accessibilityData.label);
-			this.D_ToggleButtonIdData(toggleButtonSupportedData);
-			if(targetId!=="watch-like") debugger;
 			return;
 		}
 		x: {
@@ -10887,6 +10914,8 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(collapseButton);
 		this.R_SortFilterSubMenu(viewSelector);
 	}
+	/** @private @arg {E_PerformCommentAction} x */
+	E_PerformCommentAction(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
