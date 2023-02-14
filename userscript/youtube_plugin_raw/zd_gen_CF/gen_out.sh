@@ -9,7 +9,6 @@ function gen_code {
 	for ((;;)); do
 		tail "$TMP_DIR/errors.out"
 		generate_ts_filter_errors "$TMP_DIR/errors.out" | generate_ts_with_perl | sort -u >tmp_out.txt
-		zsh;
 		tail tmp_out.txt
 		if grep -q "n:" tmp_out.txt; then
 			cp "$TMP_DIR/tmp.ts" tmp_acc.ts
