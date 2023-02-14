@@ -23,6 +23,19 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {D_ToggleMenuServiceItem} x */
+	D_ToggleMenuServiceItem(x) {
+		const cf="D_ToggleMenuServiceItem"; this.k(cf,x);
+		const {defaultText,defaultIcon,defaultServiceEndpoint,toggledText,toggledIcon,toggledServiceEndpoint,trackingParams,isToggled,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(defaultText);
+		if(defaultIcon.iconType!=="LIBRARY_ADD") debugger;
+		this.E_Like(defaultServiceEndpoint);
+		this.G_Text(toggledText);
+		if(toggledIcon.iconType!=="LIBRARY_REMOVE") debugger;
+		this.E_Like(toggledServiceEndpoint);
+		this.trackingParams(cf,trackingParams);
+		this.a_primitive_bool(isToggled);
+	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "toggled">} x */
 	D_ThumbnailOverlayToggleButton_ToggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_ToggledPrefix"; this.k(cf,x);
