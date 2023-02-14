@@ -1057,7 +1057,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		/** @type {DT_DatabaseStoreTypes} */
 		let v;
-		let ex=()=> {
+		let ex=() => {
 			let kk=this.get_keys_of_2(v);
 			for(let k of kk) {
 				switch(k) {
@@ -1070,7 +1070,7 @@ class HandleTypes extends HandleTypesEval {
 					case "playlist": break;
 				}
 			}
-		}
+		};
 		ex;
 	}
 	/** @protected @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
@@ -11177,7 +11177,9 @@ class HandleTypes extends HandleTypesEval {
 		let e_num=this.parse_number_template(expire);
 		if(Number.isNaN(e_num)) debugger;
 		this.a_primitive_num(e_num);
-		this.save_string(`${cf}.signature`,signature);
+		let [sig_0,sig_1]=split_string_once(signature,".");
+		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==1) debugger;
+		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==1) debugger;
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);
 		this.save_string(`${cf}.kind`,kind);
