@@ -2541,7 +2541,7 @@ class HandleTypes extends HandleTypesEval {
 			if(this.starts_with_targetId(x,"browse-feedUC")) {
 				const cp0=split_string(x.targetId,"browse-feed")[1];
 				let cp=split_string(cp0,"channels");
-				this.parse_channel_id(cp[0]);
+				this.D_ChannelId(cp[0]);
 				if(cp[1]!=="156") debugger;
 				return;
 			}
@@ -6823,21 +6823,16 @@ class HandleTypes extends HandleTypesEval {
 		const {type,id}=value;
 		this.x.get("indexed_db").put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
 	}
-	/** @api @public @arg {`UC${string}`} raw_id */
-	parse_channel_id(raw_id) {
-		const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
-		this.x.get("indexed_db").put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
-	}
 	/** @public @arg {G_UrlInfoItem} url_info */
 	log_url_info(url_info) {
 		switch(url_info.type) {
 			default: url_info===""; debugger; break;
-			case "channel_id:UC": this.parse_channel_id(url_info.id); break;
+			case "channel_id:UC": this.D_ChannelId(url_info.id); break;
 			case "play-next": url_info; break;
 			case "playlist:2:RDCM": {
 				this.put_boxed_id(url_info);
 				if(!this.str_starts_with_rx("UC",url_info.raw_id)) debugger;
-				this.parse_channel_id(url_info.raw_id);
+				this.D_ChannelId(url_info.raw_id);
 			} break;
 			case "playlist:1:LL": case "playlist:1:WL":
 			case "playlist:2:RDMM": case "playlist:2:RD": case "playlist:4:UU":
