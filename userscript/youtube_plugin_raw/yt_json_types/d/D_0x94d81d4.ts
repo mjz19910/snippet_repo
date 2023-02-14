@@ -51,10 +51,7 @@ type V_BinaryTimestamp={
 type D_0x12f639cf={
 	1: 25;
 };
-
-type D_RootBinaryObj={
-	0x4c82a9c: D_0x4c82a9c;
-}|{
+type R_0x12f639cf={
 	3: number;
 	6: {
 		1: V_Bigint<bigint>;
@@ -74,3 +71,5 @@ type D_RootBinaryObj={
 	};
 	0x12f639cf: D_0x12f639cf;
 };
+type R_0x4c82a9c={0x4c82a9c: D_0x4c82a9c;};
+type GR_RootBinaryObj=R_0x4c82a9c|R_0x12f639cf;
