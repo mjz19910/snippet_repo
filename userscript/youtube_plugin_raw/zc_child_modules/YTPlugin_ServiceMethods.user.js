@@ -23,7 +23,7 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
-	/** @private @arg {E_ReelWatch} x */
+	/** @protected @arg {E_ReelWatch} x */
 	E_ReelWatch(x) {const [a,b,y]=this.TE_Endpoint_3("E_ReelWatch","reelWatchEndpoint",x); this.g(y); this.M_VE37414(a); this.DE_VE37414_ReelWatch(b);}
 	/** @protected @arg {E_VE83769_Upload} x */
 	E_VE83769_Upload(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Upload","uploadEndpoint",x); this.g(y); this.M_VE83769(a); this.B_Hack(b);}
