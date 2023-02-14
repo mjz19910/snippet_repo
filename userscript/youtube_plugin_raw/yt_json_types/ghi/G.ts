@@ -69,12 +69,13 @@ type GA_FormatItagArr=[
 type GA_Playlist=A_ActionAddVideo|D_ActionRemoveVideoByVideoId|A_ActionSetPlaylistVideoOrder;
 type GC_Button=
 	|A_ChangeEngagementPanelVisibility
-	|C_Continuation
 	|C_CommandExecutor
+	|C_Continuation
 	|C_GetSurvey
 	|C_ShowReelsCommentsOverlay
 	|E_AddToPlaylistService
 	|E_CreateBackstagePost
+	|E_Feedback
 	|E_ShareEntityService
 	|E_SignalService_SendPost
 	|E_Url
