@@ -1711,13 +1711,39 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_TextRun} x */
 	D_TextRun(x) {
 		const cf="R_TextRun";
-		const {text,italics,navigationEndpoint,loggingDirectives,bold,emoji,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(italics,x => this.ceq(x,true));
-		this.t(navigationEndpoint,this.G_TextRun_Endpoint);
+		const {text,...u}=this.s(cf,x);/*#destructure_done*/
 		this.a_primitive_str(text);
-		this.t(loggingDirectives,this.D_LoggingDirectives);
-		this.t(bold,this.a_primitive_bool);
-		this.t(emoji,this.D_Emoji);
+		if("strikethrough" in u) {
+			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
+			if(strikethrough!==true) debugger;
+			return;
+		}
+		if("italics" in u) {
+			const {italics,...y}=u; this.g(y);/*#destructure_done*/
+			if(italics!==true) debugger;
+			return;
+		}
+		if("navigationEndpoint" in u) {
+			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			this.G_TextRun_Endpoint(navigationEndpoint);
+			return;
+		}
+		if("loggingDirectives" in u) {
+			const {loggingDirectives,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_LoggingDirectives(loggingDirectives);
+			return;
+		}
+		if("bold" in u) {
+			const {bold,...y}=u; this.g(y);/*#destructure_done*/
+			this.a_primitive_bool(bold);
+			return;
+		}
+		if("bold" in u) {
+			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Emoji(emoji);
+			return;
+		}
+		this.g(u);
 	}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}

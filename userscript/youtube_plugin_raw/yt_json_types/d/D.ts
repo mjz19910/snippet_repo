@@ -985,11 +985,24 @@ type D_Emoji={
 };
 type D_TextRun={
 	text: string;
-	italics?: true;
-	navigationEndpoint?: G_TextRun_Endpoint;
-	loggingDirectives?: D_LoggingDirectives;
-	bold?: boolean;
-	emoji?: D_Emoji;
+}|{
+	text: string;
+	strikethrough: true;
+}|{
+	text: string;
+	italics: true;
+}|{
+	text: string;
+	navigationEndpoint: G_TextRun_Endpoint;
+}|{
+	text: string;
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	text: string;
+	bold: boolean;
+}|{
+	text: string;
+	emoji: string;
 };
 type D_PlaylistPanel={
 	title: "YouTube Mix";
