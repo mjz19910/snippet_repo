@@ -6353,6 +6353,12 @@ class HandleTypes extends HandleTypesEval {
 	number_as_hex(x) {
 		return `0x${x.toString(16)}`;
 	}
+	/** @arg {D_DecTypeNum[]} x */
+	convert_arr_to_obj(x) {
+		let x1=this.make_param_map(x);
+		if(!x1) {debugger; return null;}
+		return this.convert_map_to_obj(x1);
+	}
 	/** @typedef {{[x:number]:string|bigint|number|null[]|V_ParamObj}} V_ParamObj */
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
 	convert_map_to_obj(x) {
@@ -6380,9 +6386,7 @@ class HandleTypes extends HandleTypesEval {
 			if(v2[0]==="bigint") {res[k]=v2[2]; continue;}
 			if(v2[0]==="group") {
 				const [,r]=v2;
-				let r2=this.make_param_map(r);
-				if(!r2) {debugger; continue;}
-				let vr=this.convert_map_to_obj(r2);
+				let vr=this.convert_arr_to_obj(r);
 				if(!vr) {debugger; continue;}
 				res[k]=vr;
 				continue;
@@ -6429,49 +6433,36 @@ class HandleTypes extends HandleTypesEval {
 			if(x[15]!==1) {debugger; return;}
 		}
 	}
+	/** @private @arg {"FEwhat_to_watch"} x */
+	D_0x4c82a9c_f2(x) {
+		if(this.str_starts_with(x,"UC")) {debugger; return this.D_ChannelId(x);}
+		if(this.str_starts_with(x,"FE")) return this.browseId(x);
+		debugger;
+	}
+	/** @private @arg {D_0x4c82a9c} x */
+	D_0x4c82a9c(x) {
+		const cf="D_0x4c82a9c";
+		const {2: f2,3: f3,35: f35,...y}=this.s(cf,x); this.g(y);
+		let x1=decodeURIComponent(f3);
+		this.params(`${cf}.continuation_token.+4.f0.f3`,"continuation_token.data",x1);
+		this.D_0x4c82a9c_f2(f2);
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
 	decode_continuation_token_binary(cf,x) {
-		cf;
 		switch(x[0]) {
 			default: debugger; break;
 			case "child": {
 				const [,field_id,_raw_bin,dec_bin]=x;
+				if(dec_bin===null) {debugger; break;}
 				let hex_id=this.number_as_hex(field_id);
+				let bin_obj=this.convert_arr_to_obj(dec_bin);
+				if(bin_obj===null) {debugger; break;}
+				this.k(`${cf}.continuation.binary_obj`,bin_obj);
 				switch(hex_id) {
 					default: debugger; break;
-					case "0x4c82a9c": {
-
-					} break;
-					case "0x94d81d4": {
-						if(dec_bin===null) {debugger; break;}
-						let bin_map=this.make_param_map(dec_bin);
-						if(bin_map===null) {debugger; break;}
-						let bin_obj=this.convert_map_to_obj(bin_map);
-						/** @type {D_0x94d81d4} */
-						let bin_2=as_any(bin_obj);
-						this.D_0x94d81d4(bin_2);
-					} return;
+					case "0x4c82a9c": return this.D_0x4c82a9c(as_any(bin_obj));
+					case "0x94d81d4": return this.D_0x94d81d4(as_any(bin_obj));
 				}
-				if(dec_bin===null) {debugger; break;}
-				let bin_map=this.make_param_map(dec_bin);
-				if(bin_map===null) {debugger; break;}
-				let f2=bin_map.get(2);
-				let f3=bin_map.get(3);
-				if(!(f2&&f3)) {debugger; break;}
-				let [f2i,...f2r]=f2; if(f2r.length!==0) debugger;
-				let [f3i,...f3r]=f3; if(f3r.length!==0) debugger;
-				if(typeof f2i!=='string') {debugger; break;}
-				if(typeof f3i!=='string') {debugger; break;}
-				if(this.str_starts_with(f2i,"UC")) {
-					this.D_ChannelId(f2i);
-				} if(this.str_starts_with(f2i,"FE")) {
-					let browse_id=this.decode_browse_id(f2i);
-					if(browse_id) this.browseId(browse_id);
-				} else {
-					debugger;
-				}
-				let x1=decodeURIComponent(f3i);
-				this.params("continuation_token.+4.f0.f3","continuation_token.data",x1);
 			} break;
 		}
 	}

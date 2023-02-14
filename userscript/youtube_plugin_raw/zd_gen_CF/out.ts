@@ -1104,5 +1104,8 @@ export namespace Gen {
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibilityData";}
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:defaultText:style";}
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:toggledAccessibilityData:size";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_Continuation.continuation_token.+4.f0.f3" | "D_Continuation.continuation_token.+4.f0.f3";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_0x4c82a9c.continuation_token.+4.f0.f3";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x4c82a9c";}
 		;
 }
