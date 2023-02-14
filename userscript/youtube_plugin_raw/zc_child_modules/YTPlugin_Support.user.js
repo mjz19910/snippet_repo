@@ -283,6 +283,22 @@ class HandleRS extends ServiceMethods {
 		this.t(startMs,this.a_primitive_str);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {R_Hint} x */
+	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
+	/** @private @arg {D_Hint} x */
+	D_Hint(x) {
+		const cf="D_Hint"; this.k(cf,x);
+		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.ceq(hintId,"sponsor-pre-purchase");
+		this.ceq(dwellTimeMs,"60000");
+		this.D_ImpressionCap(hintCap);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {D_ImpressionCap} x */
+	D_ImpressionCap(x) {
+		const cf="D_ImpressionCap"; this.k(cf,x);
+		if(this.w(`Other:${cf}`,"impressionCap",x)!=="1") debugger;
+	}
 	/** @private @arg {D_Button} x */
 	D_Button(x) {
 		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */

@@ -398,8 +398,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
-	/** @private @arg {boolean} x */
-	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
 	//#region templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */
 	HD_(cf,k,x) {
@@ -485,14 +483,6 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 		}
 		return tag;
-	}
-	/** @protected @arg {G_Text} x */
-	G_Text(x) {
-		const cf="G_Text"; this.k(cf,x);
-		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(simpleText,this.a_primitive_str);
-		this.tz(runs,this.D_TextRun);
-		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {G_TextRun_Endpoint} x */
 	G_TextRun_Endpoint(x) {
@@ -1055,54 +1045,8 @@ class HandleTypes extends HandleTypesEval {
 		if("liveChatPlaceholderItemRenderer" in x) return;
 		if("liveChatViewerEngagementMessageRenderer" in x) return;
 	}
-	/** @private @arg {D_TextRun} x */
-	D_TextRun(x) {
-		const cf="R_TextRun";
-		const {text,...u}=this.s(cf,x);/*#destructure_done*/
-		this.a_primitive_str(text);
-		if("strikethrough" in u) {
-			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
-			if(strikethrough!==true) debugger;
-			return;
-		}
-		if("italics" in u) {
-			const {italics,...y}=u; this.g(y);/*#destructure_done*/
-			if(italics!==true) debugger;
-			return;
-		}
-		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
-			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
-			this.G_TextRun_Endpoint(navigationEndpoint);
-			this.D_LoggingDirectives(loggingDirectives);
-			if("bold" in y) {
-				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
-				this.ceq(bold,true);
-				return;
-			}
-			this.g(y);
-			return;
-		}
-		if("navigationEndpoint" in u) {
-			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
-			this.G_TextRun_Endpoint(navigationEndpoint);
-			return;
-		}
-		if("bold" in u) {
-			const {bold,...y}=u; this.g(y);/*#destructure_done*/
-			this.a_primitive_bool(bold);
-			return;
-		}
-		if("emoji" in u) {
-			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_Emoji(emoji);
-			return;
-		}
-		this.g(u);
-	}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
-	/** @private @arg {P_ParamParse} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
 	//#endregion
 	//#region helpers
 	/** @protected @template {{}} T @arg {CF_M_s} cf @arg {{} extends T?T_DistributedKeysOf<T> extends []?T:never:never} x */
@@ -1527,7 +1471,6 @@ class HandleTypes extends HandleTypesEval {
 	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
 	/** @private @arg {R_EngagementPanelTitleHeader} x */
 	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
-	static {this.prototype.R_Hint;}
 	/** @private @arg {R_Hint} x */
 	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
 	/** @private @arg {R_VideoViewCount} x */
@@ -9735,11 +9678,6 @@ class HandleTypes extends HandleTypesEval {
 		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		debugger;
-	}
-	/** @arg {number} x */
-	a_primitive_num(x) {
-		this._primitive_of(x,"number");
-		if(Number.isNaN(x)) debugger;
 	}
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {

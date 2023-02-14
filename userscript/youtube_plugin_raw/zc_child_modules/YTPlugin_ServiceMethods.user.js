@@ -23,6 +23,62 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {boolean} x */
+	a_primitive_bool(x) {if(typeof x!=="boolean") debugger;}
+	/** @protected @arg {G_Text} x */
+	G_Text(x) {
+		const cf="G_Text"; this.k(cf,x);
+		const {runs,simpleText,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(simpleText,this.a_primitive_str);
+		this.tz(runs,this.D_TextRun);
+		this.t(accessibility,this.D_Accessibility);
+	}
+	/** @private @arg {D_TextRun} x */
+	D_TextRun(x) {
+		const cf="R_TextRun";
+		const {text,...u}=this.s(cf,x);/*#destructure_done*/
+		this.a_primitive_str(text);
+		if("strikethrough" in u) {
+			const {strikethrough,...y}=u; this.g(y);/*#destructure_done*/
+			if(strikethrough!==true) debugger;
+			return;
+		}
+		if("italics" in u) {
+			const {italics,...y}=u; this.g(y);/*#destructure_done*/
+			if(italics!==true) debugger;
+			return;
+		}
+		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
+			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
+			this.G_TextRun_Endpoint(navigationEndpoint);
+			this.D_LoggingDirectives(loggingDirectives);
+			if("bold" in y) {
+				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
+				this.ceq(bold,true);
+				return;
+			}
+			this.g(y);
+			return;
+		}
+		if("navigationEndpoint" in u) {
+			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
+			this.G_TextRun_Endpoint(navigationEndpoint);
+			return;
+		}
+		if("bold" in u) {
+			const {bold,...y}=u; this.g(y);/*#destructure_done*/
+			this.a_primitive_bool(bold);
+			return;
+		}
+		if("emoji" in u) {
+			const {emoji,...y}=u; this.g(y);/*#destructure_done*/
+			this.D_Emoji(emoji);
+			return;
+		}
+		this.g(u);
+	}
+	/** @protected @arg {P_ParamParse} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
+	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
@@ -166,6 +222,11 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} x */
 	a_primitive_str(x) {this._primitive_of(x,"string");}
+	/** @arg {number} x */
+	a_primitive_num(x) {
+		this._primitive_of(x,"number");
+		if(Number.isNaN(x)) debugger;
+	}
 	/** @protected @arg {string} x */
 	videoId(x) {
 		if(!this.is_normal_service(this)) return;
