@@ -733,32 +733,38 @@ class HandleTypes extends HandleTypesEval {
 				case "load_markers.entity_key.f2": case "reel_request_continuation.token.f12":
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
-				} return;
+				} break;
 				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2": case "continuation_token.data$sub_obj$f3.f1.f5.f1":
 				case "tracking.trackingParams.f11": {
-					return this.D_ChannelId(as(entry));
-				}
+					this.D_ChannelId(as(entry));
+				} break;
 				case "continuation_token.data$sub_obj$f3.f3.f48687757.f1": case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
 				case "unsubscribe.params.f2": {
-					return this.videoId(entry);
-				}
+					this.videoId(entry);
+				} break;
 				case "continuation_token.data.f110.f3.f15.f2.f1": {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
-					return this.targetId(`Binary.value:${path}`,as(entry));
-				}
+					this.targetId(`Binary.value:${path}`,as(entry));
+				} break;
 				case null: {
-				} return;
-				case null: return;
+				} break;
+				case null: break;
+				case "watch_request_continuation.token.f5": {
+					this.params(`sub.${path}`,`sub.${path}.params`,entry);
+				} break;
+				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
-				} return;
+				} break;
+				case "watch_request_continuation.token.f6.f4.f4":
+				case "watch_request_continuation.token.f2.f2":
 				case "continuation_token.data$sub_obj$f3.f1.f5.f2": {
-					return this.videoId(entry);
-				}
+					this.videoId(entry);
+				} break;
 				case "entity_key.subscribed.f2":
 				case "ypc_get_offers.params.f1.f2": {
-					return this.D_ChannelId(as(entry));
-				}
+					this.D_ChannelId(as(entry));
+				} break;
 				default: {
 					let new_data=this.save_string(path,entry);
 					if(new_data) {
@@ -768,6 +774,7 @@ class HandleTypes extends HandleTypesEval {
 					}
 				} return;
 			}
+			return;
 		}
 		if(typeof entry==="number") {
 			switch(path) {
@@ -833,9 +840,11 @@ class HandleTypes extends HandleTypesEval {
 					let new_data=this.handle_bigint(path,entry);
 					if(new_data) {
 						let x=path; x;
+						console.log(`-- [handle_value_gen$value_handle_bigint] [v:${entry[2]}n] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 				} return;
+				case "tracking.trackingParams.f8":
 				case "reel_request_continuation.token.f3.f6":
 				case "reel.player_params.f72":
 				case "tracking.trackingParams.f9":
