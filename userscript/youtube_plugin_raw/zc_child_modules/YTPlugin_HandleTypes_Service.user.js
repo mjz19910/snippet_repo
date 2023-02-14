@@ -759,6 +759,7 @@ class HandleTypes extends HandleTypesEval {
 					this.save_string(path,entry);
 				} return;
 				case "get_pdg_buy_flow.params.f1.f1": return;
+				case "reel_request_continuation.token.f12":
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
 				} return;
@@ -6443,6 +6444,7 @@ class HandleTypes extends HandleTypesEval {
 				case "FEwhat_to_watch":
 			}
 			this.browseId(x);
+			return;
 		}
 		debugger;
 	}
