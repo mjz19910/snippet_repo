@@ -4328,30 +4328,6 @@ class HandleTypes extends HandleTypesEval {
 			case "video_description":
 		}
 	}
-	/** @private @arg {GU_YoutubeUrlRedirect} x */
-	GU_YoutubeUrlRedirect(x) {
-		const cf="GU_YoutubeUrlRedirect"; this.k(cf,x);
-		let [p1,s1]=split_string_once(x,"//"); if(p1!=="https:") debugger;
-		let [h,sp]=split_string_once(s1,"/");
-		if(h!=="www.youtube.com") debugger;
-		if(this.str_is_search(sp)) {
-			let [pp,query_search]=split_string_once(sp,"?");
-			if(pp!=="redirect") debugger;
-			let parsed_search=this.parse_url_search_params(query_search);
-			let {event,redir_token,q,...y}=parsed_search;
-			this.GU_YoutubeUrlRedirect_Event(event);
-			this.GU_YoutubeUrlRedirect_RedirectToken(redir_token);
-			this.a_primitive_str(q);
-			if("v" in y) {
-				let {v,...y1}=y; this.g(y1);
-				this.a_primitive_str(v);
-				return;
-			}
-			this.g(y);
-			return;
-		}
-		this.codegen_str(cf,x);
-	}
 	/** @private @arg {GU_VE83769_Url_External} b */
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
@@ -4388,18 +4364,6 @@ class HandleTypes extends HandleTypesEval {
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		this.codegen_str(cf,x);
-	}
-	/** @private @arg {DU_Url['url']|`https://studio.youtube.com/channel/UC${string}`} x */
-	GM_E_Url_TargetUrlType(x) {
-		const rp="https://www.youtube.com/redirect?";
-		if(this.str_starts_with_rx(rp,x)) {
-			/** @type {GU_YoutubeUrlRedirect} */
-			let arg_x=as(x);
-			return this.GU_YoutubeUrlRedirect(arg_x);
-		}
-		let sp=this.parse_with_url_parse(x);
-		if(this.str_starts_with_rx("https://",sp.href)) {return;}
-		this.GU_VE83769_Url(sp.href);
 	}
 	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
@@ -4438,40 +4402,6 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		throw new Error();
-	}
-	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/${string}`} x */
-	GU_FullYoutubeUrl(x) {
-		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
-	}
-	/** @private @arg {GU_VE83769_Url} x */
-	GU_VE83769_Url(x) {
-		if(this.str_starts_with_rx("/",x)) {
-			switch(x) {
-				default: x===""; debugger; break;
-				case "/upload": break;
-			}
-			return;
-		}
-		let up=this.parse_with_url_parse(x);
-		switch(up.host) {
-			case "music.youtube.com": return this.handle_yt_music_url(up.href);
-			case "studio.youtube.com": return this.D_YtStudio_Url(up.href);
-			case "www.youtubekids.com": return this.D_YoutubeKidsUrl(up.href);
-			case "tv.youtube.com": return;
-			case "www.youtube.com": return this.GU_FullYoutubeUrl(up.href);
-			case "myactivity.google.com": return;
-			case "www.google.com": return;
-			case "www.googleadservices.com": return;
-			default: debugger; break;
-		}
-		const hn_yt_studio="https://studio.youtube.com";
-		const hn_yt_music="https://music.youtube.com";
-		const hn_yt_kids="https://www.youtubekids.com";
-		const hn_yt_tv="https://tv.youtube.com";
-		if(this.str_starts_with_rx(hn_yt_studio,x)) return;
-		if(this.str_starts_with_rx(hn_yt_music,x)) return;
-		if(this.str_starts_with_rx(hn_yt_kids,x)) return;
-		if(this.str_starts_with_rx(hn_yt_tv,x)) return;
 	}
 	/** @template {number} T @arg {T} x @returns {`${T}`} */
 	num_to_string(x) {return `${x}`;}
