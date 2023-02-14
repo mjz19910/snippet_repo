@@ -728,19 +728,12 @@ class HandleTypes extends HandleTypesEval {
 	parse_key_index=1;
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
-		let entry=x;
-		let path=cf;
-		let bc=decodeURIComponent(entry);
-		let buffer=base64_url_dec.decodeByteArray(bc);
+		let x1=decodeURIComponent(x);
+		let buffer=base64_url_dec.decodeByteArray(x1);
 		if(!buffer) {debugger; return;}
 		let c_pos=0;
-		let na_arr;
-		for(;c_pos<6;c_pos++) this.save_number(`${path}.${c_pos}`,buffer[c_pos]);
-		{
-			let n_len=4; na_arr=[...buffer.slice(c_pos,c_pos+n_len)];
-			this.save_number(`${path}.${c_pos}-${c_pos+n_len}`,na_arr);
-			c_pos+=n_len;
-		}
+		for(;c_pos<6;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
+		{const n_len=4,na_arr=[...buffer.slice(c_pos,c_pos+n_len)]; this.save_number(`${cf}.${c_pos}-${c_pos+n_len}`,na_arr); c_pos+=n_len;}
 		{let n_len=4; console.log(`[continuation_token_data_f49_log] [range:${c_pos}-${c_pos+n_len}]`,[...buffer.slice(c_pos,c_pos+4)]);}
 	}
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
@@ -3849,7 +3842,7 @@ class HandleTypes extends HandleTypesEval {
 	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {
-		let token_bin=bs.base64_url_dec.decodeByteArray(x);
+		let token_bin=base64_url_dec.decodeByteArray(x);
 		if(!token_bin) {debugger; return;}
 		this.save_number("undo_token[0]",token_bin[0]);
 	}
@@ -10328,6 +10321,15 @@ class HandleTypes extends HandleTypesEval {
 		this.parse_signature(signature);
 		this.save_string(`${cf}.key`,key);
 	}
+	/** @private @arg {string} x */
+	parse_url_sig(x) {
+		const cf="url.sig";
+		let buffer=base64_url_dec.decodeByteArray(x);
+		if(!buffer) {debugger; return;}
+		let c_pos=0;
+		for(;c_pos<2;c_pos++) this.save_number(`${cf}.${c_pos}`,buffer[c_pos]);
+		this.save_number(`${cf}.binary_arr.0`,token_bin[0]);
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf="D_VideoPlaybackShape";
@@ -10372,7 +10374,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.lsparams`,lsparams);
 		this.save_string(`${cf}.lsig`,lsig);
 		spc&&this.save_string(`${cf}.spc`,spc);
-		sig&&this.save_string(`${cf}.sig`,sig);
+		this.t(sig,this.parse_url_sig);
 		cnr&&this.save_string(`${cf}.cnr`,cnr);
 		ratebypass&&this.save_string(`${cf}.ratebypass`,ratebypass);
 		let ka=this.get_keys_of(y);
