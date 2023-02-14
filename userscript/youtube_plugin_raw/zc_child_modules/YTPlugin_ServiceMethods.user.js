@@ -4024,6 +4024,19 @@ class ServiceMethods extends ServiceData {
 		if("userFeedbackEndpoint" in x) return this.E_UserFeedback(x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
 	}
+	/** @private @arg {DE_RecordNotificationInteractions} x */
+	DE_RecordNotificationInteractions(x) {
+		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
+		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params(cf,"notification.record_interactions",serializedInteractionsRequest);
+		this.tz(actions,this.A_HideEnclosing);
+	}
+	/** @private @arg {E_RecordNotificationInteractions} x */
+	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
+	/** @private @arg {M_RecordInteractions} x */
+	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
+	/** @private @arg {GM_RecordInteractions} x */
+	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {RD_MenuServiceItem["serviceEndpoint"]} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		const cf="RD_MenuServiceItem_serviceEndpoint"; this.k(cf,x);
@@ -4493,6 +4506,15 @@ class ServiceMethods extends ServiceData {
 		this.z(entityKeys,x => {
 			this.params(`${cf}.entity_key`,"change_markers_visibility.entity_key",x);
 		});
+	}
+	/** @private @arg {E_CreatePlaylistService} x */
+	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
+	/** @private @arg {DS_CreatePlaylist} x */
+	DS_CreatePlaylist(x) {
+		const cf="DS_CreatePlaylist"; this.k(cf,x);
+		const {params,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(params,x => this.params(cf,"service$create_playlist",x));
+		this.z(videoIds,this.videoId);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

@@ -1564,8 +1564,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {E_RecordNotificationInteractions} x */
-	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
@@ -1574,16 +1572,12 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
-	/** @private @arg {E_CreatePlaylistService} x */
-	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @private @arg {M_SetSetting} x */
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
-	/** @private @arg {M_RecordInteractions} x */
-	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
@@ -1608,8 +1602,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
-	/** @private @arg {GM_RecordInteractions} x */
-	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
@@ -1632,13 +1624,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
-	}
-	/** @private @arg {DE_RecordNotificationInteractions} x */
-	DE_RecordNotificationInteractions(x) {
-		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
-		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"notification.record_interactions",serializedInteractionsRequest);
-		this.tz(actions,this.A_HideEnclosing);
 	}
 	/** @private @arg {DU_MutationDelete} x */
 	DU_MutationDelete(x) {
@@ -2626,13 +2611,6 @@ class HandleTypes extends HandleTypesEval {
 			case "comments-section":
 			case "browse-feedFEwhat_to_watch": case "watch-next-feed": case "engagement-panel-comments-section":
 		}
-	}
-	/** @private @arg {DS_CreatePlaylist} x */
-	DS_CreatePlaylist(x) {
-		const cf="DS_CreatePlaylist"; this.k(cf,x);
-		const {params,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(params,x => this.params(cf,"service$create_playlist",x));
-		this.z(videoIds,this.videoId);
 	}
 	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
 	DC_ReloadContinuationItems_Omit(cf,x) {
