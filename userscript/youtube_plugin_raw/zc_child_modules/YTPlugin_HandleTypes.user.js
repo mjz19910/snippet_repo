@@ -915,15 +915,6 @@ class HandleTypes extends HandleTypesEval {
 	zy(cf,k,x,f) {return this.z(this.w(`zy:${cf}`,k,x),f);}
 	//#endregion
 	//#region CheckedTemplates
-	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
-	T_Icon_AnyOf(cf1,x,ty_arr) {
-		const cf2="T_Icon";
-		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
-		const is_missing_iconType=!ty_arr.includes(iconType);
-		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
-		this.save_string("IconType",iconType);
-		return is_missing_iconType;
-	}
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
 	/** @private @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
@@ -2078,17 +2069,6 @@ class HandleTypes extends HandleTypesEval {
 			group_entry[1].push(x);
 		}
 		group_arr.push([k,[x]]);
-	}
-	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
-	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
-		expected_arr.push(icon.iconType);
-		missing_arr.push(icon.iconType);
-		let arr_items=JSON.stringify(missing_arr,null,"\t");
-		console.group("-- [D_Button.codegen] --");
-		try {
-			console.log("-- [D_Button.icon] --",arr_items);
-			this.codegen_typedef_all(cf,x);
-		} finally {console.groupEnd();}
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {

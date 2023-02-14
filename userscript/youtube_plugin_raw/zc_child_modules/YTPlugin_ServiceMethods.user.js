@@ -3631,6 +3631,15 @@ class ServiceMethods extends ServiceData {
 		return mp;
 	}
 	icon_types_map=this.make_icon_types_map();
+	/** @private @arg {CF_T_Icon_Any} cf1 @template {string} T @arg {T_Icon<T>} x @arg {T[]} ty_arr */
+	T_Icon_AnyOf(cf1,x,ty_arr) {
+		const cf2="T_Icon";
+		const {iconType,...y}=this.s_priv(`${cf2}:any:${cf1}`,x); this.g(y);/*#destructure_done*/
+		const is_missing_iconType=!ty_arr.includes(iconType);
+		if(is_missing_iconType) {console.log(`[missing_icon.${cf1}]`,iconType);}
+		this.save_string("IconType",iconType);
+		return is_missing_iconType;
+	}
 	/** @private @arg {D_ThumbnailOverlaySidePanel} x */
 	D_ThumbnailOverlaySidePanel(x) {
 		const cf="D_ThumbnailOverlaySidePanel"; this.k(cf,x);
@@ -3641,6 +3650,17 @@ class ServiceMethods extends ServiceData {
 		const {known,unknown}=store;
 		let missing=this.T_Icon_AnyOf("D_Icon_ThumbnailOverlaySidePanel",icon,known);
 		if(missing) this.onMissingIcon(cf,icon,x,known,unknown);
+	}
+	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
+	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
+		expected_arr.push(icon.iconType);
+		missing_arr.push(icon.iconType);
+		let arr_items=JSON.stringify(missing_arr,null,"\t");
+		console.group("-- [D_Button.codegen] --");
+		try {
+			console.log("-- [D_Button.icon] --",arr_items);
+			this.codegen_typedef_all(cf,x);
+		} finally {console.groupEnd();}
 	}
 	/** @private @arg {D_ThumbnailOverlayToggleButton} x */
 	D_ThumbnailOverlayToggleButton(x) {
