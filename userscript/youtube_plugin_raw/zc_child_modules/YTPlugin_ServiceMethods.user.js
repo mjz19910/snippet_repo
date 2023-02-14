@@ -23,6 +23,32 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
+	unwrap_prefix(x,pf) {
+		/** @private @type {T_RemovePrefix<U,VV>} */
+		let un_prefix=as({});
+		/** @private @type {Omit<U,`${VV}${string}`>} */
+		let other=as({});
+		for(let cc of Object.entries(x)) {
+			let c1=cc[0];
+			if(this.str_starts_with_rx(pf,c1)) {
+				let u1x=split_string_once(c1,pf);
+				if(u1x.length!==2) continue;
+				/** @private @type {any} */
+				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
+				/** @private @type {keyof T_RemovePrefix<U,VV>} */
+				let u1=ac;
+				un_prefix[u1]=cc[1];
+				continue;
+			}
+			/** @private @type {any} */
+			let ac=c1;
+			/** @private @type {keyof Omit<U,`${VV}${string}`>} */
+			let u1=ac;
+			other[u1]=cc[1];
+		}
+		return [un_prefix,other];
+	}
 	/** @protected @arg {D_ImpressionCap} x */
 	D_ImpressionCap(x) {
 		const cf="D_ImpressionCap"; this.k(cf,x);
@@ -37,6 +63,69 @@ class ServiceMethods extends ServiceData {
 		this.D_ImpressionCap(hintCap);
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {D_LikeButton_Like} x */
+	D_LikeButton_Like(x) {
+		const cf="D_LikeButton.like";
+		const {status,count,countText,countWithLikeText,countWithUnlikeText,countTooltipText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(status) {
+			default: debugger; break;
+			case "DISLIKE":
+			case "INDIFFERENT":
+		}
+		this.t(count,this.a_primitive_num);
+		this.G_Text(countText);
+		this.t(countWithLikeText,this.G_Text);
+		this.t(countWithUnlikeText,this.G_Text);
+		this.t(countTooltipText,this.G_Text);
+	}
+	/** @private @arg {D_LikeButton_Dislike} x */
+	D_LikeButton_Dislike(x) {
+		const cf="D_LikeButton.dislike";
+		const {countText,countWithDislikeText,countWithUndislikeText,countTooltipText,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(countText);
+		this.t(countWithDislikeText,this.G_Text);
+		this.t(countWithUndislikeText,this.G_Text);
+		this.t(countTooltipText,this.G_Text);
+	}
+	/** @private @arg {D_LikeButton} x */
+	D_LikeButton(x) {
+		const cf="D_LikeButton"; this.k(cf,x);
+		const {likesAllowed,...y}=this.s(cf,x);
+		if(likesAllowed!==true) debugger;
+		let [upt,ur]=this.unwrap_prefix(y,"like");
+		this.D_LikeButton_Like(upt);
+		let [ud,{...y1}]=this.unwrap_prefix(ur,"dislike");
+		this.D_LikeButton_Dislike(ud);
+		if("target" in y1) {
+			const cf="D_LikeButton.rest";
+			const {target,trackingParams,serviceEndpoints,...y2}=y1; this.g(y2);
+			this.t(target,this.D_LikeApi);
+			if(trackingParams) this.trackingParams(cf,trackingParams);
+			this.tz(serviceEndpoints,this.E_Like);
+		}
+	}
+	/** @private @arg {D_LikeApi} x */
+	D_LikeApi(x) {
+		if(!x) {debugger; return;}
+		const cf="D_LikeApi"; this.k(cf,x);
+		{
+			const cn="videoId";
+			if(cn in x) {
+				const {[cn]: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				return this[cn](a);
+			}
+		}
+		{
+			const cn="playlistId";
+			if(cn in x) {
+				const {[cn]: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				return this[cn](a);
+			}
+		}
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {R_LikeButton} x */
+	R_LikeButton(x) {this.H_("R_LikeButton","likeButtonRenderer",x,this.D_LikeButton);}
 	/** @protected @arg {R_Hint} x */
 	R_Hint(x) {this.H_("R_Hint","hintRenderer",x,this.D_Hint);}
 	/** @private @arg {R_ReelPlayerOverlay} x */
