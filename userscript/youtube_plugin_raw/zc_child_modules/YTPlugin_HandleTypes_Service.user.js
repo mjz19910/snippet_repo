@@ -6781,7 +6781,9 @@ class HandleTypes extends HandleTypesEval {
 		if(isPrimary!==true) debugger;
 	}
 	/** @api @public @arg {string} x */
-	parse_video_id(x) {this.put_video_args({type: "normal",v: x});}
+	parse_video_id(x) {
+		this.put_video_args({type: "normal",v: x});
+	}
 	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
 	put_boxed_id(value) {
 		const {type,id}=value;
