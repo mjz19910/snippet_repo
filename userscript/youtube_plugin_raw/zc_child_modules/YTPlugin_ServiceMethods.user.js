@@ -1903,7 +1903,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
-	/** @private @arg {string} cf1 @arg {D_LightColorPalette} x */
+	/** @protected @arg {string} cf1 @arg {D_LightColorPalette} x */
 	D_LightColorPalette(cf1,x) {
 		const cf="D_LightColorPalette";
 		/** @arg {string} k @arg {number} x */
