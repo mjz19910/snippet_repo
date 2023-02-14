@@ -140,7 +140,6 @@ ECatcherService.known_experiments.push(...[
 	[24452410,24458317,24458324,24458329],
 	[24473107],
 ].flat());
-/** @extends {HandleTypesEval<LoadAllServices,ServiceOptions>}  */
 class HandleTypes extends HandleTypesEval {
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */
 	to_param_obj(x) {

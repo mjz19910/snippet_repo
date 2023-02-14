@@ -10,7 +10,7 @@ declare global {
 		delete(name: string): void;
 		entries(): IterableIterator<[string,string]>;
 	}
-	class HandleTypesEval<T,U> extends HandleTypesEval_<T,U> {}
+	class HandleTypesEval extends HandleTypesEval_ {}
 	interface Window {__plugin_modules__?: Partial<PluginStore>;}
 	var Type_Ex_NS: typeof EX;
 	var __youtube_plugin_base_loaded__: typeof EX.__youtube_plugin_base_loaded__;
