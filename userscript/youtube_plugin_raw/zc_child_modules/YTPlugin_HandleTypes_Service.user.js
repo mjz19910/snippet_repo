@@ -736,7 +736,7 @@ class HandleTypes extends HandleTypesEval {
 				case "unsubscribe.params.f2": {
 					return this.videoId(entry);
 				}
-				case "tracking.trackingParams.f11": {
+				case "ypc_get_offers.params.f1.f2": {
 					return this.D_ChannelId(as(entry));
 				}
 				default: {

@@ -186,7 +186,11 @@ class IndexedDBService extends BaseService {
 				} else {
 					this.committed_data.push(value);
 				}
-				cur_cursor.continue();
+				try {
+					cur_cursor.continue();
+				} catch(e) {
+					debugger;
+				}
 			}
 		}
 	}
