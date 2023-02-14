@@ -6621,7 +6621,9 @@ class HandleTypes extends HandleTypesEval {
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
 		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-		debugger;
+		if(typeof f1!=="number") debugger;
+		if(typeof f2==="number"&&f2>139215997) debugger;
+		if(typeof f3==="number"&&f3>2131209233) debugger;
 	}
 	/** @private @arg {R_0x12f639cf[12]} x */
 	D_f12(x) {
