@@ -2520,6 +2520,15 @@ type D_SimpleMenuHeader={
 	title: G_Text;
 	buttons: R_Button[];
 };
+type D_SubMenuItem={
+	title: "Top chat replay";
+	selected: boolean;
+	continuation: D_ReloadContinuationData;
+	accessibility: TD_Accessibility<"Top chat replay">;
+	subtitle: "Some messages, such as potential spam, may not be visible";
+	trackingParams: string;
+};
+
 type D_SortFilterSubMenu={
 	subMenuItems: D_ActionSetPlaylistVideoOrder[];
 	title?: string;
@@ -2528,14 +2537,7 @@ type D_SortFilterSubMenu={
 	tooltip?: string;
 	trackingParams: string;
 }|{
-	subMenuItems: {
-		title: "Top chat replay";
-		selected: true;
-		continuation: D_ReloadContinuationData;
-		accessibility: TD_Accessibility<"Top chat replay">;
-		subtitle: "Some messages, such as potential spam, may not be visible";
-		trackingParams: string;
-	}[];
+	subMenuItems: D_SubMenuItem[];
 	accessibility: TD_Accessibility<"Live Chat mode selection">;
 	trackingParams: string;
 	targetId: "live-chat-view-selector-sub-menu";
