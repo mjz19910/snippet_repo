@@ -35,7 +35,6 @@ class TypedefGenerator extends ServiceMethods {
 		return null;
 	}
 }
-/** @extends {ServiceMethods<LoadAllServices,ServiceOptions>} */
 class HandleRS extends ServiceMethods {
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
@@ -99,6 +98,8 @@ class HandleRS extends ServiceMethods {
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_Endscreen} x */
 	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
+	/** @private @arg {R_Button} x */
+	R_Button(x) {this.H_("R_Button","buttonRenderer",x,this.D_Button);}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {
 		const cf="G_PlayerStoryboards"; this.k(cf,x);
@@ -146,6 +147,53 @@ class HandleRS extends ServiceMethods {
 		this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => cls_.D_VeCsn(x,true));
 	}
+	/** @private @arg {E_YpcGetOffers} x */
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
+	/** @private @arg {D_Button} x */
+	D_Button(x) {
+		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
+		let cf="D_Button";
+		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
+		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
+		else if("command" in x) cf="D_Button:command";
+		else if("style" in x) cf="D_Button:style";
+		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(hint,this.R_Hint);
+		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
+		this.t(targetId,this.D_Button_targetId);
+		this.t(serviceEndpoint,this.D_Button_SE);
+		this.t(style,x => {
+			switch(x) {
+				default: debugger; x===""; break;
+				case "STYLE_PRIMARY":
+				case "STYLE_OPACITY":
+				case "STYLE_SUGGESTIVE":
+				case "STYLE_TEXT":
+				case "STYLE_BLUE_TEXT":
+				case "STYLE_DEFAULT":
+			}
+		});
+		this.t(isDisabled,x => {if(x!==false) debugger;});
+		this.t(text,this.G_Text);
+		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
+		this.t(navigationEndpoint,this.D_Button_NavEP);
+		this.t(accessibility,this.D_Label);
+		this.t(tooltip,this.a_primitive_str);
+		this.t(trackingParams,x => this.trackingParams(cf,x));
+		this.t(accessibilityData,this.D_Accessibility);
+		this.t(command,this.GC_Button);
+	}
+	/** @private @arg {D_Button_SE} x */
+	D_Button_SE(x) {
+		const cf="D_Button_SE"; this.k(cf,x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
+		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
+		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
+		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
+		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
 		const cf="D_PlayabilityStatus";
@@ -157,6 +205,65 @@ class HandleRS extends ServiceMethods {
 		let ctx=atob(contextParams);
 		this.params(cf,"playability_status.context_params",ctx);
 	}
+	/** @private @arg {D_PlayerAnnotationsExpanded} x */
+	D_PlayerAnnotationsExpanded(x) {
+		const cf="D_PlayerAnnotationsExpanded"; this.k(cf,x);
+		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_FeaturedChannel(featuredChannel);
+		this.parse_uuid(annotationId);
+		this.a_primitive_bool(allowSwipeDismiss);
+	}
+	/** @private @arg {D_HeartbeatParams} x */
+	D_HeartbeatParams(x) {
+		const cf="D_HeartbeatParams";
+		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
+		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
+		this.ceq(softFailOnError,false);
+		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
+	}
+	/** @private @arg {D_PlaybackTracking} x */
+	D_PlaybackTracking(x) {
+		const cf="D_PlaybackTracking"; this.k(cf,x);
+		let [a,u]=this.unwrap_prefix(x,"videostats");
+		{
+			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
+		}
+		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
+		this.D_UrlAndElapsedMediaTime(atrUrl,this.a_primitive_str);
+		this.T_BaseUrl(ptrackingUrl,this.a_primitive_str);
+		this.T_BaseUrl(qoeUrl,this.a_primitive_str);
+		this.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.a_primitive_str));
+	}
+	/** @private @arg {D_PlayerCaptionsTracklist} x */
+	D_PlayerCaptionsTracklist(x) {
+		const cf="D_PlayerCaptionsTracklist";
+		const {captionTracks,audioTracks,translationLanguages,defaultAudioTrackIndex,openTranscriptCommand,...y}=this.s(cf,x); this.g(y);
+		this.z(captionTracks,this.D_CaptionTrackItem);
+		this.z(audioTracks,this.D_AudioTrackItem);
+		this.z(translationLanguages,this.D_TranslationLanguage);
+		this.a_primitive_num(defaultAudioTrackIndex);
+		this.t(openTranscriptCommand,x => {
+			if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
+			debugger;
+		});
+	}
+	/** @private @arg {D_VideoQualityPromo} x */
+	D_VideoQualityPromo(x) {
+		const cf="D_VideoQualityPromo";
+		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
+		this.D_TriggerCriteria(triggerCriteria);
+		this.G_Text(text);
+		this.E_Url(endpoint);
+		this.trackingParams(cf,trackingParams);
+		this.RA_Notification(snackbar);
+	}
+	/** @private @arg {D_PlayerAttestation} x */
+	D_PlayerAttestation(x) {
+		const cf="D_PlayerAttestation";
+		const {challenge,botguardData,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_str(challenge);
+		this.D_Botguard(botguardData);
+	}
 	/** @private @arg {DD_Streaming} x */
 	DD_Streaming(x) {
 		const cf="DD_Streaming";
@@ -165,6 +272,16 @@ class HandleRS extends ServiceMethods {
 		this.z(adaptiveFormats,this.D_AdaptiveFormatItem);
 		this.z(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
+	}
+	/** @private @arg {D_PlayerConfig} x */
+	D_PlayerConfig(x) {
+		const cf="D_PlayerConfig"; this.k(cf,x);
+		debugger;
+	}
+	/** @private @arg {D_VideoDetails} x */
+	D_VideoDetails(x) {
+		const cf="D_VideoDetails"; this.k(cf,x);
+		debugger;
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});

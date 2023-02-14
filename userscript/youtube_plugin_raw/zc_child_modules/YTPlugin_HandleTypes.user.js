@@ -1052,7 +1052,7 @@ class HandleTypes extends HandleTypesEval {
 		};
 		ex;
 	}
-	/** @protected @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
+	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {
 		/** @type {number[]} */
 		let map_entry_key_path=[];
@@ -1060,8 +1060,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
-	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
 	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @arg {boolean} x */
@@ -3012,8 +3010,6 @@ class HandleTypes extends HandleTypesEval {
 	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
 	/** @private @arg {E_GetTranscript} x */
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
-	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
 	/** @private @arg {E_Search} x */
 	E_Search(x) {const [a,b,y]=this.TE_Endpoint_3("E_Search","searchEndpoint",x); this.g(y); this.M_VE4724(a); this.DE_Search(b);}
 	/** @private @arg {E_CreateBackstagePost} x */
@@ -3977,17 +3973,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		group_arr.push([k,[x]]);
 	}
-	/** @private @arg {D_Button_SE} x */
-	D_Button_SE(x) {
-		const cf="D_Button_SE"; this.k(cf,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
-		if("ypcGetOffersEndpoint" in x) return this.E_YpcGetOffers(x);
-		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("unsubscribeEndpoint" in x) return this.E_Unsubscribe(x);
-		if("createCommentEndpoint" in x) return this.E_CreateComment(x);
-		if("getPdgBuyFlowCommand" in x) return this.C_GetPdgBuyFlow(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @template {string} T @arg {T[]} expected_arr @arg {T[]} missing_arr @arg {CF_onMissingIcon} cf @arg {T_Icon<T>} icon @template {{icon:T_Icon<T>;}} U @arg {U} x */
 	onMissingIcon(cf,icon,x,expected_arr,missing_arr) {
 		expected_arr.push(icon.iconType);
@@ -4010,40 +3995,6 @@ class HandleTypes extends HandleTypesEval {
 			case "sponsorships-button":
 		}
 		this.targetId(cf,x);
-	}
-	/** @private @arg {D_Button} x */
-	D_Button(x) {
-		/** @type {"D_Button"|`D_Button:${"serviceEndpoint"|"navigationEndpoint"|"command"|"style"}`} */
-		let cf="D_Button";
-		if("serviceEndpoint" in x) cf="D_Button:serviceEndpoint";
-		else if("navigationEndpoint" in x) cf="D_Button:navigationEndpoint";
-		else if("command" in x) cf="D_Button:command";
-		else if("style" in x) cf="D_Button:style";
-		const {style,size,isDisabled,serviceEndpoint,text,icon,navigationEndpoint,accessibility,tooltip,trackingParams,hint,iconPosition,accessibilityData,targetId,command,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(hint,this.R_Hint);
-		this.t(iconPosition,x => this.save_enum("BUTTON_ICON_POSITION_TYPE",x));
-		this.t(targetId,this.D_Button_targetId);
-		this.t(serviceEndpoint,this.D_Button_SE);
-		this.t(style,x => {
-			switch(x) {
-				default: debugger; x===""; break;
-				case "STYLE_PRIMARY":
-				case "STYLE_OPACITY":
-				case "STYLE_SUGGESTIVE":
-				case "STYLE_TEXT":
-				case "STYLE_BLUE_TEXT":
-				case "STYLE_DEFAULT":
-			}
-		});
-		this.t(isDisabled,x => {if(x!==false) debugger;});
-		this.t(text,this.G_Text);
-		this.t(icon,x => this.T_Icon(`${cf}.icon`,x));
-		this.t(navigationEndpoint,this.D_Button_NavEP);
-		this.t(accessibility,this.D_Label);
-		this.t(tooltip,this.a_primitive_str);
-		this.t(trackingParams,x => this.trackingParams(cf,x));
-		this.t(accessibilityData,this.D_Accessibility);
-		this.t(command,this.GC_Button);
 	}
 	/** @private @arg {D_PdgBuyFlowHeader} x */
 	D_PdgBuyFlowHeader(x) {
@@ -4728,14 +4679,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="B_Hack"; this.k(cf,x);
 		const {hack,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hack!==true) debugger;
-	}
-	/** @private @arg {D_PlayerAnnotationsExpanded} x */
-	D_PlayerAnnotationsExpanded(x) {
-		const cf="D_PlayerAnnotationsExpanded"; this.k(cf,x);
-		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_FeaturedChannel(featuredChannel);
-		this.parse_uuid(annotationId);
-		this.a_primitive_bool(allowSwipeDismiss);
 	}
 	/** @private @arg {D_UUIDString} x */
 	parse_uuid(x) {
@@ -10628,27 +10571,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(start);
 		this.a_primitive_str(end);
 	}
-	/** @private @arg {D_PlayerConfig} x */
-	D_PlayerConfig(x) {
-		const cf="D_PlayerConfig"; this.k(cf,x);
-	}
-	/** @private @arg {D_VideoDetails} x */
-	D_VideoDetails(x) {
-		const cf="D_VideoDetails"; this.k(cf,x);
-	}
-	/** @private @arg {D_PlaybackTracking} x */
-	D_PlaybackTracking(x) {
-		const cf="D_PlaybackTracking"; this.k(cf,x);
-		let [a,u]=this.unwrap_prefix(x,"videostats");
-		{
-			const {defaultFlushIntervalSeconds,delayplayUrl,playbackUrl,scheduledFlushWalltimeSeconds,watchtimeUrl,...y}=a; this.g(y);
-		}
-		const {atrUrl,ptrackingUrl,qoeUrl,youtubeRemarketingUrl,...y}=u; this.g(y);
-		this.D_UrlAndElapsedMediaTime(atrUrl,this.a_primitive_str);
-		this.T_BaseUrl(ptrackingUrl,this.a_primitive_str);
-		this.T_BaseUrl(qoeUrl,this.a_primitive_str);
-		this.t(youtubeRemarketingUrl,x => this.T_BaseUrl(x,this.a_primitive_str));
-	}
 	/** @private @template {string} T @arg {T_BaseUrl<T>} x @arg {(this:this,x:T)=>void} f */
 	T_BaseUrl(x,f) {
 		const cf="T_BaseUrl";
@@ -10687,36 +10609,6 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`[done.${cf}.next_key] [${ka.shift()}]`);
 		}
 		return tag;
-	}
-	/** @private @arg {D_PlayerCaptionsTracklist} x */
-	D_PlayerCaptionsTracklist(x) {
-		const cf="D_PlayerCaptionsTracklist";
-		const {captionTracks,audioTracks,translationLanguages,defaultAudioTrackIndex,openTranscriptCommand,...y}=this.s(cf,x); this.g(y);
-		this.z(captionTracks,this.D_CaptionTrackItem);
-		this.z(audioTracks,this.D_AudioTrackItem);
-		this.z(translationLanguages,this.D_TranslationLanguage);
-		this.a_primitive_num(defaultAudioTrackIndex);
-		this.t(openTranscriptCommand,x => {
-			if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-			debugger;
-		});
-	}
-	/** @private @arg {D_VideoQualityPromo} x */
-	D_VideoQualityPromo(x) {
-		const cf="D_VideoQualityPromo";
-		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=this.s(cf,x); this.g(y);
-		this.D_TriggerCriteria(triggerCriteria);
-		this.G_Text(text);
-		this.E_Url(endpoint);
-		this.trackingParams(cf,trackingParams);
-		this.RA_Notification(snackbar);
-	}
-	/** @private @arg {D_PlayerAttestation} x */
-	D_PlayerAttestation(x) {
-		const cf="D_PlayerAttestation";
-		const {challenge,botguardData,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_str(challenge);
-		this.D_Botguard(botguardData);
 	}
 	/** @private @arg {D_Botguard} x */
 	D_Botguard(x) {
@@ -11364,14 +11256,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(overflowMenu);
 		this.R_Button(collapseButton);
 		this.R_SortFilterSubMenu(viewSelector);
-	}
-	/** @private @arg {D_HeartbeatParams} x */
-	D_HeartbeatParams(x) {
-		const cf="D_HeartbeatParams";
-		const {intervalMilliseconds,softFailOnError,heartbeatServerData,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.intervalMilliseconds`,intervalMilliseconds);
-		this.ceq(softFailOnError,false);
-		this.save_string(`${cf}.heartbeatServerData`,heartbeatServerData);
 	}
 	/** @private @arg {E_PerformCommentAction} x */
 	E_PerformCommentAction(x) {x; debugger;}

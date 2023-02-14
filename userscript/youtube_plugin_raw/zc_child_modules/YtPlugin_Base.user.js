@@ -3448,8 +3448,10 @@ class ServiceData extends BaseService {
 	/** @protected */
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
-/** @template CLS_T,CLS_U @extends {ServiceData<CLS_T,CLS_U>}  */
+/** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
+	trackingParams(cf,x) {this.x.get("handle_types").params(cf,"tracking.trackingParams",x);}
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @protected @arg {string} cf @arg {{}} x */
