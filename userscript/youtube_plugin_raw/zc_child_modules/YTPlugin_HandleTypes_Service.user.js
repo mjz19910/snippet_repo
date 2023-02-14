@@ -6379,12 +6379,13 @@ class HandleTypes extends HandleTypesEval {
 			if(typeof v2==="number") {res[k]=v2; continue;}
 			if(v2[0]==="bigint") {res[k]=v2[2]; continue;}
 			if(v2[0]==="group") {
-				res[k]=v2[1].map(x => {
-					switch(x[0]) {
-						default: debugger; break;
-					}
-					return null;
-				}); continue;
+				const [,r]=v2;
+				let r2=this.make_param_map(r);
+				if(!r2) {debugger; continue;}
+				let vr=this.convert_map_to_obj(r2);
+				if(!vr) {debugger; continue;}
+				res[k]=vr;
+				continue;
 			}
 			if(v2[0]==="failed") return null;
 			debugger;
@@ -6438,9 +6439,12 @@ class HandleTypes extends HandleTypesEval {
 				let hex_id=this.number_as_hex(field_id);
 				switch(hex_id) {
 					default: debugger; break;
+					case "0x4c82a9c": {
+
+					} break;
 					case "0x94d81d4": {
 						if(dec_bin===null) {debugger; break;}
-						let bin_map=this.make_param_map(dec_bin); bin_map;
+						let bin_map=this.make_param_map(dec_bin);
 						if(bin_map===null) {debugger; break;}
 						let bin_obj=this.convert_map_to_obj(bin_map);
 						/** @type {D_0x94d81d4} */
