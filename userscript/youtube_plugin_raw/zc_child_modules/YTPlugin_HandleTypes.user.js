@@ -1726,8 +1726,6 @@ class HandleTypes extends HandleTypesEval {
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
-	/** @private @arg {E_UndoFeedback} x */
-	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
 	/** @private @arg {E_RecordNotificationInteractions} x */
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
@@ -1752,8 +1750,6 @@ class HandleTypes extends HandleTypesEval {
 	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @protected @arg {M_AddToPlaylistService} x */
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
-	/** @private @arg {M_Feedback} x */
-	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
 	/** @private @arg {M_SendPost} x */
@@ -1792,19 +1788,10 @@ class HandleTypes extends HandleTypesEval {
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @arg {GM_RecordInteractions} x */
 	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
-	/** @private @arg {GM_Feedback} x */
-	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
 	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
-	/** @private @arg {DE_UndoFeedback} x */
-	DE_UndoFeedback(x) {
-		const cf="DE_UndoFeedback"; this.k(cf,x);
-		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.parse_undo_token(undoToken);
-		this.z(actions,this.A_UndoFeedback);
-	}
 	/** @private @arg {DE_GetNotificationMenu} x */
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu"; this.k(cf,x);
@@ -1953,10 +1940,6 @@ class HandleTypes extends HandleTypesEval {
 	codegen_case_key(cf,obj,key,code) {
 		let val=obj[key];
 		this.codegen_case(cf,val,code);
-	}
-	/** @private @arg {string} x */
-	parse_undo_token(x) {
-		this.save_b64_binary("undo_token",x);
 	}
 	/** @private @arg {RS_Browse} x */
 	RS_Browse(x) {
@@ -6860,12 +6843,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} x */
 	D_VideoPlayback_ns(x) {
 		this.save_b64_binary("video_playback.buf.ns",x);
-	}
-	/** @private @arg {string} cf @arg {string} x */
-	save_b64_binary(cf,x) {
-		let buffer=base64_url_dec.decodeByteArray(x);
-		if(!buffer) {debugger; return;}
-		this.save_number(`${cf}.bytes.0-2`,buffer.slice(0,2));
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {

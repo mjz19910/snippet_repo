@@ -3921,5 +3921,28 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
+	/** @private @arg {E_UndoFeedback} x */
+	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
+	/** @private @arg {DE_UndoFeedback} x */
+	DE_UndoFeedback(x) {
+		const cf="DE_UndoFeedback"; this.k(cf,x);
+		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.parse_undo_token(undoToken);
+		this.z(actions,this.A_UndoFeedback);
+	}
+	/** @protected @arg {string} cf @arg {string} x */
+	save_b64_binary(cf,x) {
+		let buffer=base64_url_dec.decodeByteArray(x);
+		if(!buffer) {debugger; return;}
+		this.save_number(`${cf}.bytes.0-2`,buffer.slice(0,2));
+	}
+	/** @private @arg {string} x */
+	parse_undo_token(x) {
+		this.save_b64_binary("undo_token",x);
+	}
+	/** @private @arg {M_Feedback} x */
+	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
+	/** @private @arg {GM_Feedback} x */
+	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
