@@ -112,6 +112,7 @@ type CF_D_Menu_Omit=
 	|CF_D_Playlist_Omit
 	;
 ;
+type CF_add_string_to_map=T_ExtractImport<"CF_add_string_to_map">|"CF_add_string_to_map"|"a";
 type CF_D_Button=T_ExtractImport<"CF_D_Button">|"CF_D_Button"|"a";
 type CF_D_CaseGen=T_ExtractImport<"CF_D_CaseGen">|"CF_D_CaseGen"|"a";
 type CF_D_ChipCloudChip_Omit=T_ExtractImport<"CF_D_ChipCloudChip_Omit">|"CF_D_ChipCloudChip_Omit"|"a";

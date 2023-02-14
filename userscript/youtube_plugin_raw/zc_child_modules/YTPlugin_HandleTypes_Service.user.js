@@ -4014,9 +4014,10 @@ class HandleTypes extends HandleTypesEval {
 	];
 	/** @type {string[]} */
 	Button_missing_iconType=[];
-	/** @private @arg {string} cf @arg {string} k_arg @arg {string} x */
+	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x) {
-		let k=`${cf}:${k_arg}`;
+		/** @type {`${typeof cf}::${typeof k_arg}`} */
+		let k=`${cf}::${k_arg}`; this.save_string(k,x);
 		let group_arr=this.strings_map.get(cf);
 		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
 		let group_entry=group_arr.find(e => e[0]===k);

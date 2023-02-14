@@ -1100,5 +1100,9 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SortFilterSubMenu_WithTargetId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_SortFilterSubMenu_WithTargetId.MenuItem";}
 		|{n: Prelude.CF_D_ToggleButton; t: Types.CF_D_ToggleButton_; v: "D_ToggleButton:defaultText:style";}
+		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibility";}
+		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:accessibilityData";}
+		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:defaultText:style";}
+		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:toggledAccessibilityData:size";}
 		;
 }
