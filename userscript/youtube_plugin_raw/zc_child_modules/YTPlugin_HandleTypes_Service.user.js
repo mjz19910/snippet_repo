@@ -6370,21 +6370,30 @@ class HandleTypes extends HandleTypesEval {
 						let bin_map=this.make_param_map(dec_bin); bin_map;
 						if(bin_map===null) {debugger; break;}
 						let bin_obj=this.convert_map_to_obj(bin_map);
-						/** @type {{3:string;8:1;14:{1:4;3:2;4:0;}|{1:4,3:2};15:1}} */
+						/** @type {D_0x94d81d4} */
 						let bin_2=as_any(bin_obj);
 						if(bin_2[8]!==1) {debugger; break;}
-						if(bin_2[15]!==1) {debugger; break;}
 						this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",bin_2[3]);
 						let res=bin_2[14];
 						if("4" in res) {
 							const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
 							if(r_f1!==4) debugger;
-							if(r_f3!==2) debugger;
+							switch(r_f3) {
+								default: debugger; break;
+								case 1: case 2:
+							}
 							if(r_f4!==0) debugger;
 						} else {
 							const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
 							if(r_f1!==4) debugger;
 							if(r_f3!==2) debugger;
+						}
+						if("15" in bin_2) {
+							switch(bin_2[15]) {
+								default: debugger; break;
+								case 1:
+							}
+							if(bin_2[15]!==1) {debugger; break;}
 						}
 					} return;
 				}
