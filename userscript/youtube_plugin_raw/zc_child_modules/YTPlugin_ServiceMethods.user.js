@@ -115,6 +115,7 @@ class ServiceMethods extends ServiceData {
 		this.assert_is_omit_key(x,y,u);
 		return u;
 	}
+	/** @type {this["handle_types"]|null} */
 	_b_cls=null;
 	get b_cls() {
 		if(this._b_cls) return this._b_cls;
