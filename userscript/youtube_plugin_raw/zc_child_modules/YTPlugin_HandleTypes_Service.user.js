@@ -750,7 +750,9 @@ class HandleTypes extends HandleTypesEval {
 				} break;
 				case null: break;
 				case "watch_request_continuation.token.f5": {
-					this.params(`sub.${path}`,`sub.${path}.params`,entry);
+					/** @type {`sub.${path}`} */
+					const cf=`sub.${path}`;
+					this.decode_continuation_token(cf,entry);
 				} break;
 				case "watch_request_continuation.token.f9.f1.f4":
 				case "tracking.trackingParams.f6": {
