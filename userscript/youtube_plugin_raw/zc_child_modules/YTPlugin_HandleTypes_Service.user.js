@@ -11160,6 +11160,8 @@ class HandleTypes extends HandleTypesEval {
 		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		debugger;
 	}
+	/** @arg {number} x */
+	a_primitive_num(x) {this._primitive_of(x,"number");}
 	/** @private @arg {D_TimedTextApi} x */
 	D_TimedTextApi(x) {
 		const cf="D_TimedTextApi";
@@ -11172,7 +11174,9 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.hl`,hl);
 		this.save_string(`${cf}.ip`,ip);
 		this.save_string(`${cf}.ipbits`,ipbits);
-		this.save_string(`${cf}.expire`,expire);
+		let e_num=this.parse_number_template(expire);
+		if(Number.isNaN(e_num)) debugger;
+		this.a_primitive_num(e_num);
 		this.save_string(`${cf}.signature`,signature);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);

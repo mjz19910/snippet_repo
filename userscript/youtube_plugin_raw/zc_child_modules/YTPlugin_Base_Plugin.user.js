@@ -1963,8 +1963,6 @@ class ApiBase {
 	}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	_primitive_of(x,y) {if(typeof x!==y) debugger;}
-	/** @arg {number} x */
-	a_primitive_num(x) {this._primitive_of(x,"number");}
 	/** @protected @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
 		/** @private @type {Partial<B>} */

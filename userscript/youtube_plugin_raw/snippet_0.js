@@ -1,6 +1,5 @@
 import {Base64Binary} from "./support_1/Base64Binary";
 import {MyReader} from "./support_2/MyReader";
-import {split_string} from "./zc_child_modules/YTPlugin_Base_Plugin.user";
 `
 const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 this.z(actions,a => {
@@ -467,29 +466,6 @@ class ND extends Snippet_0_tmp {
 	tz(x,f) {
 		if(!x) return;
 		this.z(x,f);
-	}
-	/** @protected @template {D_SubscribeButton} T @arg {T} x */
-	SubscribeButton$Omit(x) {
-		const cf="SubscribeButton";
-		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
-		this.primitive_of(subscribed,"boolean");
-		this.primitive_of(enabled,"boolean");
-		this.primitive_of_string(type);
-		this.primitive_of_string(channelId);
-		this.primitive_of(showPreferences,"boolean");
-		this.G_Text(buttonText);
-		this.G_Text(subscribedButtonText);
-		this.G_Text(unsubscribedButtonText);
-		trackingParams; cf;
-		this.G_Text(unsubscribeButtonText);
-		// this.tz(serviceEndpoints,x => {
-		// 	if("subscribeEndpoint" in x) return this.E_Subscribe(x);
-		// 	if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
-		// 	x;
-		// 	this.do_codegen(cf,x);
-		// 	debugger;
-		// });
-		return y;
 	}
 	/** @template {{}} T @arg {T} x */
 	sd(x) {return x;}
