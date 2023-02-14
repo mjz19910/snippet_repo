@@ -23,6 +23,13 @@ const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @arg {G_DC_GetSurvey_Endpoint} x */
+	G_DC_GetSurvey_Endpoint(x) {
+		const cf="G_DC_GetSurvey_Endpoint"; this.k(cf,x);
+		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
+		if("watch" in x) return this.D_Survey_Watch(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @protected @arg {"D_InfoCardIcon"} cf @arg {D_TrackingParams} x */
 	D_TrackingParams(cf,x) {this.y(cf,"trackingParams",x,x => this.trackingParams(cf,x));}
 	/** @protected @template T,U @arg {T_Id<T>} x @arg {(this:this,x:T)=>U} f */

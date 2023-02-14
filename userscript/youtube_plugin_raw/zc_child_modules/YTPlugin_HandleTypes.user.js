@@ -440,13 +440,6 @@ class HandleTypes extends HandleTypesEval {
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {G_DC_GetSurvey_Endpoint} x */
-	G_DC_GetSurvey_Endpoint(x) {
-		const cf="G_DC_GetSurvey_Endpoint"; this.k(cf,x);
-		if("paidDigitalGoods" in x) return this.R_PaidDigitalGoods(x);
-		if("watch" in x) return this.D_Survey_Watch(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
 		const cf="G_ResponseTypes"; this.g_k(cf,x);
