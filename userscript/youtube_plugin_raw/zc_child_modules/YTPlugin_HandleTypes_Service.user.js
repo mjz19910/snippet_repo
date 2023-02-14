@@ -6251,12 +6251,12 @@ class HandleTypes extends HandleTypesEval {
 		/**/u1; x; o2;
 	}
 	/** @typedef {"DC_Continuation"|"D_Continuation"} CF_decode_continuation_token */
-	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x @arg {number} len */
-	decode_continuation_token(cf,x,len) {
-		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x),len);
+	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
+	decode_continuation_token(cf,x) {
+		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x @arg {number} len */
-	decode_continuation_token_no_uri(cf,x,len) {
+	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
+	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
 		let reader=new MyReader(buffer);
@@ -6264,11 +6264,12 @@ class HandleTypes extends HandleTypesEval {
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
 		for(let v of dec) {
-			this.decode_continuation_token_binary(cf,msg_id,v);
+			this.decode_continuation_token_binary(cf,v);
 		}
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {Uint8Array} msg_id @arg {D_DecTypeNum} x */
-	decode_continuation_token_binary(cf,msg_id,x) {
+	/** @private @arg {CF_decode_continuation_token} cf @arg {D_DecTypeNum} x */
+	decode_continuation_token_binary(cf,x) {
+		cf;
 		switch(x[0]) {
 			default: debugger; break;
 			case "child": {
@@ -6294,7 +6295,6 @@ class HandleTypes extends HandleTypesEval {
 				}
 				let x1=decodeURIComponent(f3i);
 				this.params("continuation_token.+4.f0.f3","continuation_token.data",x1);
-				this.save_string(`continuation_token_binary:${cf}`,"0x"+(new Uint32Array(msg_id.buffer)[0].toString(16)));
 			} break;
 		}
 	}
@@ -6305,7 +6305,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(request) {
 			default: debugger; break;
 			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				this.decode_continuation_token(cf,token,4);
+				this.decode_continuation_token(cf,token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
 				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
@@ -10725,7 +10725,7 @@ class HandleTypes extends HandleTypesEval {
 	D_Continuation(x) {
 		const cf="D_Continuation";
 		const {continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
-		this.decode_continuation_token(cf,continuation,2);
+		this.decode_continuation_token(cf,continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	//#endregion

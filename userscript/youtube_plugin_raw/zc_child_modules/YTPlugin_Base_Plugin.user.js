@@ -750,12 +750,10 @@ class MyReader {
 	noisy_log_level=false;
 	/** @constructor @public @arg {Uint8Array} buf  */
 	constructor(buf) {
-		this.pos=0;
-		this.base=0;
-		this.last_pos=0;
 		this.buf=buf;
+		this.pos=0;
 		this.len=buf.length;
-		this.end_pos=this.len;
+		this.last_pos=0;
 	}
 	/** @api @public @arg {number} off */
 	offset(off) {
@@ -786,10 +784,7 @@ class MyReader {
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
-		if(size===void 0) {
-			this.cur_len=this.len-prev_pos;
-			this.base=prev_pos;
-		} else {this.cur_len=this.pos+size;}
+		if(size===void 0) {this.cur_len=this.len;} else {this.cur_len=this.pos+size;}
 		this.failed=false;
 		try {return this.read_any_impl();} finally {
 			this.pos=prev_pos;
@@ -805,9 +800,7 @@ class MyReader {
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
-		let prev_end_pos=this.end_pos;
-		this.end_pos=this.cur_len+this.base;
-		for(;this.pos<this.end_pos;loop_count++) {
+		for(;this.pos<this.cur_len;loop_count++) {
 			let cur_byte=this.uint32();
 			if(cur_byte===null) {
 				this.failed=true;
@@ -831,7 +824,6 @@ class MyReader {
 			let [_fieldId,_type,decoded_data]=cur;
 			for(let item of decoded_data) {res_arr.push(item);}
 		}
-		this.end_pos=prev_end_pos;
 		return res_arr;
 	}
 	/** @private @template T @arg {number} pos @arg {()=>T} f */
@@ -1056,7 +1048,7 @@ class MyReader {
 					this.failed=true;
 					break;
 				}
-				if(this.pos+size>this.end_pos) {
+				if(this.pos+size>this.cur_len) {
 					if(this.log_range_error) console.log("range error at",this.pos,fieldId,"size is too big",size);
 					first_num.push(["error",fieldId]);
 					this.failed=true;
