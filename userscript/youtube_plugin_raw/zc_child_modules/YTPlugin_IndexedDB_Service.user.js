@@ -105,50 +105,17 @@ class IndexedDBService extends BaseService {
 	}
 	/** @private @arg {push_waiting_obj_Args} args */
 	push_waiting_obj(...args) {
-		switch(args[0]) {
-			case "boxed_id": {
-				const [key,obj]=args;
-				let d_cache=this.get_data_cache(key);
-				let c_index=this.store_cache_index[key][1];
-				let index_val=`${key}:${obj.type}:${obj.id}`;
-				let idx=c_index.get(index_val);
-				if(idx!==void 0) {
-					d_cache[1][idx]=obj;
-					return;
-				}
-				idx=d_cache[1].push(obj)-1;
-				c_index.set(index_val,idx);
-			} break;
-			case "hashtag": {
-				const [key,obj]=args;
-				let d_cache=this.get_data_cache(key);
-				let c_index=this.store_cache_index[key][1];
-				let index_val=obj.hashtag;
-				if(index_val===void 0) break;
-				let idx=c_index.get(index_val);
-				if(idx!==void 0) {
-					d_cache[1][idx]=obj;
-					return;
-				}
-				idx=d_cache[1].push(obj)-1;
-				c_index.set(index_val,idx);
-			} break;
-			case "video_id": {
-				const [key,obj]=args;
-				let d_cache=this.get_data_cache(key);
-				let c_index=this.store_cache_index[key][1];
-				let index_val=obj.v;
-				if(index_val===void 0) break;
-				if(!index_val) {debugger; throw new Error("Invalid index key");}
-				let idx=c_index.get(index_val);
-				if(idx!==void 0) {
-					d_cache[1][idx]=obj;
-					return;
-				}
-				idx=d_cache[1].push(obj)-1;
-				c_index.set(index_val,idx);
-			}; break;
+		const [key,obj]=args;
+		let d_cache=this.get_data_cache(key);
+		let c_index=this.store_cache_index[key][1];
+		let index_val=obj.key;
+		let idx=c_index.get(index_val);
+		if(idx!==void 0) {
+			d_cache[1][idx]=obj;
+			return;
 		}
+		idx=d_cache[1].push(as(obj))-1;
+		c_index.set(index_val,idx);
 	}
 	/** @arg {DatabaseStoreDescription} store_desc */
 	requestOpen(store_desc) {
