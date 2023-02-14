@@ -2797,13 +2797,6 @@ class HandleTypes extends HandleTypesEval {
 		this.codegen.codegen_renderer(x,`${cf}$${name}`);
 		debugger;
 	}
-	/** @arg {string} cf */
-	codegen_all_service_menu_icons(cf) {
-		let arr_items=JSON.stringify(this.service_menu_icons,null,"\t");
-		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
-	}
-	/** @private @type {string[]} */
-	service_menu_icons=[];
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
 	D_MenuServiceItem_Omit(x,f) {const cf="D_MenuServiceItem_Omit"; const {text,serviceEndpoint,trackingParams,...y}=this.s(cf,x); f.call(this,serviceEndpoint); return y;}
 	/** @protected @arg {D_MenuServiceItem<{}>} x */
