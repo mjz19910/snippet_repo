@@ -6629,7 +6629,12 @@ class HandleTypes extends HandleTypesEval {
 		this.R_f11(f11);
 		this.D_f12(f12);
 	}
-	R_0x4c82a9c(x) {this.D_0x4c82a9c(x[0x4c82a9c]);}
+	/** @private @arg {R_0x4c82a9c} x */
+	R_0x4c82a9c(x) {
+		const cf="R_0x4c82a9c";
+		const {0x4c82a9c: a,...y}=this.s(cf,x); this.g(y);
+		this.D_0x4c82a9c(a);
+	}
 	/** @private @arg {D_0x12f639cf} x */
 	D_0x12f639cf(x) {
 		const cf="D_0x12f639cf";
