@@ -3634,15 +3634,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
-		const {feedbackToken,...u}=this.s(cf,x);
+		const {feedbackToken,uiActions,actions,...u}=this.s(cf,x); this.g(y);
 		this.save_b64_binary("feedbackToken",feedbackToken);
-		if("uiActions" in u) {
-			const {uiActions,actions,...y}=u; this.g(y);/*#destructure_done*/
-			this.D_HideEnclosingContainer(uiActions);
-			this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
-			return;
-		}
-		this.g(u);
+		this.t(uiActions,this.D_HideEnclosingContainer);
+		this.t(actions,x => this.z(x,this.A_ReplaceEnclosing));
 	}
 	/** @private @arg {DE_VE3832_Watch} x */
 	DE_VE3832_Watch(x) {

@@ -3,11 +3,7 @@
 type DE_AddToPlaylistService={videoId: string;};
 type DE_CreateBackstagePost={createBackstagePostParams: string;};
 type DE_CreateComment={createCommentParams: string;};
-type DE_Feedback=
-	|{feedbackToken: string; uiActions: D_HideEnclosingContainer; actions?: A_ReplaceEnclosing[];}
-	|{feedbackToken: string;}
-	;
-;
+type DE_Feedback={feedbackToken: string; uiActions?: D_HideEnclosingContainer; actions?: A_ReplaceEnclosing[];};
 type DE_GetNotificationMenu={ctoken: string;};
 type DE_Like=DE_LikeIndifferent|DE_LikeLike|DE_LikeDislike;
 type DE_LikeDislike={status: "DISLIKE"; target: D_LikeApi; dislikeParams: string;};
