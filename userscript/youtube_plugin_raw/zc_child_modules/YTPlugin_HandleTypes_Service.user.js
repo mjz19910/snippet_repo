@@ -6470,6 +6470,10 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case 1: {
 				const [dec_0]=dec_t; dec_0;
+				const [type,field_id,buffer,dec_1]=dec_0;
+				if(type!=="child") debugger;
+				if(field_id!==0x4c82a9c) debugger;
+				buffer; dec_1;
 				debugger;
 			} break;
 		}
