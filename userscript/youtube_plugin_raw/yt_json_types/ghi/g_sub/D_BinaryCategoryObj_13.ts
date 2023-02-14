@@ -1,3 +1,4 @@
+// cSpell:ignoreRegExp //m/.+?"/
 type D_BinaryCategoryObj_13=
 	|{
 		1: TR_Binary_Any<"/m/0fpzzp">;
