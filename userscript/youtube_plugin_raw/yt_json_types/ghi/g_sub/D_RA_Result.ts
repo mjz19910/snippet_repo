@@ -1,15 +1,13 @@
+type D_RA_D_BinaryCategoryObj_23=[
+	["child",2,Uint8Array,["data32",1,53]],
+	["child",3,Uint8Array,null]
+];
 type D_RA_Result=
 	|D_RA_CR_0x4c82a9c
 	|D_RA_CR_0x12f639cf
 	|D_RA_CR_0x14527fab
+	|D_RA_D_BinaryCategoryObj_23
 	;
 ;
-type D_RA_CR_0x14527fab=[
-	["data32",3,number],
-	["child",11,Uint8Array,D_RA_R_YtPageSnapshot],
-	["child",12,Uint8Array,D_RA_D_PageSnapshotToken],
-	["child",0x14527fab,Uint8Array,D_RA_D_0x14527fab],
-];
-type D_RA_D_0x14527fab=[["data32", 1, 0]];
 type DD_exv_1=D_0x14527fab;
 type DD_exv_0=R_0x14527fab;

@@ -6548,6 +6548,23 @@ class HandleTypes extends HandleTypesEval {
 			buffer; dec;
 		}
 	}
+	/** @arg {D_RA_D_BinaryCategoryObj_23} x */
+	D_RA_D_BinaryCategoryObj(x) {
+		const [dec_0,dec_1]=x;
+		{
+			const [type,field_id,buffer,dec]=dec_0;
+			if(type!=="child") debugger;
+			if(field_id!==2) debugger;
+			buffer; dec;
+		}
+		{
+			const [type,field_id,buffer,dec]=dec_1;
+			if(type!=="child") debugger;
+			if(field_id!==3) debugger;
+			if(dec!==null) debugger;
+			buffer;
+		}
+	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -6560,6 +6577,9 @@ class HandleTypes extends HandleTypesEval {
 		let dec_t=as_any(dec);
 		switch(dec_t.length) {
 			default: debugger; break;
+			case 2: {
+				this.D_RA_D_BinaryCategoryObj(dec_t);
+			} break;
 			case 5: {
 				this.D_RA_CR_0x12f639cf(dec_t);
 			} break;
