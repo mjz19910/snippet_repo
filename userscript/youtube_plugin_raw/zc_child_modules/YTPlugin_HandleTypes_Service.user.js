@@ -5662,7 +5662,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private */
 	_decoder=new TextDecoder();
-	D_QoeLoggingContext(x) {x;}
 	/** @private @arg {string} cf @arg {string} x */
 	V_SerializedContextData(cf,x) {
 		let x1=decodeURIComponent(x);
@@ -5673,6 +5672,9 @@ class HandleTypes extends HandleTypesEval {
 		switch(r[0]) {
 			default: debugger; break;
 			case "child": switch(r[1]) {
+				case 1: {
+
+				} break;
 				case 3: {
 					let playlist_id=this._decoder.decode(r[2]);
 					if(this.str_starts_with_rx("RD",playlist_id)) {this.playlistId(as(playlist_id));} else {
@@ -5696,6 +5698,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
+		const cf="D_VssLoggingContext"; this.k(cf,x);
+		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.V_SerializedContextData(cf,serializedContextData);
+	}
+	/** @private @arg {D_SerializedContextData} x */
+	D_QoeLoggingContext(x) {
 		const cf="D_VssLoggingContext"; this.k(cf,x);
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.V_SerializedContextData(cf,serializedContextData);
