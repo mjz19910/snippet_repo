@@ -199,15 +199,6 @@ class IndexedDBService extends BaseService {
 	openCursor(obj_store,query,direction) {
 		return obj_store.openCursor(query,direction);
 	}
-	/**
-	 * @param {string} key
-	 * @param {{ v: string; } | { hashtag: string;} | { type: string; id: string; }} x
-	 */
-	get_index_value(key,x) {
-		switch(key) {
-			case "":x;
-		}
-	}
 	/** @private @arg {IDBDatabase} db @arg {DatabaseStoreDescription} store_desc */
 	async start_transaction(db,store_desc) {
 		let {key: tx_namespace}=store_desc;
