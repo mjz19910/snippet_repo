@@ -6524,6 +6524,29 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RA_CR_0x14527fab} x */
 	D_RA_CR_0x14527fab(x) {
 		const [dec_0,dec_1,dec_2,dec_3]=x;
+		{
+			const [type,field_id,value]=dec_0; value;
+			if(type!=="data32") debugger;
+			if(field_id!==3) debugger;
+		}
+		{
+			const [type,field_id,buffer,dec]=dec_1;
+			if(type!=="child") debugger;
+			if(field_id!==11) debugger;
+			buffer; dec;
+		}
+		{
+			const [type,field_id,buffer,dec]=dec_2;
+			if(type!=="child") debugger;
+			if(field_id!==12) debugger;
+			buffer; dec;
+		}
+		{
+			const [type,field_id,buffer,dec]=dec_3;
+			if(type!=="child") debugger;
+			if(field_id!==0x14527fab) debugger;
+			buffer; dec;
+		}
 	}
 	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
