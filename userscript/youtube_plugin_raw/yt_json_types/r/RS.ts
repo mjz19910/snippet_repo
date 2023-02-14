@@ -95,7 +95,6 @@ type RS_Next={
 	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: D_FrameworkUpdates;
 };
-type D_IsCacheHit=D_Cache_MD;
 type RS_Player={
 	responseContext: RC_ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;
@@ -245,10 +244,6 @@ type RS_Page_Browse={
 	page: "browse";
 	response: RS_Browse;
 	expirationTime: number;
-};
-type D_GraftedVeItem={
-	veData: D_TrackingParams;
-	csn: string;
 };
 type RS_Page_Channel={
 	page: "channel";

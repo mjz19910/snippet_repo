@@ -6663,7 +6663,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		let f3_idx=f3_res.map((e,z) => ({index: z,type: e[0],v: e[1]}));
 		for(let v of f3_idx) {
-			/** @type {f3_idx_item} */
+			/** @type {D_f3_idx_item} */
 			let ui=as_any(v);
 			if(ui.index===2) continue;
 			if(ui.index===4) continue;

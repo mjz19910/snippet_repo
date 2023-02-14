@@ -1,4 +1,4 @@
-type f3_idx_item={
+type D_f3_idx_item={
 	index: 0;
 	type: "d";
 	v: 0;
