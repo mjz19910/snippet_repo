@@ -144,14 +144,16 @@ type reel_watch_sequence_a15={
 	6: T_VW<reel_watch_sequence_a15_a6>;
 };
 
+type reel_watch_sequence_a3={
+	1: T_VW<"RTuwQTgt3WE">;
+	3: T_VW<10>;
+	4: T_VW<2>;
+	6: T_VW<V_Bigint<bigint>>;
+};
+
 type P_continuation_request_reel_watch_sequence_token={
 	1: T_VW<"gKyQXCkdZl0">,
-	3: T_VW<{
-		1: T_VW<"RTuwQTgt3WE">,
-		3: T_VW<10>,
-		4: T_VW<2>,
-		6: T_VW<V_Bigint<bigint>>;
-	}>,
+	3: T_VW<reel_watch_sequence_a3>,
 	5: T_VW<{
 		3: T_VW<12>;
 	}>,
