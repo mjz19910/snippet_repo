@@ -2578,14 +2578,23 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_Binary_d0(x) {this.z(x,this.D_RD_ObjArr);}
 	/** @arg {D_RD_ObjArr[]} x */
 	D_RA_D_Binary_dg(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [["child",T,...any]]} */
+	/** @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [[any,T,...any]]} */
 	is_fx_extract(x,t) {return x[0][1]===t;}
 	/** @arg {D_RA_D_Binary_f1|D_RA_CR_0x4c82a9c|D_RA_CR_0x19ac5ceb} x */
 	D_RA_D_Binary_f1(x) {
 		const cf="D_RA_D_Binary_f1";
 		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
 		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
-		this.codegen_typedef_bin(cf,x,false);
+		if(this.is_fx_extract(x,1)) {
+			const cf="D_RD_Obj_a14",[type,,a]=x[0];
+			if(type!=="data32") {
+				this.codegen_typedef_bin(cf,x);
+				return;
+			}
+			this.save_number(cf,a);
+			return;
+		}
+		this.codegen_typedef_bin(cf,x);
 	}
 	/** @arg {D_RA_D_Binary_x1} x */
 	D_RA_D_Binary_x1(x) {
