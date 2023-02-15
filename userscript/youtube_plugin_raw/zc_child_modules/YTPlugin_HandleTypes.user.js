@@ -2263,7 +2263,7 @@ class HandleTypes extends HandleTypesEval {
 			if(f6!=="external") debugger;
 			return;
 		}
-		debugger;
+		this.g(u);
 	}
 	/** @private @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {
