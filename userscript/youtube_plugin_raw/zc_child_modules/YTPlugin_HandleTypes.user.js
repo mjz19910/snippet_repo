@@ -2218,28 +2218,29 @@ class HandleTypes extends HandleTypesEval {
 		const {4: [f4],...u}=x;
 		this.V_BinaryTimestamp(f4);
 		if(3 in u) {
-			if(19 in u) {
-				const {1: [f1],2: [f2],3: [f3],6: [f6],9: [f9],19: [f19],...y}=u; this.g(y);
-				this.save_number(`${cf}.f1`,f1);
-				this.a_primitive_num(f2);
-				this.save_number(`${cf}.f3`,f3);
-				if(f6!=="related") debugger;
-				this._primitive_of(f9,"bigint");
-				this.V_VeDescObj(f19);
-				return;
-			}
-			if(9 in u) {
-				const {1: [f1],2: [f2],3: [f3],9: [f9],...y}=u; this.g(y);
-				this.save_number(`${cf}.f1`,f1);
-				this.a_primitive_num(f2);
-				this.save_number(`${cf}.f3`,f3);
-				this._primitive_of(f9,"bigint");
-				return;
-			}
-			const {1: [f1],2: [f2],3: [f3],...y}=u; this.g(y);
+			const {1: [f1],2: [f2],3: [f3],...z}=u;
 			this.save_number(`${cf}.f1`,f1);
 			this.a_primitive_num(f2);
 			this.save_number(`${cf}.f3`,f3);
+			if(6 in z) {
+				const {6: [f6],9: f9w,19: f19w,...y}=z; this.g(y);
+				if(f6!=="related") debugger;
+				if(f9w) {
+					const [f9]=f9w;
+					this._primitive_of(f9,"bigint");
+				}
+				if(f19w) {
+					const [f19]=f19w;
+					this.V_VeDescObj(f19);
+				}
+				return;
+			}
+			if(9 in z) {
+				const {9: [f9],...y}=z; this.g(y);
+				this._primitive_of(f9,"bigint");
+				return;
+			}
+			this.g(z);
 			return;
 		}
 		if(1 in u) {
