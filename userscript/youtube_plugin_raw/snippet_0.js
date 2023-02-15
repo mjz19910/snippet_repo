@@ -83,14 +83,8 @@ class CodegenService {
 export class Snippet_0_tmp {
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
-	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse} path @arg {string} x */
-	params(root,path,x) {this.parser.on_endpoint_params(root,path,x);}
-	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */
 	primitive_of(x,y) {if(typeof x!==y) debugger;}
-	/** @protected @arg {CF_L_TP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
 	/** @private @arg {string} x */
 	decode_url_b64(x) {
 		x=x.replaceAll("_","/").replaceAll("-","+");
@@ -487,12 +481,5 @@ class ND extends Snippet_0_tmp {
 	C_Continuation(x) {x;}
 	/** @arg {R_Notification} x */
 	R_Notification(x) {x;}
-	/** @arg {"next"} section @arg {DC_Generic_CTP} x */
-	CT_ClickTracked(x,section) {
-		const cf="D_NextContinuation";
-		const {continuation,clickTrackingParams}=this.sd(x);// this.g(y);//#destructure
-		this.params(cf,`${section}.continuation`,continuation);
-		this.clickTrackingParams(cf,clickTrackingParams);
-	}
 }
 new ND;
