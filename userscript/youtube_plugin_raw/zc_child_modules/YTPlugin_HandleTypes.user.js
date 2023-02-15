@@ -3101,7 +3101,7 @@ class HandleTypes extends HandleTypesEval {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
 	/** @arg {D_RA_CD_0x4c82a9c} x */
-	D_ReadAny_CD_0x4c82a9c(x) {
+	D_RA_CD_0x4c82a9c(x) {
 		if(x.length!==3) debugger;
 		const [a,b,c]=x;
 		{
@@ -3124,14 +3124,25 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @arg {D_RA_CR_0x4c82a9c} x */
-	D_ReadAny_CR_0x4c82a9c(x) {
+	D_RA_CR_0x4c82a9c(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
 		const [type,field_id,buffer,dec_1]=dec_0;
 		if(type!=="child") debugger;
 		if(field_id!==0x4c82a9c) debugger; buffer;
-		this.D_ReadAny_CD_0x4c82a9c(dec_1);
+		this.D_RA_CD_0x4c82a9c(dec_1);
 	}
+	/** @arg {D_RA_CR_0x19ac5ceb} x */
+	D_RA_CR_0x19ac5ceb(x) {
+		if(x.length!==1) debugger;
+		const [dec_0]=x;
+		const [type,field_id,buffer,dec_1]=dec_0;
+		if(type!=="child") debugger;
+		if(field_id!==0x19ac5ceb) debugger; buffer;
+		this.D_RA_CD_0x19ac5ceb(dec_1);
+	}
+	/** @arg {D_RA_CD_0x19ac5ceb} x */
+	D_RA_CD_0x19ac5ceb(x) {x; debugger;}
 	/** @arg {D_RA_CR_0x12f639cf} x */
 	D_RA_CR_0x12f639cf(x) {
 		const [dec_0,dec_1,dec_2,dec_3,dec_4]=x;
@@ -3256,7 +3267,11 @@ class HandleTypes extends HandleTypesEval {
 				this.D_RA_CR_0x14527fab(dec_t);
 			} break;
 			case 1: {
-				this.D_ReadAny_CR_0x4c82a9c(dec_t);
+				if(dec_t[0][1]===0x19ac5ceb) {
+					this.D_RA_CR_0x19ac5ceb(as(dec_t));
+					break;
+				};
+				this.D_RA_CR_0x4c82a9c(as(dec_t));
 			} break;
 		}
 		let bin_obj=this.convert_arr_to_obj(dec);
