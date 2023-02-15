@@ -273,6 +273,7 @@ class CodegenService extends BaseService {
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,do_break,ret_val) {
 		let res=this.codegen_typedef_impl(cf,x,ret_val);
+		if(ret_val) return res;
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
 		if(ci&&ci.includes(res)) return;

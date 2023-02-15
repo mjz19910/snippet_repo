@@ -2369,6 +2369,11 @@ class HandleTypes extends HandleTypesEval {
 		if(typeof obj==="symbol") return obj;
 		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
 		if(typeof obj!=="object") return obj;
+		if(obj instanceof Array) {
+			if(obj.length===1) {
+				return `TYPE::VW<${obj[0]}>`;
+			}
+		}
 		state;
 		return obj;
 	}
