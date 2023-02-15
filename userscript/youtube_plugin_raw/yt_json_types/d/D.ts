@@ -976,13 +976,8 @@ type D_AdSlot={
 	enablePacfLoggingWeb: boolean;
 };
 type D_SerializedAdServingDataEntry={serializedAdServingDataEntry: string;};
-type D_AdLayoutMetadata={
-	layoutId: string;
-	layoutType: "LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED";
-	adLayoutLoggingData: D_SerializedAdServingDataEntry;
-};
 type D_PageTopAdLayout={
-	adLayoutMetadata: D_AdLayoutMetadata;
+	adLayoutMetadata: MG_AdLayout_DisplayBillboardImageButtoned;
 	renderingContent: R_VideoMastheadAdV3;
 };
 type D_Emoji={

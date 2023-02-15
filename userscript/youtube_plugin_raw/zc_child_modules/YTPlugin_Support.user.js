@@ -454,7 +454,7 @@ class HandleRS extends ServiceMethods {
 		if(kind) this.save_string(`${cf}.kind`,kind);
 		this.save_string(`${cf}.lang`,lang);
 	}
-	/** @private @arg {MG_AdLayout_PlayerBytes} x */
+	/** @private @arg {MG_AdLayout_CompositePlayerBytes} x */
 	MG_AdLayout_PlayerBytes(x) {
 		const cf="MG_AdLayout_PlayerBytes";
 		const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);

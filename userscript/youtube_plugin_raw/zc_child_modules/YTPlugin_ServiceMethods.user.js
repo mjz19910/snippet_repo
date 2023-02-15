@@ -4734,9 +4734,9 @@ class ServiceMethods extends ServiceData {
 		this.E_VE4724_Search(searchEndpoint);
 		this.R_Button(clearButton);
 	}
-	/** @private @arg {MG_AdLayout_TopImage} x */
+	/** @private @arg {MG_AdLayout_DisplayTopLandscapeImage} x */
 	MG_AdLayout_TopImage(x) {
-		const cf="MMD_AdLayout_TopImage"; this.k(cf,x);
+		const cf="MG_AdLayout_TopImage"; this.k(cf,x);
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(layoutType);
 		this.a_primitive_str(layoutId);

@@ -479,6 +479,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_PlayerBytes";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611";}
@@ -791,6 +792,7 @@ export namespace Gen {
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_Continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}

@@ -45,9 +45,16 @@ type M_YpcGetOffers=TM_Gen<GM_YpcGetOffers>;
 //#region MG_
 type T_MG_AdLayout_2<T>={layoutType: T; layoutId: string;};
 type T_MG_AdLayout_3<T>={layoutType: T; layoutId: string; adLayoutLoggingData: D_SerializedAdServingDataEntry;};
-type MG_AdLayout_PlayerBytes=T_MG_AdLayout_2<"LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES">;
-type MG_AdLayout_TopImage=T_MG_AdLayout_3<"LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE">;
-type MG_AdLayout_SquareImage=T_MG_AdLayout_3<"LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE">;
-type MG_AdLayout=MG_AdLayout_PlayerBytes|MG_AdLayout_TopImage|MG_AdLayout_SquareImage;
+type MG_AdLayout_CompositePlayerBytes=T_MG_AdLayout_2<"LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES">;
+type MG_AdLayout_DisplayTopLandscapeImage=T_MG_AdLayout_3<"LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE">;
+type MG_AdLayout_DisplaySquareImage=T_MG_AdLayout_3<"LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE">;
+type MG_AdLayout_DisplayBillboardImageButtoned=T_MG_AdLayout_3<"LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED">;
+type MG_AdLayout=
+	|MG_AdLayout_DisplayBillboardImageButtoned
+	|MG_AdLayout_CompositePlayerBytes
+	|MG_AdLayout_DisplayTopLandscapeImage
+	|MG_AdLayout_DisplaySquareImage
+	;
+;
 //#endregion
 type MP_AccountMenu={trackingParams: string; style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT"; showLoadingSpinner: true;};

@@ -3049,13 +3049,13 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @public @arg {"MG_AdLayout"|"D_AdLayoutMetadata"} cf1 @arg {D_SerializedAdServingDataEntry} x */
+	/** @public @arg {"MG_AdLayout"|"D_AdLayoutMetadata"|"MG_AdLayout_TopImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
 	D_SerializedAdServingDataEntry(cf1,x) {
 		const cf2="D_SerializedAdServingDataEntry";
 		switch(cf1) {
 			default: debugger; break;
 			case "MG_AdLayout": {
-				this.H_(cf2,"serializedAdServingDataEntry",x,x => this.params("ad_serving_data_entry",x));
+				this.H_(cf2,"serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x));
 			} break;
 		}
 	}
@@ -4062,7 +4062,7 @@ class HandleTypes extends HandleTypesEval {
 	D_PageTopAdLayout(x) {
 		const cf="D_PageTopAdLayout"; this.k(cf,x);
 		const {adLayoutMetadata,renderingContent,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_AdLayoutMetadata(adLayoutMetadata);
+		this.MG_AdLayout(adLayoutMetadata);
 		this.R_VideoMastheadAdV3(renderingContent);
 	}
 	/** @arg {D_PlaylistPanel} x */
@@ -4083,14 +4083,6 @@ class HandleTypes extends HandleTypesEval {
 		if(isEditable!==true) debugger;
 		this.t(previewDescription,this.g);
 		this.t(numItemsToShow,x => {if(x!==25) debugger;});
-	}
-	/** @arg {D_AdLayoutMetadata} x */
-	D_AdLayoutMetadata(x) {
-		const cf="D_AdLayoutMetadata";
-		const {layoutId,layoutType,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);
-		this.save_string(`${cf}.layoutId`,layoutId);
-		if(layoutType!=="LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED") debugger;
-		this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
 	}
 	/** @private @arg {D_InfoRow} x */
 	D_InfoRow(x) {
