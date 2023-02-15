@@ -2605,7 +2605,7 @@ class ServiceMethods extends ServiceData {
 				case "continuation_token.data": {
 					/** @type {`sub.${path}`} */
 					const cf=`sub.${path}`;
-					this.x.get("handle_types").decode_continuation_token(cf,entry);
+					this.x.get("handle_types").decode_continuation_token(as_any(cf),entry);
 					ret=true;
 				} break;
 				case "tracking.trackingParams": {
@@ -2641,7 +2641,7 @@ class ServiceMethods extends ServiceData {
 					]);
 					ret=false;
 				} break;
-				case "reel.player_params":  {
+				case "reel.player_params": {
 					this.save_number(path,entry);
 					ret=true;
 				} break;
@@ -2888,7 +2888,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {
-		let off=1; root;map_entry_key_path; callback;
+		let off=1; root; map_entry_key_path; callback;
 		let ret=true;
 		for(let val of tva) {
 			off++; val;
@@ -2935,8 +2935,7 @@ class ServiceMethods extends ServiceData {
 		/** @private @type {P_LogItems} */
 		switch(path)/*endpoint*/ {
 			default: {
-				grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
-				{debugger;}
+				if(new_data) this.log_list.push([() => grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path)]);
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
