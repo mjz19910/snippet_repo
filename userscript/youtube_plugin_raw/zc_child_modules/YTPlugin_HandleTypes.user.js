@@ -2380,6 +2380,9 @@ class HandleTypes extends HandleTypesEval {
 				}
 				return obj[0];
 			}
+			/** @type {D_DecTypeNum} */
+			let otu=as(obj);
+			if(otu[0]==="child") return this.convert_arr_to_obj([otu]);
 		}
 		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
 		state;
