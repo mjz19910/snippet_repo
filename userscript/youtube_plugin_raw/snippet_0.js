@@ -81,6 +81,10 @@ class CodegenService {
 	codegen_new_typedef(x,y,z) {x; y; z;}
 }
 export class Snippet_0_tmp {
+	/** @protected @template {any[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
+	drop_last(x) {
+		return as([x.slice(0,-1),x.slice(-1)[0]]);
+	}
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {T_GetTypeof<T>} y */

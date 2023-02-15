@@ -2834,10 +2834,6 @@ class HandleTypes extends HandleTypesEval {
 		const {1: [f1],...y}=this.s(cf,x); this.g(y);
 		this.D_0x19ac5ceb_map(s,f1);
 	}
-	/** @private @template {any[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
-	drop_last(x) {
-		return as([x.slice(0,-1),x.slice(-1)[0]]);
-	}
 	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map_entry} x */
 	D_0x19ac5ceb_map_entry(s,x) {
 		const cf="D_0x19ac5ceb_map_entry";
@@ -2870,19 +2866,15 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map} x */
 	D_0x19ac5ceb_map(s,x) {
 		const cf="D_0x19ac5ceb_map";
-		const {1: [a,...b],2: [f2],3: [c,...d],5: [f3],...y}=this.s(cf,x); this.g(y);
-		if(a[0]!=="begin") debugger; if(c[0]!=="begin") debugger;
+		const {1: f1,2: [f2],3: f3,5: [f5],...y}=this.s(cf,x); this.g(y);
 		if(!(f2 instanceof Uint8Array)) debugger;
-		if(!(f3 instanceof Uint8Array)) debugger;
-		let [e,g]=this.drop_last(b);
-		let [f,h]=this.drop_last(d);
-		if(g[0]!=="end") debugger; if(h[0]!=="end") debugger;
-		this.z(e,x => {
+		if(!(f5 instanceof Uint8Array)) debugger;
+		this.z(f1,x => {
 			if(1006 in x) return this.D_0x19ac5ceb_map_key(x);
 			if(1000 in x) return this.D_0x19ac5ceb_map_container(x);
 			debugger;
 		});
-		this.z(f,x => this.D_0x19ac5ceb_map_entry(s,x));
+		this.z(f3,x => this.D_0x19ac5ceb_map_entry(s,x));
 	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
