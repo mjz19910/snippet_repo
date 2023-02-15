@@ -2604,7 +2604,7 @@ class HandleTypes extends HandleTypesEval {
 			if(x[15]!==1) {debugger; return;}
 		}
 	}
-	/** @private @arg {D_0x4c82a9c[2]} x */
+	/** @private @arg {D_0x4c82a9c[2][0]} x */
 	D_0x4c82a9c_f2(x) {
 		if(!x) {debugger; return;}
 		if(this.str_starts_with(x,"UC")) {debugger; return this.D_ChannelId(x);}
@@ -2835,11 +2835,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_0x4c82a9c} x */
 	D_0x4c82a9c(x) {
 		const cf="D_0x4c82a9c";
-		const {2: f2,3: f3,...y}=this.s(cf,x);
+		const {2: [f2],3: [f3],...y}=this.s(cf,x);
 		this.D_0x4c82a9c_f2(f2);
 		this.params("D_0x4c82a9c.continuation_token.data",f3);
 		if(35 in y) {
-			const {35: f35,...y1}=y; this.g(y1);
+			const {35: [f35],...y1}=y; this.g(y1);
 			switch(f35) {
 				default: debugger; break;
 				case "browse-feedFEwhat_to_watch":

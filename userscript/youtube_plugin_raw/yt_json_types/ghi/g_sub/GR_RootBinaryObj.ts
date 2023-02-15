@@ -14,6 +14,7 @@ type GR_RootBinaryObj=
 	|R_0x12f639cf
 	|R_0x14527fab
 	|R_0x19ac5ceb
+	|R_TrackingObj
 	|D_BinaryCategoryObj
 	|R_ClickTrackingObj
 	|R_CreatePlaylistObj
