@@ -3160,10 +3160,7 @@ class HandleTypes extends HandleTypesEval {
 			case 2: {
 				if(dec!==null) debugger;
 			} break;
-			case 3: {
-				this.D_RA_CD_0x19ac5ceb_map_f3_data_arr(dec);
-				debugger;
-			} break;
+			case 3: this.D_RA_CD_0x19ac5ceb_map_f3_data_arr(dec); break;
 		}
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_data_arr} x */
@@ -3171,12 +3168,28 @@ class HandleTypes extends HandleTypesEval {
 		const [dec_0,dec_1]=x;
 		if(x.length!==2) debugger;
 		this.D_RA_CD_0x19ac5ceb_map_f3_d0(dec_0);
-		this.D_RA_CD_0x19ac5ceb_map_f3_d2(dec_1);
+		this.D_RA_CD_0x19ac5ceb_map_f3_d1(dec_1);
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_d0} x */
-	D_RA_CD_0x19ac5ceb_map_f3_d0(x) {x;}
+	D_RA_CD_0x19ac5ceb_map_f3_d0(x) {
+		const [type,field_id,value]=x;
+		if(type!=="data32") debugger;
+		if(field_id!==1) debugger;
+		switch(value) {
+			default: debugger; break;
+			case 0: break;
+		}
+	}
 	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_d1} x */
-	D_RA_CD_0x19ac5ceb_map_f3_d2(x) {x;}
+	D_RA_CD_0x19ac5ceb_map_f3_d1(x) {
+		const [type,field_id,value]=x;
+		if(type!=="data32") debugger;
+		if(field_id!==2) debugger;
+		switch(value) {
+			default: debugger; break;
+			case 1: break;
+		}
+	}
 	/** @arg {D_RA_CD_0x19ac5ceb_f1_data} x */
 	D_RA_CD_0x19ac5ceb_f1_data(x) {
 		if(x.length!==1) debugger;
