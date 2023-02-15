@@ -81,13 +81,14 @@ class IndexedDBService extends BaseService {
 		if(arr.length!==arr.reduce((r) => r+1,0)) {debugger;}
 	}
 	is_broken=false;
+	trigger_bp() {
+		if(this.is_broken) return;
+		debugger;
+		this.is_broken=true;
+	}
 	/** @api @public @arg {AGA_push_waiting_obj} args */
 	put(...args) {
 		if(!args[1]) {debugger; return;}
-		if(!this.is_broken) {
-			debugger;
-			this.is_broken=true;
-		}
 		const [key,value,version]=args;
 		let cache=this.cached_data.get(key);
 		let cache_key=value.key;
