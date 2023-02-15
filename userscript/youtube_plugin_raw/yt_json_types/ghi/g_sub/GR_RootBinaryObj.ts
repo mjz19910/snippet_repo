@@ -30,6 +30,7 @@ type GR_RootBinaryObj=
 	|R_CreatePlaylistObj
 	|R_ContinuationObj_SubObj
 	|R_SlotAdServingDataObj
+	|{4: V_BinaryTimestamp;}
 	;
 ;
 type R_ContinuationObj_SubObj={

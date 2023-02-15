@@ -2792,7 +2792,10 @@ class HandleTypes extends HandleTypesEval {
 		if(4 in x) {
 			if(2 in x) return this.R_TrackingObj(x);
 			if(3 in x) return this.R_SlotAdServingDataObj(x);
-			this.codegen_typedef_bin(`${cf2}:${cf}`,x);
+			let keys=this.get_keys_of_2(x);
+			if(keys.length!==1) debugger;
+			this.V_BinaryTimestamp(x[4]);
+			return;
 		}
 		if(3 in x&&2 in x) return this.D_BinaryCategoryObj(cf,x);
 		if(3 in x&&1 in x) return this.D_BinaryCategoryObj(cf,x);
