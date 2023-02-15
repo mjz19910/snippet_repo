@@ -2941,6 +2941,8 @@ class ServiceMethods extends ServiceData {
 				map.delete(map_entry_key);
 				let cx=map_keys.indexOf(map_entry_key);
 				if(cx>-1) map_keys.splice(cx,1);
+			} else {
+				console.log("not del",path,map_keys);
 			}
 		}
 	}
