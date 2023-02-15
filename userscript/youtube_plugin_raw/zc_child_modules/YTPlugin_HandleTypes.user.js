@@ -2120,6 +2120,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {P_ReelParams} x */
 	P_ReelParams(x) {
 		if(6 in x) return;
+		if(5 in x) return;
 		debugger;
 	}
 	/** @private @arg {P_ReelSequenceParams} x */
@@ -2127,11 +2128,53 @@ class HandleTypes extends HandleTypesEval {
 		if(5 in x) return;
 		debugger;
 	}
+	/** @type {string[]} */
+	continuation_logged_str=[];
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	decode_continuation_token_obj(cf,x) {
 		switch(cf) {
-			default: debugger; break;
-			case "like.params":
+			default: {
+				if(this.continuation_logged_str.includes(cf)) break;
+				this.continuation_logged_str.push(cf);
+				console.log(`\ncase "${cf}":`);
+				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
+			} break;
+			case "entity.key": {
+				/** @type {P_entity_key} */
+				let u=as_any(x); u;
+			} break;
+			case "entity_key.normal": {
+				/** @type {P_entity_key_normal} */
+				let u=as_any(x); u;
+			} break;
+			case "playability_status.context_params": {
+				/** @type {P_playability_status_context_params} */
+				let u=as_any(x); u;
+			} break;
+			case "continuation_request.browse.token": {
+				/** @type {P_continuation_request_browse_token} */
+				let u=as_any(x); u;
+			} break;
+			case "unsubscribe.params": {
+				/** @type {P_unsubscribe_params} */
+				let u=as_any(x); u;
+			} break;
+			case "subscribe.params": {
+				/** @type {P_subscribe_params} */
+				let u=as_any(x); u;
+			} break;
+			case "remove_like.params": {
+				/** @type {P_remove_like_params} */
+				let u=as_any(x); u;
+			} break;
+			case "dislike.params": {
+				/** @type {P_dislike_params} */
+				let u=as_any(x); u;
+			} break;
+			case "like.params": {
+				/** @type {P_LikeParams} */
+				let u=as_any(x); u;
+			} break;
 			case "reel.sequence_params": {
 				/** @type {P_ReelSequenceParams} */
 				let u=as_any(x);
