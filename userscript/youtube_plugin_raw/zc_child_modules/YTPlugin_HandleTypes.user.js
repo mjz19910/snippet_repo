@@ -2425,7 +2425,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			case "data32": {
 				const [,,value]=x;
-				if(value!==0) debugger;
+				this.save_number(`${cf}.num`,value);
 			} break;
 		}
 	}
