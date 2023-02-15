@@ -5054,14 +5054,14 @@ class ServiceMethods extends ServiceData {
 	D_ChipCloudChip_WithSelection(x) {
 		const cf="D_ChipCloudChip_WithSelection";
 		let d=this.D_ChipCloudChip_Omit(cf,x);
-		const {style: a,isSelected: b,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
-		switch(a.styleType) {
+		const {style,isSelected,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
+		switch(style.styleType) {
 			default: debugger; break;
 			case "STYLE_DEFAULT":
 			case "STYLE_HOME_FILTER":
 			case "STYLE_REFRESH_TO_NOVEL_CHIP":
 		}
-		if(b!==true) debugger;
+		if(isSelected!==true) debugger;
 	}
 	/** @public @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
