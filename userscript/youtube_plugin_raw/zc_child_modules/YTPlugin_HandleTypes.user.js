@@ -2612,14 +2612,12 @@ class HandleTypes extends HandleTypesEval {
 			if(is_token_g2(x,31)) return;
 			if(is_token_g2(x,53)) return;
 			let kk=this.get_keys_of_2(x);
-			this.codegen_typedef(`decode_continuation_token:g_2:${kk.join()}`,x,false);
-			debugger;
+			this.cg.codegen_typedef_bin(`decode_continuation_token:g_2:${kk.join()}`,x,false);
 			return;
 		}
 		let kk=this.get_keys_of_2(x);
 		if(kk.length>0) {
-			this.codegen_typedef(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
-			debugger;
+			this.cg.codegen_typedef_bin(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x,false);
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
