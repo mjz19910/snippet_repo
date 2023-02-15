@@ -478,6 +478,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_DisplayTopLandscapeImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_PlayerBytes";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}

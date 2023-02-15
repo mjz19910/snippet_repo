@@ -3049,7 +3049,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @public @arg {"MG_AdLayout"|"D_AdLayoutMetadata"|"MG_AdLayout_TopImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
+	/** @public @arg {"MG_AdLayout"|"MG_AdLayout_DisplayTopLandscapeImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
 	D_SerializedAdServingDataEntry(cf1,x) {
 		const cf2="D_SerializedAdServingDataEntry";
 		switch(cf1) {
