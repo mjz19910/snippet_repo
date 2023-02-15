@@ -2703,7 +2703,12 @@ class ServiceMethods extends ServiceData {
 				} break;
 			}
 		} else if(entry instanceof Map) {
-			ret=true;
+			switch(path) {
+				default: {
+					debugger;
+					ret=false;
+				} break;
+			}
 		} else if(entry instanceof Uint8Array) {
 			switch(path) {
 				default: {
@@ -2713,6 +2718,7 @@ class ServiceMethods extends ServiceData {
 						console.log(`-- [handle_value_gen$do_save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`);
 						debugger;
 					}
+					ret=false;
 				} break;
 			}
 		}
