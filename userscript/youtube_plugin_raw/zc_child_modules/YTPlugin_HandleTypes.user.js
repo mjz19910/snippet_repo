@@ -2129,9 +2129,9 @@ class HandleTypes extends HandleTypesEval {
 			if(dec!==null) debugger;
 		}
 		{
-			const [type,field_id,,dec]=b;
+			const [type,id]=b;
 			if(type!=="child") debugger;
-			if(field_id!==3) debugger;
+			if(id!==3) debugger;
 			b[3]=null;
 		}
 		{
