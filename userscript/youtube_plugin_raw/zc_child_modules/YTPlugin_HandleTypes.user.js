@@ -2212,14 +2212,14 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
-	/** @private @arg {R_ClickTrackingObj} x */
-	R_ClickTrackingObj(x) {
-		const cf="R_ClickTrackingObj";
-		const {4: [f4],...u}=x;
+	/** @private @arg {Extract<R_ClickTrackingObj,{1:any}>} x */
+	R_ClickTrackingObj_t1(x) {
+		const cf="R_ClickTrackingObj_t1";
+		const {1: [f1],4: [f4],...u}=x;
+		this.save_number(`${cf}.f1`,f1);
 		this.V_BinaryTimestamp(f4);
 		if(3 in u) {
-			const {1: [f1],2: [f2],3: [f3],...z}=u;
-			this.save_number(`${cf}.f1`,f1);
+			const {2: [f2],3: [f3],...z}=u;
 			this.a_primitive_num(f2);
 			this.save_number(`${cf}.f3`,f3);
 			if(19 in z) {
@@ -2233,19 +2233,23 @@ class HandleTypes extends HandleTypesEval {
 			if(6 in z) {const {6: [f6],...y}=z; this.g(y); if(f6!=="rellist") debugger; return;}
 			return this.g(z);
 		}
-		if(1 in u) {
-			const {1: [f1],2: [f2],...z}=u;
-			this.save_number(`${cf}.f1`,f1);
-			this.a_primitive_num(f2);
-			if(19 in z) {
-				const {6: [f6],9: [f9],19: [f19],...y}=z; this.g(y);
-				if(f6!=="related-auto") debugger;
-				this._primitive_of(f9,"bigint");
-				this.V_VeDescObj(f19);
-				return;
-			}
+		const {2: [f2],...z}=u;
+		this.a_primitive_num(f2);
+		if(19 in z) {
+			const {6: [f6],9: [f9],19: [f19],...y}=z; this.g(y);
+			if(f6!=="related-auto") debugger;
+			this._primitive_of(f9,"bigint");
+			this.V_VeDescObj(f19);
 			return;
 		}
+		debugger;
+	}
+	/** @private @arg {R_ClickTrackingObj} x */
+	R_ClickTrackingObj(x) {
+		const cf="R_ClickTrackingObj"; this.k(cf,x);
+		if(1 in x) return this.R_ClickTrackingObj_t1(x);
+		const {4: [f4],...u}=x;
+		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
 			const {6: [f6],...y}=u; this.g(y);
 			if(f6!=="external") debugger;
