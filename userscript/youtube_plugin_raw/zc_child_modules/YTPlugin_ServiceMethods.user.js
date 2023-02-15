@@ -2830,7 +2830,7 @@ class ServiceMethods extends ServiceData {
 					case "_level_2_1": {
 						const idx=3;
 						if(parts.length===2) return this.handle_map_value(path,map_entry_value);
-						switch(parts[2]) {default: u(idx); debugger; parts[2]===""; break;}
+						switch(parts[2]) {default: u(idx); debugger; switch(parts[2]) {case "": }; break;}
 					} break;
 				}
 			} break;
