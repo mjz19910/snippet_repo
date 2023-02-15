@@ -2481,10 +2481,10 @@ class ServiceMethods extends ServiceData {
 	parse_player_param(root,path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		let mk=[...map.keys()];
-		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		let map_keys=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,map_keys,callback);
 		for(let i=1;i<100;i++) {
-			if(!mk.includes(i)) continue;
+			if(!map_keys.includes(i)) continue;
 			parse_key([i]);
 		}
 		if(this.eq_keys(map_keys,[])) return;
@@ -2751,11 +2751,11 @@ class ServiceMethods extends ServiceData {
 	parse_any_param(root,path,map_entry_key_path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		let mk=[...map.keys()];
-		let parse_key=this.make_parse_key(root,path,map,mk,callback);
-		let mk_max=Math.max(...mk,-1);
+		let map_keys=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,map_keys,callback);
+		let mk_max=Math.max(...map_keys,-1);
 		for(let i=1;i<mk_max+1;i++) {
-			if(!mk.includes(i)) continue;
+			if(!map_keys.includes(i)) continue;
 			map_entry_key_path.push(i);
 			parse_key(map_entry_key_path);
 			let l=map_entry_key_path.pop();
