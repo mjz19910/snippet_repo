@@ -2170,19 +2170,19 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length!==3) debugger;
 		const [a,b,c]=x;
 		{
-			const [type,field_id,buffer,dec]=a; buffer;
+			const [type,field_id,buffer,dec]=a;
 			if(type!=="child") debugger;
 			if(field_id!==2) debugger;
 			if(dec!==null) debugger;
 		}
 		{
-			const [type,field_id,buffer,dec]=b; buffer;
+			const [type,field_id,buffer,dec]=b;
 			if(type!=="child") debugger;
 			if(field_id!==3) debugger;
 			if(dec!==null) debugger;
 		}
 		{
-			const [type,field_id,buffer,dec]=c;
+			const [type,field_id,,dec]=c;
 			if(type!=="child") debugger;
 			if(field_id!==35) debugger;
 			if(dec!==null) debugger;
@@ -2258,7 +2258,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_CD_0x19ac5ceb_f1_data(x) {
 		if(x.length!==1) debugger;
 		const [item]=x;
-		const [type,field_id,buffer,dec]=item; buffer;
+		const [type,field_id,buffer,dec]=item;
 		if(type!=="child") debugger;
 		switch(field_id) {
 			default: debugger; break;
@@ -2266,7 +2266,7 @@ class HandleTypes extends HandleTypesEval {
 				if(dec.length!==1) debugger;
 				const [item]=dec;
 				{
-					const [type,field_id,buffer,dec]=item; buffer; dec;
+					const [type,field_id,buffer,dec]=item; dec;
 					if(type!=="data64") debugger;
 					if(field_id!==1) debugger;
 				}
@@ -2338,7 +2338,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {["child",1,Uint8Array,null]} x */
 	handle_1_any_d0(x) {
-		const [type,field_id,buffer]=x; buffer;
+		const [type,field_id,buffer]=x;
 		if(type!=="child") debugger;
 		if(field_id!==1) debugger;
 		x[3]=null;
