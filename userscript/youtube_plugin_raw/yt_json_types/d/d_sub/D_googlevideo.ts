@@ -8,7 +8,7 @@ type D_googlevideo_host=[
 	D_GV_q4flrn,
 	D_GV_nx57yn,
 	D_GV_nx5s7n,
-];
+][number];
 type D_GV_9gv7ln=[
 	"sn-9gv7lnes.googlevideo.com",
 	"sn-9gv7lnez.googlevideo.com",
