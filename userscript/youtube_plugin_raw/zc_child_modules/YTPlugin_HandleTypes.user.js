@@ -2373,12 +2373,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(field_id) {
 			default: debugger; break;
 			case 1: this.handle_1_any(dec); break;
-			case 2: {
-				if(dec.length!==1) debugger;
-				const [dec_0]=dec;
-				{
-				}
-			} break;
+			case 2: this.handle_2_any(dec); break;
 		}
 	}
 	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
