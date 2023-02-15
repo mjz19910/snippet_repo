@@ -2785,9 +2785,6 @@ class ServiceMethods extends ServiceData {
 			let cur_part=parts[i];
 			/** @private @type {P_LogItems} */
 			switch(cur_part) {
-				default: {
-					const idx=i; u(idx); debugger; switch(cur_part) {case "": }
-				} break;
 				case "D_0x94d81d4":
 				case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "ad_slot_logging_data":
 				case "adaptive_format":
@@ -2815,8 +2812,11 @@ class ServiceMethods extends ServiceData {
 				case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
 				case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
 				case "token":
-				case "_level_1_0": case "_level_2_0": case "_level_2_1":
-				case "f2": case "f3": case "f6": case "f9":
+				case "_level_1_0": case "_level_2_0": case "_level_2_1": break;
+				default: {
+					const idx=i; u(idx); debugger; switch(cur_part) {case "": }
+				} break;
+				case "f1": case "f2": case "f3": case "f4": case "f6": case "f9":
 				case "f13": case "f14":
 					break;
 			}
