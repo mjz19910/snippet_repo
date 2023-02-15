@@ -59,7 +59,25 @@ function raw_template(x) {
 function bind_map(v) {
 	/** @template U @arg {U} e @returns {[T,U]} */
 	return (e) => [v,e];
-}; bind_map;
+}
+class JsonReplacerState {
+	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
+	constructor(gen_name,keys,is_root) {
+		this.object_count=0;
+		this.gen_name=gen_name;
+		this.key_keep_arr=keys;
+		this.is_root=is_root;
+		this.k1="";
+		/** @api @public @type {unknown[]} */
+		this.object_store=[];
+		/** @api @public @type {Map<unknown,[number,string]>} */
+		this.parent_map=new Map;
+	}
+	/** @arg {unknown} x */
+	get_parent_walker(x) {
+		return new ParentWalker(this,x);
+	}
+}
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
