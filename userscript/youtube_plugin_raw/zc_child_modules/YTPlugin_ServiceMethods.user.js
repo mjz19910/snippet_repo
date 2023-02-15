@@ -1385,46 +1385,46 @@ class ServiceMethods extends ServiceData {
 		this.G_UrlInfoItem({type: "browse_id:VL",id,raw_id: x});
 		this.parse_guide_entry_id(id);
 	}
-	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} id */
-	parse_guide_entry_id(id) {
-		if(this.str_starts_with_rx("RD",id)) {
-			if(this.str_starts_with_rx("RDCMUC",id)) {
-				let [,raw_id]=split_string_once(id,"RDCM");
-				this.save_next_char("playlist_id.RDCMUC",split_string_once(id,"RDCMUC")[1]);
+	/** @public @arg {D_GuideEntryData['guideEntryId']|GU_PlaylistId} raw_id */
+	parse_guide_entry_id(raw_id) {
+		if(this.str_starts_with_rx("RD",raw_id)) {
+			if(this.str_starts_with_rx("RDCMUC",raw_id)) {
+				let [,id]=split_string_once(raw_id,"RDCM");
+				this.save_next_char("playlist_id.RDCMUC",split_string_once(raw_id,"RDCMUC")[1]);
 				this.G_UrlInfoItem({type: "playlist:2:RDCM",id,raw_id});
-				return console.log("[guideEntryId.playlist.RDCM.length]",id.length);
+				return console.log("[guideEntryId.playlist.RDCM.length]",raw_id.length);
 			}
-			if(this.str_starts_with_rx("RDMM",id)) {
-				let [,raw_id]=split_string_once(id,"RDMM");
-				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id,});
-				return console.log("[guideEntryId.radio_my_mix.length]",id.length);
+			if(this.str_starts_with_rx("RDMM",raw_id)) {
+				let [,id]=split_string_once(raw_id,"RDMM");
+				this.G_UrlInfoItem({type: "playlist:2:RDMM",id,raw_id});
+				return console.log("[guideEntryId.radio_my_mix.length]",raw_id.length);
 			}
-			let [,raw_id]=split_string_once(id,"RD");
-			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id,});
-			return console.log("[guideEntryId.radio.length]",id.length);
+			let [,id]=split_string_once(raw_id,"RD");
+			this.G_UrlInfoItem({type: "playlist:2:RD",id,raw_id});
+			return console.log("[guideEntryId.radio.length]",raw_id.length);
 		}
-		if(this.str_starts_with_rx("UC",id)) {
-			let [,raw_id]=split_string_once(id,"UC");
+		if(this.str_starts_with_rx("UC",raw_id)) {
+			let [,id]=split_string_once(raw_id,"UC");
 			this.G_UrlInfoItem({type: "channel_id:UC",id,raw_id});
-			if(id.length===24) return;
-			return console.log("[guideEntryId.channel.length]",id.length);
+			if(raw_id.length===24) return;
+			return console.log("[guideEntryId.channel.length]",raw_id.length);
 		}
-		if(this.str_starts_with_rx("PL",id)) {
-			let [,raw_id]=split_string_once(id,"PL");
+		if(this.str_starts_with_rx("PL",raw_id)) {
+			let [,id]=split_string_once(raw_id,"PL");
 			this.G_UrlInfoItem({type: "playlist:3:PL",id,raw_id});
-			if(id.length===34) return;
-			return console.log("[guideEntryId.playlist.length]",id.length);
+			if(raw_id.length===34) return;
+			return console.log("[guideEntryId.playlist.length]",raw_id.length);
 		}
-		if(this.str_starts_with_rx("UU",id)) {
-			let [,raw_id]=split_string_once(id,"UU");
+		if(this.str_starts_with_rx("UU",raw_id)) {
+			let [,id]=split_string_once(raw_id,"UU");
 			this.G_UrlInfoItem({type: "playlist:4:UU",id,raw_id});
-			if(id.length===26) return;
-			return console.log("[guideEntryId.uploads_playlist.length]",id.length);
+			if(raw_id.length===26) return;
+			return console.log("[guideEntryId.uploads_playlist.length]",raw_id.length);
 		}
-		switch(id) {
-			default: id===""; console.log("new with param [Browse_param_2c_VL]",id); debugger; break;
-			case "LL": this.G_UrlInfoItem({type: "playlist:1:LL",id: id}); break;
-			case "WL": this.G_UrlInfoItem({type: "playlist:1:WL",id: id}); break;
+		switch(raw_id) {
+			default: raw_id===""; console.log("new with param [Browse_param_2c_VL]",raw_id); debugger; break;
+			case "LL": this.G_UrlInfoItem({type: "playlist:1:LL",id: raw_id}); break;
+			case "WL": this.G_UrlInfoItem({type: "playlist:1:WL",id: raw_id}); break;
 		}
 	}
 	/** @private @arg {Extract<DE_VE5754,{canonicalBaseUrl:any}>["browseId"]} x */
