@@ -2149,14 +2149,19 @@ class HandleTypes extends HandleTypesEval {
 		if(30 in x) return;
 		debugger;
 	}
+	/** @private @arg {P_ReelParams} x */
+	P_ReelParams(x) {
+		if(6 in x) return;
+		debugger;
+	}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	decode_continuation_token_obj(cf,x) {
 		switch(cf) {
 			default: debugger; break;
 			case "reel.params": {
-				/** @type {P_ReelParamsObj} */
+				/** @type {P_ReelParams} */
 				let u=as_any(x);
-				this.P_ReelPlayerParamsObj(u);
+				this.P_ReelParams(u);
 			} break;
 			case "reel.player_params": {
 				/** @type {P_ReelPlayerParamsObj} */
