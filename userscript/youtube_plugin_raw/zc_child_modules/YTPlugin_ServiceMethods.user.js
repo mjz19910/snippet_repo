@@ -4855,6 +4855,55 @@ class ServiceMethods extends ServiceData {
 		this.MG_AdLayout(adLayoutMetadata);
 		this.R_VideoMastheadAdV3(renderingContent);
 	}
+	/** @private @arg {R_AdBreakService} x */
+	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
+	/** @private @arg {D_AdBreakService} x */
+	D_AdBreakService(x) {
+		const cf="D_AdBreakService";
+		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
+		if(prefetchMilliseconds!=="10000") debugger;
+		debugger;
+	}
+	/** @private @arg {R_AdActionInterstitial} x */
+	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
+	/** @private @arg {R_ClientForecastingAd} x */
+	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
+	/** @private @arg {D_ClientForecastingAd} x */
+	D_ClientForecastingAd(x) {
+		const cf="D_ClientForecastingAd";
+		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
+		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
+			this.parser.parse_url(`${cf}.impressionUrl`,x);
+		}));
+	}
+	/** @private @arg {R_InstreamVideoAd} x */
+	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
+	/** @private @arg {D_InstreamVideoAd} x */
+	D_InstreamVideoAd(x) {
+		const cf="D_InstreamVideoAd";
+		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
+		this.a_primitive_num(skipOffsetMilliseconds);
+		this.g(pings);
+		this.g(clickthroughEndpoint);
+		this.z(csiParameters,this.g);
+		this.params("instream_video_ad.player_vars",playerVars);
+		this.g(playerOverlay);
+		this.save_string(`${cf}.elementId`,elementId);
+		this.trackingParams(trackingParams);
+		if(legacyInfoCardVastExtension!=="") debugger;
+		this.g(sodarExtensionData);
+		this.videoId(externalVideoId);
+		this.g(adLayoutLoggingData);
+		if(layoutId!=="") debugger;
+	}
+	/** @protected @arg {G_AdPlacementRendererItem} x */
+	G_AdPlacementRendererItem(x) {
+		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
+		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
+		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
+		debugger;
+	}
 	/** @private @arg {R_LinearAdSequence} x */
 	R_LinearAdSequence(x) {this.H_("R_LinearAdSequence","linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
 	/** @private @arg {D_LinearAdSequence} x */
@@ -4863,6 +4912,12 @@ class ServiceMethods extends ServiceData {
 		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
 		this.MG_AdLayout(adLayoutMetadata);
 		this.z(linearAds,this.G_LinearAdsItem);
+	}
+	/** @private @arg {G_LinearAdsItem} x */
+	G_LinearAdsItem(x) {
+		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
+		if("adActionInterstitialRenderer" in x) return this.R_AdActionInterstitial(x);
+		debugger;
 	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {

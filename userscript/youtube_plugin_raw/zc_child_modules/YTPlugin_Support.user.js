@@ -112,12 +112,6 @@ class HandleRS extends ServiceMethods {
 	}
 	/** @private @arg {R_EndscreenElement} x */
 	R_EndscreenElement(x) {this.H_("R_EndscreenElement","endscreenElementRenderer",x,this.D_EndscreenElement);}
-	/** @private @arg {R_InstreamVideoAd} x */
-	R_InstreamVideoAd(x) {this.H_("R_InstreamVideoAd","instreamVideoAdRenderer",x,this.D_InstreamVideoAd);}
-	/** @private @arg {R_AdActionInterstitial} x */
-	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
-	/** @private @arg {R_ClientForecastingAd} x */
-	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
 	/** @private @arg {R_AdPlacementConfig} x */
 	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
@@ -198,23 +192,6 @@ class HandleRS extends ServiceMethods {
 		let wp_params=cls_.parse_watch_page_url(cf,url);
 		this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => cls_.D_VeCsn(x,true));
-	}
-	/** @private @arg {R_AdBreakService} x */
-	R_AdBreakService(x) {this.H_("R_AdBreakService","adBreakServiceRenderer",x,this.D_AdBreakService);}
-	/** @private @arg {D_AdBreakService} x */
-	D_AdBreakService(x) {
-		const cf="D_AdBreakService";
-		const {prefetchMilliseconds,getAdBreakUrl,...y}=this.s(cf,x); this.g(y);
-		if(prefetchMilliseconds!=="10000") debugger;
-		debugger;
-	}
-	/** @private @arg {G_AdPlacementRendererItem} x */
-	G_AdPlacementRendererItem(x) {
-		if("adBreakServiceRenderer" in x) return this.R_AdBreakService(x);
-		if("clientForecastingAdRenderer" in x) return this.R_ClientForecastingAd(x);
-		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
-		if("linearAdSequenceRenderer" in x) return this.R_LinearAdSequence(x);
-		debugger;
 	}
 	/** @private @arg {D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x) {
@@ -392,14 +369,6 @@ class HandleRS extends ServiceMethods {
 		this.z(formats,this.D_FormatItem);
 		this.t(probeUrl,x => this.parser.parse_url(cf,x));
 	}
-	/** @private @arg {D_ClientForecastingAd} x */
-	D_ClientForecastingAd(x) {
-		const cf="D_ClientForecastingAd";
-		const {impressionUrls,...y}=this.s(cf,x); this.g(y);
-		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
-			this.parser.parse_url(`${cf}.impressionUrl`,x);
-		}));
-	}
 	/** @private @arg {D_AdPlacementConfig} x */
 	D_AdPlacementConfig(x) {
 		const cf="D_AdPlacementConfig";
@@ -444,22 +413,6 @@ class HandleRS extends ServiceMethods {
 		this.save_string(`${cf}.key`,key);
 		if(kind) this.save_string(`${cf}.kind`,kind);
 		this.save_string(`${cf}.lang`,lang);
-	}
-	/** @private @arg {MG_AdLayout_CompositePlayerBytes} x */
-	MG_AdLayout_PlayerBytes(x) {
-		const cf="MG_AdLayout_PlayerBytes";
-		const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);
-		switch(layoutType) {
-			default: debugger; break;
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
-		}
-		this.save_string(`${cf}.layoutId`,layoutId);
-	}
-	/** @private @arg {G_LinearAdsItem} x */
-	G_LinearAdsItem(x) {
-		if("instreamVideoAdRenderer" in x) return this.R_InstreamVideoAd(x);
-		if("adActionInterstitialRenderer" in x) return this.R_AdActionInterstitial(x);
-		debugger;
 	}
 	/** @private @arg {D_FormatItem} x */
 	D_FormatItem(x) {
@@ -681,24 +634,6 @@ class HandleRS extends ServiceMethods {
 		const {offsetStartMilliseconds,offsetEndMilliseconds,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_str(offsetStartMilliseconds);
 		if(offsetEndMilliseconds!=="-1") debugger;
-	}
-	/** @private @arg {D_InstreamVideoAd} x */
-	D_InstreamVideoAd(x) {
-		const cf="D_InstreamVideoAd";
-		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(skipOffsetMilliseconds);
-		this.g(pings);
-		this.g(clickthroughEndpoint);
-		this.z(csiParameters,this.g);
-		this.params("instream_video_ad.player_vars",playerVars);
-		this.g(playerOverlay);
-		this.save_string(`${cf}.elementId`,elementId);
-		this.trackingParams(trackingParams);
-		if(legacyInfoCardVastExtension!=="") debugger;
-		this.g(sodarExtensionData);
-		this.videoId(externalVideoId);
-		this.g(adLayoutLoggingData);
-		if(layoutId!=="") debugger;
 	}
 	/** @private @arg {D_EndscreenElement} x */
 	D_EndscreenElement(x) {
