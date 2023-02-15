@@ -2579,8 +2579,7 @@ class HandleTypes extends HandleTypesEval {
 						if(string_store[1][1].includes(x3)) return;
 						this.save_string(save_key,x3);
 					}
-					this.codegen_typedef(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
-					debugger;
+					this.cg.codegen_typedef_bin(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 				} break;
 				case "3D printing":
 				case "AI": case "Algorithms":
