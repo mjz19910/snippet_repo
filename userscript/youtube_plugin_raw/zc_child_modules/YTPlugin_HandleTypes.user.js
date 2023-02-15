@@ -2430,6 +2430,7 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,,dec]=x;
 		if(type!=="child") debugger;
 		if(field_id!==2) debugger;
+		if(dec.length!==1) debugger;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
