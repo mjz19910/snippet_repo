@@ -2753,8 +2753,8 @@ class ServiceMethods extends ServiceData {
 		let key_index=this.parse_key_index;
 		let map_keys=[...map.keys()];
 		let parse_key=this.make_parse_key(root,path,map,map_keys,callback);
-		let mk_max=Math.max(...map_keys,-1);
-		for(let i=1;i<mk_max+1;i++) {
+		let map_keys_limit=Math.max(...map_keys,-1);
+		for(let i=1;i<map_keys_limit+1;i++) {
 			if(!map_keys.includes(i)) continue;
 			map_entry_key_path.push(i);
 			parse_key(map_entry_key_path);
@@ -2970,13 +2970,13 @@ class ServiceMethods extends ServiceData {
 		}
 		return ret;
 	}
-	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
-	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
+	/** @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root @returns {boolean} */
+	on_endpoint_params_callback(path,map_entry_values,map_entry_key_path,map_keys,root) {
 		let callback=this.on_endpoint_params_callback.bind(this);
-		let map_entry_key=map_entry_key_path.at(-1); map_entry_values;
+		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) return false;
-		let saved_map_keys=map_keys.slice();
-		let {new_path}=this.get_parse_fns(path,saved_map_keys,map_entry_values[0],map_entry_key);
+		let map_keys_=map_keys.slice();
+		let {new_path}=this.get_parse_fns(path,map_keys_,map_entry_values[0],map_entry_key);
 		/** @private @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
 			console.group(ns);
@@ -3237,26 +3237,27 @@ class ServiceMethods extends ServiceData {
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		{debugger;}
 	}
-	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} mk @arg {T_ParseCallbackFunction<T>} callback */
-	make_parse_key(root,path,map,mk,callback) {
+	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {T_ParseCallbackFunction<T>} callback */
+	make_parse_key(root,path,map,map_keys,callback) {
 		/** @private @arg {number[]} map_entry_key_path */
 		let parse_key=(map_entry_key_path) => {
-			let t_at=map_entry_key_path.at(-1);
-			if(t_at===void 0) return;
-			this.parse_value(root,path,map,mk,map_entry_key_path,map.get(t_at),callback);
+			let map_entry_key=map_entry_key_path.at(-1);
+			if(map_entry_key===void 0) return;
+			let map_entry_values=map.get(map_entry_key);
+			this.parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback);
 		};
 		return parse_key;
 	}
 	parse_key_index=1;
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
-		let last_key=map_entry_key_path.at(-1);
+		let map_entry_key=map_entry_key_path.at(-1);
 		let saved_map_keys=map_keys.slice();
-		if(map_entry_values!==void 0&&last_key) {
+		if(map_entry_values!==void 0&&map_entry_key) {
 			let res=callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
 			if(res) {
-				map.delete(last_key);
-				let cx=map_keys.indexOf(last_key);
+				map.delete(map_entry_key);
+				let cx=map_keys.indexOf(map_entry_key);
 				if(cx>-1) map_keys.splice(cx,1);
 			}
 		}
