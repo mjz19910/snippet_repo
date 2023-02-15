@@ -2394,7 +2394,7 @@ class HandleTypes extends HandleTypesEval {
 		return obj;
 	}
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
-	codegen_typedef_bin(cf,x,do_break=false) {
+	codegen_typedef_bin(cf,x,do_break=true) {
 		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(cf,[],true);
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,state),"\t");
