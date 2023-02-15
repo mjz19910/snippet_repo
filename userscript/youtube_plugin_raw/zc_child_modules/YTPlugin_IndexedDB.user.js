@@ -173,7 +173,6 @@ class IndexedDBService extends BaseService {
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
-		debugger;
 		try {
 			let [,d_cache]=this.get_data_cache(tx_namespace);
 			const obj_store=this.objectStore(transaction,tx_namespace);
