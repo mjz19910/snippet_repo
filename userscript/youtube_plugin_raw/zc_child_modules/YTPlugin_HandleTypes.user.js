@@ -2536,7 +2536,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_Binary_dg(x) {this.z(x,this.D_RD_ObjArr);}
 	/** @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [[any,T,...any]]} */
 	is_fx_extract(x,t) {return x[0][1]===t;}
-	/** @arg {D_RA_D_Binary_f1|D_RA_CR_0x4c82a9c|D_RA_CR_0x19ac5ceb} x */
+	/** @arg {D_RA_D_Binary_f1} x */
 	D_RA_D_Binary_f1(x) {
 		const cf="D_RA_D_Binary_f1";
 		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
