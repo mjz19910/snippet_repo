@@ -1872,38 +1872,6 @@ class HandleTypes extends HandleTypesEval {
 		let k=this.get_keys_of(y)[0];
 		console.log("[D_DisplayAd.next_key] [%s]",k);
 	}
-	/** @private @arg {MG_AdLayout['layoutType']} x */
-	MG_AdLayout_layoutType(x) {
-		this.save_enum("LAYOUT_TYPE",x);
-		switch(x) {
-			default: break;
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
-			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE":
-		}
-	}
-	/** @private @arg {MG_AdLayout["layoutId"]} x */
-	MG_AdLayout_LayoutId(x) {
-		this.save_b64_binary("AdLayout.layoutId",x);
-	}
-	/** @private @arg {MG_AdLayout} x */
-	MG_AdLayout(x) {
-		const cf="MG_AdLayout";
-		switch(x.layoutType) {
-			default: debugger; break;
-			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": {
-				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.MG_AdLayout_layoutType(layoutType);
-				this.MG_AdLayout_LayoutId(layoutId);
-			} break;
-			case "LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE":
-			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
-				const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.MG_AdLayout_layoutType(layoutType);
-				this.MG_AdLayout_LayoutId(layoutId);
-				this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
-			}
-		}
-	}
 	/** @private @arg {"DMD_AdSlot"} cf @arg {DMD_AdSlot} x */
 	DMD_AdSlot_Omit(cf,x) {
 		const {slotId,slotPhysicalPosition,slotType,...y}=this.s(cf,x);
@@ -3055,16 +3023,6 @@ class HandleTypes extends HandleTypesEval {
 			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT": break;
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
-	}
-	/** @public @arg {"MG_AdLayout"|"MG_AdLayout_DisplayTopLandscapeImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
-	D_SerializedAdServingDataEntry(cf1,x) {
-		const cf2="D_SerializedAdServingDataEntry";
-		switch(cf1) {
-			default: debugger; break;
-			case "MG_AdLayout": {
-				this.H_(cf2,"serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x));
-			} break;
-		}
 	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {

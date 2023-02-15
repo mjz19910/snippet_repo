@@ -4716,6 +4716,48 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.a_primitive_str(overrideEntityKey);
 	}
+	/** @public @arg {"MG_AdLayout"|"MG_AdLayout_DisplayTopLandscapeImage"} cf1 @arg {D_SerializedAdServingDataEntry} x */
+	D_SerializedAdServingDataEntry(cf1,x) {
+		const cf2="D_SerializedAdServingDataEntry";
+		switch(cf1) {
+			default: debugger; break;
+			case "MG_AdLayout": {
+				this.H_(cf2,"serializedAdServingDataEntry",x,x => this.params("ad_layout.ad_serving_data_entry",x));
+			} break;
+		}
+	}
+	/** @private @arg {MG_AdLayout['layoutType']} x */
+	MG_AdLayout_layoutType(x) {
+		this.save_enum("LAYOUT_TYPE",x);
+		switch(x) {
+			default: break;
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES":
+			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE":
+		}
+	}
+	/** @private @arg {MG_AdLayout["layoutId"]} x */
+	MG_AdLayout_LayoutId(x) {
+		this.save_b64_binary("AdLayout.layoutId",x);
+	}
+	/** @private @arg {MG_AdLayout} x */
+	MG_AdLayout(x) {
+		const cf="MG_AdLayout";
+		switch(x.layoutType) {
+			default: debugger; break;
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": {
+				const {layoutType,layoutId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.MG_AdLayout_layoutType(layoutType);
+				this.MG_AdLayout_LayoutId(layoutId);
+			} break;
+			case "LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE":
+			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
+				const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.MG_AdLayout_layoutType(layoutType);
+				this.MG_AdLayout_LayoutId(layoutId);
+				this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
+			}
+		}
+	}
 	/** @private @arg {D_AdSlotAndLayoutItem} x */
 	D_AdSlotAndLayoutItem(x) {
 		const cf="D_AdSlotAndLayoutItem"; this.k(cf,x);
