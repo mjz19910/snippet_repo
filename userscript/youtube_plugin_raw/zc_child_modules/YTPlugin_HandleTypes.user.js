@@ -2359,7 +2359,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj */
+	/** @api @public @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj @returns {unknown} */
 	typedef_json_replace_bin(state,key,obj) {
 		if(obj===null||obj===void 0) return obj;
 		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
