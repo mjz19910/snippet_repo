@@ -2622,9 +2622,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x14527fab} x */
 	R_0x14527fab(cf1,x) {
-		const cf=`${cf1}:R_0x14527fab`;
-		const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
-		this.D_0x14527fab(a);
+		switch(cf1) {
+			case "DC_Continuation": {
+				/** @type {`${cf1}:R_0x14527fab`} */
+				const cf=`${cf1}:R_0x14527fab`;
+				const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
+				this.D_0x14527fab(a);
+			} break;
+		}
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x19ac5ceb} x */
 	R_0x19ac5ceb(cf1,x) {
