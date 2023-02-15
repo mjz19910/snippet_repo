@@ -2089,7 +2089,7 @@ class HandleTypes extends HandleTypesEval {
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}
-	/** @arg {D_RA_CD_0x4c82a9c} x */
+	/** @private @arg {D_RA_CD_0x4c82a9c} x */
 	D_RA_CD_0x4c82a9c(x) {
 		if(x.length!==3) debugger;
 		const [a,b,c]=x;
@@ -2112,7 +2112,7 @@ class HandleTypes extends HandleTypesEval {
 			if(dec!==null) debugger;
 		}
 	}
-	/** @arg {D_RA_CR_0x4c82a9c} x */
+	/** @private @arg {D_RA_CR_0x4c82a9c} x */
 	D_RA_CR_0x4c82a9c(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
@@ -2121,7 +2121,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==0x4c82a9c) debugger;
 		this.D_RA_CD_0x4c82a9c(dec_1);
 	}
-	/** @arg {D_RA_CR_0x19ac5ceb} x */
+	/** @private @arg {D_RA_CR_0x19ac5ceb} x */
 	D_RA_CR_0x19ac5ceb(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
@@ -2130,7 +2130,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==0x19ac5ceb) debugger;
 		this.D_RA_CD_0x19ac5ceb(dec_1);
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb} x */
+	/** @private @arg {D_RA_CD_0x19ac5ceb} x */
 	D_RA_CD_0x19ac5ceb(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
@@ -2139,7 +2139,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==1) debugger;
 		this.z(dec_1,this.D_RA_CD_0x19ac5ceb_map);
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb_map} x */
+	/** @private @arg {D_RA_CD_0x19ac5ceb_map} x */
 	D_RA_CD_0x19ac5ceb_map(x) {
 		const [type,field_id,,dec]=x;
 		if(type!=="child") debugger;
@@ -2155,14 +2155,14 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_data_arr} x */
+	/** @private @arg {D_RA_CD_0x19ac5ceb_map_f3_data_arr} x */
 	D_RA_CD_0x19ac5ceb_map_f3_data_arr(x) {
 		const [dec_0,dec_1]=x;
 		if(x.length!==2) debugger;
 		this.D_RA_CD_0x19ac5ceb_map_f3_d0(dec_0);
 		this.D_RA_CD_0x19ac5ceb_map_f3_d1(dec_1);
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_d0} x */
+	/** @private @arg {D_RA_CD_0x19ac5ceb_map_f3_d0} x */
 	D_RA_CD_0x19ac5ceb_map_f3_d0(x) {
 		const [type,field_id,value]=x; value;
 		if(type!=="data32") debugger;
@@ -2170,7 +2170,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RA_CD_0x19ac5ceb_map_f3_d0.value";
 		this.save_number(cf,value);
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_d1} x */
+	/** @private @arg {D_RA_CD_0x19ac5ceb_map_f3_d1} x */
 	D_RA_CD_0x19ac5ceb_map_f3_d1(x) {
 		const [type,field_id,value]=x; value;
 		if(type!=="data32") debugger;
@@ -2178,7 +2178,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RA_CD_0x19ac5ceb_map_f3_d1.value";
 		this.save_number(cf,value);
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb_f1_data} x */
+	/** @private @arg {D_RA_CD_0x19ac5ceb_f1_data} x */
 	D_RA_CD_0x19ac5ceb_f1_data(x) {
 		if(x.length!==1) debugger;
 		const [item]=x;
@@ -2200,7 +2200,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @arg {D_RA_CR_0x12f639cf} x */
+	/** @private @arg {D_RA_CR_0x12f639cf} x */
 	D_RA_CR_0x12f639cf(x) {
 		const [dec_0,dec_1,dec_2,dec_3,dec_4]=x;
 		{
@@ -2229,11 +2229,11 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==0x12f639cf) debugger;
 		}
 	}
-	/** @arg {D_RA_CR_0x14527fab|D_RA_D_Binary_x1} x @returns {x is D_RA_CR_0x14527fab} */
+	/** @private @arg {D_RA_CR_0x14527fab|D_RA_D_Binary_x1} x @returns {x is D_RA_CR_0x14527fab} */
 	is_RA_CR(x) {return x[3][1]===0x14527fab;}
-	/** @template {number} T @arg {T} t @arg {[["data32",number,number],...any]} x @returns {x is [["data32",T,number],...any]} */
+	/** @private @template {number} T @arg {T} t @arg {[["data32",number,number],...any]} x @returns {x is [["data32",T,number],...any]} */
 	is_RA_CR_zct(x,t) {return x[0][1]===t;}
-	/** @arg {D_RA_CR_0x14527fab} x */
+	/** @private @arg {D_RA_CR_0x14527fab} x */
 	D_RA_CR_0x14527fab(x) {
 		const [dec_0,dec_1,dec_2,dec_3]=x;
 		{
@@ -2257,20 +2257,20 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==0x14527fab) debugger;
 		}
 	}
-	/** @arg {["child",1,Uint8Array,null]} x */
+	/** @private @arg {["child",1,Uint8Array,null]} x */
 	handle_1_any_d0(x) {
 		const [type,field_id,]=x;
 		if(type!=="child") debugger;
 		if(field_id!==1) debugger;
 		x[3]=null;
 	}
-	/** @arg {[["child",1,Uint8Array,null]]} x */
+	/** @private @arg {[["child",1,Uint8Array,null]]} x */
 	handle_1_any(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
 		this.handle_1_any_d0(dec_0);
 	}
-	/** @arg {["data32", 1, 4 | 1 | 3 | 14 | 15 | 31 | 53]} x */
+	/** @private @arg {["data32", 1, 4 | 1 | 3 | 14 | 15 | 31 | 53]} x */
 	handle_2_any_d1(x) {
 		const [type,field_id,value]=x;
 		if(type!=="data32") debugger;
@@ -2281,38 +2281,38 @@ class HandleTypes extends HandleTypesEval {
 			case 1: case 3: case 4: case 14: case 15: case 31: case 53:
 		}
 	}
-	/** @arg {[["data32", 1, 4 | 1 | 3 | 14 | 15 | 31 | 53]]} x */
+	/** @private @arg {[["data32", 1, 4 | 1 | 3 | 14 | 15 | 31 | 53]]} x */
 	handle_2_any(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
 		this.handle_2_any_d1(dec_0);
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_asFixed[0]} x */
+	/** @private @arg {D_RA_V_BinaryTimestamp_asFixed[0]} x */
 	D_RA_V_BinaryTimestamp_2_d0(x) {
 		const [type,field_id]=x;
 		if(type!=="data32") debugger;
 		if(field_id!==1) debugger;
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_asFixed[1]} x */
+	/** @private @arg {D_RA_V_BinaryTimestamp_asFixed[1]} x */
 	D_RA_V_BinaryTimestamp_2_d1(x) {
 		const [type,field_id]=x;
 		if(type!=="data_fixed32") debugger;
 		if(field_id!==2) debugger;
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_asFixed[2]} x */
+	/** @private @arg {D_RA_V_BinaryTimestamp_asFixed[2]} x */
 	D_RA_V_BinaryTimestamp_2_d2(x) {
 		const [type,field_id]=x;
 		if(type!=="data_fixed32") debugger;
 		if(field_id!==3) debugger;
 	}
-	/** @arg {RA_handle_4_any} x */
+	/** @private @arg {RA_handle_4_any} x */
 	handle_3_any(x) {
 		const [dec_0,dec_1,dec_2]=x;
 		this.D_RA_V_BinaryTimestamp_2_d0(dec_0);
 		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
 		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
 	}
-	/** @arg {D_RD_Obj_a4} x */
+	/** @private @arg {D_RD_Obj_a4} x */
 	D_RD_Obj_a4(x) {
 		const cf="D_RD_Obj_a4";
 		const [type,,value,dec]=x;
@@ -2324,7 +2324,7 @@ class HandleTypes extends HandleTypesEval {
 			case "data32": this.save_number(cf,value); break;
 		}
 	}
-	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
+	/** @private @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
 	D_RA_D_BinaryCategoryObj_d1(x) {
 		const [type,field_id,]=x;
 		if(type!=="child") debugger;
@@ -2384,7 +2384,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(do_break) {debugger;}
 	}
-	/** @arg {D_RD_Obj_a6} x */
+	/** @private @arg {D_RD_Obj_a6} x */
 	D_RD_Obj_a6(x) {
 		const cf="D_RD_Obj_a6",[type,,value,]=x;
 		switch(type) {
@@ -2397,7 +2397,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @arg {D_RD_Obj_a1} x */
+	/** @private @arg {D_RD_Obj_a1} x */
 	D_RD_Obj_a1(x) {
 		const cf="D_RD_Obj_a1";
 		const [type,field_id,,dec]=x;
@@ -2413,22 +2413,6 @@ class HandleTypes extends HandleTypesEval {
 			case "data32": {
 				const [,,value]=x;
 				this.save_number(`${cf}.num`,value);
-			} break;
-		}
-	}
-	/** @arg {D_RA_D_BinaryCategoryObj_23_a2|D_RA_D_BinaryCategoryObj_23_a2_ext} x */
-	D_RD_Obj_a2(x) {
-		switch(x[0]) {
-			case "child": {
-				const [,field_id,,dec]=x;
-				if(field_id!==2) debugger;
-				let [f,...y]=dec; this.g_a(y);
-				this.handle_2_any_d1(f);
-			} break;
-			case "data32": {
-				const [,field_id,value]=x;
-				if(field_id!==2) debugger;
-				this.save_number("Bin.obj_23.a2",value);
 			} break;
 		}
 	}
