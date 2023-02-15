@@ -1775,7 +1775,6 @@ class ServiceMethods extends ServiceData {
 		// const cf="DE_VE3832_Watch";
 		if("playlistSetVideoId" in x) {
 			if("params" in x) {
-				const cls_=this.b_cls;
 				const cf="DE_VE3832:playlistSetVideoId:params";
 				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.a_primitive_num(index);
