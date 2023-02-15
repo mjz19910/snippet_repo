@@ -4842,6 +4842,8 @@ class ServiceMethods extends ServiceData {
 		if("displayAdRenderer" in x) return this.R_DisplayAd(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @protected @arg {R_InFeedAdLayout} x */
+	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {const {adLayoutMetadata: a,renderingContent: b,...y}=this.s("D_InFeedAdLayout",x); this.g(y); this.MG_AdLayout(a); this.D_InFeedAdLayout_Content(b);}
 	/** @arg {R_VideoMastheadAdV3} x */
@@ -4853,8 +4855,15 @@ class ServiceMethods extends ServiceData {
 		this.MG_AdLayout(adLayoutMetadata);
 		this.R_VideoMastheadAdV3(renderingContent);
 	}
-	/** @protected @arg {R_InFeedAdLayout} x */
-	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
+	/** @private @arg {R_LinearAdSequence} x */
+	R_LinearAdSequence(x) {this.H_("R_LinearAdSequence","linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
+	/** @private @arg {D_LinearAdSequence} x */
+	D_LinearAdSequence(x) {
+		const cf="D_LinearAdSequence";
+		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
+		this.MG_AdLayout(adLayoutMetadata);
+		this.z(linearAds,this.G_LinearAdsItem);
+	}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout";

@@ -118,8 +118,6 @@ class HandleRS extends ServiceMethods {
 	R_AdActionInterstitial(x) {this.H_("R_AdActionInterstitial","adActionInterstitialRenderer",x,this.g);}
 	/** @private @arg {R_ClientForecastingAd} x */
 	R_ClientForecastingAd(x) {this.H_("R_ClientForecastingAd","clientForecastingAdRenderer",x,this.D_ClientForecastingAd);}
-	/** @private @arg {R_LinearAdSequence} x */
-	R_LinearAdSequence(x) {this.H_("R_LinearAdSequence","linearAdSequenceRenderer",x,this.D_LinearAdSequence);}
 	/** @private @arg {R_AdPlacementConfig} x */
 	R_AdPlacementConfig(x) {this.H_("R_AdPlacementConfig","adPlacementConfig",x,this.D_AdPlacementConfig);}
 	/** @private @arg {R_PlayerAnnotationsExpanded} x */
@@ -401,13 +399,6 @@ class HandleRS extends ServiceMethods {
 		this.z(impressionUrls,x => this.T_BaseUrl(x,x => {
 			this.parser.parse_url(`${cf}.impressionUrl`,x);
 		}));
-	}
-	/** @private @arg {D_LinearAdSequence} x */
-	D_LinearAdSequence(x) {
-		const cf="D_LinearAdSequence";
-		const {adLayoutMetadata,linearAds,...y}=this.s(cf,x); this.g(y);
-		this.MG_AdLayout_PlayerBytes(adLayoutMetadata);
-		this.z(linearAds,this.G_LinearAdsItem);
 	}
 	/** @private @arg {D_AdPlacementConfig} x */
 	D_AdPlacementConfig(x) {
