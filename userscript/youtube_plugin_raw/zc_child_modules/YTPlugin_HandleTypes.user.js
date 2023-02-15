@@ -3160,6 +3160,9 @@ class HandleTypes extends HandleTypesEval {
 			case 2: {
 				if(dec!==null) debugger;
 			} break;
+			case 3: {
+				if(dec!==null) debugger;
+			} break;
 		}
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb_f1_data} x */
