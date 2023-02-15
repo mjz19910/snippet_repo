@@ -2829,6 +2829,7 @@ class ServiceMethods extends ServiceData {
 		let map_entry_value=tva[0];
 		let {u}=this.get_parse_fns(path,[],map_entry_value);
 		let key_index=this.parse_key_index;
+		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
@@ -2864,80 +2865,77 @@ class ServiceMethods extends ServiceData {
 			case "timed_continuation": case "tracking": case "transcriptTrackSelection":
 			case "unsubscribe":
 			case "watch_playlist": case "watch":
-			case "ypc_get_offers": case "ypc_get_offline_upsell": {
-				if(parts.length===1) return this.handle_map_value(path,map_entry_value);
-				switch(parts[1]) {
-					default: {
-						const idx=2; u(idx); debugger; switch(parts[1]) {case "": }
-					} break;
-					case "watch_next":
-					case "transaction_params":
-					case "serialized_slot_ad_serving_data_entry":
-					case "reel_watch_sequence":
-					case "binary_token":
-					case "context_params": case "data": case "entity_key": case "xtags":
-					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
-					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
-					case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
-					case "f1": case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13": case "f14":
-				}
-				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
-				switch(parts[2]) {
-					default: {
-						const idx=3; u(idx); debugger; switch(parts[2]) {case "": }
-					} break;
-					case "token":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
-					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
-					case "f30": case "f33": case "f39": case "f40": case "f49":
-					case "f53": case "f56": case "f57": case "f71": case "f72": case "f110":
-				}
-				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
-				switch(parts[3]) {
-					default: {
-						const idx=4; u(idx); debugger; switch(parts[3]) {case "": }
-					} break;
-					case "f1[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f12": case "f13": case "f14": case "f15": case "f25": case "f28": case "f31": case "f36":
-				}
-				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
-				switch(parts[4]) {
-					default: {
-						const idx=5; u(idx); debugger; switch(parts[4]) {case "": }
-					} break;
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f15": case "f19": case "f20": case "f25": case "f28": case "f36":
-				}
-				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
-				switch(parts[5]) {
-					default: {
-						const idx=6; u(idx); debugger; switch(parts[5]) {case "": }
-					} break;
-					case "f1[]":
-					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f8": case "f15":
-				}
-				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
-				switch(parts[6]) {
-					default: {
-						const idx=7; u(idx); debugger; switch(parts[6]) {case "": }
-					} break;
-					case "f1":
-				}
-				if(parts.length===7) return this.handle_map_value(path,map_entry_value);
-				switch(parts[7]) {
-					default: {
-						const idx=8; u(idx); debugger; switch(parts[7]) {case "": }
-					} break;
-					case "f4":
-				}
-				if(parts.length!==8) {debugger; break;}
-				return this.handle_map_value(path,map_entry_value);
-			}
+			case "ypc_get_offers": case "ypc_get_offline_upsell": break;
 		}
-		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
-		return true;
+		if(parts.length===1) return this.handle_map_value(path,map_entry_value);
+		switch(parts[1]) {
+			default: {
+				const idx=2; u(idx); debugger; switch(parts[1]) {case "": }
+			} break;
+			case "watch_next":
+			case "transaction_params":
+			case "serialized_slot_ad_serving_data_entry":
+			case "reel_watch_sequence":
+			case "binary_token":
+			case "context_params": case "data": case "entity_key": case "xtags":
+			case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
+			case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
+			case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
+			case "f1": case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13": case "f14":
+		}
+		if(parts.length===2) return this.handle_map_value(path,map_entry_value);
+		switch(parts[2]) {
+			default: {
+				const idx=3; u(idx); debugger; switch(parts[2]) {case "": }
+			} break;
+			case "token":
+			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+			case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
+			case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
+			case "f30": case "f33": case "f39": case "f40": case "f49":
+			case "f53": case "f56": case "f57": case "f71": case "f72": case "f110":
+		}
+		if(parts.length===3) return this.handle_map_value(path,map_entry_value);
+		switch(parts[3]) {
+			default: {
+				const idx=4; u(idx); debugger; switch(parts[3]) {case "": }
+			} break;
+			case "f1[]":
+			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+			case "f12": case "f13": case "f14": case "f15": case "f25": case "f28": case "f31": case "f36":
+		}
+		if(parts.length===4) return this.handle_map_value(path,map_entry_value);
+		switch(parts[4]) {
+			default: {
+				const idx=5; u(idx); debugger; switch(parts[4]) {case "": }
+			} break;
+			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+			case "f10": case "f11": case "f15": case "f19": case "f20": case "f25": case "f28": case "f36":
+		}
+		if(parts.length===5) return this.handle_map_value(path,map_entry_value);
+		switch(parts[5]) {
+			default: {
+				const idx=6; u(idx); debugger; switch(parts[5]) {case "": }
+			} break;
+			case "f1[]":
+			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f8": case "f15":
+		}
+		if(parts.length===6) return this.handle_map_value(path,map_entry_value);
+		switch(parts[6]) {
+			default: {
+				const idx=7; u(idx); debugger; switch(parts[6]) {case "": }
+			} break;
+			case "f1":
+		}
+		if(parts.length===7) return this.handle_map_value(path,map_entry_value);
+		switch(parts[7]) {
+			default: {
+				const idx=8; u(idx); debugger; switch(parts[7]) {case "": }
+			} break;
+			case "f4":
+		}
+		if(parts.length!==8) {debugger; return false;}
+		return this.handle_map_value(path,map_entry_value);
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {
