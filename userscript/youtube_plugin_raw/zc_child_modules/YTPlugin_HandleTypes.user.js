@@ -3211,7 +3211,7 @@ class HandleTypes extends HandleTypesEval {
 			buffer;
 		}
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {string} x */
+	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) return;
@@ -3401,9 +3401,9 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		}
 	}
-	/** @private @arg {CF_decode_continuation_token} cf @arg {GR_RootBinaryObj} x */
+	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
-		this.k(`${cf}.continuation.binary_obj`,x);
+		this.k(`${cf}.binary_obj`,x);
 		if(0x4c82a9c in x) return this.R_0x4c82a9c(x);
 		if(0x12f639cf in x) return this.R_0x12f639cf(x);
 		if(0x14527fab in x) return this.R_0x14527fab(x);

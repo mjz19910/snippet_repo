@@ -3926,7 +3926,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_EY_Offlineability";
 		if("command" in x) {
 			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);
-			this.params(`${cf}.key`,"entity.key",key);
+			this.params("entity.key",key);
 			this.C_Innertube(command);
 			switch(addToOfflineButtonState) {
 				default: debugger; break;
@@ -3940,7 +3940,7 @@ class ServiceMethods extends ServiceData {
 		}
 		const {key,addToOfflineButtonState,...y}=this.s(cf,x); this.g(y);
 		if(addToOfflineButtonState!=="ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN") debugger;
-		this.params(`${cf}.key`,"entity.key",key);
+		this.params("entity.key",key);
 	}
 	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]:never:never)|["unknown",string,{}]} p */
 	XP_EntityPayload(p) {
@@ -3956,7 +3956,7 @@ class ServiceMethods extends ServiceData {
 			case "playlistLoopStateEntity": {
 				const cf="DS_EY_PlaylistLoop";
 				const {key,state,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
+				this.params("playlist_loop_state.entity.key",key);
 				switch(state) {
 					default: debugger; break;
 					case "PLAYLIST_LOOP_STATE_ALL":
@@ -3967,14 +3967,14 @@ class ServiceMethods extends ServiceData {
 			case "transcriptTrackSelectionEntity": {
 				const cf="DS_EY_TranscriptTrackSelection";
 				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
+				this.params("transcript_track_selection.entity.key",key);
 				if(selectedTrackIndex!==0) debugger;
-				this.params("transcriptTrackSelection.serializedParams",serializedParams);
+				this.params("transcript_track_selection.serialized_params",serializedParams);
 			} break;
 			case "transcriptSearchBoxStateEntity": {
 				const cf="DS_EY_TranscriptSearchBox";
 				const {key,isHidden,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
+				this.params("entity.key",key);
 				if(isHidden!==false) debugger;
 			} break;
 			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
