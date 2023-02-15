@@ -2106,7 +2106,7 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof obj[0]==="number") {
 					return `TYPE::T_VW<${obj[0]}>`;
 				}
-				return `TYPE::T_VW<${this.gen_typedef_bin(s,`${s.gen_name}.${key}.0`,obj[0])}`;
+				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}`;
 			}
 			/** @type {D_DecTypeNum} */
 			let otu=as(obj);
