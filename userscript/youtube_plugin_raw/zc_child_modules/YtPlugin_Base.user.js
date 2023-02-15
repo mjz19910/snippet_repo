@@ -694,7 +694,7 @@ class Base64Binary {
 		return this.decoder.decode(y);
 	}
 	/** @arg {Uint8Array} binary_arr */
-	encode64(binary_arr) {
+	encode(binary_arr) {
 		let output="";
 		let chr1,chr2,chr3;
 		let enc1,enc2,enc3,enc4;
