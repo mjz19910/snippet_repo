@@ -2620,15 +2620,15 @@ class HandleTypes extends HandleTypesEval {
 		const {1: f1,...y}=this.s(cf,x); this.g(y);
 		if(f1!==0) debugger;
 	}
-	/** @private @arg {R_0x14527fab} x */
-	R_0x14527fab(cf,x) {
-		const cf="R_0x14527fab";
+	/** @private @arg {P_ParamParse} cf1 @arg {R_0x14527fab} x */
+	R_0x14527fab(cf1,x) {
+		const cf=`${cf1}:R_0x14527fab`;
 		const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
 		this.D_0x14527fab(a);
 	}
-	/** @private @arg {R_0x19ac5ceb} x */
-	R_0x19ac5ceb(cf,x) {
-		const cf="R_0x19ac5ceb";
+	/** @private @arg {P_ParamParse} cf1 @arg {R_0x19ac5ceb} x */
+	R_0x19ac5ceb(cf1,x) {
+		const cf=`${cf1}:R_0x19ac5ceb`;
 		const {0x19ac5ceb: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		/** @implements {S_MapState} */
 		class MapState {
@@ -2645,7 +2645,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {D_BinaryCategoryObj} x */
 	D_BinaryCategoryObj(cf1,x) {
-		const cf2="D_BinaryCategoryObj";
+		const cf=`${cf1}:D_BinaryCategoryObj`; this.k(cf,x);
 		if(1 in x) {
 			let kk=this.get_keys_of_2(x);
 			switch(x[3]) {
@@ -2786,9 +2786,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.RV_Bigint(x);
 	}
-	/** @private @arg {R_0x12f639cf} x */
-	R_0x12f639cf(cf,x) {
-		const cf="R_0x12f639cf";
+	/** @private @arg {P_ParamParse} cf1 @arg {R_0x12f639cf} x */
+	R_0x12f639cf(cf1,x) {
+		const cf=`${cf1}:R_0x12f639cf`;
 		const {3: f3,6: f6,11: f11,12: f12,0x12f639cf: f_0x12f639cf,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(f3);
 		this.R_0x12f639cf_f6(f6);
@@ -2798,9 +2798,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {[]} x */
 	g_a(x) {if(x.length!==0) debugger;}
-	/** @private @arg {R_0x4c82a9c} x */
-	R_0x4c82a9c(cf,x) {
-		const cf="R_0x4c82a9c";
+	/** @private @arg {P_ParamParse} cf1 @arg {R_0x4c82a9c} x */
+	R_0x4c82a9c(cf1,x) {
+		const cf=`${cf1}:R_0x4c82a9c`;
 		const {0x4c82a9c: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		this.D_0x4c82a9c(a);
 	}
