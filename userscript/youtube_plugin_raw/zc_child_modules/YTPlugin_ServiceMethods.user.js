@@ -5016,32 +5016,36 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_WithNav(x) {
 		const cf="D_ChipCloudChip_WithNav";
-		let {text,trackingParams,...x2}=this.D_ChipCloudChip_OmitNav(cf,x);
+		let {text,trackingParams,...u}=this.D_ChipCloudChip_OmitNav(cf,x);
 		this.G_Text(text);
 		this.trackingParams(trackingParams);
-		if(!("style" in x2)) {
+		if("style" in u) {
+			const {style,...z}=u;
+			this.D_ChipCloudChip_Style(cf,style);
+			if("isSelected" in z) {
+				const {isSelected,...y}=z; this.g(y);
+				this.a_primitive_bool(isSelected);
+				return;
+			}
+			if("uniqueId" in z) {
+				const {uniqueId: b,...y}=z; this.g(y);/*#destructure_done*/
+				if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
+				return;
+			}
+			if("targetId" in z) {
+				const {targetId: a,...y}=z; this.g(y);/*#destructure_done*/
+				if(a!=="feed_filter_chip_bar_second_chip") debugger;
+				return;
+			}
+			this.g(z);
 			return;
 		}
-		const {style,...x1}=x2;
-		let ia=this.strings_map.get(cf);
-		if(!ia) this.strings_map.set(cf,ia=[]);
-		ia.push(["style.styleType",[style.styleType]]);
-		if("isSelected" in x1) {
-			const {isSelected: a,...y}=x1; this.g(y);
-			this.a_primitive_bool(a);
+		if("isSelected" in u) {
+			const {isSelected,...y}=u; this.g(y);
+			this.a_primitive_bool(isSelected);
 			return;
 		}
-		if("uniqueId" in x1) {
-			const {uniqueId: b,...y}=x1; this.g(y);/*#destructure_done*/
-			if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
-			return;
-		}
-		if("targetId" in x1) {
-			const {targetId: a,...y}=x1; this.g(y);/*#destructure_done*/
-			if(a!=="feed_filter_chip_bar_second_chip") debugger;
-			return;
-		}
-		this.g(x1);
+		this.g(u);
 	}
 	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
@@ -5050,8 +5054,11 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(c);
 		return y;
 	}
-	/** @private @arg {Extract<D_ChipCloudChip,{style:any}>["style"]} x */
-	D_ChipCloudChip_Style(x) {
+	/** @private @arg {string} cf @arg {Extract<D_ChipCloudChip,{style:any}>["style"]} x */
+	D_ChipCloudChip_Style(cf,x) {
+		let ia=this.strings_map.get(cf);
+		if(!ia) this.strings_map.set(cf,ia=[]);
+		ia.push(["style.styleType",[x.styleType]]);
 		switch(x.styleType) {
 			default: debugger; break;
 			case "STYLE_DEFAULT":
@@ -5064,7 +5071,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_ChipCloudChip_WithSelection";
 		let d=this.D_ChipCloudChip_Omit(cf,x);
 		const {style,isSelected,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
-		this.D_ChipCloudChip_Style(style);
+		this.D_ChipCloudChip_Style(cf,style);
 		if(isSelected!==true) debugger;
 	}
 	/** @public @arg {R_ChipCloudChip} x */
