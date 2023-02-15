@@ -4818,6 +4818,20 @@ class ServiceMethods extends ServiceData {
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
+	/** @private @arg {R_ContinuationItem} x */
+	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
+	/** @private @arg {D_ContinuationItem} x */
+	D_ContinuationItem(x) {
+		const cf="D_ContinuationItem";
+		const {trigger,continuationEndpoint,ghostCards,button,...y}=this.s(cf,x); this.g(y);
+		this.t(trigger,x => {
+			this.ceq(x,"CONTINUATION_TRIGGER_ON_ITEM_SHOWN");
+			this.save_enum("CONTINUATION_TRIGGER",x);
+		});
+		this.t(continuationEndpoint,this.GE_Continuation);
+		this.t(ghostCards,this.R_GhostGrid);
+		this.t(button,this.R_Button);
+	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
 		const cf="G_Watch_SecondaryResults_G_SectionItem"; this.k(cf,x);
