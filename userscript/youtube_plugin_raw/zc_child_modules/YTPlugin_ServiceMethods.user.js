@@ -2709,11 +2709,11 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let new_data=this.handle_bigint(path,entry);
-					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$do_save_bigint] [v:${entry[2]}n] --\n\ncase "${x}":\n`);
-						debugger;
-					}
+					if(new_data) this.log_list.push([
+						/** @type {(num:bigint,x:typeof path)=>string} */
+						(num,x) => `-- [handle_value_gen$do_save_bigint] [v:${num}n] --\n\ncase "${x}":\n`,
+						entry[2],path,
+					]);
 					ret=false;
 				} break;
 				case "tracking.trackingParams.f8":
