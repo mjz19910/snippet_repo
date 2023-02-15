@@ -214,31 +214,11 @@ class HandleTypes extends HandleTypesEval {
 		if(kx.length!==1) debugger;
 		if(kx[0]!==k) debugger;
 	}
-	/** @arg {CF_TD_ItemSection} cf1 @protected @template CT,T,U @template {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {(VU extends TD_ItemSection_3<CT,T,U>?[VU["contents"],VU["sectionIdentifier"],VU["targetId"]]:[VU["contents"]])|null} */
-	TD_ItemSection(cf1,x) {
-		const cf2="TD_ItemSection";
-		/** @type {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} */
-		let u=x;
-		if("targetId" in u) {
-			const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
-			this.trackingParams(trackingParams);
-			return as_any([contents,sectionIdentifier,targetId]);
-		}
-		const {contents,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		return as_any([contents]);
-	}
 	/** @protected @arg {K} k @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x */
 	H_Get(cf,k,x) {return this.wn(cf,x,k);}
 	// const cf="TR_ItemSection_2"; const {itemSectionRenderer: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;
 	/** @protected @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
-	/** @protected @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU, "itemSectionRenderer">]} */
-	TR_ItemSection(x) {
-		const cf="TR_ItemSection";
-		const {itemSectionRenderer: a,...y}=this.s(cf,x);/*#destructure_done*/
-		return [a,y];
-	}
 	/** @protected @template T @arg {T_Command$<T>} x @arg {(this:this,x:T)=>void} f */
 	T_Command_TP(x,f) {
 		const cf="T_Command_TP";
@@ -512,7 +492,7 @@ class HandleTypes extends HandleTypesEval {
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {G_Action_GetNotificationsMenu_Popup} x */
+	/** @protected @arg {G_Action_GetNotificationsMenu_Popup} x */
 	G_Action_GetNotificationsMenu_Popup(x) {
 		const cf="G_Action_GetNotificationsMenu_Popup"; this.k(cf,x);
 		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -649,9 +629,9 @@ class HandleTypes extends HandleTypesEval {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @private @arg {R_CommentSimplebox} x */
+	/** @protected @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
-	/** @private @arg {R_CommentsSimplebox} x */
+	/** @protected @arg {R_CommentsSimplebox} x */
 	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
 	/** @private @arg {R_SortFilterSubMenu} x */
 	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
@@ -694,7 +674,7 @@ class HandleTypes extends HandleTypesEval {
 	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
-	/** @private @arg {R_PlaylistPanelVideo} x */
+	/** @public @arg {R_PlaylistPanelVideo} x */
 	R_PlaylistPanelVideo(x) {this.H_("R_PlaylistPanelVideo","playlistPanelVideoRenderer",x,this.D_PlaylistPanelVideo);}
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
@@ -706,7 +686,7 @@ class HandleTypes extends HandleTypesEval {
 	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
-	/** @private @arg {R_Comment} x */
+	/** @protected @arg {R_Comment} x */
 	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
 	/** @private @arg {R_ElementUpdate} x */
 	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
@@ -762,7 +742,7 @@ class HandleTypes extends HandleTypesEval {
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @private @arg {R_CommentsEntryPointTeaser} x */
+	/** @protected @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
@@ -776,11 +756,11 @@ class HandleTypes extends HandleTypesEval {
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
-	/** @private @arg {R_ClipCreationTextInput} x */
+	/** @protected @arg {R_ClipCreationTextInput} x */
 	R_ClipCreationTextInput(x) {this.H_("R_ClipCreationTextInput","clipCreationTextInputRenderer",x,this.D_ClipCreationTextInput);}
-	/** @private @arg {R_ClipAdState} x */
+	/** @protected @arg {R_ClipAdState} x */
 	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
-	/** @private @arg {R_ClipCreationScrubber} x */
+	/** @protected @arg {R_ClipCreationScrubber} x */
 	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber","clipCreationScrubberRenderer",x,this.D_ClipCreationScrubber);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
@@ -818,13 +798,13 @@ class HandleTypes extends HandleTypesEval {
 	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
-	/** @private @arg {R_TopicLink} x */
+	/** @protected @arg {R_TopicLink} x */
 	R_TopicLink(x) {this.H_("R_TopicLink","topicLinkRenderer",x,this.D_TopicLink);}
-	/** @private @arg {R_CarouselLockup} x */
+	/** @protected @arg {R_CarouselLockup} x */
 	R_CarouselLockup(x) {this.H_("R_CarouselLockup","carouselLockupRenderer",x,this.D_CarouselLockup);}
-	/** @private @arg {R_RichListHeader} x */
+	/** @protected @arg {R_RichListHeader} x */
 	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
-	/** @private @arg {R_MacroMarkersListItem} x */
+	/** @protected @arg {R_MacroMarkersListItem} x */
 	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem","macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
@@ -840,7 +820,7 @@ class HandleTypes extends HandleTypesEval {
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("R_ProfilePageHeaderInformationViewModel","profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("R_ProfilePageHeaderTitleViewModel","profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
-	/** @private @arg {R_Factoid} x */
+	/** @protected @arg {R_Factoid} x */
 	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
@@ -864,7 +844,7 @@ class HandleTypes extends HandleTypesEval {
 	R_VideoMastheadAdV3(x) {this.H_("R_VideoMastheadAdV3","videoMastheadAdV3Renderer",x,this.g);}
 	/** @private @arg {R_RichMetadata} x */
 	R_RichMetadata(x) {this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);}
-	/** @private @arg {R_RichMetadataRow} x */
+	/** @protected @arg {R_RichMetadataRow} x */
 	R_RichMetadataRow(x) {this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
@@ -882,9 +862,9 @@ class HandleTypes extends HandleTypesEval {
 	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
 	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
-	/** @private @arg {R_CommentReplies} x */
+	/** @protected @arg {R_CommentReplies} x */
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
-	/** @private @arg {R_MetadataRow} x */
+	/** @protected @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
@@ -3633,7 +3613,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {D_RadioShareUrl} b */
+	/** @protected @arg {D_RadioShareUrl} b */
 	D_RadioShareUrl(b) {
 		const cf="D_RadioShareUrl";
 		let up=this.parse_with_url_parse(b);
@@ -3738,7 +3718,7 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);
 	}
-	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
+	/** @protected @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
 		this.trackingParams(trackingParams);
@@ -3746,9 +3726,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
-	/** @template T @private @arg {TR_MP_MenuSection<T>} x */
+	/** @protected @template T @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
-	/** @private @arg {D_NotificationMenuPopupMenuItem} x */
+	/** @protected @arg {D_NotificationMenuPopupMenuItem} x */
 	D_NotificationMenuPopupMenuItem(x) {
 		const cf="D_NotificationMenuPopupMenuItem"; this.k(cf,x);
 		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3765,7 +3745,7 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(teaserContent);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {MP_AccountMenu} x */
+	/** @protected @arg {MP_AccountMenu} x */
 	MP_AccountMenu(x) {
 		const cf="MP_AccountMenu"; this.k(cf,x);
 		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3773,7 +3753,7 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(trackingParams);
 		if(showLoadingSpinner!==true) debugger;
 	}
-	/** @private @arg {D_GetAccountMenu_Popup} x */
+	/** @protected @arg {D_GetAccountMenu_Popup} x */
 	Popup_GetAccountMenu(x) {
 		const cf="Popup_GetAccountMenu"; this.k(cf,x);
 		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/

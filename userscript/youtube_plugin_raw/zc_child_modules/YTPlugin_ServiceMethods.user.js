@@ -4041,15 +4041,15 @@ class ServiceMethods extends ServiceData {
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
-	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
+	/** @protected @arg {C_AdsControlFlowOpportunityReceived} x */
 	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
 	/** @private @arg {C_ChangeKeyedMarkersVisibility} x */
 	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
 	/** @private @arg {C_LoadMarkers} x */
 	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
-	/** @private @arg {C_ReloadContinuationItems} x */
+	/** @protected @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
-	/** @private @arg {A_AppendContinuationItems} x */
+	/** @protected @arg {A_AppendContinuationItems} x */
 	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @type {string[]} */
 	DC_AddToPlaylist_listTypes=[
@@ -4153,7 +4153,7 @@ class ServiceMethods extends ServiceData {
 		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(relevantStateTags,this.B_StateTag);
 	}
-	/** @private @arg {B_StateTag} x */
+	/** @protected @arg {B_StateTag} x */
 	B_StateTag(x) {
 		const cf="StateTag"; this.k(cf,x);
 		if(x.stateTag!==3) debugger;
@@ -4446,7 +4446,7 @@ class ServiceMethods extends ServiceData {
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x);/*#destructure_omit*/
 		this.trackingParams(trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.G_Text);
-		this.z(contents,this.R_PlaylistPanelVideo);
+		this.z(contents,x => this.handle_types.R_PlaylistPanelVideo(x));
 		this.a_primitive_str(title);
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
@@ -5556,6 +5556,26 @@ class ServiceMethods extends ServiceData {
 			case "PRIVACY_UNLISTED":
 			case "PRIVACY_PUBLIC":
 		}
+	}
+	/** @protected @template CT,T,U @template {TR_ItemSection_1<CT>|TR_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {[VU["itemSectionRenderer"],Omit<VU, "itemSectionRenderer">]} */
+	TR_ItemSection(x) {
+		const cf="TR_ItemSection";
+		const {itemSectionRenderer: a,...y}=this.s(cf,x);/*#destructure_done*/
+		return [a,y];
+	}
+	/** @arg {CF_TD_ItemSection} cf1 @protected @template CT,T,U @template {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} VU @arg {VU} x @returns {(VU extends TD_ItemSection_3<CT,T,U>?[VU["contents"],VU["sectionIdentifier"],VU["targetId"]]:[VU["contents"]])|null} */
+	TD_ItemSection(cf1,x) {
+		const cf2="TD_ItemSection";
+		/** @type {TD_ItemSection_1<CT>|TD_ItemSection_3<CT,T,U>} */
+		let u=x;
+		if("targetId" in u) {
+			const {contents,sectionIdentifier,targetId,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			return as_any([contents,sectionIdentifier,targetId]);
+		}
+		const {contents,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		return as_any([contents]);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
