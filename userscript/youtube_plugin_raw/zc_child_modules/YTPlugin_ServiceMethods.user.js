@@ -116,10 +116,10 @@ class ServiceMethods extends ServiceData {
 				this.x.get("handle_types").decode_continuation_token(cf,token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
-				this.params("ContinuationRequestType_ReelWatchSeq.token","reel_request_continuation.token",token);
+				this.params(cf,"continuation_request.reel_watch_sequence.token",token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				this.params("ContinuationRequestType_WatchNext.token","watch_request_continuation.token",token);
+				this.params(cf,"continuation_request.watch_next.token",token);
 			} break;
 		};
 		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */

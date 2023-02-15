@@ -1374,7 +1374,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_Timed"; this.k(cf,x);
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(timeoutMs!==60000) debugger;
-		this.params(cf,"TimedContinuation",continuation);
+		this.params(cf,"timed_continuation.data",continuation);
 	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
@@ -1546,7 +1546,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu"; this.k(cf,x);
 		const {ctoken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"GetNotificationMenu.ctoken",ctoken);
+		this.params(cf,"get_notification_menu.ctoken",ctoken);
 	}
 	/** @private @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {

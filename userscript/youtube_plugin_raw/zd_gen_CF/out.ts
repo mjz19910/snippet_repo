@@ -1152,5 +1152,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map_key";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map_value";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map_container";}
+		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.watch_request_continuation.token.f5" | "sub.continuation_token.data.f15" | "sub.continuation_token.data.f72" | "sub.continuation_token.data.f49.f6" | "sub.tracking.trackingParams.f7";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		;
 }
