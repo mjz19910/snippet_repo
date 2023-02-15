@@ -2719,8 +2719,7 @@ class ServiceMethods extends ServiceData {
 					ret=false;
 				} break;
 			}
-		}
-		if(entry instanceof Array&&this.is_bigint(entry)) {
+		} else if(this.is_bigint(entry)) {
 			switch(path) {
 				default: {
 					let new_data=this.handle_bigint(path,entry);
