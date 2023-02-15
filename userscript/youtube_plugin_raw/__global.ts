@@ -1,3 +1,5 @@
+import {ServiceLoader as ServiceLoader_} from "./zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js";
+
 export {};
 declare global {
 	interface Window {
@@ -16,5 +18,5 @@ declare global {
 	}
 	var required: PluginStore["mod$YoutubePluginBase"]["required"];
 	type PluginStore=import("./zb_plugin_types/PluginStore.js").PluginStore;
-	type ServiceLoader=InstanceType<PluginStore["mod$ServiceLoader"]["ServiceLoader"]>;
+	type ServiceLoader=ServiceLoader_;
 }
