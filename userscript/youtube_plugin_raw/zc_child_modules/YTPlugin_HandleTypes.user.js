@@ -2431,7 +2431,7 @@ class HandleTypes extends HandleTypesEval {
 				this.save_number(cf,value);
 			} break
 			case "child": {
-				if(dec!==null) return this.codegen_typedef_bin(cf,x);
+				x[3]=null;
 			} break;
 		}
 	}
