@@ -2378,15 +2378,15 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof obj[0]==="number") {
 					return `TYPE::VW<${obj[0]}>`;
 				}
-				return obj[0];
+				return this.typedef_json_replace_bin(state,"0",obj[0]);
 			}
 			/** @type {D_DecTypeNum} */
 			let otu=as(obj);
 			if(otu[0]==="child") return this.convert_arr_to_obj([otu]);
 			if(otu[0]==="data32") return this.convert_arr_to_obj([otu]);
 			/** @type {D_DecTypeNum[]} */
-			let otu=obj;
-			let res=this.convert_arr_to_obj(otu);
+			let ota=obj;
+			let res=this.convert_arr_to_obj(ota);
 			if(res!==null) return res;
 			debugger;
 		}
