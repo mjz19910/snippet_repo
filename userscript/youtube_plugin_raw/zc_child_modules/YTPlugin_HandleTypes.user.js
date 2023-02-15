@@ -2344,11 +2344,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RD_Obj_a4} x */
 	D_RD_Obj_a4(x) {
 		const cf="D_RD_Obj_a4";
-		const [type,field_id,,dec]=x;
-		if(type!=="child") return this.codegen_typedef_bin(cf,x);
-		switch(field_id) {
+		const [type,,value,dec]=x;
+		switch(type) {
 			default: debugger; break;
-			case 4: this.handle_3_any(dec); break;
+			case "child": {
+				this.handle_3_any(dec);
+			} break;
+			case "data32": this.save_number(cf,value); break;
 		}
 	}
 	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
