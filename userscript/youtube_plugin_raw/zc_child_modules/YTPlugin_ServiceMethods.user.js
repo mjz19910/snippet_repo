@@ -2647,26 +2647,9 @@ class ServiceMethods extends ServiceData {
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {string} x */
 	trackingParams(x) {this.params("tracking.trackingParams",x);}
-	/** @private @type {Map<string,string[]>} */
-	missing_codegen_types=new Map;
 	/** @protected @arg {string} cf @arg {{}} x */
-	codegen_typedef(cf,x,do_break=true) {
-		let res=this.cg.codegen_typedef(cf,x,true);
-		if(!res) return;
-		let ci=this.missing_codegen_types.get(cf);
-		if(ci&&ci.includes(res)) return;
-		if(!ci) this.missing_codegen_types.set(cf,ci=[]);
-		ci.push(res);
-		let all_ty_1=ci.map(e => {
-			let ss=split_string_once(e,"=");
-			if(ss.length==1) throw new Error();
-			return ss[1].trim().slice(0,-1);
-		});
-		let all_types=all_ty_1.reduce((p,c) => p+"|"+c+"\n","");
-		console.group(`-- [${cf}.gen_result] --`);
-		console.log("\n%s",all_types);
-		console.groupEnd();
-		if(do_break) {debugger;}
+	codegen_typedef(cf,x,do_break=false) {
+		this.cg.codegen_typedef(cf,x,do_break,true);
 	}
 	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {

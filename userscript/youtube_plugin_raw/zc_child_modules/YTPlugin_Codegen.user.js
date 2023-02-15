@@ -270,7 +270,7 @@ class CodegenService extends BaseService {
 		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
 	}
 	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_typedef(cf,x,ret_val) {
+	codegen_typedef_impl_2(cf,x,ret_val) {
 		let new_typedef=this.codegen_typedef_impl(cf,x,true);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
@@ -279,6 +279,27 @@ class CodegenService extends BaseService {
 				console.log(new_typedef);
 			}
 		}
+	}
+	/** @private @type {Map<string,string[]>} */
+	missing_codegen_types=new Map;
+	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @arg {boolean} [ret_val] @returns {string|null|void} */
+	codegen_typedef(cf,x,do_break,ret_val) {
+		let res=this.codegen_typedef_impl_2(cf,x,ret_val);
+		if(!res) return;
+		let ci=this.missing_codegen_types.get(cf);
+		if(ci&&ci.includes(res)) return;
+		if(!ci) this.missing_codegen_types.set(cf,ci=[]);
+		ci.push(res);
+		let all_ty_1=ci.map(e => {
+			let ss=split_string_once(e,"=");
+			if(ss.length==1) throw new Error();
+			return ss[1].trim().slice(0,-1);
+		});
+		let all_types=all_ty_1.reduce((p,c) => p+"|"+c+"\n","");
+		console.group(`-- [${cf}.gen_result] --`);
+		console.log("\n%s",all_types);
+		console.groupEnd();
+		if(do_break) {debugger;}
 	}
 	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;
@@ -450,7 +471,7 @@ class CodegenService extends BaseService {
 			state.parent_map.set(x,[mi,k1]);
 		}
 		let mi=state.object_store.indexOf(x);
-		if (x instanceof Uint8Array) {
+		if(x instanceof Uint8Array) {
 			let res=this.text_decoder.decode(x);
 			return `TYPE::V_Uint8Array<"${res}">`;
 		}
