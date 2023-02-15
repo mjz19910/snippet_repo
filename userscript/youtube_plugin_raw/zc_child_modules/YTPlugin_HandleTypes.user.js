@@ -2373,7 +2373,7 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,buffer]=x;
 		if(type!=="child") debugger;
 		if(field_id!==3) debugger;
-		dec_1[3]=null;
+		x[3]=null;
 		buffer;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13} x */
