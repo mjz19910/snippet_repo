@@ -1885,7 +1885,7 @@ class ServiceMethods extends ServiceData {
 			case "hashtag": {
 				let [,ht,...u]=p;
 				if(u.length===0) {
-					this.indexed_db_put("hashtag",{key: `hashtag:${ht}`,hashtag: ht});
+					this.indexed_db_put("hashtag_id",{key: `hashtag_id:${ht}`,hashtag: ht});
 				} else if(u.length===1) {
 					switch(u[0]) {
 						default: u[0]===""; debugger; break;
