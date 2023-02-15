@@ -2953,7 +2953,8 @@ class ServiceMethods extends ServiceData {
 				case "continuation_request.watch_next.token.f9.f1.f1":
 				case "get_report_form.params.f28.f1":
 				case "get_report_form.params.f28.f1[].f1.f1": {
-					this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);
+					let res=this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);
+					if(res===false) ret=false;
 				}; continue;
 			}
 		}
