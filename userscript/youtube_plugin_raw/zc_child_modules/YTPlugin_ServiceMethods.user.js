@@ -4091,12 +4091,20 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
+	/** @private @arg {D_YtConfig} x */
+	D_YtConfig(x) {
+		const cf="D_YtConfig";
+		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.primitive_str(visitorData);
+		if(sessionIndex!==0) debugger;
+		this.ds.save_root_visual_element(rootVisualElementType);
+	}
 	/** @private @arg {RC_WR_ContextExtension} x */
 	RC_WR_ContextExtension(x) {
 		const cf="RC_WR_ContextExtension"; this.k(cf,x);
 		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hasDecorated!==void 0) this._primitive_of(hasDecorated,"boolean");
-		this.t(ytConfigData,x => this.handle_types.D_YtConfig(x));
+		this.t(ytConfigData,x => this.D_YtConfig(x));
 		this.t(webPrefetchData,this.D_WebPrefetch);
 	}
 	/** @private @arg {RCA_RelevantStateTags} x */
