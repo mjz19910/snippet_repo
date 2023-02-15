@@ -790,8 +790,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InfoRow(x) {this.H_("R_InfoRow","infoRowRenderer",x,this.D_InfoRow);}
 	/** @private @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @private @arg {R_PromotedSparklesWeb} x */
-	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @private @arg {R_TextHeader} x */
 	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {R_EmojiPickerCategory} x */
