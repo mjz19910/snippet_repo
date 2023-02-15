@@ -4192,6 +4192,8 @@ class ServiceMethods extends ServiceData {
 		const {secondaryResults,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		f.call(this,secondaryResults);
 	}
+	/** @private @arg {R_RelatedChipCloud} x */
+	R_RelatedChipCloud(x) {this.H_("R_RelatedChipCloud","relatedChipCloudRenderer",x,this.D_RelatedChipCloud);}
 	/** @private @arg {G_Watch_AnyResultItem} x */
 	G_Watch_AnyResultItem(x) {
 		const cf="G_SecondaryContentsItem"; this.k(cf,x);
@@ -4220,6 +4222,8 @@ class ServiceMethods extends ServiceData {
 		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
+	/** @private @arg {R_LiveChat} x */
+	R_LiveChat(x) {this.H_("R_LiveChat","liveChatRenderer",x,this.D_LiveChat);}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="D_TwoColumnWatchNextResults"; this.k(cf,x);
@@ -4554,5 +4558,125 @@ class ServiceMethods extends ServiceData {
 		if(!webShowNewAutonavCountdown) debugger;
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
+	/** @private @arg {D_ModifiedSetItem} x */
+	D_ModifiedSetItem(x) {
+		const cf="D_ModifiedSetItem"; this.k(cf,x);
+		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(autoplayVideo,this.E_WatchPlaylist);
+		this.t(nextButtonVideo,this.E_WatchPlaylist);
+		this.t(previousButtonVideo,this.E_WatchPlaylist);
+	}
+	/** @private @arg {D_AutoplaySetItem} x */
+	D_AutoplaySetItem(x) {
+		const cf="D_AutoplaySetItem"; this.k(cf,x);
+		switch(x.mode) {
+			case "LOOP": {
+				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Watch(autoplayVideo);
+				this.t(nextButtonVideo,this.E_Watch);
+				this.D_AutoplaySetItem_ButtonVideoEP(previousButtonVideo);
+			} break;
+			case "NORMAL": {
+				const {mode: {},autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Watch(autoplayVideo);
+				this.t(nextButtonVideo,this.E_Watch);
+				this.t(previousButtonVideo,this.E_Watch);
+			} break;
+			case "SHUFFLE": {
+				const {mode: {},autoplayVideo,nextButtonVideo,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Watch(autoplayVideo);
+				this.E_Watch(nextButtonVideo);
+			} break;
+		}
+	}
+	/** @private @arg {CF_parse_identifier} cf @arg {Record<"identifier",unknown>} x */
+	force_parse_identifier(cf,x) {
+		const {identifier,...a}=this.s(`${cf}.identifier`,x); this.g(a);
+		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
+			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
+			let yk=this.get_keys_of(identifier);
+			if(!this.eq_keys(yk,["surface","tag"])) debugger;
+			switch(identifier.tag) {
+				case "engagement-panel-structured-description": break;
+				default: debugger; return;
+			}
+			let a1=this.GT_ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
+			if(a1!=="engagement-panel-structured-description") debugger;
+			return;
+		}
+		this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Video} T @arg {T} x */
+	D_Omit_Compact_Video(cf,x) {
+		let u=this.D_Omit_Compact_Player(cf,x);
+		let {videoId,shortViewCountText,publishedTimeText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
+		this.videoId(videoId);
+		this.G_Text(publishedTimeText);
+		this.G_Text(shortViewCountText);
+		return y;
+	}
+	/** @private @arg {D_WatchNextEndScreen} x */
+	D_WatchNextEndScreen(x) {
+		const cf="D_WatchNextEndScreen"; this.k(cf,x);
+		const {results,title,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(results,this.G_WatchNextEndScreenItem);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_BrowserMediaSession} x */
+	D_BrowserMediaSession(x) {
+		const cf="D_BrowserMediaSession"; this.k(cf,x);
+		const {actions,browserMediaSession,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(actions,this.R_LikeButton);
+		this.R_BrowserMediaSession(browserMediaSession);
+	}
+	/** @private @arg {string} x */
+	DC_Load_EntityKey(x) {this.params("load_markers.entity_key",x);}
+	/** @private @arg {D_DecoratedPlayerBar} x */
+	D_DecoratedPlayerBar(x) {
+		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
+		const {playerBar,...y}=this.s(cf,x);
+		if("playerBarActionButton" in y) {
+			const {playerBarActionButton,...y1}=this.s(cf,y); this.g(y1);/*#destructure_done*/
+			return this.R_Button(playerBarActionButton);
+		}
+		this.g(y);
+	}
+	/** @private @arg {D_AutoplaySwitchButton} x */
+	D_AutoplaySwitchButton(x) {
+		const cf="D_AutoplaySwitchButton"; this.k(cf,x);
+		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z([onEnabledCommand,onDisabledCommand],(x) => {
+			const cf="E_SetSettingAutonavForDesktop";
+			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.clickTrackingParams(clickTrackingParams);
+			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
+			this.M_SetSetting(commandMetadata);
+			this.T_DE_SettingItem_AutonavForDesktop(setSettingEndpoint);
+		});
+		this.D_Accessibility(enabledAccessibilityData);
+		this.D_Accessibility(disabledAccessibilityData);
+		this.trackingParams(trackingParams);
+		this.save_boolean("autoplay.switch.enabled",enabled);
+	}
+	/** @private @arg {D_DesktopTopbar} x */
+	D_DesktopTopbar(x) {
+		const cf="D_DesktopTopbar";
+		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_TopbarLogo(logo);
+		this.R_FusionSearchbox(searchbox);
+		this.trackingParams(trackingParams);
+		if(countryCode!=="CA") debugger;
+		this.z(topbarButtons,this.G_TopbarButtonItem);
+		this.R_HotkeyDialog(hotkeyDialog);
+		this.R_Button(backButton);
+		this.R_Button(forwardButton);
+		this.R_Button(a11ySkipNavigationButton);
+		this.R_Button(voiceSearchButton);
+	}
+	/** @private @arg {R_StructuredDescriptionContent} x */
+	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent","structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
+	/** @private @arg {R_ProductList} x */
+	R_ProductList(x) {this.H_("R_ProductList","productListRenderer",x,this.D_ProductList);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
