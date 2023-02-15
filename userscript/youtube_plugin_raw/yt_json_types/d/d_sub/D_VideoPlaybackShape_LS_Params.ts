@@ -3,10 +3,7 @@
 // cSpell:ignoreRegExp /"sn-(?:nx57yn.{2})"/
 // cSpell:ignoreRegExp /"sn-(?:q4flrn.{2})"/
 // cSpell:ignore googlevideo_host_q4flrn
-type G_VideoHostnames_Gen_0=T_Split<(D_googlevideo_host_9gv7ln|D_googlevideo_host_tt1e7n)[number],".">[0];
-type G_VideoHostnames_Gen_1=T_Split<(D_googlevideo_host_p5qs7n)[number],".">[0];
-type G_VideoHostnames_Gen_2=T_Split<(D_googlevideo_host_nx57yn)[number],".">[0];
-type G_VideoHostnames_Gen_3=T_Split<(D_googlevideo_host_q4flrn)[number],".">[0];
+type G_VideoHostnames_Gen_0=T_Split<D_googlevideo_host_9gv7ln[number],".">[0];
 type G_VideoHostnames_Gen=
 	|"sn-9gv7lnes"|"sn-9gv7lnez"|"sn-9gv7lnle"|"sn-9gv7lns7"
 	|"sn-tt1e7n7k"|"sn-tt1e7nls"|"sn-tt1e7nlz"
@@ -18,12 +15,7 @@ type G_VideoHostnames_Gen=
 	|"sn-q4flrnsd"|"sn-q4flrnsk"|"sn-q4flrnsl"|"sn-q4flrnss"
 	;
 ;
-type G_VideoHostnames=|G_VideoHostnames_U|G_VideoHostnames_Gen;
-type G_VideoHostnames_U=
-	|"sn-n4v7snls"
-	|"sn-n4v7snly"
-	;
-;
+type G_VideoHostnames=G_VideoHostnames_Gen;
 type D_VideoPlaybackShape_LS_Params={
 	mh: "B2";
 	mm: `${31},${26}`;
