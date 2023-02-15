@@ -2601,6 +2601,7 @@ class ServiceMethods extends ServiceData {
 	is_bigint(x) {return x[0]==="bigint";}
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
+		let key_index=this.parse_key_index;
 		let ret=false;
 		if(typeof entry==="string") {
 			switch(path) {
@@ -2656,7 +2657,7 @@ class ServiceMethods extends ServiceData {
 					let new_data=this.save_string(path,entry);
 					if(new_data) {
 						let x=path; x;
-						console.log(`-- [handle_value_gen$do_save_str] [v:${entry}] --\n\ncase "${x}":\n`);
+						console.log(`-- [handle_value_gen$do_save_str] [idx:${key_index}] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 					ret=false;
@@ -2820,7 +2821,7 @@ class ServiceMethods extends ServiceData {
 			let {u}=this.get_parse_fns(path,[],null);
 			/** @private @type {P_LogItems} */
 			switch(parts[0]) {
-				// [default_parse_param_next]
+				// [default_parse_param_empty]
 				default: {
 					const idx=1; u(idx); debugger;
 				} break;
@@ -2830,8 +2831,6 @@ class ServiceMethods extends ServiceData {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
 		let map_entry_value=tva[0];
 		let {u}=this.get_parse_fns(path,[],map_entry_value);
-		let key_index=this.parse_key_index;
-		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
