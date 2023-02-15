@@ -1074,6 +1074,11 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.parentTrackingParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4.f1";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4.f2";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
