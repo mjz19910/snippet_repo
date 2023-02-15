@@ -3280,38 +3280,19 @@ class ServiceMethods extends ServiceData {
 	params(root,path,x) {
 		/** @type {number[]} */
 		let map_entry_key_path=[];
-		this.on_endpoint_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
+		this.on_any_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
 	}
 	/** @private @type {string[]} */
 	cache_player_params=[];
 	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} params_callback */
-	on_endpoint_params(root,path,map_entry_key_path,x,params_callback) {
+	on_any_params(root,path,map_entry_key_path,x,params_callback) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_endpoint_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
-	}
-	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
-	parse_endpoint_param(root,path,map_entry_key_path,map,callback) {
-		this.parse_key_index++;
-		let key_index=this.parse_key_index;
-		let map_keys=[...map.keys()];
-		let parse_key=this.make_parse_key(root,path,map,map_keys,callback);
-		for(let i=1;i<300;i++) {
-			if(!map_keys.includes(i)) continue;
-			map_entry_key_path.push(i);
-			parse_key(map_entry_key_path);
-			map_entry_key_path.pop();
-		}
-		if(this.eq_keys(map_keys,[])) return;
-		let {new_ns}=this.get_parse_fns(path,map_keys,null);
-		new_ns();
-		let param_obj=this.to_param_obj(map);
-		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
-		{debugger;}
+		this.parse_any_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
 	}
 	/** @private @template {CF_L_TP_Params|CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {T_ParseCallbackFunction<T>} callback */
 	make_parse_key(root,path,map,map_keys,callback) {
