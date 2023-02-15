@@ -2993,7 +2993,7 @@ class ServiceMethods extends ServiceData {
 				default:
 			} break;
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
-				case 3: case 9: case 13: case 14:
+				case 2: case 3: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
 			} break;
