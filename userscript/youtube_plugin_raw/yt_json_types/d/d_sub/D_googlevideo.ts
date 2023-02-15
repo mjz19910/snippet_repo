@@ -80,3 +80,17 @@ type D_GV_n4v7sn=[
 	"sn-n4v7sns7.googlevideo.com",
 	"sn-n4v7snse.googlevideo.com",
 ];
+type D_GV_o097zn=[
+	"sn-o097znsd.googlevideo.com",
+	"sn-o097znse.googlevideo.com",
+	"sn-o097znsk.googlevideo.com",
+	"sn-o097znsl.googlevideo.com",
+	"sn-o097znsr.googlevideo.com",
+	"sn-o097znss.googlevideo.com",
+	"sn-o097znsz.googlevideo.com",
+	"sn-o097znz7.googlevideo.com",
+	"sn-o097znzd.googlevideo.com",
+	"sn-o097znze.googlevideo.com",
+	"sn-o097znzk.googlevideo.com",
+	"sn-o097znzr.googlevideo.com",
+];

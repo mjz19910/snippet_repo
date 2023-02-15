@@ -2,8 +2,9 @@
 // cSpell:ignoreRegExp /"sn-(?:n4v7sn.{2})"/
 // cSpell:ignoreRegExp /"sn-(?:nx57yn.{2})"/
 // cSpell:ignoreRegExp /"sn-(?:q4flrn.{2})"/
+// cSpell:ignoreRegExp /"sn-(?:o097zn.{2})"/
 // cSpell:ignore googlevideo_host_q4flrn
-type G_VideoHostnames_Gen_0=T_Split<D_GV_n4v7sn[number],".">[0];
+type G_VideoHostnames_Gen_0=T_Split<D_GV_o097zn[number],".">[0];
 type G_VideoHostnames_Gen=
 	|"sn-9gv7lnes"|"sn-9gv7lnez"|"sn-9gv7lnle"|"sn-9gv7lns7"
 	|"sn-n4v7snee"|"sn-n4v7sney"|"sn-n4v7snl7"|"sn-n4v7snll"|"sn-n4v7snlr"|"sn-n4v7snls"|"sn-n4v7snly"|"sn-n4v7sns7"|"sn-n4v7snse"
@@ -14,6 +15,8 @@ type G_VideoHostnames_Gen=
 	|"sn-q4flrnl6"|"sn-q4flrnl7"|"sn-q4flrnld"|"sn-q4flrnle"|"sn-q4flrnlz"
 	|"sn-q4flrnsd"|"sn-q4flrnsk"|"sn-q4flrnsl"|"sn-q4flrnss"
 	|"sn-tt1e7n7k"|"sn-tt1e7nls"|"sn-tt1e7nlz"
+	|"sn-o097znsd"|"sn-o097znse"|"sn-o097znsk"|"sn-o097znsl"|"sn-o097znsr"|"sn-o097znss"|"sn-o097znsz"
+	|"sn-o097znz7"|"sn-o097znzd"|"sn-o097znze"|"sn-o097znzk"|"sn-o097znzr"
 	;
 ;
 type G_VideoHostnames=G_VideoHostnames_Gen;
