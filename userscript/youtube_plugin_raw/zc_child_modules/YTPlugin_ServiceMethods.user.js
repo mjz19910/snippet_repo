@@ -1804,7 +1804,7 @@ class ServiceMethods extends ServiceData {
 		this.g(x);
 	}
 	/** @private @arg {DE_CreateComment} x */
-	DE_CreateComment(x) {this.TD_Params("createCommentParams","create_comment.params",x);}
+	DE_CreateComment(x) {this.TD_Params("create_comment.params","createCommentParams",x);}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
 		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
@@ -3046,8 +3046,8 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
-	/** @protected @arg {P_ParamParse} cf @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
-	TD_Params(cf,k,x) {const {[k]: a}=x; this.params(cf,a);}
+	/** @protected @arg {CF_D_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility";

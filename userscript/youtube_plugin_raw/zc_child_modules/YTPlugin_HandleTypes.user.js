@@ -1017,8 +1017,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {DE_YpcGetCart} x */
 	DE_YpcGetCart(x) {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
-		let sp=this.y(cf,"transactionParams",x,x => x);
-		this.params("ypc_get_cart.transaction_params",sp);
+		this.TD_Params("ypc_get_cart.transaction_params","transactionParams",x);
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}

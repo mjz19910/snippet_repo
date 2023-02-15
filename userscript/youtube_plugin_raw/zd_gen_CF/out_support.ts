@@ -2,7 +2,6 @@ type CF_NEW_GEN="a";
 export namespace Prelude {
 	export type AllNames=
 		//#region
-		|"CF_decode_continuation_token"
 		|"CF_add_string_to_map"
 		|"CF_D_Button"
 		|"CF_D_CaseGen"
@@ -17,6 +16,7 @@ export namespace Prelude {
 		|"CF_D_ToggleButton"
 		|"CF_D_Video_Handle"
 		|"CF_DC_Generic_CTP"
+		|"CF_decode_continuation_token"
 		|"CF_GE_ResponseReceived"
 		|"CF_L_CTP_Params"
 		|"CF_L_Params"
@@ -43,6 +43,7 @@ export namespace Prelude {
 		|"CF_TA_OpenPopup"
 		|"CF_TA_Page"
 		|"CF_TD_ItemSection"
+		|"CF_TD_Params"
 		|"CF_TE_Endpoint_2"
 		|"CF_TE_Endpoint_3"
 		|"CF_TE_Endpoint_Opt_3"
@@ -53,7 +54,6 @@ export namespace Prelude {
 	// |"CF_D_STR"
 	export type CF_NEW_STR="CF_NEW_STR";
 	//#region
-	export type CF_decode_continuation_token="CF_decode_continuation_token";
 	export type CF_add_string_to_map="CF_add_string_to_map";
 	export type CF_D_Button="CF_D_Button";
 	export type CF_D_CaseGen="CF_D_CaseGen";
@@ -68,13 +68,14 @@ export namespace Prelude {
 	export type CF_D_ToggleButton="CF_D_ToggleButton";
 	export type CF_D_Video_Handle="CF_D_Video_Handle";
 	export type CF_DC_Generic_CTP="CF_DC_Generic_CTP";
+	export type CF_decode_continuation_token="CF_decode_continuation_token";
 	export type CF_GE_ResponseReceived="CF_GE_ResponseReceived";
 	export type CF_L_CTP_Params="CF_L_CTP_Params";
 	export type CF_L_Params="CF_L_Params";
 	export type CF_L_TP_Params="CF_L_TP_Params";
 	export type CF_M_s="CF_M_s";
-	export type CF_M_w="CF_M_w";
 	export type CF_M_VE="CF_M_VE";
+	export type CF_M_w="CF_M_w";
 	export type CF_M_y="CF_M_y";
 	export type CF_M_zy="CF_M_zy";
 	export type CF_MG_s="CF_MG_s";
@@ -94,6 +95,7 @@ export namespace Prelude {
 	export type CF_TA_OpenPopup="CF_TA_OpenPopup";
 	export type CF_TA_Page="CF_TA_Page";
 	export type CF_TD_ItemSection="CF_TD_ItemSection";
+	export type CF_TD_Params="CF_TD_Params";
 	export type CF_TE_Endpoint_2="CF_TE_Endpoint_2";
 	export type CF_TE_Endpoint_3="CF_TE_Endpoint_3";
 	export type CF_TE_Endpoint_Opt_3="CF_TE_Endpoint_Opt_3";
@@ -147,6 +149,7 @@ export namespace Types {
 	export type CF_TA_OpenPopup_=CF_TA_OpenPopup;
 	export type CF_TA_Page_=CF_TA_Page;
 	export type CF_TD_ItemSection_=CF_TD_ItemSection;
+	export type CF_TD_Params_=CF_TD_Params;
 	export type CF_TE_Endpoint_2_=CF_TE_Endpoint_2;
 	export type CF_TE_Endpoint_3_=CF_TE_Endpoint_3;
 	export type CF_TE_Endpoint_Opt_3_=CF_TE_Endpoint_Opt_3;
