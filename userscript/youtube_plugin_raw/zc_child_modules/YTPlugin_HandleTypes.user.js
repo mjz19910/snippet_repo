@@ -4203,7 +4203,8 @@ class HandleTypes extends HandleTypesEval {
 			this.save_string(`${cf1}.google_video_selector`,ap[1]);
 			switch(ap[0]) {
 				default: {
-					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,mi);
+					let [x]=ap;
+					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.host_partition`,x);
 					if(gen.has) break;
 					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				}; break;
