@@ -2460,16 +2460,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {D_RD_ObjArr} x */
-	D_RD_ObjArr(x) {
-		const cf="D_RD_ObjArr";
-		switch(x[0]) {
-			default: return this.codegen_typedef_bin(cf,x);
-			case "child": break;
-			case "data32": break;
-			case "data64": break;
-		}
-	}
 	/** @private @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
 		let bin_obj=this.convert_arr_to_obj(x);
@@ -2528,39 +2518,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {number} x */
 	number_as_hex(x) {
 		return `0x${x.toString(16)}`;
-	}
-	/** @private @arg {D_0x94d81d4} x */
-	D_0x94d81d4(x) {
-		if(15 in x) {
-			const {[3]: f3,[8]: f8,[14]: f14,[15]: f15,...y}=x; this.g(y);
-			if(f8!==1) debugger;
-			if(4 in f14) {
-				const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=f14; this.g(r_y);
-				if(r_f1!==4) debugger;
-				if(r_f3!==2) debugger;
-				if(r_f4!==0) debugger;
-			} else {
-				const {[1]: r_f1,[3]: r_f3,...r_y}=f14; this.g(r_y);
-				if(r_f1!==4) debugger;
-				if(r_f3!==2) debugger;
-			}
-			return;
-		}
-		const {[3]: f3,[8]: f8,[14]: f14,...y}=x; this.g(y);
-		if(f8!==1) debugger;
-		this.params("D_0x94d81d4.f3_binary_token",f3);
-		if(4 in f14) {
-			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=f14; this.g(r_y);
-			switch(r_f1) {
-				default: debugger; break;
-				case 1: case 4:
-			}
-			switch(r_f3) {
-				default: debugger; break;
-				case 1:
-			}
-			if(r_f4!==0) debugger;
-		}
 	}
 	/** @private @arg {D_0x4c82a9c[2][0]} x */
 	D_0x4c82a9c_f2(x) {
@@ -2829,7 +2786,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_f12(f12);
 		this.D_0x12f639cf(f_0x12f639cf);
 	}
-	/** @arg {[]} x */
+	/** @private @arg {[]} x */
 	g_a(x) {if(x.length!==0) debugger;}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x4c82a9c} x */
 	R_0x4c82a9c(cf1,x) {
