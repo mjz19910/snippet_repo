@@ -2446,6 +2446,12 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
+	/** @arg {["data64",9,number[],bigint]} x */
+	D_RA_D_BinaryCategoryObj_a9(x) {
+		const [type,field_id,,]=x;
+		if(type!=="data64") debugger;
+		if(field_id!==9) debugger;
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
 		switch(x[1]) {
@@ -2456,6 +2462,7 @@ class HandleTypes extends HandleTypesEval {
 			case 2: return this.D_RA_D_BinaryCategoryObj_23_a2(x);
 			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
 			case 6: return this.D_RA_D_BinaryCategoryObj_a6(x);
+			case 9: return this.D_RA_D_BinaryCategoryObj_a9(x);
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
