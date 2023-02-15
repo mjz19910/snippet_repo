@@ -2680,12 +2680,11 @@ class ServiceMethods extends ServiceData {
 		} else if(entry instanceof Map) {
 			switch(path) {
 				default: {
-					let x=path; x;
 					let entry_keys=[...entry.keys()];
 					this.log_list.push([
-						/** @type {(entry:typeof entry,x:typeof path)=>string} */
-						(entry,x) => `-- [handle_value_gen$do_save_obj] [map_keys:${entry_keys}] --\n\ncase "${x}":\n`,
-						entry,path,
+						/** @type {(entry_keys_:typeof entry_keys,x:typeof path)=>string} */
+						(entry_keys,x) => `-- [handle_value_gen$do_save_obj] [map_keys:${entry_keys}] --\n\ncase "${x}":\n`,
+						entry_keys,path,
 					]);
 					ret=false;
 				} break;
