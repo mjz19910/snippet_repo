@@ -1,9 +1,5 @@
-// cSpell:ignoreRegExp /"sn-(?:9gv7ln.{2})"/
-// cSpell:ignoreRegExp /"sn-(?:n4v7sn.{2})"/
-// cSpell:ignoreRegExp /"sn-(?:nx57yn.{2})"/
+// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 // cSpell:ignoreRegExp /"sn-(?:q4flrn.{2})"/
-// cSpell:ignoreRegExp /"sn-(?:o097zn.{2})"/
-// cSpell:ignore googlevideo_host_q4flrn
 type G_VideoHostnames_Gen_0=Exclude<T_Split<D_googlevideo_host[number],".">[0],G_VideoHostnames_Gen>;
 type G_VideoHostnames_Gen=
 	|"sn-9gv7lnes"|"sn-9gv7lnez"|"sn-9gv7lnle"|"sn-9gv7lns7"
