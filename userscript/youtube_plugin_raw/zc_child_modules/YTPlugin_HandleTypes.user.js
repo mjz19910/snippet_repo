@@ -2469,6 +2469,15 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_BinaryCategoryObj_r(x) {
 		this.z(x,this.D_RA_D_BinaryCategoryObj_item);
 	}
+	/** @arg {D_RA_D_Binary_d0} x */
+	D_RA_D_Binary_d0(x) {
+		this.z([x[0]],this.D_RA_D_BinaryCategoryObj_item);
+		this.z([x[1]],this.D_RA_D_BinaryCategoryObj_item);
+		this.z([x[2]],this.D_RA_D_BinaryCategoryObj_item);
+		this.z([x[3]],this.D_RA_D_BinaryCategoryObj_item);
+		this.z([x[4]],this.D_RA_D_BinaryCategoryObj_item);
+		this.z([x[5]],this.D_RA_D_BinaryCategoryObj_item);
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2491,7 +2500,7 @@ class HandleTypes extends HandleTypesEval {
 			case 2: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
 			case 4: return this.D_RA_CR_0x14527fab(dec_t);
 			case 5: return this.D_RA_CR_0x12f639cf(dec_t);
-			case 6: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
+			case 6: return this.D_RA_D_Binary_d0(dec_t);
 		}
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
