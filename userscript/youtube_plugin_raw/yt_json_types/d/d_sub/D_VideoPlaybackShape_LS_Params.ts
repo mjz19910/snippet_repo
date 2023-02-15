@@ -21,7 +21,7 @@ type D_VideoPlaybackShape_LS_Params={
 	mh: "B2";
 	mm: `${31},${26}`;
 	// cspell:disable-next
-	mn: `${G_VideoHostnames},${G_VideoHostnames}`;
+	mn: `${G_VideoHostnames}`;
 	ms: "au,onr";
 	mv: "m";
 	mvi: "3";
