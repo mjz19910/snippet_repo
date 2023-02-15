@@ -2480,7 +2480,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a9} x */
 	D_RD_Obj_a9(x) {
-		const cf="D_RA_D_BinaryCategoryObj_a9",[type,id,,dec]=x;
+		const cf="D_RD_Obj_a9",[type,id,,dec]=x;
 		if(id!==9) debugger;
 		switch(type) {
 			default: {
