@@ -3416,7 +3416,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_0x19ac5ceb} x */
 	R_0x19ac5ceb(x) {
 		const cf="R_0x19ac5ceb";
-		const {0x19ac5ceb: a,...y}=this.s(cf,x); this.g(y);
+		const {0x19ac5ceb: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		this.D_0x19ac5ceb(a);
 	}
 	/** @private @arg {D_BinaryCategoryObj} x */
@@ -3573,10 +3573,12 @@ class HandleTypes extends HandleTypesEval {
 		this.D_f12(f12);
 		this.D_0x12f639cf(f_0x12f639cf);
 	}
+	/** @arg {[]} x */
+	g_a(x) {if(x.length!==0) debugger;}
 	/** @private @arg {R_0x4c82a9c} x */
 	R_0x4c82a9c(x) {
 		const cf="R_0x4c82a9c";
-		const {0x4c82a9c: a,...y}=this.s(cf,x); this.g(y);
+		const {0x4c82a9c: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		this.D_0x4c82a9c(a);
 	}
 	/** @private @arg {D_0x12f639cf} x */
@@ -3604,13 +3606,31 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {D_0x19ac5ceb} x */
 	D_0x19ac5ceb(x) {
 		const cf="D_0x19ac5ceb";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
+		const {1: [f1],...y}=this.s(cf,x); this.g(y);
 		this.D_0x19ac5ceb_map(f1);
 	}
+	/** @private @template {any[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
+	drop_last(x) {
+		return as([x.slice(0,-1),x.slice(-1)[0]]);
+	}
+	/** @private @arg {D_0x19ac5ceb_map_entry} x */
+	D_0x19ac5ceb_map_item(x) {x;}
 	/** @private @arg {D_0x19ac5ceb_map} x */
 	D_0x19ac5ceb_map(x) {
 		const cf="D_0x19ac5ceb_map";
-		const {2: f2,5: f3,...y}=this.s(cf,x); this.g(y);
+		const {1: [a,...b],2: [f2],3: [c,...d],5: [f3],...y}=this.s(cf,x); this.g(y);
+		if(a[0]!=="begin") debugger; if(c[0]!=="begin") debugger;
+		if(!(f2 instanceof Uint8Array)) debugger;
+		if(!(f3 instanceof Uint8Array)) debugger;
+		let [e,g]=this.drop_last(b);
+		let [f,h]=this.drop_last(d);
+		if(g[0]!=="end") debugger; if(h[0]!=="end") debugger;
+		this.z(e,x => {
+			x;
+		});
+		this.z(f,x => {
+			x;
+		});
 		debugger;
 	}
 	/** @private @arg {D_Notification} x */
