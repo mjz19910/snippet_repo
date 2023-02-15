@@ -2854,13 +2854,13 @@ class ServiceMethods extends ServiceData {
 					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
-					case "f1": case "f3": case "f4": case "f5": case "f6": case "f7": case "f9":
+					case "f1": case "f4": case "f5": case "f6": case "f7": case "f9":
 					case "f10": case "f13": case "f14":
 				}
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "token": case "n": case "ns": case "data_entry":
+					case "token":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
