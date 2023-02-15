@@ -2622,11 +2622,8 @@ class ServiceMethods extends ServiceData {
 				} break;
 				default: {
 					let new_data=this.save_string(path,entry);
-					if(new_data) this.log_list.push([
-						/** @type {(key_index_:typeof key_index,entry_:typeof entry,x:typeof path)=>string} */
-						(key_index,entry,x) => `-- [handle_value_gen$do_save_str] [idx:${key_index}] [v:${entry}] --\n\ncase "${x}":\n`,
-						entry,path,
-					]);
+					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$do_save_str] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
+					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
 					ret=false;
 				} break;
 			}
@@ -2634,11 +2631,8 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let new_data=this.save_number(path,entry);
-					if(new_data) this.log_list.push([
-						/** @type {(entry_:typeof entry,x:typeof path)=>string} */
-						(entry,x) => `-- [handle_value_gen$do_save_num] [v:${entry}] --\n\ncase "${x}":\n`,
-						entry,path,
-					]);
+					const cf2="do_save_num";
+					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
 					ret=false;
 				} break;
 				case "reel.player_params": {
@@ -2650,11 +2644,8 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let entry_keys=[...entry.keys()];
-					this.log_list.push([
-						/** @type {(entry_keys_:typeof entry_keys,x:typeof path)=>string} */
-						(entry_keys,x) => `-- [handle_value_gen$do_save_obj] [map_keys:${entry_keys}] --\n\ncase "${x}":\n`,
-						entry_keys,path,
-					]);
+					const cf2="do_save_obj";
+					this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry_keys}] --\n\ncase "${path}":\n`)]);
 					ret=false;
 				} break;
 				case "tracking.trackingParams": {
@@ -2665,11 +2656,8 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let new_data=this.save_number(path,[...entry]);
-					if(new_data) this.log_list.push([
-						/** @type {(entry_:typeof entry,x:typeof path)=>string} */
-						(entry,x) => `-- [handle_value_gen$do_save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`,
-						entry,path,
-					]);
+					const cf2="do_save_u8_arr";
+					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
 					ret=false;
 				} break;
 			}
