@@ -2471,12 +2471,21 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
+	/** @arg {D_RA_V_BinaryTimestamp_asFixed} x */
+	D_RA_V_BinaryTimestamp_asFixed(x) {
+		const [dec_0,dec_1,dec_2]=x;
+		this.D_RA_V_BinaryTimestamp_2_d0(dec_0);
+		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
+		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
+	}
 	/** @arg {D_RD_Obj_a9} x */
 	D_RD_Obj_a9(x) {
-		const cf="D_RA_D_BinaryCategoryObj_a9",[type,id,,]=x;
+		const cf="D_RA_D_BinaryCategoryObj_a9",[type,id,,dec]=x;
 		if(id!==9) debugger;
 		switch(type) {
-			case "child":
+			case "child": {
+				this.D_RA_V_BinaryTimestamp_asFixed(dec);
+			} break;
 			case "data64":
 		}
 	}
