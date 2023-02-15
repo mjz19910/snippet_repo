@@ -668,6 +668,7 @@ class R_HandleRichGrid_Base {
 		}
 	}
 }
+// based on https://web.archive.org/web/20190504040958/http://ntt.cc/2008/01/19/base64-encoder-decoder-with-javascript.html
 class Base64Binary {
 	/** @constructor @public @arg {string} key_str @arg {RegExp} key_regexp */
 	constructor(key_str,key_regexp) {

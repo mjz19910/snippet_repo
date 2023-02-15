@@ -6624,7 +6624,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig";
-		const {audioConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
+		const {audioConfig,playbackStartConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
