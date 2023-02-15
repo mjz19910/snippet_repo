@@ -1003,7 +1003,9 @@ class HandleTypes extends HandleTypesEval {
 	GE_Continuation(x) {
 		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
-		if("continuationCommand" in x) {this.C_Continuation(x);} else if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);} else {debugger;}
+		if("continuationCommand" in x) {this.C_Continuation(x);}
+		if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);}
+		{debugger;}
 	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
@@ -1195,7 +1197,8 @@ class HandleTypes extends HandleTypesEval {
 			return this.R_SuperVodBuyFlowContent(x);
 		});
 		this.trackingParams(trackingParams);
-		if("getSurveyCommand" in onCloseCommand) {this.C_GetSurvey(onCloseCommand);} else {debugger;}
+		if("getSurveyCommand" in onCloseCommand) return this.C_GetSurvey(onCloseCommand);
+		{debugger;}
 	}
 	/** @private @arg {D_PlaylistSidebar} x */
 	D_PlaylistSidebar(x) {
@@ -3436,10 +3439,12 @@ class HandleTypes extends HandleTypesEval {
 					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
 					let gw=() => ({k: 1,a: v});
 					let w=gw();
-					if(this.str_starts_with_rx(w.a,"RD")) {w.k=2; w.k==2&&this.parse_playlist_id(w.a);;} else {
-						this.save_next_char("share_url.v",w.a[0]);
-						this.videoId(w.a);
+					if(this.str_starts_with_rx(w.a,"RD")) {
+						w.k=2; w.k==2&&this.parse_playlist_id(w.a);
+						return;
 					}
+					this.save_next_char("share_url.v",w.a[0]);
+					this.videoId(w.a);
 					if(playnext!=="1") debugger;
 					if(!list) debugger; this.parse_playlist_id(list);
 					return;
