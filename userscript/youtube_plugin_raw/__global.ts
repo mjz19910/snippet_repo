@@ -7,7 +7,6 @@ declare global {
 		__plugin_modules__?: Partial<PluginStore>;
 	}
 }
-type Base$ImpType=typeof import("./zc_child_modules/YtPlugin_Base.user.js");
 declare global {
 	interface URLSearchParams {
 		[Symbol.iterator](): IterableIterator<[string,string]>;
