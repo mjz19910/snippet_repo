@@ -312,7 +312,7 @@ class CodegenService extends BaseService {
 		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
 		return null;
 	}
-	/** @private @arg {object} x1 */
+	/** @api @public @arg {object} x1 */
 	get_codegen_name_obj(x1) {
 		/** @type {{}} */
 		let x2=x1;
@@ -337,7 +337,7 @@ class CodegenService extends BaseService {
 		let dec=this.uppercase_first(kk);
 		let ren_dec=this.renderer_decode_map.get(dec);
 		if(ren_dec) {return ren_dec;}
-		return this.cg.get_auto_type_name(x);
+		return this.get_auto_type_name(x);
 	}
 	renderer_decode_map=new Map([
 		["PrefetchHintConfig","R_PrefetchHintConfig"],

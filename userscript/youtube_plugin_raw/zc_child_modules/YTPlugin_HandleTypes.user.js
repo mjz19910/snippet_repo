@@ -1179,7 +1179,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		this.make_codegen_group(cf,x);
+		this.cg.make_codegen_group(cf,x);
 	}
 	/** @private @template {D_CompactLink} T @arg {CF_D_Link} cf @arg {T} x */
 	D_Link_Omit(cf,x) {
@@ -1629,30 +1629,7 @@ class HandleTypes extends HandleTypesEval {
 	]);
 	/** @private @arg {object} x1 */
 	get_codegen_name(x1) {
-		/** @type {{}} */
-		let x2=x1;
-		/** @type {{[x:string]:unknown;}} */
-		let x=x2;
-		if(typeof x.type==='string') {
-			return x.type.split(".").map(x => {
-				if(x.includes("_")) {return x.split("_").map(x => this.uppercase_first(x)).join("");}
-				return this.uppercase_first(x);
-			}).join("$");
-		}
-		let wc=x.webCommandMetadata;
-		if(typeof wc==="object"&&wc!==null) {
-			/** @type {{}} */
-			let wo=wc;
-			let dec=this._decode_WCM(wo);
-			if(dec) return dec;
-		}
-		let rk=this.filter_keys(this.get_keys_of(x));
-		let kk=rk[0];
-		if(typeof kk==="number") return null;
-		let dec=this.uppercase_first(kk);
-		let ren_dec=this.renderer_decode_map.get(dec);
-		if(ren_dec) {return ren_dec;}
-		return this.cg.get_auto_type_name(x);
+		return this.cg.get_codegen_name_obj(x1);
 	}
 	/** @private @arg {RS_UpdateMetadata} x */
 	RSU_M(x) {
@@ -2474,6 +2451,18 @@ class HandleTypes extends HandleTypesEval {
 		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
 		this.codegen_typedef_all(cf,x);
 	}
+	/** @arg {D_RA_Result} x */
+	D_RA_Result(x) {
+		let x=x;
+		switch(x.length) {
+			default: return this.D_RA_D_Binary_dg(x);
+			case 1: return this.D_RA_D_Binary_f1(x);
+			case 2: return this.D_RA_D_BinaryCategoryObj_r(x);
+			case 4: return this.D_RA_CR_0x14527fab(x);
+			case 5: return this.D_RA_CR_0x12f639cf(x);
+			case 6: return this.D_RA_D_Binary_d0(x);
+		}
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2484,16 +2473,7 @@ class HandleTypes extends HandleTypesEval {
 		if(dec.length===0) debugger;
 		/** @type {D_RA_Result} */
 		let dec_t=as_any(dec);
-		switch(dec_t.length) {
-			default: return this.D_RA_D_Binary_dg(dec_t);
-			case 1: {
-				return this.D_RA_D_Binary_f1(dec_t);
-			} break;
-			case 2: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
-			case 4: return this.D_RA_CR_0x14527fab(dec_t);
-			case 5: return this.D_RA_CR_0x12f639cf(dec_t);
-			case 6: return this.D_RA_D_Binary_d0(dec_t);
-		}
+		this.D_RA_Result(dec_t);
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
 		/** @type {GR_RootBinaryObj} */

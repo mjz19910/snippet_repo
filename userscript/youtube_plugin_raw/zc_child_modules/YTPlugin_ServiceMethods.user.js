@@ -69,7 +69,7 @@ class ServiceMethods extends ServiceData {
 				if(x[2]==="UC") {
 					let [,,,v3]=x;
 					switch(v3) {
-						default: this.codegen_case(cf,v3); break;
+						default: this.cg.codegen_case(cf,v3); break;
 						case "livestreaming": break;
 					}
 					return;
@@ -77,7 +77,7 @@ class ServiceMethods extends ServiceData {
 				let [,,v2,v3]=x;
 				if(!this.str_starts_with_rx("UC",v2)) {debugger; return;}
 				switch(v3) {
-					default: this.codegen_case(cf,v3); break;
+					default: this.cg.codegen_case(cf,v3); break;
 					case "videos": break;
 				}
 
@@ -369,7 +369,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {"AD_ChangeEngagementPanelVisibility"} cf @arg {D_EngagementPanelTargetId} x */
 	D_EngagementPanelTargetId(cf,x) {
 		switch(x) {
-			default: x===""; this.codegen_case(`${cf}.targetId`,x); break;
+			default: x===""; this.cg.codegen_case(`${cf}.targetId`,x); break;
 			case "engagement-panel-clip-create":
 			case "engagement-panel-clip-view":
 			case "engagement-panel-comments-section":
@@ -890,7 +890,7 @@ class ServiceMethods extends ServiceData {
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.trackingParams(trackingParams);
 		switch(reelPlayerNavigationModel) {
-			default: this.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef_all(cf,x); break;
+			default: this.cg.codegen_case(cf,reelPlayerNavigationModel); this.codegen_typedef_all(cf,x); break;
 			case void 0:
 			case "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED":
 		}
@@ -1764,7 +1764,7 @@ class ServiceMethods extends ServiceData {
 	DE_SignalNavigation(x) {
 		const cf="DE_SignalNavigation",a=this.T_Signal(cf,x); this.k(cf,x);
 		switch(a) {
-			default: this.codegen_case(`${cf}.signal`,a); break;
+			default: this.cg.codegen_case(`${cf}.signal`,a); break;
 			case "CHANNEL_SWITCHER":
 			case "LIVE_CONTROL_ROOM":
 		}
@@ -2521,7 +2521,7 @@ class ServiceMethods extends ServiceData {
 		}
 		if(this.str_starts_with(x,"browse-feed")) return;
 		switch(x) {
-			default: x===""; this.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
+			default: x===""; this.cg.codegen_case(`D_TargetIdStr:${cf2}`,x); break;
 			case "watch-supervod-button":
 			case "browse-video-menu-button":
 			case "clip-info-button":
@@ -3088,7 +3088,7 @@ class ServiceMethods extends ServiceData {
 		const {targetId,visibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_EngagementPanelTargetId(cf,targetId);
 		switch(visibility) {
-			default: this.codegen_case(`${cf}.visibility`,visibility); break;
+			default: this.cg.codegen_case(`${cf}.visibility`,visibility); break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED":
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN":
 		}
