@@ -2344,7 +2344,7 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,,dec]=x;
 		if(type!=="child") {
 			this.codegen_typedef_all(cf,x);
-			this.codegen_group_id;
+			this.codegen_str;
 			return;
 		}
 		switch(field_id) {

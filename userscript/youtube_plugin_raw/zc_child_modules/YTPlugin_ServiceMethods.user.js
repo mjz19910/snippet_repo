@@ -2593,18 +2593,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {string} x */
 	clickTrackingParams(x) {this.params("tracking.click_tracking_params",x);}
-	/** @protected @arg {CF_D_STR} cf @arg {string} x */
-	codegen_str(cf,x) {
-		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
-		if(x.startsWith("https://")) {
-			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
-			return;
-		}
-		if(x.startsWith("http://")) {
-			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
-			return;
-		}
-	}
 	get indexed_db() {
 		return this.x.get("indexed_db");
 	}

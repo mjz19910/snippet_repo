@@ -351,6 +351,18 @@ class CodegenService extends BaseService {
 		this.cg.codegen_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
+	/** @protected @arg {CF_D_STR} cf @arg {string} x */
+	codegen_str(cf,x) {
+		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
+		if(x.startsWith("https://")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
+			return;
+		}
+		if(x.startsWith("http://")) {
+			console.log(`-- [string.${cf}] --\n\ntype D_${cf}="${x}"`);
+			return;
+		}
+	}
 	/** @private @arg {string} o @arg {string} k1 */
 	typedef_json_replace_string(o,k1) {
 		const max_str_len=120;
