@@ -560,6 +560,25 @@ class CodegenService extends BaseService {
 			if(this.eq_keys(this.get_keys_of(v.webCommandMetadata),["sendPost"])) return "TYPE::M_SendPost";
 			debugger;
 		}
+		x: if(x.accessibilityData) {
+			/** @type {{accessibilityData?:Partial<D_Label>}} */
+			let xu=x;
+			if(!xu?.accessibilityData?.label) break x;
+			return `TYPE::TD_Accessibility<${JSON.stringify(xu.accessibilityData.label)}>`;
+		}
+		x: if(x.label) {
+			/** @type {Partial<D_Label>} */
+			let xu=x;
+			if(!xu.label) break x;
+			return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
+		}
+		x: if(x.browseEndpoint) {
+			/** @type {Partial<GE_Browse>} */
+			let xu=x;
+			if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
+			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
+			return `TYPE::E_VE${ve_num}`;
+		}
 		/** @private @type {G_Text} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::G_Text";
 		if(x.simpleText) return "TYPE::G_Text";
@@ -799,25 +818,6 @@ class CodegenService extends BaseService {
 	get_json_replace_type_len_1(state,r,x,keys) {
 		/** @type {{[U in string]:unknown}} */
 		let b=x;
-		x: if(b.accessibilityData) {
-			/** @type {{accessibilityData?:Partial<D_Label>}} */
-			let xu=b;
-			if(!xu?.accessibilityData?.label) break x;
-			return `TYPE::TD_Accessibility<${JSON.stringify(xu.accessibilityData.label)}>`;
-		}
-		x: if(b.label) {
-			/** @type {Partial<D_Label>} */
-			let xu=b;
-			if(!xu.label) break x;
-			return `TYPE::TD_Label<${JSON.stringify(xu.label)}>`;
-		}
-		x: if(b.browseEndpoint) {
-			/** @type {Partial<GE_Browse>} */
-			let xu=b;
-			if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
-			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
-			return `TYPE::E_VE${ve_num}`;
-		}
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
 		let g=() => this.json_auto_replace(b);
 		let hg=false
