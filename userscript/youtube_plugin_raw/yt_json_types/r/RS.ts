@@ -95,6 +95,16 @@ type RS_Next={
 	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: D_FrameworkUpdates;
 };
+type R_PaidContentOverlay={
+	paidContentOverlayRenderer: {
+		text: G_Text;
+		durationMs: "10000";
+		navigationEndpoint: E_VE83769_Url;
+		icon: T_Icon<"MONEY_HAND">;
+		trackingParams: string;
+	};
+};
+
 type RS_Player={
 	responseContext: RC_ResponseContext;
 	playabilityStatus: D_PlayabilityStatus;
@@ -114,7 +124,7 @@ type RS_Player={
 	adPlacements?: T_AnyObjectOrEmpty<R_AdPlacement>[];
 	frameworkUpdates?: D_FrameworkUpdates;
 	endscreen?: R_Endscreen;
-	paidContentOverlay?: {};
+	paidContentOverlay?: R_PaidContentOverlay|R_PaidContentOverlay;
 	annotations?: R_PlayerAnnotationsExpanded[];
 	cacheMetadata?: D_IsCacheHit;
 };

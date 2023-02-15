@@ -588,6 +588,14 @@ class CodegenService extends BaseService {
 		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
 		if(k1==="impressionCommands") return "TYPE::ImpressionCommand[]";
 		if(k1==="clickLocationTargets") return "TYPE::ClickLocationTarget[]";
+		if(k1==="playabilityStatus") return "TYPE::D_PlayabilityStatus";
+		if(k1==="streamingData") return "TYPE::DD_Streaming";
+		if(k1==="heartbeatParams") return "TYPE::D_HeartbeatParams";
+		if(k1==="playerAds") return "TYPE::R_DesktopWatchAds";
+		if(k1==="playbackTracking") return "TYPE::D_PlaybackTracking";
+		if(k1==="videoDetails") return "TYPE::D_VideoDetails";
+		if(k1==="playerConfig") return "TYPE::D_PlayerConfig";
+		if(k1==="storyboards") return "TYPE::G_PlayerStoryboards";
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
