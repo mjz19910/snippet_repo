@@ -2625,6 +2625,9 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length===0) debugger;
 		switch(cf) {
 			default: debugger; break;
+			case "get_pdg_buy_flow.params": {
+
+			} break;
 			case "tracking.trackingParams": {
 				/** @type {D_RA_Result_TP} */
 				let u=as_any(x);
