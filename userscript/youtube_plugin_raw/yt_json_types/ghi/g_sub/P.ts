@@ -151,11 +151,11 @@ type reel_watch_sequence_a3={
 	6: T_VW<V_Bigint<bigint>>;
 };
 
+type reel_watch_sequence_a5={3: T_VW<12>;};
+
 type P_continuation_request_reel_watch_sequence_token={
 	1: T_VW<"gKyQXCkdZl0">,
 	3: T_VW<reel_watch_sequence_a3>,
-	5: T_VW<{
-		3: T_VW<12>;
-	}>,
+	5: T_VW<reel_watch_sequence_a5>,
 	15: T_VW<reel_watch_sequence_a15>;
 };
