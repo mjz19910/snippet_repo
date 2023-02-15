@@ -2382,7 +2382,7 @@ class HandleTypes extends HandleTypesEval {
 		if(obj instanceof Array) {
 			if(obj.length===1) {
 				if(typeof obj[0]==="number") {
-					return `TYPE::VW<${obj[0]}>`;
+					return `TYPE::T_VW<${obj[0]}>`;
 				}
 				return this.typedef_json_replace_bin(state,"0",obj[0]);
 			}
@@ -2516,13 +2516,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a3} x */
 	D_RD_Obj_a3(x) {
-		const cf="D_RD_Obj_a3",[type,,a]=x;
+		const cf="D_RD_Obj_a3",[type,,,a]=x;
 		if(type!=="child") {
 			this.codegen_typedef(cf,x);
 			return;
 		}
-		if(id!==5) debugger;
-		this.save_number(cf,a);
+		if(a!==null) {
+			if(a[0][0]!=="data32") debugger;
+		}
 	}
 	/** @arg {D_RD_ObjArr} x */
 	D_RD_ObjArr(x) {

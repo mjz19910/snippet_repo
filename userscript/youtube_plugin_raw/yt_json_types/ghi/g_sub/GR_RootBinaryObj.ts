@@ -19,6 +19,15 @@ type GR_RootBinaryObj=
 	|R_ClickTrackingObj
 	|R_CreatePlaylistObj
 	|R_ContinuationObj_SubObj
+	|{
+		1: T_VW<V_BinaryTimestamp>;
+		3: {
+			1: T_VW<5>;
+			6: T_VW<1>;
+			11: T_VW<2>;
+		};
+		4: T_VW<2>;
+	}
 	;
 ;
 type R_ContinuationObj_SubObj={
