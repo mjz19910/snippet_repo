@@ -1980,7 +1980,6 @@ class HandleTypes extends HandleTypesEval {
 		if(typeof obj==="symbol") return obj;
 		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
 		if(typeof obj!=="object") return obj;
-		debugger;
 		if(obj instanceof Array) {
 			if(obj.length===1) {
 				if(typeof obj[0]==="number") {
@@ -2076,18 +2075,18 @@ class HandleTypes extends HandleTypesEval {
 		});
 		this.H_d(cf,3,n1,x => this.ceq(x,1));
 	}
-	/** @private @arg {R_GetPgdBuyFlow} x */
+	/** @protected @arg {R_GetPgdBuyFlow} x */
 	R_GetPgdBuyFlow(x) {
 		const cf="R_GetPgdBuyFlow";
 		if(1 in x) return this.H_d(cf,1,x,this.D_GetPgdBuyFlow);
 		debugger;
 	}
-	/** @private @arg {P_ReelPlayerParams} x */
+	/** @protected @arg {P_ReelPlayerParams} x */
 	P_ReelPlayerParamsObj(x) {
 		if(30 in x) return;
 		debugger;
 	}
-	/** @private @arg {P_ReelParams} x */
+	/** @protected @arg {P_ReelParams} x */
 	P_ReelParams(x) {
 		const cf="P_ReelParams"; this.k(cf,x);
 		if(1 in x) {
@@ -2096,7 +2095,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
-	/** @private @arg {P_ReelSequenceParams} x */
+	/** @protected @arg {P_ReelSequenceParams} x */
 	P_ReelSequenceParams(x) {
 		if(5 in x) return;
 		debugger;
@@ -2112,80 +2111,80 @@ class HandleTypes extends HandleTypesEval {
 				console.log(`\ncase "${cf}":`);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x);
 			} break;
-			case "ad_layout.ad_serving_data_entry": {
-				/** @type {P_continuation_request_reel_watch_sequence_token} */
-				let u=as_any(x); u;
-			} break;
-			case "continuation_request.reel_watch_sequence.token": {
-				/** @type {P_continuation_request_reel_watch_sequence_token} */
-				let u=as_any(x); u;
-			} break;
-			case "entity.key": {
-				/** @type {P_entity_key} */
-				let u=as_any(x); u;
-			} break;
-			case "entity_key.normal": {
-				/** @type {P_entity_key_normal} */
-				let u=as_any(x); u;
-			} break;
-			case "playability_status.context_params": {
-				/** @type {P_playability_status_context_params} */
-				let u=as_any(x); u;
-			} break;
-			case "continuation_request.browse.token": {
-				/** @type {P_continuation_request_browse_token} */
-				let u=as_any(x); u;
-			} break;
-			case "unsubscribe.params": {
-				/** @type {P_unsubscribe_params} */
-				let u=as_any(x); u;
-			} break;
-			case "subscribe.params": {
-				/** @type {P_subscribe_params} */
-				let u=as_any(x); u;
-			} break;
-			case "remove_like.params": {
-				/** @type {P_remove_like_params} */
-				let u=as_any(x); u;
-			} break;
-			case "dislike.params": {
-				/** @type {P_dislike_params} */
-				let u=as_any(x); u;
-			} break;
-			case "like.params": {
-				/** @type {P_LikeParams} */
-				let u=as_any(x); u;
-			} break;
-			case "reel.sequence_params": {
-				/** @type {P_ReelSequenceParams} */
-				let u=as_any(x);
-				this.P_ReelSequenceParams(u);
-			} break;
-			case "reel.params": {
-				/** @type {P_ReelParams} */
-				let u=as_any(x);
-				this.P_ReelParams(u);
-			} break;
-			case "reel.player_params": {
-				/** @type {P_ReelPlayerParams} */
-				let u=as_any(x);
-				this.P_ReelPlayerParamsObj(u);
-			} break;
-			case "get_pdg_buy_flow.params": {
-				/** @type {R_GetPgdBuyFlow} */
-				let u=as_any(x);
-				this.R_GetPgdBuyFlow(u);
-			} break;
-			case "tracking.params": {
-				/** @type {R_TrackingObj} */
-				let u=as_any(x);
-				this.R_TrackingObj(u);
-			} break;
-			case "tracking.click_tracking_params": {
-				/** @type {R_ClickTrackingObj} */
-				let u=as_any(x);
-				this.R_ClickTrackingObj(u);
-			} break;
+			// case "ad_layout.ad_serving_data_entry": {
+			// 	/** @type {P_continuation_request_reel_watch_sequence_token} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "continuation_request.reel_watch_sequence.token": {
+			// 	/** @type {P_continuation_request_reel_watch_sequence_token} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "entity.key": {
+			// 	/** @type {P_entity_key} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "entity_key.normal": {
+			// 	/** @type {P_entity_key_normal} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "playability_status.context_params": {
+			// 	/** @type {P_playability_status_context_params} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "continuation_request.browse.token": {
+			// 	/** @type {P_continuation_request_browse_token} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "unsubscribe.params": {
+			// 	/** @type {P_unsubscribe_params} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "subscribe.params": {
+			// 	/** @type {P_subscribe_params} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "remove_like.params": {
+			// 	/** @type {P_remove_like_params} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "dislike.params": {
+			// 	/** @type {P_dislike_params} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "like.params": {
+			// 	/** @type {P_LikeParams} */
+			// 	let u=as_any(x); u;
+			// } break;
+			// case "reel.sequence_params": {
+			// 	/** @type {P_ReelSequenceParams} */
+			// 	let u=as_any(x);
+			// 	this.P_ReelSequenceParams(u);
+			// } break;
+			// case "reel.params": {
+			// 	/** @type {P_ReelParams} */
+			// 	let u=as_any(x);
+			// 	this.P_ReelParams(u);
+			// } break;
+			// case "reel.player_params": {
+			// 	/** @type {P_ReelPlayerParams} */
+			// 	let u=as_any(x);
+			// 	this.P_ReelPlayerParamsObj(u);
+			// } break;
+			// case "get_pdg_buy_flow.params": {
+			// 	/** @type {R_GetPgdBuyFlow} */
+			// 	let u=as_any(x);
+			// 	this.R_GetPgdBuyFlow(u);
+			// } break;
+			// case "tracking.params": {
+			// 	/** @type {R_TrackingObj} */
+			// 	let u=as_any(x);
+			// 	this.R_TrackingObj(u);
+			// } break;
+			// case "tracking.click_tracking_params": {
+			// 	/** @type {R_ClickTrackingObj} */
+			// 	let u=as_any(x);
+			// 	this.R_ClickTrackingObj(u);
+			// } break;
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
@@ -2255,7 +2254,7 @@ class HandleTypes extends HandleTypesEval {
 		if(6 in u) {const {6: [f6],...y}=u; this.g(y); return this.R_ClickTrackingObj_v_f6(f6);}
 		this.g(u);
 	}
-	/** @private @arg {R_ClickTrackingObj} x */
+	/** @protected @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj"; this.k(cf,x);
 		if(1 in x) return this.R_ClickTrackingObj_t1(x);
@@ -2268,7 +2267,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(u);
 	}
-	/** @private @arg {R_TrackingObj} x */
+	/** @protected @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {
 		const cf="R_TrackingObj";
 		const {1: [f1],2: [f2],4: [f4],...u}=x;
