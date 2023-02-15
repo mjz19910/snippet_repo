@@ -578,6 +578,16 @@ class CodegenService extends BaseService {
 			debugger;
 		}
 		if(1 in x) return x;
+		/** @private @type {RC_ResponseContext} */
+		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
+		/** @private @type {D_FrameworkUpdates} */
+		if(k1==="frameworkUpdates") return "TYPE::R_FrameworkUpdates";
+		/** @private @type {D_LoggingDirectives} */
+		if(k1==="loggingDirectives") return "TYPE::D_LoggingDirectives";
+		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
+		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
+		if(k1==="impressionCommands") return "TYPE::ImpressionCommand[]";
+		if(k1==="clickLocationTargets") return "TYPE::ClickLocationTarget[]";
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
@@ -598,16 +608,6 @@ class CodegenService extends BaseService {
 	/** @private @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} o */
 	typedef_json_replacer(state,k1,o) {
 		state.k1=k1;
-		/** @private @type {RC_ResponseContext} */
-		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
-		/** @private @type {D_FrameworkUpdates} */
-		if(k1==="frameworkUpdates") return "TYPE::R_FrameworkUpdates";
-		/** @private @type {D_LoggingDirectives} */
-		if(k1==="loggingDirectives") return "TYPE::D_LoggingDirectives";
-		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
-		if(k1==="upcomingEventData") return "TYPE::D_UpcomingEvent";
-		if(k1==="impressionCommands") return "TYPE::ImpressionCommand[]";
-		if(k1==="clickLocationTargets") return "TYPE::ClickLocationTarget[]";
 		if(o===null||o===void 0) return o;
 		if(typeof o==="bigint") return `TYPE::V_Bigint<${o}n>`;
 		if(typeof o==="boolean") return o;
