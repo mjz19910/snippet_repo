@@ -2453,7 +2453,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_Result} x */
 	D_RA_Result(x) {
-		let x=x;
 		switch(x.length) {
 			default: return this.D_RA_D_Binary_dg(x);
 			case 1: return this.D_RA_D_Binary_f1(x);
