@@ -3912,7 +3912,8 @@ class ServiceMethods extends ServiceData {
 		this.params("entity.key",key);
 		if(isHidden!==false) debugger;
 	}
-	XP_EntityPayload_Any(x) {
+	/** @arg {string} k @arg {{}} x */
+	XP_EntityPayload_Any(k,x) {
 		const cf="XP_EntityPayload_any";
 		if("key" in x) {
 			const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -3931,7 +3932,7 @@ class ServiceMethods extends ServiceData {
 			case "transcriptTrackSelectionEntity": this.DS_EY_TranscriptTrackSelection(x); break;
 			case "transcriptSearchBoxStateEntity": this.DS_EY_TranscriptSearchBox(x); break;
 			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
-			case "unknown": this.XP_EntityPayload_Any(x); break;
+			case "unknown": this.XP_EntityPayload_Any(k,x); break;
 		}
 	}
 	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
