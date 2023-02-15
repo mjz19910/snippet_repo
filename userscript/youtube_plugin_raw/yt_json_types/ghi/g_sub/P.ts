@@ -1,11 +1,3 @@
-type P_ReelParams={
-	1: T_VW<12>;
-	6: T_VW<2>;
-}|{
-	1: T_VW<12>,
-	3: T_VW<V_BinaryTimestamp>,
-	5: T_VW<{}>;
-};
 type P_ReelPlayerParams={
 	30: T_VW<1>;
 	71: T_VW<12>;
