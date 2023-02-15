@@ -1427,14 +1427,14 @@ type D_TimedTextApi={
 	sparams: "ip,ipbits,expire,v,caps,xoaf";
 	signature: `${string}.${string}`;
 	key: "yt8";
-	kind: "asr";
+	kind?: "asr";
 	lang: string;
 };
 // D_TimedTextApi["signature"]
 type D_TimedTextApi_Req=Required<D_TimedTextApi>;
 type D_CaptionTrackItem_BaseUrl=
-	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi["kind"]}&lang=${D_TimedTextApi["lang"]}`
-	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xoadf=${D_TimedTextApi_Req["xoadf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi["kind"]}&lang=${D_TimedTextApi["lang"]}`
+	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi_Req["kind"]}&lang=${D_TimedTextApi["lang"]}`
+	|`https://www.youtube.com/api/timedtext?v=${D_TimedTextApi["v"]}&caps=${D_TimedTextApi["caps"]}&xoaf=${D_TimedTextApi["xoaf"]}&xoadf=${D_TimedTextApi_Req["xoadf"]}&xosf=${D_TimedTextApi["xosf"]}&hl=${D_TimedTextApi["hl"]}&ip=${D_TimedTextApi["ip"]}&ipbits=${D_TimedTextApi["ipbits"]}&expire=${D_TimedTextApi["expire"]}&sparams=${D_TimedTextApi["sparams"]}&signature=${D_TimedTextApi["signature"]}&key=${D_TimedTextApi["key"]}&kind=${D_TimedTextApi_Req["kind"]}&lang=${D_TimedTextApi["lang"]}`
 	;
 
 type D_CaptionTrackItem={

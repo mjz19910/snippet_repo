@@ -451,7 +451,7 @@ class HandleRS extends ServiceMethods {
 		this.parse_signature(signature);
 		this.save_string(`${cf}.sparams`,sparams);
 		this.save_string(`${cf}.key`,key);
-		this.save_string(`${cf}.kind`,kind);
+		if(kind) this.save_string(`${cf}.kind`,kind);
 		this.save_string(`${cf}.lang`,lang);
 	}
 	/** @private @arg {MG_AdLayout_PlayerBytes} x */
