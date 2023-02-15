@@ -2606,8 +2606,9 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
-		x;
-		debugger;
+		for(let item of x) {
+			if(item[0]!=="child") debugger;
+		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
