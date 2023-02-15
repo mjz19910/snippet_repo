@@ -2470,6 +2470,7 @@ class HandleTypes extends HandleTypesEval {
 			case 2: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
 			case 4: return this.D_RA_CR_0x14527fab(dec_t);
 			case 5: return this.D_RA_CR_0x12f639cf(dec_t);
+			case 6: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
 		}
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
