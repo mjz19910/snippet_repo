@@ -3025,7 +3025,11 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
-	/** @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root @returns {boolean} */
+	/** 
+	 * @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root
+	 * @arg {boolean} is_debug_enabled
+	 * @returns {boolean}
+	 * */
 	on_endpoint_params_callback(root,path,map_entry_values,map_entry_key_path,map_keys,is_debug_enabled) {
 		let callback=this.on_endpoint_params_callback.bind(this);
 		let map_entry_key=map_entry_key_path.at(-1);
