@@ -2552,6 +2552,14 @@ class HandleTypes extends HandleTypesEval {
 				}
 				if(a[0][0]!=="data32") debugger;
 			} break;
+			case 11: {
+				const cf="D_RD_Obj_a11",[type,,,dec]=x;
+				if(type!=="child") {
+					this.codegen_typedef(cf,x);
+					return;
+				}
+				if(dec!==null) debugger;
+			} break;
 			case 13: {
 				const cf="D_RD_Obj_a13",[type,,a]=x;
 				if(type!=="data32") {

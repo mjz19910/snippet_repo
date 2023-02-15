@@ -8,6 +8,7 @@ type D_RD_ObjArr=
 	|["data32",7,4]
 	|D_RD_Obj_a9
 	|["child",10,Uint8Array,[["data32",1,5],["data32",6,1],["data32",11,2]]]
+	|["child",11,Uint8Array,null]
 	|["data32",13,1]
 	|["data32",14,37]
 	|D_RD_Obj_a19
