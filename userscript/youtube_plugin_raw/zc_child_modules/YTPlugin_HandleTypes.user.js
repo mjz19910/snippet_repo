@@ -2336,6 +2336,19 @@ class HandleTypes extends HandleTypesEval {
 			buffer; dec;
 		}
 	}
+	/** @arg {["child",1,Uint8Array,null]} x */
+	handle_1_any_d0(x) {
+		const [type,field_id,buffer]=x; buffer;
+		if(type!=="child") debugger;
+		if(field_id!==1) debugger;
+		x[3]=null;
+	}
+	/** @arg {[["child",1,Uint8Array,null]]} x */
+	handle_1_any(x) {
+		if(x.length!==1) debugger;
+		const [dec_0]=x;
+		this.handle_1_any_d0(dec_0);
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
 		const [type,field_id,buffer,dec]=x; buffer;
@@ -2343,14 +2356,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(field_id) {
 			default: debugger; break;
 			case 1: {
-				if(dec.length!==1) debugger;
-				const [dec_0]=dec;
-				{
-					const [type,field_id,buffer]=dec_0; buffer;
-					if(type!=="child") debugger;
-					if(field_id!==1) debugger;
-					dec_0[3]=null;
-				}
+				this.handle_1_any(dec);
 			} break;
 			case 2: {
 				if(dec.length!==1) debugger;
