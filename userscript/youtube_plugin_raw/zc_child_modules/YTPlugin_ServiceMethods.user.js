@@ -89,7 +89,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_YoutubeKidsUrl"; this.k(cf,x);
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
-		this.codegen_str(cf,x);
+		this.cg.codegen_str(cf,x);
 	}
 	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
 	handle_yt_music_url(x) {
@@ -1640,7 +1640,7 @@ class ServiceMethods extends ServiceData {
 			this.g(y);
 			return;
 		}
-		this.codegen_str(cf,x);
+		this.cg.codegen_str(cf,x);
 	}
 	/** @private @arg {DU_Url} x */
 	DE_VE83769_Url(x) {
@@ -2611,7 +2611,7 @@ class ServiceMethods extends ServiceData {
 			console.log("[channelId.length]",raw_id.length);
 			return;
 		}
-		this.codegen_str(cf,raw_id);
+		this.cg.codegen_str(cf,raw_id);
 	}
 	/** @protected @template {{}} T @arg {CF_M_s_priv} cf @arg {T} x */
 	s_priv(cf,x) {

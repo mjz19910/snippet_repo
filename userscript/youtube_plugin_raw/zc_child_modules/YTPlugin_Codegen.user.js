@@ -301,6 +301,10 @@ class CodegenService extends BaseService {
 		let {arr}=this.codegen_case_cache(cf,val);
 		console.log(`-- [js_gen_case:${cf}] --\n\n${this.codegen_case_result(arr,code)}`);
 	}
+	/** @api @public @arg {{arr:(string | number)[]}} obj */
+	codegen_case_ret(obj) {
+		return this.codegen_case_result(obj.arr);
+	}
 	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
 	codegen_case_key(cf,obj,key,code) {
 		let val=obj[key];
@@ -351,7 +355,7 @@ class CodegenService extends BaseService {
 		this.cg.codegen_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
-	/** @protected @arg {CF_D_STR} cf @arg {string} x */
+	/** @api @public @arg {CF_D_STR} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
 		if(x.startsWith("https://")) {

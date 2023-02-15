@@ -3709,7 +3709,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 		// let {...s}=this.parse_url_search_params(up.search);
-		this.codegen_str(cf,b);
+		this.cg.codegen_str(cf,b);
 	}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
@@ -4728,7 +4728,7 @@ class HandleTypes extends HandleTypesEval {
 				default: {
 					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.mi`,mi);
 					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\n${this.cg.codegen_case_result(gen.arr)}`);
+					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				} break;
 				case "sn-nx57ynlk":
 				case "sn-nx5s7n7s":
