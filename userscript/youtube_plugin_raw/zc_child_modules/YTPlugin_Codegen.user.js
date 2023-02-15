@@ -319,6 +319,10 @@ class CodegenService extends BaseService {
 		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(cf,[],true);
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,state),"\t");
+		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
+			return `[${vi}]`;
+		});
 		if(json_res) {
 			if(!this.typedef_cache.includes(json_res)) {
 				this.typedef_cache.push(json_res);
