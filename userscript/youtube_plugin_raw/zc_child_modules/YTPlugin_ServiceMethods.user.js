@@ -2811,7 +2811,7 @@ class ServiceMethods extends ServiceData {
 		};
 		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
-	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
+	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva @returns {boolean} */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
 		if(tva.length===0) return true;
@@ -2859,7 +2859,7 @@ class ServiceMethods extends ServiceData {
 				switch(parts[1]) {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {case "": }
-					} return;
+					} break;
 					case "watch_next":
 					case "transaction_params":
 					case "serialized_slot_ad_serving_data_entry":
@@ -2873,7 +2873,9 @@ class ServiceMethods extends ServiceData {
 				}
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
-					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
+					default: {
+						const idx=3; u(idx); debugger; switch(parts[2]) {case "": }
+					} break;
 					case "token":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
@@ -2884,33 +2886,40 @@ class ServiceMethods extends ServiceData {
 				if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 				switch(parts[3]) {
 					default: {
-						const idx=4; switch(parts[3]) {
-						}; u(idx); debugger; parts[3]==="";
-					} return;
+						const idx=4; u(idx); debugger; switch(parts[3]) {case "": }
+					} break;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f12": case "f13": case "f14": case "f15": case "f25": case "f28": case "f31": case "f36":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
-					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
+					default: {
+						const idx=5; u(idx); debugger; switch(parts[4]) {case "": }
+					} break;
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f15": case "f19": case "f20": case "f25": case "f28": case "f36":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
-					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
+					default: {
+						const idx=6; u(idx); debugger; switch(parts[5]) {case "": }
+					} break;
 					case "f1[]":
-					case "f1": case "f2": case "f3": case "f4": case "f6":
+					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f8": case "f15":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
-					default: {const idx=7; u(idx); debugger; parts[6]==="";} return;
+					default: {
+						const idx=7; u(idx); debugger; switch(parts[6]) {case "": }
+					} break;
 					case "f1":
 				}
 				if(parts.length===7) return this.handle_map_value(path,map_entry_value);
 				switch(parts[7]) {
-					default: {const idx=8; u(idx); debugger; parts[7]==="";} return;
+					default: {
+						const idx=8; u(idx); debugger; switch(parts[7]) {case "": }
+					} break;
 					case "f4":
 				}
 				if(parts.length!==8) {debugger; break;}
@@ -2940,15 +2949,15 @@ class ServiceMethods extends ServiceData {
 				}; continue;
 			}
 		}
-		return true;
+		return ret;
 	}
-	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {void} */
+	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
 	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let callback=this.on_endpoint_params_callback.bind(this);
 		let map_entry_key=map_entry_key_path.at(-1); map_entry_values;
-		if(!map_entry_key) return;
+		if(!map_entry_key) return false;
 		let saved_map_keys=map_keys.slice();
-		let {new_path,new_ns}=this.get_parse_fns(path,saved_map_keys,map_entry_values[0],map_entry_key);
+		let {new_path}=this.get_parse_fns(path,saved_map_keys,map_entry_values[0],map_entry_key);
 		/** @private @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
 			console.group(ns);
