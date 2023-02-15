@@ -2230,7 +2230,15 @@ class HandleTypes extends HandleTypesEval {
 				return;
 			}
 			if(9 in z) {const {9: [f9],...y}=z; this.g(y); return this._primitive_of(f9,"bigint");}
-			if(6 in z) {const {6: [f6],...y}=z; this.g(y); if(f6!=="rellist") debugger; return;}
+			if(6 in z) {
+				const {6: [f6],...y}=z; this.g(y);
+				switch(f6) {
+					default: debugger; f6===""; break;
+					case "related":
+					case "rellist":
+				}
+				return;
+			}
 			return this.g(z);
 		}
 		if(19 in u) {
