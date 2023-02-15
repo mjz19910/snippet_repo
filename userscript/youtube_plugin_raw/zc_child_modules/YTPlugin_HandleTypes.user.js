@@ -4169,12 +4169,13 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoPlayback_ns(x) {
 		this.save_b64_binary("video_playback.buf.ns",x);
 	}
-	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:never} */
+	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:[R]} */
 	get_gv_parts(x) {
 		let ss=split_string(x,"-")[1];
 		let idx=5;
 		let r1=ss.slice(0,idx);
-		let r2=ss.slice(idx);
+		if(ss[idx]!=="n") return as_any([x]);
+		let r2=ss.slice(idx+1);
 		return as_any([r1,r2]);
 	}
 	/** @private @arg {D_VideoPlaybackShape} x */
@@ -4196,7 +4197,13 @@ class HandleTypes extends HandleTypesEval {
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
-			let ap=this.get_gv_parts(mi); ap;
+			let ap=this.get_gv_parts(mi);
+			if(ap.length!==2) debugger;
+			this.save_string(`${cf1}.google_video_partition`,ap[0]);
+			this.save_string(`${cf1}.google_video_selector`,ap[1]);
+			switch(ap[0]) {
+				case "9gv7l":
+			}
 			debugger;
 			switch(mi) {
 				default: {
