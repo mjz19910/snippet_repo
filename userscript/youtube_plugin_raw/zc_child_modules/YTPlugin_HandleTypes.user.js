@@ -3155,6 +3155,7 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,buffer,dec]=x; buffer;
 		if(type!=="child") debugger;
 		switch(field_id) {
+			default: debugger; break;
 			case 1: this.D_RA_CD_0x19ac5ceb_f1_data(dec); break;
 			case 2: {
 				if(dec!==null) debugger;
@@ -3168,6 +3169,7 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,buffer,dec]=item; buffer;
 		if(type!=="child") debugger;
 		switch(field_id) {
+			default: debugger; break;
 			case 1000: {
 				if(dec.length!==1) debugger;
 				const [item]=dec;
@@ -3576,11 +3578,11 @@ class HandleTypes extends HandleTypesEval {
 	D_0x19ac5ceb(x) {
 		const cf="D_0x19ac5ceb";
 		const {1: f1,...y}=this.s(cf,x); this.g(y);
-		this.D_0x19ac5ceb_f1(f1);
+		this.D_0x19ac5ceb_map(f1);
 	}
 	/** @private @arg {D_0x19ac5ceb_map} x */
-	D_0x19ac5ceb_f1(x) {
-		const cf="D_0x19ac5ceb_f1";
+	D_0x19ac5ceb_map(x) {
+		const cf="D_0x19ac5ceb_map";
 		const {2: f2,5: f3,...y}=this.s(cf,x); this.g(y);
 		debugger;
 	}
