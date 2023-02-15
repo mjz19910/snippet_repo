@@ -2240,6 +2240,7 @@ class HandleTypes extends HandleTypesEval {
 			this.V_VeDescObj(f19);
 			return;
 		}
+		if(6 in u) {const {6: [f6],...y}=u; this.g(y); if(f6!=="watch") debugger; return;}
 		this.g(u);
 	}
 	/** @private @arg {R_ClickTrackingObj} x */
