@@ -16,6 +16,7 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "js_gen_case:log_videoplayback:D_VideoPlaybackShape.mn.host_partition";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "js_gen_case:log_videoplayback:D_VideoPlaybackShape.mn.mi";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
+		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip_WithSelection";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
 		|{n: Prelude.CF_D_GuideEntry; t: Types.CF_D_GuideEntry_; v: "D_GuideEntry";}
@@ -187,6 +188,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChildVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloud";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip_WithNav";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip_WithSelection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipUniqueId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_CinematicContainer";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ClickLocationTarget";}

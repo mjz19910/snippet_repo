@@ -5007,14 +5007,15 @@ class ServiceMethods extends ServiceData {
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	/** @private @arg {"D_ChipCloudChip_WithNav"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
 	D_ChipCloudChip_OmitNav(cf,x) {
 		const {navigationEndpoint: a,...y}=this.s(cf,x);
 		this.D_ChipCloudChip_navigationEndpoint(a);
 		return y;
 	}
-	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
-	D_ChipCloudChip_WithNav(cf,x) {
+	/** @private @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
+	D_ChipCloudChip_WithNav(x) {
+		const cf="D_ChipCloudChip_WithNav";
 		let {text,trackingParams,...x2}=this.D_ChipCloudChip_OmitNav(cf,x);
 		this.G_Text(text);
 		this.trackingParams(trackingParams);
@@ -5049,24 +5050,27 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(c);
 		return y;
 	}
+	/** @private @arg {Extract<Exclude<D_ChipCloudChip,{navigationEndpoint:any}>,{isSelected:any}>} x */
+	D_ChipCloudChip_WithSelection(x) {
+		const cf="D_ChipCloudChip_WithSelection";
+		let d=this.D_ChipCloudChip_Omit(cf,x);
+		const {style: a,isSelected: b,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
+		switch(a.styleType) {
+			default: debugger; break;
+			case "STYLE_DEFAULT":
+			case "STYLE_HOME_FILTER":
+			case "STYLE_REFRESH_TO_NOVEL_CHIP":
+		}
+		if(b!==true) debugger;
+	}
 	/** @public @arg {R_ChipCloudChip} x */
 	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
 	/** @private @arg {D_ChipCloudChip} x */
 	D_ChipCloudChip(x) {
 		const cf="D_ChipCloudChip"; this.k(cf,x);
-		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
-		if("isSelected" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {style: a,isSelected: b,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
-			switch(a.styleType) {
-				default: debugger; break;
-				case "STYLE_DEFAULT":
-				case "STYLE_HOME_FILTER":
-				case "STYLE_REFRESH_TO_NOVEL_CHIP":
-			}
-			if(b!==true) debugger;
-			return;
-		}
+		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(x);
+		if("isSelected" in x) return this.D_ChipCloudChip_WithSelection(x);
+		debugger;
 	}
 	/** @private @arg {D_ChipCloud} x */
 	D_ChipCloud(x) {
