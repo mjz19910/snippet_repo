@@ -3870,7 +3870,7 @@ class HandleTypes extends HandleTypesEval {
 				case "pp": {
 					if(root==="R_WatchPage_VE3832") {
 						const [,playerParams]=res;
-						this.playerParams(root,"watch.player_params",playerParams,this.on_player_params_callback.bind(this));
+						this.playerParams(root,"watch.player_params",playerParams,this.on_params_callback.bind(this));
 					} else {
 						debugger;
 					}
