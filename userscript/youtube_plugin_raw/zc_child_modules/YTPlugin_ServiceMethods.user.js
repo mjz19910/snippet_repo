@@ -2722,6 +2722,9 @@ class ServiceMethods extends ServiceData {
 					}
 					ret=false;
 				} break;
+				case "tracking.trackingParams.f4": {
+					ret=true;
+				} break;
 			}
 		} else if(this.is_bigint(entry)) {
 			switch(path) {
