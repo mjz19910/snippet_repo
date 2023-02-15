@@ -3177,7 +3177,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==1) debugger;
 		const cf="D_RA_CD_0x19ac5ceb_map_f3_d0.value";
 		switch(value) {
-			default: this.codegen_case(cf,x); break;
+			default: this.codegen_case(cf,value); break;
 			case 0: case 2: case 4:
 		}
 	}
@@ -3188,7 +3188,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==2) debugger;
 		const cf="D_RA_CD_0x19ac5ceb_map_f3_d1.value";
 		switch(value) {
-			default:  this.codegen_case(cf,x); break;
+			default:  this.codegen_case(cf,value); break;
 			case 1: case 3:
 		}
 	}
