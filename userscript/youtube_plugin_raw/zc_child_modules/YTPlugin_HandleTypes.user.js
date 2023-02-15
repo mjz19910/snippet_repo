@@ -4544,19 +4544,24 @@ class HandleTypes extends HandleTypesEval {
 		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,viewCount,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x); this.g(y);
 		this.videoId(videoId);
 		this.a_primitive_str(title);
-		this.a_primitive_str(lengthSeconds);
+		let num=this.parse_number_template(lengthSeconds);
+		this.a_primitive_num(num);
 		this.z(keywords,this.a_primitive_str);
 		this.channelId(channelId);
 		this.a_primitive_bool(isOwnerViewing);
+		this.ceq(isOwnerViewing,false);
 		this.a_primitive_str(shortDescription);
-		this.a_primitive_bool(isCrawlable);
+		this.ceq(isCrawlable,true);
 		this.D_Thumbnail(thumbnail);
-		this.a_primitive_bool(allowRatings);
-		this.t(viewCount,this.a_primitive_str);
+		this.ceq(allowRatings,true);
+		this.t(viewCount,x => {
+			let num=this.parse_number_template(x);
+			this.a_primitive_num(num);
+		});
 		this.a_primitive_str(author);
-		this.a_primitive_bool(isPrivate);
-		this.a_primitive_bool(isUnpluggedCorpus);
-		this.a_primitive_bool(isLiveContent);
+		this.ceq(isPrivate,false);
+		this.ceq(isUnpluggedCorpus,false);
+		this.ceq(isLiveContent,false);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
