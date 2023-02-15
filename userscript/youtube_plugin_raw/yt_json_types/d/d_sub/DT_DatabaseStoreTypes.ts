@@ -1,5 +1,8 @@
-const DT_DatabaseStoreKeys=(["video_id","hashtag_id","boxed_id","channel_id","playlist_id","browse_id"] as const) satisfies readonly (keyof DT_DatabaseStoreTypes)[];
-type DT_DatabaseStoreKeys=typeof DT_DatabaseStoreKeys;
+namespace DT_Database {
+	const V_StoreKeys=(["video_id","hashtag_id","boxed_id","channel_id","playlist_id","browse_id"] as const) satisfies readonly (keyof DT_DatabaseStoreTypes)[];
+	export type V_StoreKeys_=typeof V_StoreKeys;
+}
+type DT_DatabaseStoreKeys=DT_Database.V_StoreKeys_;
 type DT_DatabaseStoreTypes={
 	video_id: {
 		key: `video_id:${AG_put_video_args_Args["type"]}:${string}`;
