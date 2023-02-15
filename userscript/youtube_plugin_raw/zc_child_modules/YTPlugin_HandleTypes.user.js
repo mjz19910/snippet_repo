@@ -2106,7 +2106,7 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof obj[0]==="number") {
 					return `TYPE::T_VW<${obj[0]}>`;
 				}
-				return this.typedef_json_replace_bin(state,"0",obj[0]);
+				return `TYPE::T_VW<${this.typedef_json_replace_bin(state,"0",obj[0])}`;
 			}
 			/** @type {D_DecTypeNum} */
 			let otu=as(obj);
@@ -2122,8 +2122,8 @@ class HandleTypes extends HandleTypesEval {
 		state;
 		return obj;
 	}
-	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
-	codegen_typedef_bin(cf,x,do_break=true) {
+	/** @api @public @arg {string} cf @arg {object} x @returns {string|null|void} */
+	gen_typedef_bin(cf,x) {
 		/** @private @type {JsonReplacerState} */
 		let state=new JsonReplacerState(cf,[],true);
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,state),"\t");
@@ -2134,10 +2134,15 @@ class HandleTypes extends HandleTypesEval {
 		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {return x.replaceAll("\\\"","\"");});
 		json_res=json_res.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
 		json_res=`\ntype ${cf}=${json_res}\n`;
-		if(json_res) {
-			if(!this.typedef_cache.includes(json_res)) {
-				this.typedef_cache.push(json_res);
-				console.log(json_res);
+		return json_res;
+	}
+	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
+	codegen_typedef_bin(cf,x,do_break=true) {
+		let res_str=this.gen_typedef_bin(cf,x);
+		if(res_str) {
+			if(!this.typedef_cache.includes(res_str)) {
+				this.typedef_cache.push(res_str);
+				console.log(res_str);
 			}
 		}
 		if(do_break) {debugger;}
