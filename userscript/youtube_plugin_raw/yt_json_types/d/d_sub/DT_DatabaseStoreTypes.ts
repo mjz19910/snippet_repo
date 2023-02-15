@@ -19,7 +19,7 @@ type DT_DatabaseStoreTypes={
 		id: string;
 	};
 	channel_id: {
-		key: `channel_id:UC:UC${string}`;
+		key: `channel_id:UC:${string}`;
 		type: "channel_id:UC";
 		id: string;
 		raw_id: `UC${string}`;

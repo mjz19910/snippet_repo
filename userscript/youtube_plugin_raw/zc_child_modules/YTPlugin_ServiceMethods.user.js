@@ -3303,7 +3303,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_ChannelId"; this.k(cf,raw_id);
 		if(this.str_starts_with_rx("UC",raw_id)) {
 			const [a,id]=split_string_once(raw_id,"UC"); if(a!=="") debugger;
-			this.indexed_db_put("channel_id",{key: `channel_id:UC:${raw_id}`,type: "channel_id:UC",id,raw_id});
+			this.indexed_db_put("channel_id",{key: `channel_id:UC:${id}`,type: "channel_id:UC",id,raw_id});
 			if(raw_id.length===24) return;
 			console.log("[channelId.length]",raw_id.length);
 			return;
