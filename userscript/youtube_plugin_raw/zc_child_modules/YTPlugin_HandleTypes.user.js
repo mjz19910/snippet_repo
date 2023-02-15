@@ -3166,6 +3166,12 @@ class HandleTypes extends HandleTypesEval {
 		switch(field_id) {
 			case 1000: {
 				if(dec.length!==1) debugger;
+				const [item]=dec;
+				{
+					const [type,field_id,buffer,dec]=item; buffer; dec;
+					if(type!=="data64") debugger;
+					if(field_id!==1) debugger;
+				}
 			} break;
 			case 1006: {
 				if(dec.length!==0) debugger;
