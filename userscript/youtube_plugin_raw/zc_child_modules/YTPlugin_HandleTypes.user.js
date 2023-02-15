@@ -2216,7 +2216,13 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length===0) debugger;
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
-		this.decode_continuation_token_obj(cf,bin_obj);
+		try {
+			this.decode_continuation_token_obj(cf,bin_obj);
+		} catch(e) {
+			console.log("failed to decode token",bin_obj);
+			console.log("[failed_with]");
+			console.log(e);
+		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
