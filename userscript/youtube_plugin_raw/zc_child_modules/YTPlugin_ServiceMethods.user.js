@@ -3914,7 +3914,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {string} k @arg {{}} x */
 	XP_EntityPayload_Any(k,x) {
-		const cf="XP_EntityPayload_any";
+		const cf="XP_EntityPayload_Any";
 		if("key" in x) {
 			const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			console.log(`unknown.${this.uppercase_first(k)}.key`,key);
