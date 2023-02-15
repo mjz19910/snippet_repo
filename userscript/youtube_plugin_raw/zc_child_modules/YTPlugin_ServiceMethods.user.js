@@ -3339,7 +3339,7 @@ class ServiceMethods extends ServiceData {
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("DE_CreateBackstagePost.params","createBackstagePost.params",x));}
+	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("create_backstage_post.params",x));}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";

@@ -3276,7 +3276,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		const {[3]: f3,[8]: f8,[14]: f14,...y}=x; this.g(y);
 		if(f8!==1) debugger;
-		this.params("D_0x94d81d4.f3","D_0x94d81d4.binary_token",f3);
+		this.params("D_0x94d81d4.f3_binary_token",f3);
 		if("4" in f14) {
 			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=f14; this.g(r_y);
 			switch(r_f1) {
@@ -3519,7 +3519,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_0x4c82a9c";
 		const {2: f2,3: f3,...y}=this.s(cf,x);
 		this.D_0x4c82a9c_f2(f2);
-		this.params(`${cf}.continuation_token.+4.f0.f3`,"continuation_token.data",f3);
+		this.params("D_0x4c82a9c.continuation_token.data",f3);
 		if(35 in y) {
 			const {35: f35,...y1}=y; this.g(y1);
 			switch(f35) {
@@ -3870,7 +3870,7 @@ class HandleTypes extends HandleTypesEval {
 				case "pp": {
 					if(root==="R_WatchPage_VE3832") {
 						const [,playerParams]=res;
-						this.playerParams(root,"watch.player_params",playerParams);
+						this.playerParams("watch.player_params",playerParams);
 					} else {
 						debugger;
 					}
