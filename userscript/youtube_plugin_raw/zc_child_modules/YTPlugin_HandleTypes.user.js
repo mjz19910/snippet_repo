@@ -246,14 +246,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(this:this,x:T)=>void} f */
-	TD_ItemSection_2_CommentsEntryPoint(x,f) {
-		const cf="TD_ItemSection_2_CommentsEntryPoint";
-		const {contents,trackingParams,sectionIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,f);
-		this.trackingParams(trackingParams);
-		if(sectionIdentifier!=="comments-entry-point") debugger;
-	}
 	/** @protected @template {G_ShortsSurfaceIdentifier_ValidTag} T @arg {T_ShortsSurfaceIdentifier<T>} x */
 	GT_ShortsSurfaceIdentifier(x) {
 		const cf="GT_ShortsSurfaceIdentifier"; this.k(cf,x);
@@ -386,24 +378,6 @@ class HandleTypes extends HandleTypesEval {
 		x===""; this.codegen_typedef_all(cf,x);
 		x===0;
 	}
-	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
-	G_WatchResultItem_ItemSection_3(x) {
-		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
-		this.k(`${cf}.section`,x.itemSectionRenderer);
-		if(x.itemSectionRenderer.sectionIdentifier!=="comment-item-section") debugger;
-		let [u,y]=this.TR_ItemSection(x); this.g(y);
-		if(!u) return;
-		let u1=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","comments-section">`,u); if(!u1) return;
-		this.ItemSection_3_CommentItemSection(u1);
-	}
-	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
-	G_EngagementPanelSectionShowCommands(x) {
-		const cf="G_EngagementPanelSectionShowCommands"; this.k(cf,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		if("showEngagementPanelScrimAction" in x) return this.A_ShowEngagementPanelScrim(x);
-		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {G_GuideSectionItem} x */
 	G_GuideSectionItem(x) {
 		const cf="G_GuideSectionItem"; this.k(cf,x);
@@ -499,34 +473,11 @@ class HandleTypes extends HandleTypesEval {
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {G_BrowseFeed} x */
-	G_BrowseFeed(x) {
-		const cf="G_BrowseFeed"; this.k(cf,x);
-		if("richItemRenderer" in x) return this.R_RichItem(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
 		const cf="G_SecondaryContents"; this.k(cf,x);
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_WatchNext} x */
-	G_WatchNext(x) {
-		const cf="G_WatchNext"; this.k(cf,x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
-		x===""; this.codegen_typedef_all(cf,x);
-	}
-	/** @private @arg {G_StructuredDescriptionContentItem} x */
-	G_StructuredDescriptionContentItem(x) {
-		const cf="G_StructuredDescriptionContentItem"; this.k(cf,x);
-		if("expandableVideoDescriptionBodyRenderer" in x) return this.R_ExpandableVideoDescriptionBody(x);
-		if("horizontalCardListRenderer" in x) return this.R_HorizontalCardList(x);
-		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
-		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_RS_Subscribe_Action} x */
@@ -655,8 +606,6 @@ class HandleTypes extends HandleTypesEval {
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
-	/** @private @arg {R_HotkeyDialogSectionOption} x */
-	R_HotkeyDialogSectionOption(x) {this.H_("R_HotkeyDialogSectionOption","hotkeyDialogSectionOptionRenderer",x,this.D_HotkeyDialogSectionOption);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {R_SettingsSidebar} x */
@@ -709,8 +658,6 @@ class HandleTypes extends HandleTypesEval {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @private @arg {R_CommentsHeader} x */
-	R_CommentsHeader(x) {this.H_("R_CommentsHeader","commentsHeaderRenderer",x,this.D_CommentsHeader);}
 	/** @private @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {R_CommentsSimplebox} x */
@@ -732,8 +679,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
-	/** @private @arg {R_AdsEngagementPanelContent} x */
-	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent","adsEngagementPanelContentRenderer",x,this.B_Hack);}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {R_MusicCarouselShelf} x */
@@ -794,14 +739,8 @@ class HandleTypes extends HandleTypesEval {
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
 	/** @private @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @private @arg {R_ClipSection} x */
-	R_ClipSection(x) {this.H_("R_ClipSection","clipSectionRenderer",x,this.D_ClipSection);}
 	/** @private @arg {R_ClipCreation} x */
 	R_ClipCreation(x) {this.H_("C_RunAttestation","clipCreationRenderer",x,this.D_ClipCreation);}
-	/** @private @arg {R_MacroMarkersList} x */
-	R_MacroMarkersList(x) {this.H_("R_MacroMarkersList","macroMarkersListRenderer",x,this.D_MacroMarkersList);}
-	/** @private @arg {R_EngagementPanelTitleHeader} x */
-	R_EngagementPanelTitleHeader(x) {this.H_("R_EngagementPanelTitleHeader","engagementPanelTitleHeaderRenderer",x,this.D_EngagementPanelTitleHeader);}
 	/** @private @arg {R_VideoViewCount} x */
 	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
 	/** @private @arg {R_TwoColumnSearchResults} x */
@@ -812,10 +751,6 @@ class HandleTypes extends HandleTypesEval {
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
 	/** @private @arg {D_ClipSection} x */
 	D_ClipSection(x) {this.H_("D_ClipSection","contents",x,x => this.z(x,this.R_ClipCreation));}
-	/** @private @arg {R_CompactPlaylist} x */
-	R_CompactPlaylist(x) {this.H_("R_CompactPlaylist","compactPlaylistRenderer",x,this.D_CompactPlaylist);}
-	/** @private @arg {R_CompactRadio} x */
-	R_CompactRadio(x) {this.H_("R_CompactRadio","compactRadioRenderer",x,this.D_CompactRadio);}
 	/** @private @arg {R_ProfileColumnStats} x */
 	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
 	/** @private @arg {D_ProfileColumnStats} x */
@@ -840,20 +775,10 @@ class HandleTypes extends HandleTypesEval {
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @private @arg {R_TopbarMenuButton} x */
-	R_TopbarMenuButton(x) {this.H_("R_TopbarMenuButton","topbarMenuButtonRenderer",x,this.D_TopbarMenuButton);}
-	/** @private @arg {R_NotificationTopbarButton} x */
-	R_NotificationTopbarButton(x) {this.H_("R_NotificationTopbarButton","notificationTopbarButtonRenderer",x,this.D_NotificationTopbarButton);}
-	/** @private @arg {R_CommentsEntryPointHeader} x */
-	R_CommentsEntryPointHeader(x) {this.H_("R_CommentsEntryPointHeader","commentsEntryPointHeaderRenderer",x,this.D_CommentsEntryPointHeader);}
 	/** @private @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
-	/** @private @arg {R_EndScreenPlaylist} x */
-	R_EndScreenPlaylist(x) {this.H_("R_EndScreenPlaylist","endScreenPlaylistRenderer",x,this.D_EndScreenPlaylist);}
-	/** @private @arg {R_EndScreenVideo} x */
-	R_EndScreenVideo(x) {this.H_("R_EndScreenVideo","endScreenVideoRenderer",x,this.D_EndScreenVideo);}
 	/** @private @arg {R_AddToPlaylistCreate} x */
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
@@ -904,8 +829,6 @@ class HandleTypes extends HandleTypesEval {
 	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
-	/** @private @arg {R_MerchandiseItem} x */
-	R_MerchandiseItem(x) {this.H_("R_MerchandiseItem","merchandiseItemRenderer",x,this.D_MerchandiseItem);}
 	/** @private @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {R_MusicResponsiveListItem} x */
@@ -986,8 +909,6 @@ class HandleTypes extends HandleTypesEval {
 	R_CommentReplies(x) {this.H_("R_CommentReplies","commentRepliesRenderer",x,this.D_CommentReplies);}
 	/** @private @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
-	/** @private @arg {RMD_RowContainer} x */
-	RMD_RowContainer(x) {this.H_("RMD_RowContainer","metadataRowContainerRenderer",x,this.DMD_RowContainer);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {CD_Reload} x */
@@ -999,8 +920,6 @@ class HandleTypes extends HandleTypesEval {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
 			x => this.DC_Generic_CTP("next_radio.continuation",x));
 	}
-	/** @private @arg {DC_Generic_CTP} x */
-	D_CD_Next(x) {this.DC_Generic_CTP("next.continuation",x);}
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
@@ -2015,12 +1934,6 @@ class HandleTypes extends HandleTypesEval {
 	//#endregion
 	/** @template {{}} T @arg {T} x @arg {keyof T} k */
 	T_EP_In(x,k) {return x[k];}
-	/** @private @template {DC_ReloadContinuationItems} T @arg {"DC_ReloadContinuationItems"} cf @arg {T} x */
-	DC_ReloadContinuationItems_Omit(cf,x) {
-		const {slot,...y}=this.s(cf,x);
-		this.save_enum("RELOAD_CONTINUATION_SLOT",x.slot);
-		return y;
-	}
 	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
 		let name=this.get_codegen_name(x);
@@ -2053,8 +1966,6 @@ class HandleTypes extends HandleTypesEval {
 			other: o3,
 		};
 	}
-	/** @private @arg {TR_ItemSection_2<any,any>} x @returns {x is TR_ItemSection_3<any,any,any>} */
-	is_ItemSectionRendererTemplate(x) {return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);}
 	/** @private @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
 	ItemSection_3_CommentItemSection(x) {
 		if(x[1]!=="comment-item-section") debugger;
@@ -2149,49 +2060,6 @@ class HandleTypes extends HandleTypesEval {
 			this.G_Text(publishedTimeText);
 			this.G_Text(lengthText);
 			return;
-		}
-	}
-	/** @private @arg {DMD_Badge} x */
-	DMD_Badge(x) {
-		const cf="DMD_Badge"; this.k(cf,x);
-		this.save_enum("BADGE_STYLE_TYPE",x.style);
-		let ia=this.strings_map.get(x.style);
-		if(!ia) this.strings_map.set(x.style,ia=[]);
-		switch(x.style) {
-			default: x===0; debugger; break;
-			case "BADGE_STYLE_TYPE_AD": case "BADGE_STYLE_TYPE_COLLECTION":
-			case "BADGE_STYLE_TYPE_YPC":
-			case "BADGE_STYLE_TYPE_SIMPLE": {
-				const {style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.trackingParams(trackingParams);
-				ia.push(["label",[label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_MEDIUM_GREY": {
-				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_MediumGray",icon);
-				this.trackingParams(trackingParams);
-				ia.push(["label",[label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_LIVE_NOW": {
-				const {icon,style: {},trackingParams,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_LiveNow",icon);
-				this.trackingParams(trackingParams);
-				ia.push(["label",[label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_VERIFIED_ARTIST": {
-				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_VerifiedArtist",icon);
-				ia.push(["tooltip",[tooltip]]);
-				this.trackingParams(trackingParams);
-				ia.push(["accessibilityData.label",[accessibilityData.label]]);
-			} break;
-			case "BADGE_STYLE_TYPE_VERIFIED": {
-				const {icon,style: {},tooltip,trackingParams,accessibilityData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.T_Icon("DMD_Badge_Verified",icon);
-				ia.push(["tooltip",[tooltip]]);
-				this.trackingParams(trackingParams);
-				ia.push(["accessibilityData.label",[accessibilityData.label]]);
-			} break;
 		}
 	}
 	/** @private @arg {D_AdSlot} x */
@@ -3572,18 +3440,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
-	/** @private @arg {TA_Continuation<`comment-replies-item-${string}`,G_CommentRepliesItem>} x */
-	GA_Continuation_CommentRepliesItem(x) {
-		const cf="GA_Continuation_CommentRepliesItem"; this.k(cf,x);
-		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.targetId(cf,targetId);
-		this.z(continuationItems,x => {
-			const cf="G_CommentRepliesItem"; this.k(cf,x);
-			if("commentRenderer" in x) return this.R_Comment(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			this.codegen_typedef_all(cf,x);
-		});
-	}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {
 		const cf="D_FeedbackResponseProcessedStatus"; this.k(cf,x);
@@ -3647,32 +3503,6 @@ class HandleTypes extends HandleTypesEval {
 		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(tabs,this.RG_Result);
 		this.t(secondaryContents,this.G_SecondaryContents);
-	}
-	/** @private @arg {TA_Continuation<"comments-section",G_CommentsSection>} x */
-	A_CommentsSectionContinuation(x) {
-		const cf="A_CommentsSectionContinuation";
-		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.targetId(cf,targetId);
-		this.z(continuationItems,x => {
-			const cf="G_CommentsSection"; this.k(cf,x);
-			if("commentThreadRenderer" in x) return this.R_CommentThread(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			x===""; this.codegen_typedef_all(cf,x);
-		});
-	}
-	/** @private @arg {TA_Continuation<"browse-feedFEwhat_to_watch",G_BrowseFeed>} x */
-	A_BrowseFeed(x) {
-		const cf="A_BrowseFeed"; this.k(cf,x);
-		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.targetId(cf,targetId);
-		this.z(continuationItems,this.G_BrowseFeed);
-	}
-	/** @private @arg {TA_Continuation<"watch-next-feed",G_WatchNext>} x */
-	A_WatchNext(x) {
-		const cf="A_WatchNext"; this.k(cf,x);
-		const {targetId,continuationItems,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.targetId(cf,targetId);
-		this.z(continuationItems,this.G_WatchNext);
 	}
 	/** @private @arg {RS_Reel} x */
 	RS_Reel(x) {
@@ -3821,13 +3651,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(b);
 		this.trackingParams(c);
 		return y;
-	}
-	/** @private @arg {D_HotkeyDialogSection} x */
-	D_HotkeyDialogSection(x) {
-		const cf="D_HotkeyDialogSection"; this.k(cf,x);
-		const {title,options: u,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.z(u,this.R_HotkeyDialogSectionOption);
 	}
 	/** @private @arg {D_HotkeyDialogSectionOption} x */
 	D_HotkeyDialogSectionOption(x) {
@@ -4798,26 +4621,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_MusicShelfDivider(shelfDivider);
 		this.ceq(autoReloadWhenEmpty,true);
 		this.R_Button(bottomButton);
-	}
-	/** @private @arg {D_EndScreenVideo} x */
-	D_EndScreenVideo(x) {
-		const cf="D_EndScreenVideo"; this.k(cf,x);
-		const {videoId,shortViewCountText,shortBylineText,thumbnail,thumbnailOverlays,title,trackingParams,lengthInSeconds,lengthText,publishedTimeText,navigationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(videoId);
-		this.G_Text(shortViewCountText);
-		this.G_Text(shortBylineText);
-		this.D_Thumbnail(thumbnail);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		this.t(lengthInSeconds,this.a_primitive_num);
-		this.t(lengthText,this.G_Text);
-		this.G_Text(publishedTimeText);
-		x: {
-			let x=navigationEndpoint;
-			if("watchEndpoint" in x) {this.E_Watch(x); break x;}
-			if(!x.reelWatchEndpoint) debugger;
-		}
 	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
