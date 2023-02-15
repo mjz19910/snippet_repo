@@ -1158,5 +1158,13 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_response.queue_context_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_cart.transaction_params";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "RS_Next_ContextParams";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "DC_LoadMarkers_EntityKey";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "serialized_data.slot_ad_serving.data_entry";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
+		|{n: Prelude.CF_L_Params; t: Types.CF_L_Params_; v: "D_0x94d81d4.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.binary_token";}
 		;
 }

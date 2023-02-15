@@ -1559,7 +1559,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_YpcGetCart(x) {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
-		this.params(cf,"YpcGetCart.transactionParams",sp);
+		this.params(cf,"ypc_get_cart.transaction_params",sp);
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
@@ -2343,6 +2343,11 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.z(buttons,this.R_Button);
 	}
+	/** @private @arg {string} x */
+	RS_Next_ContextParams(x) {
+		const cf="RS_Next_ContextParams";
+		this.params(cf,"next_response.queue_context_params",x);
+	}
 	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next"; this.k(cf,x);
@@ -2357,7 +2362,7 @@ class HandleTypes extends HandleTypesEval {
 		this.tz(pageVisualEffects,this.R_CinematicContainer);
 		this.t(frameworkUpdates,this.D_FrameworkUpdates);
 		this.t(videoReporting,this.R_ReportFormModal);
-		this.t(queueContextParams,a => this.params(cf,"next.queue_context_params",a));
+		this.t(queueContextParams,this.RS_Next_ContextParams);
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
 	/** @private @arg {RC_SectionList} x */
@@ -2485,13 +2490,16 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 		};
 	}
+	DC_Load_EntityKey(x) {
+		const cf="DC_LoadMarkers_EntityKey";
+		this.params(cf,"load_markers.entity_key",x);
+		x;
+	}
 	/** @private @arg {DC_LoadMarkers} x */
 	DC_LoadMarkers(x) {
 		const cf="DC_LoadMarkers"; this.k(cf,x);
 		const {entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entityKeys,x => {
-			this.params(`${cf}.entity_key`,"load_markers.entity_key",x);
-		});
+		this.z(entityKeys,this.DC_Load_EntityKey);
 	}
 	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
 	DC_ChangeKeyedMarkersVisibility(x) {
@@ -2898,7 +2906,7 @@ class HandleTypes extends HandleTypesEval {
 	D_SerializedSlotAdServingDataEntry(x) {
 		const cf="D_SerializedSlotAdServingDataEntry"; this.k(cf,x);
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"slot_ad_serving_data_entry",a);
+		this.params(cf,"ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -3354,11 +3362,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {D_0x94d81d4} x */
 	D_0x94d81d4(x) {
-		if(x[8]!==1) {debugger; return;}
-		this.params("continuation_token.sub_obj.f3","continuation_token.data$sub_obj$f3",x[3]);
-		let res=x[14];
-		if("4" in res) {
-			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=res; this.g(r_y);
+		const {[3]: f3,[8]: f8,[14]: f14,...y}=x; this.g(y);
+		if(f8!==1) debugger;
+		this.params("D_0x94d81d4.f3","D_0x94d81d4.binary_token",f3);
+		if("4" in f14) {
+			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=f14; this.g(r_y);
 			switch(r_f1) {
 				default: debugger; break;
 				case 1: case 4:
@@ -3369,7 +3377,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			if(r_f4!==0) debugger;
 		} else {
-			const {[1]: r_f1,[3]: r_f3,...r_y}=res; this.g(r_y);
+			const {[1]: r_f1,[3]: r_f3,...r_y}=f14; this.g(r_y);
 			if(r_f1!==4) debugger;
 			if(r_f3!==2) debugger;
 		}
@@ -3668,7 +3676,7 @@ class HandleTypes extends HandleTypesEval {
 			if(1000 in x) return this.D_0x19ac5ceb_map_container(x);
 			debugger;
 		});
-		this.z(f,x=>this.D_0x19ac5ceb_map_entry(s,x));
+		this.z(f,x => this.D_0x19ac5ceb_map_entry(s,x));
 	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
