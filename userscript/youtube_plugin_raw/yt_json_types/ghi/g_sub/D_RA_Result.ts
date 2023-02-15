@@ -9,7 +9,11 @@ type D_RA_Result=
 	|D_RA_D_Binary_x1
 	;
 ;
+type P_ReelSequenceParams={
+	1: ["gKyQXCkdZl0"];
+	5: {3: T_VW<12>;};
+};
 type P_ReelParams={
 	1: T_VW<12>,
-	6: T_VW<2>
+	6: T_VW<2>;
 };
