@@ -2212,6 +2212,8 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
+	/** @private @arg {Extract<R_ClickTrackingObj,{6:any}>[6][0]} x */
+	R_ClickTrackingObj_v_f6(x) {this.save_string("R_ClickTrackingObj_v_f6",x);}
 	/** @private @arg {R_ClickTrackingObj_t1} x */
 	R_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
@@ -2220,6 +2222,7 @@ class HandleTypes extends HandleTypesEval {
 		this.V_BinaryTimestamp(f4);
 		if(19 in u) {
 			const {6: [f6],9: [f9],19: [f19],...z}=u;
+			this.R_ClickTrackingObj_v_f6(f6);
 			switch(f6) {
 				default: debugger; f6===""; break;
 				case "endscreen":
@@ -2241,18 +2244,10 @@ class HandleTypes extends HandleTypesEval {
 			this.a_primitive_num(f2);
 			this.save_number(`${cf}.f3`,f3);
 			if(9 in z) {const {9: [f9],...y}=z; this.g(y); return this._primitive_of(f9,"bigint");}
-			if(6 in z) {
-				const {6: [f6],...y}=z; this.g(y);
-				switch(f6) {
-					default: debugger; f6===""; break;
-					case "related":
-					case "rellist":
-				}
-				return;
-			}
+			if(6 in z) {const {6: [f6],...y}=z; this.g(y); return this.R_ClickTrackingObj_v_f6(f6);}
 			return this.g(z);
 		}
-		if(6 in u) {const {6: [f6],...y}=u; this.g(y); if(f6!=="watch") debugger; return;}
+		if(6 in u) {const {6: [f6],...y}=u; this.g(y); return this.R_ClickTrackingObj_v_f6(f6);}
 		this.g(u);
 	}
 	/** @private @arg {R_ClickTrackingObj} x */
