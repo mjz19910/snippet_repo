@@ -1053,11 +1053,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
-	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
-	codegen_case_key(cf,obj,key,code) {
-		let val=obj[key];
-		this.codegen_case(cf,val,code);
-	}
 	/** @private @arg {RS_Browse} x */
 	RS_Browse(x) {
 		const cf="RS_Browse"; this.k(cf,x);
@@ -1636,7 +1631,7 @@ class HandleTypes extends HandleTypesEval {
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
 		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
-		this.codegen.codegen_typedef(`${cf}$${u_name}`,x);
+		this.cg.codegen_typedef(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
 	/** @private @arg {{[U in string]: unknown}} x */
@@ -1675,7 +1670,7 @@ class HandleTypes extends HandleTypesEval {
 		let dec=this.uppercase_first(kk);
 		let ren_dec=this.renderer_decode_map.get(dec);
 		if(ren_dec) {return ren_dec;}
-		return this.codegen.get_auto_type_name(x);
+		return this.cg.get_auto_type_name(x);
 	}
 	/** @private @arg {RS_UpdateMetadata} x */
 	RSU_M(x) {
@@ -1872,7 +1867,7 @@ class HandleTypes extends HandleTypesEval {
 	GEN(cf,x) {
 		let name=this.get_codegen_name(x);
 		if(!name) return;
-		this.codegen.codegen_renderer(x,`${cf}$${name}`);
+		this.cg.codegen_renderer(x,`${cf}$${name}`);
 		debugger;
 	}
 	/** @protected @template T @template {string} U @arg {D_MenuServiceItem_Icon<U, T>} x @arg {(this:this,x:T)=>void} f */
@@ -2386,10 +2381,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_Obj_d0_ext|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
+		const cf="D_RA_D_BinaryCategoryObj_d0";
 		const [type,field_id,,dec]=x;
 		if(type!=="child") {
-			this;
 			this.codegen_typedef_all(cf,x);
+			this.codegen_case;
 			return;
 		}
 		switch(field_id) {
@@ -2463,6 +2459,8 @@ class HandleTypes extends HandleTypesEval {
 			this.codegen_typedef_all(cf,x);
 			return;
 		}
+		if(id!==5) debugger;
+		this.save_number(cf,a);
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
@@ -3537,10 +3535,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
 		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
-	}
-	/** @arg {string} cf @arg {{}} x */
-	codegen_break(cf,x) {
-		this.codegen_typedef_all(`${cf}.commandMetadata`,x);
 	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;

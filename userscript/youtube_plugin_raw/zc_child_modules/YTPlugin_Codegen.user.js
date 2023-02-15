@@ -280,6 +280,32 @@ class CodegenService extends BaseService {
 			}
 		}
 	}
+	/** @type {Map<string,(string|number)[]>} */
+	cases_map=new Map;
+	/** @arg {CF_D_CaseGen} cf @arg {string|number} val */
+	codegen_case_cache(cf,val) {
+		let arr=this.cases_map.get(cf);
+		if(!arr) {arr=[]; this.cases_map.set(cf,arr);}
+		let val_str=JSON.stringify(val);
+		let has=arr.includes(val_str);
+		if(!arr.includes(val_str)) arr.push(val_str);
+		return {arr,has};
+	}
+	/** @protected @arg {(string|number)[]} known @arg {string} [code] */
+	codegen_case_result(known,code) {
+		if(code) return known.map(e => `case ${e}: ${code}`).join("\n");
+		return known.map(e => `case ${e}:`).join("\n");
+	}
+	/** @api @public @arg {CF_D_CaseGen} cf @arg {string|number} val @arg {string} [code] */
+	codegen_case(cf,val,code) {
+		let {arr}=this.codegen_case_cache(cf,val);
+		console.log(`-- [js_gen_case:${cf}] --\n\n${this.codegen_case_result(arr,code)}`);
+	}
+	/** @arg {CF_D_CaseGen} cf @template {string} K @arg {{[U in K]:string|number}} obj @arg {K} key @arg {string} [code] */
+	codegen_case_key(cf,obj,key,code) {
+		let val=obj[key];
+		this.codegen_case(cf,val,code);
+	}
 	/** @private @arg {string} o @arg {string} k1 */
 	typedef_json_replace_string(o,k1) {
 		const max_str_len=120;

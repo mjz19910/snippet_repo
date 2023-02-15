@@ -2510,7 +2510,7 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value.get("parser_service");
 	}
 	/** @protected @this {BaseServicePrivate<LoadAllServices,{}>} */
-	get codegen() {
+	get cg() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
 	}
