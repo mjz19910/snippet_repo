@@ -4994,7 +4994,7 @@ class ServiceMethods extends ServiceData {
 	D_ChipCloud(x) {
 		const cf="D_ChipCloud"; this.k(cf,x);
 		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(chips,this.handle_types.R_ChipCloudChip);
+		this.z(chips,this.R_ChipCloudChip);
 		this.trackingParams(trackingParams);
 		if(horizontalScrollable!==false) debugger;
 		this.z([nextButton,previousButton],this.R_Button);
