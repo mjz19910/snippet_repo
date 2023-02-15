@@ -3912,6 +3912,15 @@ class ServiceMethods extends ServiceData {
 		this.params("entity.key",key);
 		if(isHidden!==false) debugger;
 	}
+	XP_EntityPayload_Any(x) {
+		const cf="XP_EntityPayload_any";
+		if("key" in x) {
+			const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			console.log(`unknown.${this.uppercase_first(k)}.key`,key);
+			return;
+		}
+		debugger;
+	}
 	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,null,V]:never:never)|["unknown",string,{}]} p */
 	XP_EntityPayload(p) {
 		const [ty,k,x]=p;
@@ -3922,13 +3931,7 @@ class ServiceMethods extends ServiceData {
 			case "transcriptTrackSelectionEntity": this.DS_EY_TranscriptTrackSelection(x); break;
 			case "transcriptSearchBoxStateEntity": this.DS_EY_TranscriptSearchBox(x); break;
 			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
-			case "unknown": {
-				const cf="XP_EntityPayload.unknown";
-				if("key" in x) {
-					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					console.log(`unknown.${this.uppercase_first(k)}.key`,key);
-				} else {debugger;}
-			} break;
+			case "unknown": this.XP_EntityPayload_Any(x); break;
 		}
 	}
 	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
