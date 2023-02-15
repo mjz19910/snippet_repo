@@ -138,6 +138,8 @@ ECatcherService.known_experiments.push(...[
 	[24407191,24430382,24445230,24450367,24457611,24457969,24465011,24470281],
 	[24452410,24458317,24458324,24458329],
 	[24473107],
+	[24457612],
+	[24473090],
 ].flat());
 class HandleTypes extends HandleTypesEval {
 	/** @typedef {"DE_VE3832_Watch"|"R_WatchPage_VE3832"} CF_PlayerParams */
