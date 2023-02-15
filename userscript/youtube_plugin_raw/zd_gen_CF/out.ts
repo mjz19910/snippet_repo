@@ -312,6 +312,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationText";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_NotificationTopbarButton";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PageTopAdLayout";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PaidContentOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgBuyFlow";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgBuyFlowHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_PdgColorSlider";}
@@ -723,6 +724,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_CollapseIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Guide_ExpandIcon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_Icon_Search";}
+		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PaidContentOverlay";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_PromotedSparklesWeb:icon";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_ReelMultimixAttributionLabel";}
 		|{n: Prelude.CF_T_Icon; t: Types.CF_T_Icon_; v: "D_RichMetadata_BoxArt:icon";}

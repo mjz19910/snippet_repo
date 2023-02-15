@@ -94,7 +94,7 @@ class HandleRS extends ServiceMethods {
 		});
 		this.t(frameworkUpdates,this.D_FrameworkUpdates);
 		this.t(endscreen,this.R_Endscreen);
-		this.t(paidContentOverlay,this.g);
+		this.t(paidContentOverlay,this.R_PaidContentOverlay);
 		this.tz(annotations,x => {
 			if(!x.playerAnnotationsExpandedRenderer) debugger;
 			this.R_PlayerAnnotationsExpanded(x);
@@ -142,6 +142,18 @@ class HandleRS extends ServiceMethods {
 	R_AdPlacement(x) {this.H_("R_Miniplayer","adPlacementRenderer",x,this.D_AdPlacement);}
 	/** @private @arg {R_Endscreen} x */
 	R_Endscreen(x) {this.H_("R_Endscreen","endscreenRenderer",x,this.D_Endscreen);}
+	/** @private @arg {R_PaidContentOverlay} x */
+	R_PaidContentOverlay(x) {this.H_("R_PaidContentOverlay","paidContentOverlayRenderer",x,this.D_PaidContentOverlay);}
+	/** @private @arg {D_PaidContentOverlay} x */
+	D_PaidContentOverlay(x) {
+		const cf="D_PaidContentOverlay";
+		const {text,durationMs,navigationEndpoint,icon,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(text);
+		if(durationMs!=="10000") debugger;
+		this.E_VE83769_Url(navigationEndpoint);
+		this.T_Icon(cf,icon);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {G_PlayerStoryboards} x */
 	G_PlayerStoryboards(x) {
 		const cf="G_PlayerStoryboards"; this.k(cf,x);

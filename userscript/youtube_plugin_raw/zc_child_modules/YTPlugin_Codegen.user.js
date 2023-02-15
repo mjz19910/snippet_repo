@@ -635,7 +635,7 @@ class CodegenService extends BaseService {
 		if(k1==="playerConfig") return "TYPE::D_PlayerConfig";
 		if(k1==="storyboards") return "TYPE::G_PlayerStoryboards";
 		let keys=this.filter_keys(this.get_keys_of(x));
-		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
+		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
 		{
 			/** @type {Partial<Popup_ConfirmDialog>} */
@@ -814,8 +814,8 @@ class CodegenService extends BaseService {
 		{debugger;}
 		return x;
 	}
-	/** @private @arg {JsonReplacerState} state @arg {string|null} r @param {{}} x @arg {(string | number)[]} keys */
-	get_json_replace_type_len_1(state,r,x,keys) {
+	/** @private @arg {string|null} r @param {{}} x @arg {(string | number)[]} keys */
+	get_json_replace_type_len_1(r,x,keys) {
 		/** @type {{[U in string]:unknown}} */
 		let b=x;
 		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
