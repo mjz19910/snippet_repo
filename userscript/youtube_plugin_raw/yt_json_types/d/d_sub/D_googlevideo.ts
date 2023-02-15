@@ -69,7 +69,7 @@ type D_googlevideo_host_nx5s7n=[
 	"sn-nx5s7nee.googlevideo.com",
 	"sn-nx5s7nel.googlevideo.com",
 ];
-type D_GV_n4v7snee=[
+type D_GV_n4v7sn=[
 	"sn-n4v7snee.googlevideo.com",
 	"sn-n4v7sney.googlevideo.com",
 	"sn-n4v7snl7.googlevideo.com",
