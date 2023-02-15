@@ -2598,6 +2598,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_D_Binary_x1} x */
 	D_RA_D_Binary_x1(x) {
+		const cf="D_RA_D_Binary_x1";
 		for(let x1 of x) {
 			let x=x1;
 			switch(x[0]) {
