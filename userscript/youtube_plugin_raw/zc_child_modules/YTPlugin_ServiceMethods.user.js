@@ -3895,30 +3895,32 @@ class ServiceMethods extends ServiceData {
 		this.params("subscriptionState.key",key);
 		this.a_primitive_bool(subscribed);
 	}
+	DS_EY_PlaylistLoop(x) {
+		const cf="DS_EY_PlaylistLoop";
+		const {key,state,...y}=this.s(cf,x); this.g(y);
+		this.params("playlist_loop_state.entity.key",key);
+		switch(state) {
+			default: debugger; break;
+			case "PLAYLIST_LOOP_STATE_ALL":
+			case "PLAYLIST_LOOP_STATE_NONE":
+			case "PLAYLIST_LOOP_STATE_ONE":
+		}
+	}
+	DS_EY_TranscriptSearchBox(x) {
+		const cf="DS_EY_TranscriptSearchBox";
+		const {key,isHidden,...y}=this.s(cf,x); this.g(y);
+		this.params("entity.key",key);
+		if(isHidden!==false) debugger;
+	}
 	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,null,V]:never:never)|["unknown",string,{}]} p */
 	XP_EntityPayload(p) {
-		const [ty]=p;
+		const [ty,k,x]=p;
 		switch(ty) {
-			case "offlineabilityEntity": {const [,x]=p; this.D_EY_Offlineability(x);} break;
-			case "subscriptionStateEntity": {this.DS_EY_Subscription(p[1]);} break;
-			case "playlistLoopStateEntity": {
-				const cf="DS_EY_PlaylistLoop";
-				const {key,state,...y}=this.s(cf,x); this.g(y);
-				this.params("playlist_loop_state.entity.key",key);
-				switch(state) {
-					default: debugger; break;
-					case "PLAYLIST_LOOP_STATE_ALL":
-					case "PLAYLIST_LOOP_STATE_NONE":
-					case "PLAYLIST_LOOP_STATE_ONE":
-				}
-			} break;
+			case "offlineabilityEntity": this.D_EY_Offlineability(x); break;
+			case "subscriptionStateEntity": this.DS_EY_Subscription(x); break;
+			case "playlistLoopStateEntity": this.DS_EY_PlaylistLoop(x); break;
 			case "transcriptTrackSelectionEntity": this.DS_EY_TranscriptTrackSelection(x); break;
-			case "transcriptSearchBoxStateEntity": {
-				const cf="DS_EY_TranscriptSearchBox";
-				const {key,isHidden,...y}=this.s(cf,x); this.g(y);
-				this.params("entity.key",key);
-				if(isHidden!==false) debugger;
-			} break;
+			case "transcriptSearchBoxStateEntity": this.DS_EY_TranscriptSearchBox(x); break;
 			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
 			case "unknown": {
 				const cf="XP_EntityPayload.unknown",[,k,x]=p;
