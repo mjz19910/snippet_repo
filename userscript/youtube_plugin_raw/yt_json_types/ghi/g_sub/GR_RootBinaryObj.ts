@@ -1,5 +1,6 @@
+type T_VW<T>=[T];
 type R_ClickTrackingObj={
-	4: [V_BinaryTimestamp];
+	4: T_VW<V_BinaryTimestamp>;
 	6: "external";
 };
 type GR_RootBinaryObj=
