@@ -2515,10 +2515,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!dec) {debugger; return;}
 		this.decode_continuation_token_obj(cf,dec);
 	}
-	/** @private @arg {number} x */
-	number_as_hex(x) {
-		return `0x${x.toString(16)}`;
-	}
 	/** @private @arg {D_0x4c82a9c[2][0]} x */
 	D_0x4c82a9c_f2(x) {
 		if(!x) {debugger; return;}
@@ -2539,96 +2535,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RV_Bigint";
 		const {1: f1,...y}=this.s(cf,x); this.g(y);
 		this._primitive_of(f1,"bigint");
-	}
-	/** @private @arg {D_0x14527fab} x */
-	D_0x14527fab(x) {
-		const cf="D_0x14527fab";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
-		if(f1!==0) debugger;
-	}
-	/** @private @arg {P_ParamParse} cf1 @arg {R_0x14527fab} x */
-	R_0x14527fab(cf1,x) {
-		const cf="R_0x14527fab"; this.k(`${cf1}:${cf}`,x);
-		const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
-		this.D_0x14527fab(a);
-	}
-	/** @private @arg {P_ParamParse} cf1 @arg {R_0x19ac5ceb} x */
-	R_0x19ac5ceb(cf1,x) {
-		const cf="R_0x19ac5ceb"; this.k(`${cf1}:${cf}`,x);
-		const {0x19ac5ceb: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
-		/** @implements {S_MapState} */
-		class MapState {
-			/** @type {Map<number,number>} */
-			pos_map=new Map;
-			/** @arg {number} key_pos @arg {number} key_value */
-			set_entry(key_pos,key_value) {
-				this.pos_map.set(key_pos,key_value);
-			}
-		}
-		let s_map_state=new MapState;
-		this.D_0x19ac5ceb(s_map_state,a);
-		console.log(s_map_state.pos_map);
-	}
-	/** @private @arg {P_ParamParse} cf1 @arg {D_BinaryCategoryObj} x */
-	D_BinaryCategoryObj(cf1,x) {
-		const cf=`${cf1}:D_BinaryCategoryObj`; this.k(cf,x);
-		if(1 in x) {
-			let kk=this.get_keys_of_2(x);
-			switch(x[3]) {
-				default: {
-					const x3=x[3];
-					let string_data=this.ds.get_data_store().get_string_store([]).data;
-					const save_key="CategoryObj.3";
-					x: {
-						let string_store=string_data.find(x => x[0]===save_key);
-						if(!string_store) {
-							this.save_string(save_key,x3);
-							break x;
-						}
-						if(string_store[1][0]!=="one") break x;
-						if(string_store[1][1].includes(x3)) return;
-						this.save_string(save_key,x3);
-					}
-					this.codegen_typedef_bin(`decode_continuation_token:${cf}:${kk.join()}`,x);
-				} break;
-				case "3D printing":
-				case "AI": case "Algorithms":
-				case "Bitcoin":
-				case "C++": case "Calculus": case "Computer Science": case "CPUs": case "C#": case "Computers": case "Cars":
-				case "Drawing":
-				case "Electronic Music":
-				case "Gadgets": case "Game engines": case "Geometry":
-				case "History":
-				case "Linux": case "Linux distribution":
-				case "Media theories": case "Machines":
-				case "Nintendo":
-				case "Physics": case "Puzzle games": case "Python": case "Podcasts": case "Puzzles":
-				case "Raspberry Pi":
-				case "Soundtracks": case "Statistics":
-				case "Tools":
-				case "Universe":
-			}
-			return;
-		}
-		if(2 in x) {
-			/** @template {number} T @arg {{2:{1:number}}} x @arg {T} v @returns {x is {2:{1:T}}} */
-			function is_token_g2(x,v) {return x[2][1]===v;}
-			if(is_token_g2(x,1)) return;
-			if(is_token_g2(x,3)) return;
-			if(is_token_g2(x,4)) return;
-			if(is_token_g2(x,14)) return;
-			if(is_token_g2(x,15)) return;
-			if(is_token_g2(x,31)) return;
-			if(is_token_g2(x,53)) return;
-			let kk=this.get_keys_of_2(x);
-			this.codegen_typedef_bin(`decode_continuation_token:g_2:${cf}:${kk.join()}`,x);
-			return;
-		}
-		let kk=this.get_keys_of_2(x);
-		if(kk.length>0) {
-			this.codegen_typedef_bin(`decode_continuation_token:${cf}:${this.number_as_hex(as_any(kk.shift()))}`,x);
-			debugger;
-		}
 	}
 	/** @private @arg {V_VeDescObj} x */
 	V_VeDescObj(x) {
@@ -2675,39 +2581,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(f1);
 		this.a_primitive_num(f2);
 		this.V_BinaryTimestamp(f4);
-	}
-	/** @private @arg {R_CreatePlaylistObj} x */
-	R_CreatePlaylistObj(x) {x;}
-	/** @private @arg {R_SlotAdServingDataObj} x */
-	R_SlotAdServingDataObj(x) {x;}
-	/** @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
-	GR_RootBinaryObj(cf,x) {
-		this.k(`${cf}.binary_obj`,x);
-		if(0x4c82a9c in x) return this.R_0x4c82a9c(cf,x);
-		if(0x12f639cf in x) return this.R_0x12f639cf(cf,x);
-		if(0x14527fab in x) return this.R_0x14527fab(cf,x);
-		if(0x19ac5ceb in x) return this.R_0x19ac5ceb(cf,x);
-		if(30 in x) return;
-		if(49 in x) return;
-		if(6 in x) return this.R_ClickTrackingObj(x);
-		if(4 in x) {
-			if(2 in x) return this.R_TrackingObj(x);
-			if(3 in x) return this.R_SlotAdServingDataObj(x);
-			let keys=this.get_keys_of_2(x);
-			if(keys.length!==1) debugger;
-			this.V_BinaryTimestamp(x[4][0]);
-			return;
-		}
-		if(3 in x&&2 in x) return this.D_BinaryCategoryObj(cf,x);
-		if(3 in x&&1 in x) return this.D_BinaryCategoryObj(cf,x);
-		if(1 in x) return this.R_CreatePlaylistObj(x);
-		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x);
-	}
-	/** @private @arg {R_0x12f639cf[11]} x */
-	R_f11(x) {
-		const cf="R_f11";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
-		this.D_f11(f1);
 	}
 	/** @private @arg {R_0x12f639cf[11][1]} x */
 	D_f11(x) {
@@ -2757,71 +2630,8 @@ class HandleTypes extends HandleTypesEval {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
 		}
 	}
-	/** @private @arg {R_0x12f639cf[12]} x */
-	D_f12(x) {
-		const cf="D_f12";
-		const {1: f1,2: f2,3: f3,4: f4,...y}=this.s(cf,x); this.g(y);
-		if(f1!==0) debugger;
-		if(f2!=="page_snapshot_token") debugger;
-		this.V_BinaryTimestamp(f3);
-		this.V_BinaryTimestamp(f4);
-	}
-	/** @private @arg {R_0x12f639cf[6]} x */
-	R_0x12f639cf_f6(x) {
-		const cf="R_0x12f639cf_f6";
-		if(3 in x) {
-			const {3: f3,...y}=this.s(cf,x); this.g(y);
-			this.playlistId(f3);
-			return;
-		}
-		this.RV_Bigint(x);
-	}
-	/** @private @arg {P_ParamParse} cf1 @arg {R_0x12f639cf} x */
-	R_0x12f639cf(cf1,x) {
-		const cf="R_0x19ac5ceb"; this.k(`${cf1}:${cf}`,x);
-		const {3: f3,6: f6,11: f11,12: f12,0x12f639cf: f_0x12f639cf,...y}=this.s(cf,x); this.g(y);
-		this.a_primitive_num(f3);
-		this.R_0x12f639cf_f6(f6);
-		this.R_f11(f11);
-		this.D_f12(f12);
-		this.D_0x12f639cf(f_0x12f639cf);
-	}
 	/** @private @arg {[]} x */
 	g_a(x) {if(x.length!==0) debugger;}
-	/** @private @arg {P_ParamParse} cf1 @arg {R_0x4c82a9c} x */
-	R_0x4c82a9c(cf1,x) {
-		const cf="R_0x19ac5ceb"; this.k(`${cf1}:${cf}`,x);
-		const {0x4c82a9c: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
-		this.D_0x4c82a9c(a);
-	}
-	/** @private @arg {D_0x12f639cf} x */
-	D_0x12f639cf(x) {
-		const cf="D_0x12f639cf";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
-		if(f1!==25) debugger;
-	}
-	/** @private @arg {D_0x4c82a9c} x */
-	D_0x4c82a9c(x) {
-		const cf="D_0x4c82a9c";
-		const {2: [f2],3: [f3],...y}=this.s(cf,x);
-		this.D_0x4c82a9c_f2(f2);
-		this.params("D_0x4c82a9c.continuation_token.data",f3);
-		if(35 in y) {
-			const {35: [f35],...y1}=y; this.g(y1);
-			switch(f35) {
-				default: debugger; break;
-				case "browse-feedFEwhat_to_watch":
-			}
-			return;
-		}
-		this.g(y);
-	}
-	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb} x */
-	D_0x19ac5ceb(s,x) {
-		const cf="D_0x19ac5ceb";
-		const {1: [f1],...y}=this.s(cf,x); this.g(y);
-		this.D_0x19ac5ceb_map(s,f1);
-	}
 	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map_entry} x */
 	D_0x19ac5ceb_map_entry(s,x) {
 		const cf="D_0x19ac5ceb_map_entry";
