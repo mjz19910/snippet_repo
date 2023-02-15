@@ -80,7 +80,7 @@ class HandleRS extends ServiceMethods {
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
 		this.t(videoDetails,x => cls_.D_VideoDetails(x));
-		this.t(playerConfig,this.D_PlayerConfig);
+		this.t(playerConfig,x => cls_.D_PlayerConfig(x));
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
