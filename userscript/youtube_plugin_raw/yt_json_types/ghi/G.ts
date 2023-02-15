@@ -449,20 +449,20 @@ type G_PlaylistUrlInfo={
 }|{
 	type: "playlist:1:LL"; id: "LL";
 }|{
-	type: "playlist:2:RDMM"; id: `RDMM${string}`; raw_id: string;
+	type: "playlist:2:RDMM"; id: string; raw_id: `RDMM${string}`;
 }|{
-	type: "playlist:2:RDCM"; id: `RDCMUC${string}`; raw_id: `UC${string}`;
+	type: "playlist:2:RDCM"; id: `UC${string}`; raw_id: `RDCMUC${string}`;
 }|{
-	type: "playlist:2:RD"; id: `RD${string}`; raw_id: string;
+	type: "playlist:2:RD"; id: string; raw_id: `RD${string}`;
 }|{
-	type: "playlist:3:PL"; id: `PL${string}`; raw_id: string;
+	type: "playlist:3:PL"; id: string; raw_id: `PL${string}`;
 }|{
-	type: "playlist:4:UU"; id: `UU${string}`; raw_id: string;
+	type: "playlist:4:UU"; id: string; raw_id: `UU${string}`;
 };
 type G_ChannelUrlInfo={
 	type: "channel_id:UC";
-	id: `UC${string}`;
-	raw_id: string;
+	id: string;
+	raw_id: `UC${string}`;
 };
 
 type G_UrlInfoItem=G_PlaylistUrlInfo|{

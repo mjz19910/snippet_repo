@@ -1351,7 +1351,8 @@ class ServiceMethods extends ServiceData {
 				this.indexed_db_put("browse_id",{key: `browse_id:VL:${id}`,type,id,raw_id});
 			} break;
 			case "playlist:2:RDCM": {
-				this.put_boxed_id(value);
+				const {id,raw_id}=value;
+				this.indexed_db_put("playlist_id",{key: `playlist_id:RDCM:${raw_id}`,type: "",raw_id})
 				if(!this.str_starts_with_rx("UC",value.raw_id)) debugger;
 				this.D_ChannelId(value.raw_id);
 			} break;
