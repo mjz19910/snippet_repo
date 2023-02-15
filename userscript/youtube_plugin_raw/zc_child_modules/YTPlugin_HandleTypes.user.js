@@ -2460,40 +2460,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {D_RD_Obj_a19} x */
-	D_RD_Obj_a19(x) {
-		const cf="D_RD_Obj_a19",[type,,,dec]=x;
-		if(type!=="child") debugger;
-		for(let i=0;i<dec.length;i++) {
-			let x=dec[i];
-			const [,id]=x;
-			switch(id) {
-				default: this.codegen_typedef_bin(`${cf}.${i}`,x); break;
-				case 1: case 2: case 3:
-			}
-		}
-	}
-	/** @private @arg {D_RD_Obj_a5} x */
-	D_RD_Obj_a5(x) {
-		const cf="D_RD_Obj_a5",[type,id,a]=x;
-		if(type!=="data32") {
-			this.codegen_typedef(cf,x);
-			return;
-		}
-		if(id!==5) debugger;
-		this.save_number(cf,a);
-	}
-	/** @private @arg {D_RD_Obj_a3} x */
-	D_RD_Obj_a3(x) {
-		const cf="D_RD_Obj_a3",[type,,,a]=x;
-		if(type!=="child") {
-			this.codegen_typedef(cf,x);
-			return;
-		}
-		if(a!==null) {
-			if(a[0][0]!=="data32") debugger;
-		}
-	}
 	/** @private @arg {D_RD_ObjArr} x */
 	D_RD_ObjArr(x) {
 		const cf="D_RD_ObjArr";
@@ -2503,31 +2469,6 @@ class HandleTypes extends HandleTypesEval {
 			case "data32": break;
 			case "data64": break;
 		}
-	}
-	/** @private @arg {D_RA_D_BinaryCategoryObj_r} x */
-	D_RA_D_BinaryCategoryObj_r(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @private @arg {D_RA_D_Binary_d0} x */
-	D_RA_D_Binary_d0(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @private @arg {D_RD_ObjArr[]} x */
-	D_RA_D_Binary_dg(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @private @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [[any,T,...any]]} */
-	is_fx_extract(x,t) {return x[0][1]===t;}
-	/** @private @arg {D_RA_D_Binary_x1} x */
-	D_RA_D_Binary_x1(x) {
-		const cf="D_RA_D_Binary_x1";
-		for(let x1 of x) {
-			let x=x1;
-			switch(x[0]) {
-				default: return this.codegen_typedef_bin(cf,x);
-				case "child":
-				case "data32":
-				case "data64":
-			}
-		}
-	}
-	/** @private @arg {D_RA_CR_0x12f639cf|any[]} x @returns {x is D_RA_CR_0x12f639cf} */
-	is_D_RA_CR_0x12f639cf(x) {
-		return x.length===5&&x[4][1]===0x12f639cf;
 	}
 	/** @private @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
@@ -2561,7 +2502,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(cf) {
 			default: debugger; break;
 			case "get_pdg_buy_flow.params": {
-				this.D_RA_Result_TP(x);
+				this.D_RA_GetPgdBuyFlow(x);
 			} break;
 			case "tracking.trackingParams": {
 				/** @type {D_RA_Result_TP} */
