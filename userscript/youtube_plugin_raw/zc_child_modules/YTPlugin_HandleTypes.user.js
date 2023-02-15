@@ -2258,7 +2258,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_CD_0x19ac5ceb_f1_data(x) {
 		if(x.length!==1) debugger;
 		const [item]=x;
-		const [type,field_id,buffer,dec]=item;
+		const [type,field_id,,dec]=item;
 		if(type!=="child") debugger;
 		switch(field_id) {
 			default: debugger; break;
@@ -2266,7 +2266,7 @@ class HandleTypes extends HandleTypesEval {
 				if(dec.length!==1) debugger;
 				const [item]=dec;
 				{
-					const [type,field_id,buffer,dec]=item; dec;
+					const [type,field_id,,dec]=item; dec;
 					if(type!=="data64") debugger;
 					if(field_id!==1) debugger;
 				}
@@ -2397,14 +2397,14 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
 	D_RA_D_BinaryCategoryObj_d1(x) {
-		const [type,field_id,buffer]=x;
+		const [type,field_id,]=x;
 		if(type!=="child") debugger;
 		if(field_id!==3) debugger;
 		x[3]=null;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_a6} x */
 	D_RA_D_BinaryCategoryObj_a6(x) {
-		const [type,field_id,buffer,dec]=x;
+		const [type,field_id,,dec]=x;
 		if(type!=="child") debugger;
 		if(field_id!==6) debugger;
 		if(dec!==null) debugger;
