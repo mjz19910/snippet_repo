@@ -2366,6 +2366,13 @@ class HandleTypes extends HandleTypesEval {
 		const [dec_0]=x;
 		this.handle_2_any_d1(dec_0);
 	}
+	/** @arg {RA_handle_4_any} x */
+	handle_4_any(x) {
+		this.z(x,x=>{
+			x;
+			debugger;
+		})
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
 		const [type,field_id,buffer,dec]=x; buffer;
@@ -2374,6 +2381,7 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case 1: this.handle_1_any(dec); break;
 			case 2: this.handle_2_any(dec); break;
+			case 4: this.handle_4_any(dec); break;
 		}
 	}
 	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
