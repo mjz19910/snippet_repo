@@ -2621,6 +2621,23 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_TrackingObj(u);
 	}
+	/** @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
+	decode_continuation_token_obj(cf,x) {
+		if(x.length===0) debugger;
+		switch(cf) {
+			default: debugger; break;
+			case "tracking.trackingParams": {
+				/** @type {D_RA_Result_TP} */
+				let u=as_any(x);
+				this.D_RA_Result_TP(u);
+			} break;
+			case "tracking.click_tracking_params": {
+				/** @type {D_RA_Result_CTP} */
+				let u=as_any(x);
+				this.D_RA_Result_CTP(u);
+			} break;
+		}
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2628,29 +2645,7 @@ class HandleTypes extends HandleTypesEval {
 		let reader=new MyReader(buffer);
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
-		if(dec.length===0) debugger;
-		switch(cf) {
-			default: debugger; break;
-			case "tracking.trackingParams": {
-				/** @type {D_RA_Result_TP} */
-				let u=as_any(dec);
-				this.D_RA_Result_TP(u);
-			} break;
-			case "tracking.click_tracking_params": {
-				/** @type {D_RA_Result_CTP} */
-				let u=as_any(dec);
-				this.D_RA_Result_CTP(u);
-
-			} break;
-		}
-		/** @type {D_RA_Result} */
-		let u=as_any(dec);
-		this.D_RA_Result(u);
-		let bin_obj=this.convert_arr_to_obj(dec);
-		if(!bin_obj) {debugger; return;}
-		/** @type {GR_RootBinaryObj} */
-		let t_bin_obj=as_any(bin_obj);
-		this.GR_RootBinaryObj(cf,t_bin_obj);
+		this.decode_continuation_token_obj(cf,dec);
 	}
 	/** @arg {number} x */
 	number_as_hex(x) {
