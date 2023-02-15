@@ -2384,10 +2384,10 @@ class HandleTypes extends HandleTypesEval {
 		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
 		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
+	/** @arg {D_RA_Obj_d0_ext|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
 		const [type,field_id,,dec]=x;
-		if(type!=="child") debugger;
+		if(type!=="child") {debugger; return;}
 		switch(field_id) {
 			default: debugger; break;
 			case 1: this.handle_1_any(dec); break;
@@ -2402,7 +2402,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==3) debugger;
 		x[3]=null;
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_a6} x */
+	/** @arg {D_RD_Obj_a6} x */
 	D_RA_D_BinaryCategoryObj_a6(x) {
 		const [type,field_id,,dec]=x;
 		if(type!=="child") debugger;
@@ -2452,6 +2452,14 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		});
 	}
+	/** @arg {D_RD_Obj_a5} x */
+	D_RD_Obj_a5(x) {
+		const cf="D_RD_Obj_a5",[type,id,a]=x;
+		if(type!=="data32") {
+			this.codegen_typedef_all(cf,x);
+			return;
+		}
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
 		switch(x[1]) {
@@ -2461,6 +2469,7 @@ class HandleTypes extends HandleTypesEval {
 			case 1: return this.D_RA_D_BinaryCategoryObj_13_a1(x);
 			case 2: return this.D_RA_D_BinaryCategoryObj_23_a2(x);
 			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
+			case 5: return this.D_RD_Obj_a5(x);
 			case 6: return this.D_RA_D_BinaryCategoryObj_a6(x);
 			case 9: return this.D_RA_D_BinaryCategoryObj_a9(x);
 			case 19: return this.D_RA_D_BinaryObj_a19(x);

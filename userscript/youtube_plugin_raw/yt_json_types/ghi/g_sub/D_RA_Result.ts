@@ -1,9 +1,9 @@
 type D_RA_D_BinaryCategoryObj_23_a2=["child",2,Uint8Array,[["data32",1,D_BinaryCategoryObj_23[2][1]]]];
 type D_RA_D_BinaryCategoryObj_23_a2_ext=["data32",2,number];
-type D_RA_D_BinaryCategoryObj_a3=["child",3,Uint8Array,null];
+type D_RD_Obj_a3=["child",3,Uint8Array,null];
 type D_RA_D_BinaryCategoryObj_23=[
 	D_RA_D_BinaryCategoryObj_23_a2,
-	D_RA_D_BinaryCategoryObj_a3
+	D_RD_Obj_a3
 ];
 type handle_1_any_d0=["child",1,Uint8Array,null];
 
@@ -13,7 +13,7 @@ type D_RA_D_BinaryCategoryObj_13_a1=["child",1,Uint8Array,handle_1_any];
 type D_RA_D_BinaryCategoryObj_13_a1_ext=["data32",1,0];
 type D_RA_D_BinaryCategoryObj_13=[
 	D_RA_D_BinaryCategoryObj_13_a1,
-	D_RA_D_BinaryCategoryObj_a3,
+	D_RD_Obj_a3,
 ];
 type D_RA_D_Binary_d0=[
 	["data32",1,0],
