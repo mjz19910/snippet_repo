@@ -53,7 +53,7 @@ class IndexedDBService extends BaseService {
 		let sk_ac=this.store_cache;
 		/** @type {[T,DT_DatabaseStoreTypes[T][]]|undefined} */
 		let cache_info=as(this.store_cache[key]);
-		cache_info=[key,[]];
+		cache_info??=[key,[]];
 		sk_ac[key]=cache_info;
 		/** @type {TR_data_cache<T>} */
 		let sk=as([key,cache_info[1]]);
@@ -105,7 +105,7 @@ class IndexedDBService extends BaseService {
 		let sk_ac=this.store_cache_index;
 		/** @type {[T,Map<string,number>]|undefined} */
 		let cache_index_info=as_any(this.store_cache_index[key]);
-		cache_index_info=[key,new Map];
+		cache_index_info??=[key,new Map];
 		sk_ac[key]=cache_index_info;
 		let c_index=cache_index_info[1];
 		let index_val=obj.key;
@@ -116,6 +116,7 @@ class IndexedDBService extends BaseService {
 		}
 		idx=d_cache[1].push(as(obj))-1;
 		c_index.set(index_val,idx);
+		console.log("push wait",key,index_val,idx,obj);
 	}
 	/** @arg {AG_DatabaseStoreDescription} store_desc @arg {number} version */
 	requestOpen(store_desc,version) {
@@ -172,6 +173,7 @@ class IndexedDBService extends BaseService {
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
 		transaction.onabort=event => console.log("IDBTransaction: abort",event);
 		transaction.oncomplete=event => this.onTransactionComplete(db,event,store_desc);
+		debugger;
 		try {
 			let [,d_cache]=this.get_data_cache(tx_namespace);
 			const obj_store=this.objectStore(transaction,tx_namespace);
