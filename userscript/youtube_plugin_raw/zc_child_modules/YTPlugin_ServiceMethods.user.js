@@ -2803,9 +2803,9 @@ class ServiceMethods extends ServiceData {
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
 		let parts=split_string(path,".");
 		let {u}=this.get_parse_fns(path,[],map_entry_value);
-		const idx=1;
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
+			case "_level_1_0": break;
 			case "_level_2_0": {
 				const idx=2;
 				switch(parts[1]) {
@@ -2819,13 +2819,10 @@ class ServiceMethods extends ServiceData {
 					} break;
 				}
 			} break;
-			case "_level_1_0": {
-				const idx=2;
-				if(parts.length!==1) {parts==="";}
-				u(idx);
-			} break;
 			// [default_parse_param_next]
-			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
+			default: {
+				const idx=1; u(idx); debugger; switch(parts[1]) {case "": }
+			} break;
 			case "D_0x94d81d4":
 			case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "ad_slot_logging_data":
 			case "adaptive_format":
@@ -2846,9 +2843,7 @@ class ServiceMethods extends ServiceData {
 				if(parts.length===1) return this.handle_map_value(path,map_entry_value);
 				switch(parts[1]) {
 					default: {
-						const idx=2; u(idx); debugger; switch(parts[1]) {
-							case "":
-						}
+						const idx=2; u(idx); debugger; switch(parts[1]) {case "": }
 					} return;
 					case "watch_next":
 					case "transaction_params":
@@ -2961,7 +2956,7 @@ class ServiceMethods extends ServiceData {
 			}
 			case "get_pdg_buy_flow.params":
 			// case "D_Browse.param.f110.f1.f20":
-			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
+			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
 			// case "D_Browse.param.f110":
 			case "entity_key.normal.f2": case "get_report_form.params.f28":
 			case "get_report_form.params.f28.f1[].f1": {
@@ -3002,7 +2997,6 @@ class ServiceMethods extends ServiceData {
 			case "notification.record_interactions": {
 				switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "":
 			case "next.continuation.f2.f36": {
 				switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
