@@ -2110,9 +2110,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:T_VW<{}>;}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
 	H_d(cf,k,x,f) {
 		if(!x) {debugger; return;}
-		let wr=this.wn(cf,x,k);
-		if(!wr) return;
-		return f.call(this,wr[0][0]);
+		const u=this.wn(cf,x,k);
+		if(!u) return;
+		const [a]=u;
+		if(!a) {debugger; return;}
+		const [value]=a;
+		return f.call(this,value);
 	}
 	/** @private @arg {D_GetPgdBuyFlow} x */
 	D_GetPgdBuyFlow(x) {x;}
