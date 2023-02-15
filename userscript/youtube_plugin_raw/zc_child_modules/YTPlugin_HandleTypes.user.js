@@ -97,7 +97,7 @@ class HandleTypesEval extends ServiceMethods {
 	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
-	codegen_renderer(cf,x,w) {this.codegen.codegen_renderer(x,cf,w);}
+	codegen_renderer(cf,x,w) {this.cg.codegen_renderer(x,cf,w);}
 	static {
 		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
 		/** @type {{value:ServiceResolver<CG_ServiceResolver,{}>|null}} */
