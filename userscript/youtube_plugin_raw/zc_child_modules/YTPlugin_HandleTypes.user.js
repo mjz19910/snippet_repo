@@ -2227,6 +2227,14 @@ class HandleTypes extends HandleTypesEval {
 				this.V_VeDescObj(f19);
 				return;
 			}
+			if(9 in u) {
+				const {1: [f1],2: [f2],3: [f3],9: [f9],...y}=u; this.g(y);
+				this.save_number(`${cf}.f1`,f1);
+				this.a_primitive_num(f2);
+				this.save_number(`${cf}.f3`,f3);
+				this._primitive_of(f9,"bigint");
+				return;
+			}
 			const {1: [f1],2: [f2],3: [f3],...y}=u; this.g(y);
 			this.save_number(`${cf}.f1`,f1);
 			this.a_primitive_num(f2);
