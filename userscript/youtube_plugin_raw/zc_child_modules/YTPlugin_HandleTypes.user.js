@@ -2220,7 +2220,12 @@ class HandleTypes extends HandleTypesEval {
 		this.V_BinaryTimestamp(f4);
 		if(19 in u) {
 			const {6: [f6],9: [f9],19: [f19],...z}=u;
-			this.save_string(`${cf}.f6`,f6);
+			switch(f6) {
+				default: debugger; f6===""; break;
+				case "endscreen":
+				case "related":
+				case "related-auto":
+			}
 			this._primitive_of(f9,"bigint");
 			this.V_VeDescObj(f19);
 			if(3 in z) {
