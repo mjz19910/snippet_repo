@@ -2483,11 +2483,10 @@ class ServiceMethods extends ServiceData {
 		let key_index=this.parse_key_index;
 		let mk=[...map.keys()];
 		let parse_key=this.make_parse_key(root,path,map,mk,callback);
-		for(let i=1;i<72;i++) {
+		for(let i=1;i<100;i++) {
 			if(!mk.includes(i)) continue;
 			parse_key([i]);
 		}
-		parse_key([72]);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		{debugger;}
@@ -2710,6 +2709,9 @@ class ServiceMethods extends ServiceData {
 					debugger;
 					ret=false;
 				} break;
+				case "tracking.trackingParams.f4": {
+					ret=true;
+				} break;
 			}
 		} else if(entry instanceof Uint8Array) {
 			switch(path) {
@@ -2721,9 +2723,6 @@ class ServiceMethods extends ServiceData {
 						debugger;
 					}
 					ret=false;
-				} break;
-				case "tracking.trackingParams.f4": {
-					ret=true;
 				} break;
 			}
 		} else if(this.is_bigint(entry)) {
