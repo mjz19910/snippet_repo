@@ -2286,7 +2286,7 @@ class HandleTypes extends HandleTypesEval {
 		if(typeof f2==="number"&&f2>0b1010111011010100111000000110) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
 		}
-		if(typeof f3==="number"&&f3>0b11111001000010000111110101010010) {
+		if(typeof f3==="number"&&f3>0b11111100000000010110010000100111) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
 		}
 	}
