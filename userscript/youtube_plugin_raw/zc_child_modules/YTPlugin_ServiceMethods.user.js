@@ -1079,13 +1079,34 @@ class ServiceMethods extends ServiceData {
 					let [n,id,a]=v;
 					res_obj[id]=[n,a];
 				} break;
-				case "data64": break;
-				case "data_fixed32": break;
-				case "data_fixed64": break;
-				case "error": break;
-				case "group": break;
-				case "info": break;
-				case "struct": break;
+				case "data64": {
+					let [n,id,a,b]=v;
+					res_obj[id]=[n,a,b];
+				} break;
+				case "data_fixed32": {
+					let [n,id,a]=v;
+					res_obj[id]=[n,a];
+				} break;
+				case "data_fixed64": {
+					let [n,id,a]=v;
+					res_obj[id]=[n,a];
+				} break;
+				case "error": {
+					let [n,id]=v;
+					res_obj[id]=[n,id];
+				} break;
+				case "group": {
+					let [n,id,a]=v;
+					res_obj[id]=[n,id,a];
+				} break;
+				case "info": {
+					let [n,id,a]=v;
+					res_obj[id]=[n,a];
+				} break;
+				case "struct": {
+					let [n,id,a]=v;
+					res_obj[id]=[n,id,a];
+				} break;
 			}
 		}
 		/*
