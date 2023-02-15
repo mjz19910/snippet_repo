@@ -204,23 +204,16 @@ class HandleTypes extends HandleTypesEval {
 	 * @arg {V_ParamMapValue[]} map_entry_values @arg {ARG_PathFor_PlayerParams} path @arg {number[]} map_keys @arg {T} root */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let saved_map_keys=map_keys.slice();
-		let callback=this.on_player_params_callback.bind(this);
 		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) {debugger; return;}
 		switch(map_entry_key_path.length) {
 			case 3: {
-				let v_arr=this.fmt_arr(map_entry_key_path);
-				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 			case 2: {
-				let v_arr=this.fmt_arr(map_entry_key_path);
-				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 			case 1: {
-				let v_arr=this.fmt_arr(map_entry_key_path);
-				this.parse_param_next(root,`watch.player_params.f${v_arr}`,map_entry_key_path,map_entry_values,callback);
 				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
 			} break;
 		}
