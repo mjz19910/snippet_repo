@@ -11,8 +11,8 @@ type D_RD_ObjArr=
 	|["child",11,Uint8Array,null]
 	|["data32",13,1]
 	|["data32",14,37]
+	|["child",15,Uint8Array,null]
 	|D_RD_Obj_a19
 	|["data32",30,1]
 	;
 ;
-type D_RD_Obj_a5=["data32",5,2];
