@@ -3534,7 +3534,7 @@ class ServiceMethods extends ServiceData {
 	E_UndoFeedback(x) {const [a,b,y]=this.TE_Endpoint_3("E_UndoFeedback","undoFeedbackEndpoint",x); this.g(y); this.M_Feedback(a); this.DE_UndoFeedback(b);}
 	/** @private @arg {DE_UndoFeedback} x */
 	DE_UndoFeedback(x) {
-		const cf="DE_UndoFeedback"; this.k(cf,x);
+		const cf="DE_UndoFeedback";
 		const {undoToken,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.parse_undo_token(undoToken);
 		this.z(actions,this.A_UndoFeedback);
