@@ -2487,8 +2487,11 @@ class ServiceMethods extends ServiceData {
 			if(!mk.includes(i)) continue;
 			parse_key([i]);
 		}
-		if(this.eq_keys(mk,[])) return;
-		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
+		if(this.eq_keys(map_keys,[])) return;
+		let {new_ns}=this.get_parse_fns(path,map_keys,null);
+		new_ns();
+		let param_obj=this.to_param_obj(map);
+		console.log(`[player.${path}] [idx=${key_index}]`,param_obj);
 		{debugger;}
 	}
 	/** @private @arg {string} ns @arg {()=>void} f */
@@ -2758,8 +2761,11 @@ class ServiceMethods extends ServiceData {
 			let l=map_entry_key_path.pop();
 			if(l!==i) debugger;
 		}
-		if(this.eq_keys(mk,[])) return;
-		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
+		if(this.eq_keys(map_keys,[])) return;
+		let {new_ns}=this.get_parse_fns(path,map_keys,null);
+		new_ns();
+		let param_obj=this.to_param_obj(map);
+		console.log(`[new.${path}] [idx=${key_index}]`,path,param_obj);
 		{debugger;}
 	}
 	/** @private @arg {P_ParamParse} path @arg {number[]} map_keys @arg {V_ParamMapValue|null} map_entry_value @arg {number|null} map_entry_key */
