@@ -4542,6 +4542,21 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
 		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,viewCount,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x); this.g(y);
+		this.videoId(videoId);
+		this.a_primitive_str(title);
+		this.a_primitive_str(lengthSeconds);
+		this.z(keywords,this.a_primitive_str);
+		this.channelId(channelId);
+		this.a_primitive_bool(isOwnerViewing);
+		this.a_primitive_str(shortDescription);
+		this.a_primitive_bool(isCrawlable);
+		this.D_Thumbnail(thumbnail);
+		this.a_primitive_bool(allowRatings);
+		this.t(viewCount,this.a_primitive_str);
+		this.a_primitive_str(author);
+		this.a_primitive_bool(isPrivate);
+		this.a_primitive_bool(isUnpluggedCorpus);
+		this.a_primitive_bool(isLiveContent);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns

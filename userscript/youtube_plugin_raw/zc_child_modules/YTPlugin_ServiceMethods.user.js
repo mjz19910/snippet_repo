@@ -2598,6 +2598,8 @@ class ServiceMethods extends ServiceData {
 	indexed_db_put(...args) {
 		this.indexed_db.put(...args,this.indexed_db_version);
 	}
+	/** @protected @arg {`UC${string}`} x */
+	channelId(x) {this.D_ChannelId(x);}
 	/** @protected @arg {`UC${string}`} raw_id */
 	D_ChannelId(raw_id) {
 		const cf="D_ChannelId"; this.k(cf,raw_id);
