@@ -4095,7 +4095,7 @@ class ServiceMethods extends ServiceData {
 	D_YtConfig(x) {
 		const cf="D_YtConfig";
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.primitive_str(visitorData);
+		this.a_primitive_str(visitorData);
 		if(sessionIndex!==0) debugger;
 		this.ds.save_root_visual_element(rootVisualElementType);
 	}
