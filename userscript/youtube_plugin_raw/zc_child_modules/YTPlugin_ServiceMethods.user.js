@@ -2989,7 +2989,7 @@ class ServiceMethods extends ServiceData {
 				case 2: case 3: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default: return this.parse_param_default(new_ns,is_debug_enabled);
-			} break;
+			}
 		}
 	}
 	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
