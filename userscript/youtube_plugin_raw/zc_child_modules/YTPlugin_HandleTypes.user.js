@@ -2473,9 +2473,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a9} x */
 	D_RD_Obj_a9(x) {
-		const cf="D_RA_D_BinaryCategoryObj_a9",[type,field_id,,]=x;
-		if(type!=="data64") return this.codegen_typedef_bin(cf,x,false);
-		if(field_id!==9) debugger;
+		const cf="D_RA_D_BinaryCategoryObj_a9",[type,id,,]=x;
+		if(id!==9) debugger;
+		switch(type) {
+			case "child":
+			case "data64":
+		}
 	}
 	/** @arg {D_RD_Obj_a19} x */
 	D_RD_Obj_a19(x) {
