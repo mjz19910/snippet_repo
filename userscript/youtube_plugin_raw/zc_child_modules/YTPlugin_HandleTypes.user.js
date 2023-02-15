@@ -2399,15 +2399,17 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a1|D_RA_D_BinaryCategoryObj_13_a1|D_RA_D_BinaryCategoryObj_13_a1_ext} x */
 	D_RD_Obj_a1(x) {
+		const cf="D_RD_Obj_a1";
 		const [type,field_id,,dec]=x;
 		if(field_id!==1) debugger;
 		switch(type) {
 			case "child": {
 				switch(dec.length) {
+					default: return this.codegen_typedef_bin(cf,x,false);
 					case 1: return this.handle_1_any(dec);
 					case 3: return this.handle_3_any(dec);
 				}
-			} break;
+			}
 			case "data32": {
 				const [,,value]=x;
 				if(value!==0) debugger;
