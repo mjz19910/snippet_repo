@@ -577,6 +577,25 @@ class CodegenService extends BaseService {
 			console.log(pi);
 			debugger;
 		}
+		/** @private @type {D_Accessibility} */
+		if(x.accessibilityData) return "TYPE::D_Accessibility";
+		/** @private @type {R_GuideEntryData} */
+		if(x.guideEntryData) return "TYPE::R_GuideEntryData";
+		if(x.styleType&&typeof x.styleType==="string") return `TYPE::T_StyleType<"${x.styleType}">`;
+		if(x.sizeType&&typeof x.sizeType==="string") return `TYPE::T_SizeType<"${x.sizeType}">`;
+		if(x.button_id) return `TYPE::ButtonId<"${x.button_id}">`;
+		/** @private @type {D_Label} */
+		if(x.label) return "TYPE::D_Label";
+		if(x.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string") {
+			let gen_url=x.baseUrl;
+			if(gen_url.startsWith("https://")) {
+				let pt=split_string_once(gen_url,"?");
+				if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
+				return `TYPE::T_BaseUrl<\`${pt[0]}?\${string}\`>`;
+			}
+			return `TYPE::T_BaseUrl<${x.baseUrl}>`;
+		}
+		if(x.hack&&x.hack===true) return "TYPE::B_Hack";
 		if(1 in x) return x;
 		/** @private @type {RC_ResponseContext} */
 		if(k1==="responseContext") return "TYPE::RC_ResponseContext";
@@ -799,6 +818,7 @@ class CodegenService extends BaseService {
 			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
 			return `TYPE::E_VE${ve_num}`;
 		}
+		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
@@ -1091,30 +1111,6 @@ class CodegenService extends BaseService {
 			}
 			return hr;
 		}
-		if(b.webCommandMetadata) {
-			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
-			return b;
-		}
-		/** @private @type {D_Accessibility} */
-		if(b.accessibilityData) return "TYPE::D_Accessibility";
-		/** @private @type {R_GuideEntryData} */
-		if(b.guideEntryData) return "TYPE::R_GuideEntryData";
-		if(b.styleType&&typeof b.styleType==="string") return `TYPE::T_StyleType<"${b.styleType}">`;
-		if(b.sizeType&&typeof b.sizeType==="string") return `TYPE::T_SizeType<"${b.sizeType}">`;
-		if(b.browseId==="FEsubscriptions"&&keys.length===1) return "TYPE::DE_VE96368_Browse";
-		if(b.button_id) return `TYPE::ButtonId<"${b.button_id}">`;
-		/** @private @type {D_Label} */
-		if(b.label) return "TYPE::D_Label";
-		if(b.baseUrl&&"baseUrl" in x&&typeof x.baseUrl==="string") {
-			let gen_url=x.baseUrl;
-			if(gen_url.startsWith("https://")) {
-				let pt=split_string_once(gen_url,"?");
-				if(pt.length===1) return `TYPE::T_BaseUrl<${gen_url}>`;
-				return `TYPE::T_BaseUrl<\`${pt[0]}?\${string}\`>`;
-			}
-			return `TYPE::T_BaseUrl<${b.baseUrl}>`;
-		}
-		if(b.hack&&b.hack===true) return "TYPE::B_Hack";
 		let g_res=g();
 		let k_str=keys.join();
 		if(!this.logged_replace_keys.includes(k_str)) {

@@ -95,14 +95,16 @@ type RS_Next={
 	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: D_FrameworkUpdates;
 };
+type D_PaidContentOverlay={
+	text: G_Text;
+	durationMs: "10000";
+	navigationEndpoint: E_VE83769_Url;
+	icon: T_Icon<"MONEY_HAND">;
+	trackingParams: string;
+};
+
 type R_PaidContentOverlay={
-	paidContentOverlayRenderer: {
-		text: G_Text;
-		durationMs: "10000";
-		navigationEndpoint: E_VE83769_Url;
-		icon: T_Icon<"MONEY_HAND">;
-		trackingParams: string;
-	};
+	paidContentOverlayRenderer: D_PaidContentOverlay;
 };
 
 type RS_Player={
