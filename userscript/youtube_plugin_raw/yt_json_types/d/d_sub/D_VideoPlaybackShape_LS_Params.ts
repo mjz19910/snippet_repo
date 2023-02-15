@@ -1,8 +1,11 @@
-// cSpell:ignoreRegExp /"sn-(?:nx57yn(?:lk|sl)|n4v7snls)"/
-type G_VideoHostnames_Gen=T_Split<(D_googlevideo_host_nx57yn|D_googlevideo_host_nx5s7n)[number],".">[0];
+// cSpell:ignoreRegExp /"sn-(?:nx57yn(?:lk|sl)|n4v7sn(?:ls|ly))"/
+type G_VideoHostnames_Gen_0=T_Split<D_googlevideo_host_9gv7ln[number],".">[0];
+type G_VideoHostnames_Gen_1=T_Split<D_googlevideo_host_9gv7ln[number],".">[0];
+type G_VideoHostnames_Gen=G_VideoHostnames_Gen_0|G_VideoHostnames_Gen_1;
 type G_VideoHostnames=|G_VideoHostnames_U|G_VideoHostnames_Gen;
 type G_VideoHostnames_U=
 	|"sn-n4v7snls"
+	|"sn-n4v7snly"
 	;
 ;
 type D_VideoPlaybackShape_LS_Params={
