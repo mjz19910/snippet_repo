@@ -97,6 +97,7 @@ class IndexedDBService extends BaseService {
 		this.push_waiting_obj(...args);
 		this.check_size(key);
 	}
+	log_cache_push=false;
 	/** @private @template {keyof DT_DatabaseStoreTypes} T @arg {TA_push_waiting_obj<T>} args */
 	push_waiting_obj(...args) {
 		const [key,obj]=args;
@@ -116,7 +117,7 @@ class IndexedDBService extends BaseService {
 		}
 		idx=d_cache[1].push(as(obj))-1;
 		c_index.set(index_val,idx);
-		console.log("push wait",key,index_val,idx,obj);
+		if(this.log_cache_push) console.log("push wait",key,index_val,idx,obj);
 	}
 	/** @arg {AG_DatabaseStoreDescription} store_desc @arg {number} version */
 	requestOpen(store_desc,version) {
