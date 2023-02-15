@@ -406,6 +406,8 @@ class CodegenService extends BaseService {
 		}
 		if(k1=="videoId") return "TYPE::string";
 		if(k1==="playlistSetVideoId") return "TYPE::string";
+		let num=Number(k1);
+		if(!Number.isNaN(num)) return o;
 		console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 		return o;
 	}
