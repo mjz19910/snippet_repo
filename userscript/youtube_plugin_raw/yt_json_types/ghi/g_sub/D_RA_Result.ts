@@ -16,4 +16,4 @@ type D_RA_Result=
 	]
 	;
 ;
-type D_RA_Result_CTP=[["child",4],["child",6]];
+type D_RA_Result_CTP=[["child",4,Uint8Array,D_RA_V_BinaryTimestamp],["child",6,Uint8Array,null]];
