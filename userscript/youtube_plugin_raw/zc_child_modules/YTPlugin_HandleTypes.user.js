@@ -2240,10 +2240,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(buttons,this.R_Button);
 	}
 	/** @private @arg {string} x */
-	RS_Next_ContextParams(x) {
-		const cf="RS_Next_ContextParams";
-		this.params("next_response.queue_context_params",x);
-	}
+	RS_Next_ContextParams(x) {this.params("next_response.queue_context_params",x);}
 	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next"; this.k(cf,x);
@@ -2387,11 +2384,7 @@ class HandleTypes extends HandleTypesEval {
 		};
 	}
 	/** @private @arg {string} x */
-	DC_Load_EntityKey(x) {
-		const cf="DC_LoadMarkers_EntityKey";
-		this.params("load_markers.entity_key",x);
-		x;
-	}
+	DC_Load_EntityKey(x) {this.params("load_markers.entity_key",x);}
 	/** @private @arg {DC_LoadMarkers} x */
 	DC_LoadMarkers(x) {
 		const cf="DC_LoadMarkers"; this.k(cf,x);
@@ -3001,7 +2994,7 @@ class HandleTypes extends HandleTypesEval {
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(feedbackResponses,this.D_FeedbackResponseProcessedStatus);
 	}
-	/** @public @arg {CF_decode_continuation_token} cf @arg {string} x */
+	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token(cf,x) {
 		this.decode_continuation_token_no_uri(cf,decodeURIComponent(x));
 	}

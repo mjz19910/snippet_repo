@@ -2570,8 +2570,6 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(x);
 		this.indexed_db_put("video_id",{key: `video_id:normal:${x}`,type: "normal",v: x});
 	}
-	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
-	is_bigint(x) {return x[0]==="bigint";}
 	/** @type {any[]} */
 	log_list=[];
 	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {any} entry */

@@ -1024,7 +1024,9 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x4c82a9c.continuation_token.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.binary_token";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.f3_binary_token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
