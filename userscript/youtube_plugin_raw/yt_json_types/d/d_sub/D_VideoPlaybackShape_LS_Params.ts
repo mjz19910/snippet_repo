@@ -1,4 +1,4 @@
-// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
+// cSpell:ignoreRegExp /"sn-(?:(o097z|9gv7l|n4v7s|nx57y)n.{2})"/
 // cSpell:ignoreRegExp /"sn-(?:q4flrn.{2})"/
 type G_VideoHostnames_Gen_0=Exclude<T_Split<D_googlevideo_host[number],".">[0],G_VideoHostnames_Gen>;
 type G_VideoHostnames_Gen=
