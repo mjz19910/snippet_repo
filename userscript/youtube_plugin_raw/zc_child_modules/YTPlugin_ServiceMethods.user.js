@@ -2601,29 +2601,34 @@ class ServiceMethods extends ServiceData {
 	is_bigint(x) {return x[0]==="bigint";}
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
+		let ret=false;
 		if(typeof entry==="string") {
 			switch(path) {
-				case "continuation_token.data.f49": return this.x.get("handle_types").continuation_token_data_f49(path,entry);
+				case "continuation_token.data.f49": {
+					this.x.get("handle_types").continuation_token_data_f49(path,entry);
+					ret=true;
+				} break;
 				case "load_markers.entity_key.f2":
 				case "continuation_token.data.f53.f8": {
 					this.save_string(path,entry);
+					ret=true;
 				} break;
 				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2":
 				case "tracking.trackingParams.f11": {
 					this.D_ChannelId(as(entry));
+					ret=true;
 				} break;
 				case "continuation_token.data.f53.f4.f4":
 				case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
 				case "unsubscribe.params.f2": {
 					this.videoId(entry);
+					ret=true;
 				} break;
 				case "continuation_token.data.f110.f3.f15.f2.f1": {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					this.targetId(`Binary.value:${path}`,as(entry));
+					ret=true;
 				} break;
-				case null: {
-				} break;
-				case null: break;
 				case "tracking.trackingParams.f7":
 				case "continuation_token.data.f72":
 				case "continuation_token.data.f49.f6":
@@ -2631,17 +2636,21 @@ class ServiceMethods extends ServiceData {
 					/** @type {`sub.${path}`} */
 					const cf=`sub.${path}`;
 					this.x.get("handle_types").decode_continuation_token(cf,entry);
+					ret=true;
 				} break;
 				case "tracking.trackingParams.f6": {
 					this.save_string(path,entry);
+					ret=true;
 				} break;
 				case "continuation_request.watch_next.token.f2.f2":
 				case "reel.sequence_params.f1": {
 					this.videoId(entry);
+					ret=true;
 				} break;
 				case "entity_key.subscribed.f2":
 				case "ypc_get_offers.params.f1.f2": {
 					this.D_ChannelId(as(entry));
+					ret=true;
 				} break;
 				default: {
 					let new_data=this.save_string(path,entry);
@@ -2649,59 +2658,65 @@ class ServiceMethods extends ServiceData {
 						let x=path; x;
 						console.log(`-- [handle_value_gen$value_save_string] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
+						ret=false;
+					} else {
+						ret=true;
 					}
-				} return;
+				} break;
 			}
-			return;
-		}
-		if(typeof entry==="number") {
+		} else if(typeof entry==="number") {
 			switch(path) {
 				default: {
-					if(entry<1000) {
-						this.save_number(path,entry);
-						return;
-					}
 					let new_data=this.save_number(path,entry);
 					if(new_data) {
 						let x=path; x;
 						console.log(`-- [handle_value_gen$value_save_number] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
 					}
-				} return;
-				case "AdServingDataEntry.f7": {
+					ret=false;
+				} break;
+				case "ad_serving_data_entry.f7": {
 					this.save_number(path,entry);
-				} return;
+					ret=true;
+				} break;
 				case "tracking.trackingParams.f2":
-				case "tracking.trackingParams.f16.f2": return;
+				case "tracking.trackingParams.f16.f2": {
+					ret=true;
+				} break;
 				case "reel.player_params.f57": case "unsubscribe.params.f1.f1": case "subscribe.params.f2.f1":
 				case "tracking.trackingParams.f3": case "continuation_token.data.f53.f4.f15": case "entity_key.normal.f4": case "playability_status.context_params.f2.f1": case "playability_status.context_params.f1": case "reel.params.f6": case "reel.player_params.f30": case "reel.sequence_params.f5.f3":
 				case "reel.params.f1": case "reel.player_params.f71":
 				case "tracking.trackingParams.f1": {
 					this.save_number(path,entry);
-				} return;
+					ret=true;
+				} break;
 				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
 				case "watch_playlist.params.f4": case "watch_playlist.params.f13": {
-				} return;
-				// {[x:"f2.f7"]:"STORE::Playlist.localCurrentIndex";}
-				case "next.continuation.f2.f7": return;
-				case "reel.params.f3.f3": case "reel.params.f3.f2": case "reel.params.f3.f1":
+					ret=true;
+				} break;
+				case "next.continuation.f2.f7": case "reel.params.f3.f3": case "reel.params.f3.f2": case "reel.params.f3.f1":
 				case "tracking.trackingParams.f16.f4.f3": case "tracking.trackingParams.f16.f4.f2": case "tracking.trackingParams.f16.f4.f1":
-				case "AdServingDataEntry.f9.f3": case "AdServingDataEntry.f9.f2": case "AdServingDataEntry.f9.f1": case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
+				case "ad_serving_data_entry.f9.f3": case "ad_serving_data_entry.f9.f2": case "ad_serving_data_entry.f9.f1": case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
 				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2": case "notification.record_interactions.f5":
 				case "notification.record_interactions.f2.f14.f1.f1": {
-				} return;
-			}
-		}
-		if(entry instanceof Map) return;
-		if(entry instanceof Uint8Array) {
-			switch(path) {
-				default: {
-					this.save_number(path,[...entry]);
+					ret=true;
 				} break;
 			}
-			return;
+		} else if(entry instanceof Map) {
+			ret=true;
+		} else if(entry instanceof Uint8Array) {
+			switch(path) {
+				default: {
+					let new_data=this.save_number(path,[...entry]);
+					if(new_data) {
+						let x=path; x;
+						console.log(`-- [handle_value_gen$save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`);
+						debugger;
+					}
+				} break;
+			}
 		}
-		if(this.is_bigint(entry)) {
+		if(entry instanceof Array&&this.is_bigint(entry)) {
 			switch(path) {
 				default: {
 					let new_data=this.handle_bigint(path,entry);
@@ -2710,13 +2725,14 @@ class ServiceMethods extends ServiceData {
 						console.log(`-- [handle_value_gen$value_handle_bigint] [v:${entry[2]}n] --\n\ncase "${x}":\n`);
 						debugger;
 					}
-				} return;
+					ret=false;
+				} break;
 				case "tracking.trackingParams.f8":
 				case "reel.player_params.f72":
-				case "tracking.trackingParams.f9": return;
+				case "tracking.trackingParams.f9": break;
 			}
 		}
-		switch(entry) {default: debugger; return;}
+		return ret;
 	}
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
@@ -2795,7 +2811,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {
 		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
-		if(tva.length!==1) return;
+		if(tva.length===0) return true;
 		let map_entry_value=tva[0];
 		let key_index=this.parse_key_index;
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
@@ -2824,7 +2840,7 @@ class ServiceMethods extends ServiceData {
 			case "D_0x94d81d4":
 			case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "ad_slot_logging_data":
 			case "adaptive_format":
-			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
+			case "aadc_guidelines_state": case "ad_serving_data_entry": case "macro_marker_repeat_state": case "player_state":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
 			case "entity_key": case "entity":
 			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript":
@@ -2852,8 +2868,7 @@ class ServiceMethods extends ServiceData {
 					case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 					case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
 					case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
-					case "f1": case "f4": case "f5": case "f6": case "f7": case "f9":
-					case "f10": case "f13": case "f14":
+					case "f1": case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13": case "f14":
 				}
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
@@ -2879,13 +2894,13 @@ class ServiceMethods extends ServiceData {
 				switch(parts[4]) {
 					default: {const idx=5; u(idx); debugger; parts[4]==="";} return;
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f10": case "f11": case "f15": case "f19": case "f20": case "f25":
+					case "f10": case "f11": case "f15": case "f19": case "f20": case "f25": case "f28": case "f36":
 				}
 				if(parts.length===5) return this.handle_map_value(path,map_entry_value);
 				switch(parts[5]) {
 					default: {const idx=6; u(idx); debugger; parts[5]==="";} return;
 					case "f1[]":
-					case "f1": case "f2": case "f3":
+					case "f1": case "f2": case "f3": case "f4": case "f6":
 				}
 				if(parts.length===6) return this.handle_map_value(path,map_entry_value);
 				switch(parts[6]) {
@@ -2902,10 +2917,12 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,map_entry_value);
+		return true;
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {
 		let off=1;
+		let ret=true;
 		for(let val of tva) {
 			off++;
 			let g1=() => {
@@ -2914,7 +2931,7 @@ class ServiceMethods extends ServiceData {
 				console.log("path offset",off);
 			};
 			switch(path)/*parse_param_next_arr*/ {
-				default: g1(); debugger; continue;
+				default: g1(); ret=false; continue;
 				case "continuation_request.watch_next.token.f9.f1.f1":
 				case "get_report_form.params.f28.f1":
 				case "get_report_form.params.f28.f1[].f1.f1": {
@@ -2922,6 +2939,7 @@ class ServiceMethods extends ServiceData {
 				}; continue;
 			}
 		}
+		return true;
 	}
 	/** @template {CF_L_Params} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {void} */
 	on_endpoint_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
@@ -2943,7 +2961,7 @@ class ServiceMethods extends ServiceData {
 				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 		}
 		/** @private @type {P_LogItems} */
 		switch(path)/*endpoint*/ {
@@ -2957,204 +2975,201 @@ class ServiceMethods extends ServiceData {
 				case 1: case 3: case 4:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token.f9": switch(map_entry_key) {
 				case 1: case 3:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 3: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token.f2.f36": switch(map_entry_key) {
 				case 5: case 8:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token.f2": switch(map_entry_key) {
 				case 2: case 6: case 25: case 28: case 36:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 2: case 3: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token.f6.f4": switch(map_entry_key) {
 				case 4: case 6: case 15:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token.f6": switch(map_entry_key) {
 				case 4: case 8:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token.f2": switch(map_entry_key) {
 				case 2:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 2: case 3: case 6:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 				default:
-			}
+			} break;
 			case "get_pdg_buy_flow.params":
 			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "get_notification_menu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
 			case "entity_key.normal.f2": case "get_report_form.params.f28":
 			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "get_report_form.params.f18.f1": {
 				switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "continuation_token.data.f110":
 			case "reel.sequence_params.f5": {
 				switch(map_entry_key) {case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "get_report_form.params.f28.f1.f1.f1.f1": {
 				switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "continuation_token.data.f49": {
 				switch(map_entry_key) {case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
 			case "playability_status.context_params": {
 				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "get_report_form.params.f28.f1[]":
 			case "get_report_form.params.f28.f1": {
 				switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "watch.player_params.f40.f1":
 			case "continuation_token.data.f110.f3.f15": {
 				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "reel.sequence_params": {
 				switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "notification.record_interactions": {
 				switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "next.continuation.f2.f36": {
 				switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "tracking.trackingParams.f6": {
 				switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "notification.record_interactions.f2": {
 				switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "get_pdg_buy_flow.params.f1":
-			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
+			case "tracking.trackingParams.f19": case "ad_serving_data_entry.f9": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
 			case "tracking.trackingParams.f4": {
 				switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
 				switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "ypc_get_offers.params": {
 				switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
-			case "AdServingDataEntry.f10": {
+			} break;
+			case "ad_serving_data_entry.f10": {
 				switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "subscribe.params": {
 				switch(map_entry_key) {case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "player_state.entity_key": case "macro_marker_repeat_state.entity_key": case "load_markers.entity_key": case "change_markers_visibility.entity_key": case "entity_key.normal": case "entity_key.subscribed":
 			case "aadc_guidelines_state.entity_key": {
 				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "create_comment.params": {
 				switch(map_entry_key) {case 2: case 5: case 10: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "continuation_token.data.f53":
 			case "tracking.trackingParams.f16":
 			case "continuation_token.data.f53.f4": {
 				switch(map_entry_key) {case 4: case 6: case 15: case 25: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "next.continuation": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 16: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "reel.params": {
 				switch(map_entry_key) {case 1: case 3: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "notification.opt_out": {
 				switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "watch.params.f33": {
 				switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "reel.player_params": {
 				switch(map_entry_key) {case 30: case 57: case 71: case 72: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "ypc_get_offers.params.f5": {
 				switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "like.removeLikeParams": {
 				switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "like.dislikeParams": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "like.likeParams": case "like.dislikeParams": {
 				switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "watch.player_params": {
 				switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			/** @private @type {P_LogItems} */
 			case "transcriptTrackSelection.serializedParams": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "continuation_request.reel_watch_sequence.token": {
 				switch(map_entry_key) {case 1: case 3: case 5: case 8: case 12: case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "continuation_token.data": {
 				switch(map_entry_key) {case 1: case 15: case 49: case 53: case 72: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "get_transcript.params": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "next.continuation.f2": {
 				switch(map_entry_key) {case 2: case 4: case 7: case 25: case 28: case 31: case 36: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "watch_playlist.params": {
 				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
-			case "AdServingDataEntry": {
+			} break;
+			case "ad_serving_data_entry": {
 				switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "watch.params": {
 				switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "get_report_form.params": {
 				switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			}
+			} break;
 			case "tracking.trackingParams": {
 				switch(map_entry_key) {
-					case 16: case 19: break;
+					case 16: case 19: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 					default: {
 						/** @arg {number} x @template {number} T @arg {T} mx @returns {x is T_NumRange<1,T>} */
 						function is_in_range(x,mx) {
 							if(x<=mx) return true;
 							return false;
 						}
-						if(!is_in_range(map_entry_key,11)) {
-							new_ns();
-							return;
-						}
+						if(!is_in_range(map_entry_key,11)) break;
+						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
 					}
 				}
-				return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-			}
+			} break;
 		}
-		return;
+		return false;
 	}
 	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {

@@ -1028,21 +1028,21 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f10";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f10.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f10.f11";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f10.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f13";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f14";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f9";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f9.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f9.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "AdServingDataEntry.f9.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10.f1";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10.f11";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10.f6";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f13";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f14";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f4";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f5";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f6";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f7";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9.f1";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9.f2";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.binary_token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key.f2";}
