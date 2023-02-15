@@ -2829,6 +2829,7 @@ class HandleTypes extends HandleTypesEval {
 		if(0x12f639cf in x) return this.R_0x12f639cf(cf,x);
 		if(0x14527fab in x) return this.R_0x14527fab(cf,x);
 		if(0x19ac5ceb in x) return this.R_0x19ac5ceb(cf,x);
+		if(30 in x) return;
 		if(49 in x) return;
 		if(6 in x) return this.R_ClickTrackingObj(x);
 		if(4 in x) {
