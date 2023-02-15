@@ -270,8 +270,8 @@ class CodegenService extends BaseService {
 		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
 	}
 	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_typedef_impl_2(cf,x,ret_val) {
-		let new_typedef=this.codegen_typedef_impl(cf,x,true);
+	codegen_typedef_impl(cf,x,ret_val) {
+		let new_typedef=this.codegen_typedef_base(cf,x,true);
 		if(ret_val) return new_typedef;
 		if(new_typedef) {
 			if(!this.typedef_cache.includes(new_typedef)) {
@@ -284,7 +284,7 @@ class CodegenService extends BaseService {
 	missing_codegen_types=new Map;
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,do_break,ret_val) {
-		let res=this.codegen_typedef_impl_2(cf,x,ret_val);
+		let res=this.codegen_typedef_impl(cf,x,ret_val);
 		if(!res) return;
 		let ci=this.missing_codegen_types.get(cf);
 		if(ci&&ci.includes(res)) return;
@@ -373,7 +373,7 @@ class CodegenService extends BaseService {
 		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
 		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
 		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
-		this.cg.codegen_typedef(`${cf}$${u_name}`,x);
+		this.codegen_typedef_impl(`${cf}$${u_name}`,x);
 		console.groupEnd();
 	}
 	/** @api @public @arg {CF_D_STR} cf @arg {string} x */
@@ -445,7 +445,7 @@ class CodegenService extends BaseService {
 	get_typedef_part(x) {
 		let gn=this.get_name_from_keys(x);
 		if(!gn) return null;
-		let gr=this.codegen_typedef_impl(gn,x);
+		let gr=this.codegen_typedef_base(gn,x);
 		if(!gr) return null;
 		let gr_f=this.filter_typedef_part_gen(gr);
 		let sr=split_string_once(gr_f,"=")[1];
@@ -635,7 +635,7 @@ class CodegenService extends BaseService {
 		return {};
 	}
 	/** @private @arg {string} cf @arg {object} x */
-	codegen_typedef_impl(cf,x,is_root=false) {
+	codegen_typedef_base(cf,x,is_root=false) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		/** @private @type {{[x: number|string]:{}}} */
