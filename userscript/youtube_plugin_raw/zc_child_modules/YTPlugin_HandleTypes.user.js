@@ -3163,8 +3163,14 @@ class HandleTypes extends HandleTypesEval {
 		const [item]=x;
 		const [type,field_id,buffer,dec]=item; buffer;
 		if(type!=="child") debugger;
-		if(field_id!==1006) debugger;
-		if(dec.length!==0) debugger;
+		switch(field_id) {
+			case 1000: {
+				if(dec.length!==1) debugger;
+			} break;
+			case 1006: {
+				if(dec.length!==0) debugger;
+			} break;
+		}
 	}
 	/** @arg {D_RA_CR_0x12f639cf} x */
 	D_RA_CR_0x12f639cf(x) {
