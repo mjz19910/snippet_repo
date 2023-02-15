@@ -1310,8 +1310,10 @@ class ServiceMethods extends ServiceData {
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @protected @arg {E_SignalService_SendPost} x */
 	E_SignalService_SendPost(x) {const cf="E_SignalService_SendPost",[a,b]=this.T_SE_Signal(cf,x); this.M_SendPost(a); this.G_ClientSignal(cf,b);}
+	/** @private @arg {DE_YpcGetOffers} x */
+	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",b);}
 	/** @private @arg {E_YpcGetOffers} x */
-	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.D_Params(`D${cf}`,b,"ypc_get_offers.params");}
+	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
 	/** @private @arg {DE_VE3611} x */
 	DE_VE3611(x) {x;}
 	/** @private @arg {DE_VE3854} x */
@@ -2434,8 +2436,8 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
-	/** @protected @arg {P_ParamParse} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(sec,x.params);}
+	/** @protected @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
+	D_Params(cf,path,x) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(path,x.params);}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
@@ -3444,7 +3446,7 @@ class ServiceMethods extends ServiceData {
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
 	}
 	/** @private @arg {DE_GetReportForm} x */
-	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm",x,"get_report_form.params");}
+	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm","get_report_form.params",x);}
 	/** @private @arg {DE_NotificationOptOut} x */
 	DE_NotificationOptOut(x) {
 		const cf="DE_NotificationOptOut";
@@ -3895,6 +3897,7 @@ class ServiceMethods extends ServiceData {
 		this.params("subscriptionState.key",key);
 		this.a_primitive_bool(subscribed);
 	}
+	/** @private @arg {DS_EY_PlaylistLoop} x */
 	DS_EY_PlaylistLoop(x) {
 		const cf="DS_EY_PlaylistLoop";
 		const {key,state,...y}=this.s(cf,x); this.g(y);
@@ -3906,6 +3909,7 @@ class ServiceMethods extends ServiceData {
 			case "PLAYLIST_LOOP_STATE_ONE":
 		}
 	}
+	/** @private @arg {DS_EY_TranscriptSearchBox} x */
 	DS_EY_TranscriptSearchBox(x) {
 		const cf="DS_EY_TranscriptSearchBox";
 		const {key,isHidden,...y}=this.s(cf,x); this.g(y);
