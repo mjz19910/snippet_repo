@@ -1153,7 +1153,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_SubscribeButton_SubscribedPrefix";
 		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
 		this.t(buttonText,this.G_Text);
-		this.t(entityKey,x => this.params("entity_key.subscribed",x));
+		this.t(entityKey,x => this.params("subscribe_button.entity_key",x));
 	}
 	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
 	D_SubscribeButton_UnsubscribedPrefix(x) {
@@ -1814,7 +1814,7 @@ class ServiceMethods extends ServiceData {
 				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				status;
 				target;
-				this.t(removeLikeParams,x => this.params("like.remove_like_params",x));
+				this.t(removeLikeParams,x => this.params("remove_like.params",x));
 			} break;
 			case "LIKE": {
 				const cf="E_LikeLike";
@@ -1822,14 +1822,14 @@ class ServiceMethods extends ServiceData {
 				status;
 				target;
 				actions;
-				this.t(likeParams,x => this.params("like.like_params",x));
+				this.t(likeParams,x => this.params("like.params",x));
 			} break;
 			case "DISLIKE": {
 				const cf="E_LikeDislike";
 				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				status;
 				target;
-				this.t(dislikeParams,x => this.params("like.dislike_params",x));
+				this.t(dislikeParams,x => this.params("dislike.params",x));
 			} break;
 		}
 	}
@@ -2641,7 +2641,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {string} x */
-	trackingParams(x) {this.params("tracking.trackingParams",x);}
+	trackingParams(x) {this.params("tracking.params",x);}
 	/** @protected @arg {string} cf @arg {{}} x */
 	codegen_typedef(cf,x,do_break=false) {
 		this.cg.codegen_typedef(cf,x,do_break,true);
@@ -3046,8 +3046,8 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
-	/** @protected @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
-	TD_Params(k,path,x) {const {[k]: a}=x; this.params(path,a);}
+	/** @protected @arg {P_ParamParse} cf @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	TD_Params(cf,k,x) {const {[k]: a}=x; this.params(cf,a);}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility";

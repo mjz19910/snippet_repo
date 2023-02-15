@@ -1082,9 +1082,11 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reload.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "service$create_playlist";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscriptionState.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.click_tracking_params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.parentTrackingParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams";}
