@@ -2657,7 +2657,7 @@ class ServiceMethods extends ServiceData {
 					]);
 					ret=false;
 				} break;
-				case "tracking.trackingParams.f4": {
+				case "tracking.trackingParams": {
 					ret=true;
 				} break;
 			}
