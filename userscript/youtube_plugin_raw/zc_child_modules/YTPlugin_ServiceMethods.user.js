@@ -2622,7 +2622,7 @@ class ServiceMethods extends ServiceData {
 				} break;
 				default: {
 					let new_data=this.save_string(path,entry);
-					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$do_save_str] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
+					const cf2="do_save_str";
 					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
 					ret=false;
 				} break;
