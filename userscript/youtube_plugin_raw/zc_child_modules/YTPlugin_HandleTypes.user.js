@@ -4211,22 +4211,6 @@ class HandleTypes extends HandleTypesEval {
 				case "nx5s7":
 				case "9gv7l":
 			}
-			debugger;
-			switch(mi) {
-				default: {
-					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.mi`,mi);
-					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\n${this.cg.codegen_case_ret(gen)}`);
-				} break;
-				case "sn-n4v7snls":
-				case "sn-n4v7snly":
-				case "sn-nx5s7n7s":
-				case "sn-nx5s7nel":
-				case "sn-nx57ynlk":
-				case "sn-nx57ynsd":
-				case "sn-nx57ynsl":
-				case "sn-o097znss":
-			}
 		}
 		this.save_string(`${cf1}.mn`,mn);
 		this.save_string(`${cf1}.ms`,ms);
