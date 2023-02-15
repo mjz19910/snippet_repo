@@ -4212,7 +4212,6 @@ class HandleTypes extends HandleTypesEval {
 				case "9gv7l":
 			}
 		}
-		this.save_string(`${cf1}.mn`,mn);
 		this.save_string(`${cf1}.ms`,ms);
 		this.save_string(`${cf1}.mv`,mv);
 		this.save_string(`${cf1}.mvi`,mvi);
