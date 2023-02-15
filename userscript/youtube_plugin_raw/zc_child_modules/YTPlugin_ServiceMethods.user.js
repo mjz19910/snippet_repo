@@ -2467,23 +2467,10 @@ class ServiceMethods extends ServiceData {
 		return f.call(this,apiUrl);
 	}
 	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(cf,path,x,callback) {this.on_any_params(cf,path,x,callback);}
-	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
-	parse_player_param(root,path,map,callback) {
-		this.parse_key_index++;
-		let key_index=this.parse_key_index;
-		let map_keys=[...map.keys()];
-		let parse_key=this.make_parse_key(root,path,map,map_keys,callback);
-		for(let i=1;i<100;i++) {
-			if(!map_keys.includes(i)) continue;
-			parse_key([i]);
-		}
-		if(this.eq_keys(map_keys,[])) return;
-		let {new_ns}=this.get_parse_fns(path,map_keys,null);
-		new_ns();
-		let param_obj=this.to_param_obj(map);
-		console.log(`[player.${path}] [idx=${key_index}]`,param_obj);
-		{debugger;}
+	playerParams(cf,path,x,callback) {
+		/** @type {number[]} */
+		let map_entry_key_path=[];
+		this.on_any_params(cf,path,map_entry_key_path,x,callback);
 	}
 	/** @private @arg {string} ns @arg {()=>void} f */
 	grouped(ns,f) {
