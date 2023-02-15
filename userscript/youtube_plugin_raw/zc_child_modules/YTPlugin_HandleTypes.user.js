@@ -2499,15 +2499,21 @@ class HandleTypes extends HandleTypesEval {
 		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
 		this.codegen_typedef_bin(cf,x,false);
 	}
+	/** @arg {D_RA_D_Binary_x1} x */
+	D_RA_D_Binary_x1(x) {
+		const cf="D_RA_D_Binary_x1";
+		return this.codegen_typedef_bin(cf,x);
+	}
 	/** @arg {D_RA_Result} x */
 	D_RA_Result(x) {
+		const cf="D_RA_Result";
 		switch(x.length) {
 			default: return this.D_RA_D_Binary_dg(x);
 			case 1: return this.D_RA_D_Binary_f1(x);
 			case 2: return this.D_RA_D_BinaryCategoryObj_r(x);
 			case 4: {
 				if(this.is_RA_CR(x)) return this.D_RA_CR_0x14527fab(x);
-				if(this.is_RA_CR_zct(x,1)) return this.codegen_typedef_bin(cf,x);
+				if(this.is_RA_CR_zct(x,1)) return this.D_RA_D_Binary_x1(x);
 				return this.codegen_typedef_bin(cf,x);
 			}
 			case 5: return this.D_RA_CR_0x12f639cf(x);
