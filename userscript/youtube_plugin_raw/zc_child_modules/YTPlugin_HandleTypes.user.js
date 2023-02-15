@@ -2161,7 +2161,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_GetPgdBuyFlow} x */
 	R_GetPgdBuyFlow(x) {x; debugger;}
-	/** @private @arg {P_ReelPlayerParamsObj} x */
+	/** @private @arg {P_ReelPlayerParams} x */
 	P_ReelPlayerParamsObj(x) {
 		if(30 in x) return;
 		debugger;
@@ -2187,7 +2187,7 @@ class HandleTypes extends HandleTypesEval {
 				this.P_ReelParams(u);
 			} break;
 			case "reel.player_params": {
-				/** @type {P_ReelPlayerParamsObj} */
+				/** @type {P_ReelPlayerParams} */
 				let u=as_any(x);
 				this.P_ReelPlayerParamsObj(u);
 			} break;
