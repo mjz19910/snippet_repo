@@ -2344,12 +2344,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RD_Obj_a4} x */
 	D_RD_Obj_a4(x) {
 		const cf="D_RD_Obj_a4";
-		const [type,field_id,value,dec]=x;
+		const [type,field_id,,dec]=x;
 		if(type!=="child") return this.codegen_typedef_bin(cf,x);
 		switch(field_id) {
 			default: debugger; break;
-			case 1: this.handle_1_any(dec); break;
-			case 2: this.handle_2_any(dec); break;
 			case 4: this.handle_3_any(dec); break;
 		}
 	}
