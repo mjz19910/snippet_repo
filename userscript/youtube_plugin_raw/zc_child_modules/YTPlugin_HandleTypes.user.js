@@ -148,9 +148,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(path)/*player_params*/ {
 			default: debugger; return false;
 			case "watch.player_params":
-			case "watch.player_params.f40": case "watch.player_params.f40.f1": {
-				return true;
-			}
+			case "watch.player_params.f40": case "watch.player_params.f40.f1":
 		}
 		/** @type {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} */
 		let t_pt=as(map_entry_key_path);
@@ -163,36 +161,36 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; return false;
 			case 1: {
 				switch(t_pt[0]) {
-					default: debugger; return;
+					default: debugger; return false;
 					case 8: case 9: case 12: case 25: case 40: {
 						const rk=this.exact_arr(t_pt[0]);
-						this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+						return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
 					} break;
 				}
 			} break;
 			case 2: {
 				switch(t_pt[0]) {
-					default: debugger; return;
+					default: debugger; return false;
 					case 40: switch(t_pt[1]) {
 						case 1: {
 							let [k1,k2]=t_pt;
 							const rk=this.exact_arr(k1,k2);
-							this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+							return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
 						}
 					} break;
 				}
 			} break;
 			case 3: {
 				switch(t_pt[0]) {
-					default: debugger; return;
+					default: debugger; return false;
 					case 40:
 				}
 				if(t_pt[1]!==1) debugger;
 				switch(t_pt[2]) {
-					default: debugger; return;
+					default: debugger; return false;
 					case 2: case 3:
 				}
-				this.on_player_params_callback_ty(map_entry_values,t_pt,path,map_keys,root);
+				return this.on_player_params_callback_ty(map_entry_values,t_pt,path,map_keys,root);
 			}
 		}
 	}
@@ -203,30 +201,27 @@ class HandleTypes extends HandleTypesEval {
 	/**
 	 * @template {CF_PlayerParams} T
 	 * @arg {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} map_entry_key_path
-	 * @arg {V_ParamMapValue[]} map_entry_values @arg {ARG_PathFor_PlayerParams} path @arg {number[]} map_keys @arg {T} root */
+	 * @arg {V_ParamMapValue[]} map_entry_values @arg {ARG_PathFor_PlayerParams} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
 	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		let saved_map_keys=map_keys.slice();
 		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) {debugger; return;}
 		switch(map_entry_key_path.length) {
-			case 3: {
-				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
-			} break;
-			case 2: {
-				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
-			} break;
-			case 1: {
-				this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
-			} break;
+			case 1: case 2: case 3:
+				return this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
+
 		}
+		return false;
 	}
 	/** @template {CF_PlayerParams} T @template {P_ParamParse} U @arg {ARG_on_player_params_callback_ty_len1<T,U>} x */
 	on_player_params_callback_ty_len1(...x) {
 		switch(x[0]) {
-			case "DE_VE3832_Watch": break;
-			case "R_WatchPage_VE3832": break;
-			default: debugger; break;
+			default: debugger; return false;
+			case "DE_VE3832_Watch": case "R_WatchPage_VE3832":
 		}
+		const [a1,a2,a3,a4,a5]=x;
+		debugger;
+		return false;
 	}
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
