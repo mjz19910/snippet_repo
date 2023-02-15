@@ -2624,7 +2624,6 @@ class ServiceMethods extends ServiceData {
 				case null: {
 				} break;
 				case null: break;
-				// case "watch_request_continuation.token.f5":
 				case "tracking.trackingParams.f7":
 				case "continuation_token.data.f72":
 				case "continuation_token.data.f49.f6":
@@ -2711,8 +2710,6 @@ class ServiceMethods extends ServiceData {
 						debugger;
 					}
 				} return;
-				// case "reel_request_continuation.token.f3.f6":
-				// case "watch_request_continuation.token.f9.f1.f1[].f1":
 				case "tracking.trackingParams.f8":
 				case "reel.player_params.f72":
 				case "tracking.trackingParams.f9": return;
@@ -2875,7 +2872,7 @@ class ServiceMethods extends ServiceData {
 					} return;
 					case "f1[]":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-					case "f12": case "f13": case "f14": case "f25": case "f28": case "f31": case "f36":
+					case "f12": case "f13": case "f14": case "f15": case "f25": case "f28": case "f31": case "f36":
 				}
 				if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 				switch(parts[4]) {
@@ -2939,12 +2936,12 @@ class ServiceMethods extends ServiceData {
 		};
 		switch(path) {
 			// binary tab enum
-			// /** @type {B_BinaryBrowseTab} */
-			// case "D_Browse.param.f110.f1": switch(map_entry_key) {
-			// 	case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
-			// 		return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-			// 	default: new_ns(); debugger; return;
-			// }
+			/** @type {B_BinaryBrowseTab} */
+			case "continuation_token.data.f110.f3": switch(map_entry_key) {
+				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: new_ns(); debugger; return;
+			}
 		}
 		/** @private @type {P_LogItems} */
 		switch(path)/*endpoint*/ {
@@ -2955,9 +2952,7 @@ class ServiceMethods extends ServiceData {
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
 			case "get_pdg_buy_flow.params":
-			// case "D_Browse.param.f110.f1.f20":
 			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "get_notification_menu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
-			// case "D_Browse.param.f110":
 			case "entity_key.normal.f2": case "get_report_form.params.f28":
 			case "get_report_form.params.f28.f1[].f1": {
 				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -2978,7 +2973,6 @@ class ServiceMethods extends ServiceData {
 			case "continuation_token.data.f110.f3": {
 				switch(map_entry_key) {case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			// case "D_Browse.param.f94.f1.f2.f4":
 			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
 			case "playability_status.context_params": {
 				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
@@ -3006,9 +3000,6 @@ class ServiceMethods extends ServiceData {
 			case "notification.record_interactions.f2": {
 				switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			// case "create_playlist.params": case "browse.params": {
-			// 	switch(map_entry_key) {case 84: case 93: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
-			// }
 			case "get_pdg_buy_flow.params.f1":
 			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
 			case "tracking.trackingParams.f4": {
@@ -3093,22 +3084,6 @@ class ServiceMethods extends ServiceData {
 			case "watch.params": {
 				switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			// case "continuation_request.reel_watch_sequence.token.f15.f6": {
-			// 	switch(map_entry_key) {
-			// 		default: {
-			// 			/** @arg {number} x @template {number} T @arg {T} mx @returns {x is T_NumRange<1,T>} */
-			// 			function is_in_range(x,mx) {
-			// 				if(x<=mx) return true;
-			// 				return false;
-			// 			}
-			// 			if(!is_in_range(map_entry_key,11)) {
-			// 				new_ns();
-			// 				return;
-			// 			}
-			// 		}
-			// 	}
-			// 	return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-			// }
 			case "get_report_form.params": {
 				switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}

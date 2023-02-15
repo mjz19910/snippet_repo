@@ -1069,10 +1069,20 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f10";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f11";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15.f2";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15.f2.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f19";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f2";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f20";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f6";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f7";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f8";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f9";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f15";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f49";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f49.f6";}
