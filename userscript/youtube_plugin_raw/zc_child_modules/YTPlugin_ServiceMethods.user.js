@@ -2820,7 +2820,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 			// [default_parse_param_next]
 			default: u(idx); debugger; {switch(parts[0]) {case "": break;}} break;
-			case "video_playback":
+			case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "serialized_data": case "ad_slot_logging_data": case "D_0x94d81d4": case "video_playback":
 			case "url": case "player": case "sub": case "adaptive_format":
 			case "aadc_guidelines_state": case "AdServingDataEntry": case "macro_marker_repeat_state": case "player_state":
 			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
@@ -2841,9 +2841,14 @@ class ServiceMethods extends ServiceData {
 					default: {
 						const idx=2; u(idx); debugger; switch(parts[1]) {
 							case "":
-							case "":
-						} parts[1]==="";
+						}
 					} return;
+					case "watch_next":
+					case "transaction_params":
+					case "slot_ad_serving":
+					case "serialized_slot_ad_serving_data_entry":
+					case "reel_watch_sequence":
+					case "binary_token":
 					case "sig": case "api_url":
 					case "heartbeat_params": case "watch_request_continuation": case "data$sub_obj$f3":
 					case "context_params": case "data": case "token": case "entity_key": case "xtags":
@@ -2856,7 +2861,7 @@ class ServiceMethods extends ServiceData {
 				if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 				switch(parts[2]) {
 					default: {const idx=3; u(idx); debugger; parts[2]==="";} return;
-					case "token": case "n": case "ns":
+					case "token": case "n": case "ns": case "data_entry":
 					case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
 					case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
 					case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
