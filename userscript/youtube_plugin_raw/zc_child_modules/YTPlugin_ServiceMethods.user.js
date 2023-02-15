@@ -3866,7 +3866,7 @@ class ServiceMethods extends ServiceData {
 	DS_EY_MacroMarkersList(x) {
 		const cf="DS_EY_MacroMarkersList";
 		const {key,...y}=this.s(cf,x);
-		this.params(`${cf}.key`,"entity.key",key);
+		this.params("macro_markers_list.entity.key",key);
 		if("externalVideoId" in y) {
 			const {externalVideoId,markersList,...y1}=y; this.g(y1);
 			this.videoId(externalVideoId);

@@ -1024,9 +1024,11 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "DC_Continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x4c82a9c.continuation_token.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.binary_token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.f3_binary_token";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_Continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
@@ -1044,6 +1046,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "createBackstagePost.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_backstage_post.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}
