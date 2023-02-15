@@ -43,8 +43,11 @@ type M_YpcGetCart=TM_Gen<GM_YpcGetCart>;
 type M_YpcGetOffers=TM_Gen<GM_YpcGetOffers>;
 //#endregion
 //#region MG_
-type MG_AdLayout_PlayerBytes={layoutType: "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES"; layoutId: string;};
-type MG_AdLayout_TopImage={layoutType: "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE"; layoutId: string; adLayoutLoggingData: D_AdLayoutLoggingData;};
-type MG_AdLayout=MG_AdLayout_PlayerBytes|MG_AdLayout_TopImage;
+type T_MG_AdLayout_2<T>={layoutType: T; layoutId: string;};
+type T_MG_AdLayout_3<T>={layoutType: T; layoutId: string; adLayoutLoggingData: D_SerializedAdServingDataEntry;};
+type MG_AdLayout_PlayerBytes=T_MG_AdLayout_2<"LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES">;
+type MG_AdLayout_TopImage=T_MG_AdLayout_3<"LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE">;
+type MG_AdLayout_SquareImage=T_MG_AdLayout_3<"LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE">;
+type MG_AdLayout=MG_AdLayout_PlayerBytes|MG_AdLayout_TopImage|MG_AdLayout_SquareImage;
 //#endregion
 type MP_AccountMenu={trackingParams: string; style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT"; showLoadingSpinner: true;};

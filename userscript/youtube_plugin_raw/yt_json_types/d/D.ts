@@ -456,7 +456,7 @@ type D_ActionCompanionAd={
 	adInfoRenderer: R_AdHoverTextButton;
 	adVideoId: string;
 	impressionPings: T_BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
-	adLayoutLoggingData: D_AdLayoutLoggingData;
+	adLayoutLoggingData: D_SerializedAdServingDataEntry;
 	associatedCompositePlayerBytesLayoutId?: `${string}-0000-${string}-${string}-${string}`;
 };
 type D_AlertWithButton={
@@ -975,11 +975,11 @@ type D_AdSlot={
 	fulfillmentContent: R_FulfilledLayout;
 	enablePacfLoggingWeb: boolean;
 };
-type D_AdLayoutLoggingData={serializedAdServingDataEntry: string;};
+type D_SerializedAdServingDataEntry={serializedAdServingDataEntry: string;};
 type D_AdLayoutMetadata={
 	layoutId: string;
 	layoutType: "LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED";
-	adLayoutLoggingData: D_AdLayoutLoggingData;
+	adLayoutLoggingData: D_SerializedAdServingDataEntry;
 };
 type D_PageTopAdLayout={
 	adLayoutMetadata: D_AdLayoutMetadata;

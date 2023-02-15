@@ -3048,7 +3048,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @public @arg {D_AdLayoutLoggingData} x */
+	/** @public @arg {D_SerializedAdServingDataEntry} x */
 	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params("ad_serving_data_entry",x));}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
