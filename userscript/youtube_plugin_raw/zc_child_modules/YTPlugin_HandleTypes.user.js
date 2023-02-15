@@ -2300,11 +2300,18 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(f1);
 		this.a_primitive_num(f2);
 		this.V_BinaryTimestamp(f4);
+		if(3 in u&&8 in u) {
+			const {3: [f3],8: [f8],...y}=u; this.g(y);
+			this.save_number(`${cf}.f3`,f3);
+			this._primitive_of(f8,"bigint");
+			return;
+		}
 		if(3 in u) {
 			const {3: [f3],...y}=u; this.g(y);
 			this.save_number(`${cf}.f3`,f3);
 			return;
 		}
+		debugger;
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
