@@ -2410,7 +2410,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==6) debugger;
 		if(dec!==null) debugger;
 	}
-	/** @arg {D_RD_Obj_a1|D_RA_D_BinaryCategoryObj_13_a1} x */
+	/** @arg {D_RD_Obj_a1} x */
 	D_RD_Obj_a1(x) {
 		const cf="D_RD_Obj_a1";
 		const [type,field_id,,dec]=x;
