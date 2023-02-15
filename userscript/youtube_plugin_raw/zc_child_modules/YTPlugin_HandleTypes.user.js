@@ -2410,11 +2410,16 @@ class HandleTypes extends HandleTypesEval {
 		x[3]=null;
 		buffer;
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_r|D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13} x */
+	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
 	D_RA_D_BinaryCategoryObj_r(x) {
-		const [dec_0,dec_1]=x;
-		this.D_RA_D_BinaryCategoryObj_d0(dec_0);
-		this.D_RA_D_BinaryCategoryObj_d1(dec_1);
+		this.z(x,x => {
+			switch(x[1]) {
+				default: debugger; break;
+				case 4: {
+					this.D_RA_D_BinaryCategoryObj_d0(x);
+				} break;
+			}
+		});
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
