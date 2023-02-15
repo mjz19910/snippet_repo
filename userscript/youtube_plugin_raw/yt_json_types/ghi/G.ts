@@ -18,6 +18,7 @@ type G_EY_Entity=
 	|S_EY_PlaylistLoop
 	|S_EY_Subscription
 	|S_EY_TranscriptSearchBox
+	|{superThanksSelectedTierEntity: {};}
 	;
 ;
 
