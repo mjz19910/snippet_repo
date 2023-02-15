@@ -4235,6 +4235,11 @@ class ServiceMethods extends ServiceData {
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
 	}
+	C_AdsControlFlowOpportunityReceived(x) {x;}
+	C_ChangeKeyedMarkersVisibility(x) {x;}
+	C_LoadMarkers(x) {x;}
+	C_ReloadContinuationItems(x) {x;}
+	A_AppendContinuationItems(x) {x;}
 	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`${cf}.response_endpoint`,x);
@@ -4316,13 +4321,6 @@ class ServiceMethods extends ServiceData {
 	R_PlayerOverlayVideoDetails(x) {this.H_("R_PlayerOverlayVideoDetails","playerOverlayVideoDetailsRenderer",x,this.D_PlayerOverlayVideoDetails);}
 	/** @public @arg {R_CinematicContainer} x */
 	R_CinematicContainer(x) {this.H_("R_CinematicContainer","cinematicContainerRenderer",x,this.D_CinematicContainer);}
-	/** @private @arg {MC_ResolveUrl} x */
-	MC_ResolveUrl(x) {
-		const cf="MC_ResolveUrl"; this.k(cf,x);
-		const {isVanityUrl,parentTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(isVanityUrl!==void 0) this._primitive_of(isVanityUrl,"boolean");
-		this.t(parentTrackingParams,a => this.params("tracking.parentTrackingParams",a));
-	}
 	/** @private @arg {D_CinematicContainer} x */
 	D_CinematicContainer(x) {
 		const cf="D_CinematicContainer"; this.k(cf,x);
