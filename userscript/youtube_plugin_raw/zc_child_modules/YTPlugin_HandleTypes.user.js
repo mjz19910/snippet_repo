@@ -2421,7 +2421,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a6} x */
 	D_RD_Obj_a6(x) {
-		const cf="D_RD_Obj_a6",[type,field_id,value,dec]=x;
+		const cf="D_RD_Obj_a6",[type,,value,dec]=x;
 		switch(type) {
 			default: {
 				this.codegen_typedef_bin(cf,x);
@@ -2431,7 +2431,6 @@ class HandleTypes extends HandleTypesEval {
 				this.save_number(cf,value);
 			} break
 			case "child": {
-				if(field_id!==6) debugger;
 				if(dec!==null) return this.codegen_typedef_bin(cf,x);
 			} break;
 		}
