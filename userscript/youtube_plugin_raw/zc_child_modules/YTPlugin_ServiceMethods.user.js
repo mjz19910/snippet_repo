@@ -2574,6 +2574,10 @@ class ServiceMethods extends ServiceData {
 	is_bigint(x) {return x[0]==="bigint";}
 	/** @type {any[]} */
 	log_list=[];
+	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {any} entry */
+	add_log_entry(path,cf2,key_index,entry) {
+		this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
+	}
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
 		let key_index=this.parse_key_index;
@@ -2623,7 +2627,7 @@ class ServiceMethods extends ServiceData {
 				default: {
 					let new_data=this.save_string(path,entry);
 					const cf2="do_save_str";
-					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
+					if(new_data) this.add_log_entry(path,cf2,key_index,entry);
 					ret=false;
 				} break;
 			}
@@ -2632,7 +2636,7 @@ class ServiceMethods extends ServiceData {
 				default: {
 					let new_data=this.save_number(path,entry);
 					const cf2="do_save_num";
-					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
+					if(new_data) this.add_log_entry(path,cf2,key_index,entry);
 					ret=false;
 				} break;
 				case "reel.player_params": {
@@ -2645,7 +2649,7 @@ class ServiceMethods extends ServiceData {
 				default: {
 					let entry_keys=[...entry.keys()];
 					const cf2="do_save_obj";
-					this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry_keys}] --\n\ncase "${path}":\n`)]);
+					this.add_log_entry(path,cf2,key_index,entry_keys);
 					ret=false;
 				} break;
 				case "tracking.trackingParams": {
@@ -2657,7 +2661,7 @@ class ServiceMethods extends ServiceData {
 				default: {
 					let new_data=this.save_number(path,[...entry]);
 					const cf2="do_save_u8_arr";
-					if(new_data) this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
+					if(new_data) this.add_log_entry(path,cf2,key_index,[...entry]);
 					ret=false;
 				} break;
 			}
