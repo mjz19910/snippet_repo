@@ -2524,26 +2524,27 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj";
-		if(19 in x) {
-			const {1: [f1],2: [f2],4: [f4],6: [f6],9: [f9],19: [f19],...y}=x; this.g(y);
+		const {4: [f4],...u}=x;
+		this.V_BinaryTimestamp(f4);
+		if(1 in u) {
+			const {1: [f1],2: [f2],...z}=u;
 			this.save_number(`${cf}.f1`,f1);
 			this.a_primitive_num(f2);
-			this.V_BinaryTimestamp(f4);
-			if(f6!=="related-auto") debugger;
-			this._primitive_of(f9,"bigint");
-			this.V_VeDescObj(f19);
+			if(19 in z) {
+				const {6: [f6],9: [f9],19: [f19],...y}=z; this.g(y);
+				this.a_primitive_num(f2);
+				if(f6!=="related-auto") debugger;
+				this._primitive_of(f9,"bigint");
+				this.V_VeDescObj(f19);
+				return;
+			}
 			return;
 		}
-		if(6 in x) {
-			const {4: [f4],6: [f6],...y}=x; this.g(y);
-			this.V_BinaryTimestamp(f4);
+		if(6 in u) {
+			const {6: [f6],...y}=u; this.g(y);
 			if(f6!=="external") debugger;
 			return;
 		}
-		const {1: [f1],2: [f2],4: [f4],...y}=x; this.g(y);
-		this.save_number(`${cf}.f1`,f1);
-		this.a_primitive_num(f2);
-		this.V_BinaryTimestamp(f4);
 	}
 	/** @private @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {
