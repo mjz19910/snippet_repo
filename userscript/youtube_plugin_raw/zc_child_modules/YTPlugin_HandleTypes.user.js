@@ -2381,6 +2381,7 @@ class HandleTypes extends HandleTypesEval {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `[${vi}]`;
 		});
+		json_res=`\ntype ${cf}=${json_res}\n`;
 		if(json_res) {
 			if(!this.typedef_cache.includes(json_res)) {
 				this.typedef_cache.push(json_res);
