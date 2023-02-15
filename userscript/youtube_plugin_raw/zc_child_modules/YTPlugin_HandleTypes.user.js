@@ -3574,9 +3574,11 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_0x19ac5ceb} x */
 	D_0x19ac5ceb(x) {
-		const cf="D_0x19ac5ceb"; this.k(cf,x);
-		debugger;
+		const cf="D_0x19ac5ceb";
+		const {1: f1,...y}=this.s(cf,x);
 	}
+	/** @private @arg {D_0x19ac5ceb_f1} x */
+	D_0x19ac5ceb_f1(x) {x;}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification"; this.k(cf,x);

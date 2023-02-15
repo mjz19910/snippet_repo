@@ -1,6 +1,6 @@
-type D_0x19ac5ceb={
-	1: {
-		2: "\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&";
-		5: "\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&";
-	};
+type D_0x19ac5ceb_f1={
+	2: Uint8Array;
+	5: Uint8Array;
 };
+
+type D_0x19ac5ceb={1: D_0x19ac5ceb_f1;};
