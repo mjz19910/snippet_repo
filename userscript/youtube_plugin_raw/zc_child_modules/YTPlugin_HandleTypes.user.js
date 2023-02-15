@@ -2621,9 +2621,10 @@ class HandleTypes extends HandleTypesEval {
 		if(!bin_obj) {debugger; return;}
 		/** @type {R_TrackingObj} */
 		let u=as_any(bin_obj);
-		let kk=this.get_keys_of_2(u);
-		if(this.eq_keys(kk,["1","2","4"])) return;
-		debugger;
+		if(3 in u) {
+			return;
+		}
+		this.R_TrackingObj(u);
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
