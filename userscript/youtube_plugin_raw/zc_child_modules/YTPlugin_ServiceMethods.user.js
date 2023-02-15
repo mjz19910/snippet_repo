@@ -1786,7 +1786,7 @@ class ServiceMethods extends ServiceData {
 				this.R_VssLoggingContext(loggingContext);
 				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams,cls_.on_params_callback.bind(cls_));
+				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams);
 				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
 				this._primitive_of(nofollow,"boolean");
 				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
@@ -3190,11 +3190,11 @@ class ServiceMethods extends ServiceData {
 		let map_entry_key_path=[];
 		this.on_any_params(root,path,map_entry_key_path,x,this.on_params_callback.bind(this));
 	}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(cf,path,x,callback) {
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x */
+	playerParams(cf,path,x) {
 		/** @type {number[]} */
 		let map_entry_key_path=[];
-		this.on_any_params(cf,path,map_entry_key_path,x,callback);
+		this.on_any_params(cf,path,map_entry_key_path,x,this.on_params_callback.bind(this));
 	}
 	/** @private @type {string[]} */
 	cache_params=[];
