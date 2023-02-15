@@ -2339,7 +2339,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
 	}
 	/** @arg {D_RA_Obj_d0_ext|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
-	D_RA_D_BinaryCategoryObj_d0(x) {
+	D_RD_Obj_a4(x) {
 		const cf="D_RA_D_BinaryCategoryObj_d0";
 		const [type,field_id,,dec]=x;
 		if(type!=="child") return this.codegen_typedef(cf,x);
@@ -2397,7 +2397,7 @@ class HandleTypes extends HandleTypesEval {
 		if(dec!==null) debugger;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_13_a1|D_RA_D_BinaryCategoryObj_13_a1_ext} x */
-	D_RA_D_BinaryCategoryObj_13_a1(x) {
+	D_RD_Obj_a1(x) {
 		const [type,field_id,,dec]=x;
 		if(field_id!==1) debugger;
 		switch(type) {
@@ -2409,7 +2409,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_23_a2|D_RA_D_BinaryCategoryObj_23_a2_ext} x */
-	D_RA_D_BinaryCategoryObj_23_a2(x) {
+	D_RD_Obj_a2(x) {
 		switch(x[0]) {
 			case "child": {
 				const [,field_id,,dec]=x;
@@ -2425,13 +2425,13 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @arg {["data64",9,number[],bigint]} x */
-	D_RA_D_BinaryCategoryObj_a9(x) {
-		const [type,field_id,,]=x;
+	D_RD_Obj_a9(x) {
+		const cf="D_RA_D_BinaryCategoryObj_a9",[type,field_id,,]=x;
 		if(type!=="data64") return this.codegen_typedef_bin(cf,x,false);
 		if(field_id!==9) debugger;
 	}
 	/** @arg {D_RA_D_BinaryObj_a19} x */
-	D_RA_D_BinaryObj_a19(x) {
+	D_RD_Obj_a19(x) {
 		const [type,,,dec]=x;
 		if(type!=="child") debugger;
 		this.z(dec,x => {
@@ -2454,13 +2454,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RD_ObjArr";
 		switch(x[1]) {
 			default: return this.codegen_typedef_bin(cf,x,false);
-			case 1: return this.D_RA_D_BinaryCategoryObj_13_a1(x);
-			case 2: return this.D_RA_D_BinaryCategoryObj_23_a2(x);
-			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
+			case 1: return this.D_RD_Obj_a1(x);
+			case 2: return this.D_RD_Obj_a2(x);
+			case 4: return this.D_RD_Obj_a4(x);
 			case 5: return this.D_RD_Obj_a5(x);
 			case 6: return this.D_RD_Obj_a6(x);
-			case 9: return this.D_RA_D_BinaryCategoryObj_a9(x);
-			case 19: return this.D_RA_D_BinaryObj_a19(x);
+			case 9: return this.D_RD_Obj_a9(x);
+			case 19: return this.D_RD_Obj_a19(x);
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
