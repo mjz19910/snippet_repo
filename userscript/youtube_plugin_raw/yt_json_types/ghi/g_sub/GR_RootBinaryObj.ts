@@ -11,7 +11,7 @@ type R_ClickTrackingObj={
 	2: T_VW<number>;
 	4: T_VW<V_BinaryTimestamp>;
 	6: ["related-auto"];
-	9: V_Bigint<bigint>,
+	9: VW_Bigint<bigint>,
 	19: {
 		1: T_VW<3>,
 		2: T_VW<3832>;

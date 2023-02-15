@@ -2810,6 +2810,12 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj";
+		if(19 in x) {
+			const {1: [f1],2: [f2],4: [f4],6: [f6],9: [f9],...y}=x; this.g(y);
+			this.V_BinaryTimestamp(f4);
+			if(f6!=="related-auto") debugger;
+			return;
+		}
 		if(6 in x) {
 			const {4: [f4],6: [f6],...y}=x; this.g(y);
 			this.V_BinaryTimestamp(f4);
