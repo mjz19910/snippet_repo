@@ -60,7 +60,7 @@ class HandleRS extends ServiceMethods {
 		const cf="D_ElementUpdate"; this.k(cf,x);
 		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
@@ -148,7 +148,7 @@ class HandleRS extends ServiceMethods {
 		const cf="G_PlayerStoryboards"; this.k(cf,x);
 		if("playerStoryboardSpecRenderer" in x) return;
 		if("playerLiveStoryboardSpecRenderer" in x) return;
-		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {RS_Watch} x */
 	RS_Watch(x) {

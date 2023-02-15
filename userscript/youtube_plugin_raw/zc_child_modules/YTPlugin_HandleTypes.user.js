@@ -244,28 +244,28 @@ class HandleTypes extends HandleTypesEval {
 		if("richShelfRenderer" in x) return this.R_RichShelf(x);
 		if("inlineSurveyRenderer" in x) return this.R_InlineSurvey(x);
 		if("sourcePivotHeaderRenderer" in x) return this.R_SourcePivotHeader(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
 		const cf="G_Browse_MD"; this.k(cf,x);
 		if("channelMetadataRenderer" in x) return this.R_Channel_MD(x);
 		if("playlistMetadataRenderer" in x) return this.R_Playlist_MD(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_BrowseSidebar} x */
 	G_BrowseSidebar(x) {
 		const cf="G_BrowseSidebar"; this.k(cf,x);
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_PlaylistSidebarItem} x */
 	G_PlaylistSidebarItem(x) {
 		const cf="G_PlaylistSidebarItem"; this.k(cf,x);
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R_PlaylistSidebarPrimaryInfo(x);
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @arg {G_RichGridContent} x */
 	D_RichGridContent(x) {
@@ -273,7 +273,7 @@ class HandleTypes extends HandleTypesEval {
 		if("richItemRenderer" in x) return this.R_RichItem(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RichItemContent} x */
 	G_RichItemContent(x) {
@@ -282,7 +282,7 @@ class HandleTypes extends HandleTypesEval {
 		if("videoRenderer" in x) return this.R_Video(x);
 		if("radioRenderer" in x) return this.R_Radio(x);
 		if("feedNudgeRenderer" in x) return this.R_FeedNudge(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
@@ -355,7 +355,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_NextContents"; this.k(cf,x);
 		if("twoColumnWatchNextResults" in x) return this.R_TwoColumnWatchNextResults(x);
 		if("singleColumnMusicWatchNextResultsRenderer" in x) return this.R_SingleColumnMusicWatchNextResults(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 		x===0;
 	}
 	/** @private @arg {G_GuideSectionItem} x */
@@ -367,8 +367,8 @@ class HandleTypes extends HandleTypesEval {
 		if("guideCollapsibleEntryRenderer" in x) return this.R_GuideCollapsibleEntry(x);
 		if("guideSubscriptionsSectionRenderer" in x) return this.R_GuideSubscriptionsSection(x);
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
-		x===""; this.codegen_typedef_all(cf,x); x==="";
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x); x==="";
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RS_Page_Settings} x */
 	G_RS_Page_Settings(x) {
@@ -429,7 +429,7 @@ class HandleTypes extends HandleTypesEval {
 		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
 		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
 		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RS_Page_Shorts} x */
 	G_RS_Page_Shorts(x) {
@@ -451,14 +451,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_BrowseContents"; this.k(cf,x);
 		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
 		const cf="G_SecondaryContents"; this.k(cf,x);
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RS_Subscribe_Action} x */
 	G_RS_Subscribe_Action(x) {
@@ -474,14 +474,14 @@ class HandleTypes extends HandleTypesEval {
 		if("addToGuideSectionAction" in x) return this.A_AddToGuideSection(x);
 		if("runAttestationCommand" in x) return this.C_RunAttestation(x);
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_ProfileColumnItem} x */
 	G_ProfileColumnItem(x) {
 		const cf="G_ProfileColumnItem"; this.k(cf,x);
 		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
 		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_BrowseFeedContent} x */
 	G_BrowseFeedContent(x) {
@@ -490,7 +490,7 @@ class HandleTypes extends HandleTypesEval {
 		if("subFeedSelectorRenderer" in x) return this.R_SubFeedSelector(x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @arg {G_Action_GetNotificationsMenu_Popup} x */
 	G_Action_GetNotificationsMenu_Popup(x) {
@@ -506,28 +506,28 @@ class HandleTypes extends HandleTypesEval {
 		if("invalidationContinuationData" in x) return this.CD_Invalidation(x);
 		if("liveChatReplayContinuationData" in x) return this.CD_LiveChatReplay(x);
 		if("playerSeekContinuationData" in x) return this.CD_PlayerSeek(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RA_LiveChatContinuationActions} x */
 	G_LiveChatContinuationActions(x) {
 		const cf="G_LiveChatContinuationActions"; this.k(cf,x);
 		if("replayChatItemAction" in x) return this.A_ReplayChatItem(x);
 		if("addChatItemAction" in x) return this.A_AddChatItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_ChannelSwitcherContent} x */
 	G_ChannelSwitcherContent(x) {
 		const cf="G_ChannelSwitcherContent"; this.k(cf,x);
 		if("buttonRenderer" in x) return this.R_Button(x);
 		if("accountItem" in x) return this.A_AccountItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @arg {G_PlaylistPanel_Item} x */
 	G_PlaylistPanel_Item(x) {
 		const cf="G_PlaylistPanel_Item"; this.k(cf,x);
 		if("automixPreviewVideoRenderer" in x) return this.R_AutomixPreviewVideo(x);
 		if("playlistPanelVideoRenderer" in x) return this.R_PlaylistPanelVideo(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_ChatItem} x */
 	G_ChatItem(x) {
@@ -997,7 +997,7 @@ class HandleTypes extends HandleTypesEval {
 		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
 		if("_tag" in x) return this.E_Settings(x);
 		if("searchEndpoint" in x) return this.E_VE4724_Search(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
@@ -1023,7 +1023,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @public @arg {M_GetNotificationMenu} x */
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
-	M_Empty_WCM(cf,x) {this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	M_Empty_WCM(cf,x) {this.codegen_typedef(cf,x); this.GEN(cf,x);}
 	/** @protected @arg {GM_GetTranscript} x */
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {GM_GetNotificationMenu} x */
@@ -1143,7 +1143,7 @@ class HandleTypes extends HandleTypesEval {
 		if("browseEndpoint" in x) return this.GE_Browse(x);
 		if("signalNavigationEndpoint" in x) return this.E_SignalNavigation(x);
 		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {"D_CompactLink.Styled"} cf @arg {Extract<D_CompactLink,{style:any}>} x */
 	D_CompactLink_Styled(cf,x) {
@@ -1230,13 +1230,13 @@ class HandleTypes extends HandleTypesEval {
 		const cf="RG_Result"; this.k(cf,x);
 		if("tabRenderer" in x) return this.R_Tab(x);
 		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>['endpoint']} x */
 	D_Tab_subscriptionsEndpoint(x) {
 		const cf="D_Tab_subscriptionsEndpoint"; this.k(cf,x);
 		switch(x.commandMetadata.webCommandMetadata.rootVe) {
-			default: this.codegen_typedef_all(cf,x); debugger; break;
+			default: this.codegen_typedef(cf,x); debugger; break;
 			case 96368: break;
 		}
 		this.GE_Browse(x);
@@ -1338,7 +1338,7 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoLike_richThumbnail(x) {
 		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
 		if("movingThumbnailRenderer" in x) return this.R_MovingThumbnail(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {
@@ -1388,7 +1388,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_MP_MenuNotificationSection_Item"; this.k(cf,x);
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @public @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	Omit_Menu_Radio(cf,x) {
@@ -1526,13 +1526,13 @@ class HandleTypes extends HandleTypesEval {
 	D_ChannelThumbnail_navigationEndpoint(x) {
 		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
 	D_Video_inlinePlaybackEndpoint(x) {
 		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -1559,7 +1559,7 @@ class HandleTypes extends HandleTypesEval {
 			default: break;
 		}
 		console.log("pt",x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
@@ -1737,7 +1737,7 @@ class HandleTypes extends HandleTypesEval {
 	D_NotificationMenu_Popup_SectionItem(x) {
 		const cf="D_NotificationMenu_Popup_SectionItem"; this.k(cf,x);
 		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 		return null;
 	}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
@@ -1760,14 +1760,14 @@ class HandleTypes extends HandleTypesEval {
 	D_NotificationMenu_Popup(x) {
 		const cf="D_NotificationMenu_Popup"; this.k(cf,x);
 		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(a!=="DROPDOWN") {this.codegen_typedef_all(cf,x); return null;}
+		if(a!=="DROPDOWN") {this.codegen_typedef(cf,x); return null;}
 		return b;
 	}
 	/** @private @arg {RSG_NotificationMenu_Action} x */
 	RSG_NotificationMenu_Action(x) {
 		const cf="RSG_NotificationMenu_Action"; this.k(cf,x);
 		if("openPopupAction" in x) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 		return null;
 	}
 	/** @private @arg {RSG_NotificationMenu} x */
@@ -1957,7 +1957,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_InFeedAdLayout_Content"; this.k(cf,x);
 		if("promotedSparklesWebRenderer" in x) return this.R_PromotedSparklesWeb(x);
 		if("displayAdRenderer" in x) return this.R_DisplayAd(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_InFeedAdLayout} x */
 	D_InFeedAdLayout(x) {const {adLayoutMetadata: a,renderingContent: b,...y}=this.s("D_InFeedAdLayout",x); this.g(y); this.MG_AdLayout(a); this.D_InFeedAdLayout_Content(b);}
@@ -2101,7 +2101,7 @@ class HandleTypes extends HandleTypesEval {
 		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
 		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
 		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
@@ -2342,11 +2342,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_BinaryCategoryObj_d0(x) {
 		const cf="D_RA_D_BinaryCategoryObj_d0";
 		const [type,field_id,,dec]=x;
-		if(type!=="child") {
-			this.codegen_typedef_all(cf,x);
-			this.codegen_str;
-			return;
-		}
+		if(type!=="child") return this.codegen_typedef(cf,x);
 		switch(field_id) {
 			default: debugger; break;
 			case 1: this.handle_1_any(dec); break;
@@ -2415,7 +2411,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RD_Obj_a5(x) {
 		const cf="D_RD_Obj_a5",[type,id,a]=x;
 		if(type!=="data32") {
-			this.codegen_typedef_all(cf,x);
+			this.codegen_typedef(cf,x);
 			return;
 		}
 		if(id!==5) debugger;
@@ -2449,7 +2445,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RA_D_Binary_f1";
 		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
 		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
-		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef(cf,x);
 	}
 	/** @arg {D_RA_Result} x */
 	D_RA_Result(x) {
@@ -2592,7 +2588,7 @@ class HandleTypes extends HandleTypesEval {
 						if(string_store[1][1].includes(x3)) return;
 						this.save_string(save_key,x3);
 					}
-					this.codegen_typedef_all(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
+					this.codegen_typedef(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 					debugger;
 				} break;
 				case "3D printing":
@@ -2625,13 +2621,13 @@ class HandleTypes extends HandleTypesEval {
 			if(is_token_g2(x,31)) return;
 			if(is_token_g2(x,53)) return;
 			let kk=this.get_keys_of_2(x);
-			this.codegen_typedef_all(`decode_continuation_token:g_2:${kk.join()}`,x,false);
+			this.codegen_typedef(`decode_continuation_token:g_2:${kk.join()}`,x,false);
 			debugger;
 			return;
 		}
 		let kk=this.get_keys_of_2(x);
 		if(kk.length>0) {
-			this.codegen_typedef_all(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
+			this.codegen_typedef(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x);
 			debugger;
 		}
 	}
@@ -3048,7 +3044,7 @@ class HandleTypes extends HandleTypesEval {
 	D_GuideEntry_TargetId(x) {
 		const cf="D_GuideEntry_TargetId"; this.k(cf,x);
 		switch(x) {
-			default: this.codegen_case(cf,x); break;
+			default: this.cg.codegen_case(cf,x); break;
 			case "downloads-guide-item":
 			case "library-guide-item":
 		}
@@ -3206,7 +3202,7 @@ class HandleTypes extends HandleTypesEval {
 				if(!navigationEndpoint.browseEndpoint) debugger;
 				this.GE_Browse(navigationEndpoint);
 				switch(icon.iconType) {
-					default: icon===""; this.codegen_typedef_all(cf1,x); break;
+					default: icon===""; this.codegen_typedef(cf1,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
 				}
 				return this.R_GuideEntryData(entryData);
@@ -3247,7 +3243,7 @@ class HandleTypes extends HandleTypesEval {
 			this.D_Accessibility(accessibility);
 			return;
 		}
-		this.codegen_typedef_all(cf1,x);
+		this.codegen_typedef(cf1,x);
 	}
 	/** @private @arg {D_GuideEntry} x */
 	D_GuideEntry(x) {
@@ -3271,7 +3267,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return;
 		}
-		x===""; this.codegen_typedef_all(cf,x); x==="";
+		x===""; this.codegen_typedef(cf,x); x==="";
 	}
 	/** @private @arg {D_GuideCollapsibleSectionEntry} x */
 	D_GuideCollapsibleSectionEntry(x) {
@@ -3452,7 +3448,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_ElementUpdate"; this.k(cf,x);
 		if("templateUpdate" in x) return this.R_TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.R_ResourceStatusInResponseCheck(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_TemplateUpdate} x */
 	D_TemplateUpdate(x) {
@@ -3536,7 +3532,7 @@ class HandleTypes extends HandleTypesEval {
 	RS_Playlist_AlertItem(cf1,x) {
 		const cf2="RS_Playlist_AlertItem";
 		if("alertWithButtonRenderer" in x) return this.R_AlertWithButton(x);
-		this.codegen_typedef_all(`${cf1}$${cf2}`,x);
+		this.codegen_typedef(`${cf1}$${cf2}`,x);
 	}
 	/** @private @arg {RS_Settings} x */
 	RS_Settings(x) {
@@ -3621,7 +3617,7 @@ class HandleTypes extends HandleTypesEval {
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
 		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
 	D_ChipCloudChip_Omit(cf,x) {
@@ -3751,7 +3747,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SubFeedOption_NavEP"; this.k(cf,x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("browseEndpoint" in x) return this.GE_Browse(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_SubFeedOption} x */
 	D_SubFeedOption(x) {
@@ -4206,7 +4202,7 @@ class HandleTypes extends HandleTypesEval {
 		if("indexText" in y) return this.y(cf,"indexText",y,this.G_Text);
 		let kl=this.get_keys_of(y).length;
 		if(kl>0) {
-			this.codegen_typedef_all(`${cf}:omit`,y);
+			this.codegen_typedef(`${cf}:omit`,y);
 		}
 		this.g(y);
 	}
@@ -4294,7 +4290,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RichMetadata(x) {
 		const cf="D_RichMetadata"; this.k(cf,x);
 		switch(x.style) {
-			default: this.codegen_case_key(cf,x,"style","break"); break;
+			default: this.cg.codegen_case_key(cf,x,"style","break"); break;
 			case "RICH_METADATA_RENDERER_STYLE_BOX_ART": {
 				const cf="D_RichMetadata_BoxArt";
 				const {style: {},thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -4518,7 +4514,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {TR_SectionListItem_3_Empty} x */
 	TR_SectionListItem_3_Empty(x) {
 		const cf="TR_SectionListItem_3_Empty";
-		this.codegen_typedef_all(cf,x);
+		this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_NavigationLinkItem} x */
 	D_PrimaryLinkItem(x) {
@@ -4545,7 +4541,7 @@ class HandleTypes extends HandleTypesEval {
 	D_InlineSurvey(x) {
 		const cf="D_InlineSurvey"; this.k(cf,x);
 		const {dismissalEndpoint,title,subtitle,inlineContent,response,trackingParams,dismissalText,impressionEndpoints,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.codegen_typedef_all(`${cf}.dismissalEndpoint`,dismissalEndpoint);
+		this.codegen_typedef(`${cf}.dismissalEndpoint`,dismissalEndpoint);
 		this.G_Text(title);
 		this.G_Text(subtitle);
 		this.R_CompactVideo(inlineContent);
@@ -4562,7 +4558,7 @@ class HandleTypes extends HandleTypesEval {
 		const {icon,title,contents,trackingParams,menu,showMoreButton,rowIndex,...y}=this.s(cf,pt); this.g(y);
 		if(icon) {
 			switch(icon.iconType) {
-				default: this.codegen_case(`${cf}.icon`,icon.iconType); break;
+				default: this.cg.codegen_case(`${cf}.icon`,icon.iconType); break;
 				case "YOUTUBE_SHORTS_BRAND_24": break;
 			}
 		}
@@ -4572,7 +4568,7 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Menu(menu);
 		this.R_Button(showMoreButton);
 		switch(rowIndex) {
-			default: this.codegen_case(`${cf}.rowIndex`,rowIndex); break;
+			default: this.cg.codegen_case(`${cf}.rowIndex`,rowIndex); break;
 			case 2: case 4: break;
 		}
 	}
@@ -4694,7 +4690,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf}.pl`,pl);
 		this.save_string(`${cf}.nh`,nh);
 		switch(sparams) {
-			default: this.codegen_case(`${cf}.sparams`,sparams); debugger; break;
+			default: this.cg.codegen_case(`${cf}.sparams`,sparams); debugger; break;
 			case "id,source,range,expire,ip,ms,mm,pl,nh": break;
 		}
 		this.parse_signature(signature);
@@ -4730,9 +4726,9 @@ class HandleTypes extends HandleTypesEval {
 		for(let mi of mn_arr) {
 			switch(mi) {
 				default: {
-					let gen=this.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.mi`,mi);
+					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.mi`,mi);
 					if(gen.has) break;
-					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\n${this.codegen_case_result(gen.arr)}`);
+					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.mi] --\n\n${this.cg.codegen_case_result(gen.arr)}`);
 				} break;
 				case "sn-nx57ynlk":
 				case "sn-nx5s7n7s":
@@ -4840,7 +4836,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(targetId,x => this.save_string(`${cf}.targetId`,x));
 	}
 	/** @private @arg {D_ChipColorPalette} x */
-	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.codegen_typedef_all(cf,x); this.GEN(cf,x);}
+	D_ChipColorPalette(x) {const cf="D_ChipColorPalette"; this.codegen_typedef(cf,x); this.GEN(cf,x);}
 	/** @private @arg {D_PdgCommentChip} x */
 	D_PdgCommentChip(x) {
 		const cf="D_PdgCommentChip";
@@ -5029,7 +5025,7 @@ class HandleTypes extends HandleTypesEval {
 		if("repeatChapterCommand" in x) return this.C_RepeatChapter(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("performCommentActionEndpoint" in x) return this.E_PerformCommentAction(x);
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {Extract<D_ToggleButton,{toggledServiceEndpoint:any}>["toggledServiceEndpoint"]} x */
 	D_Button_ToggledServiceEP(x) {
@@ -5038,7 +5034,7 @@ class HandleTypes extends HandleTypesEval {
 		if("commandExecutorCommand" in x) return this.C_CommandExecutor(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
 		if("performCommentActionEndpoint" in x) return;
-		x===""; this.codegen_typedef_all(cf,x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_CommentReplies} x */
 	D_CommentReplies(x) {
