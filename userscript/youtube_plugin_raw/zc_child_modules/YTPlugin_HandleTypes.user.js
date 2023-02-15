@@ -2606,10 +2606,16 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
-		for(let item of x) {
-			if(item[0]!=="child") debugger;
+		let bin_obj=this.convert_arr_to_obj(x);
+		if(!bin_obj) {debugger; return;}
+		/** @type {R_ClickTrackingObj} */
+		let u=as_any(bin_obj);
+		if(6 in u) {
+			return;
 		}
+		debugger;
 	}
+	D_RA_Result_TP(x) {x; debugger;}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2620,16 +2626,21 @@ class HandleTypes extends HandleTypesEval {
 		if(dec.length===0) debugger;
 		switch(cf) {
 			default: debugger; break;
+			case "tracking.trackingParams": {
+				/** @type {D_RA_Result_TP} */
+				let u=as_any(dec);
+				this.D_RA_Result_TP(u);
+			} break;
 			case "tracking.click_tracking_params": {
 				/** @type {D_RA_Result_CTP} */
-				let dec_t=as_any(dec);
-				this.D_RA_Result_CTP(dec_t);
+				let u=as_any(dec);
+				this.D_RA_Result_CTP(u);
 
 			} break;
 		}
 		/** @type {D_RA_Result} */
-		let dec_t=as_any(dec);
-		this.D_RA_Result(dec_t);
+		let u=as_any(dec);
+		this.D_RA_Result(u);
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
 		/** @type {GR_RootBinaryObj} */
