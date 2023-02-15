@@ -115,9 +115,9 @@ type T_WCM_={
 	rootVe?: D_RootVisualElementType;
 };
 type T_ParseCallbackFunction<T extends CF_L_Params>=(
+	path: P_ParamParse,
 	x: V_ParamMapValue[],
 	idx: number[],
-	path: P_ParamParse,
 	map_keys: number[],
 	root: T,
 ) => boolean;
