@@ -35,5 +35,14 @@ type DT_DatabaseStoreTypes={
 type PlaylistIdDatabaseObj={
 	key: `playlist_id:RDCM:UC${string}`;
 	type: "playlist_id:RDCM";
-	id: string;
+	id: `UC${string}`;
+	raw_id: `RDCMUC${string}`;
+}|{
+	key: `playlist_id:self:${D_PlaylistSelfId}`;
+	type: string;
+	id: D_PlaylistSelfId;
+}|{
+	key: `playlist_id:${D_PlaylistIdTypeBase}:${string}`;
+	type: string;
+	id: `${D_PlaylistIdTypeBase}${string}`;
 };

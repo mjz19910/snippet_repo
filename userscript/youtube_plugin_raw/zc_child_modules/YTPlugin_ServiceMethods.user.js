@@ -960,7 +960,7 @@ class ServiceMethods extends ServiceData {
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
 	cache_playlist_id=[];
-	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
+	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	log_playlist_id(x,critical=false) {
 		if(!this.cache_playlist_id.includes(x.id)) {
 			this.cache_playlist_id.push(x.id);
@@ -1329,7 +1329,7 @@ class ServiceMethods extends ServiceData {
 		const {type,id}=value;
 		this.indexed_db_put("boxed_id",{key: `boxed_id:${type}:${id}`,type,id});
 	}
-	/** @private @arg {Extract<G_UrlInfoItem,{type:`playlist:${string}`}>} x */
+	/** @private @arg {Extract<G_UrlInfo,{type:`playlist:${string}`}>} x */
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:1:LL") return false;
 		if(x.type==="playlist:1:WL") return false;
@@ -1340,11 +1340,11 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return true;
 		}
 	}
-	/** @public @arg {G_UrlInfoItem} value */
+	/** @public @arg {G_UrlInfo} value */
 	G_UrlInfoItem(value) {
 		switch(value.type) {
 			default: value===""; debugger; break;
-			case "channel_id:UC": this.D_ChannelId(value.id); break;
+			case "channel_id:UC": this.D_ChannelId(value.raw_id); break;
 			case "play-next": value; break;
 			case "browse_id:VL": {
 				const {type,id,raw_id}=value;
@@ -1352,13 +1352,25 @@ class ServiceMethods extends ServiceData {
 			} break;
 			case "playlist:2:RDCM": {
 				const {id,raw_id}=value;
-				this.indexed_db_put("playlist_id",{key: `playlist_id:RDCM:${raw_id}`,type: "",raw_id})
-				if(!this.str_starts_with_rx("UC",value.raw_id)) debugger;
-				this.D_ChannelId(value.raw_id);
+				this.indexed_db_put("playlist_id",{key: `playlist_id:RDCM:${id}`,type: "playlist_id:RDCM",id,raw_id});
+				if(!this.str_starts_with_rx("UC",id)) debugger;
+				this.D_ChannelId(id);
 			} break;
-			case "playlist:1:LL": case "playlist:1:WL":
+			case "playlist:1:LL": case "playlist:1:WL": {
+				const {id}=value;
+				const oo={
+					/** @type {`playlist_id:self:${typeof id}`} */
+					key: `playlist_id:self:${id}`,
+					type: "self",
+					id,
+				};
+				this.indexed_db_put("playlist_id",oo);
+			} break;
 			case "playlist:2:RDMM": case "playlist:2:RD": case "playlist:4:UU":
 			case "playlist:3:PL": {
+				const {type,id,raw_id}=value;
+				let type_2=split_string(type,":")[2];
+				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,type: `playlist_id:${type_2}`,id,raw_id});
 				this.put_boxed_id(value);
 				let is_critical=this.get_playlist_url_info_critical(value);
 				this.log_playlist_id(value,is_critical);

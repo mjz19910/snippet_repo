@@ -465,17 +465,28 @@ type G_ChannelUrlInfo={
 	raw_id: `UC${string}`;
 };
 
-type G_UrlInfoItem=G_PlaylistUrlInfo|{
-	type: "video"; id: string;
-}|{
-	type: "video-referral"; id: string;
-}|{
-	type: "play-next"; value: string;
-}|G_ChannelUrlInfo|{
+type D_VideoUrlInfo={
+	type: "video";
+	id: string;
+};
+
+type D_VideoReferralUrlInfo={
+	type: "video-referral";
+	id: string;
+};
+
+type D_PlayNextUrlInfo={
+	type: "play-next";
+	value: string;
+};
+
+type D_BrowseIdUrlInfo={
 	type: "browse_id:VL";
 	id: `PL${string}`;
 	raw_id: `VLPL${string}`;
 };
+
+type G_UrlInfo=G_PlaylistUrlInfo|D_VideoUrlInfo|D_VideoReferralUrlInfo|D_PlayNextUrlInfo|G_ChannelUrlInfo|D_BrowseIdUrlInfo;
 type G_WatchNext=R_CompactVideo|R_ContinuationItem;
 type G_WatchNextEndScreenItem=R_EndScreenPlaylist|
 	R_EndScreenVideo;
