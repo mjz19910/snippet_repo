@@ -1,3 +1,4 @@
+type DT_DatabaseStoreKeys=["video_id","hashtag","boxed_id","channel_id","playlist","browse_id"];
 type DT_DatabaseStoreTypes={
 	video_id: {
 		key: `video_id:${AG_put_video_args_Args["type"]}:${string}`;
@@ -19,8 +20,8 @@ type DT_DatabaseStoreTypes={
 		id: string;
 		raw_id: `UC${string}`;
 	};
-	playlist: {
-		key: `playlist:${string}:${string}`;
+	playlist_id: {
+		key: `playlist_id:${string}:${string}`;
 		type: string;
 		id: string;
 	};

@@ -45,19 +45,8 @@ type T_DistributedKeyof_2<T>=T extends infer A? Union2Tuple<keyof A>:[];
 // oh boy don't do this
 type UnionToIntersection<U>=(U extends any? (k: U) => void:never) extends ((k: infer I) => void)? I:never;
 type LastOf<T>=UnionToIntersection<T extends any? () => T:never> extends () => (infer R)? R:never;
-
-// TS4.0+
-type Push<T extends any[],V>=[...T,V];
-
 // TS4.1+
-type Union2Tuple<T,L=LastOf<T>,N=[T] extends [never]? true:false>=
-	true extends N? []:Push<Union2Tuple<Exclude<T,L>>,L>;
-// type Union2Tuple<T> =
-//     PickOne<T> extends infer U
-//     ? Exclude<T, U> extends never
-//         ? [T]
-//         : [...Union2Tuple<Exclude<T, U>>, U]
-//     : never;
+type Union2Tuple<T,L=LastOf<T>,N=[T] extends [never]? true:false>=true extends N? []:[...Union2Tuple<Exclude<T,L>>,L];
 type T_DistributedKeysOf_2<T extends {}>=T_DistributedKeyof_2<T> extends []? []:T_DistributedKeyof_2<T>;
 namespace X_T_DistributedKeysOf {
 	export type T1={v: string;};
