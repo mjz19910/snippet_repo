@@ -2935,7 +2935,7 @@ class ServiceMethods extends ServiceData {
 		/** @private @type {P_LogItems} */
 		switch(path)/*endpoint*/ {
 			default: {
-				if(new_data) this.log_list.push([() => grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path)]);
+				this.log_list.push([() => grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path)]);
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
