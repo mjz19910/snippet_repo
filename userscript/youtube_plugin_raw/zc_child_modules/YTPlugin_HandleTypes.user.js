@@ -2590,7 +2590,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RA_D_Binary_x1} x */
 	D_RA_D_Binary_x1(x) {
 		const cf="D_RA_D_Binary_x1";
-		return this.codegen_typedef_bin(cf,x);
+		const [,,c0,c1]=x;
+		if(c0[1]!==3) debugger;
+		if(c1[1]!==4) debugger;
+		if(c1[3].length!==3) debugger;
+		this.D_RA_V_BinaryTimestamp_asFixed(c1[3]);
 	}
 	/** @arg {D_RA_CR_0x12f639cf|any[]} x @returns {x is D_RA_CR_0x12f639cf} */
 	is_D_RA_CR_0x12f639cf(x) {
