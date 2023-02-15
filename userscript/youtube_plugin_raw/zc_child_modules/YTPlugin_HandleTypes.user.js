@@ -3385,7 +3385,11 @@ class HandleTypes extends HandleTypesEval {
 		this.D_0x14527fab(a);
 	}
 	/** @private @arg {R_0x19ac5ceb} x */
-	R_0x19ac5ceb(x) {x;}
+	R_0x19ac5ceb(x) {
+		const cf="R_0x19ac5ceb";
+		const {0x19ac5ceb: a,...y}=this.s(cf,x); this.g(y);
+		this.D_0x19ac5ceb(a);
+	}
 	/** @private @arg {D_BinaryCategoryObj} x */
 	D_BinaryCategoryObj(x) {
 		if(1 in x) {
@@ -3568,7 +3572,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @protected @arg {D_0x19ac5ceb} x */
+	/** @private @arg {D_0x19ac5ceb} x */
 	D_0x19ac5ceb(x) {
 		const cf="D_0x19ac5ceb"; this.k(cf,x);
 		debugger;
