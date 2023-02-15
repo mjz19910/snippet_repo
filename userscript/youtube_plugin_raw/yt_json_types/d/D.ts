@@ -2799,22 +2799,6 @@ type D_VideoDescriptionMusicSection={
 	topicLink: R_TopicLink;
 	premiumUpsellLink: G_Text;
 };
-type D_VideoDetails={
-	videoId: string;
-	title: string;
-	lengthSeconds: `${number}`;
-	keywords: string[];
-	channelId: `UC${string}`;
-	isOwnerViewing: false;
-	shortDescription: string;
-	isCrawlable: true;
-	thumbnail: D_Thumbnail;
-	allowRatings: true;
-	author: string;
-	isPrivate: false;
-	isUnpluggedCorpus: false;
-	isLiveContent: false;
-};
 type D_VideoIdTagStr=string&{_tag: "YtVideoId";};
 type D_VideoOwner={
 	thumbnail: D_Thumbnail;
