@@ -2713,6 +2713,8 @@ class HandleTypes extends HandleTypesEval {
 	R_ClickTrackingObj(x) {x;}
 	/** @private @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {x;}
+	/** @private @arg {R_CreatePlaylistObj} x */
+	R_CreatePlaylistObj(x) {x;}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
 		this.k(`${cf}.binary_obj`,x);
@@ -2723,6 +2725,7 @@ class HandleTypes extends HandleTypesEval {
 		if(6 in x) return this.R_ClickTrackingObj(x);
 		if(3 in x) return this.D_BinaryCategoryObj(cf,x);
 		if(4 in x) return this.R_TrackingObj(x);
+		if(1 in x) return this.R_CreatePlaylistObj(x);
 		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x,false);
 		debugger;
 	}

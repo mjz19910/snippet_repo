@@ -8,6 +8,7 @@ type R_TrackingObj={
 	2: T_VW<13188>;
 	4: T_VW<V_BinaryTimestamp>;
 };
+type R_CreatePlaylistObj={1: T_VW<4>;};
 type GR_RootBinaryObj=
 	|R_0x4c82a9c
 	|R_0x12f639cf
@@ -15,5 +16,6 @@ type GR_RootBinaryObj=
 	|R_0x19ac5ceb
 	|D_BinaryCategoryObj
 	|R_ClickTrackingObj
+	|R_CreatePlaylistObj
 	;
 ;
