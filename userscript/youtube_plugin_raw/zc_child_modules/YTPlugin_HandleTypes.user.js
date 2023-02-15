@@ -300,11 +300,11 @@ class HandleTypes extends HandleTypesEval {
 				switch(k) {
 					default: k===""; debugger; break;
 					case "video_id": break;
-					case "hashtag": break;
+					case "hashtag_id": break;
 					case "boxed_id": break;
 					case "browse_id": break;
 					case "channel_id": break;
-					case "playlist": break;
+					case "playlist_id": break;
 				}
 			}
 		};
