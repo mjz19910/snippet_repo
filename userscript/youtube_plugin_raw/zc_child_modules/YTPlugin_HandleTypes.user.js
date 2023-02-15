@@ -2615,6 +2615,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 		debugger;
 	}
+	/** @arg {D_RA_Result_TP} x */
 	D_RA_Result_TP(x) {x; debugger;}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
