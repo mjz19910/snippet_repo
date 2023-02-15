@@ -2490,6 +2490,7 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 		};
 	}
+	/** @private @arg {string} x */
 	DC_Load_EntityKey(x) {
 		const cf="DC_LoadMarkers_EntityKey";
 		this.params(cf,"load_markers.entity_key",x);
@@ -3362,6 +3363,21 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @protected @arg {D_0x94d81d4} x */
 	D_0x94d81d4(x) {
+		if(15 in x) {
+			const {[3]: f3,[8]: f8,[14]: f14,[15]: f15,...y}=x; this.g(y);
+			if(f8!==1) debugger;
+			if(4 in f14) {
+				const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=f14; this.g(r_y);
+				if(r_f1!==4) debugger;
+				if(r_f3!==2) debugger;
+				if(r_f4!==0) debugger;
+			} else {
+				const {[1]: r_f1,[3]: r_f3,...r_y}=f14; this.g(r_y);
+				if(r_f1!==4) debugger;
+				if(r_f3!==2) debugger;
+			}
+			return;
+		}
 		const {[3]: f3,[8]: f8,[14]: f14,...y}=x; this.g(y);
 		if(f8!==1) debugger;
 		this.params("D_0x94d81d4.f3","D_0x94d81d4.binary_token",f3);
@@ -3373,13 +3389,9 @@ class HandleTypes extends HandleTypesEval {
 			}
 			switch(r_f3) {
 				default: debugger; break;
-				case 1: case 2:
+				case 1:
 			}
 			if(r_f4!==0) debugger;
-		} else {
-			const {[1]: r_f1,[3]: r_f3,...r_y}=f14; this.g(r_y);
-			if(r_f1!==4) debugger;
-			if(r_f3!==2) debugger;
 		}
 		if("15" in x) {
 			switch(x[15]) {
