@@ -292,23 +292,6 @@ class HandleTypes extends HandleTypesEval {
 		if(old_version<3) {
 			service.create_store("browse_id",db);
 		}
-		/** @type {DT_DatabaseStoreTypes} */
-		let v;
-		let ex=() => {
-			let kk=this.get_keys_of_2(v);
-			for(let k of kk) {
-				switch(k) {
-					default: k===""; debugger; break;
-					case "video_id": break;
-					case "hashtag_id": break;
-					case "boxed_id": break;
-					case "browse_id": break;
-					case "channel_id": break;
-					case "playlist_id": break;
-				}
-			}
-		};
-		ex;
 	}
 	//#region templates
 	/** @private @arg {string} cf @arg {K} k @template {keyof T} K @public @template {{}} T @arg {T} x */

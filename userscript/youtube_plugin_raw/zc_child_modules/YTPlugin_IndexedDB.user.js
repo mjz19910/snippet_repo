@@ -30,8 +30,8 @@ class IndexedDBService extends BaseService {
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
-		/** @type {T_DistributedKeysOf_2<DT_DatabaseStoreTypes>} */
-		let keys=["video_id","hashtag","boxed_id","channel_id","playlist","browse_id"];
+		/** @type {DT_DatabaseStoreKeys} */
+		let keys=["video_id","hashtag_id","boxed_id","channel_id","playlist_id","browse_id"];
 		for(let key of keys) {
 			/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
 			function create_cache_index(s,k,v) {s[k]=v;}
