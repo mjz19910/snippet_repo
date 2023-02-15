@@ -1283,8 +1283,6 @@ class HandleTypes extends HandleTypesEval {
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @private @arg {M_SetSetting} x */
-	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
 	/** @private @arg {M_AccountMenu} x */
 	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
 	/** @private @arg {M_GetUnseenNotificationCount} x */
@@ -2200,17 +2198,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 			default: debugger; break;
 		};
-	}
-	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
-	T_DE_SettingItem_AutonavForDesktop(x) {
-		if("boolValue" in x) {
-			const cf="T_DE_SettingItem.407";
-			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(settingItemId!=="407") debugger;
-			this.a_primitive_bool(boolValue);
-			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
-			return;
-		}
 	}
 	/** @public @arg {string} cf @arg {{}} x */
 	GEN(cf,x) {
@@ -4195,8 +4182,6 @@ class HandleTypes extends HandleTypesEval {
 		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.Omit_Menu_Radio(cf,x); o;
 		this.D_CompactRadio_NavE(a); this.D_RadioShareUrl(b);
 	}
-	/** @private @arg {D_RelatedChipCloud} x */
-	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist"; this.k(cf,x);
@@ -4586,13 +4571,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
-	/** @private @arg {D_ProductList} x */
-	D_ProductList(x) {
-		const cf="D_ProductList"; this.k(cf,x);
-		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_ProductListItem);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {D_ProductListItem} x */
 	D_ProductListItem(x) {
 		const cf="D_ProductListItem"; this.k(cf,x);
@@ -5891,21 +5869,6 @@ class HandleTypes extends HandleTypesEval {
 		this.G_Text(title);
 		this.z(contents,this.G_Text);
 		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_LiveChat} x */
-	D_LiveChat(x) {
-		const cf="D_LiveChat";
-		const {continuations,header,trackingParams,clientMessages,isReplay,initialDisplayState,showHideButton,...y}=this.s(cf,x); this.g(y);
-		this.z(continuations,x => {
-			if(!x.reloadContinuationData) debugger;
-			this.D_ReloadContinuationData(x);
-		});
-		this.R_LiveChatHeader(header);
-		this.trackingParams(trackingParams);
-		this.D_ClientMessages(clientMessages);
-		this.a_primitive_bool(isReplay);
-		this.save_enum("LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
-		this.R_ToggleButton(showHideButton);
 	}
 	/** @private @arg {D_ReloadContinuationData} x */
 	D_ReloadContinuationData(x) {

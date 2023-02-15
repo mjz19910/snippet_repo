@@ -4684,5 +4684,42 @@ class ServiceMethods extends ServiceData {
 	R_StructuredDescriptionContent(x) {this.H_("R_StructuredDescriptionContent","structuredDescriptionContentRenderer",x,this.D_StructuredDescriptionContent);}
 	/** @private @arg {R_ProductList} x */
 	R_ProductList(x) {this.H_("R_ProductList","productListRenderer",x,this.D_ProductList);}
+	/** @private @arg {M_SetSetting} x */
+	M_SetSetting(x) {this.T_WCM("M_SetSetting",x,this.GM_SetSetting);}
+	/** @private @arg {T_DE_SettingItem<"407",boolean,"AUTONAV_FOR_DESKTOP">} x */
+	T_DE_SettingItem_AutonavForDesktop(x) {
+		if("boolValue" in x) {
+			const cf="T_DE_SettingItem.407";
+			const {settingItemId,boolValue,settingItemIdForClient,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(settingItemId!=="407") debugger;
+			this.a_primitive_bool(boolValue);
+			if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") debugger;
+			return;
+		}
+	}
+	/** @private @arg {D_RelatedChipCloud} x */
+	D_RelatedChipCloud(x) {this.y("D_RelatedChipCloud","content",x,this.R_ChipCloud);}
+	/** @private @arg {D_ProductList} x */
+	D_ProductList(x) {
+		const cf="D_ProductList"; this.k(cf,x);
+		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.R_ProductListItem);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_LiveChat} x */
+	D_LiveChat(x) {
+		const cf="D_LiveChat";
+		const {continuations,header,trackingParams,clientMessages,isReplay,initialDisplayState,showHideButton,...y}=this.s(cf,x); this.g(y);
+		this.z(continuations,x => {
+			if(!x.reloadContinuationData) debugger;
+			this.D_ReloadContinuationData(x);
+		});
+		this.R_LiveChatHeader(header);
+		this.trackingParams(trackingParams);
+		this.D_ClientMessages(clientMessages);
+		this.a_primitive_bool(isReplay);
+		this.save_enum("LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
+		this.R_ToggleButton(showHideButton);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
