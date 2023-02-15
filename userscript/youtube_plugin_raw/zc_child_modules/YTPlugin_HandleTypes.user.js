@@ -2419,7 +2419,7 @@ class HandleTypes extends HandleTypesEval {
 			default: this.codegen_typedef_bin(cf,x); break;
 			case "data32": {
 				this.save_number(cf,value);
-			} break
+			} break;
 			case "child": {
 				x[3]=null;
 			} break;
@@ -2490,7 +2490,11 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="child") debugger;
 		for(let i=0;i<dec.length;i++) {
 			let x=dec[i];
-			this.codegen_typedef_bin(`${cf}.${i}`,x);
+			const [,id]=x;
+			switch(id) {
+				default: this.codegen_typedef_bin(`${cf}.${i}`,x); break;
+				case 1: case 2: case 3:
+			}
 		}
 	}
 	/** @arg {D_RD_Obj_a5} x */
