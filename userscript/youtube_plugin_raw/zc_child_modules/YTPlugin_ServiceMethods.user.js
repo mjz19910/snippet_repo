@@ -4245,8 +4245,6 @@ class ServiceMethods extends ServiceData {
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
 	}
-	/** @private @arg {A_AppendContinuationItems} x */
-	A_AppendContinuationItems(x) {x;}
 	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
 		this.save_keys(`${cf}.response_endpoint`,x);
@@ -4351,6 +4349,8 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(title);
 		this.G_Text(subtitle);
 	}
+	/** @private @arg {RMD_Badge} x */
+	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
@@ -4732,5 +4732,288 @@ class ServiceMethods extends ServiceData {
 	R_FusionSearchbox(x) {this.H_("R_FusionSearchbox","fusionSearchboxRenderer",x,this.D_FusionSearchbox);}
 	/** @private @arg {R_HotkeyDialog} x */
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
+	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
+	DC_AdsControlFlowOpportunityReceived(x) {
+		const cf="DC_AdsControlFlowOpportunityReceived"; this.k(cf,x);
+		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
+		this.tz(adSlotAndLayoutMetadata,(this.D_AdSlotAndLayoutItem));
+		this._primitive_of(isInitialLoad,"boolean");
+		this._primitive_of(enablePacfLoggingWeb,"boolean");
+	}
+	/** @private @arg {D_HotkeyDialog} x */
+	D_HotkeyDialog(x) {
+		const cf="D_HotkeyDialog"; this.k(cf,x);
+		const {title,sections,dismissButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.z(sections,this.R_HotkeyDialogSection);
+		this.R_Button(dismissButton);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_TopbarLogo} x */
+	D_TopbarLogo(x) {
+		const cf="D_TopbarLogo"; this.k(cf,x);
+		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.T_Icon(`${cf}:iconImage`,iconImage);
+		this.G_Text(tooltipText);
+		this.GE_Browse(endpoint);
+		this.trackingParams(trackingParams);
+		this.a_primitive_str(overrideEntityKey);
+	}
+	/** @private @arg {D_AdSlotAndLayoutItem} x */
+	D_AdSlotAndLayoutItem(x) {
+		const cf="D_AdSlotAndLayoutItem"; this.k(cf,x);
+		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(adLayoutMetadata,this.MMD_AdLayout_TopImage);
+		this.DMD_AdSlot(adSlotMetadata);
+	}
+	/** @private @arg {D_FusionSearchbox} x */
+	D_FusionSearchbox(x) {
+		const cf="D_FusionSearchbox"; this.k(cf,x);
+		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.T_Icon("D_Icon_Search",icon);
+		this.G_Text(placeholderText);
+		this.R_WebSearchboxConfig(config);
+		this.trackingParams(trackingParams);
+		this.E_VE4724_Search(searchEndpoint);
+		this.R_Button(clearButton);
+	}
+	/** @private @arg {MG_AdLayout_TopImage} x */
+	MMD_AdLayout_TopImage(x) {
+		const cf="MMD_AdLayout_TopImage"; this.k(cf,x);
+		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(layoutType);
+		this.a_primitive_str(layoutId);
+		this.D_AdLayoutLoggingData(adLayoutLoggingData);
+	}
+	/** @private @arg {DC_ReloadContinuationItems} x */
+	DC_ReloadContinuationItems(x) {
+		const cf="DC_ReloadContinuationItems"; this.k(cf,x);
+		switch(x.slot) {
+			case "RELOAD_CONTINUATION_SLOT_BODY": {
+				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+				this.targetId(cf,targetId);
+				if(!this.is_yt_uuid(targetId)) {
+					this.save_string("Body.targetId",targetId);
+					switch(targetId) {
+						default: debugger; break;
+						case "browse-feedFEwhat_to_watch":
+					}
+				}
+				this.z(continuationItems,a => {this.save_keys("continuationItem",a);});
+			} break;
+			case "RELOAD_CONTINUATION_SLOT_HEADER": {
+				const {targetId,continuationItems,...y}=this.DC_ReloadContinuationItems_Omit(cf,x); this.g(y);
+				this.targetId(cf,targetId);
+				if(!this.is_yt_uuid(targetId)) {
+					this.save_string("Header.targetId",targetId);
+					switch(targetId) {
+						default: debugger; break;
+						case "comments-section":
+					}
+				}
+				/** @type {typeof continuationItems[number][]} */
+				let iterable_items=continuationItems;
+				this.z(iterable_items,x => {
+					if("commentsHeaderRenderer" in x) return this.R_CommentsHeader(x);
+					if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+					debugger;
+				});
+			} break;
+			default: debugger; break;
+		};
+	}
+	/** @private @arg {GM_SetSetting} x */
+	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
+	/** @private @arg {AD_AppendContinuationItems} x */
+	AD_AppendContinuationItems(x) {
+		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId); this.k(cf,x);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
+		if(this.starts_with_targetId(x,"browse-feed")) {
+			if(this.starts_with_targetId(x,"browse-feedUC")) {
+				const cp0=split_string(x.targetId,"browse-feed")[1];
+				let cp=split_string(cp0,"channels");
+				this.D_ChannelId(cp[0]);
+				if(cp[1]!=="156") debugger;
+				return;
+			}
+			switch(x.targetId) {
+				case "browse-feedFEwhat_to_watch": {
+					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
+				} break;
+			}
+			return;
+		}
+		switch(x.targetId) {
+			case "comments-section": this.A_CommentsSectionContinuation(x); break;
+			case "watch-next-feed": this.A_WatchNext(x); break;
+			default: x===0; debugger;
+		}
+	}
+	/** @private @arg {CD_Next} x */
+	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
+	/** @private @arg {R_ProductListItem} x */
+	R_ProductListItem(x) {this.H_("R_ProductListItem","productListItemRenderer",x,this.D_ProductListItem);}
+	/** @private @arg {R_MerchandiseShelf} x */
+	R_MerchandiseShelf(x) {this.H_("R_MerchandiseShelf","merchandiseShelfRenderer",x,this.D_MerchandiseShelf);}
+	/** @private @arg {R_VideoPrimaryInfo} x */
+	R_VideoPrimaryInfo(x) {this.H_("R_VideoPrimaryInfo","videoPrimaryInfoRenderer",x,this.D_VideoPrimaryInfo);}
+	/** @private @arg {R_VideoSecondaryInfo} x */
+	R_VideoSecondaryInfo(x) {this.H_("R_VideoSecondaryInfo","videoSecondaryInfoRenderer",x,this.D_VideoSecondaryInfo);}
+	/** @private @arg {R_ChipCloud} x */
+	R_ChipCloud(x) {this.H_("R_ChipCloud","chipCloudRenderer",x,this.D_ChipCloud);}
+	/** @private @arg {D_StructuredDescriptionContent} x */
+	D_StructuredDescriptionContent(x) {this.H_("D_StructuredDescriptionContent","items",x,x => this.z(x,this.G_StructuredDescriptionContentItem));}
+	/** @private @arg {R_WebSearchboxConfig} x */
+	R_WebSearchboxConfig(x) {this.H_("SearchboxConfig","webSearchboxConfig",x,this.D_WebSearchboxConfig);}
+	/** @private @arg {R_BrowserMediaSessionRenderer} x */
+	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
+	/** @private @arg {R_HotkeyDialogSection} x */
+	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
+	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
+	G_Watch_SecondaryResults_G_SectionItem(x) {
+		const cf="G_Watch_SecondaryResults_G_SectionItem"; this.k(cf,x);
+		if("compactRadioRenderer" in x) return this.R_CompactRadio(x);
+		if("compactVideoRenderer" in x) return this.R_CompactVideo(x);
+		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
+		if("adSlotRenderer" in x) return this.R_AdSlot(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		if("" in x) return;
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_TopbarButtonItem} x */
+	G_TopbarButtonItem(x) {
+		const cf="G_TopbarButtonItem"; this.k(cf,x);
+		if("topbarMenuButtonRenderer" in x) return this.R_TopbarMenuButton(x);
+		if("notificationTopbarButtonRenderer" in x) return this.R_NotificationTopbarButton(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {G_SI_DB_EngagementPanel} x */
+	G_SI_DB_EngagementPanel(x) {
+		const cf="DB_SI_EngagementPanel"; this.k(cf,x);
+		switch(x.targetId) {
+			default: x===""; debugger; break;
+			case "engagement-panel-ads": {
+				const {content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.R_AdsEngagementPanelContent(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-clip-create": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,onShowCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_ClipSection(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+				this.z(onShowCommands,this.G_EngagementPanelSectionShowCommands);
+			} break;
+			case "engagement-panel-macro-markers-description-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-macro-markers-auto-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
+				this.R_EngagementPanelTitleHeader(header);
+				this.R_MacroMarkersList(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.D_LoggingDirectives(loggingDirectives);
+			} break;
+		}
+	}
+	/** @private @arg {Extract<G_Watch_ContentsItem,{itemSectionRenderer:any}>} x */
+	G_WatchResultItem_ItemSectionGroup(x) {
+		if(this.is_ItemSectionRendererTemplate(x)) return this.G_WatchResultItem_ItemSection_3(x);
+		if(x.itemSectionRenderer.sectionIdentifier!=="comments-entry-point") debugger;
+		let u=this.TR_ItemSection_2(x); if(!u) return;
+		this.TD_ItemSection_2_CommentsEntryPoint(u,this.R_CommentItemSection_EntryPoint);
+	}
+	/** @private @arg {G_WatchNextEndScreenItem} x */
+	G_WatchNextEndScreenItem(x) {
+		const cf="G_WatchNextEndScreenItem"; this.k(cf,x);
+		if("endScreenPlaylistRenderer" in x) return this.R_EndScreenPlaylist(x);
+		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_VideoPrimaryInfo} x */
+	D_VideoPrimaryInfo(x) {
+		const cf="D_VideoPrimaryInfo"; this.k(cf,x);
+		const {title,trackingParams,viewCount,videoActions,superTitleLink,badges,dateText,relativeDateText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		this.R_VideoViewCount(viewCount);
+		this.R_Menu(videoActions);
+		this.t(superTitleLink,this.G_Text);
+		this.tz(badges,this.RMD_Badge);
+		this.G_Text(dateText);
+		this.G_Text(relativeDateText);
+	}
+	/** @private @arg {D_VideoSecondaryInfo} x */
+	D_VideoSecondaryInfo(x) {
+		const cf="D_VideoSecondaryInfo"; this.k(cf,x);
+		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.t(description,this.G_Text);
+		this.R_SubscribeButton(subscribeButton);
+		this.RMD_RowContainer(metadataRowContainer);
+		this.G_Text(showMoreText);
+		this.G_Text(showLessText);
+		this.R_VideoOwner(owner);
+		this.ceq(defaultExpanded,false);
+		this.a_primitive_num(descriptionCollapsedLines);
+		this.t(showMoreCommand,this.C_Executor);
+		this.t(showLessCommand,this.A_ChangeEngagementPanelVisibility);
+	}
+	/** @private @arg {D_MerchandiseShelf} x */
+	D_MerchandiseShelf(x) {
+		const cf="D_MerchandiseShelf"; this.k(cf,x);
+		const {title,items,trackingParams,showText,hideText,actionButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(title);
+		this.z(items,this.R_MerchandiseItem);
+		this.trackingParams(trackingParams);
+		this.a_primitive_str(showText);
+		this.a_primitive_str(hideText);
+		this.R_Menu(actionButton);
+	}
+	/** @private @arg {D_ProductListItem} x */
+	D_ProductListItem(x) {
+		const cf="D_ProductListItem"; this.k(cf,x);
+		const {thumbnail,accessibilityTitle,title,trackingParams,price,onClickCommand,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*///#destructure
+		this.D_Thumbnail(thumbnail);
+		this.a_primitive_str(accessibilityTitle);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		if(!this.str_starts_with(price,"CA$")) debugger;
+		if(!onClickCommand.urlEndpoint) debugger;
+		this.E_VE83769_Url(onClickCommand);
+		this.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @private @arg {D_ChipCloud} x */
+	D_ChipCloud(x) {
+		const cf="D_ChipCloud"; this.k(cf,x);
+		const {chips,trackingParams,horizontalScrollable,nextButton,previousButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(chips,this.R_ChipCloudChip);
+		this.trackingParams(trackingParams);
+		if(horizontalScrollable!==false) debugger;
+		this.z([nextButton,previousButton],this.R_Button);
+	}
+	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_2<any, "comments-entry-point">>['itemSectionRenderer']['contents'][number]} x */
+	R_CommentItemSection_EntryPoint(x) {
+		const cf="R_CommentItemSection_EntryPoint"; this.k(cf,x);
+		if("commentsEntryPointHeaderRenderer" in x) return this.R_CommentsEntryPointHeader(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
+	/** @private @arg {D_WebSearchboxConfig} x */
+	D_WebSearchboxConfig(x) {
+		const cf="D_WebSearchboxConfig"; this.k(cf,x);
+		const {requestLanguage: a,requestDomain: b,hasOnscreenKeyboard: c,focusSearchbox: d,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!this.eq_keys([a,b],["en","ca"])) debugger;
+		this.z([!c,d],x => {if(!x) debugger;});
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
