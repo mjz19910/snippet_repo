@@ -2514,6 +2514,18 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
 	}
+	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
+	replace_until_same(s,rx,fn) {
+		let i=0;
+		let ps=s;
+		do {
+			let p=s;
+			s=s.replaceAll(rx,fn);
+			ps=p;
+			if(i>12) break;
+		} while(ps!==s);
+		return s;
+	}
 	/** @protected @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {return this.ds.save_string(k,x);}
 	/** @protected @arg {string} k @arg {boolean} x */

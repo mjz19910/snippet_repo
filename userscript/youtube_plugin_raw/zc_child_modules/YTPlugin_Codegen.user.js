@@ -250,18 +250,6 @@ class CodegenService extends BaseService {
 		`;
 		return this.#codegen_renderer_finalize(req_names,self_code,keys,x);
 	}
-	/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
-	replace_until_same(s,rx,fn) {
-		let i=0;
-		let ps=s;
-		do {
-			let p=s;
-			s=s.replaceAll(rx,fn);
-			ps=p;
-			if(i>12) break;
-		} while(ps!==s);
-		return s;
-	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
 	/** @arg {string} cf @arg {string[]} arr */
