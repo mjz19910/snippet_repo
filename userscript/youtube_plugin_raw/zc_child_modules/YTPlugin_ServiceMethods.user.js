@@ -2956,7 +2956,7 @@ class ServiceMethods extends ServiceData {
 			}
 			case "get_pdg_buy_flow.params":
 			// case "D_Browse.param.f110.f1.f20":
-			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "GetNotificationMenu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
+			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "get_notification_menu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
 			// case "D_Browse.param.f110":
 			case "entity_key.normal.f2": case "get_report_form.params.f28":
 			case "get_report_form.params.f28.f1[].f1": {
@@ -3010,7 +3010,7 @@ class ServiceMethods extends ServiceData {
 			// 	switch(map_entry_key) {case 84: case 93: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			// }
 			case "get_pdg_buy_flow.params.f1":
-			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f1": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
+			case "tracking.trackingParams.f19": case "AdServingDataEntry.f9": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
 			case "tracking.trackingParams.f4": {
 				switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
@@ -3020,7 +3020,6 @@ class ServiceMethods extends ServiceData {
 			case "ypc_get_offers.params": {
 				switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}
-			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f3":
 			case "AdServingDataEntry.f10": {
 				switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: new_ns(); debugger; return;}
 			}

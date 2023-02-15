@@ -1049,12 +1049,21 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f1";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key.f2";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f1";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f12";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f15";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f5";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f8";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f1";}
@@ -1068,6 +1077,8 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f49";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f49.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f15";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f25";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4.f15";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4.f25";}
@@ -1095,6 +1106,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params.f1.f1";}
@@ -1247,12 +1259,15 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f11";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f1";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f15";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f2";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f25";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4.f2";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4.f3";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19.f2";}
