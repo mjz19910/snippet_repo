@@ -2452,6 +2452,8 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="data64") debugger;
 		if(field_id!==9) debugger;
 	}
+	/** @arg {D_RA_D_BinaryObj_a19} x */
+	D_RA_D_BinaryObj_a19(x) {x;}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
 		switch(x[1]) {
@@ -2463,6 +2465,7 @@ class HandleTypes extends HandleTypesEval {
 			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
 			case 6: return this.D_RA_D_BinaryCategoryObj_a6(x);
 			case 9: return this.D_RA_D_BinaryCategoryObj_a9(x);
+			case 19: return this.D_RA_D_BinaryObj_a19(x);
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
