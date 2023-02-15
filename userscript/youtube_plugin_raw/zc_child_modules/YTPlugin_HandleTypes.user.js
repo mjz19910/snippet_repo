@@ -3345,7 +3345,7 @@ class HandleTypes extends HandleTypesEval {
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
 		/** @type {GR_RootBinaryObj} */
-		let t_bin_obj=as(bin_obj);
+		let t_bin_obj=as_any(bin_obj);
 		this.GR_RootBinaryObj(cf,t_bin_obj);
 	}
 	/** @arg {number} x */

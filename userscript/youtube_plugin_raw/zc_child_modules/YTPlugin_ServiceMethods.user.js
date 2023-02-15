@@ -1025,8 +1025,8 @@ class ServiceMethods extends ServiceData {
 		x==="";
 		return null;
 	}
-	/** @typedef {string|bigint|number|V_ParamObj} V_ParamObjData */
-	/** @typedef {{[x:number]:V_ParamObjData|V_ParamObjData[]}} V_ParamObj */
+	/** @typedef {string|bigint|number|Uint8Array|["begin"]|["end"]|V_ParamObj} V_ParamObjData */
+	/** @typedef {{[x:number]:V_ParamObjData[]}} V_ParamObj */
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
 	convert_map_to_obj(x) {
 		/** @template T @arg {T[]} x */
@@ -1042,8 +1042,9 @@ class ServiceMethods extends ServiceData {
 				debugger;
 			}
 			if(value===void 0) {debugger; continue;}
+			res[k]??=[];
 			if(value.length===0) {
-				res[k]={};
+				res[k].push({});
 				continue;
 			}
 			if(value.length!==1) {
@@ -1055,14 +1056,14 @@ class ServiceMethods extends ServiceData {
 					if(r===null) {debugger; return null;}
 					return r;
 				}).filter(is_not_null);
-				v1[k]=v1;
+				res[k].push(["begin"],...v1,["end"]);
 				continue;
 			}
 			let v2=first(value);
 			if(v2===null) {debugger; continue;}
 			let v3=this.convert_value_item_to_param_item(v2);
 			if(v3===null) {debugger; continue;}
-			res[k]=v3;
+			res[k].push(v3);
 		}
 		return res;
 	}
@@ -1091,7 +1092,7 @@ class ServiceMethods extends ServiceData {
 		if(b_res.length!==1) debugger;
 		let r_obj=this.convert_arr_to_obj(b_res);
 		if(!r_obj) {debugger; return;}
-		this.V_SerializedContext_BinaryObj(cf,as(r_obj));
+		this.V_SerializedContext_BinaryObj(cf,as_any(r_obj));
 		let [r]=b_res;
 		switch(r[0]) {
 			default: debugger; break;
