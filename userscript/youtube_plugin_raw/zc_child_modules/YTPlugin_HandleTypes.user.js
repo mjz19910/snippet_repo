@@ -4169,6 +4169,14 @@ class HandleTypes extends HandleTypesEval {
 	D_VideoPlayback_ns(x) {
 		this.save_b64_binary("video_playback.buf.ns",x);
 	}
+	/** @private @template {string} A @template {string} B @template {string} C @template {`sn-${A}${B}n${C}`} R @arg {R} x @returns {R extends `sn-${infer A1}${infer A2}n${infer BP extends C}`?[`${A1}${A2}`,BP]:never} */
+	get_gv_parts(x) {
+		let ss=split_string(x,"-")[1];
+		let idx=5;
+		let r1=ss.slice(0,idx);
+		let r2=ss.slice(idx);
+		return as_any([r1,r2]);
+	}
 	/** @private @arg {D_VideoPlaybackShape} x */
 	D_VideoPlaybackShape(x) {
 		const cf1="D_VideoPlaybackShape",cf2="video_playback.api_url";
@@ -4188,6 +4196,8 @@ class HandleTypes extends HandleTypesEval {
 		// cSpell:ignoreRegExp /"sn-(?:(o097zn|9gv7ln|n4v7sn|nx57yn).{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
+			let ap=this.get_gv_parts(mi); ap;
+			debugger;
 			switch(mi) {
 				default: {
 					let gen=this.cg.codegen_case_cache(`js_gen_case:log_videoplayback:${cf1}.mn.mi`,mi);
