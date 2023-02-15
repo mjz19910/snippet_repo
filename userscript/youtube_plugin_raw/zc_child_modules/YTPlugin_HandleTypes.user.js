@@ -2713,6 +2713,7 @@ class HandleTypes extends HandleTypesEval {
 		if(0x19ac5ceb in x) return this.R_0x19ac5ceb(cf,x);
 		if(6 in x) return this.R_ClickTrackingObj(x);
 		if(3 in x) return this.D_BinaryCategoryObj(cf,x);
+		if(4 in x) return;
 		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x,false);
 		debugger;
 	}
