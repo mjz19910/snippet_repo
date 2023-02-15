@@ -1335,7 +1335,7 @@ class ServiceMethods extends ServiceData {
 	get_playlist_url_info_critical(x) {
 		if(x.type==="playlist:1:LL") return false;
 		if(x.type==="playlist:1:WL") return false;
-		switch(x.raw_id.length) {
+		switch(x.id.length) {
 			case 11: return false;
 			case 24: return false;
 			case 32: return false;
