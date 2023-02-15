@@ -2311,7 +2311,7 @@ class HandleTypes extends HandleTypesEval {
 			this.save_number(`${cf}.f3`,f3);
 			return;
 		}
-		debugger;
+		this.g(u);
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
