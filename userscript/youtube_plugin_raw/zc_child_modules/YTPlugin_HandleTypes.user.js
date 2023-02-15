@@ -2604,6 +2604,11 @@ class HandleTypes extends HandleTypesEval {
 			case 6: return this.D_RA_D_Binary_d0(x);
 		}
 	}
+	/** @arg {D_RA_Result_CTP} x */
+	D_RA_Result_CTP(x) {
+		x;
+		debugger;
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2612,6 +2617,15 @@ class HandleTypes extends HandleTypesEval {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		if(dec.length===0) debugger;
+		switch(cf) {
+			default: debugger; break;
+			case "tracking.click_tracking_params": {
+				/** @type {D_RA_Result_CTP} */
+				let dec_t=as_any(dec);
+				this.D_RA_Result_CTP(dec_t);
+
+			} break;
+		}
 		/** @type {D_RA_Result} */
 		let dec_t=as_any(dec);
 		this.D_RA_Result(dec_t);

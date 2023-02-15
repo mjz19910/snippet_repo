@@ -16,3 +16,4 @@ type D_RA_Result=
 	]
 	;
 ;
+type D_RA_Result_CTP=[];
