@@ -4208,6 +4208,7 @@ class HandleTypes extends HandleTypesEval {
 					if(gen.has) break;
 					console.log(`-- [js_gen_case:log_videoplayback:${cf1}.mn.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
 				}; break;
+				case "nx57y":
 				case "o097z":
 				case "nx5s7":
 				case "9gv7l":
