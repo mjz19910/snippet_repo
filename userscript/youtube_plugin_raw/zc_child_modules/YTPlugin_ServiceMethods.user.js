@@ -4279,5 +4279,89 @@ class ServiceMethods extends ServiceData {
 	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @public @arg {R_DesktopTopbar} x */
 	R_DesktopTopbar(x) {this.H_("R_DesktopTopbar","desktopTopbarRenderer",x,this.D_DesktopTopbar);}
+	/** @private @arg {R_DecoratedPlayerBar} x */
+	R_DecoratedPlayerBar(x) {this.H_("R_DecoratedPlayerBar","decoratedPlayerBarRenderer",x,this.D_DecoratedPlayerBar);}
+	/** @private @arg {R_AutoplaySwitchButton} x */
+	R_AutoplaySwitchButton(x) {this.H_("R_AutoplaySwitchButton","autoplaySwitchButtonRenderer",x,this.D_AutoplaySwitchButton);}
+	/** @private @arg {R_PlayerOverlayAutoplay} x */
+	R_PlayerOverlayAutoplay(x) {this.H_("R_PlayerOverlayAutoplay","playerOverlayAutoplayRenderer",x,this.D_PlayerOverlayAutoplay);}
+	/** @private @arg {R_WatchNextEndScreen} x */
+	R_WatchNextEndScreen(x) {this.H_("R_WatchNextEndScreen","watchNextEndScreenRenderer",x,this.D_WatchNextEndScreen);}
+	/** @private @arg {R_PlayerOverlayVideoDetails} x */
+	R_PlayerOverlayVideoDetails(x) {this.H_("R_PlayerOverlayVideoDetails","playerOverlayVideoDetailsRenderer",x,this.D_PlayerOverlayVideoDetails);}
+	/** @public @arg {R_CinematicContainer} x */
+	R_CinematicContainer(x) {this.H_("R_CinematicContainer","cinematicContainerRenderer",x,this.D_CinematicContainer);}
+	/** @private @arg {MC_ResolveUrl} x */
+	MC_ResolveUrl(x) {
+		const cf="MC_ResolveUrl"; this.k(cf,x);
+		const {isVanityUrl,parentTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(isVanityUrl!==void 0) this._primitive_of(isVanityUrl,"boolean");
+		this.t(parentTrackingParams,a => this.params("tracking.parentTrackingParams",a));
+	}
+	/** @private @arg {D_CinematicContainer} x */
+	D_CinematicContainer(x) {
+		const cf="D_CinematicContainer"; this.k(cf,x);
+		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(backgroundImageConfig,this.D_ThumbnailsList);
+		this.D_GradientColorConfig(gradientColorConfig);
+		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
+		if(config.lightThemeBackgroundColor!==4278190080) debugger;
+		this.save_keys(`${cf}.config`,config);
+		for(let u of Object.entries(config)) {
+			if(u[0]==="animationConfig") continue;
+			if(typeof u[1]==="object") {debugger; continue;}
+			this.save_string(`${cf}.config.${u[0]}`,`${u[1]}`);
+		}
+		this.save_keys(`${cf}.config.animationConfig`,config.animationConfig);
+	}
+	/** @private @arg {D_PlayerOverlayVideoDetails} x */
+	D_PlayerOverlayVideoDetails(x) {
+		const cf="D_PlayerOverlayVideoDetails"; this.k(cf,x);
+		const {title,subtitle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.G_Text(subtitle);
+	}
+	/** @private @arg {D_PlaylistContent} x */
+	D_PlaylistContent(x) {
+		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
+		if("isEditable" in u) {
+			const {playerInfoView,isEditable,menu,...y}=u; this.g(y);
+			this.ceq(playerInfoView,"DO_NOT_CHANGE");
+			this.R_Menu(menu);
+			this._primitive_of(isEditable,"boolean");
+			return;
+		}
+		const {totalVideos,totalVideosText,endpoint,videoCountText,...u1}=u; u1;
+		this.a_primitive_num(totalVideos);
+		this.G_Text(totalVideosText);
+		this.E_VE5754(endpoint);
+		this.G_Text(videoCountText);
+		if("menu" in u1&&"playerInfoView" in u1) {
+			const {menu,playerInfoView,...y}=u1; this.g(y);
+			this.R_Menu(menu);
+			return;
+		}
+		if("menu" in u1) {
+			const {menu,...y}=u1; this.g(y);
+			this.R_Menu(menu);
+			return;
+		}
+		if("continuations" in u1) {
+			const {continuations,badges,...y}=u1; this.g(y);
+			this.z(continuations,this.CD_Next);
+			this.z(badges,this.RMD_Badge);
+			return;
+		}
+		debugger;
+	}
+	/** @private @arg {G_Watch_ContentsItem} x */
+	G_WatchResult_ContentsItem(x) {
+		const cf="G_WatchResult_ContentsItem"; this.k(cf,x);
+		if("itemSectionRenderer" in x) return this.G_WatchResultItem_ItemSectionGroup(x);
+		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
+		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
+		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
