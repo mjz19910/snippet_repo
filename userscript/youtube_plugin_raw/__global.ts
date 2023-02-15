@@ -1,4 +1,3 @@
-import {PluginStore as PluginStore_} from "./zb_plugin_types/PluginStore.js";
 import {required as required_} from "./zc_child_modules/YtPlugin_Base.user.js";
 import {ServiceLoader as ServiceLoader_} from "./zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js";
 
@@ -19,6 +18,5 @@ declare global {
 		entries(): IterableIterator<[string,string]>;
 	}
 	var required: typeof required_;
-	type PluginStore=PluginStore_;
 	type ServiceLoader=ServiceLoader_;
 }

@@ -1832,7 +1832,7 @@ class ServiceResolver {
 //#endregion
 //#region main
 function yt_plugin_base_main() {
-	const ServiceLoader=required(store["mod$ServiceLoader"]).ServiceLoader;
+	const ServiceLoader=required(store["mod$ServiceLoaderPlugin"]).ServiceLoader;
 	setTimeout(() => {window.yt_plugin?.get_data_saver().num_bitmap_console();},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ResolverT<ServiceLoader,ServiceOptions>} */

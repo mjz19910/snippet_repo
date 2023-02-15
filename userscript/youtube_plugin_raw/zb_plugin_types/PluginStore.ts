@@ -1,5 +1,5 @@
-export interface PluginStore {
-	mod$ServiceLoader: typeof import("../zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js");
+interface PluginStore {
+	mod$ServiceLoaderPlugin: typeof import("../zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js");
 	mod$YoutubePluginBase: typeof import("../zc_child_modules/YtPlugin_Base.user.js");
 	mod$CodegenService: typeof import("../zc_child_modules/YTPlugin_Codegen.user.js");
 	mod$ParserService: typeof import("../zc_child_modules/YTPlugin_Parser_Service.user.js");
