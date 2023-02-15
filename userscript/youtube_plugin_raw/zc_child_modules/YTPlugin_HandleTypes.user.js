@@ -282,12 +282,12 @@ class HandleTypes extends HandleTypesEval {
 	indexed_db_createDatabaseSchema(service,old_version,db) {
 		if(old_version<1) {
 			service.create_store("video_id",db);
-			service.create_store("hashtag",db);
+			service.create_store("hashtag_id",db);
 			service.create_store("boxed_id",db);
 		}
 		if(old_version<2) {
 			service.create_store("channel_id",db);
-			service.create_store("playlist",db);
+			service.create_store("playlist_id",db);
 		}
 		if(old_version<3) {
 			service.create_store("browse_id",db);
