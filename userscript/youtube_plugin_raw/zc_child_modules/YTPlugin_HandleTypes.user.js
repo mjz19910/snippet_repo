@@ -2450,22 +2450,21 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_GetPgdBuyFlow} x */
 	R_GetPgdBuyFlow(x) {x;}
-	/** @private @arg {D_DecTypeNum[]} x */
-	D_RA_GetPgdBuyFlow(x) {
-		let bin_obj=this.convert_arr_to_obj(x);
-		if(!bin_obj) {debugger; return;}
-		/** @type {R_GetPgdBuyFlow} */
-		let u=as_any(bin_obj);
-		this.R_GetPgdBuyFlow(u);
-	}
-	/** @private @arg {P_ReelPlayerParamsObj} */
-	P_ReelPlayerParamsObj(x) {x;}
-	/** @private @arg {V_ParamObj} x */
-	decode_continuation_token_obj(x) {
+	/** @private @arg {P_ReelPlayerParamsObj} x */
+	P_ReelPlayerParamsObj(x) {x; debugger;}
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
+	decode_continuation_token_obj(cf,x) {
 		switch(cf) {
 			default: debugger; break;
+			case "reel.player_params": {
+				/** @type {P_ReelPlayerParamsObj} */
+				let u=as_any(x);
+				this.P_ReelPlayerParamsObj(u);
+			} break;
 			case "get_pdg_buy_flow.params": {
-				this.D_RA_GetPgdBuyFlow(x);
+				/** @type {R_GetPgdBuyFlow} */
+				let u=as_any(x);
+				this.R_GetPgdBuyFlow(u);
 			} break;
 			case "tracking.trackingParams": {
 				/** @type {D_RA_Result_TP} */
