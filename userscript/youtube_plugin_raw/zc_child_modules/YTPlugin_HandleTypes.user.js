@@ -2545,6 +2545,7 @@ class HandleTypes extends HandleTypesEval {
 			if(f6!=="external") debugger;
 			return;
 		}
+		debugger;
 	}
 	/** @private @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {
