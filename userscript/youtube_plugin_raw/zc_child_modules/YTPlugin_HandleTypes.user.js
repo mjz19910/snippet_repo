@@ -2422,9 +2422,17 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RD_Obj_a6} x */
 	D_RD_Obj_a6(x) {
 		const cf="D_RD_Obj_a6",[type,field_id,,dec]=x;
-		if(type!=="child") return this.codegen_typedef_bin(cf,x);
-		if(field_id!==6) debugger;
-		if(dec!==null) return this.codegen_typedef_bin(cf,x);
+		switch(type) {
+			default: {
+				this.codegen_typedef_bin(cf,x);
+				debugger;
+			} break;
+			case "data32":
+			case "child": {
+				if(field_id!==6) debugger;
+				if(dec!==null) return this.codegen_typedef_bin(cf,x);
+			} break;
+		}
 	}
 	/** @arg {D_RD_Obj_a1} x */
 	D_RD_Obj_a1(x) {
@@ -2729,6 +2737,7 @@ class HandleTypes extends HandleTypesEval {
 		if(0x12f639cf in x) return this.R_0x12f639cf(cf,x);
 		if(0x14527fab in x) return this.R_0x14527fab(cf,x);
 		if(0x19ac5ceb in x) return this.R_0x19ac5ceb(cf,x);
+		if(49 in x) return;
 		if(6 in x) return this.R_ClickTrackingObj(x);
 		if(3 in x) return this.D_BinaryCategoryObj(cf,x);
 		if(4 in x) return this.R_TrackingObj(x);

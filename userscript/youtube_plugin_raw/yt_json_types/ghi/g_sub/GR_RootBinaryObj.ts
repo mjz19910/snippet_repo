@@ -18,6 +18,7 @@ type GR_RootBinaryObj=
 	|D_BinaryCategoryObj
 	|R_ClickTrackingObj
 	|R_CreatePlaylistObj
+	|R_ContinuationObj_SubObj
 	;
 ;
 type R_ContinuationObj_SubObj={
