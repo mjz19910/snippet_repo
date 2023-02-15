@@ -2621,9 +2621,8 @@ class HandleTypes extends HandleTypesEval {
 		if(!bin_obj) {debugger; return;}
 		/** @type {R_TrackingObj} */
 		let u=as_any(bin_obj);
-		if(6 in u) {
-			return;
-		}
+		let kk=this.get_keys_of_2(u);
+		if(this.eq_keys(kk,[1,2,4])) return;
 		debugger;
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
