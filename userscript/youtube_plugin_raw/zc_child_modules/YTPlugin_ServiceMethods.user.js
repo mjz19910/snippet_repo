@@ -3023,12 +3023,12 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root @returns {boolean} */
-	on_endpoint_params_callback(root,path,map_entry_values,map_entry_key_path,map_keys) {
+	on_endpoint_params_callback(root,path,map_entry_values,map_entry_key_path,map_keys,is_debug_enabled) {
 		let callback=this.on_endpoint_params_callback.bind(this);
 		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) return false;
 		let map_keys_=map_keys.slice();
-		let {new_path}=this.get_parse_fns(path,map_keys_,map_entry_values[0],map_entry_key);
+		let {new_path,new_ns}=this.get_parse_fns(path,map_keys_,map_entry_values[0],map_entry_key);
 		/** @private @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
 			console.group(ns);
@@ -3250,6 +3250,7 @@ class ServiceMethods extends ServiceData {
 				}
 			} break;
 		}
+		if(is_debug_enabled) {new_ns(); debugger;}
 		return false;
 	}
 	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
