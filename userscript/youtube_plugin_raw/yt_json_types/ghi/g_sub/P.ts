@@ -86,3 +86,74 @@ type P_entity_key={
 	4: T_VW<246>,
 	5: T_VW<1>;
 };
+
+type reel_watch_sequence_a15_a6={
+	1: T_VW<"RTuwQTgt3WE">;
+	2: T_VW<{
+		6: T_VW<26>;
+	}>;
+	3: T_VW<{
+		1: T_VW<1675106330>;
+		2: T_VW<89574000>;
+	}>;
+	4: T_VW<{
+		1: T_VW<1676410041>;
+	}>;
+	5: T_VW<{
+		1: T_VW<63>;
+		2: T_VW<1>;
+	}>;
+	7: T_VW<{
+		1: [
+			{
+				1: T_VW<182>;
+			},
+			{
+				1: T_VW<930>;
+			}
+		];
+	}>;
+	8: T_VW<{
+		1: T_VW<{
+			1: T_VW<204>;
+		}>;
+		2: T_VW<1>;
+	}>;
+	9: T_VW<{
+		1: T_VW<{
+			1: T_VW<204>;
+		}>;
+		2: T_VW<1>;
+	}>;
+	10: T_VW<{
+		1: T_VW<{
+			1: T_VW<204>;
+		}>;
+		2: T_VW<1>;
+	}>;
+	11: T_VW<{
+		2: T_VW<{
+			1: T_VW<2>;
+		}>;
+	}>;
+};
+
+type reel_watch_sequence_a15={
+	1: T_VW<12>;
+	3: T_VW<11>;
+	6: T_VW<reel_watch_sequence_a15_a6>;
+};
+
+type P_continuation_request_reel_watch_sequence_token={
+	1: T_VW<"gKyQXCkdZl0">,
+	3: T_VW<{
+		1: T_VW<"RTuwQTgt3WE">,
+		3: T_VW<10>,
+		4: T_VW<2>,
+		6: T_VW<V_Bigint<12689568318623173585n>>;
+	}>,
+	5: T_VW<{
+		3: T_VW<12>;
+	}>,
+	15: T_VW<reel_watch_sequence_a15>;
+};
