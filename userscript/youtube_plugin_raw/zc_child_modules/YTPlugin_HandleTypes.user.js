@@ -2471,7 +2471,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @arg {["data64",9,number[],bigint]} x */
+	/** @arg {D_RD_Obj_a9} x */
 	D_RD_Obj_a9(x) {
 		const cf="D_RA_D_BinaryCategoryObj_a9",[type,field_id,,]=x;
 		if(type!=="data64") return this.codegen_typedef_bin(cf,x,false);
@@ -2506,6 +2506,14 @@ class HandleTypes extends HandleTypesEval {
 			case 4: return this.D_RD_Obj_a4(x);
 			case 5: return this.D_RD_Obj_a5(x);
 			case 6: return this.D_RD_Obj_a6(x);
+			case 7: {
+				const cf="D_RD_Obj_a7",[type,,a]=x;
+				if(type!=="data32") {
+					this.codegen_typedef(cf,x);
+					return;
+				}
+				this.save_number(cf,a);
+			} break;
 			case 9: return this.D_RD_Obj_a9(x);
 			case 19: return this.D_RD_Obj_a19(x);
 		}

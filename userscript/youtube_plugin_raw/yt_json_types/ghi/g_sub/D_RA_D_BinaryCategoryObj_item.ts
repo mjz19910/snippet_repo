@@ -5,6 +5,7 @@ type D_RD_ObjArr=
 	|D_RA_D_BinaryCategoryObj_23_a2
 	|D_RD_Obj_a3
 	|D_RD_Obj_a6
+	|["data32",7,4]
 	|D_RD_Obj_a9
 	|D_RD_Obj_a19
 	|D_RA_D_BinaryCategoryObj_d0
