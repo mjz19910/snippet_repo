@@ -2374,8 +2374,7 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof obj[0]==="number") {
 					return `TYPE::VW<${obj[0]}>`;
 				}
-				let inner_str=JSON.stringify(obj[0],this.typedef_json_replace_bin.bind(this,state),"\t");
-				return `TYPE::VW<${inner_str}>`;
+				return obj[0];
 			}
 		}
 		state;
