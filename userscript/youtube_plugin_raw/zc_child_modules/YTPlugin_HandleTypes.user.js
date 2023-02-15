@@ -2411,7 +2411,13 @@ class HandleTypes extends HandleTypesEval {
 		buffer;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_a6} x */
-	D_RA_D_BinaryCategoryObj_a6(x) {x;}
+	D_RA_D_BinaryCategoryObj_a6(x) {
+		const [type,field_id,buffer,dec]=x;
+		if(type!=="child") debugger;
+		if(field_id!==6) debugger;
+		if(dec!==null) debugger;
+		buffer;
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
 		switch(x[1]) {
