@@ -3933,7 +3933,7 @@ class ServiceMethods extends ServiceData {
 	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
 	/**
 	 * @public @arg {G_EY_Entity} x
-	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
+	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,null,V]|null:null:never)|["unknown",string,{}]}
 	 */
 	G_EY_Entity(x) {
 		const cf="G_EY_Entity"; this.k(cf,x);
