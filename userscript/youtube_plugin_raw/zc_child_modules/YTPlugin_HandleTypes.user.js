@@ -73,10 +73,6 @@ class JsonReplacerState {
 		/** @api @public @type {Map<unknown,[number,string]>} */
 		this.parent_map=new Map;
 	}
-	/** @arg {unknown} x */
-	get_parent_walker(x) {
-		return new ParentWalker(this,x);
-	}
 }
 const handle_types_eval_code=raw_template`
 class HandleTypesEval extends ServiceMethods {
