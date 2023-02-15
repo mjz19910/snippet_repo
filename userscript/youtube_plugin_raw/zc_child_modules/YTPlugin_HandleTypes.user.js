@@ -2207,9 +2207,10 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {V_VeDescObj} x */
 	V_VeDescObj(x) {
-		const {1: [a],2: [b],...y}=x; this.g(y);
-		if(a!==3) debugger;
-		if(b!==3832) debugger;
+		const cf="V_VeDescObj";
+		const {1: [f1],2: [f2],...y}=x; this.g(y);
+		this.save_number(`${cf}.f1`,f1);
+		if(f2!==3832) debugger;
 	}
 	/** @private @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
