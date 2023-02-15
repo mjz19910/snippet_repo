@@ -1785,7 +1785,7 @@ class ServiceMethods extends ServiceData {
 				this.R_VssLoggingContext(loggingContext);
 				this.R_Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 				this.R_PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
-				this.playerParams("DE_VE3832_Watch","watch.player_params",playerParams);
+				this.playerParams("watch.player_params",playerParams);
 				this.R_WatchEndpointMusicConfig(watchEndpointMusicSupportedConfigs);
 				this._primitive_of(nofollow,"boolean");
 				(([a,...b]) => this.ceq(a.key,"inline")&&this.ceq(b.length,0))(playerExtraUrlParams);
@@ -2441,7 +2441,7 @@ class ServiceMethods extends ServiceData {
 		this.g(y);
 	}
 	/** @protected @arg {P_ParamParse} sec @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(`${cf}.params`,sec,x.params);}
+	D_Params(cf,x,sec) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(sec,x.params);}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
@@ -2577,194 +2577,6 @@ class ServiceMethods extends ServiceData {
 	/** @arg {string} path @arg {string} cf2 @arg {number} key_index @arg {any} entry */
 	add_log_entry(path,cf2,key_index,entry) {
 		this.log_list.push([() => console.log(`-- [handle_value_gen$${cf2}] [idx:${key_index}] [v:${entry}] --\n\ncase "${path}":\n`)]);
-	}
-	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
-	handle_map_value(path,entry) {
-		let key_index=this.parse_key_index;
-		let ret=false;
-		if(typeof entry==="string") {
-			switch(path) {
-				case "continuation_token.data": {
-					this.x.get("handle_types").continuation_token_data_f49(as_any(path),entry);
-					ret=true;
-				} break;
-				case "load_markers.entity_key":
-				case "continuation_token.data": {
-					this.save_string(path,entry);
-					ret=true;
-				} break;
-				case "tracking.trackingParams": {
-					this.D_ChannelId(as(entry));
-					ret=true;
-				} break;
-				case "continuation_token.data": {
-					this.videoId(entry);
-					ret=true;
-				} break;
-				case "continuation_token.data": {
-					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
-					this.targetId(`Binary.value:${path}`,as(entry));
-					ret=true;
-				} break;
-				case "continuation_token.data": {
-					/** @type {`sub.${path}`} */
-					const cf=`sub.${path}`;
-					this.x.get("handle_types").decode_continuation_token(as_any(cf),entry);
-					ret=true;
-				} break;
-				case "tracking.trackingParams": {
-					this.save_string(path,entry);
-					ret=true;
-				} break;
-				case "reel.sequence_params": {
-					this.videoId(entry);
-					ret=true;
-				} break;
-				case "entity_key.subscribed": {
-					this.D_ChannelId(as(entry));
-					ret=true;
-				} break;
-				default: {
-					let new_data=this.save_string(path,entry);
-					const cf2="do_save_str";
-					if(new_data) this.add_log_entry(path,cf2,key_index,entry);
-					ret=false;
-				} break;
-			}
-		} else if(typeof entry==="number") {
-			switch(path) {
-				default: {
-					let new_data=this.save_number(path,entry);
-					const cf2="do_save_num";
-					if(new_data) this.add_log_entry(path,cf2,key_index,entry);
-					ret=false;
-				} break;
-				case "reel.player_params": {
-					this.save_number(path,entry);
-					ret=true;
-				} break;
-			}
-		} else if(entry instanceof Map) {
-			switch(path) {
-				default: {
-					let entry_keys=[...entry.keys()];
-					const cf2="do_save_obj";
-					this.add_log_entry(path,cf2,key_index,entry_keys);
-					ret=false;
-				} break;
-				case "tracking.trackingParams": {
-					ret=true;
-				} break;
-			}
-		} else if(entry instanceof Uint8Array) {
-			switch(path) {
-				default: {
-					let new_data=this.save_number(path,[...entry]);
-					const cf2="do_save_u8_arr";
-					if(new_data) this.add_log_entry(path,cf2,key_index,[...entry]);
-					ret=false;
-				} break;
-			}
-		} else if(this.is_bigint(entry)) {
-			switch(path) {
-				default: {
-					let new_data=this.handle_bigint(path,entry);
-					const cf2="do_save_bigint";
-					if(new_data) this.add_log_entry(path,cf2,key_index,`${entry[2]}n`);
-					ret=false;
-				} break;
-			}
-		}
-		return ret;
-	}
-	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number} map_entry_key @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
-	/** @private @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
-	parse_any_param(root,path,map_entry_key_path,map,callback) {
-		this.parse_key_index++;
-		let key_index=this.parse_key_index;
-		let map_keys=[...map.keys()];
-		let map_keys_limit=Math.max(...map_keys,-1);
-		console.log("start_keys",key_index,map_keys);
-		for(let i=1;i<map_keys_limit+1;i++) {
-			if(!map_keys.includes(i)) continue;
-			map_entry_key_path.push(i);
-			this.parse_key(root,path,map,map_keys,map_entry_key_path,callback,false);
-			let l=map_entry_key_path.pop();
-			if(l!==i) debugger;
-		}
-		console.log("end_keys",key_index,map_keys);
-		if(this.eq_keys(map_keys,[])) return;
-		console.log("start_keys_2",key_index,map_keys);
-		for(let i=1;i<map_keys_limit+1;i++) {
-			if(!map_keys.includes(i)) continue;
-			map_entry_key_path.push(i);
-			this.parse_key(root,path,map,map_keys,map_entry_key_path,callback,true);
-			let l=map_entry_key_path.pop();
-			if(l!==i) debugger;
-		}
-		let param_obj=this.to_param_obj(map);
-		console.log(`[new.${path}] [idx=${key_index}]`,path,param_obj);
-	}
-	/** @private @arg {P_ParamParse} path @arg {number[]} map_keys @arg {V_ParamMapValue|null} map_entry_value @arg {number|null} map_entry_key */
-	get_parse_fns(path,map_keys,map_entry_value,map_entry_key=null) {
-		let parts=split_string(path,".");
-		/** @private @arg {number} idx */
-		let gd=(idx) => {console.log("[param_next.next_new_ns]",parts.join(".")); gen_next_part(idx);};
-		/** @private @arg {number} idx */
-		let u=idx => this.grouped(parts.join("$"),() => gd(idx));
-		/** @private @arg {number} idx */
-		let gen_next_part=(idx) => {
-			let pad="\t\t\t";
-			if(idx>parts.length) return;
-			/** @type {string[]} */
-			let eq_len_arr=[];
-			if(parts.length===idx) {
-				if(map_entry_value instanceof Map) eq_len_arr.push(`if(map_entry_value instanceof Map) return;`);
-				switch(typeof map_entry_value) {
-					case "number": eq_len_arr.push(`if(typeof map_entry_value==="number") return this.save_number(\`[$\{path}]\`,map_entry_value);`); break;
-					case "string": eq_len_arr.push(`if(typeof map_entry_value==="string") return this.save_string(\`[$\{path}]\`,map_entry_value);`); break;
-				}
-			}
-			eq_len_arr.push("switch(map_entry_value) {default: debugger; return;}");
-			let res_case=[`default: {const idx=${idx+1}; u(idx); debugger; parts[${idx}]==="";} break;`];
-			if(idx<parts.length) {
-				res_case.push(`case "${parts[idx]}": u(idx); debugger; break;`);
-			}
-			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
-			/** @arg {string[]} arr */
-			let gen_for_part_case=(arr,gen_if_case=false) => {
-				if(arr.length===1) return arr[0];
-				let ret=`\n${pad}\t${arr.join(`\n${pad}\t`)}\n${pad}`;
-				if(!gen_if_case) return ret;
-				return `{${ret}}`;
-			};
-			console.log(`
-			-- [${parts.join(".")},${idx}] --\n\n
-			case "${parts[idx-1]}":
-			if(parts.length===${idx}) ${gen_for_part_case(eq_len_arr,true)}
-			switch(parts[${idx}]) {${gen_for_part_case(res_case)}}`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
-		};
-		let new_path=() => {
-			/** @private @type {P_LogItems} */
-			console.log("[parse_value.new_path_gen]",path);
-			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
-			console.log(ak_gen.join("\n"));
-			let msg=[""];
-			msg.push(`\tcase "${path}": switch(map_entry_key) {`);
-			msg.push(`\t\t${map_keys.map(e => `case ${e}:`).join(" ")}`);
-			msg.push("\t\t\treturn this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);");
-			msg.push("\t\tdefault: return this.parse_param_default(new_ns,is_debug_enabled);");
-			msg.push("\t}");
-			console.log(`${msg.join("\n")}\n`);
-		};
-		let new_ns=() => {
-			/** @private @type {P_LogItems} */
-			console.log("[parse_value.new_ns_gen]",path);
-			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
-			console.log(ak_gen.join("\n"));
-			console.log(`-- [parse_value.gen_ns] --\n\n\t${map_keys.map(e => `case ${e}:`).join(" ")} \n`);
-		};
-		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
 	/** @public @arg {P_ParamParse} cf @arg {string} x */
 	params(cf,x) {

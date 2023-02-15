@@ -1270,7 +1270,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DC_Timed"; this.k(cf,x);
 		const {timeoutMs,continuation,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(timeoutMs!==60000) debugger;
-		this.params(cf,"timed_continuation.data",continuation);
+		this.params("timed_continuation.data",continuation);
 	}
 	/** @private @arg {D_TwoColumnSearchResults} x */
 	D_TwoColumnSearchResults(x) {this.H_("D_TwoColumnSearchResults","primaryContents",x,this.R_SectionList);}
@@ -1442,7 +1442,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu"; this.k(cf,x);
 		const {ctoken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"get_notification_menu.ctoken",ctoken);
+		this.params("get_notification_menu.ctoken",ctoken);
 	}
 	/** @private @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {
@@ -1455,7 +1455,7 @@ class HandleTypes extends HandleTypesEval {
 	DE_YpcGetCart(x) {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
-		this.params(cf,"ypc_get_cart.transaction_params",sp);
+		this.params("ypc_get_cart.transaction_params",sp);
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
@@ -2242,7 +2242,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} x */
 	RS_Next_ContextParams(x) {
 		const cf="RS_Next_ContextParams";
-		this.params(cf,"next_response.queue_context_params",x);
+		this.params("next_response.queue_context_params",x);
 	}
 	/** @private @arg {RS_Next} x */
 	RS_Next(x) {
@@ -2389,7 +2389,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {string} x */
 	DC_Load_EntityKey(x) {
 		const cf="DC_LoadMarkers_EntityKey";
-		this.params(cf,"load_markers.entity_key",x);
+		this.params("load_markers.entity_key",x);
 		x;
 	}
 	/** @private @arg {DC_LoadMarkers} x */
@@ -2803,7 +2803,7 @@ class HandleTypes extends HandleTypesEval {
 	D_SerializedSlotAdServingDataEntry(x) {
 		const cf="D_SerializedSlotAdServingDataEntry"; this.k(cf,x);
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
+		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
 	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
@@ -4277,7 +4277,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="MC_ResolveUrl"; this.k(cf,x);
 		const {isVanityUrl,parentTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(isVanityUrl!==void 0) this._primitive_of(isVanityUrl,"boolean");
-		this.t(parentTrackingParams,a => this.params(cf,"tracking.parentTrackingParams",a));
+		this.t(parentTrackingParams,a => this.params("tracking.parentTrackingParams",a));
 	}
 	/** @private @arg {DC_AdsControlFlowOpportunityReceived} x */
 	DC_AdsControlFlowOpportunityReceived(x) {
@@ -4681,7 +4681,7 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {D_AdLayoutLoggingData} x */
-	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params(cf,"ad_serving_data_entry",x));}
+	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params("ad_serving_data_entry",x));}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
@@ -5334,7 +5334,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
 	DC_Generic_CTP(cf,path,x) {
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
-		this.params(cf,path,continuation);
+		this.params(path,continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
@@ -5376,7 +5376,7 @@ class HandleTypes extends HandleTypesEval {
 		const {submitButton,cancelButton,aadcGuidelinesStateEntityKey,authorThumbnail,avatarSize,placeholderText,emojiPicker,trackingParams,emojiButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.R_Button(submitButton);
 		this.R_Button(cancelButton);
-		this.params(cf,"aadc_guidelines_state.entity_key",aadcGuidelinesStateEntityKey);
+		this.params("aadc_guidelines_state.entity_key",aadcGuidelinesStateEntityKey);
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
@@ -5896,9 +5896,9 @@ class HandleTypes extends HandleTypesEval {
 			this.trackingParams(cf,trackingParams);
 			this.R_Button(shareButton);
 			this.t(repeatButton,this.R_ToggleButton);
-			this.params(cf,"macro_marker_repeat_state.entity_key",a);
+			this.params("macro_marker_repeat_state.entity_key",a);
 			this.t(endRepeatCommand,this.C_CommandExecutor);
-			this.params(cf,"player_state.entity_key",b);
+			this.params("player_state.entity_key",b);
 			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
 			this.a_primitive_str(timeDescriptionA11yLabel);
 			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
@@ -6305,7 +6305,7 @@ class HandleTypes extends HandleTypesEval {
 		this.t(adBadge,this.RMD_Badge);
 	}
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
-	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(cf,path,x));}
+	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(path,x));}
 	/** @private @arg {DC_PlayerSeek} x */
 	DC_PlayerSeek(x) {this.DC_Generic("DC_PlayerSeek","player_seek.continuation",x);}
 	/** @private @arg {CD_PlayerSeek} x */
@@ -6314,7 +6314,7 @@ class HandleTypes extends HandleTypesEval {
 	DC_LiveChatReplay(x) {
 		const cf="DC_LiveChatReplay";
 		const {continuation,timeUntilLastMessageMsec,...y}=this.s(cf,x); this.g(y);
-		this.params(cf,"live_chat_replay.continuation",continuation);
+		this.params("live_chat_replay.continuation",continuation);
 		this.a_primitive_num(timeUntilLastMessageMsec);
 	}
 	/** @private @arg {CD_LiveChatReplay} x */
@@ -6325,7 +6325,7 @@ class HandleTypes extends HandleTypesEval {
 		const {invalidationId,timeoutMs,continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
 		this.D_InvalidationId(invalidationId);
 		if(timeoutMs!==10000) debugger;
-		this.params(cf,"invalidation.continuation",continuation);
+		this.params("invalidation.continuation",continuation);
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
 	}
 	/** @private @arg {D_InvalidationId} x */
