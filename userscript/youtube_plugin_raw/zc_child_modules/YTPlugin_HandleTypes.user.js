@@ -2366,12 +2366,30 @@ class HandleTypes extends HandleTypesEval {
 		const [dec_0]=x;
 		this.handle_2_any_d1(dec_0);
 	}
+	/** @arg {D_RA_V_BinaryTimestamp_2[0]} x */
+	D_RA_V_BinaryTimestamp_2_d0(x) {
+		const [type,field_id]=x;
+		if(type!=="data32") debugger;
+		if(field_id!==1) debugger;
+	}
+	/** @arg {D_RA_V_BinaryTimestamp_2[1]} x */
+	D_RA_V_BinaryTimestamp_2_d1(x) {
+		const [type,field_id]=x;
+		if(type!=="data_fixed32") debugger;
+		if(field_id!==2) debugger;
+	}
+	/** @arg {D_RA_V_BinaryTimestamp_2[2]} x */
+	D_RA_V_BinaryTimestamp_2_d2(x) {
+		const [type,field_id]=x;
+		if(type!=="data_fixed32") debugger;
+		if(field_id!==3) debugger;
+	}
 	/** @arg {RA_handle_4_any} x */
 	handle_4_any(x) {
-		this.z(x,x=>{
-			x;
-			debugger;
-		})
+		const [dec_0,dec_1,dec_2]=x;
+		this.D_RA_V_BinaryTimestamp_2_d0(dec_0);
+		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
+		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
