@@ -3,7 +3,7 @@ type RA_handle_4_any=D_RA_V_BinaryTimestamp_2;
 type D_RA_V_BinaryTimestamp_2=[["data32",1,number],["data_fixed32",2,number],["data_fixed32",3,number]];
 
 type D_RA_D_BinaryCategoryObj_a6=["child",6,Uint8Array,null];
-type D_RA_D_BinaryCategoryObj_a9=[string,9,...any[]];
+type D_RA_D_BinaryCategoryObj_a9=["data64",9,number[],bigint];
 type D_RA_D_BinaryCategoryObj_item=
 	|D_RA_D_BinaryCategoryObj_13_a1
 	|D_RA_D_BinaryCategoryObj_23_a2
