@@ -4041,6 +4041,14 @@ class ServiceMethods extends ServiceData {
 	C_AddToPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_AddToPlaylist","addToPlaylistCommand",x); this.g(y); this.DC_AddToPlaylist(a);}
 	/** @private @arg {C_ChangeMarkersVisibility} x */
 	C_ChangeMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeMarkersVisibility","changeMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeMarkersVisibility(a);}
+	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
+	C_AdsControlFlowOpportunityReceived(x) {let [a,b]=this.TE_Endpoint_2("C_AdsControlFlowOpportunityReceived","adsControlFlowOpportunityReceivedCommand",x); this.g(b); this.DC_AdsControlFlowOpportunityReceived(a);}
+	/** @private @arg {C_ChangeKeyedMarkersVisibility} x */
+	C_ChangeKeyedMarkersVisibility(x) {let [a,b]=this.TE_Endpoint_2("C_ChangeKeyedMarkersVisibility","changeKeyedMarkersVisibilityCommand",x); this.g(b); this.DC_ChangeKeyedMarkersVisibility(a);}
+	/** @private @arg {C_LoadMarkers} x */
+	C_LoadMarkers(x) {let [a,b]=this.TE_Endpoint_2("C_LoadMarkers","loadMarkersCommand",x); this.g(b); this.DC_LoadMarkers(a);}
+	/** @private @arg {C_ReloadContinuationItems} x */
+	C_ReloadContinuationItems(x) {let [a,b]=this.TE_Endpoint_2("C_ReloadContinuationItems","reloadContinuationItemsCommand",x); this.g(b); this.DC_ReloadContinuationItems(a);}
 	/** @type {string[]} */
 	DC_AddToPlaylist_listTypes=[
 		"PLAYLIST_EDIT_LIST_TYPE_QUEUE",
@@ -4235,10 +4243,7 @@ class ServiceMethods extends ServiceData {
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
 	}
-	C_AdsControlFlowOpportunityReceived(x) {x;}
-	C_ChangeKeyedMarkersVisibility(x) {x;}
-	C_LoadMarkers(x) {x;}
-	C_ReloadContinuationItems(x) {x;}
+	/** @private @arg {A_AppendContinuationItems} x */
 	A_AppendContinuationItems(x) {x;}
 	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
 	GE_ResponseReceived(cf,x) {
