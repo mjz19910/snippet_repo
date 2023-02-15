@@ -2854,7 +2854,7 @@ class HandleTypes extends HandleTypesEval {
 	R_CreatePlaylistObj(x) {x;}
 	/** @private @arg {R_SlotAdServingDataObj} x */
 	R_SlotAdServingDataObj(x) {x;}
-	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
+	/** @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
 		this.k(`${cf}.binary_obj`,x);
 		if(0x4c82a9c in x) return this.R_0x4c82a9c(cf,x);
