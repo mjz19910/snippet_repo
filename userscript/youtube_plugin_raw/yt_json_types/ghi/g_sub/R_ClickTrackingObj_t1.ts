@@ -26,4 +26,9 @@ type R_ClickTrackingObj_t1=R_ClickTrackingObj_t1_v337|{
 	3: T_VW<8>;
 	4: T_VW<V_BinaryTimestamp>;
 	6: T_VW<"rellist">;
+}|{
+	1: T_VW<355>,
+	2: T_VW<5531>,
+	4: T_VW<V_BinaryTimestamp>;
+	6: T_VW<"watch">;
 };
