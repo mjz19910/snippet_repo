@@ -2476,13 +2476,9 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
-	D_RA_D_BinaryCategoryObj_r(x) {
-		this.z(x,this.D_RA_D_BinaryCategoryObj_item);
-	}
+	D_RA_D_BinaryCategoryObj_r(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
 	/** @arg {D_RA_D_Binary_d0} x */
-	D_RA_D_Binary_d0(x) {
-		this.z(x,this.D_RA_D_BinaryCategoryObj_item);
-	}
+	D_RA_D_Binary_d0(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
