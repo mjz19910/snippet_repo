@@ -2260,7 +2260,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_CR_0x14527fab|[["data32",1,number],{},{},["child",4,Uint8Array,any[]]]} x @returns {x is D_RA_CR_0x14527fab} */
 	is_RA_CR(x) {return x[3][1]===0x14527fab;}
-	/** @template {number} T @arg {T} t @arg {[["data32",number,number],{},{},{}]} x @returns {x is [["data32",T,number],{},{},{}]} */
+	/** @template {number} T @arg {T} t @arg {[["data32",number,number],...any]} x @returns {x is [["data32",T,number],...any]} */
 	is_RA_CR_zct(x,t) {return x[0][1]===t;}
 	/** @arg {D_RA_CR_0x14527fab} x */
 	D_RA_CR_0x14527fab(x) {
@@ -2519,6 +2519,10 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RA_D_Binary_x1";
 		return this.codegen_typedef_bin(cf,x);
 	}
+	/** @arg {D_RA_CR_0x12f639cf|any[]} x @returns {x is D_RA_CR_0x12f639cf} */
+	is_D_RA_CR_0x12f639cf(x) {
+		return x.length===5&&x[4][1]===0x12f639cf;
+	}
 	/** @arg {D_RA_Result} x */
 	D_RA_Result(x) {
 		const cf="D_RA_Result";
@@ -2532,7 +2536,9 @@ class HandleTypes extends HandleTypesEval {
 				return this.codegen_typedef_bin(cf,x);
 			}
 			case 5: {
-				return this.D_RA_CR_0x12f639cf(x);
+				if(this.is_D_RA_CR_0x12f639cf(x)) return this.D_RA_CR_0x12f639cf(x);
+				if(this.is_RA_CR_zct(x,1)) return this.D_RA_D_Binary_x1(x);
+				return this.codegen_typedef_bin(cf,x);
 			}
 			case 6: return this.D_RA_D_Binary_d0(x);
 		}
