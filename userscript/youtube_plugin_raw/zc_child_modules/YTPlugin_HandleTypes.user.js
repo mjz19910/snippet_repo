@@ -797,8 +797,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PlayerOverlayVideoDetails(x) {this.H_("R_PlayerOverlayVideoDetails","playerOverlayVideoDetailsRenderer",x,this.D_PlayerOverlayVideoDetails);}
 	/** @public @arg {R_CinematicContainer} x */
 	R_CinematicContainer(x) {this.H_("R_CinematicContainer","cinematicContainerRenderer",x,this.D_CinematicContainer);}
-	/** @public @arg {R_PlayerOverlay} x */
-	R_PlayerOverlay(x) {this.H_("R_PlayerOverlay","playerOverlayRenderer",x,this.D_PlayerOverlay);}
 	/** @public @arg {R_DesktopTopbar} x */
 	R_DesktopTopbar(x) {this.H_("R_DesktopTopbar","desktopTopbarRenderer",x,this.D_DesktopTopbar);}
 	/** @private @arg {R_TopbarLogo} x */
@@ -2262,42 +2260,6 @@ class HandleTypes extends HandleTypesEval {
 	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
 	RC_LiveChat(x) {this.H_("RC_LiveChat","liveChatContinuation",x,this.DC_LiveChat);}
-	/** @private @arg {RC_MainAppWebResponseContext} x */
-	RC_MainAppWebResponseContext(x) {
-		const cf="RC_MainAppWebResponseContext"; this.k(cf,x);
-		const {datasyncId,loggedOut,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(datasyncId);
-		this._primitive_of(loggedOut,"boolean");
-	}
-	/** @private @arg {RC_ConsistencyTokenJar} x */
-	RC_ConsistencyTokenJar(x) {
-		const cf="RC_ConsistencyTokenJar"; this.k(cf,x);
-		const {encryptedTokenJarContents,expirationSeconds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(encryptedTokenJarContents);
-		if(expirationSeconds!=="600") debugger;
-	}
-	/** @private @arg {RC_WR_ContextExtension} x */
-	RC_WR_ContextExtension(x) {
-		const cf="RC_WR_ContextExtension"; this.k(cf,x);
-		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(hasDecorated!==void 0) this._primitive_of(hasDecorated,"boolean");
-		this.t(ytConfigData,this.D_YtConfig);
-		this.t(webPrefetchData,this.D_WebPrefetch);
-	}
-	/** @private @arg {D_WebPrefetch} x */
-	D_WebPrefetch(x) {
-		const cf="D_WebPrefetch"; this.k(cf,x);
-		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(navigationEndpoints,x => {
-			if("watchEndpoint" in x) {return this.E_Watch(x);}
-		});
-	}
-	/** @private @arg {RCA_RelevantStateTags} x */
-	RCA_RelevantStateTags(x) {
-		const cf="RCA_RelevantStateTags"; this.k(cf,x);
-		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(relevantStateTags,this.B_StateTag);
-	}
 	/** @private @arg {D_WatchNextTabbedResults} x */
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults"; this.k(cf,x);
@@ -2780,17 +2742,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_SerializedSlotAdServingDataEntry"; this.k(cf,x);
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
-	}
-	/** @private @arg {D_TwoColumnWatchNextResults} x */
-	D_TwoColumnWatchNextResults(x) {
-		const cf="D_TwoColumnWatchNextResults"; this.k(cf,x);
-		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let u=this.D_WatchResults(results);
-		this.G_Watch_ResultsItem(u);
-		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
-		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
-		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
-		this.t(conversationBar,this.R_LiveChat);
 	}
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_GetUnseenCount(x) {
@@ -3985,13 +3936,13 @@ class HandleTypes extends HandleTypesEval {
 			/** @type {`${cf3}.data`} */
 			const cf4=`${cf3}.data`;
 			this.G_ClientSignal(cf4,b);
-			this.trackingParams(cf1,trackingParams);
+			this.trackingParams(trackingParams);
 			return;
 		}
 		if("icon" in x&&"trackingParams" in x&&"formattedTitle" in x&&"accessibility" in x) {
 			const {icon,trackingParams,formattedTitle,accessibility,...y}=this.s(cf1,x); this.g(y);
 			this.D_Accessibility(accessibility);
-			this.trackingParams(cf1,trackingParams);
+			this.trackingParams(trackingParams);
 			this.G_Text(formattedTitle);
 			this.D_Accessibility(accessibility);
 			return;
@@ -4869,7 +4820,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {CF_T_Items_TP} cf @template T @private @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
-		this.trackingParams(`T_Items_TP:${cf}`,trackingParams);
+		this.trackingParams(trackingParams);
 		return this.w_priv("items",y);
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */

@@ -4115,5 +4115,54 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_TwoColumnWatchNextResults} x */
 	R_TwoColumnWatchNextResults(x) {this.H_("R_TwoColumnWatchNextResults","twoColumnWatchNextResults",x,this.D_TwoColumnWatchNextResults);}
+	/** @private @arg {RC_MainAppWebResponseContext} x */
+	RC_MainAppWebResponseContext(x) {
+		const cf="RC_MainAppWebResponseContext"; this.k(cf,x);
+		const {datasyncId,loggedOut,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(datasyncId);
+		this._primitive_of(loggedOut,"boolean");
+	}
+	/** @private @arg {RC_ConsistencyTokenJar} x */
+	RC_ConsistencyTokenJar(x) {
+		const cf="RC_ConsistencyTokenJar"; this.k(cf,x);
+		const {encryptedTokenJarContents,expirationSeconds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(encryptedTokenJarContents);
+		if(expirationSeconds!=="600") debugger;
+	}
+	/** @private @arg {RC_WR_ContextExtension} x */
+	RC_WR_ContextExtension(x) {
+		const cf="RC_WR_ContextExtension"; this.k(cf,x);
+		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(hasDecorated!==void 0) this._primitive_of(hasDecorated,"boolean");
+		this.t(ytConfigData,this.D_YtConfig);
+		this.t(webPrefetchData,this.D_WebPrefetch);
+	}
+	/** @private @arg {RCA_RelevantStateTags} x */
+	RCA_RelevantStateTags(x) {
+		const cf="RCA_RelevantStateTags"; this.k(cf,x);
+		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(relevantStateTags,this.B_StateTag);
+	}
+	/** @public @arg {R_PlayerOverlay} x */
+	R_PlayerOverlay(x) {this.H_("R_PlayerOverlay","playerOverlayRenderer",x,this.D_PlayerOverlay);}
+	/** @private @arg {D_WebPrefetch} x */
+	D_WebPrefetch(x) {
+		const cf="D_WebPrefetch"; this.k(cf,x);
+		const {navigationEndpoints,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(navigationEndpoints,x => {
+			if("watchEndpoint" in x) {return this.E_Watch(x);}
+		});
+	}
+	/** @private @arg {D_TwoColumnWatchNextResults} x */
+	D_TwoColumnWatchNextResults(x) {
+		const cf="D_TwoColumnWatchNextResults"; this.k(cf,x);
+		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let u=this.D_WatchResults(results);
+		this.G_Watch_ResultsItem(u);
+		this.T_SecondaryResults(secondaryResults,this.G_Watch_SecondaryResults);
+		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
+		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
+		this.t(conversationBar,this.R_LiveChat);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
