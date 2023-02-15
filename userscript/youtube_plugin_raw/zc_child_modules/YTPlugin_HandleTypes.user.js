@@ -3647,8 +3647,9 @@ class HandleTypes extends HandleTypesEval {
 		this.z(e,x => {
 			if(1006 in x) return this.D_0x19ac5ceb_map_key(x);
 			if(1000 in x) return this.D_0x19ac5ceb_map_value(x);
+			debugger;
 		});
-		this.z(f,x => this.D_0x19ac5ceb_map_entry);
+		this.z(f,this.D_0x19ac5ceb_map_entry);
 	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
