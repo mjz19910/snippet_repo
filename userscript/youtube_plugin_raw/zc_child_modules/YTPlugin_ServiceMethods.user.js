@@ -14,7 +14,9 @@
 const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__),bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
-const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_; const ServiceData=bs.ServiceData; const split_string=bs.split_string; const split_string_once=bs.split_string_once;
+const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_;
+const ServiceData=bs.ServiceData;
+const split_string=bs.split_string; const split_string_once=bs.split_string_once;
 const as_any=bs.as_any;
 /** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
