@@ -2515,27 +2515,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!dec) {debugger; return;}
 		this.decode_continuation_token_obj(cf,dec);
 	}
-	/** @private @arg {D_0x4c82a9c[2][0]} x */
-	D_0x4c82a9c_f2(x) {
-		if(!x) {debugger; return;}
-		if(this.str_starts_with(x,"UC")) {debugger; return this.D_ChannelId(x);}
-		if(this.str_starts_with(x,"FE")) {
-			switch(x) {
-				default: debugger; break;
-				case "FEcomment_shorts_web_top_level":
-				case "FEwhat_to_watch":
-			}
-			this.browseId(x);
-			return;
-		}
-		debugger;
-	}
-	/** @private @arg {R_BigInt} x */
-	RV_Bigint(x) {
-		const cf="RV_Bigint";
-		const {1: f1,...y}=this.s(cf,x); this.g(y);
-		this._primitive_of(f1,"bigint");
-	}
 	/** @private @arg {V_VeDescObj} x */
 	V_VeDescObj(x) {
 		const {1: [a],2: [b],...y}=x; this.g(y);
@@ -2582,42 +2561,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_num(f2);
 		this.V_BinaryTimestamp(f4);
 	}
-	/** @private @arg {R_0x12f639cf[11][1]} x */
-	D_f11(x) {
-		const cf="R_f11";
-		const {1: f1,2: f2,3: f3,...y}=this.s(cf,x); this.g(y);
-		if(f1!=="yt_page_snapshot_regional") debugger;
-		/** @type {(["d",0|1]|["str",string])[]} */
-		let f3_res=[];
-		for(let i=0;i<f3.length;i++) {
-			const fc=f3[i];
-			if(fc===0||fc===1) {
-				f3_res.push(['d',fc]);
-				continue;
-			}
-			let ni=f3.indexOf(0,i);
-			let txt=new TextDecoder().decode(f3.slice(i,ni));
-			f3_res.push(["str",txt]);
-			i=ni;
-		}
-		let f3_idx=f3_res.map((e,z) => ({index: z,type: e[0],v: e[1]}));
-		for(let v of f3_idx) {
-			/** @type {D_f3_idx_item} */
-			let ui=as_any(v);
-			if(ui.index===2) continue;
-			if(ui.index===4) continue;
-			if(ui.index===6) continue;
-			if(ui.index===9) continue;
-			let uc=ui;
-			/** @type {`${uc["type"]}:${uc["v"]}`} */
-			let k=`${ui.type}:${ui.v}`;
-			switch(k) {
-				default: k===""; debugger; break;
-				case "d:1": break;
-				case "d:0": break;
-			}
-		}
-	}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
 		const cf="V_BinaryTimestamp";
@@ -2632,48 +2575,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {[]} x */
 	g_a(x) {if(x.length!==0) debugger;}
-	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map_entry} x */
-	D_0x19ac5ceb_map_entry(s,x) {
-		const cf="D_0x19ac5ceb_map_entry";
-		const {1: [f1],2: [f2],...y}=this.s(cf,x); this.g(y);
-		s.set_entry(f1,f2);
-	}
-	/** @private @arg {D_0x19ac5ceb_map_key} x */
-	D_0x19ac5ceb_map_key(x) {
-		const cf="D_0x19ac5ceb_map_key";
-		const {1006: [f1],...y}=this.s(cf,x); this.g(y);
-		this.g(f1);
-	}
-	/** @private @arg {D_0x19ac5ceb_map_value} x */
-	D_0x19ac5ceb_map_value(x) {
-		const cf="D_0x19ac5ceb_map_value";
-		const {1: [f1],...y}=this.s(cf,x); this.g(y);
-		if(typeof f1!=="bigint") debugger;
-		let binary_arr=new BigUint64Array(1);
-		binary_arr[0]=f1;
-		let u8_arr=new Uint8Array(binary_arr.buffer);
-		let res=base64_url_dec.encode(u8_arr);
-		this.save_string("D_0x19ac5ceb.map.video.item",res);
-	}
-	/** @private @arg {D_0x19ac5ceb_map_container} x */
-	D_0x19ac5ceb_map_container(x) {
-		const cf="D_0x19ac5ceb_map_container";
-		const {1000: [f1],...y}=this.s(cf,x); this.g(y);
-		this.D_0x19ac5ceb_map_value(f1);
-	}
-	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map} x */
-	D_0x19ac5ceb_map(s,x) {
-		const cf="D_0x19ac5ceb_map";
-		const {1: f1,2: [f2],3: f3,5: [f5],...y}=this.s(cf,x); this.g(y);
-		if(!(f2 instanceof Uint8Array)) debugger;
-		if(!(f5 instanceof Uint8Array)) debugger;
-		this.z(f1,x => {
-			if(1006 in x) return this.D_0x19ac5ceb_map_key(x);
-			if(1000 in x) return this.D_0x19ac5ceb_map_container(x);
-			debugger;
-		});
-		this.z(f3,x => this.D_0x19ac5ceb_map_entry(s,x));
-	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {
 		const cf="D_Notification"; this.k(cf,x);
