@@ -5050,17 +5050,21 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(c);
 		return y;
 	}
-	/** @private @arg {Extract<Exclude<D_ChipCloudChip,{navigationEndpoint:any}>,{isSelected:any}>} x */
-	D_ChipCloudChip_WithSelection(x) {
-		const cf="D_ChipCloudChip_WithSelection";
-		let d=this.D_ChipCloudChip_Omit(cf,x);
-		const {style,isSelected,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
-		switch(style.styleType) {
+	/** @private @arg {Extract<D_ChipCloudChip,{style:any}>["style"]} x */
+	D_ChipCloudChip_Style(x) {
+		switch(x.styleType) {
 			default: debugger; break;
 			case "STYLE_DEFAULT":
 			case "STYLE_HOME_FILTER":
 			case "STYLE_REFRESH_TO_NOVEL_CHIP":
 		}
+	}
+	/** @private @arg {Extract<Exclude<D_ChipCloudChip,{navigationEndpoint:any}>,{isSelected:any}>} x */
+	D_ChipCloudChip_WithSelection(x) {
+		const cf="D_ChipCloudChip_WithSelection";
+		let d=this.D_ChipCloudChip_Omit(cf,x);
+		const {style,isSelected,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
+		this.D_ChipCloudChip_Style(style);
 		if(isSelected!==true) debugger;
 	}
 	/** @public @arg {R_ChipCloudChip} x */
