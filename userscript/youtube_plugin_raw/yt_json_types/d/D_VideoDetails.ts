@@ -9,9 +9,9 @@ type D_VideoDetails={
 	isCrawlable: true;
 	thumbnail: D_Thumbnail;
 	allowRatings: true;
+	viewCount?: `${number}`;
 	author: string;
 	isPrivate: false;
 	isUnpluggedCorpus: false;
 	isLiveContent: false;
-	viewCount?: `${number}`;
 };

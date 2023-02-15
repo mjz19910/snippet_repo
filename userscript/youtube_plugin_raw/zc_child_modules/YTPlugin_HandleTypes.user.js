@@ -6632,7 +6632,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
 		const cf="D_VideoDetails";
-		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x); this.g(y);
+		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,viewCount,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x); this.g(y);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
