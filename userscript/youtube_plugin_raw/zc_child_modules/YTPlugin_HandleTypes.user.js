@@ -2425,6 +2425,12 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==1) debugger;
 		this.handle_1_any(dec);
 	}
+	/** @arg {D_RA_D_BinaryCategoryObj_23_a2} x */
+	D_RA_D_BinaryCategoryObj_23_a2(x) {
+		const [type,field_id,,dec]=x;
+		if(type!=="child") debugger;
+		if(field_id!==2) debugger;
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
 		switch(x[1]) {
