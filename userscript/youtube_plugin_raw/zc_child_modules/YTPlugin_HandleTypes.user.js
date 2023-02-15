@@ -2622,7 +2622,7 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {R_TrackingObj} */
 		let u=as_any(bin_obj);
 		let kk=this.get_keys_of_2(u);
-		if(this.eq_keys(kk,[1,2,4])) return;
+		if(this.eq_keys(kk,["1","2","4"])) return;
 		debugger;
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
