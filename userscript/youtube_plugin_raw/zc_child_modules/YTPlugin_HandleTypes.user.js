@@ -2462,8 +2462,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a19} x */
 	D_RD_Obj_a19(x) {
-		const cf="D_RD_Obj_a19";
-		const [type,,,dec]=x;
+		const cf="D_RD_Obj_a19",[type,,,dec]=x;
 		if(type!=="child") debugger;
 		for(let i=0;i<dec.length;i++) {
 			let x=dec[i];
