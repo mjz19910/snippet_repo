@@ -2580,51 +2580,43 @@ class ServiceMethods extends ServiceData {
 		let ret=false;
 		if(typeof entry==="string") {
 			switch(path) {
-				case "continuation_token.data.f49": {
+				case "continuation_token.data": {
 					this.x.get("handle_types").continuation_token_data_f49(path,entry);
 					ret=true;
 				} break;
-				case "load_markers.entity_key.f2":
-				case "continuation_token.data.f53.f8": {
+				case "load_markers.entity_key":
+				case "continuation_token.data": {
 					this.save_string(path,entry);
 					ret=true;
 				} break;
-				case "get_pdg_buy_flow.params.f1.f2": case "entity_key.normal.f2":
-				case "tracking.trackingParams.f11": {
+				case "tracking.trackingParams": {
 					this.D_ChannelId(as(entry));
 					ret=true;
 				} break;
-				case "continuation_token.data.f53.f4.f4":
-				case "ypc_get_offers.params.f5.f5.f1": case "ypc_get_offers.params.f5.f1": case "get_pdg_buy_flow.params.f1.f1": case "entity_key.normal.f2.f1": case "create_comment.params.f2": case "like.likeParams.f1.f1": case "like.removeLikeParams.f1.f1": case "like.dislikeParams.f1.f1": case "subscribe.params.f4":
-				case "unsubscribe.params.f2": {
+				case "continuation_token.data": {
 					this.videoId(entry);
 					ret=true;
 				} break;
-				case "continuation_token.data.f110.f3.f15.f2.f1": {
+				case "continuation_token.data": {
 					// f110=token_value; f3=command f15=showReloadUiCommand; f2=targetId; f1=value;
 					this.targetId(`Binary.value:${path}`,as(entry));
 					ret=true;
 				} break;
-				case "tracking.trackingParams.f7":
-				case "continuation_token.data.f72":
-				case "continuation_token.data.f49.f6":
-				case "continuation_token.data.f15": {
+				case "continuation_token.data": {
 					/** @type {`sub.${path}`} */
 					const cf=`sub.${path}`;
 					this.x.get("handle_types").decode_continuation_token(cf,entry);
 					ret=true;
 				} break;
-				case "tracking.trackingParams.f6": {
+				case "tracking.trackingParams": {
 					this.save_string(path,entry);
 					ret=true;
 				} break;
-				case "continuation_request.watch_next.token.f2.f2":
-				case "reel.sequence_params.f1": {
+				case "reel.sequence_params": {
 					this.videoId(entry);
 					ret=true;
 				} break;
-				case "entity_key.subscribed.f2":
-				case "ypc_get_offers.params.f1.f2": {
+				case "entity_key.subscribed": {
 					this.D_ChannelId(as(entry));
 					ret=true;
 				} break;
@@ -2649,30 +2641,8 @@ class ServiceMethods extends ServiceData {
 					]);
 					ret=false;
 				} break;
-				case "ad_serving_data_entry.f7": {
+				case "reel.player_params":  {
 					this.save_number(path,entry);
-					ret=true;
-				} break;
-				case "tracking.trackingParams.f2":
-				case "tracking.trackingParams.f16.f2": {
-					ret=true;
-				} break;
-				case "reel.player_params.f57": case "unsubscribe.params.f1.f1": case "subscribe.params.f2.f1":
-				case "tracking.trackingParams.f3": case "continuation_token.data.f53.f4.f15": case "entity_key.normal.f4": case "playability_status.context_params.f2.f1": case "playability_status.context_params.f1": case "reel.params.f6": case "reel.player_params.f30": case "reel.sequence_params.f5.f3":
-				case "reel.params.f1": case "reel.player_params.f71":
-				case "tracking.trackingParams.f1": {
-					this.save_number(path,entry);
-					ret=true;
-				} break;
-				// {[x:"f4"|"f13"]:"STORE::Playlist.localCurrentIndex";}
-				case "watch_playlist.params.f4": case "watch_playlist.params.f13": {
-					ret=true;
-				} break;
-				case "next.continuation.f2.f7": case "reel.params.f3.f3": case "reel.params.f3.f2": case "reel.params.f3.f1":
-				case "tracking.trackingParams.f16.f4.f3": case "tracking.trackingParams.f16.f4.f2": case "tracking.trackingParams.f16.f4.f1":
-				case "ad_serving_data_entry.f9.f3": case "ad_serving_data_entry.f9.f2": case "ad_serving_data_entry.f9.f1": case "tracking.trackingParams.f4.f1": case "tracking.trackingParams.f4.f2": case "tracking.trackingParams.f4.f3":
-				case "like.removeLikeParams.f5.f1": case "like.removeLikeParams.f5.f2": case "like.likeParams.f6.f1": case "like.likeParams.f6.f2": case "like.dislikeParams.f4.f1": case "like.dislikeParams.f4.f2": case "notification.record_interactions.f5":
-				case "notification.record_interactions.f2.f14.f1.f1": {
 					ret=true;
 				} break;
 			}
@@ -2714,9 +2684,6 @@ class ServiceMethods extends ServiceData {
 					]);
 					ret=false;
 				} break;
-				case "tracking.trackingParams.f8":
-				case "reel.player_params.f72":
-				case "tracking.trackingParams.f9": break;
 			}
 		}
 		return ret;
@@ -2875,7 +2842,6 @@ class ServiceMethods extends ServiceData {
 			case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
 			case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
 			case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
-			case "f1": case "f4": case "f5": case "f6": case "f7": case "f9": case "f10": case "f13": case "f14":
 		}
 		if(parts.length===2) return this.handle_map_value(path,map_entry_value);
 		switch(parts[2]) {
@@ -2883,20 +2849,14 @@ class ServiceMethods extends ServiceData {
 				const idx=3; u(idx); debugger; switch(parts[2]) {case "": }
 			} break;
 			case "token":
-			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-			case "f10": case "f11": case "f12": case "f13": case "f14": case "f15": case "f16": case "f18": case "f19":
-			case "f24": case "f25": case "f26": case "f27": case "f28": case "f28": case "f29":
-			case "f30": case "f33": case "f39": case "f40": case "f49":
-			case "f53": case "f56": case "f57": case "f71": case "f72": case "f110":
 		}
 		if(parts.length===3) return this.handle_map_value(path,map_entry_value);
 		switch(parts[3]) {
 			default: {
 				const idx=4; u(idx); debugger; switch(parts[3]) {case "": }
 			} break;
-			case "f1[]":
-			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-			case "f12": case "f13": case "f14": case "f15": case "f25": case "f28": case "f31": case "f36":
+			case "f2": case "f3": case "f6": case "f9":
+			case "f13": case "f14":
 		}
 		if(parts.length===4) return this.handle_map_value(path,map_entry_value);
 		switch(parts[4]) {
