@@ -2421,7 +2421,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RD_Obj_a6} x */
 	D_RD_Obj_a6(x) {
-		const cf="D_RD_Obj_a6",[type,,value,dec]=x;
+		const cf="D_RD_Obj_a6",[type,,value,]=x;
 		switch(type) {
 			default: {
 				this.codegen_typedef_bin(cf,x);
