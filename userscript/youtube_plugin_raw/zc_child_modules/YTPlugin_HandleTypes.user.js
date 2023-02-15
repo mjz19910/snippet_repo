@@ -2606,14 +2606,12 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
+		const cf="D_RA_Result_CTP";
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
 		/** @type {R_ClickTrackingObj} */
 		let u=as_any(bin_obj);
-		if(6 in u) {
-			return;
-		}
-		debugger;
+		this.R_ClickTrackingObj(u);
 	}
 	/** @arg {D_RA_Result_TP} x */
 	D_RA_Result_TP(x) {
@@ -2810,7 +2808,19 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @private @arg {R_ClickTrackingObj} x */
-	R_ClickTrackingObj(x) {x;}
+	R_ClickTrackingObj(x) {
+		const cf="R_ClickTrackingObj";
+		if(6 in x) {
+			const {4: [f4],6: [f6],...y}=x; this.g(y);
+			this.V_BinaryTimestamp(f4);
+			if(f6!=="external") debugger;
+			return;
+		}
+		const {1: [f1],2: [f2],4: [f4],...y}=x; this.g(y);
+		this.save_number(`${cf}.f1`,f1);
+		this.save_number(`${cf}.f2`,f2);
+		this.V_BinaryTimestamp(f4);
+	}
 	/** @private @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {
 		const cf="R_TrackingObj";

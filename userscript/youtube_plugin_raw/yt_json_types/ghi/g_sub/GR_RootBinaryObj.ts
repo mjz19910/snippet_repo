@@ -1,7 +1,11 @@
 type T_VW<T>=[T];
 type R_ClickTrackingObj={
 	4: T_VW<V_BinaryTimestamp>;
-	6: "external";
+	6: ["external"];
+}|{
+	1: [number];
+	2: [number];
+	4: T_VW<V_BinaryTimestamp>;
 };
 type R_TrackingObj={
 	1: T_VW<number>;
