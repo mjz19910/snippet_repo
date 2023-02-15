@@ -2658,10 +2658,8 @@ class ServiceMethods extends ServiceData {
 						let x=path; x;
 						console.log(`-- [handle_value_gen$do_save_str] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
-						ret=false;
-					} else {
-						ret=true;
 					}
+					ret=false;
 				} break;
 			}
 		} else if(typeof entry==="number") {
