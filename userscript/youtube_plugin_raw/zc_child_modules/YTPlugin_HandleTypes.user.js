@@ -2103,7 +2103,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @type {string[]} */
 	continuation_logged_str=[];
-	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	decode_continuation_token_obj(cf,x) {
 		switch(cf) {
 			default: {

@@ -1075,7 +1075,10 @@ class ServiceMethods extends ServiceData {
 					}
 					res_obj[id]=[n,a,this.convert_arr_to_obj(b)];
 				} break;
-				case "data32": break;
+				case "data32": {
+					let [n,id,a]=v;
+					res_obj[id]=[n,a];
+				} break;
 				case "data64": break;
 				case "data_fixed32": break;
 				case "data_fixed64": break;

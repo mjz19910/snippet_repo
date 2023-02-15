@@ -1,1 +1,4 @@
-type V_ParamObjData=string|bigint|number|Uint8Array|V_ParamObj;
+type V_ParamObjData_2=
+	|["child",Uint8Array,{}|null]
+	;
+;
