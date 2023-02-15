@@ -2656,7 +2656,7 @@ class ServiceMethods extends ServiceData {
 					let new_data=this.save_string(path,entry);
 					if(new_data) {
 						let x=path; x;
-						console.log(`-- [handle_value_gen$value_save_string] [v:${entry}] --\n\ncase "${x}":\n`);
+						console.log(`-- [handle_value_gen$do_save_str] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
 						ret=false;
 					} else {
@@ -2670,7 +2670,7 @@ class ServiceMethods extends ServiceData {
 					let new_data=this.save_number(path,entry);
 					if(new_data) {
 						let x=path; x;
-						console.log(`-- [handle_value_gen$value_save_number] [v:${entry}] --\n\ncase "${x}":\n`);
+						console.log(`-- [handle_value_gen$do_save_num] [v:${entry}] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 					ret=false;
@@ -2710,7 +2710,7 @@ class ServiceMethods extends ServiceData {
 					let new_data=this.save_number(path,[...entry]);
 					if(new_data) {
 						let x=path; x;
-						console.log(`-- [handle_value_gen$save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`);
+						console.log(`-- [handle_value_gen$do_save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 				} break;
@@ -2722,7 +2722,7 @@ class ServiceMethods extends ServiceData {
 					let new_data=this.handle_bigint(path,entry);
 					if(new_data) {
 						let x=path; x;
-						console.log(`-- [handle_value_gen$save_bigint] [v:${entry[2]}n] --\n\ncase "${x}":\n`);
+						console.log(`-- [handle_value_gen$do_save_bigint] [v:${entry[2]}n] --\n\ncase "${x}":\n`);
 						debugger;
 					}
 					ret=false;
