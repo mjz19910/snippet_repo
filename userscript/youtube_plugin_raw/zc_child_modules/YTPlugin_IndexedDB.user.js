@@ -30,21 +30,23 @@ class IndexedDBService extends BaseService {
 	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
+		/** @type {T_DistributedKeysOf_2<DT_DatabaseStoreTypes>} */
+		let keys=["video_id","hashtag","boxed_id","channel_id","playlist","browse_id"];
+		for(let key of keys) {
+			/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,Map<string,number>]}} s @arg {R} k @arg {[R,Map<string,number>]} v */
+			function create_cache_index(s,k,v) {s[k]=v;}
+			/** @template {keyof DT_DatabaseStoreTypes} R @arg {{[_ in R]?: [R,DT_DatabaseStoreTypes[R][]]}} s @arg {R} k @arg {[R,DT_DatabaseStoreTypes[R][]]} v */
+			function create_cache(s,k,v) {s[k]=v;}
+			create_cache_index(this.store_cache_index,key,[key,new Map]);
+			create_cache(this.store_cache,key,[key,[]]);
+		}
 	}
 	database_opening=false;
 	database_open=false;
 	/** @private @type {{[R in keyof DT_DatabaseStoreTypes]?: [R,Map<string,number>]}} */
-	store_cache_index={
-		video_id: ["video_id",new Map],
-		hashtag: ["hashtag",new Map],
-		boxed_id: ["boxed_id",new Map],
-	};
+	store_cache_index={};
 	/** @private @type {{[R in keyof DT_DatabaseStoreTypes]?: [R,DT_DatabaseStoreTypes[R][]]}} */
-	store_cache={
-		video_id: ["video_id",[]],
-		hashtag: ["hashtag",[]],
-		boxed_id: ["boxed_id",[]],
-	};
+	store_cache={};
 	/** @template {keyof DT_DatabaseStoreTypes} T @arg {T} key */
 	get_data_cache(key) {
 		/** @type {{[R in T]?: [R,DT_DatabaseStoreTypes[R][]]}} */
