@@ -306,6 +306,51 @@ class CodegenService extends BaseService {
 		let val=obj[key];
 		this.codegen_case(cf,val,code);
 	}
+	codegen_group_id=1;
+	/** @private @arg {{[U in string]: unknown}} x */
+	_decode_WCM(x) {
+		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
+		return null;
+	}
+	/** @private @arg {object} x1 */
+	get_codegen_name_obj(x1) {
+		/** @type {{}} */
+		let x2=x1;
+		/** @type {{[x:string]:unknown;}} */
+		let x=x2;
+		if(typeof x.type==='string') {
+			return x.type.split(".").map(x => {
+				if(x.includes("_")) {return x.split("_").map(x => this.uppercase_first(x)).join("");}
+				return this.uppercase_first(x);
+			}).join("$");
+		}
+		let wc=x.webCommandMetadata;
+		if(typeof wc==="object"&&wc!==null) {
+			/** @type {{}} */
+			let wo=wc;
+			let dec=this._decode_WCM(wo);
+			if(dec) return dec;
+		}
+		let rk=this.filter_keys(this.get_keys_of(x));
+		let kk=rk[0];
+		if(typeof kk==="number") return null;
+		let dec=this.uppercase_first(kk);
+		let ren_dec=this.renderer_decode_map.get(dec);
+		if(ren_dec) {return ren_dec;}
+		return this.cg.get_auto_type_name(x);
+	}
+	renderer_decode_map=new Map([
+		["PrefetchHintConfig","R_PrefetchHintConfig"],
+	]);
+	/** @api @public @arg {string} cf @arg {{}} x */
+	make_codegen_group(cf,x,collapsed=true) {
+		let u_name=this.get_codegen_name_obj(x);
+		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
+		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
+		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
+		this.cg.codegen_typedef(`${cf}$${u_name}`,x);
+		console.groupEnd();
+	}
 	/** @private @arg {string} o @arg {string} k1 */
 	typedef_json_replace_string(o,k1) {
 		const max_str_len=120;

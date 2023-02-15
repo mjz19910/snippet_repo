@@ -1624,24 +1624,6 @@ class HandleTypes extends HandleTypesEval {
 		this.E_YpcGetCart(purchaseCommand);
 		this.G_Text(tierValue);
 	}
-	codegen_group_id=1;
-	/** @private @arg {string} cf @arg {{}} x */
-	make_codegen_group(cf,x,collapsed=true) {
-		let u_name=this.get_codegen_name(x);
-		let gca=[`[codegen_group] [#%o] [%s] -> [%s]`,this.codegen_group_id++,cf,u_name];
-		if(collapsed) {console.groupCollapsed(...gca);} else {console.group(...gca);}
-		console.log("[starting codegen] %s",`[${cf}_${u_name}]`);
-		this.cg.codegen_typedef(`${cf}$${u_name}`,x);
-		console.groupEnd();
-	}
-	/** @private @arg {{[U in string]: unknown}} x */
-	_decode_WCM(x) {
-		if("rootVe" in x) {return `M_VE${x.rootVe}`;}
-		return null;
-	}
-	renderer_decode_map=new Map([
-		["PrefetchHintConfig","R_PrefetchHintConfig"],
-	]);
 	ignore_incorrect_name_set=new Set([
 		"D_CommonConfig",
 	]);
@@ -2385,7 +2367,7 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,,dec]=x;
 		if(type!=="child") {
 			this.codegen_typedef_all(cf,x);
-			this.codegen_case;
+			this.codegen_group_id;
 			return;
 		}
 		switch(field_id) {
