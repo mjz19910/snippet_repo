@@ -2620,13 +2620,17 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_TrackingObj(u);
 	}
+	/** @arg {D_RA_GetPgdBuyFlow} x */
+	D_RA_GetPgdBuyFlow(x) {x;}
 	/** @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
 	decode_continuation_token_obj(cf,x) {
 		if(x.length===0) debugger;
 		switch(cf) {
 			default: debugger; break;
 			case "get_pdg_buy_flow.params": {
-
+				/** @type {D_RA_GetPgdBuyFlow} */
+				let u=as_any(x);
+				this.D_RA_Result_TP(u);
 			} break;
 			case "tracking.trackingParams": {
 				/** @type {D_RA_Result_TP} */
