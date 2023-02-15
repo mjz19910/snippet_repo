@@ -2578,9 +2578,9 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_Binary_d0(x) {this.z(x,this.D_RD_ObjArr);}
 	/** @arg {D_RD_ObjArr[]} x */
 	D_RA_D_Binary_dg(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @template {number} T @arg {T} t @arg {[["child",number,...any]]} x @returns {x is [["child",T,...any]]} */
+	/** @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [["child",T,...any]]} */
 	is_fx_extract(x,t) {return x[0][1]===t;}
-	/** @arg {D_RA_CR_0x4c82a9c|D_RA_CR_0x19ac5ceb} x */
+	/** @arg {D_RA_D_Binary_f1|D_RA_CR_0x4c82a9c|D_RA_CR_0x19ac5ceb} x */
 	D_RA_D_Binary_f1(x) {
 		const cf="D_RA_D_Binary_f1";
 		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
@@ -2589,7 +2589,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_D_Binary_x1} x */
 	D_RA_D_Binary_x1(x) {
-		const cf="D_RA_D_Binary_x1";
 		const [,,c0,c1]=x;
 		if(c0[1]!==3) debugger;
 		if(c1[1]!==4) debugger;
