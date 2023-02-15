@@ -2684,6 +2684,7 @@ class ServiceMethods extends ServiceData {
 		let key_index=this.parse_key_index;
 		let map_keys=[...map.keys()];
 		let map_keys_limit=Math.max(...map_keys,-1);
+		console.log("start_keys",key_index,map_keys);
 		for(let i=1;i<map_keys_limit+1;i++) {
 			if(!map_keys.includes(i)) continue;
 			map_entry_key_path.push(i);
@@ -2691,7 +2692,9 @@ class ServiceMethods extends ServiceData {
 			let l=map_entry_key_path.pop();
 			if(l!==i) debugger;
 		}
+		console.log("end_keys",key_index,map_keys);
 		if(this.eq_keys(map_keys,[])) return;
+		console.log("start_keys_2",key_index,map_keys);
 		for(let i=1;i<map_keys_limit+1;i++) {
 			if(!map_keys.includes(i)) continue;
 			map_entry_key_path.push(i);
