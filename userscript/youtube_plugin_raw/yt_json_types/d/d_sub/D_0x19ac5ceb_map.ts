@@ -4,3 +4,4 @@ type D_0x19ac5ceb_map={
 	3: [["begin"],...D_0x19ac5ceb_map_entry[],["end"]];
 	5: [Uint8Array];
 };
+;

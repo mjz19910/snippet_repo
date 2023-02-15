@@ -3417,7 +3417,18 @@ class HandleTypes extends HandleTypesEval {
 	R_0x19ac5ceb(x) {
 		const cf="R_0x19ac5ceb";
 		const {0x19ac5ceb: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
-		this.D_0x19ac5ceb(a);
+		/** @implements {S_MapState} */
+		class MapState {
+			/** @type {Map<number,number>} */
+			pos_map=new Map;
+			/** @arg {number} key_pos @arg {number} key_value */
+			set_entry(key_pos,key_value) {
+				this.pos_map.set(key_pos,key_value);
+			}
+		}
+		let s_map_state=new MapState;
+		this.D_0x19ac5ceb(s_map_state,a);
+		console.log(s_map_state.pos_map);
 	}
 	/** @private @arg {D_BinaryCategoryObj} x */
 	D_BinaryCategoryObj(x) {
@@ -3603,22 +3614,21 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.g(y);
 	}
-	/** @private @arg {D_0x19ac5ceb} x */
-	D_0x19ac5ceb(x) {
+	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb} x */
+	D_0x19ac5ceb(s,x) {
 		const cf="D_0x19ac5ceb";
 		const {1: [f1],...y}=this.s(cf,x); this.g(y);
-		this.D_0x19ac5ceb_map(f1);
+		this.D_0x19ac5ceb_map(s,f1);
 	}
 	/** @private @template {any[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
 	drop_last(x) {
 		return as([x.slice(0,-1),x.slice(-1)[0]]);
 	}
-	/** @private @arg {D_0x19ac5ceb_map_entry} x */
-	D_0x19ac5ceb_map_entry(x) {
+	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map_entry} x */
+	D_0x19ac5ceb_map_entry(s,x) {
 		const cf="D_0x19ac5ceb_map_entry";
 		const {1: [f1],2: [f2],...y}=this.s(cf,x); this.g(y);
-		f1; f2;
-		debugger;
+		s.set_entry(f1,f2);
 	}
 	/** @private @arg {D_0x19ac5ceb_map_key} x */
 	D_0x19ac5ceb_map_key(x) {
@@ -3631,9 +3641,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_0x19ac5ceb_map_value";
 		const {1: [f1],...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="bigint") debugger;
-		let bytes=f1.toString(16); let len=16-bytes.length;
-		let bin_str="0".repeat(len)+bytes;
-		this.save_string("D_0x19ac5ceb.map_values",`0x${bin_str}n`);
+		let binary_arr=new BigUint64Array(1);
+		binary_arr[0]=f1;
+		let u8_arr=new Uint8Array(binary_arr.buffer);
+		let str=String.fromCharCode(...u8_arr);
+		this.save_string("D_0x19ac5ceb.map.video.item",btoa(str).replaceAll("=",""));
+	}
+	get_store_keys(key) {
+		return this.ds.get_data_store().seen_strings.find(e=>e[0]===key)[1][1];
 	}
 	/** @private @arg {D_0x19ac5ceb_map_container} x */
 	D_0x19ac5ceb_map_container(x) {
@@ -3641,8 +3656,8 @@ class HandleTypes extends HandleTypesEval {
 		const {1000: [f1],...y}=this.s(cf,x); this.g(y);
 		this.D_0x19ac5ceb_map_value(f1);
 	}
-	/** @private @arg {D_0x19ac5ceb_map} x */
-	D_0x19ac5ceb_map(x) {
+	/** @private @arg {S_MapState} s @arg {D_0x19ac5ceb_map} x */
+	D_0x19ac5ceb_map(s,x) {
 		const cf="D_0x19ac5ceb_map";
 		const {1: [a,...b],2: [f2],3: [c,...d],5: [f3],...y}=this.s(cf,x); this.g(y);
 		if(a[0]!=="begin") debugger; if(c[0]!=="begin") debugger;
@@ -3656,7 +3671,7 @@ class HandleTypes extends HandleTypesEval {
 			if(1000 in x) return this.D_0x19ac5ceb_map_container(x);
 			debugger;
 		});
-		this.z(f,this.D_0x19ac5ceb_map_entry);
+		this.z(f,x=>this.D_0x19ac5ceb_map_entry(s,x));
 	}
 	/** @private @arg {D_Notification} x */
 	D_Notification(x) {

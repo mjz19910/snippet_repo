@@ -2074,6 +2074,10 @@ class KnownDataSaver extends ApiBase {
 		this.#load_data();
 		this.#store_data();
 	}
+	/** @arg {string} key */
+	get_store_keys(key) {
+		return this.get_data_store().get_string_store(this.#new_strings).data.find(e=>e[0]===key);
+	}
 	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
 	do_save_keys_obj=false;
