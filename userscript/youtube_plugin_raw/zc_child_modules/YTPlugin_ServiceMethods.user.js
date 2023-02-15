@@ -4720,7 +4720,7 @@ class ServiceMethods extends ServiceData {
 	D_AdSlotAndLayoutItem(x) {
 		const cf="D_AdSlotAndLayoutItem"; this.k(cf,x);
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(adLayoutMetadata,this.MG_AdLayout_DisplayTopLandscapeImage);
+		this.z(adLayoutMetadata,this.MG_AdLayout);
 		this.handle_types.DMD_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
