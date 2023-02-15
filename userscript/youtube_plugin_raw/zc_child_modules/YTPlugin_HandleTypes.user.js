@@ -76,8 +76,6 @@ class HandleTypesEval extends ServiceMethods {
 	primitive_of(x,y) {this._primitive_of(x,y);}
 	//#endregion
 	//#region init and static init
-	// I use @private stuff that i want in static blocks
-	gk=this.get_keys_of;
 	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
