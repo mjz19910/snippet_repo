@@ -1062,6 +1062,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "live_chat_replay.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_markers_list.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_radio.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_response.queue_context_params";}
@@ -1071,6 +1072,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_seek.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playlist_edit.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playlist_loop_state.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params";}
@@ -1079,6 +1081,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscriptionState.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.click_tracking_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.parentTrackingParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f1";}
@@ -1098,6 +1101,8 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f9";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.entity.key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcript_track_selection.serialized_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params";}

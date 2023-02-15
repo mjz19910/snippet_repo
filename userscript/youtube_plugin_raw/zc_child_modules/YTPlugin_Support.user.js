@@ -84,7 +84,7 @@ class HandleRS extends ServiceMethods {
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		this.t(attestation,this.R_PlayerAttestation);
 		this.t(videoQualityPromoSupportedRenderers,this.R_VideoQualityPromo);
 		this.t(captions,this.R_PlayerCaptionsTracklist);
@@ -152,18 +152,18 @@ class HandleRS extends ServiceMethods {
 	}
 	/** @private @arg {RS_Watch} x */
 	RS_Watch(x) {
-		const cf="RS_Watch"; const ht=this.x.get("handle_types");
-		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=ht.s(cf,x); this.g(y);/*#destructure_done*/
-		ht.RC_ResponseContext(responseContext);
-		ht.R_TwoColumnWatchNextResults(contents);
-		ht.E_Watch(currentVideoEndpoint);
-		ht.trackingParams(cf,trackingParams);
-		ht.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,x => ht.GE_ResponseReceived(cf,x));
-		this.z(engagementPanels,x => ht.R_EngagementPanelSectionList(x));
-		ht.R_DesktopTopbar(topbar);
-		this.z(pageVisualEffects,x => ht.R_CinematicContainer(x));
-		ht.D_FrameworkUpdates(frameworkUpdates);
+		const cf="RS_Watch";
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.RC_ResponseContext(responseContext);
+		this.R_TwoColumnWatchNextResults(contents);
+		this.E_Watch(currentVideoEndpoint);
+		this.trackingParams(trackingParams);
+		this.R_PlayerOverlay(playerOverlays);
+		this.z(onResponseReceivedEndpoints,x => this.GE_ResponseReceived(cf,x));
+		this.z(engagementPanels,x => this.R_EngagementPanelSectionList(x));
+		this.R_DesktopTopbar(topbar);
+		this.z(pageVisualEffects,x => this.R_CinematicContainer(x));
+		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x) {
@@ -252,7 +252,7 @@ class HandleRS extends ServiceMethods {
 		const {elements,startMs,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.z(elements,this.R_EndscreenElement);
 		this.t(startMs,this.a_primitive_str);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_PlayabilityStatus} x */
 	D_PlayabilityStatus(x) {
@@ -364,7 +364,7 @@ class HandleRS extends ServiceMethods {
 		this.D_TriggerCriteria(triggerCriteria);
 		this.G_Text(text);
 		this.E_VE83769_Url(endpoint);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		this.RA_Notification(snackbar);
 	}
 	/** @private @arg {D_PlayerAttestation} x */
@@ -508,7 +508,7 @@ class HandleRS extends ServiceMethods {
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
 		this.D_Thumbnail(watermark);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		this.GE_Browse(navigationEndpoint);
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
@@ -537,7 +537,7 @@ class HandleRS extends ServiceMethods {
 		this.G_Text(headerText);
 		this.R_InfoCardIcon(icon);
 		this.R_InfoCardIcon(closeButton);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		this.ceq(allowTeaserDismiss,true);
 		this.ceq(logIconVisibilityUpdates,true);
 	}
@@ -600,7 +600,7 @@ class HandleRS extends ServiceMethods {
 		this.a_primitive_str(lastModified);
 		this.a_primitive_str(contentLength);
 		this.a_primitive_str(quality);
-		this.t(xtags,x => this.params(cf,"adaptive_format.xtags",x));
+		this.t(xtags,x => this.params("adaptive_format.xtags",x));
 		this.t(fps,this.D_FormatFps);
 		this.t(qualityLabel,this.a_primitive_str);
 		if(projectionType!=="RECTANGULAR") debugger;
@@ -691,7 +691,7 @@ class HandleRS extends ServiceMethods {
 		this.params(cf,as_any("playerVars"),playerVars);
 		this.g(playerOverlay);
 		this.save_string(`${cf}.elementId`,elementId);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		if(legacyInfoCardVastExtension!=="") debugger;
 		this.g(sodarExtensionData);
 		this.videoId(externalVideoId);
@@ -724,7 +724,7 @@ class HandleRS extends ServiceMethods {
 		this.t(dismiss,this.G_Text);
 		this.D_EndscreenElement_EP(endpoint);
 		this.t(hovercardButton,this.R_SubscribeButton);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		this.t(isSubscribe,x => this.ceq(x,true));
 		this.a_primitive_str(id);
 		this.tz(thumbnailOverlays,this.G_ThumbnailOverlayItem);
@@ -743,7 +743,7 @@ class HandleRS extends ServiceMethods {
 		const {teaser,cueRanges,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.R_SimpleCardTeaser(teaser);
 		this.z(cueRanges,this.D_CueRangeItem);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_TrackingParams} x */
 	D_InfoCardIcon(x) {this.D_TrackingParams("D_InfoCardIcon",x);}
@@ -763,7 +763,7 @@ class HandleRS extends ServiceMethods {
 		const cf="D_SimpleCardTeaser";
 		const {message,trackingParams,prominent,logVisibilityUpdates,onTapCommand,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(message);
-		this.trackingParams(cf,trackingParams);
+		this.trackingParams(trackingParams);
 		this.ceq(prominent,true);
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);

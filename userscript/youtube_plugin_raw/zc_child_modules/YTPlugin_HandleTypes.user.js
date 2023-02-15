@@ -650,7 +650,7 @@ class HandleTypes extends HandleTypesEval {
 			/** @type {`${typeof cf}_Action`} */
 			const cf1=`${cf}_Action`;
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf1,x); this.g(y);
-			this.clickTrackingParams(cf1,clickTrackingParams);
+			this.clickTrackingParams(clickTrackingParams);
 			console.log(`[${cf}.openPopupAction]`,openPopupAction);
 			return;
 		}
@@ -1231,14 +1231,14 @@ class HandleTypes extends HandleTypesEval {
 	C_AdsControlFlowOpportunityReceived(x) {
 		const cf="C_AdsControlFlowOpportunityReceived"; this.k(cf,x);
 		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(clickTrackingParams);
 		this.DC_AdsControlFlowOpportunityReceived(adsControlFlowOpportunityReceivedCommand);
 	}
 	/** @private @arg {C_ReloadContinuationItems} x */
 	C_ReloadContinuationItems(x) {
 		const cf="C_ReloadContinuationItems"; this.k(cf,x);
 		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(clickTrackingParams);
 		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
 	}
 	/** @private @arg {C_RelatedChip} x */
@@ -1390,15 +1390,15 @@ class HandleTypes extends HandleTypesEval {
 			this.G_ClientSignal(cf2,gc);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {this.C_AdsControlFlowOpportunityReceived(x);} else if("changeKeyedMarkersVisibilityCommand" in x) {
 			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
+			this.clickTrackingParams(clickTrackingParams);
 			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
 		} else if("loadMarkersCommand" in x) {
 			const {clickTrackingParams,loadMarkersCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
+			this.clickTrackingParams(clickTrackingParams);
 			this.DC_LoadMarkers(loadMarkersCommand);
 		} else if("reloadContinuationItemsCommand" in x) {this.C_ReloadContinuationItems(x);} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
+			this.clickTrackingParams(clickTrackingParams);
 			this.AD_AppendContinuationItems(appendContinuationItemsAction);
 		} else {debugger;}
 	}
@@ -2456,7 +2456,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z([onEnabledCommand,onDisabledCommand],(x) => {
 			const cf="E_SetSettingAutonavForDesktop";
 			const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
+			this.clickTrackingParams(clickTrackingParams);
 			if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/account/set_setting") debugger;
 			this.M_SetSetting(commandMetadata);
 			this.T_DE_SettingItem_AutonavForDesktop(setSettingEndpoint);
@@ -4306,7 +4306,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="AU_EngagementPanel"; this.k(cf,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.AD_UpdateEngagementPanel(updateEngagementPanelAction);
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {D_AttBgChallenge} x */
 	D_AttBgChallenge(x) {
@@ -4706,7 +4706,7 @@ class HandleTypes extends HandleTypesEval {
 		this.z(actions,x => {
 			const cf="RSG_SharePanel_Action";
 			const {clickTrackingParams,openPopupAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(cf,clickTrackingParams);
+			this.clickTrackingParams(clickTrackingParams);
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
@@ -5328,7 +5328,7 @@ class HandleTypes extends HandleTypesEval {
 	DC_Generic_CTP(cf,path,x) {
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
 		this.params(path,continuation);
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {DC_SectionList_SearchFeed} x */
 	DC_SectionList_SearchFeed(x) {
@@ -6319,7 +6319,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_InvalidationId(invalidationId);
 		if(timeoutMs!==10000) debugger;
 		this.params("invalidation.continuation",continuation);
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
+		this.t(clickTrackingParams,this.clickTrackingParams);
 	}
 	/** @private @arg {D_InvalidationId} x */
 	D_InvalidationId(x) {
@@ -6429,7 +6429,7 @@ class HandleTypes extends HandleTypesEval {
 	D_ImpressionCommand(x) {
 		const cf="D_ImpressionCommand";
 		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(clickTrackingParams);
 		this.z(loggingUrls,x => this.T_BaseUrl(x,x => this.parser.parse_url(`${cf}:LoggingUrlItem`,x)));
 		this.B_Hack(pingingEndpoint);
 	}
@@ -6520,7 +6520,7 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_Continuation";
 		const {continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
 		this.decode_continuation_token(cf,continuation);
-		this.clickTrackingParams(cf,clickTrackingParams);
+		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {D_LiveChatHeader} x */
 	D_LiveChatHeader(x) {
