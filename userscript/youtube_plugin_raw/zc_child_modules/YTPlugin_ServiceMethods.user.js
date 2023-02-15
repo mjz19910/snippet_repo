@@ -2646,7 +2646,7 @@ class ServiceMethods extends ServiceData {
 	trackingParams(x) {this.params("tracking.params",x);}
 	/** @protected @arg {string} cf @arg {{}} x */
 	codegen_typedef(cf,x,do_break=false) {
-		this.cg.codegen_typedef(cf,x,do_break,true);
+		this.cg.codegen_typedef(cf,x,do_break,false);
 	}
 	/** @protected @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
