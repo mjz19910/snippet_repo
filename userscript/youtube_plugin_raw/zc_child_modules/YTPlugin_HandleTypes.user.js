@@ -101,8 +101,6 @@ class HandleTypesEval extends ServiceMethods {
 	//#region init and static init
 	// I use @private stuff that i want in static blocks
 	gk=this.get_keys_of;
-	/** @private @arg {string} a @arg {{}} b */
-	k=(a,b) => this.save_keys(\`[\${a}]\`,b);
 	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
@@ -2622,13 +2620,13 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x14527fab} x */
 	R_0x14527fab(cf1,x) {
-		const cf="R_0x14527fab";
+		const cf="R_0x14527fab"; this.k(`${cf1}:${cf}`,x);
 		const {3: f3,11: f11,12: f12,0x14527fab: a,...y}=this.s(cf,x); this.g(y);
 		this.D_0x14527fab(a);
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x19ac5ceb} x */
 	R_0x19ac5ceb(cf1,x) {
-		const cf="R_0x19ac5ceb";
+		const cf="R_0x19ac5ceb"; this.k(`${cf1}:${cf}`,x);
 		const {0x19ac5ceb: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		/** @implements {S_MapState} */
 		class MapState {
@@ -2788,7 +2786,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x12f639cf} x */
 	R_0x12f639cf(cf1,x) {
-		const cf="R_0x19ac5ceb";
+		const cf="R_0x19ac5ceb"; this.k(`${cf1}:${cf}`,x);
 		const {3: f3,6: f6,11: f11,12: f12,0x12f639cf: f_0x12f639cf,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(f3);
 		this.R_0x12f639cf_f6(f6);
