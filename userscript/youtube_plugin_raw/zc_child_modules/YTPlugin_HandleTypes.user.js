@@ -2132,7 +2132,7 @@ class HandleTypes extends HandleTypesEval {
 			const [type,field_id,,dec]=b;
 			if(type!=="child") debugger;
 			if(field_id!==3) debugger;
-			if(dec!==null) debugger;
+			b[3]=null;
 		}
 		{
 			const [type,field_id,,dec]=c;
