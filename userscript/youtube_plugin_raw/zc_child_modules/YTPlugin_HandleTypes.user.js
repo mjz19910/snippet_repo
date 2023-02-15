@@ -2507,8 +2507,9 @@ class HandleTypes extends HandleTypesEval {
 			case 2: return this.D_RA_D_BinaryCategoryObj_r(x);
 			case 4: {
 				if(this.is_RA_CR(x)) return this.D_RA_CR_0x14527fab(x);
-				x;
-			} break;
+				if(this.is_RA_CR_zct(x,1)) return this.codegen_typedef_bin(cf,x);
+				return this.codegen_typedef_bin(cf,x);
+			}
 			case 5: return this.D_RA_CR_0x12f639cf(x);
 			case 6: return this.D_RA_D_Binary_d0(x);
 		}
