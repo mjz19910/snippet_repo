@@ -999,14 +999,8 @@ class HandleTypes extends HandleTypesEval {
 	//#region E_ (Endpoints)
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
-	/** @private @arg {E_GetNotificationMenu} x */
-	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
-	/** @private @arg {E_GetTranscript} x */
-	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {M_GetTranscript} x */
-	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
 	/** @public @arg {M_GetNotificationMenu} x */
@@ -1019,14 +1013,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
 	/** @private @arg {GM_YpcGetCart} x */
 	GM_YpcGetCart(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_cart"));}
-	/** @private @arg {DE_GetTranscript} a */
-	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
-	/** @private @arg {DE_GetNotificationMenu} x */
-	DE_GetNotificationMenu(x) {
-		const cf="DE_GetNotificationMenu"; this.k(cf,x);
-		const {ctoken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("get_notification_menu.ctoken",ctoken);
-	}
 	/** @private @arg {DE_SuperThanksSelectedTier} x */
 	DE_SuperThanksSelectedTier(x) {
 		const cf="DE_SuperThanksSelectedTier";

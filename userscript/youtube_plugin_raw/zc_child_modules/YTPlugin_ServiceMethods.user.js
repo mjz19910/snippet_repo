@@ -4820,6 +4820,12 @@ class ServiceMethods extends ServiceData {
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
 	/** @protected @arg {R_ContinuationItem} x */
 	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
+	/** @private @arg {M_GetTranscript} x */
+	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
+	/** @private @arg {E_GetNotificationMenu} x */
+	E_GetNotificationMenu(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetNotificationMenu","getNotificationMenuEndpoint",x); this.g(y); this.M_GetNotificationMenu(a); this.DE_GetNotificationMenu(b);}
+	/** @private @arg {E_GetTranscript} x */
+	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
 		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
@@ -5553,6 +5559,14 @@ class ServiceMethods extends ServiceData {
 		const {contents,trackingParams,...y}=this.s_priv(`${cf2}:${cf1}`,u); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		return as_any([contents]);
+	}
+	/** @private @arg {DE_GetTranscript} a */
+	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
+	/** @private @arg {DE_GetNotificationMenu} x */
+	DE_GetNotificationMenu(x) {
+		const cf="DE_GetNotificationMenu"; this.k(cf,x);
+		const {ctoken,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params("get_notification_menu.ctoken",ctoken);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
