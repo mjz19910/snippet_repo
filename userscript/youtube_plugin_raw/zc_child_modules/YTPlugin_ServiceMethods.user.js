@@ -2573,6 +2573,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @template {["bigint",number[],bigint]|["group",D_DecTypeNum[]]|["failed",D_DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
 	is_bigint(x) {return x[0]==="bigint";}
+	/** @type {any[]} */
+	log_list=[];
 	/** @arg {P_ParamParse} path @arg {V_ParamMapValue} entry */
 	handle_map_value(path,entry) {
 		let key_index=this.parse_key_index;
@@ -2642,9 +2644,7 @@ class ServiceMethods extends ServiceData {
 				default: {
 					let new_data=this.save_number(path,entry);
 					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$do_save_num] [v:${entry}] --\n\ncase "${x}":\n`);
-						debugger;
+						this.log_list.push([(entry,x)=>`-- [handle_value_gen$do_save_num] [v:${entry}] --\n\ncase "${x}":\n`,entry,path])
 					}
 					ret=false;
 				} break;
