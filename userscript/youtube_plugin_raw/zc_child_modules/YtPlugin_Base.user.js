@@ -693,6 +693,41 @@ class Base64Binary {
 		if(!y) return null;
 		return this.decoder.decode(y);
 	}
+	/** @arg {Uint8Array} binary_arr */
+	encode64(binary_arr) {
+		let output="";
+		let chr1,chr2,chr3;
+		let enc1,enc2,enc3,enc4;
+		chr1=chr2=chr3=0;
+		enc1=enc2=enc3=enc4=0;
+		let i=0;
+		do {
+			chr1=binary_arr[i++];
+			chr2=binary_arr[i++];
+			chr3=binary_arr[i++];
+			enc1=chr1>>2;
+			enc2=((chr1&3)<<4)|(chr2>>4);
+			enc3=((chr2&15)<<2)|(chr3>>6);
+			enc4=chr3&63;
+			if(isNaN(chr2)) {
+				output+=this._keyStr.charAt(enc1);
+				output+=this._keyStr.charAt(enc2);
+			} else if(isNaN(chr3)) {
+				output+=this._keyStr.charAt(enc1);
+				output+=this._keyStr.charAt(enc2);
+				output+=this._keyStr.charAt(enc3);
+				enc4=64;
+			} else {
+				output+=this._keyStr.charAt(enc1);
+				output+=this._keyStr.charAt(enc2);
+				output+=this._keyStr.charAt(enc3);
+				output+=this._keyStr.charAt(enc4);
+			}
+			chr1=chr2=chr3=0;
+			enc1=enc2=enc3=enc4=0;
+		} while(i<binary_arr.length);
+		return output;
+	}
 	/** @private @arg {string} input @arg {Uint8Array} binary_arr */
 	decode(input,binary_arr) {
 		var byte_len=(input.length/4)*3|0;
@@ -2076,7 +2111,7 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {string} key */
 	get_store_keys(key) {
-		return this.get_data_store().get_string_store(this.#new_strings).data.find(e=>e[0]===key);
+		return this.get_data_store().get_string_store(this.#new_strings).data.find(e => e[0]===key);
 	}
 	/** @private @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};

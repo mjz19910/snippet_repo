@@ -3645,10 +3645,8 @@ class HandleTypes extends HandleTypesEval {
 		binary_arr[0]=f1;
 		let u8_arr=new Uint8Array(binary_arr.buffer);
 		let str=String.fromCharCode(...u8_arr);
-		this.save_string("D_0x19ac5ceb.map.video.item",btoa(str).replaceAll("=",""));
-	}
-	get_store_keys(key) {
-		return this.ds.get_data_store().seen_strings.find(e=>e[0]===key)[1][1];
+		let res=base64_url_dec.encode64(u8_arr);
+		this.save_string("D_0x19ac5ceb.map.video.item",res);
 	}
 	/** @private @arg {D_0x19ac5ceb_map_container} x */
 	D_0x19ac5ceb_map_container(x) {
