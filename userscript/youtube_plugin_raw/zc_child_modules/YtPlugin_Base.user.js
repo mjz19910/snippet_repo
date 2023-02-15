@@ -2516,11 +2516,14 @@ class BaseServicePrivate extends ApiBase {
 	}
 	/** @protected @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 	replace_until_same(s,rx,fn) {
+		if(s===void 0) debugger;
 		let i=0;
 		let ps=s;
 		do {
 			let p=s;
-			s=s.replaceAll(rx,fn);
+			let ts=s.replaceAll(rx,fn);
+			if(ts===void 0) debugger;
+			s=ts;
 			ps=p;
 			if(i>12) break;
 		} while(ps!==s);
