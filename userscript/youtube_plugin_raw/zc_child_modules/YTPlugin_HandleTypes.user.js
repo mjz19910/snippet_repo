@@ -2606,7 +2606,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
-		const cf="D_RA_Result_CTP";
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
 		/** @type {R_ClickTrackingObj} */
