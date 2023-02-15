@@ -301,7 +301,7 @@ class CodegenService extends BaseService {
 		console.groupEnd();
 		if(do_break) {debugger;}
 	}
-	/** @private @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj */
+	/** @api @public @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj */
 	typedef_json_replace_bin(state,key,obj) {
 		if(obj===null||obj===void 0) return obj;
 		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
@@ -313,23 +313,6 @@ class CodegenService extends BaseService {
 		if(typeof obj!=="object") return obj;
 		state;
 		return obj;
-	}
-	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @returns {string|null|void} */
-	codegen_typedef_bin(cf,x,do_break) {
-		/** @private @type {JsonReplacerState} */
-		let state=new JsonReplacerState(cf,[],true);
-		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,state),"\t");
-		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
-			return `[${vi}]`;
-		});
-		if(json_res) {
-			if(!this.typedef_cache.includes(json_res)) {
-				this.typedef_cache.push(json_res);
-				console.log(json_res);
-			}
-		}
-		if(do_break) {debugger;}
 	}
 	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;

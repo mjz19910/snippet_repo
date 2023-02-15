@@ -2348,10 +2348,27 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==3) debugger;
 		x[3]=null;
 	}
+	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @returns {string|null|void} */
+	codegen_typedef_bin(cf,x,do_break) {
+		/** @private @type {JsonReplacerState} */
+		let state=new JsonReplacerState(cf,[],true);
+		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,state),"\t");
+		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
+			return `[${vi}]`;
+		});
+		if(json_res) {
+			if(!this.typedef_cache.includes(json_res)) {
+				this.typedef_cache.push(json_res);
+				console.log(json_res);
+			}
+		}
+		if(do_break) {debugger;}
+	}
 	/** @arg {D_RD_Obj_a6} x */
-	D_RA_D_BinaryCategoryObj_a6(x) {
-		const [type,field_id,,dec]=x;
-		if(type!=="child") debugger;
+	D_RD_Obj_a6(x) {
+		const cf="D_RD_Obj_a6",[type,field_id,,dec]=x;
+		if(type!=="child") return this.codegen_typedef_bin(cf,x);
 		if(field_id!==6) debugger;
 		if(dec!==null) debugger;
 	}
@@ -2418,7 +2435,7 @@ class HandleTypes extends HandleTypesEval {
 			case 2: return this.D_RA_D_BinaryCategoryObj_23_a2(x);
 			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
 			case 5: return this.D_RD_Obj_a5(x);
-			case 6: return this.D_RA_D_BinaryCategoryObj_a6(x);
+			case 6: return this.D_RD_Obj_a6(x);
 			case 9: return this.D_RA_D_BinaryCategoryObj_a9(x);
 			case 19: return this.D_RA_D_BinaryObj_a19(x);
 		}
