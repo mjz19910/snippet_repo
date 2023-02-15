@@ -2806,7 +2806,7 @@ class HandleTypes extends HandleTypesEval {
 		if(3 in x&&2 in x&&!(4 in x)) {
 			return this.D_BinaryCategoryObj(cf,x);
 		}
-		if(3 in x&&1 in x) {
+		if(3 in x&&1 in x&&!(4 in x)) {
 			return this.D_BinaryCategoryObj(cf,x);
 		}
 		if(3 in x) return x;
