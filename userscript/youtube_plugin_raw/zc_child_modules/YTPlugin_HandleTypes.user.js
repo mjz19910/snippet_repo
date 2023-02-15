@@ -2142,6 +2142,10 @@ class HandleTypes extends HandleTypesEval {
 				console.log(`\ncase "${cf}":`);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
 			} break;
+			case "continuation_request.reel_watch_sequence.token": {
+				/** @type {P_continuation_request_reel_watch_sequence_token} */
+				let u=as_any(x); u;
+			} break;
 			case "entity.key": {
 				/** @type {P_entity_key} */
 				let u=as_any(x); u;
