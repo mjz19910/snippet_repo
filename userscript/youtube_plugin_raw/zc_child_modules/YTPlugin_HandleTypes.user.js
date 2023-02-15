@@ -3631,14 +3631,15 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_0x19ac5ceb_map_value";
 		const {1: [f1],...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="bigint") debugger;
-		this.save_string("D_0x19ac5ceb.map_values",`${f1.toString(16)}n`);
+		let bytes=f1.toString(16); let len=16-bytes.length;
+		let bin_str="0".repeat(len)+bytes;
+		this.save_string("D_0x19ac5ceb.map_values",`0x${bin_str}n`);
 	}
 	/** @private @arg {D_0x19ac5ceb_map_container} x */
 	D_0x19ac5ceb_map_container(x) {
 		const cf="D_0x19ac5ceb_map_container";
 		const {1000: [f1],...y}=this.s(cf,x); this.g(y);
 		this.D_0x19ac5ceb_map_value(f1);
-		debugger;
 	}
 	/** @private @arg {D_0x19ac5ceb_map} x */
 	D_0x19ac5ceb_map(x) {

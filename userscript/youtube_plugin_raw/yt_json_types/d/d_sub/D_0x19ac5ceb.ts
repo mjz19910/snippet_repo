@@ -1,6 +1,6 @@
 type D_0x19ac5ceb_map_entry={
-	1: [{}];
-	2: [{}];
+	1: [number];
+	2: [number];
 };
 
 type D_0x19ac5ceb_map_key={
