@@ -2467,14 +2467,14 @@ class HandleTypes extends HandleTypesEval {
 				this.R_GetPgdBuyFlow(u);
 			} break;
 			case "tracking.trackingParams": {
-				/** @type {D_RA_Result_TP} */
+				/** @type {R_TrackingObj} */
 				let u=as_any(x);
-				this.D_RA_Result_TP(u);
+				this.R_TrackingObj(u);
 			} break;
 			case "tracking.click_tracking_params": {
-				/** @type {D_RA_Result_CTP} */
+				/** @type {R_ClickTrackingObj} */
 				let u=as_any(x);
-				this.D_RA_Result_CTP(u);
+				this.R_ClickTrackingObj(u);
 			} break;
 		}
 	}
