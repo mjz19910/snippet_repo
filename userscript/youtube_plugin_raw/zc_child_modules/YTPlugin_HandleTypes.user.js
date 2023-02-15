@@ -2541,8 +2541,17 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RA_D_Binary_f1";
 		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
 		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
+		if(this.is_fx_extract(x,4)) {
+			const cf="D_RD_Obj_a4",[type,,,dec]=x[0];
+			if(type!=="child") {
+				this.codegen_typedef_bin(cf,x);
+				return;
+			}
+			this.D_RA_V_BinaryTimestamp_asFixed(dec);
+			return;
+		}
 		if(this.is_fx_extract(x,1)) {
-			const cf="D_RD_Obj_a14",[type,,a]=x[0];
+			const cf="D_RD_Obj_a1",[type,,a]=x[0];
 			if(type!=="data32") {
 				this.codegen_typedef_bin(cf,x);
 				return;
