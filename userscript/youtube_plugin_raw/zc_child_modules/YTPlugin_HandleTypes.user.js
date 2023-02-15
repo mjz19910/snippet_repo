@@ -2123,8 +2123,10 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {P_ReelParams} x */
 	P_ReelParams(x) {
 		const cf="P_ReelParams"; this.k(cf,x);
-		if(6 in x) return;
-		if(5 in x) return;
+		if(1 in x) {
+			this.save_string(`${cf}_t${x[1]}`,Object.keys(x));
+			return;
+		}
 		debugger;
 	}
 	/** @private @arg {P_ReelSequenceParams} x */
