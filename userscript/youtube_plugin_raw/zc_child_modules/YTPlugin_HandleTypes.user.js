@@ -2416,10 +2416,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RD_Obj_a6(x) {
 		const cf="D_RD_Obj_a6",[type,,value,]=x;
 		switch(type) {
-			default: {
-				this.codegen_typedef_bin(cf,x);
-				debugger;
-			} break;
+			default: this.codegen_typedef_bin(cf,x); break;
 			case "data32": {
 				this.save_number(cf,value);
 			} break
@@ -2436,7 +2433,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(type) {
 			case "child": {
 				switch(dec.length) {
-					default: return this.codegen_typedef_bin(cf,x,false);
+					default: return this.codegen_typedef_bin(cf,x);
 					case 1: return this.handle_1_any(dec);
 					case 3: return this.handle_3_any(dec);
 				}
@@ -2476,7 +2473,7 @@ class HandleTypes extends HandleTypesEval {
 		if(id!==9) debugger;
 		switch(type) {
 			default: {
-				this.codegen_typedef_bin(cf,x,false);
+				this.codegen_typedef_bin(cf,x);
 			} break;
 			case "child": {
 				this.save_string(`${cf}.type`,type);
@@ -2493,7 +2490,7 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="child") debugger;
 		for(let i=0;i<dec.length;i++) {
 			let x=dec[i];
-			this.codegen_typedef_bin(`${cf}.${i}`,x,false);
+			this.codegen_typedef_bin(`${cf}.${i}`,x);
 		}
 	}
 	/** @arg {D_RD_Obj_a5} x */
@@ -2521,7 +2518,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RD_ObjArr(x) {
 		const cf="D_RD_ObjArr";
 		switch(x[1]) {
-			default: return this.codegen_typedef_bin(cf,x,false);
+			default: return this.codegen_typedef_bin(cf,x);
 			case 1: return this.D_RD_Obj_a1(x);
 			case 2: return this.D_RD_Obj_a2(x);
 			case 3: return this.D_RD_Obj_a3(x);
@@ -2774,7 +2771,7 @@ class HandleTypes extends HandleTypesEval {
 						if(string_store[1][1].includes(x3)) return;
 						this.save_string(save_key,x3);
 					}
-					this.codegen_typedef_bin(`decode_continuation_token:${cf}:${kk.join()}`,x,false);
+					this.codegen_typedef_bin(`decode_continuation_token:${cf}:${kk.join()}`,x);
 				} break;
 				case "3D printing":
 				case "AI": case "Algorithms":
@@ -2806,12 +2803,12 @@ class HandleTypes extends HandleTypesEval {
 			if(is_token_g2(x,31)) return;
 			if(is_token_g2(x,53)) return;
 			let kk=this.get_keys_of_2(x);
-			this.codegen_typedef_bin(`decode_continuation_token:g_2:${cf}:${kk.join()}`,x,false);
+			this.codegen_typedef_bin(`decode_continuation_token:g_2:${cf}:${kk.join()}`,x);
 			return;
 		}
 		let kk=this.get_keys_of_2(x);
 		if(kk.length>0) {
-			this.codegen_typedef_bin(`decode_continuation_token:${cf}:${this.number_as_hex(as_any(kk.shift()))}`,x,false);
+			this.codegen_typedef_bin(`decode_continuation_token:${cf}:${this.number_as_hex(as_any(kk.shift()))}`,x);
 			debugger;
 		}
 	}
@@ -2837,13 +2834,12 @@ class HandleTypes extends HandleTypesEval {
 		if(4 in x) {
 			if(2 in x) return this.R_TrackingObj(x);
 			if(3 in x) return this.R_SlotAdServingDataObj(x);
-			this.codegen_typedef_bin(`${cf2}:${cf}`,x,false);
+			this.codegen_typedef_bin(`${cf2}:${cf}`,x);
 		}
 		if(3 in x&&2 in x) return this.D_BinaryCategoryObj(cf,x);
 		if(3 in x&&1 in x) return this.D_BinaryCategoryObj(cf,x);
 		if(1 in x) return this.R_CreatePlaylistObj(x);
-		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x,false);
-		debugger;
+		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x);
 	}
 	/** @private @arg {R_0x12f639cf[11]} x */
 	R_f11(x) {
