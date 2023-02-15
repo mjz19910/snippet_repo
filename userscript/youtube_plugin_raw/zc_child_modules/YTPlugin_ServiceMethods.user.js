@@ -1804,7 +1804,7 @@ class ServiceMethods extends ServiceData {
 		this.g(x);
 	}
 	/** @private @arg {DE_CreateComment} x */
-	DE_CreateComment(x) {this.TD_Params("create_comment.params","createCommentParams",x);}
+	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
 		const cf="DE_Like"; this.g_k(cf,x); this.k(cf,x);
@@ -3046,7 +3046,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {return this.str_starts_with(x.targetId,w);}
 	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
-	/** @protected @arg {CF_D_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
+	/** @protected @arg {CF_TD_Params} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
 	TD_Params(cf,path,k,x) {const {[k]: a}=this.s(cf,x); this.params(path,a);}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
@@ -3275,7 +3275,7 @@ class ServiceMethods extends ServiceData {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {DE_CreateBackstagePost} x */
-	DE_CreateBackstagePost(x) {const cf="DE_CreateBackstagePost"; this.y(cf,"createBackstagePostParams",x,x => this.params("create_backstage_post.params",x));}
+	DE_CreateBackstagePost(x) {this.TD_Params("DE_CreateBackstagePost","create_backstage_post.params","createBackstagePostParams",x);}
 	/** @private @arg {DE_Feedback} x */
 	DE_Feedback(x) {
 		const cf="DE_Feedback";
@@ -3880,17 +3880,27 @@ class ServiceMethods extends ServiceData {
 		if(addToOfflineButtonState!=="ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN") debugger;
 		this.params("entity.key",key);
 	}
-	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]:never:never)|["unknown",string,{}]} p */
+	/** @private @arg {DS_EY_TranscriptTrackSelection} x */
+	DS_EY_TranscriptTrackSelection(x) {
+		const cf="DS_EY_TranscriptTrackSelection";
+		const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
+		this.params("transcript_track_selection.entity.key",key);
+		if(selectedTrackIndex!==0) debugger;
+		this.params("transcript_track_selection.serialized_params",serializedParams);
+	}
+	/** @private @arg {DS_EY_Subscription} x */
+	DS_EY_Subscription(x) {
+		const cf="DS_EY_Subscription";
+		const {key,subscribed,...y}=this.s(cf,x); this.g(y);
+		this.params("subscriptionState.key",key);
+		this.a_primitive_bool(subscribed);
+	}
+	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,null,V]:never:never)|["unknown",string,{}]} p */
 	XP_EntityPayload(p) {
-		const [k,x]=p;
-		switch(k) {
-			case "offlineabilityEntity": this.D_EY_Offlineability(x); break;
-			case "subscriptionStateEntity": {
-				const cf="DS_EY_Subscription";
-				const {key,subscribed,...y}=this.s(cf,x); this.g(y);
-				this.params("subscriptionState.key",key);
-				this.a_primitive_bool(subscribed);
-			} break;
+		const [ty]=p;
+		switch(ty) {
+			case "offlineabilityEntity": {const [,x]=p; this.D_EY_Offlineability(x);} break;
+			case "subscriptionStateEntity": {this.DS_EY_Subscription(p[1]);} break;
 			case "playlistLoopStateEntity": {
 				const cf="DS_EY_PlaylistLoop";
 				const {key,state,...y}=this.s(cf,x); this.g(y);
@@ -3902,13 +3912,7 @@ class ServiceMethods extends ServiceData {
 					case "PLAYLIST_LOOP_STATE_ONE":
 				}
 			} break;
-			case "transcriptTrackSelectionEntity": {
-				const cf="DS_EY_TranscriptTrackSelection";
-				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
-				this.params("transcript_track_selection.entity.key",key);
-				if(selectedTrackIndex!==0) debugger;
-				this.params("transcript_track_selection.serialized_params",serializedParams);
-			} break;
+			case "transcriptTrackSelectionEntity": this.DS_EY_TranscriptTrackSelection(x); break;
 			case "transcriptSearchBoxStateEntity": {
 				const cf="DS_EY_TranscriptSearchBox";
 				const {key,isHidden,...y}=this.s(cf,x); this.g(y);
@@ -3917,12 +3921,10 @@ class ServiceMethods extends ServiceData {
 			} break;
 			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
 			case "unknown": {
-				const cf="XP_EntityPayload.unknown";
-				let pk=p[1];
-				let x=p[2];
+				const cf="XP_EntityPayload.unknown",[,k,x]=p;
 				if("key" in x) {
 					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
+					console.log(`unknown.${this.uppercase_first(k)}.key`,key);
 				} else {debugger;}
 			} break;
 		}
@@ -3935,12 +3937,12 @@ class ServiceMethods extends ServiceData {
 	 */
 	G_EY_Entity(x) {
 		const cf="G_EY_Entity"; this.k(cf,x);
-		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="offlineabilityEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="offlineabilityEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
+		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,null,this.G_EY_Entity_Any(cf,x)];}
 		{const cn="superThanksSelectedTierEntity"; if(cn in x) return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];}
 		/** @returns {[]|[string]} */
 		const get_kl=() => {return this.get_keys_of(x);};

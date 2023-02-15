@@ -862,6 +862,9 @@ export namespace Gen {
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}
+		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_CreateBackstagePost";}
+		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_CreateComment";}
+		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_YpcGetCart";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AU_NotificationsUnseenCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddChatItem";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddToGuideSection";}

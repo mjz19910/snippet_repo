@@ -1015,10 +1015,7 @@ class HandleTypes extends HandleTypesEval {
 		console.log("super_thanks_selected_tier.key",key);
 	}
 	/** @private @arg {DE_YpcGetCart} x */
-	DE_YpcGetCart(x) {
-		const cf="DE_YpcGetCart"; this.k(cf,x);
-		this.TD_Params("ypc_get_cart.transaction_params","transactionParams",x);
-	}
+	DE_YpcGetCart(x) {this.TD_Params("DE_YpcGetCart","ypc_get_cart.transaction_params","transactionParams",x);}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
 	/** @private @arg {RS_Browse} x */
@@ -2179,7 +2176,7 @@ class HandleTypes extends HandleTypesEval {
 	decode_continuation_token_obj(cf,x) {
 		switch(cf) {
 			default: debugger; break;
-			case "like.likeParams":
+			case "like.params":
 			case "reel.sequence_params": {
 				/** @type {P_ReelSequenceParams} */
 				let u=as_any(x);
