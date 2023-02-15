@@ -114,10 +114,11 @@ type T_WCM_={
 	sendPost?: boolean;
 	rootVe?: D_RootVisualElementType;
 };
+// path,map_entry_values,map_entry_key_path,map_keys,root
 type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	path: P_ParamParse,
-	x: V_ParamMapValue[],
-	idx: number[],
+	map_entry_values: V_ParamMapValue[],
+	map_entry_key_path: number[],
 	map_keys: number[],
 	root: T,
 ) => boolean;

@@ -142,56 +142,6 @@ ECatcherService.known_experiments.push(...[
 	[24473090],
 ].flat());
 class HandleTypes extends HandleTypesEval {
-	/** @typedef {"DE_VE3832_Watch"|"R_WatchPage_VE3832"} CF_PlayerParams */
-	/** @template {CF_PlayerParams} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
-	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
-		switch(path)/*player_params*/ {
-			default: debugger; return false;
-			case "watch.player_params":
-			case "watch.player_params.f40": case "watch.player_params.f40.f1":
-		}
-		/** @type {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} */
-		let t_pt=as(map_entry_key_path);
-		switch(root) {
-			default: debugger; return false;
-			case "DE_VE3832_Watch":
-			case "R_WatchPage_VE3832":
-		}
-		switch(t_pt.length) {
-			default: debugger; return false;
-			case 1: {
-				switch(t_pt[0]) {
-					default: debugger; return false;
-					case 8: case 9: case 12: case 25: case 40: {
-						const rk=this.exact_arr(t_pt[0]);
-						return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
-					}
-				}
-			}
-			case 2: switch(t_pt[0]) {
-				default: debugger; return false;
-				case 40: switch(t_pt[1]) {
-					case 1: {
-						let [k1,k2]=t_pt;
-						const rk=this.exact_arr(k1,k2);
-						return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
-					}
-				}
-			}
-			case 3: {
-				switch(t_pt[0]) {
-					default: debugger; return false;
-					case 40:
-				}
-				if(t_pt[1]!==1) debugger;
-				switch(t_pt[2]) {
-					default: debugger; return false;
-					case 2: case 3:
-				}
-				return this.on_player_params_callback_ty(map_entry_values,t_pt,path,map_keys,root);
-			}
-		}
-	}
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
 	fmt_arr(x) {
 		return as(x.map(v => `${v}`).join(".f"));
