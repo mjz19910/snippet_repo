@@ -2170,13 +2170,13 @@ class HandleTypes extends HandleTypesEval {
 		if(x.length!==3) debugger;
 		const [a,b,c]=x;
 		{
-			const [type,field_id,buffer,dec]=a;
+			const [type,field_id,,dec]=a;
 			if(type!=="child") debugger;
 			if(field_id!==2) debugger;
 			if(dec!==null) debugger;
 		}
 		{
-			const [type,field_id,buffer,dec]=b;
+			const [type,field_id,,dec]=b;
 			if(type!=="child") debugger;
 			if(field_id!==3) debugger;
 			if(dec!==null) debugger;
@@ -2201,7 +2201,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_CR_0x19ac5ceb(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
-		const [type,field_id,buffer,dec_1]=dec_0;
+		const [type,field_id,,dec_1]=dec_0;
 		if(type!=="child") debugger;
 		if(field_id!==0x19ac5ceb) debugger;
 		this.D_RA_CD_0x19ac5ceb(dec_1);
@@ -2210,14 +2210,14 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_CD_0x19ac5ceb(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
-		const [type,field_id,buffer,dec_1]=dec_0;
+		const [type,field_id,,dec_1]=dec_0;
 		if(type!=="child") debugger;
 		if(field_id!==1) debugger;
 		this.z(dec_1,this.D_RA_CD_0x19ac5ceb_map);
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb_map} x */
 	D_RA_CD_0x19ac5ceb_map(x) {
-		const [type,field_id,buffer,dec]=x;
+		const [type,field_id,,dec]=x;
 		if(type!=="child") debugger;
 		switch(field_id) {
 			default: debugger; break;
@@ -2285,28 +2285,24 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==3) debugger;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_1;
+			const [type,field_id]=dec_1;
 			if(type!=="child") debugger;
 			if(field_id!==6) debugger;
-			buffer; dec;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_2;
+			const [type,field_id]=dec_2;
 			if(type!=="child") debugger;
 			if(field_id!==11) debugger;
-			buffer; dec;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_3;
+			const [type,field_id]=dec_3;
 			if(type!=="child") debugger;
 			if(field_id!==12) debugger;
-			buffer; dec;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_4;
+			const [type,field_id]=dec_4;
 			if(type!=="child") debugger;
 			if(field_id!==0x12f639cf) debugger;
-			buffer; dec;
 		}
 	}
 	/** @arg {D_RA_CR_0x14527fab} x */
@@ -2318,27 +2314,24 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==3) debugger;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_1;
+			const [type,field_id]=dec_1;
 			if(type!=="child") debugger;
 			if(field_id!==11) debugger;
-			buffer; dec;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_2;
+			const [type,field_id]=dec_2;
 			if(type!=="child") debugger;
 			if(field_id!==12) debugger;
-			buffer; dec;
 		}
 		{
-			const [type,field_id,buffer,dec]=dec_3;
+			const [type,field_id]=dec_3;
 			if(type!=="child") debugger;
 			if(field_id!==0x14527fab) debugger;
-			buffer; dec;
 		}
 	}
 	/** @arg {["child",1,Uint8Array,null]} x */
 	handle_1_any_d0(x) {
-		const [type,field_id,buffer]=x;
+		const [type,field_id,]=x;
 		if(type!=="child") debugger;
 		if(field_id!==1) debugger;
 		x[3]=null;
@@ -2393,7 +2386,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
-		const [type,field_id,buffer,dec]=x;
+		const [type,field_id,,dec]=x;
 		if(type!=="child") debugger;
 		switch(field_id) {
 			default: debugger; break;
@@ -2408,7 +2401,6 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="child") debugger;
 		if(field_id!==3) debugger;
 		x[3]=null;
-		buffer;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_a6} x */
 	D_RA_D_BinaryCategoryObj_a6(x) {
@@ -2416,7 +2408,6 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="child") debugger;
 		if(field_id!==6) debugger;
 		if(dec!==null) debugger;
-		buffer;
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_13_a1|D_RA_D_BinaryCategoryObj_13_a1_ext} x */
 	D_RA_D_BinaryCategoryObj_13_a1(x) {
