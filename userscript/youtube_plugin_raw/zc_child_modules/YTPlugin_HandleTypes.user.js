@@ -3436,6 +3436,8 @@ class HandleTypes extends HandleTypesEval {
 				let {...s}=this.parse_url_search_params(up.search);
 				if("v" in s) {
 					let {v,playnext,list,...y}=this.s(cf,s); this.g(y);/*#destructure_done*/
+					if(playnext!=="1") debugger;
+					if(!list) debugger; this.parse_playlist_id(list);
 					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
 					let gw=() => ({k: 1,a: v});
 					let w=gw();
@@ -3445,8 +3447,6 @@ class HandleTypes extends HandleTypesEval {
 					}
 					this.save_next_char("share_url.v",w.a[0]);
 					this.videoId(w.a);
-					if(playnext!=="1") debugger;
-					if(!list) debugger; this.parse_playlist_id(list);
 					return;
 				}
 				return;
