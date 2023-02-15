@@ -473,7 +473,6 @@ class ServiceMethods extends ServiceData {
 		let [ud,{...y1}]=this.unwrap_prefix(ur,"dislike");
 		this.D_LikeButton_Dislike(ud);
 		if("target" in y1) {
-			const cf="D_LikeButton.rest";
 			const {target,trackingParams,serviceEndpoints,...y2}=y1; this.g(y2);
 			this.t(target,this.D_LikeApi);
 			if(trackingParams) this.trackingParams(trackingParams);
@@ -4099,5 +4098,20 @@ class ServiceMethods extends ServiceData {
 	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @protected @arg {E_PerformCommentAction} x */
 	E_PerformCommentAction(x) {x; debugger;}
+	/** @public @arg {RC_ResponseContext} x */
+	RC_ResponseContext(x) {
+		const cf="RC_ResponseContext"; this.k(cf,x);
+		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
+		this.z(serviceTrackingParams,x => {
+			if(!this.is_normal_service(this)) return;
+			const service_tracking=this.x.get("service_tracking");
+			service_tracking.set_service_params(x);
+		});
+		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
+		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
+		if(maxAgeSeconds!==void 0) this.a_primitive_num(maxAgeSeconds);
+		this.t(stateTags,this.RCA_RelevantStateTags);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

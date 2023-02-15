@@ -2271,21 +2271,6 @@ class HandleTypes extends HandleTypesEval {
 		this.a_primitive_str(datasyncId);
 		this._primitive_of(loggedOut,"boolean");
 	}
-	/** @public @arg {RC_ResponseContext} x */
-	RC_ResponseContext(x) {
-		const cf="RC_ResponseContext"; this.k(cf,x);
-		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(mainAppWebResponseContext,this.RC_MainAppWebResponseContext);
-		this.z(serviceTrackingParams,x => {
-			if(!this.is_normal_service(this)) return;
-			const service_tracking=this.x.get("service_tracking");
-			service_tracking.set_service_params(x);
-		});
-		this.t(webResponseContextExtensionData,this.RC_WR_ContextExtension);
-		this.t(consistencyTokenJar,this.RC_ConsistencyTokenJar);
-		if(maxAgeSeconds!==void 0) this.a_primitive_num(maxAgeSeconds);
-		this.t(stateTags,this.RCA_RelevantStateTags);
-	}
 	/** @private @arg {RC_ConsistencyTokenJar} x */
 	RC_ConsistencyTokenJar(x) {
 		const cf="RC_ConsistencyTokenJar"; this.k(cf,x);

@@ -263,7 +263,7 @@ class HandleRS extends ServiceMethods {
 		this.t(offlineability,this.R_Button);
 		this.t(miniplayer,this.R_Miniplayer);
 		let ctx=atob(contextParams);
-		this.params(cf,"playability_status.context_params",ctx);
+		this.params("playability_status.context_params",ctx);
 	}
 	/** @private @arg {D_PlayerAnnotationsExpanded} x */
 	D_PlayerAnnotationsExpanded(x) {
