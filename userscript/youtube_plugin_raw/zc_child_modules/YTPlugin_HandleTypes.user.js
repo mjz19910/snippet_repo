@@ -2780,7 +2780,6 @@ class HandleTypes extends HandleTypesEval {
 	R_SlotAdServingDataObj(x) {x;}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
-		const cf2="GR_RootBinaryObj";
 		this.k(`${cf}.binary_obj`,x);
 		if(0x4c82a9c in x) return this.R_0x4c82a9c(cf,x);
 		if(0x12f639cf in x) return this.R_0x12f639cf(cf,x);
@@ -2794,7 +2793,7 @@ class HandleTypes extends HandleTypesEval {
 			if(3 in x) return this.R_SlotAdServingDataObj(x);
 			let keys=this.get_keys_of_2(x);
 			if(keys.length!==1) debugger;
-			this.V_BinaryTimestamp(x[4]);
+			this.V_BinaryTimestamp(x[4][0]);
 			return;
 		}
 		if(3 in x&&2 in x) return this.D_BinaryCategoryObj(cf,x);
