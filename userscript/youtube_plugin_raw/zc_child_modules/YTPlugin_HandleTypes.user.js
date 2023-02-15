@@ -2432,22 +2432,6 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @private @arg {D_RA_Result_CTP} x */
-	D_RA_Result_CTP(x) {
-		let bin_obj=this.convert_arr_to_obj(x);
-		if(!bin_obj) {debugger; return;}
-		/** @type {R_ClickTrackingObj} */
-		let u=as_any(bin_obj);
-		this.R_ClickTrackingObj(u);
-	}
-	/** @private @arg {D_RA_Result_TP} x */
-	D_RA_Result_TP(x) {
-		let bin_obj=this.convert_arr_to_obj(x);
-		if(!bin_obj) {debugger; return;}
-		/** @type {R_TrackingObj} */
-		let u=as_any(bin_obj);
-		this.R_TrackingObj(u);
-	}
 	/** @private @arg {R_GetPgdBuyFlow} x */
 	R_GetPgdBuyFlow(x) {x; debugger;}
 	/** @private @arg {P_ReelPlayerParamsObj} x */
