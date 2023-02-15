@@ -2442,9 +2442,6 @@ class HandleTypes extends HandleTypesEval {
 		let dec_t=as_any(dec);
 		switch(dec_t.length) {
 			default: debugger; break;
-			case 2: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
-			case 4: return this.D_RA_CR_0x14527fab(dec_t);
-			case 5: return this.D_RA_CR_0x12f639cf(dec_t);
 			case 1: {
 				if(dec_t[0][1]===0x19ac5ceb) {
 					this.D_RA_CR_0x19ac5ceb(as(dec_t));
@@ -2452,6 +2449,9 @@ class HandleTypes extends HandleTypesEval {
 				};
 				this.D_RA_CR_0x4c82a9c(as(dec_t));
 			} break;
+			case 2: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
+			case 4: return this.D_RA_CR_0x14527fab(dec_t);
+			case 5: return this.D_RA_CR_0x12f639cf(dec_t);
 		}
 		let bin_obj=this.convert_arr_to_obj(dec);
 		if(!bin_obj) {debugger; return;}
