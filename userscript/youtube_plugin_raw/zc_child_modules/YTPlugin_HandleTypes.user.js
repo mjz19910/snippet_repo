@@ -2415,9 +2415,9 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RD_Obj_a6} x */
 	D_RD_Obj_a6(x) {
 		const cf="D_RD_Obj_a6",[type,field_id,,dec]=x;
-		if(type!=="child") return this.codegen_typedef_bin(cf,x,false);
+		if(type!=="child") return this.codegen_typedef_bin(cf,x);
 		if(field_id!==6) debugger;
-		if(dec!==null) debugger;
+		if(dec!==null) return this.codegen_typedef_bin(cf,x);
 	}
 	/** @arg {D_RD_Obj_a1} x */
 	D_RD_Obj_a1(x) {
@@ -2460,7 +2460,7 @@ class HandleTypes extends HandleTypesEval {
 		if(type!=="data64") return this.codegen_typedef_bin(cf,x,false);
 		if(field_id!==9) debugger;
 	}
-	/** @arg {D_RA_D_BinaryObj_a19} x */
+	/** @arg {D_RD_Obj_a19} x */
 	D_RD_Obj_a19(x) {
 		const [type,,,dec]=x;
 		if(type!=="child") debugger;
