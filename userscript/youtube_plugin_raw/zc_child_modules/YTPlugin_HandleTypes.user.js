@@ -2212,7 +2212,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
-	/** @private @arg {Extract<R_ClickTrackingObj,{1:any}>} x */
+	/** @private @arg {R_ClickTrackingObj_t1} x */
 	R_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
 		const {1: [f1],2: [f2],4: [f4],...u}=x;
