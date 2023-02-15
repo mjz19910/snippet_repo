@@ -2366,19 +2366,19 @@ class HandleTypes extends HandleTypesEval {
 		const [dec_0]=x;
 		this.handle_2_any_d1(dec_0);
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_2[0]} x */
+	/** @arg {D_RA_V_BinaryTimestamp_asFixed[0]} x */
 	D_RA_V_BinaryTimestamp_2_d0(x) {
 		const [type,field_id]=x;
 		if(type!=="data32") debugger;
 		if(field_id!==1) debugger;
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_2[1]} x */
+	/** @arg {D_RA_V_BinaryTimestamp_asFixed[1]} x */
 	D_RA_V_BinaryTimestamp_2_d1(x) {
 		const [type,field_id]=x;
 		if(type!=="data_fixed32") debugger;
 		if(field_id!==2) debugger;
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_2[2]} x */
+	/** @arg {D_RA_V_BinaryTimestamp_asFixed[2]} x */
 	D_RA_V_BinaryTimestamp_2_d2(x) {
 		const [type,field_id]=x;
 		if(type!=="data_fixed32") debugger;
