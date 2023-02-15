@@ -2533,6 +2533,14 @@ class HandleTypes extends HandleTypesEval {
 				this.save_number(cf,a);
 			} break;
 			case 9: return this.D_RD_Obj_a9(x);
+			case 10: {
+				const cf="D_RD_Obj_a10",[type,,,a]=x;
+				if(type!=="child") {
+					this.codegen_typedef(cf,x);
+					return;
+				}
+				if(a[0][0]!=="data32") debugger;
+			} break;
 			case 19: return this.D_RD_Obj_a19(x);
 		}
 	}
