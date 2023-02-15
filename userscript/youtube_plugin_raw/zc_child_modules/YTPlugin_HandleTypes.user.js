@@ -2069,7 +2069,8 @@ class HandleTypes extends HandleTypesEval {
 				let res=this.convert_arr_to_obj(ota);
 				if(res!==null) return res;
 			}
-			debugger;
+			console.log("[maybe_handle_bin.do_handle_arr]",obj);
+			return obj;
 		}
 		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
 		s;
