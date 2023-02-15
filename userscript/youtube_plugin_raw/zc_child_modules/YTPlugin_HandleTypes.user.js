@@ -2341,10 +2341,17 @@ class HandleTypes extends HandleTypesEval {
 		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
 		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
 	}
-	/** @arg {D_RA_Obj_d0_ext|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
+	/** @arg {D_RD_Obj_a4|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RD_Obj_a4(x) {
-		const cf="D_RA_D_BinaryCategoryObj_d0";
-		const [type,field_id,,dec]=x;
+		const cf="D_RD_Obj_a4";
+		const [type,field_id,value,dec]=x;
+		if(type==="data32") {
+			switch(field_id) {
+				default: debugger; break;
+				case 4: this.save_number(cf,value); break;
+			}
+			return;
+		}
 		if(type!=="child") return this.codegen_typedef_bin(cf,x);
 		switch(field_id) {
 			default: debugger; break;
