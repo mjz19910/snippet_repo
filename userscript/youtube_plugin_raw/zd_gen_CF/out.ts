@@ -1148,5 +1148,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_0x19ac5ceb";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map_entry";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map_key";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_0x19ac5ceb_map_value";}
 		;
 }

@@ -3624,14 +3624,20 @@ class HandleTypes extends HandleTypesEval {
 	D_0x19ac5ceb_map_key(x) {
 		const cf="D_0x19ac5ceb_map_key";
 		const {1006: [f1],...y}=this.s(cf,x); this.g(y);
-		f1;
-		debugger;
+		this.g(f1);
 	}
 	/** @private @arg {D_0x19ac5ceb_map_value} x */
 	D_0x19ac5ceb_map_value(x) {
-		const cf="D_0x19ac5ceb_map_value";
+		const cf="D_0x19ac5ceb_map_container";
+		const {1: [f1],...y}=this.s(cf,x); this.g(y);
+		if(typeof f1!=="bigint") debugger;
+		this.save_string("D_0x19ac5ceb.map_values",`${f1.toString(16)}n`);
+	}
+	/** @private @arg {D_0x19ac5ceb_map_container} x */
+	D_0x19ac5ceb_map_container(x) {
+		const cf="D_0x19ac5ceb_map_container";
 		const {1000: [f1],...y}=this.s(cf,x); this.g(y);
-		f1;
+		this.D_0x19ac5ceb_map_value(f1);
 		debugger;
 	}
 	/** @private @arg {D_0x19ac5ceb_map} x */
@@ -3646,7 +3652,7 @@ class HandleTypes extends HandleTypesEval {
 		if(g[0]!=="end") debugger; if(h[0]!=="end") debugger;
 		this.z(e,x => {
 			if(1006 in x) return this.D_0x19ac5ceb_map_key(x);
-			if(1000 in x) return this.D_0x19ac5ceb_map_value(x);
+			if(1000 in x) return this.D_0x19ac5ceb_map_container(x);
 			debugger;
 		});
 		this.z(f,this.D_0x19ac5ceb_map_entry);
