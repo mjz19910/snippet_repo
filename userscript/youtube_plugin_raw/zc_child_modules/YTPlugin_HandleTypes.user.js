@@ -2704,6 +2704,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {x;}
+	/** @private @arg {R_TrackingObj} x */
+	R_TrackingObj(x) {x;}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
 		this.k(`${cf}.binary_obj`,x);
@@ -2713,7 +2715,7 @@ class HandleTypes extends HandleTypesEval {
 		if(0x19ac5ceb in x) return this.R_0x19ac5ceb(cf,x);
 		if(6 in x) return this.R_ClickTrackingObj(x);
 		if(3 in x) return this.D_BinaryCategoryObj(cf,x);
-		if(4 in x) return;
+		if(4 in x) return this.R_TrackingObj(x);
 		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x,false);
 		debugger;
 	}
