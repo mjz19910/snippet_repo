@@ -71,7 +71,7 @@ class HandleRS extends ServiceMethods {
 	//#endregion
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
-		const cf="RS_Player";
+		const cf="RS_Player"; const cls_=this.x.get("handle_types");
 		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
@@ -79,7 +79,7 @@ class HandleRS extends ServiceMethods {
 		this.t(heartbeatParams,this.D_HeartbeatParams);
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
-		this.t(videoDetails,this.D_VideoDetails);
+		this.t(videoDetails,x => cls_.D_VideoDetails(x));
 		this.t(playerConfig,this.D_PlayerConfig);
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
@@ -512,16 +512,6 @@ class HandleRS extends ServiceMethods {
 		this.GE_Browse(navigationEndpoint);
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
-	}
-	/** @private @arg {D_PlayerConfig} x */
-	D_PlayerConfig(x) {
-		const cf="D_PlayerConfig";
-		const {audioConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
-	}
-	/** @private @arg {D_VideoDetails} x */
-	D_VideoDetails(x) {
-		const cf="D_VideoDetails";
-		const {videoId,title,lengthSeconds,keywords,channelId,isOwnerViewing,shortDescription,isCrawlable,thumbnail,allowRatings,author,isPrivate,isUnpluggedCorpus,isLiveContent,...y}=this.s(cf,x); this.g(y);
 	}
 	/** @template T @private @arg {D_UrlAndElapsedMediaTime<T>} x @arg {(this:this,x:T)=>void} f */
 	D_UrlAndElapsedMediaTime(x,f) {
