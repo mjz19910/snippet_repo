@@ -2241,13 +2241,6 @@ class HandleTypes extends HandleTypesEval {
 			}
 			return this.g(z);
 		}
-		if(19 in u) {
-			const {6: [f6],9: [f9],19: [f19],...y}=u; this.g(y);
-			if(f6!=="related-auto") debugger;
-			this._primitive_of(f9,"bigint");
-			this.V_VeDescObj(f19);
-			return;
-		}
 		if(6 in u) {const {6: [f6],...y}=u; this.g(y); if(f6!=="watch") debugger; return;}
 		this.g(u);
 	}
