@@ -2466,12 +2466,6 @@ class ServiceMethods extends ServiceData {
 		if(sendPost!==true) debugger;
 		return f.call(this,apiUrl);
 	}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(cf,path,x,callback) {
-		/** @type {number[]} */
-		let map_entry_key_path=[];
-		this.on_any_params(cf,path,map_entry_key_path,x,callback);
-	}
 	/** @private @arg {string} ns @arg {()=>void} f */
 	grouped(ns,f) {
 		console.group(ns);
@@ -3259,6 +3253,12 @@ class ServiceMethods extends ServiceData {
 		/** @type {number[]} */
 		let map_entry_key_path=[];
 		this.on_any_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
+	}
+	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
+	playerParams(cf,path,x,callback) {
+		/** @type {number[]} */
+		let map_entry_key_path=[];
+		this.on_any_params(cf,path,map_entry_key_path,x,callback);
 	}
 	/** @private @type {string[]} */
 	cache_params=[];
