@@ -4113,5 +4113,7 @@ class ServiceMethods extends ServiceData {
 		if(maxAgeSeconds!==void 0) this.a_primitive_num(maxAgeSeconds);
 		this.t(stateTags,this.RCA_RelevantStateTags);
 	}
+	/** @public @arg {R_TwoColumnWatchNextResults} x */
+	R_TwoColumnWatchNextResults(x) {this.H_("R_TwoColumnWatchNextResults","twoColumnWatchNextResults",x,this.D_TwoColumnWatchNextResults);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
