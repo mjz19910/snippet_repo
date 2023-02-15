@@ -2259,6 +2259,10 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==0x12f639cf) debugger;
 		}
 	}
+	/** @arg {D_RA_CR_0x14527fab|[["data32",1,number],{},{},["child",4,Uint8Array,any[]]]} x @returns {x is D_RA_CR_0x14527fab} */
+	is_RA_CR(x) {return x[3][1]===0x14527fab;}
+	/** @template {number} T @arg {T} t @arg {[["data32",number,number],{},{},{}]} x @returns {x is [["data32",T,number],{},{},{}]} */
+	is_RA_CR_zct(x,t) {return x[0][1]===t;}
 	/** @arg {D_RA_CR_0x14527fab} x */
 	D_RA_CR_0x14527fab(x) {
 		const [dec_0,dec_1,dec_2,dec_3]=x;
@@ -2377,6 +2381,7 @@ class HandleTypes extends HandleTypesEval {
 				return obj[0];
 			}
 		}
+		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
 		state;
 		return obj;
 	}
@@ -2500,7 +2505,10 @@ class HandleTypes extends HandleTypesEval {
 			default: return this.D_RA_D_Binary_dg(x);
 			case 1: return this.D_RA_D_Binary_f1(x);
 			case 2: return this.D_RA_D_BinaryCategoryObj_r(x);
-			case 4: return this.D_RA_CR_0x14527fab(x);
+			case 4: {
+				if(this.is_RA_CR(x)) return this.D_RA_CR_0x14527fab(x);
+				x;
+			} break;
 			case 5: return this.D_RA_CR_0x12f639cf(x);
 			case 6: return this.D_RA_D_Binary_d0(x);
 		}

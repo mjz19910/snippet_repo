@@ -33,6 +33,7 @@ type D_RA_Result=
 	|D_RA_D_BinaryCategoryObj_13
 	|D_RA_D_BinaryCategoryObj_23
 	|D_RA_D_Binary_d0
+	|[["data32",1,487],["data32",2,62457],["data32",3,2],["child",4,Uint8Array,[{},{},{}]]]
 	;
 ;
 type DD_exv_1=D_0x14527fab;
