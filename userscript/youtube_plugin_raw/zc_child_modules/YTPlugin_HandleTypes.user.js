@@ -94,6 +94,7 @@ ECatcherService.known_experiments.push(...[
 	[24457612],
 	[24473090],
 	[24451438],
+	[24428818],
 ].flat());
 class HandleTypes extends HandleTypesEval {
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
