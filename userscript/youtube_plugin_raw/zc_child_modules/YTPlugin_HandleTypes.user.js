@@ -2117,8 +2117,28 @@ class HandleTypes extends HandleTypesEval {
 		const [value]=a;
 		return f.call(this,value);
 	}
+	/**
+	 * @protected
+	 * @template V @template {PropertyKey} K @template {{[U in K]:T_VW<{}>;}} T
+	 * @arg {K} k @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>V} f
+	 * @returns {[y,ret]}
+	 */
+	H_a(cf,k,x,f,save=false) {
+		if(save) this.k(cf,x);
+		const {[k]: [a],...y}=x;
+		const ret=f.call(this,a);
+		return [y,ret];
+	}
 	/** @private @arg {D_GetPgdBuyFlow} x */
-	D_GetPgdBuyFlow(x) {x;}
+	D_GetPgdBuyFlow(x) {
+		const cf="D_GetPgdBuyFlow";
+		let [n0]=this.H_a(cf,1,x,this.videoId,true);
+		let [n1]=this.H_a(cf,2,n0,x => {
+			if(!this.str_starts_with(x,"UC")) debugger;
+			this.D_ChannelId(x);
+		});
+		this.H_d(cf,3,n1,x => this.ceq(x,1));
+	}
 	/** @private @arg {R_GetPgdBuyFlow} x */
 	R_GetPgdBuyFlow(x) {
 		const cf="R_GetPgdBuyFlow";
