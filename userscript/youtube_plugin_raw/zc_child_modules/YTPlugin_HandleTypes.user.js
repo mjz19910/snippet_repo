@@ -2483,10 +2483,16 @@ class HandleTypes extends HandleTypesEval {
 		const cf="D_RA_D_BinaryCategoryObj_a9",[type,id,,dec]=x;
 		if(id!==9) debugger;
 		switch(type) {
+			default: {
+				this.codegen_typedef_bin(cf,x,false);
+			} break;
 			case "child": {
+				this.save_string(`${cf}.type`,type);
 				this.D_RA_V_BinaryTimestamp_asFixed(dec);
 			} break;
-			case "data64":
+			case "data64": {
+				this.save_string(`${cf}.type`,type);
+			}
 		}
 	}
 	/** @arg {D_RD_Obj_a19} x */
