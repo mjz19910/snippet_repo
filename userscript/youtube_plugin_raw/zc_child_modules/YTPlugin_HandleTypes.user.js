@@ -2410,8 +2410,8 @@ class HandleTypes extends HandleTypesEval {
 		x[3]=null;
 		buffer;
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13} x */
-	D_RA_D_BinaryCategoryObj(x) {
+	/** @arg {D_RA_D_BinaryCategoryObj_r|D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13} x */
+	D_RA_D_BinaryCategoryObj_r(x) {
 		const [dec_0,dec_1]=x;
 		this.D_RA_D_BinaryCategoryObj_d0(dec_0);
 		this.D_RA_D_BinaryCategoryObj_d1(dec_1);
@@ -2429,7 +2429,7 @@ class HandleTypes extends HandleTypesEval {
 		switch(dec_t.length) {
 			default: debugger; break;
 			case 2: {
-				this.D_RA_D_BinaryCategoryObj(dec_t);
+				this.D_RA_D_BinaryCategoryObj_r(dec_t);
 			} break;
 			case 5: {
 				this.D_RA_CR_0x12f639cf(dec_t);
