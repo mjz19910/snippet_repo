@@ -1,3 +1,4 @@
+export {};
 declare global {
 	interface Window {
 		Polymer: {Class?: <T>(x: {}) => T;};
