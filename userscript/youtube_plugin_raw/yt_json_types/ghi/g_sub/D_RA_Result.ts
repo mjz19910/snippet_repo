@@ -22,7 +22,7 @@ type D_RA_Result=
 	|D_RA_CR_0x14527fab
 	|D_RA_D_BinaryCategoryObj_13
 	|D_RA_D_BinaryCategoryObj_23
-	|[{},{},{},{},{},{}]
+	|[["data32",1,0],["data32",2,13187],["child",4,Uint8Array,[{},{},{}]],["child",6],["data64",9],["child",19]]
 	;
 ;
 type DD_exv_1=D_0x14527fab;

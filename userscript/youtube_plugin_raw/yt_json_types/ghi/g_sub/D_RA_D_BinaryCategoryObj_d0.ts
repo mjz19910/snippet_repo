@@ -11,6 +11,7 @@ type D_RA_D_BinaryCategoryObj_item=
 	|D_RA_D_BinaryCategoryObj_a6
 	|D_RA_D_BinaryCategoryObj_a9
 	|D_RA_D_BinaryCategoryObj_d0
+	|D_RA_D_BinaryCategoryObj_13_a1_ext
 	;
 ;
 
