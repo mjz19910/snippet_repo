@@ -1,1 +1,1 @@
-type AsyncPluginEventDetail={handle_types: typeof import("../zc_child_modules/YTPlugin_LoadAllServices.user.js").LoadAllServices["prototype"]["handle_types"];};
+type AsyncPluginEventDetail={handle_types: typeof import("../zc_child_modules/YTPlugin_ServiceLoader.user.js").ServiceLoader["prototype"]["handle_types"];};

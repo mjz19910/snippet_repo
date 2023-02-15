@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	YTPlugin LoadAllServices Plugin
+// @name	YTPlugin ServiceLoader Plugin
 // @namespace	https://github.com/mjz19910/
 // @version	0.1.1
 // @description	try to take over the world!
@@ -8,23 +8,23 @@
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_LoadAllServices.user.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_LoadAllServices.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_ServiceLoader_Plugin.user.js
 // ==/UserScript==
-const __module_name__="mod$LoadAllServices";
+const __module_name__="mod$ServiceLoaderPlugin";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 
-if(__yt_plugin_log_imports__) console.log("Load LoadAllServices Plugin");
+if(__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
-class LoadAllServices {
+class ServiceLoader {
 	/** @template T @typedef {NonNullable<T>} N */
 	/** @template T,U @typedef {N<store['mod$HandleTypes']>['HandleTypes']} HandleTypes */
 	start_message_channel_loop() {bs.start_message_channel_loop(this.handle_types);}
-	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
 		class HT_Caller extends HandleTypes {
 			/** @public @arg {YTNavigateFinishDetail} detail */
@@ -63,6 +63,6 @@ class LoadAllServices {
 }
 
 export_(exports => {
-	exports.LoadAllServices=LoadAllServices;
+	exports.ServiceLoader=ServiceLoader;
 	exports.__module_loaded__=true;
 });

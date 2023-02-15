@@ -20,7 +20,7 @@ export_(exports => {exports.__is_module_flag__=true;});
 const base_store=required(store.mod$YoutubePluginBase);
 const is_firefox=base_store.is_firefox;
 const BaseService=base_store.BaseService;
-/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
+/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	static known_experiments=[
 		[1714247],

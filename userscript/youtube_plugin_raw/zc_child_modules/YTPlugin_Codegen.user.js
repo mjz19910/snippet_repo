@@ -58,7 +58,7 @@ const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const split_string_once=required(store.mod$YoutubePluginBase).split_string_once;
 /** @template {string} T @template {string} D @arg {T} s @arg {D} d */
 function split_string_once_last(s,d) {return bs.split_string_once_last(s,d,null);}
-/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
+/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @no_mod @arg {{}} x2 */
 	#is_Thumbnail(x2) {return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";}

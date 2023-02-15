@@ -89,7 +89,7 @@ const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 ECatcherService.known_experiments.push(...[
 	[],
 ].flat());
-class HandleTypes extends HandleTypesEval {
+class HandleTypes extends ServiceMethods {
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
 	fmt_arr(x) {
 		return as(x.map(v => `${v}`).join(".f"));
@@ -108,7 +108,7 @@ class HandleTypes extends HandleTypesEval {
 		if(!generate_typedef.value) throw new Error();
 		return generate_typedef.value;
 	}
-	/** @arg {ResolverT<LoadAllServices,ServiceOptions>} x */
+	/** @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		generate_typedef.value=new ss.TypedefGenerator(x);

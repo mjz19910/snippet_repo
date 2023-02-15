@@ -18,7 +18,7 @@ const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as
 const ServiceData=bs.ServiceData;
 const split_string=bs.split_string; const split_string_once=bs.split_string_once;
 const as_any=bs.as_any;
-/** @extends {ServiceData<LoadAllServices,ServiceOptions>} */
+/** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}

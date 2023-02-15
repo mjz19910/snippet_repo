@@ -28,7 +28,7 @@ function required(x) {
 	return x;
 }
 const BaseService=required(store["mod$YoutubePluginBase"]).BaseService;
-/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
+/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
 	/** @api @public @arg {YTNavigateFinishDetail['pageType']} x */

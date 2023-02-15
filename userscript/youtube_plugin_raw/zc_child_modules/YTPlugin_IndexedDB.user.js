@@ -25,9 +25,9 @@ const is_firefox=h_detect_firefox(); is_firefox;
 const BaseService=required(store.mod$YoutubePluginBase).BaseService;
 const as_any=required(store.mod$YoutubePluginBase).as_any; as_any;
 const as=bs.as_;
-/** @extends {BaseService<LoadAllServices,ServiceOptions>} */
+/** @extends {BaseService<ServiceLoader,ServiceOptions>} */
 class IndexedDBService extends BaseService {
-	/** @constructor @public @arg {ResolverT<LoadAllServices, ServiceOptions>} x */
+	/** @constructor @public @arg {ResolverT<ServiceLoader, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		/** @type {DT_DatabaseStoreKeys} */
