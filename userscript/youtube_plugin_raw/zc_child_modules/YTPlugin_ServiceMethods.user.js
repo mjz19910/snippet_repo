@@ -2794,7 +2794,7 @@ class ServiceMethods extends ServiceData {
 			msg.push(`\tcase "${path}": switch(map_entry_key) {`);
 			msg.push(`\t\t${map_keys.map(e => `case ${e}:`).join(" ")}`);
 			msg.push("\t\t\treturn this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);");
-			msg.push("\t\tdefault: this.parse_param_default(new_ns,is_debug_enabled);");
+			msg.push("\t\tdefault: return this.parse_param_default(new_ns,is_debug_enabled);");
 			msg.push("\t}");
 			console.log(`${msg.join("\n")}\n`);
 		};
@@ -2988,7 +2988,7 @@ class ServiceMethods extends ServiceData {
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 2: case 3: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: this.parse_param_default(new_ns,is_debug_enabled);
+				default: return this.parse_param_default(new_ns,is_debug_enabled);
 			} break;
 		}
 	}
