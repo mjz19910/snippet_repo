@@ -150,7 +150,7 @@ type P_continuation_request_reel_watch_sequence_token={
 		1: T_VW<"RTuwQTgt3WE">,
 		3: T_VW<10>,
 		4: T_VW<2>,
-		6: T_VW<V_Bigint<12689568318623173585n>>;
+		6: T_VW<V_Bigint<bigint>>;
 	}>,
 	5: T_VW<{
 		3: T_VW<12>;
