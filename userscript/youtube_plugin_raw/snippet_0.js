@@ -1,13 +1,5 @@
 import {Base64Binary} from "./support_1/Base64Binary";
 import {MyReader} from "./support_2/MyReader";
-`
-const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
-this.z(actions,a => {
-	a;
-	debugger;
-});
-this.trackingParams(trackingParams);
-`;
 const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
 export function con_snippet_1() {
 	let x={};
@@ -63,22 +55,6 @@ function split_string_once(s,d=as(",")) {
 	/** @type {any} */
 	let q=r;
 	return as(q);
-}
-class ParserService {
-	/** @arg {T_Split<D_ApiPathFormat_1,"/">} x @returns {Join<T_Split<D_ApiPathFormat_1,"/">,".">} */
-	get_url_type(x) {x; throw 1;}
-	/** @public @arg {CF_L_TP_Params} root @arg {D_UrlFormat} x */
-	parse_url(root,x) {root; x;}
-	/** @public @arg {CF_L_TP_Params} root @arg {P_ParamParse} path @arg {string} x */
-	on_endpoint_params(root,path,x) {if(x===void 0) {debugger; return;} root; x; path;}
-}
-class CodegenService {
-	/**
-	 * @param {{}} x
-	 * @param {string} y
-	 * @param {boolean | undefined} z
-	 */
-	codegen_new_typedef(x,y,z) {x; y; z;}
 }
 export class Snippet_0_tmp {
 	/** @protected @template {any[]} T @arg {T} x @returns {T extends [...infer R,infer L]?[R,L]:never} */
@@ -288,10 +264,6 @@ export class Snippet_0_tmp {
 		}
 		return true;
 	}
-	parser=new ParserService;
-	codegen=new CodegenService;
-	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
-	codegen_new_typedef(x,gen_name,ret_val) {return this.codegen.codegen_new_typedef(x,gen_name,ret_val);}
 	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
@@ -319,64 +291,10 @@ export class Snippet_0_tmp {
 	H$R_(x,f) {f.call(this,this.w(x));}
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
-	/** @template CT,T,U @arg {TD_ItemSection_3<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
-	ItemSectionDataTemplate(x,f) {
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
-		f.call(this,[contents,sectionIdentifier,targetId]);
-		trackingParams;
-		let k=this.get_keys_of(contents);
-		switch(k[0]) {default: debugger; break;}
-	}
 }
 class ND extends Snippet_0_tmp {
-	/** @private @arg {string} x */
-	primitive_of_string(x) {this.primitive_of(x,"string");}
 	/** @protected @arg {string} x */
 	uppercase_first(x) {return x[0].toUpperCase()+x.slice(1);}
-	/** @template T @arg {T[]} x */
-	filter_keys(x) {
-		let ret=[];
-		for(let k of x) {
-			if(k==="clickTrackingParams") continue;
-			if(k==="commandMetadata") continue;
-			ret.push(k);
-		}
-		if(!ret.length) {
-			for(let k of x) {
-				if(k==="clickTrackingParams") continue;
-				ret.push(k);
-			}
-		}
-		if(!ret.length) {for(let k of x) {ret.push(k);}}
-		return ret;
-	}
-	/** @private @arg {{[U in string]: unknown}} x */
-	get_codegen_name(x) {
-		if(typeof x.type==='string') {
-			return x.type.split(".").map(e => {
-				if(e.includes("_")) {return e.split("_").map(e => this.uppercase_first(e)).join("");}
-				return this.uppercase_first(e);
-			}).join("$");
-		}
-		let rk=this.filter_keys(this.get_keys_of(x));
-		let kk=rk[0];
-		return this.uppercase_first(kk);
-	}
-	/** @private @arg {string} cf @arg {{}} x */
-	do_codegen(cf,x) {
-		let u_name=this.get_codegen_name(x);
-		let gen_name=`${cf}$${u_name}`;
-		this.codegen_new_typedef(x,gen_name);
-	}
-	/** @protected @arg {D_Dropdown_Privacy} x */
-	DropdownData(x) {
-		const {entries,label,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(label);
-		this.z(entries,x => {
-			if("privacyDropdownItemRenderer" in x) {return;}
-			this.do_codegen("Dropdown",x);
-		});
-	}
 	/** @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	H_(x,f) {f.call(this,this.w(x));}
 	/** @protected @arg {D_AlertWithButton} x */
