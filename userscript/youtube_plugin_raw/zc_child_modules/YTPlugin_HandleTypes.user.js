@@ -165,21 +165,19 @@ class HandleTypes extends HandleTypesEval {
 					case 8: case 9: case 12: case 25: case 40: {
 						const rk=this.exact_arr(t_pt[0]);
 						return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
-					} break;
+					}
 				}
-			} break;
-			case 2: {
-				switch(t_pt[0]) {
-					default: debugger; return false;
-					case 40: switch(t_pt[1]) {
-						case 1: {
-							let [k1,k2]=t_pt;
-							const rk=this.exact_arr(k1,k2);
-							return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
-						}
-					} break;
+			}
+			case 2: switch(t_pt[0]) {
+				default: debugger; return false;
+				case 40: switch(t_pt[1]) {
+					case 1: {
+						let [k1,k2]=t_pt;
+						const rk=this.exact_arr(k1,k2);
+						return this.on_player_params_callback_ty(map_entry_values,rk,path,map_keys,root);
+					}
 				}
-			} break;
+			}
 			case 3: {
 				switch(t_pt[0]) {
 					default: debugger; return false;
