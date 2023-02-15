@@ -2877,6 +2877,16 @@ class ServiceMethods extends ServiceData {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
+			case "tracking.trackingParams": switch(map_entry_key) {
+				case 4: case 6:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: return this.parse_param_default(new_ns,is_debug_enabled);
+			}
+			case "tracking.trackingParams.f4": switch(map_entry_key) {
+				case 1: case 2: case 3:
+					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
+				default: return this.parse_param_default(new_ns,is_debug_enabled);
+			}
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 2: case 3: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
