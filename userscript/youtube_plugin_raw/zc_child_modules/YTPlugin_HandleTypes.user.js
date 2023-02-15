@@ -2807,13 +2807,23 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		}
 	}
+	/** @private @arg {V_VeDescObj} x */
+	V_VeDescObj(x) {
+		const {1: [a],2: [b],...y}=x; this.g(y);
+		if(a!==3) debugger;
+		if(b!==3832) debugger;
+	}
 	/** @private @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj";
 		if(19 in x) {
-			const {1: [f1],2: [f2],4: [f4],6: [f6],9: [f9],...y}=x; this.g(y);
+			const {1: [f1],2: [f2],4: [f4],6: [f6],9: [f9],19: [f19],...y}=x; this.g(y);
+			this.save_number(`${cf}.f1`,f1);
+			this.save_number(`${cf}.f2`,f2);
 			this.V_BinaryTimestamp(f4);
 			if(f6!=="related-auto") debugger;
+			this._primitive_of(f9,"bigint");
+			this.V_VeDescObj(f19);
 			return;
 		}
 		if(6 in x) {
