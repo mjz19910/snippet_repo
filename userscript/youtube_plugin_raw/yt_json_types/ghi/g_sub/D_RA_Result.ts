@@ -16,4 +16,4 @@ type D_RA_Result=
 	]
 	;
 ;
-type D_RA_Result_CTP=[];
+type D_RA_Result_CTP=[["child",4],["child",6]];
