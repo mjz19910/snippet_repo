@@ -2803,7 +2803,7 @@ class ServiceMethods extends ServiceData {
 			console.log("[parse_value.new_path_gen]",path);
 			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: new_n\n\t}\n`);
+			console.log(`\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: \n\t}\n`);
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
