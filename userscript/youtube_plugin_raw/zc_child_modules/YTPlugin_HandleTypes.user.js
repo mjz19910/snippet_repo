@@ -2623,6 +2623,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x14527fab} x */
 	R_0x14527fab(cf1,x) {
 		switch(cf1) {
+			default: debugger; break;
 			case "DC_Continuation": {
 				/** @type {`${cf1}:R_0x14527fab`} */
 				const cf=`${cf1}:R_0x14527fab`;
@@ -2633,7 +2634,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x19ac5ceb} x */
 	R_0x19ac5ceb(cf1,x) {
-		const cf=`${cf1}:R_0x19ac5ceb`;
+		const cf="R_0x19ac5ceb";
 		const {0x19ac5ceb: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		/** @implements {S_MapState} */
 		class MapState {
@@ -2793,7 +2794,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x12f639cf} x */
 	R_0x12f639cf(cf1,x) {
-		const cf=`${cf1}:R_0x12f639cf`;
+		const cf="R_0x19ac5ceb";
 		const {3: f3,6: f6,11: f11,12: f12,0x12f639cf: f_0x12f639cf,...y}=this.s(cf,x); this.g(y);
 		this.a_primitive_num(f3);
 		this.R_0x12f639cf_f6(f6);
@@ -2805,7 +2806,7 @@ class HandleTypes extends HandleTypesEval {
 	g_a(x) {if(x.length!==0) debugger;}
 	/** @private @arg {P_ParamParse} cf1 @arg {R_0x4c82a9c} x */
 	R_0x4c82a9c(cf1,x) {
-		const cf=`${cf1}:R_0x4c82a9c`;
+		const cf="R_0x19ac5ceb"; this.k(`${cf1}:${cf}`,x);
 		const {0x4c82a9c: [a,...y1],...y}=this.s(cf,x); this.g(y); this.g_a(y1);
 		this.D_0x4c82a9c(a);
 	}
