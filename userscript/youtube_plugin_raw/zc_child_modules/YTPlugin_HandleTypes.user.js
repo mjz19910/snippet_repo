@@ -2219,10 +2219,16 @@ class HandleTypes extends HandleTypesEval {
 		this.save_number(`${cf}.f1`,f1);
 		this.V_BinaryTimestamp(f4);
 		if(19 in u) {
-			const {6: [f6],9: f9w,19: f19w,...y}=u; this.g(y);
-			if(f6!=="related") debugger;
-			if(f9w) {const [f9]=f9w; this._primitive_of(f9,"bigint");}
-			if(f19w) {const [f19]=f19w; this.V_VeDescObj(f19);}
+			const {6: [f6],9: [f9],19: [f19],...z}=u;
+			this.save_string(`${cf}.f6`,f6);
+			this._primitive_of(f9,"bigint");
+			this.V_VeDescObj(f19);
+			if(3 in z) {
+				const {3: [f3],...y}=z; this.g(y);
+				this.save_number(`${cf}.f3`,f3);
+				return;
+			}
+			this.g(z);
 			return;
 		}
 		if(3 in u) {
