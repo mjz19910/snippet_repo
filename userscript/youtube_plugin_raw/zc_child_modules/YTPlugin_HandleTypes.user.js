@@ -3142,7 +3142,30 @@ class HandleTypes extends HandleTypesEval {
 		this.D_RA_CD_0x19ac5ceb(dec_1);
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb} x */
-	D_RA_CD_0x19ac5ceb(x) {x; debugger;}
+	D_RA_CD_0x19ac5ceb(x) {
+		if(x.length!==1) debugger;
+		const [dec_0]=x;
+		const [type,field_id,buffer,dec_1]=dec_0; buffer;
+		if(type!=="child") debugger;
+		if(field_id!==1) debugger;
+		this.z(dec_1,this.D_RA_CD_0x19ac5ceb_f1);
+	}
+	/** @arg {D_RA_CD_0x19ac5ceb_f1} x */
+	D_RA_CD_0x19ac5ceb_f1(x) {
+		const [type,field_id,buffer,dec]=x; buffer;
+		if(type!=="child") debugger;
+		if(field_id!==1) debugger;
+		this.D_RA_CD_0x19ac5ceb_f1_data(dec);
+	}
+	/** @arg {D_RA_CD_0x19ac5ceb_f1_data} x */
+	D_RA_CD_0x19ac5ceb_f1_data(x) {
+		if(x.length!==1) debugger;
+		const [item]=x;
+		const [type,field_id,buffer,dec]=item; buffer;
+		if(type!=="child") debugger;
+		if(field_id!==1006) debugger;
+		if(dec.length!==0) debugger;
+	}
 	/** @arg {D_RA_CR_0x12f639cf} x */
 	D_RA_CR_0x12f639cf(x) {
 		const [dec_0,dec_1,dec_2,dec_3,dec_4]=x;
