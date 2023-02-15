@@ -3150,7 +3150,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==1) debugger;
 		this.z(dec_1,this.D_RA_CD_0x19ac5ceb_f1);
 	}
-	/** @arg {D_RA_CD_0x19ac5ceb_f1} x */
+	/** @arg {D_RA_CD_0x19ac5ceb_map} x */
 	D_RA_CD_0x19ac5ceb_f1(x) {
 		const [type,field_id,buffer,dec]=x; buffer;
 		if(type!=="child") debugger;
