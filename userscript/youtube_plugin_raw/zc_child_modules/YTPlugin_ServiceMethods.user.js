@@ -3842,7 +3842,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
-	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
+	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell","ypc_get_offline_upsell.params",x);}
 	/** @arg {G_DC_Innertube} x */
 	G_DC_Innertube(x) {
 		const cf="G_DC_Innertube"; this.k(cf,x);
@@ -5570,8 +5570,8 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		return as_any([contents]);
 	}
-	/** @private @arg {DE_GetTranscript} a */
-	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
+	/** @private @arg {DE_GetTranscript} x */
+	DE_GetTranscript(x) {this.D_Params("DE_GetTranscript","get_transcript.params",x);}
 	/** @private @arg {DE_GetNotificationMenu} x */
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu"; this.k(cf,x);
