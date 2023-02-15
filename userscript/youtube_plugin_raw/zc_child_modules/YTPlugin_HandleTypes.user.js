@@ -708,32 +708,6 @@ class HandleTypes extends HandleTypesEval {
 		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {"G_EY_Entity"} cf @template V @arg {{[U in `${string}Entity`]:V}} x */
-	G_EY_Entity_Any(cf,x) {return this.w(`G_EY_Entity_Any:${cf}`,this.get_keys_of(x)[0],x);}
-	/**
-	 * @public @arg {G_EY_Entity} x
-	 * @returns {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]|null:null:never)|["unknown",string,{}]}
-	 */
-	G_EY_Entity(x) {
-		const cf="G_EY_Entity"; this.k(cf,x);
-		{const cn="subscriptionStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="transcriptTrackSelectionEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="transcriptSearchBoxStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="offlineabilityEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="playlistLoopStateEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="macroMarkersListEntity"; if(cn in x) return [cn,this.G_EY_Entity_Any(cf,x)];}
-		{const cn="superThanksSelectedTierEntity"; if(cn in x) return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];}
-		/** @returns {[]|[string]} */
-		const get_kl=() => {return this.get_keys_of(x);};
-		let kl=get_kl();
-		if(kl.length===0) return null;
-		let [cn,...cr]=kl;
-		if(cr.length!==0) debugger;
-		if(!cn) return null;
-		x===""; this.codegen_typedef_all(cf,x);
-		this.codegen_typedef_all(`${cf}$entity`,this.G_EY_Entity_Any(cf,x));
-		return ["unknown",cn,this.G_EY_Entity_Any(cf,x)];
-	}
 	/** @private @arg {G_TopbarButtonItem} x */
 	G_TopbarButtonItem(x) {
 		const cf="G_TopbarButtonItem"; this.k(cf,x);
@@ -917,8 +891,6 @@ class HandleTypes extends HandleTypesEval {
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
 	/** @private @arg {A_AppendContinuationItems} x */
 	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
-	/** @arg {A_SetActivePanelItem} x */
-	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
@@ -941,8 +913,6 @@ class HandleTypes extends HandleTypesEval {
 	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
 	/** @private @arg {R_Microformat} x */
 	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
-	/** @private @arg {DC_EntityBatchUpdate} x */
-	R_EntityBatchUpdate(x) {this.H_("R_EntityBatchUpdate","entityBatchUpdate",x,this.DR_DC_EntityBatchUpdate);}
 	/** @private @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @private @arg {R_CompactLink} x */
@@ -1355,20 +1325,8 @@ class HandleTypes extends HandleTypesEval {
 			default: x===0; debugger;
 		}
 	}
-	/** @private @arg {AD_SetActivePanelItem} x */
-	AD_SetActivePanelItem(x) {
-		const cf="AD_SetActivePanelItem";
-		const {panelTargetId,itemIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(panelTargetId) {
-			default: debugger; break;
-			case "engagement-panel-macro-markers-auto-chapters":
-		}
-		this.save_number(`${cf}.itemIndex`,itemIndex);
-	}
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
-	/** @arg {C_Innertube} x */
-	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.G_DC_Innertube);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {C_AdsControlFlowOpportunityReceived} x */
@@ -1395,13 +1353,6 @@ class HandleTypes extends HandleTypesEval {
 	DC_AddFollowUpSurvey(x) {
 		const cf="DC_AddFollowUpSurvey";
 		const {followUpOptions,followUpText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-	}
-	/** @public @arg {DR_DC_EntityBatchUpdate} x */
-	DR_DC_EntityBatchUpdate(x) {
-		const cf="DR_DC_EntityBatchUpdate";
-		const {mutations,timestamp,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(mutations,this.DE_MutationItem);
-		this.t(timestamp,this.D_TimestampWithNanos);
 	}
 	/** @private @arg {DC_RelatedChip} x */
 	DC_RelatedChip(x) {
@@ -1561,8 +1512,6 @@ class HandleTypes extends HandleTypesEval {
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
-	/** @private @arg {E_YpcGetOfflineUpsell} x */
-	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
 	/** @private @arg {M_YpcGetCart} x */
@@ -1591,8 +1540,6 @@ class HandleTypes extends HandleTypesEval {
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @private @arg {DE_GetTranscript} a */
 	DE_GetTranscript(a) {this.D_Params("DE_GetTranscript",a,"get_transcript.params");}
-	/** @private @arg {DE_YpcGetOfflineUpsell} x */
-	DE_YpcGetOfflineUpsell(x) {this.D_Params("DE_YpcGetOfflineUpsell",x,"ypc_get_offline_upsell.params");}
 	/** @private @arg {DE_GetNotificationMenu} x */
 	DE_GetNotificationMenu(x) {
 		const cf="DE_GetNotificationMenu"; this.k(cf,x);
@@ -1611,93 +1558,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="DE_YpcGetCart"; this.k(cf,x);
 		let sp=this.y(cf,"transactionParams",x,x => x);
 		this.params(cf,"YpcGetCart.transactionParams",sp);
-	}
-	/** @private @arg {DU_MutationDelete} x */
-	DU_MutationDelete(x) {
-		const cf="DU_MutationDelete";
-		const {entityKey,type,options,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"entity_key.normal",entityKey);
-		if(type!=="ENTITY_MUTATION_TYPE_DELETE") debugger;
-		this.tf(this.O_DU_Persistence)(options);
-	}
-	/** @arg {(G_EY_Entity extends infer I?I extends {[U in `${string}Entity`]:infer V}?[keyof I,V]:never:never)|["unknown",string,{}]} p */
-	XP_EntityPayload(p) {
-		const [k,x]=p;
-		switch(k) {
-			case "offlineabilityEntity": this.D_EY_Offlineability(x); break;
-			case "subscriptionStateEntity": {
-				const cf="DS_EY_Subscription";
-				const {key,subscribed,...y}=this.s(cf,x); this.g(y);
-				this.params(cf,"subscriptionState.key",key);
-				this.a_primitive_bool(subscribed);
-			} break;
-			case "playlistLoopStateEntity": {
-				const cf="DS_EY_PlaylistLoop";
-				const {key,state,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				switch(state) {
-					default: debugger; break;
-					case "PLAYLIST_LOOP_STATE_ALL":
-					case "PLAYLIST_LOOP_STATE_NONE":
-					case "PLAYLIST_LOOP_STATE_ONE":
-				}
-			} break;
-			case "transcriptTrackSelectionEntity": {
-				const cf="DS_EY_TranscriptTrackSelection";
-				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				if(selectedTrackIndex!==0) debugger;
-				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
-			} break;
-			case "transcriptSearchBoxStateEntity": {
-				const cf="DS_EY_TranscriptSearchBox";
-				const {key,isHidden,...y}=this.s(cf,x); this.g(y);
-				this.params(`${cf}.key`,"entity.key",key);
-				if(isHidden!==false) debugger;
-			} break;
-			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
-			case "unknown": {
-				const cf="XP_EntityPayload.unknown";
-				let pk=p[1];
-				let x=p[2];
-				if("key" in x) {
-					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-					console.log(`unknown.${this.uppercase_first(pk)}.key`,key);
-				} else {debugger;}
-			} break;
-		}
-	}
-	/** @private @arg {DS_EY_MacroMarkersList} x */
-	DS_EY_MacroMarkersList(x) {
-		const cf="DS_EY_MacroMarkersList";
-		const {key,...y}=this.s(cf,x);
-		this.params(`${cf}.key`,"entity.key",key);
-		if("externalVideoId" in y) {
-			const {externalVideoId,markersList,...y1}=y; this.g(y1);
-			this.videoId(externalVideoId);
-			this.D_MarkersList(markersList);
-			return;
-		}
-		this.g(y);
-	}
-	/** @private @arg {DU_MutationReplace} x */
-	DU_MutationReplace(x) {
-		const cf="DU_MutationReplace";
-		const {entityKey,type,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"entity_key.normal",entityKey);
-		if(type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
-		let pr=this.G_EY_Entity(payload);
-		if(!pr) return;
-		this.XP_EntityPayload(pr);
-	}
-	/** @private @arg {DE_MutationItem} x */
-	DE_MutationItem(x) {
-		const cf="DE_MutationItem"; this.k(cf,x);
-		switch(x.type) {
-			default: debugger; break;
-			case "ENTITY_MUTATION_TYPE_DELETE": this.DU_MutationDelete(x); break;
-			case "ENTITY_MUTATION_TYPE_REPLACE": this.DU_MutationReplace(x); break;
-		}
 	}
 	/** @private @arg {DE_PlaylistEditor} x */
 	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
@@ -4427,40 +4287,6 @@ class HandleTypes extends HandleTypesEval {
 			this.a_primitive_str(a);
 		}
 	}
-	/** @private @arg {D_TimestampWithNanos} x */
-	D_TimestampWithNanos(x) {
-		const cf="D_TimestampWithNanos"; this.k(cf,x);
-		const {seconds,nanos,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(seconds);
-		this.a_primitive_num(nanos);
-	}
-	/** @private @arg {D_EY_Offlineability} x */
-	D_EY_Offlineability(x) {
-		const cf="D_EY_Offlineability";
-		if("command" in x) {
-			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=this.s(cf,x); this.g(y);
-			this.params(`${cf}.key`,"entity.key",key);
-			this.C_Innertube(command);
-			switch(addToOfflineButtonState) {
-				default: debugger; break;
-				case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN":
-				case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED":
-			}
-			if(contentCheckOk!==false) debugger;
-			if(racyCheckOk!==false) debugger;
-			this.D_LoggingDirectives(loggingDirectives);
-			return;
-		}
-		const {key,addToOfflineButtonState,...y}=this.s(cf,x); this.g(y);
-		if(addToOfflineButtonState!=="ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN") debugger;
-		this.params(`${cf}.key`,"entity.key",key);
-	}
-	/** @private @arg {O_DU_Persistence} x */
-	O_DU_Persistence(x) {
-		const cf="O_DU_Persistence"; this.k(cf,x);
-		const {persistenceOption,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
-	}
 	/** @private @arg {D_TwoColumnBrowseResults} x */
 	D_TwoColumnBrowseResults(x) {
 		const cf="D_TwoColumnBrowseResults"; this.k(cf,x);
@@ -6589,34 +6415,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(hideReplies);
 		if(!this.str_starts_with(targetId,"comment-replies-item-")) debugger;
 	}
-	/** @private @arg {D_MarkersList} x */
-	D_MarkersList(x) {
-		const cf="D_MarkersList";
-		const {markerType,markers,headerTitle,onTap,loggingDirectives,...y}=this.s(cf,x); this.g(y);
-		if(markerType!=="MARKER_TYPE_TIMESTAMPS") debugger;
-		this.z(markers,this.D_MarkerItem);
-		this.G_Text(headerTitle);
-		this.C_Innertube(onTap);
-		this.D_LoggingDirectives(loggingDirectives);
-	}
-	/** @private @arg {D_MarkerItem} x */
-	D_MarkerItem(x) {
-		const cf="D_MarkerItem";
-		const {title,startMillis,durationMillis,thumbnailDetails,onActive,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.a_primitive_str(startMillis);
-		if(durationMillis!=="10000") debugger;
-		this.D_Thumbnail(thumbnailDetails);
-		this.C_Innertube(onActive);
-	}
-	/** @arg {G_DC_Innertube} x */
-	G_DC_Innertube(x) {
-		const cf="G_DC_Innertube"; this.k(cf,x);
-		if("setActivePanelItemAction" in x) return this.A_SetActivePanelItem(x);
-		if("ypcGetOfflineUpsellEndpoint" in x) return this.E_YpcGetOfflineUpsell(x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
-		debugger;
-	}
 	/** @arg {`${string}.${string}`} x */
 	parse_signature(x) {
 		let [sig_0,sig_1]=split_string_once(x,".");
@@ -6667,8 +6465,6 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(collapseButton);
 		this.R_SortFilterSubMenu(viewSelector);
 	}
-	/** @private @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {x; debugger;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

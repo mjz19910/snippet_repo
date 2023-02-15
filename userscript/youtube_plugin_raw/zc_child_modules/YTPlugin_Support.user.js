@@ -45,8 +45,6 @@ class HandleRS extends ServiceMethods {
 		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
 	}
-	/** @private @arg {DR_DC_EntityBatchUpdate} x */
-	DR_DC_EntityBatchUpdate(x) {this.x.get("handle_types").DR_DC_EntityBatchUpdate(x);}
 	/** @private @arg {D_FrameworkUpdates} x */
 	D_FrameworkUpdates(x) {
 		const cf="D_FrameworkUpdates"; this.k(cf,x);
