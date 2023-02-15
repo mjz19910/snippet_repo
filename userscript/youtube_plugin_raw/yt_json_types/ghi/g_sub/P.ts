@@ -93,12 +93,10 @@ type reel_watch_sequence_a15_a6={
 		6: T_VW<26>;
 	}>;
 	3: T_VW<{
-		1: T_VW<1675106330>;
-		2: T_VW<89574000>;
+		1: T_VW<number>;
+		2: T_VW<number>;
 	}>;
-	4: T_VW<{
-		1: T_VW<1676410041>;
-	}>;
+	4: T_VW<{1: T_VW<number>;}>;
 	5: T_VW<{
 		1: T_VW<63>;
 		2: T_VW<1>;
