@@ -9,6 +9,16 @@ type R_TrackingObj={
 	4: T_VW<V_BinaryTimestamp>;
 };
 type R_CreatePlaylistObj={1: T_VW<4>;};
+type R_SlotAdServingDataObj={
+	1: T_VW<V_BinaryTimestamp>;
+	3: {
+		1: T_VW<5>;
+		6: T_VW<1>;
+		11: T_VW<2>;
+	};
+	4: T_VW<2>;
+};
+
 type GR_RootBinaryObj=
 	|R_0x4c82a9c
 	|R_0x12f639cf
@@ -19,15 +29,7 @@ type GR_RootBinaryObj=
 	|R_ClickTrackingObj
 	|R_CreatePlaylistObj
 	|R_ContinuationObj_SubObj
-	|{
-		1: T_VW<V_BinaryTimestamp>;
-		3: {
-			1: T_VW<5>;
-			6: T_VW<1>;
-			11: T_VW<2>;
-		};
-		4: T_VW<2>;
-	}
+	|R_SlotAdServingDataObj
 	;
 ;
 type R_ContinuationObj_SubObj={

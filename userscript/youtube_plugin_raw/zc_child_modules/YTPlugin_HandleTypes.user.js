@@ -2794,8 +2794,11 @@ class HandleTypes extends HandleTypesEval {
 	R_TrackingObj(x) {x;}
 	/** @private @arg {R_CreatePlaylistObj} x */
 	R_CreatePlaylistObj(x) {x;}
+	/** @private @arg {R_SlotAdServingDataObj} x */
+	R_SlotAdServingDataObj(x) {x;}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
 	GR_RootBinaryObj(cf,x) {
+		const cf2="GR_RootBinaryObj";
 		this.k(`${cf}.binary_obj`,x);
 		if(0x4c82a9c in x) return this.R_0x4c82a9c(cf,x);
 		if(0x12f639cf in x) return this.R_0x12f639cf(cf,x);
@@ -2803,14 +2806,13 @@ class HandleTypes extends HandleTypesEval {
 		if(0x19ac5ceb in x) return this.R_0x19ac5ceb(cf,x);
 		if(49 in x) return;
 		if(6 in x) return this.R_ClickTrackingObj(x);
-		if(3 in x&&2 in x&&!(4 in x)) {
-			return this.D_BinaryCategoryObj(cf,x);
+		if(4 in x) {
+			if(2 in x) return this.R_TrackingObj(x);
+			if(3 in x) return this.R_SlotAdServingDataObj(x);
+			this.codegen_typedef_bin(`${cf2}:${cf}`,x,false);
 		}
-		if(3 in x&&1 in x&&!(4 in x)) {
-			return this.D_BinaryCategoryObj(cf,x);
-		}
-		if(3 in x) return x;
-		if(4 in x) return this.R_TrackingObj(x);
+		if(3 in x&&2 in x) return this.D_BinaryCategoryObj(cf,x);
+		if(3 in x&&1 in x) return this.D_BinaryCategoryObj(cf,x);
 		if(1 in x) return this.R_CreatePlaylistObj(x);
 		this.codegen_typedef_bin(`GR_RootBinaryObj:${cf}`,x,false);
 		debugger;
