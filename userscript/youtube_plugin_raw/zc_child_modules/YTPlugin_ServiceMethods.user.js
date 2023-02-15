@@ -2781,98 +2781,45 @@ class ServiceMethods extends ServiceData {
 		let map_entry_value=tva[0];
 		let {u}=this.get_parse_fns(path,[],map_entry_value);
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
-		/** @private @type {P_LogItems} */
-		switch(parts[0]) {
-			case "_level_1_0": break;
-			case "_level_2_0": {
-				const idx=2;
-				switch(parts[1]) {
-					default: u(idx); debugger; parts[1]===""; break;
-					case "_level_2_1": {
-						const idx=3;
-						if(parts.length===2) return this.handle_map_value(path,map_entry_value);
-						switch(parts[2]) {default: u(idx); debugger; switch(parts[2]) {case "": }; break;}
-					} break;
-				}
-			} break;
-			// [default_parse_param_next]
-			default: {
-				const idx=1; u(idx); debugger; switch(parts[1]) {case "": }
-			} break;
-			case "D_0x94d81d4":
-			case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "ad_slot_logging_data":
-			case "adaptive_format":
-			case "aadc_guidelines_state": case "ad_serving_data_entry": case "macro_marker_repeat_state": case "player_state":
-			case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
-			case "entity_key": case "entity":
-			case "get_pdg_buy_flow": case "get_report_form": case "get_transcript":
-			case "invalidation":
-			case "like": case "live_chat_replay": case "load_markers":
-			case "next_radio": case "next": case "notification":
-			case "player_seek": case "playability_status": case "playlist_edit":
-			case "reel": case "reload":
-			case "service$create_playlist": case "ad_slot_logging_data": case "subscribe": case "subscriptionState":
-			case "timed_continuation": case "tracking": case "transcriptTrackSelection":
-			case "unsubscribe":
-			case "watch_playlist": case "watch":
-			case "ypc_get_offers": case "ypc_get_offline_upsell": break;
+		for(let i=0;i<parts.length;i++) {
+			/** @private @type {P_LogItems} */
+			switch(parts[i]) {
+				default: {
+					const idx=i; u(idx); debugger; switch(parts[i]) {case "": }
+				} break;
+				case "D_0x94d81d4":
+				case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "ad_slot_logging_data":
+				case "adaptive_format":
+				case "aadc_guidelines_state": case "ad_serving_data_entry": case "macro_marker_repeat_state": case "player_state":
+				case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
+				case "entity_key": case "entity":
+				case "get_pdg_buy_flow": case "get_report_form": case "get_transcript":
+				case "invalidation":
+				case "like": case "live_chat_replay": case "load_markers":
+				case "next_radio": case "next": case "notification":
+				case "player_seek": case "playability_status": case "playlist_edit":
+				case "reel": case "reload":
+				case "service$create_playlist": case "ad_slot_logging_data": case "subscribe": case "subscriptionState":
+				case "timed_continuation": case "tracking": case "transcriptTrackSelection":
+				case "unsubscribe":
+				case "watch_playlist": case "watch":
+				case "ypc_get_offers": case "ypc_get_offline_upsell":
+				case "watch_next":
+				case "transaction_params":
+				case "serialized_slot_ad_serving_data_entry":
+				case "reel_watch_sequence":
+				case "binary_token":
+				case "context_params": case "data": case "entity_key": case "xtags":
+				case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
+				case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
+				case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
+				case "token":
+				case "f2": case "f3": case "f6": case "f9":
+				case "f13": case "f14":
+					break;
+			}
+			if(parts.length===i) return this.handle_map_value(path,map_entry_value);
 		}
-		if(parts.length===1) return this.handle_map_value(path,map_entry_value);
-		switch(parts[1]) {
-			default: {
-				const idx=2; u(idx); debugger; switch(parts[1]) {case "": }
-			} break;
-			case "watch_next":
-			case "transaction_params":
-			case "serialized_slot_ad_serving_data_entry":
-			case "reel_watch_sequence":
-			case "binary_token":
-			case "context_params": case "data": case "entity_key": case "xtags":
-			case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
-			case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
-			case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
-		}
-		if(parts.length===2) return this.handle_map_value(path,map_entry_value);
-		switch(parts[2]) {
-			default: {
-				const idx=3; u(idx); debugger; switch(parts[2]) {case "": }
-			} break;
-			case "token":
-		}
-		if(parts.length===3) return this.handle_map_value(path,map_entry_value);
-		switch(parts[3]) {
-			default: {
-				const idx=4; u(idx); debugger; switch(parts[3]) {case "": }
-			} break;
-			case "f2": case "f3": case "f6": case "f9":
-			case "f13": case "f14":
-		}
-		if(parts.length===4) return this.handle_map_value(path,map_entry_value);
-		switch(parts[4]) {
-			default: {
-				const idx=5; u(idx); debugger; switch(parts[4]) {case "": }
-			} break;
-		}
-		if(parts!==void 0) {debugger; return false;}
-		// if(parts.length===5) return this.handle_map_value(path,map_entry_value);
-		// switch(parts[5]) {
-		// 	default: {
-		// 		const idx=6; u(idx); debugger; switch(parts[5]) {case "": }
-		// 	} break;
-		// }
-		// if(parts.length===6) return this.handle_map_value(path,map_entry_value);
-		// switch(parts[6]) {
-		// 	default: {
-		// 		const idx=7; u(idx); debugger; switch(parts[6]) {case "": }
-		// 	} break;
-		// }
-		// if(parts.length===7) return this.handle_map_value(path,map_entry_value);
-		// switch(parts[7]) {
-		// 	default: {
-		// 		const idx=8; u(idx); debugger; switch(parts[7]) {case "": }
-		// 	} break;
-		// }
-		// if(parts.length!==8) {debugger; return false;}
 		return this.handle_map_value(path,map_entry_value);
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
