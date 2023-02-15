@@ -2790,7 +2790,13 @@ class ServiceMethods extends ServiceData {
 			console.log("[parse_value.new_path_gen]",path);
 			let ak_gen=[""].concat(map_keys.map(x => `\t\"[parse_value.gen_ns] [${path}.f${x}]\",`));
 			console.log(ak_gen.join("\n"));
-			console.log(`\n\tcase "${path}": switch(map_entry_key) {\n\t\t${map_keys.map(e => `case ${e}:`).join(" ")}\n\t\t\treturn this.parse_param_next(root,\`\${path}.f\${map_entry_key}\`,map_entry_key_path,map_entry_values,callback);\n\t\tdefault: \n\t}\n`);
+			let msg=[""];
+			msg.push(`\tcase "${path}": switch(map_entry_key) {`);
+			msg.push(`\t\t${map_keys.map(e => `case ${e}:`).join(" ")}`);
+			msg.push("\t\t\treturn this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);");
+			msg.push("\t\tdefault: ");
+			msg.push("\t}");
+			console.log(`${msg.join("\n")}\n`);
 		};
 		let new_ns=() => {
 			/** @private @type {P_LogItems} */
@@ -2968,15 +2974,9 @@ class ServiceMethods extends ServiceData {
 			f();
 			console.groupEnd();
 		};
-		switch(path) {
-			// binary tab enum
-			/** @type {B_BinaryBrowseTab} */
-			case "continuation_token.data.f110.f3": switch(map_entry_key) {
-				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: return this.parse_param_default(new_ns,is_debug_enabled);
-			} break;
-		}
+		// binary tab enum
+		/** @type {B_BinaryBrowseTab} */
+		// "continuation_token.data.f110.f3"
 		/** @private @type {P_LogItems} */
 		switch(path)/*endpoint*/ {
 			default: {
@@ -2988,7 +2988,7 @@ class ServiceMethods extends ServiceData {
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 2: case 3: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: this.parse_param_default();
+				default: this.parse_param_default(new_ns,is_debug_enabled);
 			} break;
 		}
 	}
