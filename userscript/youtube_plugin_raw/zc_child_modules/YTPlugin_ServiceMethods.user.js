@@ -2581,7 +2581,7 @@ class ServiceMethods extends ServiceData {
 		if(typeof entry==="string") {
 			switch(path) {
 				case "continuation_token.data": {
-					this.x.get("handle_types").continuation_token_data_f49(path,entry);
+					this.x.get("handle_types").continuation_token_data_f49(as_any(path),entry);
 					ret=true;
 				} break;
 				case "load_markers.entity_key":
