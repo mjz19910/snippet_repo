@@ -2374,6 +2374,7 @@ class HandleTypes extends HandleTypesEval {
 			return `[${vi}]`;
 		});
 		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {return x.replaceAll("\\\"","\"");});
+		json_res=json_res.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
 		json_res=`\ntype ${cf}=${json_res}\n`;
 		if(json_res) {
 			if(!this.typedef_cache.includes(json_res)) {
