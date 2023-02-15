@@ -2258,7 +2258,7 @@ class HandleTypes extends HandleTypesEval {
 			if(field_id!==0x12f639cf) debugger;
 		}
 	}
-	/** @arg {D_RA_CR_0x14527fab|[{},{},{},["child",4,Uint8Array,any[]]]} x @returns {x is D_RA_CR_0x14527fab} */
+	/** @arg {D_RA_CR_0x14527fab|D_RA_D_Binary_x1} x @returns {x is D_RA_CR_0x14527fab} */
 	is_RA_CR(x) {return x[3][1]===0x14527fab;}
 	/** @template {number} T @arg {T} t @arg {[["data32",number,number],...any]} x @returns {x is [["data32",T,number],...any]} */
 	is_RA_CR_zct(x,t) {return x[0][1]===t;}
