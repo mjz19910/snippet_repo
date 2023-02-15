@@ -4134,7 +4134,7 @@ class ServiceMethods extends ServiceData {
 		const cf="RC_WR_ContextExtension"; this.k(cf,x);
 		const {hasDecorated,ytConfigData,webPrefetchData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(hasDecorated!==void 0) this._primitive_of(hasDecorated,"boolean");
-		this.t(ytConfigData,this.D_YtConfig);
+		this.t(ytConfigData,x => this.handle_types.D_YtConfig(x));
 		this.t(webPrefetchData,this.D_WebPrefetch);
 	}
 	/** @private @arg {RCA_RelevantStateTags} x */
@@ -4142,6 +4142,18 @@ class ServiceMethods extends ServiceData {
 		const cf="RCA_RelevantStateTags"; this.k(cf,x);
 		const {relevantStateTags,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(relevantStateTags,this.B_StateTag);
+	}
+	/** @private @arg {B_StateTag} x */
+	B_StateTag(x) {
+		const cf="StateTag"; this.k(cf,x);
+		if(x.stateTag!==3) debugger;
+		if("instruction" in x) {
+			const {stateTag: {},instruction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(instruction!=="STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY") debugger;
+			return;
+		}
+		const {stateTag: {},onStateTagModified,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
 	}
 	/** @public @arg {R_PlayerOverlay} x */
 	R_PlayerOverlay(x) {this.H_("R_PlayerOverlay","playerOverlayRenderer",x,this.D_PlayerOverlay);}
@@ -4163,6 +4175,71 @@ class ServiceMethods extends ServiceData {
 		this.t(playlist,a => this.T_Playlist(a,this.D_PlaylistContent));
 		this.t(autoplay,a => this.T_Autoplay(a,this.D_AutoplayContent));
 		this.t(conversationBar,this.R_LiveChat);
+	}
+	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
+	GE_ResponseReceived(cf,x) {
+		this.save_keys(`${cf}.response_endpoint`,x);
+		if("signalServiceEndpoint" in x) return this.E_SignalService_SendPost(x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+		if("changeKeyedMarkersVisibilityCommand" in x) return this.C_ChangeKeyedMarkersVisibility(x);
+		if("loadMarkersCommand" in x) return this.C_LoadMarkers(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
+		debugger;
+	}
+	/** @private @arg {DC_LoadMarkers} x */
+	DC_LoadMarkers(x) {
+		const cf="DC_LoadMarkers"; this.k(cf,x);
+		const {entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(entityKeys,this.DC_Load_EntityKey);
+	}
+	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
+	DC_ChangeKeyedMarkersVisibility(x) {
+		const cf="DC_ChangeKeyedMarkersVisibility"; this.k(cf,x);
+		const {isVisible,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(isVisible!==true) debugger;
+		if(key!=="HEATSEEKER") debugger;
+	}
+	/** @private @arg {D_PlayerOverlay} x */
+	D_PlayerOverlay(x) {
+		const cf="D_PlayerOverlay"; this.k(cf,x);
+		if("browserMediaSession" in x) return this.D_BrowserMediaSession(x);
+		const {endScreen,shareButton,addToMenu,videoDetails,...y}=this.s(cf,x);
+		this.R_WatchNextEndScreen(endScreen);
+		this.R_Button(shareButton);
+		this.R_Menu(addToMenu);
+		this.R_PlayerOverlayVideoDetails(videoDetails);
+		x: {
+			const k="autoplay";
+			if(!(k in y)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`; this.k(cf1,x);
+			y: {
+				const k2="decoratedPlayerBarRenderer";
+				if(!(k2 in y)) break y;
+				/** @type {`${typeof cf1}:${typeof k2}`} */
+				const cf2=`${cf1}:${k2}`; this.k(cf1,x);
+				const {autoplay,autonavToggle,decoratedPlayerBarRenderer,...y1}=this.s(cf2,y); this.g(y1);/*#destructure_done*/
+				this.R_PlayerOverlayAutoplay(autoplay);
+				this.R_AutoplaySwitchButton(autonavToggle);
+				this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
+				return;
+			}
+			const {autoplay,autonavToggle,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
+			this.R_PlayerOverlayAutoplay(autoplay);
+			this.R_AutoplaySwitchButton(autonavToggle);
+			return;
+		}
+		x: {
+			const k="decoratedPlayerBarRenderer";
+			if(!(k in y)) break x;
+			/** @type {`${typeof cf}:${typeof k}`} */
+			const cf1=`${cf}:${k}`; this.k(cf1,x);
+			const {decoratedPlayerBarRenderer,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
+			this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
+			return;
+		}
+		this.g(y);
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

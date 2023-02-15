@@ -4,7 +4,7 @@ import {ServiceMethods} from "./zc_child_modules/YTPlugin_ServiceMethods.user";
 function n() {throw new Error("Make never type");}
 n;
 export class HandleTypesEval_ extends ServiceMethods {
-	/** @protected @arg {D_YtConfig} x */
+	/** @public @arg {D_YtConfig} x */
 	D_YtConfig(x) {x;}
 	/** @protected */
 	gk=this.get_keys_of;

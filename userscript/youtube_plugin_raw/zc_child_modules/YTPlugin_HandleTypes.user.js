@@ -1373,31 +1373,6 @@ class HandleTypes extends HandleTypesEval {
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) {this.C_Continuation(x);} else if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);} else {debugger;}
 	}
-	/** @public @arg {CF_GE_ResponseReceived} cf @arg {GE_ResponseReceived} x */
-	GE_ResponseReceived(cf,x) {
-		this.save_keys(`${cf}.response_endpoint`,x);
-		if("signalServiceEndpoint" in x) {
-			/** @type {`${cf}.SE_Signal`} */
-			const cf1=`${cf}.SE_Signal`;
-			let [a,gc]=this.T_SE_Signal(cf1,x);
-			this.M_SendPost(a);
-			/** @type {`${cf1}.data`} */
-			const cf2=`${cf1}.data`;
-			this.G_ClientSignal(cf2,gc);
-		} else if("adsControlFlowOpportunityReceivedCommand" in x) {this.C_AdsControlFlowOpportunityReceived(x);} else if("changeKeyedMarkersVisibilityCommand" in x) {
-			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(clickTrackingParams);
-			this.DC_ChangeKeyedMarkersVisibility(changeKeyedMarkersVisibilityCommand);
-		} else if("loadMarkersCommand" in x) {
-			const {clickTrackingParams,loadMarkersCommand,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(clickTrackingParams);
-			this.DC_LoadMarkers(loadMarkersCommand);
-		} else if("reloadContinuationItemsCommand" in x) {this.C_ReloadContinuationItems(x);} else if("appendContinuationItemsAction" in x) {
-			const {clickTrackingParams,appendContinuationItemsAction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.clickTrackingParams(clickTrackingParams);
-			this.AD_AppendContinuationItems(appendContinuationItemsAction);
-		} else {debugger;}
-	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
@@ -2330,60 +2305,6 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {string} x */
 	DC_Load_EntityKey(x) {this.params("load_markers.entity_key",x);}
-	/** @private @arg {DC_LoadMarkers} x */
-	DC_LoadMarkers(x) {
-		const cf="DC_LoadMarkers"; this.k(cf,x);
-		const {entityKeys,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entityKeys,this.DC_Load_EntityKey);
-	}
-	/** @private @arg {DC_ChangeKeyedMarkersVisibility} x */
-	DC_ChangeKeyedMarkersVisibility(x) {
-		const cf="DC_ChangeKeyedMarkersVisibility"; this.k(cf,x);
-		const {isVisible,key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(isVisible!==true) debugger;
-		if(key!=="HEATSEEKER") debugger;
-	}
-	/** @private @arg {D_PlayerOverlay} x */
-	D_PlayerOverlay(x) {
-		const cf="D_PlayerOverlay"; this.k(cf,x);
-		if("browserMediaSession" in x) return this.D_BrowserMediaSession(x);
-		const {endScreen,shareButton,addToMenu,videoDetails,...y}=this.s(cf,x);
-		this.R_WatchNextEndScreen(endScreen);
-		this.R_Button(shareButton);
-		this.R_Menu(addToMenu);
-		this.R_PlayerOverlayVideoDetails(videoDetails);
-		x: {
-			const k="autoplay";
-			if(!(k in y)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`; this.k(cf1,x);
-			y: {
-				const k2="decoratedPlayerBarRenderer";
-				if(!(k2 in y)) break y;
-				/** @type {`${typeof cf1}:${typeof k2}`} */
-				const cf2=`${cf1}:${k2}`; this.k(cf1,x);
-				const {autoplay,autonavToggle,decoratedPlayerBarRenderer,...y1}=this.s(cf2,y); this.g(y1);/*#destructure_done*/
-				this.R_PlayerOverlayAutoplay(autoplay);
-				this.R_AutoplaySwitchButton(autonavToggle);
-				this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
-				return;
-			}
-			const {autoplay,autonavToggle,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
-			this.R_PlayerOverlayAutoplay(autoplay);
-			this.R_AutoplaySwitchButton(autonavToggle);
-			return;
-		}
-		x: {
-			const k="decoratedPlayerBarRenderer";
-			if(!(k in y)) break x;
-			/** @type {`${typeof cf}:${typeof k}`} */
-			const cf1=`${cf}:${k}`; this.k(cf1,x);
-			const {decoratedPlayerBarRenderer,...y1}=this.s(cf1,y); this.g(y1);/*#destructure_done*/
-			this.R_DecoratedPlayerBar(decoratedPlayerBarRenderer);
-			return;
-		}
-		this.g(y);
-	}
 	/** @private @arg {D_DecoratedPlayerBar} x */
 	D_DecoratedPlayerBar(x) {
 		const cf="D_DecoratedPlayerBar"; this.k(cf,x);
@@ -4186,19 +4107,6 @@ class HandleTypes extends HandleTypesEval {
 		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!isCacheHit) debugger;
 	}
-	/** @private @arg {B_StateTag} x */
-	B_StateTag(x) {
-		const cf="StateTag"; this.k(cf,x);
-		if(x.stateTag!==3) debugger;
-		if("instruction" in x) {
-			const {stateTag: {},instruction,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(instruction!=="STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY") debugger;
-			return;
-		}
-		const {stateTag: {},onStateTagModified,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
-	}
-	static {this.prototype.MC_ResolveUrl;}
 	/** @private @arg {MC_ResolveUrl} x */
 	MC_ResolveUrl(x) {
 		const cf="MC_ResolveUrl"; this.k(cf,x);
