@@ -112,15 +112,9 @@ class ServiceMethods extends ServiceData {
 		this.save_enum("CONTINUATION_REQUEST_TYPE",request);
 		switch(request) {
 			default: debugger; break;
-			case "CONTINUATION_REQUEST_TYPE_BROWSE": {
-				this.x.get("handle_types").decode_continuation_token(cf,token);
-			} break;
-			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
-				this.params("continuation_request.reel_watch_sequence.token",token);
-			} break;
-			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				this.params("continuation_request.watch_next.token",token);
-			} break;
+			case "CONTINUATION_REQUEST_TYPE_BROWSE": this.params("continuation_request.browse.token",token); break;
+			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": this.params("continuation_request.reel_watch_sequence.token",token); break;
+			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": this.params("continuation_request.watch_next.token",token); break;
 		};
 		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
 		function gu() {return y;}
@@ -1820,7 +1814,7 @@ class ServiceMethods extends ServiceData {
 				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				status;
 				target;
-				this.t(removeLikeParams,x => this.params("like.removeLikeParams",x));
+				this.t(removeLikeParams,x => this.params("like.remove_like_params",x));
 			} break;
 			case "LIKE": {
 				const cf="E_LikeLike";
@@ -1828,14 +1822,14 @@ class ServiceMethods extends ServiceData {
 				status;
 				target;
 				actions;
-				this.t(likeParams,x => this.params("like.likeParams",x));
+				this.t(likeParams,x => this.params("like.like_params",x));
 			} break;
 			case "DISLIKE": {
 				const cf="E_LikeDislike";
 				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				status;
 				target;
-				this.t(dislikeParams,x => this.params("like.dislikeParams",x));
+				this.t(dislikeParams,x => this.params("like.dislike_params",x));
 			} break;
 		}
 	}

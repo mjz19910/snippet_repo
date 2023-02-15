@@ -2171,15 +2171,20 @@ class HandleTypes extends HandleTypesEval {
 		if(6 in x) return;
 		debugger;
 	}
-	P_Reel_sequence_params(x) {x;}
+	/** @private @arg {P_ReelSequenceParams} x */
+	P_ReelSequenceParams(x) {
+		if(5 in x) return;
+		debugger;
+	}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj} x */
 	decode_continuation_token_obj(cf,x) {
 		switch(cf) {
 			default: debugger; break;
+			case "like.likeParams":
 			case "reel.sequence_params": {
 				/** @type {P_ReelSequenceParams} */
 				let u=as_any(x);
-				this.P_Reel_sequence_params(u);
+				this.P_ReelSequenceParams(u);
 			} break;
 			case "reel.params": {
 				/** @type {P_ReelParams} */

@@ -1040,6 +1040,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.browse.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data";}
@@ -1056,8 +1057,11 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "instream_video_ad.player_vars";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "invalidation.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislike_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.like_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.remove_like_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "live_chat_replay.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key";}
