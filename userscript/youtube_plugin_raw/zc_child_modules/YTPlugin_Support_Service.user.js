@@ -8,8 +8,8 @@
 // @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support.user.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_Support_Service.user.js
 // ==/UserScript==
 const __module_name__="mod$SupportService";
 const store=required(window.__plugin_modules__);

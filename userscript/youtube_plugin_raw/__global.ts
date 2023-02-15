@@ -50,7 +50,7 @@ namespace EX {
 	export var GFeedbackService: Base$ImpType["GFeedbackService"];
 	export var GuidedHelpService: Base$ImpType["GuidedHelpService"];
 	export var TrackingServices: Base$ImpType["TrackingServices"];
-	export var ParserService: typeof import("./zc_child_modules/YTPlugin_Parser.user.js").ParserService;
+	export var ParserService: typeof import("./zc_child_modules/YTPlugin_Parser_Service.user.js/index.js").ParserService;
 	export var YtHandlers: Base$ImpType["YtHandlers"];
 	export var HandleTypes: typeof import("./zc_child_modules/YTPlugin_HandleTypes.user.js").HandleTypes;
 	export var CodegenService: typeof import("./zc_child_modules/YTPlugin_Codegen.user.js").CodegenService;
