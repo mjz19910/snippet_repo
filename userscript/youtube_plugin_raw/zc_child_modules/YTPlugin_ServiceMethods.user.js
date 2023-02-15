@@ -2631,11 +2631,11 @@ class ServiceMethods extends ServiceData {
 				} break;
 				default: {
 					let new_data=this.save_string(path,entry);
-					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$do_save_str] [idx:${key_index}] [v:${entry}] --\n\ncase "${x}":\n`);
-						debugger;
-					}
+					if(new_data) this.log_list.push([
+						/** @type {(key_index_:typeof key_index,entry_:typeof entry,x:typeof path)=>string} */
+						(key_index,entry,x) => `-- [handle_value_gen$do_save_str] [idx:${key_index}] [v:${entry}] --\n\ncase "${x}":\n`,
+						entry,path,
+					]);
 					ret=false;
 				} break;
 			}
@@ -2643,9 +2643,11 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let new_data=this.save_number(path,entry);
-					if(new_data) {
-						this.log_list.push([(entry,x)=>`-- [handle_value_gen$do_save_num] [v:${entry}] --\n\ncase "${x}":\n`,entry,path])
-					}
+					if(new_data) this.log_list.push([
+						/** @type {(entry_:typeof entry,x:typeof path)=>string} */
+						(entry,x) => `-- [handle_value_gen$do_save_num] [v:${entry}] --\n\ncase "${x}":\n`,
+						entry,path,
+					]);
 					ret=false;
 				} break;
 				case "ad_serving_data_entry.f7": {
@@ -2680,8 +2682,11 @@ class ServiceMethods extends ServiceData {
 				default: {
 					let x=path; x;
 					let entry_keys=[...entry.keys()];
-					console.log(`-- [handle_value_gen$do_save_obj] [map_keys:${entry_keys}] --\n\ncase "${x}":\n`);
-					debugger;
+					this.log_list.push([
+						/** @type {(entry:typeof entry,x:typeof path)=>string} */
+						(entry,x) => `-- [handle_value_gen$do_save_obj] [map_keys:${entry_keys}] --\n\ncase "${x}":\n`,
+						entry,path,
+					]);
 					ret=false;
 				} break;
 				case "tracking.trackingParams.f4": {
@@ -2692,11 +2697,11 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let new_data=this.save_number(path,[...entry]);
-					if(new_data) {
-						let x=path; x;
-						console.log(`-- [handle_value_gen$do_save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`);
-						debugger;
-					}
+					if(new_data) this.log_list.push([
+						/** @type {(entry_:typeof entry,x:typeof path)=>string} */
+						(entry,x) => `-- [handle_value_gen$do_save_u8_arr] [v:${entry}n] --\n\ncase "${x}":\n`,
+						entry,path,
+					]);
 					ret=false;
 				} break;
 			}
