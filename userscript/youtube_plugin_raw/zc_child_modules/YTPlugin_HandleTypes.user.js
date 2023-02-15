@@ -2106,7 +2106,7 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof obj[0]==="number") {
 					return `TYPE::T_VW<${obj[0]}>`;
 				}
-				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}`;
+				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}>`;
 			}
 			/** @type {D_DecTypeNum} */
 			let otu=as(obj);
@@ -2129,7 +2129,16 @@ class HandleTypes extends HandleTypesEval {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `[${vi}]`;
 		});
-		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {return x.replaceAll("\\\"","\"");});
+		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,/**@type {string} */x) => {
+			let [f,...r]=x.replaceAll(/\\"|\\n|\\t/g,(/**@type {string} */v) => {
+				if(v==="\\\"") return "\"";
+				if(v==="\\n") return "\n";
+				if(v==="\\t") return "\t";
+				return v;
+			}).split("\n");
+			r=r.map(e => `\t${e}`);
+			return [f,...r].join("\n");
+		});
 		json_res=json_res.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
 		return json_res;
 	}
