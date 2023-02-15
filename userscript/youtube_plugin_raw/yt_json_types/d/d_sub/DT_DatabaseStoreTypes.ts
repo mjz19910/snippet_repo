@@ -44,5 +44,6 @@ type PlaylistIdDatabaseObj={
 }|{
 	key: `playlist_id:${D_PlaylistIdTypeBase}:${string}`;
 	type: string;
-	id: `${D_PlaylistIdTypeBase}${string}`;
+	id: string;
+	raw_id: `${D_PlaylistIdTypeBase}${string}`;
 };

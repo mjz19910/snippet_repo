@@ -1366,8 +1366,8 @@ class ServiceMethods extends ServiceData {
 				};
 				this.indexed_db_put("playlist_id",oo);
 			} break;
-			case "playlist:2:RDMM": case "playlist:2:RD": case "playlist:4:UU":
-			case "playlist:3:PL": {
+			case "playlist:2:RDMM": case "playlist:2:RD":
+			case "playlist:4:UU": case "playlist:3:PL": {
 				const {type,id,raw_id}=value;
 				let type_2=split_string(type,":")[2];
 				this.indexed_db_put("playlist_id",{key: `playlist_id:${type_2}:${id}`,type: `playlist_id:${type_2}`,id,raw_id});
