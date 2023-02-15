@@ -70,27 +70,7 @@ class JsonReplacerState {
 	}
 }
 const handle_types_eval_code=raw_template`
-class HandleTypesEval extends ServiceMethods {
-	//#region KR_ResponseContext
-	primitive_str(x) {this.a_primitive_str(x);}
-	primitive_of(x,y) {this._primitive_of(x,y);}
-	//#endregion
-	//#region init and static init
-	/** @protected @arg {\`[\${string}]\`} k @arg {string|string[]} x */
-	save_string_api=this.save_string;
-	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
-	codegen_renderer(cf,x,w) {this.cg.codegen_renderer(x,cf,w);}
-	//#endregion
-	//#region section to support above stuff
-	/** @private @arg {{accessibility?:D_Accessibility}} x */
-	handle_accessibility(x) {
-		this.save_keys("default.Accessibility",x);
-		if(x.accessibility) this.D_Accessibility(x.accessibility);
-	}
-	//#endregion
-	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:\`\${T_CF}.\${K}\`)=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.w(\`y:\${cf}\`,k,x),\`\${cf}.\${k}\`);}
-}
+class HandleTypesEval extends ServiceMethods {}
 window.HandleTypesEval=HandleTypesEval;
 //# sourceURL=plugin://extension/youtube_plugin_handle_types.js
 `;
