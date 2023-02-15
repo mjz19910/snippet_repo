@@ -2332,7 +2332,7 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==3) debugger;
 	}
 	/** @arg {RA_handle_4_any} x */
-	handle_4_any(x) {
+	handle_3_any(x) {
 		const [dec_0,dec_1,dec_2]=x;
 		this.D_RA_V_BinaryTimestamp_2_d0(dec_0);
 		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
@@ -2347,7 +2347,7 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case 1: this.handle_1_any(dec); break;
 			case 2: this.handle_2_any(dec); break;
-			case 4: this.handle_4_any(dec); break;
+			case 4: this.handle_3_any(dec); break;
 		}
 	}
 	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
@@ -2397,12 +2397,17 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==6) debugger;
 		if(dec!==null) debugger;
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_13_a1|D_RA_D_BinaryCategoryObj_13_a1_ext} x */
+	/** @arg {D_RD_Obj_a1|D_RA_D_BinaryCategoryObj_13_a1|D_RA_D_BinaryCategoryObj_13_a1_ext} x */
 	D_RD_Obj_a1(x) {
 		const [type,field_id,,dec]=x;
 		if(field_id!==1) debugger;
 		switch(type) {
-			case "child": this.handle_1_any(dec); break;
+			case "child": {
+				switch(dec.length) {
+					case 1: return this.handle_1_any(dec);
+					case 3: return this.handle_3_any(dec);
+				}
+			} break;
 			case "data32": {
 				const [,,value]=x;
 				if(value!==0) debugger;

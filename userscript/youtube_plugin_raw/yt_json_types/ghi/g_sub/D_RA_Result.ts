@@ -10,6 +10,7 @@ type handle_1_any_d0=["child",1,Uint8Array,null];
 type handle_1_any=[handle_1_any_d0];
 
 type D_RA_D_BinaryCategoryObj_13_a1=["child",1,Uint8Array,handle_1_any];
+type D_RD_Obj_a1=["child",1,Uint8Array,D_RA_V_BinaryTimestamp_asFixed];
 type D_RA_D_BinaryCategoryObj_13_a1_ext=["data32",1,0];
 type D_RA_D_BinaryCategoryObj_13=[
 	D_RA_D_BinaryCategoryObj_13_a1,
