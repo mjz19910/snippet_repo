@@ -12,6 +12,7 @@ type D_RD_ObjArr=
 	|["data32",13,1]
 	|["data32",14,37]
 	|D_RD_Obj_a19
+	|["data32",30,1]
 	;
 ;
 type D_RD_Obj_a5=["data32",5,2];
