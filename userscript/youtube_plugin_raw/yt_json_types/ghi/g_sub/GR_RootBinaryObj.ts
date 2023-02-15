@@ -4,5 +4,9 @@ type GR_RootBinaryObj=
 	|R_0x14527fab
 	|R_0x19ac5ceb
 	|D_BinaryCategoryObj
+	|{
+		4: [{}];
+		6: "external";
+	}
 	;
 ;
