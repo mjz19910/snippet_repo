@@ -1053,7 +1053,7 @@ class ServiceMethods extends ServiceData {
 					if(r===null) {debugger; return null;}
 					return r;
 				}).filter(is_not_null);
-				res[k].push(["begin"],...v1,["end"]);
+				res[k].push(...v1);
 				continue;
 			}
 			let v2=first(value);
