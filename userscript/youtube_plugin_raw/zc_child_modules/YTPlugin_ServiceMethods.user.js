@@ -4818,8 +4818,25 @@ class ServiceMethods extends ServiceData {
 	R_BrowserMediaSession(x) {this.H_("R_BrowserMediaSession","browserMediaSessionRenderer",x,this.g);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
-	/** @private @arg {R_ContinuationItem} x */
+	/** @protected @arg {R_ContinuationItem} x */
 	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
+	/** @private @arg {GE_Continuation} x */
+	GE_Continuation(x) {
+		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
+		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
+		if("continuationCommand" in x) return this.C_Continuation(x);
+		if("getTranscriptEndpoint" in x) return this.E_GetTranscript(x);
+		debugger;
+	}
+	/** @private @arg {R_GhostGrid} x */
+	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
+	/** @private @arg {D_GhostGrid} x */
+	D_GhostGrid(x) {
+		const cf="D_GhostGrid"; this.k(cf,x);
+		const {rows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(this.get_keys_of(x).join()!=="rows") debugger;
+		if(rows!==2) debugger;
+	}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem";

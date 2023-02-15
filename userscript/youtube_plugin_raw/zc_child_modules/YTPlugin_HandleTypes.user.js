@@ -266,7 +266,7 @@ class HandleTypes extends HandleTypesEval {
 		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R_PlaylistSidebarSecondaryInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @arg {G_RichGridContent} x */
+	/** @private @arg {G_RichGridContent} x */
 	D_RichGridContent(x) {
 		const cf="D_RichGridContent"; this.k(cf,x);
 		if("richItemRenderer" in x) return this.R_RichItem(x);
@@ -655,8 +655,6 @@ class HandleTypes extends HandleTypesEval {
 	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
-	/** @private @arg {R_GhostGrid} x */
-	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection","guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
@@ -999,14 +997,6 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
 	//#region E_ (Endpoints)
-	/** @private @arg {GE_Continuation} x */
-	GE_Continuation(x) {
-		const cf="GE_Continuation"; this.g_k(cf,x); this.k(cf,x);
-		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
-		if("continuationCommand" in x) {this.C_Continuation(x);}
-		if("getTranscriptEndpoint" in x) {this.E_GetTranscript(x);}
-		{debugger;}
-	}
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
 	/** @private @arg {E_GetNotificationMenu} x */
@@ -2708,13 +2698,6 @@ class HandleTypes extends HandleTypesEval {
 			default: debugger; break;
 			case "TEXT_HEADER_RENDERER_STYLE_BOLD":
 		}
-	}
-	/** @private @arg {D_GhostGrid} x */
-	D_GhostGrid(x) {
-		const cf="D_GhostGrid"; this.k(cf,x);
-		const {rows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(this.get_keys_of(x).join()!=="rows") debugger;
-		if(rows!==2) debugger;
 	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
