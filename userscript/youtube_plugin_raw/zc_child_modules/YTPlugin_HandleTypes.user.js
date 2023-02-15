@@ -146,32 +146,6 @@ class HandleTypes extends HandleTypesEval {
 	fmt_arr(x) {
 		return as(x.map(v => `${v}`).join(".f"));
 	}
-	/**
-	 * @template {CF_PlayerParams} T
-	 * @arg {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} map_entry_key_path
-	 * @arg {V_ParamMapValue[]} map_entry_values @arg {ARG_PathFor_PlayerParams} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
-	on_player_params_callback_ty(map_entry_values,map_entry_key_path,path,map_keys,root) {
-		let saved_map_keys=map_keys.slice();
-		let map_entry_key=map_entry_key_path.at(-1);
-		if(!map_entry_key) {debugger; return false;}
-		switch(map_entry_key_path.length) {
-			default: break;
-			case 1: case 2:
-			case 3: return this.on_player_params_callback_ty_len1(root,path,map_entry_key_path,map_entry_values,saved_map_keys);
-		}
-		return false;
-	}
-	/** @template {CF_PlayerParams} T @template {P_ParamParse} U @arg {ARG_on_player_params_callback_ty_len1<T,U>} x */
-	on_player_params_callback_ty_len1(...x) {
-		const [a1,a2,a3,a4,a5]=x;
-		switch(a1) {
-			default: debugger; return false;
-			case "DE_VE3832_Watch": case "R_WatchPage_VE3832":
-		}
-		console.log("[info_on_player_params_callback_ty_len1]",a2,a3,a4,a5);
-		debugger;
-		return false;
-	}
 	/** @arg {"continuation_token.data.f49"} cf @arg {string} x */
 	continuation_token_data_f49(cf,x) {
 		let x1=decodeURIComponent(x);
