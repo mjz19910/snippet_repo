@@ -2428,8 +2428,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
 	D_RA_D_BinaryCategoryObj_item(x) {
 		switch(x[1]) {
-			default: debugger; break;
+			default: debugger; {
+				x;
+			} break;
 			case 1: return this.D_RA_D_BinaryCategoryObj_13_a1(x);
+			case 2: return this.D_RA_D_BinaryCategoryObj_23_a2(x);
 			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
 			case 6: return this.D_RA_D_BinaryCategoryObj_a6(x);
 		}
