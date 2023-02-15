@@ -4739,6 +4739,54 @@ class ServiceMethods extends ServiceData {
 	MG_AdLayout_LayoutId(x) {
 		this.save_b64_binary("AdLayout.layoutId",x);
 	}
+	/** @private @arg {R_DisplayAd} x */
+	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
+	/** @private @arg {D_DisplayAd} x */
+	D_DisplayAd(x) {
+		const cf="D_DisplayAd"; this.k(cf,x);
+		const {layout,...y}=this.s(cf,x);
+		let k=this.get_keys_of(y)[0];
+		console.log("[D_DisplayAd.next_key] [%s]",k);
+	}
+	/** @private @arg {R_PromotedSparklesWeb} x */
+	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
+	/** @private @arg {D_PromotedSparklesWeb} x */
+	D_PromotedSparklesWeb(x) {
+		const cf="D_PromotedSparklesWeb";
+		const {thumbnail,icon,title,description,websiteText,actionButton,navigationEndpoint,impressionCommands,menu,trackingParams,clickLocationTargets,adBadge,...y}=this.s(cf,x); this.g(y);
+		this.D_Thumbnail(thumbnail);
+		this.T_Icon(`${cf}:icon`,icon);
+		this.G_Text(title);
+		this.G_Text(description);
+		this.G_Text(websiteText);
+		this.R_Button(actionButton);
+		this.E_VE83769_Url(navigationEndpoint);
+		this.z(impressionCommands,this.D_ImpressionCommand);
+		this.R_Menu(menu);
+		this.trackingParams(trackingParams);
+		this.z(clickLocationTargets,this.D_ClickLocationTarget);
+		this.t(adBadge,this.RMD_Badge);
+	}
+	/** @private @arg {D_InFeedAdLayout["renderingContent"]} x */
+	D_InFeedAdLayout_Content(x) {
+		const cf="D_InFeedAdLayout_Content"; this.k(cf,x);
+		if("promotedSparklesWebRenderer" in x) return this.R_PromotedSparklesWeb(x);
+		if("displayAdRenderer" in x) return this.R_DisplayAd(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {D_InFeedAdLayout} x */
+	D_InFeedAdLayout(x) {const {adLayoutMetadata: a,renderingContent: b,...y}=this.s("D_InFeedAdLayout",x); this.g(y); this.MG_AdLayout(a); this.D_InFeedAdLayout_Content(b);}
+	/** @arg {R_VideoMastheadAdV3} x */
+	R_VideoMastheadAdV3(x) {this.H_("R_VideoMastheadAdV3","videoMastheadAdV3Renderer",x,this.g);}
+	/** @arg {D_PageTopAdLayout} x */
+	D_PageTopAdLayout(x) {
+		const cf="D_PageTopAdLayout"; this.k(cf,x);
+		const {adLayoutMetadata,renderingContent,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.MG_AdLayout(adLayoutMetadata);
+		this.R_VideoMastheadAdV3(renderingContent);
+	}
+	/** @protected @arg {R_InFeedAdLayout} x */
+	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {MG_AdLayout} x */
 	MG_AdLayout(x) {
 		const cf="MG_AdLayout";
@@ -4775,14 +4823,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.E_VE4724_Search(searchEndpoint);
 		this.R_Button(clearButton);
-	}
-	/** @private @arg {MG_AdLayout_DisplayTopLandscapeImage} x */
-	MG_AdLayout_DisplayTopLandscapeImage(x) {
-		const cf="MG_AdLayout_DisplayTopLandscapeImage"; this.k(cf,x);
-		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(layoutType);
-		this.a_primitive_str(layoutId);
-		this.handle_types.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
 	}
 	/** @private @arg {DC_ReloadContinuationItems} x */
 	DC_ReloadContinuationItems(x) {
