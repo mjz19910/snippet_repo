@@ -3213,15 +3213,16 @@ class ServiceMethods extends ServiceData {
 	parse_endpoint_param(root,path,map_entry_key_path,map,callback) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
-		let mk=[...map.keys()];
-		let parse_key=this.make_parse_key(root,path,map,mk,callback);
+		let map_keys=[...map.keys()];
+		let parse_key=this.make_parse_key(root,path,map,map_keys,callback);
 		for(let i=1;i<300;i++) {
-			if(!mk.includes(i)) continue;
+			if(!map_keys.includes(i)) continue;
 			map_entry_key_path.push(i);
 			parse_key(map_entry_key_path);
 			map_entry_key_path.pop();
 		}
-		if(this.eq_keys(mk,[])) return;
+		if(this.eq_keys(map_keys,[])) return;
+		this.get_parse_fns(path,map_keys)
 		let param_obj=this.to_param_obj(map);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		{debugger;}
