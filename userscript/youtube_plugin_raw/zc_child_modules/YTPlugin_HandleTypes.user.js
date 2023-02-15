@@ -4050,12 +4050,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(c);
 		return y;
 	}
-	/** @private @arg {D_AutoplaySetItem_ButtonVideoEP} x */
-	D_AutoplaySetItem_ButtonVideoEP(x) {
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("watchPlaylistEndpoint" in x) return this.E_WatchPlaylist(x);
-		debugger;
-	}
 	/** @private @arg {MG_AdLayout_TopImage} x */
 	MMD_AdLayout_TopImage(x) {
 		const cf="MMD_AdLayout_TopImage"; this.k(cf,x);

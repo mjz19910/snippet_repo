@@ -243,15 +243,6 @@ type G_CodecTypeStr=[
 	"opus",
 	"vp9"
 ][number];
-type G_CommandMetadata={
-	webCommandMetadata: GM_All;
-	resolveUrlCommandMetadata: MC_ResolveUrl;
-}|{webCommandMetadata: GM_All;};
-// COMPLETED: #7
-type MC_ResolveUrl={
-	isVanityUrl?: boolean;
-	parentTrackingParams?: string;
-};
 type G_EngagementPanelMenu=R_Menu|R_SortFilterSubMenu;
 type G_ExtraUrlParamItem={key: "inline";};
 type G_FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;

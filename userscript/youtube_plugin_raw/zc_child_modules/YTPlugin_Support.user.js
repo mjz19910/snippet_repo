@@ -688,7 +688,7 @@ class HandleRS extends ServiceMethods {
 		this.g(pings);
 		this.g(clickthroughEndpoint);
 		this.z(csiParameters,this.g);
-		this.params(cf,as_any("playerVars"),playerVars);
+		this.params("instream_video_ad.player_vars",playerVars);
 		this.g(playerOverlay);
 		this.save_string(`${cf}.elementId`,elementId);
 		this.trackingParams(trackingParams);

@@ -4566,6 +4566,12 @@ class ServiceMethods extends ServiceData {
 		this.t(nextButtonVideo,this.E_WatchPlaylist);
 		this.t(previousButtonVideo,this.E_WatchPlaylist);
 	}
+	/** @private @arg {D_AutoplaySetItem_ButtonVideoEP} x */
+	D_AutoplaySetItem_ButtonVideoEP(x) {
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("watchPlaylistEndpoint" in x) return this.E_WatchPlaylist(x);
+		debugger;
+	}
 	/** @private @arg {D_AutoplaySetItem} x */
 	D_AutoplaySetItem(x) {
 		const cf="D_AutoplaySetItem"; this.k(cf,x);

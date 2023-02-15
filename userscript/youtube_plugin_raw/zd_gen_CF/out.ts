@@ -1056,6 +1056,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "instream_video_ad.player_vars";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "invalidation.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams";}
