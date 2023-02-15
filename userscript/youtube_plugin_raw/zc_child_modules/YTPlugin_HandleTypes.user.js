@@ -2109,7 +2109,7 @@ class HandleTypes extends HandleTypesEval {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.continuation_logged_str.push(cf);
 				console.log(`\ncase "${cf}":`);
-				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
+				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x);
 			} break;
 			case "continuation_request.reel_watch_sequence.token": {
 				/** @type {P_continuation_request_reel_watch_sequence_token} */
