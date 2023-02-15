@@ -246,24 +246,6 @@ class HandleTypes extends HandleTypesEval {
 		this.trackingParams(trackingParams);
 		f.call(this,a);
 	}
-	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
-	T_Autoplay(x,f) {
-		const cf="T_Autoplay";
-		const {autoplay,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		f.call(this,autoplay);
-	}
-	/** @private @template T @arg {T_Playlist<T>} x @arg {(this:this,x:T)=>void} f */
-	T_Playlist(x,f) {
-		const cf="T_Playlist";
-		const {playlist,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		f.call(this,playlist);
-	}
-	/** @private @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
-	T_SecondaryResults(x,f) {
-		const cf="T_SecondaryResults";
-		const {secondaryResults,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		f.call(this,secondaryResults);
-	}
 	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(this:this,x:T)=>void} f */
 	TD_ItemSection_2_CommentsEntryPoint(x,f) {
 		const cf="TD_ItemSection_2_CommentsEntryPoint";
@@ -411,13 +393,6 @@ class HandleTypes extends HandleTypesEval {
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		x===""; this.codegen_typedef_all(cf,x);
 	}
-	/** @private @arg {G_Watch_ResultsItem} x */
-	G_Watch_ResultsItem(x) {
-		const cf="G_Watch_ResultsItem"; this.k(cf,x);
-		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.z(a,this.G_WatchResult_ContentsItem);
-	}
 	/** @private @arg {Extract<G_Watch_ContentsItem,TR_ItemSection_3<any,any,any>>} x */
 	G_WatchResultItem_ItemSection_3(x) {
 		const cf="G_WatchResultItem_ItemSection"; this.k(cf,x);
@@ -457,13 +432,6 @@ class HandleTypes extends HandleTypesEval {
 		const cf="G_Watch_SecondaryResults_Contents"; this.k(cf,x);
 		const {contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.G_Watch_AnyResultItem);
-	}
-	/** @private @arg {G_Watch_SecondaryResults} x */
-	G_Watch_SecondaryResults(x) {
-		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
-		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
-		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
-		x===""; this.codegen_typedef_all(cf,x);
 	}
 	/** @private @arg {G_EngagementPanelSectionShowCommands} x */
 	G_EngagementPanelSectionShowCommands(x) {
@@ -797,8 +765,6 @@ class HandleTypes extends HandleTypesEval {
 	R_PlayerOverlayVideoDetails(x) {this.H_("R_PlayerOverlayVideoDetails","playerOverlayVideoDetailsRenderer",x,this.D_PlayerOverlayVideoDetails);}
 	/** @public @arg {R_CinematicContainer} x */
 	R_CinematicContainer(x) {this.H_("R_CinematicContainer","cinematicContainerRenderer",x,this.D_CinematicContainer);}
-	/** @public @arg {R_DesktopTopbar} x */
-	R_DesktopTopbar(x) {this.H_("R_DesktopTopbar","desktopTopbarRenderer",x,this.D_DesktopTopbar);}
 	/** @private @arg {R_TopbarLogo} x */
 	R_TopbarLogo(x) {this.H_("R_TopbarLogo","topbarLogoRenderer",x,this.D_TopbarLogo);}
 	/** @private @arg {R_FusionSearchbox} x */
@@ -890,8 +856,6 @@ class HandleTypes extends HandleTypesEval {
 	R_InFeedAdLayout(x) {this.H_("R_InFeedAdLayout","inFeedAdLayoutRenderer",x,this.D_InFeedAdLayout);}
 	/** @private @arg {R_DisplayAd} x */
 	R_DisplayAd(x) {this.H_("R_DisplayAd","displayAdRenderer",x,this.D_DisplayAd);}
-	/** @public @arg {R_EngagementPanelSectionList} x */
-	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
 	/** @private @arg {R_AdsEngagementPanelContent} x */
 	R_AdsEngagementPanelContent(x) {this.H_("R_AdsEngagementPanelContent","adsEngagementPanelContentRenderer",x,this.B_Hack);}
 	/** @private @arg {R_Notification} x */
@@ -1176,18 +1140,17 @@ class HandleTypes extends HandleTypesEval {
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {CD_Reload} x */
 	CD_Reload(x) {
-		this.y("CD_Reload","reloadContinuationData",x,
-			x => this.DC_Generic_CTP("D_CD_Reload","reload.continuation",x));
+		this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("reload.continuation",x));
 	}
 	/** @private @arg {CD_NextRadio} x */
 	CD_NextRadio(x) {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
-			x => this.DC_Generic_CTP("D_CD_NextRadio","next_radio.continuation",x));
+			x => this.DC_Generic_CTP("next_radio.continuation",x));
 	}
 	/** @private @arg {CD_Next} x */
 	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
 	/** @private @arg {DC_Generic_CTP} x */
-	D_CD_Next(x) {this.DC_Generic_CTP("D_CD_Next","next.continuation",x);}
+	D_CD_Next(x) {this.DC_Generic_CTP("next.continuation",x);}
 	/** @private @arg {AU_SubscribeButton} x */
 	AU_SubscribeButton(x) {this.H_("UA_SubscribeButton","updateSubscribeButtonAction",x,this.AD_SubscribeButton);}
 	/** @private @arg {AU_ChannelSwitcherPage} x */
@@ -2398,8 +2361,6 @@ class HandleTypes extends HandleTypesEval {
 		if(x[2]!=="comments-section") debugger;
 		this.z(x[0],this.R_ContinuationItem);
 	}
-	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
-	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
@@ -5166,8 +5127,8 @@ class HandleTypes extends HandleTypesEval {
 		this.D_Thumbnail(thumbnail);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {CF_DC_Generic_CTP} cf @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
-	DC_Generic_CTP(cf,path,x) {
+	/** @private @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
+	DC_Generic_CTP(path,x) {
 		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
 		this.params(path,continuation);
 		this.clickTrackingParams(clickTrackingParams);

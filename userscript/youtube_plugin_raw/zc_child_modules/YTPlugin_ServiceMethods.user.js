@@ -4165,6 +4165,40 @@ class ServiceMethods extends ServiceData {
 			if("watchEndpoint" in x) {return this.E_Watch(x);}
 		});
 	}
+	/** @private @arg {T_Results<G_Watch_ResultsItem>} x */
+	D_WatchResults(x) {const cf="D_WatchResults",{results: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/ return a;}
+	/** @private @arg {G_Watch_ResultsItem} x */
+	G_Watch_ResultsItem(x) {
+		const cf="G_Watch_ResultsItem"; this.k(cf,x);
+		let {trackingParams,contents: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.z(a,this.G_WatchResult_ContentsItem);
+	}
+	/** @private @template T @arg {T_Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
+	T_Autoplay(x,f) {
+		const cf="T_Autoplay";
+		const {autoplay,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		f.call(this,autoplay);
+	}
+	/** @private @template T @arg {T_Playlist<T>} x @arg {(this:this,x:T)=>void} f */
+	T_Playlist(x,f) {
+		const cf="T_Playlist";
+		const {playlist,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		f.call(this,playlist);
+	}
+	/** @private @template T @arg {T_SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
+	T_SecondaryResults(x,f) {
+		const cf="T_SecondaryResults";
+		const {secondaryResults,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		f.call(this,secondaryResults);
+	}
+	/** @private @arg {G_Watch_SecondaryResults} x */
+	G_Watch_SecondaryResults(x) {
+		const cf="G_Watch_SecondaryResults"; this.k(cf,x);
+		if("contents" in x) return this.G_Watch_SecondaryResults_Contents(x);
+		if("results" in x) return this.G_Watch_SecondaryResults_Results(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="D_TwoColumnWatchNextResults"; this.k(cf,x);
@@ -4241,5 +4275,9 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
+	/** @public @arg {R_EngagementPanelSectionList} x */
+	R_EngagementPanelSectionList(x) {this.H_("R_EngagementPanelSectionList","engagementPanelSectionListRenderer",x,this.D_EngagementPanelSectionList);}
+	/** @public @arg {R_DesktopTopbar} x */
+	R_DesktopTopbar(x) {this.H_("R_DesktopTopbar","desktopTopbarRenderer",x,this.D_DesktopTopbar);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
