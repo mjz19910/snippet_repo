@@ -3551,9 +3551,7 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf}.bytes.0`,buffer[0]);
 	}
 	/** @private @arg {string} x */
-	parse_undo_token(x) {
-		this.save_b64_binary("undo_token",x);
-	}
+	parse_undo_token(x) {this.save_b64_binary("undo_token",x);}
 	/** @private @arg {M_Feedback} x */
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
 	/** @private @arg {GM_Feedback} x */
