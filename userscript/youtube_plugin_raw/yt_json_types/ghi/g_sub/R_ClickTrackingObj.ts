@@ -6,6 +6,11 @@ type R_ClickTrackingObj=|{4: T_VW<V_BinaryTimestamp>;}|{
 	2: T_VW<number>;
 	4: T_VW<V_BinaryTimestamp>;
 }|{
+	1: T_VW<number>;
+	2: T_VW<number>;
+	3: T_VW<8>;
+	4: T_VW<V_BinaryTimestamp>;
+}|{
 	1: T_VW<0>;
 	2: T_VW<number>;
 	4: T_VW<V_BinaryTimestamp>;
