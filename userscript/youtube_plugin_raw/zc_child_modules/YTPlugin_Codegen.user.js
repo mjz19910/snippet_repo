@@ -376,7 +376,7 @@ class CodegenService extends BaseService {
 			return;
 		}
 	}
-	/** @private @arg {string} o @arg {string} k1 */
+	/** @api @public @arg {string} o @arg {string} k1 */
 	typedef_json_replace_string(o,k1) {
 		const max_str_len=120;
 		if(k1==="apiUrl") return o;
