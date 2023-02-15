@@ -2504,46 +2504,15 @@ class HandleTypes extends HandleTypesEval {
 			case "data64": break;
 		}
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
+	/** @private @arg {D_RA_D_BinaryCategoryObj_r} x */
 	D_RA_D_BinaryCategoryObj_r(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @arg {D_RA_D_Binary_d0} x */
+	/** @private @arg {D_RA_D_Binary_d0} x */
 	D_RA_D_Binary_d0(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @arg {D_RD_ObjArr[]} x */
+	/** @private @arg {D_RD_ObjArr[]} x */
 	D_RA_D_Binary_dg(x) {this.z(x,this.D_RD_ObjArr);}
-	/** @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [[any,T,...any]]} */
+	/** @private @template {number} T @arg {T} t @arg {[D_DecTypeNum]} x @returns {x is [[any,T,...any]]} */
 	is_fx_extract(x,t) {return x[0][1]===t;}
-	/** @arg {D_RA_D_Binary_f1} x */
-	D_RA_D_Binary_f1(x) {
-		const cf="D_RA_D_Binary_f1";
-		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
-		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
-		if(this.is_fx_extract(x,4)) {
-			const cf="D_RD_Obj_a4",[type,,,dec]=x[0];
-			if(type!=="child") {
-				this.codegen_typedef_bin(cf,x);
-				return;
-			}
-			this.D_RA_V_BinaryTimestamp_asFixed(dec);
-			return;
-		}
-		if(this.is_fx_extract(x,1)) {
-			const cf="D_RD_Obj_a1",[type,,a,dec]=x[0];
-			switch(type) {
-				default: return this.codegen_typedef_bin(cf,x);
-				case "child": {
-					const [d0,d1,d2]=dec;
-					if(d0[0]!=="child") debugger;
-					if(d1[0]!=="child") debugger;
-					if(d2[0]!=="data32") debugger;
-					this.save_number(`${cf}.${d2[1]}`,d2[2]);
-				} break;
-				case "data32": this.save_number(cf,a); break;
-			}
-			return;
-		}
-		this.codegen_typedef_bin(cf,x);
-	}
-	/** @arg {D_RA_D_Binary_x1} x */
+	/** @private @arg {D_RA_D_Binary_x1} x */
 	D_RA_D_Binary_x1(x) {
 		const cf="D_RA_D_Binary_x1";
 		for(let x1 of x) {
@@ -2556,31 +2525,11 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @arg {D_RA_CR_0x12f639cf|any[]} x @returns {x is D_RA_CR_0x12f639cf} */
+	/** @private @arg {D_RA_CR_0x12f639cf|any[]} x @returns {x is D_RA_CR_0x12f639cf} */
 	is_D_RA_CR_0x12f639cf(x) {
 		return x.length===5&&x[4][1]===0x12f639cf;
 	}
-	/** @arg {D_RA_Result} x */
-	D_RA_Result(x) {
-		const cf="D_RA_Result";
-		switch(x.length) {
-			default: return this.D_RA_D_Binary_dg(x);
-			case 1: return this.D_RA_D_Binary_f1(x);
-			case 2: return this.D_RA_D_BinaryCategoryObj_r(x);
-			case 4: {
-				if(this.is_RA_CR(x)) return this.D_RA_CR_0x14527fab(x);
-				if(this.is_RA_CR_zct(x,1)) return this.D_RA_D_Binary_x1(x);
-				return this.codegen_typedef_bin(cf,x);
-			}
-			case 5: {
-				if(this.is_D_RA_CR_0x12f639cf(x)) return this.D_RA_CR_0x12f639cf(x);
-				if(this.is_RA_CR_zct(x,1)) return;
-				return this.codegen_typedef_bin(cf,x);
-			}
-			case 6: return this.D_RA_D_Binary_d0(x);
-		}
-	}
-	/** @arg {D_RA_Result_CTP} x */
+	/** @private @arg {D_RA_Result_CTP} x */
 	D_RA_Result_CTP(x) {
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
@@ -2588,7 +2537,7 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_ClickTrackingObj(u);
 	}
-	/** @arg {D_RA_Result_TP} x */
+	/** @private @arg {D_RA_Result_TP} x */
 	D_RA_Result_TP(x) {
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
@@ -2596,9 +2545,9 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_TrackingObj(u);
 	}
-	/** @arg {R_GetPgdBuyFlow} x */
+	/** @private @arg {R_GetPgdBuyFlow} x */
 	R_GetPgdBuyFlow(x) {x;}
-	/** @arg {D_DecTypeNum[]} x */
+	/** @private @arg {D_DecTypeNum[]} x */
 	D_RA_GetPgdBuyFlow(x) {
 		let bin_obj=this.convert_arr_to_obj(x);
 		if(!bin_obj) {debugger; return;}
@@ -2606,7 +2555,7 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_GetPgdBuyFlow(u);
 	}
-	/** @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
+	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
 	decode_continuation_token_obj(cf,x) {
 		if(x.length===0) debugger;
 		switch(cf) {
