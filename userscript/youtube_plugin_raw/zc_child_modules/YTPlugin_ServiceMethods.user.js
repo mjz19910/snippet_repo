@@ -2863,32 +2863,27 @@ class ServiceMethods extends ServiceData {
 			default: {
 				const idx=5; u(idx); debugger; switch(parts[4]) {case "": }
 			} break;
-			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
-			case "f10": case "f11": case "f15": case "f19": case "f20": case "f25": case "f28": case "f36":
 		}
-		if(parts.length===5) return this.handle_map_value(path,map_entry_value);
-		switch(parts[5]) {
-			default: {
-				const idx=6; u(idx); debugger; switch(parts[5]) {case "": }
-			} break;
-			case "f1[]":
-			case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f8": case "f15":
-		}
-		if(parts.length===6) return this.handle_map_value(path,map_entry_value);
-		switch(parts[6]) {
-			default: {
-				const idx=7; u(idx); debugger; switch(parts[6]) {case "": }
-			} break;
-			case "f1":
-		}
-		if(parts.length===7) return this.handle_map_value(path,map_entry_value);
-		switch(parts[7]) {
-			default: {
-				const idx=8; u(idx); debugger; switch(parts[7]) {case "": }
-			} break;
-			case "f4":
-		}
-		if(parts.length!==8) {debugger; return false;}
+		if(parts!==void 0) {debugger; return false;}
+		// if(parts.length===5) return this.handle_map_value(path,map_entry_value);
+		// switch(parts[5]) {
+		// 	default: {
+		// 		const idx=6; u(idx); debugger; switch(parts[5]) {case "": }
+		// 	} break;
+		// }
+		// if(parts.length===6) return this.handle_map_value(path,map_entry_value);
+		// switch(parts[6]) {
+		// 	default: {
+		// 		const idx=7; u(idx); debugger; switch(parts[6]) {case "": }
+		// 	} break;
+		// }
+		// if(parts.length===7) return this.handle_map_value(path,map_entry_value);
+		// switch(parts[7]) {
+		// 	default: {
+		// 		const idx=8; u(idx); debugger; switch(parts[7]) {case "": }
+		// 	} break;
+		// }
+		// if(parts.length!==8) {debugger; return false;}
 		return this.handle_map_value(path,map_entry_value);
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
