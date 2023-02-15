@@ -143,22 +143,24 @@ ECatcherService.known_experiments.push(...[
 ].flat());
 class HandleTypes extends HandleTypesEval {
 	/** @typedef {"DE_VE3832_Watch"|"R_WatchPage_VE3832"} CF_PlayerParams */
-	/** @template {CF_PlayerParams} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root */
+	/** @template {CF_PlayerParams} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
 	on_player_params_callback(map_entry_values,map_entry_key_path,path,map_keys,root) {
 		switch(path)/*player_params*/ {
-			default: debugger; return;
+			default: debugger; return false;
 			case "watch.player_params":
-			case "watch.player_params.f40": case "watch.player_params.f40.f1":
+			case "watch.player_params.f40": case "watch.player_params.f40.f1": {
+				return true;
+			}
 		}
 		/** @type {ARG_on_player_params_callback_ty_len1<T,P_ParamParse>[2]} */
 		let t_pt=as(map_entry_key_path);
 		switch(root) {
-			default: debugger; break;
+			default: debugger; return false;
 			case "DE_VE3832_Watch":
 			case "R_WatchPage_VE3832":
 		}
 		switch(t_pt.length) {
-			default: debugger; return;
+			default: debugger; return false;
 			case 1: {
 				switch(t_pt[0]) {
 					default: debugger; return;

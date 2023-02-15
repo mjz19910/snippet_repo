@@ -3241,10 +3241,12 @@ class ServiceMethods extends ServiceData {
 		let last_key=map_entry_key_path.at(-1);
 		let saved_map_keys=map_keys.slice();
 		if(map_entry_values!==void 0&&last_key) {
-			map.delete(last_key);
-			let cx=map_keys.indexOf(last_key);
-			if(cx>-1) map_keys.splice(cx,1);
-			callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
+			let res=callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
+			if(res) {
+				map.delete(last_key);
+				let cx=map_keys.indexOf(last_key);
+				if(cx>-1) map_keys.splice(cx,1);
+			}
 		}
 	}
 	/** @private @arg {V_ParamMapType} x @returns {D_ParamObjType} */

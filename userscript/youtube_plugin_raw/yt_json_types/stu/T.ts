@@ -120,7 +120,7 @@ type T_ParseCallbackFunction<T extends CF_L_Params>=(
 	path: P_ParamParse,
 	map_keys: number[],
 	root: T,
-) => void;
+) => boolean;
 type T_UserFeedbackEndpointProductSpecificValueData<K,V>={userFeedbackEndpointProductSpecificValueData: T_MapEntry<K,V>;};
 //#endregion
 //#region Types that modify other types
