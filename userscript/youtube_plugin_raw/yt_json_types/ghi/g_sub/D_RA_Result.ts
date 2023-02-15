@@ -9,7 +9,7 @@ type D_RA_Result=
 	|D_RA_D_Binary_x1
 	;
 ;
-type P_ReelPlayerParamsObj={
-	30: T_VW<1>;
-	71: T_VW<12>;
+type P_ReelParamsObj={
+	1: T_VW<12>,
+	6: T_VW<2>
 };
