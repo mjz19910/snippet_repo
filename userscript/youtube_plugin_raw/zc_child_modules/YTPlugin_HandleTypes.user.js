@@ -1895,11 +1895,12 @@ class HandleTypes extends HandleTypesEval {
 				this.MG_AdLayout_layoutType(layoutType);
 				this.MG_AdLayout_LayoutId(layoutId);
 			} break;
+			case "LAYOUT_TYPE_DISPLAY_SQUARE_IMAGE":
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
 				const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.MG_AdLayout_layoutType(layoutType);
 				this.MG_AdLayout_LayoutId(layoutId);
-				this.D_AdLayoutLoggingData(adLayoutLoggingData);
+				this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
 			}
 		}
 	}
@@ -3048,8 +3049,16 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @public @arg {D_SerializedAdServingDataEntry} x */
-	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params("ad_serving_data_entry",x));}
+	/** @public @arg {"MG_AdLayout"|"D_AdLayoutMetadata"} cf1 @arg {D_SerializedAdServingDataEntry} x */
+	D_SerializedAdServingDataEntry(cf1,x) {
+		const cf2="D_SerializedAdServingDataEntry";
+		switch(cf1) {
+			default: debugger; break;
+			case "MG_AdLayout": {
+				this.H_(cf2,"serializedAdServingDataEntry",x,x => this.params("ad_serving_data_entry",x));
+			} break;
+		}
+	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
 		const cf="D_ResourceStatusInResponseCheckData"; this.k(cf,x);
@@ -4081,7 +4090,7 @@ class HandleTypes extends HandleTypesEval {
 		const {layoutId,layoutType,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);
 		this.save_string(`${cf}.layoutId`,layoutId);
 		if(layoutType!=="LAYOUT_TYPE_VIDEO_DISPLAY_BILLBOARD_IMAGE_BUTTONED") debugger;
-		this.D_AdLayoutLoggingData(adLayoutLoggingData);
+		this.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
 	}
 	/** @private @arg {D_InfoRow} x */
 	D_InfoRow(x) {

@@ -1867,9 +1867,9 @@ type D_PromotedSparklesWeb={
 	clickLocationTargets: D_ClickLocationTarget[];
 	adBadge?: RMD_Badge;
 };
-type D_InFeedAdLayout={adLayoutMetadata: MG_AdLayout_PlayerBytes; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
-type D_LinearAdSequence={adLayoutMetadata: MG_AdLayout_PlayerBytes; linearAds: G_LinearAdsItem[];};
-type D_AdSlotAndLayoutItem={adLayoutMetadata: MG_AdLayout_TopImage[]; adSlotMetadata: DMD_AdSlot;};
+type D_InFeedAdLayout={adLayoutMetadata: MG_AdLayout; renderingContent: R_PromotedSparklesWeb|R_DisplayAd;};
+type D_LinearAdSequence={adLayoutMetadata: MG_AdLayout; linearAds: G_LinearAdsItem[];};
+type D_AdSlotAndLayoutItem={adLayoutMetadata: MG_AdLayout[]; adSlotMetadata: DMD_AdSlot;};
 type D_InfoRow={
 	title: G_Text;
 	defaultMetadata?: G_Text;

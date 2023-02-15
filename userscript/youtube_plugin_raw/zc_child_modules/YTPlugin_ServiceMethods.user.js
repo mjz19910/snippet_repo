@@ -4720,7 +4720,7 @@ class ServiceMethods extends ServiceData {
 	D_AdSlotAndLayoutItem(x) {
 		const cf="D_AdSlotAndLayoutItem"; this.k(cf,x);
 		const {adLayoutMetadata,adSlotMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(adLayoutMetadata,this.MMD_AdLayout_TopImage);
+		this.z(adLayoutMetadata,this.MG_AdLayout_TopImage);
 		this.handle_types.DMD_AdSlot(adSlotMetadata);
 	}
 	/** @private @arg {D_FusionSearchbox} x */
@@ -4735,12 +4735,12 @@ class ServiceMethods extends ServiceData {
 		this.R_Button(clearButton);
 	}
 	/** @private @arg {MG_AdLayout_TopImage} x */
-	MMD_AdLayout_TopImage(x) {
+	MG_AdLayout_TopImage(x) {
 		const cf="MMD_AdLayout_TopImage"; this.k(cf,x);
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(layoutType);
 		this.a_primitive_str(layoutId);
-		this.handle_types.D_AdLayoutLoggingData(adLayoutLoggingData);
+		this.handle_types.D_SerializedAdServingDataEntry(cf,adLayoutLoggingData);
 	}
 	/** @private @arg {DC_ReloadContinuationItems} x */
 	DC_ReloadContinuationItems(x) {
