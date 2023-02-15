@@ -2814,13 +2814,13 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_TrackingObj} x */
 	R_TrackingObj(x) {
 		if(3 in x) {
-			const {1: [f1],2: [f2],3: [f3],4: [f4]}=x;
+			const {1: [f1],2: [f2],3: [f3],4: [f4],...y}=x; this.g(y);
 			this.a_primitive_num(f1);
 			this.a_primitive_num(f2);
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
-		const {1: [f1],2: [f2],4: [f4]}=x;
+		const {1: [f1],2: [f2],4: [f4],...y}=x; this.g(y);
 		this.a_primitive_num(f1);
 		this.a_primitive_num(f2);
 		this.V_BinaryTimestamp(f4);
