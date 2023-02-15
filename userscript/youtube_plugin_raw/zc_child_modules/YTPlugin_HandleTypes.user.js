@@ -2336,47 +2336,51 @@ class HandleTypes extends HandleTypesEval {
 			buffer; dec;
 		}
 	}
+	/** @arg {D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
+	D_RA_D_BinaryCategoryObj_d0(x) {
+		const [type,field_id,buffer,dec]=x; buffer;
+		if(type!=="child") debugger;
+		switch(field_id) {
+			default: debugger; break;
+			case 1: {
+				if(dec.length!==1) debugger;
+				const [dec_0]=dec;
+				{
+					const [type,field_id,buffer]=dec_0; buffer;
+					if(type!=="child") debugger;
+					if(field_id!==1) debugger;
+					dec_0[3]=null;
+				}
+			} break;
+			case 2: {
+				if(dec.length!==1) debugger;
+				const [dec_0]=dec;
+				{
+					const [type,field_id,value]=dec_0;
+					if(type!=="data32") debugger;
+					if(field_id!==1) debugger;
+					/* [f_23_TR_Binary_Num_f1] */
+					switch(value) {
+						default: debugger; break;
+						case 1: case 3: case 4: case 14: case 15: case 31: case 53:
+					}
+				}
+			} break;
+		}
+	}
+	/** @arg {(D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13)[1]} x */
+	D_RA_D_BinaryCategoryObj_d1(x) {
+		const [type,field_id,buffer]=x;
+		if(type!=="child") debugger;
+		if(field_id!==3) debugger;
+		dec_1[3]=null;
+		buffer;
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_23|D_RA_D_BinaryCategoryObj_13} x */
 	D_RA_D_BinaryCategoryObj(x) {
 		const [dec_0,dec_1]=x;
-		{
-			const [type,field_id,buffer,dec]=dec_0; buffer;
-			if(type!=="child") debugger;
-			switch(field_id) {
-				default: debugger; break;
-				case 1: {
-					if(dec.length!==1) debugger;
-					const [dec_0]=dec;
-					{
-						const [type,field_id,buffer]=dec_0; buffer;
-						if(type!=="child") debugger;
-						if(field_id!==1) debugger;
-						dec_0[3]=null;
-					}
-				} break;
-				case 2: {
-					if(dec.length!==1) debugger;
-					const [dec_0]=dec;
-					{
-						const [type,field_id,value]=dec_0;
-						if(type!=="data32") debugger;
-						if(field_id!==1) debugger;
-						/* [f_23_TR_Binary_Num_f1] */
-						switch(value) {
-							default: debugger; break;
-							case 1: case 3: case 4: case 14: case 15: case 31: case 53:
-						}
-					}
-				} break;
-			}
-		}
-		{
-			const [type,field_id,buffer]=dec_1;
-			if(type!=="child") debugger;
-			if(field_id!==3) debugger;
-			dec_1[3]=null;
-			buffer;
-		}
+		this.D_RA_D_BinaryCategoryObj_d0(dec_0);
+		this.D_RA_D_BinaryCategoryObj_d1(dec_1);
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
