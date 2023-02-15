@@ -2669,11 +2669,8 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let new_data=this.handle_bigint(path,entry);
-					if(new_data) this.log_list.push([
-						/** @type {(num:bigint,x:typeof path)=>string} */
-						(num,x) => `-- [handle_value_gen$do_save_bigint] [v:${num}n] --\n\ncase "${x}":\n`,
-						entry[2],path,
-					]);
+					const cf2="do_save_bigint";
+					if(new_data) this.add_log_entry(path,cf2,key_index,`${entry[2]}n`);
 					ret=false;
 				} break;
 			}
