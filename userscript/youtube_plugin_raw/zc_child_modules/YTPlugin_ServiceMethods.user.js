@@ -1067,6 +1067,7 @@ class ServiceMethods extends ServiceData {
 		let res_obj={};
 		for(let v of x) {
 			switch(v[0]) {
+				default: debugger; break;
 				case "child": {
 					let [n,id,a,b]=v;
 					if(b===null) {
@@ -1097,7 +1098,7 @@ class ServiceMethods extends ServiceData {
 				} break;
 				case "group": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,id,a];
+					res_obj[id]=[n,this.convert_arr_to_obj(a)];
 				} break;
 				case "info": {
 					let [n,id,a]=v;
@@ -1105,7 +1106,7 @@ class ServiceMethods extends ServiceData {
 				} break;
 				case "struct": {
 					let [n,id,a]=v;
-					res_obj[id]=[n,id,a];
+					res_obj[id]=[n,this.convert_arr_to_obj(a)];
 				} break;
 			}
 		}
