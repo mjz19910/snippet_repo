@@ -116,10 +116,10 @@ class ServiceMethods extends ServiceData {
 				this.x.get("handle_types").decode_continuation_token(cf,token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE": {
-				this.params(cf,"continuation_request.reel_watch_sequence.token",token);
+				this.params("continuation_request.reel_watch_sequence.token",token);
 			} break;
 			case "CONTINUATION_REQUEST_TYPE_WATCH_NEXT": {
-				this.params(cf,"continuation_request.watch_next.token",token);
+				this.params("continuation_request.watch_next.token",token);
 			} break;
 		};
 		/** @returns {T_OmitKey<T,"token"|"request">|typeof y} */
@@ -170,7 +170,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_PlaylistEdit"; this.k(cf,x);
 		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.playlistId(playlistId);
-		this.t(params,x => this.params(cf,"playlist_edit.params",x));
+		this.t(params,x => this.params("playlist_edit.params",x));
 		this.z(actions,x => {
 			// TODO: #12 Handle playlist actions
 			// Just skip them for now
@@ -569,7 +569,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DE_Unsubscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(channelIds,this.D_ChannelId);
-		this.params(cf,"unsubscribe.params",params);
+		this.params("unsubscribe.params",params);
 	}
 	/** @private @arg {D_Button_NavEP} x */
 	D_Button_NavEP(x) {
@@ -1148,7 +1148,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DC_GetPdgBuyFlow";
 		const {params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		let dec_params=atob(params);
-		this.params(cf,"get_pdg_buy_flow.params",dec_params);
+		this.params("get_pdg_buy_flow.params",dec_params);
 	}
 	/** @protected @template {string} T @arg {T_UrlWrappedValue<T>} x */
 	UrlWrappedValueT(x) {const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a}=this.s("T_UrlWrappedValue",x); return a;}
@@ -1159,7 +1159,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_SubscribeButton_SubscribedPrefix";
 		const {buttonText,entityKey,...y}=this.s(cf,x); this.g(y);
 		this.t(buttonText,this.G_Text);
-		this.t(entityKey,x => this.params(cf,"entity_key.subscribed",x));
+		this.t(entityKey,x => this.params("entity_key.subscribed",x));
 	}
 	/** @private @arg {D_SubscribeButton_UnsubscribedPrefix} x */
 	D_SubscribeButton_UnsubscribedPrefix(x) {
@@ -1542,23 +1542,23 @@ class ServiceMethods extends ServiceData {
 		if("videoId" in x) {
 			const {videoId,playerParams,thumbnail,overlay,params,loggingContext,sequenceProvider,sequenceParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			this.t(videoId,this.videoId);
-			this.params(cf,"reel.player_params",playerParams);
+			this.params("reel.player_params",playerParams);
 			this.t(thumbnail,this.D_Thumbnail);
 			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
+			this.params("reel.params",params);
 			if(loggingContext) {
 				this.D_VssLoggingContext(loggingContext.vssLoggingContext);
 				this.D_QoeLoggingContext(loggingContext.qoeLoggingContext);
 			}
 			this.t(sequenceProvider,x => this.ceq(x,"REEL_WATCH_SEQUENCE_PROVIDER_RPC"));
-			this.t(sequenceParams,x => this.params(cf,"reel.sequence_params",x));
+			this.t(sequenceParams,x => this.params("reel.sequence_params",x));
 			return;
 		}
 		if("inputType" in x) {
 			const {playerParams,overlay,params,sequenceProvider,inputType,loggingContext,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.params(cf,"reel.player_params",playerParams);
+			this.params("reel.player_params",playerParams);
 			this.R_ReelPlayerOverlay(overlay);
-			this.params(cf,"reel.params",params);
+			this.params("reel.params",params);
 			this.t(sequenceProvider,x => {if(x!=="REEL_WATCH_SEQUENCE_PROVIDER_RPC") debugger;});
 			this.t(inputType,x => {if(x!=="REEL_WATCH_INPUT_TYPE_SEEDLESS") debugger;});
 			if(loggingContext) {
@@ -1759,7 +1759,7 @@ class ServiceMethods extends ServiceData {
 		const {playlistId,index,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.parse_playlist_id(playlistId);
 		this.a_primitive_num(index);
-		this.params(cf,"watch_playlist.params",params);
+		this.params("watch_playlist.params",params);
 	}
 	/** @private @arg {DE_SignalNavigation} x */
 	DE_SignalNavigation(x) {
@@ -1779,7 +1779,7 @@ class ServiceMethods extends ServiceData {
 				const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig,playerParams,watchEndpointMusicSupportedConfigs,nofollow,playerExtraUrlParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				this.a_primitive_num(index);
 				this.a_primitive_str(playlistSetVideoId);
-				this.params(cf,"watch.params",params);
+				this.params("watch.params",params);
 				this.a_primitive_num(startTimeSeconds);
 				if(continuePlayback!==false) debugger;
 				this.R_VssLoggingContext(loggingContext);
@@ -1820,7 +1820,7 @@ class ServiceMethods extends ServiceData {
 				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				status;
 				target;
-				this.t(removeLikeParams,x => this.params(cf,"like.removeLikeParams",x));
+				this.t(removeLikeParams,x => this.params("like.removeLikeParams",x));
 			} break;
 			case "LIKE": {
 				const cf="E_LikeLike";
@@ -1828,14 +1828,14 @@ class ServiceMethods extends ServiceData {
 				status;
 				target;
 				actions;
-				this.t(likeParams,x => this.params(cf,"like.likeParams",x));
+				this.t(likeParams,x => this.params("like.likeParams",x));
 			} break;
 			case "DISLIKE": {
 				const cf="E_LikeDislike";
 				const {status,target,dislikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 				status;
 				target;
-				this.t(dislikeParams,x => this.params(cf,"like.dislikeParams",x));
+				this.t(dislikeParams,x => this.params("like.dislikeParams",x));
 			} break;
 		}
 	}
@@ -2766,166 +2766,14 @@ class ServiceMethods extends ServiceData {
 		};
 		return {u,gen_next_part,new_ns,new_path,map_entry_key};
 	}
-	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva @returns {boolean} */
-	parse_param_next(root,path,map_entry_key_path,tva,callback) {
-		let parts=split_string(path,".");
-		if(tva.length===0) {
-			let {u}=this.get_parse_fns(path,[],null);
-			/** @private @type {P_LogItems} */
-			switch(parts[0]) {
-				// [default_parse_param_empty]
-				default: {
-					const idx=1; u(idx); debugger;
-				} break;
-			}
-			return true;
-		}
-		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
-		let map_entry_value=tva[0];
-		let {u}=this.get_parse_fns(path,[],map_entry_value);
-		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
-		for(let i=0;i<parts.length;i++) {
-			let cur_part=parts[i];
-			/** @private @type {P_LogItems} */
-			switch(cur_part) {
-				case "D_0x94d81d4":
-				case "get_notification_menu": case "timed_continuation": case "continuation_request": case "next_response": case "ypc_get_cart": case "ad_slot_logging_data":
-				case "adaptive_format":
-				case "aadc_guidelines_state": case "ad_serving_data_entry": case "macro_marker_repeat_state": case "player_state":
-				case "change_markers_visibility": case "continuation_token": case "create_comment": case "createBackstagePost":
-				case "entity_key": case "entity":
-				case "get_pdg_buy_flow": case "get_report_form": case "get_transcript":
-				case "invalidation":
-				case "like": case "live_chat_replay": case "load_markers":
-				case "next_radio": case "next": case "notification":
-				case "player_seek": case "playability_status": case "playlist_edit":
-				case "reel": case "reload":
-				case "service$create_playlist": case "ad_slot_logging_data": case "subscribe": case "subscriptionState":
-				case "timed_continuation": case "tracking": case "transcriptTrackSelection":
-				case "unsubscribe":
-				case "watch_playlist": case "watch":
-				case "ypc_get_offers": case "ypc_get_offline_upsell":
-				case "watch_next":
-				case "transaction_params":
-				case "serialized_slot_ad_serving_data_entry":
-				case "reel_watch_sequence":
-				case "binary_token":
-				case "context_params": case "data": case "entity_key": case "xtags":
-				case "params": case "normal": case "subscribed": case "ctoken": case "continuation": case "queue_context_params": case "player_params":
-				case "key": case "parentTrackingParams": case "trackingParams": case "serializedParams": case "likeParams": case "dislikeParams":
-				case "removeLikeParams": case "sequence_params": case "record_interactions": case "opt_out":
-				case "token":
-				case "_level_1_0": case "_level_2_0": case "_level_2_1": break;
-				default: {
-					const idx=i; u(idx); debugger; switch(cur_part) {case "": }
-				} break;
-				case "f1": case "f2": case "f3": case "f4": case "f6": case "f9":
-				case "f13": case "f14":
-					break;
-			}
-			if(parts.length===i) return this.handle_map_value(path,map_entry_value);
-		}
-		return this.handle_map_value(path,map_entry_value);
+	/** @public @arg {P_ParamParse} cf @arg {string} x */
+	params(cf,x) {
+		this.x.get("handle_types").decode_continuation_token(cf,x);
 	}
-	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
-	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {
-		let off=1; root; map_entry_key_path; callback;
-		let ret=true;
-		for(let val of tva) {
-			off++; val;
-			let g1=() => {
-				console.log(`\n\t"[parse_value.gen_ar] [${path}[]]",`);
-				console.log(`\n\tcase ${JSON.stringify(path)}:\n`);
-				console.log("path offset",off);
-			};
-			`case "get_report_form.params.f28.f1[].f1.f1": {
-				let res=this.parse_param_next(root,\`\${path} []\`,map_entry_key_path,[val],callback);
-				if(res===false) ret=false;
-			}; continue;`;
-			switch(path)/*parse_param_next_arr*/ {
-				default: g1(); ret=false; continue;
-			}
-		}
-		return ret;
+	/** @api @public @arg {P_ParamParse} cf @arg {string} x */
+	playerParams(cf,x) {
+		this.x.get("handle_types").decode_continuation_token(cf,x);
 	}
-	/** @arg {()=>void} new_ns @arg {boolean} is_debug_enabled */
-	parse_param_default(new_ns,is_debug_enabled) {
-		if(is_debug_enabled) {new_ns(); debugger;}
-		return false;
-	}
-	/** 
-	 * @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root
-	 * @arg {boolean} is_debug_enabled
-	 * @returns {boolean}
-	 * */
-	on_params_callback(root,path,map_entry_values,map_entry_key_path,map_keys,is_debug_enabled) {
-		let callback=this.on_params_callback.bind(this);
-		let map_entry_key=map_entry_key_path.at(-1);
-		if(!map_entry_key) return false;
-		let map_keys_=map_keys.slice();
-		let {new_path,new_ns}=this.get_parse_fns(path,map_keys_,map_entry_values[0],map_entry_key);
-		/** @private @arg {string} ns @arg {()=>void} f */
-		let grouped=(ns,f) => {
-			console.group(ns);
-			f();
-			console.groupEnd();
-		};
-		// binary tab enum
-		/** @type {B_BinaryBrowseTab} */
-		// "continuation_token.data.f110.f3"
-		/** @private @type {P_LogItems} */
-		switch(path)/*endpoint*/ {
-			default: {
-				this.log_list.push([() => grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path)]);
-				/** @private @type {P_ParamParse} */
-				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
-			}
-			case "tracking.trackingParams":
-			case "tracking.trackingParams.f4":
-			case "continuation_request.watch_next.token": switch(map_entry_key) {
-				case 1: case 2: case 3: case 4: case 6: case 9: case 13: case 14:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default: return this.parse_param_default(new_ns,is_debug_enabled);
-			}
-		}
-	}
-	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
-	params(root,path,x) {
-		/** @type {number[]} */
-		let map_entry_key_path=[];
-		this.on_any_params(root,path,map_entry_key_path,x,this.on_params_callback.bind(this));
-	}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x */
-	playerParams(cf,path,x) {
-		/** @type {number[]} */
-		let map_entry_key_path=[];
-		this.on_any_params(cf,path,map_entry_key_path,x,this.on_params_callback.bind(this));
-	}
-	/** @private @type {string[]} */
-	cache_params=[];
-	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} params_callback */
-	on_any_params(root,path,map_entry_key_path,x,params_callback) {
-		if(x===void 0) {debugger; return;}
-		x=decodeURIComponent(x);
-		if(this.cache_params.includes(x)) return;
-		this.cache_params.push(x);
-		let param_map=this.create_param_map(x);
-		if(param_map===null) {debugger; return;}
-		this.parse_any_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
-	}
-	/**
-	 * @api @public
-	 * @template {CF_L_Params} T
-	 * @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback
-	 * @arg {boolean} is_debug_enabled
-	 * */
-	parse_key(root,path,map,map_keys,map_entry_key_path,callback,is_debug_enabled) {
-		let map_entry_key=map_entry_key_path.at(-1);
-		if(map_entry_key===void 0) return;
-		let map_entry_values=map.get(map_entry_key);
-		this.parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback,is_debug_enabled);
-	}
-	parse_key_index=1;
 	/**
 	 * @api @public
 	 * @template {CF_L_Params} T
@@ -2942,7 +2790,8 @@ class ServiceMethods extends ServiceData {
 				let cx=map_keys.indexOf(map_entry_key);
 				if(cx>-1) map_keys.splice(cx,1);
 			} else {
-				console.log("not del",path,map_keys);
+				console.log("not del",path,map_entry_key);
+				debugger;
 			}
 		}
 	}
@@ -2955,7 +2804,7 @@ class ServiceMethods extends ServiceData {
 		}));
 	}
 	/** @protected @arg {CF_L_CTP_Params} cf @arg {string} x */
-	clickTrackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
+	clickTrackingParams(cf,x) {this.params("tracking.trackingParams",x);}
 	/** @protected @arg {CF_D_STR} cf @arg {string} x */
 	codegen_str(cf,x) {
 		if(x.startsWith("UC")) {console.log(`-- [string.${cf}] --\n\ntype D_${cf}=\`UC\${string}\``);}
@@ -3022,7 +2871,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template T @template {T} U @arg {T} v1 @arg {U} v2 */
 	ceq(v1,v2) {if(v1!==v2) {debugger; return false;}; return true;}
 	/** @public @arg {CF_L_TP_Params} cf @arg {string} x */
-	trackingParams(cf,x) {this.params(cf,"tracking.trackingParams",x);}
+	trackingParams(cf,x) {this.params("tracking.trackingParams",x);}
 	/** @private @type {Map<string,string[]>} */
 	missing_codegen_types=new Map;
 	/** @protected @arg {string} cf @arg {{}} x */
@@ -3445,7 +3294,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {this.on_root_visual_element(x);}
 	/** @protected @arg {"DE_CreateComment"} cf @arg {P_ParamParse} path @arg {K} k @template {`${string}Params`} K @template {{[U in K]:string;}} T @arg {T} x */
-	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(cf,path,a);}
+	TD_Params(cf,k,path,x) {const {[k]: a}=x; this.params(path,a);}
 	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	AD_ChangeEngagementPanelVisibility(x) {
 		const cf="AD_ChangeEngagementPanelVisibility";
@@ -3719,7 +3568,7 @@ class ServiceMethods extends ServiceData {
 	DE_RecordNotificationInteractions(x) {
 		const cf="DE_RecordNotificationInteractions"; this.k(cf,x);
 		const {serializedInteractionsRequest,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"notification.record_interactions",serializedInteractionsRequest);
+		this.params("notification.record_interactions",serializedInteractionsRequest);
 		this.tz(actions,this.A_HideEnclosing);
 	}
 	/** @protected @arg {E_RecordNotificationInteractions} x */
@@ -3755,7 +3604,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DE_Subscribe";
 		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(channelIds,this.D_ChannelId);
-		this.params(cf,"subscribe.params",params);
+		this.params("subscribe.params",params);
 	}
 	/** @private @arg {GM_CreateBackstagePost} x */
 	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
@@ -3855,8 +3704,8 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(a);
 		let un_b=atob(b);
 		let no_uri_b=decodeURIComponent(un_b);
-		this.params(cf,"notification.opt_out",no_uri_b);
-		this.params(cf,"notification.record_interactions",c);
+		this.params("notification.opt_out",no_uri_b);
+		this.params("notification.record_interactions",c);
 	}
 	/** @private @arg {DE_UserFeedback} x */
 	DE_UserFeedback(x) {
@@ -4197,7 +4046,7 @@ class ServiceMethods extends ServiceData {
 	DU_MutationReplace(x) {
 		const cf="DU_MutationReplace";
 		const {entityKey,type,payload,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"entity_key.normal",entityKey);
+		this.params("entity_key.normal",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		let pr=this.G_EY_Entity(payload);
 		if(!pr) return;
@@ -4291,7 +4140,7 @@ class ServiceMethods extends ServiceData {
 			case "subscriptionStateEntity": {
 				const cf="DS_EY_Subscription";
 				const {key,subscribed,...y}=this.s(cf,x); this.g(y);
-				this.params(cf,"subscriptionState.key",key);
+				this.params("subscriptionState.key",key);
 				this.a_primitive_bool(subscribed);
 			} break;
 			case "playlistLoopStateEntity": {
@@ -4310,7 +4159,7 @@ class ServiceMethods extends ServiceData {
 				const {key,selectedTrackIndex,serializedParams,...y}=this.s(cf,x); this.g(y);
 				this.params(`${cf}.key`,"entity.key",key);
 				if(selectedTrackIndex!==0) debugger;
-				this.params(cf,"transcriptTrackSelection.serializedParams",serializedParams);
+				this.params("transcriptTrackSelection.serializedParams",serializedParams);
 			} break;
 			case "transcriptSearchBoxStateEntity": {
 				const cf="DS_EY_TranscriptSearchBox";
@@ -4360,7 +4209,7 @@ class ServiceMethods extends ServiceData {
 	DU_MutationDelete(x) {
 		const cf="DU_MutationDelete";
 		const {entityKey,type,options,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params(cf,"entity_key.normal",entityKey);
+		this.params("entity_key.normal",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE") debugger;
 		this.tf(this.O_DU_Persistence)(options);
 	}
@@ -4434,7 +4283,7 @@ class ServiceMethods extends ServiceData {
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist"; this.k(cf,x);
 		const {params,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(params,x => this.params(cf,"service$create_playlist",x));
+		this.t(params,x => this.params("service$create_playlist",x));
 		this.z(videoIds,this.videoId);
 	}
 	/** @private @arg {GM_CreatePlaylist} x */
