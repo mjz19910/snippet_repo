@@ -2122,8 +2122,8 @@ class HandleTypes extends HandleTypesEval {
 		s;
 		return obj;
 	}
-	/** @api @public @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
-	gen_typedef_bin_json(s,cf,x) {
+	/** @api @public @arg {JsonReplacerState} s @arg {object} x @returns {string} */
+	gen_typedef_bin_json(s,x) {
 		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
 		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
@@ -2135,7 +2135,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
 	gen_typedef_bin(s,cf,x) {
-		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,cf,x)}\n`;
+		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)}\n`;
 	}
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
 	codegen_typedef_bin(cf,x,do_break=true) {
