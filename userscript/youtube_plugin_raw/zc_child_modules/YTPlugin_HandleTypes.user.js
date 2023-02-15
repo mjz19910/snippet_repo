@@ -87,14 +87,7 @@ class UrlParseHelper {
 const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
-	[24281897,24448383,24458839,24437577,24441240,24463912,24441239,24451434,24455878,24458634,24450366,24463911,24454001,24440302,24448245],
-	[24407191,24430382,24445230,24450367,24457611,24457969,24465011,24470281],
-	[24452410,24458317,24458324,24458329],
-	[24473107],
-	[24457612],
-	[24473090],
-	[24451438],
-	[24428818],
+	[],
 ].flat());
 class HandleTypes extends HandleTypesEval {
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
