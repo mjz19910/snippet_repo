@@ -2705,7 +2705,8 @@ class ServiceMethods extends ServiceData {
 			switch(path) {
 				default: {
 					let x=path; x;
-					console.log(`-- [handle_value_gen$do_save_obj] [v:${entry.keys()}] --\n\ncase "${x}":\n`);
+					let entry_keys=[...entry.keys()];
+					console.log(`-- [handle_value_gen$do_save_obj] [map_keys:${entry_keys}] --\n\ncase "${x}":\n`);
 					debugger;
 					ret=false;
 				} break;
