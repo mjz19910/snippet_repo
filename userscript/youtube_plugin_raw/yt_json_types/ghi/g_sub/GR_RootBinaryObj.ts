@@ -4,8 +4,8 @@ type R_ClickTrackingObj={
 	6: "external";
 };
 type R_TrackingObj={
-	1: T_VW<0>;
-	2: T_VW<13188>;
+	1: T_VW<number>;
+	2: T_VW<number>;
 	4: T_VW<V_BinaryTimestamp>;
 };
 type R_CreatePlaylistObj={1: T_VW<4>;};
