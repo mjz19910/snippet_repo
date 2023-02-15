@@ -2663,7 +2663,7 @@ class ServiceMethods extends ServiceData {
 		}
 		return ok_e;
 	}
-	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {(Exclude<T[SI],null>)|null} */
+	/** @protected @arg {string} cf @arg {SI} ex_name @template {T_DistributedKeyof<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {[T[SI]]|null} */
 	wn(cf,x,ex_name,excl=[]) {
 		this.k(cf,x);
 		let ka=this.get_keys_of(x);
@@ -2672,14 +2672,14 @@ class ServiceMethods extends ServiceData {
 		let k=keys[0];
 		if(k!==ex_name) {debugger; return null;}
 		let r=x[k];
-		return r;
+		return [r];
 	}
 	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:{};}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K])=>U} f */
 	H_(cf,k,x,f) {
 		if(!x) {debugger; return;}
 		let wr=this.wn(cf,x,k);
 		if(!wr) return;
-		return f.call(this,wr);
+		return f.call(this,wr[0]);
 	}
 	/** @private @arg {`${number}`} x */
 	parse_number(x) {
@@ -5181,8 +5181,8 @@ class ServiceMethods extends ServiceData {
 		if("scrollToEngagementPanelCommand" in x) return this.C_ScrollToEngagementPanel(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @template {{}} T @arg {TD_ItemSection_2<T,"comments-entry-point">} x @arg {(this:this,x:T)=>void} f */
-	TD_ItemSection_2_CommentsEntryPoint(x,f) {
+	/** @private @template {{}} T @arg {[TD_ItemSection_2<T,"comments-entry-point">]} x @arg {(this:this,x:T)=>void} f */
+	TD_ItemSection_2_CommentsEntryPoint([x],f) {
 		const cf="TD_ItemSection_2_CommentsEntryPoint";
 		const {contents,trackingParams,sectionIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,f);

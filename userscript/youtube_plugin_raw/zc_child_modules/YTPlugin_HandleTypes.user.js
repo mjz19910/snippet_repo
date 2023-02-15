@@ -2107,8 +2107,21 @@ class HandleTypes extends HandleTypesEval {
 		}
 		if(do_break) {debugger;}
 	}
+	/** @protected @arg {K} k @template U @template {T_DistributedKeyof<T>} K @template {{[U in string]:T_VW<{}>;}} T @arg {string} cf @arg {T} x @arg {(this:this,x:T[K][0])=>U} f */
+	H_d(cf,k,x,f) {
+		if(!x) {debugger; return;}
+		let wr=this.wn(cf,x,k);
+		if(!wr) return;
+		return f.call(this,wr[0][0]);
+	}
+	/** @private @arg {D_GetPgdBuyFlow} x */
+	D_GetPgdBuyFlow(x) {x;}
 	/** @private @arg {R_GetPgdBuyFlow} x */
-	R_GetPgdBuyFlow(x) {x; debugger;}
+	R_GetPgdBuyFlow(x) {
+		const cf="R_GetPgdBuyFlow";
+		if(1 in x) return this.H_d(cf,1,x,this.D_GetPgdBuyFlow);
+		debugger;
+	}
 	/** @private @arg {P_ReelPlayerParams} x */
 	P_ReelPlayerParamsObj(x) {
 		if(30 in x) return;
