@@ -2349,27 +2349,34 @@ class HandleTypes extends HandleTypesEval {
 		const [dec_0]=x;
 		this.handle_1_any_d0(dec_0);
 	}
+	/** @arg {["data32", 1, 4 | 1 | 3 | 14 | 15 | 31 | 53]} x */
+	handle_2_any_d1(x) {
+		const [type,field_id,value]=x;
+		if(type!=="data32") debugger;
+		if(field_id!==1) debugger;
+		/* [f_23_TR_Binary_Num_f1] */
+		switch(value) {
+			default: debugger; break;
+			case 1: case 3: case 4: case 14: case 15: case 31: case 53:
+		}
+	}
+	/** @arg {[["data32", 1, 4 | 1 | 3 | 14 | 15 | 31 | 53]]} x */
+	handle_2_any(x) {
+		if(x.length!==1) debugger;
+		const [dec_0]=x;
+		this.handle_2_any_d1(dec_0);
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
 		const [type,field_id,buffer,dec]=x; buffer;
 		if(type!=="child") debugger;
 		switch(field_id) {
 			default: debugger; break;
-			case 1: {
-				this.handle_1_any(dec);
-			} break;
+			case 1: this.handle_1_any(dec); break;
 			case 2: {
 				if(dec.length!==1) debugger;
 				const [dec_0]=dec;
 				{
-					const [type,field_id,value]=dec_0;
-					if(type!=="data32") debugger;
-					if(field_id!==1) debugger;
-					/* [f_23_TR_Binary_Num_f1] */
-					switch(value) {
-						default: debugger; break;
-						case 1: case 3: case 4: case 14: case 15: case 31: case 53:
-					}
 				}
 			} break;
 		}
