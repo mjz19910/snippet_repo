@@ -4726,5 +4726,11 @@ class ServiceMethods extends ServiceData {
 		this.save_enum("LIVE_CHAT_DISPLAY_STATE",initialDisplayState);
 		this.R_ToggleButton(showHideButton);
 	}
+	/** @private @arg {R_TopbarLogo} x */
+	R_TopbarLogo(x) {this.H_("R_TopbarLogo","topbarLogoRenderer",x,this.D_TopbarLogo);}
+	/** @private @arg {R_FusionSearchbox} x */
+	R_FusionSearchbox(x) {this.H_("R_FusionSearchbox","fusionSearchboxRenderer",x,this.D_FusionSearchbox);}
+	/** @private @arg {R_HotkeyDialog} x */
+	R_HotkeyDialog(x) {this.H_("R_HotkeyDialog","hotkeyDialogRenderer",x,this.D_HotkeyDialog);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
