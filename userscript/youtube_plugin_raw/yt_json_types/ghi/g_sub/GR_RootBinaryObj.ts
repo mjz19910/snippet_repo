@@ -20,3 +20,7 @@ type GR_RootBinaryObj=
 	|R_CreatePlaylistObj
 	;
 ;
+type R_ContinuationObj_SubObj={
+	49: {6: string;};
+	72: string;
+};
