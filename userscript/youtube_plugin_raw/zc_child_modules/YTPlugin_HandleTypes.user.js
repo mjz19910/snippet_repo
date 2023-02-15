@@ -2410,16 +2410,16 @@ class HandleTypes extends HandleTypesEval {
 		x[3]=null;
 		buffer;
 	}
+	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
+	D_RA_D_BinaryCategoryObj_item(x) {
+		switch(x[1]) {
+			default: debugger; break;
+			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
+		}
+	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
 	D_RA_D_BinaryCategoryObj_r(x) {
-		this.z(x,x => {
-			switch(x[1]) {
-				default: debugger; break;
-				case 4: {
-					this.D_RA_D_BinaryCategoryObj_d0(x);
-				} break;
-			}
-		});
+		this.z(x,this.D_RA_D_BinaryCategoryObj_item);
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
@@ -2434,7 +2434,8 @@ class HandleTypes extends HandleTypesEval {
 		switch(dec_t.length) {
 			default: debugger; break;
 			case 2: {
-				this.D_RA_D_BinaryCategoryObj_r(dec_t);
+				// this.D_RA_D_BinaryCategoryObj_r(dec_t);
+				debugger;
 			} break;
 			case 5: {
 				this.D_RA_CR_0x12f639cf(dec_t);
