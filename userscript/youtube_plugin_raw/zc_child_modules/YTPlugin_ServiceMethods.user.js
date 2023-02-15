@@ -3923,7 +3923,7 @@ class ServiceMethods extends ServiceData {
 			case "transcriptSearchBoxStateEntity": this.DS_EY_TranscriptSearchBox(x); break;
 			case "macroMarkersListEntity": this.DS_EY_MacroMarkersList(x); break;
 			case "unknown": {
-				const cf="XP_EntityPayload.unknown",[,k,x]=p;
+				const cf="XP_EntityPayload.unknown";
 				if("key" in x) {
 					const {key,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 					console.log(`unknown.${this.uppercase_first(k)}.key`,key);
