@@ -1003,8 +1003,6 @@ class HandleTypes extends HandleTypesEval {
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {M_YpcGetCart} x */
 	M_YpcGetCart(x) {this.T_WCM("M_YpcGetCart",x,this.GM_YpcGetCart);}
-	/** @public @arg {M_GetNotificationMenu} x */
-	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
 	M_Empty_WCM(cf,x) {this.codegen_typedef(cf,x); this.GEN(cf,x);}
 	/** @private @arg {GM_GetNotificationMenu} x */
