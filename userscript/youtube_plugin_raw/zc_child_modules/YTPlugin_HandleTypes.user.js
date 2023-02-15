@@ -74,29 +74,6 @@ class HandleTypesEval extends ServiceMethods {
 	//#region KR_ResponseContext
 	primitive_str(x) {this.a_primitive_str(x);}
 	primitive_of(x,y) {this._primitive_of(x,y);}
-	/** @private @arg {D_YtConfig} x */
-	D_YtConfig(x) {
-		const cf="D_YtConfig"; this.k(cf,x);
-		const {visitorData,sessionIndex,rootVisualElementType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.primitive_str(visitorData);
-		if(sessionIndex!==0) debugger;
-		/** @private @type {\`\${typeof rootVisualElementType}\`} */
-		let s=\`\${rootVisualElementType}\`;
-		switch(s) {
-			case "3611": return;
-			case "3832": return;
-			case "3854": return;
-			case "4724": return;
-			case "5754": return;
-			case "6827": return;
-			case "11487": return;
-			case "23462": return;
-			case "37414": return;
-			case "83769": return;
-			case "96368": return;
-			default: debugger; break;
-		}
-	}
 	//#endregion
 	//#region init and static init
 	// I use @private stuff that i want in static blocks
