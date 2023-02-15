@@ -2458,9 +2458,10 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_GetPgdBuyFlow(u);
 	}
-	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
-	decode_continuation_token_obj(cf,x) {
-		if(x.length===0) debugger;
+	/** @private @arg {P_ReelPlayerParamsObj} */
+	P_ReelPlayerParamsObj(x) {x;}
+	/** @private @arg {V_ParamObj} x */
+	decode_continuation_token_obj(x) {
 		switch(cf) {
 			default: debugger; break;
 			case "get_pdg_buy_flow.params": {
@@ -2478,6 +2479,13 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
+	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
+	decode_continuation_token_dec_arr(cf,x) {
+		if(x.length===0) debugger;
+		let bin_obj=this.convert_arr_to_obj(x);
+		if(!bin_obj) {debugger; return;}
+		this.decode_continuation_token_obj(cf,bin_obj);
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2485,7 +2493,7 @@ class HandleTypes extends HandleTypesEval {
 		let reader=new MyReader(buffer);
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
-		this.decode_continuation_token_obj(cf,dec);
+		this.decode_continuation_token_dec_arr(cf,dec);
 	}
 	/** @private @arg {V_VeDescObj} x */
 	V_VeDescObj(x) {

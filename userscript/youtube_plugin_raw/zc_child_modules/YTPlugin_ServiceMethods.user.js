@@ -1024,8 +1024,6 @@ class ServiceMethods extends ServiceData {
 		x==="";
 		return null;
 	}
-	/** @typedef {string|bigint|number|Uint8Array|["begin"]|["end"]|V_ParamObj} V_ParamObjData */
-	/** @typedef {{[x:number]:V_ParamObjData[]}} V_ParamObj */
 	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
 	convert_map_to_obj(x) {
 		/** @template T @arg {T[]} x */
