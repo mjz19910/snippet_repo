@@ -4518,10 +4518,25 @@ class HandleTypes extends HandleTypesEval {
 		this.R_Button(collapseButton);
 		this.R_SortFilterSubMenu(viewSelector);
 	}
+	/** @public @arg {D_AudioConfig} x */
+	D_AudioConfig(x) {x;}
+	/** @public @arg {D_StartSeconds} x */
+	D_StartSeconds(x) {x;}
+	/** @public @arg {D_StreamSelectionConfig} x */
+	D_StreamSelectionConfig(x) {x;}
+	/** @public @arg {R_DynamicReadaheadConfig} x */
+	R_DynamicReadaheadConfig(x) {x;}
+	/** @public @arg {D_WebPlayerConfig} x */
+	D_WebPlayerConfig(x) {x;}
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {
 		const cf="D_PlayerConfig";
 		const {audioConfig,playbackStartConfig,streamSelectionConfig,mediaCommonConfig,webPlayerConfig,...y}=this.s(cf,x); this.g(y);
+		this.D_AudioConfig(audioConfig);
+		this.t(playbackStartConfig,this.D_StartSeconds);
+		this.D_StreamSelectionConfig(streamSelectionConfig);
+		this.R_DynamicReadaheadConfig(mediaCommonConfig);
+		this.D_WebPlayerConfig(webPlayerConfig);
 	}
 	/** @public @arg {D_VideoDetails} x */
 	D_VideoDetails(x) {
