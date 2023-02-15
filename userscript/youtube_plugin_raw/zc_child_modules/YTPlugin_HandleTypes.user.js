@@ -725,8 +725,6 @@ class HandleTypes extends HandleTypesEval {
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
-	/** @private @arg {A_AppendContinuationItems} x */
-	A_AppendContinuationItems(x) {let [a,y]=this.TE_Endpoint_2("A_AppendContinuationItems","appendContinuationItemsAction",x); this.g(y); this.AD_AppendContinuationItems(a);}
 	/** @private @arg {R_HotkeyDialogSection} x */
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
