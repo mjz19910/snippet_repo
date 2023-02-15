@@ -2341,7 +2341,7 @@ class HandleTypes extends HandleTypesEval {
 		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
 		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
 	}
-	/** @arg {D_RD_Obj_a4|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
+	/** @arg {D_RD_Obj_a4|D_RD_Obj_a4|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RD_Obj_a4(x) {
 		const cf="D_RD_Obj_a4";
 		const [type,field_id,value,dec]=x;
