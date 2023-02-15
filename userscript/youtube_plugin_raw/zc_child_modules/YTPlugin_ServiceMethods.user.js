@@ -2998,7 +2998,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @typedef {"DE_VE3832_Watch"|"R_WatchPage_VE3832"} CF_PlayerParams */
 	/** @template {CF_PlayerParams} T @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values @arg {P_ParamParse} path @arg {number[]} map_keys @arg {T} root @returns {boolean} */
-	on_player_params_callback(path,map_entry_values,map_entry_key_path,map_keys,root) {
+	on_player_params_callback(root,path,map_entry_values,map_entry_key_path,map_keys) {
 		switch(path)/*player_params*/ {
 			default: debugger; return false;
 			case "watch.player_params":
@@ -3047,7 +3047,7 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root @returns {boolean} */
-	on_endpoint_params_callback(path,map_entry_values,map_entry_key_path,map_keys,root) {
+	on_endpoint_params_callback(root,path,map_entry_values,map_entry_key_path,map_keys) {
 		let callback=this.on_endpoint_params_callback.bind(this);
 		let map_entry_key=map_entry_key_path.at(-1);
 		if(!map_entry_key) return false;
@@ -3328,9 +3328,9 @@ class ServiceMethods extends ServiceData {
 	/** @api @public @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {number[]} map_keys @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]|undefined} map_entry_values @arg {T_ParseCallbackFunction<T>} callback */
 	parse_value(root,path,map,map_keys,map_entry_key_path,map_entry_values,callback) {
 		let map_entry_key=map_entry_key_path.at(-1);
-		let saved_map_keys=map_keys.slice();
+		let map_keys_=map_keys.slice();
 		if(map_entry_values!==void 0&&map_entry_key) {
-			let res=callback(map_entry_values,map_entry_key_path,path,saved_map_keys,root);
+			let res=callback(root,path,map_entry_values,map_entry_key_path,map_keys_);
 			if(res) {
 				map.delete(map_entry_key);
 				let cx=map_keys.indexOf(map_entry_key);
