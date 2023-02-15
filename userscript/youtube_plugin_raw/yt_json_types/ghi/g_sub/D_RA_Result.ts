@@ -9,10 +9,10 @@ type D_RA_Result=
 	|D_RA_D_Binary_x1
 	;
 ;
-type D_RA_GetPgdBuyFlow={
-	"1": {
-		"1": ["tAuRQs_d9F8"];
-		"2": ["UC_mYaQAE6-71rjSN6CeCA-g"];
-		"3": T_VW<1>;
-	};
+type R_GetPgdBuyFlow={
+	1: T_VW<{
+		1: ["tAuRQs_d9F8"];
+		2: ["UC_mYaQAE6-71rjSN6CeCA-g"];
+		3: T_VW<1>;
+	}>;
 };

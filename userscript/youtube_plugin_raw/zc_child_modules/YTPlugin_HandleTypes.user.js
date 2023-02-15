@@ -2460,31 +2460,7 @@ class HandleTypes extends HandleTypesEval {
 			} break;
 		}
 	}
-	/** @arg {D_RA_V_BinaryTimestamp_asFixed} x */
-	D_RA_V_BinaryTimestamp_asFixed(x) {
-		const [dec_0,dec_1,dec_2]=x;
-		this.D_RA_V_BinaryTimestamp_2_d0(dec_0);
-		this.D_RA_V_BinaryTimestamp_2_d1(dec_1);
-		this.D_RA_V_BinaryTimestamp_2_d2(dec_2);
-	}
-	/** @arg {D_RD_Obj_a9} x */
-	D_RD_Obj_a9(x) {
-		const cf="D_RD_Obj_a9",[type,id,,dec]=x;
-		if(id!==9) debugger;
-		switch(type) {
-			default: {
-				this.codegen_typedef_bin(cf,x);
-			} break;
-			case "child": {
-				this.save_string(`${cf}.type`,type);
-				this.D_RA_V_BinaryTimestamp_asFixed(dec);
-			} break;
-			case "data64": {
-				this.save_string(`${cf}.type`,type);
-			}
-		}
-	}
-	/** @arg {D_RD_Obj_a19} x */
+	/** @private @arg {D_RD_Obj_a19} x */
 	D_RD_Obj_a19(x) {
 		const cf="D_RD_Obj_a19",[type,,,dec]=x;
 		if(type!=="child") debugger;
@@ -2497,7 +2473,7 @@ class HandleTypes extends HandleTypesEval {
 			}
 		}
 	}
-	/** @arg {D_RD_Obj_a5} x */
+	/** @private @arg {D_RD_Obj_a5} x */
 	D_RD_Obj_a5(x) {
 		const cf="D_RD_Obj_a5",[type,id,a]=x;
 		if(type!=="data32") {
@@ -2507,7 +2483,7 @@ class HandleTypes extends HandleTypesEval {
 		if(id!==5) debugger;
 		this.save_number(cf,a);
 	}
-	/** @arg {D_RD_Obj_a3} x */
+	/** @private @arg {D_RD_Obj_a3} x */
 	D_RD_Obj_a3(x) {
 		const cf="D_RD_Obj_a3",[type,,,a]=x;
 		if(type!=="child") {
@@ -2518,7 +2494,7 @@ class HandleTypes extends HandleTypesEval {
 			if(a[0][0]!=="data32") debugger;
 		}
 	}
-	/** @arg {D_RD_ObjArr} x */
+	/** @private @arg {D_RD_ObjArr} x */
 	D_RD_ObjArr(x) {
 		const cf="D_RD_ObjArr";
 		switch(x[0]) {
@@ -2620,17 +2596,23 @@ class HandleTypes extends HandleTypesEval {
 		let u=as_any(bin_obj);
 		this.R_TrackingObj(u);
 	}
-	/** @arg {D_RA_GetPgdBuyFlow} x */
-	D_RA_GetPgdBuyFlow(x) {x;}
+	/** @arg {R_GetPgdBuyFlow} x */
+	R_GetPgdBuyFlow(x) {x;}
+	/** @arg {D_DecTypeNum[]} x */
+	D_RA_GetPgdBuyFlow(x) {
+		let bin_obj=this.convert_arr_to_obj(x);
+		if(!bin_obj) {debugger; return;}
+		/** @type {R_GetPgdBuyFlow} */
+		let u=as_any(bin_obj);
+		this.R_GetPgdBuyFlow(u);
+	}
 	/** @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
 	decode_continuation_token_obj(cf,x) {
 		if(x.length===0) debugger;
 		switch(cf) {
 			default: debugger; break;
 			case "get_pdg_buy_flow.params": {
-				/** @type {D_RA_GetPgdBuyFlow} */
-				let u=as_any(x);
-				this.D_RA_Result_TP(u);
+				this.D_RA_Result_TP(x);
 			} break;
 			case "tracking.trackingParams": {
 				/** @type {D_RA_Result_TP} */
@@ -2653,11 +2635,11 @@ class HandleTypes extends HandleTypesEval {
 		if(!dec) {debugger; return;}
 		this.decode_continuation_token_obj(cf,dec);
 	}
-	/** @arg {number} x */
+	/** @private @arg {number} x */
 	number_as_hex(x) {
 		return `0x${x.toString(16)}`;
 	}
-	/** @protected @arg {D_0x94d81d4} x */
+	/** @private @arg {D_0x94d81d4} x */
 	D_0x94d81d4(x) {
 		if(15 in x) {
 			const {[3]: f3,[8]: f8,[14]: f14,[15]: f15,...y}=x; this.g(y);
@@ -2677,7 +2659,7 @@ class HandleTypes extends HandleTypesEval {
 		const {[3]: f3,[8]: f8,[14]: f14,...y}=x; this.g(y);
 		if(f8!==1) debugger;
 		this.params("D_0x94d81d4.f3_binary_token",f3);
-		if("4" in f14) {
+		if(4 in f14) {
 			const {[1]: r_f1,[3]: r_f3,[4]: r_f4,...r_y}=f14; this.g(r_y);
 			switch(r_f1) {
 				default: debugger; break;
@@ -2688,13 +2670,6 @@ class HandleTypes extends HandleTypesEval {
 				case 1:
 			}
 			if(r_f4!==0) debugger;
-		}
-		if("15" in x) {
-			switch(x[15]) {
-				default: debugger; break;
-				case 1:
-			}
-			if(x[15]!==1) {debugger; return;}
 		}
 	}
 	/** @private @arg {D_0x4c82a9c[2][0]} x */
