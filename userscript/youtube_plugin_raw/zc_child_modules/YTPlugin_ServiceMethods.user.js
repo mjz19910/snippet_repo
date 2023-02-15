@@ -5212,5 +5212,180 @@ class ServiceMethods extends ServiceData {
 			if(!x.reelWatchEndpoint) debugger;
 		}
 	}
+	/** @private @arg {DMD_RowContainer} x */
+	DMD_RowContainer(x) {
+		const cf="DMD_RowContainer"; this.k(cf,x);
+		const {rows,collapsedItemCount,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.tz(rows,this.DMD_RowItem);
+		this.save_number(`${cf}.coll_item_count`,collapsedItemCount);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_MerchandiseItem} x */
+	D_MerchandiseItem(x) {
+		const cf="D_MerchandiseItem"; this.k(cf,x);
+		const {thumbnail,description,title,price,vendorName,trackingParams,buttonText,buttonCommand,accessibilityTitle,buttonAccessibilityText,fromVendorText,additionalFeesText,regionFormat,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnail);
+		this.a_primitive_str(description);
+		this.a_primitive_str(title);
+		if(!this.str_starts_with(price,"CA$")) debugger;
+		this.a_primitive_str(vendorName);
+		this.trackingParams(trackingParams);
+		this.a_primitive_str(buttonText);
+		this.E_VE83769_Url(buttonCommand);
+		this.a_primitive_str(accessibilityTitle);
+		this.a_primitive_str(buttonAccessibilityText);
+		this.a_primitive_str(fromVendorText);
+		this.a_primitive_str(additionalFeesText);
+		if(regionFormat!=="REGIONAL_FORMAT_EU") debugger;
+	}
+	/** @private @arg {D_MacroMarkersList} x */
+	D_MacroMarkersList(x) {
+		const cf="D_MacroMarkersList"; this.k(cf,x);
+		const {contents,syncButtonLabel,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.R_MacroMarkersListItem);
+		this.G_Text(syncButtonLabel);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_EngagementPanelTitleHeader} x */
+	D_EngagementPanelTitleHeader(x) {
+		const cf="D_EngagementPanelTitleHeader"; this.k(cf,x);
+		const {title,contextualInfo,informationButton,menu,visibilityButton,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.t(contextualInfo,this.G_Text);
+		this.t(informationButton,this.R_Button);
+		this.t(menu,this.G_EngagementPanelMenu);
+		this.R_Button(visibilityButton);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_EndScreenPlaylist} x */
+	D_EndScreenPlaylist(x) {
+		const cf="D_EndScreenPlaylist"; this.k(cf,x);
+		const {playlistId,thumbnail,title,trackingParams,longBylineText,videoCountText,videoCount,navigationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.playlistId(playlistId);
+		this.D_Thumbnail(thumbnail);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		this.G_Text(longBylineText);
+		this.G_Text(videoCountText);
+		this.t(videoCount,this.parse_number_template);
+		this.E_Watch(navigationEndpoint);
+	}
+	/** @private @arg {D_CommentsEntryPointHeader} x */
+	D_CommentsEntryPointHeader(x) {
+		const cf="D_CommentsEntryPointHeader"; this.k(cf,x);
+		const {headerText,onTap,trackingParams,commentCount,contentRenderer,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(headerText);
+		this.C_Executor(onTap);
+		this.trackingParams(trackingParams);
+		this.t(commentCount,this.G_Text);
+		this.D_CommentsEntryPointHeader_contentRenderer(contentRenderer);
+		if(targetId!=="comments-entry-point-header-identifier") debugger;
+	}
+	/** @private @arg {D_NotificationTopbarButton} x */
+	D_NotificationTopbarButton(x) {
+		const cf="D_NotificationTopbarButton"; this.k(cf,x);
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(icon.iconType!=="NOTIFICATIONS") debugger;
+		let [g_menu,menu_signal]=this.T_SE_Signal(`${cf}.menuRequest.T_SE_Signal`,menuRequest);
+		this.M_GetNotificationMenu(g_menu);
+		this.Signal_GetNotificationsMenu(menu_signal);
+		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
+		this.trackingParams(trackingParams);
+		this.D_Accessibility(accessibility);
+		this.a_primitive_str(tooltip);
+		let [m2,s2]=this.T_SE_Signal(`${cf}.U_UnseenCount.T_SE_Signal`,updateUnseenCountEndpoint);
+		this.M_GetUnseenNotificationCount(m2);
+		this.ceq(s2.signal,"GET_UNSEEN_NOTIFICATION_COUNT");
+		this.a_primitive_num(notificationCount);
+		this.ceq(handlerDatas.length,1);
+		this.ceq(handlerDatas[0],"NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT");
+	}
+	/** @private @arg {D_TopbarMenuButton} x */
+	D_TopbarMenuButton(x) {
+		const cf="D_TopbarMenuButton"; this.k(cf,x);
+		let u=this.D_TopbarMenuButton_Omit(cf,x);
+		if("menuRenderer" in u) {
+			const {icon,menuRenderer,style,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+			if(icon.iconType!=="VIDEO_CALL") debugger;
+			let uv=this.TR_MultiPageMenu("R_TopbarMenu",menuRenderer);
+			this.D_TopbarMenuButton_MenuItem(uv);
+			if(style!=="STYLE_DEFAULT") debugger;
+			return;
+		}
+		const {avatar,menuRequest,...y}=this.s(cf,u); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(avatar);
+		let res=this.T_SE_Signal(`${cf}.SE_Signal`,menuRequest);
+		this.M_AccountMenu(res[0]);
+		this.S_GetAccountMenu(res[1]);
+	}
+	/** @private @arg {D_CompactRadio} x */
+	D_CompactRadio(x) {
+		const cf="D_CompactRadio"; this.k(cf,x);
+		let {secondaryNavigationEndpoint: a,shareUrl: b,...o}=this.Omit_Menu_Radio(cf,x); o;
+		this.D_CompactRadio_NavE(a); this.D_RadioShareUrl(b);
+	}
+	/** @private @arg {D_CompactPlaylist} x */
+	D_CompactPlaylist(x) {
+		let y=this.D_Playlist_Omit("D_CompactPlaylist",x);
+		const {...p}=y; p;
+	}
+	/** @private @arg {D_HotkeyDialogSectionOption} x */
+	D_HotkeyDialogSectionOption(x) {
+		const cf="D_HotkeyDialogSectionOption"; this.k(cf,x);
+		const {label,hotkey,...y}=this.s(cf,x);
+		this.G_Text(label);
+		this.a_primitive_str(hotkey);
+		if("hotkeyAccessibilityLabel" in y) {
+			const {hotkeyAccessibilityLabel,...y1}=this.s(cf,y); this.g(y1);/*#destructure_done*/
+			return this.D_Accessibility(hotkeyAccessibilityLabel);
+		}
+		this.g(y);
+	}
+	/** @private @arg {[R_ContinuationItem[],"comment-item-section","comments-section"]} x */
+	ItemSection_3_CommentItemSection(x) {
+		if(x[1]!=="comment-item-section") debugger;
+		if(x[2]!=="comments-section") debugger;
+		this.z(x[0],this.R_ContinuationItem);
+	}
+	/** @private @arg {D_CommentsHeader} x */
+	D_CommentsHeader(x) {
+		const cf="D_CommentsHeader"; this.k(cf,x);
+		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(countText);
+		this.R_CommentSimplebox(createRenderer);
+		this.R_SortFilterSubMenu(sortMenu);
+		this.trackingParams(trackingParams);
+		this.G_Text(titleText);
+		this.G_Text(commentsCount);
+		if(showSeparator!==true) debugger;
+		this.z(customEmojis,this.D_CustomEmoji);
+		this.parser.parse_url(cf,as(unicodeEmojisUrl));
+		this.D_LoggingDirectives(loggingDirectives);
+	}
+	/** @private @arg {M_AccountMenu} x */
+	M_AccountMenu(x) {this.T_WCM("M_AccountMenu",x,this.GM_AccountMenu);}
+	/** @private @arg {M_GetUnseenNotificationCount} x */
+	M_GetUnseenNotificationCount(x) {this.T_WCM("M_GetUnseenNotificationCount",x,this.GM_GetUnseenNotificationCount);}
+	/** @private @arg {R_CommentThread} x */
+	R_CommentThread(x) {this.H_("R_CommentThread","commentThreadRenderer",x,this.D_CommentThread);}
+	/** @private @arg {R_VideoDescriptionMusicSection} x */
+	R_VideoDescriptionMusicSection(x) {this.H_("R_VideoDescriptionMusicSection","videoDescriptionMusicSectionRenderer",x,this.D_VideoDescriptionMusicSection);}
+	/** @private @arg {R_VideoDescriptionHeader} x */
+	R_VideoDescriptionHeader(x) {this.H_("R_VideoDescriptionHeader","videoDescriptionHeaderRenderer",x,this.D_VideoDescriptionHeader);}
+	/** @private @arg {R_HorizontalCardList} x */
+	R_HorizontalCardList(x) {this.H_("R_HorizontalCardList","horizontalCardListRenderer",x,this.D_HorizontalCardList);}
+	/** @private @arg {R_ExpandableVideoDescriptionBody} x */
+	R_ExpandableVideoDescriptionBody(x) {this.H_("R_ExpandableVideoDescriptionBody","expandableVideoDescriptionBodyRenderer",x,this.D_ExpandableVideoDescriptionBody);}
+	/** @private @arg {D_ClipSection} x */
+	D_ClipSection(x) {this.H_("D_ClipSection","contents",x,x => this.z(x,this.R_ClipCreation));}
+	/** @private @arg {A_ShowEngagementPanelScrim} x */
+	A_ShowEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_ShowEngagementPanelScrim","showEngagementPanelScrimAction",x); this.g(y); this.AD_ShowEngagementPanelScrim(a);}
+	/** @private @arg {G_EngagementPanelMenu} x */
+	G_EngagementPanelMenu(x) {
+		const cf="G_EngagementPanelMenu"; this.k(cf,x);
+		if("menuRenderer" in x) return this.R_Menu(x);
+		if("sortFilterSubMenuRenderer" in x) return this.R_SortFilterSubMenu(x);
+		x===""; this.codegen_typedef_all(cf,x);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
