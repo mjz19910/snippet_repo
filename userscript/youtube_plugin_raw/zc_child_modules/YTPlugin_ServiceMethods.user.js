@@ -3222,7 +3222,8 @@ class ServiceMethods extends ServiceData {
 			map_entry_key_path.pop();
 		}
 		if(this.eq_keys(map_keys,[])) return;
-		this.get_parse_fns(path,map_keys)
+		let {new_ns}=this.get_parse_fns(path,map_keys,null);
+		new_ns();
 		let param_obj=this.to_param_obj(map);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		{debugger;}
