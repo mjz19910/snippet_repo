@@ -646,8 +646,6 @@ class HandleTypes extends HandleTypesEval {
 	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
-	/** @public @arg {R_ChipCloudChip} x */
-	R_ChipCloudChip(x) {this.H_("ChipCloudChip","chipCloudChipRenderer",x,this.D_ChipCloudChip);}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {R_ReportFormModal} x */
@@ -831,8 +829,6 @@ class HandleTypes extends HandleTypesEval {
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
-	/** @private @arg {C_RelatedChip} x */
-	C_RelatedChip(x) {let [a,y]=this.TE_Endpoint_2("C_RelatedChip","relatedChipCommand",x); this.g(y); this.DC_RelatedChip(a);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
@@ -841,13 +837,6 @@ class HandleTypes extends HandleTypesEval {
 	DC_AddFollowUpSurvey(x) {
 		const cf="DC_AddFollowUpSurvey";
 		const {followUpOptions,followUpText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-	}
-	/** @private @arg {DC_RelatedChip} x */
-	DC_RelatedChip(x) {
-		const cf="DC_RelatedChip";
-		const {targetSectionIdentifier,loadCached,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(targetSectionIdentifier!=="sid-wn-chips") debugger;
-		if(loadCached!==true) debugger;
 	}
 	/** @private @arg {DC_ResetChannelUnreadCount} x */
 	DC_ResetChannelUnreadCount(x) {
@@ -3058,73 +3047,6 @@ class HandleTypes extends HandleTypesEval {
 			case "FEED_FILTER_CHIP_BAR_STYLE_TYPE_DEFAULT": break;
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
-	}
-	/** @private @arg {D_ChipCloudChip} x */
-	D_ChipCloudChip(x) {
-		const cf="D_ChipCloudChip"; this.k(cf,x);
-		if("navigationEndpoint" in x) return this.D_ChipCloudChip_WithNav(cf,x);
-		if("isSelected" in x) {
-			let d=this.D_ChipCloudChip_Omit(cf,x);
-			const {style: a,isSelected: b,...y}=this.s(cf,d); this.g(y);/*#destructure_done*/
-			switch(a.styleType) {
-				default: debugger; break;
-				case "STYLE_DEFAULT":
-				case "STYLE_HOME_FILTER":
-				case "STYLE_REFRESH_TO_NOVEL_CHIP":
-			}
-			if(b!==true) debugger;
-			return;
-		}
-	}
-	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
-	D_ChipCloudChip_WithNav(cf,x) {
-		let {text,trackingParams,...x2}=this.D_ChipCloudChip_OmitNav(cf,x);
-		this.G_Text(text);
-		this.trackingParams(trackingParams);
-		if(!("style" in x2)) {
-			return;
-		}
-		const {style,...x1}=x2;
-		let ia=this.strings_map.get(cf);
-		if(!ia) this.strings_map.set(cf,ia=[]);
-		ia.push(["style.styleType",[style.styleType]]);
-		if("isSelected" in x1) {
-			const {isSelected: a,...y}=x1; this.g(y);
-			this.a_primitive_bool(a);
-			return;
-		}
-		if("uniqueId" in x1) {
-			const {uniqueId: b,...y}=x1; this.g(y);/*#destructure_done*/
-			if(b!=="ATTRIBUTE_FILTER_TYPE_EXPLORE") debugger;
-			return;
-		}
-		if("targetId" in x1) {
-			const {targetId: a,...y}=x1; this.g(y);/*#destructure_done*/
-			if(a!=="feed_filter_chip_bar_second_chip") debugger;
-			return;
-		}
-		this.g(x1);
-	}
-	/** @private @arg {"D_ChipCloudChip"} cf @arg {Extract<D_ChipCloudChip,{navigationEndpoint:any}>} x */
-	D_ChipCloudChip_OmitNav(cf,x) {
-		const {navigationEndpoint: a,...y}=this.s(cf,x);
-		this.D_ChipCloudChip_navigationEndpoint(a);
-		return y;
-	}
-	/** @private @arg {D_ChipCloudChip_navigationEndpoint} x */
-	D_ChipCloudChip_navigationEndpoint(x) {
-		const cf="D_ChipCloudChip_navigationEndpoint"; this.k(cf,x);
-		if("continuationCommand" in x) return this.C_Continuation(x);
-		if("relatedChipCommand" in x) return this.C_RelatedChip(x);
-		if("feedbackEndpoint" in x) return this.E_Feedback(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @arg {CF_D_ChipCloudChip_Omit} cf @private @template {D_ChipCloudChip} T @arg {T} x */
-	D_ChipCloudChip_Omit(cf,x) {
-		const {text: b,trackingParams: c,...y}=this.s(cf,x);
-		this.G_Text(b);
-		this.trackingParams(c);
-		return y;
 	}
 	/** @public @arg {D_AdLayoutLoggingData} x */
 	D_AdLayoutLoggingData(x) {const cf="D_AdLayoutLogging"; this.H_(cf,"serializedAdServingDataEntry",x,x => this.params("ad_serving_data_entry",x));}
