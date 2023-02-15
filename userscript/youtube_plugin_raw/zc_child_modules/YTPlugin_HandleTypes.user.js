@@ -2192,7 +2192,7 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_CR_0x4c82a9c(x) {
 		if(x.length!==1) debugger;
 		const [dec_0]=x;
-		const [type,field_id,dec_1]=dec_0;
+		const [type,field_id,,dec_1]=dec_0;
 		if(type!=="child") {debugger; return;}
 		if(field_id!==0x4c82a9c) debugger;
 		this.D_RA_CD_0x4c82a9c(dec_1);
