@@ -2091,8 +2091,8 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
-	/** @api @public @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj @returns {unknown} */
-	typedef_json_replace_bin(state,key,obj) {
+	/** @api @public @arg {JsonReplacerState} s @arg {string} key @arg {unknown} obj @returns {unknown} */
+	typedef_json_replace_bin(s,key,obj) {
 		if(obj===null||obj===void 0) return obj;
 		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
 		if(typeof obj==="boolean") return obj;
@@ -2106,7 +2106,7 @@ class HandleTypes extends HandleTypesEval {
 				if(typeof obj[0]==="number") {
 					return `TYPE::T_VW<${obj[0]}>`;
 				}
-				return `TYPE::T_VW<${this.typedef_json_replace_bin(state,"0",obj[0])}`;
+				return `TYPE::T_VW<${this.gen_typedef_bin(s,`${s.gen_name}.${key}.0`,obj[0])}`;
 			}
 			/** @type {D_DecTypeNum} */
 			let otu=as(obj);
@@ -2119,26 +2119,29 @@ class HandleTypes extends HandleTypesEval {
 			debugger;
 		}
 		if(obj instanceof Uint8Array) return `TYPE::T_Uint8Array<${obj.length}>`;
-		state;
+		s;
 		return obj;
 	}
-	/** @api @public @arg {string} cf @arg {object} x @returns {string|null|void} */
-	gen_typedef_bin(cf,x) {
-		/** @private @type {JsonReplacerState} */
-		let state=new JsonReplacerState(cf,[],true);
-		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,state),"\t");
+	/** @api @public @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
+	gen_typedef_bin_json(s,cf,x) {
+		let json_res=JSON.stringify(x,this.typedef_json_replace_bin.bind(this,s),"\t");
 		json_res=this.replace_until_same(json_res,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `[${vi}]`;
 		});
 		json_res=json_res.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {return x.replaceAll("\\\"","\"");});
 		json_res=json_res.replaceAll(/\"(\w+)\":/g,(_a,g) => {return g+":";});
-		json_res=`\ntype ${cf}=${json_res}\n`;
 		return json_res;
+	}
+	/** @api @public @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
+	gen_typedef_bin(s,cf,x) {
+		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,cf,x)}\n`;
 	}
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
 	codegen_typedef_bin(cf,x,do_break=true) {
-		let res_str=this.gen_typedef_bin(cf,x);
+		/** @private @type {JsonReplacerState} */
+		let s=new JsonReplacerState(cf,[],true);
+		let res_str=this.gen_typedef_bin(s,cf,x);
 		if(res_str) {
 			if(!this.typedef_cache.includes(res_str)) {
 				this.typedef_cache.push(res_str);
