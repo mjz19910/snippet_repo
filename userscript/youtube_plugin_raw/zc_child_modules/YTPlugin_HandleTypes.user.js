@@ -2621,9 +2621,6 @@ class HandleTypes extends HandleTypesEval {
 		if(!bin_obj) {debugger; return;}
 		/** @type {R_TrackingObj} */
 		let u=as_any(bin_obj);
-		if(3 in u) {
-			return;
-		}
 		this.R_TrackingObj(u);
 	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
@@ -2815,7 +2812,19 @@ class HandleTypes extends HandleTypesEval {
 	/** @private @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {x;}
 	/** @private @arg {R_TrackingObj} x */
-	R_TrackingObj(x) {x;}
+	R_TrackingObj(x) {
+		if(3 in x) {
+			const {1: [f1],2: [f2],3: [f3],4: [f4]}=x;
+			this.a_primitive_num(f1);
+			this.a_primitive_num(f2);
+			this.V_BinaryTimestamp(f4);
+			return;
+		}
+		const {1: [f1],2: [f2],4: [f4]}=x;
+		this.a_primitive_num(f1);
+		this.a_primitive_num(f2);
+		this.V_BinaryTimestamp(f4);
+	}
 	/** @private @arg {R_CreatePlaylistObj} x */
 	R_CreatePlaylistObj(x) {x;}
 	/** @private @arg {R_SlotAdServingDataObj} x */
