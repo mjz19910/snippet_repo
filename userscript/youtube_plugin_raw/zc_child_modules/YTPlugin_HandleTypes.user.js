@@ -2616,7 +2616,16 @@ class HandleTypes extends HandleTypesEval {
 		debugger;
 	}
 	/** @arg {D_RA_Result_TP} x */
-	D_RA_Result_TP(x) {x; debugger;}
+	D_RA_Result_TP(x) {
+		let bin_obj=this.convert_arr_to_obj(x);
+		if(!bin_obj) {debugger; return;}
+		/** @type {R_TrackingObj} */
+		let u=as_any(bin_obj);
+		if(6 in u) {
+			return;
+		}
+		debugger;
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);

@@ -9,4 +9,4 @@ type D_RA_Result=
 	|D_RA_D_Binary_x1
 	;
 ;
-type D_RA_Result_TP=[["data32",1,number],[],["child",4,Uint8Array,D_RA_V_BinaryTimestamp_asFixed]];
+type D_RA_Result_TP=[["data32",1,number],["data32",2,number],["child",4,Uint8Array,D_RA_V_BinaryTimestamp_asFixed]];
