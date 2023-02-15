@@ -55,11 +55,6 @@ function raw_template(x) {
 	if(x.raw.length>1) {debugger;}
 	return x.raw[0].replaceAll("\\`","`").replaceAll("\\${","${");
 }
-/** @template T @arg {T} v */
-function bind_map(v) {
-	/** @template U @arg {U} e @returns {[T,U]} */
-	return (e) => [v,e];
-}
 class JsonReplacerState {
 	/** @constructor @public @arg {string} gen_name @arg {string[]} keys @arg {boolean} is_root */
 	constructor(gen_name,keys,is_root) {
@@ -2625,7 +2620,7 @@ class HandleTypes extends HandleTypesEval {
 						if(string_store[1][1].includes(x3)) return;
 						this.save_string(save_key,x3);
 					}
-					this.cg.codegen_typedef_bin(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
+					this.codegen_typedef_bin(`decode_continuation_token:BinaryCategoryObj:${kk.join()}`,x,false);
 				} break;
 				case "3D printing":
 				case "AI": case "Algorithms":
@@ -2657,12 +2652,12 @@ class HandleTypes extends HandleTypesEval {
 			if(is_token_g2(x,31)) return;
 			if(is_token_g2(x,53)) return;
 			let kk=this.get_keys_of_2(x);
-			this.cg.codegen_typedef_bin(`decode_continuation_token:g_2:${kk.join()}`,x,false);
+			this.codegen_typedef_bin(`decode_continuation_token:g_2:${kk.join()}`,x,false);
 			return;
 		}
 		let kk=this.get_keys_of_2(x);
 		if(kk.length>0) {
-			this.cg.codegen_typedef_bin(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x,false);
+			this.codegen_typedef_bin(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x,false);
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
