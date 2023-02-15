@@ -2470,6 +2470,17 @@ class HandleTypes extends HandleTypesEval {
 	D_RA_D_BinaryCategoryObj_r(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
 	/** @arg {D_RA_D_Binary_d0} x */
 	D_RA_D_Binary_d0(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
+	/** @arg {D_RA_D_BinaryCategoryObj_item[]} x */
+	D_RA_D_Binary_dg(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
+	/** @template {number} T @arg {T} t @arg {[["child",number,...any]]} x @returns {x is [["child",T,...any]]} */
+	is_fx_extract(x,t) {return x[0][1]===t;}
+	/** @arg {D_RA_CR_0x4c82a9c|D_RA_CR_0x19ac5ceb} x */
+	D_RA_D_Binary_f1(x) {
+		const cf="D_RA_D_Binary_f1";
+		if(this.is_fx_extract(x,0x19ac5ceb)) return this.D_RA_CR_0x19ac5ceb(x);
+		if(this.is_fx_extract(x,0x4c82a9c)) return this.D_RA_CR_0x4c82a9c(x);
+		this.codegen_typedef_all(cf,x);
+	}
 	/** @private @arg {P_ParamParse} cf @arg {string} x */
 	decode_continuation_token_no_uri(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
@@ -2481,13 +2492,9 @@ class HandleTypes extends HandleTypesEval {
 		/** @type {D_RA_Result} */
 		let dec_t=as_any(dec);
 		switch(dec_t.length) {
-			default: debugger; break;
+			default: return this.D_RA_D_Binary_dg(dec_t);
 			case 1: {
-				if(dec_t[0][1]===0x19ac5ceb) {
-					this.D_RA_CR_0x19ac5ceb(as(dec_t));
-					break;
-				};
-				this.D_RA_CR_0x4c82a9c(as(dec_t));
+				return this.D_RA_D_Binary_f1(dec_t);
 			} break;
 			case 2: return this.D_RA_D_BinaryCategoryObj_r(dec_t);
 			case 4: return this.D_RA_CR_0x14527fab(dec_t);
@@ -2546,6 +2553,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_0x4c82a9c[2]} x */
 	D_0x4c82a9c_f2(x) {
+		if(!x) {debugger; return;}
 		if(this.str_starts_with(x,"UC")) {debugger; return this.D_ChannelId(x);}
 		if(this.str_starts_with(x,"FE")) {
 			switch(x) {
