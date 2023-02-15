@@ -1,1 +1,1 @@
-type D_RA_D_BinaryCategoryObj_r=D_RA_D_BinaryCategoryObj_item[];
+type D_RA_D_BinaryCategoryObj_r=D_RD_ObjArr[];

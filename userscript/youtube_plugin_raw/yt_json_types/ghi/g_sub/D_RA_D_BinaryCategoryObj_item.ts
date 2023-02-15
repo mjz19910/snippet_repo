@@ -1,4 +1,4 @@
-type D_RA_D_BinaryCategoryObj_item=
+type D_RD_ObjArr=
 	|D_RA_D_BinaryObj_a2
 	|D_RA_D_BinaryCategoryObj_13_a1
 	|D_RA_D_BinaryCategoryObj_13_a1_ext

@@ -2427,7 +2427,7 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {["data64",9,number[],bigint]} x */
 	D_RA_D_BinaryCategoryObj_a9(x) {
 		const [type,field_id,,]=x;
-		if(type!=="data64") debugger;
+		if(type!=="data64") return this.codegen_typedef_bin(cf,x,false);
 		if(field_id!==9) debugger;
 	}
 	/** @arg {D_RA_D_BinaryObj_a19} x */
@@ -2449,12 +2449,11 @@ class HandleTypes extends HandleTypesEval {
 		if(id!==5) debugger;
 		this.save_number(cf,a);
 	}
-	/** @arg {D_RA_D_BinaryCategoryObj_item} x */
-	D_RA_D_BinaryCategoryObj_item(x) {
+	/** @arg {D_RD_ObjArr} x */
+	D_RD_ObjArr(x) {
+		const cf="D_RD_ObjArr";
 		switch(x[1]) {
-			default: debugger; {
-				x;
-			} break;
+			default: return this.codegen_typedef_bin(cf,x,false);
 			case 1: return this.D_RA_D_BinaryCategoryObj_13_a1(x);
 			case 2: return this.D_RA_D_BinaryCategoryObj_23_a2(x);
 			case 4: return this.D_RA_D_BinaryCategoryObj_d0(x);
@@ -2465,11 +2464,11 @@ class HandleTypes extends HandleTypesEval {
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
-	D_RA_D_BinaryCategoryObj_r(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
+	D_RA_D_BinaryCategoryObj_r(x) {this.z(x,this.D_RD_ObjArr);}
 	/** @arg {D_RA_D_Binary_d0} x */
-	D_RA_D_Binary_d0(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
-	/** @arg {D_RA_D_BinaryCategoryObj_item[]} x */
-	D_RA_D_Binary_dg(x) {this.z(x,this.D_RA_D_BinaryCategoryObj_item);}
+	D_RA_D_Binary_d0(x) {this.z(x,this.D_RD_ObjArr);}
+	/** @arg {D_RD_ObjArr[]} x */
+	D_RA_D_Binary_dg(x) {this.z(x,this.D_RD_ObjArr);}
 	/** @template {number} T @arg {T} t @arg {[["child",number,...any]]} x @returns {x is [["child",T,...any]]} */
 	is_fx_extract(x,t) {return x[0][1]===t;}
 	/** @arg {D_RA_CR_0x4c82a9c|D_RA_CR_0x19ac5ceb} x */
