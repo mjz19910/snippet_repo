@@ -2229,9 +2229,6 @@ class HandleTypes extends HandleTypesEval {
 			const {3: [f3],...z}=u;
 			this.a_primitive_num(f2);
 			this.save_number(`${cf}.f3`,f3);
-			if(19 in z) {
-				return;
-			}
 			if(9 in z) {const {9: [f9],...y}=z; this.g(y); return this._primitive_of(f9,"bigint");}
 			if(6 in z) {
 				const {6: [f6],...y}=z; this.g(y);
