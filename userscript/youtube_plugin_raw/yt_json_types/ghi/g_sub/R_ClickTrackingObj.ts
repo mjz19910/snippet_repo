@@ -19,8 +19,5 @@ type R_ClickTrackingObj=|{4: T_VW<V_BinaryTimestamp>;}|{
 	4: T_VW<V_BinaryTimestamp>;
 	6: T_VW<"related">;
 	9: VW_Bigint<bigint>;
-	19: T_VW<V_VeDescObj>|T_VW<{
-		1: T_VW<1>;
-		2: T_VW<3832>;
-	}>;
+	19: T_VW<V_VeDescObj>;
 };

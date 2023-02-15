@@ -2216,6 +2216,14 @@ class HandleTypes extends HandleTypesEval {
 		const cf="R_ClickTrackingObj";
 		const {4: [f4],...u}=x;
 		this.V_BinaryTimestamp(f4);
+		if(3 in u) {
+			const {3: [f3], 6: [f6],9: [f9],19: [f19],...y}=u; this.g(y);
+			if(f6!=="related") debugger;
+			this.save_number(`${cf}.f3`,f3);
+			this._primitive_of(f9,"bigint");
+			this.V_VeDescObj(f19);
+			return;
+		}
 		if(1 in u) {
 			const {1: [f1],2: [f2],...z}=u;
 			this.save_number(`${cf}.f1`,f1);
