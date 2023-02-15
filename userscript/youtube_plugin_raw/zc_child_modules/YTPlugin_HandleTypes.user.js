@@ -2551,7 +2551,17 @@ class HandleTypes extends HandleTypesEval {
 			return;
 		}
 		if(this.is_fx_extract(x,1)) {
-			const cf="D_RD_Obj_a1",[type,,a]=x[0];
+			const cf="D_RD_Obj_a1",[type,,a,dec]=x[0];
+			switch(type) {
+				case "child": {
+					const [d0,d1,d2]=dec;
+					if(d0[0]!=="child") debugger;
+					if(d1[0]!=="child") debugger;
+					if(d2[0]!=="data32") debugger;
+					this.save_number(`${cf}.${d2[1]}`,d2[2]);
+				} break;
+				case "data32": this.save_number(cf,a); break;
+			}
 			if(type!=="data32") {
 				this.codegen_typedef_bin(cf,x);
 				return;
