@@ -2756,7 +2756,7 @@ class ServiceMethods extends ServiceData {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(map));
 		{debugger;}
 	}
-	/** @private @arg {P_ParamParse} path @arg {number[]} map_keys @arg {V_ParamMapValue} map_entry_value @arg {number|null} map_entry_key */
+	/** @private @arg {P_ParamParse} path @arg {number[]} map_keys @arg {V_ParamMapValue|null} map_entry_value @arg {number|null} map_entry_key */
 	get_parse_fns(path,map_keys,map_entry_value,map_entry_key=null) {
 		let parts=split_string(path,".");
 		/** @private @arg {number} idx */
@@ -2813,13 +2813,23 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva @returns {boolean} */
 	parse_param_next(root,path,map_entry_key_path,tva,callback) {
+		let parts=split_string(path,".");
+		if(tva.length===0) {
+			let {u}=this.get_parse_fns(path,[],null);
+			/** @private @type {P_LogItems} */
+			switch(parts[0]) {
+				// [default_parse_param_next]
+				default: {
+					const idx=1; u(idx); debugger;
+				} break;
+			}
+			return true;
+		}
 		if(tva.length>1) return this.parse_param_next_arr(root,path,map_entry_key_path,tva,callback);
-		if(tva.length===0) return true;
 		let map_entry_value=tva[0];
+		let {u}=this.get_parse_fns(path,[],map_entry_value);
 		let key_index=this.parse_key_index;
 		if(map_entry_value instanceof Map) this.parse_any_param(root,path,map_entry_key_path,new Map(map_entry_value),callback);
-		let parts=split_string(path,".");
-		let {u}=this.get_parse_fns(path,[],map_entry_value);
 		/** @private @type {P_LogItems} */
 		switch(parts[0]) {
 			case "_level_1_0": break;
