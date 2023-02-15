@@ -1020,364 +1020,67 @@ export namespace Gen {
 		|{n: Prelude.CF_add_string_to_map; t: Types.CF_add_string_to_map_; v: "D_ToggleButton:toggledAccessibilityData:size";}
 		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "DC_Continuation";}
 		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "D_Continuation";}
-		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.continuation_token.data.f15";}
-		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.continuation_token.data.f49.f6";}
-		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.continuation_token.data.f72";}
-		|{n: Prelude.CF_decode_continuation_token; t: Types.CF_decode_continuation_token_; v: "sub.tracking.trackingParams.f7";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10.f11";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f10.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f13";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f14";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry.f9.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_0x94d81d4.binary_token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key.f5";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity_key.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f12";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.reel_watch_sequence.token.f8";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f13";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f14";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f28";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f36";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f36.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f36.f8";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f2.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f6.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f6.f4.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f6.f4.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f6.f4.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f6.f8";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9.f1.f1[]";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9.f1.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9.f1.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token.f9.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f10";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f11";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15.f2.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f15.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f19";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f20";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f8";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f110.f3.f9";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f49";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f49.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f4.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f53.f8";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_token.data.f72";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "createBackstagePost.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "createBackstagePost.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "createBackstagePost.params.f2";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params.f10";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params.f5.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal.f2.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.subscribed.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_notification_menu.ctoken.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params.f1.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_pdg_buy_flow.params.f1.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f11";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f14";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f18";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f18.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f18.f1.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f26";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f27";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1.f1.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1.f1.f1.f1.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1[]";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1[].f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1[].f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1[].f1.f1[]";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1[].f1.f1[].f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f28.f1[].f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f29";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_report_form.params.f8";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "get_transcript.params.f8";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "invalidation.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f4.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f4.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.dislikeParams.f7";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f6.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f6.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.likeParams.f7";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f5.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f5.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "like.removeLikeParams.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "live_chat_replay.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "load_markers.entity_key.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "macro_marker_repeat_state.entity_key.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f16";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f28";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f31";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f36";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f36.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f36.f8";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f2.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next.continuation.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_radio.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "next_response.queue_context_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.opt_out.f7";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2.f14";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2.f14.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2.f14.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2.f14.f1.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f2.f14.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "notification.record_interactions.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playability_status.context_params.f2.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_seek.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "player_state.entity_key.f5";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "playlist_edit.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f3.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f3.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f3.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.params.f6";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params.f30";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params.f57";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params.f71";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.player_params.f72";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params.f5.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reload.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "service$create_playlist";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "service$create_playlist.f1";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params.f2.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params.f4";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscriptionState.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "timed_continuation.data";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.parentTrackingParams";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f10";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f11";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f15";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f4.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f16.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f19.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f4.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f6.f12";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f6.f13";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f8";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "tracking.trackingParams.f9";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams.f6";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams.f7";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "transcriptTrackSelection.serializedParams.f8";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "unsubscribe.params.f3";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f12";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f13";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f24";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f27";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f27.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f33";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f33.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f33.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f33.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f33.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f39";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f56";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.params.f7";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f12";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f25";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f40";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f40.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f40.f1.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f40.f1.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f8";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch.player_params.f9";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f12";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f13";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f27";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f27.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f4";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "watch_playlist.params.f7";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_cart.transaction_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f1.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f1.f2";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f5.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f5.f3";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f5.f5";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f5.f5.f1";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offers.params.f5.f9";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ypc_get_offline_upsell.params";}
 		;
 }

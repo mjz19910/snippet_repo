@@ -2927,26 +2927,29 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {number[]} map_entry_key_path @arg {T_ParseCallbackFunction<T>} callback @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapValue[]} tva */
 	parse_param_next_arr(root,path,map_entry_key_path,tva,callback) {
-		let off=1;
+		let off=1; root;map_entry_key_path; callback;
 		let ret=true;
 		for(let val of tva) {
-			off++;
+			off++; val;
 			let g1=() => {
 				console.log(`\n\t"[parse_value.gen_ar] [${path}[]]",`);
 				console.log(`\n\tcase ${JSON.stringify(path)}:\n`);
 				console.log("path offset",off);
 			};
+			`case "get_report_form.params.f28.f1[].f1.f1": {
+				let res=this.parse_param_next(root,\`\${path} []\`,map_entry_key_path,[val],callback);
+				if(res===false) ret=false;
+			}; continue;`;
 			switch(path)/*parse_param_next_arr*/ {
 				default: g1(); ret=false; continue;
-				case "continuation_request.watch_next.token.f9.f1.f1":
-				case "get_report_form.params.f28.f1":
-				case "get_report_form.params.f28.f1[].f1.f1": {
-					let res=this.parse_param_next(root,`${path}[]`,map_entry_key_path,[val],callback);
-					if(res===false) ret=false;
-				}; continue;
 			}
 		}
 		return ret;
+	}
+	/** @arg {()=>void} new_ns @arg {boolean} is_debug_enabled */
+	parse_param_default(new_ns,is_debug_enabled) {
+		if(is_debug_enabled) {new_ns(); debugger;}
+		return false;
 	}
 	/** 
 	 * @template {CF_L_Params} T @arg {P_ParamParse} path @arg {number[]} map_entry_key_path @arg {V_ParamMapValue[]} map_entry_values  @arg {number[]} map_keys @arg {T} root
@@ -2971,7 +2974,7 @@ class ServiceMethods extends ServiceData {
 			case "continuation_token.data.f110.f3": switch(map_entry_key) {
 				case 2: case 3: case 6: case 7: case 8: case 9: case 10: case 11: case 15: case 19: case 20:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
+				default: return this.parse_param_default(new_ns,is_debug_enabled);
 			} break;
 		}
 		/** @private @type {P_LogItems} */
@@ -2982,206 +2985,12 @@ class ServiceMethods extends ServiceData {
 				/** @private @type {P_ParamParse} */
 				return this.parse_param_next(root,as(`${path}.f${map_entry_key}`),map_entry_key_path,map_entry_values,callback);
 			}
-			case "continuation_request.watch_next.token.f9.f1": switch(map_entry_key) {
-				case 1: case 3: case 4:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token.f9": switch(map_entry_key) {
-				case 1: case 3:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
 			case "continuation_request.watch_next.token": switch(map_entry_key) {
 				case 2: case 3: case 6: case 9: case 13: case 14:
 					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token.f2.f36": switch(map_entry_key) {
-				case 5: case 8:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token.f2": switch(map_entry_key) {
-				case 2: case 6: case 25: case 28: case 36:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token": switch(map_entry_key) {
-				case 2: case 3: case 9: case 13: case 14:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token.f6.f4": switch(map_entry_key) {
-				case 4: case 6: case 15:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token.f6": switch(map_entry_key) {
-				case 4: case 8:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token.f2": switch(map_entry_key) {
-				case 2:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "continuation_request.watch_next.token": switch(map_entry_key) {
-				case 2: case 3: case 6:
-					return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-				default:
-			} break;
-			case "get_pdg_buy_flow.params":
-			case "get_report_form.params.f18": case "service$create_playlist": case "like.removeLikeParams.f1": case "like.dislikeParams.f1": case "like.likeParams.f1": case "get_report_form.params.f28.f1[].f1.f1[]": case "get_report_form.params.f18": case "get_report_form.params.f28.f1.f1.f1": case "get_report_form.params.f28.f1.f1": case "get_report_form.params.f28": case "watch.params.f27": case "watch.player_params.f40": case "get_notification_menu.ctoken": case "ypc_get_offers.params.f5.f5": case "subscribe.params.f2": case "continuation_token.data.f110.f3.f15.f2": case "create_comment.params.f5": case "unsubscribe.params.f1": case "playability_status.context_params.f2": case "watch_playlist.params.f27":
-			case "entity_key.normal.f2": case "get_report_form.params.f28":
-			case "get_report_form.params.f28.f1[].f1": {
-				switch(map_entry_key) {case 1: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "get_report_form.params.f18.f1": {
-				switch(map_entry_key) {case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "continuation_token.data.f110":
-			case "reel.sequence_params.f5": {
-				switch(map_entry_key) {case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "get_report_form.params.f28.f1.f1.f1.f1": {
-				switch(map_entry_key) {case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "continuation_token.data.f49": {
-				switch(map_entry_key) {case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "like.removeLikeParams.f5": case "like.dislikeParams.f4": case "like.likeParams.f6": case "createBackstagePost.params": case "notification.record_interactions.f2.f14.f1": case "notification.record_interactions.f2.f14.f1": case "ypc_get_offers.params.f1": case "notification.record_interactions.f2.f14": case "notification.record_interactions.f2.f14":
-			case "playability_status.context_params": {
-				switch(map_entry_key) {case 1: case 2: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "get_report_form.params.f28.f1[]":
-			case "get_report_form.params.f28.f1": {
-				switch(map_entry_key) {case 1: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "watch.player_params.f40.f1":
-			case "continuation_token.data.f110.f3.f15": {
-				switch(map_entry_key) {case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "reel.sequence_params": {
-				switch(map_entry_key) {case 1: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "notification.record_interactions": {
-				switch(map_entry_key) {case 2: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "next.continuation.f2.f36": {
-				switch(map_entry_key) {case 5: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "tracking.trackingParams.f6": {
-				switch(map_entry_key) {case 12: case 13: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "notification.record_interactions.f2": {
-				switch(map_entry_key) {case 1: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "get_pdg_buy_flow.params.f1":
-			case "tracking.trackingParams.f19": case "ad_serving_data_entry.f9": case "unsubscribe.params": case "reel.params.f3": case "tracking.trackingParams.f16.f4":
-			case "tracking.trackingParams.f4": {
-				switch(map_entry_key) {case 1: case 2: case 3: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
-				switch(map_entry_key) {case 1: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "ypc_get_offers.params": {
-				switch(map_entry_key) {case 1: case 3: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "ad_serving_data_entry.f10": {
-				switch(map_entry_key) {case 1: case 6: case 11: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "subscribe.params": {
-				switch(map_entry_key) {case 2: case 3: case 4: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "player_state.entity_key": case "macro_marker_repeat_state.entity_key": case "load_markers.entity_key": case "change_markers_visibility.entity_key": case "entity_key.normal": case "entity_key.subscribed":
-			case "aadc_guidelines_state.entity_key": {
-				switch(map_entry_key) {case 2: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "create_comment.params": {
-				switch(map_entry_key) {case 2: case 5: case 10: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "continuation_token.data.f53":
-			case "tracking.trackingParams.f16":
-			case "continuation_token.data.f53.f4": {
-				switch(map_entry_key) {case 4: case 6: case 15: case 25: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "next.continuation": {
-				switch(map_entry_key) {case 1: case 2: case 3: case 16: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "reel.params": {
-				switch(map_entry_key) {case 1: case 3: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "notification.opt_out": {
-				switch(map_entry_key) {case 2: case 3: case 4: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "watch.params.f33": {
-				switch(map_entry_key) {case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "reel.player_params": {
-				switch(map_entry_key) {case 30: case 57: case 71: case 72: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "ypc_get_offers.params.f5": {
-				switch(map_entry_key) {case 1: case 3: case 5: case 9: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "like.removeLikeParams": {
-				switch(map_entry_key) {case 1: case 3: case 4: case 5: case 6: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "like.dislikeParams": {
-				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 5: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "like.likeParams": case "like.dislikeParams": {
-				switch(map_entry_key) {case 1: case 4: case 5: case 6: case 7: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "watch.player_params": {
-				switch(map_entry_key) {case 8: case 9: case 12: case 25: case 40: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			/** @private @type {P_LogItems} */
-			case "transcriptTrackSelection.serializedParams": {
-				switch(map_entry_key) {case 1: case 2: case 3: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "continuation_request.reel_watch_sequence.token": {
-				switch(map_entry_key) {case 1: case 3: case 5: case 8: case 12: case 15: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "continuation_token.data": {
-				switch(map_entry_key) {case 1: case 15: case 49: case 53: case 72: case 110: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "get_transcript.params": {
-				switch(map_entry_key) {case 1: case 2: case 3: case 5: case 6: case 7: case 8: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "next.continuation.f2": {
-				switch(map_entry_key) {case 2: case 4: case 7: case 25: case 28: case 31: case 36: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "watch_playlist.params": {
-				switch(map_entry_key) {case 1: case 2: case 3: case 4: case 7: case 12: case 13: case 27: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "ad_serving_data_entry": {
-				switch(map_entry_key) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "watch.params": {
-				switch(map_entry_key) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 39: case 56: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "get_report_form.params": {
-				switch(map_entry_key) {case 2: case 8: case 11: case 14: case 15: case 18: case 25: case 26: case 27: case 28: case 29: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback); default: }
-			} break;
-			case "tracking.trackingParams": {
-				switch(map_entry_key) {
-					case 16: case 19: return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-					default: {
-						/** @arg {number} x @template {number} T @arg {T} mx @returns {x is T_NumRange<1,T>} */
-						function is_in_range(x,mx) {
-							if(x<=mx) return true;
-							return false;
-						}
-						if(!is_in_range(map_entry_key,11)) break;
-						return this.parse_param_next(root,`${path}.f${map_entry_key}`,map_entry_key_path,map_entry_values,callback);
-					}
-				}
+				default: this.parse_param_default();
 			} break;
 		}
-		if(is_debug_enabled) {new_ns(); debugger;}
-		return false;
 	}
 	/** @public @arg {CF_L_Params} root @arg {P_ParamParse} path @arg {string} x */
 	params(root,path,x) {
