@@ -4348,22 +4348,6 @@ class HandleTypes extends HandleTypesEval {
 		}
 		this.D_Accessibility(accessibility);
 	}
-	/** @private @arg {D_ImpressionCommand} x */
-	D_ImpressionCommand(x) {
-		const cf="D_ImpressionCommand";
-		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);
-		this.clickTrackingParams(clickTrackingParams);
-		this.z(loggingUrls,x => this.T_BaseUrl(x,x => this.parser.parse_url(`${cf}:LoggingUrlItem`,x)));
-		this.B_Hack(pingingEndpoint);
-	}
-	/** @private @arg {D_ClickLocationTarget} x */
-	D_ClickLocationTarget(x) {
-		const cf="D_ClickLocationTarget";
-		const {location,code,behaviorType,...y}=this.s(cf,x); this.g(y);
-		this.save_enum("PROMOTED_SPARKLES_CLICK_LOCATION",location);
-		this.save_number(`${cf}.code`,code);
-		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
-	}
 	/** @private @arg {D_CommentActionButtons} x */
 	D_CommentActionButtons(x) {
 		const cf="D_CommentActionButtons";
