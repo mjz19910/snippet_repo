@@ -3175,9 +3175,10 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,value]=x;
 		if(type!=="data32") debugger;
 		if(field_id!==1) debugger;
+		const cf="D_RA_CD_0x19ac5ceb_map_f3_d0.value";
 		switch(value) {
-			default: debugger; break;
-			case 0: break;
+			default: this.codegen_case(cf,x); break;
+			case 0: case 2: case 4:
 		}
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb_map_f3_d1} x */
@@ -3185,9 +3186,10 @@ class HandleTypes extends HandleTypesEval {
 		const [type,field_id,value]=x;
 		if(type!=="data32") debugger;
 		if(field_id!==2) debugger;
+		const cf="D_RA_CD_0x19ac5ceb_map_f3_d1.value";
 		switch(value) {
-			default: debugger; break;
-			case 1: break;
+			default:  this.codegen_case(cf,x); break;
+			case 1: case 3:
 		}
 	}
 	/** @arg {D_RA_CD_0x19ac5ceb_f1_data} x */
