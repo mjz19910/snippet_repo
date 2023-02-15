@@ -1438,11 +1438,6 @@ function on_port_message(event) {
 let message_channel=new MessageChannel();
 
 function fire_observer_event() {dom_observer.notify_with_port(message_channel.port1);}
-/** @template T @arg {T|undefined} x @returns {T} */
-function required(x) {
-	if(x===void 0) {throw new Error("missing required");}
-	return x;
-}
 /** @private @arg {AsyncPluginEventDetail["handle_types"]} handle_types */
 function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();

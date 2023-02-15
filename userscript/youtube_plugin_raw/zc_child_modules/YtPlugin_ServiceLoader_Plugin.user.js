@@ -18,7 +18,7 @@ const bs=required(store["mod$YoutubePluginBase"]);
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
 
-if(__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
+if(window.__yt_plugin_log_imports__) console.log("Load ServiceLoader Plugin");
 const HandleTypes=required(store.mod$HandleTypes).HandleTypes;
 class ServiceLoader {
 	/** @template T @typedef {NonNullable<T>} N */

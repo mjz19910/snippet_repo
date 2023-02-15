@@ -15,7 +15,7 @@
 //#region module setup
 const __module_name__="mod$HandleTypes";
 if(!window.__youtube_plugin_base_loaded__) {throw new Error("Failed to load base plugin");}
-if(__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
+if(window.__yt_plugin_log_imports__) console.log("Load HandleTypes Service");
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
 const as=required(bs.as_);

@@ -15,7 +15,7 @@ declare global {
 		delete(name: string): void;
 		entries(): IterableIterator<[string,string]>;
 	}
-	var required: Base$ImpType["required"];
+	var required: PluginStore["mod$YoutubePluginBase"]["required"];
 	type PluginStore=import("./zb_plugin_types/PluginStore.js").PluginStore;
 	type ServiceLoader=InstanceType<PluginStore["mod$ServiceLoader"]["ServiceLoader"]>;
 }

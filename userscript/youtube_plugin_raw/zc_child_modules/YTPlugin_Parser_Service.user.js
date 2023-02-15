@@ -21,7 +21,7 @@ const split_string_once=bs.split_string_once;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-if(__yt_plugin_log_imports__) console.log("Load Parser Service");
+if(window.__yt_plugin_log_imports__) console.log("Load Parser Service");
 /** @template T @arg {T|undefined} x @returns {T} */
 function required(x) {
 	if(x===void 0) {throw new Error("missing required");}
