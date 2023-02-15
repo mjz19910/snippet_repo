@@ -2467,16 +2467,7 @@ class ServiceMethods extends ServiceData {
 		return f.call(this,apiUrl);
 	}
 	/** @api @public @template {CF_L_TP_Params} T @arg {T} cf @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	playerParams(cf,path,x,callback) {this.on_player_params(cf,path,x,callback);}
-	/** @api @public @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} callback */
-	on_player_params(root,path,x,callback) {
-		x=decodeURIComponent(x);
-		if(this.cache_player_params.includes(x)) return;
-		this.cache_player_params.push(x);
-		let param_map=this.create_param_map(x);
-		if(param_map===null) {debugger; return;}
-		this.parse_player_param(root,path,param_map,callback);
-	}
+	playerParams(cf,path,x,callback) {this.on_any_params(cf,path,x,callback);}
 	/** @private @template {CF_L_TP_Params} T @arg {T} root @arg {P_ParamParse} path @arg {V_ParamMapType} map @arg {T_ParseCallbackFunction<T>} callback */
 	parse_player_param(root,path,map,callback) {
 		this.parse_key_index++;
@@ -3283,13 +3274,13 @@ class ServiceMethods extends ServiceData {
 		this.on_any_params(root,path,map_entry_key_path,x,this.on_endpoint_params_callback.bind(this));
 	}
 	/** @private @type {string[]} */
-	cache_player_params=[];
+	cache_params=[];
 	/** @api @public @arg {number[]} map_entry_key_path @template {CF_L_Params} T @arg {T} root @arg {P_ParamParse} path @arg {string} x @arg {T_ParseCallbackFunction<T>} params_callback */
 	on_any_params(root,path,map_entry_key_path,x,params_callback) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
-		if(this.cache_player_params.includes(x)) return;
-		this.cache_player_params.push(x);
+		if(this.cache_params.includes(x)) return;
+		this.cache_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
 		this.parse_any_param(root,path,map_entry_key_path,new Map(param_map),params_callback);
