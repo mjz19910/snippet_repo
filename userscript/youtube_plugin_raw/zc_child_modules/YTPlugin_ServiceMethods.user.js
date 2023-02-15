@@ -4825,7 +4825,7 @@ class ServiceMethods extends ServiceData {
 		if("compactVideoRenderer" in x) return this.handle_types.R_CompactVideo(x);
 		if("compactPlaylistRenderer" in x) return this.R_CompactPlaylist(x);
 		if("adSlotRenderer" in x) return this.handle_types.R_AdSlot(x);
-		if("continuationItemRenderer" in x) return this.handle_types.R_ContinuationItem(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		if("" in x) return;
 		x===""; this.codegen_typedef(cf,x);
 	}

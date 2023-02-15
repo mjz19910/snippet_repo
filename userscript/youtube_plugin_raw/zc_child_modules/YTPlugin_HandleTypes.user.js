@@ -655,8 +655,6 @@ class HandleTypes extends HandleTypesEval {
 	R_MusicCarouselShelf(x) {this.H_("R_MusicCarouselShelf","musicCarouselShelfRenderer",x,this.D_MusicCarouselShelf);}
 	/** @private @arg {R_MusicShelf} x */
 	R_MusicShelf(x) {this.H_("R_MusicShelf","musicShelfRenderer",x,this.D_MusicShelf);}
-	/** @public @arg {R_ContinuationItem} x */
-	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
 	/** @private @arg {R_GhostGrid} x */
 	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
@@ -2700,7 +2698,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_TextHeader} x */
 	D_TextHeader(x) {
-		const cf="D_ContinuationItem";
+		const cf="D_TextHeader";
 		const {title,style,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(title);
 		switch(style) {
@@ -2708,6 +2706,8 @@ class HandleTypes extends HandleTypesEval {
 			case "TEXT_HEADER_RENDERER_STYLE_BOLD":
 		}
 	}
+	/** @private @arg {R_ContinuationItem} x */
+	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
 	/** @private @arg {D_ContinuationItem} x */
 	D_ContinuationItem(x) {
 		const cf="D_ContinuationItem";
