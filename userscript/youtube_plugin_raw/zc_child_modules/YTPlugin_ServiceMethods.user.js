@@ -993,17 +993,17 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {D_PlaylistId} x */
 	playlistId(x) {this.parse_playlist_id(x);}
-	/** @arg {V_ParamMapValue} x @returns {V_ParamObjData|null} */
+	/** @arg {V_ParamMapValue} x @returns {V_ParamObj_2|null} */
 	convert_value_item_to_param_item(x) {
-		if(typeof x==='string') return x;
-		if(typeof x==="number") return x;
+		if(typeof x==='string') return {0:["raw",["string",x]]};
+		if(typeof x==="number") return {0:["raw",["number",x]]};
 		if(x instanceof Map) {
 			let x1=this.convert_map_to_obj(x);
 			if(!x1) {debugger; return null;}
-			return x1;
+			return {0:["raw",["V_ParamMapType",x]]};
 		}
 		if(x instanceof Array) {
-			if(x[0]==="bigint") return x[2];
+			if(x[0]==="bigint") return {0:["raw",["bigint",x[2]]]};
 			if(x[0]==="group") {
 				const [,r]=x;
 				let vr=this.convert_arr_to_obj(r);
@@ -1014,55 +1014,82 @@ class ServiceMethods extends ServiceData {
 			x==="";
 			return null;
 		}
-		if(x instanceof Uint8Array) return x;
+		if(x instanceof Uint8Array) return {0:["raw",["binary",x]]};
 		x==="";
 		return null;
 	}
-	/** @arg {V_ParamMapType} x @returns {V_ParamObj|null} */
+	/** @arg {V_ParamMapType} x @returns {V_ParamObj_2|null} */
 	convert_map_to_obj(x) {
 		/** @template T @arg {T[]} x */
 		function first(x) {
 			if(x.length!==1) return null;
 			return x[0];
 		}
-		/** @type {V_ParamObj} */
+		/** @type {V_ParamObj_2} */
 		let res={};
+		debugger;
 		for(let k of x.keys()) {
 			let value=x.get(k);
 			if(k in res) {
 				debugger;
 			}
 			if(value===void 0) {debugger; continue;}
-			res[k]??=[];
+			res[k]??=["raw",["array",[]]];
+			let cv=res[k];
+			if(cv[0]!=="raw"||cv[1][0]!=="array") {debugger; continue;}
+			const t=cv[1][1];
 			if(value.length===0) {
-				res[k].push({});
+				t.push({});
 				continue;
 			}
 			if(value.length!==1) {
 				/** @template T @arg {T|null} x @returns {x is T} */
 				function is_not_null(x) {return x!==null;}
-				/** @type {V_ParamObjData[]} */
 				let v1=value.map(x => {
 					let r=this.convert_value_item_to_param_item(x);
 					if(r===null) {debugger; return null;}
 					return r;
 				}).filter(is_not_null);
-				res[k].push(...v1);
+				t.push(...v1);
 				continue;
 			}
 			let v2=first(value);
 			if(v2===null) {debugger; continue;}
 			let v3=this.convert_value_item_to_param_item(v2);
 			if(v3===null) {debugger; continue;}
-			res[k].push(v3);
+			t.push(v3);
 		}
 		return res;
 	}
 	/** @arg {D_DecTypeNum[]} x */
 	convert_arr_to_obj(x) {
+		/** @private @type {V_ParamObj_2} */
+		let res_obj={};
+		for(let v of x) {
+			switch(v[0]) {
+				case "child": {
+					let [n,id,a,b]=v;
+					if(b===null) {
+						res_obj[id]=[n,a,b];
+						continue;
+					}
+					res_obj[id]=[n,a,this.convert_arr_to_obj(b)];
+				} break;
+				case "data32": break;
+				case "data64": break;
+				case "data_fixed32": break;
+				case "data_fixed64": break;
+				case "error": break;
+				case "group": break;
+				case "info": break;
+				case "struct": break;
+			}
+		}
+		/*
 		let x1=this.make_param_map(x);
 		if(!x1) {debugger; return null;}
-		return this.convert_map_to_obj(x1);
+		return this.convert_map_to_obj(x1);*/
+		return res_obj;
 	}
 	/** @private */
 	_decoder=new TextDecoder();

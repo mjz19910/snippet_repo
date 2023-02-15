@@ -1980,6 +1980,7 @@ class HandleTypes extends HandleTypesEval {
 		if(typeof obj==="symbol") return obj;
 		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
 		if(typeof obj!=="object") return obj;
+		debugger;
 		if(obj instanceof Array) {
 			if(obj.length===1) {
 				if(typeof obj[0]==="number") {
