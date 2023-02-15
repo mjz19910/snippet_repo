@@ -1,3 +1,16 @@
+type P_ReelParams_w6={
+	1: T_VW<12>;
+	6: T_VW<2>;
+};
+type P_ReelParams_w5={
+	1: T_VW<12>;
+	3: T_VW<V_BinaryTimestamp>;
+	5: T_VW<{}>;
+};
+type P_ReelParams_t15={1: T_VW<15>;};
+
+type P_ReelParams=P_ReelParams_w6|P_ReelParams_w5|P_ReelParams_t15;
+
 type P_ReelPlayerParams={
 	30: T_VW<1>;
 	71: T_VW<12>;
@@ -124,24 +137,43 @@ type reel_watch_sequence_a15_a6={
 	}>;
 };
 
-type reel_watch_sequence_a15={
+type P_reel_watch_sequence_a15={
 	1: T_VW<12>;
 	3: T_VW<11>;
 	6: T_VW<reel_watch_sequence_a15_a6>;
 };
 
-type reel_watch_sequence_a3={
+type P_reel_watch_sequence_a3={
 	1: T_VW<"RTuwQTgt3WE">;
 	3: T_VW<10>;
 	4: T_VW<2>;
 	6: T_VW<V_Bigint<bigint>>;
 };
 
-type reel_watch_sequence_a5={3: T_VW<12>;};
+type P_reel_watch_sequence_a5={3: T_VW<12>;};
 
 type P_continuation_request_reel_watch_sequence_token={
 	1: T_VW<"gKyQXCkdZl0">,
-	3: T_VW<reel_watch_sequence_a3>,
-	5: T_VW<reel_watch_sequence_a5>,
-	15: T_VW<reel_watch_sequence_a15>;
+	3: T_VW<P_reel_watch_sequence_a3>,
+	5: T_VW<P_reel_watch_sequence_a5>,
+	15: T_VW<P_reel_watch_sequence_a15>;
+};
+
+type P_ad_layout_ad_serving_data_entry={
+	4: T_VW<3>,
+	5: T_VW<2>,
+	6: T_VW<8>,
+	7: T_VW<4>,
+	9: T_VW<{
+		1: T_VW<1676502518345713>,
+		2: T_VW<982901>,
+		3: T_VW<3893336635>;
+	}>,
+	10: T_VW<{
+		1: T_VW<5>,
+		6: T_VW<1>,
+		11: T_VW<2>;
+	}>,
+	13: T_VW<1>,
+	14: T_VW<37>;
 };
