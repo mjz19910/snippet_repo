@@ -4185,7 +4185,10 @@ class HandleTypes extends HandleTypesEval {
 		const {mh,mm,mn,ms,mv,mvi,pl,initcwndbps,vprv,xtags,mime,ns,gir,...y2}=y1;
 		this.save_string(`${cf1}.mh`,mh);
 		this.save_string(`${cf1}.mm`,mm);
-		// cSpell:ignoreRegExp /"sn-(?:nx57yn(?:lk|sl)|n4v7snls)"/
+		// cSpell:ignoreRegExp /"sn-(?:9gv7ln.{2})"/
+		// cSpell:ignoreRegExp /"sn-(?:n4v7sn.{2})"/
+		// cSpell:ignoreRegExp /"sn-(?:nx57yn.{2})"/
+		// cSpell:ignoreRegExp /"sn-(?:q4flrn.{2})"/
 		let mn_arr=split_string(mn);
 		for(let mi of mn_arr) {
 			switch(mi) {
