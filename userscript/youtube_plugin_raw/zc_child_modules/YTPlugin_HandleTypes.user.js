@@ -2521,66 +2521,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RD_ObjArr} x */
 	D_RD_ObjArr(x) {
 		const cf="D_RD_ObjArr";
-		switch(x[1]) {
+		switch(x[0]) {
 			default: return this.codegen_typedef_bin(cf,x);
-			case 1: return this.D_RD_Obj_a1(x);
-			case 2: return this.D_RD_Obj_a2(x);
-			case 3: return this.D_RD_Obj_a3(x);
-			case 4: return this.D_RD_Obj_a4(x);
-			case 5: return this.D_RD_Obj_a5(x);
-			case 6: return this.D_RD_Obj_a6(x);
-			case 7: {
-				const cf="D_RD_Obj_a7",[type,,a]=x;
-				if(type!=="data32") {
-					this.codegen_typedef(cf,x);
-					return;
-				}
-				this.save_number(cf,a);
-			} break;
-			case 9: return this.D_RD_Obj_a9(x);
-			case 10: {
-				const cf="D_RD_Obj_a10",[type,,,a]=x;
-				if(type!=="child") {
-					this.codegen_typedef(cf,x);
-					return;
-				}
-				if(a[0][0]!=="data32") debugger;
-			} break;
-			case 11: {
-				const cf="D_RD_Obj_a11",[type,,,dec]=x;
-				if(type!=="child") {
-					this.codegen_typedef(cf,x);
-					return;
-				}
-				if(dec!==null) debugger;
-			} break;
-			case 13: {
-				const cf="D_RD_Obj_a13",[type,,a]=x;
-				if(type!=="data32") {
-					this.codegen_typedef(cf,x);
-					return;
-				}
-				this.save_number(cf,a);
-			} break;
-			case 14: {
-				const cf="D_RD_Obj_a14",[type,,a]=x;
-				if(type!=="data32") {
-					this.codegen_typedef(cf,x);
-					return;
-				}
-				this.save_number(cf,a);
-			} break;
-			case 19: return this.D_RD_Obj_a19(x);
-			case 30: {
-				const [type,id,a]=x;
-				/** @type {`D_RD_Obj_a${typeof id}`} */
-				const cf=`D_RD_Obj_a${id}`;
-				if(type!=="data32") {
-					this.codegen_typedef(cf,x);
-					return;
-				}
-				this.save_number(cf,a);
-			} break;
+			case "child": break;
+			case "data32": break;
+			case "data64": break;
 		}
 	}
 	/** @arg {D_RA_D_BinaryCategoryObj_r} x */
