@@ -3548,7 +3548,7 @@ class ServiceMethods extends ServiceData {
 	save_b64_binary(cf,x) {
 		let buffer=base64_url_dec.decodeByteArray(x);
 		if(!buffer) {debugger; return;}
-		this.save_number(`${cf}.bytes.0-2`,buffer.slice(0,2));
+		this.save_number(`${cf}.bytes.0`,buffer[0]);
 	}
 	/** @private @arg {string} x */
 	parse_undo_token(x) {

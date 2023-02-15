@@ -4238,7 +4238,7 @@ class HandleTypes extends HandleTypesEval {
 		this.save_string(`${cf1}.sparams`,sparams);
 		this.save_string(`${cf1}.lsparams`,lsparams);
 		this.save_b64_binary(`${cf2}.lsig`,lsig);
-		spc&&this.save_string(`${cf1}.spc`,spc);
+		spc&&this.save_b64_binary(`${cf1}.spc`,spc);
 		this.t(sig,x => this.save_b64_binary(`${cf2}.sig`,x));
 		cnr&&this.save_string(`${cf1}.cnr`,cnr);
 		ratebypass&&this.save_string(`${cf1}.ratebypass`,ratebypass);
