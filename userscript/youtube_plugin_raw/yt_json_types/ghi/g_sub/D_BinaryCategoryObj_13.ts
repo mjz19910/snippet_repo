@@ -1,19 +1,41 @@
-type D_BinaryCategoryObj_13={
-	1: TR_Binary_f1<string>;
-	3: "Linux"|"Python"|"3D printing"
-	|"AI"|"Algorithms"
+type GD_BinaryCategoryType=
+	|"3D printing"
+	|"AI"
+	|"Algorithms"
 	|"Bitcoin"
-	|"C++"|"Calculus"|"Computer Science"|"CPUs"|"C#"|"Computers"|"Cars"
+	|"C#"
+	|"C++"
+	|"Calculus"
+	|"Cars"
+	|"Computer Science"
+	|"Computers"
+	|"CPUs"
 	|"Drawing"
 	|"Electronic Music"
-	|"Gadgets"|"Game engines"|"Geometry"
+	|"Gadgets"
+	|"Game engines"
+	|"Geometry"
 	|"History"
-	|"Linux"|"Linux distribution"
-	|"Media theories"|"Machines"
+	|"Linux distribution"
+	|"Linux"
+	|"Linux"
+	|"Machines"
+	|"Media theories"
 	|"Nintendo"
-	|"Physics"|"Puzzle games"|"Python"|"Podcasts"|"Puzzles"
+	|"Physics"
+	|"Podcasts"
+	|"Puzzle games"
+	|"Puzzles"
+	|"Python"
+	|"Python"
 	|"Raspberry Pi"
-	|"Soundtracks"|"Statistics"
+	|"Soundtracks"
+	|"Statistics"
 	|"Tools"
-	|"Universe";
+	|"Universe"
+	;
+;
+type D_BinaryCategoryObj_13={
+	1: TR_Binary_f1<string>;
+	3: GD_BinaryCategoryType;
 };
