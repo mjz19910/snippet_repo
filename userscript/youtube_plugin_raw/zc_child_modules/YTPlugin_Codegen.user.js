@@ -289,19 +289,6 @@ class CodegenService extends BaseService {
 		console.groupEnd();
 		if(do_break) {debugger;}
 	}
-	/** @api @public @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj */
-	typedef_json_replace_bin(state,key,obj) {
-		if(obj===null||obj===void 0) return obj;
-		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
-		if(typeof obj==="boolean") return obj;
-		if(typeof obj==="function") return obj;
-		if(typeof obj==="number") return obj;
-		if(typeof obj==="symbol") return obj;
-		if(typeof obj==="string") return this.typedef_json_replace_string(obj,key);
-		if(typeof obj!=="object") return obj;
-		state;
-		return obj;
-	}
 	/** @type {Map<string,(string|number)[]>} */
 	cases_map=new Map;
 	/** @arg {CF_D_CaseGen} cf @arg {string|number} val */

@@ -2362,6 +2362,21 @@ class HandleTypes extends HandleTypesEval {
 		if(field_id!==3) debugger;
 		x[3]=null;
 	}
+	/** @private @type {string[]} */
+	typedef_cache=[];
+	/** @api @public @arg {JsonReplacerState} state @arg {string} key @arg {unknown} obj */
+	typedef_json_replace_bin(state,key,obj) {
+		if(obj===null||obj===void 0) return obj;
+		if(typeof obj==="bigint") return `TYPE::V_Bigint<${obj}n>`;
+		if(typeof obj==="boolean") return obj;
+		if(typeof obj==="function") return obj;
+		if(typeof obj==="number") return obj;
+		if(typeof obj==="symbol") return obj;
+		if(typeof obj==="string") return this.cg.typedef_json_replace_string(obj,key);
+		if(typeof obj!=="object") return obj;
+		state;
+		return obj;
+	}
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} do_break @returns {string|null|void} */
 	codegen_typedef_bin(cf,x,do_break) {
 		/** @private @type {JsonReplacerState} */
