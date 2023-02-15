@@ -98,15 +98,6 @@ class HandleTypesEval extends ServiceMethods {
 	save_string_api=this.save_string;
 	/** @private @arg {string} cf @arg {unknown} x @arg {boolean} [w] */
 	codegen_renderer(cf,x,w) {this.cg.codegen_renderer(x,cf,w);}
-	static {
-		/** @typedef {{codegen:CodegenService<{},{}>}} CG_ServiceResolver */
-		/** @type {{value:ServiceResolver<CG_ServiceResolver,{}>|null}} */
-		let v={value: null};
-		let cg=new CodegenService(v);
-		let sr=new ServiceResolver({codegen: cg},{});
-		let t=new this({value: sr});
-		t.codegen_renderer("",{},true);
-	}
 	//#endregion
 	//#region section to support above stuff
 	/** @private @arg {{accessibility?:D_Accessibility}} x */
