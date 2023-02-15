@@ -2553,6 +2553,7 @@ class HandleTypes extends HandleTypesEval {
 		if(this.is_fx_extract(x,1)) {
 			const cf="D_RD_Obj_a1",[type,,a,dec]=x[0];
 			switch(type) {
+				default: return this.codegen_typedef_bin(cf,x);
 				case "child": {
 					const [d0,d1,d2]=dec;
 					if(d0[0]!=="child") debugger;
@@ -2562,11 +2563,6 @@ class HandleTypes extends HandleTypesEval {
 				} break;
 				case "data32": this.save_number(cf,a); break;
 			}
-			if(type!=="data32") {
-				this.codegen_typedef_bin(cf,x);
-				return;
-			}
-			this.save_number(cf,a);
 			return;
 		}
 		this.codegen_typedef_bin(cf,x);
