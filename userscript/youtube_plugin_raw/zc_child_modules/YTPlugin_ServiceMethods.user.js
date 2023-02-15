@@ -3309,12 +3309,7 @@ class ServiceMethods extends ServiceData {
 	new_service_icon(cf,x) {
 		if(this.service_menu_icons.includes(x)) return;
 		this.service_menu_icons.push(x);
-		this.codegen_all_service_menu_icons(cf);
-	}
-	/** @arg {string} cf */
-	codegen_all_service_menu_icons(cf) {
-		let arr_items=JSON.stringify(this.service_menu_icons,null,"\t");
-		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
+		this.codegen.codegen_all_service_menu_icons(this.service_menu_icons,cf);
 	}
 	/** @private @arg {Extract<RD_MenuServiceItem,{icon:any}>["icon"]} x */
 	RD_MenuServiceItem_Icon(x) {

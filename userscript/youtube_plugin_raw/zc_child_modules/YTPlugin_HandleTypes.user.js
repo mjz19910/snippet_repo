@@ -2387,7 +2387,11 @@ class HandleTypes extends HandleTypesEval {
 	/** @arg {D_RA_Obj_d0_ext|D_RA_D_BinaryCategoryObj_d0|D_RA_D_BinaryCategoryObj_23[0]|D_RA_D_BinaryCategoryObj_13[0]} x */
 	D_RA_D_BinaryCategoryObj_d0(x) {
 		const [type,field_id,,dec]=x;
-		if(type!=="child") {debugger; return;}
+		if(type!=="child") {
+			this;
+			this.codegen_typedef_all(cf,x);
+			return;
+		}
 		switch(field_id) {
 			default: debugger; break;
 			case 1: this.handle_1_any(dec); break;

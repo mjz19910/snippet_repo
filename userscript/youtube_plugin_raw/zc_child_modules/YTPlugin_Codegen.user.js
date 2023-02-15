@@ -264,6 +264,11 @@ class CodegenService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	typedef_cache=[];
+	/** @arg {string} cf @arg {string[]} arr */
+	codegen_all_service_menu_icons(arr,cf) {
+		let arr_items=JSON.stringify(arr,null,"\t");
+		console.log(`-- [ServiceMenu.${cf}.icon] --\n%s`,arr_items);
+	}
 	/** @api @public @arg {string} cf @arg {object} x  @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_typedef(cf,x,ret_val) {
 		let new_typedef=this.codegen_typedef_impl(cf,x,true);
