@@ -140,6 +140,7 @@ ECatcherService.known_experiments.push(...[
 	[24473107],
 	[24457612],
 	[24473090],
+	[24451438],
 ].flat());
 class HandleTypes extends HandleTypesEval {
 	/** @template U @template {U[]} T @arg {T} x @returns {Join<{[R in keyof T]:`${T[R]}`},".f">} */
@@ -2525,7 +2526,9 @@ class HandleTypes extends HandleTypesEval {
 				if(this.is_RA_CR_zct(x,1)) return this.D_RA_D_Binary_x1(x);
 				return this.codegen_typedef_bin(cf,x);
 			}
-			case 5: return this.D_RA_CR_0x12f639cf(x);
+			case 5: {
+				return this.D_RA_CR_0x12f639cf(x);
+			}
 			case 6: return this.D_RA_D_Binary_d0(x);
 		}
 	}
@@ -2697,6 +2700,7 @@ class HandleTypes extends HandleTypesEval {
 		let kk=this.get_keys_of_2(x);
 		if(kk.length>0) {
 			this.codegen_typedef_bin(`decode_continuation_token:${this.number_as_hex(as_any(kk.shift()))}`,x,false);
+			debugger;
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {GR_RootBinaryObj} x */
