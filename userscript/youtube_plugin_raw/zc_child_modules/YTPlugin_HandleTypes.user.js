@@ -2197,7 +2197,7 @@ class HandleTypes extends HandleTypesEval {
 				let u=as_any(x);
 				this.R_GetPgdBuyFlow(u);
 			} break;
-			case "tracking.trackingParams": {
+			case "tracking.params": {
 				/** @type {R_TrackingObj} */
 				let u=as_any(x);
 				this.R_TrackingObj(u);

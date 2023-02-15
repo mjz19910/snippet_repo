@@ -48,13 +48,14 @@ type CF_WithParams=
 type CF_M_s=
 	|`${CF_parse_identifier}.identifier`
 	|`T_WCM:${CF_T_WCM}`
-	|CF_D_ToggleButton
 	|CF_D_CustomEmoji
+	|CF_D_ToggleButton
 	|CF_D_Video_Handle
 	|CF_GE_ResponseReceived
 	|CF_T_GM
 	|CF_T_Items_TP
 	|CF_T_SE_Signal
+	|CF_TD_Params
 	|CF_WithParams
 	|T_ExtractImport<"CF_M_s">
 	;
