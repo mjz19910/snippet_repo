@@ -3628,7 +3628,7 @@ class HandleTypes extends HandleTypesEval {
 	}
 	/** @private @arg {D_0x19ac5ceb_map_value} x */
 	D_0x19ac5ceb_map_value(x) {
-		const cf="D_0x19ac5ceb_map_container";
+		const cf="D_0x19ac5ceb_map_value";
 		const {1: [f1],...y}=this.s(cf,x); this.g(y);
 		if(typeof f1!=="bigint") debugger;
 		this.save_string("D_0x19ac5ceb.map_values",`${f1.toString(16)}n`);
