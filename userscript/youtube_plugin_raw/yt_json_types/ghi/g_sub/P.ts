@@ -30,3 +30,13 @@ type P_ad_layout_ad_serving_data_entry={
 	13: T_VW_3<"data32",1>;
 	14: T_VW_3<"data32",37>;
 };
+
+type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
+	1: T_VW_2<V_BinaryTimestamp>,
+	3: {
+		1: T_VW_3<"data32",5>,
+		6: T_VW_3<"data32",1>,
+		11: T_VW_3<"data32",2>
+	},
+	4: T_VW_3<"data32",2>
+}

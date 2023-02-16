@@ -2066,7 +2066,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @api @public @arg {JsonReplacerState} s @arg {string} cf @arg {object} x @returns {string} */
 	gen_typedef_bin(s,cf,x) {
-		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)}\n`;
+		return `\ntype ${cf}=${this.gen_typedef_bin_json(s,x)};\n`;
 	}
 	/** @api @public @arg {string} cf @arg {object} x @arg {boolean} [do_break] @returns {string|null|void} */
 	codegen_typedef_bin(cf,x,do_break=true) {
@@ -4384,11 +4384,11 @@ class HandleTypes extends ServiceMethods {
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.continuation_logged_str.push(cf);
+				const n_cf=`P_${cf.replaceAll(".","_")}`;
 				this.codegen_typedef_bin(n_cf,x,false);
 				let str_arr=[""];
 				/** @arg {string} code */
 				function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
-				const n_cf=`P_${cf.replaceAll(".","_")}`;
 				let pad=1;
 				ap(`case "${cf}": {`);
 				pad+=1;
@@ -4399,6 +4399,11 @@ class HandleTypes extends ServiceMethods {
 				ap(`} break;`);
 				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 				debugger;
+			} break;
+			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
+				/** @type {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} */
+				let u=as_any(x);
+				this.P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(u);
 			} break;
 			case "ad_layout.ad_serving_data_entry": {
 				/** @type {P_ad_layout_ad_serving_data_entry} */
