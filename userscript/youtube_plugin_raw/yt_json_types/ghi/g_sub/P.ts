@@ -126,3 +126,13 @@ type P_remove_like_params={
 		2: T_D32<441847181>
 	}
 };
+type P_dislike_params={
+	1: {
+		1: T_VSR<"z6EQlZaB7v8">
+	},
+	2: T_D32<0>,
+	4: {
+		1: T_D32<1676518936>,
+		2: T_D32<441858121>
+	}
+};

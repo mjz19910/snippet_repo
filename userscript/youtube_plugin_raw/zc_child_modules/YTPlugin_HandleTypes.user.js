@@ -4624,6 +4624,16 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_entity_key(u);
 			} break;
+			case "remove_like.params": {
+				/** @type {P_remove_like_params} */
+				let u=as_any(x);
+				this.P_remove_like_params(u);
+			} break;
+			case "dislike.params": {
+				/** @type {P_dislike_params} */
+				let u=as_any(x);
+				this.P_dislike_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -4631,6 +4641,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_dislike_params} x */
+	P_dislike_params(x) {x;}
+	/** @private @arg {P_remove_like_params} x */
+	P_remove_like_params(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
