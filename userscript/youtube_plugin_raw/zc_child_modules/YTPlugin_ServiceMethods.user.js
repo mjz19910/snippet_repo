@@ -6181,5 +6181,11 @@ class ServiceMethods extends ServiceData {
 		this.ceq(autoReloadWhenEmpty,true);
 		this.R_Button(bottomButton);
 	}
+	/** @private @arg {R_MusicResponsiveListItem} x */
+	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.g);}
+	/** @private @arg {R_MusicShelfDivider} x */
+	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.g);}
+	/** @public @arg {R_SortFilterSubMenu} x */
+	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

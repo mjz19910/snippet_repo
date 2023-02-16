@@ -588,8 +588,6 @@ class HandleTypes extends ServiceMethods {
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @public @arg {R_CommentsSimplebox} x */
 	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
-	/** @public @arg {R_SortFilterSubMenu} x */
-	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
 	/** @public @arg {R_AdSlot} x */
 	R_AdSlot(x) {this.H_("R_AdSlot","adSlotRenderer",x,this.D_AdSlot);}
 	/** @private @arg {R_FulfilledLayout} x */
@@ -729,10 +727,6 @@ class HandleTypes extends ServiceMethods {
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
 	/** @public @arg {R_VideoOwner} x */
 	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
-	/** @private @arg {R_MusicResponsiveListItem} x */
-	R_MusicResponsiveListItem(x) {this.H_("R_MusicResponsiveListItem","musicResponsiveListItemRenderer",x,this.g);}
-	/** @private @arg {R_MusicShelfDivider} x */
-	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.g);}
 	/** @private @arg {R_TextInputFormField} x */
 	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {R_Dropdown} x */
