@@ -1106,6 +1106,21 @@ class Support_GenericApi extends ServiceMethods {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {R_Notification} x */
+	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
+	/** @private @arg {D_Notification} x */
+	D_Notification(x) {
+		const cf="D_Notification";
+		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
+		this.z([shortMessage,sentTimeText],this.G_Text);
+		if(navigationEndpoint.watchEndpoint) {this.E_Watch(navigationEndpoint);} else {debugger;}
+		this._primitive_of(read,"boolean");
+		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
+		this.R_Menu(contextualMenu);
+		this.parse_number_template(notificationId);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

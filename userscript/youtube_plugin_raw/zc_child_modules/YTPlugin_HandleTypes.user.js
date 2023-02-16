@@ -390,8 +390,6 @@ class HandleTypes extends ServiceMethods {
 	R_Tabbed(x) {this.H_("R_Tabbed","tabbedRenderer",x,this.R_WatchNextTabbedResults);}
 	/** @private @arg {R_WatchNextTabbedResults} x */
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
-	/** @private @arg {R_Notification} x */
-	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {this.H_("R_GuideSubscriptionsSection","guideSubscriptionsSectionRenderer",x,this.D_GuideSubscriptionsSection);}
 	/** @private @arg {R_GuideDownloadsEntry} x */
@@ -1165,19 +1163,6 @@ class HandleTypes extends ServiceMethods {
 		let dec=reader.try_read_any();
 		if(!dec) {debugger; return;}
 		this.decode_continuation_token_dec_arr(cf,dec);
-	}
-	/** @private @arg {D_Notification} x */
-	D_Notification(x) {
-		const cf="D_Notification";
-		const {trackingParams,thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,notificationId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.z([thumbnail,videoThumbnail],this.D_Thumbnail);
-		this.z([shortMessage,sentTimeText],this.G_Text);
-		if(navigationEndpoint.watchEndpoint) {this.E_Watch(navigationEndpoint);} else {debugger;}
-		this._primitive_of(read,"boolean");
-		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
-		this.R_Menu(contextualMenu);
-		this.parse_number_template(notificationId);
 	}
 	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
