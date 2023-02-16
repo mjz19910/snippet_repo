@@ -1182,7 +1182,7 @@ class Support_EventInput extends ServiceMethods {
 	R_PageTypePlaylist(x) {
 		const cf="R_PageTypePlaylist";
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		debugger;
+		this.E_VE5754(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
