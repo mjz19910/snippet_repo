@@ -278,6 +278,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InlineSurvey";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InstreamVideoAd";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_InvalidationId";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LearningResource";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LightColorPalette";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeApi";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_LikeButton";}
