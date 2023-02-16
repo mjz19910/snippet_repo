@@ -446,14 +446,6 @@ class HandleTypes extends ServiceMethods {
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @public @arg {G_Action_GetNotificationsMenu_Popup} x */
-	G_Action_GetNotificationsMenu_Popup(x) {
-		const cf="G_Action_GetNotificationsMenu_Popup"; this.k(cf,x);
-		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(popupType!=="DROPDOWN") debugger;
-		if(beReused!==true) debugger;
-		return a;
-	}
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
 		const cf="G_LiveChatContinuationItem"; this.k(cf,x);
@@ -579,8 +571,6 @@ class HandleTypes extends ServiceMethods {
 	R_WatchNextTabbedResults(x) {this.H_("R_WatchNextTabbedResults","watchNextTabbedResultsRenderer",x,this.D_WatchNextTabbedResults);}
 	/** @public @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
-	/** @public @arg {R_CommentsSimplebox} x */
-	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification","notificationRenderer",x,this.D_Notification);}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
@@ -655,8 +645,6 @@ class HandleTypes extends ServiceMethods {
 	R_AlertWithButton(x) {this.H_("R_AlertWithButton","alertWithButtonRenderer",x,this.D_AlertWithButton);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @public @arg {R_CommentsEntryPointTeaser} x */
-	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {R_AddToPlaylistCreate} x */
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
@@ -1138,12 +1126,6 @@ class HandleTypes extends ServiceMethods {
 		this.E_Watch(navigationEndpoint);
 		this.G_Text(lengthText);
 		this.videoId(videoId);
-		return y;
-	}
-	/** @private @template {D_Omit_Menu_Radio&D_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
-	D_Omit_Menu_Radio(cf,x) {
-		let {navigationEndpoint,menu,...y}=this.D_Omit_Compact_Player(cf,x);
-		this.R_Menu(menu);
 		return y;
 	}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
@@ -2606,47 +2588,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @public @arg {D_RadioShareUrl} b */
-	D_RadioShareUrl(b) {
-		const cf="D_RadioShareUrl";
-		let up=this.parse_with_url_parse(b);
-		{
-			let obj=new UrlParseHelper(up);
-			if(obj.get_with_pathname(up,"/watch")) {
-				let {...s}=this.parse_url_search_params(up.search);
-				if("v" in s) {
-					let {v,playnext,list,...y}=this.s(cf,s); this.g(y);/*#destructure_done*/
-					if(playnext!=="1") debugger;
-					if(!list) debugger; this.parse_playlist_id(list);
-					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
-					let gw=() => ({k: 1,a: v});
-					let w=gw();
-					if(this.str_starts_with_rx(w.a,"RD")) {
-						w.k=2; w.k==2&&this.parse_playlist_id(w.a);
-						return;
-					}
-					this.save_next_char("share_url.v",w.a[0]);
-					this.videoId(w.a);
-					return;
-				}
-				return;
-			}
-		}
-		{
-			let obj=new UrlParseHelper(up);
-			if(obj.get_with_pathname(up,"/playlist")) {
-				let {...s}=this.parse_url_search_params(up.search);
-				if("list" in s) {
-					let {list,...y}=this.s(cf,s); this.g(y);/*#destructure_done*/
-					let w=list;
-					if(this.str_starts_with(w,"PL")) return this.playlistId(w);
-				}
-				return;
-			}
-		}
-		// let {...s}=this.parse_url_search_params(up.search);
-		this.cg.codegen_str(cf,b);
-	}
 	/** @private @arg {D_AddToPlaylist} x */
 	D_AddToPlaylist(x) {
 		const cf="D_AddToPlaylist"; this.k(cf,x);
@@ -2739,14 +2680,6 @@ class HandleTypes extends ServiceMethods {
 		this.D_Thumbnail(teaserAvatar);
 		this.G_Text(teaserContent);
 		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {MP_AccountMenu} x */
-	MP_AccountMenu(x) {
-		const cf="MP_AccountMenu"; this.k(cf,x);
-		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
-		this.trackingParams(trackingParams);
-		if(showLoadingSpinner!==true) debugger;
 	}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {

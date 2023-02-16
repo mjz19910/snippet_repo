@@ -6046,6 +6046,18 @@ class ServiceMethods extends ServiceData {
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("TR_MultiPageMenu<MP_AccountMenu>",x));
 		this.z(u2,this.MP_AccountMenu);
 	}
+	/** @public @arg {MP_AccountMenu} x */
+	MP_AccountMenu(x) {
+		const cf="MP_AccountMenu"; this.k(cf,x);
+		const {style,trackingParams,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT") debugger;
+		this.trackingParams(trackingParams);
+		if(showLoadingSpinner!==true) debugger;
+	}
+	/** @public @arg {R_CommentsSimplebox} x */
+	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
+	/** @public @arg {R_CommentsEntryPointTeaser} x */
+	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @private @arg {D_CommentsEntryPointHeader_contentRenderer} x */
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer";
@@ -6072,6 +6084,14 @@ class ServiceMethods extends ServiceData {
 		/** @type {[D_NotificationMenuPopupMenuItem[], never[]]} */
 		let [u2]=this.z(u1,x => this.TR_MultiPageMenu("P_NotificationMenu_Popup",x));
 		this.z(u2,this.D_NotificationMenuPopupMenuItem);
+	}
+	/** @public @arg {G_Action_GetNotificationsMenu_Popup} x */
+	G_Action_GetNotificationsMenu_Popup(x) {
+		const cf="G_Action_GetNotificationsMenu_Popup"; this.k(cf,x);
+		const {popup: a,popupType,beReused,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(popupType!=="DROPDOWN") debugger;
+		if(beReused!==true) debugger;
+		return a;
 	}
 	/** @public @arg {R_CompactLink} x */
 	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
@@ -6137,6 +6157,53 @@ class ServiceMethods extends ServiceData {
 		this.tz(n1,this.R_CompactLink);
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
+	}
+	/** @private @template {D_Omit_Menu_Radio&D_Omit_Compact_Player} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
+	D_Omit_Menu_Radio(cf,x) {
+		let {navigationEndpoint,menu,...y}=this.D_Omit_Compact_Player(cf,x);
+		this.R_Menu(menu);
+		return y;
+	}
+	/** @public @arg {D_RadioShareUrl} b */
+	D_RadioShareUrl(b) {
+		const cf="D_RadioShareUrl";
+		let up=this.parse_with_url_parse(b);
+		{
+			let obj=new UrlParseHelper(up);
+			if(obj.get_with_pathname(up,"/watch")) {
+				let {...s}=this.parse_url_search_params(up.search);
+				if("v" in s) {
+					let {v,playnext,list,...y}=this.s(cf,s); this.g(y);/*#destructure_done*/
+					if(playnext!=="1") debugger;
+					if(!list) debugger; this.parse_playlist_id(list);
+					/** @returns {{k:1;a:string;}|{k:2;a:`RD${string}`}} */
+					let gw=() => ({k: 1,a: v});
+					let w=gw();
+					if(this.str_starts_with_rx(w.a,"RD")) {
+						w.k=2; w.k==2&&this.parse_playlist_id(w.a);
+						return;
+					}
+					this.save_next_char("share_url.v",w.a[0]);
+					this.videoId(w.a);
+					return;
+				}
+				return;
+			}
+		}
+		{
+			let obj=new UrlParseHelper(up);
+			if(obj.get_with_pathname(up,"/playlist")) {
+				let {...s}=this.parse_url_search_params(up.search);
+				if("list" in s) {
+					let {list,...y}=this.s(cf,s); this.g(y);/*#destructure_done*/
+					let w=list;
+					if(this.str_starts_with(w,"PL")) return this.playlistId(w);
+				}
+				return;
+			}
+		}
+		// let {...s}=this.parse_url_search_params(up.search);
+		this.cg.codegen_str(cf,b);
 	}
 	/** @private @arg {CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
