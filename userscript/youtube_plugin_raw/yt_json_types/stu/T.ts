@@ -246,7 +246,7 @@ type DecodeUriComponent_5<T extends string>=DecodeUriComponent_4<T_Replace<T,"%5
 type DecodeUriComponent_6<T extends string>=DecodeUriComponent_5<T_Replace<T,"%5D","]">>;
 type DecodeUriComponent_all_1<T extends string>=[{[U in keyof UriDecodeMap]: T extends `${U}${string}`? UriDecodeMap[U]:never}[keyof UriDecodeMap]] extends [never]? T:{[U in keyof UriDecodeMap]: T extends `${U}${string}`? UriDecodeMap[U]:never}[keyof UriDecodeMap];
 type DecodeUriComponent_all<T extends string>=T extends `${infer M extends keyof UriDecodeMap}${infer R}`? `${DecodeUriComponent_all_1<M>}${R}`:T extends `%${infer M2}${infer M3}${infer R}`?`${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T extends `${infer B}%${infer M2}${infer M3}${infer R}`?`${B}${DecodeUriComponent_all_1<`%${M2}${M3}`>}${DecodeUriComponent_all<R>}`:T;
-type DecodeUriComponent<T extends string>=DecodeUriComponent_4<T>;
+type DecodeUriComponent<T extends string>=DecodeUriComponent_6<T>;
 type Do_Dec=DecodeUriComponent<"%5Bab%5D%5Bab%5D">;
 type DoDec2=DecodeUriComponent_all_1<"=">;
 type TRS_Actions={
