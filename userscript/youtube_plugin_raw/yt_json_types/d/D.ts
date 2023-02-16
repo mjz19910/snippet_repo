@@ -1100,7 +1100,7 @@ type D_GuideEntry_PresentationNewContent={
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
 };
 type D_GuideEntry_PresentationNone={
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: E_VE3611;
 	thumbnail: D_Thumbnail;
 	badges: D_LiveBroadcastingBadge;
 	trackingParams: string;
