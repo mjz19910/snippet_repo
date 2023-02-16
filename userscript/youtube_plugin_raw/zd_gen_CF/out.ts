@@ -922,6 +922,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_Feedback";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_FlagGetForm";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetNotificationMenu";}
+		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetSettingsEditor";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetSharePanel";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetTranscript";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_GetUnseenNotificationCount";}

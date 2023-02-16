@@ -2379,8 +2379,8 @@ type D_PlaylistHeader={
 	viewCountText: G_Text;
 	shareData: D_CanShare;
 	isEditable: boolean;
-	privacy: string;
-	ownerEndpoint: GE_Browse;
+	privacy: "PRIVATE";
+	ownerEndpoint: E_VE3611;
 	editableDetails: D_EditableDetails;
 	trackingParams: string;
 	serviceEndpoints: E_PlaylistEdit[];
@@ -2391,7 +2391,7 @@ type D_PlaylistHeader={
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;
 	shufflePlayButton: R_Button;
-	onDescriptionTap: TA_OpenPopup_Empty;
+	onDescriptionTap: T_OpenPopup_Dialog<R_FancyDismissibleDialog>;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: G_Text;
