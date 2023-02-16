@@ -1160,7 +1160,14 @@ type D_GuideEntry_ShortsTab={
 	serviceEndpoint: T_SE_Signal<M_Empty_WCM,{}>|E_ReelWatch;
 	isPrimary: true;
 };
-type D_GuideEntry_Subscriptions=TD_GuideEntry_Primary<"SUBSCRIPTIONS">;
+type D_GuideEntry_Subscriptions={
+	navigationEndpoint: E_VE96368;
+	icon: T_Icon<"SUBSCRIPTIONS">;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: TD_Accessibility<"Subscriptions">;
+	isPrimary: true;
+};
 type D_GuideEntry_VideoLibrary=TD_GuideEntry_Tid_Primary<"VIDEO_LIBRARY_WHITE","library-guide-item">;
 type D_GuideEntry_WatchHistory=TD_GuideEntry_Simple<"WATCH_HISTORY">;
 type D_GuideEntry_WatchLater=TD_GuideEntry_Simple<"WATCH_LATER">;

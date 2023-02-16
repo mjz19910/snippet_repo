@@ -77,3 +77,8 @@ type P_reel_player_params={
 type P_reel_params={
 	1: T_D32<15>
 };
+type P_logging_context_serialized_context_data={
+	1: {
+		1: T_D32<12>
+	}
+};
