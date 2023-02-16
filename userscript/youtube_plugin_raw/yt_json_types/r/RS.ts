@@ -275,7 +275,7 @@ type RS_Page_Channel={
 	page: "channel";
 	endpoint: E_VE3611;
 	response: RS_Channel;
-	url: `/@${string}`|`/@${string}/videos`|`/@${string}/shorts`;
+	url: `/@${string}`|`/@${string}/videos`|`/@${string}/shorts`|`/@${string}/playlists`;
 	expirationTime: number;
 }|{
 	rootVe: 3611;
