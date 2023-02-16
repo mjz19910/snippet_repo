@@ -4129,6 +4129,10 @@ class ServiceMethods extends ServiceData {
 		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
 			let pr=this.parse_with_url_parse(x);
 			switch(pr.host) {
+				case "pagead2.googlesyndication.com": {
+					if(pr.pathname!=="/pcs/activeview") debugger;
+					const {xai,sai,sig,cid,acvw,...y}=this.parse_url_search_params(pr.search); this.g(y);
+				} break;
 				case "googleads.g.doubleclick.net": {
 					if(pr.pathname!=="/pagead/interaction/") debugger;
 					let {ai,sigh,label,...y}=this.parse_url_search_params(pr.search); this.g(y);
