@@ -1498,7 +1498,7 @@ type D_CanShare={canShare: false;};
 type D_CanonicalBaseUrl={canonicalBaseUrl: string;};
 type D_TimedTextApi={
 	v: D_VideoId;
-	caps: "asr";
+	caps?: "asr";
 	xoaf: `${5}`;
 	xoadf?: string;
 	xosf?: `${1}`;
