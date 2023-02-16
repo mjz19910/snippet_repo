@@ -1932,6 +1932,18 @@ type D_ClickLocationTarget={
 	code: 31;
 	behaviorType: "PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE_OPEN_AD";
 };
+type E_Pinging={
+	clickTrackingParams: string;
+	loggingUrls: T_BaseUrl<`https://googleads.g.doubleclick.net/pagead/interaction/?${string}`>[];
+	pingingEndpoint: B_Hack;
+};
+type D_EmptyMap={emptyMap: true;};
+type D_ActiveView={
+	viewableCommands: E_Pinging[];
+	endOfSessionCommands: E_Pinging[];
+	regexUriMacroValidator: D_EmptyMap;
+};
+
 type D_PromotedSparklesWeb={
 	thumbnail: D_Thumbnail;
 	icon: T_Icon<"EXTERNAL_LINK">;
@@ -1941,7 +1953,9 @@ type D_PromotedSparklesWeb={
 	actionButton: R_Button;
 	navigationEndpoint: E_VE83769_Url;
 	impressionCommands: D_ImpressionCommand[];
+	noopTapEndpoints?: E_Pinging[];
 	menu: R_Menu;
+	activeView?: D_ActiveView;
 	trackingParams: string;
 	clickLocationTargets: D_ClickLocationTarget[];
 	adBadge?: RMD_Badge;
