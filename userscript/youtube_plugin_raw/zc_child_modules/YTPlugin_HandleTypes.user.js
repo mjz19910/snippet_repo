@@ -1677,7 +1677,7 @@ class HandleTypes extends ServiceMethods {
 	 * @returns {[y,ret]}
 	 */
 	H_a(cf,k,x,f,save=false) {
-		if(save)
+		if(save) this.k(cf,x);
 		const {[k]: [a],...y}=x;
 		const ret=f.call(this,a);
 		return [y,ret];
