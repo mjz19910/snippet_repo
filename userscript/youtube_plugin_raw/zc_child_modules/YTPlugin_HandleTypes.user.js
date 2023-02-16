@@ -4384,6 +4384,7 @@ class HandleTypes extends ServiceMethods {
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.continuation_logged_str.push(cf);
+				this.codegen_typedef_bin(n_cf,x,false);
 				let str_arr=[""];
 				/** @arg {string} code */
 				function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
@@ -4397,7 +4398,6 @@ class HandleTypes extends ServiceMethods {
 				pad-=1;
 				ap(`} break;`);
 				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
-				this.codegen_typedef_bin(n_cf,x,false);
 				debugger;
 			} break;
 			case "ad_layout.ad_serving_data_entry": {
