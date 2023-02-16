@@ -5629,6 +5629,8 @@ class ServiceMethods extends ServiceData {
 			x===""; this.codegen_typedef(cf,x);
 		});
 	}
+	/** @private @arg {R_CommentActionButtons} x */
+	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
 	/** @public @arg {R_Comment} x */
 	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
 	/** @private @arg {D_Comment} x */
