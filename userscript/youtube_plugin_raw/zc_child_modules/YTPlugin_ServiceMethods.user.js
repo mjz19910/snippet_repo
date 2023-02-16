@@ -433,7 +433,7 @@ class ServiceMethods extends ServiceData {
 		this.t(elapsedMediaTimeSeconds,this.a_primitive_num);
 	}
 	/** @protected @arg {CF_T_Signal} cf @template T @arg {T_Signal<T>} x */
-	T_Signal(cf,x) {return this.w(`T_Signal:${cf}`,"signal",x);}
+	T_Signal(cf,x) {return this.w(cf,"signal",x);}
 	/** @protected @template {{}} U @arg {U} x @template {string} VV @arg {VV} pf @returns {[T_RemovePrefix<U,VV>,Omit<U,`${VV}${string}`>]} */
 	unwrap_prefix(x,pf) {
 		/** @private @type {T_RemovePrefix<U,VV>} */
