@@ -633,12 +633,12 @@ type D_ChannelOptions={
 };
 type D_ChannelThumbnailWithLink={
 	thumbnail: D_Thumbnail;
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: null;
 	accessibility: D_Accessibility;
 	title: string;
 }|{
 	thumbnail: D_Thumbnail;
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: E_VE3611;
 	accessibility: D_Accessibility;
 };
 type D_CheckboxSurveyOption={

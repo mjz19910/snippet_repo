@@ -2126,7 +2126,7 @@ class ServiceMethods extends ServiceData {
 				let x2=navigationEndpoint;
 				if("browseEndpoint" in x2) {this.E_VE3611(x2); break x;}
 				if("watchEndpoint" in x2) {this.E_Watch(x2); break x;}
-				if("urlEndpoint" in x2) {this.E_VE83769_Url(x2);break x;}
+				if("urlEndpoint" in x2) {this.E_VE83769_Url(x2); break x;}
 				debugger;
 			}
 			return;
@@ -5893,17 +5893,10 @@ class ServiceMethods extends ServiceData {
 		const {infoRows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(infoRows,this.R_InfoRow);
 	}
-	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
-	D_ChannelThumbnail_navigationEndpoint(x) {
-		const cf="D_ChannelThumbnail_navigationEndpoint";
-		if("browseEndpoint" in x) {debugger; return;}
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
-		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
+		const {thumbnail,accessibility,...y}=this.s(cf,x);
 		this.D_Thumbnail(thumbnail);
-		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
 		this.D_Accessibility(accessibility);
 		return y;
 	}
@@ -5911,11 +5904,24 @@ class ServiceMethods extends ServiceData {
 	D_ChannelThumbnailWithLink(x) {
 		const cf="D_ChannelThumbnailWithLink";
 		if("title" in x) {
-			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+			const {title,navigationEndpoint,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+			x: {
+				const x2=navigationEndpoint;
+				if(!x2) break x;
+				const cf="D_ChannelThumbnail_navigationEndpoint";
+				if("browseEndpoint" in x2) {debugger; break x;}
+				x2===""; this.codegen_typedef(cf,x);
+			}
 			this.a_primitive_str(title);
 			return;
 		}
-		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+		let {navigationEndpoint,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+		x: {
+			const x2=navigationEndpoint;
+			const cf="D_ChannelThumbnail_navigationEndpoint";
+			if("browseEndpoint" in x2) {this.E_VE3611(x2); break x;}
+			x2===""; this.codegen_typedef(cf,x);
+		}
 	}
 	/** @private @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {
