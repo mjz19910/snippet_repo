@@ -826,9 +826,7 @@ class Support_RS_Browse extends ServiceMethods {
 	/** @private @arg {RC_SectionList} x */
 	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
 }
-class Support_GenericApi extends ServiceMethods {
-
-}
+class Support_GenericApi extends ServiceMethods {}
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
