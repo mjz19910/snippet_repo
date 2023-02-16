@@ -6014,6 +6014,28 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_CustomEmoji} x */
 	D_CustomEmoji(x) {this.g(this.D_CustomEmoji_Omit("D_CustomEmoji",x));}
+	/** @public @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {CF_D_CustomEmoji} cf @arg {T} x */
+	D_CustomEmoji_Omit(cf,x) {
+		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.s(cf,x);
+		this.parse_emoji_id(emojiId);
+		let [s_arr]=this.z(shortcuts,this.parse_emoji_shortcut);
+		this.z(s_arr,this.a_primitive_str);
+		this.save_string(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
+		this.save_string(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
+		this.D_EmojiImage(image);
+		this.a_primitive_bool(isCustomEmoji);
+		return y;
+	}
+	/** @public @arg {D_GetAccountMenu_Popup} x */
+	Popup_GetAccountMenu(x) {
+		const cf="Popup_GetAccountMenu"; this.k(cf,x);
+		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(b!=="DROPDOWN") debugger;
+		if(c!==true) debugger;
+		return a;
+	}
+	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
+	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";

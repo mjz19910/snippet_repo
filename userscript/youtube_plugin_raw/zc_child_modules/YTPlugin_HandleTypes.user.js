@@ -513,8 +513,6 @@ class HandleTypes extends ServiceMethods {
 	//#region CheckedTemplates
 	/** @private @arg {CF_TA_Page} cf @template T @arg {T_Page<T>} x @template U @arg {(this:this,x:T)=>U} f */
 	TA_Page(cf,x,f) {f.call(this,this.w(`TA_Page:${cf}`,"page",x));}
-	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
 	//#endregion
 	//#region web_command_metadata
 	//#endregion
@@ -2750,14 +2748,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		if(showLoadingSpinner!==true) debugger;
 	}
-	/** @public @arg {D_GetAccountMenu_Popup} x */
-	Popup_GetAccountMenu(x) {
-		const cf="Popup_GetAccountMenu"; this.k(cf,x);
-		const {popup: a,popupType: b,beReused: c,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(b!=="DROPDOWN") debugger;
-		if(c!==true) debugger;
-		return a;
-	}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe"; this.k(cf,x);
@@ -2999,18 +2989,6 @@ class HandleTypes extends ServiceMethods {
 		let fs=split_string_once(x,":");
 		let [ls,w]=split_string_once_last(fs[1],":",null); if(w!=="") debugger;
 		return ls;
-	}
-	/** @public @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {CF_D_CustomEmoji} cf @arg {T} x */
-	D_CustomEmoji_Omit(cf,x) {
-		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=this.s(cf,x);
-		this.parse_emoji_id(emojiId);
-		let [s_arr]=this.z(shortcuts,this.parse_emoji_shortcut);
-		this.z(s_arr,this.a_primitive_str);
-		this.save_string(`save://CustomEmoji.d/shortcuts/${emojiId}?custom=${isCustomEmoji}`,shortcuts.join(","));
-		this.save_string(`save://CustomEmoji.d/searchTerms/${emojiId}?custom=${isCustomEmoji}`,searchTerms.join(","));
-		this.D_EmojiImage(image);
-		this.a_primitive_bool(isCustomEmoji);
-		return y;
 	}
 	/**
 	 * @private
