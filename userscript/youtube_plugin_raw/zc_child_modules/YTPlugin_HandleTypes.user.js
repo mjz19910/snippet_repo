@@ -679,16 +679,12 @@ class HandleTypes extends ServiceMethods {
 	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.g);}
 	/** @private @arg {R_RichMetadata} x */
 	R_RichMetadata(x) {this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);}
-	/** @public @arg {R_RichMetadataRow} x */
-	R_RichMetadataRow(x) {this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
 	/** @private @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @public @arg {R_MetadataRow} x */
-	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {CD_NextRadio} x */
@@ -2752,15 +2748,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {D_RichMetadataRow} x */
-	D_RichMetadataRow(x) {
-		const cf="D_RichMetadataRow"; this.k(cf,x);
-		if(!x.contents) debugger;
-		if(!x.trackingParams) debugger;
-		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_RichMetadata);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
 		const cf="D_AddToPlaylistCreate"; this.k(cf,x);
@@ -3220,14 +3207,6 @@ class HandleTypes extends ServiceMethods {
 		let [sig_0,sig_1]=split_string_once(x,".");
 		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
-	}
-	/** @private @arg {D_MetadataRow} x */
-	D_MetadataRow(x) {
-		const cf="D_MetadataRow";
-		const {title,contents,trackingParams,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.z(contents,this.G_Text);
-		this.trackingParams(trackingParams);
 	}
 	/** @public @arg {D_PlayerConfig} x */
 	D_PlayerConfig(x) {

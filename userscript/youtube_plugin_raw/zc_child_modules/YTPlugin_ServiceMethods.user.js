@@ -6436,10 +6436,32 @@ class ServiceMethods extends ServiceData {
 		this.R_TopicLink(topicLink);
 		this.G_Text(premiumUpsellLink);
 	}
+	/** @public @arg {R_RichMetadataRow} x */
+	R_RichMetadataRow(x) {this.H_("R_RichMetadataRow","richMetadataRowRenderer",x,this.D_RichMetadataRow);}
+	/** @private @arg {D_RichMetadataRow} x */
+	D_RichMetadataRow(x) {
+		const cf="D_RichMetadataRow"; this.k(cf,x);
+		if(!x.contents) debugger;
+		if(!x.trackingParams) debugger;
+		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.R_RichMetadata);
+		this.trackingParams(trackingParams);
+	}
+	/** @public @arg {R_MetadataRow} x */
+	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
+	/** @private @arg {D_MetadataRow} x */
+	D_MetadataRow(x) {
+		const cf="D_MetadataRow";
+		const {title,contents,trackingParams,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.z(contents,this.G_Text);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {DMD_RowItem} x */
 	DMD_RowItem(x) {
 		if("metadataRowRenderer" in x) return this.R_MetadataRow(x);
 		if("richMetadataRowRenderer" in x) return this.R_RichMetadataRow(x);
+		debugger;
 	}
 	/**
 	 * @private
