@@ -573,6 +573,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.t(callToAction,this.G_Text);
 		this.t(dismiss,this.G_Text);
 		this.D_EndscreenElement_EP(endpoint);
+		this.t(subscribersText,this.G_Text);
 		this.t(hovercardButton,this.R_SubscribeButton);
 		this.trackingParams(trackingParams);
 		this.t(isSubscribe,x => this.ceq(x,true));
