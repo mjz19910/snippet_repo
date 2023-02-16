@@ -1122,6 +1122,86 @@ class Support_GenericApi extends ServiceMethods {
 		this.parse_number_template(notificationId);
 	}
 }
+class Support_EventInput extends ServiceMethods {
+	/** @protected @arg {YTNavigateFinishDetail} x */
+	YTNavigateFinishDetail(x) {
+		const cf="YTNavigateFinishDetail";
+		switch(x.pageType) {
+			case "browse": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_VE3854(endpoint);
+				const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
+				if(ve!==3854) debugger;
+				{
+					let x=response;
+					if("rootVe" in x) {
+						/** @type {"RS_Page_VE3854_Browse"} */
+						const cf=`RS_Page_VE${ve}_Browse`;
+						const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+						if(rootVe!==ve) debugger;
+						if(url!=="/") debugger;
+					} else {
+						/** @type {"RS_Page_VE3854_Browse"} */
+						const cf=`RS_Page_VE${ve}_Browse`;
+						const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+						if(url!=="/") debugger;
+					}
+				}
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "channel": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.DataResponsePageType(response);
+				this.E_VE3611(endpoint);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "playlist": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				debugger;
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "search": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_VE4724_Search(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "settings": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Settings(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "shorts": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_ReelWatch(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "watch": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Watch(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+		}
+	}
+}
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
@@ -1130,4 +1210,5 @@ export_(exports => {
 	exports.Support_RS_Page_Browse=Support_RS_Page_Browse;
 	exports.Support_RS_Browse=Support_RS_Browse;
 	exports.Support_GenericApi=Support_GenericApi;
+	exports.Support_EventInput=Support_EventInput;
 });
