@@ -70,6 +70,37 @@ class ServiceMethods extends ServiceData {
 	T_Item=(x,f) => this.y("T_Item","item",x,f);
 	/** @private @template {string} T @arg {T} x @returns {x is `${string}:${string}`} */
 	str_is_uri(x) {return x.includes(":");}
+	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
+	handle_yt_music_url(x) {
+		switch(x) {
+			case "https://music.youtube.com/": break;
+			default: debugger; break;
+		}
+	}
+	/** @arg {O2} tx @template {{}} T @template {{}} O2 @arg {O2} o2 @template {T_DistributedKeyof<T>} K @arg {T} x @arg {{}} o2 @returns {asserts tx is T_OmitKey<T,Exclude<K,T_DistributedKeyof<O2>>>} */
+	assert_is_omit_key(x,o2,tx) {
+		/** @typedef {[K,O2]} T_IN_ARGS */
+		/** @type {T_IN_ARGS} */
+		let u; tx;
+		function u1() {u;}
+		/**/u1; x; o2;
+	}
+	/** @type {Map<string,[string,string[]][]>} */
+	strings_map=new Map;
+	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
+	add_string_to_map(cf,k_arg,x) {
+		/** @type {`${typeof cf}::${typeof k_arg}`} */
+		let k=`${cf}::${k_arg}`;
+		let group_arr=this.strings_map.get(cf);
+		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
+		let group_entry=group_arr.find(e => e[0]===k);
+		x: {
+			if(!group_entry) break x;
+			if(group_entry[1].includes(x)) return;
+			group_entry[1].push(x);
+		}
+		group_arr.push([k,[x]]);
+	}
 	/** @private @arg {string} x */
 	GU_YoutubeUrlRedirect_RedirectToken(x) {
 		let token_str=atob(x);
@@ -131,37 +162,6 @@ class ServiceMethods extends ServiceData {
 		if(x==="https://www.youtubekids.com?source=youtube_web") return;
 		if(x==="https://www.youtubekids.com/?source=youtube_web") return;
 		this.cg.codegen_str(cf,x);
-	}
-	/** @private @arg {Extract<GU_VE83769_Url_External,`${string}://music.youtube.com${string}`>} x */
-	handle_yt_music_url(x) {
-		switch(x) {
-			case "https://music.youtube.com/": break;
-			default: debugger; break;
-		}
-	}
-	/** @arg {O2} tx @template {{}} T @template {{}} O2 @arg {O2} o2 @template {T_DistributedKeyof<T>} K @arg {T} x @arg {{}} o2 @returns {asserts tx is T_OmitKey<T,Exclude<K,T_DistributedKeyof<O2>>>} */
-	assert_is_omit_key(x,o2,tx) {
-		/** @typedef {[K,O2]} T_IN_ARGS */
-		/** @type {T_IN_ARGS} */
-		let u; tx;
-		function u1() {u;}
-		/**/u1; x; o2;
-	}
-	/** @type {Map<string,[string,string[]][]>} */
-	strings_map=new Map;
-	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
-	add_string_to_map(cf,k_arg,x) {
-		/** @type {`${typeof cf}::${typeof k_arg}`} */
-		let k=`${cf}::${k_arg}`;
-		let group_arr=this.strings_map.get(cf);
-		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
-		let group_entry=group_arr.find(e => e[0]===k);
-		x: {
-			if(!group_entry) break x;
-			if(group_entry[1].includes(x)) return;
-			group_entry[1].push(x);
-		}
-		group_arr.push([k,[x]]);
 	}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
