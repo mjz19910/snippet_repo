@@ -1091,29 +1091,6 @@ class HandleTypes extends ServiceMethods {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @template {{}} T @arg {string} cf @arg {T} x */
-	rl(cf,x) {
-		this.k(`${cf}:omit`,x);
-		return x;
-	}
-	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
-	D_Video_Omit(cf,x) {
-		let u=this.D_ThumbnailOverlay_Omit(cf,x);
-		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=u;
-		this.G_Text(ownerText);
-		if(showActionMenu!==false) debugger;
-		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		return y;
-	}
-	/** @private @arg {D_Video_Owner} x */
-	D_Video_Owner(x) {
-		const cf="D_Video_Owner"; this.k(cf,x);
-		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(thumbnail);
-		debugger;
-		this.D_Accessibility(accessibility);
-		this.a_primitive_str(title);
-	}
 	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
 	D_ChannelThumbnailWithLink_Omit(cf,x) {
 		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);

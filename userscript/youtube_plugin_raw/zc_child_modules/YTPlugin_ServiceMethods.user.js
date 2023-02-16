@@ -20,6 +20,11 @@ const split_string=bs.split_string; const split_string_once=bs.split_string_once
 const as_any=bs.as_any;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @private @template {{}} T @arg {string} cf @arg {T} x */
+	rl(cf,x) {
+		this.k(`${cf}:omit`,x);
+		return x;
+	}
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {
 		let eid=split_string_once(x,"/");
@@ -5783,6 +5788,24 @@ class ServiceMethods extends ServiceData {
 		if("videoDescriptionHeaderRenderer" in x) return this.R_VideoDescriptionHeader(x);
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
 		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
+	D_Video_Omit(cf,x) {
+		let u=this.D_ThumbnailOverlay_Omit(cf,x);
+		let {ownerText,showActionMenu,channelThumbnailSupportedRenderers,...y}=u;
+		this.G_Text(ownerText);
+		if(showActionMenu!==false) debugger;
+		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
+		return y;
+	}
+	/** @private @arg {D_Video_Owner} x */
+	D_Video_Owner(x) {
+		const cf="D_Video_Owner"; this.k(cf,x);
+		const {thumbnail,navigationEndpoint,accessibility,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnail);
+		debugger;
+		this.D_Accessibility(accessibility);
+		this.a_primitive_str(title);
 	}
 	/** @private @arg {CF_D_Video_Handle} cf @arg {D_Video} x */
 	D_Video_Handle(cf,x) {
