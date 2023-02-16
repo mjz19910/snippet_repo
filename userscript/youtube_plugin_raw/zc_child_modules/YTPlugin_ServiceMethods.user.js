@@ -7316,7 +7316,7 @@ class ServiceMethods extends ServiceData {
 		const cf="D_Tab_subscriptionsEndpoint";
 		switch(x.commandMetadata.webCommandMetadata.rootVe) {
 			default: this.codegen_typedef(cf,x); debugger; break;
-			case 96368: break;
+			case 96368: this.E_VE96368(x); break;
 		}
 		debugger;
 	}
