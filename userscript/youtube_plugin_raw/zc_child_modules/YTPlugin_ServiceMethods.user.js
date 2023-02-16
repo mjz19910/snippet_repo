@@ -7349,7 +7349,7 @@ class ServiceMethods extends ServiceData {
 		if(reflowOptions.minimumRowsOfVideosBetweenSections!==1) debugger;
 		return y;
 	}
-	/** @private @arg {R_Tab} x */
+	/** @protected @arg {R_Tab} x */
 	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
 	/** @private @arg {D_Tab} x */
 	D_Tab(x) {
