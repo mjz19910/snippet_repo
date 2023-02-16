@@ -1283,19 +1283,6 @@ class HandleTypes extends ServiceMethods {
 		let k=this.get_keys_of(x);
 		k.pop()==="";
 	}
-	/** @private @template {D_CompactVideo|D_Video} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
-	D_ThumbnailOverlay_Omit(cf,x) {
-		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);
-		this.trackingParams(trackingParams);
-		this.R_Menu(menu);
-		this.G_Text(title);
-		this.videoId(videoId);
-		this.D_ThumbnailOverlay_NavEP(navigationEndpoint);
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(longBylineText);
-		this.G_Text(shortBylineText);
-		return y;
-	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
@@ -1773,17 +1760,6 @@ class HandleTypes extends ServiceMethods {
 			}
 		})(x);
 	}
-	/** @private @template {D_CompactVideo} T @arg {"D_CompactVideo"} cf @arg {T} x @returns {T_OmitKey<T,Exclude<keyof T,Omit_y>>} */
-	D_CompactVideo_Omit(cf,x) {
-		let u=this.D_ThumbnailOverlay_Omit(cf,x);
-		let {richThumbnail,accessibility,channelThumbnail,badges,viewCountText,shortViewCountText,...y}=u;
-		this.t(richThumbnail,this.D_VideoLike_richThumbnail);
-		this.D_Accessibility(accessibility);
-		this.D_Thumbnail(channelThumbnail);
-		this.tz(badges,this.RMD_Badge);
-		/** @typedef {keyof typeof y} Omit_y */
-		return as_any(y);
-	}
 	/** @private @arg {D_AdSlot} x */
 	D_AdSlot(x) {
 		const cf="D_AdSlot"; this.k(cf,x);
@@ -2053,16 +2029,6 @@ class HandleTypes extends ServiceMethods {
 		if(recordClickEndpoint.recordNotificationInteractionsEndpoint) {this.E_RecordNotificationInteractions(recordClickEndpoint);}
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
-	}
-	/** @private @arg {D_TextHeader} x */
-	D_TextHeader(x) {
-		const cf="D_TextHeader";
-		const {title,style,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		switch(style) {
-			default: debugger; break;
-			case "TEXT_HEADER_RENDERER_STYLE_BOLD":
-		}
 	}
 	/** @private @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
