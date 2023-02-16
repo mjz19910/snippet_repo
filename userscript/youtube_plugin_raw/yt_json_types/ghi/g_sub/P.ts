@@ -70,3 +70,7 @@ type P_continuation_request_browse_token={
 		35: T_VSR<"browse-feedFEwhat_to_watch">;
 	};
 };
+type P_reel_player_params={
+	30: T_D32<1>,
+	71: T_D32<15>
+};

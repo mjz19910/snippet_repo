@@ -4449,6 +4449,11 @@ class HandleTypes extends ServiceMethods {
 				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 				debugger;
 			} break;
+			case "reel.player_params": {
+				/** @type {P_reel_player_params} */
+				let u=as_any(x);
+				this.P_reel_player_params(u);
+			} break;
 			case "create_playlist.params": {
 				/** @type {P_create_playlist_params} */
 				let u=as_any(x);
@@ -4489,6 +4494,8 @@ class HandleTypes extends ServiceMethods {
 	P_continuation_request_browse_token(x) {x;}
 	/** @private @arg {P_create_playlist_params} x */
 	P_create_playlist_params(x) {x;}
+	/** @private @arg {P_reel_player_params} x */
+	P_reel_player_params(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
