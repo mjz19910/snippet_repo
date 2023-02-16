@@ -1795,6 +1795,7 @@ type D_Factoid={
 };
 type D_FancyDismissibleDialog={
 	dialogMessage: G_Text;
+	title?: G_Text;
 	confirmLabel: G_Text;
 	trackingParams: string;
 };

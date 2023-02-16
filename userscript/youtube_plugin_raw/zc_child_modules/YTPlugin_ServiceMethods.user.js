@@ -4566,20 +4566,20 @@ class ServiceMethods extends ServiceData {
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==0) debugger;
-			if(u!=="2566914048") debugger;
+			this.save_string("dark_gradient.0",u);
 		}
 		{
 			let c=x[1];
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
-			if(u!=="2130706432") debugger;
+			this.save_string("dark_gradient.1",u);
 		}
 		{
 			let c=x[2];
 			/** @private @type {`${typeof c['darkThemeColor']}`} */
 			let u=`${c.darkThemeColor}`;
 			if(c.startLocation!==1) debugger;
-			if(u!=="4278190080") debugger;
+			this.save_string("dark_gradient.2",u);
 		}
 	}
 	/** @private @arg {D_AutoplayContent} x */
@@ -7632,7 +7632,7 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {D_FancyDismissibleDialog} x */
 	D_FancyDismissibleDialog(x) {
 		const cf="D_FancyDismissibleDialog";
-		const {dialogMessage,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
+		const {dialogMessage,title,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(dialogMessage);
 		this.G_Text(confirmLabel);
 		this.trackingParams(trackingParams);
