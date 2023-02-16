@@ -2112,10 +2112,6 @@ class HandleTypes extends ServiceMethods {
 		this.D_ChannelId(channelId);
 		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
-	/** @private @arg {D_EditableDetails} x */
-	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
-	/** @private @arg {D_CanShare} x */
-	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
 		const cf="D_TranscriptSearchPanel";
