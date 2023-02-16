@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // ==/UserScript==
 const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__);
-const bs=required(store["mod$YoutubePluginBase"]),ss=required(store["mod$SupportService"]);
+const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const base64_dec=bs.base64_dec,base64_url_dec=bs.base64_url_dec;
@@ -24,6 +24,8 @@ class ServiceMethods extends ServiceData {
 	/** @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
+		// cyclic import SupportService -> ServiceMethods -> SupportService
+		let ss=required(store["mod$SupportService"]);
 		this.z_RS_support_player=new ss.Support_RS_Player(x);
 		this.z_Support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
 		this.z_Support_RS_Watch=new ss.Support_RS_Watch(x);
