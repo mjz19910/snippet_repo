@@ -1993,7 +1993,7 @@ class HandleTypes extends ServiceMethods {
 				if(otu.length===3) {
 					const [,binary_arr,obj]=otu;
 					if(obj!==null) return obj;
-					console.log("[typedef_json_bin_maybe_string]",this._decoder.decode(binary_arr));
+					console.log("[maybe_handle_bin.do_maybe_string]",this._decoder.decode(binary_arr));
 					return otu;
 				}
 				return this.convert_arr_to_obj([otu]);
