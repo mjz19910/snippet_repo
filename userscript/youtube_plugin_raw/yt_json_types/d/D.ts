@@ -1241,7 +1241,14 @@ type D_GuideEntry=
 		accessibility: TD_Accessibility<"Liked videos">;
 		entryData: R_GuideEntryData;
 	}
-	|TD_GuideEntry_EntryData<"PLAYLISTS">
+	|{
+		navigationEndpoint: E_VE5754;
+		icon: T_Icon<"PLAYLISTS">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<string>;
+		entryData: R_GuideEntryData;
+	}
 	|TD_GuideEntry_Simple<"ADD_CIRCLE">
 	|TD_GuideEntry_Simple<"CLAPPERBOARD">
 	|TD_GuideEntry_Simple<"COURSE">
