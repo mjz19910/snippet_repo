@@ -1151,8 +1151,6 @@ class Support_EventInput extends ServiceMethods {
 			case 3854: case 96368:
 		}
 		this.R_PageTypeBrowse_Response(response);
-		{
-		}
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
