@@ -3841,6 +3841,58 @@ class ServiceMethods extends ServiceData {
 	A_HideEngagementPanelScrim(x) {let [a,y]=this.TE_Endpoint_2("A_HideEngagementPanelScrim","hideEngagementPanelScrimAction",x); this.g(y); this.AD_HideEngagementPanelTargetId(a);}
 	/** @private @arg {AD_HideEngagementPanelTargetId} x */
 	AD_HideEngagementPanelTargetId(x) {this.y("AD_HideEngagementPanelTargetId","engagementPanelTargetId",x,x => {if(x!=="engagement-panel-clip-create") debugger;});}
+	/** @private @arg {AD_SetActivePanelItem} x */
+	AD_SetActivePanelItem(x) {
+		const cf="AD_SetActivePanelItem";
+		const {panelTargetId,itemIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		switch(panelTargetId) {
+			default: debugger; break;
+			case "engagement-panel-macro-markers-auto-chapters":
+		}
+		this.save_number(`${cf}.itemIndex`,itemIndex);
+	}
+	/** @private @arg {AD_ShowEngagementPanelScrim} x */
+	AD_ShowEngagementPanelScrim(x) {
+		const cf="AD_ShowEngagementPanelScrim";
+		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
+		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
+		let [x1]=this.z(n,this.unpack_popup_dialog);
+		let [x2]=this.z(x1,x => {
+			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
+			return x[1];
+		});
+		this.z(x2,this.R_ConfirmDialog);
+	}
+	/** @public @arg {AD_AddToToast} x */
+	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
+	/** @public @arg {AD_ReelDismissal} x */
+	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
+	/** @private @arg {AD_AppendContinuationItems} x */
+	AD_AppendContinuationItems(x) {
+		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
+		if(this.starts_with_targetId(x,"browse-feed")) {
+			if(this.starts_with_targetId(x,"browse-feedUC")) {
+				const cp0=split_string(x.targetId,"browse-feed")[1];
+				let cp=split_string(cp0,"channels");
+				this.D_ChannelId(cp[0]);
+				if(cp[1]!=="156") debugger;
+				return;
+			}
+			switch(x.targetId) {
+				case "browse-feedFEwhat_to_watch": {
+					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
+				} break;
+			}
+			return;
+		}
+		switch(x.targetId) {
+			case "comments-section": this.A_CommentsSectionContinuation(x); break;
+			case "watch-next-feed": this.A_WatchNext(x); break;
+			default: x===0; debugger;
+		}
+	}
 	/** @private @arg {C_EntityUpdate} x */
 	C_EntityUpdate(x) {let [a,y]=this.TE_Endpoint_2("C_EntityUpdate","entityUpdateCommand",x); this.g(y); this.R_EntityBatchUpdate(a);}
 	/** @protected @arg {DC_EntityBatchUpdate} x */
@@ -3904,16 +3956,6 @@ class ServiceMethods extends ServiceData {
 	C_Innertube(x) {this.H_("C_Innertube","innertubeCommand",x,this.G_DC_Innertube);}
 	/** @arg {A_SetActivePanelItem} x */
 	A_SetActivePanelItem(x) {let [a,y]=this.TE_Endpoint_2("A_SetActivePanelItem","setActivePanelItemAction",x); this.g(y); this.AD_SetActivePanelItem(a);}
-	/** @private @arg {AD_SetActivePanelItem} x */
-	AD_SetActivePanelItem(x) {
-		const cf="AD_SetActivePanelItem";
-		const {panelTargetId,itemIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		switch(panelTargetId) {
-			default: debugger; break;
-			case "engagement-panel-macro-markers-auto-chapters":
-		}
-		this.save_number(`${cf}.itemIndex`,itemIndex);
-	}
 	/** @private @arg {E_YpcGetOfflineUpsell} x */
 	E_YpcGetOfflineUpsell(x) {const [a,y]=this.TE_Endpoint_2("E_YpcGetOfflineUpsell","ypcGetOfflineUpsellEndpoint",x); this.g(y); this.DE_YpcGetOfflineUpsell(a);}
 	/** @private @arg {DE_YpcGetOfflineUpsell} x */
@@ -5284,31 +5326,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_SetSetting} x */
 	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
-	/** @private @arg {AD_AppendContinuationItems} x */
-	AD_AppendContinuationItems(x) {
-		const cf="AD_AppendContinuationItems"; this.targetId(cf,x.targetId);
-		if(this.starts_with_targetId(x,"comment-replies-item-")) return this.GA_Continuation_CommentRepliesItem(x);
-		if(this.starts_with_targetId(x,"browse-feed")) {
-			if(this.starts_with_targetId(x,"browse-feedUC")) {
-				const cp0=split_string(x.targetId,"browse-feed")[1];
-				let cp=split_string(cp0,"channels");
-				this.D_ChannelId(cp[0]);
-				if(cp[1]!=="156") debugger;
-				return;
-			}
-			switch(x.targetId) {
-				case "browse-feedFEwhat_to_watch": {
-					this.save_string("ContinuationItem.targetId",x.targetId); this.A_BrowseFeed(x);
-				} break;
-			}
-			return;
-		}
-		switch(x.targetId) {
-			case "comments-section": this.A_CommentsSectionContinuation(x); break;
-			case "watch-next-feed": this.A_WatchNext(x); break;
-			default: x===0; debugger;
-		}
-	}
 	/** @private @arg {CD_Next} x */
 	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
 	/** @private @arg {R_ProductListItem} x */
@@ -6863,23 +6880,6 @@ class ServiceMethods extends ServiceData {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
 	}
-	/** @private @arg {AD_ShowEngagementPanelScrim} x */
-	AD_ShowEngagementPanelScrim(x) {
-		const cf="AD_ShowEngagementPanelScrim";
-		const {engagementPanelTargetId,onClickCommands,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		let [n]=this.z(onClickCommands,x => this.TA_OpenPopup("TA_OpenPopup<Popup_ConfirmDialog>",x));
-		let [x1]=this.z(n,this.unpack_popup_dialog);
-		let [x2]=this.z(x1,x => {
-			if(!x[0]) {console.log("Missed popup type",x[1]); return null;}
-			return x[1];
-		});
-		this.z(x2,this.R_ConfirmDialog);
-	}
-	/** @public @arg {AD_AddToToast} x */
-	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
-	/** @public @arg {AD_ReelDismissal} x */
-	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
