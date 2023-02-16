@@ -8,7 +8,7 @@ type D_VideoDetails={
 	shortDescription: string;
 	isCrawlable: true;
 	thumbnail: D_Thumbnail;
-	allowRatings: true;
+	allowRatings: boolean;
 	viewCount?: `${number}`;
 	author: string;
 	isPrivate: false;
