@@ -4335,12 +4335,14 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {R_ClickTrackingObj_t1} x */
 	R_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
-		const {1: [t1,f1],2: [t2,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
-		if(t1!=="data32") debugger;
-		if(t2!=="data32") debugger;
-		this.save_number(`${cf}.${t1}.f1`,f1);
-		this.a_primitive_num(f2);
-		this.V_BinaryTimestamp(f4);
+		if(this.is_tp_xx(x,0)) {
+			const {1: [t1,f1],2: [t2,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
+			if(t1!=="data32") debugger;
+			if(t2!=="data32") debugger;
+			this.save_number(`${cf}.f1`,f1);
+			this.a_primitive_num(f2);
+			this.V_BinaryTimestamp(f4);
+		}
 	}
 	/** @protected @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
@@ -4357,7 +4359,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
-	/** @template {number} T @arg {T} t @arg {P_tracking_params} x @returns {x is {1: T_VW_3<"data32", T>;}} */
+	/** @template {number} T @arg {T} t @arg {{1:T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
 	is_tp_xx(x,t) {return x[1][1]===t;}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {
