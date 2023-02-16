@@ -1,5 +1,5 @@
 type V_ParamObjData_2=
-	|[type: "child",binary_arr: Uint8Array,obj: {}|null]
+	|[type: "child",binary_arr: Uint8Array,obj: V_ParamObj_2|null]
 	|[type: "data32",value: number]
 	|[type: "data64",raw_number: number[],value: bigint]
 	|[type: "data_fixed32",value: number]
