@@ -5631,6 +5631,17 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_CommentActionButtons} x */
 	R_CommentActionButtons(x) {this.H_("R_CommentActionButtons","commentActionButtonsRenderer",x,this.D_CommentActionButtons);}
+	/** @private @arg {D_CommentActionButtons} x */
+	D_CommentActionButtons(x) {
+		const cf="D_CommentActionButtons";
+		const {likeButton,replyButton,dislikeButton,trackingParams,protoCreationMs,style,...y}=this.s(cf,x); this.g(y);
+		this.R_ToggleButton(likeButton);
+		this.R_Button(replyButton);
+		this.R_ToggleButton(dislikeButton);
+		this.trackingParams(trackingParams);
+		this.a_primitive_str(protoCreationMs);
+		if(style!=="COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR") debugger;
+	}
 	/** @public @arg {R_Comment} x */
 	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
 	/** @private @arg {D_Comment} x */
@@ -6113,8 +6124,25 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_CommentsSimplebox} x */
 	R_CommentsSimplebox(x) {this.H_("R_CommentsSimplebox","commentsSimpleboxRenderer",x,this.D_CommentsSimplebox);}
+	/** @private @arg {D_CommentsSimplebox} x */
+	D_CommentsSimplebox(x) {
+		const cf="D_CommentsSimplebox";
+		const {simpleboxAvatar,simpleboxPlaceholder,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(simpleboxAvatar);
+		this.G_Text(simpleboxPlaceholder);
+		this.trackingParams(trackingParams);
+	}
 	/** @public @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
+	/** @private @arg {D_CommentsEntryPointTeaser} x */
+	D_CommentsEntryPointTeaser(x) {
+		const cf="D_CommentsEntryPointTeaser"; this.k(cf,x);
+		const {teaserAvatar,teaserContent,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!teaserAvatar.accessibility) debugger;
+		this.D_Thumbnail(teaserAvatar);
+		this.G_Text(teaserContent);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {D_CommentsEntryPointHeader_contentRenderer} x */
 	D_CommentsEntryPointHeader_contentRenderer(x) {
 		const cf="D_CommentsEntryPointHeader_contentRenderer";

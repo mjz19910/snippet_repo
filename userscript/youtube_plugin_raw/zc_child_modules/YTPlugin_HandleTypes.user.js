@@ -2642,15 +2642,6 @@ class HandleTypes extends ServiceMethods {
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		if(showLoadingSpinner!==true) debugger;
 	}
-	/** @private @arg {D_CommentsEntryPointTeaser} x */
-	D_CommentsEntryPointTeaser(x) {
-		const cf="D_CommentsEntryPointTeaser"; this.k(cf,x);
-		const {teaserAvatar,teaserContent,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!teaserAvatar.accessibility) debugger;
-		this.D_Thumbnail(teaserAvatar);
-		this.G_Text(teaserContent);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe"; this.k(cf,x);
@@ -2849,14 +2840,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_EmojiPicker(emojiPicker);
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
-	}
-	/** @private @arg {D_CommentsSimplebox} x */
-	D_CommentsSimplebox(x) {
-		const cf="D_CommentsSimplebox";
-		const {simpleboxAvatar,simpleboxPlaceholder,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(simpleboxAvatar);
-		this.G_Text(simpleboxPlaceholder);
-		this.trackingParams(trackingParams);
 	}
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {
@@ -3588,17 +3571,6 @@ class HandleTypes extends ServiceMethods {
 			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
 		}
 		this.D_Accessibility(accessibility);
-	}
-	/** @private @arg {D_CommentActionButtons} x */
-	D_CommentActionButtons(x) {
-		const cf="D_CommentActionButtons";
-		const {likeButton,replyButton,dislikeButton,trackingParams,protoCreationMs,style,...y}=this.s(cf,x); this.g(y);
-		this.R_ToggleButton(likeButton);
-		this.R_Button(replyButton);
-		this.R_ToggleButton(dislikeButton);
-		this.trackingParams(trackingParams);
-		this.a_primitive_str(protoCreationMs);
-		if(style!=="COMMENT_ACTION_BUTTON_STYLE_TYPE_DESKTOP_TOOLBAR") debugger;
 	}
 	/** @protected @arg {Extract<D_ToggleButton,{defaultServiceEndpoint:any}>["defaultServiceEndpoint"]} x */
 	D_Button_DefServiceEP(x) {
