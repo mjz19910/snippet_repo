@@ -7334,7 +7334,7 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
-	/** @private @arg {R_RichGrid} x */
+	/** @public @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
 	/** @private @arg {D_RichGrid} x */
 	D_RichGrid(x) {
@@ -7449,7 +7449,7 @@ class ServiceMethods extends ServiceData {
 		if("richSectionRenderer" in x) return this.R_RichSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {R_MusicQueue} x */
+	/** @public @arg {R_MusicQueue} x */
 	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {D_MusicQueue} x */
 	D_MusicQueue(x) {
