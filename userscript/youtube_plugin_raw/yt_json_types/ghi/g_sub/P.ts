@@ -11,7 +11,8 @@ type R_ClickTrackingObj=
 	;
 ;
 type T_D32<T>=["data32",T];
-type T_Fx_D32<T>=["data_fixed32",T];
+type T_FD32<T>=["data_fixed32",T];
+type T_VSR<T>=["raw", ["string", T]];
 type P_tracking_params={
 	1: T_VW_3<"data32",0>;
 	2: T_VW_3<"data32",13188>;
