@@ -627,8 +627,6 @@ class HandleTypes extends ServiceMethods {
 	R_ReportFormModal(x) {this.H_("R_ReportFormModal","reportFormModalRenderer",x,this.g);}
 	/** @private @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @public @arg {R_VideoViewCount} x */
-	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
 	/** @private @arg {R_TwoColumnSearchResults} x */
 	R_TwoColumnSearchResults(x) {this.H_("R_TwoColumnSearchResults","twoColumnSearchResultsRenderer",x,this.D_TwoColumnSearchResults);}
 	/** @private @arg {R_PlaylistSidebarSecondaryInfo} x */
@@ -2940,15 +2938,6 @@ class HandleTypes extends ServiceMethods {
 		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
 		if(!this.eq_keys(t,u)) debugger;
 		this.z([startAccessibility,endAccessibility,durationAccessibility],this.D_Accessibility);
-	}
-	/** @private @arg {D_VideoViewCount} x */
-	D_VideoViewCount(x) {
-		const cf="D_VideoViewCount"; this.k(cf,x);
-		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(viewCount);
-		this.t(shortViewCount,this.G_Text);
-		this.t(extraShortViewCount,this.G_Text);
-		this.t(isLive,this.a_primitive_bool);
 	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {

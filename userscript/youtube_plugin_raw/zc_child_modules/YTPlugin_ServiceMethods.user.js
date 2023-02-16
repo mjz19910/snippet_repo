@@ -5388,6 +5388,17 @@ class ServiceMethods extends ServiceData {
 		if("endScreenVideoRenderer" in x) return this.R_EndScreenVideo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @public @arg {R_VideoViewCount} x */
+	R_VideoViewCount(x) {this.H_("R_VideoViewCount","videoViewCountRenderer",x,this.D_VideoViewCount);}
+	/** @private @arg {D_VideoViewCount} x */
+	D_VideoViewCount(x) {
+		const cf="D_VideoViewCount"; this.k(cf,x);
+		const {viewCount,shortViewCount,extraShortViewCount,isLive,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(viewCount);
+		this.t(shortViewCount,this.G_Text);
+		this.t(extraShortViewCount,this.G_Text);
+		this.t(isLive,this.a_primitive_bool);
+	}
 	/** @private @arg {D_VideoPrimaryInfo} x */
 	D_VideoPrimaryInfo(x) {
 		const cf="D_VideoPrimaryInfo";
