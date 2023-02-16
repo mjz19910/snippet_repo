@@ -205,10 +205,26 @@ class ServiceMethods extends ServiceData {
 			case "video_description":
 		}
 	}
-	/** @private @arg {M_EditPlaylist} x */
-	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
+	/** @private @arg {GM_YpcGetOffers} x */
+	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
+	/** @private @arg {GM_CreateComment} x */
+	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
+	/** @protected @arg {GM_Unsubscribe} x */
+	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
+	/** @protected @arg {GM_GetPdgBuyFlow} x */
+	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
+	/** @private @arg {GM_GetSharePanel} x */
+	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
+	/** @private @arg {GM_Next} x */
+	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
+	/** @private @arg {GM_Browse} x */
+	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
+	/** @protected @arg {GM_AddToPlaylistService} x */
+	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
+	/** @private @arg {M_EditPlaylist} x */
+	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {DE_PlaylistEdit} x */
 	DE_PlaylistEdit(x) {
 		const cf="D_PlaylistEdit";
@@ -690,12 +706,6 @@ class ServiceMethods extends ServiceData {
 		if("createCommentReplyDialogEndpoint" in x) return;
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {GM_YpcGetOffers} x */
-	GM_YpcGetOffers(x) {this.T_GM("GM_YpcGetOffers",x,x => this.ceq(x,"/youtubei/v1/ypc/get_offers"));}
-	/** @private @arg {GM_CreateComment} x */
-	GM_CreateComment(x) {this.T_GM("GM_CreateComment",x,x => this.ceq(x,"/youtubei/v1/comment/create_comment"));}
-	/** @protected @arg {GM_Unsubscribe} x */
-	GM_Unsubscribe(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/subscription/unsubscribe"));}
 	/** @private @arg {M_YpcGetOffers} x */
 	M_YpcGetOffers(x) {this.T_WCM("M_YpcGetOffers",x,this.GM_YpcGetOffers);}
 	/** @private @arg {M_CreateComment} x */
@@ -712,12 +722,8 @@ class ServiceMethods extends ServiceData {
 	C_GetPdgBuyFlow(x) {let [a,b,y]=this.TE_Endpoint_3("C_GetPdgBuyFlow","getPdgBuyFlowCommand",x); this.g(y); this.M_GetPdgBuyFlow(a); this.DC_GetPdgBuyFlow(b);}
 	/** @private @arg {M_GetPdgBuyFlow} x */
 	M_GetPdgBuyFlow(x) {this.T_WCM("M_GetPdgBuyFlow",x,this.GM_GetPdgBuyFlow);}
-	/** @protected @arg {GM_GetPdgBuyFlow} x */
-	GM_GetPdgBuyFlow(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/pdg/get_pdg_buy_flow"));}
 	/** @private @arg {M_GetSharePanel} x */
 	M_GetSharePanel(x) {this.T_WCM("M_GetSharePanel",x,this.GM_GetSharePanel);}
-	/** @private @arg {GM_GetSharePanel} x */
-	GM_GetSharePanel(x) {this.T_GM("GM_GetSharePanel",x,x => this.ceq(x,"/youtubei/v1/share/get_share_panel"));}
 	/** @protected @arg {CF_TA_OpenPopup} cf1 @template T @arg {TA_OpenPopup<T>} x */
 	TA_OpenPopup(cf1,x) {
 		const cf2="TA_OpenPopup";
@@ -801,10 +807,6 @@ class ServiceMethods extends ServiceData {
 		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.GC_Button);
 	}
-	/** @private @arg {GM_Next} x */
-	GM_Next(x) {this.T_GM("GM_Next",x,x => this.ceq(x,"/youtubei/v1/next"));}
-	/** @private @arg {GM_Browse} x */
-	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @private @arg {MC_Continuation} x */
 	MC_Continuation(x) {
 		this.T_WCM("MC_Continuation",x,x => {
@@ -876,8 +878,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.G_DC_GetSurvey_Endpoint(a);
 	}
-	/** @protected @arg {GM_AddToPlaylistService} x */
-	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
 	/** @private @template T @arg {CF_T_WCM_Unpack} cf @arg {{webCommandMetadata: T}} x */
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @protected @arg {M_AddToPlaylistService} x */
