@@ -76,5 +76,6 @@ type GU_VE83769_Url_External=
 	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}/videos`
 	|`https://studio.youtube.com/channel/UC${D_StrOnlyLen<24,"AAAAAAAAAAAAAAAAAAAAAAAA">}`
 	|`https://www.googleadservices.com/pagead/aclk?${string}`
+	|`https://googleads.g.doubleclick.net/aclk?sa=l&ai=${string}&ae=1&num=1&cid=CAQSGwDUE5ymnWT3OXutClglsJNPdbyVZHb-FKmsARgB&sig=AOD64_27x_iDAZA3amyOVWA0dZ41NZteDA&client=ca-pub-6219811747049371&rf=3&adurl=https://www.newdawndevelopments.com/service/custom-homes%3Futm_term%3D%26utm_campaign%3DDISPLAY%2Bcampaign%2Bfor%2B%2522web%2Bdevelopment%2522%2Blanding%2Bpage%26utm_source%3Dadwords%26utm_medium%3Dppc%26hsa_acc%3D6163404992%26hsa_cam%3D14380444759%26hsa_grp%3D143153779636%26hsa_ad%3D632985586463%26hsa_src%3Dd%26hsa_tgt%3D%26hsa_kw%3D%26hsa_mt%3D%26hsa_net%3Dadwords%26hsa_ver%3D3%26gclid%3DEAIaIQobChMIr87m7fSZ_QIVSARPCB1noQTREAEYASAAEgJpHPD_BwE`
 	;
 ;
