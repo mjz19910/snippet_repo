@@ -677,8 +677,6 @@ class HandleTypes extends ServiceMethods {
 	R_RatingSurvey(x) {this.H_("R_RatingSurvey","ratingSurveyRenderer",x,this.D_RatingSurvey);}
 	/** @arg {R_AutomixPreviewVideo} x */
 	R_AutomixPreviewVideo(x) {this.H_("R_AutomixPreviewVideo","automixPreviewVideoRenderer",x,this.g);}
-	/** @private @arg {R_RichMetadata} x */
-	R_RichMetadata(x) {this.H_("R_RichMetadata","richMetadataRenderer",x,this.D_RichMetadata);}
 	/** @private @arg {R_TranscriptSegment} x */
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
@@ -2717,36 +2715,6 @@ class HandleTypes extends ServiceMethods {
 		const {title,button,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.R_Button(button);
-	}
-	/** @private @arg {D_RichMetadata} x */
-	D_RichMetadata(x) {
-		const cf="D_RichMetadata"; this.k(cf,x);
-		switch(x.style) {
-			default: this.cg.codegen_case_key(cf,x,"style","break"); break;
-			case "RICH_METADATA_RENDERER_STYLE_BOX_ART": {
-				const cf="D_RichMetadata_BoxArt";
-				const {style: {},thumbnail,title,subtitle,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.D_Thumbnail(thumbnail);
-				this.G_Text(title);
-				this.t(subtitle,this.G_Text);
-				this.G_Text(callToAction);
-				this.T_Icon(`${cf}:icon`,callToActionIcon);
-				if(!endpoint.browseEndpoint) debugger;
-				debugger;
-				this.trackingParams(trackingParams);
-			} break;
-			case "RICH_METADATA_RENDERER_STYLE_TOPIC": {
-				const cf="D_RichMetadata_Topic";
-				const {style: {},thumbnail,title,callToAction,callToActionIcon,endpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.D_Thumbnail(thumbnail);
-				this.G_Text(title);
-				this.G_Text(callToAction);
-				this.T_Icon(`${cf}:icon`,callToActionIcon);
-				if(!endpoint.browseEndpoint) debugger;
-				debugger;
-				this.trackingParams(trackingParams);
-			} break;
-		}
 	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
