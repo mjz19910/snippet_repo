@@ -14,8 +14,6 @@ export namespace Gen {
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "D_YtStudio_Url";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "S_VideoGoodPutShape.sparams";}
 		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "js_gen_case:log_videoplayback:D_VideoPlaybackShape.mn.host_partition";}
-		|{n: Prelude.CF_D_CaseGen; t: Types.CF_D_CaseGen_; v: "js_gen_case:log_videoplayback:D_VideoPlaybackShape.mn.mi";}
-		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_D_ChipCloudChip_Omit; t: Types.CF_D_ChipCloudChip_Omit_; v: "D_ChipCloudChip_WithSelection";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_CustomEmoji";}
 		|{n: Prelude.CF_D_CustomEmoji; t: Types.CF_D_CustomEmoji_; v: "D_LiveChatEmoji";}
@@ -72,6 +70,7 @@ export namespace Gen {
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "D_PlaylistContent";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_L_TP_Params; t: Types.CF_L_TP_Params_; v: "R_WatchPage_VE3832";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: ".identifier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AccountItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddChatItem";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_AddToGuideSection";}
@@ -159,7 +158,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationReplace";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdBreakService";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdLayoutMetadata";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacementConfig";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdSlot";}
@@ -194,7 +192,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Channel_MD";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChildVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloud";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip_WithNav";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipCloudChip_WithSelection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ChipUniqueId";}
@@ -241,7 +238,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndScreenVideo";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Endscreen";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EndscreenElement";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelSectionList";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_EngagementPanelTitleHeader";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableSurveyResponse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableTab";}
@@ -486,10 +482,6 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Contents";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "G_Watch_SecondaryResults_Results";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_DisplayTopLandscapeImage";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_PlayerBytes";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MG_AdLayout_TopImage";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MMD_AdLayout_TopImage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "MP_AccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3611";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "M_VE3854";}
@@ -557,8 +549,10 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_DB_EngagementPanel_Ads";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE124975_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE126250_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE126250_EngagementPanel.identifier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE139722_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE76278_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE76278_EngagementPanel.identifier";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE99999_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_GetAccountMenu";}
@@ -569,29 +563,201 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Signal_GetNotificationsMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "Signal_Omit";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "StateTag";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:CF_TA_OpenPopup";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:DE_ShareEntityService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:G_Action_GetNotificationsMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:RSG_NotificationMenu_Action";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:RSM_ChannelPreference";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup:R_PdgBuyFlow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup<D_GetAccountMenu_Popup>";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup<Popup_ConfirmDialog>";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup_Empty";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:a";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:CF_TD_ItemSection";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_1<any>";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_3<\"comment-item-section\",\"engagement-panel-comments-section\">";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_3<\"sid-wn-chips\",\"watch-next-feed\">";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection_2_CommentsEntryPoint";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:AU_NotificationsUnseenCount";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_AddChatItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_AddToGuideSection";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_AddToToast";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_AppendContinuationItems";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_ChangeEngagementPanelVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_HideEnclosing";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_HideEngagementPanelScrim";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_ReplaceEnclosing";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_SendFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_SetActivePanelItem";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_ShowEngagementPanelScrim";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_Signal";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:A_UndoFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:CF_TE_Endpoint_2";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_AddToPlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_AdsControlFlowOpportunityReceived";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ChangeKeyedMarkersVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ChangeMarkersVisibility";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_CommandExecutor";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_EngagementPanelHeaderShowNavigationButton";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_EntityUpdate";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_FilterChipTransform";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_FollowUp";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_LoadMarkers";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_Loop";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_RefreshPlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_RelatedChip";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ReloadContinuationItems";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_RepeatChapter";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ResetChannelUnreadCount";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ShowReelsCommentsOverlay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_UpdateToggleButtonState";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_ShowEngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_YpcGetOfflineUpsell";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:a";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:CF_TE_Endpoint_3";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:C_GetPdgBuyFlow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_AddToPlaylistService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_CreateBackstagePost";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_CreateComment";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_CreatePlaylistService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_GetNotificationMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_GetReportForm";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_GetTranscript";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Like";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_NotificationOptOut";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_PlaylistEdit";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_PlaylistEditor";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_RecordNotificationInteractions";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_ReelWatch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_ShareEntityService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_SignalNavigation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Subscribe";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_UndoFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Unsubscribe";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE11487";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE23462";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE3611";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE42352";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE4724_Search";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE5754";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE83769_Upload";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE83769_Url";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_VE96368";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_Watch";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_WatchPlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_YpcGetCart";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:E_YpcGetOffers";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_3:a";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_Opt_3:CF_TE_Endpoint_Opt_3";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_Opt_3:C_Continuation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_Opt_3:a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_SignalService_I_0";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_TrackedObj_2:";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_TrackedObj_2:AD_ReelDismissal";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_TrackedObj_2:CF_TE_TrackedObj_2";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_TrackedObj_2:a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TM_Visibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TR_ItemSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Autoplay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_BaseUrl";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Command_TP";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_DE_SettingItem.407";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:CF_T_Icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:DMD_Badge_LiveNow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:DMD_Badge_MediumGray";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:DMD_Badge_Verified";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:DMD_Badge_VerifiedArtist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Button.icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Button:command.icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Button:navigationEndpoint.icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Button:serviceEndpoint.icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Button:style.icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_EmojiPickerCategoryButton:ForChannel:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_EmojiPickerCategoryButton:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_EmojiPickerCategoryButton:targetId:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Guide_CollapseIcon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Guide_ExpandIcon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_Icon_Search";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_PaidContentOverlay";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_PromotedSparklesWeb:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_ReelMultimixAttributionLabel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_RichMetadata_BoxArt:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_RichMetadata_Topic:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_ThumbnailOverlayBottomPanel:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_ThumbnailOverlayToggleButton_ToggledPrefix:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_ThumbnailOverlayToggleButton_UntoggledPrefix_1:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_ThumbnailOverlayToggleButton_UntoggledPrefix_2:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:D_TopbarLogo:iconImage";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:a";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:CF_T_Icon_Any";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:D_GuideEntry_Icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:D_GuideEntry_WithIcon:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:D_GuideEntry_WithNavEP:icon";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:D_Icon_ThumbnailOverlaySidePanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Icon:any:a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_OpenPopup_Toast";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Playlist";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_SecondaryResults";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Types";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_UrlWrappedValue";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:CF_T_WCM";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:MC_Continuation";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_AccountMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_AddToPlaylistService";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_CreateBackstagePost";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_CreateComment";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_CreatePlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_EditPlaylist";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Feedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_FlagGetForm";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetNotificationMenu";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetPdgBuyFlow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetSharePanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetTranscript";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetUnseenNotificationCount";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Like";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_NotificationOptOut";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_RecordInteractions";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_SendPost";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_SetSetting";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Subscribe";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_Unsubscribe";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_UserFeedback";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE37414";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE3832";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE42352";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE4724";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE5754";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE83769";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_VE96368";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_YpcGetCart";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_YpcGetOffers";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "ToggleButton.state";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_BinaryTimestamp";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_SerializedContext_BinaryObj:D_QoeLoggingContext";}
-		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "V_SerializedContext_BinaryObj:D_VssLoggingContext";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "XP_EntityPayload_Any";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "YTNavigateFinishDetail";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "aCF_parse_identifier.identifier";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_SendPost";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "GM_UserFeedback";}
 		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_AdditionalDataItem";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "G_EY_Entity_Any:G_EY_Entity";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Other:D_ImpressionCap";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "TA_Page:AD_UpdateChannelSwitcherPage";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "TA_Page:CF_TA_Page";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "TA_Page:a";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "T_Items:CF_T_Items";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "T_Items:D_ProfileColumn";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "T_Items:a";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "T_Items_TP:CF_T_Items_TP";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "T_Items_TP:R_CompactLink_Items";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "T_Items_TP:a";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Unpack:T_WCM:CF_T_WCM_Unpack";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Unpack:T_WCM:MG_Survey_CMD";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "Unpack:T_WCM:a";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "zy:CF_M_zy";}
+		|{n: Prelude.CF_M_w; t: Types.CF_M_w_; v: "zy:a";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEnclosing";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AD_HideEngagementPanelTargetId";}
 		|{n: Prelude.CF_M_y; t: Types.CF_M_y_; v: "AU_ToggleButtonText";}
@@ -646,7 +812,6 @@ export namespace Gen {
 		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_CreateBackstagePost";}
 		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_CreateComment";}
 		|{n: Prelude.CF_TD_Params; t: Types.CF_TD_Params_; v: "DE_YpcGetCart";}
-		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AD_ReelDismissal";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "AU_NotificationsUnseenCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddChatItem";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "A_AddToGuideSection";}
@@ -815,13 +980,10 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithIcon";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
-		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE126250_EngagementPanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE76278_EngagementPanel";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_Continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_slot_logging_data.serialized_slot_ad_serving_data_entry";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "adaptive_format.xtags";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "change_markers_visibility.entity.key";}
@@ -862,7 +1024,6 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reel.sequence_params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "reload.continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "remove_like.params";}
-		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "service$create_playlist";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscribe_button.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "subscriptionState.key";}

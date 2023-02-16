@@ -1,6 +1,9 @@
 while (<>) {
 	my $input=$_;
 	my @spl = split(/'/, $input);
+	say STDERR "line[0] = $spl[0]";
+	say STDERR "line[1] = $spl[1]";
+	say STDERR "line[2] = $spl[2]";
 	my @spl_2 = split(" | ", $spl[1]);
 	foreach my $i (@spl_2)
 	{
