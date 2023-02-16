@@ -4567,6 +4567,16 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_like_params(u);
 			} break;
+			case "playability_status.context_params": {
+				/** @type {P_playability_status_context_params} */
+				let u=as_any(x);
+				this.P_playability_status_context_params(u);
+			} break;
+			case "entity.key": {
+				/** @type {P_entity_key} */
+				let u=as_any(x);
+				this.P_entity_key(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -4574,6 +4584,10 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_entity_key} x */
+	P_entity_key(x) {x;}
+	/** @private @arg {P_playability_status_context_params} x */
+	P_playability_status_context_params(x) {x;}
 	/** @private @arg {P_like_params} x */
 	P_like_params(x) {x;}
 	/** @private @arg {P_logging_context_serialized_context_data} x */

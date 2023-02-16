@@ -109,3 +109,10 @@ type P_playability_status_context_params={
 		1: T_D32<2>;
 	};
 };
+type P_entity_key={
+	2: {
+		1: T_VSR<"z6EQlZaB7v8">
+	},
+	4: T_D32<246>,
+	5: T_D32<1>
+};

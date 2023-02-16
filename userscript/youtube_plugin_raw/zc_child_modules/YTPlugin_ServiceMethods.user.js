@@ -2091,7 +2091,7 @@ class ServiceMethods extends ServiceData {
 		}
 		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
 			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
-			this.G_TextRun_Endpoint(navigationEndpoint);
+			this.E_VE6827(navigationEndpoint);
 			this.D_LoggingDirectives(loggingDirectives);
 			if("bold" in y) {
 				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
@@ -2103,7 +2103,7 @@ class ServiceMethods extends ServiceData {
 		}
 		if("navigationEndpoint" in u) {
 			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
-			this.G_TextRun_Endpoint(navigationEndpoint);
+			this.E_VE3611(navigationEndpoint);
 			return;
 		}
 		if("bold" in u) {
