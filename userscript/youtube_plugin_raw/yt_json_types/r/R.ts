@@ -304,6 +304,20 @@ type R_PageTypeBrowse={
 		};
 		url: "/";
 		expirationTime?: number;
+	}|{
+		rootVe: 3854;
+		url: "/";
+		endpoint: E_VE3854;
+		page: "browse";
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_FeedTabbedHeader;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
+		};
+		expirationTime: 1676534033586;
 	};
 	fromHistory: boolean;
 	navigationDoneMs: number;

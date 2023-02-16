@@ -1041,7 +1041,13 @@ class HandleTypes extends ServiceMethods {
 				const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
 				{
 					let x=response;
-					{
+					if("rootVe" in x) {
+						/** @type {"RS_Page_VE3854_Browse"} */
+						const cf=`RS_Page_VE${ve}_Browse`;
+						const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+						if(rootVe!==ve) debugger;
+						if(url!=="/") debugger;
+					} else {
 						/** @type {"RS_Page_VE3854_Browse"} */
 						const cf=`RS_Page_VE${ve}_Browse`;
 						const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
