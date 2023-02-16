@@ -1843,7 +1843,7 @@ class ServiceMethods extends ServiceData {
 	M_VE96368(x) {return this.T_WCM("M_VE96368",x,this.GM_VE96368);}
 	/** @private @arg {GM_VE3832} x */
 	GM_VE3832(x) {
-		const cf="GM_VE3832_WatchPlaylist";
+		const cf="GM_VE3832";
 		const {url,rootVe,webPageType,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		x: {
 			if(this.str_starts_with(url,"/playlist")) break x;
@@ -1855,7 +1855,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE3611} x @returns {`VE${rootVe}`} */
 	GM_VE3611(x) {
-		const cf="GM_VE3611_WC";
+		const cf="GM_VE3611";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.GU_VE3611_Url(url);
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
@@ -1865,7 +1865,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE3854} x @returns {`VE${rootVe}`} */
 	GM_VE3854(x) {
-		const cf="GM_VE3854_WC";
+		const cf="GM_VE3854";
 		const {url,webPageType,rootVe,apiUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		x: {
 			if(url==="/") break x;
@@ -1877,7 +1877,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {GM_VE4724} x @returns {`VE${rootVe}`} */
 	GM_VE4724(x) {
-		const cf="GM_VE4724_WC";
+		const cf="GM_VE4724";
 		const {url,webPageType,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(!this.str_starts_with_rx("/results?search_query=",url)) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
@@ -1886,7 +1886,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {M_ResolveUrlCommand} x */
 	M_ResolveUrlCommand(x) {
-		const cf="GM_VE_ResolveUrl_C_MD";
+		const cf="M_ResolveUrlCommand";
 		const {parentTrackingParams,isVanityUrl,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.t(parentTrackingParams,x => this.trackingParams(x));
 		this.t(isVanityUrl,x => this.ceq(x,true));
