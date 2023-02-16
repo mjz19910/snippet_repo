@@ -540,8 +540,6 @@ class HandleTypes extends ServiceMethods {
 	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
-	/** @public @arg {R_RichItem} x */
-	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
 	/** @private @arg {R_FeedNudge} x */
 	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
 	/** @private @arg {R_Radio} x */
@@ -1074,20 +1072,6 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
-	}
-	/** @private @arg {D_RichItem} x */
-	D_RichItem(x) {
-		const cf="D_RichItem"; this.k(cf,x);
-		if("rowIndex" in x) {
-			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			this.G_RichItemContent(content);
-			this.trackingParams(trackingParams);
-			this.save_number("Item.pos",[rowIndex,colIndex]);
-			return;
-		}
-		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_RichItemContent(content);
-		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {

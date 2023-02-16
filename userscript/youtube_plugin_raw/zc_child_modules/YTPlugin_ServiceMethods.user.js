@@ -5784,6 +5784,22 @@ class ServiceMethods extends ServiceData {
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @public @arg {R_RichItem} x */
+	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
+	/** @private @arg {D_RichItem} x */
+	D_RichItem(x) {
+		const cf="D_RichItem"; this.k(cf,x);
+		if("rowIndex" in x) {
+			const {content,trackingParams,rowIndex,colIndex,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.G_RichItemContent(content);
+			this.trackingParams(trackingParams);
+			this.save_number("Item.pos",[rowIndex,colIndex]);
+			return;
+		}
+		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_RichItemContent(content);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {G_BrowseFeed} x */
 	G_BrowseFeed(x) {
 		const cf="G_BrowseFeed";
