@@ -4441,6 +4441,62 @@ class ServiceMethods extends ServiceData {
 		this._primitive_of(isCourse,"boolean");
 		return y;
 	}
+	/** @public @arg {R_SectionList} x */
+	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
+	/** @private @arg {GD_RC_SectionList} x */
+	GD_RC_SectionList(x) {
+		const cf="GD_RC_SectionList"; this.k(cf,x);
+		if("targetId" in x) {
+			switch(x.targetId) {
+				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
+				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
+				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
+				case "search-feed": return this.DC_SectionList_SearchFeed(x);
+			}
+		}
+		if("contents" in x) {
+			const {contents: arr,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(!arr) {debugger; return;}
+			/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
+			let ux_1=[];
+			let ux_2=[];
+			for(let item of arr) {
+				const {itemSectionRenderer: x,...y}=item; this.g(y);
+				if("targetId" in x) {
+					let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
+					if(r===null) continue;
+					ux_1.push(r);
+					continue;
+				}
+				let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
+				ux_2.push(r);
+				x;
+			}
+			this.z(ux_1,x => {
+				/** @type {DC_SectionListBase} */
+				switch(x[1]) {
+					default: debugger; break;
+					case "comment-item-section": {
+						let [x0,,x2]=x;
+						if(x2!=="engagement-panel-comments-section") debugger;
+						this.z(x0,x => {
+							if(!x.continuationItemRenderer) debugger;
+							return this.R_ContinuationItem(x);
+						});
+					} break;
+				}
+			});
+			this.trackingParams(trackingParams);
+			return;
+		}
+		if("disablePullToRefresh" in x) {
+			const {trackingParams,disablePullToRefresh,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.trackingParams(trackingParams);
+			if(disablePullToRefresh!==true) debugger;
+			return;
+		}
+		debugger;
+	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
 		const cf="D_EngagementPanelSectionList";
