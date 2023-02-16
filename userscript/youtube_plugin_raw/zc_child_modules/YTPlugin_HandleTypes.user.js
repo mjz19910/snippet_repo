@@ -687,10 +687,6 @@ class HandleTypes extends ServiceMethods {
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
 	/** @private @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @private @arg {R_EmojiPickerCategory} x */
-	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
-	/** @private @arg {R_EmojiPickerCategoryButton} x */
-	R_EmojiPickerCategoryButton(x) {this.H_("R_EmojiPickerCategoryButton","emojiPickerCategoryButtonRenderer",x,this.D_EmojiPickerCategoryButton);}
 	/** @public @arg {R_MetadataRow} x */
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {CD_TimedContinuation} x */
@@ -3201,75 +3197,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {CD_Invalidation} x */
 	CD_Invalidation(x) {this.y("CD_Invalidation","invalidationContinuationData",x,this.DC_Invalidation);}
-	/** @private @arg {D_EmojiPickerCategory} x */
-	D_EmojiPickerCategory(x) {
-		if(x.categoryType==="CATEGORY_TYPE_GLOBAL") {
-			const cf="D_EmojiPickerCategory:Global";
-			const {categoryId,title,emojiIds,trackingParams,categoryType,...y}=this.s(cf,x); this.g(y);
-			if(!this.str_starts_with(categoryId,"UC")) debugger;
-			this.G_Text(title);
-			this.z(emojiIds,x => {
-				this.save_string(`${categoryId}.emojiId`,this.parse_emoji_id(x));
-			});
-			this.D_ChannelId(categoryId);
-			this.trackingParams(trackingParams);
-			return;
-		}
-		const cf="D_EmojiPickerCategory";
-		const {categoryId,title,emojiIds,trackingParams,imageLoadingLazy,categoryType,...y}=this.s(cf,x); this.g(y);
-		switch(categoryId) {
-			default: debugger; break;
-			case "people": case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
-		}
-		this.G_Text(title);
-		this.z(emojiIds,x => {
-			this.save_string(`${categoryId}.emojiId`,x);
-		});
-		this.trackingParams(trackingParams);
-		if(imageLoadingLazy!==true) debugger;
-		if(categoryType!=="CATEGORY_TYPE_UNICODE") debugger;
-	}
-	/** @private @arg {D_EmojiPickerCategoryButton} x @returns {x is {categoryId: `UC${string}`}} */
-	Is_D_EmojiPickerCategoryButton_WithChannelCategoryId(x) {
-		return this.str_starts_with(x.categoryId,"UC");
-	}
-	/** @private @arg {D_EmojiPickerCategoryButton} x */
-	D_EmojiPickerCategoryButton(x) {
-		if("targetId" in x) {
-			const cf="D_EmojiPickerCategoryButton:targetId";
-			const {categoryId,icon,tooltip,accessibility,targetId,...y}=this.s(cf,x); this.g(y);
-			switch(categoryId) {
-				default: debugger; break;
-				case "people":
-			}
-			this.T_Icon(`${cf}:icon`,icon);
-			if(tooltip!=="People") debugger;
-			this.D_Accessibility(accessibility);
-			if(targetId!=="emoji-picker-category-button-people") debugger;
-			return;
-		}
-		if(this.Is_D_EmojiPickerCategoryButton_WithChannelCategoryId(x)) {
-			const cf="D_EmojiPickerCategoryButton:ForChannel";
-			const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
-			this.D_ChannelId(categoryId);
-			this.T_Icon(`${cf}:icon`,icon);
-			if(tooltip!=="YouTube") debugger;
-			this.D_Accessibility(accessibility);
-			return;
-		}
-		const cf="D_EmojiPickerCategoryButton";
-		const {categoryId,icon,tooltip,accessibility,...y}=this.s(cf,x); this.g(y);
-		switch(categoryId) {
-			default: debugger; break;
-			case "nature": case "food": case "travel": case "activities": case "objects": case "symbols":
-		}
-		this.T_Icon(`${cf}:icon`,icon);
-		switch(tooltip) {
-			default: debugger; break;
-			case "Nature": case "Food": case "Travel": case "Activities": case "Objects": case "Symbols":
-		}
-		this.D_Accessibility(accessibility);
-	}
 	/** @protected @arg {Extract<D_ToggleButton,{defaultServiceEndpoint:any}>["defaultServiceEndpoint"]} x */
 	D_Button_DefServiceEP(x) {
 		const cf="D_Button_DefServiceEP"; this.k(cf,x);
