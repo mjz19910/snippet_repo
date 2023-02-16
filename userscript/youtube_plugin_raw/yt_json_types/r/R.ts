@@ -289,6 +289,28 @@ type R_PageTypeWatch={
 	navigationDoneMs: number;
 };
 type R_PageTypeBrowse={
+	endpoint: E_VE96368;
+	pageType: "browse";
+	fromHistory: false;
+	response: {
+		page: "browse";
+		endpoint: E_VE96368;
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_FeedTabbedHeader;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+			observedStateTags: {
+				stateTag: 3;
+				instruction: "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY";
+			}[];
+		};
+		url: "/feed/subscriptions";
+		expirationTime: 1676554733213;
+	};
+	navigationDoneMs: 1676554433787;
+}|{
 	pageType: "browse";
 	endpoint: E_VE3854;
 	response: {
