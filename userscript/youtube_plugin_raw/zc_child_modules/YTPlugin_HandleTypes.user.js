@@ -913,17 +913,6 @@ class HandleTypes extends ServiceMethods {
 		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
 	}
 	//#region Grouped Endpoints
-	// in this case, inferred (E_Page is a index accessed type)
-	/** @private @arg {E_Page} x */
-	E_Page(x) {
-		const cf="E_Page"; this.k(cf,x);
-		if("browseEndpoint" in x) {debugger; return;}
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
-		if("_tag" in x) return this.E_Settings(x);
-		if("searchEndpoint" in x) return this.E_VE4724_Search(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
 	//#region E_ (Endpoints)
@@ -1433,12 +1422,64 @@ class HandleTypes extends ServiceMethods {
 	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail"; this.k(cf,x);
-		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_Page(endpoint);
-		this.DataResponsePageType(response);
-		this.parser.parse_page_type(pageType);
-		this._primitive_of(fromHistory,"boolean");
-		this.a_primitive_num(navigationDoneMs);
+		switch(x.pageType) {
+			case "browse": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				debugger;
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "channel": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				debugger;
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "playlist": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				debugger;
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "search": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_VE4724_Search(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "settings": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Settings(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "shorts": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_ReelWatch(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+			case "watch": {
+				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.E_Watch(endpoint);
+				this.DataResponsePageType(response);
+				this.parser.parse_page_type(pageType);
+				this._primitive_of(fromHistory,"boolean");
+				this.a_primitive_num(navigationDoneMs);
+			} break;
+		}
 	}
 	/** @private @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
