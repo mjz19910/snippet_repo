@@ -40,6 +40,18 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @returns {true} */
 	true_() {return true;}
+	/** @private @template {D_Microformat} U @arg {U} x */
+	unwrap_microformat(x) {
+		let [v,o]=this.unwrap_prefix(x,"url");
+		let [v1,o2]=this.unwrap_prefix(o,"ios");
+		let [v2,o3]=this.unwrap_prefix(o2,"twitter");
+		return {
+			url: v,
+			ios: v1,
+			twitter: v2,
+			other: o3,
+		};
+	}
 	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/

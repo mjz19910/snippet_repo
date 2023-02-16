@@ -1114,21 +1114,6 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @template {D_Microformat} U @arg {U} x */
-	unwrap_microformat(x) {
-		/** @private @type {Partial<T_RemovePrefix<U,"url">>} */
-		let uu={}; uu;
-		uu.applinksAndroid;
-		let [v,o]=this.unwrap_prefix(x,"url");
-		let [v1,o2]=this.unwrap_prefix(o,"ios");
-		let [v2,o3]=this.unwrap_prefix(o2,"twitter");
-		return {
-			url: v,
-			ios: v1,
-			twitter: v2,
-			other: o3,
-		};
-	}
 	/** @template {string} T @arg {string} x @arg {T} tag @returns {string&{_tag:T}} */
 	make_str_tag(x,tag) {
 		/** @template T */
