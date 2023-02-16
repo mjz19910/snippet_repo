@@ -1294,12 +1294,6 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
-	/** @public @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
-	D_Omit_ThumbnailOverlay(cf,x) {
-		const {thumbnailOverlays,...y}=this.s(cf,x);
-		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
-		return y;
-	}
 	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
 	D_ThumbnailOverlay_NavEP(x) {
 		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
@@ -1782,13 +1776,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {number} T @arg {T} x @returns {`${T}`} */
 	num_to_string(x) {return `${x}`;}
-	/** @public @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Player} T @arg {T} x */
-	D_Omit_Compact_Player(cf,x) {
-		const {title,trackingParams,...y}=this.s(cf,x);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		return y;
-	}
 	/** @template {{}} T @arg {T} x */
 	get_omit_gen(x) {
 		return new (class Gen1 {

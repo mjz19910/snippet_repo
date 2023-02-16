@@ -4684,6 +4684,19 @@ class ServiceMethods extends ServiceData {
 		}
 		this.codegen_typedef(cf,x);
 	}
+	/** @public @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Player} T @arg {T} x */
+	D_Omit_Compact_Player(cf,x) {
+		const {title,trackingParams,...y}=this.s(cf,x);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		return y;
+	}
+	/** @public @arg {CF_D_Menu_Omit} cf @template {{thumbnailOverlays:G_ThumbnailOverlayItem[]}} T @arg {T} x */
+	D_Omit_ThumbnailOverlay(cf,x) {
+		const {thumbnailOverlays,...y}=this.s(cf,x);
+		this.z(thumbnailOverlays,this.G_ThumbnailOverlayItem);
+		return y;
+	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Omit_Compact_Video} T @arg {T} x */
 	D_Omit_Compact_Video(cf,x) {
 		let u=this.D_Omit_Compact_Player(cf,x);
