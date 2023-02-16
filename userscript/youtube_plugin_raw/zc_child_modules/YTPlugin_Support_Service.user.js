@@ -825,38 +825,6 @@ class Support_RS_Browse extends ServiceMethods {
 	}
 	/** @private @arg {RC_SectionList} x */
 	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
-	/** @public @arg {R_PlaylistHeader} x */
-	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
-	/** @private @arg {D_PlaylistHeader} x */
-	D_PlaylistHeader(x) {
-		const cf="D_PlaylistHeader";
-		const {playButton,playlistHeaderBanner,playlistId,privacy,shufflePlayButton,trackingParams,editableDetails,editorEndpoint,isEditable,ownerEndpoint,serviceEndpoints,moreActionsMenu,title,numVideosText,descriptionTapText,descriptionText,onDescriptionTap,shareData,stats,briefStats,byline,ownerText,viewCountText,cinematicContainer,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_Button(playButton);
-		this.R_HeroPlaylistThumbnail(playlistHeaderBanner);
-		this.playlistId(playlistId);
-		this.save_string(`${cf}.privacy`,privacy);
-		this.R_Button(shufflePlayButton);
-		this.trackingParams(trackingParams);
-		this.D_EditableDetails(editableDetails);
-		this.E_PlaylistEditor(editorEndpoint);
-		this.a_primitive_bool(isEditable);
-		debugger;
-		this.z(serviceEndpoints,this.E_PlaylistEdit);
-		this.R_Menu(moreActionsMenu);
-		this.G_Text(title);
-		this.G_Text(numVideosText);
-		this.G_Text(descriptionTapText);
-		this.g(descriptionText);
-		if(!onDescriptionTap.openPopupAction) debugger;
-		this.g(onDescriptionTap.openPopupAction);
-		this.D_CanShare(shareData);
-		this.z(stats,this.G_Text);
-		this.z(briefStats,this.G_Text);
-		this.z(byline,this.R_PlaylistByline);
-		this.G_Text(ownerText);
-		this.G_Text(viewCountText);
-		this.R_CinematicContainer(cinematicContainer);
-	}
 	/** @private @arg {R_HeroPlaylistThumbnail} x */
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {R_PlaylistByline} x */
