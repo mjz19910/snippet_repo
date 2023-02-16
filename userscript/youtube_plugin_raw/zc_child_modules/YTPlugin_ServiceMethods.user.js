@@ -221,17 +221,21 @@ class ServiceMethods extends ServiceData {
 		this.z(actions,x => {
 			switch(x.action) {
 				case "ACTION_ADD_VIDEO": {
-					const cf="A_ActionAddVideo";
+					const cf="A_AddVideo";
 					const {action: {},addedVideoId,...y}=this.s(cf,x); this.g(y);
 					this.t(addedVideoId,this.videoId);
 				} break;
 				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID": {
-					const cf="D_ActionRemoveVideoByVideoId";
+					const cf="A_RemoveVideoByVideoId";
 					const {action: {},removedVideoId,...y}=this.s(cf,x); this.g(y);
 					this.videoId(removedVideoId);
 				} break;
 				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": {
-					const cf="A_ActionSetPlaylistVideoOrder";
+					const cf="A_SetPlaylistVideoOrder";
+					const {action: {},...y}=this.s(cf,x); this.g(y);
+				} break;
+				case "ACTION_COPY_FROM_PLAYLIST": {
+					const cf="A_COPY_FROM_PLAYLIST";
 					const {action: {},...y}=this.s(cf,x); this.g(y);
 				} break;
 				default: debugger; break;
