@@ -4650,6 +4650,36 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_unsubscribe_params(u);
 			} break;
+			case "continuation_request.watch_next.token": {
+				/** @type {P_continuation_request_watch_next_token} */
+				let u=as_any(x);
+				this.P_continuation_request_watch_next_token(u);
+			} break;
+			case "entity_key.normal": {
+				/** @type {P_entity_key_normal} */
+				let u=as_any(x);
+				this.P_entity_key_normal(u);
+			} break;
+			case "watch_playlist.params": {
+				/** @type {P_watch_playlist_params} */
+				let u=as_any(x);
+				this.P_watch_playlist_params(u);
+			} break;
+			case "playlist_loop_state.entity.key": {
+				/** @type {P_playlist_loop_state_entity_key} */
+				let u=as_any(x);
+				this.P_playlist_loop_state_entity_key(u);
+			} break;
+			case "load_markers.entity_key": {
+				/** @type {P_load_markers_entity_key} */
+				let u=as_any(x);
+				this.P_load_markers_entity_key(u);
+			} break;
+			case "create_backstage_post.params": {
+				/** @type {P_create_backstage_post_params} */
+				let u=as_any(x);
+				this.P_create_backstage_post_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -4657,6 +4687,18 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_create_backstage_post_params} x */
+	P_create_backstage_post_params(x) {x;}
+	/** @private @arg {P_load_markers_entity_key} x */
+	P_load_markers_entity_key(x) {x;}
+	/** @private @arg {P_watch_playlist_params} x */
+	P_watch_playlist_params(x) {x;}
+	/** @private @arg {P_playlist_loop_state_entity_key} x */
+	P_playlist_loop_state_entity_key(x) {x;}
+	/** @private @arg {P_entity_key_normal} x */
+	P_entity_key_normal(x) {x;}
+	/** @private @arg {P_continuation_request_watch_next_token} x */
+	P_continuation_request_watch_next_token(x) {x;}
 	/** @private @arg {P_unsubscribe_params} x */
 	P_unsubscribe_params(x) {x;}
 	/** @private @arg {P_subscribe_params} x */
