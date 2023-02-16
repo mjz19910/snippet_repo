@@ -229,7 +229,7 @@ class Support_RS_Player extends ServiceMethods {
 	/** @private @arg {D_PlayerMicroformat} x */
 	D_PlayerMicroformat(x) {
 		const cf="D_PlayerMicroformat";
-		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,...y}=this.s(cf,x); this.g(y);
+		const {thumbnail,embed,title,description,lengthSeconds,ownerProfileUrl,externalChannelId,isFamilySafe,availableCountries,isUnlisted,hasYpcMetadata,viewCount,category,publishDate,ownerChannelName,liveBroadcastDetails,uploadDate,learningResource,...y}=this.s(cf,x); this.g(y);
 		this.D_Thumbnail(thumbnail);
 		this.t(embed,this.D_MicroformatEmbed);
 		this.G_Text(title);
@@ -247,6 +247,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.a_primitive_str(ownerChannelName);
 		this.t(liveBroadcastDetails,this.D_LiveBroadcastDetails);
 		this.a_primitive_str(uploadDate);
+		this.t(learningResource,this.D_LearningResource)
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
@@ -622,6 +623,14 @@ class Support_RS_Player extends ServiceMethods {
 		this.ceq(prominent,true);
 		this.ceq(logVisibilityUpdates,true);
 		this.A_ChangeEngagementPanelVisibility(onTapCommand);
+	}
+	/** @private @arg {D_LearningResource} x */
+	D_LearningResource(x) {
+		const cf="D_LearningResource";
+		const {learningResourceType,educationalLevel,educationalLevelCountry,...y}=this.s(cf,x); this.g(y);
+		this.save_string("D_LearningResource.learningResourceType",learningResourceType);
+		this.save_string("D_LearningResource.educationalLevel",educationalLevel);
+		this.save_string("D_LearningResource.educationalLevelCountry",educationalLevelCountry);
 	}
 }
 class Support_RS_WatchPage extends ServiceMethods {

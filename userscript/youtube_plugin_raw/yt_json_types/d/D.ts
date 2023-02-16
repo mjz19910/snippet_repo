@@ -2281,6 +2281,11 @@ type D_PlayerCaptionsTracklist={
 	openTranscriptCommand?: A_ChangeEngagementPanelVisibility;
 };
 type D_PlayerLiveStoryboardSpec={spec: string;};
+type D_LearningResource={
+	learningResourceType: ["How-to"];
+	educationalLevel: ["Beginner"];
+	educationalLevelCountry: "US";
+};
 type D_PlayerMicroformat={
 	thumbnail: D_Thumbnail;
 	embed?: D_MicroformatEmbed;
@@ -2299,6 +2304,7 @@ type D_PlayerMicroformat={
 	ownerChannelName: string;
 	liveBroadcastDetails?: D_LiveBroadcastDetails;
 	uploadDate: string;
+	learningResource?: D_LearningResource;
 };
 type D_PlayerOverlay={
 	endScreen: R_WatchNextEndScreen;

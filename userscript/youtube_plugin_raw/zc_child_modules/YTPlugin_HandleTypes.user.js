@@ -3520,6 +3520,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_transcript_track_selection_serialized_params(u);
 			} break;
+			case "continuation_request.reel_watch_sequence.token": {
+				/** @type {P_continuation_request_reel_watch_sequence_token} */
+				let u=as_any(x);
+				this.P_continuation_request_reel_watch_sequence_token(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -3527,6 +3532,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_continuation_request_reel_watch_sequence_token} x */
+	P_continuation_request_reel_watch_sequence_token(x) {x;}
 	/** @private @arg {P_transcript_track_selection_serialized_params} x */
 	P_transcript_track_selection_serialized_params(x) {x;}
 	/** @private @arg {P_transcript_track_selection_entity_key} x */
