@@ -4089,19 +4089,6 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,this.G_Text);
 		this.trackingParams(trackingParams);
 	}
-	/** @public @arg {D_ReloadContinuationData} x */
-	D_ReloadContinuationData(x) {
-		const cf="D_ReloadContinuationData";
-		const {reloadContinuationData,...y}=this.s(cf,x); this.g(y);
-		this.D_Continuation(reloadContinuationData);
-	}
-	/** @private @arg {D_Continuation} x */
-	D_Continuation(x) {
-		const cf="D_Continuation";
-		const {continuation,clickTrackingParams,...y}=this.s(cf,x); this.g(y);
-		this.decode_continuation_token(cf,continuation);
-		this.clickTrackingParams(clickTrackingParams);
-	}
 	/** @private @arg {D_LiveChatHeader} x */
 	D_LiveChatHeader(x) {
 		const cf="D_LiveChatHeader";

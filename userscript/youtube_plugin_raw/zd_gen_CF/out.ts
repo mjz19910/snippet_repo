@@ -546,6 +546,12 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_WatchPage_VE3832";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_DB_EngagementPanel_Ads";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE124975_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE126250_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE139722_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE76278_EngagementPanel";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "SI_VE99999_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_Client_Popup";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_GetAccountMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "S_VideoGoodPutShape";}
@@ -794,6 +800,8 @@ export namespace Gen {
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_GuideEntry_WithNavEP";}
 		|{n: Prelude.CF_onMissingIcon; t: Types.CF_onMissingIcon_; v: "D_ThumbnailOverlaySidePanel";}
 		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "D_EngagementPanelSectionList";}
+		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE126250_EngagementPanel";}
+		|{n: Prelude.CF_parse_identifier; t: Types.CF_parse_identifier_; v: "SI_VE76278_EngagementPanel";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "D_Continuation";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "aadc_guidelines_state.entity_key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "ad_layout.ad_serving_data_entry";}
