@@ -4460,6 +4460,7 @@ class HandleTypes extends ServiceMethods {
 	P_tracking_params(x) {
 		const cf="P_tracking_params"; this.k(cf,x);
 		if(this.is_tp_xx(x,0)) {
+			if(16 in x) return;
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=x; this.g(y);
 			this.save_number(`${cf}.f1`,f1);
 			this.a_primitive_num(f2);
@@ -4573,6 +4574,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_like_params} x */
+	P_like_params(x) {x;}
 	/** @private @arg {P_logging_context_serialized_context_data} x */
 	P_logging_context_serialized_context_data(x) {x;}
 	/** @private @arg {P_reel_params} x */
