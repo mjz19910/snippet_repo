@@ -1123,6 +1123,8 @@ class Support_GenericApi extends ServiceMethods {
 	}
 }
 class Support_EventInput extends ServiceMethods {
+	/** @private @arg {E_Settings} x */
+	E_Settings(x) {x; debugger;}
 	/** @public @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail";
@@ -1250,7 +1252,7 @@ class Support_EventInput extends ServiceMethods {
 				}
 			}
 			this.E_VE3611(endpoint);
-			this.RS_Channel(response);
+			this.handle_types.RS_Channel(response);
 			const {rootVe,expirationTime,csn,...y}=u; this.g(y);
 			this._primitive_of(expirationTime,"number");
 			if(rootVe!==3611) debugger;
@@ -1363,6 +1365,21 @@ class Support_EventInput extends ServiceMethods {
 		this.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
+	}
+	/** @private @arg {D_GraftedVeItem} x */
+	D_GraftedVeItem(x) {
+		const cf="D_GraftedVeItem";
+		const {veData,csn,...y}=this.s(cf,x); this.g(y);
+		this.D_VeCsn(csn);
+	}
+	/** @public @arg {string} x @arg {boolean} is_prev */
+	D_VeCsn(x,is_prev=false) {
+		let csn_dec=atob(x);
+		if(is_prev) {
+			console.log("[prev_csn_dec]",csn_dec);
+		} else {
+			console.log("[csn_dec]",csn_dec);
+		}
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});

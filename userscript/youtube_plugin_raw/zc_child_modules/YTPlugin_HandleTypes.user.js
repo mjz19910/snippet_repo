@@ -474,8 +474,6 @@ class HandleTypes extends ServiceMethods {
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	//#region Grouped Endpoints
-	/** @private @arg {E_Settings} x */
-	E_Settings(x) {x; debugger;}
 	//#region E_ (Endpoints)
 	/** @private @arg {E_YpcGetCart} x */
 	E_YpcGetCart(x) {const [a,b,y]=this.TE_Endpoint_3("E_YpcGetCart","ypcGetCartEndpoint",x); this.g(y); this.M_YpcGetCart(a); this.DE_YpcGetCart(b);}
@@ -1435,21 +1433,6 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_str(url);
 		return y;
 	}
-	/** @private @arg {D_GraftedVeItem} x */
-	D_GraftedVeItem(x) {
-		const cf="D_GraftedVeItem";
-		const {veData,csn,...y}=this.s(cf,x); this.g(y);
-		this.D_VeCsn(csn);
-	}
-	/** @public @arg {string} x @arg {boolean} is_prev */
-	D_VeCsn(x,is_prev=false) {
-		let csn_dec=atob(x);
-		if(is_prev) {
-			console.log("[prev_csn_dec]",csn_dec);
-		} else {
-			console.log("[csn_dec]",csn_dec);
-		}
-	}
 	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
@@ -1522,7 +1505,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.R_TranscriptSearchPanel(a);
 	}
-	/** @private @arg {RS_Channel} x */
+	/** @public @arg {RS_Channel} x */
 	RS_Channel(x) {
 		const cf="RS_Channel";
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,cacheMetadata,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
