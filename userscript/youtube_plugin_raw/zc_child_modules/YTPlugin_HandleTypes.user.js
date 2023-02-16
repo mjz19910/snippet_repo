@@ -252,7 +252,7 @@ class HandleTypes extends ServiceMethods {
 			case "att.get": return this.RS_AttGet(x.data);
 			case "att.log": return this.RS_AttLog_RC(x.data);
 			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
-			case "browse": return this.RS_Browse(x.data);
+			case "browse": return this.support_RS_Browse.RS_Browse(x.data);
 			case "feedback": return this.RS_Feedback(x.data);
 			case "get_transcript": return this.RSG_Transcript(x.data);
 			case "get_survey": return this.RSG_Survey(x.data);
