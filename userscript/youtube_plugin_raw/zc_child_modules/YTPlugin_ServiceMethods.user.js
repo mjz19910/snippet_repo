@@ -20,6 +20,8 @@ const ServiceData=bs.ServiceData;
 const split_string=bs.split_string,split_string_once=bs.split_string_once,split_string_once_last=bs.split_string_once_last;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @public @template T @arg {TR_MP_MenuSection<T>} x */
+	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
 	/** @arg {D_CustomEmoji['shortcuts'][number]} x */
 	parse_emoji_shortcut(x) {
 		let fs=split_string_once(x,":");

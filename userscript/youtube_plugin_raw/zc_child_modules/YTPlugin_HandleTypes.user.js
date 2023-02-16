@@ -2447,8 +2447,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
-	/** @public @template T @arg {TR_MP_MenuSection<T>} x */
-	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe"; this.k(cf,x);
