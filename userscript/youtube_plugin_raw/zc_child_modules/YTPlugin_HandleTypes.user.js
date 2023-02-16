@@ -1451,17 +1451,6 @@ class HandleTypes extends ServiceMethods {
 			this.a_primitive_str(a);
 		}
 	}
-	/** @private @arg {RS_Reel} x */
-	RS_Reel(x) {
-		const cf="RS_Reel";
-		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_ReelPlayerOverlay(overlay);
-		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
-		this.trackingParams(trackingParams);
-		this.R_DesktopTopbar(desktopTopbar);
-		if(!engagementPanels) debugger;
-		else {this.z(engagementPanels,this.R_EngagementPanelSectionList);}
-	}
 	/** @type {Map<string,((y:C_UpdateToggleButtonState)=>void)>} */
 	h_m=new Map;
 	/** @private @arg {D_Transcript} x */
@@ -1483,29 +1472,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_Microformat(microformat);
 		this.tz(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
 		this.t(cacheMetadata,this.D_Cache_MD);
-	}
-	/** @private @arg {RS_Playlist} x */
-	RS_Playlist(x) {
-		const cf="RS_Playlist";
-		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_TwoColumnBrowseResults(contents);
-		this.R_PlaylistHeader(header);
-		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
-		this.R_Playlist_MD(metadata);
-		this.R_DesktopTopbar(topbar);
-		this.trackingParams(trackingParams);
-		this.R_Microformat(microformat);
-		this.R_PlaylistSidebar(sidebar);
-	}
-	/** @private @arg {RS_Settings} x */
-	RS_Settings(x) {
-		const cf="RS_Settings";
-		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_TwoColumnBrowseResults(contents);
-		this.R_DesktopTopbar(topbar);
-		this.trackingParams(trackingParams);
-		this.tz(onResponseReceivedEndpoints,(this.g));
-		this.R_SettingsSidebar(sidebar);
 	}
 	/** @private @arg {D_ResourceStatusInResponseCheck} x */
 	D_ResourceStatusInResponseCheck(x) {
