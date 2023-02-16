@@ -219,8 +219,6 @@ class ServiceMethods extends ServiceData {
 		this.playlistId(playlistId);
 		this.t(params,x => this.params("playlist_edit.params",x));
 		this.z(actions,x => {
-			// TODO: #12 Handle playlist actions
-			// Just skip them for now
 			switch(x.action) {
 				case "ACTION_ADD_VIDEO": {
 					const cf="A_ActionAddVideo";
