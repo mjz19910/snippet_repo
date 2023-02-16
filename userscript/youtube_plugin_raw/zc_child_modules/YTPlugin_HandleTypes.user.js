@@ -812,7 +812,7 @@ class HandleTypes extends ServiceMethods {
 	RS_Browse(x) {
 		const cf="RS_Browse";
 		x: {
-			let jk=this.get_keys_of(x).filter(e=>{
+			let jk=this.get_keys_of(x).filter(e => {
 				if(e==="responseContext") return false;
 				return true;
 			}).join();
@@ -2226,7 +2226,7 @@ class HandleTypes extends ServiceMethods {
 						if(!f2.startsWith("@")) debugger;
 						switch(f3) {
 							default: debugger; break;
-							case "videos":
+							case "shorts": case "videos":
 						}
 					}
 				}
