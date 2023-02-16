@@ -4109,7 +4109,10 @@ class ServiceMethods extends ServiceData {
 			let pr=this.parse_with_url_parse(x);
 			switch(pr.host) {
 				case "googleads.g.doubleclick.net": {
-
+					if(pr.pathname!=="/pagead/interaction/") debugger;
+					let x2=this.parse_url_search_params(pr.search);
+					console.log(x2);
+					debugger;
 				} break;
 				default: debugger; break;
 			};

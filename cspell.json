@@ -247,6 +247,7 @@
       "RDCMUC",
       "RDGM",
       "RDMM",
+      "RDSH",
       "Readahead",
       "realpath",
       "rebuffer",

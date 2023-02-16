@@ -166,121 +166,121 @@ type P_create_backstage_post_params={
 };
 type P_subscription_state_key={
 	2: T_VSR<`UC${string}`>;
-	4: T_D32<51>,
-	5: T_D32<1>
+	4: T_D32<51>;
+	5: T_D32<1>;
 };
 type P_shorts_source_bp={
 	94: {
 		1: {
 			2: {
-				1: T_VSR<"xSNX8P68wJ8">,
-				2: T_VSR<"xSNX8P68wJ8">,
-				3: T_VSR<"xSNX8P68wJ8">
-			}
-		},
-		5: T_VW_Bigint<1879003204532078215n>
-	}
+				1: T_VSR<"xSNX8P68wJ8">;
+				2: T_VSR<"xSNX8P68wJ8">;
+				3: T_VSR<"xSNX8P68wJ8">;
+			};
+		};
+		5: T_VW_Bigint<1879003204532078215n>;
+	};
 };
 type P_get_transcript_params={
-	1: T_VSR<string>,
-	2: T_VSR<string>,
-	3: T_D32<1>,
-	5: T_VSR<"engagement-panel-searchable-transcript-search-panel">,
-	6: T_D32<1>,
-	7: T_D32<1>,
-	8: T_D32<1>
+	1: T_VSR<string>;
+	2: T_VSR<string>;
+	3: T_D32<1>;
+	5: T_VSR<"engagement-panel-searchable-transcript-search-panel">;
+	6: T_D32<1>;
+	7: T_D32<1>;
+	8: T_D32<1>;
 };
 type P_transcript_track_selection_entity_key={
-	2: T_VSR<".transcript.track.selection.key">,
-	4: T_D32<315>,
-	5: T_D32<1>
+	2: T_VSR<".transcript.track.selection.key">;
+	4: T_D32<315>;
+	5: T_D32<1>;
 };
 type P_transcript_track_selection_serialized_params={
-	1: T_VSR<"tjqBrtu1Igs">,
-	2: T_VSR<"CgNhc3ISAmVuGgA%3D">,
-	3: T_D32<1>,
-	6: T_D32<0>,
-	7: T_D32<1>,
-	8: T_D32<0>
+	1: T_VSR<string>;
+	2: T_VSR<"CgNhc3ISAmVuGgA%3D">;
+	3: T_D32<1>;
+	6: T_D32<0>;
+	7: T_D32<1>;
+	8: T_D32<0>;
 };
 type P_continuation_request_reel_watch_sequence_token={
 	3: {
-		1: T_VSR<"RqmS9CSMkxA">,
-		3: T_D32<10>,
-		4: T_D32<2>,
-		6: T_VW_Bigint<3749702744313588453n>
-	},
+		1: T_VSR<"RqmS9CSMkxA">;
+		3: T_D32<10>;
+		4: T_D32<2>;
+		6: T_VW_Bigint<3749702744313588453n>;
+	};
 	5: {
-		3: T_D32<15>
-	},
-	8: {},
-	12: T_VSR<"RDSH">,
+		3: T_D32<15>;
+	};
+	8: {};
+	12: T_VSR<"RDSH">;
 	15: {
-		1: T_D32<11>,
-		3: T_D32<11>,
+		1: T_D32<11>;
+		3: T_D32<11>;
 		6: {
-			1: T_VSR<"RqmS9CSMkxA">,
+			1: T_VSR<"RqmS9CSMkxA">;
 			2: {
-				6: T_D32<26>
-			},
+				6: T_D32<26>;
+			};
 			3: {
-				1: T_D32<1668653213>,
-				2: T_D32<485233000>
-			},
+				1: T_D32<1668653213>;
+				2: T_D32<485233000>;
+			};
 			4: {
-				1: T_D32<1669690989>
-			},
+				1: T_D32<1669690989>;
+			};
 			5: {
-				1: T_D32<13>,
-				2: T_D32<2>
-			},
+				1: T_D32<13>;
+				2: T_D32<2>;
+			};
 			6: {
 				1: {
-					1: T_D32<970>,
-					2: T_D32<1>
-				}
-			},
+					1: T_D32<970>;
+					2: T_D32<1>;
+				};
+			};
 			7: {
 				1: {
-					1: T_D32<1288>
-				}
-			},
+					1: T_D32<1288>;
+				};
+			};
 			8: {
 				1: {
-					1: T_D32<204>
-				},
-				2: T_D32<2>
-			},
+					1: T_D32<204>;
+				};
+				2: T_D32<2>;
+			};
 			9: {
 				1: {
-					1: T_D32<205>
-				},
-				2: T_D32<2>
-			},
+					1: T_D32<205>;
+				};
+				2: T_D32<2>;
+			};
 			10: {
 				1: {
-					1: T_D32<204>
-				},
-				2: T_D32<2>
-			},
+					1: T_D32<204>;
+				};
+				2: T_D32<2>;
+			};
 			11: {
 				2: {
-					1: T_D32<1>
-				}
-			}
-		}
-	}
+					1: T_D32<1>;
+				};
+			};
+		};
+	};
 };
 type P_reel_sequence_params={
-	1: T_VSR<"ss-I6WAiMFA">,
+	1: T_VSR<string>;
 	5: {
-		3: T_D32<12>
-	}
+		3: T_D32<12>;
+	};
 };
 type P_get_pdg_buy_flow_params={
 	1: {
-		1: T_VSR<"jsuDKlNI0uw">,
-		2: T_VSR<"UCAMMArn7VSN6NvEmkKO_9Lw">,
-		3: T_D32<1>
-	}
+		1: T_VSR<string>;
+		2: T_VSR<`UC${string}`>;
+		3: T_D32<1>;
+	};
 };
