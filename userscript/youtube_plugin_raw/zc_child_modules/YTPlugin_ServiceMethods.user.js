@@ -6918,7 +6918,7 @@ class ServiceMethods extends ServiceData {
 			if(!this.str_starts_with_rx("UC",sa)) return [false,null];
 			/** @returns {`UC${string}`} */
 			function wx() {return "UC";}
-			let [cid,fe]=split_string_once_last(sa,"featured",wx()); if(fe!=="") debugger;
+			let [cid,fe]=split_string_once_last(sa,ll,wx()); if(fe!=="") debugger;
 			return [true,[1,sa,cid,ll]];
 		}
 		return [false,null];
