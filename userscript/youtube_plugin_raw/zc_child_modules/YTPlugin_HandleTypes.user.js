@@ -929,7 +929,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="DataResponsePageType";
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
-			case "browse": return this.RS_Page_Browse(x);
+			case "browse": return this.support_RS_Page_Browse.RS_Page_Browse(x);
 			case "watch": return this.support_RS_WatchPage.RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
