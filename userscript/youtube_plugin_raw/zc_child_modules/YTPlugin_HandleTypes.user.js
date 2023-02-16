@@ -2022,7 +2022,10 @@ class HandleTypes extends ServiceMethods {
 				return this.convert_arr_to_obj([otu]);
 			}
 			if(otu[0]==="raw") {
-				return `TYPE::["raw",${otu[1]}]`;
+				switch(otu[1][0]) {
+					case "string": return `TYPE::T_VW_R<"string","${otu[1][1]}">`;
+				}
+				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
 			}
 			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
 			let ota=obj;
