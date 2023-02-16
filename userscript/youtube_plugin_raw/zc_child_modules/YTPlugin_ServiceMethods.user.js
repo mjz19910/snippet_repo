@@ -6080,6 +6080,18 @@ class ServiceMethods extends ServiceData {
 		if("metadataRowRenderer" in x) return this.R_MetadataRow(x);
 		if("richMetadataRowRenderer" in x) return this.R_RichMetadataRow(x);
 	}
+	/**
+	 * @private
+	 * @arg {D_EmojiImage} x
+	 * This might be D_Thumbnail, if the optional properties match,
+	 * use that instead of repeating the code
+	 * */
+	D_EmojiImage(x) {
+		const cf="D_EmojiImage"; this.k(cf,x);
+		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Accessibility(accessibility);
+		this.z(thumbnails,this.D_ThumbnailItem);
+	}
 	/** @private @arg {D_CustomEmoji} x */
 	D_CustomEmoji(x) {this.g(this.D_CustomEmoji_Omit("D_CustomEmoji",x));}
 	/** @public @template {D_CustomEmoji|D_LiveChatEmoji} T @arg {CF_D_CustomEmoji} cf @arg {T} x */

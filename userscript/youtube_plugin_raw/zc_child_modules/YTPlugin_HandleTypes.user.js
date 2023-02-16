@@ -2853,18 +2853,6 @@ class HandleTypes extends ServiceMethods {
 		let [ls,w]=split_string_once_last(fs[1],":",null); if(w!=="") debugger;
 		return ls;
 	}
-	/**
-	 * @private
-	 * @arg {D_EmojiImage} x
-	 * This might be D_Thumbnail, if the optional properties match,
-	 * use that instead of repeating the code
-	 * */
-	D_EmojiImage(x) {
-		const cf="D_EmojiImage"; this.k(cf,x);
-		const {accessibility,thumbnails,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Accessibility(accessibility);
-		this.z(thumbnails,this.D_ThumbnailItem);
-	}
 	/** @private @arg {D_C4TabbedHeader} x */
 	D_C4TabbedHeader(x) {
 		const cf="D_C4TabbedHeader"; this.k(cf,x);
