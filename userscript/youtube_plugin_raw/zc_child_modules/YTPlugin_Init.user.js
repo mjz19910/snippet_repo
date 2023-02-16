@@ -22,5 +22,14 @@ x: {
 		console.log("missing ServiceLoaderPlugin");
 		break x;
 	}
+	const ss=store.mod$SupportService;
+	if(!ss) {
+		console.log("missing SupportService");
+		break x;
+	}
+	if(ss.Support_RS_Player) {
+		console.log("missing SupportService.Support_RS_Player");
+		break x;
+	}
 	bs.yt_plugin_base_main();
 }
