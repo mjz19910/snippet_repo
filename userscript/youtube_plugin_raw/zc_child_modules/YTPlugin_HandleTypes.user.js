@@ -460,9 +460,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {G_ChatItem} x */
 	G_ChatItem(x) {
 		const cf="G_ChatItem";
-		if("liveChatTextMessageRenderer" in x) return;
-		if("liveChatPlaceholderItemRenderer" in x) return;
-		if("liveChatViewerEngagementMessageRenderer" in x) return;
+		if("liveChatTextMessageRenderer" in x) return this.R_LiveChatTextMessage(x);
+		if("liveChatPlaceholderItemRenderer" in x) return this.R_LiveChatPlaceholderItem(x);
+		if("liveChatViewerEngagementMessageRenderer" in x) return this.R_LiveChatViewerEngagementMessage(x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	//#endregion
 	//#region helpers
@@ -3469,6 +3470,12 @@ class HandleTypes extends ServiceMethods {
 	R_DynamicReadaheadConfig(x) {x;}
 	/** @public @arg {D_WebPlayerConfig} x */
 	D_WebPlayerConfig(x) {x;}
+	/** @public @arg {R_LiveChatTextMessage} x */
+	R_LiveChatTextMessage(x) {x;}
+	/** @public @arg {R_LiveChatPlaceholderItem} x */
+	R_LiveChatPlaceholderItem(x) {x;}
+	/** @public @arg {R_LiveChatViewerEngagementMessage} x */
+	R_LiveChatViewerEngagementMessage(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

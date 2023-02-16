@@ -979,15 +979,17 @@ class ServiceMethods extends ServiceData {
 		let r=x[hk];
 		return r;
 	}
+	k=this.save_keys;
+	ks=this.k;
 	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
-		const cf="D_EndscreenElement_EP";
+		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
 		if("browseEndpoint" in x) return this.E_VE3611(x);
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
-		debugger;
+		x===""; this.codegen_typedef(cf,x);
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
@@ -2736,7 +2738,6 @@ class ServiceMethods extends ServiceData {
 		let num=as(this.parse_number(x));
 		return num;
 	}
-	k=this.save_keys;
 	/** @api @public @template {{}} T @arg {CF_M_s} cf @arg {T} x */
 	s(cf,x) {
 		if(!x) debugger;
@@ -4641,7 +4642,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_EngagementPanelSectionList} x */
 	D_EngagementPanelSectionList(x) {
-		const cf="D_EngagementPanelSectionList";
+		const cf="D_EngagementPanelSectionList"; this.ks(cf,x);
 		if("veType" in x) {
 			switch(x.veType) {
 				default: debugger; break;
@@ -4653,7 +4654,8 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		this.G_SI_DB_EngagementPanel(x);
+		if("targetId" in x) return this.G_SI_DB_EngagementPanel(x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_ThumbnailsList} x */
 	D_ThumbnailsList(x) {
