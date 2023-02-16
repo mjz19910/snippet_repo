@@ -2449,14 +2449,6 @@ class HandleTypes extends ServiceMethods {
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @public @template T @arg {TR_MP_MenuSection<T>} x */
 	TR_MP_MenuSection(x) {return x.multiPageMenuSectionRenderer;}
-	/** @public @arg {D_NotificationMenuPopupMenuItem} x */
-	D_NotificationMenuPopupMenuItem(x) {
-		const cf="D_NotificationMenuPopupMenuItem"; this.k(cf,x);
-		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-		if(showLoadingSpinner!==true) debugger;
-	}
 	/** @private @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe"; this.k(cf,x);

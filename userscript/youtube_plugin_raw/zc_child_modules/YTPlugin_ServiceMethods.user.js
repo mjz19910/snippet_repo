@@ -6591,6 +6591,14 @@ class ServiceMethods extends ServiceData {
 		this.a_primitive_str(tooltip);
 		return y;
 	}
+	/** @public @arg {D_NotificationMenuPopupMenuItem} x */
+	D_NotificationMenuPopupMenuItem(x) {
+		const cf="D_NotificationMenuPopupMenuItem"; this.k(cf,x);
+		const {trackingParams,style,showLoadingSpinner,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		if(showLoadingSpinner!==true) debugger;
+	}
 	/** @private @arg {Signal_GetNotificationsMenu} x */
 	Signal_GetNotificationsMenu(x) {
 		const cf="Signal_GetNotificationsMenu";
