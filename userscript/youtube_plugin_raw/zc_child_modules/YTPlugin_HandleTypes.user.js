@@ -2164,33 +2164,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
-	/** @private @arg {DC_SectionList_BrowseFeed_Subscriptions} x */
-	D_SectionList_BrowseFeed_Subscriptions(x) {
-		const cf="D_SectionList_BrowseFeed_Subscriptions"; this.k(cf,x);
-		const {contents,trackingParams,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		});
-		this.trackingParams(trackingParams);
-		if(targetId!=="browse-feedFEsubscriptions") debugger;
-	}
-	/** @private @arg {DC_SectionList_BrowseFeed_History} x */
-	D_SectionList_BrowseFeed_History(x) {
-		const cf="D_SectionList_BrowseFeed_History"; this.k(cf,x);
-		const {contents,trackingParams,header,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,x => {
-			if("itemSectionRenderer" in x) return this.TR_SectionListItem_3_Empty(x);
-			if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-			if("musicCarouselShelfRenderer" in x) return this.R_MusicCarouselShelf(x);
-			if("musicShelfRenderer" in x) return this.R_MusicShelf(x);
-		});
-		this.R_TextHeader(header);
-		this.trackingParams(trackingParams);
-		if(targetId!=="browse-feedFEhistory") debugger;
-	}
 	/** @private @arg {D_TextHeader} x */
 	D_TextHeader(x) {
 		const cf="D_TextHeader";
