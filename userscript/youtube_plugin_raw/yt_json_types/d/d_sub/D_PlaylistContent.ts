@@ -1,4 +1,26 @@
 type D_PlaylistContent={
+	title: "Watch Later";
+	contents: R_PlaylistPanelVideo[];
+	currentIndex: 0;
+	playlistId: string;
+	totalVideos: 1;
+	ownerName: G_Text;
+	isInfinite: false;
+	shortBylineText: G_Text;
+	longBylineText: G_Text;
+	totalVideosText: G_Text;
+	trackingParams: string;
+	titleText: G_Text;
+	isEditable: true;
+	endpoint: E_VE5754;
+	localCurrentIndex: 0;
+	playlistButtons: R_Menu;
+	badges: RMD_Badge[];
+	videoCountText: G_Text;
+	onReorderEndpoint: E_PlaylistEdit;
+	isCourse: false;
+	nextVideoLabel: G_Text;
+}|{
 	title: "Abyss Soul Lotus OSTs";
 	contents: R_PlaylistPanelVideo[];
 	currentIndex: number;
