@@ -27,7 +27,7 @@ x: {
 		console.log("missing SupportService");
 		break x;
 	}
-	if(ss.Support_RS_Player) {
+	if(!ss.Support_RS_Player) {
 		console.log("missing SupportService.Support_RS_Player");
 		break x;
 	}
