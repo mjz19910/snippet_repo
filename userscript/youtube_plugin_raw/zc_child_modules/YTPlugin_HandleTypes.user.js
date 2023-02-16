@@ -2030,9 +2030,9 @@ class HandleTypes extends ServiceMethods {
 			}
 			if(otu[0]==="data64") {
 				if(otu.length===3) {
-					return ["raw",["bigint",otu[2]]];
+					return `TYPE::T_VW_Bigint<${otu[2]}n>`;
 				}
-				return ["raw",["bigint",otu[3]]];
+				return this.convert_arr_to_obj([otu]);
 			}
 			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
 			let ota=obj;
