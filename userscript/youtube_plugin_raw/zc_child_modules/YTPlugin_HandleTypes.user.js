@@ -4484,25 +4484,29 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
+	decode_binary_object_log_info(cf,x) {
+		this.continuation_logged_str.push(cf);
+		const n_cf=`P_${cf.replaceAll(".","_")}`;
+		this.codegen_typedef_bin(n_cf,x,false);
+		let str_arr=[""];
+		/** @arg {string} code */
+		function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
+		let pad=1;
+		ap(`case "${cf}": {`);
+		pad+=1;
+		ap(`/** @type {${n_cf}} */`);
+		ap("let u=as_any(x);");
+		ap(`this.${n_cf}(u);`);
+		pad-=1;
+		ap(`} break;`);
+		console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
+	}
+	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	decode_binary_object(cf,x) {
 		switch(cf) {
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
-				this.continuation_logged_str.push(cf);
-				const n_cf=`P_${cf.replaceAll(".","_")}`;
-				this.codegen_typedef_bin(n_cf,x,false);
-				let str_arr=[""];
-				/** @arg {string} code */
-				function ap(code) {str_arr.push(`${"\t".repeat(pad)}${code}`);}
-				let pad=1;
-				ap(`case "${cf}": {`);
-				pad+=1;
-				ap(`/** @type {${n_cf}} */`);
-				ap("let u=as_any(x);");
-				ap(`this.${n_cf}(u);`);
-				pad-=1;
-				ap(`} break;`);
-				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
+				this.decode_binary_object_log_info(cf,x);
 				debugger;
 			} break;
 			case "reel.player_params": {
