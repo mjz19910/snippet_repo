@@ -616,6 +616,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ResetChannelUnreadCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_ShowReelsCommentsOverlay";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:C_UpdateToggleButtonState";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_PerformCommentAction";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_ShowEngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:E_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_Endpoint_2:a";}
@@ -847,6 +848,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_ResetChannelUnreadCount";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_ShowReelsCommentsOverlay";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "C_UpdateToggleButtonState";}
+		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_PerformCommentAction";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_ShowEngagementPanel";}
 		|{n: Prelude.CF_TE_Endpoint_2; t: Types.CF_TE_Endpoint_2_; v: "E_YpcGetOfflineUpsell";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "C_GetPdgBuyFlow";}

@@ -4103,7 +4103,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @protected @arg {E_PerformCommentAction} x */
-	E_PerformCommentAction(x) {const [a,y]=this.TE_Endpoint_2("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.g(a);}
+	E_PerformCommentAction(x) {this.H_("E_PerformCommentAction","performCommentActionEndpoint",x,this.g);}
 	/** @private @arg {DS_CreatePlaylist} x */
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist";
