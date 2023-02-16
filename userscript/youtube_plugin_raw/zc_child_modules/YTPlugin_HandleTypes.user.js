@@ -4372,7 +4372,10 @@ class HandleTypes extends ServiceMethods {
 		const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
 		this.save_number(`${cf}.f1`,f1);
 		this.a_primitive_num(f2);
-		if(f3!==1) debugger;
+		switch(f3) {
+			default: this.codegen_typedef_bin(cf,x); debugger; break;
+			case 1: case 3:
+		}
 		this.V_BinaryTimestamp(f4);
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
