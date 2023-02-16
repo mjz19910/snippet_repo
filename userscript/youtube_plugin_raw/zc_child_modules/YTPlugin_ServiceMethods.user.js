@@ -1071,7 +1071,12 @@ class ServiceMethods extends ServiceData {
 				case "child": {
 					let [n,id,a,b]=v;
 					if(b===null) {
-						res_obj[id]=[n,a,b];
+						let decoded_string=this._decoder.decode(a);
+						if(a[0]===0) {
+							debugger;
+							continue;
+						}
+						res_obj[id]=["raw",["string",decoded_string]];
 						continue;
 					}
 					res_obj[id]=[n,a,this.convert_arr_to_obj(b)];

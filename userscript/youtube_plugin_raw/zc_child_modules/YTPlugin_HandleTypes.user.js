@@ -2145,11 +2145,11 @@ class HandleTypes extends ServiceMethods {
 				console.log(`\ncase "${cf}":`);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x);
 			} break;
-			// case "tracking.params": {
-			// 	/** @type {R_TrackingObj} */
-			// 	let u=as_any(x);
-			// 	this.R_TrackingObj(u);
-			// } break;
+			case "tracking.click_tracking_params": {
+			/** @type {R_ClickTrackingObj} */
+				let u=as_any(x);
+				this.R_ClickTrackingObj(u);
+			} break;
 			case "tracking.params": {
 				/** @type {P_tracking_params} */
 				let u=as_any(x);
@@ -2219,11 +2219,6 @@ class HandleTypes extends ServiceMethods {
 			// 	let u=as_any(x);
 			// 	this.R_GetPgdBuyFlow(u);
 			// } break;
-			// case "tracking.click_tracking_params": {
-			// 	/** @type {R_ClickTrackingObj} */
-			// 	let u=as_any(x);
-			// 	this.R_ClickTrackingObj(u);
-			// } break;
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
@@ -2248,59 +2243,21 @@ class HandleTypes extends ServiceMethods {
 		if(!dec) {debugger; return;}
 		this.decode_continuation_token_dec_arr(cf,dec);
 	}
-	/** @private @arg {V_VeDescObj} x */
+	/** @protected @arg {V_VeDescObj} x */
 	V_VeDescObj(x) {
 		const cf="V_VeDescObj";
 		const {1: [f1],2: [f2],...y}=x; this.g(y);
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
-	/** @private @arg {Extract<R_ClickTrackingObj,{6:any}>[6][0]} x */
-	R_ClickTrackingObj_v_f6(x) {this.save_string("R_ClickTrackingObj_v_f6",x);}
-	/** @private @arg {R_ClickTrackingObj_t1} x */
-	R_ClickTrackingObj_t1(x) {
-		const cf="R_ClickTrackingObj_t1";
-		const {1: [f1],2: [f2],4: [f4],...u}=x;
-		this.save_number(`${cf}.f1`,f1);
-		this.V_BinaryTimestamp(f4);
-		if(19 in u) {
-			const {6: [f6],9: [f9],19: [f19],...z}=u;
-			this.R_ClickTrackingObj_v_f6(f6);
-			switch(f6) {
-				default: debugger; f6===""; break;
-				case "endscreen":
-				case "related":
-				case "related-auto":
-			}
-			this._primitive_of(f9,"bigint");
-			this.V_VeDescObj(f19);
-			if(3 in z) {
-				const {3: [f3],...y}=z; this.g(y);
-				this.save_number(`${cf}.f3`,f3);
-				return;
-			}
-			this.g(z);
-			return;
-		}
-		if(3 in u) {
-			const {3: [f3],...z}=u;
-			this.a_primitive_num(f2);
-			this.save_number(`${cf}.f3`,f3);
-			if(9 in z) {const {9: [f9],...y}=z; this.g(y); return this._primitive_of(f9,"bigint");}
-			if(6 in z) {const {6: [f6],...y}=z; this.g(y); return this.R_ClickTrackingObj_v_f6(f6);}
-			return this.g(z);
-		}
-		if(6 in u) {const {6: [f6],...y}=u; this.g(y); return this.R_ClickTrackingObj_v_f6(f6);}
-		this.g(u);
-	}
 	/** @protected @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj"; this.k(cf,x);
-		if(1 in x) return this.R_ClickTrackingObj_t1(x);
-		const {4: [f4],...u}=x;
+		const {4: [,,f4],...u}=x;
+		debugger;
 		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
-			const {6: [f6],...y}=u; this.g(y);
+			const {6: [,,f6],...y}=u; this.g(y);
 			if(f6!=="external") debugger;
 			return;
 		}
