@@ -2173,6 +2173,10 @@ class HandleTypes extends ServiceMethods {
 				let sp=split_string(url,"/");
 				switch(sp.length) {
 					default: debugger; break;
+					case 2: {
+						if(!sp[1].startsWith("@")) debugger;
+						if(sp[0]!=="") debugger;
+					} break;
 					case 3: {
 						let [f1,f2,f3]=sp;
 						if(f1!=="") debugger;
