@@ -2104,12 +2104,10 @@ class HandleTypes extends ServiceMethods {
 				let gen=this.cg.codegen_case_cache(`${cf}.host_partition`,ap);
 				if(gen.has) break;
 				console.log(`-- [js_gen_case:${cf}.host_partition] --\n\n${this.cg.codegen_case_ret(gen)}`);
+				debugger;
 			}; break;
-			case "n4v7s":
 			case "nx57y":
-			case "o097z":
 			case "nx5s7":
-			case "9gv7l":
 		}
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
 		x: {
