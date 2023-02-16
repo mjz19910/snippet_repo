@@ -805,6 +805,7 @@ export namespace Gen {
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "continuation_request.watch_next.token";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_backstage_post.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_comment.params";}
+		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "create_playlist.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "dislike.params";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity.key";}
 		|{n: Prelude.P_ParamParse; t: Types.P_ParamParse_; v: "entity_key.normal";}

@@ -17,11 +17,6 @@ type P_param_known_like_paths=[
 	"f6",
 	"f7"
 ][number];
-type P_param_known_service=
-	|"service$create_playlist.f1"
-	|"service$create_playlist"
-	;
-;
 type P_param_tracking<T extends string="tracking">=[
 	`${T}.parentTrackingParams`,
 	`${T}.trackingParams.f1`,

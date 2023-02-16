@@ -4454,11 +4454,6 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_continuation_request_browse_token(u);
 			} break;
-			case "service$create_playlist": {
-				/** @type {P_service_create_playlist} */
-				let u=as_any(x);
-				this.P_service_create_playlist(u);
-			} break;
 			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
 				/** @type {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} */
 				let u=as_any(x);
@@ -4482,25 +4477,11 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
-	P_ad_layout_ad_serving_data_entry(x) {
-		const cf="P_ad_layout_ad_serving_data_entry";
-		this.codegen_typedef_bin(cf,x,false);
-	}
+	P_ad_layout_ad_serving_data_entry(x) {x;}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
-	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
-		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
-		this.codegen_typedef_bin(cf,x,false);
-	}
-	/** @private @arg {P_service_create_playlist} x */
-	P_service_create_playlist(x) {
-		const cf="P_service_create_playlist";
-		this.codegen_typedef_bin(cf,x,false);
-	}
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
 	/** @private @arg {P_continuation_request_browse_token} x */
-	P_continuation_request_browse_token(x) {
-		const cf="P_continuation_request_browse_token";
-		this.codegen_typedef_bin(cf,x,false);
-	}
+	P_continuation_request_browse_token(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

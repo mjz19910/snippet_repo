@@ -4106,7 +4106,7 @@ class ServiceMethods extends ServiceData {
 	DS_CreatePlaylist(x) {
 		const cf="DS_CreatePlaylist"; this.k(cf,x);
 		const {params,videoIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(params,x => this.params("service$create_playlist",x));
+		this.t(params,x => this.params("create_playlist.params",x));
 		this.z(videoIds,this.videoId);
 	}
 	/** @private @arg {GM_CreatePlaylist} x */
