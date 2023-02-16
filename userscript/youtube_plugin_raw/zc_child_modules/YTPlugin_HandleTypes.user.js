@@ -679,16 +679,10 @@ class HandleTypes extends ServiceMethods {
 	R_ChannelHeaderLinks(x) {this.H_("R_ChannelHeaderLinks","channelHeaderLinksRenderer",x,this.D_ChannelHeaderLinks);}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
-	/** @public @arg {R_VideoOwner} x */
-	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {R_TextInputFormField} x */
 	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
 	/** @private @arg {R_Dropdown} x */
 	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
-	/** @public @arg {R_TopicLink} x */
-	R_TopicLink(x) {this.H_("R_TopicLink","topicLinkRenderer",x,this.D_TopicLink);}
-	/** @public @arg {R_CarouselLockup} x */
-	R_CarouselLockup(x) {this.H_("R_CarouselLockup","carouselLockupRenderer",x,this.D_CarouselLockup);}
 	/** @public @arg {R_RichListHeader} x */
 	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
 	/** @public @arg {R_MacroMarkersListItem} x */

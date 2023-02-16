@@ -5416,6 +5416,8 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(dateText);
 		this.G_Text(relativeDateText);
 	}
+	/** @public @arg {R_VideoOwner} x */
+	R_VideoOwner(x) {this.H_("R_VideoOwner","videoOwnerRenderer",x,this.D_VideoOwner);}
 	/** @private @arg {D_VideoSecondaryInfo} x */
 	D_VideoSecondaryInfo(x) {
 		const cf="D_VideoSecondaryInfo";
@@ -5998,6 +6000,10 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(label);
 		this.a_primitive_str(accessibilityText);
 	}
+	/** @public @arg {R_TopicLink} x */
+	R_TopicLink(x) {this.H_("R_TopicLink","topicLinkRenderer",x,this.D_TopicLink);}
+	/** @public @arg {R_CarouselLockup} x */
+	R_CarouselLockup(x) {this.H_("R_CarouselLockup","carouselLockupRenderer",x,this.D_CarouselLockup);}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {
 		const cf="D_VideoDescriptionMusicSection";
