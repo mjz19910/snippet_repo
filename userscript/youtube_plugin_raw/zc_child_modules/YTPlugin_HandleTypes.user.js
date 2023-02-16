@@ -218,34 +218,6 @@ class HandleTypes extends ServiceMethods {
 		if("guideSectionRenderer" in x) return this.R_GuideSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_RS_Page_Settings} x */
-	G_RS_Page_Settings(x) {
-		const cf="R_SettingsPage";
-		if("rootVe" in x) return this.RS_VE23462_Page_Settings(x);
-		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="settings") debugger;
-		debugger;
-		this.RS_Settings(response);
-		this.a_primitive_str(url);
-	}
-	/** @private @arg {G_RS_Page_Playlist} x */
-	G_RS_Page_Playlist(x) {
-		const cf="R_PlaylistPage";
-		const {url,endpoint,page,response,...y}=this.s(cf,x);
-		if(page!=="playlist") debugger;
-		debugger;
-		this.RS_Playlist(response);
-		this.a_primitive_str(url);
-		if("rootVe" in y) {
-			const {rootVe,...u}=this.s(cf,y); this.g(u);/*#destructure_done*/
-			switch(rootVe) {
-				default: debugger; break;
-				case 5754: break;
-			}
-			return;
-		}
-		this.g(y);
-	}
 	/** @private @arg {RS_VE23462_Page_Settings} x */
 	RS_VE23462_Page_Settings(x) {
 		const cf="Settings_VE23462";
@@ -270,21 +242,6 @@ class HandleTypes extends ServiceMethods {
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
-	}
-	/** @private @arg {G_RS_Page_Shorts} x */
-	G_RS_Page_Shorts(x) {
-		const cf="RS_ShortsPage";
-		if("rootVe" in x) return this.RS_VE37414_Shorts(x);
-		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,previousCsn,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="shorts") debugger;
-		this.E_ReelWatch(endpoint);
-		this.RS_Reel(response);
-		this.support_RS_Player.RS_Player(playerResponse);
-		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
-		if(url.includes("&")) debugger;
-		this.t(previousCsn,x => this.D_VeCsn(x,true));
-		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
 	}
 	/** @private @arg {G_RS_Subscribe_Action} x */
 	G_RS_Subscribe_Action(x) {
@@ -1492,109 +1449,6 @@ class HandleTypes extends ServiceMethods {
 		} else {
 			console.log("[csn_dec]",csn_dec);
 		}
-	}
-	/** @private @arg {RS_Page_Channel} x */
-	RS_Page_Channel(x) {
-		const cf="RS_Page_Channel";
-		if("rootVe" in x) {
-			const {url,endpoint,page,response,...u}=this.s(cf,x);/*#destructure_done*/
-			{
-				let sp=split_string(url,"/");
-				switch(sp.length) {
-					default: debugger; break;
-					case 2: {
-						if(!sp[1].startsWith("@")) debugger;
-						if(sp[0]!=="") debugger;
-					} break;
-					case 3: {
-						let [f1,f2,f3]=sp;
-						if(f1!=="") debugger;
-						if(!f2.startsWith("@")) debugger;
-						if(this.str_is_search(f3)) {
-							let [p,s]=split_string_once(f3,"?");
-							if(p!=="search") debugger;
-							let {query,...y}=this.parse_url_search_params(s); this.g(y);
-							this.a_primitive_str(query);
-							return;
-						}
-						switch(f3) {
-							default: debugger; break;
-							case "videos": case "playlists": case "community": case "channels":
-						}
-					}
-				}
-			}
-			this.E_VE3611(endpoint);
-			this.RS_Channel(response);
-			const {rootVe,expirationTime,csn,...y}=u; this.g(y);
-			this._primitive_of(expirationTime,"number");
-			if(rootVe!==3611) debugger;
-			this.t(csn,this.D_VeCsn);
-			return;
-		}
-		if("csn" in x) {
-			const {...u}=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			const {csn,expirationTime,graftedVes,...y}=u; this.g(y);
-			this.D_VeCsn(csn);
-			this.z(graftedVes,this.D_GraftedVeItem);
-			this._primitive_of(expirationTime,"number");
-			return;
-		}
-		if("expirationTime" in x&&"previousCsn" in x) {
-			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			const {previousCsn,expirationTime,...y}=u; this.g(y);
-			this.D_VeCsn(previousCsn,true);
-			this._primitive_of(expirationTime,"number");
-			return;
-		}
-		if("expirationTime" in x) {
-			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);
-			if(page!=="channel") debugger;
-			this.E_VE3611(endpoint);
-			this.RS_Channel(response);
-			{
-				let sp=split_string(url,"/");
-				switch(sp.length) {
-					default: debugger; break;
-					case 2: {
-						if(!sp[1].startsWith("@")) debugger;
-						if(sp[0]!=="") debugger;
-					} break;
-					case 3: {
-						let [f1,f2,f3]=sp;
-						if(f1!=="") debugger;
-						if(!f2.startsWith("@")) debugger;
-						if(this.str_is_search(f3)) {
-							let [p,s]=split_string_once(f3,"?");
-							if(p!=="search") debugger;
-							let {query,...y}=this.parse_url_search_params(s); this.g(y);
-							this.a_primitive_str(query);
-							return;
-						}
-						switch(f3) {
-							default: debugger; break;
-							case "shorts": case "videos": case "playlists": case "search":
-						}
-					}
-				}
-			}
-			this._primitive_of(expirationTime,"number");
-			return;
-		}
-		{
-			const u=this.RS_Page_Channel_Omit(cf,x);/*#destructure_done*/
-			this.g(u);
-		}
-	}
-	/** @private @arg {RS_Page_Search} x */
-	RS_Page_Search(x) {
-		const cf="RS_SearchPage";
-		const {page,endpoint,response,url,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(page!=="search") debugger;
-		this.E_VE4724_Search(endpoint);
-		this.RS_Search(response);
-		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
-		if(url.includes("&")) debugger;
 	}
 	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
