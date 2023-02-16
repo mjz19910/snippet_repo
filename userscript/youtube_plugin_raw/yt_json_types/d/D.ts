@@ -2059,20 +2059,6 @@ type D_MacroMarkersList={
 	trackingParams: string;
 };
 type D_VideoLike_richThumbnail=R_MovingThumbnail;
-type D_MenuNavigationItem=
-	|{
-		text: G_Text;
-		icon: T_Icon<"INFO">;
-		navigationEndpoint: TA_OpenPopup_Empty;
-		trackingParams: string;
-	}
-	|{
-		text: G_Text;
-		icon: T_Icon<"FEEDBACK">;
-		navigationEndpoint: E_UserFeedback;
-		trackingParams: string;
-		accessibility: TD_Accessibility<"Send feedback">;
-	};
 type D_MenuServiceIcon={icon: T_Icon<"FLAG">;};
 type D_MenuServiceIconTypeStr=[
 	"SUBTITLES",
