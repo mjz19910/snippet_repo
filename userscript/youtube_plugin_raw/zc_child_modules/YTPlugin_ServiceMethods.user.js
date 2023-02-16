@@ -236,7 +236,8 @@ class ServiceMethods extends ServiceData {
 				} break;
 				case "ACTION_COPY_FROM_PLAYLIST": {
 					const cf="A_COPY_FROM_PLAYLIST";
-					const {action: {},...y}=this.s(cf,x); this.g(y);
+					const {action: {},sourcePlaylistId,...y}=this.s(cf,x); this.g(y);
+					this.playlistId(sourcePlaylistId);
 				} break;
 				default: debugger; break;
 			}
