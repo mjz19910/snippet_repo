@@ -1031,6 +1031,13 @@ class Support_GenericApi extends ServiceMethods {
 	}
 	/** @private @arg {R_SimpleMenuHeader} x */
 	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
+	/** @private @arg {D_SimpleMenuHeader} x */
+	D_SimpleMenuHeader(x) {
+		const cf="D_SimpleMenuHeader";
+		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.z(buttons,this.R_Button);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

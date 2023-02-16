@@ -881,13 +881,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
-	/** @private @arg {D_SimpleMenuHeader} x */
-	D_SimpleMenuHeader(x) {
-		const cf="D_SimpleMenuHeader";
-		const {title,buttons,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.z(buttons,this.R_Button);
-	}
 	/** @private @arg {string} x */
 	RS_Next_ContextParams(x) {this.params("next.queue_context.params",x);}
 	/** @public @arg {RS_Next} x */
