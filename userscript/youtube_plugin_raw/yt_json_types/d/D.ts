@@ -3138,6 +3138,11 @@ type DMD_AdSlot={
 	slotPhysicalPosition: 0;
 };
 type DMD_Badge={
+	icon: T_Icon<"PRIVACY_PRIVATE">;
+	style: "BADGE_STYLE_TYPE_SIMPLE";
+	label: "Private";
+	trackingParams: string;
+}|{
 	style: "BADGE_STYLE_TYPE_AD";
 	label: "Ad";
 	trackingParams: string;
