@@ -37,10 +37,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	rl(cf,x) {this.k(`${cf}:omit`,x); return x;}
 	/** @arg {D_CustomEmoji['emojiId']} x */
-	parse_emoji_id(x) {
-		let eid=split_string_once(x,"/");
-		return eid;
-	}
+	parse_emoji_id(x) {return split_string_once(x,"/");}
 	/** @public @template {string} SW @arg {SW} sw @arg {["",string]} x @returns {x is ["",`${SW}${string}`]} */
 	str_starts_with_rx_in_arr(x,sw) {
 		return this.str_starts_with(x[1],sw);
