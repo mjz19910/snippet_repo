@@ -1225,7 +1225,7 @@ class Support_EventInput extends ServiceMethods {
 		const {page,endpoint,response,url,...y}=this.s(cf,x);/*#destructure_omit*/
 		if(page!=="channel") debugger;
 		debugger;
-		this.RS_Channel(response);
+		this.handle_types.RS_Channel(response);
 		this.a_primitive_str(url);
 		return y;
 	}
@@ -1287,7 +1287,7 @@ class Support_EventInput extends ServiceMethods {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);
 			if(page!=="channel") debugger;
 			this.E_VE3611(endpoint);
-			this.RS_Channel(response);
+			this.handle_types.RS_Channel(response);
 			{
 				let sp=split_string(url,"/");
 				switch(sp.length) {
@@ -1358,12 +1358,12 @@ class Support_EventInput extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.support_RS_Player.RS_Player(playerResponse);
-		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
+		this.handle_types.support_RS_Player.RS_Player(playerResponse);
+		this.t(reelWatchSequenceResponse,x => this.handle_types.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(previousCsn,x => this.D_VeCsn(x,true));
-		this.t(cachedReelWatchSequenceResponse,this.RS_ReelWatchSequence);
+		this.t(cachedReelWatchSequenceResponse,x => this.handle_types.RS_ReelWatchSequence(x));
 	}
 	/** @private @arg {RS_Page_Search} x */
 	RS_Page_Search(x) {
@@ -1397,14 +1397,14 @@ class Support_EventInput extends ServiceMethods {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
-		this.support_RS_Player.RS_Player(playerResponse);
+		this.handle_types.support_RS_Player.RS_Player(playerResponse);
 		this.E_ReelWatch(endpoint);
 		this.RS_Reel(response);
-		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
+		this.t(reelWatchSequenceResponse,x => this.handle_types.RS_ReelWatchSequence(x));
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
-		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
+		this.handle_types.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
 	/** @private @arg {RS_Reel} x */
 	RS_Reel(x) {
@@ -1424,11 +1424,11 @@ class Support_EventInput extends ServiceMethods {
 		this.R_TwoColumnBrowseResults(contents);
 		this.R_PlaylistHeader(header);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
-		this.R_Playlist_MD(metadata);
+		this.handle_types.R_Playlist_MD(metadata);
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(trackingParams);
 		this.R_Microformat(microformat);
-		this.R_PlaylistSidebar(sidebar);
+		this.handle_types.R_PlaylistSidebar(sidebar);
 	}
 	/** @private @arg {RS_Settings} x */
 	RS_Settings(x) {
@@ -1438,7 +1438,7 @@ class Support_EventInput extends ServiceMethods {
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
-		this.R_SettingsSidebar(sidebar);
+		this.handle_types.R_SettingsSidebar(sidebar);
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
