@@ -1079,6 +1079,33 @@ class Support_GenericApi extends ServiceMethods {
 	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
+	/** @private @arg {D_MP_MenuNotificationSection} x */
+	D_MP_MenuNotificationSection(x) {
+		const cf="D_MP_MenuNotificationSection";
+		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.trackingParams(trackingParams);
+		this.z(items,this.GR_MP_MenuNotificationSection_Item);
+	}
+	/** @private @arg {R_PrivacyDropdownItem} x */
+	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
+	/** @private @arg {D_PrivacyDropdownItem} x */
+	D_PrivacyDropdownItem(x) {
+		const cf="D_PrivacyDropdownItem";
+		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(label);
+		if(icon.iconType!=="PRIVACY_PUBLIC") debugger;
+		this.G_Text(description);
+		if(int32Value!==1) debugger;
+		if(isSelected!==false) debugger;
+		this.D_Label(accessibility);
+	}
+	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
+	GR_MP_MenuNotificationSection_Item(x) {
+		const cf="R_MP_MenuNotificationSection_Item";
+		if("notificationRenderer" in x) return this.R_Notification(x);
+		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

@@ -476,8 +476,6 @@ class HandleTypes extends ServiceMethods {
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
-	/** @private @arg {R_PrivacyDropdownItem} x */
-	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
 	/** @private @arg {AU_SubscribeButton} x */
@@ -597,13 +595,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(text);
 		this.R_Button(helpButton);
 		this.R_Button(dismissButton);
-	}
-	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
-	GR_MP_MenuNotificationSection_Item(x) {
-		const cf="R_MP_MenuNotificationSection_Item";
-		if("notificationRenderer" in x) return this.R_Notification(x);
-		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -860,13 +851,6 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
-	}
-	/** @private @arg {D_MP_MenuNotificationSection} x */
-	D_MP_MenuNotificationSection(x) {
-		const cf="D_MP_MenuNotificationSection";
-		const {trackingParams,items,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.trackingParams(trackingParams);
-		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
 	/** @private @arg {string} x */
 	RS_Next_ContextParams(x) {this.params("next.queue_context.params",x);}
@@ -2316,17 +2300,6 @@ class HandleTypes extends ServiceMethods {
 		this.D_ChipColorPalette(chipColorPalette);
 		if(chipIcon.iconType!=="FILL_DOLLAR_SIGN_HEART_12") debugger;
 		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_PrivacyDropdownItem} x */
-	D_PrivacyDropdownItem(x) {
-		const cf="D_PrivacyDropdownItem";
-		const {label,icon,description,int32Value,isSelected,accessibility,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(label);
-		if(icon.iconType!=="PRIVACY_PUBLIC") debugger;
-		this.G_Text(description);
-		if(int32Value!==1) debugger;
-		if(isSelected!==false) debugger;
-		this.D_Label(accessibility);
 	}
 	/** @private @arg {"DC_PlayerSeek"} cf @arg {P_ParamParse} path @arg {DC_Generic} x */
 	DC_Generic(cf,path,x) {this.y(cf,"continuation",x,x => this.params(path,x));}
