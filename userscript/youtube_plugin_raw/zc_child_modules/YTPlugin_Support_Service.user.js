@@ -1506,6 +1506,12 @@ class Support_EventInput extends ServiceMethods {
 		this.R_SectionList(content);
 		this.trackingParams(trackingParams);
 	}
+	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
+	D_Tab_Subscriptions_EP(x) {
+		const cf="D_Tab_Subscriptions_EP";
+		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

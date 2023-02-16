@@ -7334,12 +7334,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(y);
 	}
-	/** @private @arg {Extract<D_Tab,{tabIdentifier:"FEsubscriptions"}>["endpoint"]} x */
-	D_Tab_Subscriptions_EP(x) {
-		const cf="D_Tab_Subscriptions_EP";
-		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
 	/** @private @arg {D_RichGrid} x */
