@@ -4379,6 +4379,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {number} T @arg {T} t @arg {{1:T_D32<number>}} x @returns {x is {1:T_D32<T>}} */
 	is_tp_xx(x,t) {return x[1][1]===t;}
+	/** @template {number} T @arg {T} t @arg {{2:T_D32<number>}} x @returns {x is {2:T_D32<T>}} */
+	is_tp_xx_2(x,t) {return x[2][1]===t;}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {
 		const cf="P_tracking_params"; this.k(cf,x);
@@ -4389,7 +4391,7 @@ class HandleTypes extends ServiceMethods {
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
-		if(this.is_tp_xx(x,521)) {
+		if(this.is_tp_xx_2(x,6236)) {
 			return;
 		}
 		if(!x[3]) debugger;
