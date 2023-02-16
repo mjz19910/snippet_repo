@@ -988,7 +988,7 @@ type D_Emoji={
 	searchTerms: ["rolling"];
 	image: D_Thumbnail;
 };
-type D_TextRun={
+type D_TextRun=|{
 	text: string;
 }|{
 	text: string;
@@ -999,6 +999,9 @@ type D_TextRun={
 }|{
 	text: string;
 	navigationEndpoint: E_VE3611;
+}|{
+	text: "Watch Later";
+	navigationEndpoint: E_VE5754;
 }|{
 	text: "https://www.deviantart.com/zianu/art/...";
 	navigationEndpoint: E_VE83769_Url;
