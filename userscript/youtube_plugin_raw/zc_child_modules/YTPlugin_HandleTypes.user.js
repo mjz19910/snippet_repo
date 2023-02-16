@@ -1995,7 +1995,7 @@ class HandleTypes extends ServiceMethods {
 					if(obj!==null) {
 						if(1 in obj&&2 in obj&&3 in obj&&obj[1][0]==="data32") {
 							console.log("maybe_handle_bin.do_V_BinaryTimestamp",obj);
-							return ["child","TYPE::Uint8Array","TYPE::V_BinaryTimestamp"];
+							return `TYPE::T_VW_2<V_BinaryTimestamp>`;
 						}
 						console.log("maybe_handle_bin.do_obj",obj);
 						return obj;
@@ -2005,7 +2005,7 @@ class HandleTypes extends ServiceMethods {
 						console.log("[maybe_handle_bin.do_maybe_string]",decoded_string);
 						return otu;
 					}
-					return ["child","TYPE::Uint8Array",decoded_string];
+					return `TYPE::T_VW_2<"${decoded_string}">`;
 				}
 				return this.convert_arr_to_obj([otu]);
 			}
