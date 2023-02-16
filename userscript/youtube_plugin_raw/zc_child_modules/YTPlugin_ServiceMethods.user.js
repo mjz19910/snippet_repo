@@ -6876,6 +6876,10 @@ class ServiceMethods extends ServiceData {
 		});
 		this.z(x2,this.R_ConfirmDialog);
 	}
+	/** @public @arg {AD_AddToToast} x */
+	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
+	/** @public @arg {AD_ReelDismissal} x */
+	AD_ReelDismissal(x) {let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);}
 	/** @private @arg {GM_AccountMenu} x */
 	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
 	/** @private @arg {GM_GetUnseenNotificationCount} x */
@@ -7265,14 +7269,8 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {A_AddToToast} x */
 	A_AddToToast(x) {let [a,y]=this.TE_Endpoint_2("A_AddToToast","addToToastAction",x); this.g(y); this.AD_AddToToast(a);}
-	/** @public @arg {AD_AddToToast} x */
-	AD_AddToToast(x) {this.T_Item(x,this.R_NotificationText);}
 	/** @public @arg {RA_ReelDismissal} x */
 	RA_ReelDismissal(x) {this.H_("RA_ReelDismissal","reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
-	/** @public @arg {AD_ReelDismissal} x */
-	AD_ReelDismissal(x) {
-		let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);
-	}
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_("RA_NotificationMulti","notificationMultiActionRenderer",x,this.g);}
 }
