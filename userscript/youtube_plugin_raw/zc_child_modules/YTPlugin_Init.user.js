@@ -17,4 +17,10 @@ const bs=required(store["mod$YoutubePluginBase"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 export_(exports => {exports.__is_module_flag__=true;});
-bs.yt_plugin_base_main();
+x: {
+	if(store["mod$ServiceLoaderPlugin"]===void 0) {
+		console.log("missing ServiceLoaderPlugin");
+		break x;
+	}
+	bs.yt_plugin_base_main();
+}
