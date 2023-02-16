@@ -689,7 +689,7 @@ class Support_RS_Page_Browse extends ServiceMethods {
 		if("rootVe" in x) {
 			switch(x.rootVe) {
 				case 3854: {
-					const {rootVe,expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+					const {rootVe,expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 					this._primitive_of(expirationTime,"number");
 					this.save_number(`${cf}.rootVe`,rootVe);
 				} break;
@@ -698,16 +698,16 @@ class Support_RS_Page_Browse extends ServiceMethods {
 			return;
 		}
 		if("expirationTime" in x) {
-			const {expirationTime,...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+			const {expirationTime,...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 			this._primitive_of(expirationTime,"number");
 			return;
 		}
-		const {...y}=this.RS_BrowsePage_Omit(cf,x); this.g(y);
+		const {...y}=this.RS_Page_Browse_Omit(cf,x); this.g(y);
 	}
 	/** @private */
 	log_url=false;
 	/** @private @arg {"RS_Page_Browse"} cf @template {RS_Page_Browse} T @arg {T} x */
-	RS_BrowsePage_Omit(cf,x) {
+	RS_Page_Browse_Omit(cf,x) {
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		debugger;
