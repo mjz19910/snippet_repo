@@ -3178,29 +3178,7 @@ class ServiceMethods extends ServiceData {
 	/** @protected @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
 	str_starts_with(str,needle) {return this.str_starts_with_rx(needle,str);}
 	/** @private @arg {Extract<GM_All,{rootVe:any}>['rootVe']} x */
-	on_root_visual_element(x) {
-		this.ds.save_root_visual_element(x);
-		/** @private @type {`${typeof x}`} */
-		let ss=`${x}`;
-		switch(ss) {
-			case "3611": return;
-			case "3832": return;
-			case "3854": return;
-			case "4724": return;
-			case "5754": return;
-			case "6827": return;
-			case "11487": return;
-			case "23462": return;
-			case "37414": return;
-			case "83769": return;
-			case "96368": return;
-			default: {
-				/** @private @type {GM_All[]} */
-				let x=[]; x;
-			}
-		}
-		switch(ss) {default: debugger;}
-	}
+	on_root_visual_element(x) {this.ds.save_root_visual_element(x);}
 	/** @protected @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {if(!this.str_starts_with(x,"/@")) debugger;}
 	/** @protected @arg {string} x */
