@@ -386,6 +386,26 @@ class ServiceMethods extends ServiceData {
 	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @protected @arg {GM_UserFeedback} x */
 	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
+	/** @private @arg {GM_GetNotificationMenu} x */
+	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
+	/** @private @arg {GM_AccountMenu} x */
+	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
+	/** @private @arg {GM_GetUnseenNotificationCount} x */
+	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
+	/** @private @arg {GM_NotificationOptOut} x */
+	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
+	/** @private @arg {GM_FlagGetForm} x */
+	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
+	/** @private @arg {GM_Feedback} x */
+	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
+	/** @private @arg {GM_SendPost} x */
+	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
+	/** @private @arg {GM_CreatePlaylist} x */
+	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
+	/** @private @arg {GM_SetSetting} x */
+	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
+	/** @private @arg {GM_GetTranscript} x */
+	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {DE_PlaylistEdit} x */
@@ -3608,10 +3628,6 @@ class ServiceMethods extends ServiceData {
 		this.save_enum("PLAYLIST_LOOP_STATE",state);
 		this.R_Button(button);
 	}
-	/** @private @arg {GM_NotificationOptOut} x */
-	GM_NotificationOptOut(x) {this.T_GM("GM_NotificationOptOut",x,x => this.ceq(x,"/youtubei/v1/notification/opt_out"));}
-	/** @private @arg {GM_FlagGetForm} x */
-	GM_FlagGetForm(x) {this.T_GM("GM_FlagGetForm",x,x => this.ceq(x,"/youtubei/v1/flag/get_form"));}
 	/** @private @arg {R_NotificationText} x */
 	R_NotificationText(x) {this.H_("R_NotificationText","notificationTextRenderer",x,this.D_NotificationText);}
 	/** @private @arg {D_NotificationText} x */
@@ -3662,12 +3678,8 @@ class ServiceMethods extends ServiceData {
 	parse_undo_token(x) {this.save_b64_binary("undo_token",x);}
 	/** @private @arg {M_Feedback} x */
 	M_Feedback(x) {this.T_WCM("M_Feedback",x,this.GM_Feedback);}
-	/** @private @arg {GM_Feedback} x */
-	GM_Feedback(x) {this.T_GM("GM_Feedback",x,x => this.ceq(x,"/youtubei/v1/feedback"));}
 	/** @private @arg {A_UndoFeedback} x */
 	A_UndoFeedback(x) {let [a,y]=this.TE_Endpoint_2("A_UndoFeedback","undoFeedbackAction",x); this.g(y); this.B_Hack(a);}
-	/** @private @arg {GM_SendPost} x */
-	GM_SendPost(x) {if(this.w("GM_SendPost","sendPost",x)!==true) debugger;}
 	/** @protected @arg {R_ToggleButton} x */
 	R_ToggleButton(x) {this.H_("R_ToggleButton","toggleButtonRenderer",x,this.D_ToggleButton);}
 	/** @private @private @arg {any} z @template {D_ToggleButton} T @arg {CF_D_ToggleButton} cf @arg {T} x @returns {T extends infer V?Omit<V, T_Split<"trackingParams">[number]>:never} */
@@ -4173,8 +4185,6 @@ class ServiceMethods extends ServiceData {
 		this.t(params,x => this.params("create_playlist.params",x));
 		this.z(videoIds,this.videoId);
 	}
-	/** @private @arg {GM_CreatePlaylist} x */
-	GM_CreatePlaylist(x) {this.T_GM("GM_CreatePlaylist",x,x => this.ceq(x,"/youtubei/v1/playlist/create"));}
 	/** @public @arg {RC_ResponseContext} x */
 	RC_ResponseContext(x) {
 		const cf="RC_ResponseContext";
@@ -5302,8 +5312,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
-	/** @private @arg {GM_SetSetting} x */
-	GM_SetSetting(x) {this.T_GM("GM_SetSetting",x,x => this.ceq(x,"/youtubei/v1/account/set_setting"));}
 	/** @private @arg {CD_Next} x */
 	CD_Next(x) {this.y("CD_Next","nextContinuationData",x,this.D_CD_Next);}
 	/** @private @arg {R_ProductListItem} x */
@@ -5326,12 +5334,8 @@ class ServiceMethods extends ServiceData {
 	R_HotkeyDialogSection(x) {this.H_("R_HotkeyDialogSection","hotkeyDialogSectionRenderer",x,this.D_HotkeyDialogSection);}
 	/** @protected @arg {R_ContinuationItem} x */
 	R_ContinuationItem(x) {this.H_("R_ContinuationItem","continuationItemRenderer",x,this.D_ContinuationItem);}
-	/** @private @arg {GM_GetTranscript} x */
-	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {M_GetTranscript} x */
 	M_GetTranscript(x) {this.T_WCM("M_GetTranscript",x,this.GM_GetTranscript);}
-	/** @private @arg {GM_GetNotificationMenu} x */
-	GM_GetNotificationMenu(x) {this.T_GM("GM_GetNotificationMenu",x,x => this.ceq(x,"/youtubei/v1/notification/get_notification_menu"));}
 	/** @private @arg {M_GetNotificationMenu} x */
 	M_GetNotificationMenu(x) {this.T_WCM("M_GetNotificationMenu",x,this.GM_GetNotificationMenu);}
 	/** @private @arg {E_GetNotificationMenu} x */
@@ -6858,10 +6862,6 @@ class ServiceMethods extends ServiceData {
 		if(!x.watchEndpoint) debugger;
 		this.E_Watch(x);
 	}
-	/** @private @arg {GM_AccountMenu} x */
-	GM_AccountMenu(x) {this.T_GM("GM_AccountMenu",x,x => this.ceq(x,"/youtubei/v1/account/account_menu"));}
-	/** @private @arg {GM_GetUnseenNotificationCount} x */
-	GM_GetUnseenNotificationCount(x) {this.T_GM("GM_GetUnseenNotificationCount",x,x => this.ceq(x,"/youtubei/v1/notification/get_unseen_count"));}
 	/** @private @arg {R_ClipCreation} x */
 	R_ClipCreation(x) {this.H_("C_RunAttestation","clipCreationRenderer",x,this.D_ClipCreation);}
 	/** @public @arg {R_ClipCreationTextInput} x */
