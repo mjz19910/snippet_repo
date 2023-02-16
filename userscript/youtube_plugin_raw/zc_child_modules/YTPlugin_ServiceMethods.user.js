@@ -7248,8 +7248,7 @@ class ServiceMethods extends ServiceData {
 		const cf="DE_VE23462";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		switch(browseId) {
-			case "SPaccount_overview":
-			case "SPaccount_notifications":
+			case "SPaccount_overview": case "SPaccount_notifications":
 		}
 	}
 	/** @public @arg {DE_VE42352} x */
