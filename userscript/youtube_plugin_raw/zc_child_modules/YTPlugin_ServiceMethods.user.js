@@ -1031,6 +1031,7 @@ class ServiceMethods extends ServiceData {
 		this.t(style,x => {
 			switch(x) {
 				default: debugger; x===""; break;
+				case "STYLE_MONO_FILLED_OVERLAY":
 				case "STYLE_PRIMARY":
 				case "STYLE_OPACITY":
 				case "STYLE_SUGGESTIVE":
