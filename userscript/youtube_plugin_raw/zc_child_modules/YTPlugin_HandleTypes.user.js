@@ -4561,6 +4561,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_logging_context_serialized_context_data(u);
 			} break;
+			case "like.params": {
+				/** @type {P_like_params} */
+				let u=as_any(x);
+				this.P_like_params(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
