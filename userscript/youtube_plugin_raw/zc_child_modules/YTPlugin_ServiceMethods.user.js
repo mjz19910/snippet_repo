@@ -7221,7 +7221,7 @@ class ServiceMethods extends ServiceData {
 	DE_VE3611(x) {
 		const cf="DE_VE3611";
 		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		console.log("DE_VE3611.browseId",browseId);
+		this.channelId(browseId);
 	}
 	/** @public @arg {DE_VE3854} x */
 	DE_VE3854(x) {
