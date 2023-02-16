@@ -31,10 +31,10 @@ type R_ClickTrackingObj_t1={
 	4: T_VW_2<V_BinaryTimestamp>;
 	6: T_VSR<"autoplay">;
 	9: T_VW_Bigint<14961257671762767615n>;
-	19: {
+	19: T_VW_2<{
 		1: T_D32<16>;
 		2: T_D32<3832>;
-	};
+	}>;
 }|{
 	1: T_D32<242>;
 	2: T_D32<119920>;
