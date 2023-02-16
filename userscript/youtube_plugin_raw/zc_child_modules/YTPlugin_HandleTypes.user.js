@@ -1037,13 +1037,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(title);
 		this.z(items,this.R_CompactLink);
 	}
-	/** @private @template {D_CompactLink} T @arg {CF_D_Link} cf @arg {T} x */
-	D_Link_Omit(cf,x) {
-		const {title,trackingParams,...y}=this.s(cf,x);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		return y;
-	}
 	/** @private @arg {D_PdgBuyFlow} x */
 	D_PdgBuyFlow(x) {
 		const cf="D_PdgBuyFlow"; this.k(cf,x);

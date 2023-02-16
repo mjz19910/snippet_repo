@@ -5752,6 +5752,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_CompactLink} x */
 	R_CompactLink(x) {this.H_("R_CompactLink","compactLinkRenderer",x,this.D_CompactLink);}
+	/** @private @template {D_CompactLink} T @arg {CF_D_Link} cf @arg {T} x */
+	D_Link_Omit(cf,x) {
+		const {title,trackingParams,...y}=this.s(cf,x);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		return y;
+	}
 	/** @private @arg {Extract<D_CompactLink,{navigationEndpoint:any}>["navigationEndpoint"]} x */
 	D_CompactLink_NavEndpoint(x) {
 		const cf="D_CompactLink_NavEndpoint"; this.k(cf,x);
