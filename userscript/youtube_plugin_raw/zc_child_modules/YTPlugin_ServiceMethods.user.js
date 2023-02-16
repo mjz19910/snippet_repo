@@ -7220,11 +7220,13 @@ class ServiceMethods extends ServiceData {
 	DE_VE3611(x) {
 		const cf="DE_VE3611";
 		const {params,browseId,canonicalBaseUrl,query,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		console.log("DE_VE3611.browseId",browseId);
 	}
 	/** @public @arg {DE_VE3854} x */
 	DE_VE3854(x) {
 		const cf="DE_VE3854";
 		const {browseId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(browseId!=="FEwhat_to_watch") debugger;
 	}
 	/** @public @arg {DE_VE6827} x */
 	DE_VE6827(x) {
