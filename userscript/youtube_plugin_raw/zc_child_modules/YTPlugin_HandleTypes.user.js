@@ -2439,12 +2439,6 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);
 	}
-	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
-	T_Items_TP(cf,x) {
-		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
-		this.trackingParams(trackingParams);
-		return this.w_priv("items",y);
-	}
 	/** @arg {CF_T_Items} cf @template T @private @arg {T_Items<T>} x */
 	T_Items(cf,x) {return this.w(`T_Items:${cf}`,"items",x);}
 	/** @private @arg {RS_Unsubscribe} x */
