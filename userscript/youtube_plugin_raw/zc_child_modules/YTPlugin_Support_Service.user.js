@@ -382,7 +382,11 @@ class Support_RS_Player extends ServiceMethods {
 		this.z([startTimeMs,endTimeMs],this.a_primitive_str);
 		this.D_Thumbnail(watermark);
 		this.trackingParams(trackingParams);
-		debugger;
+		x: {
+			let x2=navigationEndpoint;
+			if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
+			debugger;
+		}
 		this.a_primitive_str(channelName);
 		this.R_SubscribeButton(subscribeButton);
 	}

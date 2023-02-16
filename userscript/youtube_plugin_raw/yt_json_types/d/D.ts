@@ -607,7 +607,7 @@ type D_FeaturedChannel={
 	endTimeMs: `${number}`;
 	watermark: D_Thumbnail;
 	trackingParams: string;
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: E_VE3611;
 	channelName: string;
 	subscribeButton: R_SubscribeButton;
 };
