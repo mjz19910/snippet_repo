@@ -2934,6 +2934,7 @@ class HandleRendererContentItemArray extends BaseService {
 		if("videoRenderer" in rc) return true;
 		if("radioRenderer" in rc) return true;
 		if("feedNudgeRenderer" in rc) return true;
+		if("reelItemRenderer" in rc) return true;
 		let rk=this.get_keys_of(rc);
 		console.log("[rich_item_renderer.content] [%s]",...rk);
 		{debugger;}
