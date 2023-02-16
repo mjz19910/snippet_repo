@@ -1135,19 +1135,6 @@ class HandleTypes extends ServiceMethods {
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @public @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
-	Omit_Menu_Radio(cf,x) {
-		if("adSlotMetadata" in x) {debugger; throw new Error();}
-		let u=this.D_Omit_Menu_Radio(cf,x);
-		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
-		this.playlistId(playlistId);
-		this.D_Thumbnail(thumbnail);
-		this.G_Text(videoCountText);
-		this.G_Text(thumbnailText);
-		this.G_Text(longBylineText);
-		this.G_Text(videoCountShortText);
-		return y;
-	}
 	/** @private @template {{}} T @arg {string} cf @arg {T} x */
 	rl(cf,x) {
 		this.k(`${cf}:omit`,x);

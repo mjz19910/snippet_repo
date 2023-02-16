@@ -6205,6 +6205,19 @@ class ServiceMethods extends ServiceData {
 		// let {...s}=this.parse_url_search_params(up.search);
 		this.cg.codegen_str(cf,b);
 	}
+	/** @public @template {D_CompactPlaylist|D_Radio|D_CompactRadio} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
+	Omit_Menu_Radio(cf,x) {
+		if("adSlotMetadata" in x) {debugger; throw new Error();}
+		let u=this.D_Omit_Menu_Radio(cf,x);
+		let {playlistId,thumbnail,videoCountText,thumbnailText,longBylineText,videoCountShortText,...y}=this.D_Omit_ThumbnailOverlay(cf,u);
+		this.playlistId(playlistId);
+		this.D_Thumbnail(thumbnail);
+		this.G_Text(videoCountText);
+		this.G_Text(thumbnailText);
+		this.G_Text(longBylineText);
+		this.G_Text(videoCountShortText);
+		return y;
+	}
 	/** @private @arg {CF_D_Playlist_Omit} cf @arg {D_CompactPlaylist} x */
 	D_Playlist_Omit(cf,x) {
 		let {shortBylineText,sidebarThumbnails,shareUrl,thumbnailRenderer,...y}=this.Omit_Menu_Radio(cf,x);
