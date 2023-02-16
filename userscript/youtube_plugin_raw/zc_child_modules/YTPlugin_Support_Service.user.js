@@ -1077,6 +1077,8 @@ class Support_GenericApi extends ServiceMethods {
 		this.z(entries,this.R_PrivacyDropdownItem);
 		if(label!=="Privacy") debugger;
 	}
+	/** @private @arg {R_MP_MenuNotificationSection} x */
+	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

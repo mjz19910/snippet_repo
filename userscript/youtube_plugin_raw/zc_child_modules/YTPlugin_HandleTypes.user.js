@@ -384,8 +384,6 @@ class HandleTypes extends ServiceMethods {
 	R_PdgCommentPreview(x) {this.H_("R_PdgCommentPreview","pdgCommentPreviewRenderer",x,this.D_PdgCommentPreview);}
 	/** @private @arg {R_PdgBuyFlowHeader} x */
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
-	/** @private @arg {R_MP_MenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
 	/** @private @arg {R_Tabbed} x */
