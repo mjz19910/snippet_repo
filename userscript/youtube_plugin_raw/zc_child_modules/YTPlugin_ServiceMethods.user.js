@@ -180,6 +180,59 @@ class ServiceMethods extends ServiceData {
 		if(tooltip!=="Added") debugger;
 		this.E_PlaylistEdit(serviceEndpoint);
 	}
+	/** @private @arg {DE_PlaylistEdit} x */
+	DE_PlaylistEdit(x) {
+		const cf="D_PlaylistEdit";
+		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.playlistId(playlistId);
+		this.t(params,x => this.params("playlist_edit.params",x));
+		this.z(actions,x => {
+			// TODO: #12 Handle playlist actions
+			// Just skip them for now
+			switch(x.action) {
+				case "ACTION_ADD_VIDEO":
+				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
+				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
+				default: debugger; break;
+			}
+		});
+	}
+	/** @private @arg {DE_ShowEngagementPanel} x */
+	DE_ShowEngagementPanel(x) {
+		const cf="D_ShowEngagementPanel";
+		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+	}
+	/** @private @arg {DE_Unsubscribe} x */
+	DE_Unsubscribe(x) {
+		const cf="DE_Unsubscribe";
+		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(channelIds,this.D_ChannelId);
+		this.params("unsubscribe.params",params);
+	}
+	/** @private @arg {DE_ShareEntityService} x */
+	DE_ShareEntityService(x) {
+		const cf="DE_ShareEntityService";
+		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
+		let [u1,y1]=this.z(b,x => this.TA_OpenPopup(cf,x));
+		this.z(y1,x => {if(x!==void 0) debugger;});
+		this.z(u1,this.Popup_ShareEntityService);
+	}
+	/** @protected @arg {DE_AddToPlaylistService} x */
+	DE_AddToPlaylistService(x) {
+		const cf="DE_AddToPlaylistService";
+		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.videoId(videoId);
+	}
+	/** @arg {DE_VE83769_Url_1} x */
+	DE_VE83769_Url_1(x) {
+		const cf="DE_VE83769_Url_1";
+		const {url,target,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(target!=="TARGET_NEW_WINDOW") debugger;
+		let x1=this.parse_with_url_parse(url);
+		if(x1.pathname!=="/aclk") debugger;
+		debugger;
+	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
 	/** @private @arg {string} x */
@@ -408,23 +461,6 @@ class ServiceMethods extends ServiceData {
 	GM_GetTranscript(x) {this.T_GM("GM_GetTranscript",x,x => this.ceq(x,"/youtubei/v1/get_transcript"));}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
-	/** @private @arg {DE_PlaylistEdit} x */
-	DE_PlaylistEdit(x) {
-		const cf="D_PlaylistEdit";
-		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
-		this.t(params,x => this.params("playlist_edit.params",x));
-		this.z(actions,x => {
-			// TODO: #12 Handle playlist actions
-			// Just skip them for now
-			switch(x.action) {
-				case "ACTION_ADD_VIDEO":
-				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
-				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
-				default: debugger; break;
-			}
-		});
-	}
 	/** @private @arg {T_RemovePrefix<D_ThumbnailOverlayToggleButton_1, "untoggled">} x */
 	D_ThumbnailOverlayToggleButton_UntoggledPrefix_1(x) {
 		const cf="D_ThumbnailOverlayToggleButton_UntoggledPrefix_1";
@@ -618,12 +654,6 @@ class ServiceMethods extends ServiceData {
 	A_SendFeedback(x) {let [a,b]=this.TE_Endpoint_2("A_SendFeedback","sendFeedbackAction",x); this.g(b); this.AD_SendFeedback(a);}
 	/** @private @arg {E_ShowEngagementPanel} x */
 	E_ShowEngagementPanel(x) {let [a,b]=this.TE_Endpoint_2("E_ShowEngagementPanel","showEngagementPanelEndpoint",x); this.g(b); this.DE_ShowEngagementPanel(a);}
-	/** @private @arg {DE_ShowEngagementPanel} x */
-	DE_ShowEngagementPanel(x) {
-		const cf="D_ShowEngagementPanel";
-		const {panelIdentifier,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
-	}
 	/** @private @arg {A_Signal} x */
 	A_Signal(x) {let [a,y]=this.TE_Endpoint_2("A_Signal","signalAction",x); this.g(y); this.AD_Signal(a);}
 	/** @arg {string} cf1 @arg {G_ClientSignal["actions"][number]} x */
@@ -872,13 +902,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.targetId(cf,x);
 	}
-	/** @private @arg {DE_Unsubscribe} x */
-	DE_Unsubscribe(x) {
-		const cf="DE_Unsubscribe";
-		const {channelIds,params,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(channelIds,this.D_ChannelId);
-		this.params("unsubscribe.params",params);
-	}
 	/** @private @arg {D_Button_NavEP} x */
 	D_Button_NavEP(x) {
 		const cf="D_Button_NavEP";
@@ -936,14 +959,6 @@ class ServiceMethods extends ServiceData {
 		this.R_UnifiedSharePanel(popup);
 		if(popupType!=="DIALOG") debugger;
 		this.a_primitive_bool(beReused);
-	}
-	/** @private @arg {DE_ShareEntityService} x */
-	DE_ShareEntityService(x) {
-		const cf="DE_ShareEntityService";
-		const {serializedShareEntity: a,commands: b,...y}=this.s(cf,x); this.g(y);
-		let [u1,y1]=this.z(b,x => this.TA_OpenPopup(cf,x));
-		this.z(y1,x => {if(x!==void 0) debugger;});
-		this.z(u1,this.Popup_ShareEntityService);
 	}
 	/** @private @arg {D_Button_SE} x */
 	D_Button_SE(x) {
@@ -1065,12 +1080,6 @@ class ServiceMethods extends ServiceData {
 	unpack_T_WCM(cf,x) {return this.w(`Unpack:T_WCM:${cf}`,"webCommandMetadata",x);}
 	/** @protected @arg {M_AddToPlaylistService} x */
 	M_AddToPlaylistService(x) {this.T_WCM("M_AddToPlaylistService",x,this.GM_AddToPlaylistService);}
-	/** @protected @arg {DE_AddToPlaylistService} x */
-	DE_AddToPlaylistService(x) {
-		const cf="DE_AddToPlaylistService";
-		const {videoId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.videoId(videoId);
-	}
 	/** @protected @arg {E_AddToPlaylistService} x */
 	E_AddToPlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_AddToPlaylistService","addToPlaylistServiceEndpoint",x); this.g(y); this.M_AddToPlaylistService(a); this.DE_AddToPlaylistService(b);}
 	/** @private @arg {C_ShowReelsCommentsOverlay} x */
@@ -1625,8 +1634,6 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @protected @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
-	/** @arg {DE_VE83769_Url_1} x */
-	DE_VE83769_Url_1(x) {x;}
 	/** @protected @arg {E_VE83769_Url} x */
 	E_VE83769_Url(x) {
 		const cf="E_VE83769_Url";
