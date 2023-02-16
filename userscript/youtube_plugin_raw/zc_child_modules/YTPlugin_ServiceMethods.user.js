@@ -6335,6 +6335,13 @@ class ServiceMethods extends ServiceData {
 			case "TEXT_HEADER_RENDERER_STYLE_BOLD":
 		}
 	}
+	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
+	D_ThumbnailOverlay_NavEP(x) {
+		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		let k=this.get_keys_of(x);
+		k.pop()==="";
+	}
 	/** @private @template {D_CompactVideo|D_Video} T @arg {CF_D_Menu_Omit} cf @arg {T} x */
 	D_ThumbnailOverlay_Omit(cf,x) {
 		const {trackingParams,menu,title,videoId,navigationEndpoint,thumbnail,longBylineText,shortBylineText,...y}=this.D_Omit_ThumbnailOverlay(cf,x);

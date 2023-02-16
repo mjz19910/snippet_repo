@@ -1276,13 +1276,6 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.D_Video_With_Add_IsWatched("D_Video_Other",x);
 	}
-	/** @private @arg {D_CompactVideo["navigationEndpoint"]} x */
-	D_ThumbnailOverlay_NavEP(x) {
-		if("reelWatchEndpoint" in x) return this.E_ReelWatch(x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		let k=this.get_keys_of(x);
-		k.pop()==="";
-	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
