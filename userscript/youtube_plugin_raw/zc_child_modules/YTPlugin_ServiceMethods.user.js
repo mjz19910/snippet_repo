@@ -1116,7 +1116,7 @@ class ServiceMethods extends ServiceData {
 		return this.convert_map_to_obj(x1);*/
 		return res_obj;
 	}
-	/** @private */
+	/** @protected */
 	_decoder=new TextDecoder();
 	/** @private @arg {"D_QoeLoggingContext"|"D_VssLoggingContext"} cf1 @arg {V_SerializedContext_BinaryObj} x */
 	V_SerializedContext_BinaryObj(cf1,x) {

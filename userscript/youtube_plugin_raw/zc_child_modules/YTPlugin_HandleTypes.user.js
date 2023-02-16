@@ -1990,7 +1990,12 @@ class HandleTypes extends ServiceMethods {
 			/** @type {D_DecTypeNum|V_ParamObj_2[number]} */
 			let otu=as(obj);
 			if(otu[0]==="child") {
-				if(otu.length===3) return otu;
+				if(otu.length===3) {
+					const [,binary_arr,obj]=otu;
+					if(obj!==null) return obj;
+					console.log("[typedef_json_bin_maybe_string]",this._decoder.decode(binary_arr));
+					return otu;
+				}
 				return this.convert_arr_to_obj([otu]);
 			}
 			if(otu[0]==="data32") {
