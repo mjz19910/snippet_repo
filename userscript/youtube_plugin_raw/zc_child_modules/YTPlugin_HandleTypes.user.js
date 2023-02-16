@@ -1306,8 +1306,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(queueContextParams,this.RS_Next_ContextParams);
 		this.t(continuationContents,this.RC_PlaylistPanel);
 	}
-	/** @private @arg {RC_SectionList} x */
-	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
 	/** @private @arg {RC_PlaylistPanel} x */
 	RC_PlaylistPanel(x) {this.H_("RC_PlaylistPanel","playlistPanelContinuation",x,this.g);}
 	/** @private @arg {RC_LiveChat} x */
@@ -1457,15 +1455,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(sequenceContinuation,this.a_primitive_str);
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
-	}
-	/** @private @arg {GA_ResponseReceived} x */
-	GA_ResponseReceived(x) {
-		const cf="GA_ResponseReceived";
-		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
-		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
-		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
-		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
-		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {

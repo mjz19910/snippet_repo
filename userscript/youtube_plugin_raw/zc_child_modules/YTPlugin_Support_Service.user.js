@@ -764,6 +764,25 @@ class Support_RS_Browse extends ServiceMethods {
 		this.t(continuationContents,this.RC_SectionList);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
 	}
+	/** @private @arg {C_ResetChannelUnreadCount} x */
+	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
+	/** @private @arg {DC_ResetChannelUnreadCount} x */
+	DC_ResetChannelUnreadCount(x) {
+		const cf="DC_ResetChannelUnreadCount";
+		const {channelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_ChannelId(channelId);
+	}
+	/** @private @arg {GA_ResponseReceived} x */
+	GA_ResponseReceived(x) {
+		const cf="GA_ResponseReceived";
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.C_AdsControlFlowOpportunityReceived(x);
+		if("appendContinuationItemsAction" in x) return this.A_AppendContinuationItems(x);
+		if("reloadContinuationItemsCommand" in x) return this.C_ReloadContinuationItems(x);
+		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {RC_SectionList} x */
+	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
