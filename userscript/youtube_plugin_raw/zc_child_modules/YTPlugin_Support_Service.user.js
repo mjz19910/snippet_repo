@@ -775,12 +775,6 @@ class Support_RS_Browse extends ServiceMethods {
 		if(thumbnailCrop!=="MUSIC_THUMBNAIL_CROP_UNSPECIFIED") debugger;
 		if(thumbnailScale!=="MUSIC_THUMBNAIL_SCALE_UNSPECIFIED") debugger;
 	}
-	/** @private @arg {D_Cache_MD} x */
-	D_Cache_MD(x) {
-		const cf="CacheMetadata";
-		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(!isCacheHit) debugger;
-	}
 	/** @private @arg {G_Browse_MD} x */
 	G_Browse_MD(x) {
 		const cf="G_Browse_MD";

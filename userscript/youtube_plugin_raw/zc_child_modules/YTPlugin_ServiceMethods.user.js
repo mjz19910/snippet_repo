@@ -7595,5 +7595,11 @@ class ServiceMethods extends ServiceData {
 			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
 		}
 	}
+	/** @protected @arg {D_Cache_MD} x */
+	D_Cache_MD(x) {
+		const cf="CacheMetadata";
+		const {isCacheHit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(!isCacheHit) debugger;
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
