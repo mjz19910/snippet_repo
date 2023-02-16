@@ -222,9 +222,20 @@ class ServiceMethods extends ServiceData {
 			// TODO: #12 Handle playlist actions
 			// Just skip them for now
 			switch(x.action) {
-				case "ACTION_ADD_VIDEO":
-				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID":
-				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": break;
+				case "ACTION_ADD_VIDEO": {
+					const cf="A_ActionAddVideo";
+					const {action: {},addedVideoId,...y}=this.s(cf,x); this.g(y);
+					this.videoId(addedVideoId);
+				} break;
+				case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID": {
+					const cf="D_ActionRemoveVideoByVideoId";
+					const {action: {},removedVideoId,...y}=this.s(cf,x); this.g(y);
+					this.videoId(removedVideoId);
+				} break;
+				case "ACTION_SET_PLAYLIST_VIDEO_ORDER": {
+					const cf="A_ActionSetPlaylistVideoOrder";
+					const {action: {},...y}=this.s(cf,x); this.g(y);
+				} break;
 				default: debugger; break;
 			}
 		});
@@ -7643,7 +7654,7 @@ class ServiceMethods extends ServiceData {
 		this.D_EditableDetails(editableDetails);
 		this.E_PlaylistEditor(editorEndpoint);
 		this.a_primitive_bool(isEditable);
-		debugger;
+		this.E_VE3611(ownerEndpoint);
 		this.z(serviceEndpoints,this.E_PlaylistEdit);
 		this.R_Menu(moreActionsMenu);
 		this.G_Text(title);
@@ -7682,7 +7693,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {E_PlaylistEditor} x */
 	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_GetSettingsEditor(a); this.DE_PlaylistEditor(b);}
 	/** @private @arg {M_GetSettingsEditor} x */
-	M_GetSettingsEditor(x) {this.T_WCM("M_GetSettingsEditor",x,this.GM_GetSettingsEditor)}
+	M_GetSettingsEditor(x) {this.T_WCM("M_GetSettingsEditor",x,this.GM_GetSettingsEditor);}
 	/** @private @arg {GM_GetSettingsEditor} x */
 	GM_GetSettingsEditor(x) {this.T_GM("GM_GetSettingsEditor",x,x => this.ceq(x,"/youtubei/v1/playlist/get_settings_editor"));}
 	/** @private @arg {DE_PlaylistEditor} x */

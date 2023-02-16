@@ -87,6 +87,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AD_UpdateNotificationsUnseenCount";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AU_EngagementPanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "AU_ToggleButtonTextData";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_ActionAddVideo";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_BrowseFeed";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_CommentsSectionContinuation";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "A_WatchNext";}
@@ -158,6 +160,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DS_EY_TranscriptTrackSelection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationDelete";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationReplace";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionRemoveVideoByVideoId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActiveView";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdBreakService";}
@@ -248,6 +251,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExpandableVideoDescriptionBody";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ExternalChannelId";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_Factoid";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FancyDismissibleDialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeaturedChannel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeedFilterChipBar";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_FeedNudge";}
