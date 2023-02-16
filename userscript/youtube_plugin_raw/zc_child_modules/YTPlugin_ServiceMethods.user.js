@@ -5830,6 +5830,82 @@ class ServiceMethods extends ServiceData {
 		this.R_ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
 		return y;
 	}
+	/** @private @arg {R_ChannelThumbnailWithLink} x */
+	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
+	/** @private @template {D_ChildVideo_Omit} T @arg {"D_ChildVideo"} cf @arg {T} x */
+	D_ChildVideo_Omit(cf,x) {
+		let {title,navigationEndpoint,lengthText,videoId,...y}=this.s(cf,x);
+		this.G_Text(title);
+		this.E_Watch(navigationEndpoint);
+		this.G_Text(lengthText);
+		this.videoId(videoId);
+		return y;
+	}
+	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
+	D_Video_inlinePlaybackEndpoint(x) {
+		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {D_TopicLink} x */
+	D_TopicLink(x) {
+		const cf="D_TopicLink"; this.k(cf,x);
+		const {thumbnailDetails,title,trackingParams,endpoint,callToActionIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnailDetails);
+		this.G_Text(title);
+		this.trackingParams(trackingParams);
+		debugger;
+		if(callToActionIcon.iconType!=="CHEVRON_RIGHT") debugger;
+	}
+	/** @private @arg {R_InfoRow} x */
+	R_InfoRow(x) {this.H_("R_InfoRow","infoRowRenderer",x,this.D_InfoRow);}
+	/** @private @arg {D_InfoRow} x */
+	D_InfoRow(x) {
+		const cf="D_InfoRow";
+		const {title,defaultMetadata,expandedMetadata,expandIcon,trackingParams,infoRowExpandStatusKey,...y}=this.s(cf,x); this.g(y);
+		this.G_Text(title);
+		this.t(defaultMetadata,this.G_Text);
+		this.t(expandedMetadata,this.G_Text);
+		this.t(expandIcon,x => {if(x.iconType!=="EXPAND") debugger;});
+		this.trackingParams(trackingParams);
+		this.t(infoRowExpandStatusKey,x => {
+			switch(x) {
+				default: debugger; break;
+				case "structured-description-music-section-artists-row-state-id":
+				case "structured-description-music-section-licenses-row-state-id":
+			}
+		});
+	}
+	/** @private @arg {D_CarouselLockup} x */
+	D_CarouselLockup(x) {
+		const cf="D_CarouselLockup"; this.k(cf,x);
+		const {infoRows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(infoRows,this.R_InfoRow);
+	}
+	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
+	D_ChannelThumbnail_navigationEndpoint(x) {
+		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
+		if("browseEndpoint" in x) {debugger; return;}
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
+	D_ChannelThumbnailWithLink_Omit(cf,x) {
+		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
+		this.D_Thumbnail(thumbnail);
+		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
+		this.D_Accessibility(accessibility);
+		return y;
+	}
+	/** @private @arg {D_ChannelThumbnailWithLink} x */
+	D_ChannelThumbnailWithLink(x) {
+		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
+		if("title" in x) {
+			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+			this.a_primitive_str(title);
+			return;
+		}
+		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+	}
 	/** @private @arg {D_Video_Owner} x */
 	D_Video_Owner(x) {
 		const cf="D_Video_Owner"; this.k(cf,x);

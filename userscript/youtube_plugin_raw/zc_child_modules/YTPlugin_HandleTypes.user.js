@@ -531,32 +531,6 @@ class HandleTypes extends ServiceMethods {
 	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
-	/** @private @arg {R_ChannelThumbnailWithLink} x */
-	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
-	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
-	D_ChannelThumbnail_navigationEndpoint(x) {
-		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
-		if("browseEndpoint" in x) {debugger; return;}
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
-	D_ChannelThumbnailWithLink_Omit(cf,x) {
-		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
-		this.D_Thumbnail(thumbnail);
-		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
-		this.D_Accessibility(accessibility);
-		return y;
-	}
-	/** @private @arg {D_ChannelThumbnailWithLink} x */
-	D_ChannelThumbnailWithLink(x) {
-		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
-		if("title" in x) {
-			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
-			this.a_primitive_str(title);
-			return;
-		}
-		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
-	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -719,8 +693,6 @@ class HandleTypes extends ServiceMethods {
 	R_TranscriptSegment(x) {this.H_("R_TranscriptSegment","transcriptSegmentRenderer",x,this.D_TranscriptSegment);}
 	/** @private @arg {R_PdgCommentChip} x */
 	R_PdgCommentChip(x) {this.H_("R_PdgCommentChip","pdgCommentChipRenderer",x,this.D_PdgCommentChip);}
-	/** @private @arg {R_InfoRow} x */
-	R_InfoRow(x) {this.H_("R_InfoRow","infoRowRenderer",x,this.D_InfoRow);}
 	/** @private @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
 	/** @private @arg {R_EmojiPickerCategory} x */
@@ -1080,26 +1052,11 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
 	}
-	/** @private @template {D_ChildVideo_Omit} T @arg {"D_ChildVideo"} cf @arg {T} x */
-	D_ChildVideo_Omit(cf,x) {
-		let {title,navigationEndpoint,lengthText,videoId,...y}=this.s(cf,x);
-		this.G_Text(title);
-		this.E_Watch(navigationEndpoint);
-		this.G_Text(lengthText);
-		this.videoId(videoId);
-		return y;
-	}
 	/** @private @arg {GR_MP_MenuNotificationSection_Item} x */
 	GR_MP_MenuNotificationSection_Item(x) {
 		const cf="R_MP_MenuNotificationSection_Item"; this.k(cf,x);
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
-	D_Video_inlinePlaybackEndpoint(x) {
-		const cf="D_Video_inlinePlaybackEndpoint"; this.k(cf,x);
-		if("watchEndpoint" in x) return this.E_Watch(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {YTNavigateFinishDetail} x */
@@ -2891,22 +2848,6 @@ class HandleTypes extends ServiceMethods {
 		const {externalChannelId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ChannelId(externalChannelId);
 	}
-	/** @private @arg {D_TopicLink} x */
-	D_TopicLink(x) {
-		const cf="D_TopicLink"; this.k(cf,x);
-		const {thumbnailDetails,title,trackingParams,endpoint,callToActionIcon,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(thumbnailDetails);
-		this.G_Text(title);
-		this.trackingParams(trackingParams);
-		debugger;
-		if(callToActionIcon.iconType!=="CHEVRON_RIGHT") debugger;
-	}
-	/** @private @arg {D_CarouselLockup} x */
-	D_CarouselLockup(x) {
-		const cf="D_CarouselLockup"; this.k(cf,x);
-		const {infoRows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(infoRows,this.R_InfoRow);
-	}
 	/** @private @arg {D_RichListHeader} x */
 	D_RichListHeader(x) {
 		const cf="D_RichListHeader"; this.k(cf,x);
@@ -3091,23 +3032,6 @@ class HandleTypes extends ServiceMethods {
 		if(isEditable!==true) debugger;
 		this.t(previewDescription,this.g);
 		this.t(numItemsToShow,x => {if(x!==25) debugger;});
-	}
-	/** @private @arg {D_InfoRow} x */
-	D_InfoRow(x) {
-		const cf="D_InfoRow";
-		const {title,defaultMetadata,expandedMetadata,expandIcon,trackingParams,infoRowExpandStatusKey,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.t(defaultMetadata,this.G_Text);
-		this.t(expandedMetadata,this.G_Text);
-		this.t(expandIcon,x => {if(x.iconType!=="EXPAND") debugger;});
-		this.trackingParams(trackingParams);
-		this.t(infoRowExpandStatusKey,x => {
-			switch(x) {
-				default: debugger; break;
-				case "structured-description-music-section-artists-row-state-id":
-				case "structured-description-music-section-licenses-row-state-id":
-			}
-		});
 	}
 	/** @arg {S_VideoGoodPutShape} x */
 	S_VideoGoodPutShape(x) {
