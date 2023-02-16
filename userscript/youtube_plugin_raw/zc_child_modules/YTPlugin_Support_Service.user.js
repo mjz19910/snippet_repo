@@ -1123,7 +1123,7 @@ class Support_GenericApi extends ServiceMethods {
 	}
 }
 class Support_EventInput extends ServiceMethods {
-	/** @protected @arg {YTNavigateFinishDetail} x */
+	/** @public @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const cf="YTNavigateFinishDetail";
 		switch(x.pageType) {

@@ -131,6 +131,7 @@ class HandleTypes extends ServiceMethods {
 		this.support_RS_Page_Browse=new ss.Support_RS_Page_Browse(x);
 		this.support_RS_Browse=new ss.Support_RS_Browse(x);
 		this.support_GenericApi=new ss.Support_GenericApi(x);
+		this.support_EventInput=new ss.Support_EventInput(x);
 	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */
