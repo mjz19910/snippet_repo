@@ -2528,6 +2528,7 @@ class HandleTypes extends ServiceMethods {
 				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
 				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
 				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,11487)) return this.E_VE11487(x2);
 				x2; debugger;
 				break x;
 			}

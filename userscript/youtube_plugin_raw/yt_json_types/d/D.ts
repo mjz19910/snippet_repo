@@ -1277,7 +1277,13 @@ type D_GuideEntry=
 	|TD_GuideEntry_Simple<"UNPLUGGED_LOGO">
 	|TD_GuideEntry_Simple<"YOUTUBE_KIDS_ROUND">
 	|TD_GuideEntry_Simple<"YOUTUBE_MUSIC">
-	|TD_GuideEntry_Simple<"YOUTUBE_ROUND">
+	|{
+		navigationEndpoint: E_VE11487;
+		icon: T_Icon<"YOUTUBE_ROUND">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"YouTube Premium">;
+	}
 	;
 ;
 //#endregion
