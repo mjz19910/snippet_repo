@@ -7693,5 +7693,21 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(viewCountText);
 		this.R_CinematicContainer(cinematicContainer);
 	}
+	/** @private @arg {R_HeroPlaylistThumbnail} x */
+	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
+	/** @private @arg {D_HeroPlaylistThumbnail} x */
+	D_HeroPlaylistThumbnail(x) {
+		const cf="D_HeroPlaylistThumbnail";
+		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(thumbnail);
+		if(this.num_to_string(maxRatio)!=="0.5625") debugger;
+		this.trackingParams(trackingParams);
+		this.E_Watch(onTap);
+		this.G_ThumbnailOverlayItem(thumbnailOverlays);
+	}
+	/** @private @arg {R_PlaylistByline} x */
+	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
+	/** @private @arg {D_PlaylistByline} x */
+	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

@@ -2116,18 +2116,6 @@ class HandleTypes extends ServiceMethods {
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
 	/** @private @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
-	/** @private @arg {D_HeroPlaylistThumbnail} x */
-	D_HeroPlaylistThumbnail(x) {
-		const cf="D_HeroPlaylistThumbnail";
-		const {thumbnail,maxRatio,trackingParams,onTap,thumbnailOverlays,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.D_Thumbnail(thumbnail);
-		if(this.num_to_string(maxRatio)!=="0.5625") debugger;
-		this.trackingParams(trackingParams);
-		this.E_Watch(onTap);
-		this.G_ThumbnailOverlayItem(thumbnailOverlays);
-	}
-	/** @private @arg {D_PlaylistByline} x */
-	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
 		const cf="D_TranscriptSearchPanel";
