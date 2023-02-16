@@ -5813,6 +5813,14 @@ class ServiceMethods extends ServiceData {
 		const {videos,...z}=this.s(cf,y); this.g(z);/*#destructure_done*/
 		this.z(videos,this.R_ChildVideo);
 	}
+	/** @private @arg {R_ChildVideo} x */
+	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
+	/** @private @arg {D_ChildVideo} x */
+	D_ChildVideo(x) {
+		const cf="D_ChildVideo"; this.k(cf,x);
+		let y=this.D_ChildVideo_Omit(cf,x);
+		this.g(y);
+	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);

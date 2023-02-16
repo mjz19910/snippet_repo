@@ -531,10 +531,32 @@ class HandleTypes extends ServiceMethods {
 	R_MusicQueue(x) {this.H_("R_MusicQueue","musicQueueRenderer",x,this.D_MusicQueue);}
 	/** @private @arg {R_RichGrid} x */
 	R_RichGrid(x) {this.H_("R_RichGrid","richGridRenderer",x,this.D_RichGrid);}
-	/** @private @arg {R_ChildVideo} x */
-	R_ChildVideo(x) {this.H_("R_Radio","childVideoRenderer",x,this.D_ChildVideo);}
 	/** @private @arg {R_ChannelThumbnailWithLink} x */
 	R_ChannelThumbnailWithLink(x) {this.H_("R_ChannelThumbnailWithLink","channelThumbnailWithLinkRenderer",x,this.D_ChannelThumbnailWithLink);}
+	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
+	D_ChannelThumbnail_navigationEndpoint(x) {
+		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
+		if("browseEndpoint" in x) {debugger; return;}
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
+	D_ChannelThumbnailWithLink_Omit(cf,x) {
+		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
+		this.D_Thumbnail(thumbnail);
+		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
+		this.D_Accessibility(accessibility);
+		return y;
+	}
+	/** @private @arg {D_ChannelThumbnailWithLink} x */
+	D_ChannelThumbnailWithLink(x) {
+		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
+		if("title" in x) {
+			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+			this.a_primitive_str(title);
+			return;
+		}
+		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
+	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
 	/** @private @arg {R_SimpleMenuHeader} x */
@@ -1058,12 +1080,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {...y}=this.D_RichGrid_Omit(cf,x); this.g(y);
 	}
-	/** @private @arg {D_ChildVideo} x */
-	D_ChildVideo(x) {
-		const cf="D_ChildVideo"; this.k(cf,x);
-		let y=this.D_ChildVideo_Omit(cf,x);
-		this.g(y);
-	}
 	/** @private @template {D_ChildVideo_Omit} T @arg {"D_ChildVideo"} cf @arg {T} x */
 	D_ChildVideo_Omit(cf,x) {
 		let {title,navigationEndpoint,lengthText,videoId,...y}=this.s(cf,x);
@@ -1078,30 +1094,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="R_MP_MenuNotificationSection_Item"; this.k(cf,x);
 		if("notificationRenderer" in x) return this.R_Notification(x);
 		if("continuationItemRenderer" in x) return this.R_ContinuationItem(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @template {D_ChannelThumbnailWithLink} T @arg {"D_ChannelThumbnailWithLink"} cf @arg {T} x */
-	D_ChannelThumbnailWithLink_Omit(cf,x) {
-		const {thumbnail,navigationEndpoint,accessibility,...y}=this.s(cf,x);
-		this.D_Thumbnail(thumbnail);
-		this.D_ChannelThumbnail_navigationEndpoint(navigationEndpoint);
-		this.D_Accessibility(accessibility);
-		return y;
-	}
-	/** @private @arg {D_ChannelThumbnailWithLink} x */
-	D_ChannelThumbnailWithLink(x) {
-		const cf="D_ChannelThumbnailWithLink"; this.k(cf,x);
-		if("title" in x) {
-			const {title,...y}=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
-			this.a_primitive_str(title);
-			return;
-		}
-		let y=this.D_ChannelThumbnailWithLink_Omit(cf,x); this.g(y);
-	}
-	/** @private @arg {D_ChannelThumbnailWithLink['navigationEndpoint']} x */
-	D_ChannelThumbnail_navigationEndpoint(x) {
-		const cf="D_ChannelThumbnail_navigationEndpoint"; this.k(cf,x);
-		if("browseEndpoint" in x) {debugger; return;}
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Video_inlinePlaybackEndpoint} x */
