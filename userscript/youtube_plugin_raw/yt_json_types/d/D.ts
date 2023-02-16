@@ -1001,6 +1001,9 @@ type D_TextRun={
 	text: "https://www.deviantart.com/zianu/art/...";
 	navigationEndpoint: E_VE83769_Url;
 }|{
+	text: "https://youtu.be/XdnRkI5EM-k";
+	navigationEndpoint: E_Watch;
+}|{
 	text: "#shorts";
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;
