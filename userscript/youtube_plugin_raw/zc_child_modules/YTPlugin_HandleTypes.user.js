@@ -564,8 +564,6 @@ class HandleTypes extends ServiceMethods {
 	R_RichItem(x) {this.H_("R_RichItem","richItemRenderer",x,this.D_RichItem);}
 	/** @private @arg {R_FeedNudge} x */
 	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
-	/** @private @arg {R_MovingThumbnail} x */
-	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
 	/** @private @arg {R_Radio} x */
 	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
 	/** @private @arg {R_ChildVideo} x */
@@ -1149,21 +1147,6 @@ class HandleTypes extends ServiceMethods {
 		const {content,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_RichItemContent(content);
 		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_MovingThumbnail} x */
-	D_MovingThumbnail(x) {
-		const cf="D_MovingThumbnail"; this.k(cf,x);
-		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.t(movingThumbnailDetails,x => {
-			if("logAsMovingThumbnail" in x) {
-				const cf="D_MovingThumbnail_Thumbnails";
-				const {logAsMovingThumbnail,...y}=this.s(cf,x);
-				return this.D_Thumbnail(y);
-			}
-			this.D_Thumbnail(x);
-		});
-		if(enableHoveredLogging!==true) debugger;
-		if(enableOverlay!==true) debugger;
 	}
 	/** @private @arg {D_Radio} x */
 	D_Radio(x) {

@@ -6355,6 +6355,23 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(shortBylineText);
 		return y;
 	}
+	/** @private @arg {R_MovingThumbnail} x */
+	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
+	/** @private @arg {D_MovingThumbnail} x */
+	D_MovingThumbnail(x) {
+		const cf="D_MovingThumbnail"; this.k(cf,x);
+		const {movingThumbnailDetails,enableHoveredLogging,enableOverlay,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.t(movingThumbnailDetails,x => {
+			if("logAsMovingThumbnail" in x) {
+				const cf="D_MovingThumbnail_Thumbnails";
+				const {logAsMovingThumbnail,...y}=this.s(cf,x);
+				return this.D_Thumbnail(y);
+			}
+			this.D_Thumbnail(x);
+		});
+		if(enableHoveredLogging!==true) debugger;
+		if(enableOverlay!==true) debugger;
+	}
 	/** @private @arg {D_VideoLike_richThumbnail} x */
 	D_VideoLike_richThumbnail(x) {
 		const cf="D_VideoLike_richThumbnail"; this.k(cf,x);
@@ -6365,7 +6382,7 @@ class ServiceMethods extends ServiceData {
 	D_CompactVideo_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
 		let {richThumbnail,accessibility,channelThumbnail,badges,viewCountText,shortViewCountText,...y}=u;
-		this.t(richThumbnail,this.D_VideoLike_richThumbnail);
+		this.t(richThumbnail,this.R_MovingThumbnail);
 		this.D_Accessibility(accessibility);
 		this.D_Thumbnail(channelThumbnail);
 		this.tz(badges,this.RMD_Badge);
