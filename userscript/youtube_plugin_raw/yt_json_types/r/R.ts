@@ -324,7 +324,7 @@ type R_PageTypeBrowse={
 };
 type R_PageTypeChannel={
 	pageType: "channel";
-	endpoint: {};
+	endpoint: E_VE3611;
 	response: RS_Page_Channel;
 	fromHistory: boolean;
 	navigationDoneMs: number;
