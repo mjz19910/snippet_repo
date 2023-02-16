@@ -7270,5 +7270,106 @@ class ServiceMethods extends ServiceData {
 	RA_ReelDismissal(x) {this.H_("RA_ReelDismissal","reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
 	/** @public @arg {RA_NotificationMulti} x */
 	RA_NotificationMulti(x) {this.H_("RA_NotificationMulti","notificationMultiActionRenderer",x,this.g);}
+	/** @protected @arg {R_TwoColumnBrowseResults} x */
+	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
+	/** @private @arg {D_TwoColumnBrowseResults} x */
+	D_TwoColumnBrowseResults(x) {
+		const cf="D_TwoColumnBrowseResults";
+		const {tabs,secondaryContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(tabs,this.RG_Result);
+		this.t(secondaryContents,this.G_SecondaryContents);
+	}
+	/** @private @arg {R_ExpandableTab} x */
+	R_ExpandableTab(x) {this.H_("R_ExpandableTab","expandableTabRenderer",x,this.D_ExpandableTab);}
+	/** @private @arg {D_ExpandableTab} x */
+	D_ExpandableTab(x) {
+		const cf="D_ExpandableTab";
+		if(x.selected) {
+			const {endpoint,title,selected,expandedText,content,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			this.E_VE3611(endpoint);
+			this.a_primitive_str(title);
+			this.a_primitive_bool(selected);
+			this.t(expandedText,this.a_primitive_str);
+			return this.t(content,this.R_SectionList);
+		}
+		const {endpoint,title,selected,...y}=this.s(cf,x);/*#destructure_later*/
+		this.E_VE3611(endpoint);
+		this.a_primitive_str(title);
+		this.a_primitive_bool(selected);
+		if("expandedText" in y) {
+			const {expandedText,...y1}=y; this.g(y1);
+			return this.t(expandedText,this.a_primitive_str);
+		}
+		this.g(y);
+	}
+	/** @private @arg {R_Tab} x */
+	R_Tab(x) {this.H_("Tab","tabRenderer",x,this.D_Tab);}
+	/** @private @arg {D_Tab} x */
+	D_Tab(x) {
+		const cf="D_Tab";
+		if("tabIdentifier" in x) {
+			switch(x.tabIdentifier) {
+				default: debugger; break;
+				case "FEhistory": {
+					const {selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_History`,x); this.g(y);
+					if(selected!==true) debugger;
+					if(!content.sectionListRenderer) debugger;
+					this.R_SectionList(content);
+					this.trackingParams(trackingParams);
+				} break;
+				case "FEsubscriptions": {
+					const {endpoint,selected,content,tabIdentifier: {},accessibility,trackingParams,...y}=this.s(`${cf}_Subscriptions`,x); this.g(y);
+					this.D_Tab_subscriptionsEndpoint(endpoint);
+					if(selected!==true) debugger;
+					if(!content.sectionListRenderer) debugger;
+					this.R_SectionList(content);
+					this.trackingParams(trackingParams);
+				} break;
+				case "FEwhat_to_watch": {
+					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
+					if(selected!==true) debugger;
+					if(!content.richGridRenderer) debugger;
+					this.R_RichGrid(content);
+					this.trackingParams(trackingParams);
+				} break;
+			}
+			return;
+		}
+		if("selected" in x) {return;}
+		if("content" in x) {
+			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
+			const cf2=`${cf}_${"R_MusicQueue"}`;
+			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			this.R_MusicQueue(content);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		x: {
+			if(!("endpoint" in x)) break x;
+			/** @type {`${typeof cf}_WithEndpoint`} */
+			const cf2=`${cf}_WithEndpoint`;
+			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
+			y: {
+				if(this.is_TE_VE(endpoint,3611)) {this.E_VE3611(endpoint); break y;}
+				debugger;
+			}
+			this.trackingParams(trackingParams);
+			this.save_string(`${cf2}.title`,title);
+		}
+	}
+	/** @private @arg {RG_Result} x */
+	RG_Result(x) {
+		const cf="RG_Result";
+		if("tabRenderer" in x) return this.R_Tab(x);
+		if("expandableTabRenderer" in x) return this.R_ExpandableTab(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {G_SecondaryContents} x */
+	G_SecondaryContents(x) {
+		const cf="G_SecondaryContents";
+		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
+		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

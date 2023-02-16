@@ -781,6 +781,13 @@ class Support_RS_Browse extends ServiceMethods {
 		if("resetChannelUnreadCountCommand" in x) return this.C_ResetChannelUnreadCount(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {G_BrowseContents} x */
+	G_BrowseContents(x) {
+		const cf="G_BrowseContents";
+		if("twoColumnBrowseResultsRenderer" in x) return this.R_TwoColumnBrowseResults(x);
+		if("feedFilterChipBarRenderer" in x) return this.R_FeedFilterChipBar(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {RC_SectionList} x */
 	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
 }
