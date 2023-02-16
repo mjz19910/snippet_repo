@@ -1366,7 +1366,7 @@ class Support_EventInput extends ServiceMethods {
 		const cf="R_PlaylistPage";
 		const {url,endpoint,page,response,...y}=this.s(cf,x);
 		if(page!=="playlist") debugger;
-		debugger;
+		this.E_VE5754(endpoint);
 		this.RS_Playlist(response);
 		this.a_primitive_str(url);
 		if("rootVe" in y) {
