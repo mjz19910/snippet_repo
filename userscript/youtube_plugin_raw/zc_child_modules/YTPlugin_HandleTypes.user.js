@@ -386,8 +386,6 @@ class HandleTypes extends ServiceMethods {
 	R_PdgBuyFlowHeader(x) {this.H_("R_PdgBuyFlowHeader","pdgBuyFlowHeaderRenderer",x,this.D_PdgBuyFlowHeader);}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
 	R_MP_MenuNotificationSection(x) {this.H_("D_NotificationMenu_PopupItem","multiPageMenuNotificationSectionRenderer",x,this.D_MP_MenuNotificationSection);}
-	/** @private @arg {R_SimpleMenuHeader} x */
-	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
 	/** @private @arg {R_SingleColumnMusicWatchNextResults} x */
 	R_SingleColumnMusicWatchNextResults(x) {this.H_("R_SingleColumnMusicWatchNextResults","singleColumnMusicWatchNextResultsRenderer",x,this.R_Tabbed);}
 	/** @private @arg {R_Tabbed} x */
@@ -410,15 +408,6 @@ class HandleTypes extends ServiceMethods {
 	R_GuideEntry(x) {this.H_("R_GuideEntry","guideEntryRenderer",x,this.D_GuideEntry);}
 	/** @private @arg {R_GuideSection} x */
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
-	/** @private @arg {R_AddToPlaylist} x */
-	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
-	/** @private @arg {D_AddToPlaylist} x */
-	D_AddToPlaylist(x) {
-		const cf="D_AddToPlaylist";
-		const {playlists,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(playlists,this.R_PlaylistAddToOption);
-		this.z(actions,this.R_AddToPlaylistCreate);
-	}
 	/** @public @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
 	/** @public @arg {R_ResourceStatusInResponseCheck} x */
@@ -439,10 +428,6 @@ class HandleTypes extends ServiceMethods {
 	R_Playlist_MD(x) {this.H_("R_Playlist_MD","playlistMetadataRenderer",x,this.D_Playlist_MD);}
 	/** @private @arg {R_ChannelSwitcherPage} x */
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
-	/** @private @arg {R_AddToPlaylistCreate} x */
-	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
-	/** @private @arg {R_PlaylistAddToOption} x */
-	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {R_TranscriptFooter} x */
@@ -509,8 +494,6 @@ class HandleTypes extends ServiceMethods {
 	AD_GetMultiPageMenu(x) {this.H_("AD_GetMultiPageMenu","menu",x,x => this.TR_MultiPageMenu("TR_MultiPageMenu_Empty",x));}
 	/** @private @arg {C_RunAttestation} x */
 	C_RunAttestation(x) {this.H_("C_RunAttestation","runAttestationCommand",x,this.D_RunAttestation);}
-	/** @private @arg {C_RefreshPlaylist} x */
-	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
 	/** @private @arg {C_ResetChannelUnreadCount} x */
 	C_ResetChannelUnreadCount(x) {let [a,y]=this.TE_Endpoint_2("C_ResetChannelUnreadCount","resetChannelUnreadCountCommand",x); this.g(y); this.DC_ResetChannelUnreadCount(a);}
 	/** @arg {C_FollowUp} x */
@@ -723,7 +706,7 @@ class HandleTypes extends ServiceMethods {
 		console.log("pt",x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {RS_AccountMenu} x */
+	/** @public @arg {RS_AccountMenu} x */
 	RS_AccountMenu(x) {
 		const cf="RS_AccountMenu";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -782,7 +765,7 @@ class HandleTypes extends ServiceMethods {
 	ignore_incorrect_name_set=new Set([
 		"D_CommonConfig",
 	]);
-	/** @private @arg {RS_UpdateMetadata} x */
+	/** @public @arg {RS_UpdateMetadata} x */
 	RSU_M(x) {
 		const cf="RSU_M";
 		const {responseContext: {},continuation,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -819,7 +802,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AU_Viewership} x */
 	AU_Viewership(x) {this.y("AU_Viewership","updateViewershipAction",x,x => this.y("AU_ViewershipData","viewCount",x,this.R_VideoViewCount));}
-	/** @private @arg {RS_Search} x */
+	/** @public @arg {RS_Search} x */
 	RS_Search(x) {
 		const cf="RS_Search";
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -898,15 +881,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.z(items,this.GR_MP_MenuNotificationSection_Item);
 	}
-	/** @private @arg {D_NotificationMenu_PopupItem} x */
-	D_NotificationMenu_PopupItem(x) {
-		const cf="D_NotificationMenu_PopupItem";
-		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._R_SimpleMenuHeader(header);
-		this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
@@ -916,7 +890,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {string} x */
 	RS_Next_ContextParams(x) {this.params("next.queue_context.params",x);}
-	/** @private @arg {RS_Next} x */
+	/** @public @arg {RS_Next} x */
 	RS_Next(x) {
 		const cf="RS_Next";
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1005,14 +979,6 @@ class HandleTypes extends ServiceMethods {
 			}
 		})(x);
 	}
-	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
-	AD_UpdateNotificationsUnseenCount(x) {
-		const cf="AD_UpdateNotificationsUnseenCount";
-		const {handlerData,unseenCount,timeoutMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(handlerData);
-		this.a_primitive_num(unseenCount);
-		this.a_primitive_num(timeoutMs);
-	}
 	/** @private @arg {AD_UpdateEngagementPanel} x */
 	AD_UpdateEngagementPanel(x) {
 		const cf="AD_UpdateEngagementPanel";
@@ -1033,7 +999,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(selectText);
 		this.z(actions,this.A_GetMultiPageMenu);
 	}
-	/** @private @arg {RS_AccountsList} x */
+	/** @public @arg {RS_AccountsList} x */
 	RS_AccountsList(x) {
 		const cf="RS_AccountsList";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1052,13 +1018,13 @@ class HandleTypes extends ServiceMethods {
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
-	/** @private @arg {RS_SetSetting} x */
+	/** @protected @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting";
 		const {responseContext: {},settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(settingItemId!=="407") debugger;
 	}
-	/** @private @arg {RS_Feedback} x */
+	/** @protected @arg {RS_Feedback} x */
 	RS_Feedback(x) {
 		const cf="RS_Feedback";
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1249,7 +1215,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
-	/** @private @arg {RSG_Transcript} x */
+	/** @protected @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
 		const cf="RSG_Transcript";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1258,7 +1224,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {RS_AttGet} x */
+	/** @protected @arg {RS_AttGet} x */
 	RS_AttGet(x) {
 		const cf="RS_AttGet";
 		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1775,7 +1741,7 @@ class HandleTypes extends ServiceMethods {
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @private @arg {RS_AttLog_RC} x */
+	/** @protected @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {
@@ -1948,13 +1914,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @template T @arg {T_OpenPopup_Toast<T>} x */
-	T_OpenPopup_Toast(x) {
-		const cf="T_OpenPopup_Toast";
-		const {popupType,popup,...y}=this.s(cf,x); this.g(y);
-		if(popupType!=="TOAST") return null;
-		return popup;
-	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
 		const cf="D_TranscriptSearchPanel";
@@ -2088,24 +2047,6 @@ class HandleTypes extends ServiceMethods {
 		const {entries,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(entries,this.R_PrivacyDropdownItem);
 		if(label!=="Privacy") debugger;
-	}
-	/** @private @arg {D_PlaylistAddToOption} x */
-	D_PlaylistAddToOption(x) {
-		const cf="D_PlaylistAddToOption";
-		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
-		this.G_Text(title);
-		switch(privacy) {
-			default: debugger; break;
-			case "PRIVATE":
-			case "UNLISTED":
-			case "PUBLIC":
-		}
-		this.ceq(containsSelectedVideos,"NONE");
-		this.ceq(privacyIcon.iconType,"PRIVACY_PRIVATE");
-		this.E_PlaylistEdit(addToPlaylistServiceEndpoint);
-		this.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
-		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {

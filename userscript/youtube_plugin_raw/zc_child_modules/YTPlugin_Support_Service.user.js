@@ -972,6 +972,65 @@ class Support_GenericApi extends ServiceMethods {
 	}
 	/** @private @arg {AU_NotificationsUnseenCount} x */
 	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
+	/** @private @template T @arg {T_OpenPopup_Toast<T>} x */
+	T_OpenPopup_Toast(x) {
+		const cf="T_OpenPopup_Toast";
+		const {popupType,popup,...y}=this.s(cf,x); this.g(y);
+		if(popupType!=="TOAST") return null;
+		return popup;
+	}
+	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
+	AD_UpdateNotificationsUnseenCount(x) {
+		const cf="AD_UpdateNotificationsUnseenCount";
+		const {handlerData,unseenCount,timeoutMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(handlerData);
+		this.a_primitive_num(unseenCount);
+		this.a_primitive_num(timeoutMs);
+	}
+	/** @private @arg {R_AddToPlaylist} x */
+	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
+	/** @private @arg {D_AddToPlaylist} x */
+	D_AddToPlaylist(x) {
+		const cf="D_AddToPlaylist";
+		const {playlists,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(playlists,this.R_PlaylistAddToOption);
+		this.z(actions,this.R_AddToPlaylistCreate);
+	}
+	/** @private @arg {R_AddToPlaylistCreate} x */
+	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
+	/** @private @arg {R_PlaylistAddToOption} x */
+	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
+	/** @private @arg {C_RefreshPlaylist} x */
+	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
+	/** @private @arg {D_NotificationMenu_PopupItem} x */
+	D_NotificationMenu_PopupItem(x) {
+		const cf="D_NotificationMenu_PopupItem";
+		const {header,sections,style,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this._R_SimpleMenuHeader(header);
+		this.z(sections,this.D_NotificationMenu_Popup_SectionItem);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_PlaylistAddToOption} x */
+	D_PlaylistAddToOption(x) {
+		const cf="D_PlaylistAddToOption";
+		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.playlistId(playlistId);
+		this.G_Text(title);
+		switch(privacy) {
+			default: debugger; break;
+			case "PRIVATE":
+			case "UNLISTED":
+			case "PUBLIC":
+		}
+		this.ceq(containsSelectedVideos,"NONE");
+		this.ceq(privacyIcon.iconType,"PRIVACY_PRIVATE");
+		this.E_PlaylistEdit(addToPlaylistServiceEndpoint);
+		this.E_PlaylistEdit(removeFromPlaylistServiceEndpoint);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {R_SimpleMenuHeader} x */
+	_R_SimpleMenuHeader(x) {this.H_("SimpleMenuHeader","simpleMenuHeaderRenderer",x,this.D_SimpleMenuHeader);}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
