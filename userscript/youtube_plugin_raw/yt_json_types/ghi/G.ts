@@ -71,6 +71,10 @@ type GA_Playlist=
 	|A_AddVideo
 	|A_RemoveVideoByVideoId
 	|A_SetPlaylistVideoOrder
+	|{
+		action: "ACTION_COPY_FROM_PLAYLIST";
+		sourcePlaylistId: "WL";
+	}
 	;
 ;
 type GC_Button=
