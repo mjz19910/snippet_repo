@@ -90,14 +90,6 @@ type GD_EngagementPanelMenu={
 	visibilityButton: R_Button;
 	trackingParams: string;
 };
-type GD_Icon=NonNullable<[
-	T_Icon<D_AnyIconStr>,
-	Extract<D_Button,{icon: any;}>['icon'],
-	D_InfoRow['expandIcon'],
-	D_TopicLink['callToActionIcon'],
-	T_Icon<"LIBRARY_REMOVE">,
-	D_ThumbnailOverlayHoverText['icon']
-][number]>;
 type GE_Continuation=E_GetNotificationMenu|C_Continuation|E_GetTranscript;
 type G_SettingItemIdEnum=
 	|"NOTIFICATION_SUBSCRIPTION_NOTIFICATIONS"

@@ -2529,6 +2529,7 @@ class HandleTypes extends ServiceMethods {
 				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
 				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
 				if(this.is_TE_VE(x2,11487)) return this.E_VE11487(x2);
+				if(this.is_TE_VE(x2,23462)) return this.E_VE23462(x2);
 				x2; debugger;
 				break x;
 			}
@@ -4490,7 +4491,7 @@ class HandleTypes extends ServiceMethods {
 		if(typeof f2==="number"&&f2>0b1010111011010101010000001011) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
 		}
-		if(typeof f3==="number"&&f3>0b11111100000000010110010000100111) {
+		if(typeof f3==="number"&&f3>0b11111111000001011100100010001100) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
 		}
 	}

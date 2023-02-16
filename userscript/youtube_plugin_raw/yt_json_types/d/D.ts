@@ -1271,7 +1271,13 @@ type D_GuideEntry=
 		accessibility: TD_Accessibility<"Music">;
 	}
 	|TD_GuideEntry_Simple<"NEWS">
-	|TD_GuideEntry_Simple<"SETTINGS">
+	|{
+		navigationEndpoint: E_VE23462;
+		icon: T_Icon<"SETTINGS">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Settings">;
+	}
 	|TD_GuideEntry_Simple<"TRENDING">
 	|TD_GuideEntry_Simple<"TROPHY">
 	|TD_GuideEntry_Simple<"UNPLUGGED_LOGO">
@@ -1343,17 +1349,6 @@ type D_AnimationConfig={
 	crossfadeStartOffset: 1;
 	maxFrameRate: 30;
 };
-type D_AnyIconStr=[
-	"DELETE",
-	"EXPAND_MORE",
-	"MIX",
-	"MODERATOR",
-	"NOTIFICATIONS_ACTIVE",
-	"PRIVACY_UNLISTED",
-	"SETTINGS",
-	"SORT",
-	"YOUTUBE_SHORTS_BRAND_24",
-][number];
 type D_AnySaved={[U in D_SD_UrlTypes]?: GD_SD_Item;};
 type ApiFormatObj=[
 	["youtubei",[["v1",[
