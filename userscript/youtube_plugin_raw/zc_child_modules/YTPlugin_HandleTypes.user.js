@@ -4357,14 +4357,23 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(u);
 	}
+	/** @template {number} T @arg {T} t @arg {P_tracking_params} x @returns {x is {1: T_VW_3<"data32", T>;}} */
+	is_tp_xx(x,t) {return x[1][1]===t;}
 	/** @protected @arg {P_tracking_params} x */
 	P_tracking_params(x) {
 		const cf="P_tracking_params"; this.k(cf,x);
-		const {1: [,f1],2: [,f2],4: [,,f4],...u}=x;
-		this.a_primitive_num(f1);
+		if(this.is_tp_xx(x,0)) {
+			const {1: [,f1],2: [,f2],4: [,,f4],...y}=x; this.g(y);
+			this.save_number(`${cf}.f1`,f1);
+			this.a_primitive_num(f2);
+			this.V_BinaryTimestamp(f4);
+			return;
+		}
+		const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
+		this.save_number(`${cf}.f1`,f1);
 		this.a_primitive_num(f2);
+		if(f3!==1) debugger;
 		this.V_BinaryTimestamp(f4);
-		this.g(u);
 	}
 	/** @private @arg {V_BinaryTimestamp} x */
 	V_BinaryTimestamp(x) {
