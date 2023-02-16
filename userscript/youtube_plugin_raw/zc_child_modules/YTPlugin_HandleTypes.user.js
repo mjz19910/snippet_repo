@@ -990,8 +990,10 @@ class HandleTypes extends ServiceMethods {
 			/** @type {`${typeof cf}_WithEndpoint`} */
 			const cf2=`${cf}_WithEndpoint`;
 			const {endpoint,title,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
-			if(endpoint.commandMetadata.webCommandMetadata.rootVe!==3611) debugger;
-			debugger;
+			y: {
+				if(this.is_TE_VE(endpoint,3611)) {this.E_VE3611(endpoint); break y;}
+				debugger;
+			}
 			this.trackingParams(trackingParams);
 			this.save_string(`${cf2}.title`,title);
 		}
