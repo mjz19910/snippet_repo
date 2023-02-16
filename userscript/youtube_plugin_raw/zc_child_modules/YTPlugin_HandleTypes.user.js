@@ -394,13 +394,6 @@ class HandleTypes extends ServiceMethods {
 		if("updateSubscribeButtonAction" in x) return this.AU_SubscribeButton(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {G_ProfileColumnItem} x */
-	G_ProfileColumnItem(x) {
-		const cf="G_ProfileColumnItem";
-		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
-		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_LiveChatContinuationItem} x */
 	G_LiveChatContinuationItem(x) {
 		const cf="G_LiveChatContinuationItem";
@@ -533,6 +526,15 @@ class HandleTypes extends ServiceMethods {
 	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
 	/** @private @arg {R_ProfileColumn} x */
 	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
+	/** @private @arg {D_ProfileColumn} x */
+	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
+	/** @private @arg {G_ProfileColumnItem} x */
+	G_ProfileColumnItem(x) {
+		const cf="G_ProfileColumnItem";
+		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
+		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
 	/** @private @arg {D_BrowseFeedActions} x */
@@ -578,7 +580,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_ProfileColumnUserInfo} x */
 	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
 	/** @private @arg {R_SearchBox} x */
-	R_SearchBox(x) {this.H_("D_ProfileColumn","searchBoxRenderer",x,this.D_SearchBox);}
+	R_SearchBox(x) {this.H_("R_SearchBox","searchBoxRenderer",x,this.D_SearchBox);}
 	/** @private @arg {R_SubFeedSelector} x */
 	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
 	/** @private @arg {R_SubFeedOption} x */
@@ -2252,8 +2254,6 @@ class HandleTypes extends ServiceMethods {
 		this.z(playlists,this.R_PlaylistAddToOption);
 		this.z(actions,this.R_AddToPlaylistCreate);
 	}
-	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
 	/** @private @arg {D_ProfileColumnStatsEntry} x */
 	D_ProfileColumnStatsEntry(x) {
 		const cf="D_ProfileColumnStatsEntry";
