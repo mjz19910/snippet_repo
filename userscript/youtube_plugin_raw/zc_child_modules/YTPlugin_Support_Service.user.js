@@ -1125,6 +1125,21 @@ class Support_GenericApi extends ServiceMethods {
 class Support_EventInput extends ServiceMethods {
 	/** @private @arg {E_Settings} x */
 	E_Settings(x) {x; debugger;}
+	/** @public @arg {R_PageTypeBrowse["response"]} x */
+	R_PageTypeBrowse_Response(x) {
+		const cf="R_PageTypeBrowse_Response";
+		if("rootVe" in x) {
+			const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			if(url!=="/") debugger;
+		} else {
+			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+			switch(url) {
+				default: debugger; break;
+				case "/":
+				case "/feed/subscriptions":
+			}
+		}
+	}
 	/** @public @arg {R_PageTypeBrowse} x */
 	R_PageTypeBrowse(x) {
 		const cf="R_PageTypeBrowse";
@@ -1135,22 +1150,8 @@ class Support_EventInput extends ServiceMethods {
 		switch(ve) {
 			case 3854: case 96368:
 		}
+		this.R_PageTypeBrowse_Response(response);
 		{
-			/** @type {`RS_Page_VE${typeof ve}_Browse`} */
-			const cf=`RS_Page_VE${ve}_Browse`;
-			let x=response;
-			if("rootVe" in x) {
-				const {rootVe,page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				if(rootVe!==ve) debugger;
-				if(url!=="/") debugger;
-			} else {
-				const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				switch(url) {
-					default: debugger; break;
-					case "/":
-					case "/feed/subscriptions":
-				}
-			}
 		}
 		this.parser.parse_page_type(pageType);
 		this._primitive_of(fromHistory,"boolean");
