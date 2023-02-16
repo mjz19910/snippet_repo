@@ -5009,7 +5009,20 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf}.code`,code);
 		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
-	D_ActiveView(x) {x;}
+	/** @private @arg {D_EmptyMap} x */
+	D_EmptyMap(x) {
+		const cf="D_ActiveView";
+		const {emptyMap,...y}=this.s(cf,x); this.g(y);
+		this.ceq(emptyMap,true);
+	}
+	/** @private @arg {D_ActiveView} x */
+	D_ActiveView(x) {
+		const cf="D_ActiveView";
+		const {viewableCommands,endOfSessionCommands,regexUriMacroValidator,...y}=this.s(cf,x); this.g(y);
+		this.z(viewableCommands,this.E_Pinging);
+		this.z(endOfSessionCommands,this.E_Pinging);
+		this.D_EmptyMap(regexUriMacroValidator);
+	}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
