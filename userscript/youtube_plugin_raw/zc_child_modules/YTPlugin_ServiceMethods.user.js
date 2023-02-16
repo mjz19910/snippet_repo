@@ -2123,7 +2123,13 @@ class ServiceMethods extends ServiceData {
 		}
 		if("navigationEndpoint" in u&&"loggingDirectives" in u) {
 			const {navigationEndpoint,loggingDirectives,...y}=u;/*#destructure_done*/
-			this.E_VE6827(navigationEndpoint);
+			let h=() => {
+				let x2=navigationEndpoint;
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,3611)) return this.E_VE3611(x2);
+				debugger;
+			};
+			h();
 			this.D_LoggingDirectives(loggingDirectives);
 			if("bold" in y) {
 				const {bold,...y1}=y; this.g(y1);/*#destructure_done*/
@@ -2138,8 +2144,8 @@ class ServiceMethods extends ServiceData {
 			x: {
 				let x2=navigationEndpoint;
 				if("browseEndpoint" in x2) {
-					if(this.is_TE_VE(x2,3611))  {this.E_VE3611(x2);break x;}
-					if(this.is_TE_VE(x2,6827))  {this.E_VE6827(x2);break x;}
+					if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
+					if(this.is_TE_VE(x2,6827)) {this.E_VE6827(x2); break x;}
 					debugger;
 					break x;
 				}
