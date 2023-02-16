@@ -197,71 +197,7 @@ class HandleTypes extends ServiceMethods {
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @protected @arg {Response} response @arg {G_ResponseTypes} x */
-	G_ResponseTypes(response,x) {
-		const cf="G_ResponseTypes"; this.ks(cf,x);
-		if(!response.ok) {
-			console.log("not ok",x);
-			return;
-		}
-		/** @private @arg {{type:string}} x */
-		let g=x => {return this.save_string("need_api_type",x.type);};
-		switch(x.type) {case "_Generic": return g(x);}
-		/** @private */
-		this._current_response_type=x.type;
-		/** @private @type {{data:{responseContext:RC_ResponseContext;}}} */
-		let v=x;
-		this.RC_ResponseContext(v.data.responseContext);
-		x: if("actions" in x.data) {
-			if(x.type==="account.account_menu") break x;
-			if(x.type==="browse.edit_playlist") break x;
-			if(x.type==="like.dislike") break x;
-			if(x.type==="notification.get_notification_menu") break x;
-			if(x.type==="notification.get_unseen_count") break x;
-			if(x.type==="notification.modify_channel_preference") break x;
-			if(x.type==="share.get_share_panel") break x;
-			if(x.type==="subscription.subscribe") break x;
-			if(x.type==="subscription.unsubscribe") break x;
-			if(x.type==="updated_metadata") break x;
-			if(x.type==="get_transcript") break x;
-		}
-		switch(x.type) {
-			case "account.account_menu": return this.RS_AccountMenu(x.data);
-			case "account.accounts_list": return this.RS_AccountsList(x.data);
-			case "account.set_setting": return this.RS_SetSetting(x.data);
-			case "att.get": return this.RS_AttGet(x.data);
-			case "att.log": return this.RS_AttLog_RC(x.data);
-			case "browse.edit_playlist": return this.RSB_EditPlaylist(x.data);
-			case "browse": return this.support_RS_Browse.RS_Browse(x.data);
-			case "feedback": return this.RS_Feedback(x.data);
-			case "get_transcript": return this.RSG_Transcript(x.data);
-			case "get_survey": return this.RSG_Survey(x.data);
-			case "getAccountSwitcherEndpoint": return this.REG_AccountSwitcher(x.data);
-			case "getDatasyncIdsEndpoint": return this.REG_DatasyncIds(x.data);
-			case "guide": return this.RS_Guide(x.data);
-			case "like.like": return this.RSL_Like(x.data);
-			case "like.dislike": return this.RSL_Dislike(x.data);
-			case "like.removelike": return this.RSL_RemoveLike(x.data);
-			case "live_chat.get_live_chat_replay": return this.RS_GetLiveChat(x.data);
-			case "live_chat.get_live_chat": return this.RS_GetLiveChat(x.data);
-			case "music.get_search_suggestions": return this.RSG_SearchSuggestions(x.data);
-			case "next": return this.RS_Next(x.data);
-			case "notification.get_notification_menu": return this.RSG_NotificationMenu(x.data);
-			case "notification.get_unseen_count": return this.RSG_GetUnseenCount(x.data);
-			case "notification.modify_channel_preference": return this.RSM_ChannelPreference(x.data);
-			case "notification.record_interactions": return this.RS_Success(x.data);
-			case "player": return this.support_RS_Player.RS_Player(x.data);
-			case "playlist.get_add_to_playlist": return this.RSG_AddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.RSW_ReelItem(x.data);
-			case "reel.reel_watch_sequence": return this.RS_ReelWatchSequence(x.data);
-			case "share.get_share_panel": return this.RSG_SharePanel(x.data);
-			case "subscription.subscribe": return this.RS_Subscribe(x.data);
-			case "subscription.unsubscribe": return this.RS_Unsubscribe(x.data);
-			case "search": return this.RS_Search(x.data);
-			case "updated_metadata": return this.RSU_M(x.data);
-			case "pdg.get_pdg_buy_flow": return this.RSG_PdgBuyFlow(x.data);
-			default: debugger; return g(x);
-		}
-	}
+	G_ResponseTypes(response,x) {this.support_GenericApi.G_ResponseTypes(response,x);}
 	/** @private @arg {G_NextContents} x */
 	G_NextContents(x) {
 		const cf="G_NextContents";
