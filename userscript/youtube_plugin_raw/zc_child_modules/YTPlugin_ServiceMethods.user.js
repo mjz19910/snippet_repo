@@ -342,6 +342,16 @@ class ServiceMethods extends ServiceData {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		return `VE${rootVe}`;
 	}
+	/** @private @arg {GM_Like} x */
+	GM_Like(x) {
+		const cf="GM_Like"; this.ks(cf,x);
+		switch(x.apiUrl) {
+			default: {x===""; this.codegen_typedef(cf,x);} break;
+			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
+			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
+			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
+		}
+	}
 	/** @private @arg {GM_EditPlaylist} x */
 	GM_EditPlaylist(x) {this.T_GM("GM_EditPlaylist",x,x => this.ceq(x,"/youtubei/v1/browse/edit_playlist"));}
 	/** @private @arg {GM_YpcGetOffers} x */
@@ -2076,16 +2086,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_SignalNavigation} x */
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
-	/** @private @arg {GM_Like} x */
-	GM_Like(x) {
-		const cf="GM_Like"; this.ks(cf,x);
-		switch(x.apiUrl) {
-			default: {x===""; this.codegen_typedef(cf,x);} break;
-			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
-			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
-			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
-		}
-	}
 	/** @private @arg {GU_VE6827_Url} x */
 	D_VE6827_Url(x) {
 		let [f,...pf]=split_string(x,"/"); if(f!=="") debugger;
