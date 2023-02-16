@@ -2391,7 +2391,7 @@ type D_PlaylistHeader={
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;
 	shufflePlayButton: R_Button;
-	onDescriptionTap: T_OpenPopup_Dialog<R_FancyDismissibleDialog>;
+	onDescriptionTap: TA_OpenPopup<T_OpenPopup_Dialog<R_FancyDismissibleDialog>>;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: G_Text;

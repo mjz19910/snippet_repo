@@ -594,6 +594,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup<D_GetAccountMenu_Popup>";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup<Popup_ConfirmDialog>";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:TA_OpenPopup_Empty";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:T_OpenPopup_Dialog";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TA_OpenPopup:a";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:CF_TD_ItemSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection:TD_ItemSection_1<any>";}
@@ -828,6 +829,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup<D_GetAccountMenu_Popup>";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup<Popup_ConfirmDialog>";}
 		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "TA_OpenPopup_Empty";}
+		|{n: Prelude.CF_TA_OpenPopup; t: Types.CF_TA_OpenPopup_; v: "T_OpenPopup_Dialog";}
 		|{n: Prelude.CF_TA_Page; t: Types.CF_TA_Page_; v: "AD_UpdateChannelSwitcherPage";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_1<any>";}
 		|{n: Prelude.CF_TD_ItemSection; t: Types.CF_TD_ItemSection_; v: "TD_ItemSection_3<\"comment-item-section\",\"comments-section\">";}

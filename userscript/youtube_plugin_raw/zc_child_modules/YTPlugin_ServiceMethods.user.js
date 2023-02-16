@@ -7615,6 +7615,18 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
+	/** @public @arg {D_FancyDismissibleDialog} x */
+	D_FancyDismissibleDialog(x) {
+		const cf="D_PlaylistHeader";
+		const {...y}=this.s(cf,x); this.g(y);
+	}
+	/** @public @arg {R_FancyDismissibleDialog} x */
+	R_FancyDismissibleDialog(x) {this.H_("R_FancyDismissibleDialog","fancyDismissibleDialogRenderer",x,this.D_FancyDismissibleDialog);}
+	/** @private @arg {D_PlaylistHeader["onDescriptionTap"]} x */
+	T_OpenPopup_Dialog(x) {
+		let {popup}=this.TA_OpenPopup("T_OpenPopup_Dialog",x);
+		this.R_FancyDismissibleDialog(popup);
+	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader";
@@ -7635,8 +7647,7 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(numVideosText);
 		this.G_Text(descriptionTapText);
 		this.g(descriptionText);
-		if(!onDescriptionTap.openPopupAction) debugger;
-		this.g(onDescriptionTap.openPopupAction);
+		this.T_OpenPopup_Dialog(onDescriptionTap);
 		this.D_CanShare(shareData);
 		this.z(stats,this.G_Text);
 		this.z(briefStats,this.G_Text);
