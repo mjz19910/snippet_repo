@@ -699,6 +699,10 @@ class HandleTypes extends ServiceMethods {
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @public @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
+	/** @public @template {string} SW @arg {SW} sw @arg {["",string]} x @returns {x is ["",`${SW}${string}`]} */
+	str_starts_with_rx_in_arr(x,sw) {
+		return this.str_starts_with(x[1],sw);
+	}
 	/** @public @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
 	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}featured`,`UC${string}`,string]|[1,`UC${string}featured`,`UC${string}`,"featured"]]} */
@@ -706,16 +710,15 @@ class HandleTypes extends ServiceMethods {
 		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
 			let ss=split_string(x.targetId,"browse-feed");
 			if(ss.length!==2) return [false,null];
+			if(!this.str_starts_with_rx_in_arr(ss,"UC")) return [false,null];
 			let sa=ss[1];
 			let ll=sa.slice(24);
+			if(!this.str_starts_with_rx("UC",sa)) return [false,null];
+			if(ll!=="featured") return [false,null];
 			/** @returns {`UC${string}`} */
 			function wx() {return "UC";}
-			if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
-				let [cid,fe]=split_string_once_last(sa,"featured",wx()); if(fe!=="") debugger;
-				return [true,[1,sa,cid,ll]];
-			}
 			let [cid,fe]=split_string_once_last(sa,"featured",wx()); if(fe!=="") debugger;
-			return [true,[2,sa,cid,ll]];
+			return [true,[1,sa,cid,ll]];
 		}
 		return [false,null];
 	}
