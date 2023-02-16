@@ -438,6 +438,7 @@ class Support_RS_Player extends ServiceMethods {
 				}
 				debugger;
 			} break;
+			case "Nonprofits & Activism":
 			case "Travel & Events": case "Sports": case "Education": case "Pets & Animals":
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
 			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":

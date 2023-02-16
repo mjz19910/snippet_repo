@@ -146,6 +146,7 @@ type D_VideoCategory=
 	|"Gaming"
 	|"Howto & Style"
 	|"Music"
+	|"Nonprofits & Activism"
 	|"People & Blogs"
 	|"Pets & Animals"
 	|"Science & Technology"
@@ -1010,6 +1011,10 @@ type D_TextRun={
 }|{
 	text: "#shorts";
 	navigationEndpoint: E_VE6827;
+	loggingDirectives: D_LoggingDirectives;
+}|{
+	text: `@${string}`;
+	navigationEndpoint: E_VE3611;
 	loggingDirectives: D_LoggingDirectives;
 }|{
 	text: "#lockpicking";
