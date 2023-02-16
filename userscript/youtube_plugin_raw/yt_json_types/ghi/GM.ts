@@ -101,6 +101,7 @@ type GM_CreateComment=T_GM_PostApi_WithApiUrl<"/youtubei/v1/comment/create_comme
 type GM_CreatePlaylist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/create">;
 type GM_Dislike=T_GM_PostApi_WithApiUrl<"/youtubei/v1/like/dislike">;
 type GM_EditPlaylist=T_GM_PostApi_WithApiUrl<"/youtubei/v1/browse/edit_playlist">;
+type GM_GetSettingsEditor=T_GM_PostApi_WithApiUrl<"/youtubei/v1/playlist/get_settings_editor">;
 type GM_Feedback=T_GM_PostApi_WithApiUrl<"/youtubei/v1/feedback">;
 type GM_FlagGetForm=T_GM_PostApi_WithApiUrl<"/youtubei/v1/flag/get_form">;
 type GM_GetNotificationMenu=T_GM_PostApi_WithApiUrl<"/youtubei/v1/notification/get_notification_menu">;

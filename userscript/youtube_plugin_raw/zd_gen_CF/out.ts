@@ -736,6 +736,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_FlagGetForm";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetNotificationMenu";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetPdgBuyFlow";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetSettingsEditor";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetSharePanel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetTranscript";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_WCM:M_GetUnseenNotificationCount";}
@@ -982,6 +983,7 @@ export namespace Gen {
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_FlagGetForm";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetNotificationMenu";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetPdgBuyFlow";}
+		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetSettingsEditor";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetSharePanel";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetTranscript";}
 		|{n: Prelude.CF_T_WCM; t: Types.CF_T_WCM_; v: "M_GetUnseenNotificationCount";}

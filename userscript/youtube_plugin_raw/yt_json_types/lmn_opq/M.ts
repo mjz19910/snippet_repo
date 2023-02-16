@@ -21,6 +21,7 @@ type M_CreateBackstagePost=TM_Gen<GM_CreateBackstagePost>;
 type M_CreateComment=TM_Gen<GM_CreateComment>;
 type M_CreatePlaylist=TM_Gen<GM_CreatePlaylist>;
 type M_EditPlaylist=TM_Gen<GM_EditPlaylist>;
+type M_GetSettingsEditor=TM_Gen<GM_GetSettingsEditor>;
 type M_Feedback=TM_Gen<GM_Feedback>;
 type M_FlagGetForm=TM_Gen<GM_FlagGetForm>;
 type M_GetNotificationMenu=TM_Gen<GM_GetNotificationMenu>;
