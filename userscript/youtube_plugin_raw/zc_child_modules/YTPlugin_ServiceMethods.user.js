@@ -21,17 +21,6 @@ const ServiceData=bs.ServiceData;
 const split_string=bs.split_string,split_string_once=bs.split_string_once,split_string_once_last=bs.split_string_once_last;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
-	static init_once=false;
-	/** @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		if(ServiceMethods.init_once) {
-			return;
-		}
-		ServiceMethods.init_once=true;
-		// cyclic import SupportService -> ServiceMethods -> SupportService
-		let ss=required(store["mod$SupportService"]);
-	}
 	k=this.save_keys;
 	ks=this.k;
 	/** @override @returns {"unknown"|"normal"} */

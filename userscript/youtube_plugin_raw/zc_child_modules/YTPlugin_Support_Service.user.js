@@ -54,15 +54,15 @@ class Support_RS_Player extends ServiceMethods {
 	//#endregion
 	/** @public @arg {RS_Player} x */
 	RS_Player(x) {
-		const cf="RS_Player"; const cls_=this.x.get("handle_types");
+		const cf="RS_Player";
 		const {responseContext: {},playabilityStatus,streamingData,heartbeatParams,playerAds,playbackTracking,videoDetails,playerConfig,storyboards,microformat,cards,trackingParams,attestation,videoQualityPromoSupportedRenderers,captions,adPlacements,frameworkUpdates,endscreen,paidContentOverlay,annotations,cacheMetadata,...y}=this.s(cf,x); this.g(y);
 		this.D_PlayabilityStatus(playabilityStatus);
 		this.t(streamingData,this.DD_Streaming);
 		this.t(heartbeatParams,this.D_HeartbeatParams);
 		this.tz(playerAds,this.R_DesktopWatchAds);
 		this.t(playbackTracking,this.D_PlaybackTracking);
-		this.t(videoDetails,x => cls_.D_VideoDetails(x));
-		this.t(playerConfig,x => cls_.D_PlayerConfig(x));
+		this.t(videoDetails,x => this.handle_types.D_VideoDetails(x));
+		this.t(playerConfig,x => this.handle_types.D_PlayerConfig(x));
 		this.t(storyboards,this.G_PlayerStoryboards);
 		this.t(microformat,this.R_PlayerMicroformat);
 		this.t(cards,this.R_CardCollection);
@@ -631,28 +631,26 @@ class Support_RS_WatchPage extends ServiceMethods {
 	}
 	/** @private @arg {RS_VE3832_Page_Watch} x */
 	RS_VE3832_Page_Watch(x) {
-		const cls_=this.x.get("handle_types");
 		const cf="R_WatchPage_VE3832"; this.k(cf,x);
-		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=cls_.s(cf,x); this.g(y);/*#destructure_done*/
+		const {page: {},rootVe,url,endpoint,preconnect,playerResponse,response,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(rootVe!==3832) debugger;
-		let wp_params=cls_.parse_watch_page_url(cf,url);
+		let wp_params=this.handle_types.parse_watch_page_url(cf,url);
 		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
-		cls_.E_Watch(endpoint);
-		if(preconnect!==void 0) cls_.parse_preconnect_arr(preconnect);
+		this.E_Watch(endpoint);
+		if(preconnect!==void 0) this.handle_types.parse_preconnect_arr(preconnect);
 		this.handle_types.z_RS_support_player.RS_Player(playerResponse);
 		this.handle_types.z_Support_RS_Watch.RS_Watch(response);
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
-		const cls_=this.x.get("handle_types");
 		const cf="RS_Page_Watch"; this.k(cf,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		cls_.E_Watch(endpoint);
+		this.E_Watch(endpoint);
 		this.handle_types.z_Support_RS_Watch.RS_Watch(response);
 		this.handle_types.z_RS_support_player.RS_Player(playerResponse);
-		let wp_params=cls_.parse_watch_page_url(cf,url);
+		let wp_params=this.handle_types.parse_watch_page_url(cf,url);
 		this.save_keys(`${cf}.wp_params`,wp_params);
-		this.t(previousCsn,x => cls_.D_VeCsn(x,true));
+		this.t(previousCsn,x => this.handle_types.D_VeCsn(x,true));
 	}
 }
 class Support_RS_Watch extends ServiceMethods {
