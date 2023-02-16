@@ -998,6 +998,9 @@ type D_TextRun={
 	text: string;
 	navigationEndpoint: E_VE3611;
 }|{
+	text: "https://www.deviantart.com/zianu/art/...";
+	navigationEndpoint: E_VE83769_Url;
+}|{
 	text: "#shorts";
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;

@@ -11,7 +11,7 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YtPlugin_Codegen.user.js
 // ==/UserScript==
-if(__yt_plugin_log_imports__) console.log("Load Codegen Service");
+if(window.__yt_plugin_log_imports__) console.log("Load Codegen Service");
 const __module_name__="mod$CodegenService";
 const store=required(window.__plugin_modules__);
 const bs=required(store["mod$YoutubePluginBase"]);
@@ -578,6 +578,13 @@ class CodegenService extends BaseService {
 			if(!(xu.browseEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
 			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
 			return `TYPE::E_VE${ve_num}`;
+		}
+		x: if(x.urlEndpoint) {
+			/** @type {Partial<E_VE83769_Url>} */
+			let xu=x;
+			if(!(xu.urlEndpoint&&xu.clickTrackingParams&&xu.commandMetadata)) break x;
+			let ve_num=xu.commandMetadata.webCommandMetadata.rootVe;
+			return `TYPE::E_VE${ve_num}_Url`;
 		}
 		/** @private @type {G_Text} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::G_Text";

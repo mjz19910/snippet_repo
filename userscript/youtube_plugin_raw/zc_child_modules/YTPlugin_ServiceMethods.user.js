@@ -568,7 +568,7 @@ class ServiceMethods extends ServiceData {
 	D_Button_NavEP(x) {
 		const cf="D_Button_NavEP";
 		if("shareEntityServiceEndpoint" in x) return this.E_ShareEntityService(x);
-		if("browseEndpoint" in x) {debugger; return; }
+		if("browseEndpoint" in x) {debugger; return;}
 		if("watchEndpoint" in x) return this.E_Watch(x);
 		if("urlEndpoint" in x) return this.E_VE83769_Url(x);
 		if("createCommentReplyDialogEndpoint" in x) return;
@@ -2094,7 +2094,11 @@ class ServiceMethods extends ServiceData {
 		}
 		if("navigationEndpoint" in u) {
 			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
-			this.E_VE3611(navigationEndpoint);
+			x: {
+				let x2=navigationEndpoint;
+				if("browseEndpoint" in x2) {this.E_VE3611(x2); break x;}
+				this.E_VE83769_Url(x2);
+			}
 			return;
 		}
 		if("bold" in u) {
