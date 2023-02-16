@@ -2152,7 +2152,7 @@ class HandleTypes extends ServiceMethods {
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x);
 			} break;
 			case "tracking.click_tracking_params": {
-			/** @type {R_ClickTrackingObj} */
+				/** @type {R_ClickTrackingObj} */
 				let u=as_any(x);
 				this.R_ClickTrackingObj(u);
 			} break;
@@ -2256,11 +2256,21 @@ class HandleTypes extends ServiceMethods {
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
+	/** @protected @arg {R_ClickTrackingObj_t1} x */
+	R_ClickTrackingObj_t1(x) {
+		const cf="R_ClickTrackingObj_t1";
+		const {1: [t1,f1],2: [t2,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
+		if(t1!=="data32") debugger;
+		if(t2!=="data32") debugger;
+		this.save_number(`${cf}.${t1}.f1`,f1);
+		this.a_primitive_num(f2);
+		this.V_BinaryTimestamp(f4);
+	}
 	/** @protected @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
 		const cf="R_ClickTrackingObj"; this.k(cf,x);
-		if(1 in x) return;
-		const {4: [,,f4],...u}=x;
+		if(1 in x) return this.R_ClickTrackingObj_t1(x);
+		const {4: [,,f4],...u}=this.s(cf,x);
 		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
 			const {6: [ty,[ty2,f6]],...y}=u; this.g(y);
