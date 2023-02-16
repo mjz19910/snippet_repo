@@ -52,3 +52,4 @@ type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
 	},
 	4: T_D32<2>;
 };
+type P_service$create_playlist={1: T_D32<4>};

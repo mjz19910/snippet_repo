@@ -4351,7 +4351,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_num(f2);
 		switch(f3) {
 			default: this.codegen_typedef_bin(cf,x); debugger; break;
-			case 1:
+			case 1: case 2:
 		}
 		this.V_BinaryTimestamp(f4);
 	}
@@ -4425,6 +4425,11 @@ class HandleTypes extends ServiceMethods {
 				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 				debugger;
 			} break;
+			case "service$create_playlist": {
+				/** @type {P_service$create_playlist} */
+				let u=as_any(x);
+				this.P_service_create_playlist(u);
+			} break;
 			case "ad_slot_logging_data.serialized_slot_ad_serving_data_entry": {
 				/** @type {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} */
 				let u=as_any(x);
@@ -4451,6 +4456,8 @@ class HandleTypes extends ServiceMethods {
 	P_ad_layout_ad_serving_data_entry(x) {x;}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
 	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
+	/** @private @arg {P_service$create_playlist} x */
+	P_service_create_playlist(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

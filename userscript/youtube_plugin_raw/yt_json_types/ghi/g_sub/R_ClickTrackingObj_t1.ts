@@ -8,4 +8,9 @@ type R_ClickTrackingObj_t1={
 	2: T_D32<62457>,
 	3: T_D32<1>,
 	4: T_VW_2<V_BinaryTimestamp>;
+}|{
+	1: T_D32<501>,
+	2: T_D32<79431>,
+	3: T_D32<2>,
+	4: T_VW_2<V_BinaryTimestamp>
 };
