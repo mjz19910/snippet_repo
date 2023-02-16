@@ -27,6 +27,23 @@ type E_Subscribe=TE_Endpoint_3<"subscribeEndpoint",DE_Subscribe,M_Subscribe>;
 type E_UndoFeedback=TE_Endpoint_3<"undoFeedbackEndpoint",DE_UndoFeedback,M_Feedback>;
 type E_VE83769_Upload=TE_Endpoint_3<"uploadEndpoint",B_Hack,M_VE83769>;
 type DE_VE83769_Url_1$d$ad_url={gclid: string;};
+type DE_VE83769_Url_1$d$ad_url2={
+	utm_term: "";
+	utm_campaign: "DISPLAY campaign for \"web development\" landing page";
+	utm_source: "adwords";
+	utm_medium: "ppc";
+	hsa_acc: `${number}`;
+	hsa_cam: `${number}`;
+	hsa_grp: `${number}`;
+	hsa_ad: `${number}`;
+	hsa_src: "d";
+	hsa_tgt: "";
+	hsa_kw: "";
+	hsa_mt: "";
+	hsa_net: "adwords";
+	hsa_ver: "3";
+	gclid: string;
+};
 type DE_VE83769_Url_Shape={
 	sa: "l";
 	ai: string;
@@ -36,7 +53,7 @@ type DE_VE83769_Url_Shape={
 	sig: string;
 	client: `ca-pub-${number}`;
 	rf: "3";
-	adurl: `https://plantagreenhouses.ca/?gclid=${string}`;
+	adurl: `https://plantagreenhouses.ca/?gclid=${string}`|`https://www.newdawndevelopments.com/service/custom-homes?gclid=${string}&hsa_ver=3&hsa_net=adwords&hsa_mt=&hsa_kw=&hsa_tgt=&hsa_src=d&hsa_ad=${number}&hsa_grp=${number}&hsa_cam=${number}&hsa_acc=${number}&utm_medium=ppc&utm_source=adwords&utm_campaign=DISPLAY+campaign+for+%22web+development%22+landing+page&utm_term=`;
 };
 type DE_VE83769_Url_1={
 	url: `https://googleads.g.doubleclick.net/aclk?adurl=${string}&rf=3&client=ca-pub-${number}&sig=${string}&cid=${string}&num=1&ae=1&ai=${string}&sa=l`;
