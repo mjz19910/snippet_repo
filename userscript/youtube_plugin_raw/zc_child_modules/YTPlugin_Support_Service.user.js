@@ -998,6 +998,16 @@ class Support_GenericApi extends ServiceMethods {
 	}
 	/** @private @arg {R_AddToPlaylistCreate} x */
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
+	/** @private @arg {D_AddToPlaylistCreate} x */
+	D_AddToPlaylistCreate(x) {
+		const cf="D_AddToPlaylistCreate";
+		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.R_CompactLink(openCreateLink);
+		this.R_TextInputFormField(nameInput);
+		this.R_Dropdown(privacyInput);
+		this.R_Button(createAction);
+		this.E_CreatePlaylistService(serviceEndpoint);
+	}
 	/** @private @arg {R_PlaylistAddToOption} x */
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {C_RefreshPlaylist} x */

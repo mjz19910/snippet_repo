@@ -2006,16 +2006,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(title);
 		this.R_Button(button);
 	}
-	/** @private @arg {D_AddToPlaylistCreate} x */
-	D_AddToPlaylistCreate(x) {
-		const cf="D_AddToPlaylistCreate";
-		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.R_CompactLink(openCreateLink);
-		this.R_TextInputFormField(nameInput);
-		this.R_Dropdown(privacyInput);
-		this.R_Button(createAction);
-		this.E_CreatePlaylistService(serviceEndpoint);
-	}
 	/** @private @arg {D_TextInputFormField} x */
 	D_TextInputFormField(x) {
 		const cf="D_TextInputFormField";
