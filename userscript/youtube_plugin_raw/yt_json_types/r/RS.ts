@@ -51,7 +51,7 @@ type RS_Channel={
 	trackingParams: string;
 	topbar: R_DesktopTopbar;
 	microformat: R_MicroformatData;
-	onResponseReceivedActions: C_ResetChannelUnreadCount[];
+	onResponseReceivedActions?: C_ResetChannelUnreadCount[];
 	cacheMetadata?: D_Cache_MD;
 };
 type RS_Feedback={
