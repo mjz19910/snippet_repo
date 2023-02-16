@@ -23,13 +23,13 @@ const split_string=bs.split_string,split_string_once=bs.split_string_once,split_
 class ServiceMethods extends ServiceData {
 	k=this.save_keys;
 	ks=this.k;
+	/** @type {this["handle_types"]|null} */
+	_b_cls=null;
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
 	get handle_types() {
 		return this.x.get("handle_types");
 	}
-	/** @type {this["handle_types"]|null} */
-	_b_cls=null;
 	get b_cls() {
 		if(this._b_cls) return this._b_cls;
 		this._b_cls=this.handle_types;
@@ -38,6 +38,8 @@ class ServiceMethods extends ServiceData {
 	get indexed_db() {
 		return this.x.get("indexed_db");
 	}
+	/** @protected @returns {true} */
+	true_() {return true;}
 	/** @public @arg {CF_T_Items_TP} cf @template T @arg {T_Items_TP<T>} x */
 	T_Items_TP(cf,x) {
 		const {trackingParams,...y}=this.s(cf,x);/*#destructure_off*/
@@ -370,6 +372,20 @@ class ServiceMethods extends ServiceData {
 	GM_Browse(x) {this.T_GM("GM_Browse",x,x => this.ceq(x,"/youtubei/v1/browse"));}
 	/** @protected @arg {GM_AddToPlaylistService} x */
 	GM_AddToPlaylistService(x) {this.T_GM("GM_AddToPlaylistService",x,x => this.ceq(x,"/youtubei/v1/playlist/get_add_to_playlist"));}
+	/** @private @arg {GM_RemoveLike} x */
+	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
+	/** @private @arg {GM_Dislike} x */
+	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.ceq(x,"/youtubei/v1/like/dislike"));}
+	/** @private @arg {GM_LikeLike} x */
+	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.ceq(x,"/youtubei/v1/like/like"));}
+	/** @private @arg {GM_RecordInteractions} x */
+	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
+	/** @private @arg {GM_CreateBackstagePost} x */
+	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
+	/** @private @arg {GM_Subscribe} x */
+	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
+	/** @protected @arg {GM_UserFeedback} x */
+	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {DE_PlaylistEdit} x */
@@ -3417,12 +3433,6 @@ class ServiceMethods extends ServiceData {
 		this.t(uiActions,this.D_HideEnclosingContainer);
 		this.t(actions,x => this.z(x,this.DE_Feedback_ActionItem));
 	}
-	/** @private @arg {GM_RemoveLike} x */
-	GM_RemoveLike(x) {this.T_GM("GM_RemoveLike",x,x => this.ceq(x,"/youtubei/v1/like/removelike"));}
-	/** @private @arg {GM_Dislike} x */
-	GM_Dislike(x) {this.T_GM("GM_Dislike",x,x => this.ceq(x,"/youtubei/v1/like/dislike"));}
-	/** @private @arg {GM_LikeLike} x */
-	GM_LikeLike(x) {this.T_GM("GM_LikeLike",x,x => this.ceq(x,"/youtubei/v1/like/like"));}
 	/** @private @arg {M_CreateBackstagePost} x */
 	M_CreateBackstagePost(x) {this.T_WCM("M_CreateBackstagePost",x,this.GM_CreateBackstagePost);}
 	/** @private @arg {E_Subscribe} x */
@@ -3454,8 +3464,6 @@ class ServiceMethods extends ServiceData {
 	E_RecordNotificationInteractions(x) {const [a,b,y]=this.TE_Endpoint_3("E_RecordNotificationInteractions","recordNotificationInteractionsEndpoint",x); this.g(y); this.M_RecordInteractions(a); this.DE_RecordNotificationInteractions(b);}
 	/** @private @arg {M_RecordInteractions} x */
 	M_RecordInteractions(x) {this.T_WCM("M_RecordInteractions",x,this.GM_RecordInteractions);}
-	/** @private @arg {GM_RecordInteractions} x */
-	GM_RecordInteractions(x) {this.T_GM("GM_RecordInteractions",x,x => this.ceq(x,"/youtubei/v1/notification/record_interactions"));}
 	/** @private @arg {RD_MenuServiceItem["serviceEndpoint"]} x */
 	RD_MenuServiceItem_serviceEndpoint(x) {
 		const cf="RD_MenuServiceItem_serviceEndpoint";
@@ -3484,8 +3492,6 @@ class ServiceMethods extends ServiceData {
 		this.z(channelIds,this.D_ChannelId);
 		this.params("subscribe.params",params);
 	}
-	/** @private @arg {GM_CreateBackstagePost} x */
-	GM_CreateBackstagePost(x) {this.T_GM("GM_CreateBackstagePost",x,x => this.ceq(x,"/youtubei/v1/backstage/create_post"));}
 	/** @private @arg {M_Subscribe} x */
 	M_Subscribe(x) {this.T_WCM("M_Subscribe",x,this.GM_Subscribe);}
 	/** @private @arg {DC_ShowReloadUi} x */
@@ -3545,8 +3551,6 @@ class ServiceMethods extends ServiceData {
 		this.trackingParams(trackingParams);
 		this.D_Accessibility(accessibilityData);
 	}
-	/** @private @arg {GM_Subscribe} x */
-	GM_Subscribe(x) {this.T_GM("GM_Subscribe",x,x => this.ceq(x,"/youtubei/v1/subscription/subscribe"));}
 	/** @private @arg {E_NotificationOptOut} x */
 	E_NotificationOptOut(x) {const cf="E_NotificationOptOut",[a,b,y]=this.TE_Endpoint_3(cf,"notificationOptOutEndpoint",x); this.g(y); this.DE_NotificationOptOut(b); this.M_NotificationOptOut(a);}
 	/** @private @arg {E_UserFeedback} x */
@@ -3587,10 +3591,6 @@ class ServiceMethods extends ServiceData {
 	M_FlagGetForm(x) {this.T_WCM("M_FlagGetForm",x,this.GM_FlagGetForm);}
 	/** @private @arg {M_UserFeedback} x */
 	M_UserFeedback(x) {this.T_WCM("M_UserFeedback",x,this.GM_UserFeedback);}
-	/** @protected @returns {true} */
-	true_() {return true;}
-	/** @protected @arg {GM_UserFeedback} x */
-	GM_UserFeedback(x) {this.ceq(this.w("GM_UserFeedback","ignoreNavigation",x),this.true_());}
 	/** @private @arg {D_ChipUniqueId} x */
 	D_ChipUniqueId(x) {
 		const cf="D_ChipUniqueId";
