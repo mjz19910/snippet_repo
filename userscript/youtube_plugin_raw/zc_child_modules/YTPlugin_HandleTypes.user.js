@@ -3186,6 +3186,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="R_Obj_f19";
 		const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
 		this.save_number(`${cf}.f1`,f1);
+		this.save_number(`${cf}.f2`,f2);
 		switch(f2) {
 			default: debugger; break;
 			case 3832:

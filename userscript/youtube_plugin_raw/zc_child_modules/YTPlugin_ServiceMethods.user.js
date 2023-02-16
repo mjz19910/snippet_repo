@@ -244,7 +244,7 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
 	add_string_to_map(cf,k_arg,x) {
 		/** @type {`${typeof cf}::${typeof k_arg}`} */
-		let k=`${cf}::${k_arg}`; this.save_string(k,x);
+		let k=`${cf}::${k_arg}`;
 		let group_arr=this.strings_map.get(cf);
 		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
 		let group_entry=group_arr.find(e => e[0]===k);
