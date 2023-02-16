@@ -713,7 +713,7 @@ class HandleTypes extends ServiceMethods {
 	D_WatchNextTabbedResults(x) {
 		const cf="D_WatchNextTabbedResults";
 		const {tabs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(tabs,this.R_Tab);
+		this.z(tabs,x => this.support_EventInput.R_Tab(x));
 	}
 	//#region pause
 	//#endregion
