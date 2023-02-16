@@ -28,6 +28,9 @@ class ServiceMethods extends ServiceData {
 		this.z_Support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
 		this.z_Support_RS_Watch=new ss.Support_RS_Watch(x);
 	}
+	k=this.save_keys;
+	ks=this.k;
+	g_k=this.k;
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
 	get handle_types() {
@@ -512,8 +515,6 @@ class ServiceMethods extends ServiceData {
 			this.tz(serviceEndpoints,this.E_Like);
 		}
 	}
-	/** @protected @arg {string} cf @arg {{}} x */
-	g_k=this.k;
 	/** @protected @arg {E_Like} x */
 	E_Like(x) {const [a,b,y]=this.TE_Endpoint_3("E_Like","likeEndpoint",x); this.g(y); this.M_Like(a); this.DE_Like(b);}
 	/** @private @arg {M_Like} x */
@@ -979,8 +980,6 @@ class ServiceMethods extends ServiceData {
 		let r=x[hk];
 		return r;
 	}
-	k=this.save_keys;
-	ks=this.k;
 	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
 	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_EndscreenElement_EP} x */
