@@ -111,40 +111,40 @@ type P_playability_status_context_params={
 };
 type P_entity_key={
 	2: {
-		1: T_VSR<"z6EQlZaB7v8">
+		1: T_VSR<D_VideoId>;
 	},
 	4: T_D32<246>,
-	5: T_D32<1>
+	5: T_D32<1>;
 };
 type P_remove_like_params={
 	1: {
-		1: T_VSR<"z6EQlZaB7v8">
+		1: T_VSR<D_VideoId>;
 	},
 	3: T_D32<0>,
 	5: {
 		1: T_D32<1676518936>,
-		2: T_D32<441847181>
-	}
+		2: T_D32<441847181>;
+	};
 };
 type P_dislike_params={
 	1: {
-		1: T_VSR<"z6EQlZaB7v8">
+		1: T_VSR<D_VideoId>;
 	},
 	2: T_D32<0>,
 	4: {
 		1: T_D32<1676518936>,
-		2: T_D32<441858121>
-	}
+		2: T_D32<441858121>;
+	};
 };
 type P_subscribe_button_entity_key={
 	2: T_VSR<`UC${string}`>,
 	4: T_D32<51>,
-	5: T_D32<1>
+	5: T_D32<1>;
 };
 type P_subscribe_params={
 	2: {
-		1: T_D32<3>
+		1: T_D32<3>;
 	},
 	3: T_D32<0>,
-	4: T_VSR<"z6EQlZaB7v8">
+	4: T_VSR<D_VideoId>;
 };
