@@ -7617,7 +7617,7 @@ class ServiceMethods extends ServiceData {
 	R_PlaylistHeader(x) {this.H_("R_PlaylistHeader","playlistHeaderRenderer",x,this.D_PlaylistHeader);}
 	/** @public @arg {D_FancyDismissibleDialog} x */
 	D_FancyDismissibleDialog(x) {
-		const cf="D_PlaylistHeader";
+		const cf="D_FancyDismissibleDialog";
 		const {dialogMessage,confirmLabel,trackingParams,...y}=this.s(cf,x); this.g(y);
 		this.G_Text(dialogMessage);
 		this.G_Text(confirmLabel);
