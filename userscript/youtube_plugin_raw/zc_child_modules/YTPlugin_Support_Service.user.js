@@ -1381,6 +1381,31 @@ class Support_EventInput extends ServiceMethods {
 		const {veData,csn,...y}=this.s(cf,x); this.g(y);
 		this.D_VeCsn(csn);
 	}
+	/** @private @arg {RS_VE23462_Page_Settings} x */
+	RS_VE23462_Page_Settings(x) {
+		const cf="Settings_VE23462";
+		const {page,endpoint,response,url,rootVe,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(page!=="settings") debugger;
+		debugger;
+		this.RS_Settings(response);
+		this.a_primitive_str(url);
+		if(rootVe!==23462) debugger;
+	}
+	/** @private @arg {RS_VE37414_Shorts} x */
+	RS_VE37414_Shorts(x) {
+		const cf="Shorts_VE37414";
+		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(rootVe!==37414) debugger;
+		if(page!=="shorts") debugger;
+		this.support_RS_Player.RS_Player(playerResponse);
+		this.E_ReelWatch(endpoint);
+		this.RS_Reel(response);
+		this.t(reelWatchSequenceResponse,this.RS_ReelWatchSequence);
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(url.includes("&")) debugger;
+		if(!cachedReelWatchSequenceResponse) debugger;
+		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
