@@ -3213,52 +3213,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(simpleboxPlaceholder);
 		this.trackingParams(trackingParams);
 	}
-	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
-	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
-	/** @private @arg {Extract<D_SortFilterSubMenu,{targetId:any}>} x */
-	D_SortFilterSubMenu_WithTargetId(x) {
-		const cf="D_SortFilterSubMenu_WithTargetId";
-		switch(x.targetId) {
-			default: debugger; break;
-			case "live-chat-view-selector-sub-menu": {
-				const {subMenuItems,accessibility,trackingParams,targetId: {},...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.z(subMenuItems,x => {
-					const {title,selected,continuation,accessibility,subtitle,trackingParams,...y}=this.s(`${cf}.MenuItem`,x); this.g(y);
-					this.a_primitive_str(title);
-					this.a_primitive_bool(selected);
-					this.D_ReloadContinuationData(continuation);
-					this.D_Accessibility(accessibility);
-					this.a_primitive_str(subtitle);
-					this.trackingParams(trackingParams);
-				});
-				this.D_Accessibility(accessibility);
-				this.trackingParams(trackingParams);
-			} break;
-		}
-	}
-	/** @private @arg {D_SortFilterSubMenu} x */
-	D_SortFilterSubMenu(x) {
-		const cf="D_SortFilterSubMenu"; this.k(cf,x);
-		if("targetId" in x) return this.D_SortFilterSubMenu_WithTargetId(x);
-		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(subMenuItems,this.D_ActionSetPlaylistVideoOrder);
-		this.t(title,this.a_primitive_str);
-		this.dt(icon,x => x.iconType!=="SORT");
-		this.t(accessibility,this.D_Accessibility);
-		this.t(tooltip,this.a_primitive_str);
-		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_ActionSetPlaylistVideoOrder} x */
-	D_ActionSetPlaylistVideoOrder(x) {
-		const cf="D_ActionSetPlaylistVideoOrder"; this.k(cf,x);
-		const {title,selected,continuation,serviceEndpoint,accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.a_primitive_str(title);
-		this.a_primitive_bool(selected);
-		this.t(continuation,this.CD_Reload);
-		this.t(serviceEndpoint,this.C_Continuation);
-		this.t(accessibility,this.D_Accessibility);
-		this.trackingParams(trackingParams);
-	}
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {
 		let eid=split_string_once(x,"/");

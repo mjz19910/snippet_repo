@@ -20,6 +20,8 @@ const split_string=bs.split_string; const split_string_once=bs.split_string_once
 const as_any=bs.as_any;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
+	dt(x,f) {if(!x) return; let g=f.call(this,x); if(g) debugger;}
 	/** @template {CF_T_Commands} T_CF @arg {T_CF} cf @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	T_Commands(cf,x,f) {this.z(this.w(`T_Commands:${cf}`,"commands",x),f);}
 	get handle_types() {
@@ -6187,5 +6189,49 @@ class ServiceMethods extends ServiceData {
 	R_MusicShelfDivider(x) {this.H_("R_MusicShelfDivider","musicShelfDividerRenderer",x,this.g);}
 	/** @public @arg {R_SortFilterSubMenu} x */
 	R_SortFilterSubMenu(x) {this.H_("R_SortFilterSubMenu","sortFilterSubMenuRenderer",x,this.D_SortFilterSubMenu);}
+	/** @private @arg {D_SortFilterSubMenu} x */
+	D_SortFilterSubMenu(x) {
+		const cf="D_SortFilterSubMenu"; this.k(cf,x);
+		if("targetId" in x) return this.D_SortFilterSubMenu_WithTargetId(x);
+		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(subMenuItems,this.D_ActionSetPlaylistVideoOrder);
+		this.t(title,this.a_primitive_str);
+		this.dt(icon,x => x.iconType!=="SORT");
+		this.t(accessibility,this.D_Accessibility);
+		this.t(tooltip,this.a_primitive_str);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {D_ActionSetPlaylistVideoOrder} x */
+	D_ActionSetPlaylistVideoOrder(x) {
+		const cf="D_ActionSetPlaylistVideoOrder"; this.k(cf,x);
+		const {title,selected,continuation,serviceEndpoint,accessibility,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.a_primitive_str(title);
+		this.a_primitive_bool(selected);
+		this.t(continuation,this.CD_Reload);
+		this.t(serviceEndpoint,this.C_Continuation);
+		this.t(accessibility,this.D_Accessibility);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {Extract<D_SortFilterSubMenu,{targetId:any}>} x */
+	D_SortFilterSubMenu_WithTargetId(x) {
+		const cf="D_SortFilterSubMenu_WithTargetId";
+		switch(x.targetId) {
+			default: debugger; break;
+			case "live-chat-view-selector-sub-menu": {
+				const {subMenuItems,accessibility,trackingParams,targetId: {},...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				this.z(subMenuItems,x => {
+					const {title,selected,continuation,accessibility,subtitle,trackingParams,...y}=this.s(`${cf}.MenuItem`,x); this.g(y);
+					this.a_primitive_str(title);
+					this.a_primitive_bool(selected);
+					this.D_ReloadContinuationData(continuation);
+					this.D_Accessibility(accessibility);
+					this.a_primitive_str(subtitle);
+					this.trackingParams(trackingParams);
+				});
+				this.D_Accessibility(accessibility);
+				this.trackingParams(trackingParams);
+			} break;
+		}
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
