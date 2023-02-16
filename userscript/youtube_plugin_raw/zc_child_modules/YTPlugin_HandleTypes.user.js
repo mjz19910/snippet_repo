@@ -820,6 +820,7 @@ class HandleTypes extends ServiceMethods {
 			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
+			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
 			if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
 			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
