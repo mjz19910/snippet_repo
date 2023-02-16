@@ -7713,5 +7713,11 @@ class ServiceMethods extends ServiceData {
 	D_EditableDetails(x) {this.y("D_EditableDetails","canDelete",x,x => this.ceq(x,false));}
 	/** @private @arg {D_CanShare} x */
 	D_CanShare(x) {this.y("D_CanShare","canShare",x,x => this.ceq(x,false));}
+	/** @private @arg {E_PlaylistEditor} x */
+	E_PlaylistEditor(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEditor","playlistEditorEndpoint",x); this.g(y); this.M_Empty_WCM("DC_PlaylistEditor",a); this.DE_PlaylistEditor(b);}
+	/** @private @arg {DE_PlaylistEditor} x */
+	DE_PlaylistEditor(x) {this.y("DE_PlaylistEditor","playlistId",x,this.playlistId);}
+	/** @private @arg {string} cf @arg {M_Empty_WCM} x */
+	M_Empty_WCM(cf,x) {this.codegen_typedef(cf,x); this.GEN(cf,x);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
