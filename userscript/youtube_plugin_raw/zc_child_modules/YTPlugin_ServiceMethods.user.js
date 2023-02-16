@@ -4100,6 +4100,21 @@ class ServiceMethods extends ServiceData {
 			this.params("change_markers_visibility.entity.key",x);
 		});
 	}
+	/** @private @arg {E_Pinging} x */
+	E_Pinging(x) {
+		const cf="E_Pinging";
+		const {clickTrackingParams,loggingUrls,pingingEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.B_Hack(pingingEndpoint);
+		this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
+			let pr=this.parse_with_url_parse(x);
+			switch(pr.host) {
+				case "googleads.g.doubleclick.net": {
+
+				} break;
+				default: debugger; break;
+			};
+		}));
+	}
 	/** @protected @arg {E_CreatePlaylistService} x */
 	E_CreatePlaylistService(x) {const [a,b,y]=this.TE_Endpoint_3("E_CreatePlaylistService","createPlaylistServiceEndpoint",x); this.g(y); this.DS_CreatePlaylist(b); this.M_CreatePlaylist(a);}
 	/** @protected @arg {E_PerformCommentAction} x */
@@ -4991,8 +5006,6 @@ class ServiceMethods extends ServiceData {
 		this.save_number(`${cf}.code`,code);
 		this.save_enum("PROMOTED_SPARKLES_CLICK_BEHAVIOR_TYPE",behaviorType);
 	}
-	/** @private @arg {E_Pinging} x */
-	E_Pinging(x) {x;}
 	/** @private @arg {R_PromotedSparklesWeb} x */
 	R_PromotedSparklesWeb(x) {this.H_("R_PromotedSparklesWeb","promotedSparklesWebRenderer",x,this.D_PromotedSparklesWeb);}
 	/** @private @arg {D_PromotedSparklesWeb} x */
