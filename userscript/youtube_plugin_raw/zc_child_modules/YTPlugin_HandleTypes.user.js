@@ -4424,6 +4424,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {x;}
+	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
