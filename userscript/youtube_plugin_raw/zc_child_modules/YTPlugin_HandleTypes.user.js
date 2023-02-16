@@ -4449,8 +4449,13 @@ class HandleTypes extends ServiceMethods {
 				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 				debugger;
 			} break;
+			case "continuation_request.browse.token": {
+				/** @type {P_continuation_request_browse_token} */
+				let u=as_any(x);
+				this.P_continuation_request_browse_token(u);
+			} break;
 			case "service$create_playlist": {
-				/** @type {P_service$create_playlist} */
+				/** @type {P_service_create_playlist} */
 				let u=as_any(x);
 				this.P_service_create_playlist(u);
 			} break;
@@ -4477,11 +4482,25 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
-	P_ad_layout_ad_serving_data_entry(x) {x;}
+	P_ad_layout_ad_serving_data_entry(x) {
+		const cf="P_ad_layout_ad_serving_data_entry";
+		this.codegen_typedef_bin(cf,x,false);
+	}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
-	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
-	/** @private @arg {P_service$create_playlist} x */
-	P_service_create_playlist(x) {x;}
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {
+		const cf="P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry";
+		this.codegen_typedef_bin(cf,x,false);
+	}
+	/** @private @arg {P_service_create_playlist} x */
+	P_service_create_playlist(x) {
+		const cf="P_service_create_playlist";
+		this.codegen_typedef_bin(cf,x,false);
+	}
+	/** @private @arg {P_continuation_request_browse_token} x */
+	P_continuation_request_browse_token(x) {
+		const cf="P_continuation_request_browse_token";
+		this.codegen_typedef_bin(cf,x,false);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
