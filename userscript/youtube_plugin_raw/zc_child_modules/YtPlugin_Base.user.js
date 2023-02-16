@@ -2034,7 +2034,15 @@ class ApiBase {
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf<T>} */
 	get_keys_of(obj) {
 		if(!obj) {debugger;}
-		let rq=Object.keys(obj);
+		let rq=Object.keys(obj).map(v => {
+			/** @returns {number|string} */
+			function mk() {return parseInt(v,10);}
+			/** @type {string|number} */
+			let pn=mk();
+			if(Number.isNaN(pn)) return v;
+			if(pn!=v) return v;
+			return pn;
+		});
 		/** @private @type {any} */
 		let ra=rq;
 		return ra;
