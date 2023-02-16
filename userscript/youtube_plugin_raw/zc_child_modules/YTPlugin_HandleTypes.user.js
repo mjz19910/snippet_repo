@@ -816,17 +816,17 @@ class HandleTypes extends ServiceMethods {
 				if(e==="responseContext") return false;
 				return true;
 			}).join();
-			if(jk==="responseContext,contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="responseContext,continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
-			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
-			if(jk==="responseContext,contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
-			if(jk==="responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
-			if(jk==="responseContext,contents,header,trackingParams,topbar,observedStateTags") break x;
-			if(jk==="responseContext,header,trackingParams,onResponseReceivedActions") break x;
-			if(jk==="responseContext,contents,trackingParams,topbar,sidebar") break x;
-			if(jk==="responseContext,trackingParams,onResponseReceivedActions") break x;
-			if(jk==="responseContext,contents,header,trackingParams,topbar") break x;
+			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="continuationContents,metadata,trackingParams,microformat,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates") break x;
+			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
+			if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
+			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
+			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
+			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
+			if(jk==="contents,trackingParams,topbar,sidebar") break x;
+			if(jk==="trackingParams,onResponseReceivedActions") break x;
+			if(jk==="contents,header,trackingParams,topbar") break x;
 			console.log(`-- [RS_Browse.jk_gen] --\n\nif(jk==="${jk}") break x;`);
 			debugger;
 		}
