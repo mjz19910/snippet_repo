@@ -3210,7 +3210,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			if(!f9w) debugger;
 			if(f19w) {
-				f19w;
+				const [ty,,f19]=f19w;
 				debugger;
 			}
 			if(!f19w) debugger;
