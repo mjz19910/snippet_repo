@@ -449,8 +449,6 @@ class HandleTypes extends ServiceMethods {
 	A_ReplayChatItem(x) {this.H_("A_ReplayChatItem","replayChatItemAction",x,this.AD_ReplayChatItem);}
 	/** @private @arg {A_AccountItem} x */
 	A_AccountItem(x) {this.H_("A_AccountItem","accountItem",x,this.AD_AccountItem);}
-	/** @private @arg {R_MicroformatData} x */
-	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
 	/** @private @arg {R_SettingsSidebar} x */
 	R_SettingsSidebar(x) {this.H_("R_SettingsSidebar","settingsSidebarRenderer",x,this.D_SettingsSidebar);}
 	/** @private @arg {R_PlaylistSidebar} x */
@@ -503,17 +501,6 @@ class HandleTypes extends ServiceMethods {
 	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
 	/** @public @arg {R_ResourceStatusInResponseCheck} x */
 	R_ResourceStatusInResponseCheck(x) {this.H_("R_ResourceStatusInResponseCheck","resourceStatusInResponseCheck",x,this.D_ResourceStatusInResponseCheck);}
-	/** @private @arg {R_ProfileColumn} x */
-	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
-	/** @private @arg {D_ProfileColumn} x */
-	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
-	/** @private @arg {G_ProfileColumnItem} x */
-	G_ProfileColumnItem(x) {
-		const cf="G_ProfileColumnItem";
-		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
-		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {R_ReportFormModal} x */
@@ -526,18 +513,6 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistSidebarSecondaryInfo(x) {this.H_("R_PlaylistSidebarSecondaryInfo","playlistSidebarSecondaryInfoRenderer",x,this.D_PlaylistSidebarSecondaryInfo);}
 	/** @private @arg {R_TranscriptSearchPanel} x */
 	R_TranscriptSearchPanel(x) {this.H_("R_TranscriptSearchPanel","transcriptSearchPanelRenderer",x,this.D_TranscriptSearchPanel);}
-	/** @private @arg {R_ProfileColumnStats} x */
-	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
-	/** @private @arg {D_ProfileColumnStats} x */
-	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats","items",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
-	/** @private @arg {R_ProfileColumnStatsEntry} x */
-	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
-	/** @private @arg {R_ProfileColumnUserInfo} x */
-	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
-	/** @private @arg {R_SubFeedSelector} x */
-	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
-	/** @private @arg {R_SubFeedOption} x */
-	R_SubFeedOption(x) {this.H_("R_SubFeedOption","subFeedOptionRenderer",x,this.D_SubFeedOption);}
 	/** @private @arg {R_Channel_MD} x */
 	R_Channel_MD(x) {this.H_("R_Channel_MD","channelMetadataRenderer",x,this.D_Channel_MD);}
 	/** @private @arg {R_Playlist_MD} x */
@@ -716,30 +691,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {B_HrefUrl} x */
 	B_HrefUrl(x) {this.y("B_HrefUrl","hrefUrl",x,x => this.parser.parse_url("B_HrefUrl.url",x));}
-	/** @private @arg {D_Microformat} x */
-	D_Microformat(x) {
-		const cf="D_Microformat";
-		const {url,ios,twitter,other,...y}=this.unwrap_microformat(x); this.g(y);
-		{
-			const {title,description,thumbnail,siteName,appName,androidPackage,ogType,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=other; this.g(y);
-			this.z([title,description,siteName,appName,androidPackage,ogType,schemaDotOrgType],this.a_primitive_str);
-			this.D_Thumbnail(thumbnail);
-			if(noindex!==false) debugger;
-			if(unlisted!==false) debugger;
-			this.tz(tags,this.a_primitive_str);
-			this.t(familySafe,x => {if(x!==true) debugger;});
-			this.tz(availableCountries,this.a_primitive_str);
-			this.z(linkAlternates,this.B_HrefUrl);
-		}
-		{
-			const {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);
-			this.z([appArguments,appStoreId],this.a_primitive_str);
-		}
-		{
-			const {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=this.s(`${cf}.url`,url); this.g(y);
-			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
-		}
-	}
 	/** @private @arg {D_SettingsSidebar} x */
 	D_SettingsSidebar(x) {
 		const cf="D_SettingsSidebar";
@@ -2166,44 +2117,6 @@ class HandleTypes extends ServiceMethods {
 		const {playlists,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(playlists,this.R_PlaylistAddToOption);
 		this.z(actions,this.R_AddToPlaylistCreate);
-	}
-	/** @private @arg {D_ProfileColumnStatsEntry} x */
-	D_ProfileColumnStatsEntry(x) {
-		const cf="D_ProfileColumnStatsEntry";
-		const {label,value,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(label);
-		this.G_Text(value);
-	}
-	/** @private @arg {D_ProfileColumnUserInfo} x */
-	D_ProfileColumnUserInfo(x) {
-		const cf="D_ProfileColumnUserInfo";
-		const {title,thumbnail,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.D_Thumbnail(thumbnail);
-	}
-	/** @private @arg {D_SubFeedSelector} x */
-	D_SubFeedSelector(x) {
-		const cf="D_SubFeedSelector";
-		const {title,options,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.z(options,this.R_SubFeedOption);
-		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_SubFeedOption["navigationEndpoint"]} x */
-	D_SubFeedOption_NavEP(x) {
-		const cf="D_SubFeedOption_NavEP";
-		if("watchEndpoint" in x) return this.E_Watch(x);
-		if("browseEndpoint" in x) {debugger; return;}
-		x===""; this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {D_SubFeedOption} x */
-	D_SubFeedOption(x) {
-		const cf="D_SubFeedOption";
-		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(name);
-		this.a_primitive_bool(isSelected);
-		this.D_SubFeedOption_NavEP(navigationEndpoint);
-		this.trackingParams(trackingParams);
 	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}

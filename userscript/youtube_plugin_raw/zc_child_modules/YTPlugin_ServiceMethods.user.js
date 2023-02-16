@@ -7411,11 +7411,50 @@ class ServiceMethods extends ServiceData {
 		if("compactLinkRenderer" in x) return this.R_CompactLink(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {R_SubFeedSelector} x */
+	R_SubFeedSelector(x) {this.H_("R_SubFeedSelector","subFeedSelectorRenderer",x,this.D_SubFeedSelector);}
+	/** @private @arg {D_SubFeedSelector} x */
+	D_SubFeedSelector(x) {
+		const cf="D_SubFeedSelector";
+		const {title,options,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.z(options,this.R_SubFeedOption);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {R_SubFeedOption} x */
+	R_SubFeedOption(x) {this.H_("R_SubFeedOption","subFeedOptionRenderer",x,this.D_SubFeedOption);}
+	/** @private @arg {D_SubFeedOption["navigationEndpoint"]} x */
+	D_SubFeedOption_NavEP(x) {
+		const cf="D_SubFeedOption_NavEP";
+		if("watchEndpoint" in x) return this.E_Watch(x);
+		if("browseEndpoint" in x) {debugger; return;}
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {D_SubFeedOption} x */
+	D_SubFeedOption(x) {
+		const cf="D_SubFeedOption";
+		const {name,isSelected,navigationEndpoint,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(name);
+		this.a_primitive_bool(isSelected);
+		this.D_SubFeedOption_NavEP(navigationEndpoint);
+		this.trackingParams(trackingParams);
+	}
 	/** @private @arg {G_SecondaryContents} x */
 	G_SecondaryContents(x) {
 		const cf="G_SecondaryContents";
 		if("profileColumnRenderer" in x) return this.R_ProfileColumn(x);
 		if("browseFeedActionsRenderer" in x) return this.R_BrowseFeedActions(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @private @arg {R_ProfileColumn} x */
+	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
+	/** @private @arg {D_ProfileColumn} x */
+	D_ProfileColumn(x) {this.z(this.T_Items("D_ProfileColumn",x),this.G_ProfileColumnItem);}
+	/** @private @arg {G_ProfileColumnItem} x */
+	G_ProfileColumnItem(x) {
+		const cf="G_ProfileColumnItem";
+		if("profileColumnStatsRenderer" in x) return this.R_ProfileColumnStats(x);
+		if("profileColumnUserInfoRenderer" in x) return this.R_ProfileColumnUserInfo(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {G_RichGridContent} x */
@@ -7495,6 +7534,54 @@ class ServiceMethods extends ServiceData {
 		if(type!=="INFO") debugger;
 		this.G_Text(text);
 		this.R_Button(dismissButton);
+	}
+	/** @private @arg {R_ProfileColumnStats} x */
+	R_ProfileColumnStats(x) {this.H_("R_ProfileColumnStats","profileColumnStatsRenderer",x,this.D_ProfileColumnStats);}
+	/** @private @arg {D_ProfileColumnStats} x */
+	D_ProfileColumnStats(x) {this.H_("D_ProfileColumnStats","items",x,x => this.z(x,this.R_ProfileColumnStatsEntry));}
+	/** @private @arg {R_ProfileColumnStatsEntry} x */
+	R_ProfileColumnStatsEntry(x) {this.H_("R_ProfileColumnStatsEntry","profileColumnStatsEntryRenderer",x,this.D_ProfileColumnStatsEntry);}
+	/** @private @arg {D_ProfileColumnStatsEntry} x */
+	D_ProfileColumnStatsEntry(x) {
+		const cf="D_ProfileColumnStatsEntry";
+		const {label,value,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(label);
+		this.G_Text(value);
+	}
+	/** @private @arg {R_ProfileColumnUserInfo} x */
+	R_ProfileColumnUserInfo(x) {this.H_("R_ProfileColumnUserInfo","profileColumnUserInfoRenderer",x,this.D_ProfileColumnUserInfo);}
+	/** @private @arg {D_ProfileColumnUserInfo} x */
+	D_ProfileColumnUserInfo(x) {
+		const cf="D_ProfileColumnUserInfo";
+		const {title,thumbnail,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.D_Thumbnail(thumbnail);
+	}
+	/** @protected @arg {R_MicroformatData} x */
+	R_Microformat(x) {this.H_("R_Microformat","microformatDataRenderer",x,this.D_Microformat);}
+	/** @private @arg {D_Microformat} x */
+	D_Microformat(x) {
+		const cf="D_Microformat";
+		const {url,ios,twitter,other,...y}=this.unwrap_microformat(x); this.g(y);
+		{
+			const {title,description,thumbnail,siteName,appName,androidPackage,ogType,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=other; this.g(y);
+			this.z([title,description,siteName,appName,androidPackage,ogType,schemaDotOrgType],this.a_primitive_str);
+			this.D_Thumbnail(thumbnail);
+			if(noindex!==false) debugger;
+			if(unlisted!==false) debugger;
+			this.tz(tags,this.a_primitive_str);
+			this.t(familySafe,x => {if(x!==true) debugger;});
+			this.tz(availableCountries,this.a_primitive_str);
+			this.z(linkAlternates,this.B_HrefUrl);
+		}
+		{
+			const {appArguments,appStoreId,...y}=this.s(`${cf}.ios`,ios); this.g(y);
+			this.z([appArguments,appStoreId],this.a_primitive_str);
+		}
+		{
+			const {canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos,...y}=this.s(`${cf}.url`,url); this.g(y);
+			this.z([canonical,applinksAndroid,applinksIos,applinksWeb,twitterAndroid,twitterIos],this.a_primitive_str);
+		}
 	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
