@@ -2328,7 +2328,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_DesktopTopbar(topbar);
 		this.trackingParams(trackingParams);
 		this.R_Microformat(microformat);
-		this.z(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
+		this.tz(onResponseReceivedActions,this.C_ResetChannelUnreadCount);
 		this.t(cacheMetadata,this.D_Cache_MD);
 	}
 	/** @private @arg {RS_Playlist} x */
