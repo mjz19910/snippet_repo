@@ -469,7 +469,7 @@ type D_AlertWithButton={
 type D_C4TabbedHeader={
 	channelId: `UC${string}`;
 	title: string;
-	navigationEndpoint: GE_Browse;
+	navigationEndpoint: E_VE3611;
 	avatar: D_Thumbnail;
 	banner: D_Thumbnail;
 	badges?: RMD_Badge[];

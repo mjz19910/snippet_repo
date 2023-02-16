@@ -2650,7 +2650,7 @@ class HandleTypes extends ServiceMethods {
 		const {channelId,title,navigationEndpoint,avatar,banner,badges,headerLinks,subscribeButton,subscriberCountText,tvBanner,mobileBanner,trackingParams,sponsorButton,channelHandleText,videosCountText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_ChannelId(channelId);
 		this.a_primitive_str(title);
-		debugger;
+		this.E_VE3611(navigationEndpoint);
 		this.D_Thumbnail(avatar);
 		this.D_Thumbnail(banner);
 		this.tz(badges,this.RMD_Badge);
