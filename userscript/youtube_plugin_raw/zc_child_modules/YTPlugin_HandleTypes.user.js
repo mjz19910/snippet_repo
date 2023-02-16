@@ -1774,8 +1774,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		throw new Error();
 	}
-	/** @template {number} T @arg {T} x @returns {`${T}`} */
-	num_to_string(x) {return `${x}`;}
 	/** @template {{}} T @arg {T} x */
 	get_omit_gen(x) {
 		return new (class Gen1 {

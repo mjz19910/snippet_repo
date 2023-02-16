@@ -4609,6 +4609,8 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(thumbnail);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 	}
+	/** @template {number} T @arg {T} x @returns {`${T}`} */
+	num_to_string(x) {return `${x}`;}
 	/** @private @arg {D_PlayerOverlayAutoplay} x */
 	D_PlayerOverlayAutoplay(x) {
 		const cf="D_PlayerOverlayAutoplay";
