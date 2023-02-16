@@ -3181,6 +3181,16 @@ class HandleTypes extends ServiceMethods {
 		this.save_number(`${cf}.f1`,f1);
 		if(f2!==3832) debugger;
 	}
+	/** @protected @arg {R_Obj_f19} x */
+	R_Obj_f19(x) {
+		const cf="R_Obj_f19";
+		const {1: [,f1],2: [,f2],...y}=this.s(cf,x); this.g(y);
+		this.save_number(`${cf}.f1`,f1);
+		switch(f2) {
+			default: debugger; break;
+			case 3832:
+		}
+	}
 	/** @protected @arg {R_ClickTrackingObj_t1} x */
 	R_ClickTrackingObj_t1(x) {
 		const cf="R_ClickTrackingObj_t1";
@@ -3211,7 +3221,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				if(!f9w) debugger;
 				if(t19!=="child") debugger;
-				console.log("f19",f19);
+				this.R_Obj_f19(f19);
 				return;
 			}
 			const {1: [,f1],2: [,f2],4: [,,f4],...y}=this.s(cf,x); this.g(y);
