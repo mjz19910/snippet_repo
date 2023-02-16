@@ -341,14 +341,6 @@ class HandleTypes extends ServiceMethods {
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.RS_ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
-	/** @private @arg {G_BrowseHeader} x */
-	G_BrowseHeader(x) {
-		const cf="G_BrowseHeader";
-		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
-		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
-		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {G_RS_Page_Shorts} x */
 	G_RS_Page_Shorts(x) {
 		const cf="RS_ShortsPage";
@@ -493,8 +485,6 @@ class HandleTypes extends ServiceMethods {
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
 	/** @private @arg {R_C4TabbedHeader} x */
 	R_C4TabbedHeader(x) {this.H_("R_C4TabbedHeader","c4TabbedHeaderRenderer",x,this.D_C4TabbedHeader);}
-	/** @private @arg {R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
 	/** @public @arg {R_TemplateUpdate} x */
@@ -1946,12 +1936,6 @@ class HandleTypes extends ServiceMethods {
 		this.RS_Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
-	}
-	/** @private @arg {D_FeedTabbedHeader} x */
-	D_FeedTabbedHeader(x) {
-		const cf="D_FeedTabbedHeader";
-		const {title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
 	}
 	/** @private @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}

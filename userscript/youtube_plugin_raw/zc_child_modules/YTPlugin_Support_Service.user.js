@@ -764,6 +764,22 @@ class Support_RS_Browse extends ServiceMethods {
 		this.t(continuationContents,this.RC_SectionList);
 		this.tz_cf(cf,alerts,this.RS_Playlist_AlertItem);
 	}
+	/** @private @arg {R_FeedTabbedHeader} x */
+	R_FeedTabbedHeader(x) {this.H_("FeedTabbedHeader","feedTabbedHeaderRenderer",x,this.D_FeedTabbedHeader);}
+	/** @private @arg {D_FeedTabbedHeader} x */
+	D_FeedTabbedHeader(x) {
+		const cf="D_FeedTabbedHeader";
+		const {title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+	}
+	/** @private @arg {G_BrowseHeader} x */
+	G_BrowseHeader(x) {
+		const cf="G_BrowseHeader";
+		if("feedTabbedHeaderRenderer" in x) return this.R_FeedTabbedHeader(x);
+		if("c4TabbedHeaderRenderer" in x) return this.R_C4TabbedHeader(x);
+		if("playlistHeaderRenderer" in x) return this.R_PlaylistHeader(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {D_MusicThumbnail} x */
