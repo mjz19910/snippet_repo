@@ -537,6 +537,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Channel";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_VE3854_Browse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_VE96368_Browse";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Page_Watch";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Player";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "RS_Playlist";}
