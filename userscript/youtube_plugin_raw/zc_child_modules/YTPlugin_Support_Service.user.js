@@ -774,14 +774,6 @@ class Support_RS_Browse extends ServiceMethods {
 		if("playlistHeaderRenderer" in x) return this.handle_types.R_PlaylistHeader(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
-	/** @private @arg {D_NavigationLinkItem} x */
-	D_PrimaryLinkItem(x) {
-		const cf="D_PrimaryLinkItem";
-		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.E_VE83769_Url(navigationEndpoint);
-		this.D_Thumbnail(icon);
-		this.G_Text(title);
-	}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {this.H_("R_MusicThumbnail","musicThumbnailRenderer",x,this.D_MusicThumbnail);}
 	/** @private @arg {D_MusicThumbnail} x */

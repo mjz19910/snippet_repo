@@ -7653,5 +7653,13 @@ class ServiceMethods extends ServiceData {
 		this.z(primaryLinks,this.D_PrimaryLinkItem);
 		this.tz(secondaryLinks,this.D_PrimaryLinkItem);
 	}
+	/** @private @arg {D_NavigationLinkItem} x */
+	D_PrimaryLinkItem(x) {
+		const cf="D_PrimaryLinkItem";
+		const {navigationEndpoint,icon,title,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_VE83769_Url(navigationEndpoint);
+		this.D_Thumbnail(icon);
+		this.G_Text(title);
+	}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
