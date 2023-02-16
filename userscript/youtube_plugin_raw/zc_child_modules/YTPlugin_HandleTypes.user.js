@@ -2626,8 +2626,7 @@ class HandleTypes extends ServiceMethods {
 		if("icon" in x) return this.D_GuideEntry_WithIcon(cf,x);
 		if("presentationStyle" in x) {
 			const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-			if(!navigationEndpoint.browseEndpoint) debugger;
-			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
+			this.E_VE3611(navigationEndpoint);
 			this.D_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
 			this.trackingParams(trackingParams);
