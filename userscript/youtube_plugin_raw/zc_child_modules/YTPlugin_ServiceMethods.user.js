@@ -989,7 +989,7 @@ class ServiceMethods extends ServiceData {
 		return r;
 	}
 	/** @protected @template {CF_M_y} T_CF  @arg {T_CF} cf @template U @arg {K} k @template {T_DistributedKeyof<T>} K @template {{}} T @arg {T} x @arg {(this:this,x:T[K],cf:`${T_CF}.${K}`)=>U} f */
-	y(cf,k,x,f) {return f.call(this,this.w(`y:${cf}`,k,x),`${cf}.${k}`);}
+	y(cf,k,x,f) {return f.call(this,this.w(cf,k,x),`${cf}.${k}`);}
 	/** @protected @arg {D_EndscreenElement_EP} x */
 	D_EndscreenElement_EP(x) {
 		const cf="D_EndscreenElement_EP"; this.ks(cf,x);
@@ -2476,7 +2476,7 @@ class ServiceMethods extends ServiceData {
 		this.g(y);
 	}
 	/** @protected @arg {P_ParamParse} path @template {CF_D_Params} T_CF @arg {T_CF} cf @template {string} T @arg {{params:T;}} x */
-	D_Params(cf,path,x) {const {params: p,...y}=this.s_priv(`D_Params:${cf}`,x); this.g(y); this.params(path,x.params);}
+	D_Params(cf,path,x) {const {params: p,...y}=this.s(cf,x); this.g(y); this.params(path,x.params);}
 	/** @protected @template {{}} T @arg {T} obj @returns {T_DistributedKeysOf_2<T>} */
 	get_keys_of_2(obj) {
 		if(!obj) {debugger;}
@@ -6548,7 +6548,7 @@ class ServiceMethods extends ServiceData {
 		return a;
 	}
 	/** @public @arg {CF_TR_MultiPageMenu} cf @template T @arg {TR_MultiPageMenu<T>} x */
-	TR_MultiPageMenu(cf,x) {return this.w(`TR_MultiPageMenu:${cf}`,"multiPageMenuRenderer",x);}
+	TR_MultiPageMenu(cf,x) {return this.w(cf,"multiPageMenuRenderer",x);}
 	/** @private @arg {S_GetAccountMenu} x */
 	S_GetAccountMenu(x) {
 		const cf="S_GetAccountMenu";
