@@ -4484,7 +4484,9 @@ class ServiceMethods extends ServiceData {
 		this.t(backgroundImageConfig,this.D_ThumbnailsList);
 		this.D_GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
-		if(config.lightThemeBackgroundColor!==4278190080) debugger;
+		/** @private @type {`${typeof config["lightThemeBackgroundColor"]}`} */
+		let u=`${config.lightThemeBackgroundColor}`;
+		this.save_string(`${cf}.lightBackground.0`,u);
 		this.save_keys(`${cf}.config`,config);
 		for(let u of Object.entries(config)) {
 			if(u[0]==="animationConfig") continue;
@@ -4500,8 +4502,6 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(title);
 		this.G_Text(subtitle);
 	}
-	/** @protected @arg {RMD_Badge} x */
-	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent(x) {
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
@@ -5851,6 +5851,8 @@ class ServiceMethods extends ServiceData {
 			this.codegen_typedef(cf,x);
 		});
 	}
+	/** @protected @arg {RMD_Badge} x */
+	RMD_Badge(x) {this.H_("RMD_Badge","metadataBadgeRenderer",x,this.DMD_Badge);}
 	/** @private @arg {DMD_Badge} x */
 	DMD_Badge(x) {
 		const cf="DMD_Badge";
@@ -7566,7 +7568,7 @@ class ServiceMethods extends ServiceData {
 			const {title,description,thumbnail,siteName,appName,androidPackage,ogType,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=other; this.g(y);
 			this.z([title,description,siteName,appName,androidPackage,ogType,schemaDotOrgType],this.a_primitive_str);
 			this.D_Thumbnail(thumbnail);
-			if(noindex!==false) debugger;
+			this.a_primitive_bool(noindex);
 			if(unlisted!==false) debugger;
 			this.tz(tags,this.a_primitive_str);
 			this.t(familySafe,x => {if(x!==true) debugger;});

@@ -2113,7 +2113,7 @@ type D_Microformat={
 	twitterCardType: string;
 	twitterSiteHandle: string;
 	schemaDotOrgType: string;
-	noindex: false;
+	noindex: boolean;
 	unlisted: false;
 	tags?: string[];
 	familySafe?: true;
