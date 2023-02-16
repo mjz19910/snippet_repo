@@ -4590,6 +4590,27 @@ class HandleTypes extends ServiceMethods {
 	P_create_playlist_params(x) {x;}
 	/** @private @arg {P_reel_player_params} x */
 	P_reel_player_params(x) {x;}
+	/** @public @arg {D_TimedTextApi} x */
+	D_TimedTextApi(x) {
+		const cf="D_TimedTextApi";
+		let {v,caps,xoaf,xoadf,xosf,hl,ip,ipbits,expire,signature,sparams,key,kind,lang,...y}=this.s(cf,x); this.g(y);
+		this.videoId(v);
+		this.save_string(`${cf}.caps`,caps);
+		this.save_string(`${cf}.xoaf`,xoaf);
+		xoadf&&this.save_string(`${cf}.xoadf`,xoadf);
+		xosf&&this.save_string(`${cf}.xosf`,xosf);
+		this.save_string(`${cf}.hl`,hl);
+		this.save_string(`${cf}.ip`,ip);
+		this.save_string(`${cf}.ipbits`,ipbits);
+		let e_num=this.parse_number_template(expire);
+		if(Number.isNaN(e_num)) debugger;
+		this.a_primitive_num(e_num);
+		this.parse_signature(signature);
+		this.save_string(`${cf}.sparams`,sparams);
+		this.save_string(`${cf}.key`,key);
+		kind&&this.save_string(`${cf}.kind`,kind);
+		this.save_string(`${cf}.lang`,lang);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
