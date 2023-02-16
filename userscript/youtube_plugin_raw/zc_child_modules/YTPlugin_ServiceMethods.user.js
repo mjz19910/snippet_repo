@@ -6687,7 +6687,8 @@ class ServiceMethods extends ServiceData {
 		const {sections,trackingParams,style,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.ceq(sections.length,1);
 		let n=this.TR_MP_MenuSection(sections[0]);
-		let n1=this.T_Items_TP("R_CompactLink_Items",n);
+		if(!n) {debugger; return;}
+		let n1=this.T_Items_TP("R_CompactLink_Items",n[0]);
 		this.tz(n1,this.R_CompactLink);
 		this.trackingParams(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
