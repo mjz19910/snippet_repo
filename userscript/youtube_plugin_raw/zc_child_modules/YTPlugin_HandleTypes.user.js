@@ -2114,7 +2114,8 @@ class HandleTypes extends ServiceMethods {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.continuation_logged_str.push(cf);
 				console.log(`\ncase "${cf}":`);
-				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x);
+				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
+				debugger;
 			} break;
 			case "tracking.click_tracking_params": {
 				/** @type {R_ClickTrackingObj} */
