@@ -320,7 +320,7 @@ type RS_VE3832_Page_Watch={
 };
 type RS_VE5754_Page_Playlist={
 	page: "playlist";
-	endpoint: GE_Browse;
+	endpoint: E_VE5754;
 	response: RS_Playlist;
 	url: string;
 	rootVe: 5754;
