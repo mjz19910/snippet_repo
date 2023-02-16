@@ -1004,6 +1004,9 @@ type D_TextRun={
 	text: "https://youtu.be/XdnRkI5EM-k";
 	navigationEndpoint: E_Watch;
 }|{
+	text: "Original sound";
+	navigationEndpoint: E_VE6827;
+}|{
 	text: "#shorts";
 	navigationEndpoint: E_VE6827;
 	loggingDirectives: D_LoggingDirectives;

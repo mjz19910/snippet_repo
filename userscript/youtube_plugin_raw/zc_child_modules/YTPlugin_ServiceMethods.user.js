@@ -2137,7 +2137,12 @@ class ServiceMethods extends ServiceData {
 			const {navigationEndpoint,...y}=u; this.g(y);/*#destructure_done*/
 			x: {
 				let x2=navigationEndpoint;
-				if("browseEndpoint" in x2) {this.E_VE3611(x2); break x;}
+				if("browseEndpoint" in x2) {
+					if(this.is_TE_VE(x2,3611))  {this.E_VE3611(x2);break x;}
+					if(this.is_TE_VE(x2,6827))  {this.E_VE6827(x2);break x;}
+					debugger;
+					break x;
+				}
 				if("watchEndpoint" in x2) {this.E_Watch(x2); break x;}
 				if("urlEndpoint" in x2) {this.E_VE83769_Url(x2); break x;}
 				debugger;
