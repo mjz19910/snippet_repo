@@ -101,31 +101,6 @@ class ServiceMethods extends ServiceData {
 		}
 		group_arr.push([k,[x]]);
 	}
-	/** @private @arg {string} x */
-	GU_YoutubeUrlRedirect_RedirectToken(x) {
-		let token_str=atob(x);
-		let token_parts=split_string_once(token_str,"|");
-		if(token_parts.length===1) {debugger; return;}
-		let [p1,p2]=token_parts.map(x => base64_url_dec.decodeByteArray(x));
-		if(!(p1&&p2)) return;
-		for(let i=0;i<3;i++) {
-			this.save_next_byte("url.redir_token[0].data",p1,i);
-		}
-		for(let i=0;i<3;i++) {
-			this.save_next_byte("url.redir_token[1].data",p2,i);
-		}
-	}
-	/** @private @arg {GU_YoutubeUrlRedirect_Event} x */
-	GU_YoutubeUrlRedirect_Event(x) {
-		switch(x) {
-			default: debugger; break;
-			case "":
-			case "channel_banner":
-			case "endscreen":
-			case "product_shelf":
-			case "video_description":
-		}
-	}
 	/** @private @arg {GU_VE83769_Url_External} b */
 	D_YtStudio_Url(b) {
 		const cf="D_YtStudio_Url";
@@ -205,6 +180,31 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
+	/** @private @arg {string} x */
+	GU_YoutubeUrlRedirect_RedirectToken(x) {
+		let token_str=atob(x);
+		let token_parts=split_string_once(token_str,"|");
+		if(token_parts.length===1) {debugger; return;}
+		let [p1,p2]=token_parts.map(x => base64_url_dec.decodeByteArray(x));
+		if(!(p1&&p2)) return;
+		for(let i=0;i<3;i++) {
+			this.save_next_byte("url.redir_token[0].data",p1,i);
+		}
+		for(let i=0;i<3;i++) {
+			this.save_next_byte("url.redir_token[1].data",p2,i);
+		}
+	}
+	/** @private @arg {GU_YoutubeUrlRedirect_Event} x */
+	GU_YoutubeUrlRedirect_Event(x) {
+		switch(x) {
+			default: debugger; break;
+			case "":
+			case "channel_banner":
+			case "endscreen":
+			case "product_shelf":
+			case "video_description":
+		}
+	}
 	/** @private @arg {M_EditPlaylist} x */
 	M_EditPlaylist(x) {this.T_WCM("M_EditPlaylist",x,this.GM_EditPlaylist);}
 	/** @private @arg {GM_EditPlaylist} x */
