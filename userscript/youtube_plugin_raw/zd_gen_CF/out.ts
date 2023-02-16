@@ -571,6 +571,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "StateTag";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TD_ItemSection_2_CommentsEntryPoint";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_SignalService_I_0";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_TrackedObj_2:";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TE_TrackedObj_2:AD_ReelDismissal";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TM_Visibility";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "TR_ItemSection";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "T_Autoplay";}
@@ -710,6 +712,7 @@ export namespace Gen {
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetCart";}
 		|{n: Prelude.CF_TE_Endpoint_3; t: Types.CF_TE_Endpoint_3_; v: "E_YpcGetOffers";}
 		|{n: Prelude.CF_TE_Endpoint_Opt_3; t: Types.CF_TE_Endpoint_Opt_3_; v: "C_Continuation";}
+		|{n: Prelude.CF_TE_TrackedObj_2; t: Types.CF_TE_TrackedObj_2_; v: "AD_ReelDismissal";}
 		|{n: Prelude.CF_T_Commands; t: Types.CF_T_Commands_; v: "DC_CommandExecutor";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AccountMenu";}
 		|{n: Prelude.CF_T_GM; t: Types.CF_T_GM_; v: "GM_AddToPlaylistService";}

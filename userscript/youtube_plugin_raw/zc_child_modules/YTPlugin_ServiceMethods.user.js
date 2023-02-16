@@ -957,6 +957,18 @@ class ServiceMethods extends ServiceData {
 		return [endpoint,y];
 	}
 	/**
+	 * @arg {CF_TE_TrackedObj_2} cf1
+	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
+	 * @returns {[T_EP[EP_Key],Omit<T_EP,"trackingParams"|EP_Key>]}
+	 * */
+	TE_TrackedObj_2(cf1,x,k) {
+		const cf2="TE_TrackedObj_2";
+		const {trackingParams,[k]: endpoint,...y}=this.s(`${cf2}:${cf1}`,x);
+		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
+		this.trackingParams(trackingParams);
+		return [endpoint,y];
+	}
+	/**
 	 * @arg {CF_TE_Endpoint_2} cf1
 	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_Endpoint_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
 	 * @returns {[T_EP[EP_Key],Omit<T_EP,"clickTrackingParams"|EP_Key>]}
@@ -7170,21 +7182,9 @@ class ServiceMethods extends ServiceData {
 	RA_ReelDismissal(x) {this.H_("RA_ReelDismissal","reelDismissalActionRenderer",x,this.AD_ReelDismissal);}
 	/** @public @arg {AD_ReelDismissal} x */
 	AD_ReelDismissal(x) {
-		let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal","",x); this.g(y); this.RA_Notification(a);
-	}
-	/**
-	 * @arg {CF_TE_TrackedObj_2} cf1
-	 * @template {Extract<keyof T_EP,EPL>} EP_Key @template {TE_TrackedObj_2<EPL,{}>} T_EP @arg {T_EP} x @arg {EP_Key} k
-	 * @returns {[T_EP[EP_Key],Omit<T_EP,"trackingParams"|EP_Key>]}
-	 * */
-	TE_TrackedObj_2(x) {
-		const cf2="TE_Endpoint_2";
-		const {trackingParams,[k]: endpoint,...y}=this.s_priv(`${cf2}:${cf1}`,x);
-		/** @type {`${CF_TE_Endpoint_2}.endpoint`} */
-		this.trackingParams(trackingParams);
-		return [endpoint,y];
+		let [a,y]=this.TE_TrackedObj_2("AD_ReelDismissal",x,"onDismissalCompletionRenderer"); this.g(y); this.RA_Notification(a);
 	}
 	/** @public @arg {RA_NotificationMulti} x */
-	RA_NotificationMulti(x) {this.H_("RA_NotificationMulti","notificationMultiActionRenderer",x,this.AD_ReelDismissal);}
+	RA_NotificationMulti(x) {this.H_("RA_NotificationMulti","notificationMultiActionRenderer",x,this.g);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});
