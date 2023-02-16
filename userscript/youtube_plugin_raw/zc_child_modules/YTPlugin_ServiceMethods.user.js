@@ -39,8 +39,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {D_CustomEmoji['emojiId']} x */
 	parse_emoji_id(x) {
 		let eid=split_string_once(x,"/");
-		this.D_ChannelId(eid[0]);
-		return eid[1];
+		return eid;
 	}
 	/** @public @template {string} SW @arg {SW} sw @arg {["",string]} x @returns {x is ["",`${SW}${string}`]} */
 	str_starts_with_rx_in_arr(x,sw) {
@@ -6223,7 +6222,9 @@ class ServiceMethods extends ServiceData {
 			if(!this.str_starts_with(categoryId,"UC")) debugger;
 			this.G_Text(title);
 			this.z(emojiIds,x => {
-				this.save_string(`${categoryId}.emojiId`,this.parse_emoji_id(x));
+				let [channel_id,parsed_emoji]=this.parse_emoji_id(x);
+				this.D_ChannelId(channel_id);
+				this.save_string(`${categoryId}.emojiId`,parsed_emoji);
 			});
 			this.D_ChannelId(categoryId);
 			this.trackingParams(trackingParams);
