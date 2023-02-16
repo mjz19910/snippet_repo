@@ -671,16 +671,6 @@ class Support_RS_Watch extends ServiceMethods {
 		this.z(pageVisualEffects,x => this.R_CinematicContainer(x));
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {R_ElementUpdate} x */
-	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
-	/** @private @arg {D_ElementUpdate} x */
-	D_ElementUpdate(x) {
-		const cls_=this.x.get("handle_types");
-		const cf="D_ElementUpdate"; this.k(cf,x);
-		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
-		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

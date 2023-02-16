@@ -7109,7 +7109,17 @@ class ServiceMethods extends ServiceData {
 		/** @typedef {keyof typeof y} Omit_y */
 		return as_any(y);
 	}
-	/** @private @arg {D_FrameworkUpdates} x */
+	/** @private @arg {R_ElementUpdate} x */
+	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
+	/** @private @arg {D_ElementUpdate} x */
+	D_ElementUpdate(x) {
+		const cls_=this.x.get("handle_types");
+		const cf="D_ElementUpdate"; this.k(cf,x);
+		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
+		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
+		x===""; this.codegen_typedef(cf,x);
+	}
+	/** @public @arg {D_FrameworkUpdates} x */
 	D_FrameworkUpdates(x) {
 		const cf="D_FrameworkUpdates"; this.k(cf,x);
 		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
