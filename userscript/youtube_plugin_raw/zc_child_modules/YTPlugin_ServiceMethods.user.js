@@ -3299,16 +3299,17 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_MenuNavigationItem} x */
 	D_MenuNavigationItem(x) {
 		const cf="D_MenuNavigationItem";
-		const {trackingParams,text,icon,navigationEndpoint,...y}=this.s(cf,x);/*#destructure_later*/
+		const {trackingParams,text,icon,navigationEndpoint,accessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 		this.G_Text(text);
-		switch(icon.iconType) {
-			default: this.codegen_typedef(cf,x); break;
-			case "FEEDBACK": case "INFO":
+		if(icon) {
+			switch(icon.iconType) {
+				default: this.codegen_typedef(cf,x); break;
+				case "FEEDBACK": case "INFO":
+			}
 		}
 		this.D_MenuNavigationItem_Endpoint(navigationEndpoint);
-		if("accessibility" in y) return this.y(cf,"accessibility",y,this.D_Accessibility);
-		this.g(y);
+		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @arg {["Signal",Extract<RD_MenuServiceItem["serviceEndpoint"],{signalServiceEndpoint:any}>["signalServiceEndpoint"]]} x */
 	RD_MenuServiceItem_ServiceInfo(x) {

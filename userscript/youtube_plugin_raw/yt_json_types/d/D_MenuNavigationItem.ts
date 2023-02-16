@@ -32,7 +32,7 @@ type E_AdFeedback={
 };
 type D_MenuNavigationItem={
 	text: G_Text;
-	icon: T_Icon<"INFO"|"FEEDBACK">;
+	icon?: T_Icon<"INFO"|"FEEDBACK">;
 	navigationEndpoint: E_UserFeedback|TA_OpenPopup_Empty|E_AdFeedback;
 	trackingParams: string;
 	accessibility?: TD_Accessibility<"Send feedback">;
