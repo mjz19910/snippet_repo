@@ -216,7 +216,7 @@ class ServiceMethods extends ServiceData {
 	DE_PlaylistEdit(x) {
 		const cf="D_PlaylistEdit";
 		const {playlistId,params,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.playlistId(playlistId);
+		this.t(playlistId,this.playlistId);
 		this.t(params,x => this.params("playlist_edit.params",x));
 		this.z(actions,x => {
 			switch(x.action) {

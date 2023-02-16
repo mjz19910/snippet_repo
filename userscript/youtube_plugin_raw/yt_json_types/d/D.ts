@@ -1326,7 +1326,7 @@ type D_AboutThisAd={url: D_UrlWrappedValue;};
 type D_Accessibility={accessibilityData: D_Label;};
 type D_AccountItemSection=Record<"contents",G_AccountItemSection[]>;
 type D_AccountSettingIdList=[407];
-type D_ActionRemoveVideoByVideoId={
+type A_RemoveVideoByVideoId={
 	action: "ACTION_REMOVE_VIDEO_BY_VIDEO_ID";
 	removedVideoId: string;
 };

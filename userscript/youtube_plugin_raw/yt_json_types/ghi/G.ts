@@ -67,7 +67,12 @@ type GA_FormatItagArr=[
 	302,303,308,315,394,395,396,397,398,399,
 	400,401,
 ];
-type GA_Playlist=A_ActionAddVideo|D_ActionRemoveVideoByVideoId|A_ActionSetPlaylistVideoOrder;
+type GA_Playlist=
+	|A_AddVideo
+	|A_RemoveVideoByVideoId
+	|A_SetPlaylistVideoOrder
+	;
+;
 type GC_Button=
 	|A_ChangeEngagementPanelVisibility
 	|C_CommandExecutor
