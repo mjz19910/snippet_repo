@@ -4539,7 +4539,8 @@ class HandleTypes extends ServiceMethods {
 		ap(`this.${n_cf}(u);`);
 		pad-=1;
 		ap(`} break;`);
-		console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
+		console.log(`-- [binary_gen_case:${cf}] --\n${str_arr.join("\n")}`);
+		console.log(`-- [binary_gen_function:${cf}] --\n\n/** @private @arg {${n_cf}} x */\n${n_cf}(x) {x;}`);
 	}
 	/** @private @arg {P_entity_key} x */
 	P_entity_key(x) {x;}
@@ -4634,6 +4635,11 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_dislike_params(u);
 			} break;
+			case "subscribe_button.entity_key": {
+				/** @type {P_subscribe_button_entity_key} */
+				let u=as_any(x);
+				this.P_subscribe_button_entity_key(u);
+			} break;
 			default: {
 				if(this.continuation_logged_str.includes(cf)) break;
 				this.decode_binary_object_log_info(cf,x);
@@ -4641,6 +4647,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
+	/** @private @arg {P_subscribe_button_entity_key} x */
+	P_subscribe_button_entity_key(x) {x;}
 	/** @private @arg {P_dislike_params} x */
 	P_dislike_params(x) {x;}
 	/** @private @arg {P_remove_like_params} x */
