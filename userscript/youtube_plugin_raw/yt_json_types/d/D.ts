@@ -1151,7 +1151,15 @@ type D_GuideEntry_MyVideosTab={
 	formattedTitle: G_Text;
 	accessibility: D_Accessibility;
 };
-type D_GuideEntry_OfflineDownloadEntry=TD_GuideEntry_Tid_Primary<"OFFLINE_DOWNLOAD","downloads-guide-item">;
+type D_GuideEntry_OfflineDownloadEntry={
+	navigationEndpoint: E_VE42352;
+	icon: T_Icon<"OFFLINE_DOWNLOAD">;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: TD_Accessibility<"Downloads">;
+	targetId: "downloads-guide-item";
+	isPrimary: true;
+};
 type D_GuideEntry_ShortsTab={
 	icon: T_Icon<"TAB_SHORTS">;
 	trackingParams: string;

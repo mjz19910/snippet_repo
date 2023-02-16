@@ -2410,7 +2410,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {"D_GuideEntry"} cf @arg {Extract<D_GuideEntry,{targetId:any;}>|D_GuideEntry_OfflineDownloadEntry|D_GuideEntry_VideoLibrary} x */
 	D_GuideEntry_WithTargetId(cf,x) {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
-		if(!navigationEndpoint.browseEndpoint) debugger;
+		{
+			let x2=navigationEndpoint;
+			if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+			if(this.is_TE_VE(x2,42352)) return this.E_VE42352(x2);
+			debugger;
+		}
 		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
 		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
 		this.D_GuideEntry_TargetId(targetId);
@@ -2520,8 +2525,9 @@ class HandleTypes extends ServiceMethods {
 		x: {
 			let x2=navigationEndpoint;
 			if("browseEndpoint" in x2) {
-				if(x2.commandMetadata.webCommandMetadata.rootVe!==6827) debugger;
-				this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,6827)) return this.E_VE6827(x2);
+				if(this.is_TE_VE(x2,5754)) return this.E_VE5754(x2);
+				x2; debugger;
 				break x;
 			}
 			if("urlEndpoint" in x2) {
