@@ -2024,8 +2024,15 @@ class HandleTypes extends ServiceMethods {
 			if(otu[0]==="raw") {
 				switch(otu[1][0]) {
 					case "string": return `TYPE::T_VSR<"${otu[1][1]}">`;
+					case "bigint": return `TYPE::T_VW_Bigint<${otu[1][1]}n>`;
 				}
 				return `TYPE::T_VW_R<"${otu[1][0]}",${otu[1][1]}>`;
+			}
+			if(otu[0]==="data64") {
+				if(otu.length===3) {
+					return ["raw",["bigint",otu[2]]];
+				}
+				return ["raw",["bigint",otu[3]]];
 			}
 			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
 			let ota=obj;
@@ -4382,6 +4389,7 @@ class HandleTypes extends ServiceMethods {
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
+		if(!x[3]) debugger;
 		const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
 		this.save_number(`${cf}.f1`,f1);
 		this.a_primitive_num(f2);
