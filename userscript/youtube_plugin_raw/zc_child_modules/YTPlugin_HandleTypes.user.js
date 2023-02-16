@@ -125,6 +125,9 @@ class HandleTypes extends ServiceMethods {
 	constructor(x) {
 		super(x);
 		generate_typedef.value=new ss.TypedefGenerator(x);
+		this.z_RS_support_player=new ss.Support_RS_Player(x);
+		this.z_Support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
+		this.z_Support_RS_Watch=new ss.Support_RS_Watch(x);
 	}
 	//#endregion
 	/** @protected @template {(string|number)[]} T @template {T} R @arg {T} src @arg {R} target @returns {src is R} */

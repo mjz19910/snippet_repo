@@ -31,9 +31,6 @@ class ServiceMethods extends ServiceData {
 		ServiceMethods.init_once=true;
 		// cyclic import SupportService -> ServiceMethods -> SupportService
 		let ss=required(store["mod$SupportService"]);
-		this.z_RS_support_player=new ss.Support_RS_Player(x);
-		this.z_Support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
-		this.z_Support_RS_Watch=new ss.Support_RS_Watch(x);
 	}
 	k=this.save_keys;
 	ks=this.k;
