@@ -1460,7 +1460,7 @@ class Support_EventInput extends ServiceMethods {
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=this.s(`${cf}_WhatToWatch`,x); this.g(y);
 					this.ceq(selected,true);
-					this.R_RichGrid(content);
+					this.handle_types.R_RichGrid(content);
 					this.trackingParams(trackingParams);
 				} break;
 			}
@@ -1471,7 +1471,7 @@ class Support_EventInput extends ServiceMethods {
 			/** @type {`${typeof cf}_${"R_MusicQueue"}`} */
 			const cf2=`${cf}_${"R_MusicQueue"}`;
 			const {content,trackingParams,...y}=this.s(cf2,x); this.g(y);/*#destructure_done*/
-			this.R_MusicQueue(content);
+			this.handle_types.R_MusicQueue(content);
 			this.trackingParams(trackingParams);
 			return;
 		}
