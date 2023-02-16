@@ -1142,7 +1142,7 @@ class Support_EventInput extends ServiceMethods {
 		} else {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			switch(url) {
-				default: debugger; break;
+				default: url===""; debugger; break;
 				case "/":
 				case "/feed/subscriptions":
 			}
