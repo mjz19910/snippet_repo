@@ -1030,7 +1030,7 @@ class ServiceMethods extends ServiceData {
 		this.t(serviceEndpoint,this.D_Button_SE);
 		this.t(style,x => {
 			switch(x) {
-				default: debugger; x===""; break;
+				default: console.log("D_Button.style",x); break;
 				case "STYLE_MONO_FILLED_OVERLAY":
 				case "STYLE_PRIMARY":
 				case "STYLE_OPACITY":
