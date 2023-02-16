@@ -1127,7 +1127,9 @@ class Support_EventInput extends ServiceMethods {
 	E_Settings(x) {x; debugger;}
 	/** @arg {R_PageTypeBrowse["endpoint"]} x */
 	R_Page_DefaultEndpoint(x) {
+		const cf="R_Page_DefaultEndpoint"; this.k(cf,x);
 		if(this.is_TE_VE(x,3854)) return this.E_VE3854(x);
+		if(this.is_TE_VE(x,6827)) return this.E_VE6827(x);
 		if(this.is_TE_VE(x,96368)) return this.E_VE96368(x);
 		debugger;
 	}

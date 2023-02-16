@@ -289,6 +289,24 @@ type R_PageTypeWatch={
 	navigationDoneMs: number;
 };
 type R_PageTypeBrowse={
+	endpoint: E_VE6827;
+	pageType: "browse";
+	fromHistory: false;
+	response: {
+		page: "browse";
+		endpoint: E_VE6827;
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			header: R_FeedTabbedHeader;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+		};
+		url: "/feed/library";
+		expirationTime: 1676555594925;
+	};
+	navigationDoneMs: 1676555295187;
+}|{
 	endpoint: E_VE96368;
 	pageType: "browse";
 	fromHistory: false;
@@ -393,7 +411,7 @@ type RC_PlaylistPanel={playlistPanelContinuation: DC_PlaylistPanel;};
 type RC_SectionList={sectionListContinuation: GD_RC_SectionList;};
 //#endregion
 //#region RC
-type RC_ConsistencyTokenJar={	encryptedTokenJarContents: string;	expirationSeconds: `${D_TokenJarDefaultExpirationSeconds}`;};
+type RC_ConsistencyTokenJar={encryptedTokenJarContents: string; expirationSeconds: `${D_TokenJarDefaultExpirationSeconds}`;};
 type RC_CsiServiceC={key: "c"; value: RC_ECatcherClientName['value'];};
 type RC_CsiServiceCVer={key: "cver"; value: string;};
 type RC_CsiVarMap={
