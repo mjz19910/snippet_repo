@@ -231,6 +231,7 @@ class ServiceMethods extends ServiceData {
 		if(target!=="TARGET_NEW_WINDOW") debugger;
 		let x1=this.parse_with_url_parse(url);
 		if(x1.pathname!=="/aclk") debugger;
+		let s_map=Object.fromEntries(x1.searchParams.entries());
 		debugger;
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
