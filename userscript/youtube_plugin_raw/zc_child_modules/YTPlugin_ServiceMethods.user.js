@@ -5789,6 +5789,30 @@ class ServiceMethods extends ServiceData {
 		if("videoDescriptionMusicSectionRenderer" in x) return this.R_VideoDescriptionMusicSection(x);
 		x===""; this.codegen_typedef(cf,x);
 	}
+	/** @private @arg {R_FeedNudge} x */
+	R_FeedNudge(x) {this.H_("R_FeedNudge","feedNudgeRenderer",x,this.D_FeedNudge);}
+	/** @private @arg {D_FeedNudge} x */
+	D_FeedNudge(x) {
+		const cf="D_FeedNudge"; this.k(cf,x);
+		const {lightIconImage,title,subtitle,dismissButton,impressionEndpoint,trackingParams,style,contents,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.D_Thumbnail(lightIconImage);
+		this.G_Text(title);
+		this.G_Text(subtitle);
+		this.R_Button(dismissButton);
+		this.E_Feedback(impressionEndpoint);
+		this.trackingParams(trackingParams);
+		if(style!=="FEED_NUDGE_STYLE_CHIP") debugger;
+		this.z(contents,this.R_ChipCloudChip);
+	}
+	/** @private @arg {R_Radio} x */
+	R_Radio(x) {this.H_("R_Radio","radioRenderer",x,this.D_Radio);}
+	/** @private @arg {D_Radio} x */
+	D_Radio(x) {
+		const cf="D_Radio"; this.k(cf,x);
+		let {...y}=this.Omit_Menu_Radio(cf,x);
+		const {videos,...z}=this.s(cf,y); this.g(z);/*#destructure_done*/
+		this.z(videos,this.R_ChildVideo);
+	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
