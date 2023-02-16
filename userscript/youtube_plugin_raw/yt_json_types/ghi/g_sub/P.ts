@@ -74,3 +74,6 @@ type P_reel_player_params={
 	30: T_D32<1>,
 	71: T_D32<15>
 };
+type P_reel_params={
+	1: T_D32<15>
+};

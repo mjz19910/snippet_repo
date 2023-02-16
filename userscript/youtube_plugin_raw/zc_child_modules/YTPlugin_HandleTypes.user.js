@@ -4484,8 +4484,15 @@ class HandleTypes extends ServiceMethods {
 				let u=as_any(x);
 				this.P_tracking_params(u);
 			} break;
+			case "reel.params": {
+				/** @type {P_reel_params} */
+				let u=as_any(x);
+				this.P_reel_params(u);
+			} break;
 		}
 	}
+	/** @private @arg {P_reel_params} x */
+	P_reel_params(x) {x;}
 	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
 	P_ad_layout_ad_serving_data_entry(x) {x;}
 	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */

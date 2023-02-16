@@ -1172,15 +1172,15 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_VssLoggingContext} x */
 	D_VssLoggingContext(x) {
-		const cf="D_VssLoggingContext"; this.k(cf,x);
+		const cf="D_VssLoggingContext";
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.V_SerializedContextData(cf,serializedContextData);
+		this.params("logging_context.serialized_context_data",serializedContextData);
 	}
 	/** @private @arg {D_SerializedContextData} x */
 	D_QoeLoggingContext(x) {
-		const cf="D_QoeLoggingContext"; this.k(cf,x);
+		const cf="D_QoeLoggingContext";
 		const {serializedContextData,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.V_SerializedContextData(cf,serializedContextData);
+		this.params("logging_context.serialized_context_data",serializedContextData);
 	}
 	/** @protected @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext","vssLoggingContext",x,this.D_VssLoggingContext);}
