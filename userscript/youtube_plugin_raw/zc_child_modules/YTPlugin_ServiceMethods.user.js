@@ -234,11 +234,16 @@ class ServiceMethods extends ServiceData {
 		if(x1.pathname!=="/aclk") debugger;
 		let s_map=Object.fromEntries(x1.searchParams.entries());
 		{
-			/** @type {{}} */
-			let x2=s_map;
+			/** @type {DE_VE83769_Url_Shape} */
+			let x2=as(s_map);
 			const {sa,ai,ae,num,cid,sig,client,rf,adurl,...y}=x2; this.g(y);
+			let u1=this.parse_with_url_parse(adurl);
+			if(u1.hostname!=="plantagreenhouses.ca") debugger;
+			if(u1.pathname!=="/") debugger;
+			/** @type {DE_VE83769_Url_1$d$ad_url} */
+			let x3=as(Object.fromEntries(u1.searchParams.entries()));
+			const {gclid,...y1}=x3; this.g(y1);
 		}
-		debugger;
 	}
 	/** @protected @arg {E_PlaylistEdit} x */
 	E_PlaylistEdit(x) {const [a,b,y]=this.TE_Endpoint_3("E_PlaylistEdit","playlistEditEndpoint",x); this.g(y); this.M_EditPlaylist(a); this.DE_PlaylistEdit(b);}
