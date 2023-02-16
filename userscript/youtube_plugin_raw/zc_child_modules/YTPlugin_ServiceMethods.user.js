@@ -2507,7 +2507,6 @@ class ServiceMethods extends ServiceData {
 		{
 			const x=s2_c;
 			let a=(x>>>24)%256,r=(x>>>16)%256,g=(x>>>8)%256,b=x%256;
-			if(a!==0xff) debugger;
 			switch(r) {
 				default: log_color(`d1_s2_c_r`,r); break;
 				case 0x05: case 0x06: case 0x07: case 0x09: case 0x0a:
@@ -2534,6 +2533,9 @@ class ServiceMethods extends ServiceData {
 				case 0x21: case 0x23: case 0x25: case 0x26: case 0x27:
 				case 0x29: case 0x2b: case 0x2c: case 0x2d: case 0x2f:
 				case 0x30: case 0x31: case 0x33:
+			}
+			switch(a) {
+				default: log_color(`d1_s2_c_a`,b); break;
 			}
 		}
 		{
