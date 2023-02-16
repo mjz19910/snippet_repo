@@ -5259,6 +5259,40 @@ class ServiceMethods extends ServiceData {
 		this.t(ghostCards,this.R_GhostGrid);
 		this.t(button,this.R_Button);
 	}
+	/** @public @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
+	DC_Generic_CTP(path,x) {
+		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
+		this.params(path,continuation);
+		this.clickTrackingParams(clickTrackingParams);
+	}
+	/** @private @arg {CD_Reload} x */
+	CD_Reload(x) {
+		this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("reload.continuation",x));
+	}
+	/** @public @arg {R_CompactVideo} x */
+	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
+	/** @private @arg {D_CompactVideo} x */
+	D_CompactVideo(x) {
+		const cf="D_CompactVideo"; this.k(cf,x);
+		if("ownerBadges" in x&&"publishedTimeText" in x) {
+			let {publishedTimeText,lengthText,ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
+			this.G_Text(publishedTimeText);
+			this.G_Text(lengthText);
+			this.z(ownerBadges,this.RMD_Badge);
+			return;
+		}
+		if("ownerBadges" in x) {
+			let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
+			this.z(ownerBadges,this.RMD_Badge);
+			return;
+		}
+		if("publishedTimeText" in x) {
+			let {publishedTimeText,lengthText,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
+			this.G_Text(publishedTimeText);
+			this.G_Text(lengthText);
+			return;
+		}
+	}
 	/** @private @arg {G_Watch_SecondaryResults_G_SectionItem} x */
 	G_Watch_SecondaryResults_G_SectionItem(x) {
 		const cf="G_Watch_SecondaryResults_G_SectionItem";
@@ -6289,5 +6323,7 @@ class ServiceMethods extends ServiceData {
 			} break;
 		}
 	}
+	/** @private @arg {R_TextHeader} x */
+	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 }
 export_(exports => {exports.ServiceMethods=ServiceMethods;});

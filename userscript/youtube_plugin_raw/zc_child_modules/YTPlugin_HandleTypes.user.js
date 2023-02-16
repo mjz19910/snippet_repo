@@ -635,8 +635,6 @@ class HandleTypes extends ServiceMethods {
 	R_ProfileColumn(x) {this.H_("ProfileColumn","profileColumnRenderer",x,this.D_ProfileColumn);}
 	/** @private @arg {R_BrowseFeedActions} x */
 	R_BrowseFeedActions(x) {this.H_("BrowseFeedActions","browseFeedActionsRenderer",x,this.D_BrowseFeedActions);}
-	/** @public @arg {R_CompactVideo} x */
-	R_CompactVideo(x) {this.H_("R_CompactVideo","compactVideoRenderer",x,this.D_CompactVideo);}
 	/** @private @arg {R_Transcript} x */
 	R_Transcript(x) {this.H_("Transcript","transcriptRenderer",x,this.D_Transcript);}
 	/** @private @arg {R_MusicThumbnail} x */
@@ -781,8 +779,6 @@ class HandleTypes extends ServiceMethods {
 	R_InfoRow(x) {this.H_("R_InfoRow","infoRowRenderer",x,this.D_InfoRow);}
 	/** @private @arg {R_PrivacyDropdownItem} x */
 	R_PrivacyDropdownItem(x) {this.H_("R_PrivacyDropdownItem","privacyDropdownItemRenderer",x,this.D_PrivacyDropdownItem);}
-	/** @private @arg {R_TextHeader} x */
-	R_TextHeader(x) {this.H_("R_TextHeader","textHeaderRenderer",x,this.D_TextHeader);}
 	/** @private @arg {R_EmojiPickerCategory} x */
 	R_EmojiPickerCategory(x) {this.H_("R_EmojiPickerCategory","emojiPickerCategoryRenderer",x,this.D_EmojiPickerCategory);}
 	/** @private @arg {R_EmojiPickerCategoryButton} x */
@@ -793,10 +789,6 @@ class HandleTypes extends ServiceMethods {
 	R_MetadataRow(x) {this.H_("R_MetadataRow","metadataRowRenderer",x,this.D_MetadataRow);}
 	/** @private @arg {CD_TimedContinuation} x */
 	CD_TimedContinuation(x) {this.H_("CD_TimedContinuation","timedContinuationData",x,this.DC_Timed);}
-	/** @private @arg {CD_Reload} x */
-	CD_Reload(x) {
-		this.y("CD_Reload","reloadContinuationData",x,x => this.DC_Generic_CTP("reload.continuation",x));
-	}
 	/** @private @arg {CD_NextRadio} x */
 	CD_NextRadio(x) {
 		this.y("CD_NextRadio","nextRadioContinuationData",x,
@@ -1791,28 +1783,6 @@ class HandleTypes extends ServiceMethods {
 		this.tz(badges,this.RMD_Badge);
 		/** @typedef {keyof typeof y} Omit_y */
 		return as_any(y);
-	}
-	/** @private @arg {D_CompactVideo} x */
-	D_CompactVideo(x) {
-		const cf="D_CompactVideo"; this.k(cf,x);
-		if("ownerBadges" in x&&"publishedTimeText" in x) {
-			let {publishedTimeText,lengthText,ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
-			this.G_Text(publishedTimeText);
-			this.G_Text(lengthText);
-			this.z(ownerBadges,this.RMD_Badge);
-			return;
-		}
-		if("ownerBadges" in x) {
-			let {ownerBadges,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
-			this.z(ownerBadges,this.RMD_Badge);
-			return;
-		}
-		if("publishedTimeText" in x) {
-			let {publishedTimeText,lengthText,...y}=this.D_CompactVideo_Omit(cf,x); this.g(y);
-			this.G_Text(publishedTimeText);
-			this.G_Text(lengthText);
-			return;
-		}
 	}
 	/** @private @arg {D_AdSlot} x */
 	D_AdSlot(x) {
@@ -3105,12 +3075,6 @@ class HandleTypes extends ServiceMethods {
 		const {thumbnail,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.D_Thumbnail(thumbnail);
 		this.trackingParams(trackingParams);
-	}
-	/** @public @arg {P_ParamParse} path @arg {DC_Generic_CTP} x */
-	DC_Generic_CTP(path,x) {
-		const {continuation,clickTrackingParams,...y}=this.s("DC_Generic_CTP",x); this.g(y);
-		this.params(path,continuation);
-		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @private @arg {DC_LiveChat} x */
 	DC_LiveChat(x) {
