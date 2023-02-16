@@ -161,7 +161,7 @@ class ServiceMethods extends ServiceData {
 		return u;
 	}
 	/** @private @arg {DC_ShowReelsCommentsOverlay} x */
-	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,x => this.b_cls.R_EngagementPanelSectionList(x));}
+	DC_ShowReelsCommentsOverlay(x) {this.y("DC_ShowReelsCommentsOverlay","engagementPanel",x,this.R_EngagementPanelSectionList);}
 	/** @private @arg {D_ToggleMenuServiceItem} x */
 	D_ToggleMenuServiceItem(x) {
 		const cf="D_ToggleMenuServiceItem";
