@@ -659,10 +659,6 @@ class HandleTypes extends ServiceMethods {
 	R_ChannelSwitcherPage(x) {this.H_("R_ChannelSwitcherPage","channelSwitcherPageRenderer",x,this.D_ChannelSwitcherPage);}
 	/** @public @arg {R_CommentsEntryPointTeaser} x */
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
-	/** @public @template {string} SW @arg {SW} sw @arg {["",string]} x @returns {x is ["",`${SW}${string}`]} */
-	str_starts_with_rx_in_arr(x,sw) {
-		return this.str_starts_with(x[1],sw);
-	}
 	/** @private @arg {R_AddToPlaylistCreate} x */
 	R_AddToPlaylistCreate(x) {this.H_("R_AddToPlaylistCreate","addToPlaylistCreateRenderer",x,this.D_AddToPlaylistCreate);}
 	/** @private @arg {R_PlaylistAddToOption} x */
@@ -673,10 +669,6 @@ class HandleTypes extends ServiceMethods {
 	R_HeroPlaylistThumbnail(x) {this.H_("R_HeroPlaylistThumbnail","heroPlaylistThumbnailRenderer",x,this.D_HeroPlaylistThumbnail);}
 	/** @private @arg {R_PlaylistByline} x */
 	R_PlaylistByline(x) {this.H_("R_PlaylistByline","playlistBylineRenderer",x,this.D_PlaylistByline);}
-	/** @public @arg {R_ClipAdState} x */
-	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
-	/** @public @arg {R_ClipCreationScrubber} x */
-	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber","clipCreationScrubberRenderer",x,this.D_ClipCreationScrubber);}
 	/** @private @arg {R_TranscriptSegmentList} x */
 	R_TranscriptSegmentList(x) {this.H_("R_TranscriptSegmentList","transcriptSegmentListRenderer",x,this.D_TranscriptSegmentList);}
 	/** @private @arg {R_TranscriptFooter} x */
@@ -2913,23 +2905,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D_PlaylistByline} x */
 	D_PlaylistByline(x) {this.y("D_PlaylistByline","text",x,this.G_Text);}
-	/** @private @arg {D_ClipAdState} x */
-	D_ClipAdState(x) {
-		const cf="D_ClipAdState"; this.k(cf,x);
-		const {title,body,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(title);
-		this.G_Text(body);
-	}
-	/** @private @arg {D_ClipCreationScrubber} x */
-	D_ClipCreationScrubber(x) {
-		const cf="D_ClipCreationScrubber"; this.k(cf,x);
-		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(lengthTemplate!=="$clip_length seconds") debugger;
-		let u=this.exact_arr(60000,5000,15000,120000);
-		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
-		if(!this.eq_keys(t,u)) debugger;
-		this.z([startAccessibility,endAccessibility,durationAccessibility],this.D_Accessibility);
-	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
 		const cf="D_TranscriptSearchPanel"; this.k(cf,x);

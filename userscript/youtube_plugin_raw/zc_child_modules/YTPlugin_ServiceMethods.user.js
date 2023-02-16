@@ -20,6 +20,10 @@ const split_string=bs.split_string; const split_string_once=bs.split_string_once
 const as_any=bs.as_any;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @public @template {string} SW @arg {SW} sw @arg {["",string]} x @returns {x is ["",`${SW}${string}`]} */
+	str_starts_with_rx_in_arr(x,sw) {
+		return this.str_starts_with(x[1],sw);
+	}
 	/** @public @template {{}} T @arg {TR_ItemSection_2<T,"comments-entry-point">} x */
 	TR_ItemSection_2(x) {return this.wn("TR_ItemSection_2",x,"itemSectionRenderer");}
 	/** @protected @template {{}} T @arg {T|null|undefined|void} x @arg {(this:this,x:T)=>boolean} f */
@@ -6152,6 +6156,27 @@ class ServiceMethods extends ServiceData {
 		const {placeholderText,maxCharacterLimit,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(placeholderText);
 		if(maxCharacterLimit!==140) debugger;
+	}
+	/** @public @arg {R_ClipCreationScrubber} x */
+	R_ClipCreationScrubber(x) {this.H_("R_ClipCreationScrubber","clipCreationScrubberRenderer",x,this.D_ClipCreationScrubber);}
+	/** @private @arg {D_ClipCreationScrubber} x */
+	D_ClipCreationScrubber(x) {
+		const cf="D_ClipCreationScrubber"; this.k(cf,x);
+		const {lengthTemplate,maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs,startAccessibility,endAccessibility,durationAccessibility,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(lengthTemplate!=="$clip_length seconds") debugger;
+		let u=this.exact_arr(60000,5000,15000,120000);
+		let t=this.exact_arr(maxLengthMs,minLengthMs,defaultLengthMs,windowSizeMs);
+		if(!this.eq_keys(t,u)) debugger;
+		this.z([startAccessibility,endAccessibility,durationAccessibility],this.D_Accessibility);
+	}
+	/** @public @arg {R_ClipAdState} x */
+	R_ClipAdState(x) {this.H_("R_ClipAdState","clipAdStateRenderer",x,this.D_ClipAdState);}
+	/** @private @arg {D_ClipAdState} x */
+	D_ClipAdState(x) {
+		const cf="D_ClipAdState"; this.k(cf,x);
+		const {title,body,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(title);
+		this.G_Text(body);
 	}
 	/** @private @arg {D_ClipCreation} x */
 	D_ClipCreation(x) {
