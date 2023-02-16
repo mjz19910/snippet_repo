@@ -701,39 +701,56 @@ class HandleTypes extends ServiceMethods {
 	R_CommentsEntryPointTeaser(x) {this.H_("R_CommentsEntryPointTeaser","commentsEntryPointTeaserRenderer",x,this.D_CommentsEntryPointTeaser);}
 	/** @public @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
+	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x @returns {[false,null]|[true, [2,`UC${string}featured`,`UC${string}`,string]|[1,`UC${string}featured`,`UC${string}`,"featured"]]} */
+	is_browse_feedUC(x) {
+		if(this.str_starts_with_rx("browse-feed",x.targetId)) {
+			let ss=split_string(x.targetId,"browse-feed");
+			if(ss.length!==2) return [false,null];
+			let sa=ss[1];
+			let ll=sa.slice(24);
+			/** @returns {`UC${string}`} */
+			function wx() {return "UC";}
+			if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
+				let [cid,fe]=split_string_once_last(sa,"featured",wx()); if(fe!=="") debugger;
+				return [true,[1,sa,cid,ll]];
+			}
+			let [cid,fe]=split_string_once_last(sa,"featured",wx()); if(fe!=="") debugger;
+			return [true,[2,sa,cid,ll]];
+		}
+		return [false,null];
+	}
+	/** @private @arg {DC_SectionList_BrowseFeed_ChannelFeatured} x */
+	DC_SectionList_BrowseFeed_ChannelFeatured(x) {
+		let b_info=this.is_browse_feedUC(x);
+		if(!b_info[0]) {
+			debugger;
+			return;
+		}
+		let [,bp]=b_info;
+		if(bp[0]===2) {
+			let [,sa,,last_part]=bp;
+			console.log("target_id.last_part",last_part);
+			if(this.str_starts_with_rx(sa,"UC")) {
+				let floc=sa.indexOf("featured");
+				if(floc<0) {debugger; return;}
+				let s1=sa.slice(0,floc);
+				let s2=sa.slice(floc);
+				console.log("[RichGrid.targetId]",x.targetId);
+				console.log("[target_id_parse]",s1,s2);
+			}
+			return;
+		}
+		let [,,channelId,last_part]=bp;
+		if(last_part!=="featured") debugger;
+		this.D_ChannelId(channelId);
+		debugger;
+	}
 	/** @private @arg {GD_RC_SectionList} x */
 	GD_RC_SectionList(x) {
 		const cf="GD_RC_SectionList"; this.k(cf,x);
 		if("targetId" in x) {
 			switch(x.targetId) {
-				default: {
-					if(this.str_starts_with_rx("browse-feed",x.targetId)) {
-						let ss=split_string(x.targetId,"browse-feed");
-						if(ss.length!==2) {debugger; return;}
-						let sa=ss[1];
-						let ll=sa.slice(24);
-						if(this.str_starts_with_rx(sa,"UC")&&ll==="featured") {
-							/** @returns {`UC${string}`} */
-							function wx() {return "UCx";}
-							let [cid,fe]=split_string_once_last(sa,"featured",wx());
-							if(fe!=="") debugger;
-							this.D_ChannelId(cid);
-							return;
-						}
-						console.log("target_id.ll",ll);
-						if(this.str_starts_with_rx(sa,"UC")) {
-							let floc=sa.indexOf("featured");
-							if(floc<0) {debugger; return;}
-							let s1=sa.slice(0,floc);
-							let s2=sa.slice(floc);
-							if(ll!==s2) debugger;
-							console.log("[RichGrid.targetId]",x.targetId);
-							console.log("[target_id_parse]",s1,s2);
-						}
-						return;
-					};
-					debugger;
-				} return;
+				default: return this.DC_SectionList_BrowseFeed_ChannelFeatured(x);
 				case "browse-feedFEhistory": return this.D_SectionList_BrowseFeed_History(x);
 				case "browse-feedFEsubscriptions": return this.D_SectionList_BrowseFeed_Subscriptions(x);
 				case "search-feed": return this.DC_SectionList_SearchFeed(x);
