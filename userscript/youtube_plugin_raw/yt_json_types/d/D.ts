@@ -1256,8 +1256,20 @@ type D_GuideEntry=
 	|TD_GuideEntry_Simple<"FASHION_LOGO">
 	|TD_GuideEntry_Simple<"FLAG">
 	|TD_GuideEntry_Simple<"GAMING_LOGO">
-	|TD_GuideEntry_Simple<"LIVE">
-	|TD_GuideEntry_Simple<"MUSIC">
+	|{
+		navigationEndpoint: E_VE3611;
+		icon: T_Icon<"LIVE">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Live">;
+	}
+	|{
+		navigationEndpoint: E_VE3611;
+		icon: T_Icon<"MUSIC">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Music">;
+	}
 	|TD_GuideEntry_Simple<"NEWS">
 	|TD_GuideEntry_Simple<"SETTINGS">
 	|TD_GuideEntry_Simple<"TRENDING">
