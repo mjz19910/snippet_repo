@@ -3657,14 +3657,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {"D_VideoOwner"} cf @arg {D_VideoOwner} x */
 	D_VideoOwner_Omit(cf,x) {
-		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,navigationEndpoint,...y}=this.s(cf,x);
+		const {thumbnail,title,trackingParams,subscriberCountText,subscriptionButton,membershipButton,...y}=this.s(cf,x);
 		this.D_Thumbnail(thumbnail);
 		this.G_Text(title);
 		this.trackingParams(trackingParams);
 		this.G_Text(subscriberCountText);
 		this.D_SubscriptionButton(subscriptionButton);
 		this.t(membershipButton,this.R_Button);
-		debugger;
 		return y;
 	}
 	/** @private @arg {D_SubscriptionButton} x */
@@ -3677,7 +3676,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D_VideoOwner} x */
 	D_VideoOwner(x) {
 		const cf="D_VideoOwner"; this.k(cf,x);
-		let u=this.D_VideoOwner_Omit(cf,x); const {badges,...y}=this.s(`${cf}:1`,u); this.g(y);/*#destructure_done*/
+		let u=this.D_VideoOwner_Omit(cf,x); const {navigationEndpoint,badges,...y}=this.s(`${cf}:1`,u); this.g(y);/*#destructure_done*/
 		this.tz(badges,this.RMD_Badge);
 	}
 	/** @private @arg {D_MusicCarouselShelf} x */
