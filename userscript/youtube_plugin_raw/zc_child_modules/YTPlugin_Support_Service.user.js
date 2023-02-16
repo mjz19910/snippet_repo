@@ -247,7 +247,7 @@ class Support_RS_Player extends ServiceMethods {
 		this.a_primitive_str(ownerChannelName);
 		this.t(liveBroadcastDetails,this.D_LiveBroadcastDetails);
 		this.a_primitive_str(uploadDate);
-		this.t(learningResource,this.D_LearningResource)
+		this.t(learningResource,this.D_LearningResource);
 	}
 	/** @private @arg {D_AdPlacement} x */
 	D_AdPlacement(x) {
@@ -438,9 +438,7 @@ class Support_RS_Player extends ServiceMethods {
 				}
 				debugger;
 			} break;
-			case "Sports":
-			case "Education":
-			case "Pets & Animals":
+			case "Travel & Events": case "Sports": case "Education": case "Pets & Animals":
 			case "Autos & Vehicles": case "Comedy": case "Entertainment": case "Film & Animation": case "Gaming":
 			case "Howto & Style": case "Music": case "People & Blogs": case "Science & Technology":
 		}

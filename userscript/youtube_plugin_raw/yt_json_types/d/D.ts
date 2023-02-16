@@ -150,6 +150,7 @@ type D_VideoCategory=
 	|"Pets & Animals"
 	|"Science & Technology"
 	|"Sports"
+	|"Travel & Events"
 	;
 ;
 type D_VE6827_PageLocation=
