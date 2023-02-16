@@ -147,6 +147,22 @@ class ServiceMethods extends ServiceData {
 		function u1() {u;}
 		/**/u1; x; o2;
 	}
+	/** @type {Map<string,[string,string[]][]>} */
+	strings_map=new Map;
+	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
+	add_string_to_map(cf,k_arg,x) {
+		/** @type {`${typeof cf}::${typeof k_arg}`} */
+		let k=`${cf}::${k_arg}`;
+		let group_arr=this.strings_map.get(cf);
+		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
+		let group_entry=group_arr.find(e => e[0]===k);
+		x: {
+			if(!group_entry) break x;
+			if(group_entry[1].includes(x)) return;
+			group_entry[1].push(x);
+		}
+		group_arr.push([k,[x]]);
+	}
 	/** @private @template {DC_Continuation} T @arg {"DC_Continuation"} cf @arg {T} x @returns {T_OmitKey<T,"token"|"request">} */
 	DC_Continuation_Omit(cf,x) {
 		const {token,request,...y}=this.s(cf,x);
@@ -238,22 +254,6 @@ class ServiceMethods extends ServiceData {
 		const cf1="D_ToggleButton_ServiceEP.data";
 		this.M_SendPost(wc);
 		this.G_ClientSignal(cf1,s);
-	}
-	/** @type {Map<string,[string,string[]][]>} */
-	strings_map=new Map;
-	/** @private @arg {CF_add_string_to_map} cf @arg {"defaultTooltip"|"toggledTooltip"|"accessibilityData.accessibilityData.label"} k_arg @arg {string} x */
-	add_string_to_map(cf,k_arg,x) {
-		/** @type {`${typeof cf}::${typeof k_arg}`} */
-		let k=`${cf}::${k_arg}`;
-		let group_arr=this.strings_map.get(cf);
-		if(!group_arr) this.strings_map.set(cf,group_arr=[]);
-		let group_entry=group_arr.find(e => e[0]===k);
-		x: {
-			if(!group_entry) break x;
-			if(group_entry[1].includes(x)) return;
-			group_entry[1].push(x);
-		}
-		group_arr.push([k,[x]]);
 	}
 	/** @private @arg {Extract<G_ClientSignal_Item,TA_OpenPopup<any>>} x */
 	S_Client_Popup(x) {
