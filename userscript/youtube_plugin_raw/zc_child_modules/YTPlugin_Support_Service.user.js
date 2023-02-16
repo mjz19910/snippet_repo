@@ -1055,6 +1055,28 @@ class Support_GenericApi extends ServiceMethods {
 		this.G_Text(title);
 		this.z(buttons,this.R_Button);
 	}
+	/** @private @arg {R_TextInputFormField} x */
+	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
+	/** @private @arg {D_TextInputFormField} x */
+	D_TextInputFormField(x) {
+		const cf="D_TextInputFormField";
+		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(label);
+		if(maxCharacterLimit!==150) debugger;
+		this.a_primitive_str(placeholderText);
+		if(validValueRegexp!=="[^<>]*") debugger;
+		this.G_Text(invalidValueErrorMessage);
+		this.ceq(required,true);
+	}
+	/** @private @arg {R_Dropdown} x */
+	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
+	/** @private @arg {D_Dropdown_Privacy} x */
+	D_Dropdown(x) {
+		const cf="D_Dropdown";
+		const {entries,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(entries,this.R_PrivacyDropdownItem);
+		if(label!=="Privacy") debugger;
+	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

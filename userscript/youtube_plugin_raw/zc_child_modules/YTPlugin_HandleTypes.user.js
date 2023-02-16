@@ -448,10 +448,6 @@ class HandleTypes extends ServiceMethods {
 	R_LiveChatMessageInput(x) {this.H_("R_LiveChatMessageInput","liveChatMessageInputRenderer",x,this.g);}
 	/** @private @arg {R_ChannelSwitcherHeader} x */
 	R_ChannelSwitcherHeader(x) {this.H_("R_ChannelSwitcherHeader","channelSwitcherHeaderRenderer",x,this.D_ChannelSwitcherHeader);}
-	/** @private @arg {R_TextInputFormField} x */
-	R_TextInputFormField(x) {this.H_("R_TextInputFormField","textInputFormFieldRenderer",x,this.D_TextInputFormField);}
-	/** @private @arg {R_Dropdown} x */
-	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @arg {R_RichShelf} x */
@@ -716,13 +712,13 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {RSG_Survey} x */
+	/** @public @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {RSG_PdgBuyFlow} x */
+	/** @public @arg {RSG_PdgBuyFlow} x */
 	RSG_PdgBuyFlow(x) {
 		const cf="RSG_PdgBuyFlow";
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -816,13 +812,13 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.targetId(cf,targetId);
 	}
-	/** @private @arg {RSG_SearchSuggestions} x */
+	/** @public @arg {RSG_SearchSuggestions} x */
 	RSG_SearchSuggestions(x) {
 		const cf="RSG_SearchSuggestions";
 		const {responseContext: {},trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {RSL_Like} x */
+	/** @public @arg {RSL_Like} x */
 	RSL_Like(x) {
 		const cf="RSL_Like";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -831,7 +827,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 	}
-	/** @private @arg {RSL_Dislike} x */
+	/** @public @arg {RSL_Dislike} x */
 	RSL_Dislike(x) {
 		const cf="RSL_Dislike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -843,7 +839,7 @@ class HandleTypes extends ServiceMethods {
 		let [r1]=ac;
 		this.z(r1,this.g);
 	}
-	/** @private @arg {RSL_RemoveLike} x */
+	/** @public @arg {RSL_RemoveLike} x */
 	RSL_RemoveLike(x) {
 		const cf="RSL_RemoveLike";
 		const {responseContext: {},actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -852,7 +848,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		}));
 	}
-	/** @private @arg {RS_ReelWatchSequence} x */
+	/** @public @arg {RS_ReelWatchSequence} x */
 	RS_ReelWatchSequence(x) {
 		const cf="RS_ReelWatchSequence";
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -860,7 +856,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.t(continuationEndpoint,this.C_Continuation);
 	}
-	/** @private @arg {RS_GetLiveChat} x */
+	/** @public @arg {RS_GetLiveChat} x */
 	RS_GetLiveChat(x) {
 		const cf="RS_GetLiveChat";
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -972,13 +968,13 @@ class HandleTypes extends ServiceMethods {
 		this.R_Transcript(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @private @arg {REG_DatasyncIds} x */
+	/** @public @arg {REG_DatasyncIds} x */
 	REG_DatasyncIds(x) {
 		const cf="REG_DatasyncIds";
 		const {responseContext: {},datasyncIds,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(datasyncIds,this.a_primitive_str);
 	}
-	/** @private @arg {REG_AccountSwitcher} x */
+	/** @public @arg {REG_AccountSwitcher} x */
 	REG_AccountSwitcher(x) {
 		const cf="REG_AccountSwitcher";
 		const {responseContext: {},selectText,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -992,7 +988,7 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(selectText);
 		this.z(actions,this.AU_ChannelSwitcherPage);
 	}
-	/** @private @arg {RS_WatchReelItem} x */
+	/** @public @arg {RS_WatchReelItem} x */
 	RSW_ReelItem(x) {
 		const cf="RSW_ReelItem";
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1004,13 +1000,13 @@ class HandleTypes extends ServiceMethods {
 		this.R_DesktopTopbar(desktopTopbar);
 		this.z(engagementPanels,this.R_EngagementPanelSectionList);
 	}
-	/** @protected @arg {RS_SetSetting} x */
+	/** @public @arg {RS_SetSetting} x */
 	RS_SetSetting(x) {
 		const cf="RS_SetSetting";
 		const {responseContext: {},settingItemId,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		if(settingItemId!=="407") debugger;
 	}
-	/** @protected @arg {RS_Feedback} x */
+	/** @public @arg {RS_Feedback} x */
 	RS_Feedback(x) {
 		const cf="RS_Feedback";
 		const {responseContext: {},feedbackResponses,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1201,7 +1197,7 @@ class HandleTypes extends ServiceMethods {
 		this.R_Menu(contextualMenu);
 		this.parse_number_template(notificationId);
 	}
-	/** @protected @arg {RSG_Transcript} x */
+	/** @public @arg {RSG_Transcript} x */
 	RSG_Transcript(x) {
 		const cf="RSG_Transcript";
 		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1210,14 +1206,14 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 	}
-	/** @protected @arg {RS_AttGet} x */
+	/** @public @arg {RS_AttGet} x */
 	RS_AttGet(x) {
 		const cf="RS_AttGet";
 		const {responseContext: {},challenge,bgChallenge,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.a_primitive_str(challenge);
 		this.D_AttBgChallenge(bgChallenge);
 	}
-	/** @private @arg {RS_Guide} x */
+	/** @public @arg {RS_Guide} x */
 	RS_Guide(x) {
 		const cf="RS_Guide";
 		const {responseContext: {},items,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1727,7 +1723,7 @@ class HandleTypes extends ServiceMethods {
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @protected @arg {RS_AttLog_RC} x */
+	/** @public @arg {RS_AttLog_RC} x */
 	RS_AttLog_RC(x) {this.HD_("RS_AttLog_RC","responseContext",x);}
 	/** @private @arg {D_FeedbackResponseProcessedStatus} x */
 	D_FeedbackResponseProcessedStatus(x) {
@@ -1849,7 +1845,7 @@ class HandleTypes extends ServiceMethods {
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		this.a_primitive_str(identifier);
 	}
-	/** @private @arg {RSG_SharePanel} x */
+	/** @public @arg {RSG_SharePanel} x */
 	RSG_SharePanel(x) {
 		const cf="RSG_SharePanel";
 		const {responseContext: {},trackingParams,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1861,7 +1857,7 @@ class HandleTypes extends ServiceMethods {
 			console.log("[RSG_SharePanel.openPopupAction]",openPopupAction);
 		});
 	}
-	/** @private @arg {RS_Subscribe} x */
+	/** @public @arg {RS_Subscribe} x */
 	RS_Subscribe(x) {
 		const cf="RS_Subscribe";
 		const {responseContext: {},actions,newNotificationButton,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1889,7 +1885,7 @@ class HandleTypes extends ServiceMethods {
 		this.a_primitive_bool(subscribed);
 		this.D_ChannelId(channelId);
 	}
-	/** @private @arg {RS_Unsubscribe} x */
+	/** @public @arg {RS_Unsubscribe} x */
 	RS_Unsubscribe(x) {
 		const cf="RS_Unsubscribe";
 		const {responseContext,actions,trackingParams,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -2005,24 +2001,6 @@ class HandleTypes extends ServiceMethods {
 		const {title,button,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.G_Text(title);
 		this.R_Button(button);
-	}
-	/** @private @arg {D_TextInputFormField} x */
-	D_TextInputFormField(x) {
-		const cf="D_TextInputFormField";
-		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(label);
-		if(maxCharacterLimit!==150) debugger;
-		this.a_primitive_str(placeholderText);
-		if(validValueRegexp!=="[^<>]*") debugger;
-		this.G_Text(invalidValueErrorMessage);
-		this.ceq(required,true);
-	}
-	/** @private @arg {D_Dropdown_Privacy} x */
-	D_Dropdown(x) {
-		const cf="D_Dropdown";
-		const {entries,label,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(entries,this.R_PrivacyDropdownItem);
-		if(label!=="Privacy") debugger;
 	}
 	/** @private @arg {D_RunAttestation} x */
 	D_RunAttestation(x) {
