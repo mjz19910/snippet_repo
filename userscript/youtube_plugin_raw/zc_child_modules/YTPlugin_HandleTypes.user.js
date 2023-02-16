@@ -2263,7 +2263,9 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.V_BinaryTimestamp(f4);
 		if(6 in u) {
-			const {6: [,,f6],...y}=u; this.g(y);
+			const {6: [ty,[ty2,f6]],...y}=u; this.g(y);
+			if(ty!=="raw") debugger;
+			if(ty2!=="string") debugger;
 			if(f6!=="external") debugger;
 			return;
 		}
