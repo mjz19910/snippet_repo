@@ -2233,7 +2233,7 @@ class HandleTypes extends ServiceMethods {
 						}
 						switch(f3) {
 							default: debugger; break;
-							case "shorts": case "videos": case "playlists":
+							case "shorts": case "videos": case "playlists": case "search":
 						}
 					}
 				}
