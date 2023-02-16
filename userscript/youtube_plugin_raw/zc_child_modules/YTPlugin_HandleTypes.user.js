@@ -3310,7 +3310,7 @@ class HandleTypes extends ServiceMethods {
 		if(typeof f2==="number"&&f2>0b1010111011010101010000001011) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f2] --\n\n[0b${(f2).toString(2)}]`);
 		}
-		if(typeof f3==="number"&&f3>0b11111111000001011100100010001100) {
+		if(typeof f3==="number"&&f3>0b11111111000011111010011111000000) {
 			console.log(`-- [max_gen:V_BinaryTimestamp_gen:f3] --\n\n[0b${(f3).toString(2)}]`);
 		}
 	}
