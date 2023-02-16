@@ -45,23 +45,6 @@ class Support_RS_Player extends ServiceMethods {
 		if(sig_0.match(/^[0-9A-F]+$/)===null) debugger; if(sig_0.length!==40) debugger;
 		if(sig_1.match(/^[0-9A-F]+$/)===null) debugger; if(sig_1.length!==40) debugger;
 	}
-	/** @private @arg {D_FrameworkUpdates} x */
-	D_FrameworkUpdates(x) {
-		const cf="D_FrameworkUpdates"; this.k(cf,x);
-		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
-		this.t(elementUpdate,this.R_ElementUpdate);
-	}
-	/** @private @arg {R_ElementUpdate} x */
-	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
-	/** @private @arg {D_ElementUpdate} x */
-	D_ElementUpdate(x) {
-		const cls_=this.x.get("handle_types");
-		const cf="D_ElementUpdate"; this.k(cf,x);
-		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
-		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
-		x===""; this.codegen_typedef(cf,x);
-	}
 	/** @private @arg {D_Cache_MD} x */
 	D_Cache_MD(x) {
 		const cf="CacheMetadata"; this.k(cf,x);
@@ -143,21 +126,6 @@ class Support_RS_Player extends ServiceMethods {
 		if("playerStoryboardSpecRenderer" in x) return;
 		if("playerLiveStoryboardSpecRenderer" in x) return;
 		this.codegen_typedef(cf,x);
-	}
-	/** @private @arg {RS_Watch} x */
-	RS_Watch(x) {
-		const cf="RS_Watch";
-		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
-		this.R_TwoColumnWatchNextResults(contents);
-		this.E_Watch(currentVideoEndpoint);
-		this.trackingParams(trackingParams);
-		this.R_PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,x => this.GE_ResponseReceived(cf,x));
-		this.z(engagementPanels,x => this.R_EngagementPanelSectionList(x));
-		this.R_DesktopTopbar(topbar);
-		this.z(pageVisualEffects,x => this.R_CinematicContainer(x));
-		this.D_FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {D_CaptionTrackItem} x */
 	D_CaptionTrackItem(x) {
@@ -671,8 +639,8 @@ class Support_RS_WatchPage extends ServiceMethods {
 		this.save_keys(`VE3832.${cf}.wp_params`,wp_params);
 		cls_.E_Watch(endpoint);
 		if(preconnect!==void 0) cls_.parse_preconnect_arr(preconnect);
-		this.RS_Player(playerResponse);
-		this.RS_Watch(response);
+		this.z_RS_support_player.RS_Player(playerResponse);
+		this.z_Support_RS_Watch.RS_Watch(response);
 	}
 	/** @private @arg {RS_Page_Watch} x */
 	RS_Page_Watch(x) {
@@ -680,15 +648,50 @@ class Support_RS_WatchPage extends ServiceMethods {
 		const cf="RS_Page_Watch"; this.k(cf,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		cls_.E_Watch(endpoint);
-		this.RS_Watch(response);
-		this.RS_Player(playerResponse);
+		this.z_Support_RS_Watch.RS_Watch(response);
+		this.z_RS_support_player.RS_Player(playerResponse);
 		let wp_params=cls_.parse_watch_page_url(cf,url);
 		this.save_keys(`${cf}.wp_params`,wp_params);
 		this.t(previousCsn,x => cls_.D_VeCsn(x,true));
+	}
+}
+class Support_RS_Watch extends ServiceMethods {
+	/** @public @arg {RS_Watch} x */
+	RS_Watch(x) {
+		const cf="RS_Watch";
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.RC_ResponseContext(responseContext);
+		this.R_TwoColumnWatchNextResults(contents);
+		this.E_Watch(currentVideoEndpoint);
+		this.trackingParams(trackingParams);
+		this.R_PlayerOverlay(playerOverlays);
+		this.z(onResponseReceivedEndpoints,x => this.GE_ResponseReceived(cf,x));
+		this.z(engagementPanels,x => this.R_EngagementPanelSectionList(x));
+		this.R_DesktopTopbar(topbar);
+		this.z(pageVisualEffects,x => this.R_CinematicContainer(x));
+		this.D_FrameworkUpdates(frameworkUpdates);
+	}
+	/** @private @arg {D_FrameworkUpdates} x */
+	D_FrameworkUpdates(x) {
+		const cf="D_FrameworkUpdates"; this.k(cf,x);
+		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
+		this.t(elementUpdate,this.R_ElementUpdate);
+	}
+	/** @private @arg {R_ElementUpdate} x */
+	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
+	/** @private @arg {D_ElementUpdate} x */
+	D_ElementUpdate(x) {
+		const cls_=this.x.get("handle_types");
+		const cf="D_ElementUpdate"; this.k(cf,x);
+		if("templateUpdate" in x) return cls_.R_TemplateUpdate(x);
+		if("resourceStatusInResponseCheck" in x) return cls_.R_ResourceStatusInResponseCheck(x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {
 	exports.Support_RS_Player=Support_RS_Player;
 	exports.Support_RS_WatchPage=Support_RS_WatchPage;
+	exports.Support_RS_Watch=Support_RS_Watch;
 });

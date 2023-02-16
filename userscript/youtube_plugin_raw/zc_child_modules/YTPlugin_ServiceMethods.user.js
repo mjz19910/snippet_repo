@@ -11,7 +11,8 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/zc_child_modules/YTPlugin_ServiceMethods.user.js
 // ==/UserScript==
-const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__),bs=required(store["mod$YoutubePluginBase"]);
+const __module_name__="mod$ServiceMethods",store=required(window.__plugin_modules__);
+const bs=required(store["mod$YoutubePluginBase"]),ss=required(store["mod$SupportService"]);
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const base64_dec=bs.base64_dec,base64_url_dec=bs.base64_url_dec;
@@ -20,6 +21,13 @@ const ServiceData=bs.ServiceData;
 const split_string=bs.split_string,split_string_once=bs.split_string_once,split_string_once_last=bs.split_string_once_last;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
+	/** @arg {ResolverT<ServiceLoader,ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+		this.z_RS_support_player=new ss.Support_RS_Player(x);
+		this.z_Support_RS_WatchPage=new ss.Support_RS_WatchPage(x);
+		this.z_Support_RS_Watch=new ss.Support_RS_Watch(x);
+	}
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
 	get handle_types() {
