@@ -2575,7 +2575,7 @@ class HandleTypes extends ServiceMethods {
 		if("entryData" in x) {
 			if("icon" in x) {
 				const {navigationEndpoint,icon,entryData,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
-				debugger;
+				this.E_VE5754(navigationEndpoint);
 				switch(icon.iconType) {
 					default: icon===""; this.codegen_typedef(cf1,x); break;
 					case "LIKES_PLAYLIST": case "PLAYLISTS":
