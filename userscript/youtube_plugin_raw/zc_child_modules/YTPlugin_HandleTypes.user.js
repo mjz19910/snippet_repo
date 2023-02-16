@@ -1425,8 +1425,13 @@ class HandleTypes extends ServiceMethods {
 		switch(x.pageType) {
 			case "browse": {
 				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				debugger;
-				this.DataResponsePageType(response);
+				this.E_VE3854(endpoint);
+				const ve=endpoint.commandMetadata.webCommandMetadata.rootVe;
+				{
+					let x=response;
+					const cf=`RS_Page_VE${ve}_Browse`;
+					const {pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+				}
 				this.parser.parse_page_type(pageType);
 				this._primitive_of(fromHistory,"boolean");
 				this.a_primitive_num(navigationDoneMs);
