@@ -4395,7 +4395,7 @@ class HandleTypes extends ServiceMethods {
 				ap("this.${cf}(u);");
 				pad-=1;
 				ap(`} break;`);
-				console.log(`-- [binary_gen:${cf}] --${str_arr.join("\n")}`);
+				console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 				this.codegen_typedef_bin(`P_${cf.replaceAll(".","_")}`,x,false);
 				debugger;
 			} break;
