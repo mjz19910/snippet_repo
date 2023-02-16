@@ -5683,9 +5683,19 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(channel);
 		this.G_Text(views);
 		this.G_Text(publishDate);
-		this.z(factoid,this.handle_types.R_Factoid);
+		this.z(factoid,this.R_Factoid);
 		debugger;
 		this.D_Thumbnail(channelThumbnail);
+	}
+	/** @public @arg {R_Factoid} x */
+	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
+	/** @private @arg {D_Factoid} x */
+	D_Factoid(x) {
+		const cf="D_Factoid"; this.k(cf,x);
+		const {value,label,accessibilityText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.G_Text(value);
+		this.G_Text(label);
+		this.a_primitive_str(accessibilityText);
 	}
 	/** @private @arg {D_VideoDescriptionMusicSection} x */
 	D_VideoDescriptionMusicSection(x) {

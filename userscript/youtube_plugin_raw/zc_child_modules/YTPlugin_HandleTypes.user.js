@@ -779,8 +779,6 @@ class HandleTypes extends ServiceMethods {
 	R_ProfilePageHeaderInformationViewModel(x) {this.H_("R_ProfilePageHeaderInformationViewModel","profilePageHeaderInformationViewModel",x,this.D_ProfilePageHeaderInformation);}
 	/** @arg {R_ProfilePageHeaderTitleViewModel} x */
 	R_ProfilePageHeaderTitleViewModel(x) {this.H_("R_ProfilePageHeaderTitleViewModel","profilePageHeaderTitleViewModel",x,this.D_ProfilePageHeaderTitle);}
-	/** @public @arg {R_Factoid} x */
-	R_Factoid(x) {const cf="R_Factoid"; this.H_(cf,"factoidRenderer",x,this.D_Factoid);}
 	/** @private @arg {R_PlaylistPanel} x */
 	R_PlaylistPanel(x) {this.H_("R_PlaylistPanel","playlistPanelRenderer",x,this.D_PlaylistPanel);}
 	/** @arg {R_RatingSurveyOption} x */
@@ -3774,14 +3772,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="D_CarouselLockup"; this.k(cf,x);
 		const {infoRows,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(infoRows,this.R_InfoRow);
-	}
-	/** @private @arg {D_Factoid} x */
-	D_Factoid(x) {
-		const cf="D_Factoid"; this.k(cf,x);
-		const {value,label,accessibilityText,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(value);
-		this.G_Text(label);
-		this.a_primitive_str(accessibilityText);
 	}
 	/** @private @arg {D_RichListHeader} x */
 	D_RichListHeader(x) {
