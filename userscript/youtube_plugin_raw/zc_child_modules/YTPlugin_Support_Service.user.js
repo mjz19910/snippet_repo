@@ -671,13 +671,6 @@ class Support_RS_Watch extends ServiceMethods {
 		this.z(pageVisualEffects,x => this.R_CinematicContainer(x));
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {D_FrameworkUpdates} x */
-	D_FrameworkUpdates(x) {
-		const cf="D_FrameworkUpdates"; this.k(cf,x);
-		const {entityBatchUpdate,elementUpdate,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.DR_DC_EntityBatchUpdate(entityBatchUpdate);
-		this.t(elementUpdate,this.R_ElementUpdate);
-	}
 	/** @private @arg {R_ElementUpdate} x */
 	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
 	/** @private @arg {D_ElementUpdate} x */

@@ -1114,7 +1114,7 @@ class HandleTypes extends ServiceMethods {
 		this.RC_ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.RS_Page_Browse(x);
-			case "watch": return this.z_RS_support_player.RS_WatchPage(x);
+			case "watch": return this.z_Support_RS_WatchPage.RS_WatchPage(x);
 			case "channel": return this.RS_Page_Channel(x);
 			case "playlist": return this.G_RS_Page_Playlist(x);
 			case "settings": return this.G_RS_Page_Settings(x);
