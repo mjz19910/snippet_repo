@@ -1168,8 +1168,22 @@ type D_GuideEntry_Subscriptions={
 	accessibility: TD_Accessibility<"Subscriptions">;
 	isPrimary: true;
 };
-type D_GuideEntry_VideoLibrary=TD_GuideEntry_Tid_Primary<"VIDEO_LIBRARY_WHITE","library-guide-item">;
-type D_GuideEntry_WatchHistory=TD_GuideEntry_Simple<"WATCH_HISTORY">;
+type D_GuideEntry_VideoLibrary={
+	navigationEndpoint: E_VE6827;
+	icon: T_Icon<"VIDEO_LIBRARY_WHITE">;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: TD_Accessibility<"Library">;
+	targetId: "library-guide-item";
+	isPrimary: true;
+};
+type D_GuideEntry_WatchHistory={
+	navigationEndpoint: E_VE6827;
+	icon: T_Icon<"WATCH_HISTORY">;
+	trackingParams: string;
+	formattedTitle: G_Text;
+	accessibility: TD_Accessibility<"History">;
+};
 type D_GuideEntry_WatchLater=TD_GuideEntry_Simple<"WATCH_LATER">;
 type D_GuideEntry_WhatToWatch={
 	navigationEndpoint: E_VE3854;

@@ -2411,7 +2411,7 @@ class HandleTypes extends ServiceMethods {
 	D_GuideEntry_WithTargetId(cf,x) {
 		const {navigationEndpoint,icon,targetId,isPrimary,...y}=this.D_GuideEntry_Omit(cf,x); this.g(y);
 		if(!navigationEndpoint.browseEndpoint) debugger;
-		debugger;
+		if(icon.iconType!=="VIDEO_LIBRARY_WHITE") debugger;
 		this.T_Icon_AnyOf("D_GuideEntry_Icon",icon,["OFFLINE_DOWNLOAD","VIDEO_LIBRARY_WHITE"]);
 		this.D_GuideEntry_TargetId(targetId);
 		if(isPrimary!==true) debugger;
@@ -2518,13 +2518,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {navigationEndpoint,icon,...y}=this.D_GuideEntry_Omit(cf1,x); this.g(y);
 		x: {
-			let x=navigationEndpoint;
-			if("browseEndpoint" in x) {
-				debugger;
+			let x2=navigationEndpoint;
+			if("browseEndpoint" in x2) {
+				this.E_VE6827(x2);
 				break x;
 			}
-			if("urlEndpoint" in x) {
-				this.E_VE83769_Url(x);
+			if("urlEndpoint" in x2) {
+				this.E_VE83769_Url(x2);
 				break x;
 			}
 		}
