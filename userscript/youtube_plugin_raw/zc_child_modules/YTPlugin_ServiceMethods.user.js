@@ -6223,6 +6223,13 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {D_RadioShareUrl} b */
 	D_RadioShareUrl(b) {
+		/** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
+		class UrlParseHelper {
+			/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
+			constructor(x) {this.x=x;}
+			/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
+			get_with_pathname(cx,pname) {return ServiceMethods.is_url_with_pathname(cx,pname);}
+		}
 		const cf="D_RadioShareUrl";
 		let up=this.parse_with_url_parse(b);
 		{

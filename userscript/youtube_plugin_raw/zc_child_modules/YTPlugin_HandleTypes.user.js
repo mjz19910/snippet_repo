@@ -77,13 +77,6 @@ window.HandleTypesEval=HandleTypesEval;
 eval(handle_types_eval_code);
 //#endregion
 //#region HandleTypes
-/** @template {string} T1 @template {string} T2 @template {string} T3 @template {string} T4 @template {string} T5 */
-class UrlParseHelper {
-	/** @arg {UrlParseRes<T1,T2,T3,T4,T5>} x */
-	constructor(x) {this.x=x;}
-	/** @arg {U} cx @template {UrlParseRes<T1,T2,T3,T4,T5>} U @template {`/${T5}`} T @arg {T} pname @returns {cx is Extract<U,{pathname:T}>} */
-	get_with_pathname(cx,pname) {return ServiceMethods.is_url_with_pathname(cx,pname);}
-}
 const ECatcherService=required(store["mod$ECatcherService"]?.ECatcherService);
 // [new_fexp_expected]
 ECatcherService.known_experiments.push(...[
