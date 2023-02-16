@@ -2354,8 +2354,9 @@ class ServiceMethods extends ServiceData {
 				let x2=navigationEndpoint;
 				if("browseEndpoint" in x2) {
 					if(this.is_TE_VE(x2,3611)) {this.E_VE3611(x2); break x;}
+					if(this.is_TE_VE(x2,5754)) {this.E_VE5754(x2); break x;}
 					if(this.is_TE_VE(x2,6827)) {this.E_VE6827(x2); break x;}
-					debugger;
+					debugger; x2;
 					break x;
 				}
 				if("watchEndpoint" in x2) {this.E_Watch(x2); break x;}
