@@ -1,4 +1,9 @@
-type GU_VE3611_Url="/gaming"|`/@${string}`|`/channel/UC${string}`;
+type GU_VE3611_Url=|"/gaming"
+	|`/@${string}`
+	|`/channel/UC${string}`
+	|`/source/${string}/shorts?bp=${string}`
+	;
+;
 // cspell:ignore RDCMUC
 type GU_PlaylistId=GU_PlaylistId_NoRadio|`RD${string}`|`RDMM${string}`|`RDCMUC${string}`;
 type GU_PlaylistId_NoRadio="WL"|"LL"|`UU${string}`|`PL${string}`;
