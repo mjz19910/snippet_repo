@@ -731,6 +731,7 @@ class Support_RS_Browse extends ServiceMethods {
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions,cacheMetadata") break x;
 			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,frameworkUpdates") break x;
 			if(jk==="contents,header,trackingParams,topbar,observedStateTags,cacheMetadata") break x;
+			if(jk==="contents,header,metadata,trackingParams,topbar,microformat,sidebar") break x;
 			if(jk==="contents,header,trackingParams,topbar,onResponseReceivedActions") break x;
 			if(jk==="contents,header,trackingParams,topbar,observedStateTags") break x;
 			if(jk==="header,trackingParams,onResponseReceivedActions") break x;
@@ -1143,9 +1144,10 @@ class Support_EventInput extends ServiceMethods {
 		} else {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 			switch(url) {
-				default: url===""; debugger; switch(url){
-					case "/feed/library":
+				default: url===""; debugger; switch(url) {
+					case "/feed/history":
 				} break;
+				case "/feed/history":
 				case "/feed/library":
 				case "/":
 				case "/feed/subscriptions":
@@ -1166,59 +1168,69 @@ class Support_EventInput extends ServiceMethods {
 		this._primitive_of(fromHistory,"boolean");
 		this.a_primitive_num(navigationDoneMs);
 	}
+	/** @public @arg {R_PageTypeChannel} x */
+	R_PageTypeChannel(x) {
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.DataResponsePageType(response);
+		this.E_VE3611(endpoint);
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
+	/** @public @arg {R_PageTypePlaylist} x */
+	R_PageTypePlaylist(x) {
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		debugger;
+		this.DataResponsePageType(response);
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
+	R_PageTypeSearch(x) {
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_VE4724_Search(endpoint);
+		this.DataResponsePageType(response);
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
+	R_PageTypeSettings(x) {
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_Settings(endpoint);
+		this.DataResponsePageType(response);
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
+	R_PageTypeWatch(x) {
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_Watch(endpoint);
+		this.DataResponsePageType(response);
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
+	/** @public @arg {R_PageTypeShorts} x */
+	R_PageTypeShorts(x) {
+		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.E_ReelWatch(endpoint);
+		this.DataResponsePageType(response);
+		this.parser.parse_page_type(pageType);
+		this._primitive_of(fromHistory,"boolean");
+		this.a_primitive_num(navigationDoneMs);
+	}
 	/** @public @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
-		const cf="YTNavigateFinishDetail";
+		const cf="YTNavigateFinishDetail"; this.k(cf,x);
 		switch(x.pageType) {
+			default: debugger; break;
 			case "browse": return this.R_PageTypeBrowse(x);
-			case "channel": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.DataResponsePageType(response);
-				this.E_VE3611(endpoint);
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
-			case "playlist": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				debugger;
-				this.DataResponsePageType(response);
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
-			case "search": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_VE4724_Search(endpoint);
-				this.DataResponsePageType(response);
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
-			case "settings": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_Settings(endpoint);
-				this.DataResponsePageType(response);
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
-			case "shorts": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_ReelWatch(endpoint);
-				this.DataResponsePageType(response);
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
-			case "watch": {
-				const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-				this.E_Watch(endpoint);
-				this.DataResponsePageType(response);
-				this.parser.parse_page_type(pageType);
-				this._primitive_of(fromHistory,"boolean");
-				this.a_primitive_num(navigationDoneMs);
-			} break;
+			case "channel": return this.R_PageTypeChannel(x);
+			case "playlist": return this.R_PageTypePlaylist(x);
+			case "search": return this.R_PageTypeSearch(x);
+			case "settings": return this.R_PageTypeSettings(x);
+			case "shorts": return this.R_PageTypeShorts(x);
+			case "watch": return this.R_PageTypeWatch(x);
 		}
 	}
 	/** @private @arg {DataResponsePageType} x */
