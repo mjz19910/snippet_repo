@@ -2186,6 +2186,27 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("expirationTime" in x) {
 			const {page,endpoint,response,url,expirationTime,...y}=this.s(cf,x); this.g(y);
+			if(page!=="channel") debugger;
+			this.E_VE3611(endpoint);
+			this.RS_Channel(response);
+			{
+				let sp=split_string(url,"/");
+				switch(sp.length) {
+					case 2: {
+						if(!sp[1].startsWith("@")) debugger;
+						if(sp[0]!=="") debugger;
+					} break;
+					case 3: {
+						let [f1,f2,f3]=sp;
+						if(f1!=="") debugger;
+						if(!f2.startsWith("@")) debugger;
+						switch(f3) {
+							default: debugger; break;
+							case "videos":
+						}
+					}
+				}
+			}
 			this._primitive_of(expirationTime,"number");
 			return;
 		}
