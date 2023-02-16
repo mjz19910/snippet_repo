@@ -288,7 +288,24 @@ type R_PageTypeWatch={
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };
-type R_PageTypeBrowse={
+type R_PageTypeBrowse=|{
+	endpoint: E_VE6827;
+	pageType: "browse";
+	fromHistory: false;
+	response: {
+		page: "browse";
+		endpoint: E_VE6827;
+		response: {
+			responseContext: RC_ResponseContext;
+			contents: R_TwoColumnBrowseResults;
+			trackingParams: string;
+			topbar: R_DesktopTopbar;
+		};
+		url: "/feed/history";
+		expirationTime: 1676555455508;
+	};
+	navigationDoneMs: 1676555455775;
+}|{
 	endpoint: E_VE6827;
 	pageType: "browse";
 	fromHistory: false;
