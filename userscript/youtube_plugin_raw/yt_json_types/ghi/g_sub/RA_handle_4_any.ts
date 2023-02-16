@@ -1,1 +1,0 @@
-type RA_handle_4_any=D_RA_V_BinaryTimestamp_asFixed;

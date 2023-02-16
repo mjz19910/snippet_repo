@@ -2105,41 +2105,6 @@ class HandleTypes extends ServiceMethods {
 		const ret=f.call(this,a);
 		return [y,ret];
 	}
-	/** @private @arg {D_GetPgdBuyFlow} x */
-	D_GetPgdBuyFlow(x) {
-		const cf="D_GetPgdBuyFlow";
-		let [n0]=this.H_a(cf,1,x,this.videoId,true);
-		let [n1]=this.H_a(cf,2,n0,x => {
-			if(!this.str_starts_with(x,"UC")) debugger;
-			this.D_ChannelId(x);
-		});
-		this.H_d(cf,3,n1,x => this.ceq(x,1));
-	}
-	/** @protected @arg {R_GetPgdBuyFlow} x */
-	R_GetPgdBuyFlow(x) {
-		const cf="R_GetPgdBuyFlow";
-		if(1 in x) return this.H_d(cf,1,x,this.D_GetPgdBuyFlow);
-		debugger;
-	}
-	/** @protected @arg {P_ReelPlayerParams} x */
-	P_ReelPlayerParamsObj(x) {
-		if(30 in x) return;
-		debugger;
-	}
-	/** @protected @arg {P_ReelParams} x */
-	P_ReelParams(x) {
-		const cf="P_ReelParams"; this.k(cf,x);
-		if(1 in x) {
-			this.save_string(`${cf}_t${x[1]}`,Object.keys(x));
-			return;
-		}
-		debugger;
-	}
-	/** @protected @arg {P_ReelSequenceParams} x */
-	P_ReelSequenceParams(x) {
-		if(5 in x) return;
-		debugger;
-	}
 	/** @type {string[]} */
 	continuation_logged_str=[];
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
@@ -2157,74 +2122,10 @@ class HandleTypes extends ServiceMethods {
 				this.R_ClickTrackingObj(u);
 			} break;
 			case "tracking.params": {
-				/** @type {R_TrackingObj} */
+				/** @type {P_tracking_params} */
 				let u=as_any(x);
 				this.R_TrackingObj(u);
 			} break;
-			// case "ad_layout.ad_serving_data_entry": {
-			// 	/** @type {P_continuation_request_reel_watch_sequence_token} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "continuation_request.reel_watch_sequence.token": {
-			// 	/** @type {P_continuation_request_reel_watch_sequence_token} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "entity.key": {
-			// 	/** @type {P_entity_key} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "entity_key.normal": {
-			// 	/** @type {P_entity_key_normal} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "playability_status.context_params": {
-			// 	/** @type {P_playability_status_context_params} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "continuation_request.browse.token": {
-			// 	/** @type {P_continuation_request_browse_token} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "unsubscribe.params": {
-			// 	/** @type {P_unsubscribe_params} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "subscribe.params": {
-			// 	/** @type {P_subscribe_params} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "remove_like.params": {
-			// 	/** @type {P_remove_like_params} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "dislike.params": {
-			// 	/** @type {P_dislike_params} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "like.params": {
-			// 	/** @type {P_LikeParams} */
-			// 	let u=as_any(x); u;
-			// } break;
-			// case "reel.sequence_params": {
-			// 	/** @type {P_ReelSequenceParams} */
-			// 	let u=as_any(x);
-			// 	this.P_ReelSequenceParams(u);
-			// } break;
-			// case "reel.params": {
-			// 	/** @type {P_ReelParams} */
-			// 	let u=as_any(x);
-			// 	this.P_ReelParams(u);
-			// } break;
-			// case "reel.player_params": {
-			// 	/** @type {P_ReelPlayerParams} */
-			// 	let u=as_any(x);
-			// 	this.P_ReelPlayerParamsObj(u);
-			// } break;
-			// case "get_pdg_buy_flow.params": {
-			// 	/** @type {R_GetPgdBuyFlow} */
-			// 	let u=as_any(x);
-			// 	this.R_GetPgdBuyFlow(u);
-			// } break;
 		}
 	}
 	/** @private @arg {P_ParamParse} cf @arg {D_DecTypeNum[]} x */
