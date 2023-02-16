@@ -4541,6 +4541,26 @@ class HandleTypes extends ServiceMethods {
 		ap(`} break;`);
 		console.log(`-- [binary_gen:${cf}] --\n${str_arr.join("\n")}`);
 	}
+	/** @private @arg {P_entity_key} x */
+	P_entity_key(x) {x;}
+	/** @private @arg {P_playability_status_context_params} x */
+	P_playability_status_context_params(x) {x;}
+	/** @private @arg {P_like_params} x */
+	P_like_params(x) {x;}
+	/** @private @arg {P_logging_context_serialized_context_data} x */
+	P_logging_context_serialized_context_data(x) {x;}
+	/** @private @arg {P_reel_params} x */
+	P_reel_params(x) {x;}
+	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
+	P_ad_layout_ad_serving_data_entry(x) {x;}
+	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
+	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
+	/** @private @arg {P_continuation_request_browse_token} x */
+	P_continuation_request_browse_token(x) {x;}
+	/** @private @arg {P_create_playlist_params} x */
+	P_create_playlist_params(x) {x;}
+	/** @private @arg {P_reel_player_params} x */
+	P_reel_player_params(x) {x;}
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	decode_binary_object(cf,x) {
 		switch(cf) {
@@ -4611,26 +4631,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @private @arg {P_entity_key} x */
-	P_entity_key(x) {x;}
-	/** @private @arg {P_playability_status_context_params} x */
-	P_playability_status_context_params(x) {x;}
-	/** @private @arg {P_like_params} x */
-	P_like_params(x) {x;}
-	/** @private @arg {P_logging_context_serialized_context_data} x */
-	P_logging_context_serialized_context_data(x) {x;}
-	/** @private @arg {P_reel_params} x */
-	P_reel_params(x) {x;}
-	/** @private @arg {P_ad_layout_ad_serving_data_entry} x */
-	P_ad_layout_ad_serving_data_entry(x) {x;}
-	/** @private @arg {P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry} x */
-	P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry(x) {x;}
-	/** @private @arg {P_continuation_request_browse_token} x */
-	P_continuation_request_browse_token(x) {x;}
-	/** @private @arg {P_create_playlist_params} x */
-	P_create_playlist_params(x) {x;}
-	/** @private @arg {P_reel_player_params} x */
-	P_reel_player_params(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
