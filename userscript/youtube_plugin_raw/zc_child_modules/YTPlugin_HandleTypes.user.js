@@ -3228,9 +3228,16 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if(this.is_tp_xx(x,416)) {
+			const {1: [,f1],2: [,f2],4: [,,f4],6: f6,11: f11,19: f19,...y}=this.s(cf,x); this.g(y);
+			this.save_number(`${cf}.f1`,f1);
+			this.a_primitive_num(f2);
+			this.V_BinaryTimestamp(f4);
+			if(!f6) debugger;
+			if(!f11) debugger;
+			if(!f19) debugger;
 			return;
 		}
-		x;
+		debugger;
 	}
 	/** @protected @arg {R_ClickTrackingObj} x */
 	R_ClickTrackingObj(x) {
