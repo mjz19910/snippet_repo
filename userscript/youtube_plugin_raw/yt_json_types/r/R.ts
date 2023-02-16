@@ -302,6 +302,7 @@ type R_PageTypeBrowse={
 			onResponseReceivedActions: C_AdsControlFlowOpportunityReceived[];
 		};
 		url: "/";
+		expirationTime?: number;
 	};
 	fromHistory: boolean;
 	navigationDoneMs: number;
