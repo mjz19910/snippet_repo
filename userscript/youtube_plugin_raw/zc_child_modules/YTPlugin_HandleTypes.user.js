@@ -1987,15 +1987,25 @@ class HandleTypes extends ServiceMethods {
 				}
 				return `TYPE::T_VW<${this.gen_typedef_bin_json(s,obj[0])}>`;
 			}
-			/** @type {D_DecTypeNum} */
+			/** @type {D_DecTypeNum|V_ParamObj_2[number]} */
 			let otu=as(obj);
-			if(otu[0]==="child") return this.convert_arr_to_obj([otu]);
-			if(otu[0]==="data32") return this.convert_arr_to_obj([otu]);
-			/** @type {D_DecTypeNum[]} */
+			if(otu[0]==="child") {
+				if(otu.length===3) return otu;
+				return this.convert_arr_to_obj([otu]);
+			}
+			if(otu[0]==="data32") {
+				if(otu.length===2) return otu;
+				return this.convert_arr_to_obj([otu]);
+			}
+			/** @type {(D_DecTypeNum|V_ParamObj_2[number])[]} */
 			let ota=obj;
 			if(ota[0][0]==="child") {
-				let res=this.convert_arr_to_obj(ota);
-				if(res!==null) return res;
+				debugger;
+				let otr=[];
+				for(let item of ota) {
+					otr.push(item);
+				}
+				return otr;
 			}
 			console.log("[maybe_handle_bin.do_handle_arr]",obj);
 			return obj;
