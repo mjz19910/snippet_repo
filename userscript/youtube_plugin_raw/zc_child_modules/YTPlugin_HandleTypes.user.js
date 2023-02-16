@@ -867,13 +867,6 @@ class HandleTypes extends ServiceMethods {
 		this.RC_LiveChat(a1);
 		this.t_cf(cf,a2,this.trackingParams);
 	}
-	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
-	D_NotificationMenu_Popup_SectionItem(x) {
-		const cf="D_NotificationMenu_Popup_SectionItem";
-		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
-		x===""; this.codegen_typedef(cf,x);
-		return null;
-	}
 	/** @private @arg {D_MP_MenuNotificationSection} x */
 	D_MP_MenuNotificationSection(x) {
 		const cf="D_MP_MenuNotificationSection";

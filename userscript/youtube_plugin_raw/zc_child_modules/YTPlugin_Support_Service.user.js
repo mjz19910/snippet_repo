@@ -1002,6 +1002,13 @@ class Support_GenericApi extends ServiceMethods {
 	R_PlaylistAddToOption(x) {this.H_("R_PlaylistAddToOption","playlistAddToOptionRenderer",x,this.D_PlaylistAddToOption);}
 	/** @private @arg {C_RefreshPlaylist} x */
 	C_RefreshPlaylist(x) {let [a,y]=this.TE_Endpoint_2("C_RefreshPlaylist","refreshPlaylistCommand",x); this.g(y); this.g(a);}
+	/** @private @arg {D_NotificationMenu_Popup_SectionItem} x */
+	D_NotificationMenu_Popup_SectionItem(x) {
+		const cf="D_NotificationMenu_Popup_SectionItem";
+		if("multiPageMenuNotificationSectionRenderer" in x) return this.R_MP_MenuNotificationSection(x);
+		x===""; this.codegen_typedef(cf,x);
+		return null;
+	}
 	/** @private @arg {D_NotificationMenu_PopupItem} x */
 	D_NotificationMenu_PopupItem(x) {
 		const cf="D_NotificationMenu_PopupItem";
