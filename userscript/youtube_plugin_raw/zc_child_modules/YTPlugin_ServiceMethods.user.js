@@ -1358,8 +1358,28 @@ class ServiceMethods extends ServiceData {
 	E_VE23462(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE23462","browseEndpoint",x); this.g(y); this.M_VE23462(a); this.DE_VE23462(b);}
 	/** @protected @arg {E_VE42352} x */
 	E_VE42352(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE42352","browseEndpoint",x); this.g(y); this.M_VE42352(a); this.DE_VE42352(b);}
+	/** @arg {DE_VE83769_Url_1} x */
+	DE_VE83769_Url_1(x) {x;}
 	/** @protected @arg {E_VE83769_Url} x */
-	E_VE83769_Url(x) {const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);}
+	E_VE83769_Url(x) {
+		const cf="E_VE83769_Url";
+		if("loggingUrls" in x) {
+			const {clickTrackingParams,loggingUrls,commandMetadata,urlEndpoint,...y}=this.s(cf,x); this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			this.z(loggingUrls,x => this.T_BaseUrl(x,x => {
+				let x2=this.parse_with_url_parse(x);
+				if(x2.host!=="www.youtube.com") debugger;
+				if(x2.pathname!=="/pagead/paralleladinteraction") debugger;
+				let x3=this.parse_url_search_params(x2.search);
+				console.log(x3);
+				debugger;
+			}));
+			this.M_VE83769(commandMetadata);
+			this.DE_VE83769_Url_1(urlEndpoint);
+			return;
+		}
+		const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);
+	}
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
 	/** @protected @arg {E_SignalService_SendPost} x */
@@ -5039,7 +5059,7 @@ class ServiceMethods extends ServiceData {
 		this.z(impressionCommands,this.D_ImpressionCommand);
 		this.tz(noopTapEndpoints,this.E_Pinging);
 		this.R_Menu(menu);
-		this.t(activeView,this.D_ActiveView)
+		this.t(activeView,this.D_ActiveView);
 		this.trackingParams(trackingParams);
 		this.z(clickLocationTargets,this.D_ClickLocationTarget);
 		this.t(adBadge,this.RMD_Badge);

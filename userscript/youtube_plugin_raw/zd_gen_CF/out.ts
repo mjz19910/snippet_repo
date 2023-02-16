@@ -158,6 +158,7 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationDelete";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "DU_MutationReplace";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActionSetPlaylistVideoOrder";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_ActiveView";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdBreakService";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacement";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "D_AdPlacementConfig";}
