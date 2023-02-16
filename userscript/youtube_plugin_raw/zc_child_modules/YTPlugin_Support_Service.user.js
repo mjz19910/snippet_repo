@@ -827,6 +827,15 @@ class Support_RS_Browse extends ServiceMethods {
 	RC_SectionList(x) {this.H_("RC_SectionList","sectionListContinuation",x,this.GD_RC_SectionList);}
 }
 class Support_GenericApi extends ServiceMethods {
+	// //#region TODO
+	/** @private @arg {D_NotificationMenu_Popup} x */
+	D_NotificationMenu_Popup(x) {
+		const cf="D_NotificationMenu_Popup";
+		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(a!=="DROPDOWN") {this.codegen_typedef(cf,x); return null;}
+		return b;
+	}
+	//#endregion
 	/** @public @arg {Response} response @arg {G_ResponseTypes} x */
 	G_ResponseTypes(response,x) {
 		const cf="G_ResponseTypes"; this.ks(cf,x);
@@ -893,6 +902,76 @@ class Support_GenericApi extends ServiceMethods {
 			default: debugger; return g(x);
 		}
 	}
+	/** @private @arg {RSG_AddToPlaylist} x */
+	RSG_AddToPlaylist(x) {
+		const cf="RS_GetAddToPlaylist";
+		const {responseContext: {},contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(contents,this.R_AddToPlaylist);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {RSB_EditPlaylist} x */
+	RSB_EditPlaylist(x) {
+		const cf="RSB_EditPlaylist";
+		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		if(status!=="STATUS_SUCCEEDED") debugger;
+		let [r]=this.z(actions,x => {
+			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
+			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
+		});
+		this.z(r,a => a);
+		this.z(playlistEditResults,this.g);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {RSG_NotificationMenu} x */
+	RSG_NotificationMenu(x) {
+		const cf="RSG_NotificationMenu";
+		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
+		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
+		let [u3]=this.z(u2,x => this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
+		this.z(u3,this.D_NotificationMenu_PopupItem);
+		this.trackingParams(trackingParams);
+	}
+	/** @private @arg {RSM_ChannelPreference} x */
+	RSM_ChannelPreference(x) {
+		const cf="RSM_ChannelPreference";
+		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.RC_ResponseContext(responseContext);
+		let [u1]=this.z(actions,x => {
+			if(!x.openPopupAction) debugger;
+			let a=this.TA_OpenPopup(cf,x);
+			return this.T_OpenPopup_Toast(a);
+		});
+		this.z(u1,this.RA_Notification);
+		this.trackingParams(trackingParams);
+		this.R_EntityBatchUpdate(frameworkUpdates);
+		this.D_ChannelId(channelId);
+		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
+	}
+	/** @private @arg {RS_Success} x */
+	RS_Success(x) {
+		const cf="RS_Success";
+		const {responseContext: {},success,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this._primitive_of(success,"boolean");
+	}
+	/** @private @arg {RSG_GetUnseenCount} x */
+	RSG_GetUnseenCount(x) {
+		const cf="RSG_GetUnseenCount";
+		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.tz(actions,(x => {
+			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
+		}));
+		if(unseenCount!==void 0) this.a_primitive_num(unseenCount);
+	}
+	/** @private @arg {RSG_NotificationMenu_Action} x */
+	RSG_NotificationMenu_Action(x) {
+		const cf="RSG_NotificationMenu_Action";
+		if("openPopupAction" in x) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
+		x===""; this.codegen_typedef(cf,x);
+		return null;
+	}
+	/** @private @arg {AU_NotificationsUnseenCount} x */
+	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 }
 export_(exports => {exports.TypedefGenerator=TypedefGenerator;});
 export_(exports => {

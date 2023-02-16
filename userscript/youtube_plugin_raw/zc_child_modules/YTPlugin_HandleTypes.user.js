@@ -358,8 +358,6 @@ class HandleTypes extends ServiceMethods {
 	//#region web_command_metadata
 	//#endregion
 	//#region general done
-	/** @private @arg {AU_NotificationsUnseenCount} x */
-	AU_NotificationsUnseenCount(x) {let [a,y]=this.TE_Endpoint_2("AU_NotificationsUnseenCount","updateNotificationsUnseenCountAction",x); this.g(y); this.AD_UpdateNotificationsUnseenCount(a);}
 	/** @private @arg {A_GetMultiPageMenu} x */
 	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu","getMultiPageMenuAction",x,this.AD_GetMultiPageMenu);}
 	/** @private @arg {A_AddToGuideSection} x */
@@ -414,6 +412,13 @@ class HandleTypes extends ServiceMethods {
 	R_GuideSection(x) {this.H_("R_GuideSection","guideSectionRenderer",x,this.D_GuideSection);}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
+	/** @private @arg {D_AddToPlaylist} x */
+	D_AddToPlaylist(x) {
+		const cf="D_AddToPlaylist";
+		const {playlists,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.z(playlists,this.R_PlaylistAddToOption);
+		this.z(actions,this.R_AddToPlaylistCreate);
+	}
 	/** @public @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_("TemplateUpdate","templateUpdate",x,this.D_TemplateUpdate);}
 	/** @public @arg {R_ResourceStatusInResponseCheck} x */
@@ -535,19 +540,6 @@ class HandleTypes extends ServiceMethods {
 	cg_mismatch_set=new Set();
 	/** @type {[string,string][]} */
 	cg_mismatch_list=[];
-	/** @private @arg {RSB_EditPlaylist} x */
-	RSB_EditPlaylist(x) {
-		const cf="RSB_EditPlaylist";
-		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(status!=="STATUS_SUCCEEDED") debugger;
-		let [r]=this.z(actions,x => {
-			if("refreshPlaylistCommand" in x) return this.C_RefreshPlaylist(x);
-			if("openPopupAction" in x) return this.TA_OpenPopup("TA_OpenPopup_Empty",x);
-		});
-		this.z(r,a => a);
-		this.z(playlistEditResults,this.g);
-		this.trackingParams(trackingParams);
-	}
 	/** @template A1,A2,A3,A4 @template {[(a1:A1,a2:A2,a3:A3,a4:A4,...n:any[])=>void]} T @arg {[T,A1,A2,A3,A4]} arg0 */
 	make_bind([func,a1,a2,a3,a4]) {return [func,a1,a2,a3,a4];}
 	//#region Grouped Endpoints
@@ -741,13 +733,6 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {RSG_AddToPlaylist} x */
-	RSG_AddToPlaylist(x) {
-		const cf="RS_GetAddToPlaylist";
-		const {responseContext: {},contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(contents,this.R_AddToPlaylist);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {RSG_Survey} x */
 	RSG_Survey(x) {
 		const cf="RSG_Survey";
@@ -922,30 +907,6 @@ class HandleTypes extends ServiceMethods {
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {D_NotificationMenu_Popup} x */
-	D_NotificationMenu_Popup(x) {
-		const cf="D_NotificationMenu_Popup";
-		const {popupType: a,popup: b,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		if(a!=="DROPDOWN") {this.codegen_typedef(cf,x); return null;}
-		return b;
-	}
-	/** @private @arg {RSG_NotificationMenu_Action} x */
-	RSG_NotificationMenu_Action(x) {
-		const cf="RSG_NotificationMenu_Action";
-		if("openPopupAction" in x) return this.TA_OpenPopup("RSG_NotificationMenu_Action",x);
-		x===""; this.codegen_typedef(cf,x);
-		return null;
-	}
-	/** @private @arg {RSG_NotificationMenu} x */
-	RSG_NotificationMenu(x) {
-		const cf="RSG_NotificationMenu";
-		const {responseContext: {},actions,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		let [ar]=this.z(actions,this.RSG_NotificationMenu_Action);
-		let [u2]=this.z(ar,this.D_NotificationMenu_Popup);
-		let [u3]=this.z(u2,x => this.TR_MultiPageMenu("D_NotificationMenu_PopupItemMenu",x));
-		this.z(u3,this.D_NotificationMenu_PopupItem);
-		this.trackingParams(trackingParams);
-	}
 	/** @private @arg {D_SimpleMenuHeader} x */
 	D_SimpleMenuHeader(x) {
 		const cf="D_SimpleMenuHeader";
@@ -1043,15 +1004,6 @@ class HandleTypes extends ServiceMethods {
 				return this.x;
 			}
 		})(x);
-	}
-	/** @private @arg {RSG_GetUnseenCount} x */
-	RSG_GetUnseenCount(x) {
-		const cf="RSG_GetUnseenCount";
-		const {responseContext: {},actions,unseenCount,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.tz(actions,(x => {
-			if("updateNotificationsUnseenCountAction" in x) return this.AU_NotificationsUnseenCount(x);
-		}));
-		if(unseenCount!==void 0) this.a_primitive_num(unseenCount);
 	}
 	/** @private @arg {AD_UpdateNotificationsUnseenCount} x */
 	AD_UpdateNotificationsUnseenCount(x) {
@@ -1305,12 +1257,6 @@ class HandleTypes extends ServiceMethods {
 			if("updateEngagementPanelAction" in a) {return this.AU_EngagementPanel(a);}
 		});
 		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {RS_Success} x */
-	RS_Success(x) {
-		const cf="RS_Success";
-		const {responseContext: {},success,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this._primitive_of(success,"boolean");
 	}
 	/** @private @arg {RS_AttGet} x */
 	RS_AttGet(x) {
@@ -1972,13 +1918,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.D_FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {D_AddToPlaylist} x */
-	D_AddToPlaylist(x) {
-		const cf="D_AddToPlaylist";
-		const {playlists,actions,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.z(playlists,this.R_PlaylistAddToOption);
-		this.z(actions,this.R_AddToPlaylistCreate);
-	}
 	/** @private @arg {AD_UpdateChannelSwitcherPage} x */
 	AD_UpdateChannelSwitcherPage(x) {this.TA_Page("AD_UpdateChannelSwitcherPage",x,this.R_ChannelSwitcherPage);}
 	/** @private @arg {AD_AddToGuideSection} x */
@@ -2015,22 +1954,6 @@ class HandleTypes extends ServiceMethods {
 		const {popupType,popup,...y}=this.s(cf,x); this.g(y);
 		if(popupType!=="TOAST") return null;
 		return popup;
-	}
-	/** @private @arg {RSM_ChannelPreference} x */
-	RSM_ChannelPreference(x) {
-		const cf="RSM_ChannelPreference";
-		const {responseContext,actions,trackingParams,frameworkUpdates,channelId,newNotificationButton,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.RC_ResponseContext(responseContext);
-		let [u1]=this.z(actions,x => {
-			if(!x.openPopupAction) debugger;
-			let a=this.TA_OpenPopup(cf,x);
-			return this.T_OpenPopup_Toast(a);
-		});
-		this.z(u1,this.RA_Notification);
-		this.trackingParams(trackingParams);
-		this.R_EntityBatchUpdate(frameworkUpdates);
-		this.D_ChannelId(channelId);
-		this.R_SubscriptionNotificationToggleButton(newNotificationButton);
 	}
 	/** @private @arg {D_TranscriptSearchPanel} x */
 	D_TranscriptSearchPanel(x) {
