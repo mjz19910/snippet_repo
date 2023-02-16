@@ -2586,10 +2586,9 @@ class HandleTypes extends ServiceMethods {
 			const {entryData,navigationEndpoint,thumbnail,badges,presentationStyle,...y}=this.s(cf2,u); this.g(y);/*#destructure_done*/
 			this.R_GuideEntryData(entryData);
 			if(!navigationEndpoint.browseEndpoint) debugger;
-			debugger;
+			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			this.D_Thumbnail(thumbnail);
 			this.D_GuideEntryBadges(badges);
-			if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 			return;
 		}
 		if("navigationEndpoint" in x) return this.D_GuideEntry_WithNavEP(cf1,x);
