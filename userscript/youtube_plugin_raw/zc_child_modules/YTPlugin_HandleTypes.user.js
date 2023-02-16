@@ -4389,6 +4389,9 @@ class HandleTypes extends ServiceMethods {
 			this.V_BinaryTimestamp(f4);
 			return;
 		}
+		if(this.is_tp_xx(x,521)) {
+			return;
+		}
 		if(!x[3]) debugger;
 		const {1: [,f1],2: [,f2],3: [,f3],4: [,,f4],...y}=x; this.g(y);
 		this.save_number(`${cf}.f1`,f1);

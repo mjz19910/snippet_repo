@@ -12,7 +12,7 @@ type R_ClickTrackingObj=
 ;
 type T_D32<T>=["data32",T];
 type T_FD32<T>=["data_fixed32",T];
-type T_VSR<T>=["raw", ["string", T]];
+type T_VSR<T>=["raw",["string",T]];
 type P_tracking_params={
 	1: T_D32<0>;
 	2: T_D32<13188>;
@@ -26,7 +26,12 @@ type P_tracking_params={
 	1: T_D32<512>;
 	2: T_D32<62457>;
 	3: T_D32<2>;
-	4: T_VW_2<V_BinaryTimestamp>
+	4: T_VW_2<V_BinaryTimestamp>;
+}|{
+	1: T_D32<521>,
+	2: T_D32<6236>,
+	4: T_VW_2<V_BinaryTimestamp>,
+	8: T_VW_Bigint<12391810279397228368n>;
 };
 type P_ad_layout_ad_serving_data_entry={
 	4: T_D32<3>;
@@ -52,4 +57,4 @@ type P_ad_slot_logging_data_serialized_slot_ad_serving_data_entry={
 	},
 	4: T_D32<2>;
 };
-type P_service$create_playlist={1: T_D32<4>};
+type P_service$create_playlist={1: T_D32<4>;};
