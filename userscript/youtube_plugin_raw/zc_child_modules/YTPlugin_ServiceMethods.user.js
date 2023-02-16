@@ -6677,7 +6677,19 @@ class ServiceMethods extends ServiceData {
 		this.G_Text(shortBylineText);
 		return y;
 	}
-	/** @private @arg {R_MovingThumbnail} x */
+	/** @private @arg {D_Video} x */
+	D_Video_With_VideoId(x) {
+		const cf="D_Video_With:videoId";
+		if("topStandaloneBadge" in x) return this.D_Video_With_Add_IsWatched(`${cf}:topStandaloneBadge`,x);
+		if("descriptionSnippet" in x) return this.D_Video_With_Add_IsWatched(`${cf}:descriptionSnippet`,x);
+		return this.D_Video_With_Add_IsWatched(cf,x);
+	}
+	/** @private @arg {D_Video} x */
+	D_Video_With_Owner(x) {
+		const cf="D_Video_With:owner";
+		return this.D_Video_With_Add_IsWatched(cf,x);
+	}
+	/** @public @arg {R_MovingThumbnail} x */
 	R_MovingThumbnail(x) {this.H_("R_MovingThumbnail","movingThumbnailRenderer",x,this.D_MovingThumbnail);}
 	/** @private @arg {D_MovingThumbnail} x */
 	D_MovingThumbnail(x) {

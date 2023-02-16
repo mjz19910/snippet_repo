@@ -1120,18 +1120,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(inlinePlaybackEndpoint,this.D_Video_inlinePlaybackEndpoint);
 		this.tz(buttons,this.R_ToggleButton);
 	}
-	/** @private @arg {D_Video} x */
-	D_Video_With_VideoId(x) {
-		const cf="D_Video_With:videoId";
-		if("topStandaloneBadge" in x) return this.D_Video_With_Add_IsWatched(`${cf}:topStandaloneBadge`,x);
-		if("descriptionSnippet" in x) return this.D_Video_With_Add_IsWatched(`${cf}:descriptionSnippet`,x);
-		return this.D_Video_With_Add_IsWatched(cf,x);
-	}
-	/** @private @arg {D_Video} x */
-	D_Video_With_Owner(x) {
-		const cf="D_Video_With:owner";
-		return this.D_Video_With_Add_IsWatched(cf,x);
-	}
 	/** @private @arg {CF_D_Menu_Omit} cf @template {D_Video} T @arg {T} x */
 	D_Video_Omit(cf,x) {
 		let u=this.D_ThumbnailOverlay_Omit(cf,x);
