@@ -30,7 +30,6 @@ class ServiceMethods extends ServiceData {
 	}
 	k=this.save_keys;
 	ks=this.k;
-	g_k=this.k;
 	/** @override @returns {"unknown"|"normal"} */
 	get service_type() {return "normal";}
 	get handle_types() {
@@ -561,8 +560,6 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {R_PivotButton} x */
 	R_PivotButton(x) {this.H_("R_PivotButton","pivotButtonRenderer",x,this.D_PivotButton);}
-	/** @private @arg {A_AddToToast} x */
-	A_AddToToast(x) {x;}
 	/** @private @arg {D_PivotButton} x */
 	D_PivotButton(x) {
 		const cf="D_PivotButton";
@@ -890,12 +887,11 @@ class ServiceMethods extends ServiceData {
 	R_CommonConfig(x) {this.H_("R_CommonConfig","commonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {G_MenuItem} x */
 	G_MenuItem(x) {
-		const cf="G_MenuItem"; this.g_k(cf,x);
+		const cf="G_MenuItem"; this.ks(cf,x);
 		if("toggleMenuServiceItemRenderer" in x) return this.R_ToggleMenuServiceItem(x);
 		if("menuServiceItemRenderer" in x) return this.R_MenuServiceItem(x);
 		if("menuNavigationItemRenderer" in x) return this.R_MenuNavigationItem(x);
-		this.codegen_typedef("MenuItems",x);
-		this.G_Text(x);
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {D_Menu} x */
 	D_Menu(x) {
@@ -1364,10 +1360,6 @@ class ServiceMethods extends ServiceData {
 	DE_YpcGetOffers(x) {this.D_Params("DE_YpcGetOffers","ypc_get_offers.params",x);}
 	/** @private @arg {E_YpcGetOffers} x */
 	E_YpcGetOffers(x) {const cf="E_YpcGetOffers",[a,b,y]=this.TE_Endpoint_3(cf,"ypcGetOffersEndpoint",x); this.g(y); this.M_YpcGetOffers(a); this.DE_YpcGetOffers(b);}
-	/** @private @arg {DE_VE3611} x */
-	DE_VE3611(x) {x;}
-	/** @private @arg {DE_VE3854} x */
-	DE_VE3854(x) {x;}
 	/** @private @arg {DE_VE4724_Search} x */
 	DE_VE4724_Search(x) {this.H_("DE_VE4724_Search","query",x,this.a_primitive_str);}
 	/** @arg {G_PlaylistUrlInfo|G_ChannelUrlInfo} value*/
@@ -1576,12 +1568,6 @@ class ServiceMethods extends ServiceData {
 		if("browseId" in x) return this.y(cf,"browseId",x,this.browseId);
 		debugger;
 	}
-	/** @private @arg {DE_VE6827} x */
-	DE_VE6827(x) {x;}
-	/** @private @arg {DE_VE11487} x */
-	DE_VE11487(x) {x;}
-	/** @private @arg {DE_VE23462} x */
-	DE_VE23462(x) {x;}
 	/** @private @arg {DE_ReelWatch} x */
 	DE_VE37414_ReelWatch(x) {
 		const cf="DE_ReelWatch";
@@ -1615,8 +1601,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(x);
 	}
-	/** @private @arg {DE_VE42352} x */
-	DE_VE42352(x) {x;}
 	/** @private @arg {GU_YoutubeUrlRedirect|`https://www.youtube.com/${string}`} x */
 	GU_FullYoutubeUrl(x) {
 		if(this.str_starts_with(x,"https://www.youtube.com/redirect?")) return this.GU_YoutubeUrlRedirect(as(x));
@@ -1712,8 +1696,6 @@ class ServiceMethods extends ServiceData {
 		}
 		this.g(u);
 	}
-	/** @private @arg {DE_VE96368} x */
-	DE_VE96368(x) {x;}
 	/** @private @arg {M_VE3611|M_VE3611} x */
 	M_VE3611(x) {
 		const cf="M_VE3611";
@@ -1859,8 +1841,9 @@ class ServiceMethods extends ServiceData {
 	DE_CreateComment(x) {this.TD_Params("DE_CreateComment","create_comment.params","createCommentParams",x);}
 	/** @private @arg {DE_Like} x */
 	DE_Like(x) {
-		const cf="DE_Like"; this.g_k(cf,x);
+		const cf="DE_Like"; this.ks(cf,x);
 		switch(x.status) {
+			default: {x===""; this.codegen_typedef(cf,x);} break;
 			case "INDIFFERENT": {
 				const cf="E_LikeIndifferent";
 				const {status,target,removeLikeParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
@@ -1889,9 +1872,9 @@ class ServiceMethods extends ServiceData {
 	E_SignalNavigation(x) {const [a,b,y]=this.TE_Endpoint_3("E_SignalNavigation","signalNavigationEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_SignalNavigation(b);}
 	/** @private @arg {GM_Like} x */
 	GM_Like(x) {
-		const cf="GM_Like"; this.g_k(cf,x);
+		const cf="GM_Like"; this.ks(cf,x);
 		switch(x.apiUrl) {
-			default: debugger; break;
+			default: {x===""; this.codegen_typedef(cf,x);} break;
 			case "/youtubei/v1/like/removelike": return this.GM_RemoveLike(x);
 			case "/youtubei/v1/like/dislike": return this.GM_Dislike(x);
 			case "/youtubei/v1/like/like": return this.GM_LikeLike(x);
@@ -3481,8 +3464,12 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {AD_ReplaceEnclosing_Item} x */
 	AD_ReplaceEnclosing_Item(x) {
-		const cf="AD_ReplaceEnclosing_Item"; this.g_k(cf,x);
+		const cf="AD_ReplaceEnclosing_Item"; this.ks(cf,x);
 		if("notificationTextRenderer" in x) return this.R_NotificationText(x);
+		if("reelDismissalActionRenderer" in x) return this.RA_ReelDismissal(x);
+		if("notificationMultiActionRenderer" in x) return this.RA_NotificationMultiAction(x);
+		x.notificationMultiActionRenderer;
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {DE_GetReportForm} x */
 	DE_GetReportForm(x) {this.D_Params("DE_GetReportForm","get_report_form.params",x);}
@@ -3776,9 +3763,11 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @private @arg {D_LoggingDirectives_Gestures} x */
 	D_LoggingDirectives_Gestures(x) {
-		const cf="D_LoggingDirectives_Gestures"; this.g_k(cf,x);
+		const cf="D_LoggingDirectives_Gestures"; this.ks(cf,x);
 		let inner=this.T_Types(x);
-		if(inner!==4) debugger;
+		if(inner!==4) {
+			inner===""; this.codegen_typedef(cf,x);
+		}
 	}
 	/** @private @arg {C_UpdateToggleButtonState} x */
 	C_UpdateToggleButtonState(x) {let [a,b]=this.TE_Endpoint_2("C_UpdateToggleButtonState","updateToggleButtonStateCommand",x); this.g(b); this.DC_UpdateToggleButtonState(a);}
@@ -5265,11 +5254,11 @@ class ServiceMethods extends ServiceData {
 	E_GetTranscript(x) {const [a,b,y]=this.TE_Endpoint_3("E_GetTranscript","getTranscriptEndpoint",x); this.g(y); this.M_GetTranscript(a); this.DE_GetTranscript(b);}
 	/** @private @arg {GE_Continuation} x */
 	GE_Continuation(x) {
-		const cf="GE_Continuation"; this.g_k(cf,x);
+		const cf="GE_Continuation"; this.ks(cf,x);
 		if("getNotificationMenuEndpoint" in x) return this.E_GetNotificationMenu(x);
 		if("continuationCommand" in x) return this.C_Continuation(x);
 		if("getTranscriptEndpoint" in x) return this.E_GetTranscript(x);
-		debugger;
+		x===""; this.codegen_typedef(cf,x);
 	}
 	/** @private @arg {R_GhostGrid} x */
 	R_GhostGrid(x) {this.H_("R_GhostGrid","ghostGridRenderer",x,this.D_GhostGrid);}
