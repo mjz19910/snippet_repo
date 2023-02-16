@@ -4504,11 +4504,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {P_ParamParse} cf @arg {V_ParamObj_2} x */
 	decode_binary_object(cf,x) {
 		switch(cf) {
-			default: {
-				if(this.continuation_logged_str.includes(cf)) break;
-				this.decode_binary_object_log_info(cf,x);
-				debugger;
-			} break;
 			case "reel.player_params": {
 				/** @type {P_reel_player_params} */
 				let u=as_any(x);
@@ -4553,6 +4548,11 @@ class HandleTypes extends ServiceMethods {
 				/** @type {P_logging_context_serialized_context_data} */
 				let u=as_any(x);
 				this.P_logging_context_serialized_context_data(u);
+			} break;
+			default: {
+				if(this.continuation_logged_str.includes(cf)) break;
+				this.decode_binary_object_log_info(cf,x);
+				debugger;
 			} break;
 		}
 	}
