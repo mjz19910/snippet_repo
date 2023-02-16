@@ -6202,6 +6202,20 @@ class ServiceMethods extends ServiceData {
 		if(x[2]!=="comments-section") debugger;
 		this.z(x[0],this.R_ContinuationItem);
 	}
+	/** @private @arg {R_EmojiPicker} x */
+	R_EmojiPicker(x) {this.H_("R_EmojiPicker","emojiPickerRenderer",x,this.D_EmojiPicker);}
+	/** @private @arg {D_EmojiPicker} x */
+	D_EmojiPicker(x) {
+		const cf="D_EmojiPicker";
+		const {id,categories,categoryButtons,searchPlaceholderText,searchNoResultsText,pickSkinToneText,trackingParams,clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel,...y}=this.s(cf,x); this.g(y);
+		if(id!=="emoji") debugger;
+		this.z(categories,this.R_EmojiPickerCategory);
+		this.z(categoryButtons,this.R_EmojiPickerCategoryButton);
+		this.G_Text(searchPlaceholderText);
+		this.G_Text(searchNoResultsText);
+		this.G_Text(pickSkinToneText);
+		this.z([clearSearchLabel,skinToneGenericLabel,skinToneLightLabel,skinToneMediumLightLabel,skinToneMediumLabel,skinToneMediumDarkLabel,skinToneDarkLabel],this.a_primitive_str);
+	}
 	/** @public @arg {R_CommentSimplebox} x */
 	R_CommentSimplebox(x) {this.H_("R_CommentSimplebox","commentSimpleboxRenderer",x,this.D_CommentSimplebox);}
 	/** @private @arg {D_CommentSimplebox} x */
@@ -6214,7 +6228,7 @@ class ServiceMethods extends ServiceData {
 		this.D_Thumbnail(authorThumbnail);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.G_Text(placeholderText);
-		this.handle_types.R_EmojiPicker(emojiPicker);
+		this.R_EmojiPicker(emojiPicker);
 		this.trackingParams(trackingParams);
 		this.R_Button(emojiButton);
 	}
