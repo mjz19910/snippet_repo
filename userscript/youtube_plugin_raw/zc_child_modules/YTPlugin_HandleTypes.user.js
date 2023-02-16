@@ -653,8 +653,6 @@ class HandleTypes extends ServiceMethods {
 	R_Dropdown(x) {this.H_("R_Dropdown","dropdownRenderer",x,this.D_Dropdown);}
 	/** @public @arg {R_RichListHeader} x */
 	R_RichListHeader(x) {this.H_("R_RichListHeader","richListHeaderRenderer",x,this.D_RichListHeader);}
-	/** @public @arg {R_MacroMarkersListItem} x */
-	R_MacroMarkersListItem(x) {this.H_("R_MacroMarkersListItem","macroMarkersListItemRenderer",x,this.D_MacroMarkersListItem);}
 	/** @private @arg {R_PdgCommentOption} x */
 	R_PdgCommentOption(x) {this.H_("R_PdgCommentOption","pdgCommentOptionRenderer",x,this.D_PdgCommentOption);}
 	/** @arg {R_RichSection} x */
@@ -2855,36 +2853,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.G_Text(title);
 		this.R_Button(navigationButton);
-	}
-	/** @private @arg {D_MacroMarkersListItem} x */
-	D_MacroMarkersListItem(x) {
-		const cf="D_MacroMarkersListItem"; this.k(cf,x);
-		if("playerStateEntityKey" in x) {
-			const {title,timeDescription,thumbnail,onTap,trackingParams,shareButton,repeatButton,macroMarkerRepeatStateEntityKey: a,endRepeatCommand,playerStateEntityKey: b,carouselType,lightColorPalette,darkColorPalette,timeDescriptionA11yLabel,...y}=this.s(cf,x); this.g(y);
-			this.G_Text(title);
-			this.G_Text(timeDescription);
-			this.D_Thumbnail(thumbnail);
-			this.E_Watch(onTap);
-			this.trackingParams(trackingParams);
-			this.R_Button(shareButton);
-			this.t(repeatButton,this.R_ToggleButton);
-			this.params("macro_marker_repeat_state.entity_key",a);
-			this.t(endRepeatCommand,this.C_CommandExecutor);
-			this.params("player_state.entity_key",b);
-			if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-			this.a_primitive_str(timeDescriptionA11yLabel);
-			this.t_cf(cf,lightColorPalette,this.D_LightColorPalette);
-			this.t_cf(cf,darkColorPalette,this.D_DarkColorPalette);
-			return;
-		}
-		const {title,timeDescription,thumbnail,onTap,trackingParams,carouselType,layout,...y}=this.s(cf,x); this.g(y);
-		this.G_Text(title);
-		this.G_Text(timeDescription);
-		this.D_Thumbnail(thumbnail);
-		this.E_Watch(onTap);
-		this.trackingParams(trackingParams);
-		if(carouselType!=="MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT") debugger;
-		if(layout!=="MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL") debugger;
 	}
 	/** @private @arg {D_PdgCommentPreview} x */
 	D_PdgCommentPreview(x) {
