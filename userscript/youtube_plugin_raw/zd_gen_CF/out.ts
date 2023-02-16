@@ -556,6 +556,8 @@ export namespace Gen {
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ClickTrackingObj";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_ClickTrackingObj_t1";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_Obj_f19";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse";}
+		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PageTypeBrowse_Response";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_PlaylistPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_SettingsPage";}
 		|{n: Prelude.CF_M_s; t: Types.CF_M_s_; v: "R_TextRun";}
