@@ -5064,6 +5064,30 @@ class ServiceMethods extends ServiceData {
 		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
 	}
+	/** @private @arg {"DMD_AdSlot"} cf @arg {DMD_AdSlot} x */
+	DMD_AdSlot_Omit(cf,x) {
+		const {slotId,slotPhysicalPosition,slotType,...y}=this.s(cf,x);
+		this.a_primitive_str(slotId);
+		let do_=false;
+		if(do_) {
+			let sid=split_string(slotId,":");
+			let n=(BigInt(sid[0]));
+			n/=1000n;
+			this.save_number("AdSlot.slotId[0]",Number(n));
+			this.save_number("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
+		}
+		switch(slotPhysicalPosition) {
+			case 0:
+			case 1: break;
+			default: debugger; break;
+		}
+		switch(slotType) {
+			case "SLOT_TYPE_IN_FEED":
+			case "SLOT_TYPE_PAGE_TOP": break;
+			default: debugger; break;
+		}
+		return y;
+	}
 	/** @public @arg {DMD_AdSlot} x */
 	DMD_AdSlot(x) {
 		const cf="DMD_AdSlot",u=this.DMD_AdSlot_Omit(cf,x); this.k(cf,x);

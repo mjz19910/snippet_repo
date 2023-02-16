@@ -1824,30 +1824,6 @@ class HandleTypes extends ServiceMethods {
 		this.R_FulfillmentLayout(fulfillmentContent);
 		this._primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {"DMD_AdSlot"} cf @arg {DMD_AdSlot} x */
-	DMD_AdSlot_Omit(cf,x) {
-		const {slotId,slotPhysicalPosition,slotType,...y}=this.s(cf,x);
-		this.a_primitive_str(slotId);
-		let do_=false;
-		if(do_) {
-			let sid=split_string(slotId,":");
-			let n=(BigInt(sid[0]));
-			n/=1000n;
-			this.save_number("AdSlot.slotId[0]",Number(n));
-			this.save_number("AdSlot.slotId[1..]",sid.slice(1).map(e => Number.parseInt(e,10)));
-		}
-		switch(slotPhysicalPosition) {
-			case 0:
-			case 1: break;
-			default: debugger; break;
-		}
-		switch(slotType) {
-			case "SLOT_TYPE_IN_FEED":
-			case "SLOT_TYPE_PAGE_TOP": break;
-			default: debugger; break;
-		}
-		return y;
-	}
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_GetUnseenCount(x) {
 		const cf="RSG_GetUnseenCount"; this.k(cf,x);
