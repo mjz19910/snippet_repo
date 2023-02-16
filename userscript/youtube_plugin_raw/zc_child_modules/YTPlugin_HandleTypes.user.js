@@ -1848,12 +1848,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		return y;
 	}
-	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
-	D_SerializedSlotAdServingDataEntry(x) {
-		const cf="D_SerializedSlotAdServingDataEntry"; this.k(cf,x);
-		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
-	}
 	/** @private @arg {RSG_GetUnseenCount} x */
 	RSG_GetUnseenCount(x) {
 		const cf="RSG_GetUnseenCount"; this.k(cf,x);

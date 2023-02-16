@@ -5058,6 +5058,12 @@ class ServiceMethods extends ServiceData {
 			}
 		}
 	}
+	/** @private @arg {D_SerializedSlotAdServingDataEntry} x */
+	D_SerializedSlotAdServingDataEntry(x) {
+		const cf="D_SerializedSlotAdServingDataEntry"; this.k(cf,x);
+		const {serializedSlotAdServingDataEntry: a,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
+		this.params("ad_slot_logging_data.serialized_slot_ad_serving_data_entry",a);
+	}
 	/** @public @arg {DMD_AdSlot} x */
 	DMD_AdSlot(x) {
 		const cf="DMD_AdSlot",u=this.DMD_AdSlot_Omit(cf,x); this.k(cf,x);
