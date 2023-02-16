@@ -4511,9 +4511,7 @@ class ServiceMethods extends ServiceData {
 	D_PlaylistContent(x) {
 		const {...u}=this.D_PlaylistContent_Omit(x);/*#destructure_done*/
 		if("isEditable" in u) {
-			const {playerInfoView,isEditable,menu,...y}=u; this.g(y);
-			this.ceq(playerInfoView,"DO_NOT_CHANGE");
-			this.R_Menu(menu);
+			const {isEditable,...y}=u; y;
 			this._primitive_of(isEditable,"boolean");
 			return;
 		}
@@ -4523,17 +4521,17 @@ class ServiceMethods extends ServiceData {
 		this.E_VE5754(endpoint);
 		this.G_Text(videoCountText);
 		if("menu" in u1&&"playerInfoView" in u1) {
-			const {menu,playerInfoView,...y}=u1; this.g(y);
+			const {menu,playerInfoView,playlistShareUrl,...y}=u1; this.g(y);
 			this.R_Menu(menu);
 			return;
 		}
 		if("menu" in u1) {
-			const {menu,...y}=u1; this.g(y);
+			const {menu,playlistShareUrl,...y}=u1; this.g(y);
 			this.R_Menu(menu);
 			return;
 		}
 		if("continuations" in u1) {
-			const {continuations,badges,...y}=u1; this.g(y);
+			const {continuations,badges,playlistShareUrl,...y}=u1; this.g(y);
 			this.z(continuations,this.CD_Next);
 			this.z(badges,this.RMD_Badge);
 			return;
@@ -4626,14 +4624,14 @@ class ServiceMethods extends ServiceData {
 	/** @private @arg {D_PlaylistContent} x */
 	D_PlaylistContent_Omit(x) {
 		const cf="D_PlaylistContent";
-		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x);/*#destructure_omit*/
+		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,shortBylineText,longBylineText,trackingParams,titleText,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=this.s(cf,x);/*#destructure_omit*/
 		this.trackingParams(trackingParams);
 		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],this.G_Text);
 		this.z(contents,this.R_PlaylistPanelVideo);
 		this.a_primitive_str(title);
 		this.a_primitive_str(playlistId);
 		this.a_primitive_num(currentIndex);
-		this.parser.parse_url(cf,playlistShareUrl);
+		// this.parser.parse_url(cf,playlistShareUrl);
 		this.save_number("Playlist.localCurrentIndex",localCurrentIndex);
 		this.R_Menu(playlistButtons);
 		this._primitive_of(isInfinite,"boolean");
