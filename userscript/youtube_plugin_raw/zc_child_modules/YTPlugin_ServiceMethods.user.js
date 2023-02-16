@@ -1378,7 +1378,7 @@ class ServiceMethods extends ServiceData {
 			this.DE_VE83769_Url_1(urlEndpoint);
 			return;
 		}
-		const [a,b,y]=this.TE_Endpoint_3("E_VE83769_Url","urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);
+		const [a,b,y]=this.TE_Endpoint_3(cf,"urlEndpoint",x); this.g(y); this.M_VE83769(a); this.DE_VE83769_Url(b);
 	}
 	/** @protected @arg {E_VE96368} x */
 	E_VE96368(x) {let [a,b,y]=this.TE_Endpoint_3("E_VE96368","browseEndpoint",x); this.g(y); this.M_VE96368(a); this.DE_VE96368(b);}
