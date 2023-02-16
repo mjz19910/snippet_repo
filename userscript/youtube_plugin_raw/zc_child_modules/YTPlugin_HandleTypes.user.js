@@ -595,8 +595,6 @@ class HandleTypes extends ServiceMethods {
 	R_TwoColumnBrowseResults(x) {this.H_("R_TwoColumnBrowseResults","twoColumnBrowseResultsRenderer",x,this.D_TwoColumnBrowseResults);}
 	/** @private @arg {R_AddToPlaylist} x */
 	R_AddToPlaylist(x) {this.H_("R_AddToPlaylist","addToPlaylistRenderer",x,this.D_AddToPlaylist);}
-	/** @public @arg {R_Comment} x */
-	R_Comment(x) {this.H_("Comment","commentRenderer",x,this.D_Comment);}
 	/** @private @arg {R_ElementUpdate} x */
 	R_ElementUpdate(x) {this.H_("ElementUpdate","updates",x,x => this.z(x,this.D_ElementUpdate));}
 	/** @public @arg {R_TemplateUpdate} x */
@@ -2740,29 +2738,6 @@ class HandleTypes extends ServiceMethods {
 		this.G_Text(placeholderText);
 		this.trackingParams(trackingParams);
 	}
-	/** @private @arg {D_Comment} x */
-	D_Comment(x) {
-		const cf="D_Comment";
-		const {authorText,authorThumbnail,actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,commentId,contentText,currentUserReplyThumbnail,voteCount,isLiked,expandButton,publishedTimeText,voteStatus,trackingParams,collapseButton,replyCount,loggingDirectives,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.G_Text(authorText);
-		this.D_Thumbnail(authorThumbnail);
-		this.R_CommentActionButtons(actionButtons);
-		this.R_Menu(actionMenu);
-		debugger;
-		this.a_primitive_bool(authorIsChannelOwner);
-		this.a_primitive_str(commentId);
-		this.G_Text(contentText);
-		this.D_Thumbnail(currentUserReplyThumbnail);
-		this.t(voteCount,this.G_Text);
-		this.a_primitive_bool(isLiked);
-		this.R_Button(expandButton);
-		this.G_Text(publishedTimeText);
-		this.ceq(voteStatus,"INDIFFERENT");
-		this.trackingParams(trackingParams);
-		this.R_Button(collapseButton);
-		this.t(replyCount,this.a_primitive_num);
-		this.D_LoggingDirectives(loggingDirectives);
-	}
 	/** @private @arg {D_PlaylistHeader} x */
 	D_PlaylistHeader(x) {
 		const cf="D_PlaylistHeader"; this.k(cf,x);
@@ -3034,13 +3009,6 @@ class HandleTypes extends ServiceMethods {
 		const {contents,trackingParams,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
 		this.z(contents,this.R_RichMetadata);
 		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {D_SubscriptionButton} x */
-	D_SubscriptionButton(x) {
-		const cf="D_SubscriptionButton"; this.k(cf,x);
-		const {type,subscribed,...y}=this.s(cf,x); this.g(y);/*#destructure_done*/
-		this.save_string("button.type",type);
-		this.t(subscribed,this.a_primitive_bool);
 	}
 	/** @private @arg {D_AddToPlaylistCreate} x */
 	D_AddToPlaylistCreate(x) {
