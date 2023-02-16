@@ -4443,6 +4443,30 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {R_SectionList} x */
 	R_SectionList(x) {this.H_("R_SectionList","sectionListRenderer",x,this.GD_RC_SectionList);}
+	/** 
+	 * @private
+	 * @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]["itemSectionRenderer"]} x
+	 * @arg {[R_ContinuationItem[], "comment-item-section", "engagement-panel-comments-section"][]} u1
+	 * @arg {R_Message[]} u2
+	 */
+	GD_RC_SectionList_p2_ItemSection(x,u1,u2) {
+		if("targetId" in x) {
+			let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
+			if(r===null) return;
+			u1.push(r);
+			return;
+		}
+		let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
+		if(r===null) return;
+		let [v,...z]=r;
+		if(z.length!==0) debugger;
+		u2.push(...v);
+	}
+	/** @public @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>["contents"][number]} x */
+	GD_RC_SectionList_p2_contentItem(x,u1,u2) {
+		const {itemSectionRenderer,...y}=x; this.g(y);
+		this.GD_RC_SectionList_p2_ItemSection(itemSectionRenderer,u1,u2);
+	}
 	/** @public @arg {Extract<Exclude<GD_RC_SectionList,{targetId:any}>,{contents:any}>} x */
 	GD_RC_SectionList_p2(x) {
 		const cf="GD_RC_SectionList_p2";
@@ -4450,19 +4474,9 @@ class ServiceMethods extends ServiceData {
 		if(!arr) {debugger; return;}
 		/** @type {[R_ContinuationItem[],"comment-item-section","engagement-panel-comments-section"][]} */
 		let ux_1=[];
+		/** @type {R_Message[]} */
 		let ux_2=[];
-		for(let item of arr) {
-			const {itemSectionRenderer: x,...y}=item; this.g(y);
-			if("targetId" in x) {
-				let r=this.TD_ItemSection(`TD_ItemSection_3<"comment-item-section","engagement-panel-comments-section">`,x);
-				if(r===null) continue;
-				ux_1.push(r);
-				continue;
-			}
-			let r=this.TD_ItemSection(`TD_ItemSection_1<any>`,x);
-			ux_2.push(r);
-			x;
-		}
+		for(let item of arr) this.GD_RC_SectionList_p2_contentItem(item,ux_1,ux_2);
 		this.z(ux_1,x => {
 			/** @type {DC_SectionListBase} */
 			switch(x[1]) {
