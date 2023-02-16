@@ -21,7 +21,6 @@ const bs=required(store["mod$YoutubePluginBase"]);
 const as=required(bs.as_);
 const split_string=bs.split_string;
 const split_string_once=bs.split_string_once;
-const split_string_once_last=bs.split_string_once_last;
 const base64_url_dec=bs.base64_url_dec;
 const MyReader=bs.MyReader;
 /** @private @arg {(x:typeof exports)=>void} fn */

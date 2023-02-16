@@ -16,7 +16,7 @@ const __module_name__="mod$ServiceMethods",store=required(window.__plugin_module
 function export_(fn,flags={global: false}) {bs.do_export(fn,flags,exports,__module_name__);}
 const base64_dec=bs.base64_dec; const base64_url_dec=bs.base64_url_dec; const as=bs.as_;
 const ServiceData=bs.ServiceData;
-const split_string=bs.split_string; const split_string_once=bs.split_string_once;
+const split_string=bs.split_string,split_string_once=bs.split_string_once.split_string_once_last=bs.split_string_once_last;
 const as_any=bs.as_any;
 /** @extends {ServiceData<ServiceLoader,ServiceOptions>} */
 class ServiceMethods extends ServiceData {
