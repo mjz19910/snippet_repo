@@ -1233,7 +1233,14 @@ type D_GuideEntry=
 	|D_GuideEntry_WatchHistory
 	|D_GuideEntry_WatchLater
 	|D_GuideEntry_WhatToWatch
-	|TD_GuideEntry_EntryData<"LIKES_PLAYLIST">
+	|{
+		navigationEndpoint: E_VE5754;
+		icon: T_Icon<"LIKES_PLAYLIST">;
+		trackingParams: string;
+		formattedTitle: G_Text;
+		accessibility: TD_Accessibility<"Liked videos">;
+		entryData: R_GuideEntryData;
+	}
 	|TD_GuideEntry_EntryData<"PLAYLISTS">
 	|TD_GuideEntry_Simple<"ADD_CIRCLE">
 	|TD_GuideEntry_Simple<"CLAPPERBOARD">
